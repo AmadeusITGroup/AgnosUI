@@ -1,13 +1,9 @@
-name: ci
+name: pr
 on:
-  push:
+  pull_request:
     branches: [main]
 jobs:
   build:
-    needs: e2e-tests
     uses: './.github/workflows/build.yml'
-    with:
-      docPath: main
-      docPublish: true
   e2e-tests:
     uses: './.github/workflows/e2e-tests.yml'
