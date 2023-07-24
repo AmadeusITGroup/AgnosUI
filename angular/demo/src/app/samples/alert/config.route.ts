@@ -18,14 +18,14 @@ export enum AlertStatus {
 @Component({
 	standalone: true,
 	imports: [AgnosUIAngularModule, NgFor, FormsModule],
-	template: ` <button class="btn btn-primary showAlert" (click)="showAlert(alert)">Show alert</button>
+	template: ` <button class="btn btn-primary showAlert" (click)="showAlert(alert)" type="button">Show alert</button>
 		<br />
 		<br />
 		<div class="d-flex flex-column">
 			<div class="d-flex form-group">
 				<label class="align-self-center me-3" for="typeSelect">Alert type: </label>
 				<select id="typeSelect" class="form-select w-auto" [(ngModel)]="type">
-					<option *ngFor="let style of styleList" [ngValue]="style.value">{{ style.label }}</option>
+					<option *ngFor="let style of styleList" [value]="style.value">{{ style.label }}</option>
 				</select>
 			</div>
 

@@ -33,7 +33,7 @@
 		</button>
 	</div>
 	<br />
-	Collection Size::
+	Collection size:
 	<div id="btn-config-collectionSize" class="btn-group mb-2">
 		<button
 			class="btn btn-sm btn-outline-secondary"
@@ -104,7 +104,7 @@
 			class:active={$widgetsConfig$.pagination?.slotPages === CustomPages}
 			on:click={() => updatePaginationConfig({slotPages: CustomPages})}
 		>
-			custom Pages
+			custom pages
 		</button>
 		<button
 			class="btn btn-sm btn-outline-secondary"

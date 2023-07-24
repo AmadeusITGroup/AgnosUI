@@ -68,20 +68,19 @@
 	<button type="button" class="btn btn-outline-primary" on:click={() => toggle()}>Toggle</button>
 	<button type="button" class="ms-2 btn btn-outline-primary" on:click={() => toggle(undefined, true)}>Toggle with animation</button>
 	<button type="button" class="ms-2 btn btn-outline-primary" on:click={() => toggle(undefined, false)}>Toggle without animation</button>
-	<div>
-		<ul class="mt-2">
-			<li>visible = {$visible$}</li>
-			<li>transitioning = {$transitioning$}</li>
-			<li>shown = {$shown$}</li>
-			<li>hidden = {$hidden$}</li>
-		</ul>
 
-		{#if !$paramRemoveFromDom$ || !$hidden$}
-			<div use:directive={{transition: $paramTransition$, animation: $paramAnimation$}} style="max-width: 300px;">
-				<div class="card" style="width: 300px;">
-					<div class="card-body">You can collapse this card by clicking Toggle</div>
-				</div>
+	<ul class="mt-2">
+		<li>visible = {$visible$}</li>
+		<li>transitioning = {$transitioning$}</li>
+		<li>shown = {$shown$}</li>
+		<li>hidden = {$hidden$}</li>
+	</ul>
+
+	{#if !$paramRemoveFromDom$ || !$hidden$}
+		<div use:directive={{transition: $paramTransition$, animation: $paramAnimation$}} style="max-width: 300px;">
+			<div class="card" style="width: 300px;">
+				<div class="card-body">You can collapse this card by clicking Toggle</div>
 			</div>
-		{/if}
-	</div>
+		</div>
+	{/if}
 </div>

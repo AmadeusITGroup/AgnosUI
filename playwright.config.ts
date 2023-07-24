@@ -70,6 +70,7 @@ const config: PlaywrightTestConfig = {
 	retries: 1,
 	reporter: [[isCI ? 'github' : 'list'], ['html', {open: 'never'}]],
 	forbidOnly: isCI,
+	snapshotPathTemplate: '{testDir}/{testFilePath}-snapshots/{arg}{ext}',
 	use: {
 		trace: 'on-all-retries',
 		video: 'on-first-retry',

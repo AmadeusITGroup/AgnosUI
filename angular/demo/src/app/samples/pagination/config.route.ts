@@ -47,7 +47,7 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
 					*ngIf="!widget.api.isEllipsis(page)"
 					[attr.aria-label]="state.pagesLabel[i]"
 					class="page-link au-page"
-					href
+					href="#"
 					(click)="widget.actions.select(page); $event.preventDefault()"
 					[attr.tabindex]="state.disabled ? '-1' : null"
 					[attr.aria-disabled]="state.disabled ? 'true' : null"
@@ -77,7 +77,7 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
 				</button>
 			</div>
 			<br />
-			Collection Size:
+			Collection size:
 			<div id="btn-config-collectionSize" class="btn-group mb-2">
 				<button
 					class="btn btn-sm btn-outline-secondary"
@@ -102,7 +102,7 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
 				</button>
 				<button
 					class="btn btn-sm btn-outline-secondary"
-					[class.active]="(widgetsConfig$ | async)?.pagination?.collectionSize === undefined"
+					[class.active]="!(widgetsConfig$ | async)?.pagination?.collectionSize"
 					(click)="updatePaginationConfig({collectionSize: undefined})"
 				>
 					undefined
@@ -148,7 +148,7 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
 					[class.active]="(widgetsConfig$ | async)?.pagination?.slotPages === custom"
 					(click)="updatePaginationConfig({slotPages: custom})"
 				>
-					custom Pages
+					custom pages
 				</button>
 				<button
 					class="btn btn-sm btn-outline-secondary"

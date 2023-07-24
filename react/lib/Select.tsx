@@ -77,7 +77,7 @@ export function Select<Item>(props: Partial<SelectProps<Item>>) {
 	const refSetMenu = useDirective(hasFocusDirective);
 
 	return (
-		<div className={`au-select dropdown input-group input-group-sm mb-3 ${className}`}>
+		<div className={`au-select dropdown input-group input-group-sm mb-3 d-block ${className}`}>
 			<div ref={refSetInput} role="combobox" className="input-group" aria-haspopup="listbox" aria-expanded="true">
 				<Badges api={widget} selected={selected}></Badges>
 				<input

@@ -1,0 +1,80 @@
+<body>
+	<div
+	 id="root"
+	>
+		<div
+		 class="container p-3"
+		>
+			<div
+			 class="demo-focustrack"
+			>
+				<div
+				 class="border my-2 p-2"
+				>
+					<h5>
+						"Container"
+					</h5>
+					<input
+					 class="form-control"
+					 id="focusableInput"
+					 placeholder="Focusable input"
+					 type="text"
+					 value=""
+					/>
+					<br />
+					<input
+					 class="form-control"
+					 id="focusableInput2"
+					 placeholder="Focusable input 2"
+					 type="text"
+					 value=""
+					/>
+				</div>
+				<input
+				 class="form-control"
+				 disabled=""
+				 id="disabledInput"
+				 placeholder="Disabled input"
+				 type="text"
+				 value=""
+				/>
+				<br />
+				<div
+				 class="form-check mb-2"
+				>
+					<input
+					 checked="false"
+					 class="form-check-input"
+					 disabled=""
+					 id="containerHasFocus"
+					 type="checkbox"
+					/>
+					<label
+					 class="form-check-label"
+					 for="containerHasFocus"
+					>
+						"Focus in container"
+					</label>
+				</div>
+				<label
+				 class="form-label"
+				 for="activeElement"
+				>
+					"Active element history:"
+				</label>
+				<textarea
+				 class="form-control mb-2"
+				 id="activeElementHistory"
+				 readonly=""
+				>
+					"[{\"tagName\":\"body\"}]"
+				</textarea>
+				<button
+				 class="btn btn-primary"
+				>
+					"Clear"
+				</button>
+			</div>
+		</div>
+	</div>
+</body>

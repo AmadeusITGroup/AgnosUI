@@ -12,7 +12,7 @@ import {Component} from '@angular/core';
 			<div [auUse]="hasFocusApi.directive" class="my-2 p-2 border">
 				<h5>Container</h5>
 				<input class="form-control" type="text" placeholder="Focusable input" id="focusableInput" /><br />
-				<input class="form-control" type="text" placeholder="Focusable input 2" id="focusableInput2" /><br />
+				<input class="form-control" type="text" placeholder="Focusable input 2" id="focusableInput2" />
 			</div>
 			<input class="form-control" type="text" placeholder="Disabled input" id="disabledInput" disabled /><br />
 			<div class="form-check mb-2">
@@ -20,7 +20,7 @@ import {Component} from '@angular/core';
 				<label class="form-check-label" for="containerHasFocus">Focus in container</label>
 			</div>
 			<label for="activeElement" class="form-label">Active element history:</label>
-			<textarea class="form-control mb-2" id="activeElementHistory">{{ activeElementsJson }}</textarea>
+			<textarea class="form-control mb-2" id="activeElementHistory" readonly>{{ activeElementsJson }}</textarea>
 			<button class="btn btn-primary" (click)="clear()">Clear</button>
 		</div>
 	`,

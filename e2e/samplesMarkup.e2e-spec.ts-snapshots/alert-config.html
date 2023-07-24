@@ -1,0 +1,131 @@
+<body>
+	<div
+	 id="root"
+	>
+		<div
+		 class="container p-3"
+		>
+			<button
+			 class="btn btn-primary showAlert"
+			 type="button"
+			>
+				"Show alert"
+			</button>
+			<br />
+			<br />
+			<div
+			 class="d-flex flex-column"
+			>
+				<div
+				 class="d-flex form-group"
+				>
+					<label
+					 class="align-self-center me-3"
+					 for="typeSelect"
+					>
+						"Alert type:"
+					</label>
+					<select
+					 class="form-select w-auto"
+					 id="typeSelect"
+					>
+						<option
+						 value="success"
+						>
+							"success"
+						</option>
+						<option
+						 value="info"
+						>
+							"info"
+						</option>
+						<option
+						 value="warning"
+						>
+							"warning"
+						</option>
+						<option
+						 value="danger"
+						>
+							"danger"
+						</option>
+						<option
+						 value="primary"
+						>
+							"primary"
+						</option>
+						<option
+						 value="secondary"
+						>
+							"secondary"
+						</option>
+						<option
+						 value="light"
+						>
+							"light"
+						</option>
+						<option
+						 value="dark"
+						>
+							"dark"
+						</option>
+					</select>
+				</div>
+				<label>
+					<input
+					 checked="true"
+					 class="form-check-input me-1"
+					 type="checkbox"
+					/>
+					"Animation on init"
+				</label>
+				<label>
+					<input
+					 checked="true"
+					 class="form-check-input me-1"
+					 type="checkbox"
+					/>
+					"Animation"
+				</label>
+				<label>
+					<input
+					 checked="true"
+					 class="dismissibleInput form-check-input me-1"
+					 type="checkbox"
+					/>
+					"Dismissible"
+				</label>
+			</div>
+			<br />
+			<br />
+			<div
+			 class="alert alert-success au-alert d-flex show w-100"
+			 role="alert"
+			>
+				<div
+				 class="alert-body"
+				>
+					<h4
+					 class="alert-heading"
+					>
+						"Well done!"
+					</h4>
+					<p>
+						"Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content."
+					</p>
+					<hr />
+					<p
+					 class="mb-0"
+					>
+						"Whenever you need to, be sure to use margin utilities to keep things nice and tidy."
+					</p>
+				</div>
+				<button
+				 aria-label="Close"
+				 class="btn-close ms-auto"
+				 type="button"
+				/>
+			</div>
+		</div>
+	</div>
+</body>

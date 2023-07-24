@@ -6,5 +6,5 @@
 
 <Pagination bind:page />
 <div>
-	Current page: <span id="defaultPage">{page}</span><br />
+	Current page: <span id="defaultPage">{page}</span>
 </div>
