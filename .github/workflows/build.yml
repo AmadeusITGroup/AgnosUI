@@ -18,6 +18,10 @@ on:
         description: 'Whether to publish the documentation on gh-pages'
         type: boolean
         default: false
+      docPath:
+        description: 'If version is empty, path in which the documentation on gh-pages should be published.'
+        type: string
+        default: ''
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -49,11 +53,6 @@ jobs:
         with:
           file: core/coverage/lcov.info
           flags: unit
-      - if: inputs.docPublish
-        uses: actions/checkout@v3
-        with:
-          ref: gh-pages
-          path: gh-pages
       - run: ./scripts/npmPublish.sh --dry-run
       - if: inputs.version != '' && inputs.npmPublish
         run: |
@@ -62,14 +61,24 @@ jobs:
           git push origin v${{ inputs.version }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - if: inputs.version != '' && inputs.docPublish
+      - if: inputs.docPublish && (inputs.version != '' || inputs.docPath != '')
+        uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+          path: gh-pages
+      - if: inputs.docPublish && (inputs.version != '' || inputs.docPath != '')
         env:
           VERSION: ${{ inputs.version }}
         working-directory: gh-pages
         run: |
-          rm -rf v${VERSION%.*}
-          cp -a ../demo/dist v${VERSION%.*}
+          if [ -n "$VERSION" ]; then
+            export DOC_PATH="v${VERSION%.*}"
+          else
+            export DOC_PATH="${{ inputs.docPath }}"
+          fi
+          rm -rf "$DOC_PATH"
+          cp -a ../demo/dist "$DOC_PATH"
           rm -f latest && ln -s v$(npx semver v* | tail -1) latest
           git add .
-          git commit --allow-empty -a -m "v${{ inputs.version }} from ${{ github.sha }}"
+          git commit --allow-empty -a -m "$DOC_PATH from ${{ github.sha }}"
           git push origin gh-pages
