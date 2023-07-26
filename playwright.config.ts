@@ -2,23 +2,24 @@ import type {PlaywrightTestConfig} from '@playwright/test';
 import {devices} from '@playwright/test';
 
 const isCI = process.env.CI === 'true';
+const includeCoverage = process.env.COVERAGE === 'true';
 const envFramework = process.env.FRAMEWORK?.toLowerCase();
 const demoUrl = 'http://localhost:4000';
 const previewDemoCommand = 'npm run preview demo';
 const frameworks = [
 	{
 		name: 'angular',
-		command: isCI ? previewDemoCommand : `npm run dev angular`,
+		command: isCI ? previewDemoCommand : includeCoverage ? `npm run dev:coverage angular` : `npm run dev angular`,
 		url: `${isCI ? demoUrl : 'http://localhost:4200'}/angular/samples/`,
 	},
 	{
 		name: 'react',
-		command: isCI ? previewDemoCommand : `npm run dev react`,
+		command: isCI ? previewDemoCommand : includeCoverage ? `npm run dev:coverage react` : `npm run dev react`,
 		url: `${isCI ? demoUrl : 'http://localhost:3000'}/react/samples/`,
 	},
 	{
 		name: 'svelte',
-		command: isCI ? previewDemoCommand : `npm run dev svelte`,
+		command: isCI ? previewDemoCommand : includeCoverage ? `npm run dev:coverage svelte` : `npm run dev svelte`,
 		url: `${isCI ? demoUrl : 'http://localhost:3001'}/svelte/samples/`,
 	},
 ].filter(envFramework ? (framework) => framework.name === envFramework : () => true);
@@ -63,10 +64,11 @@ if (includesDemo) {
 }
 
 const config: PlaywrightTestConfig = {
+	globalSetup: isCI || includeCoverage ? require.resolve('e2e/global-setup') : undefined,
 	testDir: 'e2e',
 	testMatch: '*e2e-spec.ts',
 	retries: 1,
-	reporter: [['list'], ['html', {open: 'never'}]],
+	reporter: [[isCI ? 'github' : 'list'], ['html', {open: 'never'}]],
 	forbidOnly: isCI,
 	use: {
 		trace: 'on-all-retries',

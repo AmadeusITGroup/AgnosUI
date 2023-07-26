@@ -1,5 +1,8 @@
 # AgnosUI: A Versatile Frontend Widget Library for CSS Bootstrap Design
 
+[![Build Status](https://github.com/AmadeusITGroup/AgnosUI/workflows/ci/badge.svg?branch=main)](https://github.com/AmadeusITGroup/AgnosUI/actions)
+[![codecov](https://codecov.io/gh/AmadeusITGroup/AgnosUI/branch/main/graph/badge.svg)](https://codecov.io/gh/AmadeusITGroup/AgnosUI)
+
 ## Introduction
 
 AgnosUI is a powerful library of widgets designed specifically for the [CSS Bootstrap design](https://getbootstrap.com/). Inspired by the success of [ng-bootstrap](https://ng-bootstrap.github.io/#/home), AgnosUI takes the concept a step further by offering widgets that can seamlessly integrate with any front-end framework of your choice. With support for popular frameworks like [Angular](https://angular.io/), [React](https://react.dev/), and [Svelte](https://svelte.dev/), AgnosUI allows you to effortlessly create consistent and visually appealing UI components across your projects.

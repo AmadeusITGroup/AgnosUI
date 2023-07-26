@@ -8,7 +8,10 @@ on:
         description: Version number (x.y.z)
 
 jobs:
+  e2e-tests:
+    uses: './.github/workflows/e2e-tests.yml'
   build:
+    needs: e2e-tests
     uses: './.github/workflows/build.yml'
     with:
       version: ${{ inputs.version }}

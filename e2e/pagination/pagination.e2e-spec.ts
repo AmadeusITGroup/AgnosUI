@@ -1,7 +1,8 @@
-import {expect, test} from '@playwright/test';
+import {expect, getTest} from '../fixture';
 import {PaginationPO} from '@agnos-ui/page-objects';
 import {PaginationDemoPO} from '../demo-po/pagination.po';
 
+const test = getTest();
 async function paginationState(paginationPO: PaginationPO) {
 	return paginationPO.locatorRoot.evaluate((rootNode: HTMLElement) => {
 		const pagesElements = [...rootNode.querySelectorAll('.au-page')] as HTMLLinkElement[];

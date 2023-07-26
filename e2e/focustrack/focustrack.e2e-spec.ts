@@ -1,9 +1,10 @@
-import {test, expect} from '@playwright/test';
+import {expect, getTest} from '../fixture';
 import {FocusTrackPO} from '../demo-po/focustrack.po';
 
 type PromiseValue<T> = T extends Promise<infer U> ? U : never;
 type State = PromiseValue<ReturnType<FocusTrackPO['getState']>>;
 
+const test = getTest();
 test.describe(`Select tests`, () => {
 	test.beforeEach(async ({page}) => {
 		await page.goto('#/focustrack/focustrack');
