@@ -1,0 +1,31 @@
+{
+	"name": "@agnos-ui/angular",
+	"description": "Bootstrap-based widget library for Angular.",
+	"homepage": "https://amadeusitgroup.github.io/AgnosUI/latest/",
+	"keywords": [
+		"angular",
+		"bootstrap",
+		"components",
+		"widgets",
+		"alert",
+		"modal",
+		"pagination",
+		"rating"
+	],
+	"peerDependencies": {
+		"@angular/common": "^16.1.3",
+		"@angular/core": "^16.1.3"
+	},
+	"dependencies": {
+		"@agnos-ui/core": "",
+		"@amadeus-it-group/tansu": "*",
+		"tslib": "^2.6.0"
+	},
+	"license": "MIT",
+	"bugs": "https://github.com/AmadeusITGroup/AgnosUI/issues",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/AmadeusITGroup/AgnosUI.git",
+		"directory": "angular/lib"
+	}
+}

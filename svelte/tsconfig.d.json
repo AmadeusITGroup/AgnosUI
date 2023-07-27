@@ -1,0 +1,13 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"outDir": "dist/dts",
+		"noEmit": false,
+		"declaration": true,
+		"emitDeclarationOnly": true,
+		"paths": {
+			"@agnos-ui/core": ["@agnos-ui/core"]
+		}
+	},
+	"include": ["lib"]
+}

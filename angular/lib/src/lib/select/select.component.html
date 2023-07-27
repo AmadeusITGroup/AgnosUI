@@ -1,0 +1,54 @@
+<ng-container>
+	<div [auUse]="_widget.directives.hasFocusDirective" role="combobox" class="input-group" aria-haspopup="listbox" aria-expanded="true">
+		<ng-container *ngIf="state$().selected as selected">
+			<div *ngIf="selected.length" class="input-group-text" (mousedown)="$event.preventDefault()">
+				<div *ngFor="let item of selected" class="badge rounded-pill text-bg-primary d-inline-flex align-items-center m-1">
+					<div class="me-1">{{ item }}</div>
+					<span role="button" tabindex="-1" aria-label="Close" (click)="api.unselect(item)">x</span>
+				</div>
+			</div>
+		</ng-container>
+		<input
+			type="text"
+			class="form-control"
+			[value]="state$().filterText"
+			aria-autocomplete="list"
+			autoCorrect="off"
+			autoCapitalize="none"
+			autoComplete="off"
+			(keydown)="_widget.actions.onInputKeydown($event)"
+			(input)="_widget.actions.onInput($event)"
+		/>
+	</div>
+	<ul
+		*ngIf="state$().opened && state$().visible.length"
+		[auUse]="_widget.directives.hasFocusDirective"
+		class="dropdown-menu show w-100"
+		data-popper-placement="bottom-start"
+		(mousedown)="$event.preventDefault()"
+	>
+		<li
+			*ngFor="let itemCtx of state$().visible; trackBy: itemCtxTrackBy"
+			class="dropdown-item position-relative"
+			[class.bg-light]="itemCtx === state$().highlighted"
+		>
+			<div class="form-check">
+				<input type="checkbox" tabindex="-1" class="form-check-input" [id]="itemCtx.id" [checked]="itemCtx.selected" (change)="itemCtx.toggle()" />
+				<label [for]="itemCtx.id" class="form-check-label stretched-link" (click)="itemCtx.toggle(); $event.preventDefault()">
+					{{ itemCtx.item }}
+				</label>
+			</div>
+		</li>
+	</ul>
+</ng-container>
+<style>
+	.input-group-text {
+		background-color: transparent;
+	}
+	.dropdown-menu {
+		position: absolute;
+		inset: 0px auto auto 0px;
+		margin: 0px;
+		transform: translate3d(0px, 45px, 0px);
+	}
+</style>

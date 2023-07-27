@@ -1,0 +1,9 @@
+{
+	"extends": ["../.eslintrc.json", "plugin:react/recommended", "plugin:react/jsx-runtime"],
+	"plugins": ["react"],
+	"settings": {
+		"react": {
+			"version": "detect"
+		}
+	}
+}

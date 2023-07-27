@@ -1,0 +1,11 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"noEmit": false,
+		"declaration": true,
+		"emitDeclarationOnly": true,
+		"outDir": "dist/dts"
+	},
+	"include": ["lib"],
+	"exclude": ["**/*.spec.ts", "**/__mocks__/**"]
+}

@@ -1,0 +1,38 @@
+{
+	"name": "@agnos-ui/page-objects",
+	"description": "Page objects to be used when testing AgnosUI-based applications with Playwright.",
+	"keywords": [
+		"playwright",
+		"page-object",
+		"e2e",
+		"testing",
+		"AgnosUI",
+		"widgets",
+		"components"
+	],
+	"main": "dist/lib/index.js",
+	"module": "dist/lib/index.mjs",
+	"types": "dist/lib/index.d.ts",
+	"scripts": {
+		"build": "npm run build:rollup && npm run build:dts && npm run build:api-extractor",
+		"build:rollup": "tsc && vite build -c vite.config.ts",
+		"build:dts": "tsc -p tsconfig.d.json",
+		"build:api-extractor": "api-extractor run"
+	},
+	"dependencies": {
+		"@agnos-ui/base-po": ""
+	},
+	"peerDependencies": {
+		"@playwright/test": "*"
+	},
+	"files": [
+		"dist/lib"
+	],
+	"license": "MIT",
+	"bugs": "https://github.com/AmadeusITGroup/AgnosUI/issues",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/AmadeusITGroup/AgnosUI.git",
+		"directory": "page-objects"
+	}
+}

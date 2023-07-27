@@ -1,0 +1,73 @@
+name: build
+on:
+  workflow_call:
+    secrets:
+      NPM_TOKEN:
+        description: 'NPM token to use to publish packages'
+        required: false
+    inputs:
+      version:
+        description: 'Version number (x.y.z) to set before executing the build'
+        type: string
+        default: ''
+      npmPublish:
+        description: 'Whether to publish the package on npm'
+        type: boolean
+        default: false
+      docPublish:
+        description: 'Whether to publish the documentation on gh-pages'
+        type: boolean
+        default: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm ci
+      - run: npm run syncpack:check
+      - if: inputs.version != ''
+        run: |
+          node scripts/setVersion.js "${{ inputs.version }}"
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com
+          git commit -a -m v${{ inputs.version }}
+          git tag v${{ inputs.version }}
+          git show HEAD
+      - run: npm run build:ci
+      - run: npm run format:check
+      - run: npm run lint
+      - run: npx playwright install --with-deps
+      - run: npm run test
+      - run: npm run e2e
+      - if: inputs.docPublish
+        uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+          path: gh-pages
+      - run: ./scripts/npmPublish.sh --dry-run
+      - if: inputs.version != '' && inputs.npmPublish
+        run: |
+          npm whoami
+          ./scripts/npmPublish.sh --provenance
+          git push origin v${{ inputs.version }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - if: inputs.version != '' && inputs.docPublish
+        env:
+          VERSION: ${{ inputs.version }}
+        working-directory: gh-pages
+        run: |
+          rm -rf v${VERSION%.*}
+          cp -a ../demo/dist v${VERSION%.*}
+          rm -f latest && ln -s v$(npx semver v* | tail -1) latest
+          git add .
+          git commit --allow-empty -a -m "v${{ inputs.version }} from ${{ github.sha }}"
+          git push origin gh-pages

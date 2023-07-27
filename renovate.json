@@ -1,0 +1,32 @@
+{
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"extends": ["config:base", "group:allNonMajor", ":preserveSemverRanges"],
+	"ignorePresets": [":dependencyDashboard", ":prHourlyLimit2", ":prConcurrentLimit10"],
+	"packageRules": [
+		{
+			"matchPackagePatterns": [""],
+			"rangeStrategy": "bump"
+		},
+		{
+			"matchPackageNames": ["@angular/core"],
+			"postUpgradeTasks": {
+				"commands": [
+					"npm install",
+					"cd angular && npm run ng update {{{depName}}} --from={{{currentVersion}}} --to={{{newVersion}}} --migrate-only --allow-dirty --force"
+				],
+				"executionMode": "branch",
+				"fileFilters": ["**"]
+			}
+		},
+		{
+			"matchPackagePatterns": ["^@angular", "^ng-packagr", "^zone.js"],
+			"groupName": "Angular dependencies",
+			"groupSlug": "angular-dependencies",
+			"matchUpdateTypes": ["major"]
+		}
+	],
+	"lockFileMaintenance": {
+		"enabled": true,
+		"schedule": ["at any time"]
+	}
+}

@@ -1,0 +1,10 @@
+{
+	"eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "svelte"],
+	"svelte.enable-ts-plugin": true,
+	"vitest.include": ["**/*.spec.ts"],
+	"typescript.tsdk": "node_modules\\typescript\\lib",
+	"typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
+	"typescript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces": false,
+	"javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
+	"javascript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces": false
+}

@@ -1,0 +1,13 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"noEmit": false,
+		"declaration": true,
+		"emitDeclarationOnly": true,
+		"outDir": "dist/dts",
+		"paths": {
+			"@agnos-ui/base-po": ["@agnos-ui/base-po"]
+		}
+	},
+	"include": ["lib"]
+}
