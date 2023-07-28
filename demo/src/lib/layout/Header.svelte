@@ -15,7 +15,7 @@
 	<div class="row mb-4 align-items-end">
 		<h1 class="col-auto me-auto me-md-none mb-0">{title}</h1>
 		<div class="col">
-			<div class="btn-group btn-group-sm me-2" role="group" aria-label="Basic radio toggle button group">
+			<div class="btn-group btn-group-sm me-2 bg-white" role="group" aria-label="Basic radio toggle button group">
 				<a
 					href={`${$pathToRoot$}angular/${$frameworkLessUrl$}`}
 					class="btn btn-outline-primary"
@@ -41,8 +41,12 @@
 		{#each tabs as { title, key, path }}
 			{@const isActive = tab === key}
 			<li class="nav-item" role="presentation">
-				<a href={`${$pathToRoot$}${$selectedFramework$}${path}`} role="tab" class="nav-link" aria-selected={isActive} class:active={isActive}
-					>{title}</a
+				<a
+					href={`${$pathToRoot$}${$selectedFramework$}${path}`}
+					role="tab"
+					class="nav-link link-body-emphasis"
+					aria-selected={isActive}
+					class:active={isActive}>{title}</a
 				>
 			</li>
 		{/each}

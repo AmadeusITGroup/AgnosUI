@@ -27,11 +27,11 @@
 		visually appealing UI components across your projects.
 	</div>
 
-	<h2 class="text-center">For a comprehensive understanding of AgnosUI's features and usage,<br />feel free to explore our demo</h2>
+	<h4 class="text-center">For a comprehensive understanding of AgnosUI's features and usage,<br />feel free to explore our demo</h4>
 	<div class="d-flex links d-flex justify-content-evenly">
-		<a href="angular/components/alert/examples"><Svg svg={angularLogo} className="framework-logo" /></a>
-		<a href="react/components/alert/examples"><Svg svg={reactLogo} className="framework-logo" /></a>
-		<a href="svelte/components/alert/examples"><Svg svg={sveteLogo} className="framework-logo" /></a>
+		<a href="angular/components/alert/examples" aria-label="link to angular examples"><Svg svg={angularLogo} className="framework-logo" /></a>
+		<a href="react/components/alert/examples" aria-label="link to react examples"><Svg svg={reactLogo} className="framework-logo" /></a>
+		<a href="svelte/components/alert/examples" aria-label="link to svelte examples"><Svg svg={sveteLogo} className="framework-logo" /></a>
 	</div>
 </section>
 
@@ -41,7 +41,10 @@
 		font-weight: 300;
 	}
 	.links {
-		padding: 3rem;
+		padding: 1rem;
+		@media (min-width: 768px) {
+			padding: 3rem;
+		}
 
 		:global(.framework-logo) {
 			height: 100px;

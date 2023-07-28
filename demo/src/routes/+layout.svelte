@@ -26,7 +26,7 @@
 			</div>
 		</div>
 	</nav>
-	<div class="demo-main">
+	<div class="demo-main d-flex justify-content-center">
 		<div class="container-xxl">
 			<slot />
 		</div>
@@ -50,12 +50,6 @@
 	}
 
 	.demo-main {
-		grid-area: main;
 		overflow: auto;
-	}
-
-	.container-xxl {
-		/* TODO: not centered otherwise. To be investigated */
-		margin-right: unset;
 	}
 </style>
