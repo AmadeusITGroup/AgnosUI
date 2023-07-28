@@ -65,12 +65,12 @@ if (includesDemo) {
 const config: PlaywrightTestConfig = {
 	testDir: 'e2e',
 	testMatch: '*e2e-spec.ts',
-	retries: 0,
+	retries: 1,
 	reporter: [['list'], ['html', {open: 'never'}]],
 	forbidOnly: isCI,
 	use: {
-		trace: 'retain-on-failure',
-		video: 'on',
+		trace: 'on-all-retries',
+		video: 'on-first-retry',
 	},
 	projects,
 	webServer: frameworks.map((framework) => ({
