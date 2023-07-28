@@ -2,6 +2,7 @@ node_modules
 dist
 .angular
 coverage/
+.nyc_output/
 playwright-report/
 test-results/
 .svelte-kit/

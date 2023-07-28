@@ -21,7 +21,9 @@
 	],
 	"scripts": {
 		"dev": "vite -c vite.demo.config.ts",
+		"dev:coverage": "vite -c vite.demo-coverage.config.ts",
 		"build": "npm run build:rollup && npm run build:dts && npm run build:api-extractor && npm run build:demo && npm run svelte-check",
+		"build:coverage": "vite build -c vite.demo-coverage.config.ts",
 		"build:rollup": "vite build -c vite.lib.config.ts",
 		"build:dts": "tsc -p tsconfig.d.json",
 		"build:api-extractor": "api-extractor run",

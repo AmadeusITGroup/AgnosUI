@@ -1,4 +1,4 @@
-import {expect, test} from '@playwright/test';
+import {expect, getTest} from '../fixture';
 import type {State} from '../demo-po/transition.po';
 import {TransitionPO} from '../demo-po/transition.po';
 
@@ -20,6 +20,7 @@ const disableAnimationSetting = async (po: TransitionPO, expectedState: State) =
 	expect(await po.getState()).toEqual(expectedState);
 };
 
+const test = getTest();
 test.describe.parallel('Transition tests', () => {
 	test.beforeEach(async ({page}) => {
 		await page.goto('#/transition/transition');

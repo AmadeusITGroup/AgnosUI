@@ -19,6 +19,7 @@ const browsers = ['chromium', 'firefox', 'webkit'];
 let framework = '';
 let browser = '';
 
+let includeCoverage = false;
 const restArgs = [];
 for (let i = 0; i < args.length; i++) {
 	const arg = args[i];
@@ -26,9 +27,14 @@ for (let i = 0; i < args.length; i++) {
 		framework = arg;
 	} else if (browsers.indexOf(arg) > -1) {
 		browser = arg;
+	} else if (arg === '--coverage') {
+		includeCoverage = true;
 	} else {
 		restArgs.push(arg);
 	}
+}
+if (includeCoverage) {
+	process.env.COVERAGE = 'true';
 }
 
 const cmd = [];

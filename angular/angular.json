@@ -15,7 +15,7 @@
 			"prefix": "app",
 			"architect": {
 				"build": {
-					"builder": "@angular-devkit/build-angular:browser",
+					"builder": "ngx-build-plus:browser",
 					"options": {
 						"outputPath": "dist/demo",
 						"index": "demo/src/index.html",
@@ -55,12 +55,16 @@
 							"extractLicenses": false,
 							"sourceMap": true,
 							"namedChunks": true
+						},
+						"coverage": {
+							"sourceMap": true,
+							"extraWebpackConfig": "./demo/coverage.webpack.js"
 						}
 					},
 					"defaultConfiguration": "production"
 				},
 				"serve": {
-					"builder": "@angular-devkit/build-angular:dev-server",
+					"builder": "ngx-build-plus:dev-server",
 					"configurations": {
 						"production": {
 							"servePath": "/angular/samples",
@@ -69,6 +73,11 @@
 						"development": {
 							"servePath": "/angular/samples",
 							"browserTarget": "demo:build:development"
+						},
+						"coverage": {
+							"servePath": "/angular/samples",
+							"browserTarget": "demo:build:coverage",
+							"extraWebpackConfig": "./demo/coverage.webpack.js"
 						}
 					},
 					"defaultConfiguration": "development"

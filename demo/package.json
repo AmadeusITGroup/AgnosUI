@@ -5,6 +5,7 @@
 	"scripts": {
 		"dev": "vite dev -c vite.config.ts",
 		"build": "npm run build:demo && npm run svelte-check",
+		"build:coverage": "npm run build",
 		"build:demo": "vite build -c vite.config.ts",
 		"preview": "vite preview -c vite.config.ts",
 		"svelte-check": "svelte-check"

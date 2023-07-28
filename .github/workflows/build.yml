@@ -44,9 +44,11 @@ jobs:
       - run: npm run build:ci
       - run: npm run format:check
       - run: npm run lint
-      - run: npx playwright install --with-deps
-      - run: npm run test
-      - run: npm run e2e
+      - run: npm run test:coverage
+      - uses: codecov/codecov-action@v3
+        with:
+          file: core/coverage/lcov.info
+          flags: unit
       - if: inputs.docPublish
         uses: actions/checkout@v3
         with:

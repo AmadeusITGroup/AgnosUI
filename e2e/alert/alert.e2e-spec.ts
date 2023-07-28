@@ -1,7 +1,8 @@
 import {AlertPO} from '@agnos-ui/page-objects';
-import {expect, test} from '@playwright/test';
+import {expect, getTest} from '../fixture';
 import {AlertDemoPO} from '../demo-po/alert.po';
 
+const test = getTest();
 test.describe(`Alert tests`, () => {
 	test(`Config alert`, async ({page}) => {
 		const alertDemoPO = new AlertDemoPO(page);

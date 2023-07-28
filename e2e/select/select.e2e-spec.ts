@@ -1,10 +1,11 @@
-import {expect, test} from '@playwright/test';
+import {expect, getTest} from '../fixture';
 import {SelectPO} from '@agnos-ui/page-objects';
 import {SelectDemoPO} from '../demo-po/select.po';
 
 type PromiseValue<T> = T extends Promise<infer U> ? U : never;
 type State = PromiseValue<ReturnType<SelectPO['state']>>;
 
+const test = getTest();
 test.describe.parallel(`Select tests`, () => {
 	test.beforeEach(async ({page}) => {
 		await page.goto('#/select/select?filterText=initial value');
