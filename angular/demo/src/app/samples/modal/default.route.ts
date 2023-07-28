@@ -9,7 +9,7 @@ import {FormsModule} from '@angular/forms';
 	standalone: true,
 	imports: [AgnosUIAngularModule, CommonModule, FormsModule],
 	template: `
-		<button class="btn btn-primary" (click)="show(modal)">Launch demo modal</button>
+		<button class="btn btn-primary" type="button" (click)="show(modal)">Launch demo modal</button>
 		<div class="mt-3" data-testid="message">{{ message }}</div>
 		<au-modal #modal slotTitle="Save changes">
 			Do you want to save your changes?

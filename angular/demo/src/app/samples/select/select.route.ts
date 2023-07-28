@@ -10,8 +10,8 @@ import {FormsModule} from '@angular/forms';
 	template: `
 		<h2>Multiselect example</h2>
 		<div class="mb-3">
-			<label for="select-example" class="form-label">Multiselect</label>
-			<au-select id="select-example" [items]="items" [(filterText)]="filterText"></au-select>
+			<label class="form-label">Multiselect</label>
+			<au-select [items]="items" [(filterText)]="filterText"></au-select>
 		</div>
 		<div class="demo-select-config">
 			<strong>Default config</strong><br />

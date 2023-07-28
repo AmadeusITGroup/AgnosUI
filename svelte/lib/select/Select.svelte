@@ -32,7 +32,7 @@
 	$: widget.patchChangedProps($$props);
 </script>
 
-<div class="au-select dropdown input-group input-group-sm mb-3 {$className$}">
+<div class="au-select dropdown input-group input-group-sm mb-3 d-block {$className$}">
 	<!-- svelte-ignore a11y-role-has-required-aria-props -->
 	<div use:hasFocusDirective role="combobox" class="input-group" aria-haspopup="listbox" aria-expanded="true">
 		{#if $selected$.length}

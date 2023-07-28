@@ -56,7 +56,7 @@ import {Component} from '@angular/core';
 				</button>
 				<button
 					class="btn btn-sm btn-outline-secondary"
-					[class.active]="(widgetsConfig$ | async)?.rating?.maxRating === undefined"
+					[class.active]="!(widgetsConfig$ | async)?.rating?.maxRating"
 					(click)="updateRatingConfig({maxRating: undefined})"
 				>
 					undefined

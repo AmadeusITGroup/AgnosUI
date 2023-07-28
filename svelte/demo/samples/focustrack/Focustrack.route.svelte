@@ -19,6 +19,6 @@
 		<label class="form-check-label" for="containerHasFocus">Focus in container</label>
 	</div>
 	<label for="activeElement" class="form-label">Active element history:</label>
-	<textarea class="form-control mb-2" id="activeElementHistory">{JSON.stringify(activeElements)}</textarea>
-	<button class="btn btn-primary mb-2" on:click={() => (activeElements = [])}>Clear</button>
+	<textarea class="form-control mb-2" id="activeElementHistory" readonly>{JSON.stringify(activeElements)}</textarea>
+	<button class="btn btn-primary" on:click={() => (activeElements = [])}>Clear</button>
 </div>

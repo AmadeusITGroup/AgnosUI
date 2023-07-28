@@ -139,7 +139,7 @@ export class PaginationPagesDirective {
 				*ngIf="!widget.api.isEllipsis(page)"
 				[attr.aria-label]="state.pagesLabel[i]"
 				class="page-link au-page"
-				href
+				href="#"
 				(click)="widget.actions.select(page); $event.preventDefault()"
 				[attr.tabindex]="state.disabled ? '-1' : null"
 				[attr.aria-disabled]="state.disabled ? 'true' : null"
@@ -176,7 +176,7 @@ const defaultConfig: Partial<PaginationProps> = {
 					<a
 						[attr.aria-label]="state.ariaFirstLabel"
 						class="page-link au-first"
-						href
+						href="#"
 						(click)="widget.actions.first(); $event.preventDefault()"
 						[attr.tabindex]="state.previousDisabled ? '-1' : null"
 						[attr.aria-disabled]="state.previousDisabled ? 'true' : null"
@@ -190,7 +190,7 @@ const defaultConfig: Partial<PaginationProps> = {
 					<a
 						[attr.aria-label]="state.ariaPreviousLabel"
 						class="page-link au-previous"
-						href
+						href="#"
 						(click)="widget.actions.previous(); $event.preventDefault()"
 						[attr.tabindex]="state.previousDisabled ? '-1' : null"
 						[attr.aria-disabled]="state.previousDisabled ? 'true' : null"
@@ -205,7 +205,7 @@ const defaultConfig: Partial<PaginationProps> = {
 					<a
 						[attr.aria-label]="state.ariaNextLabel"
 						class="page-link au-next"
-						href
+						href="#"
 						(click)="widget.actions.next(); $event.preventDefault()"
 						[attr.tabindex]="state.nextDisabled ? '-1' : null"
 						[attr.aria-disabled]="state.nextDisabled ? 'true' : null"
@@ -219,7 +219,7 @@ const defaultConfig: Partial<PaginationProps> = {
 					<a
 						[attr.aria-label]="state.ariaLastLabel"
 						class="page-link au-last"
-						href
+						href="#"
 						(click)="widget.actions.last(); $event.preventDefault()"
 						[attr.tabindex]="state.nextDisabled ? '-1' : null"
 						[attr.aria-disabled]="state.nextDisabled ? 'true' : null"
@@ -230,6 +230,7 @@ const defaultConfig: Partial<PaginationProps> = {
 					</a>
 				</li>
 			</ul>
+			<div aria-live="polite" class="visually-hidden">Current page is {{ state.page }}</div>
 		</ng-container>
 	`,
 })

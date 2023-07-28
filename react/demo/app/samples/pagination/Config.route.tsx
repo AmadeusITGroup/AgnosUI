@@ -80,7 +80,7 @@ const PaginationDemo = () => {
 					</button>
 				</div>
 				<br />
-				collection size:&nbsp;
+				Collection size:&nbsp;
 				<div id="btn-config-collectionSize" className="btn-group mb-2">
 					<button
 						className={`btn btn-sm btn-outline-secondary ${paginationConfig.collectionSize === 40 ? 'active' : ''}`}

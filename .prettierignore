@@ -6,3 +6,4 @@ coverage/
 playwright-report/
 test-results/
 .svelte-kit/
+*-snapshots/

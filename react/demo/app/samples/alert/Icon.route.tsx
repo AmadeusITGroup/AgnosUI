@@ -23,7 +23,7 @@ const AlertIcon = ({widget, state}: AlertContext) => {
 	return (
 		<>
 			<span className="d-flex align-items-center svg icon-20 me-1" dangerouslySetInnerHTML={{__html: typeIcon[state.type]}}></span>
-			<div className="alert-body">
+			<div className="alert-body d-flex w-100">
 				<Slot slotContent={state.slotDefault} props={{widget, state}}></Slot>
 			</div>
 			{state.dismissible ? (

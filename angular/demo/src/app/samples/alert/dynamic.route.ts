@@ -24,18 +24,16 @@ class AlertContainerService {
 	standalone: true,
 	imports: [AlertComponent, NgFor],
 	template: `
-		<div #errorArea>
-			<au-alert
-				*ngFor="let alert of alertContainerService.alerts"
-				[animation]="alert.animation"
-				[animationOnInit]="alert.animationOnInit"
-				[dismissible]="alert.dismissible"
-				[type]="alert.type"
-				[slotDefault]="alert.slotDefault"
-				(hidden)="removeAlert(alert)"
-			>
-			</au-alert>
-		</div>
+		<au-alert
+			*ngFor="let alert of alertContainerService.alerts"
+			[animation]="alert.animation"
+			[animationOnInit]="alert.animationOnInit"
+			[dismissible]="alert.dismissible"
+			[type]="alert.type"
+			[slotDefault]="alert.slotDefault"
+			(hidden)="removeAlert(alert)"
+		>
+		</au-alert>
 	`,
 })
 class ChildComponent {

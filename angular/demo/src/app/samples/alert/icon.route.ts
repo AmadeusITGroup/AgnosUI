@@ -39,7 +39,7 @@ export default class IconAlertComponent {
 	providers: [SlotDirective],
 	template: `
 		<ng-template #iconDemo let-state="state" let-widget="widget">
-			<span class="d-flex align-items-center me-1" [innerHTML]="sanitizer.bypassSecurityTrustHtml(typeIcon[state.type])"> </span>
+			<span class="d-flex align-items-center svg icon-20 me-1" [innerHTML]="sanitizer.bypassSecurityTrustHtml(typeIcon[state.type])"> </span>
 			<div class="d-flex w-100 alert-body">
 				<ng-template [auSlot]="state.slotDefault" [auSlotProps]="{widget, state}"></ng-template>
 				<button

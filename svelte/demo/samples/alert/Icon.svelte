@@ -24,13 +24,15 @@
 
 <!-- eslint-disable-next-line svelte/no-at-html-tags -->
 <span class="d-flex align-items-center svg icon-20 me-1">{@html typeIcon[state.type]}</span>
-<Slot slotContent={state.slotDefault} props={{widget, state}} let:component let:props>
-	<slot slot="slot" let:props {...props} />
-	<svelte:component this={component} {...props}>
-		<svelte:fragment let:state let:widget><slot {state} {widget} /></svelte:fragment>
-		<slot name="structure" slot="structure" let:state let:widget {state} {widget} />
-	</svelte:component>
-</Slot>
+<div class="alert-body d-flex w-100">
+	<Slot slotContent={state.slotDefault} props={{widget, state}} let:component let:props>
+		<slot slot="slot" let:props {...props} />
+		<svelte:component this={component} {...props}>
+			<svelte:fragment let:state let:widget><slot {state} {widget} /></svelte:fragment>
+			<slot name="structure" slot="structure" let:state let:widget {state} {widget} />
+		</svelte:component>
+	</Slot>
+</div>
 {#if state.dismissible}
 	<button type="button" class="btn-close ms-auto" on:click={() => widget.api.close()} aria-label={state.ariaCloseButtonLabel} />
 {/if}

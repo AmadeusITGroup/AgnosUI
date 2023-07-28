@@ -125,7 +125,9 @@ export function Pagination(props: Partial<PaginationProps>) {
 				<Slot slotContent={state.slotPages} props={slotContext}></Slot>
 				{ItemsAfter}
 			</ul>
-			<div className="visually-hidden">{state.page && `Current page is ${state.page}`}</div>
+			<div aria-live="polite" className="visually-hidden">
+				{state.page && `Current page is ${state.page}`}
+			</div>
 		</>
 	);
 }

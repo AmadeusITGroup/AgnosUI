@@ -20,8 +20,7 @@ export type SelectProps<Item> = WidgetProps<SelectWidget<Item>>;
 	templateUrl: './select.component.html',
 	styles: [],
 	host: {
-		'[class]': '"au-select dropdown input-group input-group-sm mb-3 " + state$().className',
-		style: 'display: block',
+		'[class]': '"au-select dropdown input-group input-group-sm mb-3 d-block" + state$().className',
 	},
 })
 export class SelectComponent<Item> implements OnChanges {

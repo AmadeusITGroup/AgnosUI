@@ -13,7 +13,6 @@
 		<button type="button" class="btn btn-outline-danger" on:click={() => modal.api.close(false)}>No</button>
 	</svelte:fragment>
 </Modal>
-<br />
 <button
 	type="button"
 	class="btn btn-primary"
