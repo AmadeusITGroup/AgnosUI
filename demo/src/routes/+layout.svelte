@@ -16,7 +16,8 @@
 		<div class="container-fluid">
 			<a class="navbar-brand" href={$pathToRoot$}> AgnosUI </a>
 			<div class="d-flex align-items-center">
-				<a class="nav-link text-white" href="https://github.com/AmadeusITGroup/AgnosUI" aria-label="link to GitHub repository" target="_blank">
+				<span class="badge bg-warning text-bg-warning">Work In Progress</span>
+				<a class="nav-link text-white ms-3" href="https://github.com/AmadeusITGroup/AgnosUI" aria-label="link to GitHub repository" target="_blank">
 					<Svg className="icon-24 align-middle" svg={github} />
 				</a>
 				<a class="nav-link text-white ms-3" href="https://twitter.com/AgnosUI" aria-label="link to twitter account" target="_blank">
