@@ -37,11 +37,12 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
       - run: npm run syncpack:check
+      - run: |
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com
       - if: inputs.version != ''
         run: |
           node scripts/setVersion.js "${{ inputs.version }}"
-          git config --global user.name github-actions
-          git config --global user.email github-actions@github.com
           git commit -a -m v${{ inputs.version }}
           git tag v${{ inputs.version }}
           git show HEAD
