@@ -7,6 +7,7 @@
 	import {selectedFramework$} from '../lib/stores';
 	import Svg from '$lib/layout/Svg.svelte';
 	import github from 'bootstrap-icons/icons/github.svg?raw';
+	import twitter from 'bootstrap-icons/icons/twitter.svg?raw';
 </script>
 
 <svelte:head>
@@ -19,9 +20,12 @@
 			<a class="navbar-brand" href={$pathToRoot$}> AgnosUI </a>
 			<div class="d-flex align-items-center">
 				<a class="nav-link text-white" href="https://github.com/AmadeusITGroup/AgnosUI" aria-label="link to GitHub repository" target="_blank">
-					<Svg className="icon-20 align-middle" svg={github} />
+					<Svg className="icon-24 align-middle" svg={github} />
 				</a>
-				<span class="ms-2 navbar-text">v{import.meta.env.AGNOSUI_VERSION}</span>
+				<a class="nav-link text-white ms-3" href="https://twitter.com/AgnosUI" aria-label="link to twitter account" target="_blank">
+					<Svg className="icon-24 align-middle" svg={twitter} />
+				</a>
+				<span class="ms-3 text-white">v{import.meta.env.AGNOSUI_VERSION}</span>
 			</div>
 		</div>
 	</nav>
