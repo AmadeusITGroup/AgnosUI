@@ -2,6 +2,7 @@
 	import Svg from '$lib/layout/Svg.svelte';
 	import github from 'bootstrap-icons/icons/github.svg?raw';
 	import twitter from 'bootstrap-icons/icons/twitter.svg?raw';
+	import coneStriped from 'bootstrap-icons/icons/cone-striped.svg?raw';
 	import 'bootstrap/dist/css/bootstrap.css';
 	import {/*canonicalURL$,*/ pathToRoot$} from '../lib/stores';
 	import './styles.scss';
@@ -18,7 +19,10 @@
 		<div class="container-fluid">
 			<a class="navbar-brand" href={$pathToRoot$}> AgnosUI </a>
 			<div class="d-flex align-items-center">
-				<span class="badge bg-warning text-bg-warning">Work In Progress</span>
+				<span class="badge bg-warning text-bg-warning d-none d-sm-block">Work In Progress</span>
+				<span class="badge rounded-pill bg-warning text-bg-warning d-block d-sm-none" aria-label="Work In Progress">
+					<Svg className="icon-20 align-middle" svg={coneStriped} />
+				</span>
 				<a class="nav-link text-white ms-3" href="https://github.com/AmadeusITGroup/AgnosUI" aria-label="link to GitHub repository" target="_blank">
 					<Svg className="icon-24 align-middle" svg={github} />
 				</a>
