@@ -94,7 +94,7 @@
 	}
 
 	input:not([type='checkbox']).empty {
-		opacity: 0.5;
+		opacity: 0.6;
 	}
 
 	[type='checkbox'].empty {

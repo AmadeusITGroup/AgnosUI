@@ -4,13 +4,13 @@
 </script>
 
 <h4>Simple alert</h4>
-<Sample title="Generic example" {componentName} sampleName="Generic" height={500} />
+<Sample title="Generic example" {componentName} sampleName="Generic" />
 
 <h4>Configurable alert</h4>
-<Sample title="Config example" {componentName} sampleName="Config" height={500} />
+<Sample title="Config example" {componentName} sampleName="Config" />
 
 <h4>Customizable icon</h4>
-<Sample title="Customizable icon example" {componentName} sampleName="Icon" height={500} />
+<Sample title="Customizable icon example" {componentName} sampleName="Icon" />
 
 <h4>Dynamic alert generation</h4>
-<Sample title="Dynamic generation example" {componentName} sampleName="Dynamic" height={500} />
+<Sample title="Dynamic generation example" {componentName} sampleName="Dynamic" />

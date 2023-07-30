@@ -15,8 +15,8 @@
 	<div class="alert alert-primary">
 		Welcome to AgnosUI Demo! Experience the beginning stages of our exciting journey as we actively develop our library for CSS Bootstrap design.
 		<br />
-		Follow us on <a href="https://github.com/AmadeusITGroup/AgnosUI">GitHub</a> for the latest updates and be a part of shaping the next-generation UI
-		components!
+		Follow us on <a href="https://github.com/AmadeusITGroup/AgnosUI" class="link-body-emphasis">GitHub</a> for the latest updates and be a part of shaping
+		the next-generation UI components!
 	</div>
 
 	<div class="note my-3">

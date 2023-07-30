@@ -17,7 +17,7 @@ const allRoutes = globSync(`${pathToFrameworkDir}/**/+page.svelte`).map((route) 
 );
 
 async function analyze(page: Page): Promise<AxeResults> {
-	return new AxeBuilder({page}).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).disableRules(['color-contrast']).analyze();
+	return new AxeBuilder({page}).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
 }
 
 test.describe.parallel('Demo Website', () => {
