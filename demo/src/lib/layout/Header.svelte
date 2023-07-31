@@ -11,7 +11,7 @@
 	$: isSvelte = $selectedFramework$ === 'svelte';
 </script>
 
-<header class="bg-light pt-4 pb-md-5 px-4 px-lg-5 d-flex mb-3 d-md-block align-items-center title">
+<header class="bg-light pt-4 pb-5 px-4 px-lg-5 d-flex mb-3 d-md-block align-items-center title">
 	<div class="row mb-4 align-items-end">
 		<h1 class="col-auto me-auto me-md-none mb-0">{title}</h1>
 		<div class="col">
@@ -37,7 +37,7 @@
 			</div>
 		</div>
 	</div>
-	<ul class="nav-tabs px-4 px-lg-5 content-tabset justify-content-md-start justify-content-end nav" role="tablist">
+	<ul class="nav-tabs px-4 px-lg-5 content-tabset justify-content-start nav" role="tablist">
 		{#each tabs as { title, key, path }}
 			{@const isActive = tab === key}
 			<li class="nav-item" role="presentation">

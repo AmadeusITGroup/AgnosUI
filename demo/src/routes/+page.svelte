@@ -41,7 +41,7 @@
 		font-weight: 300;
 	}
 	.links {
-		padding: 1rem;
+		padding: 1rem 0rem;
 		@media (min-width: 768px) {
 			padding: 3rem;
 		}
