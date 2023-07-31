@@ -231,7 +231,7 @@ export interface ModalActions {
 	 * Action to be called when the user clicks on the close button. It closes the modal with the {@link modalCloseButtonClick} result.
 	 * @param event - mouse event
 	 */
-	closeButtonClick(event: MouseEvent): void;
+	closeButtonClick(event: Pick<MouseEvent, never>): void;
 
 	/**
 	 * Action to be called when the user clicks on the modal DOM element (which is supposed to have the size of the full viewport).
@@ -240,7 +240,7 @@ export interface ModalActions {
 	 * (with the {@link modalOutsideClick} result).
 	 * @param event - mouse event
 	 */
-	modalClick(event: MouseEvent): void;
+	modalClick(event: Pick<MouseEvent, 'target' | 'currentTarget'>): void;
 }
 
 /**
