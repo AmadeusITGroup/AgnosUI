@@ -16,6 +16,13 @@ main {
 	}
 }
 
+.hljs-keyword {
+	color: #d33948 !important;
+}
+.hljs-built_in {
+	color: #bf5308 !important;
+}
+
 .demo-sample {
 	width: 100%;
 }
@@ -116,7 +123,7 @@ header {
 	.demo-layout {
 		display: grid;
 		grid-template-areas: 'sidebar main';
-		grid-template-columns: min-content 1fr;
+		grid-template-columns: max-content 1fr;
 		gap: 1.5rem;
 	}
 

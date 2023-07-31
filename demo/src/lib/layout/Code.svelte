@@ -22,7 +22,7 @@
 	}
 </script>
 
-<div class={`code-container ${containerClass}`}>
+<div class={`bg-light-subtle ${containerClass}`}>
 	{#if isSample}
 		<div class="d-flex justify-content-between align-items-center border-bottom border-secondary-subtle w-100 pb-2 mb-3">
 			<h5 class="mb-0">{codeTitle}</h5>
@@ -34,10 +34,6 @@
 </div>
 
 <style lang="scss">
-	.code-container {
-		background-color: #f8f8f8;
-	}
-
 	.doc {
 		border: 1px solid #d7d9ea;
 	}

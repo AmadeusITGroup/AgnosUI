@@ -17,7 +17,6 @@
 	import Lazy from './Lazy.svelte';
 	import Svg from './Svg.svelte';
 	import {pathToRoot$} from '../stores';
-	// import {onMount} from 'svelte';
 
 	/**
 	 * iFrame title
@@ -113,18 +112,17 @@
 
 	id++;
 	const baseId = `sample-${id}`;
-	$: sampleUrl = `${$pathToRoot$}${$selectedFramework$}/samples/#/${path}` + (urlParameters ? `#${JSON.stringify(urlParameters)}` : '');
+	$: sampleBaseUrl = `${$pathToRoot$}${$selectedFramework$}/samples/#/${path}`;
+	$: sampleUrl = sampleBaseUrl + (urlParameters ? `#${JSON.stringify(urlParameters)}` : '');
+	$: sampleBaseUrl, (iframeLoaded = false);
 
-	// TODO : need a way to resize the content of the iframe (even in dev mode where cross domain is involved)
-	// See https://stackoverflow.com/questions/22086722/resize-cross-domain-iframe-height (solution based on parent.postMessage)
-	// To verify the issue uncomment this.
-	// function onLoad() {
-	// 	let head = iframe?.contentDocument?.head || iframe?.contentWindow?.document.head;
-	// 	console.log(head);
-	// }
-	// onMount(() => {
-	// 	iframe.addEventListener('load', onLoad);
-	// })
+	let iframeLoaded = false;
+	function onLoad(event: Event) {
+		iframeLoaded = true;
+		if (height === undefined && event.target instanceof HTMLIFrameElement && event.target.contentWindow) {
+			event.target.height = event.target.contentWindow.document.body.scrollHeight.toString(10);
+		}
+	}
 </script>
 
 <div class="my-4 py-2 px-0 px-sm-3">
@@ -141,7 +139,16 @@
 	</div>
 	<div class="row">
 		<div class="col-sm-12">
-			<iframe class="demo-sample" use:iframeSrc={sampleUrl} {title} {height} />
+			{#if !iframeLoaded}
+				<div class="position-relative">
+					<div class="position-absolute top-0 start-50 translate-middle-x">
+						<div class="spinner-border text-primary" role="status">
+							<span class="visually-hidden">Loading...</span>
+						</div>
+					</div>
+				</div>
+			{/if}
+			<iframe class="demo-sample" use:iframeSrc={sampleUrl} {title} {height} on:load={onLoad} />
 		</div>
 		{#if showCode}
 			<div class="col-auto">

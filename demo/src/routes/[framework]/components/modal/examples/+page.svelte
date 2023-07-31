@@ -4,7 +4,7 @@
 </script>
 
 <h4>Default</h4>
-<Sample title="Default example" {componentName} sampleName="Default" height={500} />
+<Sample title="Default example" {componentName} sampleName="Default" height={300} />
 
 <h4>Modal stack</h4>
-<Sample title="Modal stack example" {componentName} sampleName="Stack" height={500} />
+<Sample title="Modal stack example" {componentName} sampleName="Stack" height={400} />
