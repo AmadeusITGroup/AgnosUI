@@ -36,14 +36,13 @@
 		"vitest": "^0.33.0"
 	},
 	"scripts": {
-		"build:ci": "npm run doc && npm run build && npm run build:copy",
-		"build:coverage": "npm run doc && node scripts/run.js build:coverage serial && npm run build:copy",
+		"build:ci": "npm run doc && npm run build",
+		"build:coverage": "npm run doc && node scripts/run.js build:coverage serial",
 		"build": "node scripts/run.js build serial",
 		"build:rollup": "node scripts/run.js build:rollup serial",
 		"build:demo": "node scripts/run.js build:demo serial",
 		"build:dts": "node scripts/run.js build:dts serial",
 		"build:api-extractor": "node scripts/run.js build:api-extractor serial",
-		"build:copy": "node scripts/run.js build:copy",
 		"tdd": "node scripts/run.js tdd",
 		"tdd:ui": "node scripts/run.js tdd:ui",
 		"test:coverage": "node scripts/run.js test:coverage",

@@ -28,7 +28,6 @@
 		"build:dts": "tsc -p tsconfig.d.json",
 		"build:api-extractor": "api-extractor run",
 		"build:demo": "vite build -c vite.demo.config.ts",
-		"build:copy": "node ../demo/scripts/copy.mjs svelte",
 		"preview": "vite preview -c vite.demo.config.ts",
 		"svelte-check": "svelte-check --fail-on-warnings --tsconfig ./tsconfig.json --output human-verbose"
 	},

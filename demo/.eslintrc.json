@@ -11,6 +11,12 @@
 			"parserOptions": {
 				"parser": "@typescript-eslint/parser"
 			}
+		},
+		{
+			"files": ["src/service-worker.ts"],
+			"parserOptions": {
+				"project": ["demo/tsconfig.sw.json"]
+			}
 		}
 	]
 }

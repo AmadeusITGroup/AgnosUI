@@ -28,7 +28,6 @@
 		"build:api-extractor": "api-extractor run",
 		"build:demo": "vite build -c vite.demo.config.ts",
 		"build:tsc": "tsc",
-		"build:copy": "node ../demo/scripts/copy.mjs react",
 		"preview": "vite preview -c vite.demo.config.ts"
 	},
 	"devDependencies": {
