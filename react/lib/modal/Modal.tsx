@@ -22,7 +22,7 @@ const DefaultSlotHeader = (slotContext: ModalContext) => (
 				type="button"
 				className="btn-close"
 				aria-label={slotContext.state.ariaCloseButtonLabel}
-				onClick={slotContext.widget.actions.closeButtonClick as any}
+				onClick={slotContext.widget.actions.closeButtonClick}
 			/>
 		)}
 	</>
@@ -65,7 +65,7 @@ export const Modal = forwardRef(function Modal(props: PropsWithChildren<Partial<
 			<Portal container={state.container}>
 				{state.backdropHidden ? null : <div className={`modal-backdrop ${state.backdropClass}`} ref={refSetBackdrop} />}
 				{state.hidden ? null : (
-					<div className={`modal d-block ${state.modalClass}`} ref={refSetModal} onClick={widget.actions.modalClick as any}>
+					<div className={`modal d-block ${state.modalClass}`} ref={refSetModal} onClick={widget.actions.modalClick}>
 						<div className="modal-dialog">
 							<div className="modal-content">
 								<Slot slotContent={state.slotStructure} props={slotContext} />
