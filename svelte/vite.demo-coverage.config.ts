@@ -10,7 +10,7 @@ export default defineConfig((config) => {
 		plugins: [
 			istanbul({
 				cwd: path.join(__dirname, '/..'),
-				include: ['svelte/lib/*', 'core/lib/*'],
+				include: ['svelte/lib/*'],
 				extension: ['.ts', '.svelte'],
 				exclude: ['node_modules', 'test/'],
 				forceBuildInstrument: true,

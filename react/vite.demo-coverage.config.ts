@@ -10,7 +10,7 @@ export default defineConfig((config) => {
 		plugins: [
 			istanbul({
 				cwd: path.join(__dirname, '/..'),
-				include: ['react/lib/*', 'core/lib/*'],
+				include: ['react/lib/*'],
 				exclude: ['node_modules', 'test/'],
 				forceBuildInstrument: true,
 			}),

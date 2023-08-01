@@ -5,7 +5,6 @@ export default defineConfig({
 		include: ['./test/**/*.spec.ts'],
 		coverage: {
 			reporter: ['text', 'json', 'html'],
-			src: ['./src/'],
 		},
 	},
 });

@@ -1,7 +1,7 @@
 import type {SpyInstance} from 'vitest';
 import {beforeEach, describe, expect, test, vi} from 'vitest';
 import type {PaginationState, PaginationWidget} from './pagination';
-import {createPagination} from './pagination';
+import {createPagination, getPaginationDefaultConfig} from './pagination';
 import {ngBootstrapPagination} from './pagination.utils';
 
 describe(`Pagination`, () => {
@@ -51,6 +51,42 @@ describe(`Pagination`, () => {
 			ariaNextLabel: 'Action link for next page',
 			ariaPreviousLabel: 'Action link for previous page',
 		});
+	});
+
+	test('should include a simple pageFactory implementation in default config', () => {
+		expect(getPaginationDefaultConfig().pagesFactory(5, 10)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+	});
+
+	test('should include a simple slot number label factory in default config', () => {
+		const slotNumberLabel = getPaginationDefaultConfig().slotNumberLabel as (props: {displayedPage: number}) => string;
+		expect(slotNumberLabel({displayedPage: 3})).toEqual(`3`);
+	});
+
+	test('should warn using invalid size value', () => {
+		pagination.patch({size: 'invalidSize' as 'sm'});
+		expect(state.size).toStrictEqual(null);
+		expectLogInvalidValue();
+		pagination.patch({size: 'sm'});
+		expect(state.size).toStrictEqual('sm');
+	});
+
+	test('actions should update the state', () => {
+		pagination.patch({collectionSize: 200});
+		pagination.actions.first();
+		expect(state).toContain({page: 1, pageCount: 20});
+		pagination.actions.next();
+		expect(state).toContain({page: 2, pageCount: 20});
+		pagination.actions.select(5);
+		expect(state).toContain({page: 5, pageCount: 20});
+		pagination.actions.last();
+		expect(state).toContain({page: 20, pageCount: 20});
+		pagination.actions.previous();
+		expect(state).toContain({page: 19, pageCount: 20});
+	});
+
+	test('should return api isEllipisis', () => {
+		expect(pagination.api.isEllipsis(-1)).toBe(true);
+		expect(pagination.api.isEllipsis(2)).toBe(false);
 	});
 
 	test('should calculate and update no of pages (default page size)', () => {
