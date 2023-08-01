@@ -22,6 +22,7 @@ import {SelectComponent} from './select/select.component';
 import {UseDirective} from './transition/use.directive';
 import {SlotDirective} from './slot.directive';
 import {AlertComponent} from './alert/alert.component';
+import {AccordionDirective, AccordionItemComponent, AccordionHeaderDirective, AccordionBodyDirective} from './accordion/accordion.component';
 
 const components = [
 	SlotDirective,
@@ -44,6 +45,10 @@ const components = [
 	ModalBodyDirective,
 	ModalFooterDirective,
 	AlertComponent,
+	AccordionDirective,
+	AccordionItemComponent,
+	AccordionHeaderDirective,
+	AccordionBodyDirective,
 ];
 
 @NgModule({

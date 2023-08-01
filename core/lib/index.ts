@@ -8,3 +8,4 @@ export * from './pagination.utils';
 export * from './config';
 export * from './modal/modal';
 export * from './alert';
+export * from './accordion';

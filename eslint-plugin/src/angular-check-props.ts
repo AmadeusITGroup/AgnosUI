@@ -27,7 +27,7 @@ const findDecorator = ({decorators}: {decorators?: TSESTree.Decorator[]}, decora
 		return false;
 	});
 
-const isAngularComponent = (node: TSESTree.ClassDeclaration) => !!findDecorator(node, 'Component');
+const isAngularComponent = (node: TSESTree.ClassDeclaration) => !!findDecorator(node, 'Component') || !!findDecorator(node, 'Directive');
 
 const isNonStaticPropertyDefinition = (node: TSESTree.Node): node is TSESTree.PropertyDefinition =>
 	node.type === TSESTree.AST_NODE_TYPES.PropertyDefinition && !node.static;

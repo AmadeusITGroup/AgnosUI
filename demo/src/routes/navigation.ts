@@ -2,6 +2,7 @@ export const menu = [
 	{
 		title: 'Components',
 		submenu: [
+			{label: 'Accordion', path: '/components/accordion'},
 			{label: 'Alert', path: '/components/alert'},
 			{label: 'Modal', path: '/components/modal'},
 			{label: 'Pagination', path: '/components/pagination'},

@@ -5,6 +5,7 @@ import type {AlertProps} from './alert';
 import type {PaginationProps} from './pagination';
 import type {RatingProps} from './rating';
 import type {SelectProps} from './select';
+import type {AccordionProps} from './accordion';
 import {identity} from './utils';
 
 export type Partial2Levels<T> = Partial<{
@@ -96,4 +97,5 @@ export interface WidgetsConfig {
 	 * the alert widget config
 	 */
 	alert: AlertProps;
+	accordion: AccordionProps;
 }
