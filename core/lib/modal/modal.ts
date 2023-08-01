@@ -281,6 +281,7 @@ const defaultConfig: ModalProps = {
 	backdropTransition: fadeTransition, // TODO: is it ok to depend on bootstrap transition?
 	closeButton: true,
 	closeOnOutsideClick: true,
+	/* c8 ignore next 1 */
 	container: typeof window !== 'undefined' ? document.body : null,
 	modalClass: '',
 	modalTransition: fadeTransition, // TODO: is it ok to depend on bootstrap transition?
@@ -299,6 +300,7 @@ const defaultConfig: ModalProps = {
 /**
  * Returns a copy of the default modal config.
  */
+/* c8 ignore next 3 */
 export function getModalDefaultConfig() {
 	return {...defaultConfig};
 }

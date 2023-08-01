@@ -1,14 +1,14 @@
-import type {Page} from '@playwright/test';
+import type {Page, TestInfo} from '@playwright/test';
 import {test as base} from '@playwright/test';
 import {promises as fs} from 'fs';
 import path from 'path';
 import {v4 as uuidv4} from 'uuid';
 
-async function afterEach({page}: {page: Page}) {
+async function afterEach({page}: {page: Page}, testInfo: TestInfo) {
 	const coverage: string = await page.evaluate(() => {
 		return JSON.stringify((window as any).__coverage__);
 	});
-	if (coverage) {
+	if (coverage && testInfo.project.name.endsWith(':chromium')) {
 		await fs.writeFile(path.join(__dirname, '.nyc_output', `${uuidv4()}.json`), coverage);
 	}
 }

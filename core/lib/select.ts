@@ -337,6 +337,7 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 				});
 			},
 
+			/* c8 ignore next 3 */
 			clearText() {
 				// FIXME: not implemented yet!
 			},
@@ -362,6 +363,7 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 				highlightedIndex$.set(-1);
 			},
 
+			/* c8 ignore next 15 */
 			focus(item: Item) {
 				// FIXME: not implemented yet!
 			},

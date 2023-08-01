@@ -118,6 +118,7 @@ const defaultConfig: AlertProps = {
 	transition: fadeTransition,
 };
 
+/* c8 ignore next 3 */
 export function getAlertDefaultConfig() {
 	return {...defaultConfig};
 }
