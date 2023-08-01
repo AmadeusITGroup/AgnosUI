@@ -4,12 +4,7 @@ import AxeBuilder from '@axe-core/playwright';
 import type {AxeResults} from 'axe-core';
 import {globSync} from 'glob';
 import path from 'path';
-
-const pathRegExp = /\\/g;
-
-function normalizePath(str: string) {
-	return str.replace(pathRegExp, '/');
-}
+import {normalizePath} from './utils';
 
 const pathToFrameworkDir = normalizePath(path.join(__dirname, '../demo/src/routes'));
 const allRoutes = globSync(`${pathToFrameworkDir}/**/+page.svelte`).map((route) =>

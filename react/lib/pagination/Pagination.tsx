@@ -119,7 +119,7 @@ export function Pagination(props: Partial<PaginationProps>) {
 		);
 	}
 	return (
-		<>
+		<nav aria-label={state.ariaLabel}>
 			<ul className={classNames('au-pagination', 'pagination', state.size ? `pagination-${state.size}` : '', state.className)}>
 				{ItemsBefore}
 				<Slot slotContent={state.slotPages} props={slotContext}></Slot>
@@ -128,6 +128,6 @@ export function Pagination(props: Partial<PaginationProps>) {
 			<div aria-live="polite" className="visually-hidden">
 				{state.page && `Current page is ${state.page}`}
 			</div>
-		</>
+		</nav>
 	);
 }

@@ -5,3 +5,5 @@
 
 <h4>Default</h4>
 <Sample title="Pagination example" {componentName} sampleName="Default" />
+<h4>Custom</h4>
+<Sample title="Custom Pagination example" {componentName} sampleName="Custom" />

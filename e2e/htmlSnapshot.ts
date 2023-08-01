@@ -88,7 +88,7 @@ const compareName = ({name: a}: {name: string}, {name: b}: {name: string}) => co
 
 const spaceRegExp = /\s+/;
 const excludeClassRegExp = /^(s|svelte|ng)-/;
-const excludeAttrRegExp = /^(ng-|_ng|slot$)/;
+const excludeAttrRegExp = /^(ng-|_ng|slot$|au-)/;
 
 const excludeAttrSet = new Set([
 	'slot', // slot shouldn't be kept in the DOM by svelte, cf https://github.com/sveltejs/svelte/issues/8621
@@ -107,7 +107,6 @@ const tagReplacements = new Map([
 	['app-root', 'div'],
 	['au-alert', ''],
 	['au-modal', ''],
-	['au-pagination', ''],
 	['au-rating', 'div'],
 	['au-select', 'div'],
 	['ng-component', ''],
