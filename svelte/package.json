@@ -35,6 +35,9 @@
 		"@agnos-ui/core": "",
 		"@amadeus-it-group/tansu": "0.0.22"
 	},
+	"peerDependencies": {
+		"svelte": "*"
+	},
 	"devDependencies": {
 		"@sveltejs/vite-plugin-svelte": "^2.4.3",
 		"eslint-plugin-svelte": "^2.32.4",

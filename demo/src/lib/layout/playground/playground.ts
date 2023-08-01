@@ -16,7 +16,6 @@ export function getPlaygroundContext() {
 }
 
 interface PlaygroundProps {
-	componentName: string;
 	config: Record<string, any>;
 	types: Record<string, string>;
 	doc: WidgetDoc;

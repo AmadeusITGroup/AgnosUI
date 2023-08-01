@@ -68,3 +68,25 @@ hljs.registerLanguage('svelte', () => ({
 }));
 
 export default hljs;
+
+const extensionRegExp = /\.\w+$/;
+export const languageFromFileName = (fileName: string | undefined) => {
+	if (fileName) {
+		const extensionMatch = extensionRegExp.exec(fileName);
+		switch (extensionMatch?.[0]) {
+			case '.ts':
+				if (fileName.endsWith('.component.ts')) {
+					return 'angular';
+				}
+				return 'typescript';
+			case '.tsx':
+				return 'react';
+			case '.html':
+				return 'html';
+			case '.css':
+				return 'css';
+			case '.svelte':
+				return 'svelte';
+		}
+	}
+};
