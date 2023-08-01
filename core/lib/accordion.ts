@@ -1,0 +1,654 @@
+import type {ConfigValidator, PropsConfig} from './services';
+import {
+	bindDirectiveNoArg,
+	directiveSubscribe,
+	registrationArray,
+	stateStores,
+	typeBoolean,
+	typeFunction,
+	typeString,
+	writablesForProps,
+} from './services';
+import type {TransitionFn} from './transitions';
+import {createTransition} from './transitions';
+import {collapseVerticalTransition} from './transitions/bootstrap';
+import type {Directive, SlotContent, Widget, WidgetSlotContext} from './types';
+import type {ReadableSignal} from '@amadeus-it-group/tansu';
+import {computed, writable} from '@amadeus-it-group/tansu';
+import {noop} from './utils';
+
+let itemId = 0;
+
+function getItemId() {
+	return `accordion-item-${itemId++}`;
+}
+
+function adjustItemsCloseOthers(items: AccordionItemWidget[], openItems: string[], oldOpen?: string): AccordionItemWidget[] {
+	if (openItems.length == 2) {
+		oldOpen = oldOpen ?? openItems[0];
+		const keepOpen = openItems.find((id) => id !== oldOpen)!;
+		items.forEach((item) => {
+			if (item.state$().itemId !== keepOpen && !item.state$().itemCollapsed) {
+				item.patch({itemCollapsed: true});
+			}
+		});
+	} else if (openItems.length > 2) {
+		//this case can happen when you have multiple items open and you toggle the close others
+		const keepOpen = openItems[0];
+		items.forEach((item) => {
+			if (item.state$().itemId !== keepOpen && !item.state$().itemCollapsed) {
+				item.patch({itemCollapsed: true});
+			}
+		});
+	}
+	return items;
+}
+
+function getItem(items: AccordionItemWidget[], itemId: string): AccordionItemWidget | undefined {
+	return items.find((item) => item.state$().itemId === itemId);
+}
+
+export interface AccordionCommonPropsAndState {
+	/**
+	 * Classes to add on the accordion DOM element.
+	 */
+	accordionClass: string;
+}
+
+export interface AccordionProps extends AccordionCommonPropsAndState {
+	/**
+	 * If `true`, only one item at the time can stay open.
+	 */
+	closeOthers: boolean;
+	/**
+	 * An event fired when an item is shown.
+	 *
+	 * Event payload is the id of the item.
+	 */
+	onShown: (itemId: string) => void;
+	/**
+	 * An event fired when an item is hidden.
+	 *
+	 * Event payload is the id of the item.
+	 */
+	onHidden: (itemId: string) => void;
+	//item configuration
+	/**
+	 * The id of the accordion-item. It can be used for controlling the accordion-item via the accordion api.
+	 *
+	 * It is a prop of the accordion-item.
+	 */
+	itemId: string;
+	/**
+	 * If `true`, the content of the accordion-item collapse will be removed from the DOM. It will be just hidden otherwise.
+	 *
+	 * It is a prop of the accordion-item.
+	 */
+	itemDestroyOnHide: boolean;
+	/**
+	 * If `true`, the accordion-item will be disabled.
+	 * It will not react to user's clicks, but still will be possible to toggle programmatically.
+	 *
+	 * It is a prop of the accordion-item.
+	 */
+	itemDisabled: boolean;
+	/**
+	 * If `true`, the accordion-item will be collapsed. Otherwise, it will be expanded.
+	 *
+	 * It is a prop of the accordion-item.
+	 */
+	itemCollapsed: boolean;
+	/**
+	 * If `true`, accordion-item will be animated.
+	 *
+	 * It is a prop of the accordion-item.
+	 */
+	itemAnimation: boolean;
+	/**
+	 * The transition to use for the accordion-item collapse when is toggled.
+	 *
+	 * It is a prop of the accordion-item.
+	 */
+	itemTransition: TransitionFn;
+	/**
+	 * An event fired when an item is shown.
+	 *
+	 * It is a prop of the accordion-item.
+	 */
+	onItemShown: () => void;
+	/**
+	 * An event fired when an item is hidden.
+	 *
+	 * It is a prop of the accordion-item.
+	 */
+	onItemHidden: () => void;
+	/**
+	 * An event fired when the `collapsed` value changes.
+	 *
+	 * Event payload is the new value of collapsed.
+	 *
+	 * It is a prop of the accordion-item.
+	 */
+	onItemCollapsedChange: (collapsed: boolean) => void;
+	/**
+	 * Structure of the accordion-item. The default item structure is: accordion-item
+	 * contains accordion header and accordion collapse; the accordion header contains the accordion button
+	 * (that contains `slotItemHeader`), while the accordion collapse contains the accordion body (that contains slotItemBody).
+	 *
+	 * It is a prop of the accordion-item.
+	 */
+	slotItemStructure: SlotContent<AccordionItemContext>;
+	/**
+	 * Content present in the accordion body.
+	 *
+	 * It is a prop of the accordion-item.
+	 */
+	slotItemBody: SlotContent<AccordionItemContext>;
+	/**
+	 * Content present in the accordion button inside the accordion header.
+	 *
+	 * It is a prop of the accordion-item.
+	 */
+	slotItemHeader: SlotContent<AccordionItemContext>;
+	/**
+	 * Classes to add on the accordion-item DOM element.
+	 *
+	 * It is a prop of the accordion-item.
+	 */
+	itemClass: string;
+	/**
+	 * Classes to add on the accordion-item header DOM element.
+	 *
+	 * It is a prop of the accordion-item.
+	 */
+	itemHeaderClass: string;
+	/**
+	 * Classes to add on the accordion-item toggle button DOM element.
+	 *
+	 * It is a prop of the accordion-item.
+	 */
+	itemButtonClass: string;
+	/**
+	 * Classes to add on the accordion-item collapse DOM element.
+	 *
+	 * It is a prop of the accordion-item.
+	 */
+	itemCollapseClass: string;
+	/**
+	 * Classes to add on the accordion-item body DOM element.
+	 *
+	 * It is a prop of the accordion-item.
+	 */
+	itemBodyClass: string;
+}
+
+export interface AccordionState extends AccordionCommonPropsAndState {
+	/**
+	 * Array containing all the accordion-items contained in the accordion.
+	 */
+	itemsWidget: AccordionItemWidget[];
+}
+
+export interface AccordionApi {
+	/**
+	 * Given the itemId, it will return if such item is expanded or not.
+	 *
+	 * If the itemId is not a valid id it will return `false`.
+	 */
+	isExpanded(itemId: string): boolean;
+	/**
+	 * Given the itemId, will expand the corresponding accordion-item.
+	 *
+	 * If the itemId is not valid, nothing will happen.
+	 */
+	expand(itemId: string): void;
+	/**
+	 * Given the itemId, will collapse the corresponding accordion-item.
+	 *
+	 * If the itemId is not valid, nothing will happen.
+	 */
+	collapse(itemId: string): void;
+	/**
+	 * Given the itemId, will toggle the corresponding accordion-item.
+	 *
+	 * If the itemId is not valid, nothing will happen.
+	 */
+	toggle(itemId: string): void;
+	/**
+	 * It will expand all the items in the accordion.
+	 *
+	 * If `closeOthers` is `true` it will expand only the last accordion-item.
+	 */
+	expandAll(): void;
+	/**
+	 * It will collapse all the accordion-items in the accordion.
+	 */
+	collapseAll(): void;
+	/**
+	 * Creates a new in accordionItem.
+	 */
+	registerItem(itemConfig?: PropsConfig<AccordionItemProps>): AccordionItemWidget;
+}
+
+export interface AccordionDirectives {
+	/**
+	 * Directive to put on the accordion DOM element
+	 */
+	accordionDirective: Directive;
+}
+
+export type AccordionWidget = Widget<AccordionProps, AccordionState, AccordionApi, object, AccordionDirectives>;
+
+export type AccordionItemContext = WidgetSlotContext<AccordionItemWidget>;
+
+export interface AccordionItemActions {
+	/**
+	 * Action to be called when the user clicks on the accordion-item button. If the accordion-item is disabled nothing will happen.
+	 */
+	click(): void;
+}
+
+export interface AccordionItemApi {
+	/**
+	 * It will collapse the accordion-item.
+	 */
+	collapse(): void;
+
+	/**
+	 * It will expand the accordion-item.
+	 */
+	expand(): void;
+	/**
+	 * It will toggle the accordion-item.
+	 */
+	toggle(): void;
+	/**
+	 * Method to be called after the initialization to allow animations.
+	 */
+	initDone(): void;
+}
+
+export interface AccordionItemDirectives {
+	/**
+	 * Directive to be put on the accordion-item collapse. It will handle the animation.
+	 */
+	collapseDirective: Directive;
+	/**
+	 * Directive to be put on the accordion-item. It will handle adding the accordion-item to the accordion.
+	 */
+	accordionItemDirective: Directive;
+}
+
+export interface AccordionItemCommonPropsAndState {
+	/**
+	 * If `true`, the accordion-item will be collapsed. Otherwise, it will be expanded.
+	 */
+	itemCollapsed: boolean;
+	/**
+	 * If `true`, the accordion-item will be disabled.
+	 * It will not react to user's clicks, but still will be possible to toggle programmatically.
+	 */
+	itemDisabled: boolean;
+	/**
+	 * The id of the accordion-item. It can be used for controlling the accordion-item via the accordion api.
+	 */
+	itemId: string;
+	/**
+	 * Content present in the accordion button inside the accordion header.
+	 */
+	slotItemHeader: SlotContent<AccordionItemContext>;
+	/**
+	 * Content present in the accordion body.
+	 */
+	slotItemBody: SlotContent<AccordionItemContext>;
+	/**
+	 * Structure of the accordion-item. The default item structure is: accordion-item
+	 * contains accordion header and accordion collapse; the accordion header contains the accordion button
+	 * (that contains `slotItemHeader`), while the accordion collapse contains the accordion body (that contains slotItemBody).
+	 */
+	slotItemStructure: SlotContent<AccordionItemContext>;
+	/**
+	 * Classes to add on the accordion-item DOM element.
+	 */
+	itemClass: string;
+	/**
+	 * Classes to add on the accordion-item header DOM element.
+	 */
+	itemHeaderClass: string;
+	/**
+	 * Classes to add on the accordion-item collapse DOM element.
+	 */
+	itemButtonClass: string;
+	/**
+	 * Classes to add on the accordion-item collapse DOM element.
+	 */
+	itemCollapseClass: string;
+	/**
+	 * Classes to add on the accordion-item body DOM element.
+	 */
+	itemBodyClass: string;
+}
+
+export interface AccordionItemProps extends AccordionItemCommonPropsAndState {
+	/**
+	 * If `true`, accordion-item will be animated.
+	 */
+	itemAnimation: boolean;
+	/**
+	 * The transition to use for the accordion-item collapse when is toggled.
+	 */
+	itemTransition: TransitionFn;
+	/**
+	 * If `true`, the content of the accordion-item collapse will be removed from the DOM. It will be just hidden otherwise.
+	 */
+	itemDestroyOnHide: boolean;
+	/**
+	 * An event fired when an item is shown.
+	 */
+	onItemShown: () => void;
+	/**
+	 * An event fired when an item is hidden.
+	 */
+	onItemHidden: () => void;
+	/**
+	 * An event fired when the `collapsed` value changes.
+	 *
+	 * Event payload is the new value of collapsed.
+	 */
+	onItemCollapsedChange: (collapsed: boolean) => void;
+}
+
+export interface AccordionItemState extends AccordionItemCommonPropsAndState {
+	/**
+	 * If `true` the collapse inside the accordion-item should be in DOM. Its value depends on the
+	 * value of the `itemCollapse` and `itemDestroyOnHide`.
+	 */
+	shouldBeInDOM: boolean;
+}
+
+export type AccordionItemWidget = Widget<AccordionItemProps, AccordionItemState, AccordionItemApi, AccordionItemActions, AccordionItemDirectives>;
+
+const defaultAccordionConfig: AccordionProps = {
+	closeOthers: false,
+	onShown: noop,
+	onHidden: noop,
+	accordionClass: '',
+	itemId: '',
+	itemDestroyOnHide: false,
+	itemDisabled: false,
+	itemCollapsed: true,
+	itemAnimation: true,
+	itemTransition: collapseVerticalTransition,
+	onItemShown: noop,
+	onItemHidden: noop,
+	onItemCollapsedChange: noop,
+	slotItemStructure: undefined,
+	slotItemBody: undefined,
+	slotItemHeader: undefined,
+	itemClass: '',
+	itemHeaderClass: '',
+	itemButtonClass: '',
+	itemCollapseClass: '',
+	itemBodyClass: '',
+};
+
+const defaultItemConfig: AccordionItemProps = {
+	itemId: defaultAccordionConfig.itemId,
+	itemDestroyOnHide: defaultAccordionConfig.itemDestroyOnHide,
+	itemDisabled: defaultAccordionConfig.itemDisabled,
+	itemCollapsed: defaultAccordionConfig.itemCollapsed,
+	itemAnimation: defaultAccordionConfig.itemAnimation,
+	itemTransition: defaultAccordionConfig.itemTransition,
+	onItemShown: defaultAccordionConfig.onItemShown,
+	onItemHidden: defaultAccordionConfig.onItemHidden,
+	onItemCollapsedChange: defaultAccordionConfig.onItemCollapsedChange,
+	slotItemStructure: defaultAccordionConfig.slotItemStructure,
+	slotItemBody: defaultAccordionConfig.slotItemBody,
+	slotItemHeader: defaultAccordionConfig.slotItemHeader,
+	itemClass: defaultAccordionConfig.itemClass,
+	itemHeaderClass: defaultAccordionConfig.itemHeaderClass,
+	itemButtonClass: defaultAccordionConfig.itemButtonClass,
+	itemCollapseClass: defaultAccordionConfig.itemCollapseClass,
+	itemBodyClass: defaultAccordionConfig.itemBodyClass,
+};
+/**
+ * Retrieve a shallow copy of the default accordion config
+ * @returns the default accordion config
+ */
+export function getAccordionDefaultConfig(): AccordionProps {
+	return {...defaultAccordionConfig};
+}
+
+const configAccordionValidator: ConfigValidator<AccordionProps> = {
+	closeOthers: typeBoolean,
+	onShown: typeFunction,
+	onHidden: typeFunction,
+	itemId: typeString,
+	itemDestroyOnHide: typeBoolean,
+	itemDisabled: typeBoolean,
+	itemCollapsed: typeBoolean,
+	itemAnimation: typeBoolean,
+	itemTransition: typeFunction,
+	onItemShown: typeFunction,
+	onItemHidden: typeFunction,
+	onItemCollapsedChange: typeFunction,
+	itemClass: typeString,
+	itemHeaderClass: typeString,
+	itemButtonClass: typeString,
+	itemCollapseClass: typeString,
+	itemBodyClass: typeString,
+};
+
+const configItemValidator: ConfigValidator<AccordionItemProps> = {
+	itemId: typeString,
+	itemDestroyOnHide: typeBoolean,
+	itemDisabled: typeBoolean,
+	itemCollapsed: typeBoolean,
+	itemAnimation: typeBoolean,
+	itemTransition: typeFunction,
+	onItemShown: typeFunction,
+	onItemHidden: typeFunction,
+	onItemCollapsedChange: typeFunction,
+	itemClass: typeString,
+	itemHeaderClass: typeString,
+	itemButtonClass: typeString,
+	itemCollapseClass: typeString,
+	itemBodyClass: typeString,
+};
+
+function createAccordionItem(
+	accordionOnShown: ReadableSignal<(itemId: string) => void>,
+	accordionOnHidden: ReadableSignal<(itemId: string) => void>,
+	config?: PropsConfig<AccordionItemProps>
+): AccordionItemWidget {
+	const [
+		{
+			itemAnimation$,
+			itemTransition$,
+			itemDestroyOnHide$,
+			onItemShown$,
+			onItemHidden$,
+			onItemCollapsedChange$,
+			itemCollapsed$,
+			itemId$,
+			itemDisabled$,
+			...stateProps
+		},
+		patch,
+	] = writablesForProps(defaultItemConfig, config, configItemValidator);
+	if (!itemId$()) {
+		itemId$.set(getItemId());
+	}
+	const initDone$ = writable(false);
+	const shouldBeInDOM$ = computed(() => {
+		return itemDestroyOnHide$() === false || !itemTransition.state$().hidden;
+	});
+	const itemTransition = createTransition({
+		transition: itemTransition$,
+		visible: computed(() => {
+			const collapsed = itemCollapsed$();
+			onItemCollapsedChange$()(collapsed);
+			return !collapsed;
+		}),
+		animation: itemAnimation$,
+		animationOnInit: false,
+		initDone: initDone$,
+		onHidden: () => {
+			accordionOnHidden()(itemId$());
+			onItemHidden$()();
+		},
+		onShown: () => {
+			accordionOnShown()(itemId$());
+			onItemShown$()();
+		},
+	});
+
+	return {
+		...stateStores({
+			itemCollapsed$,
+			itemId$,
+			shouldBeInDOM$,
+			itemDisabled$,
+			...stateProps,
+		}),
+		patch,
+		actions: {
+			click: () => {
+				if (!itemDisabled$()) {
+					itemCollapsed$.update((c: boolean) => !c);
+				}
+			},
+		},
+		api: {
+			initDone: () => {
+				initDone$.set(true);
+			},
+			collapse: () => {
+				itemCollapsed$.set(true);
+			},
+			expand: () => {
+				itemCollapsed$.set(false);
+			},
+			toggle: () => {
+				itemCollapsed$.update((c: boolean) => !c);
+			},
+		},
+		directives: {collapseDirective: bindDirectiveNoArg(itemTransition.directives.directive), accordionItemDirective: noop},
+	};
+}
+/**
+ * Creates a new Accordion widget instance.
+ * @param config - config of the accordion, either as a store or as an object containing values or stores.
+ * @returns a new accordion widget instance
+ */
+export function createAccordion(config?: PropsConfig<AccordionProps>): AccordionWidget {
+	const [
+		{
+			closeOthers$,
+			onShown$,
+			onHidden$,
+			itemId$,
+			itemAnimation$,
+			itemClass$,
+			itemDisabled$,
+			itemCollapsed$,
+			itemTransition$,
+			itemDestroyOnHide$,
+			itemBodyClass$,
+			itemButtonClass$,
+			itemCollapseClass$,
+			itemHeaderClass$,
+			onItemCollapsedChange$,
+			onItemHidden$,
+			onItemShown$,
+			slotItemStructure$,
+			slotItemBody$,
+			slotItemHeader$,
+			...stateProps
+		},
+		patch,
+	] = writablesForProps(defaultAccordionConfig, config, configAccordionValidator);
+	const itemsWidget$ = registrationArray<AccordionItemWidget>();
+	const openItems$ = computed(() => {
+		const openItems: string[] = [];
+		itemsWidget$().forEach((item) => {
+			if (!item.state$().itemCollapsed) {
+				openItems.push(item.state$().itemId);
+			}
+		});
+		return openItems;
+	});
+
+	const oldOpenItem$ = writable(openItems$()[0]);
+	const checkCloseOthersAction$ = computed(() => {
+		if (closeOthers$()) {
+			adjustItemsCloseOthers(itemsWidget$(), openItems$(), oldOpenItem$());
+			oldOpenItem$.set(openItems$()[0]);
+		} else {
+			itemsWidget$();
+		}
+	});
+
+	const action$ = computed(() => {
+		checkCloseOthersAction$();
+	});
+	return {
+		...stateStores({itemsWidget$, ...stateProps}),
+		patch,
+		actions: {},
+		api: {
+			isExpanded: (id: string) => {
+				const item = getItem(itemsWidget$(), id);
+				if (item) {
+					return !item.state$().itemCollapsed;
+				} else {
+					return false;
+				}
+			},
+			expand: (id: string) => {
+				getItem(itemsWidget$(), id)?.api.expand();
+			},
+			collapse: (id: string) => {
+				getItem(itemsWidget$(), id)?.api.collapse();
+			},
+			toggle: (id: string) => {
+				getItem(itemsWidget$(), id)?.api.toggle();
+			},
+			expandAll: () => {
+				itemsWidget$().forEach((i) => i.api.expand());
+			},
+			collapseAll: () => {
+				itemsWidget$().forEach((i) => i.api.collapse());
+			},
+			registerItem: (itemConfig?: ReadableSignal<Partial<AccordionItemProps>>) => {
+				const item = createAccordionItem(
+					onShown$,
+					onHidden$,
+					computed(() => ({
+						itemId: itemId$(),
+						itemClass: itemClass$(),
+						itemAnimation: itemAnimation$(),
+						itemDisabled: itemDisabled$(),
+						itemCollapsed: itemCollapsed$(),
+						itemTransition: itemTransition$(),
+						itemDestroyOnHide: itemDestroyOnHide$(),
+						itemBodyClass: itemBodyClass$(),
+						itemButtonClass: itemButtonClass$(),
+						itemCollapseClass: itemCollapseClass$(),
+						itemHeaderClass: itemHeaderClass$(),
+						onItemCollapsedChange: onItemCollapsedChange$(),
+						onItemHidden: onItemHidden$(),
+						onItemShown: onItemShown$(),
+						slotItemStructure: slotItemStructure$(),
+						slotItemBody: slotItemBody$(),
+						slotItemHeader: slotItemHeader$(),
+						...itemConfig?.(),
+					}))
+				);
+				item.directives.accordionItemDirective = () => ({destroy: itemsWidget$.register(item)});
+				return item;
+			},
+		},
+		directives: {accordionDirective: directiveSubscribe(action$)},
+	};
+}

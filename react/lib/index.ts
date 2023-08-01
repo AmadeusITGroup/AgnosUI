@@ -8,3 +8,4 @@ export * from './pagination/Pagination';
 export * from './pagination/PageItem';
 export * from './Slot';
 export * from './WidgetsDefaultConfig';
+export * from './Accordion';

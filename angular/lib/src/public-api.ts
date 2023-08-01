@@ -11,3 +11,4 @@ export * from './lib/slot.directive';
 export * from './lib/modal/modal.service';
 export * from './lib/modal/modal.component';
 export * from './lib/alert/alert.component';
+export * from './lib/accordion/accordion.component';
