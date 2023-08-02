@@ -5,7 +5,7 @@ import {glob} from 'glob';
 
 export const copySamples = (): Plugin => {
 	return {
-		name: 'my-copy-samples',
+		name: 'copy-samples',
 		apply: 'build',
 		async buildStart(info) {
 			for (const framework of ['angular', 'react', 'svelte']) {
@@ -17,7 +17,7 @@ export const copySamples = (): Plugin => {
 				});
 				for (const file of files) {
 					const name = path.posix.join(dst, file);
-					console.log(name);
+					this.info(`copy ${name}`);
 					this.emitFile({
 						type: 'asset',
 						name,

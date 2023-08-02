@@ -26,14 +26,16 @@ self.addEventListener('install', (event) => {
 			const cache = await caches.open(CACHE);
 			const {withHash, withoutHash} = splitAssets(ASSETS);
 			const missingWithHash: string[] = [];
-			for (const url of withHash) {
-				const response = await caches.match(url);
-				if (response?.ok) {
-					cache.put(url, response);
-				} else {
-					missingWithHash.push(url);
-				}
-			}
+			await Promise.all(
+				withHash.map(async (url) => {
+					const response = await caches.match(url);
+					if (response?.ok) {
+						cache.put(url, response);
+					} else {
+						missingWithHash.push(url);
+					}
+				})
+			);
 			await cache.addAll([...missingWithHash, ...withoutHash]);
 			await self.skipWaiting();
 		})()
@@ -44,9 +46,7 @@ self.addEventListener('activate', (event) => {
 	event.waitUntil(
 		(async () => {
 			await self.clients.claim();
-			for (const key of await caches.keys()) {
-				if (key !== CACHE) await caches.delete(key);
-			}
+			await Promise.all((await caches.keys()).filter((key) => key !== CACHE).map((key) => caches.delete(key)));
 		})()
 	);
 });
