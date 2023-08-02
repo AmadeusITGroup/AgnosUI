@@ -9,23 +9,23 @@
 		<link href="../../_app/immutable/assets/0.f721b913.css" rel="stylesheet">
 		<link href="../../_app/immutable/assets/bootstrap.2f49b383.css" rel="stylesheet">
 		<link href="../../_app/immutable/assets/2.e5320fe0.css" rel="stylesheet">
-		<link rel="modulepreload" href="../../_app/immutable/entry/start.efc8306f.js">
+		<link rel="modulepreload" href="../../_app/immutable/entry/start.6d45534e.js">
 		<link rel="modulepreload" href="../../_app/immutable/chunks/scheduler.bebea13f.js">
-		<link rel="modulepreload" href="../../_app/immutable/chunks/singletons.224a276b.js">
-		<link rel="modulepreload" href="../../_app/immutable/entry/app.8e889d14.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/singletons.cce7bb10.js">
+		<link rel="modulepreload" href="../../_app/immutable/entry/app.96936902.js">
 		<link rel="modulepreload" href="../../_app/immutable/chunks/preload-helper.41c905a7.js">
 		<link rel="modulepreload" href="../../_app/immutable/chunks/index.db664e96.js">
-		<link rel="modulepreload" href="../../_app/immutable/nodes/0.bd720673.js">
+		<link rel="modulepreload" href="../../_app/immutable/nodes/0.ab76a1c6.js">
 		<link rel="modulepreload" href="../../_app/immutable/chunks/Svg.9e1cabe2.js">
-		<link rel="modulepreload" href="../../_app/immutable/chunks/stores.4e2192ee.js">
-		<link rel="modulepreload" href="../../_app/immutable/chunks/stores.2d2aed38.js">
-		<link rel="modulepreload" href="../../_app/immutable/nodes/2.6119cddc.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/stores.0899bb45.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/stores.bfa5019e.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/navigation.2a2e9149.js">
+		<link rel="modulepreload" href="../../_app/immutable/nodes/2.65933805.js">
 		<link rel="modulepreload" href="../../_app/immutable/chunks/each.909dc1de.js">
-		<link rel="modulepreload" href="../../_app/immutable/nodes/4.6cde1e8a.js">
-		<link rel="modulepreload" href="../../_app/immutable/chunks/ComponentPage.6fcefc14.js">
+		<link rel="modulepreload" href="../../_app/immutable/nodes/4.64aa4a60.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/ComponentPage.d4668070.js">
 		<link rel="modulepreload" href="../../_app/immutable/chunks/app.8c876633.js">
-		<link rel="modulepreload" href="../../_app/immutable/nodes/12.840a7a98.js">
-		<link rel="modulepreload" href="../../_app/immutable/chunks/navigation.002e579b.js"><title>AgnosUI - Modal examples for svelte</title><!-- HEAD_svelte-ll89db_START --><meta name="description" content="Modal examples widget of AgnosUI for svelte"><!-- HEAD_svelte-ll89db_END -->
+		<link rel="modulepreload" href="../../_app/immutable/nodes/12.ba96f277.js"><title>AgnosUI - Modal examples for svelte</title><!-- HEAD_svelte-ll89db_START --><meta name="description" content="Modal examples widget of AgnosUI for svelte"><!-- HEAD_svelte-ll89db_END -->
 		<title>AgnosUI</title>
 	</head>
 	<body>
@@ -39,7 +39,7 @@
 			
 			<script>
 				{
-					__sveltekit_b2zrfb = {
+					__sveltekit_uvqv97 = {
 						base: new URL("../..", location).pathname.slice(0, -1),
 						env: {}
 					};
@@ -49,8 +49,8 @@
 					const data = [null,null,null,null];
 
 					Promise.all([
-						import("../../_app/immutable/entry/start.efc8306f.js"),
-						import("../../_app/immutable/entry/app.8e889d14.js")
+						import("../../_app/immutable/entry/start.6d45534e.js"),
+						import("../../_app/immutable/entry/app.96936902.js")
 					]).then(([kit, app]) => {
 						kit.start(app, element, {
 							node_ids: [0, 2, 4, 12],
@@ -59,6 +59,12 @@
 							error: null
 						});
 					});
+
+					if ('serviceWorker' in navigator) {
+						addEventListener('load', function () {
+							navigator.serviceWorker.register('../../service-worker.js');
+						});
+					}
 				}
 			</script>
 		</div>
