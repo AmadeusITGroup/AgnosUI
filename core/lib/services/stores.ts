@@ -102,7 +102,7 @@ export interface WritableWithDefaultOptions<T, U = T> {
 export function writableWithDefault<T, U = T>(
 	defValue: T,
 	config$: ReadableSignal<U | undefined> = readable(undefined),
-	{normalizeValue = identity as any, equal}: WritableWithDefaultOptions<T, U> = {}
+	{normalizeValue = identity as any, equal = Object.is}: WritableWithDefaultOptions<T, U> = {}
 ): WritableSignal<T, U | undefined> {
 	const own$ = writable(undefined as T | undefined);
 	const validatedDefConfig$ = computed(

@@ -46,9 +46,18 @@ export const WidgetsDefaultConfig = ({
 	adaptParentConfig?: (config: Partial2Levels<WidgetsConfig>) => Partial2Levels<WidgetsConfig>;
 }) => {
 	const config$ = useContext(widgetsConfigContext);
-	const store$ = useMemo(() => createWidgetsConfig(config$, adaptParentConfig), [config$, adaptParentConfig]);
+	let storeRecreated = false;
+
+	const store$ = useMemo(() => {
+		const store = createWidgetsConfig(config$, adaptParentConfig);
+		store.set(props);
+		storeRecreated = true;
+		return store;
+	}, [config$, adaptParentConfig]);
 	useEffect(() => {
-		store$.set(props);
+		if (!storeRecreated) {
+			store$.set(props);
+		}
 	}, [props]);
 	return <widgetsConfigContext.Provider value={store$}>{children}</widgetsConfigContext.Provider>;
 };
