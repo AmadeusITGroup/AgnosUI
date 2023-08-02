@@ -2,8 +2,9 @@ import {sveltekit} from '@sveltejs/kit/vite';
 import path from 'path';
 import type {ProxyOptions} from 'vite';
 import {defineConfig} from 'vite';
-import {alias} from '../viteAlias';
 import pkg from '../core/package.json';
+import {alias} from '../viteAlias';
+import {copySamples} from './scripts/copySamples.plugin';
 import {docExtractor} from './scripts/doc.plugin';
 
 const proxy: Record<string, string | ProxyOptions> = {
@@ -33,12 +34,12 @@ export default defineConfig({
 	},
 	preview: {
 		port: 4000,
-		proxy: process.env.CI === 'true' ? {} : proxy,
+		proxy: {},
 	},
 	resolve: {
 		alias,
 	},
-	plugins: [sveltekit(), docExtractor()],
+	plugins: [copySamples(), sveltekit(), docExtractor()],
 	define: {
 		'import.meta.env.AGNOSUI_VERSION': JSON.stringify((pkg as any).version ?? '0.0.0'),
 	},

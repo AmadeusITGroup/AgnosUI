@@ -8,7 +8,6 @@
 		"build": "npm run build:lib && npm run build:demo",
 		"build:lib": "ng build lib",
 		"build:demo": "ng build demo",
-		"build:copy": "node ../demo/scripts/copy.mjs angular",
 		"build:coverage": "ng build demo --configuration coverage",
 		"watch": "ng build --watch --configuration development",
 		"preview": "node ./scripts/preview.cjs dist/demo --port 4200 --single",

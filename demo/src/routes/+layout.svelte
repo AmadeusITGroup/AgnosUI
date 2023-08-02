@@ -6,6 +6,27 @@
 	import 'bootstrap/dist/css/bootstrap.css';
 	import {/*canonicalURL$,*/ pathToRoot$} from '../lib/stores';
 	import './styles.scss';
+	import {beforeNavigate} from '$app/navigation';
+	import {updated} from '$app/stores';
+	import {onMount} from 'svelte';
+
+	const onServiceWorkerUpdate = () => {
+		updated.check();
+	};
+
+	onMount(() => {
+		navigator.serviceWorker?.addEventListener('controllerchange', onServiceWorkerUpdate);
+		return () => {
+			navigator.serviceWorker?.removeEventListener('controllerchange', onServiceWorkerUpdate);
+		};
+	});
+
+	beforeNavigate(({willUnload, to}) => {
+		if ($updated && !willUnload && to?.url) {
+			// force reload of the page on navigation when a new version of the site has been detected
+			location.href = to.url.href;
+		}
+	});
 </script>
 
 <!-- TODO: add canonical URL when noindex is removed
