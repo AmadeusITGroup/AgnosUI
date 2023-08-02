@@ -1,6 +1,9 @@
-<body>
+<body
+ style="overflow: hidden;"
+>
 	<div
 	 id="root"
+	 inert=""
 	>
 		<div
 		 class="container p-3"
@@ -15,6 +18,57 @@
 			 class="mt-3"
 			 data-testid="message"
 			/>
+		</div>
+	</div>
+	<div
+	 class="modal-backdrop show"
+	 inert=""
+	/>
+	<div
+	 class="d-block modal show"
+	>
+		<div
+		 class="modal-dialog"
+		>
+			<div
+			 class="modal-content"
+			>
+				<div
+				 class="modal-header"
+				>
+					<h5
+					 class="modal-title"
+					>
+						"Save changes"
+					</h5>
+					<button
+					 aria-label="Close"
+					 class="btn-close"
+					 type="button"
+					/>
+				</div>
+				<div
+				 class="modal-body"
+				>
+					"Do you want to save your changes?"
+				</div>
+				<div
+				 class="modal-footer"
+				>
+					<button
+					 class="btn btn-outline-primary"
+					 type="button"
+					>
+						"Yes"
+					</button>
+					<button
+					 class="btn btn-outline-danger"
+					 type="button"
+					>
+						"No"
+					</button>
+				</div>
+			</div>
 		</div>
 	</div>
 </body>

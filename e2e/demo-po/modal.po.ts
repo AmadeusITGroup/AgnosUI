@@ -1,5 +1,6 @@
 import {ModalPO} from '@agnos-ui/page-objects';
 import {BasePO} from '@agnos-ui/base-po';
+import type {Page} from '@playwright/test';
 
 export class ModalDemoPO extends BasePO {
 	getComponentSelector(): string {
@@ -38,3 +39,8 @@ export class ModalDefaultDemoModalPO extends ModalPO {
 		return this.locatorFooter().getByText('No');
 	}
 }
+
+export const openDemoModal = async (page: Page) => {
+	const modalDemoPO = new ModalDemoPO(page);
+	await modalDemoPO.locatorLaunchDemoModalButton().click();
+};
