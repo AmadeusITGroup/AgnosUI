@@ -1,5 +1,5 @@
 import {describe, expect, test} from 'vitest';
-import {isBoolean, isFunction, isNumber, getValueInRange, isString} from './checks';
+import {isBoolean, isFunction, isNumber, clamp, isString} from './checks';
 
 describe('Checks', () => {
 	test(`'isNumber' should check if value is a number`, () => {
@@ -80,19 +80,19 @@ describe('Checks', () => {
 	});
 
 	test(`'getValueInRange' should return a value is within a specific range`, () => {
-		expect(getValueInRange(1, 5)).toBe(1);
-		expect(getValueInRange(-1, 5)).toBe(0);
-		expect(getValueInRange(0, 5)).toBe(0);
-		expect(getValueInRange(-Infinity, 5)).toBe(0);
-		expect(getValueInRange(-2022, 5)).toBe(0);
+		expect(clamp(1, 5)).toBe(1);
+		expect(clamp(-1, 5)).toBe(0);
+		expect(clamp(0, 5)).toBe(0);
+		expect(clamp(-Infinity, 5)).toBe(0);
+		expect(clamp(-2022, 5)).toBe(0);
 		// Max could be < min
-		expect(getValueInRange(5, -5)).toBe(0);
-		expect(getValueInRange(Infinity, 5)).toBe(5);
-		expect(getValueInRange(2022, 5)).toBe(5);
-		expect(getValueInRange(0, 10, 5)).toBe(5);
-		expect(getValueInRange(5, 10, 5)).toBe(5);
-		expect(getValueInRange(6, 10, 5)).toBe(6);
-		expect(getValueInRange(10, 10, 5)).toBe(10);
-		expect(getValueInRange(2022, 10, 5)).toBe(10);
+		expect(clamp(5, -5)).toBe(0);
+		expect(clamp(Infinity, 5)).toBe(5);
+		expect(clamp(2022, 5)).toBe(5);
+		expect(clamp(0, 10, 5)).toBe(5);
+		expect(clamp(5, 10, 5)).toBe(5);
+		expect(clamp(6, 10, 5)).toBe(6);
+		expect(clamp(10, 10, 5)).toBe(10);
+		expect(clamp(2022, 10, 5)).toBe(10);
 	});
 });

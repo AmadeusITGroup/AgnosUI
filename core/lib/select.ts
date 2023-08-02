@@ -6,6 +6,9 @@ import {stateStores, writablesForProps} from './services/stores';
 import type {Widget} from './types';
 
 export interface SelectCommonPropsAndState<Item> {
+	/**
+	 * the class to attach to the select DOM element
+	 */
 	className: string;
 
 	/**
@@ -219,6 +222,11 @@ const defaultConfig: SelectProps<any> = {
 	className: '',
 };
 
+/**
+ * Create a SelectWidget with given config props
+ * @param config - an optional alert config
+ * @returns a SelectWidget
+ */
 export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): SelectWidget<Item> {
 	// Props
 	const [{opened$: _dirtyOpened$, items$, itemId$, matchFn$, onFilterTextChange$, ...otherProps}, patch] = writablesForProps<SelectProps<Item>>(

@@ -53,7 +53,7 @@ export interface TransitionProps {
 	 */
 	visible: boolean;
 
-	/*
+	/**
 	 * Whether the transition should be animated.
 	 */
 	animation: boolean;
@@ -161,6 +161,9 @@ export interface TransitionApi {
 }
 
 export interface TransitionDirectives {
+	/**
+	 * the transition directive
+	 */
 	directive: Directive<void | Partial<TransitionProps>>;
 }
 

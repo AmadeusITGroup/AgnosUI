@@ -1,7 +1,7 @@
 import {computed} from '@amadeus-it-group/tansu';
 import type {ConfigValidator, PropsConfig} from './services';
 import {bindableDerived, INVALID_VALUE, stateStores, writablesForProps} from './services';
-import {getValueInRange, isNumber} from './services/checks';
+import {clamp, isNumber} from './services/checks';
 import {typeBoolean, typeFunction, typeNumber, typeString} from './services/writables';
 import type {Widget, SlotContent, WidgetSlotContext} from './types';
 import {noop} from './utils';
@@ -331,6 +331,10 @@ const defaultConfig: PaginationProps = {
 	slotNumberLabel: ({displayedPage}) => `${displayedPage}`,
 };
 
+/**
+ * Returns a shallow copy of the default pagination config
+ * @returns a copy of the default config
+ */
 export function getPaginationDefaultConfig() {
 	return {...defaultConfig};
 }
@@ -355,7 +359,12 @@ const configValidator: ConfigValidator<PaginationProps> = {
 	className: typeString,
 };
 
-export function createPagination(config$?: PropsConfig<PaginationProps>): PaginationWidget {
+/**
+ * Create a PaginationWidget with given config props
+ * @param config - an optional alert config
+ * @returns a PaginationWidget
+ */
+export function createPagination(config?: PropsConfig<PaginationProps>): PaginationWidget {
 	const [
 		{
 			// dirty inputs that need adjustment:
@@ -369,7 +378,7 @@ export function createPagination(config$?: PropsConfig<PaginationProps>): Pagina
 			...stateProps
 		},
 		patch,
-	] = writablesForProps(defaultConfig, config$, configValidator);
+	] = writablesForProps(defaultConfig, config, configValidator);
 
 	// computed
 	// nb total of Pages.
@@ -382,7 +391,7 @@ export function createPagination(config$?: PropsConfig<PaginationProps>): Pagina
 		return pageCount;
 	});
 	// current page
-	const page$ = bindableDerived(onPageChange$, [_dirtyPage$, pageCount$], ([dirtyPage, pageCount]) => getValueInRange(dirtyPage, pageCount, 1));
+	const page$ = bindableDerived(onPageChange$, [_dirtyPage$, pageCount$], ([dirtyPage, pageCount]) => clamp(dirtyPage, pageCount, 1));
 
 	const pages$ = computed(() => pagesFactory$()(page$(), pageCount$()));
 

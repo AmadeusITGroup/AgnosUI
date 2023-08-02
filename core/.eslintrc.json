@@ -1,0 +1,35 @@
+{
+	"extends": ["../.eslintrc.json", "plugin:jsdoc/recommended-typescript-error"],
+	"rules": {
+		"jsdoc/tag-lines": "off",
+		"jsdoc/check-tag-names": [
+			"error",
+			{
+				"definedTags": ["remarks", "defaultValue"]
+			}
+		],
+		"jsdoc/require-jsdoc": [
+			"error",
+			{
+				"publicOnly": true,
+				"contexts": ["ExportNamedDeclaration TSInterfaceDeclaration > TSInterfaceBody > TSPropertySignature"]
+			}
+		]
+	},
+	"overrides": [
+		{
+			"files": ["*.spec.ts"],
+			"rules": {
+				"jsdoc/require-jsdoc": "off",
+				"jsdoc/require-param": "off",
+				"jsdoc/require-returns": "off"
+			}
+		},
+		{
+			"files": ["**/__mocks__/*.ts"],
+			"rules": {
+				"jsdoc/require-jsdoc": "off"
+			}
+		}
+	]
+}

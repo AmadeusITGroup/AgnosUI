@@ -76,9 +76,24 @@ export const createWidgetsConfig = <T>(
 };
 
 export interface WidgetsConfig {
+	/**
+	 * the pagination widget config
+	 */
 	pagination: PaginationProps;
+	/**
+	 * the rating widget config
+	 */
 	rating: RatingProps;
+	/**
+	 * the select widget config
+	 */
 	select: SelectProps<any>;
+	/**
+	 * the modal widget config
+	 */
 	modal: ModalProps;
+	/**
+	 * the alert widget config
+	 */
 	alert: AlertProps;
 }

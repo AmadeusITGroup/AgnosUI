@@ -39,6 +39,9 @@ export class SelectComponent<Item> implements OnChanges {
 	 */
 	@Input() filterText: string | undefined;
 
+	/**
+	 * the class to attach to the select DOM element
+	 */
 	@Input() className: string | undefined;
 
 	/**

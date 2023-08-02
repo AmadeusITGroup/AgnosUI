@@ -21,8 +21,6 @@ export type ToState<S extends {[K in keyof S & `${string}$`]: ReadableSignal<any
  * Utility function designed to create a `patch` function related to the provided stores.
  * Any key given to the patch function which is not in the original object will be ignored.
  *
- * @param stores - object of stores
- *
  * @example
  *
  * ```typescript
@@ -35,7 +33,8 @@ export type ToState<S extends {[K in keyof S & `${string}$`]: ReadableSignal<any
  * patch({a: 2, c: 2}) // will perform storeA$.set(2), c is ignored.
  *
  * ```
- * @returns
+ * @param stores - object of stores
+ * @returns the patch function
  */
 export function createPatch<T extends object, V extends object = T>(stores: ToWritableSignal<T, V>) {
 	return function <U extends Partial<T>>(storesValues?: U | void) {
@@ -56,6 +55,7 @@ export function createPatch<T extends object, V extends object = T>(stores: ToWr
  *
  * @param obj1 - First object
  * @param obj2 - Second object
+ * @returns the object with changed properties
  */
 export function findChangedProperties<T extends Record<string, any>>(obj1: Partial<T>, obj2: Partial<T>): Partial<T> | null {
 	if (obj1 === obj2) {
@@ -82,10 +82,17 @@ export const INVALID_VALUE = Symbol();
 export type NormalizeValue<T, U = T> = (value: U) => T | typeof INVALID_VALUE;
 
 export interface WritableWithDefaultOptions<T, U = T> {
+	/**
+	 * the normalize value function. should return the invalidValue symbol when the provided value is invalid
+	 */
 	normalizeValue?: NormalizeValue<T, U>;
+	/**
+	 * the equal function, allowing to compare two values. used to check if a previous and current values are equals.
+	 */
 	equal?: StoreOptions<T>['equal'];
 }
 
+/* eslint-disable jsdoc/check-param-names, jsdoc/require-param */
 /**
  * Returns a writable store whose value is either its own value (when it is not undefined) or a default value
  * that comes either from the `config$` store (when it is not undefined) or from `defValue`.
@@ -95,7 +102,7 @@ export interface WritableWithDefaultOptions<T, U = T> {
  * `set` or `update` functions), or the `defValue` is used instead (if the invalid value comes from the `config$` store).
  *
  * @param defValue - Default value used when both the own value and the config$ value are undefined.
- * @param config$ - Default value used when the own value is undefined.
+ * @param config$ - Default value used when the own value is undefined
  * @param options - Object which can contain the following optional functions: normalizeValue and equal
  * @returns a writable store with the extra default value and normalization logic described above
  */
@@ -141,6 +148,7 @@ export function writableWithDefault<T, U = T>(
 		}
 	);
 }
+/* eslint-enable */
 
 export type ConfigValidator<T extends object, U extends object = T> = {[K in keyof T & keyof U]?: WritableWithDefaultOptions<T[K], U[K]>};
 

@@ -42,6 +42,10 @@ export interface HasFocus {
 	hasFocus$: ReadableSignal<boolean>;
 }
 
+/**
+ * Create a HasFocus
+ * @returns a HasFocus
+ */
 export function createHasFocus(): HasFocus {
 	const {elements$, directive} = createStoreArrayDirective();
 

@@ -43,6 +43,9 @@ export interface AlertCommonPropsAndState {
 }
 
 export interface AlertState extends AlertCommonPropsAndState {
+	/**
+	 * Is `true` when the alert is hidden. Compared to `visible`, this is updated after the transition is executed.
+	 */
 	hidden: boolean;
 }
 
@@ -98,6 +101,9 @@ export interface AlertApi {
 }
 
 export interface AlertDirectives {
+	/**
+	 * the transition directive, piloting what is the visual effect of going from hidden to visible
+	 */
 	transitionDirective: Directive;
 }
 
@@ -118,7 +124,11 @@ const defaultConfig: AlertProps = {
 	transition: fadeTransition,
 };
 
-export function getAlertDefaultConfig() {
+/**
+ * Retrieve a shallow copy of the default alert config
+ * @returns the default alert config
+ */
+export function getAlertDefaultConfig(): AlertProps {
 	return {...defaultConfig};
 }
 
@@ -127,6 +137,11 @@ const configValidator: ConfigValidator<AlertProps> = {
 	type: typeString,
 };
 
+/**
+ * Create an AlertWidget with given config props
+ * @param config - an optional alert config
+ * @returns an AlertWidget
+ */
 export function createAlert(config?: PropsConfig<AlertProps>): AlertWidget {
 	const [
 		{

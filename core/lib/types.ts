@@ -8,20 +8,43 @@ export interface Widget<
 	Actions extends object = object,
 	Directives extends object = object
 > {
+	/**
+	 * the reactive state of the widget
+	 */
 	state$: ReadableSignal<State>;
+	/**
+	 * the different stores of the widget, all reactive
+	 */
 	stores: {[K in keyof State as `${K & string}$`]: ReadableSignal<State[K]>};
 
 	/**
 	 * Modify the parameter values, and recalculate the stores accordingly
 	 */
 	patch(parameters: Partial<Props>): void;
+	/**
+	 * the directives that can be used on associated elements to react to the widget.
+	 * an example would be adding classes to the container of the widget when it is in a certain state
+	 */
 	directives: Directives;
+	/**
+	 * all the handlers that should be connected to user interactions i.e. click, keyboard and touch interactions.
+	 * typically, the handlers are event listeners that call api functions to affect the widget state
+	 */
 	actions: Actions;
+	/**
+	 * all the api functions to interact with the widget
+	 */
 	api: Api;
 }
 
 export interface WidgetSlotContext<W extends Widget> {
+	/**
+	 * the state of the widget
+	 */
 	state: WidgetState<W>;
+	/**
+	 * the widget
+	 */
 	widget: Pick<W, 'actions' | 'api' | 'directives' | 'state$' | 'stores'>;
 }
 

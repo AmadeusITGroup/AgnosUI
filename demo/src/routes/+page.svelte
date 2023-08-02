@@ -7,27 +7,40 @@
 </script>
 
 <svelte:head>
-	<title>Home page</title>
+	<title>AgsnoUI - Home page</title>
 	<meta name="description" content="Svelte demo app" />
 </svelte:head>
 
 <section class="pt-3">
-	<div class="alert alert-primary">
-		Welcome to AgnosUI Demo! Experience the beginning stages of our exciting journey as we actively develop our library for CSS Bootstrap design.
-		<br />
-		Follow us on <a href="https://github.com/AmadeusITGroup/AgnosUI" class="link-body-emphasis">GitHub</a> for the latest updates and be a part of shaping
-		the next-generation UI components!
+	<div class="d-flex justify-content-center">
+		<div class="alert alert-primary">
+			<p class="text-center">Welcome to AgnosUI Demo!</p>
+			<p class="mb-0">
+				Experience the beginning stages of our exciting journey as we actively develop our library for CSS Bootstrap design.
+				<br />
+				Follow us on <a href="https://github.com/AmadeusITGroup/AgnosUI" class="link-body-emphasis">GitHub</a> for the latest updates and be a part of
+				shaping the next-generation UI components!
+			</p>
+		</div>
 	</div>
 
 	<div class="note my-3">
-		AgnosUI is a powerful library of widgets designed specifically for <a href="https://getbootstrap.com/">Bootstrap</a>. Inspired by the success of
-		<a href="https://ng-bootstrap.github.io/">ng-bootstrap</a>, AgnosUI takes the concept a step further by offering widgets that can seamlessly
-		integrate with any front-end framework of your choice. With support for popular frameworks like <a href="https://angular.io/">Angular</a>,
-		<a href="https://react.dev/">React</a>, and <a href="https://svelte.dev/">Svelte</a>, AgnosUI allows you to effortlessly create consistent and
-		visually appealing UI components across your projects.
+		<p>
+			AgnosUI is a powerful library of widgets designed specifically for <a href="https://getbootstrap.com/">Bootstrap</a>.
+		</p>
+		<p>
+			Inspired by the success of
+			<a href="https://ng-bootstrap.github.io/">ng-bootstrap</a>, AgnosUI takes the concept a step further by offering widgets that can seamlessly
+			integrate with any front-end framework of your choice.
+		</p>
+		<p>
+			With support for popular frameworks like <a href="https://angular.io/">Angular</a>,
+			<a href="https://react.dev/">React</a>, and <a href="https://svelte.dev/">Svelte</a>, AgnosUI allows you to effortlessly create consistent and
+			visually appealing UI components across your projects.
+		</p>
 	</div>
 
-	<h4 class="text-center">For a comprehensive understanding of AgnosUI's features and usage,<br />feel free to explore our demo</h4>
+	<h4 class="text-center mt-4 mt-md-5">For a comprehensive understanding of AgnosUI's features and usage,<br />feel free to explore our demo</h4>
 	<div class="d-flex links d-flex justify-content-evenly">
 		<a href="angular/components/alert/examples" aria-label="link to angular examples"><Svg svg={angularLogo} className="framework-logo" /></a>
 		<a href="react/components/alert/examples" aria-label="link to react examples"><Svg svg={reactLogo} className="framework-logo" /></a>

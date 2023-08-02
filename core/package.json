@@ -26,7 +26,8 @@
 		"test:coverage": "vitest run --coverage"
 	},
 	"dependencies": {
-		"@amadeus-it-group/tansu": "0.0.22"
+		"@amadeus-it-group/tansu": "0.0.22",
+		"remove": "^0.1.5"
 	},
 	"files": [
 		"dist/lib"
@@ -37,5 +38,8 @@
 		"type": "git",
 		"url": "https://github.com/AmadeusITGroup/AgnosUI.git",
 		"directory": "core"
+	},
+	"devDependencies": {
+		"eslint-plugin-jsdoc": "^46.4.5"
 	}
 }
