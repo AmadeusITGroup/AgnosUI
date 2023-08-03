@@ -1,3 +1,0 @@
-import{s as d,n as m}from"../chunks/scheduler.bebea13f.js";import{S as h,i as u,g as p,m as f,B as g,h as _,f as s,n as x,k as c,y as v,a as y}from"../chunks/index.db664e96.js";import{g as r,a as C}from"../chunks/app.8c876633.js";function k(l){let t,e,o;return document.title=t=r(i),{c(){e=p("meta"),o=f(`
-Coming soon...`),this.h()},l(n){const a=g("svelte-nmzoe7",document.head);e=_(a,"META",{name:!0,content:!0}),a.forEach(s),o=x(n,`
-Coming soon...`),this.h()},h(){c(e,"name","description"),c(e,"content",C(i))},m(n,a){v(document.head,e),y(n,o,a)},p(n,[a]){a&0&&t!==(t=r(i))&&(document.title=t)},i:m,o:m,d(n){n&&s(o),s(e)}}}const i="Focustrack";class q extends h{constructor(t){super(),u(this,t,null,k,d,{})}}export{q as component};
