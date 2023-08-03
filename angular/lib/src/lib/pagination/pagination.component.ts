@@ -1,7 +1,12 @@
-import type {WidgetProps, PaginationContext as PaginationCoreContext, PaginationNumberContext as PaginationNumberCoreContext} from '@agnos-ui/core';
+import type {
+	WidgetProps,
+	PaginationContext as PaginationCoreContext,
+	PaginationNumberContext as PaginationNumberCoreContext,
+	WidgetState,
+} from '@agnos-ui/core';
 import {createPagination, toSlotContextWidget} from '@agnos-ui/core';
 import {AsyncPipe, NgForOf, NgIf} from '@angular/common';
-import type {AfterContentChecked, OnChanges, SimpleChanges} from '@angular/core';
+import type {AfterContentChecked, OnChanges, Signal, SimpleChanges} from '@angular/core';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -18,6 +23,7 @@ import {
 import type {AdaptWidgetSlots, AdaptSlotContentProps, SlotContent} from '../slot.directive';
 import {ComponentTemplate, SlotDirective, callWidgetFactory} from '../slot.directive';
 import {patchSimpleChanges} from '../utils';
+import {toSignal} from '@angular/core/rxjs-interop';
 
 /**
  * A type for the context of the pagination slot
@@ -36,6 +42,10 @@ export type PaginationWidget = AdaptWidgetSlots<ReturnType<typeof createPaginati
  * A type for the props of the pagination
  */
 export type PaginationProps = WidgetProps<PaginationWidget>;
+/**
+ * A type for the state of the pagination
+ */
+export type PaginationState = WidgetState<PaginationWidget>;
 
 /**
  * A directive to use to give the 'ellipsis' link template to the pagination component
@@ -163,11 +173,14 @@ const defaultConfig: Partial<PaginationProps> = {
 };
 
 @Component({
-	selector: 'au-pagination',
+	// eslint-disable-next-line @angular-eslint/component-selector
+	selector: 'nav[au-pagination]',
 	standalone: true,
 	imports: [NgIf, AsyncPipe, SlotDirective],
-	host: {role: 'navigation'},
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	host: {
+		'[attr.aria-label]': 'state$().ariaLabel',
+	},
 	encapsulation: ViewEncapsulation.None,
 	template: `
 		<ng-container *ngIf="widget.state$ | async as state">
@@ -244,6 +257,15 @@ export class PaginationComponent implements OnChanges, AfterContentChecked {
 	 * @param pageCount - The total number of pages
 	 */
 	@Input() ariaPageLabel: ((processPage: number, pageCount: number) => string) | undefined;
+
+	/**
+	 * The label for the nav element.
+	 *
+	 * for I18n, we suggest to use the global configuration
+	 * override any configuration parameters provided for this
+	 * @defaultValue 'Page navigation'
+	 */
+	@Input() ariaLabel: string | undefined;
 
 	/**
 	 * The label for the "active" page.
@@ -385,6 +407,8 @@ export class PaginationComponent implements OnChanges, AfterContentChecked {
 	 * An input to add a custom class to the UL
 	 */
 	@Input() className: string | undefined;
+
+	state$: Signal<PaginationState> = toSignal(this._widget.state$, {requireSync: true});
 
 	constructor() {
 		this._widget.patch({

@@ -5,75 +5,554 @@
 		<div
 		 class="container p-3"
 		>
-			<ul
-			 class="au-pagination pagination"
+			<h5>
+				"Default pagination:"
+			</h5>
+			<nav
+			 aria-label="Page navigation"
 			>
-				<li
-				 class="disabled page-item"
+				<ul
+				 class="au-pagination pagination"
 				>
-					<a
-					 aria-disabled="true"
-					 aria-label="Action link for previous page"
-					 class="au-previous page-link"
-					 href="#"
-					 tabindex="-1"
+					<li
+					 class="page-item"
 					>
-						<span
-						 aria-hidden="true"
+						<a
+						 aria-label="Action link for previous page"
+						 class="au-previous page-link"
+						 href="#"
 						>
-							"‹"
-						</span>
-					</a>
-				</li>
-				<li
-				 aria-current="page"
-				 class="active page-item"
+							<span
+							 aria-hidden="true"
+							>
+								"‹"
+							</span>
+						</a>
+					</li>
+					<li
+					 class="page-item"
+					>
+						<a
+						 aria-label="Page 1 of 7"
+						 class="au-page page-link"
+						 href="#"
+						>
+							"1"
+						</a>
+					</li>
+					<li
+					 class="page-item"
+					>
+						<a
+						 aria-label="Page 2 of 7"
+						 class="au-page page-link"
+						 href="#"
+						>
+							"2"
+						</a>
+					</li>
+					<li
+					 class="page-item"
+					>
+						<a
+						 aria-label="Page 3 of 7"
+						 class="au-page page-link"
+						 href="#"
+						>
+							"3"
+						</a>
+					</li>
+					<li
+					 aria-current="page"
+					 class="active page-item"
+					>
+						<a
+						 aria-label="Page 4 of 7"
+						 class="au-page page-link"
+						 href="#"
+						>
+							"4"
+							<span
+							 class="visually-hidden"
+							>
+								"(current)"
+							</span>
+						</a>
+					</li>
+					<li
+					 class="page-item"
+					>
+						<a
+						 aria-label="Page 5 of 7"
+						 class="au-page page-link"
+						 href="#"
+						>
+							"5"
+						</a>
+					</li>
+					<li
+					 class="page-item"
+					>
+						<a
+						 aria-label="Page 6 of 7"
+						 class="au-page page-link"
+						 href="#"
+						>
+							"6"
+						</a>
+					</li>
+					<li
+					 class="page-item"
+					>
+						<a
+						 aria-label="Page 7 of 7"
+						 class="au-page page-link"
+						 href="#"
+						>
+							"7"
+						</a>
+					</li>
+					<li
+					 class="page-item"
+					>
+						<a
+						 aria-label="Action link for next page"
+						 class="au-next page-link"
+						 href="#"
+						>
+							<span
+							 aria-hidden="true"
+							>
+								"›"
+							</span>
+						</a>
+					</li>
+				</ul>
+				<div
+				 aria-live="polite"
+				 class="visually-hidden"
 				>
-					<a
-					 aria-label="Page 1 of 1"
-					 class="au-page page-link"
-					 href="#"
-					>
-						"1"
-						<span
-						 class="visually-hidden"
-						>
-							"(current)"
-						</span>
-					</a>
-				</li>
-				<li
-				 class="disabled page-item"
+					"Current page is 4"
+				</div>
+			</nav>
+			<h5>
+				"No direction links:"
+			</h5>
+			<nav
+			 aria-label="Page navigation"
+			>
+				<ul
+				 class="au-pagination pagination"
 				>
-					<a
-					 aria-disabled="true"
-					 aria-label="Action link for next page"
-					 class="au-next page-link"
-					 href="#"
-					 tabindex="-1"
+					<li
+					 class="page-item"
 					>
-						<span
-						 aria-hidden="true"
+						<a
+						 aria-label="Page 1 of 7"
+						 class="au-page page-link"
+						 href="#"
 						>
-							"›"
-						</span>
-					</a>
-				</li>
-			</ul>
+							"1"
+						</a>
+					</li>
+					<li
+					 class="page-item"
+					>
+						<a
+						 aria-label="Page 2 of 7"
+						 class="au-page page-link"
+						 href="#"
+						>
+							"2"
+						</a>
+					</li>
+					<li
+					 class="page-item"
+					>
+						<a
+						 aria-label="Page 3 of 7"
+						 class="au-page page-link"
+						 href="#"
+						>
+							"3"
+						</a>
+					</li>
+					<li
+					 aria-current="page"
+					 class="active page-item"
+					>
+						<a
+						 aria-label="Page 4 of 7"
+						 class="au-page page-link"
+						 href="#"
+						>
+							"4"
+							<span
+							 class="visually-hidden"
+							>
+								"(current)"
+							</span>
+						</a>
+					</li>
+					<li
+					 class="page-item"
+					>
+						<a
+						 aria-label="Page 5 of 7"
+						 class="au-page page-link"
+						 href="#"
+						>
+							"5"
+						</a>
+					</li>
+					<li
+					 class="page-item"
+					>
+						<a
+						 aria-label="Page 6 of 7"
+						 class="au-page page-link"
+						 href="#"
+						>
+							"6"
+						</a>
+					</li>
+					<li
+					 class="page-item"
+					>
+						<a
+						 aria-label="Page 7 of 7"
+						 class="au-page page-link"
+						 href="#"
+						>
+							"7"
+						</a>
+					</li>
+				</ul>
+				<div
+				 aria-live="polite"
+				 class="visually-hidden"
+				>
+					"Current page is 4"
+				</div>
+			</nav>
+			<h5>
+				"With boundary links:"
+			</h5>
+			<nav
+			 aria-label="Page navigation"
+			>
+				<ul
+				 class="au-pagination pagination"
+				>
+					<li
+					 class="page-item"
+					>
+						<a
+						 aria-label="Action link for first page"
+						 class="au-first page-link"
+						 href="#"
+						>
+							<span
+							 aria-hidden="true"
+							>
+								"«"
+							</span>
+						</a>
+					</li>
+					<li
+					 class="page-item"
+					>
+						<a
+						 aria-label="Action link for previous page"
+						 class="au-previous page-link"
+						 href="#"
+						>
+							<span
+							 aria-hidden="true"
+							>
+								"‹"
+							</span>
+						</a>
+					</li>
+					<li
+					 class="page-item"
+					>
+						<a
+						 aria-label="Page 1 of 7"
+						 class="au-page page-link"
+						 href="#"
+						>
+							"1"
+						</a>
+					</li>
+					<li
+					 class="page-item"
+					>
+						<a
+						 aria-label="Page 2 of 7"
+						 class="au-page page-link"
+						 href="#"
+						>
+							"2"
+						</a>
+					</li>
+					<li
+					 class="page-item"
+					>
+						<a
+						 aria-label="Page 3 of 7"
+						 class="au-page page-link"
+						 href="#"
+						>
+							"3"
+						</a>
+					</li>
+					<li
+					 aria-current="page"
+					 class="active page-item"
+					>
+						<a
+						 aria-label="Page 4 of 7"
+						 class="au-page page-link"
+						 href="#"
+						>
+							"4"
+							<span
+							 class="visually-hidden"
+							>
+								"(current)"
+							</span>
+						</a>
+					</li>
+					<li
+					 class="page-item"
+					>
+						<a
+						 aria-label="Page 5 of 7"
+						 class="au-page page-link"
+						 href="#"
+						>
+							"5"
+						</a>
+					</li>
+					<li
+					 class="page-item"
+					>
+						<a
+						 aria-label="Page 6 of 7"
+						 class="au-page page-link"
+						 href="#"
+						>
+							"6"
+						</a>
+					</li>
+					<li
+					 class="page-item"
+					>
+						<a
+						 aria-label="Page 7 of 7"
+						 class="au-page page-link"
+						 href="#"
+						>
+							"7"
+						</a>
+					</li>
+					<li
+					 class="page-item"
+					>
+						<a
+						 aria-label="Action link for next page"
+						 class="au-next page-link"
+						 href="#"
+						>
+							<span
+							 aria-hidden="true"
+							>
+								"›"
+							</span>
+						</a>
+					</li>
+					<li
+					 class="page-item"
+					>
+						<a
+						 aria-label="Action link for last page"
+						 class="au-last page-link"
+						 href="#"
+						>
+							<span
+							 aria-hidden="true"
+							>
+								"»"
+							</span>
+						</a>
+					</li>
+				</ul>
+				<div
+				 aria-live="polite"
+				 class="visually-hidden"
+				>
+					"Current page is 4"
+				</div>
+			</nav>
 			<div
-			 aria-live="polite"
-			 class="visually-hidden"
+			 class="mb-3"
 			>
-				"Current page is 1"
-			</div>
-			<div>
 				"Current page:"
 				<span
 				 id="defaultPage"
 				>
-					"1"
+					"4"
 				</span>
 			</div>
+			<h5>
+				"Disabled pagination:"
+			</h5>
+			<nav
+			 aria-label="Disabled pagination"
+			>
+				<ul
+				 class="au-pagination pagination"
+				>
+					<li
+					 class="disabled page-item"
+					>
+						<a
+						 aria-disabled="true"
+						 aria-label="Action link for previous page"
+						 class="au-previous page-link"
+						 href="#"
+						 tabindex="-1"
+						>
+							<span
+							 aria-hidden="true"
+							>
+								"‹"
+							</span>
+						</a>
+					</li>
+					<li
+					 aria-current="page"
+					 class="active disabled page-item"
+					>
+						<a
+						 aria-disabled="true"
+						 aria-label="Page 1 of 7"
+						 class="au-page page-link"
+						 href="#"
+						 tabindex="-1"
+						>
+							"1"
+							<span
+							 class="visually-hidden"
+							>
+								"(current)"
+							</span>
+						</a>
+					</li>
+					<li
+					 class="disabled page-item"
+					>
+						<a
+						 aria-disabled="true"
+						 aria-label="Page 2 of 7"
+						 class="au-page page-link"
+						 href="#"
+						 tabindex="-1"
+						>
+							"2"
+						</a>
+					</li>
+					<li
+					 class="disabled page-item"
+					>
+						<a
+						 aria-disabled="true"
+						 aria-label="Page 3 of 7"
+						 class="au-page page-link"
+						 href="#"
+						 tabindex="-1"
+						>
+							"3"
+						</a>
+					</li>
+					<li
+					 class="disabled page-item"
+					>
+						<a
+						 aria-disabled="true"
+						 aria-label="Page 4 of 7"
+						 class="au-page page-link"
+						 href="#"
+						 tabindex="-1"
+						>
+							"4"
+						</a>
+					</li>
+					<li
+					 class="disabled page-item"
+					>
+						<a
+						 aria-disabled="true"
+						 aria-label="Page 5 of 7"
+						 class="au-page page-link"
+						 href="#"
+						 tabindex="-1"
+						>
+							"5"
+						</a>
+					</li>
+					<li
+					 class="disabled page-item"
+					>
+						<a
+						 aria-disabled="true"
+						 aria-label="Page 6 of 7"
+						 class="au-page page-link"
+						 href="#"
+						 tabindex="-1"
+						>
+							"6"
+						</a>
+					</li>
+					<li
+					 class="disabled page-item"
+					>
+						<a
+						 aria-disabled="true"
+						 aria-label="Page 7 of 7"
+						 class="au-page page-link"
+						 href="#"
+						 tabindex="-1"
+						>
+							"7"
+						</a>
+					</li>
+					<li
+					 class="disabled page-item"
+					>
+						<a
+						 aria-disabled="true"
+						 aria-label="Action link for next page"
+						 class="au-next page-link"
+						 href="#"
+						 tabindex="-1"
+						>
+							<span
+							 aria-hidden="true"
+							>
+								"›"
+							</span>
+						</a>
+					</li>
+				</ul>
+				<div
+				 aria-live="polite"
+				 class="visually-hidden"
+				>
+					"Current page is 1"
+				</div>
+			</nav>
 		</div>
 	</div>
 </body>

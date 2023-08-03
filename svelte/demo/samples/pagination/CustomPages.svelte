@@ -10,20 +10,19 @@
 	export let widget: $$Props['widget'];
 	const FILTER_PAG_REGEX = /[^0-9]/g;
 	let inputRef: HTMLInputElement;
-	// TODO change the type of the event in all framework demo
-	function handleKeyDownEnter(e: any) {
+	function handleKeyDownEnter(e: KeyboardEvent & {currentTarget: EventTarget & HTMLInputElement}) {
 		if (e.key === 'Enter') {
-			handleOnBlur(e);
+			handleTheChange(e);
 		}
 	}
-	function handleOnBlur(e: any) {
-		const value = e.target.value;
+	function handleTheChange(e: (FocusEvent | KeyboardEvent) & {currentTarget: EventTarget & HTMLInputElement}) {
+		const value = e.currentTarget.value;
 		const intValue = parseInt(value);
 		widget.actions.select(intValue);
 		inputRef.value = widget.stores.page$().toString();
 	}
-	function formatInput(e: any) {
-		e.target.value = e.target.value.replace(FILTER_PAG_REGEX, '');
+	function formatInput(e: Event & {currentTarget: EventTarget & HTMLInputElement}) {
+		e.currentTarget.value = e.currentTarget.value.replace(FILTER_PAG_REGEX, '');
 	}
 </script>
 
@@ -40,7 +39,7 @@
 				class="form-control custom-pages-input"
 				id="paginationInput"
 				on:keydown={handleKeyDownEnter}
-				on:blur={handleOnBlur}
+				on:blur={handleTheChange}
 				on:input={formatInput}
 				aria-labelledby="paginationInputLabel paginationDescription"
 				style="width: 2.5rem"

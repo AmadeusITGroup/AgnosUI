@@ -39,6 +39,15 @@ export interface PaginationCommonPropsAndState {
 	size: 'sm' | 'lg' | null;
 
 	/**
+	 * The label for the nav element.
+	 *
+	 * for I18n, we suggest to use the global configuration
+	 * override any configuration parameters provided for this
+	 * @defaultValue 'Page navigation'
+	 */
+	ariaLabel: string;
+
+	/**
 	 * The label for the "active" page.
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
@@ -305,6 +314,7 @@ const defaultConfig: PaginationProps = {
 		}
 		return pages;
 	},
+	ariaLabel: 'Page navigation',
 	activeLabel: '(current)',
 	ariaPageLabel: (processPage: number, pageCount: number) => `Page ${processPage} of ${pageCount}`,
 	ariaFirstLabel: 'Action link for first page',
@@ -335,6 +345,7 @@ const configValidator: ConfigValidator<PaginationProps> = {
 	size: {normalizeValue: (value) => (value === 'lg' || value === 'sm' || value === null ? value : INVALID_VALUE)},
 	onPageChange: typeFunction,
 	pagesFactory: typeFunction,
+	ariaLabel: typeString,
 	activeLabel: typeString,
 	ariaPageLabel: typeFunction,
 	ariaFirstLabel: typeString,

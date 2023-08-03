@@ -10,7 +10,7 @@ const undefinedConfig = getUndefinedValues(getPaginationDefaultConfig());
 	standalone: true,
 	imports: [AgnosUIAngularModule],
 	providers: provideHashConfig('pagination'),
-	template: `<au-pagination #widget></au-pagination>`,
+	template: `<nav au-pagination #widget></nav>`,
 })
 export default class PlaygroundComponent {
 	@ViewChild('widget') widget: PaginationComponent;
