@@ -3,7 +3,7 @@
 	"private": true,
 	"main": "dist/index.js",
 	"dependencies": {
-		"@typescript-eslint/utils": "^5.62.0"
+		"@typescript-eslint/utils": "^6.2.1"
 	},
 	"peerDependencies": {
 		"typescript": "*"
