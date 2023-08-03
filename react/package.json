@@ -31,13 +31,13 @@
 		"preview": "vite preview -c vite.demo.config.ts"
 	},
 	"devDependencies": {
-		"@types/react": "^18.2.14",
-		"@types/react-dom": "^18.2.6",
-		"@vitejs/plugin-react": "^4.0.1",
-		"eslint-plugin-react": "^7.32.2",
+		"@types/react": "^18.2.18",
+		"@types/react-dom": "^18.2.7",
+		"@vitejs/plugin-react": "^4.0.4",
+		"eslint-plugin-react": "^7.33.1",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
-		"react-router-dom": "^6.14.1"
+		"react-router-dom": "^6.14.2"
 	},
 	"dependencies": {
 		"@agnos-ui/core": "",

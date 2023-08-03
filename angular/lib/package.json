@@ -13,13 +13,13 @@
 		"rating"
 	],
 	"peerDependencies": {
-		"@angular/common": "^16.1.3",
-		"@angular/core": "^16.1.3"
+		"@angular/common": "^16.1.8",
+		"@angular/core": "^16.1.8"
 	},
 	"dependencies": {
 		"@agnos-ui/core": "",
 		"@amadeus-it-group/tansu": "*",
-		"tslib": "^2.6.0"
+		"tslib": "^2.6.1"
 	},
 	"license": "MIT",
 	"bugs": "https://github.com/AmadeusITGroup/AgnosUI/issues",

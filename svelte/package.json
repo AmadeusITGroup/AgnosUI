@@ -36,11 +36,11 @@
 		"@amadeus-it-group/tansu": "0.0.22"
 	},
 	"devDependencies": {
-		"@sveltejs/vite-plugin-svelte": "^2.4.2",
-		"eslint-plugin-svelte": "^2.32.2",
+		"@sveltejs/vite-plugin-svelte": "^2.4.3",
+		"eslint-plugin-svelte": "^2.32.4",
 		"prettier-plugin-svelte": "^2.10.1",
-		"svelte": "^4.0.1",
-		"svelte-check": "^3.4.4"
+		"svelte": "^4.1.2",
+		"svelte-check": "^3.4.6"
 	},
 	"license": "MIT",
 	"bugs": "https://github.com/AmadeusITGroup/AgnosUI/issues",
