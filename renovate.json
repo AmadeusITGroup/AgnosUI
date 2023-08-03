@@ -4,6 +4,7 @@
 	"platform": "github",
 	"extends": ["config:recommended", "group:allNonMajor", ":preserveSemverRanges"],
 	"ignorePresets": [":dependencyDashboard", ":prHourlyLimit2", ":prConcurrentLimit10"],
+	"schedule": "every weekend",
 	"packageRules": [
 		{"matchPackagePatterns": [""], "rangeStrategy": "bump"},
 		{
