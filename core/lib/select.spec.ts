@@ -210,6 +210,17 @@ describe(`Select model`, () => {
 			expect(currentStateCloned, 'filtering with different case').toEqual(expectedState);
 		});
 
+		test('typing', () => {
+			selectWidget.actions.onInput({target: {value: 'aa'}});
+			expect(currentState!.opened).toBe(true);
+			expect(currentState!.visible.length).toBe(2);
+			const onFilterTextChange = vi.fn();
+			const widgetWithFilterChange = createSelect({onFilterTextChange});
+			widgetWithFilterChange.patch(props);
+			widgetWithFilterChange.actions.onInput({target: {value: 'aa'}});
+			expect(onFilterTextChange).toHaveBeenCalledWith('aa');
+		});
+
 		test(`Functionnal api for highlighted item`, () => {
 			selectWidget.api.open();
 			const expectedState = getStateClone();
@@ -246,6 +257,14 @@ describe(`Select model`, () => {
 			selectWidget.api.highlight('not in list');
 			expectedState.highlighted = undefined;
 			expect(currentStateCloned, 'highlight api with a non existant item').toEqual(expectedState);
+
+			selectWidget.patch({items: []});
+			selectWidget.api.highlight('not in list');
+			expect(currentStateCloned, 'highlight api with a non existant item').toContain({highlighted: undefined});
+			selectWidget.api.highlightPrevious();
+			expect(currentStateCloned, 'highlight api with a non existant item').toContain({highlighted: undefined});
+			selectWidget.api.highlightNext();
+			expect(currentStateCloned, 'highlight api with a non existant item').toContain({highlighted: undefined});
 		});
 	});
 

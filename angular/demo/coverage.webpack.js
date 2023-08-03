@@ -6,7 +6,7 @@ module.exports = {
 				loader: 'coverage-istanbul-loader',
 				options: {esModules: true},
 				enforce: 'post',
-				include: [require('path').join(__dirname, '..', 'lib', 'src'), require('path').join(__dirname, '..', '..', 'core')],
+				include: require('path').join(__dirname, '..', 'lib', 'src'),
 				exclude: [/\.(e2e|spec|po)\.ts$/, /node_modules/, /(ngfactory|ngstyle)\.js/],
 			},
 		],

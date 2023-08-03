@@ -19,7 +19,13 @@ jobs:
       - run: npx playwright install --with-deps
       - run: npm run build:coverage
       - run: npm run e2e -- --shard=${{ matrix.shard }}/${{ strategy.job-total}}
+      - id: check_lcov
+        run: |
+          if test -f "e2e/coverage/lcov.info"; then
+            echo "check_lcov=true" >> $GITHUB_OUTPUT
+          fi
       - uses: codecov/codecov-action@v3
+        if: steps.check_lcov.outputs.check_lcov == 'true'
         with:
           file: e2e/coverage/lcov.info
           flags: e2e-${{ matrix.shard }}

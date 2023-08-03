@@ -3,7 +3,7 @@ import {computed, writable} from '@amadeus-it-group/tansu';
 import type {SpyInstance} from 'vitest';
 import {afterEach, beforeEach, describe, expect, test, vi} from 'vitest';
 import type {RatingWidget, RatingProps} from './rating';
-import {createRating} from './rating';
+import {createRating, getRatingDefaultConfig} from './rating';
 import type {WidgetState} from './types';
 
 function keyboardEvent(key: string): KeyboardEvent {
@@ -73,6 +73,12 @@ describe(`Rating`, () => {
 				className: '',
 				slotStar: expect.any(Function),
 			});
+		});
+
+		test('should include a simple slot factory in the default config', () => {
+			const slotStar = getRatingDefaultConfig().slotStar as (props: {fill: number}) => string;
+			expect(slotStar({fill: 100})).toBe('★');
+			expect(slotStar({fill: 20})).toBe('☆');
 		});
 
 		test(`should ignore invalid 'rating' values`, () => {

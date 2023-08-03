@@ -19,8 +19,13 @@ async function globalSetup() {
 	});
 	return async () => {
 		console.log('Saving coverage report...');
-		await nycInstance.report();
-		console.log('Coverage report saved !');
+		const files = await fs.readdir(nycDir);
+		if (files.length) {
+			await nycInstance.report();
+			console.log('Coverage report saved !');
+		} else {
+			console.log('No coverage computed.');
+		}
 	};
 }
 
