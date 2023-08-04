@@ -2,7 +2,8 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import {defineConfig} from 'vite';
 import {alias} from '../viteAlias';
-import {dependencies} from './package.json';
+import {dependencies, peerDependencies} from './package.json';
+const external = [...Object.keys(dependencies), ...Object.keys(peerDependencies)];
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -16,7 +17,7 @@ export default defineConfig({
 			formats: ['es', 'cjs'],
 		},
 		rollupOptions: {
-			external: Object.keys(dependencies),
+			external: (id) => external.some((dependency) => id === dependency || id.startsWith(`${dependency}/`)),
 		},
 		emptyOutDir: true,
 		outDir: path.join(__dirname, 'dist/lib'),

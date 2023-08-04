@@ -13,12 +13,12 @@
 		"rating"
 	],
 	"peerDependencies": {
-		"@angular/common": "^16.1.8",
-		"@angular/core": "^16.1.8"
+		"@angular/common": "*",
+		"@angular/core": "*"
 	},
 	"dependencies": {
 		"@agnos-ui/core": "",
-		"@amadeus-it-group/tansu": "*",
+		"@amadeus-it-group/tansu": "0.0.22",
 		"tslib": "^2.6.1"
 	},
 	"license": "MIT",

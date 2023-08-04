@@ -44,6 +44,10 @@
 		"@amadeus-it-group/tansu": "0.0.22",
 		"classnames": "^2.3.2"
 	},
+	"peerDependencies": {
+		"react": "*",
+		"react-dom": "*"
+	},
 	"license": "MIT",
 	"bugs": "https://github.com/AmadeusITGroup/AgnosUI/issues",
 	"repository": {

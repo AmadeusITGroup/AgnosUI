@@ -4,19 +4,20 @@
 	import Sample from '../Sample.svelte';
 	import PlaygroundLine from './PlaygroundLine.svelte';
 	import {createPlayground} from './playground';
+	import type {SampleInfo} from '../sample';
 
-	export let componentName: string;
+	export let sample: SampleInfo;
 	export let config: Record<string, any>;
 	export let doc: WidgetDoc;
 	export let types: Record<string, string> = {};
 	export let height: number | undefined = undefined;
 
-	const {values$, sampleParameters$, help$} = createPlayground({componentName, config, types, doc});
+	const {values$, sampleParameters$, help$} = createPlayground({config, types, doc});
 </script>
 
 <div class="row">
 	<div class="col">
-		<Sample title="Configuration" {componentName} sampleName="Playground" urlParameters={$sampleParameters$} showCodeButton={false} {height} />
+		<Sample title="Configuration" {sample} urlParameters={$sampleParameters$} showCodeButton={false} {height} />
 	</div>
 </div>
 <div class="row">
@@ -53,7 +54,7 @@
 				<div class="mb-2">
 					<span class="highlight">Default value:</span>
 					{#if type === 'function'}
-						<div class="mt-3"><Code code={defaultValue} codeTitle={'function'} isSample={false} /></div>
+						<div class="mt-3"><Code code={defaultValue} title={'function'} isSample={false} language="typescript" /></div>
 					{:else}
 						<code>{defaultValue}</code>
 					{/if}

@@ -31,7 +31,7 @@
 						<span class="fw-bold">Default value:</span>
 						{#if nType === 'function'}
 							<div class="my-2">
-								<Code code={defaultValue} codeTitle={'function'} isSample={false} />
+								<Code code={defaultValue} title={'function'} language="typescript" isSample={false} />
 							</div>
 						{:else}
 							<code>{'' + defaultValue}</code>

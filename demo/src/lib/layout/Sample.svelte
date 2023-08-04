@@ -14,9 +14,11 @@
 	import {selectedFramework$, type Frameworks} from '../stores';
 
 	import openLink from '../icons/open-link.svg?raw';
+	import stackblitz from '../icons/stackblitz.svg?raw';
+	import {pathToRoot$} from '../stores';
 	import Lazy from './Lazy.svelte';
 	import Svg from './Svg.svelte';
-	import {pathToRoot$} from '../stores';
+	import type {SampleInfo} from './sample';
 
 	/**
 	 * iFrame title
@@ -24,24 +26,9 @@
 	export let title: string;
 
 	/**
-	 * Component name used to find the code in a specific framework.
-	 *
-	 * The component must be located in the folder:
-	 * ```typescript
-	 * ${componentName}/${sampleName}
-	 * ```
+	 * Sample
 	 */
-	export let componentName: string;
-
-	/**
-	 * File name (without the extension), used to retrieve the code
-	 *
-	 * The component must be located in the folder:
-	 * ```typescript
-	 * ${componentName}/${sampleName}
-	 * ```
-	 */
-	export let sampleName: string;
+	export let sample: SampleInfo;
 
 	export let height: number | undefined = undefined;
 
@@ -74,41 +61,19 @@
 
 	let showCode = false;
 
-	$: normalizedComponentName = componentName.toLowerCase();
-	$: path = `${normalizedComponentName}/${sampleName}`.toLowerCase();
-	async function getCode(_showCode: boolean, frameworkName: Frameworks, _component: string, sample: string) {
+	$: path = `${sample.componentName}/${sample.sampleName}`.toLowerCase();
+	async function getCode(_showCode: boolean, frameworkName: Frameworks, sample: SampleInfo) {
 		if (!_showCode) {
 			return '';
 		}
-		let module;
-		if (frameworkName === 'angular') {
-			sample = sample[0].toLowerCase() + sample.substring(1);
-			module = await import(`../../../../angular/demo/src/app/samples/${normalizedComponentName}/${sample}.route.ts?raw`);
-		} else if (frameworkName === 'react') {
-			module = await import(`../../../../react/demo/app/samples/${normalizedComponentName}/${sample}.route.tsx?raw`);
-		} else if (frameworkName === 'svelte') {
-			module = await import(`../../../../svelte/demo/samples/${normalizedComponentName}/${sample}.route.svelte?raw`);
-		}
-		return module.default;
+		const frameworkFiles = sample.files[frameworkName];
+		return await frameworkFiles.files[frameworkFiles.entryPoint]();
 	}
 	let code = '';
-	$: getCode(showCode, $selectedFramework$!, componentName, sampleName).then((importedCode) => {
+	$: getCode(showCode, $selectedFramework$!, sample).then((importedCode) => {
 		code = importedCode;
 	});
-	let codeTitle = '';
-	$: {
-		switch ($selectedFramework$) {
-			case 'angular':
-				codeTitle = `${sampleName[0].toLowerCase() + sampleName.substring(1)}.component.ts`;
-				break;
-			case 'react':
-				codeTitle = `${sampleName}.tsx`;
-				break;
-			case 'svelte':
-				codeTitle = `${sampleName}.svelte`;
-				break;
-		}
-	}
+	$: fileName = sample.files[$selectedFramework$].entryPoint;
 
 	id++;
 	const baseId = `sample-${id}`;
@@ -132,6 +97,12 @@
 				<input type="checkbox" class="btn-check" id={`${baseId}-code`} autocomplete="off" bind:checked={showCode} />
 				<label class="btn btn-primary" for={`${baseId}-code`}>Code</label>
 			</div>
+			<button
+				class="btn btn-sm btn-primary me-2"
+				aria-label="Open example in stackblitz"
+				on:click={async () => (await import('../stackblitz')).openInStackblitz(sample, $selectedFramework$)}
+				><Svg className="icon-20 align-middle" svg={stackblitz} /></button
+			>
 		{/if}
 		<a href={sampleUrl} class="action" target="_blank" rel="noreferrer nofollow external" aria-label="View sample in new tab"
 			><Svg svg={openLink} />
@@ -152,7 +123,7 @@
 		</div>
 		{#if showCode}
 			<div class="col-auto">
-				<Lazy component={() => import('./Code.svelte')} {code} {codeTitle}>
+				<Lazy component={() => import('./Code.svelte')} {code} {fileName}>
 					<div class="spinner-border text-primary" role="status">
 						<span class="visually-hidden">Loading...</span>
 					</div>

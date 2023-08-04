@@ -3,9 +3,9 @@ import path from 'path';
 import type {ProxyOptions} from 'vite';
 import {defineConfig} from 'vite';
 import pkg from '../core/package.json';
-import {alias} from '../viteAlias';
 import {copySamples} from './scripts/copySamples.plugin';
 import {docExtractor} from './scripts/doc.plugin';
+import {includeSamples} from './scripts/includeSamples.plugin';
 
 const proxy: Record<string, string | ProxyOptions> = {
 	'/angular/samples': {
@@ -36,10 +36,7 @@ export default defineConfig({
 		port: 4000,
 		proxy: {},
 	},
-	resolve: {
-		alias,
-	},
-	plugins: [copySamples(), sveltekit(), docExtractor()],
+	plugins: [copySamples(), includeSamples(), sveltekit(), docExtractor()],
 	define: {
 		'import.meta.env.AGNOSUI_VERSION': JSON.stringify((pkg as any).version ?? '0.0.0'),
 	},
