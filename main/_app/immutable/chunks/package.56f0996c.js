@@ -1,0 +1,45 @@
+const t=`{
+	"name": "@agnos-ui/core",
+	"description": "Framework-agnostic headless widget library.",
+	"homepage": "https://amadeusitgroup.github.io/AgnosUI/latest/",
+	"keywords": [
+		"headless",
+		"agnostic",
+		"components",
+		"widgets",
+		"alert",
+		"modal",
+		"pagination",
+		"rating"
+	],
+	"main": "dist/lib/index.js",
+	"module": "dist/lib/index.mjs",
+	"types": "dist/lib/index.d.ts",
+	"scripts": {
+		"build": "npm run build:rollup && npm run build:dts && npm run build:api-extractor",
+		"build:rollup": "tsc && vite build -c vite.config.ts",
+		"build:dts": "tsc -p tsconfig.d.json",
+		"build:api-extractor": "api-extractor run",
+		"test": "vitest run",
+		"tdd": "vitest",
+		"tdd:ui": "vitest --ui",
+		"test:coverage": "vitest run --coverage"
+	},
+	"dependencies": {
+		"@amadeus-it-group/tansu": "0.0.22"
+	},
+	"files": [
+		"dist/lib"
+	],
+	"license": "MIT",
+	"bugs": "https://github.com/AmadeusITGroup/AgnosUI/issues",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/AmadeusITGroup/AgnosUI.git",
+		"directory": "core"
+	},
+	"devDependencies": {
+		"eslint-plugin-jsdoc": "^46.4.5"
+	}
+}
+`;export{t as default};
