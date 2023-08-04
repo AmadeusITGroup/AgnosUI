@@ -25,5 +25,5 @@
 			"matchUpdateTypes": ["major"]
 		}
 	],
-	"lockFileMaintenance": {"enabled": true, "schedule": ["at any time"]}
+	"lockFileMaintenance": {"enabled": true, "schedule": ["every weekend"]}
 }
