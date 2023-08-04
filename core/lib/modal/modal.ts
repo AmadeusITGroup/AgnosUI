@@ -298,6 +298,7 @@ const defaultConfig: ModalProps = {
 
 /**
  * Returns a copy of the default modal config.
+ * @returns a copy of the default modal config
  */
 export function getModalDefaultConfig() {
 	return {...defaultConfig};

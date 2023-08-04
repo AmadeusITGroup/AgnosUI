@@ -71,6 +71,10 @@ export const promiseFromTimeout = (delay: number) => {
 	};
 };
 
+/**
+ * Launch a reflow using a call to the provided html element getBoudingClientRect
+ * @param element the html element
+ */
 export function reflow(element: HTMLElement = document.body) {
 	element.getBoundingClientRect();
 }

@@ -1,11 +1,21 @@
 import type {TransitionFn} from './baseTransitions';
 import {promiseFromEvent, promiseFromTimeout} from './utils';
 
-export function hasTransition(element: HTMLElement) {
+/**
+ * Check if the provided html element has a transition
+ * @param element - the html element
+ * @returns true if the element has a transition
+ */
+export function hasTransition(element: HTMLElement): boolean {
 	return window.getComputedStyle(element).transitionProperty !== 'none';
 }
 
-export function getTransitionDurationMs(element: HTMLElement) {
+/**
+ * Retrieve the transition duration of the provided html element in milli seconds
+ * @param element - the html element
+ * @returns transition duration in milli seconds
+ */
+export function getTransitionDurationMs(element: HTMLElement): number {
 	const {transitionDelay, transitionDuration} = window.getComputedStyle(element);
 	const transitionDelaySec = parseFloat(transitionDelay);
 	const transitionDurationSec = parseFloat(transitionDuration);

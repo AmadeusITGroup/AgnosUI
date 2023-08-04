@@ -10,6 +10,11 @@ function _applyPagination(page: number, maxSize: number): [number, number] {
 
 /**
  * Appends ellipses and first/last page number to the displayed pages
+ * @param start - the first page number
+ * @param end - the last page number
+ * @param ellipses - apply ellipses
+ * @param pages - the pages to apply the function to
+ * @param pageCount - the total number of pages
  */
 function _applyEllipses(start: number, end: number, ellipses: boolean, pages: number[], pageCount: number) {
 	if (ellipses) {
@@ -47,6 +52,11 @@ function _applyEllipses(start: number, end: number, ellipses: boolean, pages: nu
  * Ex. for selected page = 6:
  * [5,*6*,7] for maxSize = 3
  * [4,5,*6*,7] for maxSize = 4
+ *
+ * @param page - the page number
+ * @param maxSize - the max size
+ * @param pageCount - the page count
+ * @returns the rotated page numbers
  */
 function _applyRotation(page: number, maxSize: number, pageCount: number): [number, number] {
 	let start = 0;
@@ -69,6 +79,13 @@ function _applyRotation(page: number, maxSize: number, pageCount: number): [numb
 	return [start, end];
 }
 
+/**
+ * This is the pagination algorithm used by ng-bootstrap. While this is not the default implementation of our widget, we export it to ease the migration from ng-bootstrap pagination.
+ * @param maxSize - the max size
+ * @param rotate - rotate the pages
+ * @param ellipses - enable ellipses
+ * @returns the pages
+ */
 export function ngBootstrapPagination(maxSize: number, rotate: boolean, ellipses: boolean): (page: number, pageCount: number) => number[] {
 	return function (page: number, pageCount: number) {
 		let pages: number[] = [];

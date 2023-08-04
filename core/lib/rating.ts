@@ -6,7 +6,13 @@ import {typeBoolean, typeFunction, typeNumber, typeString} from './services/writ
 import type {SlotContent, Widget} from './types';
 
 export interface StarContext {
+	/**
+	 * indicates how much the current star is filled, from 0 to 100
+	 */
 	fill: number;
+	/**
+	 * the position of the star in the rating
+	 */
 	index: number;
 }
 
@@ -96,9 +102,21 @@ export interface RatingProps extends RatingCommonPropsAndState {
 }
 
 export interface RatingState extends RatingCommonPropsAndState {
+	/**
+	 * the aria value of the rating
+	 */
 	ariaValueText: string;
+	/**
+	 * the visible value of the rating (it changes when hovering over the rating even though the real value did not change)
+	 */
 	visibleRating: number;
+	/**
+	 * is the rating interactive i.e. listening to hover, click and keyboard events
+	 */
 	isInteractive: boolean;
+	/**
+	 * the list of stars
+	 */
 	stars: StarContext[];
 }
 
@@ -160,6 +178,10 @@ const defaultConfig: RatingProps = {
 	ariaLabelledBy: '',
 };
 
+/**
+ * Returns a shallow copy of the default rating config.
+ * @returns a copy of the default config
+ */
 export function getRatingDefaultConfig() {
 	return {...defaultConfig};
 }
@@ -181,6 +203,11 @@ const configValidator: ConfigValidator<RatingProps> = {
 	ariaLabelledBy: typeString,
 };
 
+/**
+ * Create a RatingWidget with given config props
+ * @param config - an optional alert config
+ * @returns a RatingWidget
+ */
 export function createRating(config?: PropsConfig<RatingProps>): RatingWidget {
 	const [
 		{
@@ -219,7 +246,7 @@ export function createRating(config?: PropsConfig<RatingProps>): RatingWidget {
 	const ariaValueText$ = computed(() => ariaValueTextFn$()(visibleRating$(), maxRating$()));
 	const stars$ = computed(() => {
 		const visibleRating = visibleRating$();
-		return Array.from({length: maxRating$()}, (v, i) => ({
+		return Array.from({length: maxRating$()}, (_v, i) => ({
 			fill: Math.round(Math.max(Math.min(visibleRating - i, 1), 0) * 100),
 			index: i,
 		}));

@@ -37,5 +37,8 @@
 		"type": "git",
 		"url": "https://github.com/AmadeusITGroup/AgnosUI.git",
 		"directory": "core"
+	},
+	"devDependencies": {
+		"eslint-plugin-jsdoc": "^46.4.5"
 	}
 }
