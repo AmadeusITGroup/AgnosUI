@@ -2,6 +2,7 @@ import adapter from '@sveltejs/adapter-static';
 import {vitePreprocess} from '@sveltejs/kit/vite';
 import path from 'path';
 import {fileURLToPath} from 'url';
+import child_process from 'child_process';
 
 const __dirname = fileURLToPath(new URL('./', import.meta.url));
 
@@ -39,6 +40,10 @@ const config = {
 		},
 
 		alias,
+
+		version: {
+			name: child_process.execSync('git rev-parse HEAD').toString().trim(),
+		},
 	},
 };
 
