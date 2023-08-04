@@ -12,7 +12,12 @@
 			"error",
 			{
 				"publicOnly": true,
-				"contexts": ["ExportNamedDeclaration TSInterfaceDeclaration > TSInterfaceBody > TSPropertySignature"]
+				"contexts": [
+					"TSInterfaceDeclaration > TSInterfaceBody > TSPropertySignature",
+					"TSInterfaceDeclaration > TSInterfaceBody > TSMethodSignature",
+					"TSTypeAliasDeclaration > TSTypeLiteral > TSPropertySignature",
+					"TSTypeAliasDeclaration > TSTypeLiteral > TSMethodSignature"
+				]
 			}
 		]
 	},

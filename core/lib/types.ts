@@ -9,7 +9,7 @@ export interface Widget<
 	Directives extends object = object
 > {
 	/**
-	 * the reactive state of the widget
+	 * the reactive state of the widget, combining all the values served by the stores
 	 */
 	state$: ReadableSignal<State>;
 	/**
@@ -22,8 +22,7 @@ export interface Widget<
 	 */
 	patch(parameters: Partial<Props>): void;
 	/**
-	 * the directives that can be used on associated elements to react to the widget.
-	 * an example would be adding classes to the container of the widget when it is in a certain state
+	 * directives to be used on html elements in the template of the widget or in the slots
 	 */
 	directives: Directives;
 	/**

@@ -107,7 +107,7 @@ export interface RatingState extends RatingCommonPropsAndState {
 	 */
 	ariaValueText: string;
 	/**
-	 * the value of the rating
+	 * the visible value of the rating (it changes when hovering over the rating even though the real value did not change)
 	 */
 	visibleRating: number;
 	/**

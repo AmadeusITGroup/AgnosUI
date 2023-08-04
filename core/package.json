@@ -26,8 +26,7 @@
 		"test:coverage": "vitest run --coverage"
 	},
 	"dependencies": {
-		"@amadeus-it-group/tansu": "0.0.22",
-		"remove": "^0.1.5"
+		"@amadeus-it-group/tansu": "0.0.22"
 	},
 	"files": [
 		"dist/lib"

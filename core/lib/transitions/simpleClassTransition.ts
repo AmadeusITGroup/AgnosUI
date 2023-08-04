@@ -11,7 +11,7 @@ export interface SimpleClassTransitionConfig {
 	 */
 	animationPendingShowClasses?: string[];
 	/**
-	 * a list of classes to add to the collapsable element while transitioning towards the hidden state
+	 * a list of classes to add to the collapsable element while transitioning towards the hide state
 	 */
 	animationPendingHideClasses?: string[];
 	/**

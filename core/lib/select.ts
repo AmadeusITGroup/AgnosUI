@@ -155,20 +155,48 @@ export interface SelectApi<Item> {
 	 * The focus feature is designed to know what item must be focused in the UI, i.e. among the badge elements.
 	 */
 	focus(item: Item): void;
+	/**
+	 * Focus the first element
+	 */
 	focusFirst(): void;
+	/**
+	 * Focus the previous element. If no element was focused before the call, nothing happens.
+	 */
 	focusPrevious(): void;
+	/**
+	 * Focus the next element. If no element was focused before the call, nothing happens.
+	 */
 	focusNext(): void;
+	/**
+	 * Focus the last element. If no element was focused before the call, nothing happens.
+	 */
 	focusLast(): void;
 
 	/**
 	 * Select the provided item.
 	 * The selected list is used to
+	 * @param item - the item to select
 	 */
 	select(item: Item): void;
+	/**
+	 * Unselect the provided item.
+	 * @param item - the item to unselect
+	 */
 	unselect(item: Item): void;
+	/**
+	 * Toggle the selection of an item
+	 * @param item - the item to toggle
+	 * @param selected - an optional boolean to enforce the selected/unselected state instead of toggling
+	 */
 	toggleItem(item: Item, selected?: boolean): void;
 
+	/**
+	 * open the select
+	 */
 	open(): void;
+	/**
+	 * close the select
+	 */
 	close(): void;
 	/**
 	 * Toggle the dropdown menu
