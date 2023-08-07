@@ -199,7 +199,11 @@ const defaultItemConfig: AccordionItemProps = {
 	itemBodyClass: defaultAccordionConfig.itemBodyClass,
 };
 
-export function getAccordionDefaultConfig() {
+/**
+ * Retrieve a shallow copy of the default accordion config
+ * @returns the default accordion config
+ */
+export function getAccordionDefaultConfig(): AccordionProps {
 	return {...defaultAccordionConfig};
 }
 

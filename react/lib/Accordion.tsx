@@ -32,7 +32,7 @@ const DefaultSlotStructure = (slotContext: AccordionItemContext) => {
 					type="button"
 					id={`${slotContext.state.itemId}-toggle`}
 					onClick={slotContext.widget.actions.click}
-					className={`accordion-button ${slotContext.state.itemButtonClass} ${slotContext.state.itemCollapsed ? 'collapsed' : null}`}
+					className={`accordion-button ${slotContext.state.itemButtonClass} ${slotContext.state.itemCollapsed ? 'collapsed' : ''}`}
 					disabled={slotContext.state.itemDisabled}
 					aria-controls={`${slotContext.state.itemId}-collapse`}
 					aria-disabled={slotContext.state.itemDisabled}

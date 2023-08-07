@@ -1,10 +1,9 @@
 import {AgnosUIAngularModule} from '@agnos-ui/angular';
-import {NgFor} from '@angular/common';
 import {Component} from '@angular/core';
 
 @Component({
 	standalone: true,
-	imports: [AgnosUIAngularModule, NgFor],
+	imports: [AgnosUIAngularModule],
 	template: `
 		<div auAccordion>
 			<div au-accordion-item [itemCollapsed]="false">

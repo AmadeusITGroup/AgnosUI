@@ -14,7 +14,7 @@ const frameworks = [
 	},
 	{
 		name: 'react',
-		command: isCI ? previewDemoCommand : includeCoverage ? `npm run dev:coverage react` : `npm run dev react`,
+		command: isCI ? previewDemoCommand : includeCoverage ? `STRICT=false npm run dev:coverage react` : `STRICT=false npm run dev react`,
 		url: `${isCI ? demoUrl : 'http://localhost:3000'}/react/samples/`,
 	},
 	{
