@@ -39,7 +39,7 @@ const t=`{
 		"directory": "core"
 	},
 	"devDependencies": {
-		"eslint-plugin-jsdoc": "^46.4.5"
+		"eslint-plugin-jsdoc": "^46.4.6"
 	}
 }
 `;export{t as default};

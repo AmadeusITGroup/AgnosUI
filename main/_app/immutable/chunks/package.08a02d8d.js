@@ -8,9 +8,9 @@ const t=`{
 		"watch": "ng build --watch --configuration development"
 	},
 	"devDependencies": {
-		"@angular-devkit/build-angular": "^16.1.7",
+		"@angular-devkit/build-angular": "^16.1.8",
 		"@angular/animations": "^16.1.8",
-		"@angular/cli": "^16.1.7",
+		"@angular/cli": "^16.1.8",
 		"@angular/common": "^16.1.8",
 		"@angular/compiler": "^16.1.8",
 		"@angular/compiler-cli": "^16.1.8",
