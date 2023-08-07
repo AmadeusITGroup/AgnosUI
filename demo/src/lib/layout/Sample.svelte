@@ -111,8 +111,8 @@
 		{#if showCodeButton}
 			<div class="btn-group btn-group-sm me-2" role="group" aria-label="Toggle code">
 				<input type="checkbox" class="btn-check" id={`${baseId}-code`} autocomplete="off" bind:checked={showCode} />
-				<label class="btn btn-primary" for={`${baseId}-code`}>
-					<Svg className="icon-20 align-middle" svg={codeSvg} />
+				<label class="btn btn-primary d-flex align-items-center" for={`${baseId}-code`}>
+					<Svg className="icon-20 align-middle me-1" svg={codeSvg} />
 					Code
 				</label>
 			</div>
