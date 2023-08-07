@@ -11,6 +11,7 @@
 		"svelte-check": "svelte-check"
 	},
 	"dependencies": {
+		"@popperjs/core": "^2.11.8",
 		"highlight.js": "^11.8.0"
 	},
 	"devDependencies": {

@@ -15,10 +15,13 @@
 
 	import openLink from '../icons/open-link.svg?raw';
 	import stackblitz from '../icons/stackblitz.svg?raw';
+	import codeSvg from '../icons/code.svg?raw';
 	import {pathToRoot$} from '../stores';
 	import Lazy from './Lazy.svelte';
 	import Svg from './Svg.svelte';
 	import type {SampleInfo} from './sample';
+	import {onDestroy} from 'svelte';
+	import {tooltip} from '$lib/tooltip/tooltip';
 
 	/**
 	 * iFrame title
@@ -82,47 +85,58 @@
 	$: sampleBaseUrl, (iframeLoaded = false);
 
 	let iframeLoaded = false;
+	let resizeObserver: ResizeObserver;
+	let iframeHeight = 50;
 	function onLoad(event: Event) {
 		iframeLoaded = true;
-		if (height === undefined && event.target instanceof HTMLIFrameElement && event.target.contentWindow) {
-			event.target.height = event.target.contentWindow.document.body.scrollHeight.toString(10);
+		if (!resizeObserver) {
+			resizeObserver = new ResizeObserver((entries) => {
+				if (entries.length === 1) {
+					iframeHeight = entries[0].contentRect.height + 2;
+				}
+			});
+		}
+		resizeObserver.disconnect();
+		if (event.target instanceof HTMLIFrameElement && event.target.contentDocument) {
+			resizeObserver.observe(event.target.contentDocument.body);
 		}
 	}
+	onDestroy(() => {
+		resizeObserver?.disconnect();
+	});
 </script>
 
 <div class="my-4 py-2 px-0 px-sm-3">
-	<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+	<div class="btn-toolbar d-flex align-items-center" role="toolbar" aria-label="Toolbar with button groups">
 		{#if showCodeButton}
 			<div class="btn-group btn-group-sm me-2" role="group" aria-label="Toggle code">
 				<input type="checkbox" class="btn-check" id={`${baseId}-code`} autocomplete="off" bind:checked={showCode} />
-				<label class="btn btn-primary" for={`${baseId}-code`}>Code</label>
+				<label class="btn btn-primary" for={`${baseId}-code`}>
+					<Svg className="icon-20 align-middle" svg={codeSvg} />
+					Code
+				</label>
 			</div>
 			<button
-				class="btn btn-sm btn-primary me-2"
+				class="btn btn-sm btn-link me-2"
 				aria-label="Open example in stackblitz"
+				use:tooltip={{content: 'Edit in Stackblitz'}}
 				on:click={async () => (await import('../stackblitz')).openInStackblitz(sample, $selectedFramework$)}
-				><Svg className="icon-20 align-middle" svg={stackblitz} /></button
+				><Svg className="icon-24 align-middle" svg={stackblitz} /></button
 			>
 		{/if}
-		<a href={sampleUrl} class="action" target="_blank" rel="noreferrer nofollow external" aria-label="View sample in new tab"
-			><Svg svg={openLink} />
+		<a
+			href={sampleUrl}
+			class="action"
+			target="_blank"
+			rel="noreferrer nofollow external"
+			aria-label="View sample in new tab"
+			use:tooltip={{content: 'Open example in a new tab'}}
+			><Svg className="icon-20 align-middle" svg={openLink} />
 		</a>
 	</div>
 	<div class="row">
-		<div class="col-sm-12">
-			{#if !iframeLoaded}
-				<div class="position-relative">
-					<div class="position-absolute top-0 start-50 translate-middle-x">
-						<div class="spinner-border text-primary" role="status">
-							<span class="visually-hidden">Loading...</span>
-						</div>
-					</div>
-				</div>
-			{/if}
-			<iframe class="demo-sample" use:iframeSrc={sampleUrl} {title} {height} on:load={onLoad} />
-		</div>
 		{#if showCode}
-			<div class="col-auto">
+			<div class="col-auto my-2">
 				<Lazy component={() => import('./Code.svelte')} {code} {fileName}>
 					<div class="spinner-border text-primary" role="status">
 						<span class="visually-hidden">Loading...</span>
@@ -130,10 +144,26 @@
 				</Lazy>
 			</div>
 		{/if}
+		<div class="col-sm-12">
+			{#if !iframeLoaded}
+				<div class="position-relative">
+					<div class="position-absolute start-50 translate-middle-x iframeSpinner">
+						<div class="spinner-border text-primary" role="status">
+							<span class="visually-hidden">Loading...</span>
+						</div>
+					</div>
+				</div>
+			{/if}
+			<iframe class="demo-sample border rounded mt-3" use:iframeSrc={sampleUrl} {title} height={height ?? iframeHeight} on:load={onLoad} />
+		</div>
 	</div>
 </div>
 
 <style lang="scss">
+	.iframeSpinner {
+		top: 1.5rem;
+	}
+
 	.action {
 		display: inline-block;
 
