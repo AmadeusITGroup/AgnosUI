@@ -11,7 +11,7 @@
 	$: isSvelte = $selectedFramework$ === 'svelte';
 </script>
 
-<header class="bg-light pt-4 pb-5 px-4 px-lg-5 d-flex mb-3 d-md-block align-items-center title">
+<header class="bg-light pt-4 pb-5 px-4 px-lg-5 d-flex mb-4 d-md-block align-items-center title">
 	<div class="row mb-4 align-items-end">
 		<h1 class="col-auto me-auto me-md-none mb-0">{title}</h1>
 		<div class="col">

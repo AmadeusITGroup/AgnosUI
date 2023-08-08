@@ -4,16 +4,17 @@
 	import sampleReadonly from '@agnos-ui/samples/rating/readonly';
 	import sampleCustomTemplate from '@agnos-ui/samples/rating/customTemplate';
 	import sampleForm from '@agnos-ui/samples/rating/form';
+	import LinkHeading from '$lib/link-heading/LinkHeading.svelte';
 </script>
 
-<h4>Default</h4>
+<LinkHeading label="Default rating" id="default" level={2} />
 <Sample title="Rating example" sample={sampleDefault} />
 
-<h4>Readonly</h4>
+<LinkHeading label="Readonly" id="readonly" level={2} />
 <Sample title="Read only rating" sample={sampleReadonly} />
 
-<h4>Custom Template</h4>
+<LinkHeading label="Custom Template" id="custom" level={2} />
 <Sample title="Custom template" sample={sampleCustomTemplate} />
 
-<h4>Form integration</h4>
+<LinkHeading label="Form integration" id="form" level={2} />
 <Sample title="Form" sample={sampleForm} />

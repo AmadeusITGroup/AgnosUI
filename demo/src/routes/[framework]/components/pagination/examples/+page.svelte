@@ -2,9 +2,11 @@
 	import Sample from '../../../../../lib/layout/Sample.svelte';
 	import sampleDefault from '@agnos-ui/samples/pagination/default';
 	import sampleCustom from '@agnos-ui/samples/pagination/custom';
+	import LinkHeading from '$lib/link-heading/LinkHeading.svelte';
 </script>
 
-<h4>Default</h4>
+<LinkHeading label="Default pagination" id="default" level={2} />
 <Sample title="Pagination example" sample={sampleDefault} />
-<h4>Custom</h4>
+
+<LinkHeading label="Customization" id="custom" level={2} />
 <Sample title="Custom Pagination example" sample={sampleCustom} />

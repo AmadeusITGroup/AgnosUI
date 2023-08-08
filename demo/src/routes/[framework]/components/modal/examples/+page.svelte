@@ -1,11 +1,12 @@
 <script lang="ts">
+	import LinkHeading from '$lib/link-heading/LinkHeading.svelte';
 	import Sample from '../../../../../lib/layout/Sample.svelte';
 	import sampleDefault from '@agnos-ui/samples/modal/default';
 	import sampleStack from '@agnos-ui/samples/modal/stack';
 </script>
 
-<h4>Default</h4>
+<LinkHeading label="Default modal" id="default" level={2} />
 <Sample title="Default example" sample={sampleDefault} height={300} />
 
-<h4>Modal stack</h4>
+<LinkHeading label="Modal stack" id="stack" level={2} />
 <Sample title="Modal stack example" sample={sampleStack} height={400} />

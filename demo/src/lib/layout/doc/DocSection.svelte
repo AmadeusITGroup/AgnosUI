@@ -2,23 +2,27 @@
 	import {normalizedType, textToLines} from '../../../app';
 	import type {PropertyDoc} from '@agnos-ui/doc/types';
 	import Code from '../Code.svelte';
+	import LinkHeading from '$lib/link-heading/LinkHeading.svelte';
 
 	const noDefault = {};
 
 	export let title: string;
 	export let properties: PropertyDoc[];
 	export let defaultValues: Record<string, any> = noDefault;
+	$: titleLowercase = title.toLowerCase();
 
 	$: hasDefaults = defaultValues !== noDefault;
 </script>
 
 {#if properties.length}
 	<section class="mb-3">
-		<h2 class="border pb-3 border-0 border-bottom">{title}</h2>
+		<div class="border pb-3 border-0 border-bottom">
+			<LinkHeading label={title} id={titleLowercase} level={2} />
+		</div>
 		{#each properties as { name, type, description, defaultValue } (name)}
 			{@const lines = textToLines(description)}
 			<div class="my-4 pb-3 border-bottom">
-				<h3><a href="#{name}" class="link-offset-2">{name}</a></h3>
+				<LinkHeading label={name} id="{titleLowercase}-{name}" level={3} className="text-primary" />
 				<div class="mb-3"><span class="fw-bold">Type:</span> <code>{type}</code></div>
 				<div class="mb-3">
 					{#each lines as line}

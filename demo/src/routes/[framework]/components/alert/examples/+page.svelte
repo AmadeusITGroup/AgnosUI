@@ -4,16 +4,17 @@
 	import sampleConfig from '@agnos-ui/samples/alert/config';
 	import sampleIcon from '@agnos-ui/samples/alert/icon';
 	import sampleDynamic from '@agnos-ui/samples/alert/dynamic';
+	import LinkHeading from '$lib/link-heading/LinkHeading.svelte';
 </script>
 
-<h4>Simple alert</h4>
+<LinkHeading label="Simple alert" id="default" level={2} />
 <Sample title="Generic example" sample={sampleGeneric} />
 
-<h4>Configurable alert</h4>
+<LinkHeading label="Configurable alert" id="config" level={2} />
 <Sample title="Config example" sample={sampleConfig} />
 
-<h4>Customizable icon</h4>
+<LinkHeading label="Customizable icon" id="custom" level={2} />
 <Sample title="Customizable icon example" sample={sampleIcon} />
 
-<h4>Dynamic alert generation</h4>
+<LinkHeading label="Dynamic alert generation" id="dynamic" level={2} />
 <Sample title="Dynamic generation example" sample={sampleDynamic} />
