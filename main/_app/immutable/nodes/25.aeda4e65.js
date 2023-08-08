@@ -1,0 +1,3 @@
+import{s as d,n as m}from"../chunks/scheduler.2ed3e821.js";import{S as h,i as p,g as u,m as f,B as g,h as _,f as s,n as x,k as r,y as v,a as y}from"../chunks/index.6f5125a4.js";import{g as c,a as C}from"../chunks/app.8c876633.js";function T(l){let t,e,o;return document.title=t=c(i),{c(){e=u("meta"),o=f(`
+Coming soon...`),this.h()},l(n){const a=g("svelte-nmzoe7",document.head);e=_(a,"META",{name:!0,content:!0}),a.forEach(s),o=x(n,`
+Coming soon...`),this.h()},h(){r(e,"name","description"),r(e,"content",C(i))},m(n,a){v(document.head,e),y(n,o,a)},p(n,[a]){a&0&&t!==(t=c(i))&&(document.title=t)},i:m,o:m,d(n){n&&s(o),s(e)}}}const i="Transition";class q extends h{constructor(t){super(),p(this,t,null,T,d,{})}}export{q as component};
