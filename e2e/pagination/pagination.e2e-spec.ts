@@ -57,21 +57,21 @@ test.describe.parallel(`Pagination tests`, () => {
 		disabled: null,
 		isPreviousDisabled: false,
 		isNextDisabled: false,
-		pages: ['1', '2', '3', '4(current)', '5', '6', '7'],
+		pages: ['1', '2', '3', '4(current)', '5', '6'],
 	};
 	const initCustomState: State = {
 		rootClasses: ['au-pagination', 'pagination'],
 		disabled: null,
 		isPreviousDisabled: false,
 		isNextDisabled: false,
-		pages: ['A', 'B', 'C', 'D(current)', 'E', 'F', 'G'],
+		pages: ['A', 'B', 'C', 'D(current)', 'E', 'F'],
 	};
 	const disabledInitState: State = {
 		rootClasses: ['au-pagination', 'pagination'],
 		disabled: 'true',
 		isPreviousDisabled: true,
 		isNextDisabled: true,
-		pages: ['1(current)', '2', '3', '4', '5', '6', '7'],
+		pages: ['1(current)', '2', '3', '4', '5', '6'],
 	};
 	test(`Default features`, async ({page}) => {
 		const paginationDemoPO = new PaginationDemoPO(page);
@@ -92,17 +92,17 @@ test.describe.parallel(`Pagination tests`, () => {
 			isFirstDisabled: true,
 			isLastDisabled: false,
 			isPreviousDisabled: true,
-			pages: ['1(current)', '2', '3', '4', '5', '6', '7'],
+			pages: ['1(current)', '2', '3', '4', '5', '6'],
 		});
 		await paginationWithBoundariesPO.locatorLastButton.click();
-		expect(await paginationDemoPO.defaultPaginationDemoState()).toEqual({page: 7});
+		expect(await paginationDemoPO.defaultPaginationDemoState()).toEqual({page: 6});
 		expect(await paginationState(paginationWithBoundariesPO)).toEqual({
 			...initState,
 			isFirstDisabled: false,
 			isLastDisabled: true,
 			isNextDisabled: true,
 			isPreviousDisabled: false,
-			pages: ['1', '2', '3', '4', '5', '6', '7(current)'],
+			pages: ['1', '2', '3', '4', '5', '6(current)'],
 		});
 	});
 

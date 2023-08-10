@@ -6,7 +6,13 @@
 </script>
 
 <LinkHeading label="Default modal" id="default" level={2} />
-<Sample title="Default example" sample={sampleDefault} height={300} />
+<Sample title="Default example" sample={sampleDefault} height={300} noresize />
 
 <LinkHeading label="Modal stack" id="stack" level={2} />
-<Sample title="Modal stack example" sample={sampleStack} height={400} />
+<p>
+	It is possible to stack modals on top of each other. Note that for better User Experience, stacking modals should be avoided as much as possible.
+</p>
+<Sample title="Modal stack example" sample={sampleStack} height={400} noresize />
+
+<LinkHeading label="Accessibility" id="accessibility" level={2} />
+<p>TODO</p>

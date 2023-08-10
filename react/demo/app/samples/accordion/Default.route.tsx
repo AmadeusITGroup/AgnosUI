@@ -15,15 +15,12 @@ const fancyHeader = () => (
 		&#9733; <b>Fancy</b> title &#9733;
 	</span>
 );
-const AccordionDemo = () => {
-	return (
-		<>
-			<Accordion>
-				<AccordionItem slotItemHeader="Simple" slotItemBody={body} itemCollapsed={false} itemId={'item-1'} />
-				<AccordionItem slotItemHeader={fancyHeader} slotItemBody={body} itemId={'item-2'} />
-				<AccordionItem slotItemHeader="Disabled" slotItemBody={body} itemDisabled={true} itemId={'item-3'} />
-			</Accordion>
-		</>
-	);
-};
+
+const AccordionDemo = () => (
+	<Accordion>
+		<AccordionItem slotItemHeader="Simple" slotItemBody={body} itemCollapsed={false} itemId={'item-1'} />
+		<AccordionItem slotItemHeader={fancyHeader} slotItemBody={body} itemId={'item-2'} />
+		<AccordionItem slotItemHeader="Disabled" slotItemBody={body} itemDisabled={true} itemId={'item-3'} />
+	</Accordion>
+);
 export default AccordionDemo;

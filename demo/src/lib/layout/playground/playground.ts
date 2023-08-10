@@ -137,9 +137,7 @@ export function createPlayground({config: defautConfig, types, doc}: PlaygroundP
 		sampleParameters$,
 		help$,
 		showHelp(key: string) {
-			helpKey$.update((helpKey) => {
-				return helpKey === key ? undefined : key;
-			});
+			helpKey$.update((helpKey) => (helpKey === key ? undefined : key));
 		},
 	};
 	setPlaygroundContext(api);

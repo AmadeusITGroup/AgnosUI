@@ -32,7 +32,7 @@
 			</ul>
 		</nav>
 	</aside>
-	<div>
+	<div class="pb-4">
 		<slot />
 	</div>
 </div>

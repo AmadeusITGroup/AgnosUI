@@ -23,7 +23,7 @@
 </script>
 
 <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-<span class="d-flex align-items-center svg icon-20 me-1">{@html typeIcon[state.type]}</span>
+<span class="d-flex align-items-center me-2">{@html typeIcon[state.type]}</span>
 <div class="alert-body d-flex w-100">
 	<Slot slotContent={state.slotDefault} props={{widget, state}} let:component let:props>
 		<slot slot="slot" let:props {...props} />

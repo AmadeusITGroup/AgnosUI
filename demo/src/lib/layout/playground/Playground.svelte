@@ -10,14 +10,15 @@
 	export let config: Record<string, any>;
 	export let doc: WidgetDoc;
 	export let types: Record<string, string> = {};
-	export let height: number | undefined = undefined;
+	export let height = 100;
+	export let noresize = false;
 
 	const {values$, sampleParameters$, help$} = createPlayground({config, types, doc});
 </script>
 
 <div class="row">
 	<div class="col">
-		<Sample title="Configuration" {sample} urlParameters={$sampleParameters$} showCodeButton={false} {height} />
+		<Sample title="Configuration" {sample} urlParameters={$sampleParameters$} showCodeButton={false} {height} {noresize} />
 	</div>
 </div>
 <div class="row">

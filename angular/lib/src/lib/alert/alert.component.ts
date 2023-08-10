@@ -91,7 +91,7 @@ const defaultConfig: Partial<AlertProps> = {
 export class AlertComponent implements OnChanges, AfterContentChecked {
 	/**
 	 * Type of the alert.
-	 * The are the following types: 'success', 'info', 'warning', 'danger', 'primary', 'secondary', 'light' and 'dark'.
+	 * There are the following types: 'success', 'info', 'warning', 'danger', 'primary', 'secondary', 'light' and 'dark'.
 	 */
 	@Input()
 	type: string | undefined;
