@@ -122,7 +122,7 @@ test.describe.parallel(`Rating tests`, () => {
 			text: '3.64 out of 5',
 			disabled: null,
 			readonly: 'true',
-			stars: ['♥♥', '♥♥', '♥♥', '♥♥', '♥♥'],
+			stars: ['', '', '', '', ''],
 			classes: expectedClasses,
 		};
 		expect(await ratingPO.state()).toEqual(expectedState);
