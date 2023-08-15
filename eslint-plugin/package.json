@@ -9,8 +9,8 @@
 		"typescript": "*"
 	},
 	"devDependencies": {
-		"@angular/core": "^16.1.8",
-		"svelte": "^4.1.2",
+		"@angular/core": "^16.2.0",
+		"svelte": "^4.2.0",
 		"svelte-eslint-parser": "^0.32.2"
 	},
 	"scripts": {

@@ -39,11 +39,11 @@
 		"svelte": "*"
 	},
 	"devDependencies": {
-		"@sveltejs/vite-plugin-svelte": "^2.4.3",
+		"@sveltejs/vite-plugin-svelte": "^2.4.5",
 		"eslint-plugin-svelte": "^2.32.4",
 		"prettier-plugin-svelte": "^2.10.1",
-		"svelte": "^4.1.2",
-		"svelte-check": "^3.4.6"
+		"svelte": "^4.2.0",
+		"svelte-check": "^3.5.0"
 	},
 	"license": "MIT",
 	"bugs": "https://github.com/AmadeusITGroup/AgnosUI/issues",
