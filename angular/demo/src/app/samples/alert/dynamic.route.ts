@@ -45,7 +45,6 @@ class ChildComponent {
 }
 
 @Component({
-	selector: 'app-alert-parent',
 	standalone: true,
 	imports: [ChildComponent],
 	template: `
