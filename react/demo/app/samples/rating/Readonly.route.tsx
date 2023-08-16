@@ -1,5 +1,6 @@
 import type {StarContext} from '@agnos-ui/core';
 import {Rating} from '@agnos-ui/react';
+import heartFill from 'bootstrap-icons/icons/heart-fill.svg?raw';
 
 const RatingDemo = () => {
 	return (
@@ -19,10 +20,8 @@ const RatingDemo = () => {
 					};
 					return (
 						<span className={starClassname.join(' ')}>
-							<span className="half" style={styles}>
-								&hearts;
-							</span>
-							&hearts;
+							<span className="half" style={styles} dangerouslySetInnerHTML={{__html: heartFill}}></span>
+							<span dangerouslySetInnerHTML={{__html: heartFill}}></span>
 						</span>
 					);
 				}}

@@ -36,8 +36,13 @@ main {
 	.star {
 		position: relative;
 		display: inline-block;
-		font-size: 300%;
+		font-size: 2.5rem;
 		color: #d3d3d3;
+		svg {
+			width: 1em;
+			height: 1em;
+			padding-right: 0.1rem;
+		}
 	}
 
 	.full {
