@@ -7,3 +7,4 @@ test-results/
 .svelte-kit/
 dist.tar.gz
 .nyc_output/
+.idea

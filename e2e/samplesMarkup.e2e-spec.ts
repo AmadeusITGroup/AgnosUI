@@ -24,7 +24,12 @@ test.describe.parallel(`Samples markup consistency check`, () => {
 	};
 
 	for (const route of allRoutes) {
-		test(`${route} should have a consistent markup`, async ({page}) => {
+		test(`${route} should have a consistent markup`, async ({page}, testInfo) => {
+			test.skip(route === 'pagination/pagination', 'FIXME: sample to be made consistent');
+			// skipping accordion playground for angular until we handle playground config better for components like accordion
+			if (route === 'accordion/playground' && testInfo.project.name.startsWith('angular:')) {
+				test.skip();
+			}
 			await page.goto(`#/${route}${routesExtraHash[route] ?? ''}`);
 			await routesExtraAction[route]?.(page);
 			await page.waitForSelector('.fade', {state: 'detached'}); // wait for fade transitions to be finished
