@@ -23,7 +23,7 @@
 						"polyfills": "src/polyfills.ts",
 						"outputPath": "dist/demo",
 						"scripts": [],
-						"styles": [],
+						"styles": ["src/demo.scss"],
 						"tsConfig": "tsconfig.json"
 					}
 				},
