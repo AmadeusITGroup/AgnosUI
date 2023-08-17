@@ -2,10 +2,8 @@
 	"extends": "../tsconfig.json",
 	"compilerOptions": {
 		"paths": {
-			"@agnos-ui/core": ["./core/lib"],
-			"@agnos-ui/svelte": ["./svelte/lib"],
-			"@agnos-ui/common": ["./common"],
-			"@agnos-ui/common/*": ["./common/*"]
+			"@agnos-ui/core": ["@agnos-ui/core"]
 		}
-	}
+	},
+	"exclude": ["dist", "demo"]
 }
