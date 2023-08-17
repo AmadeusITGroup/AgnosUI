@@ -33,7 +33,8 @@
 	 */
 	export let sample: SampleInfo;
 
-	export let height: number | undefined = undefined;
+	export let noresize = false;
+	export let height: number;
 
 	/**
 	 * Object to be stringified and sent in the parameter of the iframe url.
@@ -82,13 +83,13 @@
 	const baseId = `sample-${id}`;
 	$: sampleBaseUrl = `${$pathToRoot$}${$selectedFramework$}/samples/#/${path}`;
 	$: sampleUrl = sampleBaseUrl + (urlParameters ? `#${JSON.stringify(urlParameters)}` : '');
-	$: sampleBaseUrl, (iframeLoaded = false);
 
-	let iframeLoaded = false;
+	let iframeLoaded = true;
 	let resizeObserver: ResizeObserver;
-	let iframeHeight = 50;
-	function onLoad(event: Event) {
-		iframeLoaded = true;
+
+	let iframeHeight = 0;
+
+	const setupObserver = (iframe: HTMLIFrameElement) => {
 		if (!resizeObserver) {
 			resizeObserver = new ResizeObserver((entries) => {
 				if (entries.length === 1) {
@@ -97,8 +98,32 @@
 			});
 		}
 		resizeObserver.disconnect();
-		if (event.target instanceof HTMLIFrameElement && event.target.contentDocument) {
-			resizeObserver.observe(event.target.contentDocument.body);
+		const root = iframe.contentDocument?.getElementById('root');
+		if (root) {
+			resizeObserver.observe(root);
+		}
+	};
+
+	const updateLoaded = (iframe: HTMLIFrameElement, baseSrc: string) => {
+		const update = (baseSrc: string) => {
+			if (!iframe.contentWindow?.location?.href?.startsWith(baseSrc)) {
+				iframeLoaded = false;
+			}
+		};
+		update(baseSrc);
+		// the onLoad event is never called when loading a tab that was discarded through Chrome Tab Discarding
+		// so we use the first execution of this directive to check if the iframe is loaded and if we can setup a resize observer
+		if (iframe.contentDocument?.getElementById('root')) {
+			setupObserver(iframe);
+		}
+		return {
+			update,
+		};
+	};
+	function onLoad(event: Event) {
+		iframeLoaded = true;
+		if (event.target instanceof HTMLIFrameElement) {
+			setupObserver(event.target);
 		}
 	}
 	onDestroy(() => {
@@ -106,7 +131,7 @@
 	});
 </script>
 
-<div class="my-4 py-2 px-0 px-sm-3">
+<div class="mb-4 py-2 px-0 px-sm-3">
 	<div class="btn-toolbar d-flex align-items-center" role="toolbar" aria-label="Toolbar with button groups">
 		{#if showCodeButton}
 			<div class="btn-group btn-group-sm me-2" role="group" aria-label="Toggle code">
@@ -136,7 +161,7 @@
 	</div>
 	<div class="row">
 		{#if showCode}
-			<div class="col-auto my-2">
+			<div class="col-12 my-2">
 				<Lazy component={() => import('./Code.svelte')} {code} {fileName}>
 					<div class="spinner-border text-primary" role="status">
 						<span class="visually-hidden">Loading...</span>
@@ -144,17 +169,23 @@
 				</Lazy>
 			</div>
 		{/if}
-		<div class="col-sm-12">
+		<div class="col-sm-12 position-relative mt-3">
 			{#if !iframeLoaded}
-				<div class="position-relative">
-					<div class="position-absolute start-50 translate-middle-x iframeSpinner">
-						<div class="spinner-border text-primary" role="status">
-							<span class="visually-hidden">Loading...</span>
-						</div>
+				<div class="position-absolute top-50 start-50 translate-middle iframeSpinner">
+					<div class="spinner-border text-primary" role="status">
+						<span class="visually-hidden">Loading...</span>
 					</div>
 				</div>
 			{/if}
-			<iframe class="demo-sample border rounded mt-3" use:iframeSrc={sampleUrl} {title} height={height ?? iframeHeight} on:load={onLoad} />
+			<iframe
+				class="demo-sample border rounded"
+				use:iframeSrc={sampleUrl}
+				{title}
+				height={noresize ? height : iframeHeight || height}
+				use:updateLoaded={sampleBaseUrl}
+				on:load={onLoad}
+				loading="lazy"
+			/>
 		</div>
 	</div>
 </div>

@@ -17,7 +17,7 @@ export interface AlertCommonPropsAndState {
 
 	/**
 	 * Type of the alert.
-	 * The are the following types: 'success', 'info', 'warning', 'danger', 'primary', 'secondary', 'light' and 'dark'.
+	 * There are the following types: 'success', 'info', 'warning', 'danger', 'primary', 'secondary', 'light' and 'dark'.
 	 */
 	type: string;
 

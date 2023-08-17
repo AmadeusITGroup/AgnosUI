@@ -5,4 +5,4 @@
 	import doc from '../../../../../../../core/dist/api.json?modal&extractApi';
 </script>
 
-<Playground {sample} config={getModalDefaultConfig()} height={250} {doc} />
+<Playground {sample} config={getModalDefaultConfig()} height={250} noresize {doc} />

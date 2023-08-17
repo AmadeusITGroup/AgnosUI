@@ -7,7 +7,7 @@
 </script>
 
 <svelte:head>
-	<title>AgsnoUI - Home page</title>
+	<title>AgnosUI - Home page</title>
 	<meta name="description" content="Svelte demo app" />
 </svelte:head>
 
@@ -42,13 +42,13 @@
 
 	<h4 class="text-center mt-4 mt-md-5">For a comprehensive understanding of AgnosUI's features and usage,<br />feel free to explore our demo</h4>
 	<div class="d-flex links d-flex justify-content-evenly">
-		<a href="angular/components/alert/examples" aria-label="link to angular examples" title="Angular">
+		<a href="angular/components/accordion/examples" aria-label="link to angular examples" title="Angular">
 			<Svg svg={angularLogo} className="framework-logo" />
 		</a>
-		<a href="react/components/alert/examples" aria-label="link to react examples" title="React">
+		<a href="react/components/accordion/examples" aria-label="link to react examples" title="React">
 			<Svg svg={reactLogo} className="framework-logo" />
 		</a>
-		<a href="svelte/components/alert/examples" aria-label="link to svelte examples" title="Svelte">
+		<a href="svelte/components/accordion/examples" aria-label="link to svelte examples" title="Svelte">
 			<Svg svg={sveteLogo} className="framework-logo" />
 		</a>
 	</div>

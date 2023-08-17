@@ -11,7 +11,7 @@
 </script>
 
 <tr>
-	<td class="align-middle"> <button class="btn btn-link align-middle" on:click={() => showHelp(key)}>{key}</button></td>
+	<td> <button class="btn btn-link align-middle" on:click={() => showHelp(key)}>{key}</button></td>
 	<PlaygroundValue {type} {defaultValue} api={config} placeholder={defaultValue} ariaLabel="property {key} config input" />
 	<PlaygroundValue {type} {defaultValue} api={prop} ariaLabel="property {key} value input" />
 </tr>

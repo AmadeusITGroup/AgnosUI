@@ -56,7 +56,7 @@ function CustomPages({widget, state}: AdaptSlotContentProps<PaginationContext>) 
 }
 
 const getPageSymbol = ({displayedPage}: AdaptSlotContentProps<PaginationNumberContext>) => {
-	return ['A', 'B', 'C', 'D', 'E', 'F', 'G'][displayedPage - 1];
+	return ['A', 'B', 'C', 'D', 'E', 'F'][displayedPage - 1];
 };
 
 const PaginationCustom = () => {
@@ -70,13 +70,12 @@ const PaginationCustom = () => {
 					slotPrevious={'Prev'}
 					slotNext={'Next'}
 					slotNumberLabel={getPageSymbol}
-					collectionSize={70}
 					page={customPage}
 					onPageChange={setPage}
 				/>
 				<hr />
 				<p>A pagination with customized pages:</p>
-				<Pagination collectionSize={70} page={customPage} slotPages={CustomPages} ariaLabel={'Page navigation with customized pages'} />
+				<Pagination page={customPage} slotPages={CustomPages} ariaLabel={'Page navigation with customized pages'} />
 			</WidgetsDefaultConfig>
 		</>
 	);

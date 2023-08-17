@@ -105,7 +105,7 @@ const excludeAttrSet = new Set([
 
 const removeTagsAndDescendants = new Set(['script', 'router-outlet']);
 const tagReplacements = new Map([
-	['app-root', 'div'],
+	['app-root', ''],
 	['au-alert', ''],
 	['au-modal', ''],
 	['au-rating', 'div'],

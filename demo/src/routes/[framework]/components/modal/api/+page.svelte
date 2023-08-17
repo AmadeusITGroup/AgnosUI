@@ -4,8 +4,4 @@
 	import ApiDoc from '../../../../../lib/layout/doc/ApiDoc.svelte';
 </script>
 
-<svelte:head>
-	<title>Modal API</title>
-	<meta name="description" content="" />
-</svelte:head>
 <ApiDoc doc={widgetDoc} defaultValues={getModalDefaultConfig()} />
