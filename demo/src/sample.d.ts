@@ -1,4 +1,5 @@
 declare module '@agnos-ui/samples/*' {
-	const sample: Sample;
+	import type {SampleInfo} from '$lib/layout/sample';
+	const sample: SampleInfo;
 	export default sample;
 }
