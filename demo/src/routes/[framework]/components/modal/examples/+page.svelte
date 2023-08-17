@@ -13,6 +13,3 @@
 	It is possible to stack modals on top of each other. Note that for better User Experience, stacking modals should be avoided as much as possible.
 </p>
 <Sample title="Modal stack example" sample={sampleStack} height={400} noresize />
-
-<LinkHeading label="Accessibility" id="accessibility" level={2} />
-<p>TODO</p>
