@@ -1,6 +1,4 @@
 <script lang="ts" context="module">
-	let id = 0;
-
 	const iframeSrc = (iframe: HTMLIFrameElement, src: string) => {
 		const update = (src: string) => iframe.contentWindow?.location.replace(new URL(src, window.location.href));
 		update(src);
@@ -79,8 +77,6 @@
 	});
 	$: fileName = sample.files[$selectedFramework$].entryPoint;
 
-	id++;
-	const baseId = `sample-${id}`;
 	$: sampleBaseUrl = `${$pathToRoot$}${$selectedFramework$}/samples/#/${path}`;
 	$: sampleUrl = sampleBaseUrl + (urlParameters ? `#${JSON.stringify(urlParameters)}` : '');
 
@@ -132,17 +128,34 @@
 </script>
 
 <div class="mb-4 py-2 px-0 px-sm-3">
-	<div class="btn-toolbar d-flex align-items-center" role="toolbar" aria-label="Toolbar with button groups">
-		{#if showCodeButton}
-			<div class="btn-group btn-group-sm me-2" role="group" aria-label="Toggle code">
-				<input type="checkbox" class="btn-check" id={`${baseId}-code`} autocomplete="off" bind:checked={showCode} />
-				<label class="btn btn-primary d-flex align-items-center" for={`${baseId}-code`}>
-					<Svg className="icon-20 align-middle me-1" svg={codeSvg} />
-					Code
-				</label>
+	<div class="position-relative border">
+		{#if !iframeLoaded}
+			<div class="position-absolute top-50 start-50 translate-middle iframeSpinner">
+				<div class="spinner-border text-primary" role="status">
+					<span class="visually-hidden">Loading...</span>
+				</div>
 			</div>
+		{/if}
+		<iframe
+			class="demo-sample d-block"
+			use:iframeSrc={sampleUrl}
+			{title}
+			height={noresize ? height : iframeHeight || height}
+			use:updateLoaded={sampleBaseUrl}
+			on:load={onLoad}
+			loading="lazy"
+		/>
+	</div>
+	<div class="btn-toolbar border border-top-0 d-flex align-items-center p-1" role="toolbar" aria-label="Toolbar with button groups">
+		{#if showCodeButton}
 			<button
-				class="btn btn-sm btn-link me-2"
+				class="btn btn-sm btn-link m-1 p-0"
+				aria-label="Show or hide the code"
+				use:tooltip={{content: 'Toogle code'}}
+				on:click={() => (showCode = !showCode)}><Svg className="icon-24 align-middle" svg={codeSvg} /></button
+			>
+			<button
+				class="btn btn-sm btn-link m-1 p-0"
 				aria-label="Open example in stackblitz"
 				use:tooltip={{content: 'Edit in Stackblitz'}}
 				on:click={async () => (await import('../stackblitz')).openInStackblitz(sample, $selectedFramework$)}
@@ -151,7 +164,7 @@
 		{/if}
 		<a
 			href={sampleUrl}
-			class="action"
+			class="action m-1 p-0"
 			target="_blank"
 			rel="noreferrer nofollow external"
 			aria-label="View sample in new tab"
@@ -159,35 +172,15 @@
 			><Svg className="icon-20 align-middle" svg={openLink} />
 		</a>
 	</div>
-	<div class="row">
-		{#if showCode}
-			<div class="col-12 my-2">
-				<Lazy component={() => import('./Code.svelte')} {code} {fileName}>
-					<div class="spinner-border text-primary" role="status">
-						<span class="visually-hidden">Loading...</span>
-					</div>
-				</Lazy>
-			</div>
-		{/if}
-		<div class="col-sm-12 position-relative mt-3">
-			{#if !iframeLoaded}
-				<div class="position-absolute top-50 start-50 translate-middle iframeSpinner">
-					<div class="spinner-border text-primary" role="status">
-						<span class="visually-hidden">Loading...</span>
-					</div>
+	{#if showCode}
+		<div class="border">
+			<Lazy component={() => import('./Code.svelte')} {code} {fileName}>
+				<div class="spinner-border text-primary" role="status">
+					<span class="visually-hidden">Loading...</span>
 				</div>
-			{/if}
-			<iframe
-				class="demo-sample border rounded"
-				use:iframeSrc={sampleUrl}
-				{title}
-				height={noresize ? height : iframeHeight || height}
-				use:updateLoaded={sampleBaseUrl}
-				on:load={onLoad}
-				loading="lazy"
-			/>
+			</Lazy>
 		</div>
-	</div>
+	{/if}
 </div>
 
 <style lang="scss">

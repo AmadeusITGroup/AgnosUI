@@ -7,6 +7,8 @@
 
 AgnosUI is a powerful library of widgets designed specifically for the [CSS Bootstrap design](https://getbootstrap.com/). Inspired by the success of [ng-bootstrap](https://ng-bootstrap.github.io/), AgnosUI takes the concept a step further by offering widgets that can seamlessly integrate with any front-end framework of your choice. With support for popular frameworks like [Angular](https://angular.io/), [React](https://react.dev/), and [Svelte](https://svelte.dev/), AgnosUI allows you to effortlessly create consistent and visually appealing UI components across your projects.
 
+Feel free to explore the [demo site](https://amadeusitgroup.github.io/AgnosUI/latest/) to see AgnosUI's capabilities.
+
 ## Key Characteristics
 
 1. **Framework Agnostic Widgets**: AgnosUI's widget architecture revolves around a framework-agnostic core. Each widget is implemented in this core, focusing on its model (data) and the methods required to manipulate this data. This abstraction allows developers to create widgets independently of any specific framework, facilitating integration into various projects.

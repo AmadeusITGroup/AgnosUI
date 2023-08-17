@@ -27,6 +27,30 @@ main {
 	width: 100%;
 }
 
+h2,
+.h2 {
+	font-size: calc(1.325rem + 0.6vw);
+}
+
+@media (min-width: 1200px) {
+	h2,
+	.h2 {
+		font-size: 1.5rem;
+	}
+}
+
+h3,
+.h3 {
+	font-size: calc(1.3rem + 0.4vw);
+}
+
+@media (min-width: 1200px) {
+	h3,
+	.h3 {
+		font-size: 1.5rem;
+	}
+}
+
 header {
 	&.title {
 		margin-left: calc(var(--bs-gutter-x) * -0.5);
