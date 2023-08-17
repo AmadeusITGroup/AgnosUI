@@ -11,6 +11,3 @@
 <LinkHeading label="Customization" id="custom" level={2} />
 <p>The pagination widget is fully customizable, from the page numbers to the arrows.</p>
 <Sample title="Custom Pagination example" sample={sampleCustom} height={256} />
-
-<LinkHeading label="Accessibility" id="accessibility" level={2} />
-<p>TODO</p>
