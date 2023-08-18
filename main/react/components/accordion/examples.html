@@ -12,25 +12,25 @@
 		<link href="../../../_app/immutable/assets/Sample.fd01a369.css" rel="stylesheet">
 		<link href="../../../_app/immutable/assets/Code.a21cc7ad.css" rel="stylesheet">
 		<link href="../../../_app/immutable/assets/LinkHeading.b3133932.css" rel="stylesheet">
-		<link rel="modulepreload" href="../../../_app/immutable/entry/start.034f92bc.js">
+		<link rel="modulepreload" href="../../../_app/immutable/entry/start.4f86dba4.js">
 		<link rel="modulepreload" href="../../../_app/immutable/chunks/scheduler.2ed3e821.js">
-		<link rel="modulepreload" href="../../../_app/immutable/chunks/singletons.8f6d1f60.js">
-		<link rel="modulepreload" href="../../../_app/immutable/entry/app.c2f9c72d.js">
+		<link rel="modulepreload" href="../../../_app/immutable/chunks/singletons.bafe5fde.js">
+		<link rel="modulepreload" href="../../../_app/immutable/entry/app.68d2cb8c.js">
 		<link rel="modulepreload" href="../../../_app/immutable/chunks/preload-helper.a4192956.js">
 		<link rel="modulepreload" href="../../../_app/immutable/chunks/index.6f5125a4.js">
-		<link rel="modulepreload" href="../../../_app/immutable/nodes/0.b8b4e68c.js">
+		<link rel="modulepreload" href="../../../_app/immutable/nodes/0.2652791e.js">
 		<link rel="modulepreload" href="../../../_app/immutable/chunks/Svg.4ea3afa0.js">
-		<link rel="modulepreload" href="../../../_app/immutable/chunks/stores.de8918a5.js">
+		<link rel="modulepreload" href="../../../_app/immutable/chunks/stores.ef2a542a.js">
 		<link rel="modulepreload" href="../../../_app/immutable/chunks/index.es.5c333286.js">
-		<link rel="modulepreload" href="../../../_app/immutable/chunks/stores.9c36e096.js">
-		<link rel="modulepreload" href="../../../_app/immutable/chunks/navigation.0a071aa0.js">
-		<link rel="modulepreload" href="../../../_app/immutable/nodes/2.9e9c8275.js">
+		<link rel="modulepreload" href="../../../_app/immutable/chunks/stores.4959dde9.js">
+		<link rel="modulepreload" href="../../../_app/immutable/chunks/navigation.7cd3ef98.js">
+		<link rel="modulepreload" href="../../../_app/immutable/nodes/2.b3d16b8f.js">
 		<link rel="modulepreload" href="../../../_app/immutable/chunks/each.c25865bc.js">
-		<link rel="modulepreload" href="../../../_app/immutable/nodes/3.e315200a.js">
-		<link rel="modulepreload" href="../../../_app/immutable/chunks/ComponentPage.de1d4cd5.js">
+		<link rel="modulepreload" href="../../../_app/immutable/nodes/3.a1a9520b.js">
+		<link rel="modulepreload" href="../../../_app/immutable/chunks/ComponentPage.c81dafd7.js">
 		<link rel="modulepreload" href="../../../_app/immutable/chunks/app.8c876633.js">
-		<link rel="modulepreload" href="../../../_app/immutable/nodes/11.6445130c.js">
-		<link rel="modulepreload" href="../../../_app/immutable/chunks/Sample.bc94466a.js">
+		<link rel="modulepreload" href="../../../_app/immutable/nodes/11.9c1531e7.js">
+		<link rel="modulepreload" href="../../../_app/immutable/chunks/Sample.3a9516c6.js">
 		<link rel="modulepreload" href="../../../_app/immutable/chunks/LinkHeading.4117e805.js"><title>AgnosUI - Accordion examples for react</title><!-- HEAD_svelte-ll89db_START --><meta name="description" content="Accordion examples widget of AgnosUI for react"><!-- HEAD_svelte-ll89db_END -->
 		<title>AgnosUI</title>
 	</head>
@@ -60,7 +60,7 @@
 			
 			<script>
 				{
-					__sveltekit_1ohvlb9 = {
+					__sveltekit_1ux8zqp = {
 						base: new URL("../../..", location).pathname.slice(0, -1),
 						env: {}
 					};
@@ -70,8 +70,8 @@
 					const data = [null,null,null,null];
 
 					Promise.all([
-						import("../../../_app/immutable/entry/start.034f92bc.js"),
-						import("../../../_app/immutable/entry/app.c2f9c72d.js")
+						import("../../../_app/immutable/entry/start.4f86dba4.js"),
+						import("../../../_app/immutable/entry/app.68d2cb8c.js")
 					]).then(([kit, app]) => {
 						kit.start(app, element, {
 							node_ids: [0, 2, 3, 11],
@@ -80,6 +80,12 @@
 							error: null
 						});
 					});
+
+					if ('serviceWorker' in navigator) {
+						addEventListener('load', function () {
+							navigator.serviceWorker.register('../../../service-worker.js');
+						});
+					}
 				}
 			</script>
 		</div>
