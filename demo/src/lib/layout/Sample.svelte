@@ -89,7 +89,7 @@
 		if (!resizeObserver) {
 			resizeObserver = new ResizeObserver((entries) => {
 				if (entries.length === 1) {
-					iframeHeight = entries[0].contentRect.height + 2;
+					iframeHeight = entries[0].contentRect.height || iframeHeight;
 				}
 			});
 		}
