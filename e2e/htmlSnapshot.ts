@@ -158,6 +158,51 @@ export const filterHtmlStructure = (node: HTMLNode): HTMLNode => {
 	};
 };
 
+const hasNumberRegExp = /\d/;
+export const idAttributes = new Set(['id', 'for', 'aria-labelledby', 'aria-describedby', 'aria-controls', 'aria-activedescendant', 'aria-owns']);
+export const rewriteIds = (node: HTMLNode) => {
+	let idCounter = 0;
+	const createId = () => {
+		idCounter++;
+		return `rewritten-id-${idCounter}`;
+	};
+	const idsMap = new Map<string, string>();
+	const getMappedId = (id: string) => {
+		if (!hasNumberRegExp.test(id)) {
+			return id; // don't replace ids that do not contain a number
+		}
+		let newId = idsMap.get(id);
+		if (!newId) {
+			newId = createId();
+			idsMap.set(id, newId);
+		}
+		return newId;
+	};
+
+	const processAttribute = (attribute: HTMLAttribute): HTMLAttribute => {
+		if (idAttributes.has(attribute.name)) {
+			return {name: attribute.name, value: attribute.value.trim().split(/\s+/).map(getMappedId).join(' ')};
+		}
+		return attribute;
+	};
+
+	const processNode = (node: HTMLNode): HTMLNode => {
+		if (node && typeof node === 'object') {
+			const attributes = node.attributes.map(processAttribute);
+			const childNodes = node.childNodes.map(processNode);
+			return {
+				...node,
+				attributes,
+				childNodes,
+			};
+		} else {
+			return node;
+		}
+	};
+
+	return processNode(node);
+};
+
 export const htmlSnapshot = async (locator: Locator) => {
 	const res: string[] = [];
 	const recFn = (node: HTMLNode, level = '') => {
@@ -182,6 +227,6 @@ export const htmlSnapshot = async (locator: Locator) => {
 			res.push(level + JSON.stringify(node));
 		}
 	};
-	recFn(filterHtmlStructure(await htmlStructure(locator)));
+	recFn(rewriteIds(filterHtmlStructure(await htmlStructure(locator))));
 	return res.join('\n');
 };

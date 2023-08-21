@@ -1,6 +1,7 @@
 import type {ConfigValidator, PropsConfig} from './services';
 import {
 	bindDirectiveNoArg,
+	bindableDerived,
 	directiveSubscribe,
 	registrationArray,
 	stateStores,
@@ -14,7 +15,7 @@ import {createTransition} from './transitions';
 import {collapseVerticalTransition} from './transitions/bootstrap';
 import type {Directive, SlotContent, Widget, WidgetSlotContext} from './types';
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
-import {computed, writable} from '@amadeus-it-group/tansu';
+import {computed, readable, writable} from '@amadeus-it-group/tansu';
 import {noop} from './utils';
 
 let itemId = 0;
@@ -470,16 +471,15 @@ function createAccordionItem(
 			onItemHidden$,
 			onItemCollapsedChange$,
 			itemCollapsed$,
-			itemId$,
+			itemId$: _dirtyItemId$,
 			itemDisabled$,
 			...stateProps
 		},
 		patch,
 	] = writablesForProps(defaultItemConfig, config, configItemValidator);
-	if (!itemId$()) {
-		itemId$.set(getItemId());
-	}
+
 	const initDone$ = writable(false);
+	const itemId$ = bindableDerived(readable(noop), [_dirtyItemId$], ([dirtyItemId]) => (dirtyItemId ? dirtyItemId : getItemId()));
 	const shouldBeInDOM$ = computed(() => {
 		return itemDestroyOnHide$() === false || !itemTransition.state$().hidden;
 	});
