@@ -11,7 +11,7 @@
 	<div use:directive class="my-2 p-2 border">
 		<h5>Container</h5>
 		<input class="form-control" type="text" placeholder="Focusable input" id="focusableInput" /><br />
-		<input class="form-control" type="text" placeholder="Focusable input 2" id="focusableInput2" />
+		<input class="form-control" type="text" placeholder="Other focusable input" id="otherFocusableInput" />
 	</div>
 	<input class="form-control" type="text" placeholder="Disabled input" id="disabledInput" disabled /><br />
 	<div class="form-check mb-2">

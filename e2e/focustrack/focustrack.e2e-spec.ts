@@ -27,9 +27,9 @@ test.describe(`Select tests`, () => {
 		expectedState.isInContainer = true;
 		await expect.poll(async () => await focustrackPO.getState()).toEqual(expectedState);
 
-		await focustrackPO.locatorFocusableInput2.click();
+		await focustrackPO.locatorOtherFocusableInput.click();
 
-		expectedState.activeElements.push({tagName: 'input', id: 'focusableInput2'});
+		expectedState.activeElements.push({tagName: 'input', id: 'otherFocusableInput'});
 		await expect.poll(async () => await focustrackPO.getState()).toEqual(expectedState);
 
 		await focustrackPO.locatorDisabledInput.click({force: true});
