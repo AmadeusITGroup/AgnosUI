@@ -21,7 +21,7 @@ const Focustrack = () => {
 				<h5>Container</h5>
 				<input className="form-control" type="text" placeholder="Focusable input" id="focusableInput" />
 				<br />
-				<input className="form-control" type="text" placeholder="Focusable input 2" id="focusableInput2" />
+				<input className="form-control" type="text" placeholder="Other focusable input" id="otherFocusableInput" />
 			</div>
 			<input className="form-control" type="text" placeholder="Disabled input" id="disabledInput" disabled />
 			<br />

@@ -20,8 +20,8 @@ export class FocusTrackPO extends BasePO {
 	/**
 	 * Second focusable input on the demo page
 	 */
-	get locatorFocusableInput2() {
-		return this.locatorRoot.locator('#focusableInput2');
+	get locatorOtherFocusableInput() {
+		return this.locatorRoot.locator('#otherFocusableInput');
 	}
 
 	/**
