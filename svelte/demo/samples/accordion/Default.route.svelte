@@ -3,7 +3,7 @@
 </script>
 
 <Accordion>
-	<AccordionItem itemCollapsed={false} itemId="item-1">
+	<AccordionItem itemCollapsed={false}>
 		<slot slot="itemHeader">Simple</slot>
 		<slot slot="itemBody"
 			>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat
@@ -13,7 +13,7 @@
 			accusamus labore sustainable VHS.
 		</slot>
 	</AccordionItem>
-	<AccordionItem itemId="item-2">
+	<AccordionItem>
 		<slot slot="itemHeader"><span>&#9733; <b>Fancy</b> title &#9733;</span></slot>
 		<slot slot="itemBody"
 			>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat
@@ -23,7 +23,7 @@
 			accusamus labore sustainable VHS.
 		</slot>
 	</AccordionItem>
-	<AccordionItem itemDisabled={true} itemId="item-3">
+	<AccordionItem itemDisabled={true}>
 		<slot slot="itemHeader">Disabled</slot>
 		<slot slot="itemBody"
 			>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat

@@ -6,7 +6,7 @@ import {Component} from '@angular/core';
 	imports: [AgnosUIAngularModule],
 	template: `
 		<div auAccordion>
-			<div au-accordion-item [itemCollapsed]="false" [itemId]="'item-1'">
+			<div au-accordion-item [itemCollapsed]="false">
 				<ng-template auAccordionItemHeader>Simple</ng-template>
 				<ng-template auAccordionItemBody
 					>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat
@@ -16,7 +16,7 @@ import {Component} from '@angular/core';
 					haven't heard of them accusamus labore sustainable VHS.
 				</ng-template>
 			</div>
-			<div au-accordion-item [itemId]="'item-2'">
+			<div au-accordion-item>
 				<ng-template auAccordionItemHeader
 					><span>&#9733; <b>Fancy</b> title &#9733;</span></ng-template
 				>
@@ -28,7 +28,7 @@ import {Component} from '@angular/core';
 					haven't heard of them accusamus labore sustainable VHS.
 				</ng-template>
 			</div>
-			<div au-accordion-item [itemDisabled]="true" [itemId]="'item-3'">
+			<div au-accordion-item [itemDisabled]="true">
 				<ng-template auAccordionItemHeader>Disabled</ng-template>
 				<ng-template auAccordionItemBody
 					>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat
