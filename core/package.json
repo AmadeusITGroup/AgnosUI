@@ -12,13 +12,20 @@
 		"pagination",
 		"rating"
 	],
-	"main": "dist/lib/index.js",
-	"module": "dist/lib/index.mjs",
-	"types": "dist/lib/index.d.ts",
+	"type": "module",
+	"main": "./dist/lib/index.js",
+	"module": "./dist/lib/index.js",
+	"types": "./dist/lib/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/lib/index.d.ts",
+			"default": "./dist/lib/index.js"
+		}
+	},
 	"scripts": {
-		"build": "npm run build:rollup && npm run build:dts && npm run build:api-extractor",
-		"build:rollup": "tsc && vite build -c vite.config.ts",
-		"build:dts": "tsc -p tsconfig.d.json",
+		"build": "npm run build:lib && npm run build:tsc && npm run build:api-extractor",
+		"build:lib": "node ../scripts/rm.js dist/lib && tsc -p tsconfig.lib.json",
+		"build:tsc": "tsc",
 		"build:api-extractor": "api-extractor run",
 		"test": "vitest run",
 		"tdd": "vitest",
