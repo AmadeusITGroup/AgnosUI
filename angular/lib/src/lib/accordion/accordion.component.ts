@@ -99,10 +99,10 @@ export class AccordionItemStructureDirective {
 export class AccordionItemDefaultSlotsComponent {
 	@ViewChild('structure', {static: true}) structure: TemplateRef<AccordionItemContext>;
 }
-export const accordionItemDefaultslotItemStructure = new ComponentTemplate(AccordionItemDefaultSlotsComponent, 'structure');
+export const accordionItemDefaultSlotItemStructure = new ComponentTemplate(AccordionItemDefaultSlotsComponent, 'structure');
 
 const defaultConfig: Partial<AccordionItemProps> = {
-	slotItemStructure: accordionItemDefaultslotItemStructure,
+	slotItemStructure: accordionItemDefaultSlotItemStructure,
 };
 
 @Component({

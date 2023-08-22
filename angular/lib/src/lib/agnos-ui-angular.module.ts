@@ -22,7 +22,13 @@ import {SelectComponent} from './select/select.component';
 import {UseDirective} from './transition/use.directive';
 import {SlotDirective} from './slot.directive';
 import {AlertComponent} from './alert/alert.component';
-import {AccordionDirective, AccordionItemComponent, AccordionHeaderDirective, AccordionBodyDirective} from './accordion/accordion.component';
+import {
+	AccordionDirective,
+	AccordionItemComponent,
+	AccordionHeaderDirective,
+	AccordionBodyDirective,
+	AccordionItemStructureDirective,
+} from './accordion/accordion.component';
 
 /* istanbul ignore next */
 const components = [
@@ -50,6 +56,7 @@ const components = [
 	AccordionItemComponent,
 	AccordionHeaderDirective,
 	AccordionBodyDirective,
+	AccordionItemStructureDirective,
 ];
 
 @NgModule({
