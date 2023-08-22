@@ -3,15 +3,15 @@
 	import Slot from '../slot/Slot.svelte';
 	import type {WidgetPropsEvents, WidgetPropsProps} from '../utils';
 	import {callWidgetFactory, createEventDispatcher} from '../utils';
-	import type {RatingProps, RatingSlots} from './rating';
+	import type {RatingProps as Props, RatingSlots as Slots} from './rating';
 </script>
 
 <script lang="ts">
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Props = WidgetPropsProps<RatingProps>; // eslint-disable-line @typescript-eslint/no-unused-vars
-	type $$Events = WidgetPropsEvents<RatingProps>;
+	type $$Props = WidgetPropsProps<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Events = WidgetPropsEvents<Props>;
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Slots = RatingSlots; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Slots = Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
 	const dispatch = createEventDispatcher<$$Events>();
 
 	export let rating: number | undefined = undefined;

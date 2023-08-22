@@ -5,19 +5,19 @@
 	import type {WidgetPropsEvents, WidgetPropsProps} from '../utils';
 	import {callWidgetFactory, createEventDispatcher} from '../utils';
 	import AlertDefaultStructure from './AlertDefaultStructure.svelte';
-	import type {AlertProps, AlertSlots} from './alert';
+	import type {AlertProps as Props, AlertSlots as Slots} from './alert';
 
-	const defaultConfig: Partial<AlertProps> = {
+	const defaultConfig: Partial<Props> = {
 		slotStructure: AlertDefaultStructure,
 	};
 </script>
 
 <script lang="ts">
-	type $$props = WidgetPropsProps<AlertProps>;
-	type $$Events = WidgetPropsEvents<AlertProps>;
-	type $$Slots = AlertSlots; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$props = WidgetPropsProps<Props>;
+	type $$Events = WidgetPropsEvents<Props>;
+	type $$Slots = Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
 	const dispatch = createEventDispatcher<$$Events>();
-	export const widget = callWidgetFactory(createAlert, 'alert', $$slots, defaultConfig);
+	const widget = callWidgetFactory(createAlert, 'alert', $$slots, defaultConfig);
 	export let visible: boolean | undefined = undefined;
 	export const api = widget.api;
 
