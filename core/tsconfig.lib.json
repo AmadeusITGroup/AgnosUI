@@ -3,8 +3,7 @@
 	"compilerOptions": {
 		"noEmit": false,
 		"declaration": true,
-		"emitDeclarationOnly": true,
-		"outDir": "dist/dts"
+		"outDir": "dist/lib"
 	},
 	"include": ["lib"],
 	"exclude": ["**/*.spec.ts", "**/__mocks__/**"]

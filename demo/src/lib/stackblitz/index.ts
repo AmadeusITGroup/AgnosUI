@@ -80,7 +80,7 @@ if (isReleased) {
 	};
 
 	const corePackage = addAsyncFiles(
-		import.meta.glob(['../../../../core/dist/lib/**', '../../../../core/package.json', '!**/tsdoc-metadata.json', '!**/*.{map,js}'], {
+		import.meta.glob(['../../../../core/dist/lib/**', '../../../../core/package.json', '!**/*.map'], {
 			as: 'raw',
 			import: 'default',
 		}) as any,
@@ -90,7 +90,7 @@ if (isReleased) {
 	frameworkCreateStackblitz.angular.push(
 		corePackage,
 		addAsyncFiles(
-			import.meta.glob(['../../../../angular/dist/lib/**', '!**/tsdoc-metadata.json', '!**/*.map'], {
+			import.meta.glob(['../../../../angular/dist/lib/**'], {
 				as: 'raw',
 				import: 'default',
 			}) as any,
@@ -102,7 +102,7 @@ if (isReleased) {
 	frameworkCreateStackblitz.react.push(
 		corePackage,
 		addAsyncFiles(
-			import.meta.glob(['../../../../react/dist/lib/**', '../../../../react/package.json', '!**/tsdoc-metadata.json', '!**/*.map'], {
+			import.meta.glob(['../../../../react/dist/lib/**', '../../../../react/package.json', '!**/*.map'], {
 				as: 'raw',
 				import: 'default',
 			}) as any,
@@ -114,7 +114,7 @@ if (isReleased) {
 	frameworkCreateStackblitz.svelte.push(
 		corePackage,
 		addAsyncFiles(
-			import.meta.glob(['../../../../svelte/dist/lib/**', '../../../../svelte/package.json', '!**/tsdoc-metadata.json', '!**/*.{map,cjs}'], {
+			import.meta.glob(['../../../../svelte/dist/lib/**', '../../../../svelte/package.json', '!**/*.map'], {
 				as: 'raw',
 				import: 'default',
 			}) as any,

@@ -13,9 +13,9 @@
 		"rating"
 	],
 	"type": "module",
-	"main": "dist/lib/index.cjs",
-	"module": "dist/lib/index.js",
-	"types": "dist/lib/index.d.ts",
+	"main": "./dist/lib/index.js",
+	"module": "./dist/lib/index.js",
+	"types": "./dist/lib/index.d.ts",
 	"files": [
 		"dist/lib"
 	],
