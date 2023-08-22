@@ -13,7 +13,7 @@
 </script>
 
 <script lang="ts">
-	type $$props = WidgetPropsProps<Props>;
+	type $$Props = WidgetPropsProps<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
 	type $$Events = WidgetPropsEvents<Props>;
 	type $$Slots = Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
 	const dispatch = createEventDispatcher<$$Events>();
