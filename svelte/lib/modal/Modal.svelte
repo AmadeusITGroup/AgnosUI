@@ -5,9 +5,9 @@
 	import {callWidgetFactory, createEventDispatcher} from '../utils';
 	import ModalDefaultHeader from './ModalDefaultHeader.svelte';
 	import ModalDefaultStructure from './ModalDefaultStructure.svelte';
-	import type {ModalProps, ModalSlots} from './modal';
+	import type {ModalProps as Props, ModalSlots as Slots} from './modal';
 
-	const defaultConfig: Partial<ModalProps> = {
+	const defaultConfig: Partial<Props> = {
 		slotStructure: ModalDefaultStructure,
 		slotHeader: ModalDefaultHeader,
 	};
@@ -15,10 +15,10 @@
 
 <script lang="ts">
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Props = WidgetPropsProps<ModalProps>; // eslint-disable-line @typescript-eslint/no-unused-vars
-	type $$Events = WidgetPropsEvents<ModalProps>;
+	type $$Props = WidgetPropsProps<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Events = WidgetPropsEvents<Props>;
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Slots = ModalSlots; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Slots = Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
 	const dispatch = createEventDispatcher<$$Events>();
 
 	export let visible: boolean | undefined = undefined;

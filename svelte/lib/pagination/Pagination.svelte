@@ -4,19 +4,19 @@
 	import type {WidgetPropsEvents, WidgetPropsProps} from '../utils';
 	import {callWidgetFactory, createEventDispatcher} from '../utils';
 	import PaginationDefaultPages from './PaginationDefaultPages.svelte';
-	import type {PaginationProps, PaginationSlots} from './pagination';
+	import type {PaginationProps as Props, PaginationSlots as Slots} from './pagination';
 
-	const defaultConfig: Partial<PaginationProps> = {
+	const defaultConfig: Partial<Props> = {
 		slotPages: PaginationDefaultPages,
 	};
 </script>
 
 <script lang="ts">
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Props = WidgetPropsProps<PaginationProps>; // eslint-disable-line @typescript-eslint/no-unused-vars
-	type $$Events = WidgetPropsEvents<PaginationProps>;
+	type $$Props = WidgetPropsProps<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Events = WidgetPropsEvents<Props>;
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Slots = PaginationSlots; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Slots = Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
 	const dispatch = createEventDispatcher<$$Events>();
 
 	/**
@@ -24,7 +24,7 @@
 	 *
 	 *  Page numbers start with `1`.
 	 */
-	export let page: PaginationProps['page'] | undefined = undefined;
+	export let page: Props['page'] | undefined = undefined;
 
 	const widget = callWidgetFactory(createPagination, 'pagination', $$slots, defaultConfig);
 	widget.patch({

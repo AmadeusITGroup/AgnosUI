@@ -1,17 +1,17 @@
 <script lang="ts" context="module">
 	import {createSelect} from '@agnos-ui/core';
-	import type {WidgetPropsEvents, WidgetPropsProps, WidgetPropsSlots} from '../utils';
+	import type {WidgetPropsEvents, WidgetPropsProps} from '../utils';
 	import {callWidgetFactory, createEventDispatcher} from '../utils';
-	import type {SelectProps, SelectWidget} from './select';
+	import type {SelectProps as Props, SelectSlots as Slots, SelectWidget} from './select';
 </script>
 
 <script lang="ts">
 	type Item = $$Generic; // eslint-disable-line no-undef
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Props = WidgetPropsProps<SelectProps<Item>>; // eslint-disable-line @typescript-eslint/no-unused-vars
-	type $$Events = WidgetPropsEvents<SelectProps<Item>>;
+	type $$Props = WidgetPropsProps<Props<Item>>; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Events = WidgetPropsEvents<Props<Item>>;
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Slots = WidgetPropsSlots<SelectProps<Item>>; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Slots = Slots<Item>; // eslint-disable-line @typescript-eslint/no-unused-vars
 	const dispatch = createEventDispatcher<$$Events>();
 
 	export let filterText: string | undefined = undefined;

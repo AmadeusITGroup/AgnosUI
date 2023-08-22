@@ -1,0 +1,11 @@
+{
+	"extends": "../../tsconfig.json",
+	"compilerOptions": {
+		"paths": {
+			"@agnos-ui/core": ["@agnos-ui/core"],
+			"@agnos-ui/svelte": ["@agnos-ui/svelte"],
+			"@agnos-ui/common": ["./common"],
+			"@agnos-ui/common/*": ["./common/*"]
+		}
+	}
+}

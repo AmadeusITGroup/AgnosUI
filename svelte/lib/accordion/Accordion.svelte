@@ -3,14 +3,14 @@
 	import type {WidgetPropsProps, WidgetPropsEvents} from '../utils';
 	import {createEventDispatcher, callWidgetFactory} from '../utils';
 	import {setAccordionApi} from './accordion';
-	import type {AccordionProps, AccordionSlots} from './accordion';
+	import type {AccordionProps as Props, AccordionSlots as Slots} from './accordion';
 </script>
 
 <script lang="ts">
-	type $$Props = WidgetPropsProps<AccordionProps>; // eslint-disable-line @typescript-eslint/no-unused-vars
-	type $$Events = WidgetPropsEvents<AccordionProps>;
+	type $$Props = WidgetPropsProps<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Events = WidgetPropsEvents<Props>;
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Slots = {default: Record<string, never>} & AccordionSlots; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Slots = {default: Record<string, never>} & Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
 	const dispatch = createEventDispatcher<$$Events>();
 
 	export let itemCollapsed: boolean | undefined = undefined;

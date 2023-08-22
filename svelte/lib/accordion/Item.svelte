@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
 	import Slot from '../slot/Slot.svelte';
 	import {getAccordionApi} from './accordion';
-	import type {AccordionItemProps, AccordionSlots} from './accordion';
+	import type {AccordionItemProps as Props, AccordionSlots as Slots} from './accordion';
 
 	import type {WidgetPropsProps, WidgetPropsEvents} from '../utils';
 	import {createEventDispatcher, callWidgetFactory} from '../utils';
@@ -9,17 +9,17 @@
 	import {onMount} from 'svelte';
 	import ItemDefaultStructure from './ItemDefaultStructure.svelte';
 
-	const defaultConfig: Partial<AccordionItemProps> = {
+	const defaultConfig: Partial<Props> = {
 		slotItemStructure: ItemDefaultStructure,
 	};
 </script>
 
 <script lang="ts">
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Props = WidgetPropsProps<AccordionItemProps>; // eslint-disable-line @typescript-eslint/no-unused-vars
-	type $$Events = WidgetPropsEvents<AccordionItemProps>;
+	type $$Props = WidgetPropsProps<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Events = WidgetPropsEvents<Props>;
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Slots = AccordionSlots; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Slots = Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
 	const dispatch = createEventDispatcher<$$Events>();
 
 	const accordionApi = getAccordionApi();
