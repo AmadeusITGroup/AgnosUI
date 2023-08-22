@@ -31,6 +31,7 @@
 		directives: {accordionItemDirective},
 		state$,
 	} = widget;
+	export const api = widget.api;
 
 	widget.patch({
 		onItemCollapsedChange: (event) => {

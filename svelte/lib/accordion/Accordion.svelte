@@ -15,6 +15,7 @@
 
 	export let itemCollapsed: boolean | undefined = undefined;
 	const widget = callWidgetFactory(createAccordion, 'accordion', $$slots as any, {});
+	export const api = widget.api;
 	const {
 		directives: {accordionDirective},
 		stores: {className$},

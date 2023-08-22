@@ -5,6 +5,7 @@ import {readFile} from 'fs/promises';
 
 const samplePrefix = '@agnos-ui/samples/';
 const rawSampleSuffix = '?raw&sample';
+const commonImport = /^(!raw-loader!)?@agnos-ui\/common\/samples\/([^?]*)(\?raw)?$/;
 
 const importRegExp = /import([^;]+from)?\s*['"]([^'"]+)['"]\s*;/g;
 const findDependencies = (fileContent: string) => {
@@ -54,8 +55,9 @@ export const includeSamples = (): Plugin => {
 							const dependencyParts = dependency.split('/');
 							if (dependencyParts[0] === '.') {
 								await addFile(framework, path.basename(dependency), path.join(directory, dependency));
-							} else if (dependency.startsWith('@agnos-ui/common/samples')) {
-								await addFile(framework, path.basename(dependency), path.join(__dirname, '..', '..', 'common', dependency.substring(17)));
+							} else if (dependency.match(commonImport)) {
+								const cleanedDependency = dependency.replace(commonImport, './$2');
+								await addFile(framework, path.basename(cleanedDependency), path.join(__dirname, '..', '..', 'common', 'samples', cleanedDependency));
 							} else {
 								// TODO: check that the dependency is valid and included in package.json
 							}
