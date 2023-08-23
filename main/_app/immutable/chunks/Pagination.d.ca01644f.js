@@ -1,0 +1,10 @@
+const t=`import type { PaginationContext as PaginationCoreContext, WidgetProps, WidgetState } from '@agnos-ui/core';
+import { createPagination } from '@agnos-ui/core';
+import type { AdaptSlotContentProps, AdaptWidgetSlots } from '../Slot';
+export type PaginationContext = AdaptSlotContentProps<PaginationCoreContext>;
+export type PaginationWidget = AdaptWidgetSlots<ReturnType<typeof createPagination>>;
+export type PaginationProps = WidgetProps<PaginationWidget>;
+export type PaginationState = WidgetState<PaginationWidget>;
+export declare function DefaultPages(slotContext: PaginationContext): import("react/jsx-runtime").JSX.Element | null;
+export declare function Pagination(props: Partial<PaginationProps>): import("react/jsx-runtime").JSX.Element;
+`;export{t as default};
