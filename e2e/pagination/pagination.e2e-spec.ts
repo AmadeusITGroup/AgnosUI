@@ -109,9 +109,13 @@ test.describe.parallel(`Pagination tests`, () => {
 	// TODO add test with the custom template, className...
 	test(`Custom features`, async ({page}) => {
 		const expectedState = {...initCustomState};
-		const paginationPO = new PaginationPO(page, 0);
+		const paginationPO1 = new PaginationPO(page, 0);
+		const paginationPO2 = new PaginationPO(page, 1);
 		await page.goto('#/pagination/custom');
-		await paginationPO.locatorRoot.waitFor();
-		expect(await paginationState(paginationPO)).toEqual(expectedState);
+		await paginationPO1.locatorRoot.waitFor();
+		expect(await paginationState(paginationPO1)).toEqual(expectedState);
+		await paginationPO2.locatorNextButton.click();
+		expectedState.pages = ['A', 'B', 'C', 'D', 'E(current)', 'F'];
+		expect(await paginationState(paginationPO1)).toEqual(expectedState);
 	});
 });

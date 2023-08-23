@@ -75,7 +75,7 @@ const PaginationCustom = () => {
 				/>
 				<hr />
 				<p>A pagination with customized pages:</p>
-				<Pagination page={customPage} slotPages={CustomPages} ariaLabel={'Page navigation with customized pages'} />
+				<Pagination page={customPage} onPageChange={setPage} slotPages={CustomPages} ariaLabel={'Page navigation with customized pages'} />
 			</WidgetsDefaultConfig>
 		</>
 	);
