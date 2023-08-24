@@ -38,7 +38,7 @@
 		"svelte-check:demo-build": "svelte-check --fail-on-warnings --tsconfig ./demo/tsconfig.build.json --output human-verbose"
 	},
 	"dependencies": {
-		"@agnos-ui/core": "",
+		"@agnos-ui/core": "0.0.1-alpha.0",
 		"@amadeus-it-group/tansu": "0.0.22"
 	},
 	"peerDependencies": {
@@ -58,5 +58,6 @@
 		"type": "git",
 		"url": "https://github.com/AmadeusITGroup/AgnosUI.git",
 		"directory": "svelte"
-	}
+	},
+	"version": "0.0.1-alpha.0"
 }
