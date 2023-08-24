@@ -19,28 +19,27 @@ export class ModalPO extends BasePO {
 		return this.selectors.rootComponent;
 	}
 
-	// TODO: should we expose getters instead?
-	locatorHeader(): Locator {
+	get locatorHeader(): Locator {
 		return this.locatorRoot.locator(this.selectors.header);
 	}
 
-	locatorTitle(): Locator {
-		return this.locatorHeader().locator(this.selectors.title);
+	get locatorTitle(): Locator {
+		return this.locatorHeader.locator(this.selectors.title);
 	}
 
-	locatorBody(): Locator {
+	get locatorBody(): Locator {
 		return this.locatorRoot.locator(this.selectors.body);
 	}
 
-	locatorFooter(): Locator {
+	get locatorFooter(): Locator {
 		return this.locatorRoot.locator(this.selectors.footer);
 	}
 
-	locatorCloseButton(): Locator {
+	get locatorCloseButton(): Locator {
 		return this.locatorRoot.locator(this.selectors.closeButton);
 	}
 
-	locatorBackdrop(): Locator {
+	get locatorBackdrop(): Locator {
 		return this.locatorRoot.locator(this.selectors.backdrop);
 	}
 }

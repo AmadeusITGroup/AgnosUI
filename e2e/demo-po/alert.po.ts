@@ -16,31 +16,31 @@ export class AlertDemoPO extends BasePO {
 		return '.container';
 	}
 
-	locatorShowAlertButton(): Locator {
+	get locatorShowAlertButton(): Locator {
 		return this.locatorRoot.locator(this.locators.showAlertButton);
 	}
 
-	locatorDismissibleInput(): Locator {
+	get locatorDismissibleInput(): Locator {
 		return this.locatorRoot.locator(this.locators.dismissibleInput);
 	}
 
-	locatorTypeSelect(): Locator {
+	get locatorTypeSelect(): Locator {
 		return this.locatorRoot.locator(this.locators.typeSelect);
 	}
 
-	locatorAddErrorButton(): Locator {
+	get locatorAddErrorButton(): Locator {
 		return this.locatorRoot.locator(this.locators.addError);
 	}
 
-	locatorAddInfoButton(): Locator {
+	get locatorAddInfoButton(): Locator {
 		return this.locatorRoot.locator(this.locators.addInfo);
 	}
 
-	locatorAddWarningButton(): Locator {
+	get locatorAddWarningButton(): Locator {
 		return this.locatorRoot.locator(this.locators.addWarning);
 	}
 
-	locatorAlertCountLabel(): Locator {
+	get locatorAlertCountLabel(): Locator {
 		return this.locatorRoot.locator(this.locators.alertCount);
 	}
 }

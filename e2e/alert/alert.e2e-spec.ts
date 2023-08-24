@@ -13,16 +13,16 @@ test.describe(`Alert tests`, () => {
 
 		expect(await alertPO.locatorRoot.getAttribute('class')).toContain('success');
 
-		await alertPO.locatorCloseButton().click();
+		await alertPO.locatorCloseButton.click();
 
 		await alertPO.locatorRoot.waitFor({state: 'hidden'});
 
-		await alertDemoPO.locatorDismissibleInput().click();
-		await alertDemoPO.locatorTypeSelect().selectOption('danger');
-		await alertDemoPO.locatorShowAlertButton().click();
+		await alertDemoPO.locatorDismissibleInput.click();
+		await alertDemoPO.locatorTypeSelect.selectOption('danger');
+		await alertDemoPO.locatorShowAlertButton.click();
 
 		expect(await alertPO.locatorRoot.getAttribute('class')).toContain('danger');
-		await expect(alertPO.locatorCloseButton()).toHaveCount(0);
+		await expect(alertPO.locatorCloseButton).toHaveCount(0);
 	});
 
 	test(`Dynamic alert with the service`, async ({page}) => {
@@ -31,16 +31,16 @@ test.describe(`Alert tests`, () => {
 
 		await page.goto('#/alert/dynamic');
 		await alertDemoPO.locatorRoot.waitFor();
-		expect(await alertDemoPO.locatorAlertCountLabel().innerText()).toContain('0');
+		expect(await alertDemoPO.locatorAlertCountLabel.innerText()).toContain('0');
 
-		await alertDemoPO.locatorAddErrorButton().click();
-		await alertDemoPO.locatorAddInfoButton().click();
-		await alertDemoPO.locatorAddWarningButton().click();
+		await alertDemoPO.locatorAddErrorButton.click();
+		await alertDemoPO.locatorAddInfoButton.click();
+		await alertDemoPO.locatorAddWarningButton.click();
 
-		expect(await alertDemoPO.locatorAlertCountLabel().innerText()).toContain('3');
+		expect(await alertDemoPO.locatorAlertCountLabel.innerText()).toContain('3');
 
-		await alertPO.locatorCloseButton().click();
-		await expect(alertPO.locatorCloseButton()).toHaveCount(0);
-		await expect(alertDemoPO.locatorAlertCountLabel()).toContainText('2');
+		await alertPO.locatorCloseButton.click();
+		await expect(alertPO.locatorCloseButton).toHaveCount(0);
+		await expect(alertDemoPO.locatorAlertCountLabel).toContainText('2');
 	});
 });
