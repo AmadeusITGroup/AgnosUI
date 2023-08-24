@@ -13,7 +13,7 @@ export class AlertPO extends BasePO {
 		return this.selectors.rootComponent;
 	}
 
-	locatorCloseButton(): Locator {
+	get locatorCloseButton(): Locator {
 		return this.locatorRoot.locator(this.selectors.closeButton);
 	}
 }

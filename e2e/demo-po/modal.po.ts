@@ -7,40 +7,40 @@ export class ModalDemoPO extends BasePO {
 		return '.container';
 	}
 
-	locatorLaunchDemoModalButton() {
+	get locatorLaunchDemoModalButton() {
 		return this.locatorRoot.getByText('Launch demo modal');
 	}
 
-	locatorMessage() {
+	get locatorMessage() {
 		return this.locatorRoot.getByTestId('message');
 	}
 }
 
 export class ModalStackDemoModalPO extends ModalPO {
-	locatorLaunchOtherModalButton() {
+	get locatorLaunchOtherModalButton() {
 		return this.locatorRoot.getByText('Launch other modal');
 	}
 
-	locatorEnableBackdropButton() {
+	get locatorEnableBackdropButton() {
 		return this.locatorRoot.getByText('Enable backdrop');
 	}
 
-	locatorDisableBackdropButton() {
+	get locatorDisableBackdropButton() {
 		return this.locatorRoot.getByText('Disable backdrop');
 	}
 }
 
 export class ModalDefaultDemoModalPO extends ModalPO {
-	locatorYesButton() {
-		return this.locatorFooter().getByText('Yes');
+	get locatorYesButton() {
+		return this.locatorFooter.getByText('Yes');
 	}
 
-	locatorNoButton() {
-		return this.locatorFooter().getByText('No');
+	get locatorNoButton() {
+		return this.locatorFooter.getByText('No');
 	}
 }
 
 export const openDemoModal = async (page: Page) => {
 	const modalDemoPO = new ModalDemoPO(page);
-	await modalDemoPO.locatorLaunchDemoModalButton().click();
+	await modalDemoPO.locatorLaunchDemoModalButton.click();
 };
