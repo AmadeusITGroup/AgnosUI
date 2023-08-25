@@ -3,13 +3,14 @@
 	"private": true,
 	"main": "dist/index.js",
 	"dependencies": {
-		"@typescript-eslint/utils": "^5.62.0"
+		"@typescript-eslint/utils": "^6.4.1"
 	},
 	"peerDependencies": {
 		"typescript": "*"
 	},
 	"devDependencies": {
 		"@angular/core": "^16.2.2",
+		"@typescript-eslint/rule-tester": "^6.4.1",
 		"svelte": "^4.2.0",
 		"svelte-eslint-parser": "^0.33.0"
 	},

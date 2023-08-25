@@ -1,14 +1,17 @@
-import {test} from 'vitest';
+import {afterAll, test} from 'vitest';
 import {angularCheckPropsRule} from '../src/angular-check-props';
 import type {TSESLint} from '@typescript-eslint/utils';
-import {ESLintUtils} from '@typescript-eslint/utils';
+import type {InvalidTestCase} from '@typescript-eslint/rule-tester';
+import {RuleTester} from '@typescript-eslint/rule-tester';
+
+RuleTester.afterAll = afterAll;
 
 test('angular-check-props', () => {
 	const codeTemplate = (classContent: string, widgetProps: string, classContent2 = '') =>
 		`import { Component, EventEmitter } from "@angular/core";\ninterface MyWidgetProps {\n${widgetProps}\n}\ninterface MyWidget {\n\tpatch(props: Partial<MyWidgetProps>): void\n}\n@Component({})\nclass MyComponent {\n${classContent}\n\t_widget: MyWidget;\n${classContent2}\n}`;
 
-	const ruleTester = new ESLintUtils.RuleTester({
-		parser: '@typescript-eslint/parser',
+	const ruleTester = new RuleTester({
+		parser: require.resolve('@typescript-eslint/parser'),
 		parserOptions: {
 			project: './tsconfig.test.json',
 			tsconfigRootDir: __dirname,
@@ -16,7 +19,7 @@ test('angular-check-props', () => {
 	});
 	type MessageIds<T extends TSESLint.RuleModule<any, any>> = T extends TSESLint.RuleModule<infer U, any> ? U : never;
 
-	const invalid: ESLintUtils.InvalidTestCase<MessageIds<typeof angularCheckPropsRule>, []>[] = [
+	const invalid: InvalidTestCase<MessageIds<typeof angularCheckPropsRule>, []>[] = [
 		{
 			code: codeTemplate('@Input() someInput;', ''),
 			errors: [{messageId: 'extraProp', data: {type: 'input', name: 'someInput'}}],
