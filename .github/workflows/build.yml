@@ -73,7 +73,7 @@ jobs:
         working-directory: gh-pages
         run: |
           if [ -n "$VERSION" ]; then
-            export DOC_PATH="v${VERSION%.*}"
+            export DOC_PATH="v$(node scripts/versionDocFolder.js "$VERSION")"
           else
             export DOC_PATH="${{ inputs.docPath }}"
           fi
