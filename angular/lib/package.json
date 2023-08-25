@@ -19,7 +19,7 @@
 	"dependencies": {
 		"@agnos-ui/core": "",
 		"@amadeus-it-group/tansu": "0.0.22",
-		"tslib": "^2.6.1"
+		"tslib": "^2.6.2"
 	},
 	"license": "MIT",
 	"bugs": "https://github.com/AmadeusITGroup/AgnosUI/issues",
