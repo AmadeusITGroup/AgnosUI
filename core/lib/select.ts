@@ -4,13 +4,9 @@ import {createHasFocus} from './services/focustrack';
 import type {PropsConfig} from './services/stores';
 import {stateStores, writablesForProps} from './services/stores';
 import type {Widget} from './types';
+import type {WidgetsCommonPropsAndState} from './commonProps';
 
-export interface SelectCommonPropsAndState<Item> {
-	/**
-	 * the class to attach to the select DOM element
-	 */
-	className: string;
-
+export interface SelectCommonPropsAndState<Item> extends WidgetsCommonPropsAndState {
 	/**
 	 * List of selected items
 	 */

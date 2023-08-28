@@ -7,7 +7,7 @@ import {FormsModule} from '@angular/forms';
 	standalone: true,
 	imports: [AgnosUIAngularModule, CommonModule, FormsModule],
 	template: `
-		<button class="btn btn-primary" (click)="modalService.open({slotTitle: 'First modal', modalClass: 'modal-sm', slotDefault: recursiveModal})">
+		<button class="btn btn-primary" (click)="modalService.open({slotTitle: 'First modal', className: 'modal-sm', slotDefault: recursiveModal})">
 			Launch demo modal
 		</button>
 		<ng-template #recursiveModal let-widget="widget" let-state="state">

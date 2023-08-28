@@ -5,6 +5,7 @@ import {clamp, isNumber} from './services/checks';
 import {typeBoolean, typeFunction, typeNumber, typeString} from './services/writables';
 import type {Widget, SlotContent, WidgetSlotContext} from './types';
 import {noop} from './utils';
+import type {WidgetsCommonPropsAndState} from './commonProps';
 
 /**
  * A type for the slot context of the pagination widget
@@ -21,7 +22,7 @@ export interface PaginationNumberContext extends PaginationContext {
 	displayedPage: number;
 }
 
-export interface PaginationCommonPropsAndState {
+export interface PaginationCommonPropsAndState extends WidgetsCommonPropsAndState {
 	/**
 	 * The current page.
 	 *
@@ -104,12 +105,6 @@ export interface PaginationCommonPropsAndState {
 	 * @defaultValue false
 	 */
 	boundaryLinks: boolean;
-
-	/**
-	 * An input to add a custom class to the UL
-	 * @defaultValue ''
-	 */
-	className: string;
 
 	/**
 	 * The template to use for the ellipsis slot

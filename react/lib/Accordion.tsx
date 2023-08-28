@@ -86,7 +86,7 @@ export const Accordion = forwardRef(function Accordion(props: PropsWithChildren<
 	const refSetAccordion = useDirective(widget.directives.accordionDirective);
 	return (
 		<AccordionDIContext.Provider value={widget.api}>
-			<div className={`accordion ${state.accordionClass}`} ref={refSetAccordion}>
+			<div className={`accordion ${state.className}`} ref={refSetAccordion}>
 				{props.children}
 			</div>
 		</AccordionDIContext.Provider>

@@ -82,7 +82,7 @@ const defaultConfig: Partial<AlertProps> = {
 		<div
 			*ngIf="!state().hidden"
 			[auUse]="widget.directives.transitionDirective"
-			class="au-alert d-flex w-100 alert alert-{{ state().type }}"
+			class="au-alert d-flex w-100 alert alert-{{ state().type }} {{ state().className }}"
 			role="alert"
 		>
 			<ng-template [auSlot]="state().slotStructure" [auSlotProps]="{state: state(), widget}"></ng-template>
@@ -163,6 +163,11 @@ export class AlertComponent implements OnChanges, AfterContentChecked {
 	@Output() shown = new EventEmitter<void>();
 
 	readonly defaultSlots = writable(defaultConfig);
+	/**
+	 * CSS classes to be applied on the widget main container
+	 */
+	@Input() className: string | undefined;
+
 	readonly _widget = callWidgetFactory(createAlert, 'alert', this.defaultSlots);
 	readonly widget = toSlotContextWidget(this._widget);
 	readonly api = this._widget.api;

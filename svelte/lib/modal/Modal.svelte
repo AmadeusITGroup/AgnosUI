@@ -43,7 +43,7 @@
 	});
 
 	const {
-		stores: {backdropClass$, backdropHidden$, hidden$, modalClass$, slotStructure$},
+		stores: {backdropClass$, backdropHidden$, hidden$, className$, slotStructure$},
 		directives: {backdropDirective, backdropPortalDirective, modalDirective, modalPortalDirective},
 		state$,
 	} = widget;
@@ -60,7 +60,7 @@
 {#if !$hidden$}
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<div class="modal d-block {$modalClass$}" use:modalPortalDirective use:modalDirective on:click={widget.actions.modalClick}>
+	<div class="modal d-block {$className$}" use:modalPortalDirective use:modalDirective on:click={widget.actions.modalClick}>
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<Slot slotContent={$slotStructure$} props={slotContext} let:component let:props>

@@ -245,7 +245,7 @@ export class AccordionItemComponent implements OnChanges, AfterContentChecked, A
 	exportAs: 'auAccordion',
 	standalone: true,
 	host: {
-		'[class]': '"accordion " + state$().accordionClass',
+		'[class]': '"accordion " + state$().className',
 	},
 	hostDirectives: [
 		{
@@ -260,10 +260,11 @@ export class AccordionDirective implements OnChanges {
 	 * If `true`, only one item at the time can stay open.
 	 */
 	@Input() closeOthers: boolean | undefined;
+
 	/**
-	 * Classes to add on the accordion DOM element.
+	 * CSS classes to be applied on the widget main container
 	 */
-	@Input() accordionClass: string | undefined;
+	@Input() className: string | undefined;
 
 	/**
 	 * An event fired when an item is shown.

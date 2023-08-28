@@ -27,7 +27,7 @@ const ModalBody = ({widget, state}: ModalContext) => (
 );
 
 const StackDemo = () => (
-	<button className="btn btn-primary" onClick={() => openModal({slotTitle: 'First modal', modalClass: 'modal-sm', slotDefault: ModalBody})}>
+	<button className="btn btn-primary" onClick={() => openModal({slotTitle: 'First modal', className: 'modal-sm', slotDefault: ModalBody})}>
 		Launch demo modal
 	</button>
 );

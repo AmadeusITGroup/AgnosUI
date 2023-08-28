@@ -24,6 +24,7 @@ describe(`Alert`, () => {
 
 	test(`should create alert with a default state`, () => {
 		expect(state).toEqual({
+			className: '',
 			dismissible: true,
 			slotDefault: undefined,
 			slotStructure: undefined,

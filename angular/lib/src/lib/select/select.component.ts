@@ -40,7 +40,7 @@ export class SelectComponent<Item> implements OnChanges {
 	@Input() filterText: string | undefined;
 
 	/**
-	 * the class to attach to the select DOM element
+	 * CSS classes to be applied on the widget main container
 	 */
 	@Input() className: string | undefined;
 

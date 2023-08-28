@@ -17,6 +17,7 @@ import type {Directive, SlotContent, Widget, WidgetSlotContext} from './types';
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {computed, readable, writable} from '@amadeus-it-group/tansu';
 import {noop} from './utils';
+import type {WidgetsCommonPropsAndState} from './commonProps';
 
 let itemId = 0;
 
@@ -49,14 +50,7 @@ function getItem(items: AccordionItemWidget[], itemId: string): AccordionItemWid
 	return items.find((item) => item.state$().itemId === itemId);
 }
 
-export interface AccordionCommonPropsAndState {
-	/**
-	 * Classes to add on the accordion DOM element.
-	 */
-	accordionClass: string;
-}
-
-export interface AccordionProps extends AccordionCommonPropsAndState {
+export interface AccordionProps extends WidgetsCommonPropsAndState {
 	/**
 	 * If `true`, only one item at the time can stay open.
 	 */
@@ -183,7 +177,7 @@ export interface AccordionProps extends AccordionCommonPropsAndState {
 	itemBodyClass: string;
 }
 
-export interface AccordionState extends AccordionCommonPropsAndState {
+export interface AccordionState extends WidgetsCommonPropsAndState {
 	/**
 	 * Array containing all the accordion-items contained in the accordion.
 	 */
@@ -373,7 +367,7 @@ const defaultAccordionConfig: AccordionProps = {
 	closeOthers: false,
 	onShown: noop,
 	onHidden: noop,
-	accordionClass: '',
+	className: '',
 	itemId: '',
 	itemDestroyOnHide: false,
 	itemDisabled: false,

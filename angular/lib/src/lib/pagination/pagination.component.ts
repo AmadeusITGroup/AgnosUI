@@ -404,7 +404,7 @@ export class PaginationComponent implements OnChanges, AfterContentChecked {
 	@Output() pageChange = new EventEmitter<number>(true);
 
 	/**
-	 * An input to add a custom class to the UL
+	 * CSS classes to be applied on the widget main container
 	 */
 	@Input() className: string | undefined;
 
