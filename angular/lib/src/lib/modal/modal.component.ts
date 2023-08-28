@@ -152,7 +152,7 @@ const defaultConfig: Partial<ModalProps> = {
 	template: `
 		<ng-template [auSlotDefault]="defaultSlots"><ng-content></ng-content></ng-template>
 		<div *ngIf="!state().backdropHidden" class="modal-backdrop {{ state().backdropClass }}" [auUse]="backdropDirective"></div>
-		<div *ngIf="!state().hidden" class="modal d-block {{ state().modalClass }}" [auUse]="modalDirective" (click)="widget.actions.modalClick($event)">
+		<div *ngIf="!state().hidden" class="modal d-block {{ state().className }}" [auUse]="modalDirective" (click)="widget.actions.modalClick($event)">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<ng-template [auSlot]="state().slotStructure" [auSlotProps]="{state: state(), widget}"></ng-template>
@@ -215,9 +215,9 @@ export class ModalComponent implements OnChanges, AfterContentChecked {
 	@Input() closeButton: boolean | undefined;
 
 	/**
-	 * Classes to add on the modal DOM element.
+	 * CSS classes to be applied on the widget main container
 	 */
-	@Input() modalClass: string | undefined;
+	@Input() className: string | undefined;
 
 	@Input() slotStructure: SlotContent<ModalContext>;
 	@ContentChild(ModalStructureDirective, {static: false})
@@ -260,6 +260,7 @@ export class ModalComponent implements OnChanges, AfterContentChecked {
 	@Output() shown = new EventEmitter<void>();
 
 	readonly defaultSlots = writable(defaultConfig);
+
 	readonly _widget = callWidgetFactory(createModal, 'modal', this.defaultSlots);
 	readonly widget = toSlotContextWidget(this._widget);
 	readonly api = this._widget.api;

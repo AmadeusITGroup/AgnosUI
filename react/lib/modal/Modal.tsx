@@ -65,7 +65,7 @@ export const Modal = forwardRef(function Modal(props: PropsWithChildren<Partial<
 			<Portal container={state.container}>
 				{state.backdropHidden ? null : <div className={`modal-backdrop ${state.backdropClass}`} ref={refSetBackdrop} />}
 				{state.hidden ? null : (
-					<div className={`modal d-block ${state.modalClass}`} ref={refSetModal} onClick={widget.actions.modalClick}>
+					<div className={`modal d-block ${state.className}`} ref={refSetModal} onClick={widget.actions.modalClick}>
 						<div className="modal-dialog">
 							<div className="modal-content">
 								<Slot slotContent={state.slotStructure} props={slotContext} />

@@ -18,6 +18,7 @@ import {promiseFromStore} from '../transitions/utils';
 import type {Widget, Directive, SlotContent, WidgetSlotContext} from '../types';
 import {noop} from '../utils';
 import {removeScrollbars, revertScrollbars} from './scrollbars';
+import type {WidgetsCommonPropsAndState} from '../commonProps';
 
 /**
  * Value present in the {@link ModalBeforeCloseEvent.result|result} property of the {@link ModalProps.onBeforeClose|onBeforeClose} event
@@ -39,7 +40,7 @@ export type ModalContext = WidgetSlotContext<ModalWidget>;
 /**
  * Properties of the modal widget that are also in the state of the modal.
  */
-export interface ModalCommonPropsAndState {
+export interface ModalCommonPropsAndState extends WidgetsCommonPropsAndState {
 	/**
 	 * Value of the aria-label attribute to put on the close button.
 	 */
@@ -61,11 +62,6 @@ export interface ModalCommonPropsAndState {
 	 * Otherwise, they stay where the widget is located.
 	 */
 	container: HTMLElement | null;
-
-	/**
-	 * Classes to add on the modal DOM element.
-	 */
-	modalClass: string;
 
 	/**
 	 * Body of the modal.
@@ -282,7 +278,7 @@ const defaultConfig: ModalProps = {
 	closeButton: true,
 	closeOnOutsideClick: true,
 	container: typeof window !== 'undefined' ? document.body : null,
-	modalClass: '',
+	className: '',
 	modalTransition: fadeTransition, // TODO: is it ok to depend on bootstrap transition?
 	onBeforeClose: noop,
 	onVisibleChange: noop,

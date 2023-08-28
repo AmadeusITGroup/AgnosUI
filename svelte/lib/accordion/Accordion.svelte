@@ -17,7 +17,7 @@
 	const widget = callWidgetFactory(createAccordion, 'accordion', $$slots as any, {});
 	const {
 		directives: {accordionDirective},
-		stores: {accordionClass$},
+		stores: {className$},
 	} = widget;
 	widget.patch({
 		onItemCollapsedChange: (event) => {
@@ -37,6 +37,6 @@
 	$: widget.patchChangedProps($$props);
 </script>
 
-<div class="accordion {$accordionClass$}" use:accordionDirective>
+<div class="accordion {$className$}" use:accordionDirective>
 	<slot />
 </div>

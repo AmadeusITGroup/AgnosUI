@@ -1,3 +1,4 @@
+import type {WidgetsCommonPropsAndState} from './commonProps';
 import type {ConfigValidator, PropsConfig} from './services';
 import {bindDirectiveNoArg, stateStores, typeBoolean, typeString, writablesForProps} from './services';
 import type {TransitionFn} from './transitions';
@@ -8,7 +9,7 @@ import {noop} from './utils';
 
 export type AlertContext = WidgetSlotContext<AlertWidget>;
 
-export interface AlertCommonPropsAndState {
+export interface AlertCommonPropsAndState extends WidgetsCommonPropsAndState {
 	/**
 	 * If `true`, alert can be dismissed by the user.
 	 * The close button (×) will be displayed and you can be notified of the event with the (close) output.
@@ -122,6 +123,7 @@ const defaultConfig: AlertProps = {
 	animation: true,
 	animationOnInit: false,
 	transition: fadeTransition,
+	className: '',
 };
 
 /**

@@ -310,7 +310,7 @@ describe(`Accordion`, () => {
 	test(`should have default config`, () => {
 		accordion = createAccordion(getAccordionDefaultConfig());
 		const {stores} = accordion;
-		expect(stores.accordionClass$()).toBe('');
+		expect(stores.className$()).toBe('');
 		const i = accordion.api.registerItem();
 		const {stores: itemStores} = i;
 		const itemStoreValues = {

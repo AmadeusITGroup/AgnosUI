@@ -129,7 +129,7 @@ export class RatingComponent implements ControlValueAccessor, OnChanges, AfterCo
 	@Input() tabindex: number | undefined;
 
 	/**
-	 * Classname to be applied on the rating container
+	 * CSS classes to be applied on the widget main container
 	 */
 	@Input() className: string | undefined;
 

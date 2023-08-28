@@ -4,6 +4,7 @@ import {INVALID_VALUE, bindableDerived, stateStores, writablesForProps} from './
 import {isNumber} from './services/checks';
 import {typeBoolean, typeFunction, typeNumber, typeString} from './services/writables';
 import type {SlotContent, Widget} from './types';
+import type {WidgetsCommonPropsAndState} from './commonProps';
 
 export interface StarContext {
 	/**
@@ -16,7 +17,7 @@ export interface StarContext {
 	index: number;
 }
 
-export interface RatingCommonPropsAndState {
+export interface RatingCommonPropsAndState extends WidgetsCommonPropsAndState {
 	/**
 	 * The current rating. Could be a decimal value like `3.75`.
 	 */
@@ -49,11 +50,6 @@ export interface RatingCommonPropsAndState {
 	 * If the component is disabled, `tabindex` will still be set to `-1`.
 	 */
 	tabindex: number;
-
-	/**
-	 * Classname to be applied on the rating container
-	 */
-	className: string;
 
 	/**
 	 * The template to override the way each star is displayed.
