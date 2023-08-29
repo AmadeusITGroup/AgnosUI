@@ -55,7 +55,7 @@
 				<div class="mb-2">
 					<span class="highlight">Default value:</span>
 					{#if type === 'function'}
-						<div class="mt-3"><Code code={defaultValue} title={'function'} isSample={false} language="typescript" /></div>
+						<div class="mt-3"><Code code={defaultValue} language="typescript" /></div>
 					{:else}
 						<code>{defaultValue}</code>
 					{/if}
