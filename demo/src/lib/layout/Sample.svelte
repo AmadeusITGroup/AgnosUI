@@ -10,6 +10,7 @@
 
 <script lang="ts">
 	import {selectedFramework$, type Frameworks} from '../stores';
+	import clipboard from 'bootstrap-icons/icons/clipboard.svg?raw';
 
 	import openLink from '../icons/open-link.svg?raw';
 	import stackblitz from '../icons/stackblitz.svg?raw';
@@ -62,20 +63,15 @@
 	export let showCodeButton = true;
 
 	let showCode = false;
+	let code = '';
 
 	$: path = `${sample.componentName}/${sample.sampleName}`.toLowerCase();
-	async function getCode(_showCode: boolean, frameworkName: Frameworks, sample: SampleInfo) {
-		if (!_showCode) {
-			return '';
-		}
-		const frameworkFiles = sample.files[frameworkName];
-		return await frameworkFiles.files[frameworkFiles.entryPoint]();
+	$: files = Object.keys(sample.files[$selectedFramework$].files);
+	$: selectedFileName = sample.files[$selectedFramework$].entryPoint;
+	async function getCode(showCode: boolean, frameworkName: Frameworks, sample: SampleInfo, fileName: string) {
+		code = showCode ? await sample.files[frameworkName].files[fileName]() : '';
 	}
-	let code = '';
-	$: getCode(showCode, $selectedFramework$!, sample).then((importedCode) => {
-		code = importedCode;
-	});
-	$: fileName = sample.files[$selectedFramework$].entryPoint;
+	$: getCode(showCode, $selectedFramework$!, sample, selectedFileName);
 
 	$: sampleBaseUrl = `${$pathToRoot$}${$selectedFramework$}/samples/#/${path}`;
 	$: sampleUrl = sampleBaseUrl + (urlParameters ? `#${JSON.stringify(urlParameters)}` : '');
@@ -173,8 +169,20 @@
 		</a>
 	</div>
 	{#if showCode}
-		<div class="border">
-			<Lazy component={() => import('./Code.svelte')} {code} {fileName}>
+		<ul class="nav nav-underline p-3 border-start border-end">
+			{#each files as file}
+				<li class="nav-item">
+					<button class="nav-link" class:active={selectedFileName === file} on:click={() => (selectedFileName = file)}>{file}</button>
+				</li>
+			{/each}
+			<li class="ms-auto">
+				<button class="btn" aria-label="copy to clipboard" on:click={() => navigator.clipboard.writeText(code)}
+					><Svg className={`align-middle icon-20`} svg={clipboard} /></button
+				>
+			</li>
+		</ul>
+		<div class="border border-top-0">
+			<Lazy component={() => import('./Code.svelte')} {code} fileName={selectedFileName} className="py-3 px-2 px-sm-4 code-sample">
 				<div class="spinner-border text-primary" role="status">
 					<span class="visually-hidden">Loading...</span>
 				</div>
