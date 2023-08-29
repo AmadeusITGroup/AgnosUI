@@ -1,12 +1,14 @@
-import {afterAll, test} from 'vitest';
+import {afterAll, describe, test} from 'vitest';
 import {angularCheckPropsRule} from '../src/angular-check-props';
 import type {TSESLint} from '@typescript-eslint/utils';
 import type {InvalidTestCase} from '@typescript-eslint/rule-tester';
 import {RuleTester} from '@typescript-eslint/rule-tester';
 
+RuleTester.describe = describe;
+RuleTester.it = test;
 RuleTester.afterAll = afterAll;
 
-test('angular-check-props', () => {
+describe('angular-check-props', () => {
 	const codeTemplate = (classContent: string, widgetProps: string, classContent2 = '') =>
 		`import { Component, EventEmitter } from "@angular/core";\ninterface MyWidgetProps {\n${widgetProps}\n}\ninterface MyWidget {\n\tpatch(props: Partial<MyWidgetProps>): void\n}\n@Component({})\nclass MyComponent {\n${classContent}\n\t_widget: MyWidget;\n${classContent2}\n}`;
 

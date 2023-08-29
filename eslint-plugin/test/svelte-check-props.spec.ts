@@ -1,12 +1,14 @@
-import {afterAll, test} from 'vitest';
+import {afterAll, describe, test} from 'vitest';
 import {svelteCheckPropsRule} from '../src/svelte-check-props';
 import type {TSESLint} from '@typescript-eslint/utils';
 import type {InvalidTestCase} from '@typescript-eslint/rule-tester';
 import {RuleTester} from '@typescript-eslint/rule-tester';
 
+RuleTester.describe = describe;
+RuleTester.it = test;
 RuleTester.afterAll = afterAll;
 
-test('svelte-check-props', () => {
+describe('svelte-check-props', () => {
 	const codeTemplate = (scriptContent: string, widgetProps: string, scriptContent2 = '') =>
 		`<script lang="ts" context="module">\nimport { createEventDispatcher } from "svelte";\ninterface MyWidgetProps {\n${widgetProps}\n}\ninterface MyWidget {\n\tpatch(props: Partial<MyWidgetProps>): void\n}\n</script><script lang="ts">\nconst dispatch = createEventDispatcher();\n${scriptContent}\nlet widget: MyWidget;\n${scriptContent2}\n</script>`;
 

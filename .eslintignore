@@ -7,4 +7,4 @@ test-results/
 .svelte-kit/
 demo/vite-env.d.ts
 demo/src/app.d.ts
-**/environment.prod.ts
+eslint-plugin/test/file.svelte
