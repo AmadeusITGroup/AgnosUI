@@ -6,6 +6,7 @@ import pkg from '../core/package.json';
 import {copySamples} from './scripts/copySamples.plugin';
 import {docExtractor} from './scripts/doc.plugin';
 import {includeSamples} from './scripts/includeSamples.plugin';
+import {emitFile} from './scripts/emitFile.plugin';
 
 const proxy: Record<string, string | ProxyOptions> = {
 	'/angular/samples': {
@@ -22,6 +23,8 @@ const proxy: Record<string, string | ProxyOptions> = {
 	},
 };
 
+const version = JSON.stringify((pkg as any).version ?? '0.0.0');
+
 // https://vitejs.dev/config/
 export default defineConfig({
 	envDir: path.join(__dirname, 'env'),
@@ -36,8 +39,14 @@ export default defineConfig({
 		port: 4000,
 		proxy: {},
 	},
-	plugins: [copySamples(), includeSamples(), sveltekit(), docExtractor()],
+	plugins: [
+		copySamples(),
+		includeSamples(),
+		sveltekit(),
+		docExtractor(),
+		emitFile({type: 'asset', fileName: 'version.json', name: 'version.json', source: version}),
+	],
 	define: {
-		'import.meta.env.AGNOSUI_VERSION': JSON.stringify((pkg as any).version ?? '0.0.0'),
+		'import.meta.env.AGNOSUI_VERSION': version,
 	},
 });

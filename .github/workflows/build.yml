@@ -73,13 +73,13 @@ jobs:
         working-directory: gh-pages
         run: |
           if [ -n "$VERSION" ]; then
-            export DOC_PATH="v$(node scripts/versionDocFolder.js "$VERSION")"
+            export DOC_PATH="v$(node ../scripts/versionDocFolder.js "$VERSION")"
           else
             export DOC_PATH="${{ inputs.docPath }}"
           fi
           rm -rf "$DOC_PATH"
           cp -a ../demo/dist "$DOC_PATH"
-          rm -f latest && ln -s v$(npx semver v* | tail -1) latest
+          node ../scripts/updateVersionsList.js
           git add .
           git commit --allow-empty -a -m "$DOC_PATH from ${{ github.sha }}"
           git push origin gh-pages
