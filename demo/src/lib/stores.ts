@@ -1,6 +1,7 @@
 import {computed, get} from '@amadeus-it-group/tansu';
 import {browser} from '$app/environment';
 import {page} from '$app/stores';
+import {createIntersection} from '@agnos-ui/core';
 
 // Return how deep the current route is compared to base
 export const routeLevel$ = computed(() => {
@@ -49,3 +50,5 @@ const frameworkKeyRegExp = /^\/\[framework\]\//;
 export const frameworkLessUrl$ = computed(() => {
 	return (get(page).route.id || '').replace(frameworkKeyRegExp, '');
 });
+
+export const intersectionApi = createIntersection();

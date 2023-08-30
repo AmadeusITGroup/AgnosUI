@@ -9,18 +9,17 @@
 </script>
 
 <script lang="ts">
-	import {selectedFramework$, type Frameworks} from '../stores';
+	import {tooltip} from '$lib/tooltip/tooltip';
+	import openLink from 'bootstrap-icons/icons/box-arrow-up-right.svg?raw';
 	import clipboard from 'bootstrap-icons/icons/clipboard.svg?raw';
-
-	import openLink from '../icons/open-link.svg?raw';
+	import codeSvg from 'bootstrap-icons/icons/code.svg?raw';
+	import {onDestroy} from 'svelte';
 	import stackblitz from '../icons/stackblitz.svg?raw';
-	import codeSvg from '../icons/code.svg?raw';
-	import {pathToRoot$} from '../stores';
+	import type {Frameworks} from '../stores';
+	import {pathToRoot$, selectedFramework$} from '../stores';
 	import Lazy from './Lazy.svelte';
 	import Svg from './Svg.svelte';
 	import type {SampleInfo} from './sample';
-	import {onDestroy} from 'svelte';
-	import {tooltip} from '$lib/tooltip/tooltip';
 
 	/**
 	 * iFrame title
@@ -176,8 +175,11 @@
 				</li>
 			{/each}
 			<li class="ms-auto">
-				<button class="btn" aria-label="copy to clipboard" on:click={() => navigator.clipboard.writeText(code)}
-					><Svg className={`align-middle icon-20`} svg={clipboard} /></button
+				<button
+					class="btn"
+					aria-label="copy to clipboard"
+					use:tooltip={{content: 'Copy to clipboard'}}
+					on:click={() => navigator.clipboard.writeText(code)}><Svg className={`align-middle icon-20`} svg={clipboard} /></button
 				>
 			</li>
 		</ul>
