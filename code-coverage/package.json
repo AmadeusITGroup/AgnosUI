@@ -1,0 +1,52 @@
+{
+	"name": "@agnos-ui/code-coverage",
+	"private": true,
+	"dependencies": {
+		"@babel/core": "^7.22.11",
+		"@babel/plugin-syntax-decorators": "^7.22.10",
+		"@babel/plugin-syntax-typescript": "^7.22.5",
+		"babel-plugin-istanbul": "^6.1.1",
+		"nyc": "^15.1.0",
+		"uuid": "^9.0.0"
+	},
+	"peerDependencies": {
+		"vite": "*"
+	},
+	"devDependencies": {
+		"@types/babel__core": "^7.20.1",
+		"vite": "^4.4.9"
+	},
+	"scripts": {
+		"build": "npm run build:rollup && npm run build:dts",
+		"build:rollup": "tsc && vite build -c vite.config.ts",
+		"build:dts": "tsc -p tsconfig.d.json"
+	},
+	"type": "module",
+	"exports": {
+		"./vitePlugin": {
+			"types": "./dist/lib/vitePlugin.d.ts",
+			"require": "./dist/lib/vitePlugin.cjs",
+			"default": "./dist/lib/vitePlugin.js"
+		},
+		"./interceptReadFile": {
+			"types": "./dist/lib/interceptReadFile.d.ts",
+			"require": "./dist/lib/interceptReadFile.cjs",
+			"default": "./dist/lib/interceptReadFile.js"
+		},
+		"./vitestProvider": {
+			"types": "./dist/lib/vitestProvider.d.ts",
+			"require": "./dist/lib/vitestProvider.cjs",
+			"default": "./dist/lib/vitestProvider.js"
+		},
+		"./setup": {
+			"types": "./dist/lib/setup.d.ts",
+			"require": "./dist/lib/setup.cjs",
+			"default": "./dist/lib/setup.js"
+		},
+		"./reportCoverage": {
+			"types": "./dist/lib/reportCoverage.d.ts",
+			"require": "./dist/lib/reportCoverage.cjs",
+			"default": "./dist/lib/reportCoverage.js"
+		}
+	}
+}

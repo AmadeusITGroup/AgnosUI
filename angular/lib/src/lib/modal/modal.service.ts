@@ -1,6 +1,7 @@
 import {ApplicationRef, createComponent, EnvironmentInjector, EventEmitter, inject, Injectable, Injector} from '@angular/core';
 import type {ModalProps} from './modal.component';
 import {ModalComponent} from './modal.component';
+import type {Subscription} from 'rxjs';
 
 export interface ModalServiceOpenOptions {
 	injector?: Injector;
@@ -16,7 +17,7 @@ export class ModalService {
 			environmentInjector: injector.get(EnvironmentInjector),
 			elementInjector: injector,
 		});
-		const subscriptions = [];
+		const subscriptions: Subscription[] = [];
 		try {
 			for (const prop of Object.keys(options) as (string & keyof ModalProps)[]) {
 				const value = options[prop];

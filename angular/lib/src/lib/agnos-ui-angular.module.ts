@@ -24,6 +24,7 @@ import {SlotDirective} from './slot.directive';
 import {AlertComponent} from './alert/alert.component';
 import {AccordionDirective, AccordionItemComponent, AccordionHeaderDirective, AccordionBodyDirective} from './accordion/accordion.component';
 
+/* istanbul ignore next */
 const components = [
 	SlotDirective,
 	SelectComponent,
