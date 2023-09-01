@@ -4,8 +4,8 @@ export default defineConfig({
 	test: {
 		include: ['./**/*.spec.ts'],
 		coverage: {
-			reporter: [['text'], ['json'], ['html'], ['lcov', {projectRoot: '..'}]],
-			exclude: ['**/*.spec.ts', '**/__mocks__/**'],
+			provider: 'custom',
+			customProviderModule: '@agnos-ui/code-coverage/vitestProvider',
 		},
 		environment: 'happy-dom',
 	},

@@ -13,7 +13,6 @@
 		"@types/uuid": "^9.0.2",
 		"@typescript-eslint/eslint-plugin": "^6.4.1",
 		"@typescript-eslint/parser": "^6.4.1",
-		"@vitest/coverage-v8": "^0.34.2",
 		"@vitest/ui": "^0.34.2",
 		"bootstrap": "^5.3.1",
 		"eslint": "^8.47.0",
@@ -22,16 +21,13 @@
 		"happy-dom": "^10.11.0",
 		"husky": "^8.0.3",
 		"npm-run-all": "^4.1.5",
-		"nyc": "^15.1.0",
 		"prettier": "^2.8.8",
 		"pretty-quick": "^3.1.3",
 		"semver": "^7.5.4",
 		"syncpack": "^11.2.1",
 		"ts-node": "^10.9.1",
 		"typescript": "~5.1.6",
-		"uuid": "^9.0.0",
 		"vite": "^4.4.9",
-		"vite-plugin-istanbul": "^5.0.0",
 		"vitest": "^0.34.2"
 	},
 	"scripts": {
@@ -60,6 +56,7 @@
 		"syncpack:fix": "syncpack fix-mismatches"
 	},
 	"workspaces": [
+		"code-coverage",
 		"core",
 		"angular",
 		"react",

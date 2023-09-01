@@ -123,7 +123,7 @@ export function writableWithDefault<T, U = T>(
 			if (normalizedValue === undefined) {
 				return defValue;
 			}
-			return normalizedValue;
+			return normalizedValue as T;
 		},
 		{equal}
 	);
@@ -141,7 +141,7 @@ export function writableWithDefault<T, U = T>(
 				if (normalizedValue === INVALID_VALUE) {
 					console.error('Not setting invalid value', value);
 				} else {
-					own$.set(normalizedValue);
+					own$.set(normalizedValue as T);
 				}
 			},
 			update,

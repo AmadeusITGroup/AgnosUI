@@ -64,7 +64,7 @@ if (includesDemo) {
 }
 
 const config: PlaywrightTestConfig = {
-	globalSetup: isCI || includeCoverage ? require.resolve('e2e/global-setup') : undefined,
+	globalSetup: require.resolve('./e2e/global-setup'),
 	testDir: 'e2e',
 	testMatch: '*e2e-spec.ts',
 	retries: 1,
