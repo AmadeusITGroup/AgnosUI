@@ -8,6 +8,7 @@
 			"@agnos-ui/react": ["./react/lib"],
 			"@agnos-ui/common": ["./common"],
 			"@agnos-ui/common/*": ["./common/*"]
-		}
+		},
+		"moduleResolution": "node"
 	}
 }

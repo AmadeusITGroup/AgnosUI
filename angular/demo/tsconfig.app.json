@@ -5,6 +5,6 @@
 		"outDir": "../out-tsc/app",
 		"types": ["@types/webpack-env"]
 	},
-	"files": ["src/main.ts", "src/polyfills.ts"],
+	"files": ["src/main.ts", "src/polyfills.ts", "src/environments/environment.prod.ts"],
 	"include": ["src/**/*.d.ts", "src/app/samples/**/*.route.ts"]
 }

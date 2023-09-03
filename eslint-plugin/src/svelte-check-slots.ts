@@ -178,7 +178,7 @@ export const svelteCheckSlotsRule = ESLintUtils.RuleCreator.withoutDocs({
 	meta: {
 		docs: {
 			description: 'Check AgnosUI calls to Slot in svelte components.',
-			recommended: 'error',
+			recommended: 'recommended',
 		},
 		fixable: 'code',
 		messages: {

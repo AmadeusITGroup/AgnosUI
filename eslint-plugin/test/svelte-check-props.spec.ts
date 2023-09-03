@@ -1,15 +1,20 @@
-import {test} from 'vitest';
+import {afterAll, describe, test} from 'vitest';
 import {svelteCheckPropsRule} from '../src/svelte-check-props';
 import type {TSESLint} from '@typescript-eslint/utils';
-import {ESLintUtils} from '@typescript-eslint/utils';
+import type {InvalidTestCase} from '@typescript-eslint/rule-tester';
+import {RuleTester} from '@typescript-eslint/rule-tester';
 
-test('svelte-check-props', () => {
+RuleTester.describe = describe;
+RuleTester.it = test;
+RuleTester.afterAll = afterAll;
+
+describe('svelte-check-props', () => {
 	const codeTemplate = (scriptContent: string, widgetProps: string, scriptContent2 = '') =>
 		`<script lang="ts" context="module">\nimport { createEventDispatcher } from "svelte";\ninterface MyWidgetProps {\n${widgetProps}\n}\ninterface MyWidget {\n\tpatch(props: Partial<MyWidgetProps>): void\n}\n</script><script lang="ts">\nconst dispatch = createEventDispatcher();\n${scriptContent}\nlet widget: MyWidget;\n${scriptContent2}\n</script>`;
 
-	const ruleTester = new ESLintUtils.RuleTester({
+	const ruleTester = new RuleTester({
 		plugins: ['svelte'],
-		parser: require.resolve('svelte-eslint-parser') as any,
+		parser: require.resolve('svelte-eslint-parser'),
 		parserOptions: {
 			parser: '@typescript-eslint/parser',
 			project: './tsconfig.test.json',
@@ -19,7 +24,7 @@ test('svelte-check-props', () => {
 	});
 	type MessageIds<T extends TSESLint.RuleModule<any, any>> = T extends TSESLint.RuleModule<infer U, any> ? U : never;
 
-	const invalid: ESLintUtils.InvalidTestCase<MessageIds<typeof svelteCheckPropsRule>, []>[] = [
+	const invalid: InvalidTestCase<MessageIds<typeof svelteCheckPropsRule>, []>[] = [
 		{
 			filename: 'file.svelte',
 			code: codeTemplate('export let someProp: string | undefined;', ''),

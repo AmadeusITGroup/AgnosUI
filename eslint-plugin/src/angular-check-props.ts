@@ -353,7 +353,7 @@ export const angularCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 	meta: {
 		docs: {
 			description: 'Check AgnosUI props in angular components.',
-			recommended: 'error',
+			recommended: 'recommended',
 		},
 		fixable: 'code',
 		messages: {

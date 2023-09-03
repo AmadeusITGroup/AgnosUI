@@ -367,7 +367,7 @@ export const svelteCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 	meta: {
 		docs: {
 			description: 'Check AgnosUI props in svelte components.',
-			recommended: 'error',
+			recommended: 'recommended',
 		},
 		fixable: 'code',
 		messages: {
