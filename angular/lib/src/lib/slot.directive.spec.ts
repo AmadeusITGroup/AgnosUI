@@ -1,3 +1,4 @@
+import {describe, it, expect} from 'vitest';
 import {writable} from '@amadeus-it-group/tansu';
 import type {TemplateRef} from '@angular/core';
 import {ChangeDetectionStrategy, Component, Injectable, Input, ViewChild, inject} from '@angular/core';

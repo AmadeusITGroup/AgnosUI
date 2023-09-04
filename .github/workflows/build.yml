@@ -52,7 +52,7 @@ jobs:
       - run: npm run test:coverage
       - uses: codecov/codecov-action@v3
         with:
-          file: core/coverage/lcov.info
+          files: core/coverage/lcov.info,angular/coverage/lcov.info
           flags: unit
       - run: ./scripts/npmPublish.sh --dry-run
       - if: inputs.version != '' && inputs.npmPublish
