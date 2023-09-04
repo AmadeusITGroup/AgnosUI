@@ -1,1 +1,0 @@
-import{s as o,o as n}from"../chunks/scheduler.9fa00b13.js";import{S as s,i as a}from"../chunks/index.e26394fb.js";import{g as r}from"../chunks/navigation.c89858f5.js";function i(t){return n(()=>r("rating/examples",{replaceState:!0})),[]}class u extends s{constructor(e){super(),a(this,e,i,null,o,{})}}export{u as component};
