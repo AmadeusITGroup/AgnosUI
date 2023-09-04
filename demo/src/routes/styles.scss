@@ -146,12 +146,23 @@ header {
 @media (min-width: 992px) {
 	.demo-layout {
 		display: grid;
-		grid-template-areas: 'sidebar main';
-		grid-template-columns: max-content 1fr;
+		grid-template-areas: 'sidebar main toc';
+		grid-template-columns: max-content 1fr max-content;
 		gap: 1.5rem;
 	}
 
 	.demo-sidebar {
+		position: -webkit-sticky;
+		position: sticky;
+		top: 0;
+		display: block !important;
+		height: calc(100vh - 6rem);
+		padding-left: 0.25rem;
+		margin-left: -0.25rem;
+		overflow-y: auto;
+	}
+
+	.demo-toc {
 		position: -webkit-sticky;
 		position: sticky;
 		top: 0;
@@ -190,6 +201,34 @@ header {
 
 .demo-main {
 	grid-area: main;
+}
+
+.toc {
+	&-link:hover,
+	&-link:focus {
+		color: var(--bs-emphasis-color);
+		background-color: var(--demo-sidebar-link-bg);
+	}
+	&-link {
+		padding: 0.1875rem 0.5rem;
+		color: var(--bs-body-color);
+		text-decoration: none;
+		border-left: 3px solid transparent;
+		transition: border-color 0.25s;
+
+		&.active {
+			color: var(--bs-emphasis-color);
+			border-left-color: var(--bs-primary);
+			transition: none;
+		}
+	}
+
+	&-h2 {
+		padding-left: 0.5rem;
+	}
+	&-h3 {
+		padding-left: 1rem;
+	}
 }
 
 .svg {

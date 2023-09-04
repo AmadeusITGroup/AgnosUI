@@ -2,7 +2,7 @@
 	import {normalizedType, textToLines} from '../../../app';
 	import type {PropertyDoc} from '@agnos-ui/doc/types';
 	import Code from '../Code.svelte';
-	import LinkHeading from '$lib/link-heading/LinkHeading.svelte';
+	import Section from '$lib/layout/Section.svelte';
 
 	const noDefault = {};
 
@@ -15,14 +15,10 @@
 </script>
 
 {#if properties.length}
-	<section class="mb-3">
-		<div class="border pb-3 border-0 border-bottom">
-			<LinkHeading label={title} id={titleLowercase} level={2} />
-		</div>
+	<Section label={title} id={titleLowercase} level={2} headerClassName="my-4">
 		{#each properties as { name, type, description, defaultValue } (name)}
 			{@const lines = textToLines(description)}
-			<div class="my-4 pb-3 border-bottom">
-				<LinkHeading label={name} id="{titleLowercase}-{name}" level={3} className="text-primary" />
+			<Section label={name} id="{titleLowercase}-{name}" level={3} headerClassName="text-primary">
 				<div class="mb-3"><span class="fw-bold">Type:</span> <code>{type}</code></div>
 				<div class="mb-3">
 					{#each lines as line}
@@ -42,9 +38,23 @@
 						{/if}
 					</div>
 				{/if}
-			</div>
+			</Section>
+			{#if hasDefaults && defaultValue}
+				{@const nType = normalizedType(type)}
+				<div class="mb-3">
+					<span class="fw-bold">Default value:</span>
+					{#if nType === 'function'}
+						<div class="my-2">
+							<Code code={defaultValue} language="typescript" />
+						</div>
+					{:else}
+						<code>{'' + defaultValue}</code>
+					{/if}
+				</div>
+			{/if}
+			<hr />
 		{/each}
-	</section>
+	</Section>
 {/if}
 
 <style>
