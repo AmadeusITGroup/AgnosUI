@@ -78,19 +78,6 @@
 					"options": {
 						"browserTarget": "demo:build"
 					}
-				},
-				"test": {
-					"builder": "@angular-devkit/build-angular:karma",
-					"options": {
-						"watch": false,
-						"main": "demo/src/test.ts",
-						"polyfills": "demo/src/polyfills.ts",
-						"tsConfig": "demo/tsconfig.spec.json",
-						"karmaConfig": "demo/karma.conf.js",
-						"assets": ["demo/src/favicon.ico", "demo/src/assets"],
-						"styles": ["demo/src/styles.css"],
-						"scripts": []
-					}
 				}
 			}
 		},
@@ -114,15 +101,6 @@
 						}
 					},
 					"defaultConfiguration": "production"
-				},
-				"test": {
-					"builder": "@angular-devkit/build-angular:karma",
-					"options": {
-						"watch": false,
-						"main": "lib/src/test.ts",
-						"tsConfig": "lib/tsconfig.spec.json",
-						"karmaConfig": "lib/karma.conf.js"
-					}
 				}
 			}
 		}

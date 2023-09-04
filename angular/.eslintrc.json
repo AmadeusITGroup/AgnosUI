@@ -32,16 +32,6 @@
 			"files": ["*.html"],
 			"extends": ["plugin:@angular-eslint/template/recommended"],
 			"rules": {}
-		},
-		{
-			"files": ["**/karma.conf.js"],
-			"env": {
-				"browser": false,
-				"node": true
-			},
-			"rules": {
-				"@typescript-eslint/no-var-requires": "off"
-			}
 		}
 	]
 }
