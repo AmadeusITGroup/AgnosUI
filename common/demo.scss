@@ -1,3 +1,5 @@
+@import 'variables';
+
 body {
 	min-height: 100vh;
 }
@@ -10,16 +12,16 @@ main {
 .sample-links {
 	column-count: 1;
 
-	@media (min-width: 576px) {
+	@include media-breakpoint-up(sm) {
 		column-count: 2;
 	}
-	@media (min-width: 768px) {
+	@include media-breakpoint-up(md) {
 		column-count: 3;
 	}
-	@media (min-width: 992px) {
+	@include media-breakpoint-up(lg) {
 		column-count: 5;
 	}
-	@media (min-width: 1200px) {
+	@include media-breakpoint-up(xl) {
 		column-count: 6;
 	}
 }

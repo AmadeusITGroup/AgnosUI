@@ -55,13 +55,15 @@
 </section>
 
 <style lang="scss">
+	@import '../../../common/variables';
+
 	.note {
 		font-size: 1.25rem;
 		font-weight: 300;
 	}
 	.links {
 		padding: 1rem 0rem;
-		@media (min-width: 768px) {
+		@include media-breakpoint-up(md) {
 			padding: 3rem;
 		}
 
