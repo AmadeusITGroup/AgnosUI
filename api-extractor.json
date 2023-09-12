@@ -20,5 +20,8 @@
 	},
 	"compiler": {
 		"tsconfigFilePath": "<projectFolder>/tsconfig.d.json"
+	},
+	"tsdocMetadata": {
+		"enabled": false
 	}
 }

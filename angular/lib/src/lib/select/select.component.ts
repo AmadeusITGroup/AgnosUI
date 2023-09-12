@@ -1,16 +1,9 @@
-import type {WidgetProps, WidgetState, ItemCtx} from '@agnos-ui/core';
-import {createSelect} from '@agnos-ui/core';
+import type {ItemCtx, SelectWidget, WidgetState} from '@agnos-ui/angular-headless';
+import {UseDirective, callWidgetFactory, createSelect, patchSimpleChanges} from '@agnos-ui/angular-headless';
 import {CommonModule} from '@angular/common';
 import type {OnChanges, Signal, SimpleChanges} from '@angular/core';
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import {toSignal} from '@angular/core/rxjs-interop';
-import type {AdaptWidgetSlots} from '../slot.directive';
-import {callWidgetFactory} from '../slot.directive';
-import {UseDirective} from '../transition/use.directive';
-import {patchSimpleChanges} from '../utils';
-
-export type SelectWidget<Item> = AdaptWidgetSlots<ReturnType<typeof createSelect<Item>>>;
-export type SelectProps<Item> = WidgetProps<SelectWidget<Item>>;
 
 @Component({
 	standalone: true,

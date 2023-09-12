@@ -5,6 +5,19 @@
 	"bugs": "https://github.com/AmadeusITGroup/AgnosUI/issues",
 	"license": "MIT",
 	"private": true,
+	"keywords": [
+		"components",
+		"widgets",
+		"accordion",
+		"alert",
+		"modal",
+		"pagination",
+		"rating"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/AmadeusITGroup/AgnosUI.git"
+	},
 	"devDependencies": {
 		"@axe-core/playwright": "^4.7.3",
 		"@microsoft/api-extractor": "^7.36.4",

@@ -1,6 +1,16 @@
+import type {ModalBeforeCloseEvent, ModalContext, ModalProps, ModalState, SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
+import {
+	ComponentTemplate,
+	SlotDefaultDirective,
+	SlotDirective,
+	UseDirective,
+	callWidgetFactory,
+	createModal,
+	mergeDirectives,
+	patchSimpleChanges,
+	toSlotContextWidget,
+} from '@agnos-ui/angular-headless';
 import {writable} from '@amadeus-it-group/tansu';
-import type {ModalBeforeCloseEvent, ModalContext as ModalCoreContext, TransitionFn, WidgetProps, WidgetState} from '@agnos-ui/core';
-import {createModal, mergeDirectives, toSlotContextWidget} from '@agnos-ui/core';
 import {NgIf} from '@angular/common';
 import type {AfterContentChecked, OnChanges, Signal, SimpleChanges} from '@angular/core';
 import {
@@ -17,16 +27,6 @@ import {
 	inject,
 } from '@angular/core';
 import {toSignal} from '@angular/core/rxjs-interop';
-import type {AdaptSlotContentProps, AdaptWidgetSlots, SlotContent} from '../slot.directive';
-import {ComponentTemplate, SlotDirective, callWidgetFactory} from '../slot.directive';
-import {SlotDefaultDirective} from '../slotDefault.directive';
-import {UseDirective} from '../transition/use.directive';
-import {patchSimpleChanges} from '../utils';
-
-export type ModalWidget = AdaptWidgetSlots<ReturnType<typeof createModal>>;
-export type ModalProps = WidgetProps<ModalWidget>;
-export type ModalState = WidgetState<ModalWidget>;
-export type ModalContext = AdaptSlotContentProps<ModalCoreContext>;
 
 /**
  * Directive to provide the slot structure for the modal widget.

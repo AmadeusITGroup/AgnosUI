@@ -1,15 +1,12 @@
 import type {AlertProps} from '@agnos-ui/core';
-import type {AdaptPropsSlots} from '@agnos-ui/react';
-import {Alert, WidgetsDefaultConfig} from '@agnos-ui/react';
-import {useState} from 'react';
-
-import {Slot} from '@agnos-ui/react';
+import type {AdaptPropsSlots, AlertContext} from '@agnos-ui/react';
+import {Alert, Slot, WidgetsDefaultConfig} from '@agnos-ui/react';
 import biCheckCircleFill from 'bootstrap-icons/icons/check-circle-fill.svg?raw';
 import biDashCircleFill from 'bootstrap-icons/icons/dash-circle-fill.svg?raw';
 import biExclamationTriangleFill from 'bootstrap-icons/icons/exclamation-triangle-fill.svg?raw';
 import biInfoCircleFill from 'bootstrap-icons/icons/info-circle-fill.svg?raw';
 import biLightbulb from 'bootstrap-icons/icons/lightbulb.svg?raw';
-import type {AlertContext} from 'react/lib/Alert';
+import {useState} from 'react';
 
 const AlertIcon = ({widget, state}: AlertContext) => {
 	const typeIcon: Record<string, string> = {

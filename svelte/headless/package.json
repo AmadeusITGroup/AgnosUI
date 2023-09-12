@@ -1,0 +1,23 @@
+{
+	"name": "@agnos-ui/svelte-headless",
+	"private": true,
+	"description": "Headless widget library for Svelte.",
+	"type": "module",
+	"main": "./index.js",
+	"module": "./index.js",
+	"types": "./index.d.ts",
+	"exports": {
+		".": {
+			"types": "./index.d.ts",
+			"svelte": "./index.js"
+		}
+	},
+	"dependencies": {
+		"@agnos-ui/core": "",
+		"@amadeus-it-group/tansu": "0.0.22"
+	},
+	"peerDependencies": {
+		"svelte": "*"
+	},
+	"sideEffects": false
+}

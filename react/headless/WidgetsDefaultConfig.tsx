@@ -2,7 +2,7 @@ import type {Partial2Levels} from '@agnos-ui/core';
 import {createWidgetsConfig} from '@agnos-ui/core';
 import type {PropsWithChildren} from 'react';
 import {useContext, useEffect, useMemo} from 'react';
-import type {WidgetsConfig} from './Slot';
+import type {WidgetsConfig} from './utils';
 import {widgetsConfigContext} from './utils';
 
 /**

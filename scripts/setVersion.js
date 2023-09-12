@@ -6,7 +6,17 @@ const setVersion = (version) => {
 	if (version != undefined && !valid(version)) {
 		throw new Error(`Invalid version number: ${version}`);
 	}
-	const directories = ['core', 'svelte', 'react', 'angular/lib', 'base-po', 'page-objects'];
+	const directories = [
+		'core/lib',
+		'svelte/headless',
+		'svelte/lib',
+		'react/headless',
+		'react/lib',
+		'angular/headless',
+		'angular/lib',
+		'base-po',
+		'page-objects',
+	];
 
 	const processDependencies = (dependencies) => {
 		if (dependencies) {

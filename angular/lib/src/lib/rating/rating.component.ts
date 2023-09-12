@@ -1,5 +1,5 @@
-import type {StarContext, WidgetProps, WidgetState} from '@agnos-ui/core';
-import {createRating} from '@agnos-ui/core';
+import type {AdaptSlotContentProps, RatingState, SlotContent, StarContext} from '@agnos-ui/angular-headless';
+import {SlotDirective, callWidgetFactory, createRating, patchSimpleChanges} from '@agnos-ui/angular-headless';
 import {NgForOf} from '@angular/common';
 import type {AfterContentChecked, OnChanges, Signal, SimpleChanges} from '@angular/core';
 import {
@@ -19,13 +19,6 @@ import {
 import {toSignal} from '@angular/core/rxjs-interop';
 import type {ControlValueAccessor} from '@angular/forms';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
-import type {AdaptSlotContentProps, AdaptWidgetSlots, SlotContent} from '../slot.directive';
-import {SlotDirective, callWidgetFactory} from '../slot.directive';
-import {patchSimpleChanges} from '../utils';
-
-export type RatingWidget = AdaptWidgetSlots<ReturnType<typeof createRating>>;
-export type RatingProps = WidgetProps<RatingWidget>;
-export type RatingState = WidgetState<RatingWidget>;
 
 // eslint-disable-next-line @angular-eslint/directive-selector
 @Directive({selector: 'ng-template[auRatingStar]', standalone: true})

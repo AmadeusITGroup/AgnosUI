@@ -1,6 +1,15 @@
+import type {AlertContext, AlertProps, AlertState, SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
+import {
+	ComponentTemplate,
+	SlotDefaultDirective,
+	SlotDirective,
+	UseDirective,
+	callWidgetFactory,
+	createAlert,
+	patchSimpleChanges,
+	toSlotContextWidget,
+} from '@agnos-ui/angular-headless';
 import {writable} from '@amadeus-it-group/tansu';
-import type {AlertContext as AlertCoreContext, TransitionFn, WidgetProps, WidgetState} from '@agnos-ui/core';
-import {createAlert, toSlotContextWidget} from '@agnos-ui/core';
 import {NgIf} from '@angular/common';
 import type {AfterContentChecked, OnChanges, Signal, SimpleChanges} from '@angular/core';
 import {
@@ -9,29 +18,18 @@ import {
 	ContentChild,
 	Directive,
 	EventEmitter,
-	inject,
 	Input,
 	Output,
 	TemplateRef,
 	ViewChild,
+	inject,
 } from '@angular/core';
 import {toSignal} from '@angular/core/rxjs-interop';
-import type {AdaptSlotContentProps, AdaptWidgetSlots, SlotContent} from '../slot.directive';
-import {callWidgetFactory, ComponentTemplate, SlotDirective} from '../slot.directive';
-import {SlotDefaultDirective} from '../slotDefault.directive';
-import {UseDirective} from '../transition/use.directive';
-import {patchSimpleChanges} from '../utils';
-
-export type AlertWidget = AdaptWidgetSlots<ReturnType<typeof createAlert>>;
-export type AlertState = WidgetState<AlertWidget>;
-export type AlertProps = WidgetProps<AlertWidget>;
-
-export type AlertContext = AdaptSlotContentProps<AlertCoreContext>;
 
 @Directive({selector: 'ng-template[auAlertBody]', standalone: true})
 export class AlertBodyDirective {
-	public templateRef = inject(TemplateRef<AdaptSlotContentProps<AlertContext>>);
-	static ngTemplateContextGuard(dir: AlertBodyDirective, context: unknown): context is AlertCoreContext {
+	public templateRef = inject(TemplateRef<AlertContext>);
+	static ngTemplateContextGuard(dir: AlertBodyDirective, context: unknown): context is AlertContext {
 		return true;
 	}
 }
@@ -39,7 +37,7 @@ export class AlertBodyDirective {
 @Directive({selector: 'ng-template[auAlertStructure]', standalone: true})
 export class AlertStructureDirective {
 	public templateRef = inject(TemplateRef<AlertContext>);
-	static ngTemplateContextGuard(dir: AlertStructureDirective, context: unknown): context is AlertCoreContext {
+	static ngTemplateContextGuard(dir: AlertStructureDirective, context: unknown): context is AlertContext {
 		return true;
 	}
 }
@@ -61,7 +59,7 @@ export class AlertStructureDirective {
 	</ng-template>`,
 })
 export class AlertDefaultSlotsComponent {
-	@ViewChild('structure', {static: true}) structure: TemplateRef<AlertCoreContext>;
+	@ViewChild('structure', {static: true}) structure: TemplateRef<AlertContext>;
 }
 
 export const alertDefaultSlotStructure = new ComponentTemplate(AlertDefaultSlotsComponent, 'structure');
@@ -140,11 +138,11 @@ export class AlertComponent implements OnChanges, AfterContentChecked {
 	 */
 	@Input() ariaCloseButtonLabel: string | undefined;
 
-	@Input() slotDefault: SlotContent<AdaptSlotContentProps<AlertCoreContext>>;
+	@Input() slotDefault: SlotContent<AlertContext>;
 	@ContentChild(AlertBodyDirective, {static: false})
 	slotDefaultFromContent: AlertBodyDirective | null;
 
-	@Input() slotStructure: SlotContent<AdaptSlotContentProps<AlertCoreContext>>;
+	@Input() slotStructure: SlotContent<AlertContext>;
 	@ContentChild(AlertStructureDirective, {static: false}) slotStructureFromContent: AlertStructureDirective | undefined;
 
 	/**

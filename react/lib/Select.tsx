@@ -1,11 +1,6 @@
-import type {ItemCtx, WidgetProps} from '@agnos-ui/core';
-import {createSelect} from '@agnos-ui/core';
+import type {ItemCtx, SelectProps, SelectWidget} from '@agnos-ui/react-headless';
+import {createSelect, useDirective, useWidgetWithConfig} from '@agnos-ui/react-headless';
 import type {SyntheticEvent} from 'react';
-import type {AdaptWidgetSlots} from './Slot';
-import {useDirective, useWidgetWithConfig} from './utils';
-
-export type SelectWidget<Item> = AdaptWidgetSlots<ReturnType<typeof createSelect<Item>>>;
-export type SelectProps<Item> = WidgetProps<SelectWidget<Item>>;
 
 const inputGroupText = {
 	backgroundColor: 'transparent',

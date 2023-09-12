@@ -76,15 +76,23 @@ if (isReleased) {
 	};
 
 	const corePackage = addAsyncFiles(
-		import.meta.glob(['../../../../core/dist/lib/**', '../../../../core/package.json', '!**/*.map'], {
+		import.meta.glob(['../../../../core/dist/lib/**', '!**/*.map'], {
 			as: 'raw',
 			import: 'default',
 		}) as any,
 		'packages/@agnos-ui/core/',
-		'../../../../core/'
+		'../../../../core/dist/lib/'
 	);
 	frameworkCreateStackblitz.angular.push(
 		corePackage,
+		addAsyncFiles(
+			import.meta.glob(['../../../../angular/dist/headless/**', '!**/*.map'], {
+				as: 'raw',
+				import: 'default',
+			}) as any,
+			'packages/@agnos-ui/angular-headless/',
+			'../../../../angular/dist/headless/'
+		),
 		addAsyncFiles(
 			import.meta.glob(['../../../../angular/dist/lib/**', '!**/*.map'], {
 				as: 'raw',
@@ -98,24 +106,40 @@ if (isReleased) {
 	frameworkCreateStackblitz.react.push(
 		corePackage,
 		addAsyncFiles(
-			import.meta.glob(['../../../../react/dist/lib/**', '../../../../react/package.json', '!**/*.map'], {
+			import.meta.glob(['../../../../react/dist/headless/**', '!**/*.map'], {
+				as: 'raw',
+				import: 'default',
+			}) as any,
+			'packages/@agnos-ui/react-headless/',
+			'../../../../react/dist/headless/'
+		),
+		addAsyncFiles(
+			import.meta.glob(['../../../../react/dist/lib/**', '!**/*.map'], {
 				as: 'raw',
 				import: 'default',
 			}) as any,
 			'packages/@agnos-ui/react/',
-			'../../../../react/'
+			'../../../../react/dist/lib/'
 		),
 		mergePackageJson
 	);
 	frameworkCreateStackblitz.svelte.push(
 		corePackage,
 		addAsyncFiles(
-			import.meta.glob(['../../../../svelte/dist/lib/**', '../../../../svelte/package.json', '!**/*.map'], {
+			import.meta.glob(['../../../../svelte/dist/headless/**', '!**/*.map'], {
+				as: 'raw',
+				import: 'default',
+			}) as any,
+			'packages/@agnos-ui/svelte-headless/',
+			'../../../../svelte/dist/headless/'
+		),
+		addAsyncFiles(
+			import.meta.glob(['../../../../svelte/dist/lib/**', '!**/*.map'], {
 				as: 'raw',
 				import: 'default',
 			}) as any,
 			'packages/@agnos-ui/svelte/',
-			'../../../../svelte/'
+			'../../../../svelte/dist/lib/'
 		),
 		mergePackageJson
 	);

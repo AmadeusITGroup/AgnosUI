@@ -1,17 +1,7 @@
-import type {AlertContext as AlertCoreContext, WidgetProps} from '@agnos-ui/core';
-import {createAlert} from '@agnos-ui/core';
+import type {AlertContext, AlertProps} from '@agnos-ui/react-headless';
+import {Slot, createAlert, useDirective, useWidgetWithConfig} from '@agnos-ui/react-headless';
 import type {PropsWithChildren} from 'react';
 import {forwardRef, useImperativeHandle} from 'react';
-import type {AdaptSlotContentProps, AdaptWidgetSlots} from './Slot';
-import {Slot} from './Slot';
-import {useDirective, useWidgetWithConfig} from './utils';
-
-export type AlertContext = AdaptSlotContentProps<AlertCoreContext>;
-export type AlertWidget = AdaptWidgetSlots<ReturnType<typeof createAlert>>;
-export type AlertProps = WidgetProps<AlertWidget>;
-export type AlertState = WidgetProps<AlertWidget>;
-
-export interface AlertReactProps extends AlertProps, Omit<React.HTMLAttributes<HTMLUListElement>, 'className'> {}
 
 const DefaultSlotStructure = (slotContext: AlertContext) => (
 	<>

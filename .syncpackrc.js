@@ -1,6 +1,6 @@
 /** @type import("syncpack").RcFile */
 module.exports = {
-	source: ['package.json', '*/package.json', 'demo/src/lib/stackblitz/*/package.json', 'angular/lib/package.json'],
+	source: ['package.json', '*/package.json', '*/{lib,headless}/package.json', 'demo/src/lib/stackblitz/*/package.json'],
 	indent: '\t',
 	semverRange: '^',
 	versionGroups: [
