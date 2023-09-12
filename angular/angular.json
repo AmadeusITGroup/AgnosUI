@@ -22,7 +22,7 @@
 						"main": "demo/src/main.ts",
 						"polyfills": "demo/src/polyfills.ts",
 						"tsConfig": "demo/tsconfig.app.json",
-						"assets": ["demo/src/favicon.ico", "demo/src/assets"],
+						"assets": ["demo/src/agnosui-logo.svg", "demo/src/assets"],
 						"styles": ["demo/src/styles.css", "../common/demo.scss"],
 						"scripts": [],
 						"inlineStyleLanguage": "scss",

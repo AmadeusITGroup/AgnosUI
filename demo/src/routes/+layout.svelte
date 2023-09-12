@@ -54,10 +54,8 @@
 			</div>
 		</div>
 	</nav>
-	<div class="demo-main d-flex justify-content-center">
-		<div class="container-xxl">
-			<slot />
-		</div>
+	<div class="demo-main d-flex flex-column">
+		<slot />
 	</div>
 </div>
 
