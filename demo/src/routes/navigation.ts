@@ -6,6 +6,7 @@ export const menu = [
 			{label: 'Alert', path: '/components/alert'},
 			{label: 'Modal', path: '/components/modal'},
 			{label: 'Pagination', path: '/components/pagination'},
+			{label: 'Progressbar', path: '/components/progressbar'},
 			{label: 'Rating', path: '/components/rating'},
 		],
 	} /*,

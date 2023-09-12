@@ -8,3 +8,4 @@ export * from './modal/Modal';
 export * from './modal/modalService';
 export * from './pagination/PageItem';
 export * from './pagination/Pagination';
+export * from './Progressbar';

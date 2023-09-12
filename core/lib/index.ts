@@ -10,3 +10,4 @@ export * from './modal/modal';
 export * from './alert';
 export * from './accordion';
 export * from './commonProps';
+export * from './progressbar';
