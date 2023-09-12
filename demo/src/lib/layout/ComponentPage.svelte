@@ -17,5 +17,5 @@
 
 <Header title={componentName} {tabs} tab={$selectedTabName$} />
 <div class="main-content">
-	<slot tab={$selectedTabName$} />
+	<slot />
 </div>

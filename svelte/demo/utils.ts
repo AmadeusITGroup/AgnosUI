@@ -1,8 +1,11 @@
 import {computed} from '@amadeus-it-group/tansu';
 import {createWidgetsDefaultConfig} from '@agnos-ui/svelte';
 import {hashObject$} from '@agnos-ui/common/utils';
+import {getPropValues} from '@agnos-ui/common/propsValues';
 
 export function hashChangeHook(widgetName: string) {
-	createWidgetsDefaultConfig(() => ({[widgetName]: hashObject$().config}));
-	return computed(() => hashObject$().props);
+	createWidgetsDefaultConfig(() => {
+		return {[widgetName]: getPropValues(hashObject$().config)};
+	});
+	return computed(() => getPropValues(hashObject$().props));
 }

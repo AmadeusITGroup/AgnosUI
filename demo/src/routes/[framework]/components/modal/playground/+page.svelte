@@ -3,6 +3,15 @@
 	import {getModalDefaultConfig} from '@agnos-ui/core';
 	import sample from '@agnos-ui/samples/modal/playground';
 	import doc from '../../../../../../../core/dist/api.json?modal&extractApi';
+	import type {PropsValues} from '@agnos-ui/common/propsValues';
+	export let listPropsValues: {[key in keyof ReturnType<typeof getModalDefaultConfig>]?: PropsValues[]} = {
+		backdropTransition: ['fade'],
+		modalTransition: ['fade'],
+		onBeforeClose: ['noop', 'log'],
+		onHidden: ['noop', 'log'],
+		onShown: ['noop', 'log'],
+		onVisibleChange: ['noop', 'log'],
+	};
 </script>
 
-<Playground {sample} config={getModalDefaultConfig()} height={250} noresize {doc} />
+<Playground {sample} config={getModalDefaultConfig()} height={250} noresize {doc} {listPropsValues} />

@@ -3,6 +3,14 @@
 	import {getAlertDefaultConfig} from '@agnos-ui/core';
 	import sample from '@agnos-ui/samples/alert/playground';
 	import doc from '../../../../../../../core/dist/api.json?alert&extractApi';
+	import type {PropsValues} from '@agnos-ui/common/propsValues';
+
+	export let listPropsValues: {[key in keyof ReturnType<typeof getAlertDefaultConfig>]?: PropsValues[]} = {
+		onVisibleChange: ['noop', 'log'],
+		onShown: ['noop', 'log'],
+		transition: ['fade'],
+		onHidden: ['noop', 'log'],
+	};
 </script>
 
-<Playground {sample} config={getAlertDefaultConfig()} {doc} />
+<Playground {sample} config={getAlertDefaultConfig()} {doc} {listPropsValues} />

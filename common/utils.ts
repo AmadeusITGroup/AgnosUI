@@ -32,7 +32,7 @@ function undefinedIfEmpty(object: object | undefined) {
 
 /**
  * Update the hash url
- * @param type Type of value to be update
+ * @param type Type of value to be updated
  * @param key
  * @param value any value, or undefined to remove the key
  */

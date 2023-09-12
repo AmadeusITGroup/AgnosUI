@@ -3,6 +3,7 @@ import {getContext, setContext} from 'svelte';
 import {hashObject$, updateHashValue} from '@agnos-ui/common/utils';
 import type {WidgetDoc} from '@agnos-ui/doc/types';
 import {normalizedType, textToLines} from '../../../app';
+import type {PropsValues} from '@agnos-ui/common/propsValues';
 
 type Playground = ReturnType<typeof createPlayground>;
 
@@ -19,12 +20,16 @@ interface PlaygroundProps {
 	config: Record<string, any>;
 	types: Record<string, string>;
 	doc: WidgetDoc;
+	listPropsValues: Record<string, PropsValues[]>;
 }
 
-function createSingleValueContext(valueType: 'config' | 'props', key: string, value: any, type: string) {
+function createSingleValueContext(valueType: 'config' | 'props', key: string, value: any, type: string, selectValues?: PropsValues[]) {
 	function getTargetValue({target}: any) {
 		let value: any;
 		const targetValue = target.value.trim();
+		if (selectValues) {
+			return {value: targetValue};
+		}
 		switch (type) {
 			case 'boolean':
 				value = target.checked;
@@ -32,7 +37,6 @@ function createSingleValueContext(valueType: 'config' | 'props', key: string, va
 			case 'number':
 				value = +targetValue;
 				break;
-
 			default:
 				value = target.value;
 				break;
@@ -42,11 +46,12 @@ function createSingleValueContext(valueType: 'config' | 'props', key: string, va
 
 	const api = {
 		value: value ?? '',
+		selectValue: value?.value,
 		isEmpty: value === undefined,
 		onChange(e: any) {
 			updateHashValue(valueType, key, getTargetValue(e));
 		},
-
+		selectValues: selectValues,
 		clear() {
 			updateHashValue(valueType, key, undefined);
 		},
@@ -55,13 +60,21 @@ function createSingleValueContext(valueType: 'config' | 'props', key: string, va
 	return api;
 }
 
-function createValueContext(key: string, defaultValue: any, configValue: any, propValue: any, type: string = typeof defaultValue) {
+function createValueContext(
+	key: string,
+	defaultValue: any,
+	configValue: any,
+	propValue: any,
+	type: string = typeof defaultValue,
+	selectValues?: PropsValues[]
+) {
 	const api = {
 		key,
 		defaultValue,
-		config: createSingleValueContext('config', key, configValue, type),
-		prop: createSingleValueContext('props', key, propValue, type),
+		config: createSingleValueContext('config', key, configValue, type, selectValues),
+		prop: createSingleValueContext('props', key, propValue, type, selectValues),
 		type,
+		selectValues,
 	};
 
 	return api;
@@ -70,7 +83,7 @@ function createValueContext(key: string, defaultValue: any, configValue: any, pr
 export type SingleValueContextApi = ReturnType<typeof createSingleValueContext>;
 export type ValueContextApi = ReturnType<typeof createValueContext>;
 
-export function createPlayground({config: defautConfig, types, doc}: PlaygroundProps) {
+export function createPlayground({config: defaultConfig, types, doc, listPropsValues = {}}: PlaygroundProps) {
 	const docByProps: Record<string, WidgetDoc['props'][0]> = {};
 	for (const propDoc of doc.props) {
 		docByProps[propDoc.name] = propDoc;
@@ -78,8 +91,8 @@ export function createPlayground({config: defautConfig, types, doc}: PlaygroundP
 	const values$ = computed(() => {
 		const values: ReturnType<typeof createValueContext>[] = [];
 		const {config, props} = hashObject$();
-		for (const [key, value] of Object.entries(defautConfig)) {
-			values.push(createValueContext(key, value, config[key], props[key], types[key]));
+		for (const [key, value] of Object.entries(defaultConfig)) {
+			values.push(createValueContext(key, value, config[key], props[key], types[key], listPropsValues[key]));
 		}
 		return values;
 	});

@@ -6,6 +6,7 @@ import type {Provider} from '@angular/core';
 import {InjectionToken, effect, inject} from '@angular/core';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {ActivatedRoute} from '@angular/router';
+import {getPropValues} from '@agnos-ui/common/propsValues';
 
 function getJsonHash(json: string) {
 	const {config = {}, props = {}} = JSON.parse(json ?? '{}');
@@ -27,7 +28,7 @@ export function provideHashConfig(widgetName: keyof WidgetsConfig): Provider[] {
 			},
 		},
 		provideWidgetsConfig((parentConfig) => {
-			parentConfig[widgetName] = inject(hashConfigToken)().config;
+			parentConfig[widgetName] = getPropValues(inject(hashConfigToken)().config);
 			return parentConfig;
 		}),
 	];
@@ -46,7 +47,7 @@ export function hashChangeHook(propsCallback: (props: any) => void) {
 	}
 
 	effect(() => {
-		callPropsCallback(hashConfig$().props);
+		callPropsCallback(getPropValues(hashConfig$().props));
 	});
 }
 
