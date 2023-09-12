@@ -53,6 +53,11 @@ h3,
 	}
 }
 
+h5,
+.h5 {
+	font-size: calc(0.8rem + 0.4vw);
+}
+
 header {
 	&.title {
 		margin-left: calc(var(--bs-gutter-x) * -0.5);
