@@ -356,7 +356,7 @@ const configValidator: ConfigValidator<PaginationProps> = {
 
 /**
  * Create a PaginationWidget with given config props
- * @param config - an optional alert config
+ * @param config - an optional pagination config
  * @returns a PaginationWidget
  */
 export function createPagination(config?: PropsConfig<PaginationProps>): PaginationWidget {
