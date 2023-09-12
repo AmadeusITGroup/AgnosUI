@@ -1,0 +1,22 @@
+{
+	"private": true,
+	"name": "@agnos-ui/core",
+	"description": "Framework-agnostic headless widget library.",
+	"keywords": [
+		"agnostic"
+	],
+	"type": "module",
+	"main": "./index.js",
+	"module": "./index.js",
+	"types": "./index.d.ts",
+	"exports": {
+		".": {
+			"types": "./index.d.ts",
+			"default": "./index.js"
+		}
+	},
+	"dependencies": {
+		"@amadeus-it-group/tansu": "0.0.22"
+	},
+	"sideEffects": false
+}

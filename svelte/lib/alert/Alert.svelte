@@ -1,11 +1,7 @@
 <script lang="ts" context="module">
-	import {createAlert} from '@agnos-ui/core';
-
-	import Slot from '../slot/Slot.svelte';
-	import type {WidgetPropsEvents, WidgetPropsProps} from '../utils';
-	import {callWidgetFactory, createEventDispatcher} from '../utils';
+	import type {AlertProps as Props, AlertSlots as Slots, WidgetPropsEvents, WidgetPropsProps} from '@agnos-ui/svelte-headless';
+	import {Slot, callWidgetFactory, createAlert, createEventDispatcher} from '@agnos-ui/svelte-headless';
 	import AlertDefaultStructure from './AlertDefaultStructure.svelte';
-	import type {AlertProps as Props, AlertSlots as Slots} from './alert';
 
 	const defaultConfig: Partial<Props> = {
 		slotStructure: AlertDefaultStructure,

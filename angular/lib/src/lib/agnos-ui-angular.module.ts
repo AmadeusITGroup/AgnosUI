@@ -1,3 +1,4 @@
+import {SlotDirective, UseDirective} from '@agnos-ui/angular-headless';
 import {NgModule} from '@angular/core';
 import {
 	ModalBodyDirective,
@@ -19,8 +20,6 @@ import {
 } from './pagination/pagination.component';
 import {RatingComponent, RatingStarDirective} from './rating/rating.component';
 import {SelectComponent} from './select/select.component';
-import {UseDirective} from './transition/use.directive';
-import {SlotDirective} from './slot.directive';
 import {AlertComponent} from './alert/alert.component';
 import {
 	AccordionDirective,

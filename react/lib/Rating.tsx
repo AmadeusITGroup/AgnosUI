@@ -1,12 +1,6 @@
-import type {WidgetProps} from '@agnos-ui/core';
-import {createRating} from '@agnos-ui/core';
+import type {RatingProps} from '@agnos-ui/react-headless';
+import {Slot, createRating, useWidgetWithConfig} from '@agnos-ui/react-headless';
 import React from 'react';
-import type {AdaptWidgetSlots} from './Slot';
-import {Slot} from './Slot';
-import {useWidgetWithConfig} from './utils';
-
-export type RatingWidget = AdaptWidgetSlots<ReturnType<typeof createRating>>;
-export type RatingProps = WidgetProps<RatingWidget>;
 
 export function Rating(props: Partial<RatingProps>) {
 	const [

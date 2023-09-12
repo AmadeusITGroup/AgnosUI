@@ -3,7 +3,8 @@
 	"extends": "./tsconfig.lib.dev.json",
 	"compilerOptions": {
 		"paths": {
-			"@agnos-ui/core": ["@agnos-ui/core"]
+			"@agnos-ui/core": ["./core/dist/lib"],
+			"@agnos-ui/angular-headless": ["./angular/dist/headless"]
 		}
 	},
 	"exclude": ["src/test.ts", "**/*.spec.ts"]

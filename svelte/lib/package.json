@@ -1,0 +1,23 @@
+{
+	"name": "@agnos-ui/svelte",
+	"private": true,
+	"description": "Bootstrap-based widget library for Svelte.",
+	"type": "module",
+	"main": "./index.js",
+	"module": "./index.js",
+	"types": "./index.d.ts",
+	"exports": {
+		".": {
+			"types": "./index.d.ts",
+			"svelte": "./index.js"
+		}
+	},
+	"dependencies": {
+		"@agnos-ui/svelte-headless": "",
+		"@amadeus-it-group/tansu": "0.0.22"
+	},
+	"peerDependencies": {
+		"svelte": "*"
+	},
+	"sideEffects": false
+}

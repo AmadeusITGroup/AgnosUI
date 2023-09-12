@@ -1,16 +1,7 @@
-import type {ModalContext as ModalCoreContext, WidgetProps, WidgetState} from '@agnos-ui/core';
-import {createModal, toSlotContextWidget} from '@agnos-ui/core';
+import type {ModalContext, ModalProps} from '@agnos-ui/react-headless';
+import {Portal, Slot, createModal, toSlotContextWidget, useDirective, useWidgetWithConfig} from '@agnos-ui/react-headless';
 import type {PropsWithChildren} from 'react';
 import {forwardRef, useImperativeHandle} from 'react';
-import {Portal} from '../Portal';
-import type {AdaptSlotContentProps, AdaptWidgetSlots} from '../Slot';
-import {Slot} from '../Slot';
-import {useDirective, useWidgetWithConfig} from '../utils';
-
-export type ModalContext = AdaptSlotContentProps<ModalCoreContext>;
-export type ModalWidget = AdaptWidgetSlots<ReturnType<typeof createModal>>;
-export type ModalProps = WidgetProps<ModalWidget>;
-export type ModalState = WidgetState<ModalWidget>;
 
 const DefaultSlotHeader = (slotContext: ModalContext) => (
 	<>

@@ -1,0 +1,14 @@
+{
+	"name": "@agnos-ui/angular-headless",
+	"description": "Headless widget library for Angular.",
+	"peerDependencies": {
+		"@angular/common": "*",
+		"@angular/core": "*"
+	},
+	"dependencies": {
+		"@agnos-ui/core": "",
+		"@amadeus-it-group/tansu": "0.0.22",
+		"tslib": "^2.6.2"
+	},
+	"sideEffects": false
+}

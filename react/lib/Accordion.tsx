@@ -1,28 +1,16 @@
 import type {
-	AccordionItemContext as AccordionItemCoreContext,
-	AccordionApi as AccordionCoreApi,
-	AccordionItemWidget as AccordionItemCoreWidget,
-	WidgetProps,
+	AccordionApi,
+	AccordionItemContext,
+	AccordionItemProps,
+	AccordionItemWidget,
+	AccordionProps,
 	WidgetFactory,
-} from '@agnos-ui/core';
-
-import type {AdaptWidgetSlots, AdaptSlotContentProps} from './Slot';
-import {Slot} from './Slot';
-import {useWidgetWithConfig, useDirective} from './utils';
+} from '@agnos-ui/react-headless';
+import {Slot, createAccordion, useDirective, useWidgetWithConfig} from '@agnos-ui/react-headless';
 import type {PropsWithChildren} from 'react';
 import {createContext, forwardRef, useContext, useEffect, useImperativeHandle} from 'react';
-import {createAccordion} from '@agnos-ui/core';
 
-export type AccordionItemContext = AdaptSlotContentProps<AccordionItemCoreContext>;
-export type AccordionItemWidget = AdaptWidgetSlots<AccordionItemCoreWidget>;
-export type AccordionItemProps = WidgetProps<AccordionItemWidget>;
-export type AccordionItemState = WidgetProps<AccordionItemWidget>;
-
-export type AccordionWidget = AdaptWidgetSlots<ReturnType<typeof createAccordion>>;
-export type AccordionProps = WidgetProps<AccordionWidget>;
-export type AccordionState = WidgetProps<AccordionWidget>;
-
-const AccordionDIContext: React.Context<Partial<AccordionCoreApi>> = createContext({});
+const AccordionDIContext: React.Context<Partial<AccordionApi>> = createContext({});
 const DefaultSlotStructure = (slotContext: AccordionItemContext) => {
 	const collapseSetRef = useDirective(slotContext.widget.directives.collapseDirective);
 	return (
@@ -61,7 +49,7 @@ const defaultConfig: Partial<AccordionItemProps> = {
 };
 export const AccordionItem = forwardRef(function AccordionItem(props: PropsWithChildren<Partial<AccordionItemProps>>, ref) {
 	const {registerItem} = useContext(AccordionDIContext);
-	const [state, widget] = useWidgetWithConfig(registerItem as WidgetFactory<AccordionItemCoreWidget>, props, null, {
+	const [state, widget] = useWidgetWithConfig(registerItem as WidgetFactory<AccordionItemWidget>, props, null, {
 		...defaultConfig,
 	});
 	const slotContext: AccordionItemContext = {

@@ -1,11 +1,12 @@
-import {describe, it, expect} from 'vitest';
 import {writable} from '@amadeus-it-group/tansu';
 import type {TemplateRef} from '@angular/core';
 import {ChangeDetectionStrategy, Component, Injectable, Input, ViewChild, inject} from '@angular/core';
-import {TestBed} from '@angular/core/testing';
-import type {SlotContent} from './slot.directive';
-import {ComponentTemplate, SlotDirective, injectWidgetsConfig, provideWidgetsConfig} from './slot.directive';
 import {toSignal} from '@angular/core/rxjs-interop';
+import {TestBed} from '@angular/core/testing';
+import {describe, expect, it} from 'vitest';
+import {SlotDirective} from './slot.directive';
+import type {SlotContent} from './utils';
+import {ComponentTemplate, injectWidgetsConfig, provideWidgetsConfig} from './utils';
 
 describe('slot directive', () => {
 	@Component({

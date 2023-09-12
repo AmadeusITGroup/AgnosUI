@@ -1,10 +1,37 @@
-import type {ReadableSignal, WritableSignal} from '@amadeus-it-group/tansu';
-import {asReadable, computed, writable} from '@amadeus-it-group/tansu';
 import type {Directive, Widget, WidgetFactory, WidgetProps, WidgetState, WidgetsConfigStore} from '@agnos-ui/core';
 import {findChangedProperties} from '@agnos-ui/core';
+import type {ReadableSignal, WritableSignal} from '@amadeus-it-group/tansu';
+import {asReadable, computed, writable} from '@amadeus-it-group/tansu';
 import type {RefCallback} from 'react';
 import {createContext, useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
-import type {AdaptPropsSlots, AdaptWidgetSlots, WidgetsConfig} from './Slot';
+
+import type {SlotContent as CoreSlotContent, WidgetsConfig as CoreWidgetsConfig, WidgetSlotContext} from '@agnos-ui/core';
+
+export type SlotContent<Props extends object = object> =
+	| CoreSlotContent<Props>
+	| ((props: Props) => React.ReactNode)
+	| React.ComponentType<Props>
+	| React.ReactNode;
+
+export type AdaptSlotContentProps<Props extends Record<string, any>> = Props extends WidgetSlotContext<infer U>
+	? WidgetSlotContext<AdaptWidgetSlots<U>> & AdaptPropsSlots<Omit<Props, keyof WidgetSlotContext<any>>>
+	: AdaptPropsSlots<Props>;
+
+export type AdaptPropsSlots<Props> = Omit<Props, `slot${string}`> & {
+	[K in keyof Props & `slot${string}`]: Props[K] extends CoreSlotContent<infer U> ? SlotContent<AdaptSlotContentProps<U>> : Props[K];
+};
+
+export type WidgetsConfig = {
+	[WidgetName in keyof CoreWidgetsConfig]: AdaptPropsSlots<CoreWidgetsConfig[WidgetName]>;
+};
+
+export type AdaptWidgetSlots<W extends Widget> = Widget<
+	AdaptPropsSlots<WidgetProps<W>>,
+	AdaptPropsSlots<WidgetState<W>>,
+	W['api'],
+	W['actions'],
+	W['directives']
+>;
 
 export function useWidget<Factory extends (...arg: any[]) => Widget>(
 	createWidget: Factory,

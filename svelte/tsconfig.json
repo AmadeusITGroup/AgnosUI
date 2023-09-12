@@ -2,8 +2,8 @@
 	"extends": "../tsconfig.json",
 	"compilerOptions": {
 		"paths": {
-			"@agnos-ui/core": ["@agnos-ui/core"]
+			"@agnos-ui/core": ["./core/lib"],
+			"@agnos-ui/svelte-headless": ["./svelte/headless"]
 		}
-	},
-	"exclude": ["dist", "demo"]
+	}
 }

@@ -1,10 +1,12 @@
-import type {
-	WidgetProps,
-	PaginationContext as PaginationCoreContext,
-	PaginationNumberContext as PaginationNumberCoreContext,
-	WidgetState,
-} from '@agnos-ui/core';
-import {createPagination, toSlotContextWidget} from '@agnos-ui/core';
+import type {PaginationContext, PaginationNumberContext, PaginationProps, PaginationState, SlotContent} from '@agnos-ui/angular-headless';
+import {
+	ComponentTemplate,
+	SlotDirective,
+	callWidgetFactory,
+	createPagination,
+	patchSimpleChanges,
+	toSlotContextWidget,
+} from '@agnos-ui/angular-headless';
 import {AsyncPipe, NgForOf, NgIf} from '@angular/common';
 import type {AfterContentChecked, OnChanges, Signal, SimpleChanges} from '@angular/core';
 import {
@@ -20,32 +22,7 @@ import {
 	ViewEncapsulation,
 	inject,
 } from '@angular/core';
-import type {AdaptWidgetSlots, AdaptSlotContentProps, SlotContent} from '../slot.directive';
-import {ComponentTemplate, SlotDirective, callWidgetFactory} from '../slot.directive';
-import {patchSimpleChanges} from '../utils';
 import {toSignal} from '@angular/core/rxjs-interop';
-
-/**
- * A type for the context of the pagination slot
- */
-export type PaginationContext = AdaptSlotContentProps<PaginationCoreContext>;
-
-/**
- * A type for the context of the pagination number Slot
- */
-export type PaginationNumberContext = AdaptSlotContentProps<PaginationNumberCoreContext>;
-/**
- * A type for the widget of the pagination
- */
-export type PaginationWidget = AdaptWidgetSlots<ReturnType<typeof createPagination>>;
-/**
- * A type for the props of the pagination
- */
-export type PaginationProps = WidgetProps<PaginationWidget>;
-/**
- * A type for the state of the pagination
- */
-export type PaginationState = WidgetState<PaginationWidget>;
 
 /**
  * A directive to use to give the 'ellipsis' link template to the pagination component

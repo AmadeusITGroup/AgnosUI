@@ -1,5 +1,5 @@
+import type {ModalProps, ModalWidget} from '@agnos-ui/react-headless';
 import ReactDOM from 'react-dom/client';
-import type {ModalWidget, ModalProps} from './Modal';
 import {Modal} from './Modal';
 
 export const openModal = async (options: Partial<ModalProps>) => {

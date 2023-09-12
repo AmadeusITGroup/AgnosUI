@@ -1,9 +1,6 @@
 <script lang="ts" context="module">
-	import {createRating} from '@agnos-ui/core';
-	import Slot from '../slot/Slot.svelte';
-	import type {WidgetPropsEvents, WidgetPropsProps} from '../utils';
-	import {callWidgetFactory, createEventDispatcher} from '../utils';
-	import type {RatingProps as Props, RatingSlots as Slots} from './rating';
+	import type {RatingProps as Props, RatingSlots as Slots, WidgetPropsEvents, WidgetPropsProps} from '@agnos-ui/svelte-headless';
+	import {Slot, callWidgetFactory, createEventDispatcher, createRating} from '@agnos-ui/svelte-headless';
 </script>
 
 <script lang="ts">

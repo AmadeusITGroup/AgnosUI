@@ -1,0 +1,12 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"outDir": "dist/headless",
+		"noEmit": false,
+		"declaration": true,
+		"paths": {
+			"@agnos-ui/core": ["./core/dist/lib"]
+		}
+	},
+	"include": ["headless"]
+}

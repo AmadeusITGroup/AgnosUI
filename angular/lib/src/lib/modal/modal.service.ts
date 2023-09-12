@@ -1,7 +1,7 @@
+import type {ModalProps} from '@agnos-ui/angular-headless';
 import {ApplicationRef, createComponent, EnvironmentInjector, EventEmitter, inject, Injectable, Injector} from '@angular/core';
-import type {ModalProps} from './modal.component';
-import {ModalComponent} from './modal.component';
 import type {Subscription} from 'rxjs';
+import {ModalComponent} from './modal.component';
 
 export interface ModalServiceOpenOptions {
 	injector?: Injector;

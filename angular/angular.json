@@ -108,6 +108,29 @@
 					"defaultConfiguration": "production"
 				}
 			}
+		},
+		"headless": {
+			"projectType": "library",
+			"root": "headless",
+			"sourceRoot": "headless/src",
+			"prefix": "lib",
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-angular:ng-packagr",
+					"options": {
+						"project": "headless/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "headless/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "headless/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				}
+			}
 		}
 	},
 	"cli": {

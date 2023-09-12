@@ -1,41 +1,38 @@
-import type {AfterContentChecked, AfterViewInit, Signal, SimpleChanges, OnChanges} from '@angular/core';
+import type {
+	AccordionItemContext,
+	AccordionItemProps,
+	AccordionItemState,
+	AccordionState,
+	AdaptSlotContentProps,
+	SlotContent,
+	TransitionFn,
+} from '@agnos-ui/angular-headless';
+import {
+	ComponentTemplate,
+	SlotDirective,
+	UseDirective,
+	callWidgetFactory,
+	createAccordion,
+	patchSimpleChanges,
+	toSlotContextWidget,
+} from '@agnos-ui/angular-headless';
+import {writable} from '@amadeus-it-group/tansu';
+import {NgIf} from '@angular/common';
+import type {AfterContentChecked, AfterViewInit, OnChanges, Signal, SimpleChanges} from '@angular/core';
 import {
 	ChangeDetectionStrategy,
 	Component,
 	ContentChild,
 	Directive,
-	effect,
 	EventEmitter,
-	inject,
 	Input,
 	Output,
 	TemplateRef,
 	ViewChild,
+	effect,
+	inject,
 } from '@angular/core';
-import {NgIf} from '@angular/common';
 import {toSignal} from '@angular/core/rxjs-interop';
-import type {AdaptWidgetSlots, AdaptSlotContentProps} from '../slot.directive';
-import {callWidgetFactory, ComponentTemplate, SlotDirective} from '../slot.directive';
-import type {
-	AccordionItemWidget as AccordionItemWidgetCore,
-	AccordionItemContext as AccordionItemCoreContext,
-	TransitionFn,
-	SlotContent,
-} from '@agnos-ui/core';
-import {createAccordion, toSlotContextWidget} from '@agnos-ui/core';
-import type {WidgetProps, WidgetState} from '@agnos-ui/core';
-import {patchSimpleChanges} from '../utils';
-import {UseDirective} from '../transition/use.directive';
-import {writable} from '@amadeus-it-group/tansu';
-
-export type AccordionWidget = AdaptWidgetSlots<ReturnType<typeof createAccordion>>;
-export type AccordionProps = WidgetProps<AccordionWidget>;
-export type AccordionState = WidgetState<AccordionWidget>;
-
-export type AccordionItemWidget = AdaptWidgetSlots<AccordionItemWidgetCore>;
-export type AccordionItemProps = WidgetProps<AccordionItemWidget>;
-export type ItemState = WidgetState<AccordionItemWidget>;
-export type AccordionItemContext = AdaptSlotContentProps<AccordionItemCoreContext>;
 
 @Directive({selector: 'ng-template[auAccordionItemBody]', standalone: true})
 export class AccordionBodyDirective {
@@ -124,13 +121,13 @@ const defaultConfig: Partial<AccordionItemProps> = {
 	template: ` <ng-template [auSlotProps]="{state: state(), widget}" [auSlot]="state().slotItemStructure"></ng-template> `,
 })
 export class AccordionItemComponent implements OnChanges, AfterContentChecked, AfterViewInit {
-	@Input() slotItemHeader: SlotContent<AdaptSlotContentProps<AccordionItemCoreContext>>;
+	@Input() slotItemHeader: SlotContent<AccordionItemContext>;
 	@ContentChild(AccordionHeaderDirective, {static: false})
 	slotItemHeaderFromContent: AccordionHeaderDirective | null;
-	@Input() slotItemBody: SlotContent<AdaptSlotContentProps<AccordionItemCoreContext>>;
+	@Input() slotItemBody: SlotContent<AccordionItemContext>;
 	@ContentChild(AccordionBodyDirective, {static: false})
 	slotItemBodyFromContent: AccordionBodyDirective | null;
-	@Input() slotItemStructure: SlotContent<AdaptSlotContentProps<AccordionItemCoreContext>>;
+	@Input() slotItemStructure: SlotContent<AccordionItemContext>;
 	@ContentChild(AccordionItemStructureDirective, {static: false})
 	slotItemStructureFromContent: AccordionItemStructureDirective | null;
 
@@ -201,7 +198,7 @@ export class AccordionItemComponent implements OnChanges, AfterContentChecked, A
 	readonly api = this._widget.api;
 	useDirective = inject(UseDirective);
 	// TODO: remove "as any" when https://github.com/angular/angular/pull/50162 is merged
-	state: Signal<ItemState> = toSignal(this._widget.state$ as any, {requireSync: true});
+	state: Signal<AccordionItemState> = toSignal(this._widget.state$ as any, {requireSync: true});
 
 	constructor() {
 		this._widget.patch({
@@ -316,9 +313,9 @@ export class AccordionDirective implements OnChanges {
 	 * It is a prop of the accordion-item.
 	 */
 	@Input() itemTransition: TransitionFn | undefined;
-	@Input() slotItemStructure: SlotContent<AdaptSlotContentProps<AccordionItemCoreContext>>;
-	@Input() slotItemBody: SlotContent<AdaptSlotContentProps<AccordionItemCoreContext>>;
-	@Input() slotItemHeader: SlotContent<AdaptSlotContentProps<AccordionItemCoreContext>>;
+	@Input() slotItemStructure: SlotContent<AccordionItemContext>;
+	@Input() slotItemBody: SlotContent<AccordionItemContext>;
+	@Input() slotItemHeader: SlotContent<AccordionItemContext>;
 	/**
 	 * Classes to add on the accordion-item DOM element.
 	 *

@@ -22,7 +22,8 @@
 		"useDefineForClassFields": false,
 		"paths": {
 			"@agnos-ui/core": ["./core/lib"],
-			"@agnos-ui/angular": ["./angular/lib/src/public-api"]
+			"@agnos-ui/angular": ["./angular/lib/src/public-api"],
+			"@agnos-ui/angular-headless": ["./angular/headless/src/public-api"]
 		}
 	},
 	"angularCompilerOptions": {

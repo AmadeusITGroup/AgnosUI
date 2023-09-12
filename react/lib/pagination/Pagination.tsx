@@ -1,15 +1,7 @@
-import type {PaginationContext as PaginationCoreContext, WidgetProps, WidgetState} from '@agnos-ui/core';
-import {createPagination, toSlotContextWidget} from '@agnos-ui/core';
+import type {PaginationContext, PaginationProps} from '@agnos-ui/react-headless';
+import {Slot, createPagination, toSlotContextWidget, useWidgetWithConfig} from '@agnos-ui/react-headless';
 import classNames from 'classnames';
-import type {AdaptSlotContentProps, AdaptWidgetSlots} from '../Slot';
-import {Slot} from '../Slot';
-import {useWidgetWithConfig} from '../utils';
 import {NavButton, PageItem} from './PageItem';
-
-export type PaginationContext = AdaptSlotContentProps<PaginationCoreContext>;
-export type PaginationWidget = AdaptWidgetSlots<ReturnType<typeof createPagination>>;
-export type PaginationProps = WidgetProps<PaginationWidget>;
-export type PaginationState = WidgetState<PaginationWidget>;
 
 export function DefaultPages(slotContext: PaginationContext) {
 	const {widget, state} = slotContext;

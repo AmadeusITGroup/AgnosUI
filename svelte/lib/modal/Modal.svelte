@@ -1,11 +1,8 @@
 <script lang="ts" context="module">
-	import {createModal, toSlotContextWidget} from '@agnos-ui/core';
-	import Slot from '../slot/Slot.svelte';
-	import type {WidgetPropsEvents, WidgetPropsProps} from '../utils';
-	import {callWidgetFactory, createEventDispatcher} from '../utils';
+	import type {ModalProps as Props, ModalSlots as Slots, WidgetPropsEvents, WidgetPropsProps} from '@agnos-ui/svelte-headless';
+	import {Slot, callWidgetFactory, createEventDispatcher, createModal, toSlotContextWidget} from '@agnos-ui/svelte-headless';
 	import ModalDefaultHeader from './ModalDefaultHeader.svelte';
 	import ModalDefaultStructure from './ModalDefaultStructure.svelte';
-	import type {ModalProps as Props, ModalSlots as Slots} from './modal';
 
 	const defaultConfig: Partial<Props> = {
 		slotStructure: ModalDefaultStructure,

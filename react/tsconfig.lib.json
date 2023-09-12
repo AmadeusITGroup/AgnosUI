@@ -5,7 +5,8 @@
 		"noEmit": false,
 		"declaration": true,
 		"paths": {
-			"@agnos-ui/core": ["@agnos-ui/core"]
+			"@agnos-ui/core": ["./core/dist/lib"],
+			"@agnos-ui/react-headless": ["./react/dist/headless"]
 		}
 	},
 	"include": ["lib"]

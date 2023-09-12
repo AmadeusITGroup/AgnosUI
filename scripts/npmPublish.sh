@@ -1,6 +1,6 @@
-#!/bin/sh -e
+#!/bin/bash -e
 
-for dir in core svelte react angular/dist/lib base-po page-objects ; do
+for dir in core/dist/lib {svelte,react,angular}/dist/{headless,lib} base-po page-objects ; do
 	echo '$ cd '"$dir"' && npm publish --access=public '"$@"
 	( cd "$dir" && npm publish --access=public "$@" )
 done
