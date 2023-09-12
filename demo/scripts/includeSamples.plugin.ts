@@ -46,6 +46,8 @@ export const includeSamples = (): Plugin => {
 						const dependencyParts = dependency.split('/');
 						if (dependencyParts[0] === '.') {
 							await addFile(framework, path.basename(dependency), path.join(directory, dependency));
+						} else if (dependency.startsWith('@agnos-ui/common/samples')) {
+							await addFile(framework, path.basename(dependency), path.join(__dirname, '..', '..', 'common', dependency.substring(17)));
 						} else {
 							// TODO: check that the dependency is valid and included in package.json
 						}
@@ -73,7 +75,9 @@ export const includeSamples = (): Plugin => {
 					const frameworkFiles = files[framework];
 					output += `${JSON.stringify(framework)}:{entryPoint:${JSON.stringify(frameworkFiles[0].fileName)},files:{`;
 					frameworkFiles.forEach(({fileName, filePath}) => {
-						output += `[${JSON.stringify(fileName)}]: () => import(${JSON.stringify(filePath + '?raw')}).then(file=>file.default),`;
+						output += `[${JSON.stringify(fileName)}]: () => import(${JSON.stringify(
+							filePath + '?raw'
+						)}).then(file=>file.default).then(file=>file.replace(/@agnos-ui\\/common\\/samples\\/[^/]+/g,'.')),`;
 					});
 					output += `}},`;
 				});

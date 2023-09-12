@@ -14,6 +14,7 @@ export const links = new InjectionToken<string[]>('app-links');
 			</div>
 		</div>
 	`,
+	styles: ["@import '@agnos-ui/common/samples/links.scss';"],
 })
 export class LinksComponent {
 	links = inject(links);

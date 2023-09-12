@@ -25,6 +25,7 @@
 		"@angular/platform-browser": "^16.2.2",
 		"@angular/platform-browser-dynamic": "^16.2.2",
 		"@angular/router": "^16.2.2",
+		"ngx-build-plus": "^16.0.0",
 		"rxjs": "^7.8.1",
 		"tslib": "^2.6.2",
 		"zone.js": "^0.13.1"

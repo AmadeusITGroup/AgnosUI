@@ -1,8 +1,9 @@
+import '@agnos-ui/common/samples/rating/custom.scss';
 import {Rating} from '@agnos-ui/react';
 import type {StarContext} from '@agnos-ui/core';
 
-const CustomStar = function ({fill, index}: StarContext) {
-	const starClassname = ['star-2'];
+const CustomStar = ({fill, index}: StarContext) => {
+	const starClassname = ['star'];
 	if (fill === 100) {
 		starClassname.push('filled');
 	}
@@ -11,12 +12,5 @@ const CustomStar = function ({fill, index}: StarContext) {
 	}
 	return <span className={starClassname.join(' ')}>&#9733;</span>;
 };
-
-const RatingDemo = () => {
-	return (
-		<>
-			<Rating className="rating-custom" rating={7} slotStar={CustomStar} ariaLabel="custom rating" />
-		</>
-	);
-};
+const RatingDemo = () => <Rating className="rating-custom" rating={7} slotStar={CustomStar} ariaLabel="custom rating" />;
 export default RatingDemo;

@@ -16,10 +16,6 @@ const addAsyncFiles =
 		);
 	};
 
-const demoCSS: StackblitzProcessor = async (project) => {
-	project.files['src/demo.scss'] = (await import('@agnos-ui/common/demo.scss?raw')).default;
-};
-
 const frameworkCreateStackblitz: Record<Frameworks, StackblitzProcessor[]> = {
 	angular: [
 		addAsyncFiles(import.meta.glob('./angular/**', {as: 'raw', import: 'default'}) as any, '', './angular/'),
@@ -35,7 +31,7 @@ const frameworkCreateStackblitz: Record<Frameworks, StackblitzProcessor[]> = {
 	react: [
 		addAsyncFiles(import.meta.glob('./react/**', {as: 'raw', import: 'default'}) as any, '', './react/'),
 		async (project, sample) => {
-			project.files['src/main.tsx'] = `import "./demo.scss";\nimport {createRoot} from "react-dom/client";\nimport App from ${JSON.stringify(
+			project.files['src/main.tsx'] = `import {createRoot} from "react-dom/client";\nimport App from ${JSON.stringify(
 				`./${sample.files.react.entryPoint.replace(/\.tsx?$/, '')}`
 			)};\nconst rootElement = document.getElementById('root');\nconst root = createRoot(rootElement);\nroot.render(<App />)`;
 		},
@@ -43,7 +39,7 @@ const frameworkCreateStackblitz: Record<Frameworks, StackblitzProcessor[]> = {
 	svelte: [
 		addAsyncFiles(import.meta.glob('./svelte/**', {as: 'raw', import: 'default'}) as any, '', './svelte/'),
 		async (project, sample) => {
-			project.files['src/main.ts'] = `import "./demo.scss";\nimport App from ${JSON.stringify(
+			project.files['src/main.ts'] = `import App from ${JSON.stringify(
 				`./${sample.files.svelte.entryPoint}`
 			)};\nconst app = new App({target: document.getElementById('root')});\nexport default app;`;
 			project.template = 'node';
@@ -90,7 +86,7 @@ if (isReleased) {
 	frameworkCreateStackblitz.angular.push(
 		corePackage,
 		addAsyncFiles(
-			import.meta.glob(['../../../../angular/dist/lib/**'], {
+			import.meta.glob(['../../../../angular/dist/lib/**', '!**/*.map'], {
 				as: 'raw',
 				import: 'default',
 			}) as any,
@@ -133,7 +129,7 @@ export const openInStackblitz = async (sample: SampleInfo, framework: Frameworks
 	};
 	const filesInfo = sample.files[framework];
 	const {entryPoint, files} = filesInfo;
-	const processors = [addAsyncFiles(files, 'src/'), demoCSS, ...frameworkCreateStackblitz[framework]];
+	const processors = [addAsyncFiles(files, 'src/'), ...frameworkCreateStackblitz[framework]];
 	for (const processor of processors) {
 		await processor(project, sample, framework);
 	}

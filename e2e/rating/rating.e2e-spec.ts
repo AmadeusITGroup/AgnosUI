@@ -115,7 +115,7 @@ test.describe.parallel(`Rating tests`, () => {
 		expectedClasses.length = 5;
 		expectedClasses.fill(['au-rating-star']);
 		const expectedState: State = {
-			rootClasses: ['d-inline-flex', 'au-rating', 'rating-custom'],
+			rootClasses: ['d-inline-flex', 'au-rating', 'rating-readonly'],
 			min: '0',
 			max: '5',
 			value: '3.64',
