@@ -15,7 +15,7 @@
 			"prefix": "app",
 			"architect": {
 				"build": {
-					"builder": "@angular-devkit/build-angular:browser",
+					"builder": "ngx-build-plus:browser",
 					"options": {
 						"outputPath": "dist/demo",
 						"index": "demo/src/index.html",
@@ -24,7 +24,9 @@
 						"tsConfig": "demo/tsconfig.app.json",
 						"assets": ["demo/src/favicon.ico", "demo/src/assets"],
 						"styles": ["demo/src/styles.css", "../common/demo.scss"],
-						"scripts": []
+						"scripts": [],
+						"inlineStyleLanguage": "scss",
+						"extraWebpackConfig": "./demo/webpack.js"
 					},
 					"configurations": {
 						"production": {
@@ -60,7 +62,10 @@
 					"defaultConfiguration": "production"
 				},
 				"serve": {
-					"builder": "@angular-devkit/build-angular:dev-server",
+					"builder": "ngx-build-plus:dev-server",
+					"options": {
+						"extraWebpackConfig": "./demo/webpack.js"
+					},
 					"configurations": {
 						"production": {
 							"servePath": "/angular/samples",

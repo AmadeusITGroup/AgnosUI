@@ -1,3 +1,5 @@
+import '@agnos-ui/common/samples/links.scss';
+
 export function Links({links}: {links: string[]}) {
 	return (
 		<>

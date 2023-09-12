@@ -1,10 +1,11 @@
 <script lang="ts">
 	import {computed} from '@amadeus-it-group/tansu';
 	import Page404 from './Page404.svelte';
-	import {hash$} from '../../common/utils';
+	import {hash$} from '@agnos-ui/common/utils';
 
 	import 'bootstrap/dist/css/bootstrap.css';
-	import '../../common/demo.scss';
+	import '@agnos-ui/common/demo.scss';
+	import '@agnos-ui/common/samples/links.scss';
 
 	const componentRegExp = /samples\/([^/]*)\/([^/]*).route.svelte/;
 	function replacePattern(components: Record<string, any>) {

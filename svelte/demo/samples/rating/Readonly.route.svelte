@@ -1,9 +1,10 @@
 <script lang="ts">
 	import {Rating} from '@agnos-ui/svelte';
 	import heartFill from 'bootstrap-icons/icons/heart-fill.svg?raw';
+	import '@agnos-ui/common/samples/rating/readonly.scss';
 </script>
 
-<Rating className="rating-custom" rating={3.64} readonly={true} maxRating={5} ariaLabel="readonly rating">
+<Rating className="rating-readonly" rating={3.64} readonly={true} maxRating={5} ariaLabel="readonly rating">
 	<span slot="star" let:fill let:index class="star" class:full={fill === 100}>
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		<span class="half" style:width={fill + '%'}>{@html heartFill}</span>
