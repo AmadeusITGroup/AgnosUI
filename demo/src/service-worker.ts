@@ -58,7 +58,12 @@ self.addEventListener('fetch', (event) => {
 			(async () => {
 				const cache = await caches.open(CACHE);
 				const response = await cache.match(url.pathname);
-				return response!;
+				if (response) {
+					return response;
+				} else {
+					await cache.add(url.pathname);
+					return (await cache.match(url.pathname))!;
+				}
 			})()
 		);
 	}
