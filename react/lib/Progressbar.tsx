@@ -39,7 +39,14 @@ export const Progressbar = (props: PropsWithChildren<Partial<ProgressbarProps>>)
 	const [state, widget] = useWidgetWithConfig(createProgressbar, props, 'progressbar', {...defaultConfig, slotDefault: props.children});
 	const slotContext: ProgressbarContext = {state, widget: toSlotContextWidget(widget)};
 	return (
-		<div role="progressbar" aria-label={state.ariaLabel || undefined} aria-valuenow={state.value} aria-valuemin={state.min} aria-valuemax={state.max}>
+		<div
+			role="progressbar"
+			aria-label={state.ariaLabel || undefined}
+			aria-valuenow={state.value}
+			aria-valuemin={state.min}
+			aria-valuemax={state.max}
+			aria-valuetext={state.ariaValueText}
+		>
 			<Slot slotContent={state.slotContent} props={slotContext} />
 		</div>
 	);

@@ -67,6 +67,7 @@ const defaultConfig: Partial<ProgressbarProps> = {
 		'[attr.aria-valuenow]': 'state().value',
 		'[attr.aria-valuemin]': 'state().min',
 		'[attr.aria-valuemax]': 'state().max',
+		'[attr.aria-valuetext]': 'state().ariaValueText',
 	},
 	template: `
 		<ng-template [auSlotDefault]="defaultSlots"><ng-content></ng-content></ng-template>
@@ -75,23 +76,24 @@ const defaultConfig: Partial<ProgressbarProps> = {
 })
 export class ProgressbarComponent implements AfterContentChecked, OnChanges {
 	readonly defaultSlots = writable(defaultConfig);
+
 	/**
-	 * the aria label
+	 * The aria label.
 	 */
 	@Input() ariaLabel: string | undefined;
 
 	/**
-	 * the minimum value
+	 * The minimum value.
 	 */
 	@Input() min: number | undefined;
 
 	/**
-	 * the maximum value
+	 * The maximum value.
 	 */
 	@Input() max: number | undefined;
 
 	/**
-	 * the current value
+	 * The current value.
 	 */
 	@Input() value: number | undefined;
 
@@ -105,24 +107,29 @@ export class ProgressbarComponent implements AfterContentChecked, OnChanges {
 	@ContentChild(ProgressbarContentDirective, {static: false}) slotContentFromContent: ProgressbarContentDirective | undefined;
 
 	/**
-	 * if `true`, display the current percentage in the `xx%` format
+	 * If `true`, displays the current percentage in the `xx%` format.
 	 */
 	@Input() showValue: boolean | undefined;
 
 	/**
-	 * height of the progressbar, can be any valid css height value
+	 * Height of the progressbar, can be any valid css height value.
 	 */
 	@Input() height: string | undefined;
 
 	/**
-	 * if `true`, animates a striped progressbar
+	 * If `true`, animates a striped progressbar.
 	 */
 	@Input() animated: boolean | undefined;
 
 	/**
-	 * if `true`, shows a striped progressbar
+	 * If `true`, shows a striped progressbar.
 	 */
 	@Input() striped: boolean | undefined;
+
+	/**
+	 * Return the value for the 'aria-valuetext' attribute.
+	 */
+	@Input() ariaValueTextFn: ((value: number, minimum: number, maximum: number) => string | undefined) | undefined;
 
 	readonly _widget = callWidgetFactory(createProgressbar, 'progressbar', this.defaultSlots);
 	readonly widget = toSlotContextWidget(this._widget);

@@ -2,7 +2,32 @@ import {ProgressbarPO} from '@agnos-ui/page-objects';
 import {expect, getTest} from '../fixture';
 import {ProgressbarDemoPO} from 'e2e/demo-po/progressbar.po';
 
+interface State {
+	ariaLabel: string | null;
+	ariaValueNow: string | null;
+	ariaValueMin: string | null;
+	ariaValueMax: string | null;
+	ariaValueText: string | null;
+	label: string | null | undefined;
+	innerClasses: string[];
+}
+
 const test = getTest();
+async function getState(progressbarPO: ProgressbarPO): Promise<State> {
+	return progressbarPO.locatorRoot.evaluate((rootNode: HTMLElement) => {
+		const innerBar = rootNode.querySelector('.progress-bar');
+		return {
+			ariaLabel: rootNode.getAttribute('aria-label'),
+			ariaValueNow: rootNode.getAttribute('aria-valuenow'),
+			ariaValueMin: rootNode.getAttribute('aria-valuemin'),
+			ariaValueMax: rootNode.getAttribute('aria-valuemax'),
+			ariaValueText: rootNode.getAttribute('aria-valuetext'),
+			label: innerBar?.textContent?.trim(),
+			innerClasses: innerBar?.className?.trim()?.split(' ')?.sort() ?? [],
+		};
+	});
+}
+
 test.describe(`Progressbar tests`, () => {
 	test(`Default progressbar`, async ({page}) => {
 		const progressbarDemoPO = new ProgressbarDemoPO(page);
@@ -11,8 +36,15 @@ test.describe(`Progressbar tests`, () => {
 		await page.goto('#/progressbar/default');
 		await progressbarDemoPO.locatorRoot.waitFor();
 
-		expect(await progressbarPO.locatorRoot.getAttribute('aria-valuenow')).toBe('80');
-		expect(await progressbarPO.locatorInnerBar.getAttribute('class')).toContain('text-bg-warning');
+		expect(await getState(progressbarPO)).toStrictEqual({
+			ariaLabel: 'Progressbar',
+			ariaValueMax: '100',
+			ariaValueMin: '0',
+			ariaValueNow: '80',
+			ariaValueText: null,
+			innerClasses: ['progress-bar', 'text-bg-warning'],
+			label: '80%',
+		});
 	});
 
 	test(`Simple customization progressbar`, async ({page}) => {
@@ -21,16 +53,35 @@ test.describe(`Progressbar tests`, () => {
 		await page.goto('#/progressbar/striped');
 		await progressbarDemoPO.locatorRoot.waitFor();
 
-		const customMinMaxBar = new ProgressbarPO(page, 0);
-		const animatedBar = new ProgressbarPO(page, 1);
 		const heightBar = new ProgressbarPO(page, 2);
 
-		expect(await customMinMaxBar.locatorRoot.getAttribute('aria-label')).toBe('Step 4 out of 5');
-		expect(await customMinMaxBar.locatorRoot.getAttribute('aria-valuemax')).toBe('5');
-		expect(await customMinMaxBar.locatorInnerBar.innerText()).toBe('Step 4 out of 5');
-
-		expect(await animatedBar.locatorInnerBar.getAttribute('class')).toContain('progress-bar-animated');
-
-		expect(await heightBar.locatorOuterBar).toHaveCSS('height', '24px');
+		expect(await getState(new ProgressbarPO(page, 0))).toStrictEqual({
+			ariaLabel: 'Progressbar',
+			ariaValueMax: '5',
+			ariaValueMin: '1',
+			ariaValueNow: '4',
+			ariaValueText: 'Step 4 out of 5',
+			innerClasses: ['progress-bar'],
+			label: 'Step 4 out of 5',
+		});
+		expect(await getState(new ProgressbarPO(page, 1))).toStrictEqual({
+			ariaLabel: 'Progressbar',
+			ariaValueMax: '100',
+			ariaValueMin: '0',
+			ariaValueNow: '63',
+			ariaValueText: null,
+			innerClasses: ['progress-bar', 'progress-bar-animated', 'progress-bar-striped', 'text-bg-info'],
+			label: '',
+		});
+		expect(await getState(heightBar)).toStrictEqual({
+			ariaLabel: 'Progressbar',
+			ariaValueMax: '100',
+			ariaValueMin: '0',
+			ariaValueNow: '47',
+			ariaValueText: null,
+			innerClasses: ['progress-bar'],
+			label: '',
+		});
+		expect(heightBar.locatorOuterBar).toHaveCSS('height', '24px');
 	});
 });

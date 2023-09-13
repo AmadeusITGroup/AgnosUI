@@ -80,7 +80,7 @@ export class RatingComponent implements ControlValueAccessor, OnChanges, AfterCo
 	}
 
 	/**
-	 * Return the value for the 'aria-value' attribute.
+	 * Return the value for the 'aria-valuetext' attribute.
 	 */
 	@Input('auAriaValueTextFn') ariaValueTextFn: ((rating: number, maxRating: number) => string) | undefined;
 

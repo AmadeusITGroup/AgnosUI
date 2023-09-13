@@ -18,7 +18,7 @@
 	type $$Slots = Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
 	export const widget = callWidgetFactory(createProgressbar, 'progressbar', $$slots, defaultConfig);
 	const {
-		stores: {slotContent$, ariaLabel$, value$, min$, max$},
+		stores: {slotContent$, ariaLabel$, value$, min$, max$, ariaValueText$},
 		state$,
 	} = widget;
 
@@ -27,7 +27,14 @@
 	$: slotContext = {widget, state: $state$};
 </script>
 
-<div role="progressbar" aria-label={$ariaLabel$ || undefined} aria-valuenow={$value$} aria-valuemin={$min$} aria-valuemax={$max$}>
+<div
+	role="progressbar"
+	aria-label={$ariaLabel$ || undefined}
+	aria-valuenow={$value$}
+	aria-valuemin={$min$}
+	aria-valuemax={$max$}
+	aria-valuetext={$ariaValueText$}
+>
 	<Slot slotContent={$slotContent$} props={slotContext} let:component let:props>
 		<slot slot="slot" name="content" let:props {...props} />
 		<svelte:component this={component} {...props}>

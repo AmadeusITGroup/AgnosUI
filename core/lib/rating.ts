@@ -69,7 +69,7 @@ export interface RatingCommonPropsAndState extends WidgetsCommonPropsAndState {
 
 export interface RatingProps extends RatingCommonPropsAndState {
 	/**
-	 * Return the value for the 'aria-value' attribute.
+	 * Return the value for the 'aria-valuetext' attribute.
 	 * @param rating - Current rating value.
 	 * @param maxRating - maxRating value.
 	 */

@@ -1,6 +1,6 @@
 import {clamp} from './services/checks';
 import type {ConfigValidator, PropsConfig} from './services';
-import {bindableDerived, stateStores, typeBoolean, typeNumber, typeString, writablesForProps} from './services';
+import {bindableDerived, stateStores, typeBoolean, typeFunction, typeNumber, typeString, writablesForProps} from './services';
 import type {SlotContent, Widget, WidgetSlotContext} from './types';
 import {computed, readable} from '@amadeus-it-group/tansu';
 import {noop} from './utils';
@@ -10,67 +10,78 @@ export type ProgressbarContext = WidgetSlotContext<ProgressbarWidget>;
 
 export interface ProgressbarCommonPropsAndState extends WidgetsCommonPropsAndState {
 	/**
-	 * the minimum value
+	 * The minimum value.
 	 * @defaultValue 0
 	 */
 	min: number;
 	/**
-	 * the maximum value
+	 * The maximum value.
 	 * @defaultValue 100
 	 */
 	max: number;
 	/**
-	 * the current value
+	 * The current value.
 	 * @defaultValue 0
 	 */
 	value: number;
 	/**
-	 * the aria label
+	 * The aria label.
 	 */
 	ariaLabel: string;
 	/**
-	 * global template for the Progressbar content
+	 * Global template for the Progressbar content.
 	 */
 	slotContent: SlotContent<ProgressbarContext>;
 	/**
-	 * label of the progress
+	 * Label of the progress.
 	 */
 	slotDefault: SlotContent<ProgressbarContext>;
 	/**
-	 * height of the progressbar, can be any valid css height value
+	 * Height of the progressbar, can be any valid css height value.
 	 */
 	height: string;
 	/**
-	 * if `true`, display the current percentage in the `xx%` format
+	 * If `true`, displays the current percentage in the `xx%` format.
 	 */
 	showValue: boolean;
 	/**
-	 * if `true`, shows a striped progressbar
+	 * If `true`, shows a striped progressbar.
 	 */
 	striped: boolean;
 	/**
-	 * if `true`, animates a striped progressbar
+	 * If `true`, animates a striped progressbar.
 	 */
 	animated: boolean;
 }
 
 export interface ProgressbarState extends ProgressbarCommonPropsAndState {
 	/**
-	 * percentage of completion
+	 * Percentage of completion.
 	 */
 	percentage: number;
 	/**
-	 * `true` if the value is above its minimum value
+	 * `true` if the value is above its minimum value.
 	 */
 	started: boolean;
 	/**
-	 * `true` if the value has reached its maximum value
+	 * `true` if the value has reached its maximum value.
 	 */
 	finished: boolean;
+	/**
+	 * The aria value text.
+	 */
+	ariaValueText: string | undefined;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface ProgressbarProps extends ProgressbarCommonPropsAndState {}
+export interface ProgressbarProps extends ProgressbarCommonPropsAndState {
+	/**
+	 * Return the value for the 'aria-valuetext' attribute.
+	 * @param value - current value
+	 * @param minimum - minimum value
+	 * @param maximum - maximum value
+	 */
+	ariaValueTextFn: (value: number, minimum: number, maximum: number) => string | undefined;
+}
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface ProgressbarApi {}
@@ -89,6 +100,7 @@ const defaultConfig: ProgressbarProps = {
 	showValue: false,
 	striped: false,
 	animated: false,
+	ariaValueTextFn: () => undefined,
 };
 
 /**
@@ -109,6 +121,7 @@ const configValidator: ConfigValidator<ProgressbarProps> = {
 	showValue: typeBoolean,
 	striped: typeBoolean,
 	animated: typeBoolean,
+	ariaValueTextFn: typeFunction,
 };
 
 /**
@@ -119,10 +132,12 @@ const configValidator: ConfigValidator<ProgressbarProps> = {
 export function createProgressbar(config?: PropsConfig<ProgressbarProps>): ProgressbarWidget {
 	const [
 		{
-			min$,
+			// dirty inputs that need adjustment:
 			max$: _dirtyMaximum$,
-			// dirty value that needs adjustment:
 			value$: _dirtyValue$,
+			// clean inputs
+			min$,
+			ariaValueTextFn$,
 			...stateProps
 		},
 		patch,
@@ -130,9 +145,18 @@ export function createProgressbar(config?: PropsConfig<ProgressbarProps>): Progr
 
 	const max$ = bindableDerived(readable(noop), [_dirtyMaximum$, min$], ([dirtyMaximum, minimum]) => Math.max(minimum, dirtyMaximum));
 	const value$ = bindableDerived(readable(noop), [_dirtyValue$, min$, max$], ([dirtyValue, min, max]) => clamp(dirtyValue, max, min));
-	const percentage$ = computed(() => (max$() > min$() ? clamp(((value$() - min$()) * 100) / (max$() - min$()), 100, 0) : 0));
+	const percentage$ = computed(() => {
+		const max = max$();
+		const min = min$();
+		if (max > min) {
+			return clamp(((value$() - min) * 100) / (max - min), 100, 0);
+		} else {
+			return 0;
+		}
+	});
 	const started$ = computed(() => value$() > min$());
 	const finished$ = computed(() => value$() === max$());
+	const ariaValueText$ = computed(() => ariaValueTextFn$()(value$(), min$(), max$()));
 
 	return {
 		...stateStores({
@@ -142,6 +166,7 @@ export function createProgressbar(config?: PropsConfig<ProgressbarProps>): Progr
 			percentage$,
 			started$,
 			finished$,
+			ariaValueText$,
 			...stateProps,
 		}),
 		patch,
