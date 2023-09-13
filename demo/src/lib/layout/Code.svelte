@@ -13,7 +13,8 @@
 </script>
 
 <div class={`bg-light-subtle ${className}`}>
-	<pre class="mb-0"><code bind:this={container}
+	<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+	<pre class="mb-0" tabindex="0"><code bind:this={container}
 			>{#if formattedCode != null}<!-- eslint-disable-line svelte/no-at-html-tags -->{@html formattedCode}{:else}{code}{/if}</code
 		></pre>
 </div>
@@ -24,9 +25,6 @@
 	}
 
 	pre {
-		> code {
-			white-space: pre-wrap;
-		}
 		// color: black;
 		tab-size: 1rem;
 	}
