@@ -8,9 +8,12 @@
 	"rangeStrategy": "bump",
 	"packageRules": [
 		{
-			"matchPackagePatterns": ["^@angular", "^typescript", "^ng-packagr", "^zone.js"],
-			"groupName": "Angular/Typescript dependencies",
-			"groupSlug": "angular-dependencies",
+			"matchPackageNames": ["typescript"],
+			"groupName": "Typescript dependencies",
+			"groupSlug": "typescript-dependencies"
+		},
+		{
+			"matchPackageNames": ["@angular/core"],
 			"postUpgradeTasks": {
 				"commands": [
 					"npm install",
@@ -19,6 +22,11 @@
 				"executionMode": "branch",
 				"fileFilters": ["**"]
 			}
+		},
+		{
+			"matchPackagePatterns": ["^@angular", "^ng-packagr", "^zone.js"],
+			"groupName": "Angular dependencies",
+			"groupSlug": "angular-dependencies"
 		}
 	],
 	"lockFileMaintenance": {"enabled": true, "schedule": ["every weekend"]}
