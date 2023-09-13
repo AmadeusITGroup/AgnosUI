@@ -11,7 +11,7 @@
 		"@types/react": "^18.2.21",
 		"@types/react-dom": "^18.2.7",
 		"@vitejs/plugin-react": "^4.0.4",
-		"bootstrap-icons": "^1.10.5",
+		"bootstrap-icons": "^1.11.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"sass": "^1.66.1",

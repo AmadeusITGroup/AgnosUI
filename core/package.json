@@ -46,6 +46,6 @@
 		"directory": "core"
 	},
 	"devDependencies": {
-		"eslint-plugin-jsdoc": "^46.5.0"
+		"eslint-plugin-jsdoc": "^46.6.0"
 	}
 }
