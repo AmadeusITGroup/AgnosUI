@@ -2,13 +2,15 @@
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
 	"repositories": ["AmadeusITGroup/AgnosUI"],
 	"platform": "github",
-	"extends": ["config:recommended", "group:allNonMajor", ":preserveSemverRanges"],
+	"extends": ["config:recommended", "group:allNonMajor"],
 	"ignorePresets": [":prHourlyLimit2", ":prConcurrentLimit10"],
 	"schedule": "every weekend",
+	"rangeStrategy": "bump",
 	"packageRules": [
-		{"matchPackagePatterns": [""], "rangeStrategy": "bump"},
 		{
-			"matchPackageNames": ["@angular/core"],
+			"matchPackagePatterns": ["^@angular", "^typescript", "^ng-packagr", "^zone.js"],
+			"groupName": "Angular/Typescript dependencies",
+			"groupSlug": "angular-dependencies",
 			"postUpgradeTasks": {
 				"commands": [
 					"npm install",
@@ -17,12 +19,6 @@
 				"executionMode": "branch",
 				"fileFilters": ["**"]
 			}
-		},
-		{
-			"matchPackagePatterns": ["^@angular", "^ng-packagr", "^zone.js"],
-			"groupName": "Angular dependencies",
-			"groupSlug": "angular-dependencies",
-			"matchUpdateTypes": ["major"]
 		}
 	],
 	"lockFileMaintenance": {"enabled": true, "schedule": ["every weekend"]}
