@@ -5,7 +5,7 @@
 	import Section from '$lib/layout/Section.svelte';
 </script>
 
-<Section label="Default pagination" id="default" level={2}>
+<Section label="Basic paginations" id="default" level={2}>
 	<Sample title="Pagination example" sample={sampleDefault} height={419} />
 </Section>
 

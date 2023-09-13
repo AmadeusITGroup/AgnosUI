@@ -7,7 +7,7 @@ const PaginationDemo = () => {
 
 	return (
 		<>
-			<h5>Default pagination:</h5>
+			<h5>Basic pagination:</h5>
 			<Pagination page={page} collectionSize={60} onPageChange={(page) => setTimeout(() => setPage(page), 0)} />
 
 			<h5>No direction links:</h5>

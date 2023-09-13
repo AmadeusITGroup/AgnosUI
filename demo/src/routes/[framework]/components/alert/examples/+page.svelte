@@ -6,7 +6,7 @@
 	import Section from '$lib/layout/Section.svelte';
 </script>
 
-<Section label="Simple alert" id="default" level={2}>
+<Section label="Basic alerts" id="default" level={2}>
 	<Sample title="Generic example" sample={sampleGeneric} height={627} />
 </Section>
 

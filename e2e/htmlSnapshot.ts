@@ -1,4 +1,5 @@
 import type {Locator} from '@playwright/test';
+import os from 'os';
 
 export type HTMLAttribute = {name: string; value: string};
 export type HTMLNode =
@@ -228,5 +229,5 @@ export const htmlSnapshot = async (locator: Locator) => {
 		}
 	};
 	recFn(rewriteIds(filterHtmlStructure(await htmlStructure(locator))));
-	return res.join('\n');
+	return res.join(os.EOL);
 };
