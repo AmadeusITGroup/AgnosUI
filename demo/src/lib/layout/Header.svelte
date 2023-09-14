@@ -11,10 +11,10 @@
 	$: isSvelte = $selectedFramework$ === 'svelte';
 </script>
 
-<header class="bg-light pt-4 pb-5 px-4 px-lg-5 d-flex mb-4 d-md-block align-items-center title">
-	<div class="row mb-4 align-items-end">
-		<h1 class="col-auto me-auto me-md-none mb-0">{title}</h1>
-		<div class="col">
+<header class="bg-light pt-4 pb-5 px-4 px-lg-5 d-flex mb-4 align-items-center title">
+	<div class="row mb-4 align-items-center w-100">
+		<h1 class="col-auto me-auto me-md-none mb-0 p-3">{title}</h1>
+		<div class="col flex-grow-0">
 			<div class="btn-group btn-group-sm me-2 bg-white" role="group" aria-label="Basic radio toggle button group">
 				<a
 					href={`${$pathToRoot$}angular/${$frameworkLessUrl$}`}

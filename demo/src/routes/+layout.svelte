@@ -4,7 +4,7 @@
 	import twitter from 'bootstrap-icons/icons/twitter.svg?raw';
 	import coneStriped from 'bootstrap-icons/icons/cone-striped.svg?raw';
 	import 'bootstrap/dist/css/bootstrap.css';
-	import {/*canonicalURL$,*/ pathToRoot$} from '../lib/stores';
+	import {/*canonicalURL$,*/ pathToRoot$} from '$lib/stores';
 	import './styles.scss';
 	import {beforeNavigate} from '$app/navigation';
 	import {updated} from '$app/stores';

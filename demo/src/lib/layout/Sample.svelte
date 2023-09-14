@@ -11,7 +11,6 @@
 <script lang="ts">
 	import {tooltip} from '$lib/tooltip/tooltip';
 	import openLink from 'bootstrap-icons/icons/box-arrow-up-right.svg?raw';
-	import clipboard from 'bootstrap-icons/icons/clipboard.svg?raw';
 	import codeSvg from 'bootstrap-icons/icons/code.svg?raw';
 	import {onDestroy} from 'svelte';
 	import stackblitz from '../icons/stackblitz.svg?raw';
@@ -174,17 +173,9 @@
 					<button class="nav-link" class:active={selectedFileName === file} on:click={() => (selectedFileName = file)}>{file}</button>
 				</li>
 			{/each}
-			<li class="ms-auto">
-				<button
-					class="btn"
-					aria-label="copy to clipboard"
-					use:tooltip={{content: 'Copy to clipboard'}}
-					on:click={() => navigator.clipboard.writeText(code)}><Svg className={`align-middle icon-20`} svg={clipboard} /></button
-				>
-			</li>
 		</ul>
 		<div class="border border-top-0">
-			<Lazy component={() => import('./Code.svelte')} {code} fileName={selectedFileName} className="py-3 px-2 px-sm-4 code-sample">
+			<Lazy component={() => import('./Code.svelte')} {code} fileName={selectedFileName}>
 				<div class="spinner-border text-primary" role="status">
 					<span class="visually-hidden">Loading...</span>
 				</div>

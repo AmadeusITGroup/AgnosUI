@@ -3,12 +3,14 @@ import typescript from 'highlight.js/lib/languages/typescript';
 import css from 'highlight.js/lib/languages/css';
 import scss from 'highlight.js/lib/languages/scss';
 import xml from 'highlight.js/lib/languages/xml';
+import bash from 'highlight.js/lib/languages/bash';
 
 hljs.registerLanguage('typescript', typescript);
 hljs.registerLanguage('html', xml);
 hljs.registerLanguage('xml', xml);
 hljs.registerLanguage('css', css);
 hljs.registerLanguage('scss', scss);
+hljs.registerLanguage('bash', bash);
 hljs.registerLanguage('angular', () => ({
 	subLanguage: 'typescript',
 	contains: [
@@ -91,6 +93,10 @@ export const languageFromFileName = (fileName: string | undefined) => {
 				return 'scss';
 			case '.svelte':
 				return 'svelte';
+			case '.sh':
+				return 'bash';
+			default:
+				return undefined;
 		}
 	}
 };
