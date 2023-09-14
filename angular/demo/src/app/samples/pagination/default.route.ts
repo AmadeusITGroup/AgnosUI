@@ -5,7 +5,7 @@ import {Component} from '@angular/core';
 	standalone: true,
 	imports: [AgnosUIAngularModule],
 	template: `
-		<h5>Default pagination:</h5>
+		<h5>Basic pagination:</h5>
 		<nav au-pagination [(page)]="page" [collectionSize]="60"></nav>
 
 		<h5>No direction links:</h5>
