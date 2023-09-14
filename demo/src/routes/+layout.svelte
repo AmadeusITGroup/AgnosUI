@@ -9,6 +9,7 @@
 	import {beforeNavigate} from '$app/navigation';
 	import {updated} from '$app/stores';
 	import {onMount} from 'svelte';
+	import MobileMenu from './[framework]/menu/MobileMenu.svelte';
 
 	const onServiceWorkerUpdate = () => {
 		updated.check();
@@ -54,20 +55,35 @@
 			</div>
 		</div>
 	</nav>
+	<div class="demo-mobile-menu d-block d-md-none">
+		<MobileMenu />
+	</div>
 	<div class="demo-main d-flex flex-column">
 		<slot />
 	</div>
 </div>
 
-<style>
+<style lang="scss">
+	@import '../../../common/variables';
+
 	.agnos-ui {
 		width: 100vw;
 		height: 100vh;
 		display: grid;
 		grid-template-areas:
 			'top'
+			'mobileMenu'
 			'main';
-		grid-template-rows: 60px 1fr;
+		grid-template-rows: 60px auto 1fr;
+	}
+
+	.demo-mobile-menu {
+		grid-area: mobileMenu;
+		position: sticky;
+		top: 0;
+		background-color: var(--bs-body-bg);
+		box-shadow: $box-shadow;
+		z-index: 10;
 	}
 
 	.demo-nav-top {
@@ -76,6 +92,7 @@
 	}
 
 	.demo-main {
+		grid-area: main;
 		overflow: auto;
 	}
 </style>

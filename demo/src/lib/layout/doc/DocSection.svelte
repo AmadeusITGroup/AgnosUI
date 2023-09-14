@@ -39,19 +39,6 @@
 					</div>
 				{/if}
 			</Section>
-			{#if hasDefaults && defaultValue}
-				{@const nType = normalizedType(type)}
-				<div class="mb-3">
-					<span class="fw-bold">Default value:</span>
-					{#if nType === 'function'}
-						<div class="my-2">
-							<Code code={defaultValue} language="typescript" />
-						</div>
-					{:else}
-						<code>{'' + defaultValue}</code>
-					{/if}
-				</div>
-			{/if}
 			<hr />
 		{/each}
 	</Section>
