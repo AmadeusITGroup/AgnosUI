@@ -2,31 +2,7 @@ import {ProgressbarPO} from '@agnos-ui/page-objects';
 import {expect, getTest} from '../fixture';
 import {ProgressbarDemoPO} from 'e2e/demo-po/progressbar.po';
 
-interface State {
-	ariaLabel: string | null;
-	ariaValueNow: string | null;
-	ariaValueMin: string | null;
-	ariaValueMax: string | null;
-	ariaValueText: string | null;
-	label: string | null | undefined;
-	innerClasses: string[];
-}
-
 const test = getTest();
-async function getState(progressbarPO: ProgressbarPO): Promise<State> {
-	return progressbarPO.locatorRoot.evaluate((rootNode: HTMLElement) => {
-		const innerBar = rootNode.querySelector('.progress-bar');
-		return {
-			ariaLabel: rootNode.getAttribute('aria-label'),
-			ariaValueNow: rootNode.getAttribute('aria-valuenow'),
-			ariaValueMin: rootNode.getAttribute('aria-valuemin'),
-			ariaValueMax: rootNode.getAttribute('aria-valuemax'),
-			ariaValueText: rootNode.getAttribute('aria-valuetext'),
-			label: innerBar?.textContent?.trim(),
-			innerClasses: innerBar?.className?.trim()?.split(' ')?.sort() ?? [],
-		};
-	});
-}
 
 test.describe(`Progressbar tests`, () => {
 	test(`Default progressbar`, async ({page}) => {
@@ -36,7 +12,7 @@ test.describe(`Progressbar tests`, () => {
 		await page.goto('#/progressbar/default');
 		await progressbarDemoPO.locatorRoot.waitFor();
 
-		expect(await getState(progressbarPO)).toStrictEqual({
+		expect(await progressbarPO.getState()).toStrictEqual({
 			ariaLabel: 'Progressbar',
 			ariaValueMax: '100',
 			ariaValueMin: '0',
@@ -55,7 +31,7 @@ test.describe(`Progressbar tests`, () => {
 
 		const heightBar = new ProgressbarPO(page, 2);
 
-		expect(await getState(new ProgressbarPO(page, 0))).toStrictEqual({
+		expect(await new ProgressbarPO(page, 0).getState()).toStrictEqual({
 			ariaLabel: 'Progressbar',
 			ariaValueMax: '5',
 			ariaValueMin: '1',
@@ -64,7 +40,7 @@ test.describe(`Progressbar tests`, () => {
 			innerClasses: ['progress-bar'],
 			label: 'Step 4 out of 5',
 		});
-		expect(await getState(new ProgressbarPO(page, 1))).toStrictEqual({
+		expect(await new ProgressbarPO(page, 1).getState()).toStrictEqual({
 			ariaLabel: 'Progressbar',
 			ariaValueMax: '100',
 			ariaValueMin: '0',
@@ -73,7 +49,7 @@ test.describe(`Progressbar tests`, () => {
 			innerClasses: ['progress-bar', 'progress-bar-animated', 'progress-bar-striped', 'text-bg-info'],
 			label: '',
 		});
-		expect(await getState(heightBar)).toStrictEqual({
+		expect(await heightBar.getState()).toStrictEqual({
 			ariaLabel: 'Progressbar',
 			ariaValueMax: '100',
 			ariaValueMin: '0',
