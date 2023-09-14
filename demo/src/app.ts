@@ -1,5 +1,8 @@
 import {intersectionApi} from '$lib/stores';
 import {afterUpdate} from 'svelte';
+import {asReadable, writable} from '@amadeus-it-group/tansu';
+import type {ReadableSignal} from '@amadeus-it-group/tansu';
+import {getContext, setContext} from 'svelte';
 
 export function getTitle(title: string, frameworkName = '') {
 	return `AgnosUI - ${title}` + (frameworkName ? ` for ${frameworkName}` : '');
@@ -52,4 +55,45 @@ export function createTOC(getElements: (node: HTMLElement) => HTMLElement[]) {
 	});
 
 	return directive;
+}
+const dotRegExp = /^\.\//;
+const moduleSymbol = Symbol('module');
+function loader(module: any) {
+	const map: Record<string, any> = {};
+	for (const [key, component] of Object.entries(module.default)) {
+		map[key.replace(dotRegExp, '')] = component;
+	}
+	return map;
+}
+/**
+ * Module loader utility
+ * It creates a store containing the imports loaded with the loaderFn, and set it in the context.
+ *
+ * @example
+ * ```typescript
+ * const modules$ = createModulesContext();
+ * $: modules$.load(() => import(`./${$selectedFramework$}/index.ts`));
+ * ```
+ */
+export function createModulesContext() {
+	const modules$ = writable(<Record<string, any>>{});
+
+	const api = asReadable(modules$, {
+		load(loaderFn: () => Promise<any>) {
+			loaderFn().then((m) => {
+				modules$.set(loader(m));
+			});
+		},
+	});
+
+	setContext(moduleSymbol, api);
+	return api;
+}
+
+/**
+ *
+ * @returns get the modules context set with {@link setModulesContext}
+ */
+export function getModulesContext() {
+	return getContext(moduleSymbol) as ReadableSignal<Record<string, any>>;
 }

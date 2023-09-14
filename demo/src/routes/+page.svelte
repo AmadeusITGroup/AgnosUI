@@ -19,9 +19,14 @@
 		<div class="col-12 col-lg-6 order-1 order-lg-0">
 			<div class="pres-logo d-block text-center text-lg-start">AgnosUI</div>
 			<div class="mt-3">
-				<div class="pres-line ps-4 pres-logo-text"><Svg svg={bullet} className="bullet" /> Making your webapps powerfull and consistent</div>
-				<div class="pres-line ps-4 pres-logo-text"><Svg svg={bullet} className="bullet" /> Headless widgets library</div>
-				<div class="pres-line ps-4 pres-logo-text"><Svg svg={bullet} className="bullet" /> Adapters for Angular, React and Svelte</div>
+				<div class="pres-line ps-4 pres-logo-text"><Svg svg={bullet} className="bullet" /> Making your webapps powerful and consistent</div>
+				<div class="pres-line ps-4 pres-logo-text"><Svg svg={bullet} className="bullet" /> Core builders for components in TS only</div>
+				<div class="pres-line ps-4 pres-logo-text">
+					<Svg svg={bullet} className="bullet" /> Headless widgets library for Angular, React and svelte made using the core
+				</div>
+				<div class="pres-line ps-4 pres-logo-text">
+					<Svg svg={bullet} className="bullet" /> Highly customizable Bootstrap components made with those Headless widgets
+				</div>
 			</div>
 			<div class="btn-docs card mb-3 mt-5">
 				<div class="row g-0">
@@ -31,7 +36,7 @@
 							<div class="card-text row">
 								<div class="col-12 col-sm-4">
 									<a
-										href="angular/components/accordion/examples"
+										href="angular/getting-started/installation"
 										class="btn-doc d-flex align-items-center justify-items-center"
 										aria-label="link to angular examples"
 										title="Angular"
@@ -42,7 +47,7 @@
 								</div>
 								<div class="col-12 col-sm-4">
 									<a
-										href="react/components/accordion/examples"
+										href="react/getting-started/installation"
 										class="btn-doc d-flex align-items-center justify-items-center"
 										aria-label="link to angular examples"
 										title="Angular"
@@ -53,7 +58,7 @@
 								</div>
 								<div class="col-12 col-sm-4">
 									<a
-										href="svelte/components/accordion/examples"
+										href="svelte/getting-started/installation"
 										class="btn-doc d-flex align-items-center justify-items-center"
 										aria-label="link to angular examples"
 										title="Svelte"
@@ -77,16 +82,15 @@
 	<div class="container-xxl">
 		<div class="cards row align-content-around">
 			<LandingCard title="Headless widgets">
-				Each widget is managed in pure typescript with a reactive model and an api to drive the data.
+				Each widget is managed with a core framework agnostic that provides a reactive model and an api to drive the data. Adapters for Angular, React
+				and Svelte are provided to plug the widgets in your favorite framework.
 			</LandingCard>
-			<LandingCard title="Consistent">
-				Widgets are provided for Angular, React and Svelte with the exact same markup and functionnalities.
-			</LandingCard>
+			<LandingCard title="Consistent">Widgets are provided for Angular, React and Svelte with the exact same markup and functionalities.</LandingCard>
 			<LandingCard title="Highly configurable">
-				Default values for all widget props are configurable at any point of the component subtree.
+				Default values for all widgets props are configurable at any point of the component subtree.
 			</LandingCard>
-			<LandingCard title="Fully tested">Unit test for headless with Vitest. E2e tests for adapters with Playwright.</LandingCard>
-			<LandingCard title="Accessible">Widgets are tested with Axe.</LandingCard>
+			<LandingCard title="Fully tested">Unit tests for headless with Vitest. E2e tests for adapters with Playwright.</LandingCard>
+			<LandingCard title="Accessible">Widgets are tested for accessibility with Axe.</LandingCard>
 		</div>
 	</div>
 </section>
