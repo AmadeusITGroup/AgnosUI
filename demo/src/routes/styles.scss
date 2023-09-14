@@ -1,5 +1,82 @@
 @import '@agnos-ui/common/variables';
 
+:root {
+	// Color palette
+	$au-primary: #5a3265;
+	$au-primary-light: #a182a7;
+	$au-secondary: #d2b000; // to fill icon usage ?
+	$au-primary-hover: #4b335b;
+	$au-body-text-color: #402b30;
+	$au-body-bg-color: #fff;
+	$au-background-light: #f3f5fa;
+	// --bs-light-bg-subtle ??
+	// BS variables override
+	// Add of au variables
+	--au-body-background-light-color: #{$au-background-light};
+	--bs-body-color: #{$au-body-text-color};
+	--au-section-border-top-color: var(--bs-body-color);
+	--au-section-background-color: var(--au-body-background-light-color);
+	--bs-primary: #{$au-primary};
+	--au-primary-light: #{$au-primary-light};
+	--bs-secondary: #{$au-secondary};
+	--au-primary-hover: #{$au-primary-hover};
+	--bs-secondary-rgb: #{to-rgb($au-secondary)};
+	--bs-primary-rgb: #{to-rgb($au-primary)};
+	--au-primary-hover-rgb: #{to-rgb($au-primary-hover)};
+	--bs-link-color: var(--bs-primary); // bs to update
+	--bs-link-hover-color: var(--au-primary-hover); // bs to update to stronger
+	--bs-link-hover-color-rgb: var(--au-primary-hover-rgb); // bs to update to stronger
+	--bs-link-color-rgb: var(--bs-primary-rgb);
+	--bs-navbar-brand-color: var(--bs-body-color);
+	.bg-navbar {
+		background-color: var(--au-primary-light);
+	}
+	.card-title {
+		--bs-card-title-color: var(--bs-primary);
+	}
+	.btn-outline-primary {
+		--bs-btn-color: var(--bs-primary);
+		--bs-btn-border-color: var(--bs-primary);
+		--bs-btn-hover-color: #fff;
+		--bs-btn-hover-bg: var(--au-primary-hover);
+		--bs-btn-hover-border-color: var(--au-primary-hover);
+		--bs-btn-focus-shadow-rgb: 13, 110, 253;
+		--bs-btn-active-color: #fff;
+		--bs-btn-active-bg: var(--bs-primary);
+		--bs-btn-active-border-color: var(--bs-primary);
+		--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+		--bs-btn-disabled-color: var(--bs-primary);
+		--bs-btn-disabled-bg: transparent;
+		--bs-btn-disabled-border-color: var(--bs-primary);
+		--bs-gradient: none;
+	}
+	.btn-primary {
+		--bs-btn-color: #fff;
+		--bs-btn-bg: var(--bs-primary);
+		--bs-btn-border-color: var(--bs-primary);
+		--bs-btn-hover-color: #fff;
+		--bs-btn-hover-bg: var(--au-primary-hover); // to be changed
+		--bs-btn-hover-border-color: var(--au-primary-hover);
+		--bs-btn-focus-shadow-rgb: 49, 132, 253; // to be changed
+		--bs-btn-active-color: #fff;
+		--bs-btn-active-bg: var(--au-primary-hover); // to be changed
+		--bs-btn-active-border-color: var(--au-primary-hover); // to be changed
+		--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+		--bs-btn-disabled-color: #fff;
+		--bs-btn-disabled-bg: var(--bs-primary);
+		--bs-btn-disabled-border-color: var(--bs-primary);
+	}
+	.navbar-dark,
+	.navbar[data-bs-theme='dark'] {
+		--bs-navbar-color: var(--bs-body-color); // not accessible
+		--bs-navbar-hover-color: var(--au-primary-light);
+		--bs-navbar-active-color: #000;
+		--bs-navbar-brand-color: var(--bs-body-color); // not accessible
+		--bs-navbar-brand-hover-color: var(--bs-body-color); // not accessible
+		--bs-navbar-toggler-border-color: rgba(255, 255, 255, 0.1);
+	}
+}
+
 body {
 	min-height: 100vh;
 	--bs-light-rgb: 237, 238, 247;
@@ -62,11 +139,6 @@ header {
 		position: relative;
 
 		.content-tabset {
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			right: 0;
-
 			.nav-link {
 				border-style: solid;
 				border-width: 3px 1px 1px;
@@ -78,10 +150,11 @@ header {
 			}
 
 			.active {
-				border-top-color: #28a745;
+				border-top-color: var(--bs-primary);
 			}
 
 			.navigation-dropdown {
+				// where is it used ?
 				cursor: pointer;
 
 				.nav-link {
@@ -118,9 +191,20 @@ header {
 	}
 }
 
-// .demo-nav-top {
-// 	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.33), inset 0 -1px 0 rgba(255, 255, 255, 0.15);
-// }
+// What is it ?
+.demo-links-link {
+	color: var(--bs-body-color);
+	text-decoration: none;
+	&:hover,
+	&:focus {
+		color: var(--bs-emphasis-color);
+	}
+	&.active {
+		font-weight: bold;
+		color: var(--bs-emphasis-color);
+		background-color: #d9e5f1;
+	}
+}
 
 .svg {
 	display: inline-flex;

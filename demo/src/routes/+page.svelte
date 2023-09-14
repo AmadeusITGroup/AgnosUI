@@ -97,10 +97,10 @@
 <style lang="scss">
 	@import '@agnos-ui/common/variables';
 
-	@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
-	$font-name: 'Kanit';
+	@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
+	$font-name: 'Oswald';
 
-	.btn-doc :global(.pres-card-logo) {
+	.btn.btn-primary :global(.pres-card-logo) {
 		width: 30px;
 		height: 30px;
 	}
@@ -108,48 +108,24 @@
 	:global(.agnosui-logo) {
 		width: 50px;
 	}
-	.pres-card-title {
-		font-size: 1.5rem;
-		text-align: center;
-	}
-	.au-landing-card {
-		background-color: $light-background;
-		border: 1px solid var(--bs-primary);
+
+	.btn-docs {
+		background-color: var(--au-body-background-light-color);
 	}
 	.au-landing-list {
 		list-style-type: none;
 		font-size: 1rem;
 		margin-bottom: 0.5rem;
-
-		:global(.bullet) {
-			width: 20px;
-			height: 20px;
-			min-width: 20px;
-			min-height: 20px;
-			margin-top: 3px;
-			color: $gradient-text-top;
-		}
 	}
-	.btn-doc {
+	.btn.btn-primary {
 		font-family: 'Jost', sans-serif;
-		font-weight: 500;
-		font-size: 15px;
-		letter-spacing: 1px;
-		display: inline-block;
-		padding: 8px 20px;
-		border-radius: 50px;
+		font-weight: 500; // can be done differently
+		font-size: 15px; // can be done differently
+		letter-spacing: 1px; // can be done differently ?
+		padding: 8px 20px; // can be done differently
 		transition: 0.5s;
 		margin: 5px 0 0 0;
 		color: #fff;
-		background: $gradient-top;
 		text-decoration: none;
-	}
-	.btn-doc:hover {
-		background: $gradient-bottom;
-		border-color: $gradient-top;
-	}
-	.au-footer {
-		border-top: 1px solid $gradient-text-bottom;
-		background-color: $light-background;
 	}
 </style>

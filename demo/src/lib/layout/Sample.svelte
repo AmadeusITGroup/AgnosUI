@@ -106,7 +106,7 @@
 		{/if}
 		<a
 			href={sampleUrl}
-			class="action m-1 p-0"
+			class="m-1 p-0"
 			target="_blank"
 			rel="noreferrer nofollow external"
 			aria-label="View sample in new tab"
@@ -135,14 +135,5 @@
 <style lang="scss">
 	.iframeSpinner {
 		top: 1.5rem;
-	}
-
-	.action {
-		display: inline-block;
-
-		> :global(svg) {
-			width: 20px;
-			height: 20px;
-		}
 	}
 </style>

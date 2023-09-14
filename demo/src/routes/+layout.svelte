@@ -51,7 +51,7 @@
 -->
 
 <div class="agnos-ui">
-	<nav class="demo-nav-top navbar navbar-dark bg-primary bg-gradient">
+	<nav class="demo-nav-top navbar navbar-dark bg-navbar">
 		<div class="container-fluid">
 			<a class="navbar-brand" href={$pathToRoot$}> AgnosUI </a>
 			<div class="align-items-center d-none d-md-flex">
@@ -62,9 +62,10 @@
 					<Svg className="icon-24 align-middle" svg={github} />
 				</a>
 				<a class="nav-link text-white ms-3" href="https://twitter.com/AgnosUI" aria-label="link to twitter / x account" target="_blank">
+					<!-- <a class="nav-link ms-3" href="https://twitter.com/AgnosUI" aria-label="link to twitter account" target="_blank"> -->
 					<Svg className="icon-24 align-middle" svg={twitter} />
 				</a>
-				<span class="ms-3 text-white">v{import.meta.env.AGNOSUI_VERSION}</span>
+				<span class="ms-3">v{import.meta.env.AGNOSUI_VERSION}</span>
 			</div>
 			<div class="d-block d-md-none">
 				<MobileMenu />
