@@ -3,6 +3,7 @@
 	import 'bootstrap/dist/css/bootstrap.css';
 	import {pathToRoot$, selectedFramework$, intersectionApi} from '../../lib/stores';
 	import {menu} from '../navigation';
+	import MainSection from '$lib/layout/MainSection.svelte';
 
 	const {elements$, visibleElements$} = intersectionApi;
 	function getElementProperties(element: HTMLElement, isVisible: boolean) {
@@ -59,7 +60,9 @@
 			</nav>
 		</aside>
 		<div class="pb-4 col">
-			<slot />
+			<MainSection>
+				<slot />
+			</MainSection>
 		</div>
 		<div class="demo-toc col-auto d-none d-lg-flex">
 			{#if $elements$.length}
