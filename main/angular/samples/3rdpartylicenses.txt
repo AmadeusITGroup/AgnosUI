@@ -24,10 +24,10 @@ SOFTWARE.
 
 
 @agnos-ui/angular
-MIT
+
+@agnos-ui/angular-headless
 
 @agnos-ui/core
-MIT
 
 @amadeus-it-group/tansu
 MIT
