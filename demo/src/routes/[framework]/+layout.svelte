@@ -1,9 +1,10 @@
 <script lang="ts">
 	import {page} from '$app/stores';
-	import 'bootstrap/dist/css/bootstrap.css';
-	import {pathToRoot$, selectedFramework$, intersectionApi} from '../../lib/stores';
-	import {menu} from '../navigation';
 	import MainSection from '$lib/layout/MainSection.svelte';
+	import {intersectionApi, pathToRoot$, selectedFramework$} from '../../lib/stores';
+	import {menu} from '../navigation';
+
+	import 'bootstrap/dist/css/bootstrap.css';
 
 	const {elements$, visibleElements$} = intersectionApi;
 	function getElementProperties(element: HTMLElement, isVisible: boolean) {

@@ -9,7 +9,7 @@
 	$: isReact = $selectedFramework$ === 'react';
 	$: isSvelte = $selectedFramework$ === 'svelte';
 	const modules$ = createModulesContext();
-	$: modules$.load(() => import(`../${$selectedFramework$}/index.ts`));
+	$: modules$.load(() => import(`./snippets/${$selectedFramework$}/index.ts`));
 </script>
 
 <!-- TODO refactor it with the header part to use the same component -->
