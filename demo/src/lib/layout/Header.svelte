@@ -37,7 +37,7 @@
 			</div>
 		</div>
 	</div>
-	<ul class="nav-tabs px-4 px-lg-5 content-tabset justify-content-start nav" role="tablist">
+	<ul class="nav-tabs px-4 px-lg-5 content-tabset position-absolute bottom-0 left-0 right-0 justify-content-start nav" role="tablist">
 		{#each tabs as { title, key, path }}
 			{@const isActive = tab === key}
 			<li class="nav-item" role="presentation">

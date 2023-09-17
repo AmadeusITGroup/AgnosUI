@@ -14,6 +14,7 @@
 			const firstSubSection = element.querySelector('section');
 			if ((firstSubSection && visibleElements$().has(firstSubSection)) || (!firstSubSection && isVisible)) {
 				classnames.push('active');
+				classnames.push('fw-bold');
 			}
 
 			return {
@@ -43,7 +44,7 @@
 								{@const isCurrent = $page.route.id?.startsWith(`/[framework]${path}`)}
 								<li>
 									<a
-										class="demo-links-link d-inline-block rounded"
+										class="demo-links-link px-2 py-1 ms-3 d-inline-block rounded"
 										class:active={isCurrent}
 										aria-current={isCurrent ? 'page' : undefined}
 										href="{$pathToRoot$}{$selectedFramework$}{path}"
@@ -98,8 +99,6 @@
 		.demo-sidebar {
 			position: sticky;
 			top: 0;
-			// height: calc(100vh - 6rem);
-			// overflow-y: auto;
 		}
 
 		.demo-toc {
@@ -112,17 +111,19 @@
 	}
 
 	.toc {
-		&-link:hover,
-		&-link:focus {
-			color: var(--bs-emphasis-color);
-			background-color: var(--demo-sidebar-link-bg);
-		}
 		&-link {
-			padding: 0.1875rem 0.5rem;
+			padding: 0.1875rem 0.5rem; // can be done with utils
 			color: var(--bs-body-color);
 			text-decoration: none;
 			border-left: 3px solid transparent;
 			transition: border-color 0.25s;
+
+			&:hover,
+			&:focus {
+				color: var(--bs-emphasis-color);
+				text-decoration: underline;
+				// background-color: var(--demo-sidebar-link-bg); // this variable does not exist...
+			}
 
 			&.active {
 				color: var(--bs-emphasis-color);

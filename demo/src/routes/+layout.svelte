@@ -36,7 +36,7 @@
 -->
 
 <div class="agnos-ui">
-	<nav class="demo-nav-top navbar navbar-dark bg-primary bg-gradient">
+	<nav class="demo-nav-top navbar navbar-dark bg-navbar">
 		<div class="container-fluid">
 			<a class="navbar-brand" href={$pathToRoot$}> AgnosUI </a>
 			<div class="d-flex align-items-center">
@@ -44,13 +44,13 @@
 				<span class="badge rounded-pill bg-warning text-bg-warning d-block d-sm-none" aria-label="Work In Progress">
 					<Svg className="icon-20 align-middle" svg={coneStriped} />
 				</span>
-				<a class="nav-link text-white ms-3" href="https://github.com/AmadeusITGroup/AgnosUI" aria-label="link to GitHub repository" target="_blank">
+				<a class="nav-link ms-3" href="https://github.com/AmadeusITGroup/AgnosUI" aria-label="link to GitHub repository" target="_blank">
 					<Svg className="icon-24 align-middle" svg={github} />
 				</a>
-				<a class="nav-link text-white ms-3" href="https://twitter.com/AgnosUI" aria-label="link to twitter account" target="_blank">
+				<a class="nav-link ms-3" href="https://twitter.com/AgnosUI" aria-label="link to twitter account" target="_blank">
 					<Svg className="icon-24 align-middle" svg={twitter} />
 				</a>
-				<span class="ms-3 text-white">v{import.meta.env.AGNOSUI_VERSION}</span>
+				<span class="ms-3">v{import.meta.env.AGNOSUI_VERSION}</span>
 			</div>
 		</div>
 	</nav>
