@@ -1,25 +1,23 @@
-import type {AdaptSlotContentProps, AdaptWidgetSlots, SlotContent} from '../slot.directive';
-import {ComponentTemplate, SlotDirective, callWidgetFactory} from '../slot.directive';
+import type {ProgressbarContext, ProgressbarProps, ProgressbarState, SlotContent} from '@agnos-ui/angular-headless';
+import {
+	ComponentTemplate,
+	SlotDirective,
+	callWidgetFactory,
+	createProgressbar,
+	patchSimpleChanges,
+	toSlotContextWidget,
+	SlotDefaultDirective,
+} from '@agnos-ui/angular-headless';
 import type {AfterContentChecked, OnChanges, Signal, SimpleChanges} from '@angular/core';
 import {NgClass, NgIf} from '@angular/common';
 import {ChangeDetectionStrategy, Component, ContentChild, Directive, Input, TemplateRef, ViewChild, inject} from '@angular/core';
-import type {ProgressbarContext as ProgressbarCoreContext, WidgetProps, WidgetState} from '@agnos-ui/core';
-import {createProgressbar, toSlotContextWidget} from '@agnos-ui/core';
 import {writable} from '@amadeus-it-group/tansu';
 import {toSignal} from '@angular/core/rxjs-interop';
-import {patchSimpleChanges} from '../utils';
-import {SlotDefaultDirective} from '../slotDefault.directive';
-
-export type ProgressbarWidget = AdaptWidgetSlots<ReturnType<typeof createProgressbar>>;
-export type ProgressbarState = WidgetState<ProgressbarWidget>;
-export type ProgressbarProps = WidgetProps<ProgressbarWidget>;
-
-export type ProgressbarContext = AdaptSlotContentProps<ProgressbarCoreContext>;
 
 @Directive({selector: 'ng-template[auProgressbarContent]', standalone: true})
 export class ProgressbarContentDirective {
 	public templateRef = inject(TemplateRef<ProgressbarContext>);
-	static ngTemplateContextGuard(_dir: ProgressbarContentDirective, context: unknown): context is ProgressbarCoreContext {
+	static ngTemplateContextGuard(_dir: ProgressbarContentDirective, context: unknown): context is ProgressbarContext {
 		return true;
 	}
 }
@@ -46,7 +44,7 @@ export class ProgressbarContentDirective {
 	`,
 })
 export class ProgressbarDefaultSlotsComponent {
-	@ViewChild('content', {static: true}) content: TemplateRef<ProgressbarCoreContext>;
+	@ViewChild('content', {static: true}) content: TemplateRef<ProgressbarContext>;
 }
 
 export const progressbarDefaultSlotContent = new ComponentTemplate(ProgressbarDefaultSlotsComponent, 'content');
@@ -102,8 +100,8 @@ export class ProgressbarComponent implements AfterContentChecked, OnChanges {
 	 */
 	@Input() className: string | undefined;
 
-	@Input() slotDefault: SlotContent<AdaptSlotContentProps<ProgressbarCoreContext>>;
-	@Input() slotContent: SlotContent<AdaptSlotContentProps<ProgressbarCoreContext>>;
+	@Input() slotDefault: SlotContent<ProgressbarContext>;
+	@Input() slotContent: SlotContent<ProgressbarContext>;
 	@ContentChild(ProgressbarContentDirective, {static: false}) slotContentFromContent: ProgressbarContentDirective | undefined;
 
 	/**

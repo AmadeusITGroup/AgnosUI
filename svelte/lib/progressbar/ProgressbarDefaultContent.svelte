@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Slot from '../slot/Slot.svelte';
-	import type {ProgressbarSlots} from './progressbar';
+	import {Slot} from '@agnos-ui/svelte-headless';
+	import type {ProgressbarSlots} from '@agnos-ui/svelte-headless';
 
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
 	type $$Props = ProgressbarSlots['content']; // eslint-disable-line @typescript-eslint/no-unused-vars

@@ -14,6 +14,17 @@ import Progressbar from './progressbar/Progressbar.svelte';
 
 export * from './modal/modalService';
 export * from './accordion/accordion';
-export * from './progressbar/progressbar';
 
-export {Select, Rating, Pagination, PaginationDefaultPages, Modal, ModalDefaultHeader, ModalDefaultStructure, Alert, Accordion, AccordionItem};
+export {
+	Select,
+	Rating,
+	Pagination,
+	PaginationDefaultPages,
+	Modal,
+	ModalDefaultHeader,
+	ModalDefaultStructure,
+	Alert,
+	Accordion,
+	AccordionItem,
+	Progressbar,
+};

@@ -1,14 +1,6 @@
-import type {ProgressbarContext as ProgressbarCoreContext, WidgetProps, WidgetState} from '@agnos-ui/core';
-import {createProgressbar, toSlotContextWidget} from '@agnos-ui/core';
 import {type PropsWithChildren} from 'react';
-import type {AdaptSlotContentProps, AdaptWidgetSlots} from './Slot';
-import {Slot} from './Slot';
-import {useWidgetWithConfig} from './utils';
-
-export type ProgressbarContext = AdaptSlotContentProps<ProgressbarCoreContext>;
-export type ProgressbarWidget = AdaptWidgetSlots<ReturnType<typeof createProgressbar>>;
-export type ProgressbarProps = WidgetProps<ProgressbarWidget>;
-export type ProgressbarState = WidgetState<ProgressbarWidget>;
+import type {ProgressbarContext, ProgressbarProps} from '@agnos-ui/react-headless';
+import {Slot, createProgressbar, toSlotContextWidget, useWidgetWithConfig} from '@agnos-ui/react-headless';
 
 function DefaultSlotContent(slotContext: ProgressbarContext) {
 	const classList = ['progress-bar'];
