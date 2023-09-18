@@ -24,7 +24,6 @@ describe(`Progressbar`, () => {
 			max: 100,
 			min: 0,
 			percentage: 0,
-			showValue: false,
 			slotContent: undefined,
 			slotDefault: undefined,
 			started: false,

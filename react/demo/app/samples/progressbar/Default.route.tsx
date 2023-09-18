@@ -1,7 +1,8 @@
+import type {ProgressbarContext} from '@agnos-ui/react';
 import {Progressbar, WidgetsDefaultConfig} from '@agnos-ui/react';
 
 const DefaultDemo = () => (
-	<WidgetsDefaultConfig progressbar={{showValue: true}}>
+	<WidgetsDefaultConfig progressbar={{slotDefault: ({state}: ProgressbarContext) => `${state.percentage}%`}}>
 		<div className="d-flex flex-column gap-2">
 			<Progressbar value={20} />
 			<Progressbar value={40} className="text-bg-success" />

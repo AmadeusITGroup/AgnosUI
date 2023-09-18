@@ -17,7 +17,6 @@ function DefaultSlotContent(slotContext: ProgressbarContext) {
 		<div className="progress" style={{height: slotContext.state.height}}>
 			<div className={classList.join(' ')} style={{width: `${slotContext.state.percentage}%`}}>
 				<Slot slotContent={slotContext.state.slotDefault} props={slotContext} />
-				{slotContext.state.showValue ? <>{slotContext.state.percentage}%</> : null}
 			</div>
 		</div>
 	);

@@ -3,7 +3,7 @@
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const widgetsConfig$ = createWidgetsDefaultConfig();
-	$widgetsConfig$ = {progressbar: {showValue: true}};
+	$widgetsConfig$ = {progressbar: {slotDefault: (widget) => `${widget.state.percentage}%`}};
 </script>
 
 <div class="d-flex flex-column gap-2">

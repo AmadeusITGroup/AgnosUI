@@ -41,15 +41,12 @@ export interface ProgressbarCommonPropsAndState extends WidgetsCommonPropsAndSta
 	 */
 	height: string;
 	/**
-	 * If `true`, displays the current percentage in the `xx%` format.
-	 */
-	showValue: boolean;
-	/**
 	 * If `true`, shows a striped progressbar.
 	 */
 	striped: boolean;
 	/**
 	 * If `true`, animates a striped progressbar.
+	 * Takes effect only for browsers supporting CSS3 animations, and if `striped` is `true`.
 	 */
 	animated: boolean;
 }
@@ -97,7 +94,6 @@ const defaultConfig: ProgressbarProps = {
 	slotContent: undefined,
 	slotDefault: undefined,
 	height: '',
-	showValue: false,
 	striped: false,
 	animated: false,
 	ariaValueTextFn: () => undefined,
@@ -118,7 +114,6 @@ const configValidator: ConfigValidator<ProgressbarProps> = {
 	ariaLabel: typeString,
 	className: typeString,
 	height: typeString,
-	showValue: typeBoolean,
 	striped: typeBoolean,
 	animated: typeBoolean,
 	ariaValueTextFn: typeFunction,

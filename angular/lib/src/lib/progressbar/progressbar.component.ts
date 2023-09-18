@@ -37,7 +37,6 @@ export class ProgressbarContentDirective {
 					[style.width.%]="state.percentage"
 				>
 					<ng-template [auSlot]="state.slotDefault" [auSlotProps]="{state, widget}"></ng-template>
-					<ng-container *ngIf="state.showValue">{{ state.percentage }}%</ng-container>
 				</div>
 			</div>
 		</ng-template>
@@ -104,17 +103,13 @@ export class ProgressbarComponent implements AfterContentChecked, OnChanges {
 	@ContentChild(ProgressbarContentDirective, {static: false}) slotContentFromContent: ProgressbarContentDirective | undefined;
 
 	/**
-	 * If `true`, displays the current percentage in the `xx%` format.
-	 */
-	@Input('auShowValue') showValue: boolean | undefined;
-
-	/**
 	 * Height of the progressbar, can be any valid css height value.
 	 */
 	@Input('auHeight') height: string | undefined;
 
 	/**
 	 * If `true`, animates a striped progressbar.
+	 * Takes effect only for browsers supporting CSS3 animations, and if `striped` is `true`.
 	 */
 	@Input('auAnimated') animated: boolean | undefined;
 

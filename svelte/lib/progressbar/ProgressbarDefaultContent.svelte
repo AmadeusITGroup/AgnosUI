@@ -27,8 +27,5 @@
 				<slot name="content" slot="content" let:state let:widget {state} {widget} />
 			</svelte:component>
 		</Slot>
-		{#if state.showValue}
-			{state.percentage}%
-		{/if}
 	</div>
 </div>
