@@ -37,7 +37,7 @@ export enum AlertStatus {
 		<br />
 		<br />
 
-		<au-alert #alert [animation]="animation" [animationOnInit]="animationOnInit" [dismissible]="dismissible" [type]="type">
+		<au-component auAlert #alert [auAnimation]="animation" [auAnimationOnInit]="animationOnInit" [auDismissible]="dismissible" [auType]="type">
 			<h4 class="alert-heading">Well done!</h4>
 			<p>
 				Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing
@@ -45,7 +45,7 @@ export enum AlertStatus {
 			</p>
 			<hr />
 			<p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
-		</au-alert>`,
+		</au-component>`,
 })
 export default class ConfigAlertComponent {
 	styleList = Object.entries(AlertStatus).map((entry) => {

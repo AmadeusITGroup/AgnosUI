@@ -11,7 +11,7 @@ import {Component} from '@angular/core';
 		<ng-template #custom let-fill="fill">
 			<span class="star" [class.full]="fill === 100"> <span class="half" [style.width.%]="fill">&hearts;</span>&hearts; </span>
 		</ng-template>
-		<au-rating [(rating)]="rating"></au-rating>
+		<div [(auRating)]="rating"></div>
 		<div class="mt-3">
 			Disabled:
 			<div id="btn-config-disabled" class="btn-group mb-2">

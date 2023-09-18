@@ -103,8 +103,7 @@ const defaultConfig: Partial<AccordionItemProps> = {
 };
 
 @Component({
-	// eslint-disable-next-line @angular-eslint/component-selector
-	selector: '[au-accordion-item]',
+	selector: '[auAccordionItem]',
 	exportAs: 'auAccordionItem',
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -121,75 +120,75 @@ const defaultConfig: Partial<AccordionItemProps> = {
 	template: ` <ng-template [auSlotProps]="{state: state(), widget}" [auSlot]="state().slotItemStructure"></ng-template> `,
 })
 export class AccordionItemComponent implements OnChanges, AfterContentChecked, AfterViewInit {
-	@Input() slotItemHeader: SlotContent<AccordionItemContext>;
+	@Input('auSlotItemHeader') slotItemHeader: SlotContent<AccordionItemContext>;
 	@ContentChild(AccordionHeaderDirective, {static: false})
 	slotItemHeaderFromContent: AccordionHeaderDirective | null;
-	@Input() slotItemBody: SlotContent<AccordionItemContext>;
+	@Input('auSlotItemBody') slotItemBody: SlotContent<AccordionItemContext>;
 	@ContentChild(AccordionBodyDirective, {static: false})
 	slotItemBodyFromContent: AccordionBodyDirective | null;
-	@Input() slotItemStructure: SlotContent<AccordionItemContext>;
+	@Input('auSlotItemStructure') slotItemStructure: SlotContent<AccordionItemContext>;
 	@ContentChild(AccordionItemStructureDirective, {static: false})
 	slotItemStructureFromContent: AccordionItemStructureDirective | null;
 
 	/**
 	 * The id of the accordion-item. It can be used for controlling the accordion-item via the accordion api.
 	 */
-	@Input() itemId: string | undefined;
+	@Input('auItemId') itemId: string | undefined;
 	/**
 	 * The transition to use for the accordion-item collapse when is toggled.
 	 */
-	@Input() itemTransition: TransitionFn | undefined;
+	@Input('auItemTransition') itemTransition: TransitionFn | undefined;
 	/**
 	 * Classes to add on the accordion-item DOM element.
 	 */
-	@Input() itemClass: string | undefined;
+	@Input('auItemClass') itemClass: string | undefined;
 	/**
 	 * If `true`, the content of the accordion-item collapse will be removed from the DOM. It will be just hidden otherwise.
 	 */
-	@Input() itemDestroyOnHide: boolean | undefined;
+	@Input('auItemDestroyOnHide') itemDestroyOnHide: boolean | undefined;
 	/**
 	 * If `true`, the accordion-item will be disabled.
 	 * It will not react to user's clicks, but still will be possible to toggle programmatically.
 	 */
-	@Input() itemDisabled: boolean | undefined;
+	@Input('auItemDisabled') itemDisabled: boolean | undefined;
 	/**
 	 * If `true`, the accordion-item will be collapsed. Otherwise, it will be expanded.
 	 */
-	@Input() itemCollapsed: boolean | undefined;
+	@Input('auItemCollapsed') itemCollapsed: boolean | undefined;
 	/**
 	 * If `true`, accordion-item will be animated.
 	 */
-	@Input() itemAnimation: boolean | undefined;
+	@Input('auItemAnimation') itemAnimation: boolean | undefined;
 	/**
 	 * Classes to add on the accordion-item header DOM element.
 	 */
-	@Input() itemHeaderClass: string | undefined;
+	@Input('auItemHeaderClass') itemHeaderClass: string | undefined;
 	/**
 	 * Classes to add on the accordion-item collapse DOM element.
 	 */
-	@Input() itemButtonClass: string | undefined;
+	@Input('auItemButtonClass') itemButtonClass: string | undefined;
 	/**
 	 * Classes to add on the accordion-item collapse DOM element.
 	 */
-	@Input() itemCollapseClass: string | undefined;
+	@Input('auItemCollapseClass') itemCollapseClass: string | undefined;
 	/**
 	 * Classes to add on the accordion-item body DOM element.
 	 */
-	@Input() itemBodyClass: string | undefined;
+	@Input('auItemBodyClass') itemBodyClass: string | undefined;
 	/**
 	 * An event fired when an item is shown.
 	 */
-	@Output() itemShown = new EventEmitter<void>();
+	@Output('auItemShown') itemShown = new EventEmitter<void>();
 	/**
 	 * An event fired when an item is hidden.
 	 */
-	@Output() itemHidden = new EventEmitter<void>();
+	@Output('auItemHidden') itemHidden = new EventEmitter<void>();
 	/**
 	 * An event fired when the `collapsed` value changes.
 	 *
 	 * Event payload is the new value of collapsed.
 	 */
-	@Output() itemCollapsedChange = new EventEmitter<boolean>();
+	@Output('auItemCollapsedChange') itemCollapsedChange = new EventEmitter<boolean>();
 
 	defaultSlots = writable(defaultConfig);
 	readonly ad = inject(AccordionDirective);
@@ -256,96 +255,96 @@ export class AccordionDirective implements OnChanges {
 	/**
 	 * If `true`, only one item at the time can stay open.
 	 */
-	@Input() closeOthers: boolean | undefined;
+	@Input('auCloseOthers') closeOthers: boolean | undefined;
 
 	/**
 	 * CSS classes to be applied on the widget main container
 	 */
-	@Input() className: string | undefined;
+	@Input('auClassName') className: string | undefined;
 
 	/**
 	 * An event fired when an item is shown.
 	 *
 	 * Event payload is the id of the item.
 	 */
-	@Output() shown: EventEmitter<string> = new EventEmitter<string>();
+	@Output('auShown') shown: EventEmitter<string> = new EventEmitter<string>();
 	/**
 	 * An event fired when an item is hidden.
 	 *
 	 * Event payload is the id of the item.
 	 */
-	@Output() hidden: EventEmitter<string> = new EventEmitter<string>();
+	@Output('auHidden') hidden: EventEmitter<string> = new EventEmitter<string>();
 
 	/**
 	 * The id of the accordion-item. It can be used for controlling the accordion-item via the accordion api.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	@Input() itemId: string | undefined;
+	@Input('auItemId') itemId: string | undefined;
 	/**
 	 * If `true`, the content of the accordion-item collapse will be removed from the DOM. It will be just hidden otherwise.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	@Input() itemDestroyOnHide: boolean | undefined;
+	@Input('auItemDestroyOnHide') itemDestroyOnHide: boolean | undefined;
 	/**
 	 * If `true`, the accordion-item will be disabled.
 	 * It will not react to user's clicks, but still will be possible to toggle programmatically.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	@Input() itemDisabled: boolean | undefined;
+	@Input('auItemDisabled') itemDisabled: boolean | undefined;
 	/**
 	 * If `true`, the accordion-item will be collapsed. Otherwise, it will be expanded.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	@Input() itemCollapsed: boolean | undefined;
+	@Input('auItemCollapsed') itemCollapsed: boolean | undefined;
 	/**
 	 * If `true`, accordion-item will be animated.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	@Input() itemAnimation: boolean | undefined;
+	@Input('auItemAnimation') itemAnimation: boolean | undefined;
 	/**
 	 * The transition to use for the accordion-item collapse when is toggled.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	@Input() itemTransition: TransitionFn | undefined;
-	@Input() slotItemStructure: SlotContent<AccordionItemContext>;
-	@Input() slotItemBody: SlotContent<AccordionItemContext>;
-	@Input() slotItemHeader: SlotContent<AccordionItemContext>;
+	@Input('auItemTransition') itemTransition: TransitionFn | undefined;
+	@Input('auSlotItemStructure') slotItemStructure: SlotContent<AccordionItemContext>;
+	@Input('auSlotItemBody') slotItemBody: SlotContent<AccordionItemContext>;
+	@Input('auSlotItemHeader') slotItemHeader: SlotContent<AccordionItemContext>;
 	/**
 	 * Classes to add on the accordion-item DOM element.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	@Input() itemClass: string | undefined;
+	@Input('auItemClass') itemClass: string | undefined;
 	/**
 	 * Classes to add on the accordion-item header DOM element.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	@Input() itemHeaderClass: string | undefined;
+	@Input('auItemHeaderClass') itemHeaderClass: string | undefined;
 	/**
 	 * Classes to add on the accordion-item toggle button DOM element.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	@Input() itemButtonClass: string | undefined;
+	@Input('auItemButtonClass') itemButtonClass: string | undefined;
 	/**
 	 * Classes to add on the accordion-item collapse DOM element.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	@Input() itemCollapseClass: string | undefined;
+	@Input('auItemCollapseClass') itemCollapseClass: string | undefined;
 	/**
 	 * Classes to add on the accordion-item body DOM element.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	@Input() itemBodyClass: string | undefined;
+	@Input('auItemBodyClass') itemBodyClass: string | undefined;
 
 	//should not be documented
 	/**
@@ -353,13 +352,13 @@ export class AccordionDirective implements OnChanges {
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	@Output() itemShown = new EventEmitter<void>();
+	@Output('auItemShown') itemShown = new EventEmitter<void>();
 	/**
 	 * An event fired when an item is hidden.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	@Output() itemHidden = new EventEmitter<void>();
+	@Output('auItemHidden') itemHidden = new EventEmitter<void>();
 	/**
 	 * An event fired when the `collapsed` value changes.
 	 *
@@ -367,7 +366,7 @@ export class AccordionDirective implements OnChanges {
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	@Output() itemCollapsedChange = new EventEmitter<boolean>();
+	@Output('auItemCollapsedChange') itemCollapsedChange = new EventEmitter<boolean>();
 
 	readonly _widget = callWidgetFactory(createAccordion, 'accordion', {});
 	readonly api = this._widget.api;

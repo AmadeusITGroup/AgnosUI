@@ -5,7 +5,7 @@ import {Component} from '@angular/core';
 	standalone: true,
 	imports: [AgnosUIAngularModule],
 	template: `
-		<au-rating [(rating)]="rating" (hover)="hovered = $event" (leave)="left = $event" ariaLabel="rating" />
+		<div [(auRating)]="rating" #rat (auHover)="hovered = $event" (auLeave)="left = $event" auAriaLabel="rating"></div>
 		<div>
 			Current rate: <span id="defaultRating">{{ rating }}</span
 			><br />

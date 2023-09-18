@@ -15,19 +15,17 @@ import {
 	isSameDoc,
 } from './ast-utils';
 
-const findDecorator = ({decorators}: {decorators?: TSESTree.Decorator[]}, decoratorName: string) =>
-	decorators?.find(({expression}) => {
-		if (
+const getDecorator = ({decorators}: {decorators?: TSESTree.Decorator[]}, decoratorName: string) =>
+	decorators?.find(
+		({expression}) =>
 			expression.type === TSESTree.AST_NODE_TYPES.CallExpression &&
 			expression.callee.type === TSESTree.AST_NODE_TYPES.Identifier &&
 			expression.callee.name === decoratorName
-		) {
-			return true;
-		}
-		return false;
-	});
+	);
 
-const isAngularComponent = (node: TSESTree.ClassDeclaration) => !!findDecorator(node, 'Component') || !!findDecorator(node, 'Directive');
+const findDecorator = ({decorators}: {decorators?: TSESTree.Decorator[]}, decoratorName: string) => !!getDecorator({decorators}, decoratorName);
+
+const isAngularComponent = (node: TSESTree.ClassDeclaration) => findDecorator(node, 'Component') || findDecorator(node, 'Directive');
 
 const isNonStaticPropertyDefinition = (node: TSESTree.Node): node is TSESTree.PropertyDefinition =>
 	node.type === TSESTree.AST_NODE_TYPES.PropertyDefinition && !node.static;
@@ -75,7 +73,7 @@ const reportMissingInputProp = (node: TSESTree.Node, name: string, prop: PropInf
 		fix(fixer) {
 			const indentation = getIndentation(node, context);
 			const doc = createDocWithIndentation(prop.doc, indentation);
-			return fixer.insertTextBefore(node, `${doc}@Input() ${name}: ${prop.type};\n\n${indentation}`);
+			return fixer.insertTextBefore(node, `${doc}@Input('${validAlias(name)}') ${name}: ${prop.type};\n\n${indentation}`);
 		},
 	});
 };
@@ -98,7 +96,7 @@ const reportMissingOutputProp = (
 		*fix(fixer) {
 			const indentation = getIndentation(node, context);
 			const doc = createDocWithIndentation(prop.doc, indentation);
-			yield fixer.insertTextBefore(node, `${doc}@Output() ${name} = new EventEmitter<${prop.type}>();\n\n${indentation}`);
+			yield fixer.insertTextBefore(node, `${doc}@Output('${validAlias(name)}') ${name} = new EventEmitter<${prop.type}>();\n\n${indentation}`);
 			const eventInApiPatch = widgetPatch?.properties.get(prop.widgetProp);
 			const emitInFunction = eventInApiPatch ? findCallToEventEmitter(eventInApiPatch, name) : null;
 			if (!emitInFunction) {
@@ -160,6 +158,32 @@ const reportInvalidOutputPropType = (
 			} else {
 				return fixer.insertTextAfter(node.key, ` = ${newValue}`);
 			}
+		},
+	});
+};
+
+const validAlias = (name: string) => `au${name.substring(0, 1).toUpperCase()}${name.substring(1)}`;
+
+const reportInvalidAlias = (
+	node: TSESTree.PropertyDefinition,
+	name: string,
+	type: 'input' | 'output',
+	alias: string,
+	context: Readonly<TSESLint.RuleContext<'noValidAlias', any>>
+) => {
+	context.report({
+		node,
+		messageId: 'noValidAlias',
+		data: {
+			name,
+			type,
+			alias,
+		},
+		*fix(fixer) {
+			const decoratorName = type.substring(0, 1).toUpperCase() + type.substring(1);
+			const decorator = getDecorator(node, decoratorName)!;
+			yield fixer.remove(decorator);
+			yield fixer.insertTextBefore(node, `@${decoratorName}('${alias}')`);
 		},
 	});
 };
@@ -312,6 +336,11 @@ export const angularCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 									if (!isSameDoc(nodeComment, inputInfo.doc)) {
 										reportNonMatchingPropDoc(classMember, name, 'input', inputInfo, context);
 									}
+									const decoratorArguments = (getDecorator(classMember, 'Input')!.expression as TSESTree.CallExpression).arguments;
+									const inputValidAlias = validAlias(name);
+									if (!decoratorArguments.length || decoratorArguments[0].type !== 'Literal' || decoratorArguments[0].value !== inputValidAlias) {
+										reportInvalidAlias(classMember, name, 'input', inputValidAlias, context);
+									}
 								} else {
 									reportExtraProp(classMember, name, 'input', context);
 								}
@@ -333,6 +362,11 @@ export const angularCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 									const emitInFunction = eventInApiPatch ? findCallToEventEmitter(eventInApiPatch, name) : null;
 									if (!emitInFunction) {
 										reportMissingOutputEmit(classMember, name, outputInfo, node.body, widgetPatch?.node, eventInApiPatch, context);
+									}
+									const outputValidAlias = validAlias(name);
+									const decoratorArguments = (getDecorator(classMember, 'Output')!.expression as TSESTree.CallExpression).arguments;
+									if (!decoratorArguments.length || decoratorArguments[0].type !== 'Literal' || decoratorArguments[0].value !== outputValidAlias) {
+										reportInvalidAlias(classMember, name, 'output', outputValidAlias, context);
 									}
 								} else {
 									reportExtraProp(classMember, name, 'output', context);
@@ -358,6 +392,7 @@ export const angularCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 		fixable: 'code',
 		messages: {
 			extraProp: 'Extra {{ type }} "{{ name }}" not present in the API.',
+			noValidAlias: 'No proper alias for {{ type }} "{{ name }}": expected \'{{ alias }}\'.',
 			invalidPropType: 'Invalid type for {{ type }} "{{ name }}": expected {{ expectedType }}, found {{ foundType }}.',
 			nonMatchingPropDoc: 'Documentation for {{ type }} "{{ name }}" does not match the API documentation.',
 			missingProp: 'Missing {{ type }} "{{ name }}" which is present in the API.',

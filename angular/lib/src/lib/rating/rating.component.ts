@@ -20,7 +20,6 @@ import {toSignal} from '@angular/core/rxjs-interop';
 import type {ControlValueAccessor} from '@angular/forms';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 
-// eslint-disable-next-line @angular-eslint/directive-selector
 @Directive({selector: 'ng-template[auRatingStar]', standalone: true})
 export class RatingStarDirective {
 	public templateRef = inject(TemplateRef<AdaptSlotContentProps<StarContext>>);
@@ -30,7 +29,7 @@ export class RatingStarDirective {
 }
 
 @Component({
-	selector: 'au-rating',
+	selector: '[auRating]',
 	standalone: true,
 	imports: [NgForOf, SlotDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -83,79 +82,79 @@ export class RatingComponent implements ControlValueAccessor, OnChanges, AfterCo
 	/**
 	 * Return the value for the 'aria-value' attribute.
 	 */
-	@Input() ariaValueTextFn: ((rating: number, maxRating: number) => string) | undefined;
+	@Input('auAriaValueTextFn') ariaValueTextFn: ((rating: number, maxRating: number) => string) | undefined;
 
 	/**
 	 * If `true`, the rating is disabled.
 	 */
-	@Input() disabled: boolean | undefined;
+	@Input('auDisabled') disabled: boolean | undefined;
 
 	/**
 	 * The maximum rating that can be given.
 	 */
-	@Input() maxRating: number | undefined;
+	@Input('auMaxRating') maxRating: number | undefined;
 
 	/**
 	 * The current rating. Could be a decimal value like `3.75`.
 	 */
-	@Input() rating: number | undefined;
+	@Input('auRating') rating: number | undefined;
 
 	/**
 	 * If `true`, the rating can't be changed.
 	 */
-	@Input() readonly: boolean | undefined;
+	@Input('auReadonly') readonly: boolean | undefined;
 
 	/**
 	 * Define if the rating can be reset.
 	 *
 	 * If set to true, the user can 'unset' the rating value by cliking on the current rating value.
 	 */
-	@Input() resettable: boolean | undefined;
+	@Input('auResettable') resettable: boolean | undefined;
 
-	@Input() slotStar: SlotContent<AdaptSlotContentProps<StarContext>>;
+	@Input('auSlotStar') slotStar: SlotContent<AdaptSlotContentProps<StarContext>>;
 	@ContentChild(RatingStarDirective, {static: false}) slotStarFromContent: RatingStarDirective | undefined;
 
 	/**
 	 * Allows setting a custom rating tabindex.
 	 * If the component is disabled, `tabindex` will still be set to `-1`.
 	 */
-	@Input() tabindex: number | undefined;
+	@Input('auTabindex') tabindex: number | undefined;
 
 	/**
 	 * CSS classes to be applied on the widget main container
 	 */
-	@Input() className: string | undefined;
+	@Input('auClassName') className: string | undefined;
 
 	/**
 	 * The aria label
 	 */
-	@Input() ariaLabel: string | undefined;
+	@Input('auAriaLabel') ariaLabel: string | undefined;
 
 	/**
 	 * The aria labelled by
 	 */
-	@Input() ariaLabelledBy: string | undefined;
+	@Input('auAriaLabelledBy') ariaLabelledBy: string | undefined;
 
 	/**
 	 * An event emitted when the user is hovering over a given rating.
 	 *
 	 * Event payload is equal to the rating being hovered over.
 	 */
-	@Output() hover = new EventEmitter<number>();
+	@Output('auHover') hover = new EventEmitter<number>();
 
 	/**
 	 * An event emitted when the user stops hovering over a given rating.
 	 *
 	 * Event payload is equal to the rating of the last item being hovered over.
 	 */
-	@Output() leave = new EventEmitter<number>();
+	@Output('auLeave') leave = new EventEmitter<number>();
 
 	/**
 	 * An event emitted when the rating is changed.
 	 *
 	 * Event payload is equal to the newly selected rating.
 	 */
-	@Output() ratingChange = new EventEmitter<number>();
+	@Output('auRatingChange') ratingChange = new EventEmitter<number>();
 
 	constructor() {
 		this._widget.patch({

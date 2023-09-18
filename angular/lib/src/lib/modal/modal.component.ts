@@ -31,7 +31,6 @@ import {toSignal} from '@angular/core/rxjs-interop';
 /**
  * Directive to provide the slot structure for the modal widget.
  */
-// eslint-disable-next-line @angular-eslint/directive-selector
 @Directive({selector: 'ng-template[auModalStructure]', standalone: true})
 export class ModalStructureDirective {
 	public templateRef = inject(TemplateRef<ModalContext>);
@@ -43,11 +42,10 @@ export class ModalStructureDirective {
 /**
  * Directive to provide the slot header for the modal widget.
  */
-// eslint-disable-next-line @angular-eslint/directive-selector
 @Directive({selector: 'ng-template[auModalHeader]', standalone: true})
 export class ModalHeaderDirective {
 	public templateRef = inject(TemplateRef<ModalContext>);
-	static ngTemplateContextGuard(dir: ModalHeaderDirective, context: unknown): context is ModalContext {
+	static ngTemplateContextGuard(_dir: ModalHeaderDirective, context: unknown): context is ModalContext {
 		return true;
 	}
 }
@@ -55,11 +53,10 @@ export class ModalHeaderDirective {
 /**
  * Directive to provide the slot title for the modal widget.
  */
-// eslint-disable-next-line @angular-eslint/directive-selector
 @Directive({selector: 'ng-template[auModalTitle]', standalone: true})
 export class ModalTitleDirective {
 	public templateRef = inject(TemplateRef<ModalContext>);
-	static ngTemplateContextGuard(dir: ModalTitleDirective, context: unknown): context is ModalContext {
+	static ngTemplateContextGuard(_dir: ModalTitleDirective, context: unknown): context is ModalContext {
 		return true;
 	}
 }
@@ -67,11 +64,10 @@ export class ModalTitleDirective {
 /**
  * Directive to provide the default slot for the modal widget.
  */
-// eslint-disable-next-line @angular-eslint/directive-selector
 @Directive({selector: 'ng-template[auModalBody]', standalone: true})
 export class ModalBodyDirective {
 	public templateRef = inject(TemplateRef<ModalContext>);
-	static ngTemplateContextGuard(dir: ModalBodyDirective, context: unknown): context is ModalContext {
+	static ngTemplateContextGuard(_dir: ModalBodyDirective, context: unknown): context is ModalContext {
 		return true;
 	}
 }
@@ -79,11 +75,10 @@ export class ModalBodyDirective {
 /**
  * Directive to provide the slot footer for the modal widget.
  */
-// eslint-disable-next-line @angular-eslint/directive-selector
 @Directive({selector: 'ng-template[auModalFooter]', standalone: true})
 export class ModalFooterDirective {
 	public templateRef = inject(TemplateRef<ModalContext>);
-	static ngTemplateContextGuard(dir: ModalFooterDirective, context: unknown): context is ModalContext {
+	static ngTemplateContextGuard(_dir: ModalFooterDirective, context: unknown): context is ModalContext {
 		return true;
 	}
 }
@@ -145,7 +140,7 @@ const defaultConfig: Partial<ModalProps> = {
  * Modal component.
  */
 @Component({
-	selector: 'au-modal',
+	selector: '[auModal]',
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [UseDirective, NgIf, SlotDirective, SlotDefaultDirective],
@@ -165,99 +160,99 @@ export class ModalComponent implements OnChanges, AfterContentChecked {
 	/**
 	 * Whether the modal and its backdrop (if present) should be animated when shown or hidden.
 	 */
-	@Input() animation: boolean | undefined;
+	@Input('auAnimation') animation: boolean | undefined;
 
 	/**
 	 * The transition to use for the backdrop behind the modal (if present).
 	 */
-	@Input() backdropTransition: TransitionFn | undefined;
+	@Input('auBackdropTransition') backdropTransition: TransitionFn | undefined;
 
 	/**
 	 * The transition to use for the modal.
 	 */
-	@Input() modalTransition: TransitionFn | undefined;
+	@Input('auModalTransition') modalTransition: TransitionFn | undefined;
 
 	/**
 	 * Whether the modal should be visible when the transition is completed.
 	 */
-	@Input() visible: boolean | undefined;
+	@Input('auVisible') visible: boolean | undefined;
 
 	/**
 	 * Whether a backdrop should be created behind the modal.
 	 */
-	@Input() backdrop: boolean | undefined;
+	@Input('auBackdrop') backdrop: boolean | undefined;
 
 	/**
 	 * Whether the modal should be closed when clicking on the viewport outside the modal.
 	 */
-	@Input() closeOnOutsideClick: boolean | undefined;
+	@Input('auCloseOnOutsideClick') closeOnOutsideClick: boolean | undefined;
 
 	/**
 	 * Which element should contain the modal and backdrop DOM elements.
 	 * If it is not null, the modal and backdrop DOM elements are moved to the specified container.
 	 * Otherwise, they stay where the widget is located.
 	 */
-	@Input() container: HTMLElement | null | undefined;
+	@Input('auContainer') container: HTMLElement | null | undefined;
 
 	/**
 	 * Value of the aria-label attribute to put on the close button.
 	 */
-	@Input() ariaCloseButtonLabel: string | undefined;
+	@Input('auAriaCloseButtonLabel') ariaCloseButtonLabel: string | undefined;
 
 	/**
 	 * Classes to add on the backdrop DOM element.
 	 */
-	@Input() backdropClass: string | undefined;
+	@Input('auBackdropClass') backdropClass: string | undefined;
 
 	/**
 	 * Whether to display the close button.
 	 */
-	@Input() closeButton: boolean | undefined;
+	@Input('auCloseButton') closeButton: boolean | undefined;
 
 	/**
 	 * CSS classes to be applied on the widget main container
 	 */
-	@Input() className: string | undefined;
+	@Input('auClassName') className: string | undefined;
 
-	@Input() slotStructure: SlotContent<ModalContext>;
+	@Input('auSlotStructure') slotStructure: SlotContent<ModalContext>;
 	@ContentChild(ModalStructureDirective, {static: false})
 	slotStructureFromContent: ModalStructureDirective | null;
 
-	@Input() slotHeader: SlotContent<ModalContext>;
+	@Input('auSlotHeader') slotHeader: SlotContent<ModalContext>;
 	@ContentChild(ModalHeaderDirective, {static: false})
 	slotHeaderFromContent: ModalHeaderDirective | null;
 
-	@Input() slotTitle: SlotContent<ModalContext>;
+	@Input('auSlotTitle') slotTitle: SlotContent<ModalContext>;
 	@ContentChild(ModalTitleDirective, {static: false})
 	slotTitleFromContent: ModalTitleDirective | null;
 
-	@Input() slotDefault: SlotContent<ModalContext>;
+	@Input('auSlotDefault') slotDefault: SlotContent<ModalContext>;
 	@ContentChild(ModalBodyDirective, {static: false})
 	slotDefaultFromContent: ModalBodyDirective | null;
 
-	@Input() slotFooter: SlotContent<ModalContext>;
+	@Input('auSlotFooter') slotFooter: SlotContent<ModalContext>;
 	@ContentChild(ModalFooterDirective, {static: false})
 	slotFooterFromContent: ModalFooterDirective | null;
 
 	/**
 	 * Event to be triggered when the visible property changes.
 	 */
-	@Output() visibleChange = new EventEmitter<boolean>();
+	@Output('auVisibleChange') visibleChange = new EventEmitter<boolean>();
 
 	/**
 	 * Event to be triggered when the modal is about to be closed (i.e. the close method was called).
 	 */
-	@Output() beforeClose = new EventEmitter<ModalBeforeCloseEvent>();
+	@Output('auBeforeClose') beforeClose = new EventEmitter<ModalBeforeCloseEvent>();
 
 	/**
 	 * Event to be triggered when the transition is completed and the modal is not visible.
 	 */
-	@Output() hidden = new EventEmitter<void>();
+	@Output('auHidden') hidden = new EventEmitter<void>();
 
 	/**
 	 * Event to be triggered when the transition is completed and the modal is visible.
 	 */
-	@Output() shown = new EventEmitter<void>();
+	@Output('auShown') shown = new EventEmitter<void>();
 
 	readonly defaultSlots = writable(defaultConfig);
 

@@ -11,13 +11,13 @@ import {FormsModule} from '@angular/forms';
 	template: `
 		<button class="btn btn-primary" type="button" (click)="show(modal)">Launch demo modal</button>
 		<div class="mt-3" data-testid="message">{{ message }}</div>
-		<au-modal #modal slotTitle="Save changes">
+		<au-component auModal #modal auSlotTitle="Save changes">
 			Do you want to save your changes?
 			<ng-template auModalFooter>
 				<button type="button" class="btn btn-outline-primary" (click)="modal.api.close(true)">Yes</button>
 				<button type="button" class="btn btn-outline-danger" (click)="modal.api.close(false)">No</button>
 			</ng-template>
-		</au-modal>
+		</au-component>
 	`,
 })
 export default class DefaultModalComponent {

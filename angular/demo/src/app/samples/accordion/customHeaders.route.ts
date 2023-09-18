@@ -8,7 +8,7 @@ import BODY from '!raw-loader!@agnos-ui/common/samples/accordion/body.txt';
 	imports: [AgnosUIAngularModule, NgIf],
 	template: `
 		<div auAccordion #accordion="auAccordion">
-			<div au-accordion-item>
+			<div auAccordionItem>
 				<ng-template auAccordionItemStructure let-state="state" let-widget="widget">
 					<div
 						class="{{ state.itemHeaderClass }} accordion-button accordion-header custom-header justify-content-between"
@@ -44,7 +44,7 @@ import BODY from '!raw-loader!@agnos-ui/common/samples/accordion/body.txt';
 					</div>
 				</ng-template>
 			</div>
-			<div au-accordion-item>
+			<div auAccordionItem>
 				<ng-template auAccordionItemStructure let-state="state" let-widget="widget">
 					<div
 						class="{{ state.itemHeaderClass }} accordion-button accordion-header custom-header justify-content-between"
@@ -86,7 +86,7 @@ import BODY from '!raw-loader!@agnos-ui/common/samples/accordion/body.txt';
 					</div>
 				</ng-template>
 			</div>
-			<div au-accordion-item [itemDisabled]="thirdDisabled">
+			<div auAccordionItem [auItemDisabled]="thirdDisabled">
 				<ng-template auAccordionItemStructure let-state="state" let-widget="widget">
 					<div
 						class="{{ state.itemHeaderClass }} accordion-button accordion-header custom-header justify-content-between"

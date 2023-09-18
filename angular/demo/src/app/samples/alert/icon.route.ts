@@ -20,11 +20,11 @@ import {DomSanitizer} from '@angular/platform-browser';
 		}),
 	],
 	template: `
-		<au-alert type="success">Alert success with a customisable icon</au-alert>
-		<au-alert type="warning">Alert warning with a customisable icon</au-alert>
-		<au-alert type="danger">Alert danger with a customisable icon</au-alert>
-		<au-alert type="info">Alert info with a customisable icon</au-alert>
-		<au-alert type="light">Alert light with a customisable icon</au-alert>
+		<au-component auAlert auType="success">Alert success with a customisable icon</au-component>
+		<au-component auAlert auType="warning">Alert warning with a customisable icon</au-component>
+		<au-component auAlert auType="danger">Alert danger with a customisable icon</au-component>
+		<au-component auAlert auType="info">Alert info with a customisable icon</au-component>
+		<au-component auAlert auType="light">Alert light with a customisable icon</au-component>
 	`,
 })
 export default class IconAlertComponent {

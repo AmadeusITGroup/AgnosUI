@@ -11,7 +11,7 @@ import {FormsModule} from '@angular/forms';
 		<h2>Multiselect example</h2>
 		<div class="mb-3">
 			<label class="form-label">Multiselect</label>
-			<au-select [items]="items" [(filterText)]="filterText"></au-select>
+			<div auSelect [auItems]="items" [(auFilterText)]="filterText"></div>
 		</div>
 		<div class="demo-select-config">
 			<strong>Default config</strong><br />

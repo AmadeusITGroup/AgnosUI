@@ -94,24 +94,13 @@ const attrExceptions = ['autocapitalize', 'autocomplete', 'autocorrect'];
 
 const excludeAttrSet = new Set([
 	'slot', // slot shouldn't be kept in the DOM by svelte, cf https://github.com/sveltejs/svelte/issues/8621
-
-	// The following attributes are used in our Angular components:
-	// FIXME (to discuss): do not use anymore the host element in AgnosUI Angular components
-	// so that we can filter it out (as it is done in au-alert, au-modal, and au-pagination in tagReplacements)
-	// and then remove the following list of attributes
-	'arialabel', // note: this should not be confused with the standard Aria attribute aria-label (which should not be removed)
-	'arialabelledby', // note: this should not be confused with the standard Aria attribute aria-labelledby (which should not be removed)
-	'classname',
 ]);
 
 const removeTagsAndDescendants = new Set(['script', 'router-outlet']);
 const tagReplacements = new Map([
 	['app-root', ''],
-	['au-alert', ''],
-	['au-modal', ''],
-	['au-rating', 'div'],
-	['au-select', 'div'],
 	['ng-component', ''],
+	['au-component', ''],
 ]);
 const filterTagName = (tagName: string) => {
 	const mapResult = tagReplacements.get(tagName);
@@ -138,7 +127,7 @@ export const filterHtmlStructure = (node: HTMLNode): HTMLNode => {
 		attributes = [];
 	}
 	attributes = attributes
-		.filter(({name, value}) => !(excludeAttrSet.has(name) || (excludeAttrRegExp.test(name) && !attrExceptions.includes(name))))
+		.filter(({name}) => !(excludeAttrSet.has(name) || (excludeAttrRegExp.test(name) && !attrExceptions.includes(name))))
 		.map(({name, value}) => {
 			if (name === 'class') {
 				value = value
