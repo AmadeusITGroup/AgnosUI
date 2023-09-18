@@ -1,4 +1,3 @@
-import type {RatingComponent} from '@agnos-ui/angular';
 import {ProgressbarComponent} from '@agnos-ui/angular';
 import {getProgressbarDefaultConfig} from '@agnos-ui/core';
 import {Component, ViewChild} from '@angular/core';
@@ -10,10 +9,10 @@ const undefinedConfig = getUndefinedValues(getProgressbarDefaultConfig());
 	standalone: true,
 	imports: [ProgressbarComponent],
 	providers: provideHashConfig('progressbar'),
-	template: `<div au-progressbar #widget></div>`,
+	template: `<div auProgressbar #widget></div>`,
 })
 export default class PlaygroundComponent {
-	@ViewChild('widget') widget: RatingComponent;
+	@ViewChild('widget') widget: ProgressbarComponent;
 
 	constructor() {
 		hashChangeHook((props) => {

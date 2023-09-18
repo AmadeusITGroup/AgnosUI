@@ -12,11 +12,11 @@ import {Component} from '@angular/core';
 	],
 	template: `
 		<div class="d-flex flex-column gap-2">
-			<div au-progressbar [value]="20"></div>
-			<div au-progressbar [value]="40" className="text-bg-success"></div>
-			<div au-progressbar [value]="60" className="text-bg-info"></div>
-			<div au-progressbar [value]="80" className="text-bg-warning"></div>
-			<div au-progressbar [value]="100" className="text-bg-danger"></div>
+			<div auProgressbar [auValue]="20"></div>
+			<div auProgressbar [auValue]="40" auClassName="text-bg-success"></div>
+			<div auProgressbar [auValue]="60" auClassName="text-bg-info"></div>
+			<div auProgressbar [auValue]="80" auClassName="text-bg-warning"></div>
+			<div auProgressbar [auValue]="100" auClassName="text-bg-danger"></div>
 		</div>
 	`,
 })

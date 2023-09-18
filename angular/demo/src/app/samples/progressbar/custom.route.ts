@@ -11,7 +11,7 @@ import {interval, takeWhile} from 'rxjs';
 	template: `
 		<div class="d-flex align-items-center flex-wrap">
 			<div style="width: 350px">
-				<div au-progressbar #progressbar [value]="value">
+				<div auProgressbar #progressbar [auValue]="value">
 					<ng-template auProgressbarContent let-state="state">
 						<div class="position-relative" style="height: 300px">
 							<div class="cup">

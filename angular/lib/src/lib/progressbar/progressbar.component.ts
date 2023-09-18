@@ -54,8 +54,7 @@ const defaultConfig: Partial<ProgressbarProps> = {
 };
 
 @Component({
-	// eslint-disable-next-line @angular-eslint/component-selector
-	selector: 'div[au-progressbar]',
+	selector: '[auProgressbar]',
 	standalone: true,
 	imports: [SlotDirective, SlotDefaultDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -78,56 +77,56 @@ export class ProgressbarComponent implements AfterContentChecked, OnChanges {
 	/**
 	 * The aria label.
 	 */
-	@Input() ariaLabel: string | undefined;
+	@Input('auAriaLabel') ariaLabel: string | undefined;
 
 	/**
 	 * The minimum value.
 	 */
-	@Input() min: number | undefined;
+	@Input('auMin') min: number | undefined;
 
 	/**
 	 * The maximum value.
 	 */
-	@Input() max: number | undefined;
+	@Input('auMax') max: number | undefined;
 
 	/**
 	 * The current value.
 	 */
-	@Input() value: number | undefined;
+	@Input('auValue') value: number | undefined;
 
 	/**
 	 * CSS classes to be applied on the widget main container
 	 */
-	@Input() className: string | undefined;
+	@Input('auClassName') className: string | undefined;
 
-	@Input() slotDefault: SlotContent<ProgressbarContext>;
-	@Input() slotContent: SlotContent<ProgressbarContext>;
+	@Input('auSlotDefault') slotDefault: SlotContent<ProgressbarContext>;
+	@Input('auSlotContent') slotContent: SlotContent<ProgressbarContext>;
 	@ContentChild(ProgressbarContentDirective, {static: false}) slotContentFromContent: ProgressbarContentDirective | undefined;
 
 	/**
 	 * If `true`, displays the current percentage in the `xx%` format.
 	 */
-	@Input() showValue: boolean | undefined;
+	@Input('auShowValue') showValue: boolean | undefined;
 
 	/**
 	 * Height of the progressbar, can be any valid css height value.
 	 */
-	@Input() height: string | undefined;
+	@Input('auHeight') height: string | undefined;
 
 	/**
 	 * If `true`, animates a striped progressbar.
 	 */
-	@Input() animated: boolean | undefined;
+	@Input('auAnimated') animated: boolean | undefined;
 
 	/**
 	 * If `true`, shows a striped progressbar.
 	 */
-	@Input() striped: boolean | undefined;
+	@Input('auStriped') striped: boolean | undefined;
 
 	/**
 	 * Return the value for the 'aria-valuetext' attribute.
 	 */
-	@Input() ariaValueTextFn: ((value: number, minimum: number, maximum: number) => string | undefined) | undefined;
+	@Input('auAriaValueTextFn') ariaValueTextFn: ((value: number, minimum: number, maximum: number) => string | undefined) | undefined;
 
 	readonly _widget = callWidgetFactory(createProgressbar, 'progressbar', this.defaultSlots);
 	readonly widget = toSlotContextWidget(this._widget);
