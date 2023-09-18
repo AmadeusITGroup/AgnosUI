@@ -23,7 +23,6 @@ import {
 	Output,
 	TemplateRef,
 	ViewChild,
-	effect,
 	inject,
 } from '@angular/core';
 import {toSignal} from '@angular/core/rxjs-interop';
@@ -270,10 +269,6 @@ export class ModalComponent implements OnChanges, AfterContentChecked {
 			onHidden: () => this.hidden.emit(),
 			onBeforeClose: (event) => this.beforeClose.emit(event),
 			onVisibleChange: (event) => this.visibleChange.emit(event),
-		});
-		effect(() => {
-			// TODO: workaround to be removed when https://github.com/angular/angular/issues/50320 is fixed
-			this.state();
 		});
 	}
 
