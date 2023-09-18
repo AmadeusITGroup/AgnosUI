@@ -9,9 +9,8 @@ import {toSignal} from '@angular/core/rxjs-interop';
 	standalone: true,
 	imports: [UseDirective, CommonModule],
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	selector: 'au-select',
+	selector: '[auSelect]',
 	templateUrl: './select.component.html',
-	styles: [],
 	host: {
 		'[class]': '"au-select dropdown input-group input-group-sm mb-3 d-block" + state$().className',
 	},
@@ -20,54 +19,54 @@ export class SelectComponent<Item> implements OnChanges {
 	/**
 	 * List of available items for the dropdown
 	 */
-	@Input() items: Item[] | undefined;
+	@Input('auItems') items: Item[] | undefined;
 
 	/**
 	 * true if the select is open
 	 */
-	@Input() opened: boolean | undefined;
+	@Input('auOpened') opened: boolean | undefined;
 
 	/**
 	 * Filtered text to be display in the filter input
 	 */
-	@Input() filterText: string | undefined;
+	@Input('auFilterText') filterText: string | undefined;
 
 	/**
 	 * CSS classes to be applied on the widget main container
 	 */
-	@Input() className: string | undefined;
+	@Input('auClassName') className: string | undefined;
 
 	/**
 	 * Callback called when the text filter change
 	 */
-	@Output() filterTextChange = new EventEmitter<string>();
+	@Output('auFilterTextChange') filterTextChange = new EventEmitter<string>();
 
 	/**
 	 * true if the select is disabled
 	 */
-	@Input() disabled: boolean | undefined;
+	@Input('auDisabled') disabled: boolean | undefined;
 
 	/**
 	 * Custom function to filter an item.
 	 * By default, item is considered as a string, and the function returns true if the text is found
 	 */
-	@Input() matchFn: ((item: Item, text: string) => boolean) | undefined;
+	@Input('auMatchFn') matchFn: ((item: Item, text: string) => boolean) | undefined;
 
 	/**
 	 * Custom function to get the id of an item
 	 * By default, the item is returned
 	 */
-	@Input() itemId: ((item: Item) => string) | undefined;
+	@Input('auItemId') itemId: ((item: Item) => string) | undefined;
 
 	/**
 	 * List of selected items
 	 */
-	@Input() selected: Item[] | undefined;
+	@Input('auSelected') selected: Item[] | undefined;
 
 	/**
 	 * true if a loading process is being done
 	 */
-	@Input() loading: boolean | undefined;
+	@Input('auLoading') loading: boolean | undefined;
 
 	readonly _widget = callWidgetFactory<SelectWidget<Item>>(createSelect, 'select');
 	readonly api = this._widget.api;

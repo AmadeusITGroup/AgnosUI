@@ -12,20 +12,20 @@ import {FormsModule} from '@angular/forms';
 			return config;
 		}),
 	],
-	template: ` <au-alert type="primary">Simple primary alert</au-alert>
+	template: ` <au-component auAlert auType="primary">Simple primary alert</au-component>
 
-		<au-alert type="secondary">Simple secondary alert</au-alert>
+		<au-component auAlert auType="secondary">Simple secondary alert</au-component>
 
-		<au-alert type="success">Simple success alert</au-alert>
+		<au-component auAlert auType="success">Simple success alert</au-component>
 
-		<au-alert type="danger">Simple danger alert</au-alert>
+		<au-component auAlert auType="danger">Simple danger alert</au-component>
 
-		<au-alert type="warning">Simple warning alert</au-alert>
+		<au-component auAlert auType="warning">Simple warning alert</au-component>
 
-		<au-alert type="info">Simple info alert</au-alert>
+		<au-component auAlert auType="info">Simple info alert</au-component>
 
-		<au-alert type="light">Simple light alert</au-alert>
+		<au-component auAlert auType="light">Simple light alert</au-component>
 
-		<au-alert type="dark">Simple dark alert</au-alert>`,
+		<au-component auAlert auType="dark">Simple dark alert</au-component>`,
 })
 export default class GenericAlertComponent {}

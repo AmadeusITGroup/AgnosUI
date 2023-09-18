@@ -69,7 +69,7 @@ const defaultConfig: Partial<AlertProps> = {
 };
 
 @Component({
-	selector: 'au-alert',
+	selector: '[auAlert]',
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [NgIf, SlotDirective, UseDirective, SlotDefaultDirective],
@@ -91,14 +91,14 @@ export class AlertComponent implements OnChanges, AfterContentChecked {
 	 * Type of the alert.
 	 * There are the following types: 'success', 'info', 'warning', 'danger', 'primary', 'secondary', 'light' and 'dark'.
 	 */
-	@Input()
+	@Input('auType')
 	type: string | undefined;
 
 	/**
 	 * If `true`, alert can be dismissed by the user.
 	 * The close button (×) will be displayed and you can be notified of the event with the (close) output.
 	 */
-	@Input()
+	@Input('auDismissible')
 	dismissible: boolean | undefined;
 
 	/**
@@ -106,13 +106,13 @@ export class AlertComponent implements OnChanges, AfterContentChecked {
 	 *
 	 * Depending on the value of AlertProps.animationOnInit, the animation can be optionally skipped during the showing process.
 	 */
-	@Input()
+	@Input('auTransition')
 	transition: TransitionFn | undefined;
 
 	/**
 	 * If `true` the alert is visible to the user
 	 */
-	@Input()
+	@Input('auVisible')
 	visible: boolean | undefined;
 
 	/**
@@ -121,7 +121,7 @@ export class AlertComponent implements OnChanges, AfterContentChecked {
 	 * Animation is triggered  when the `.open()` function is called
 	 * or the visible prop is changed
 	 */
-	@Input()
+	@Input('auAnimationOnInit')
 	animationOnInit: boolean | undefined;
 
 	/**
@@ -130,41 +130,41 @@ export class AlertComponent implements OnChanges, AfterContentChecked {
 	 * Animation is triggered  when clicked on the close button (×),
 	 * via the `.close()` function or the visible prop is changed
 	 */
-	@Input()
+	@Input('auAnimation')
 	animation: boolean | undefined;
 
 	/**
 	 * Accessibility close button label
 	 */
-	@Input() ariaCloseButtonLabel: string | undefined;
+	@Input('auAriaCloseButtonLabel') ariaCloseButtonLabel: string | undefined;
 
-	@Input() slotDefault: SlotContent<AlertContext>;
+	@Input('auSlotDefault') slotDefault: SlotContent<AlertContext>;
 	@ContentChild(AlertBodyDirective, {static: false})
 	slotDefaultFromContent: AlertBodyDirective | null;
 
-	@Input() slotStructure: SlotContent<AlertContext>;
+	@Input('auSlotStructure') slotStructure: SlotContent<AlertContext>;
 	@ContentChild(AlertStructureDirective, {static: false}) slotStructureFromContent: AlertStructureDirective | undefined;
 
 	/**
 	 * Callback called when the alert visibility changed.
 	 */
-	@Output() visibleChange = new EventEmitter<boolean>();
+	@Output('auVisibleChange') visibleChange = new EventEmitter<boolean>();
 
 	/**
 	 * Callback called when the alert is hidden.
 	 */
-	@Output() hidden = new EventEmitter<void>();
+	@Output('auHidden') hidden = new EventEmitter<void>();
 
 	/**
 	 * Callback called when the alert is shown.
 	 */
-	@Output() shown = new EventEmitter<void>();
+	@Output('auShown') shown = new EventEmitter<void>();
 
 	readonly defaultSlots = writable(defaultConfig);
 	/**
 	 * CSS classes to be applied on the widget main container
 	 */
-	@Input() className: string | undefined;
+	@Input('auClassName') className: string | undefined;
 
 	readonly _widget = callWidgetFactory(createAlert, 'alert', this.defaultSlots);
 	readonly widget = toSlotContextWidget(this._widget);

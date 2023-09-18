@@ -8,11 +8,11 @@ import BODY from '!raw-loader!@agnos-ui/common/samples/accordion/body.txt';
 	imports: [AgnosUIAngularModule, NgFor],
 	template: `
 		<div auAccordion #accordion="auAccordion">
-			<div au-accordion-item [itemId]="'first'">
+			<div auAccordionItem auItemId="first">
 				<ng-template auAccordionItemHeader>First panel</ng-template>
 				<ng-template auAccordionItemBody>{{ BODY }} </ng-template>
 			</div>
-			<div au-accordion-item [itemId]="'second'" #itemTwo>
+			<div auAccordionItem auItemId="second" #itemTwo>
 				<ng-template auAccordionItemHeader>Second panel</ng-template>
 				<ng-template auAccordionItemBody>{{ BODY }} </ng-template>
 			</div>

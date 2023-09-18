@@ -10,7 +10,7 @@ import {ComponentTemplate, injectWidgetsConfig, provideWidgetsConfig} from './ut
 
 describe('slot directive', () => {
 	@Component({
-		selector: 'au-test-slot-directive',
+		selector: '[auTestSlotDirective]',
 		standalone: true,
 		changeDetection: ChangeDetectionStrategy.OnPush,
 		imports: [SlotDirective],
@@ -70,7 +70,7 @@ describe('slot directive', () => {
 
 	it('component', () => {
 		@Component({
-			selector: 'au-test-slot-directive-component-hello',
+			selector: '[auTestSlotDirectiveComponentHello]',
 			standalone: true,
 			changeDetection: ChangeDetectionStrategy.OnPush,
 			template: 'Hello {{myProp}}!',
@@ -80,7 +80,7 @@ describe('slot directive', () => {
 		}
 
 		@Component({
-			selector: 'au-test-slot-directive-component-goodbye',
+			selector: '[auTestSlotDirectiveComponentGoodbye]',
 			standalone: true,
 			changeDetection: ChangeDetectionStrategy.OnPush,
 			template: 'Goodbye {{myProp}}!',
@@ -105,7 +105,7 @@ describe('slot directive', () => {
 
 	it('template', () => {
 		@Component({
-			selector: 'au-test-slot-directive-template',
+			selector: '[auTestSlotDirectiveTemplate]',
 			standalone: true,
 			imports: [SlotDirective],
 			changeDetection: ChangeDetectionStrategy.OnPush,
@@ -140,7 +140,7 @@ describe('slot directive', () => {
 
 	it('component template', () => {
 		@Component({
-			selector: 'au-test-slot-directive-component-template',
+			selector: '[auTestSlotDirectiveComponentTemplate]',
 			standalone: true,
 			changeDetection: ChangeDetectionStrategy.OnPush,
 			template: `
@@ -178,7 +178,7 @@ describe('widgets config', () => {
 		}
 
 		@Component({
-			selector: 'au-test-widget-config',
+			selector: '[auTestWidgetConfig]',
 			template: `maxRating = {{ myConfig().rating.maxRating }}`,
 			providers: [
 				provideWidgetsConfig((parentConfig) => {

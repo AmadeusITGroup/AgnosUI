@@ -10,7 +10,7 @@ const undefinedConfig = getUndefinedValues(getRatingDefaultConfig());
 	standalone: true,
 	imports: [AgnosUIAngularModule],
 	providers: provideHashConfig('rating'),
-	template: `<au-rating #widget />`,
+	template: `<div [auRating] #widget></div>`,
 })
 export default class PlaygroundComponent {
 	@ViewChild('widget') widget: RatingComponent;

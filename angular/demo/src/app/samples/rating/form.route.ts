@@ -8,7 +8,7 @@ import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 	imports: [AgnosUIAngularModule, ReactiveFormsModule, NgIf],
 	template: `
 		<label class="form-label" id="ratingLabel">Rating of your experience</label><br />
-		<au-rating [formControl]="ctrl" ariaLabelledBy="ratingLabel" />
+		<div [auRating] [formControl]="ctrl" auAriaLabelledBy="ratingLabel"></div>
 		<div id="form-msg" class="form-text small">
 			<div *ngIf="ctrl.valid" class="text-success">Thanks!</div>
 			<div *ngIf="ctrl.invalid" class="text-danger">Please rate us</div>

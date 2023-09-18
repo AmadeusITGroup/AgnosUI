@@ -27,11 +27,10 @@ import {toSignal} from '@angular/core/rxjs-interop';
 /**
  * A directive to use to give the 'ellipsis' link template to the pagination component
  */
-// eslint-disable-next-line @angular-eslint/directive-selector
 @Directive({selector: 'ng-template[auPaginationEllipsis]', standalone: true})
 export class PaginationEllipsisDirective {
 	public templateRef = inject(TemplateRef<PaginationContext>);
-	static ngTemplateContextGuard(dir: PaginationEllipsisDirective, context: unknown): context is PaginationContext {
+	static ngTemplateContextGuard(_dir: PaginationEllipsisDirective, context: unknown): context is PaginationContext {
 		return true;
 	}
 }
@@ -39,11 +38,10 @@ export class PaginationEllipsisDirective {
 /**
  * A directive to use to give the 'first' link template to the pagination component
  */
-// eslint-disable-next-line @angular-eslint/directive-selector
 @Directive({selector: 'ng-template[auPaginationFirst]', standalone: true})
 export class PaginationFirstDirective {
 	public templateRef = inject(TemplateRef<PaginationContext>);
-	static ngTemplateContextGuard(dir: PaginationFirstDirective, context: unknown): context is PaginationContext {
+	static ngTemplateContextGuard(_dir: PaginationFirstDirective, context: unknown): context is PaginationContext {
 		return true;
 	}
 }
@@ -51,11 +49,10 @@ export class PaginationFirstDirective {
 /**
  * A directive to use to give the 'last' link template to the pagination component
  */
-// eslint-disable-next-line @angular-eslint/directive-selector
 @Directive({selector: 'ng-template[auPaginationLast]', standalone: true})
 export class PaginationLastDirective {
 	public templateRef = inject(TemplateRef<PaginationContext>);
-	static ngTemplateContextGuard(dir: PaginationLastDirective, context: unknown): context is PaginationContext {
+	static ngTemplateContextGuard(_dir: PaginationLastDirective, context: unknown): context is PaginationContext {
 		return true;
 	}
 }
@@ -63,11 +60,10 @@ export class PaginationLastDirective {
 /**
  * A directive to use to give the 'next' link template to the pagination component
  */
-// eslint-disable-next-line @angular-eslint/directive-selector
 @Directive({selector: 'ng-template[auPaginationNext]', standalone: true})
 export class PaginationNextDirective {
 	public templateRef = inject(TemplateRef<PaginationContext>);
-	static ngTemplateContextGuard(dir: PaginationNextDirective, context: unknown): context is PaginationContext {
+	static ngTemplateContextGuard(_dir: PaginationNextDirective, context: unknown): context is PaginationContext {
 		return true;
 	}
 }
@@ -75,11 +71,10 @@ export class PaginationNextDirective {
 /**
  * A directive to use to give the page 'number' template to the pagination component
  */
-// eslint-disable-next-line @angular-eslint/directive-selector
 @Directive({selector: 'ng-template[auPaginationNumber]', standalone: true})
 export class PaginationNumberDirective {
 	public templateRef = inject(TemplateRef<PaginationNumberContext>);
-	static ngTemplateContextGuard(dir: PaginationNumberDirective, context: unknown): context is PaginationNumberContext {
+	static ngTemplateContextGuard(_dir: PaginationNumberDirective, context: unknown): context is PaginationNumberContext {
 		return true;
 	}
 }
@@ -87,11 +82,10 @@ export class PaginationNumberDirective {
 /**
  * A directive to use to give the 'previous' link template to the pagination component
  */
-// eslint-disable-next-line @angular-eslint/directive-selector
 @Directive({selector: 'ng-template[auPaginationPrevious]', standalone: true})
 export class PaginationPreviousDirective {
 	public templateRef = inject(TemplateRef<PaginationContext>);
-	static ngTemplateContextGuard(dir: PaginationPreviousDirective, context: unknown): context is PaginationContext {
+	static ngTemplateContextGuard(_dir: PaginationPreviousDirective, context: unknown): context is PaginationContext {
 		return true;
 	}
 }
@@ -99,11 +93,10 @@ export class PaginationPreviousDirective {
 /**
  * A directive to use to give the 'Pages' template for the Pages slot
  */
-// eslint-disable-next-line @angular-eslint/directive-selector
 @Directive({selector: 'ng-template[auPaginationPages]', standalone: true})
 export class PaginationPagesDirective {
 	public templateRef = inject(TemplateRef<PaginationContext>);
-	static ngTemplateContextGuard(dir: PaginationPagesDirective, context: unknown): context is PaginationContext {
+	static ngTemplateContextGuard(_dir: PaginationPagesDirective, context: unknown): context is PaginationContext {
 		return true;
 	}
 }
@@ -150,8 +143,7 @@ const defaultConfig: Partial<PaginationProps> = {
 };
 
 @Component({
-	// eslint-disable-next-line @angular-eslint/component-selector
-	selector: 'nav[au-pagination]',
+	selector: '[auPagination]',
 	standalone: true,
 	imports: [NgIf, AsyncPipe, SlotDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -233,7 +225,7 @@ export class PaginationComponent implements OnChanges, AfterContentChecked {
 	 * @param processPage - The current page number
 	 * @param pageCount - The total number of pages
 	 */
-	@Input() ariaPageLabel: ((processPage: number, pageCount: number) => string) | undefined;
+	@Input('auAriaPageLabel') ariaPageLabel: ((processPage: number, pageCount: number) => string) | undefined;
 
 	/**
 	 * The label for the nav element.
@@ -242,7 +234,7 @@ export class PaginationComponent implements OnChanges, AfterContentChecked {
 	 * override any configuration parameters provided for this
 	 * @defaultValue 'Page navigation'
 	 */
-	@Input() ariaLabel: string | undefined;
+	@Input('auAriaLabel') ariaLabel: string | undefined;
 
 	/**
 	 * The label for the "active" page.
@@ -250,7 +242,7 @@ export class PaginationComponent implements OnChanges, AfterContentChecked {
 	 * override any configuration parameters provided for this
 	 * @defaultValue '(current)'
 	 */
-	@Input() activeLabel: string | undefined;
+	@Input('auActiveLabel') activeLabel: string | undefined;
 
 	/**
 	 * The label for the "First" page button.
@@ -258,7 +250,7 @@ export class PaginationComponent implements OnChanges, AfterContentChecked {
 	 * override any configuration parameters provided for this
 	 * @defaultValue 'Action link for first page'
 	 */
-	@Input() ariaFirstLabel: string | undefined;
+	@Input('auAriaFirstLabel') ariaFirstLabel: string | undefined;
 
 	/**
 	 * The label for the "Previous" page button.
@@ -266,7 +258,7 @@ export class PaginationComponent implements OnChanges, AfterContentChecked {
 	 * override any configuration parameters provided for this
 	 * @defaultValue 'Action link for previous page'
 	 */
-	@Input() ariaPreviousLabel: string | undefined;
+	@Input('auAriaPreviousLabel') ariaPreviousLabel: string | undefined;
 
 	/**
 	 * The label for the "Next" page button.
@@ -274,7 +266,7 @@ export class PaginationComponent implements OnChanges, AfterContentChecked {
 	 * override any configuration parameters provided for this
 	 * @defaultValue 'Action link for next page'
 	 */
-	@Input() ariaNextLabel: string | undefined;
+	@Input('auAriaNextLabel') ariaNextLabel: string | undefined;
 
 	/**
 	 * The label for the "Last" page button.
@@ -282,54 +274,54 @@ export class PaginationComponent implements OnChanges, AfterContentChecked {
 	 * override any configuration parameters provided for this
 	 * @defaultValue 'Action link for last page'
 	 */
-	@Input() ariaLastLabel: string | undefined;
+	@Input('auAriaLastLabel') ariaLastLabel: string | undefined;
 
 	readonly _widget = callWidgetFactory(createPagination, 'pagination', defaultConfig);
 	readonly widget = toSlotContextWidget(this._widget);
 	readonly api = this._widget.api;
 
-	@Input() slotEllipsis: SlotContent<PaginationContext>;
+	@Input('auSlotEllipsis') slotEllipsis: SlotContent<PaginationContext>;
 	@ContentChild(PaginationEllipsisDirective, {static: false})
 	slotEllipsisFromContent: PaginationEllipsisDirective | undefined;
 
-	@Input() slotFirst: SlotContent<PaginationContext>;
+	@Input('auSlotFirst') slotFirst: SlotContent<PaginationContext>;
 	@ContentChild(PaginationFirstDirective, {static: false})
 	slotFirstFromContent: PaginationFirstDirective | undefined;
 
-	@Input() slotPrevious: SlotContent<PaginationContext>;
+	@Input('auSlotPrevious') slotPrevious: SlotContent<PaginationContext>;
 	@ContentChild(PaginationPreviousDirective, {static: false})
 	slotPreviousFromContent: PaginationPreviousDirective | undefined;
 
-	@Input() slotNext: SlotContent<PaginationContext>;
+	@Input('auSlotNext') slotNext: SlotContent<PaginationContext>;
 	@ContentChild(PaginationNextDirective, {static: false})
 	slotNextFromContent: PaginationNextDirective | undefined;
 
-	@Input() slotLast: SlotContent<PaginationContext>;
+	@Input('auSlotLast') slotLast: SlotContent<PaginationContext>;
 	@ContentChild(PaginationLastDirective, {static: false})
 	slotLastFromContent: PaginationLastDirective | undefined;
 
-	@Input() slotPages: SlotContent<PaginationContext>;
+	@Input('auSlotPages') slotPages: SlotContent<PaginationContext>;
 	@ContentChild(PaginationPagesDirective, {static: false})
 	slotPagesFromContent: PaginationPagesDirective | undefined;
 
-	@Input() slotNumberLabel: SlotContent<PaginationNumberContext>;
+	@Input('auSlotNumberLabel') slotNumberLabel: SlotContent<PaginationNumberContext>;
 	@ContentChild(PaginationNumberDirective, {static: false})
 	slotNumberLabelFromContent: PaginationNumberDirective | undefined;
 
 	/**
 	 * If `true`, pagination links will be disabled.
 	 */
-	@Input() disabled: boolean | undefined;
+	@Input('auDisabled') disabled: boolean | undefined;
 
 	/**
 	 * If `true`, the "First" and "Last" page links are shown.
 	 */
-	@Input() boundaryLinks: boolean | undefined;
+	@Input('auBoundaryLinks') boundaryLinks: boolean | undefined;
 
 	/**
 	 * If `true`, the "Next" and "Previous" page links are shown.
 	 */
-	@Input() directionLinks: boolean | undefined;
+	@Input('auDirectionLinks') directionLinks: boolean | undefined;
 
 	/**
 	 * The number of items in your paginated collection.
@@ -340,7 +332,7 @@ export class PaginationComponent implements OnChanges, AfterContentChecked {
 	 * Whatever the collectionSize the page number is of minimum 1.
 	 * @defaultValue 0
 	 */
-	@Input() collectionSize: number | undefined;
+	@Input('auCollectionSize') collectionSize: number | undefined;
 
 	/**
 	 * The current page.
@@ -348,13 +340,13 @@ export class PaginationComponent implements OnChanges, AfterContentChecked {
 	 * Page numbers start with `1`.
 	 * @defaultValue 1
 	 */
-	@Input() page: number | undefined;
+	@Input('auPage') page: number | undefined;
 
 	/**
 	 * The number of items per page.
 	 * @defaultValue 10
 	 */
-	@Input() pageSize: number | undefined;
+	@Input('auPageSize') pageSize: number | undefined;
 
 	/**
 	 * The pagination display size.
@@ -362,14 +354,14 @@ export class PaginationComponent implements OnChanges, AfterContentChecked {
 	 * Bootstrap currently supports small and large sizes.
 	 * @defaultValue null
 	 */
-	@Input() size: 'sm' | 'lg' | null | undefined;
+	@Input('auSize') size: 'sm' | 'lg' | null | undefined;
 
 	/**
 	 * pagesFactory returns a function computing the array of pages to be displayed
 	 * as number (-1 are treated as ellipsis).
 	 * Use Page slot to customize the pages view and not this
 	 */
-	@Input() pagesFactory: ((page: number, pageCount: number) => number[]) | undefined;
+	@Input('auPagesFactory') pagesFactory: ((page: number, pageCount: number) => number[]) | undefined;
 
 	/**
 	 * An event fired when the page is changed.
@@ -378,12 +370,12 @@ export class PaginationComponent implements OnChanges, AfterContentChecked {
 	 *
 	 * Page numbers start with `1`.
 	 */
-	@Output() pageChange = new EventEmitter<number>(true);
+	@Output('auPageChange') pageChange = new EventEmitter<number>(true);
 
 	/**
 	 * CSS classes to be applied on the widget main container
 	 */
-	@Input() className: string | undefined;
+	@Input('auClassName') className: string | undefined;
 
 	state$: Signal<PaginationState> = toSignal(this._widget.state$, {requireSync: true});
 

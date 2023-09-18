@@ -9,8 +9,8 @@ export interface ModalServiceOpenOptions {
 
 @Injectable({providedIn: 'root'})
 export class ModalService {
-	private _injector = inject(Injector);
-	private _applicationRef = inject(ApplicationRef);
+	private readonly _injector = inject(Injector);
+	private readonly _applicationRef = inject(ApplicationRef);
 
 	async open(options: Partial<ModalProps>, {injector = this._injector}: ModalServiceOpenOptions = {}): Promise<any> {
 		const component = createComponent(ModalComponent, {
@@ -28,7 +28,7 @@ export class ModalService {
 						subscriptions.push(eventEmitter.subscribe(value));
 					}
 				} else {
-					component.setInput(prop, value);
+					component.setInput(`au${prop.substring(0, 1).toUpperCase()}${prop.substring(1)}`, value);
 				}
 			}
 			this._applicationRef.attachView(component.hostView);

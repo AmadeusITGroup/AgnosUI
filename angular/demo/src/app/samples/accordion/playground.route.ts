@@ -11,11 +11,11 @@ const undefinedAccordionConfig = getUndefinedValues(getAccordionDefaultConfig())
 	imports: [AgnosUIAngularModule],
 	providers: [provideHashConfig('accordion')],
 	template: ` <div auAccordion>
-		<div au-accordion-item>
+		<div auAccordionItem>
 			<ng-template auAccordionItemHeader>Header 1</ng-template>
 			<ng-template auAccordionItemBody>Body 1 </ng-template>
 		</div>
-		<div au-accordion-item>
+		<div auAccordionItem>
 			<ng-template auAccordionItemHeader>Header 2</ng-template>
 			<ng-template auAccordionItemBody>Body 2</ng-template>
 		</div>

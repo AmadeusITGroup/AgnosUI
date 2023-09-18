@@ -17,13 +17,14 @@
 					}
 				],
 				"@angular-eslint/component-selector": [
-					"warn",
+					"error",
 					{
-						"type": "element",
+						"type": "attribute",
 						"prefix": "au",
-						"style": "kebab-case"
+						"style": "camelCase"
 					}
-				]
+				],
+				"@angular-eslint/no-input-rename": "off"
 			}
 		},
 		{
