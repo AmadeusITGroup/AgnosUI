@@ -6,10 +6,16 @@
 	$: isAngular = $selectedFramework$ === 'angular';
 	$: isReact = $selectedFramework$ === 'react';
 	$: isSvelte = $selectedFramework$ === 'svelte';
+	$: capitalizedFramework = $selectedFramework$?.[0]?.toUpperCase() + $selectedFramework$?.substring(1);
 
 	$: fwkDir = `./fwk/${$selectedFramework$}/`;
 	const modules: Record<string, any> = import.meta.glob('./fwk/*/*.svelte', {eager: true, import: 'default'});
 </script>
+
+<svelte:head>
+	<title>AgnosUI - {capitalizedFramework} Installation Guide</title>
+	<meta name="description" content="Installation Guide for {capitalizedFramework} AgnosUI" />
+</svelte:head>
 
 <!-- TODO refactor it with the header part to use the same component -->
 <div class="row mb-4 align-items-center">
