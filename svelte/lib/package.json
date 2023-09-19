@@ -13,11 +13,12 @@
 		}
 	},
 	"dependencies": {
-		"@agnos-ui/svelte-headless": "",
+		"@agnos-ui/svelte-headless": "0.0.1-alpha.1",
 		"@amadeus-it-group/tansu": "0.0.22"
 	},
 	"peerDependencies": {
 		"svelte": "*"
 	},
-	"sideEffects": false
+	"sideEffects": false,
+	"version": "0.0.1-alpha.1"
 }
