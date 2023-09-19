@@ -15,24 +15,29 @@
 </svelte:head>
 
 <div class="container-xxl">
-	<section class="row pres mb-4">
+	<section class="row pres mb-4 pt-3">
 		<div class="col-12 col-lg-6 order-1 order-lg-0">
-			<div class="pres-logo d-block text-center text-lg-start">AgnosUI</div>
+			<div class="pres-logo d-block text-center text-lg-start fw-bold">AgnosUI</div>
 			<div class="mt-3">
-				<div class="pres-line ps-4 pres-logo-text"><Svg svg={bullet} className="bullet" /> Making your webapps powerfull and consistent</div>
-				<div class="pres-line ps-4 pres-logo-text"><Svg svg={bullet} className="bullet" /> Headless widgets library</div>
-				<div class="pres-line ps-4 pres-logo-text"><Svg svg={bullet} className="bullet" /> Adapters for Angular, React and Svelte</div>
+				<div class="pres-line ps-4 pres-logo-text"><Svg svg={bullet} className="bullet" /> Making your webapps powerful and consistent</div>
+				<div class="pres-line ps-4 pres-logo-text"><Svg svg={bullet} className="bullet" /> Core builders for components in TS only</div>
+				<div class="pres-line ps-4 pres-logo-text">
+					<Svg svg={bullet} className="bullet" /> Headless widgets library for Angular, React and svelte made using the core
+				</div>
+				<div class="pres-line ps-4 pres-logo-text">
+					<Svg svg={bullet} className="bullet" /> Highly customizable Bootstrap components made with those Headless widgets
+				</div>
 			</div>
 			<div class="btn-docs card mb-3 mt-5">
 				<div class="row g-0">
 					<div class="col">
 						<div class="card-body">
-							<h5 class="card-title pres-card-title mb-4">Checkout the docs</h5>
+							<h5 class="card-title fw-bold pres-card-title text-center mb-4 fs-1">Checkout the docs</h5>
 							<div class="card-text row">
 								<div class="col-12 col-sm-4">
 									<a
-										href="angular/components/accordion/examples"
-										class="btn-doc d-flex align-items-center justify-items-center"
+										href="angular/getting-started/installation"
+										class="btn btn-primary rounded-pill d-flex align-items-center justify-items-center mt-1"
 										aria-label="link to angular examples"
 										title="Angular"
 									>
@@ -42,8 +47,8 @@
 								</div>
 								<div class="col-12 col-sm-4">
 									<a
-										href="react/components/accordion/examples"
-										class="btn-doc d-flex align-items-center justify-items-center"
+										href="react/getting-started/installation"
+										class="btn btn-primary rounded-pill d-flex align-items-center justify-items-center mt-1"
 										aria-label="link to angular examples"
 										title="Angular"
 									>
@@ -53,8 +58,8 @@
 								</div>
 								<div class="col-12 col-sm-4">
 									<a
-										href="svelte/components/accordion/examples"
-										class="btn-doc d-flex align-items-center justify-items-center"
+										href="svelte/getting-started/installation"
+										class="btn btn-primary rounded-pill d-flex align-items-center justify-items-center mt-1"
 										aria-label="link to angular examples"
 										title="Svelte"
 									>
@@ -73,20 +78,19 @@
 		</div>
 	</section>
 </div>
-<section class="background pt-5 mt-5 flex-grow-1">
+<section class="section pt-5 mt-5 flex-grow-1">
 	<div class="container-xxl">
 		<div class="cards row align-content-around">
 			<LandingCard title="Headless widgets">
-				Each widget is managed in pure typescript with a reactive model and an api to drive the data.
+				Each widget is managed with a framework-agnostic core that provides a reactive model and an api to drive the data. Adapters for Angular, React
+				and Svelte are provided to plug the widgets in your favorite framework.
 			</LandingCard>
-			<LandingCard title="Consistent">
-				Widgets are provided for Angular, React and Svelte with the exact same markup and functionnalities.
-			</LandingCard>
+			<LandingCard title="Consistent">Widgets are provided for Angular, React and Svelte with the exact same markup and functionalities.</LandingCard>
 			<LandingCard title="Highly configurable">
-				Default values for all widget props are configurable at any point of the component subtree.
+				Default values for all widgets props are configurable at any point of the component subtree.
 			</LandingCard>
-			<LandingCard title="Fully tested">Unit test for headless with Vitest. E2e tests for adapters with Playwright.</LandingCard>
-			<LandingCard title="Accessible">Widgets are tested with Axe.</LandingCard>
+			<LandingCard title="Fully tested">Unit tests for headless with Vitest. E2e tests for adapters with Playwright.</LandingCard>
+			<LandingCard title="Accessible">Widgets are tested for accessibility with Axe.</LandingCard>
 		</div>
 	</div>
 </section>
@@ -94,10 +98,10 @@
 <style lang="scss">
 	@import '../../../common/variables';
 
-	@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
-	$font-name: 'Kanit';
+	@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
+	$font-name: 'Oswald';
 
-	.btn-doc :global(.pres-card-logo) {
+	.btn.btn-primary :global(.pres-card-logo) {
 		width: 30px;
 		height: 30px;
 	}
@@ -109,19 +113,11 @@
 	}
 
 	.pres {
-		padding-top: 1rem;
-
-		&-card-title {
-			font-size: 1.5rem;
-			text-align: center;
-		}
-
 		&-logo {
 			font-family: $font-name, sans-serif;
 			font-size: 5rem;
 			font-weight: 300;
-			background: linear-gradient($gradient-text-top, $gradient-text-bottom);
-			// background: linear-gradient(#bc0cf1, #d40404);
+			background: linear-gradient(var(--bs-primary), var(--bs-secondary));
 			background-clip: text;
 			-webkit-background-clip: text;
 			-webkit-text-fill-color: transparent;
@@ -136,44 +132,29 @@
 
 			:global(.bullet) {
 				height: 20px;
-				color: $gradient-text-top;
+				color: var(--bs-primary);
 			}
 		}
 	}
 
 	.btn-docs {
-		background-color: $light-background;
+		background-color: var(--au-body-background-light-color);
 	}
 
-	.btn-doc {
+	.btn.btn-primary {
 		font-family: 'Jost', sans-serif;
-		font-weight: 500;
-		font-size: 15px;
-		letter-spacing: 1px;
-		display: inline-block;
-		padding: 8px 20px;
-		border-radius: 50px;
+		font-weight: 500; // can be done differently
+		font-size: 15px; // can be done differently
+		letter-spacing: 1px; // can be done differently ?
+		padding: 8px 20px; // can be done differently
 		transition: 0.5s;
-		margin: 5px 0 0 0;
-		color: #fff;
-		background: $gradient-top;
-		// border: 4px solid $gradient-bottom;
-		// border: 5px solid #1066ef;
-		text-decoration: none;
+		color: #fff; // can be done differently
+		// background: var(--bs-primary);
+		text-decoration: none; // can be done differently
 	}
 
-	.btn-doc:hover {
-		background: $gradient-bottom;
-		border-color: $gradient-top;
+	.section {
+		border-top: 1px solid var(--au-section-border-top-color);
+		background-color: var(--au-section-background-color);
 	}
-
-	.background {
-		border-top: 1px solid $gradient-text-bottom;
-		background-color: $light-background;
-	}
-
-	// 	:global(.framework-logo) {
-	// 		height: 50px;
-	// 	}
-	// }
 </style>

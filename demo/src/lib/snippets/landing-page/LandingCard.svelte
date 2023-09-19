@@ -33,10 +33,10 @@
 		height: 140px;
 	}
 
-	h5 {
-		color: $gradient-text-bottom;
-		font-weight: bold;
-	}
+	// h5 {
+	// 	color: $gradient-text-bottom;
+	// 	font-weight: bold;
+	// }
 
 	.card {
 		height: 100%;
