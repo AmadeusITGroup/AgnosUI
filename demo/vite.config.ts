@@ -2,7 +2,7 @@ import {sveltekit} from '@sveltejs/kit/vite';
 import path from 'path';
 import type {ProxyOptions} from 'vite';
 import {defineConfig} from 'vite';
-import pkg from '../core/package.json';
+import pkg from '../core/lib/package.json';
 import {copySamples} from './scripts/copySamples.plugin';
 import {docExtractor} from './scripts/doc.plugin';
 import {includeSamples} from './scripts/includeSamples.plugin';
