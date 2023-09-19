@@ -12,52 +12,57 @@ test.describe(`Progressbar tests`, () => {
 		await page.goto('#/progressbar/default');
 		await progressbarDemoPO.locatorRoot.waitFor();
 
-		expect(await progressbarPO.getState()).toStrictEqual({
+		expect(await progressbarPO.state()).toStrictEqual({
 			ariaLabel: 'Progressbar',
 			ariaValueMax: '100',
 			ariaValueMin: '0',
 			ariaValueNow: '80',
 			ariaValueText: null,
 			innerClasses: ['progress-bar', 'text-bg-warning'],
+			innerWidth: '80%',
 			label: '80%',
+			outerHeight: '',
 		});
 	});
 
 	test(`Simple customization progressbar`, async ({page}) => {
 		const progressbarDemoPO = new ProgressbarDemoPO(page);
 
-		await page.goto('#/progressbar/striped');
+		await page.goto('#/progressbar/simplecustom');
 		await progressbarDemoPO.locatorRoot.waitFor();
 
-		const heightBar = new ProgressbarPO(page, 2);
-
-		expect(await new ProgressbarPO(page, 0).getState()).toStrictEqual({
+		expect(await new ProgressbarPO(page, 0).state()).toStrictEqual({
 			ariaLabel: 'Progressbar',
 			ariaValueMax: '5',
 			ariaValueMin: '1',
 			ariaValueNow: '4',
 			ariaValueText: 'Step 4 out of 5',
 			innerClasses: ['progress-bar'],
+			innerWidth: '75%',
 			label: 'Step 4 out of 5',
+			outerHeight: '',
 		});
-		expect(await new ProgressbarPO(page, 1).getState()).toStrictEqual({
+		expect(await new ProgressbarPO(page, 1).state()).toStrictEqual({
 			ariaLabel: 'Progressbar',
 			ariaValueMax: '100',
 			ariaValueMin: '0',
 			ariaValueNow: '63',
 			ariaValueText: null,
 			innerClasses: ['progress-bar', 'progress-bar-animated', 'progress-bar-striped', 'text-bg-info'],
+			innerWidth: '63%',
 			label: '',
+			outerHeight: '',
 		});
-		expect(await heightBar.getState()).toStrictEqual({
+		expect(await new ProgressbarPO(page, 2).state()).toStrictEqual({
 			ariaLabel: 'Progressbar',
 			ariaValueMax: '100',
 			ariaValueMin: '0',
 			ariaValueNow: '47',
 			ariaValueText: null,
 			innerClasses: ['progress-bar'],
+			innerWidth: '47%',
 			label: '',
+			outerHeight: '1.5rem',
 		});
-		expect(heightBar.locatorOuterBar).toHaveCSS('height', '24px');
 	});
 });

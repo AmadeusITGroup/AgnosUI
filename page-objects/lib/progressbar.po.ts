@@ -15,6 +15,8 @@ export interface State {
 	ariaValueText: string | null;
 	label: string | null | undefined;
 	innerClasses: string[];
+	outerHeight: string | undefined;
+	innerWidth: string | undefined;
 }
 
 export class ProgressbarPO extends BasePO {
@@ -31,9 +33,10 @@ export class ProgressbarPO extends BasePO {
 		return this.locatorRoot.locator(this.selectors.innerBar);
 	}
 
-	async getState(): Promise<State> {
+	async state(): Promise<State> {
 		return this.locatorRoot.evaluate((rootNode: HTMLElement) => {
 			const innerBar = rootNode.querySelector('.progress-bar');
+			const outerBar = rootNode.querySelector('.progress');
 			return {
 				ariaLabel: rootNode.getAttribute('aria-label'),
 				ariaValueNow: rootNode.getAttribute('aria-valuenow'),
@@ -42,6 +45,8 @@ export class ProgressbarPO extends BasePO {
 				ariaValueText: rootNode.getAttribute('aria-valuetext'),
 				label: innerBar?.textContent?.trim(),
 				innerClasses: innerBar?.className?.trim()?.split(' ')?.sort() ?? [],
+				outerHeight: (outerBar as HTMLElement | undefined)?.style?.height,
+				innerWidth: (innerBar as HTMLElement | undefined)?.style?.width,
 			};
 		});
 	}

@@ -21,6 +21,6 @@ import {Component} from '@angular/core';
 		</div>
 	`,
 })
-export default class StripedProgressBarComponent {
+export default class SimpleCustomProgressBarComponent {
 	readonly valueText = (val: number, _min: number, max: number) => `Step ${val} out of ${max}`;
 }

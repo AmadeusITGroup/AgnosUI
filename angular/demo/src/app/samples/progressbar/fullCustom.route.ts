@@ -47,7 +47,7 @@ import {interval, takeWhile} from 'rxjs';
 	`,
 	styles: ["@import '@agnos-ui/common/samples/progressbar/custom.scss';"],
 })
-export default class DefaultProgressBarComponent implements OnDestroy {
+export default class FullCustomProgressBarComponent implements OnDestroy {
 	value = 0;
 	subscription: Subscription | undefined;
 

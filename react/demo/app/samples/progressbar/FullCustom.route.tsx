@@ -21,7 +21,7 @@ const CustomContent = ({state}: AdaptSlotContentProps<ProgressbarContext>) => (
 	</div>
 );
 
-const CustomDemo = () => {
+const FullCustomDemo = () => {
 	const [value, setValue] = useState(0);
 	const [running, setRunning] = useState(false);
 	useEffect(() => {
@@ -67,4 +67,4 @@ const CustomDemo = () => {
 		</div>
 	);
 };
-export default CustomDemo;
+export default FullCustomDemo;
