@@ -1,5 +1,9 @@
 export const menu = [
 	{
+		title: 'Getting started',
+		submenu: [{label: 'Installation', path: '/getting-started/installation'}],
+	},
+	{
 		title: 'Components',
 		submenu: [
 			{label: 'Accordion', path: '/components/accordion'},

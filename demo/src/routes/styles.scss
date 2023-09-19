@@ -29,28 +29,19 @@ main {
 	width: 100%;
 }
 
+h1,
+.h1 {
+	font-size: calc(2.125rem + 0.6vw);
+}
+
 h2,
 .h2 {
 	font-size: calc(1.325rem + 0.6vw);
 }
 
-@include media-breakpoint-up(xl) {
-	h2,
-	.h2 {
-		font-size: 1.5rem;
-	}
-}
-
 h3,
 .h3 {
 	font-size: calc(1.3rem + 0.4vw);
-}
-
-@include media-breakpoint-up(xl) {
-	h3,
-	.h3 {
-		font-size: 1.5rem;
-	}
 }
 
 h5,
