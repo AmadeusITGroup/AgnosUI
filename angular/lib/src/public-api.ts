@@ -12,3 +12,4 @@ export * from './lib/modal/modal.service';
 export * from './lib/pagination/pagination.component';
 export * from './lib/rating/rating.component';
 export * from './lib/select/select.component';
+export * from './lib/progressbar/progressbar.component';

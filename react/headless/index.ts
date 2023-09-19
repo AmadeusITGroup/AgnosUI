@@ -40,3 +40,8 @@ export type RatingState = WidgetState<RatingWidget>;
 export type SelectWidget<Item> = AdaptWidgetSlots<import('@agnos-ui/core').SelectWidget<Item>>;
 export type SelectProps<Item> = WidgetProps<SelectWidget<Item>>;
 export type SelectState<Item> = WidgetState<SelectWidget<Item>>;
+
+export type ProgressbarWidget = AdaptWidgetSlots<import('@agnos-ui/core').ProgressbarWidget>;
+export type ProgressbarProps = WidgetProps<ProgressbarWidget>;
+export type ProgressbarState = WidgetState<ProgressbarWidget>;
+export type ProgressbarContext = AdaptSlotContentProps<import('@agnos-ui/core').ProgressbarContext>;

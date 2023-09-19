@@ -6,6 +6,7 @@ import type {PaginationProps} from './pagination';
 import type {RatingProps} from './rating';
 import type {SelectProps} from './select';
 import type {AccordionProps} from './accordion';
+import type {ProgressbarProps} from './progressbar';
 import {identity} from './utils';
 
 export type Partial2Levels<T> = Partial<{
@@ -101,4 +102,8 @@ export interface WidgetsConfig {
 	 * the accordion widget config
 	 */
 	accordion: AccordionProps;
+	/**
+	 * the progress bar widget config
+	 */
+	progressbar: ProgressbarProps;
 }

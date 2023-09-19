@@ -45,3 +45,8 @@ export type SelectWidget<Item> = AdaptWidgetSlots<import('@agnos-ui/core').Selec
 export type SelectProps<Item> = WidgetProps<SelectWidget<Item>>;
 export type SelectState<Item> = WidgetState<SelectWidget<Item>>;
 export type SelectSlots<Item> = WidgetPropsSlots<SelectProps<Item>>;
+
+export type ProgressbarWidget = AdaptWidgetSlots<import('@agnos-ui/core').ProgressbarWidget>;
+export type ProgressbarProps = WidgetProps<ProgressbarWidget>;
+export type ProgressbarState = WidgetState<ProgressbarWidget>;
+export type ProgressbarSlots = WidgetPropsSlots<ProgressbarProps>;
