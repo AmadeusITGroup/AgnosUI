@@ -1,0 +1,13 @@
+const n=`/*
+ * Public API Surface of @agnos-ui/angular
+ */
+export * from '@agnos-ui/angular-headless';
+export * from './lib/accordion/accordion.component';
+export * from './lib/agnos-ui-angular.module';
+export * from './lib/alert/alert.component';
+export * from './lib/modal/modal.component';
+export * from './lib/modal/modal.service';
+export * from './lib/pagination/pagination.component';
+export * from './lib/rating/rating.component';
+export * from './lib/select/select.component';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljLWFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uL2xpYi9zcmMvcHVibGljLWFwaS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTs7R0FFRztBQUVILGNBQWMsNEJBQTRCLENBQUM7QUFFM0MsY0FBYyxxQ0FBcUMsQ0FBQztBQUNwRCxjQUFjLCtCQUErQixDQUFDO0FBQzlDLGNBQWMsNkJBQTZCLENBQUM7QUFDNUMsY0FBYyw2QkFBNkIsQ0FBQztBQUM1QyxjQUFjLDJCQUEyQixDQUFDO0FBQzFDLGNBQWMsdUNBQXVDLENBQUM7QUFDdEQsY0FBYywrQkFBK0IsQ0FBQztBQUM5QyxjQUFjLCtCQUErQixDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiLypcbiAqIFB1YmxpYyBBUEkgU3VyZmFjZSBvZiBAYWdub3MtdWkvYW5ndWxhclxuICovXG5cbmV4cG9ydCAqIGZyb20gJ0BhZ25vcy11aS9hbmd1bGFyLWhlYWRsZXNzJztcblxuZXhwb3J0ICogZnJvbSAnLi9saWIvYWNjb3JkaW9uL2FjY29yZGlvbi5jb21wb25lbnQnO1xuZXhwb3J0ICogZnJvbSAnLi9saWIvYWdub3MtdWktYW5ndWxhci5tb2R1bGUnO1xuZXhwb3J0ICogZnJvbSAnLi9saWIvYWxlcnQvYWxlcnQuY29tcG9uZW50JztcbmV4cG9ydCAqIGZyb20gJy4vbGliL21vZGFsL21vZGFsLmNvbXBvbmVudCc7XG5leHBvcnQgKiBmcm9tICcuL2xpYi9tb2RhbC9tb2RhbC5zZXJ2aWNlJztcbmV4cG9ydCAqIGZyb20gJy4vbGliL3BhZ2luYXRpb24vcGFnaW5hdGlvbi5jb21wb25lbnQnO1xuZXhwb3J0ICogZnJvbSAnLi9saWIvcmF0aW5nL3JhdGluZy5jb21wb25lbnQnO1xuZXhwb3J0ICogZnJvbSAnLi9saWIvc2VsZWN0L3NlbGVjdC5jb21wb25lbnQnO1xuIl19`;export{n as default};
