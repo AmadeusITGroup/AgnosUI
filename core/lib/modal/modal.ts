@@ -1,5 +1,5 @@
 import {computed, readable} from '@amadeus-it-group/tansu';
-import type {PropsConfig} from '../services';
+import type {PropsConfig} from '../services/index.js';
 import {
 	sliblingsInert,
 	bindDirective,
@@ -10,15 +10,15 @@ import {
 	registrationArray,
 	stateStores,
 	writablesForProps,
-} from '../services';
-import type {TransitionFn} from '../transitions';
-import {createTransition} from '../transitions';
-import {fadeTransition} from '../transitions/bootstrap/fade';
-import {promiseFromStore} from '../transitions/utils';
-import type {Widget, Directive, SlotContent, WidgetSlotContext} from '../types';
-import {noop} from '../utils';
-import {removeScrollbars, revertScrollbars} from './scrollbars';
-import type {WidgetsCommonPropsAndState} from '../commonProps';
+} from '../services/index.js';
+import type {TransitionFn} from '../transitions/index.js';
+import {createTransition} from '../transitions/index.js';
+import {fadeTransition} from '../transitions/bootstrap/fade.js';
+import {promiseFromStore} from '../transitions/utils.js';
+import type {Widget, Directive, SlotContent, WidgetSlotContext} from '../types.js';
+import {noop} from '../utils.js';
+import {removeScrollbars, revertScrollbars} from './scrollbars.js';
+import type {WidgetsCommonPropsAndState} from '../commonProps.js';
 
 /**
  * Value present in the {@link ModalBeforeCloseEvent.result|result} property of the {@link ModalProps.onBeforeClose|onBeforeClose} event

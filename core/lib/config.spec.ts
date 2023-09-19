@@ -1,6 +1,6 @@
 import {describe, expect, test} from 'vitest';
-import type {Partial2Levels} from './config';
-import {createWidgetsConfig} from './config';
+import type {Partial2Levels} from './config.js';
+import {createWidgetsConfig} from './config.js';
 
 describe('defaultConfig', () => {
 	test(`Basic functionalities`, () => {

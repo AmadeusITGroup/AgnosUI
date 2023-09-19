@@ -2,8 +2,9 @@
 	"extends": "../../tsconfig.json",
 	"compilerOptions": {
 		"paths": {
-			"@agnos-ui/core": ["./core/dist/lib"],
-			"@agnos-ui/svelte-headless": ["./svelte/dist/headless"]
-		}
+			"@agnos-ui/core": ["./core/dist/lib/index.d.ts", "./core/dist/lib/index.js"],
+			"@agnos-ui/svelte-headless": ["./svelte/dist/headless/index.d.ts", "./svelte/dist/headless/index.js"]
+		},
+		"moduleResolution": "NodeNext"
 	}
 }

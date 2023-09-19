@@ -1,5 +1,5 @@
-import type {TransitionFn} from './baseTransitions';
-import {promiseFromEvent, promiseFromTimeout} from './utils';
+import type {TransitionFn} from './baseTransitions.js';
+import {promiseFromEvent, promiseFromTimeout} from './utils.js';
 
 /**
  * Check if the provided html element has a transition

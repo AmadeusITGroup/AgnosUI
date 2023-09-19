@@ -1,8 +1,8 @@
 import {test, describe, beforeAll, afterAll, expect} from 'vitest';
 import {EventEmitter} from 'events';
-import {createCSSTransition} from './cssTransitions';
-import type {TransitionProps} from './baseTransitions';
-import {createTransition} from './baseTransitions';
+import {createCSSTransition} from './cssTransitions.js';
+import type {TransitionProps} from './baseTransitions.js';
+import {createTransition} from './baseTransitions.js';
 
 describe(`createCSSTransition`, () => {
 	const createElement = (): HTMLElement => {

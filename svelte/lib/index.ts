@@ -12,8 +12,8 @@ import Accordion from './accordion/Accordion.svelte';
 import AccordionItem from './accordion/Item.svelte';
 import Progressbar from './progressbar/Progressbar.svelte';
 
-export * from './modal/modalService';
-export * from './accordion/accordion';
+export * from './modal/modalService.js';
+export * from './accordion/accordion.js';
 
 export {
 	Select,

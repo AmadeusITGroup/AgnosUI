@@ -1,4 +1,7 @@
 {
 	"extends": "../tsconfig.json",
-	"exclude": ["dist"]
+	"exclude": ["dist"],
+	"compilerOptions": {
+		"moduleResolution": "NodeNext"
+	}
 }

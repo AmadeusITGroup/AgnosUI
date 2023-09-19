@@ -1,5 +1,5 @@
-import {createCSSTransition} from './cssTransitions';
-import {addClasses, reflow, removeClasses} from './utils';
+import {createCSSTransition} from './cssTransitions.js';
+import {addClasses, reflow, removeClasses} from './utils.js';
 
 export interface SimpleClassTransitionConfig {
 	/**

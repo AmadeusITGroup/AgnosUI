@@ -1,6 +1,6 @@
 import type {SpyInstance} from 'vitest';
 import {beforeEach, describe, expect, test, vi} from 'vitest';
-import {ngBootstrapPagination} from './pagination.utils';
+import {ngBootstrapPagination} from './pagination.utils.js';
 
 describe(`Pagination utils`, () => {
 	let pageFactory: (page: number, pageCount: number) => number[];

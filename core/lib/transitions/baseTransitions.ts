@@ -1,5 +1,5 @@
 import {batch, computed, derived, writable} from '@amadeus-it-group/tansu';
-import type {ConfigValidator, PropsConfig} from '../services';
+import type {ConfigValidator, PropsConfig} from '../services/index.js';
 import {
 	bindableDerived,
 	createStoreDirective,
@@ -8,9 +8,9 @@ import {
 	mergeDirectives,
 	stateStores,
 	writablesForProps,
-} from '../services';
-import {typeBoolean, typeFunction} from '../services/writables';
-import type {Directive, Widget} from '../types';
+} from '../services/index.js';
+import {typeBoolean, typeFunction} from '../services/writables.js';
+import type {Directive, Widget} from '../types.js';
 
 /**
  * Function that implements a transition.

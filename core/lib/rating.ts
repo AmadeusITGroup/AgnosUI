@@ -1,10 +1,10 @@
 import {computed, writable} from '@amadeus-it-group/tansu';
-import type {ConfigValidator, PropsConfig} from './services';
-import {INVALID_VALUE, bindableDerived, stateStores, writablesForProps} from './services';
-import {isNumber} from './services/checks';
-import {typeBoolean, typeFunction, typeNumber, typeString} from './services/writables';
-import type {SlotContent, Widget} from './types';
-import type {WidgetsCommonPropsAndState} from './commonProps';
+import type {ConfigValidator, PropsConfig} from './services/index.js';
+import {INVALID_VALUE, bindableDerived, stateStores, writablesForProps} from './services/index.js';
+import {isNumber} from './services/checks.js';
+import {typeBoolean, typeFunction, typeNumber, typeString} from './services/writables.js';
+import type {SlotContent, Widget} from './types.js';
+import type {WidgetsCommonPropsAndState} from './commonProps.js';
 
 export interface StarContext {
 	/**

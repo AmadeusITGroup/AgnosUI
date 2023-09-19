@@ -2,7 +2,8 @@
 	"extends": "../../tsconfig.json",
 	"compilerOptions": {
 		"paths": {
-			"@agnos-ui/core": ["./core/dist/lib"]
-		}
+			"@agnos-ui/core": ["./core/dist/lib/index.d.ts", "./core/dist/lib/index.js"]
+		},
+		"moduleResolution": "NodeNext"
 	}
 }

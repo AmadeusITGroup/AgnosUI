@@ -1,6 +1,6 @@
-import {isBoolean, isFunction, isNumber, isString} from './checks';
-import type {WritableWithDefaultOptions} from './stores';
-import {INVALID_VALUE} from './stores';
+import {isBoolean, isFunction, isNumber, isString} from './checks.js';
+import type {WritableWithDefaultOptions} from './stores.js';
+import {INVALID_VALUE} from './stores.js';
 
 export const testToNormalizeValue =
 	<T>(filter: (value: T) => boolean) =>

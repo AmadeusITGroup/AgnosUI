@@ -1,4 +1,4 @@
-import {createSimpleClassTransition} from '../simpleClassTransition';
+import {createSimpleClassTransition} from '../simpleClassTransition.js';
 
 export const fadeTransition = createSimpleClassTransition({
 	animationPendingClasses: ['fade'],

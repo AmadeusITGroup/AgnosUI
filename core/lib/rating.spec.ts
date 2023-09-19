@@ -2,9 +2,9 @@ import type {UnsubscribeFunction, WritableSignal} from '@amadeus-it-group/tansu'
 import {computed, writable} from '@amadeus-it-group/tansu';
 import type {SpyInstance} from 'vitest';
 import {afterEach, beforeEach, describe, expect, test, vi} from 'vitest';
-import type {RatingWidget, RatingProps} from './rating';
-import {createRating, getRatingDefaultConfig} from './rating';
-import type {WidgetState} from './types';
+import type {RatingWidget, RatingProps} from './rating.js';
+import {createRating, getRatingDefaultConfig} from './rating.js';
+import type {WidgetState} from './types.js';
 
 function keyboardEvent(key: string): KeyboardEvent {
 	return {

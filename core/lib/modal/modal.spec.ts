@@ -1,5 +1,5 @@
 import {describe, expect, test, beforeEach} from 'vitest';
-import {createModal, modalCloseButtonClick, modalOutsideClick} from './modal';
+import {createModal, modalCloseButtonClick, modalOutsideClick} from './modal.js';
 
 describe('modal', () => {
 	const noopTransition = async () => {};

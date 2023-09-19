@@ -1,5 +1,5 @@
-import type {CollapseConfig} from '../collapse';
-import {createCollapseTransition} from '../collapse';
+import type {CollapseConfig} from '../collapse.js';
+import {createCollapseTransition} from '../collapse.js';
 
 const verticalConfig: CollapseConfig = {
 	dimension: 'height',

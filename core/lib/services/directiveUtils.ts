@@ -1,7 +1,7 @@
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {asReadable, batch, readable, writable} from '@amadeus-it-group/tansu';
-import type {Directive} from '../types';
-import {noop} from '../utils';
+import type {Directive} from '../types.js';
+import {noop} from '../utils.js';
 
 /**
  * Binds the given directive to a store that provides its argument.

@@ -3,7 +3,7 @@
 	import {Slot, callWidgetFactory, createEventDispatcher, toSlotContextWidget} from '@agnos-ui/svelte-headless';
 	import {onMount} from 'svelte';
 	import ItemDefaultStructure from './ItemDefaultStructure.svelte';
-	import {getAccordionApi} from './accordion';
+	import {getAccordionApi} from './accordion.js';
 
 	const defaultConfig: Partial<Props> = {
 		slotItemStructure: ItemDefaultStructure,

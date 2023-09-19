@@ -1,7 +1,7 @@
 import {beforeEach, describe, expect, test} from 'vitest';
-import {createAlert} from './alert';
-import type {AlertWidget} from './alert';
-import type {WidgetState} from './types';
+import {createAlert} from './alert.js';
+import type {AlertWidget} from './alert.js';
+import type {WidgetState} from './types.js';
 
 const promiseWithResolve = () => {
 	let resolve: (value: void | Promise<void>) => void;

@@ -1,13 +1,13 @@
 import type {ReadableSignal, WritableSignal} from '@amadeus-it-group/tansu';
 import {asReadable, computed, writable} from '@amadeus-it-group/tansu';
-import type {ModalProps} from './modal/modal';
-import type {AlertProps} from './alert';
-import type {PaginationProps} from './pagination';
-import type {RatingProps} from './rating';
-import type {SelectProps} from './select';
-import type {AccordionProps} from './accordion';
-import type {ProgressbarProps} from './progressbar';
-import {identity} from './utils';
+import type {ModalProps} from './modal/modal.js';
+import type {AlertProps} from './alert.js';
+import type {PaginationProps} from './pagination.js';
+import type {RatingProps} from './rating.js';
+import type {SelectProps} from './select.js';
+import type {AccordionProps} from './accordion.js';
+import type {ProgressbarProps} from './progressbar.js';
+import {identity} from './utils.js';
 
 export type Partial2Levels<T> = Partial<{
 	[Level1 in keyof T]: Partial<T[Level1]>;

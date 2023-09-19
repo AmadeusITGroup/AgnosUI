@@ -1,7 +1,15 @@
 import type {WritableSignal} from '@amadeus-it-group/tansu';
 import {writable} from '@amadeus-it-group/tansu';
 import {beforeEach, describe, expect, test, vi} from 'vitest';
-import {bindableDerived, createPatch, findChangedProperties, INVALID_VALUE, stateStores, writablesWithDefault, writableWithDefault} from './stores';
+import {
+	bindableDerived,
+	createPatch,
+	findChangedProperties,
+	INVALID_VALUE,
+	stateStores,
+	writablesWithDefault,
+	writableWithDefault,
+} from './stores.js';
 
 describe(`Stores service`, () => {
 	describe('createPatch', () => {

@@ -1,10 +1,10 @@
-import type {AccordionWidget, AccordionItemWidget} from './accordion';
-import {createAccordion, getAccordionDefaultConfig} from './accordion';
+import type {AccordionWidget, AccordionItemWidget} from './accordion.js';
+import {createAccordion, getAccordionDefaultConfig} from './accordion.js';
 import type {UnsubscribeFunction, WritableSignal} from '@amadeus-it-group/tansu';
 import {computed, readable, writable} from '@amadeus-it-group/tansu';
 import type {SpyInstance} from 'vitest';
 import {afterEach, beforeEach, describe, expect, test, vi} from 'vitest';
-import type {WidgetProps, WidgetState} from './types';
+import type {WidgetProps, WidgetState} from './types.js';
 
 function expectOpenItems(state: WidgetState<AccordionWidget>, expected: boolean[]) {
 	const openItems: boolean[] = state.itemsWidget.map((itemWidget) => !itemWidget.state$().itemCollapsed);

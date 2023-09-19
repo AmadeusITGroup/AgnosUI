@@ -1,7 +1,7 @@
 import {expect, test, describe, beforeEach} from 'vitest';
-import {createTransition} from './baseTransitions';
-import type {TransitionFn} from './baseTransitions';
-import {promiseFromStore} from './utils';
+import {createTransition} from './baseTransitions.js';
+import type {TransitionFn} from './baseTransitions.js';
+import {promiseFromStore} from './utils.js';
 import {writable} from '@amadeus-it-group/tansu';
 
 describe(`createTransition`, () => {

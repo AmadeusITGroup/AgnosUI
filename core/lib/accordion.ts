@@ -1,4 +1,4 @@
-import type {ConfigValidator, PropsConfig} from './services';
+import type {ConfigValidator, PropsConfig} from './services/index.js';
 import {
 	bindDirectiveNoArg,
 	bindableDerived,
@@ -9,15 +9,15 @@ import {
 	typeFunction,
 	typeString,
 	writablesForProps,
-} from './services';
-import type {TransitionFn} from './transitions';
-import {createTransition} from './transitions';
-import {collapseVerticalTransition} from './transitions/bootstrap';
-import type {Directive, SlotContent, Widget, WidgetSlotContext} from './types';
+} from './services/index.js';
+import type {TransitionFn} from './transitions/index.js';
+import {createTransition} from './transitions/index.js';
+import {collapseVerticalTransition} from './transitions/bootstrap/index.js';
+import type {Directive, SlotContent, Widget, WidgetSlotContext} from './types.js';
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {computed, readable, writable} from '@amadeus-it-group/tansu';
-import {noop} from './utils';
-import type {WidgetsCommonPropsAndState} from './commonProps';
+import {noop} from './utils.js';
+import type {WidgetsCommonPropsAndState} from './commonProps.js';
 
 let itemId = 0;
 

@@ -3,7 +3,12 @@
 	"extends": "../tsconfig.json",
 	"compilerOptions": {
 		"outDir": "../out-tsc/app",
-		"types": ["@types/webpack-env"]
+		"types": ["@types/webpack-env"],
+		"paths": {
+			"@agnos-ui/core": ["./core/dist/lib"],
+			"@agnos-ui/angular-headless": ["./angular/dist/headless"],
+			"@agnos-ui/angular": ["./angular/dist/lib"]
+		}
 	},
 	"files": ["src/main.ts", "src/polyfills.ts", "src/environments/environment.prod.ts"],
 	"include": ["src/**/*.d.ts", "src/app/samples/**/*.route.ts"]

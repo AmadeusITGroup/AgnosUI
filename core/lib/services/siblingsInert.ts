@@ -1,6 +1,6 @@
 import {computed} from '@amadeus-it-group/tansu';
-import {noop} from '../utils';
-import {createStoreArrayDirective, directiveSubscribe, mergeDirectives} from './directiveUtils';
+import {noop} from '../utils.js';
+import {createStoreArrayDirective, directiveSubscribe, mergeDirectives} from './directiveUtils.js';
 
 const internalSetSiblingsInert = (element: Element) => {
 	const inertValues = new Map<Element, boolean>();

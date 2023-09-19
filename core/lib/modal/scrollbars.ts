@@ -1,4 +1,4 @@
-import {noop} from '../utils';
+import {noop} from '../utils.js';
 
 const internalRemoveScrollbars = () => {
 	const scrollbarWidth = Math.abs(window.innerWidth - document.documentElement.clientWidth);

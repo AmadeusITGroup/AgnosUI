@@ -1,5 +1,5 @@
 import {describe, test, expect, vi} from 'vitest';
-import {activeElement$, createHasFocus} from './focustrack';
+import {activeElement$, createHasFocus} from './focustrack.js';
 
 describe(`Focustrack service`, () => {
 	describe('activeElement', () => {

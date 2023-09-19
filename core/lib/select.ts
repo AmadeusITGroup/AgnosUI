@@ -1,10 +1,10 @@
 import {asReadable, batch, computed, writable} from '@amadeus-it-group/tansu';
-import type {HasFocus} from './services/focustrack';
-import {createHasFocus} from './services/focustrack';
-import type {PropsConfig} from './services/stores';
-import {stateStores, writablesForProps} from './services/stores';
-import type {Widget} from './types';
-import type {WidgetsCommonPropsAndState} from './commonProps';
+import type {HasFocus} from './services/focustrack.js';
+import {createHasFocus} from './services/focustrack.js';
+import type {PropsConfig} from './services/stores.js';
+import {stateStores, writablesForProps} from './services/stores.js';
+import type {Widget} from './types.js';
+import type {WidgetsCommonPropsAndState} from './commonProps.js';
 
 export interface SelectCommonPropsAndState<Item> extends WidgetsCommonPropsAndState {
 	/**

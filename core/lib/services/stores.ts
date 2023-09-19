@@ -1,6 +1,6 @@
 import {batch, computed, derived, get, readable, writable, asReadable} from '@amadeus-it-group/tansu';
 import type {ReadableSignal, Updater, WritableSignal, StoreOptions, StoreInput, StoresInputValues} from '@amadeus-it-group/tansu';
-import {identity} from '../utils';
+import {identity} from '../utils.js';
 
 export type ToWritableSignal<P, V = P> = {
 	[K in keyof P & keyof V as `${K & string}$`]-?: WritableSignal<P[K], V[K] | undefined>;

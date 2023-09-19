@@ -1,2 +1,2 @@
-export * from './collapse';
-export * from './fade';
+export * from './collapse.js';
+export * from './fade.js';

@@ -1,5 +1,5 @@
 import type {ReadableSignal, SubscribableStore} from '@amadeus-it-group/tansu';
-import type {PropsConfig} from './services';
+import type {PropsConfig} from './services/index.js';
 
 export interface Widget<
 	Props extends object = object,

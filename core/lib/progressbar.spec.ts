@@ -1,7 +1,7 @@
 import {beforeEach, describe, expect, test} from 'vitest';
-import {createProgressbar, getProgressbarDefaultConfig} from './progressbar';
-import type {ProgressbarWidget} from './progressbar';
-import type {WidgetState} from './types';
+import {createProgressbar, getProgressbarDefaultConfig} from './progressbar.js';
+import type {ProgressbarWidget} from './progressbar.js';
+import type {WidgetState} from './types.js';
 
 describe(`Progressbar`, () => {
 	let progressbar: ProgressbarWidget;

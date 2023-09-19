@@ -1,8 +1,8 @@
 import {afterEach, beforeEach, describe, expect, test, vi} from 'vitest';
-import type {Directive} from '../types';
-import type {TransitionFn, TransitionWidget} from './baseTransitions';
-import {createTransition} from './baseTransitions';
-import {createSimpleClassTransition} from './simpleClassTransition';
+import type {Directive} from '../types.js';
+import type {TransitionFn, TransitionWidget} from './baseTransitions.js';
+import {createTransition} from './baseTransitions.js';
+import {createSimpleClassTransition} from './simpleClassTransition.js';
 
 describe('createSimpleClassTransition', () => {
 	let element: HTMLElement;

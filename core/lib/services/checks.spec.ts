@@ -1,5 +1,5 @@
 import {describe, expect, test} from 'vitest';
-import {isBoolean, isFunction, isNumber, clamp, isString} from './checks';
+import {isBoolean, isFunction, isNumber, clamp, isString} from './checks.js';
 
 describe('Checks', () => {
 	test(`'isNumber' should check if value is a number`, () => {

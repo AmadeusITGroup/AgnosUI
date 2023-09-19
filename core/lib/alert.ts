@@ -1,11 +1,11 @@
-import type {WidgetsCommonPropsAndState} from './commonProps';
-import type {ConfigValidator, PropsConfig} from './services';
-import {bindDirectiveNoArg, stateStores, typeBoolean, typeString, writablesForProps} from './services';
-import type {TransitionFn} from './transitions';
-import {createTransition} from './transitions';
-import {fadeTransition} from './transitions/bootstrap';
-import type {Directive, SlotContent, Widget, WidgetSlotContext} from './types';
-import {noop} from './utils';
+import type {WidgetsCommonPropsAndState} from './commonProps.js';
+import type {ConfigValidator, PropsConfig} from './services/index.js';
+import {bindDirectiveNoArg, stateStores, typeBoolean, typeString, writablesForProps} from './services/index.js';
+import type {TransitionFn} from './transitions/index.js';
+import {createTransition} from './transitions/index.js';
+import {fadeTransition} from './transitions/bootstrap/index.js';
+import type {Directive, SlotContent, Widget, WidgetSlotContext} from './types.js';
+import {noop} from './utils.js';
 
 export type AlertContext = WidgetSlotContext<AlertWidget>;
 

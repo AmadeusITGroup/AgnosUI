@@ -1,5 +1,5 @@
 import {describe, expect, test} from 'vitest';
-import {removeScrollbars, revertScrollbars} from './scrollbars';
+import {removeScrollbars, revertScrollbars} from './scrollbars.js';
 
 describe('scrollbars', () => {
 	test('basic feature, restore body overflow to scroll', () => {

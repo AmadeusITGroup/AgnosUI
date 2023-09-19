@@ -1,6 +1,6 @@
 import {asReadable, writable} from '@amadeus-it-group/tansu';
 import {vi} from 'vitest';
-import type {HasFocus, createHasFocus as realCreateHasFocus} from '../focustrack';
+import type {HasFocus, createHasFocus as realCreateHasFocus} from '../focustrack.js';
 
 export const createHasFocus = vi.fn<Parameters<typeof realCreateHasFocus>, ReturnType<typeof realCreateHasFocus>>();
 

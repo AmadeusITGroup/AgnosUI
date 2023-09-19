@@ -10,7 +10,7 @@ import {
 	directiveUpdate,
 	mergeDirectives,
 	registrationArray,
-} from './directiveUtils';
+} from './directiveUtils.js';
 
 describe('directiveUtils', () => {
 	let element: HTMLElement;

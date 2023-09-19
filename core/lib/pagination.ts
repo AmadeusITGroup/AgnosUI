@@ -1,11 +1,11 @@
 import {computed} from '@amadeus-it-group/tansu';
-import type {ConfigValidator, PropsConfig} from './services';
-import {bindableDerived, INVALID_VALUE, stateStores, writablesForProps} from './services';
-import {clamp, isNumber} from './services/checks';
-import {typeBoolean, typeFunction, typeNumber, typeString} from './services/writables';
-import type {Widget, SlotContent, WidgetSlotContext} from './types';
-import {noop} from './utils';
-import type {WidgetsCommonPropsAndState} from './commonProps';
+import type {ConfigValidator, PropsConfig} from './services/index.js';
+import {bindableDerived, INVALID_VALUE, stateStores, writablesForProps} from './services/index.js';
+import {clamp, isNumber} from './services/checks.js';
+import {typeBoolean, typeFunction, typeNumber, typeString} from './services/writables.js';
+import type {Widget, SlotContent, WidgetSlotContext} from './types.js';
+import {noop} from './utils.js';
+import type {WidgetsCommonPropsAndState} from './commonProps.js';
 
 /**
  * A type for the slot context of the pagination widget

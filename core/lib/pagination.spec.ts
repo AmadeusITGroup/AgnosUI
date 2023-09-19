@@ -1,8 +1,8 @@
 import type {SpyInstance} from 'vitest';
 import {beforeEach, describe, expect, test, vi} from 'vitest';
-import type {PaginationState, PaginationWidget} from './pagination';
-import {createPagination, getPaginationDefaultConfig} from './pagination';
-import {ngBootstrapPagination} from './pagination.utils';
+import type {PaginationState, PaginationWidget} from './pagination.js';
+import {createPagination, getPaginationDefaultConfig} from './pagination.js';
+import {ngBootstrapPagination} from './pagination.utils.js';
 
 describe(`Pagination`, () => {
 	let pagination: PaginationWidget;

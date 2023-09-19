@@ -1,10 +1,10 @@
-import {clamp} from './services/checks';
-import type {ConfigValidator, PropsConfig} from './services';
-import {bindableDerived, stateStores, typeBoolean, typeFunction, typeNumber, typeString, writablesForProps} from './services';
-import type {SlotContent, Widget, WidgetSlotContext} from './types';
+import {clamp} from './services/checks.js';
+import type {ConfigValidator, PropsConfig} from './services/index.js';
+import {bindableDerived, stateStores, typeBoolean, typeFunction, typeNumber, typeString, writablesForProps} from './services/index.js';
+import type {SlotContent, Widget, WidgetSlotContext} from './types.js';
 import {computed, readable} from '@amadeus-it-group/tansu';
-import {noop} from './utils';
-import type {WidgetsCommonPropsAndState} from './commonProps';
+import {noop} from './utils.js';
+import type {WidgetsCommonPropsAndState} from './commonProps.js';
 
 export type ProgressbarContext = WidgetSlotContext<ProgressbarWidget>;
 

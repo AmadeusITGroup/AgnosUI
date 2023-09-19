@@ -1,8 +1,8 @@
 import {expect, test, describe, beforeEach, vi} from 'vitest';
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
-import type {ItemCtx, SelectWidget, SelectProps} from './select';
-import {createSelect} from './select';
-import {createHasFocusMock} from './services/__mocks__/focustrack';
+import type {ItemCtx, SelectWidget, SelectProps} from './select.js';
+import {createSelect} from './select.js';
+import {createHasFocusMock} from './services/__mocks__/focustrack.js';
 
 vi.mock('./services/focustrack');
 

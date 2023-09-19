@@ -1,7 +1,7 @@
 import EventEmitter from 'events';
 import {writable} from '@amadeus-it-group/tansu';
 import {describe, test, expect, vi} from 'vitest';
-import {promiseFromStore, promiseFromEvent, promiseFromTimeout} from './utils';
+import {promiseFromStore, promiseFromEvent, promiseFromTimeout} from './utils.js';
 
 const clearTimeoutSpy = vi.spyOn(global, 'clearTimeout');
 

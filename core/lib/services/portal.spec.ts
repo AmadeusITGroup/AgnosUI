@@ -1,5 +1,5 @@
 import {beforeEach, describe, expect, test} from 'vitest';
-import {portal} from './portal';
+import {portal} from './portal.js';
 
 describe(`Portal`, () => {
 	let testArea: HTMLElement;

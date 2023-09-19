@@ -1,5 +1,5 @@
 import {beforeEach, describe, expect, test} from 'vitest';
-import {sliblingsInert} from './siblingsInert';
+import {sliblingsInert} from './siblingsInert.js';
 
 describe('sliblingsInert', () => {
 	let testArea: HTMLElement;
