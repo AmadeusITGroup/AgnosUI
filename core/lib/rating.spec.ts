@@ -34,7 +34,7 @@ describe(`Rating`, () => {
 		beforeEach(() => {
 			consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 			defConfig = writable({});
-			rating = createRating(computed(() => ({...callbacks, ...defConfig()})));
+			rating = createRating({config: computed(() => ({...callbacks, ...defConfig()}))});
 			unsubscribe = rating.state$.subscribe((newState) => {
 				stateChangeCount++;
 				state = newState;
@@ -634,10 +634,12 @@ describe(`Rating`, () => {
 			const values: number[] = [];
 			const visibleRatingValues: number[] = [];
 			const ratingWidget = createRating({
-				maxRating: 10,
-				rating: 2,
-				onRatingChange(value) {
-					values.push(value);
+				props: {
+					maxRating: 10,
+					rating: 2,
+					onRatingChange(value) {
+						values.push(value);
+					},
 				},
 			});
 			const unsubscribe = ratingWidget.stores.visibleRating$.subscribe((value) => visibleRatingValues.push(value));

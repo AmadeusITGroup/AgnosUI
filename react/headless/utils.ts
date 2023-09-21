@@ -127,4 +127,4 @@ export const useWidgetWithConfig = <W extends Widget>(
 	widgetName: keyof WidgetsConfig | null,
 	defaultProps?: Partial<AdaptPropsSlots<WidgetProps<W>>>
 ): [AdaptPropsSlots<WidgetState<W>>, AdaptWidgetSlots<W>] =>
-	useWidget(factory, props as any, useWidgetContext(widgetName, defaultProps) as any) as any;
+	useWidget(factory, props as any, {config: useWidgetContext(widgetName, defaultProps) as any}) as any;

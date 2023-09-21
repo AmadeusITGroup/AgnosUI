@@ -37,12 +37,14 @@ describe(`createTransition`, () => {
 	test(`basic case`, async () => {
 		const element = <HTMLElement>{id: 'domEl'};
 		const transitionInstance = createTransition({
-			animationOnInit: true,
-			visible: true,
-			transition,
-			onShown,
-			onHidden,
-			onVisibleChange,
+			props: {
+				animationOnInit: true,
+				visible: true,
+				transition,
+				onShown,
+				onHidden,
+				onVisibleChange,
+			},
 		});
 		const directiveInstance = transitionInstance.directives.directive(element);
 		await transitionInstance.api.show();
@@ -66,12 +68,14 @@ describe(`createTransition`, () => {
 	test(`simultaneous calls show/hide`, async () => {
 		const element = <HTMLElement>{id: 'domEl'};
 		const transitionInstance = createTransition({
-			animationOnInit: true,
-			visible: true,
-			transition,
-			onShown,
-			onHidden,
-			onVisibleChange,
+			props: {
+				animationOnInit: true,
+				visible: true,
+				transition,
+				onShown,
+				onHidden,
+				onVisibleChange,
+			},
 		});
 		const directiveInstance = transitionInstance.directives.directive(element);
 		const transition1 = transitionInstance.api.show();
@@ -104,12 +108,14 @@ describe(`createTransition`, () => {
 	test(`simultaneous calls show/hide/show`, async () => {
 		const element = <HTMLElement>{id: 'domEl'};
 		const transitionInstance = createTransition({
-			animationOnInit: true,
-			visible: true,
-			transition,
-			onShown,
-			onHidden,
-			onVisibleChange,
+			props: {
+				animationOnInit: true,
+				visible: true,
+				transition,
+				onShown,
+				onHidden,
+				onVisibleChange,
+			},
 		});
 		const directiveInstance = transitionInstance.directives.directive(element);
 		const transition1 = transitionInstance.api.show();
@@ -158,12 +164,14 @@ describe(`createTransition`, () => {
 	test(`simultaneous calls, show/show`, async () => {
 		const element = <HTMLElement>{id: 'domEl'};
 		const transitionInstance = createTransition({
-			animationOnInit: true,
-			visible: true,
-			onShown,
-			onHidden,
-			onVisibleChange,
-			transition,
+			props: {
+				animationOnInit: true,
+				visible: true,
+				onShown,
+				onHidden,
+				onVisibleChange,
+				transition,
+			},
 		});
 		const directiveInstance = transitionInstance.directives.directive(element);
 		const transition1 = transitionInstance.api.show();
@@ -191,13 +199,15 @@ describe(`createTransition`, () => {
 		let hiddenCalled: () => void;
 		const hiddenCalledPromise = new Promise<void>((resolve) => (hiddenCalled = resolve));
 		const transitionInstance = createTransition({
-			onShown,
-			onHidden: function () {
-				hiddenCalled();
-				onHidden();
+			props: {
+				onShown,
+				onHidden: function () {
+					hiddenCalled();
+					onHidden();
+				},
+				onVisibleChange,
+				transition,
 			},
-			onVisibleChange,
-			transition,
 		});
 		events.push('afterCreateTransition');
 		transitionInstance.patch({visible: false});
@@ -226,14 +236,16 @@ describe(`createTransition`, () => {
 		let shownCalled: () => void;
 		const shownCalledPromise = new Promise<void>((resolve) => (shownCalled = resolve));
 		const transitionInstance = createTransition({
-			visible: false,
-			onHidden,
-			onVisibleChange,
-			onShown: function () {
-				shownCalled();
-				onShown();
+			props: {
+				visible: false,
+				onHidden,
+				onVisibleChange,
+				onShown: function () {
+					shownCalled();
+					onShown();
+				},
+				transition,
 			},
-			transition,
 		});
 		events.push('afterCreateTransition');
 		transitionInstance.patch({initDone: true, visible: true});
@@ -262,14 +274,16 @@ describe(`createTransition`, () => {
 		let shownCalled: () => void;
 		const shownCalledPromise = new Promise<void>((resolve) => (shownCalled = resolve));
 		const transitionInstance = createTransition({
-			visible: false,
-			onHidden,
-			onVisibleChange,
-			onShown: function () {
-				shownCalled();
-				onShown();
+			props: {
+				visible: false,
+				onHidden,
+				onVisibleChange,
+				onShown: function () {
+					shownCalled();
+					onShown();
+				},
+				transition,
 			},
-			transition,
 		});
 		events.push('afterCreateTransition');
 		transitionInstance.patch({visible: true});
@@ -299,15 +313,17 @@ describe(`createTransition`, () => {
 		const initDone = writable(false);
 		const shownCalledPromise = new Promise<void>((resolve) => (shownCalled = resolve));
 		const transitionInstance = createTransition({
-			visible: false,
-			initDone,
-			onHidden,
-			onVisibleChange,
-			onShown: function () {
-				shownCalled();
-				onShown();
+			props: {
+				visible: false,
+				initDone,
+				onHidden,
+				onVisibleChange,
+				onShown: function () {
+					shownCalled();
+					onShown();
+				},
+				transition,
 			},
-			transition,
 		});
 		events.push('afterCreateTransition');
 		const directiveInstance = transitionInstance.directives.directive(element); // this does not change initDone
@@ -352,14 +368,16 @@ describe(`createTransition`, () => {
 		let shownCalled: () => void;
 		const shownCalledPromise = new Promise<void>((resolve) => (shownCalled = resolve));
 		const transitionInstance = createTransition({
-			visible: false,
-			onHidden,
-			onVisibleChange,
-			onShown: function () {
-				shownCalled();
-				onShown();
+			props: {
+				visible: false,
+				onHidden,
+				onVisibleChange,
+				onShown: function () {
+					shownCalled();
+					onShown();
+				},
+				transition,
 			},
-			transition,
 		});
 		events.push('afterCreateTransition');
 		const directiveInstance = transitionInstance.directives.directive(element);
@@ -389,10 +407,12 @@ describe(`createTransition`, () => {
 	test(`setting visible with patch`, async () => {
 		const element = <HTMLElement>{id: 'domEl'};
 		const transitionInstance = createTransition({
-			transition,
-			onShown,
-			onHidden,
-			onVisibleChange,
+			props: {
+				transition,
+				onShown,
+				onHidden,
+				onVisibleChange,
+			},
 		});
 		events.push('afterCreateTransition');
 		const unsubscribeState = transitionInstance.state$.subscribe((state) => {
@@ -447,10 +467,12 @@ describe(`createTransition`, () => {
 			test(`check initial animation with animationOnInit = ${animationOnInit} and animation = ${animation} and visible = true`, async () => {
 				let element = <HTMLElement>{id: 'domEl1'};
 				const transitionInstance = createTransition({
-					animationOnInit,
-					animation,
-					onVisibleChange,
-					transition,
+					props: {
+						animationOnInit,
+						animation,
+						onVisibleChange,
+						transition,
+					},
 				});
 				events.push('afterCreateTransition');
 				const unsubscribeState = transitionInstance.state$.subscribe((state) => {
@@ -559,11 +581,13 @@ describe(`createTransition`, () => {
 			test(`check initial animation with animationOnInit = ${animationOnInit} and animation = ${animation} and visible = false`, async () => {
 				let element = <HTMLElement>{id: 'domEl1'};
 				const transitionInstance = createTransition({
-					animationOnInit,
-					animation,
-					visible: false,
-					onVisibleChange,
-					transition,
+					props: {
+						animationOnInit,
+						animation,
+						visible: false,
+						onVisibleChange,
+						transition,
+					},
 				});
 				events.push('afterCreateTransition');
 				const unsubscribeState = transitionInstance.state$.subscribe((state) => {

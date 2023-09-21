@@ -120,7 +120,7 @@ export const callWidgetFactory = <W extends Widget>(
 	slots: SlotsPresent<WidgetProps<AdaptWidgetSlots<W>>>,
 	defaultConfig?: Partial<WidgetProps<AdaptWidgetSlots<W>>>
 ): AdaptWidgetSlots<W> & {patchChangedProps: AdaptWidgetSlots<W>['patch']} =>
-	withPatchChangedProps(factory(getContextWidgetConfig(widgetName, slots, defaultConfig)) as any);
+	withPatchChangedProps(factory({config: getContextWidgetConfig(widgetName, slots, defaultConfig)}) as any);
 
 export const useSvelteSlot = Symbol('useSvelteSlot');
 

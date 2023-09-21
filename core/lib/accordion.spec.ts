@@ -1,7 +1,7 @@
 import type {AccordionWidget, AccordionItemWidget} from './accordion';
 import {createAccordion, getAccordionDefaultConfig} from './accordion';
 import type {UnsubscribeFunction, WritableSignal} from '@amadeus-it-group/tansu';
-import {computed, readable, writable} from '@amadeus-it-group/tansu';
+import {computed, writable} from '@amadeus-it-group/tansu';
 import type {SpyInstance} from 'vitest';
 import {afterEach, beforeEach, describe, expect, test, vi} from 'vitest';
 import type {WidgetProps, WidgetState} from './types';
@@ -74,7 +74,7 @@ describe(`Accordion`, () => {
 	beforeEach(() => {
 		consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 		defConfigAccordion = writable({});
-		accordion = createAccordion(computed(() => ({...callbacksAccordion, ...defConfigAccordion()})));
+		accordion = createAccordion({config: computed(() => ({...callbacksAccordion, ...defConfigAccordion()}))});
 		unsubscribe = accordion.state$.subscribe((newState) => {
 			state = newState;
 		});
@@ -259,7 +259,7 @@ describe(`Accordion`, () => {
 	});
 
 	test(`should have correct value for shouldBeInDOM`, () => {
-		const i = accordion.api.registerItem(writable({itemDestroyOnHide: true, itemVisible: true}));
+		const i = accordion.api.registerItem({props: {itemDestroyOnHide: true, itemVisible: true}});
 		expect(i.state$().shouldBeInDOM).toBe(true);
 		i.api.collapse();
 		expect(i.state$().shouldBeInDOM).toBe(false);
@@ -283,7 +283,7 @@ describe(`Accordion`, () => {
 	test(`should call initDone to enable the transition on item`, async () => {
 		const el = document.createElement('div');
 		const itemTransition = vi.fn();
-		const itemWidget = accordion.api.registerItem(readable({itemTransition}));
+		const itemWidget = accordion.api.registerItem({props: {itemTransition}});
 		itemWidget.directives.accordionItemDirective(el);
 		itemWidget.directives.collapseDirective(el);
 		expectOpenItems(state, [false]);
@@ -298,7 +298,7 @@ describe(`Accordion`, () => {
 
 	test(`should not work click when item is disabled`, () => {
 		const element = <HTMLElement>{id: 'domEl'};
-		const i = accordion.api.registerItem(readable({itemDisabled: true}));
+		const i = accordion.api.registerItem({props: {itemDisabled: true}});
 		i.directives.accordionItemDirective(element);
 		expectOpenItems(state, [false]);
 		i.patch({itemVisible: true});
@@ -308,7 +308,7 @@ describe(`Accordion`, () => {
 	});
 
 	test(`should have default config`, () => {
-		accordion = createAccordion(getAccordionDefaultConfig());
+		accordion = createAccordion({config: getAccordionDefaultConfig()});
 		const {stores} = accordion;
 		expect(stores.className$()).toBe('');
 		const i = accordion.api.registerItem();

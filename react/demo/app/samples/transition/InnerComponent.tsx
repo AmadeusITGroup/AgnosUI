@@ -13,21 +13,20 @@ const InnerComponent = () => {
 	const paramTransition = useObservable(paramTransition$);
 	const paramAnimation = useObservable(paramAnimation$);
 	const paramAnimationOnInit = useObservable(paramAnimationOnInit$);
-	const paramVisible = useObservable(paramVisible$);
 	const paramRemoveFromDom = useObservable(paramRemoveFromDom$);
 	const [transitionState, transitionWidget] = useWidget(
 		createTransition,
+		{},
 		{
-			transition: paramTransition,
-			animation: paramAnimation,
-		},
-		{
-			animationOnInit: paramAnimationOnInit,
-			visible: paramVisible,
+			props: {
+				transition: paramTransition$,
+				animation: paramAnimation$,
+				animationOnInit: paramAnimationOnInit$,
+				visible: paramVisible$,
+			},
 		}
 	);
 	const transitionRef = useDirective(transitionWidget.directives.directive);
-	paramVisible$.set(transitionState.visible);
 
 	const changeTransition = (newTransition: TransitionFn) => {
 		// Make sure the element is removed from the DOM

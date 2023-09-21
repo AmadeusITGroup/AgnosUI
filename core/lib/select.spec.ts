@@ -215,7 +215,7 @@ describe(`Select model`, () => {
 			expect(currentState!.opened).toBe(true);
 			expect(currentState!.visible.length).toBe(2);
 			const onFilterTextChange = vi.fn();
-			const widgetWithFilterChange = createSelect({onFilterTextChange});
+			const widgetWithFilterChange = createSelect({props: {onFilterTextChange}});
 			widgetWithFilterChange.patch(props);
 			widgetWithFilterChange.actions.onInput({target: {value: 'aa'}});
 			expect(onFilterTextChange).toHaveBeenCalledWith('aa');

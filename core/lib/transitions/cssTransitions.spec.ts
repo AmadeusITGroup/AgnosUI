@@ -23,7 +23,7 @@ describe(`createCSSTransition`, () => {
 	};
 
 	const callTransitionShow = async (element: HTMLElement, props: Partial<TransitionProps>) => {
-		const transitionInstance = createTransition({animationOnInit: true, ...props});
+		const transitionInstance = createTransition({props: {animationOnInit: true, ...props}});
 		const directiveInstance = transitionInstance.directives.directive(element);
 		await transitionInstance.api.show();
 		directiveInstance?.destroy?.();
@@ -164,17 +164,19 @@ describe(`createCSSTransition`, () => {
 		const events: string[] = [];
 		const element = createElement();
 		const cssTransition = createTransition({
-			animationOnInit: true,
-			transition: createCSSTransition((e, d, a, c: {used?: boolean}) => {
-				events.push(`startFn:${d}:${c.used ?? false}`);
-				c.used = true;
-				expect(e).toBe(element);
-				expect(a).toBe(true);
-				e.style.transitionDuration = '1s'; // much higher value than the time we start the second transition
-				return () => {
-					events.push(`endFn:${d}`);
-				};
-			}),
+			props: {
+				animationOnInit: true,
+				transition: createCSSTransition((e, d, a, c: {used?: boolean}) => {
+					events.push(`startFn:${d}:${c.used ?? false}`);
+					c.used = true;
+					expect(e).toBe(element);
+					expect(a).toBe(true);
+					e.style.transitionDuration = '1s'; // much higher value than the time we start the second transition
+					return () => {
+						events.push(`endFn:${d}`);
+					};
+				}),
+			},
 		});
 		events.push('before');
 		const timeBefore = performance.now();

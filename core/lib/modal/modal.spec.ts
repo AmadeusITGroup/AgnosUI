@@ -20,7 +20,9 @@ describe('modal', () => {
 		`;
 		expect(document.body.style.overflow).not.toBe('hidden');
 		const modal = createModal({
-			modalTransition: noopTransition,
+			props: {
+				modalTransition: noopTransition,
+			},
 		});
 		const modalElement = document.getElementById('modalElement')!;
 		const directive = modal.directives.modalDirective(modalElement);
@@ -44,7 +46,9 @@ describe('modal', () => {
 	test('close on close method call', async () => {
 		const element = {} as HTMLElement;
 		const modal = createModal({
-			modalTransition: noopTransition,
+			props: {
+				modalTransition: noopTransition,
+			},
 		});
 		const directive = modal.directives.modalDirective(element);
 		const promise = modal.api.open();
@@ -58,7 +62,9 @@ describe('modal', () => {
 	test('close on close button click', async () => {
 		const element = {} as HTMLElement;
 		const modal = createModal({
-			modalTransition: noopTransition,
+			props: {
+				modalTransition: noopTransition,
+			},
 		});
 		const directive = modal.directives.modalDirective(element);
 		const promise = modal.api.open();
@@ -71,8 +77,10 @@ describe('modal', () => {
 	test('close on outside click', async () => {
 		const element = {} as HTMLElement;
 		const modal = createModal({
-			modalTransition: noopTransition,
-			closeOnOutsideClick: true,
+			props: {
+				modalTransition: noopTransition,
+				closeOnOutsideClick: true,
+			},
 		});
 		const directive = modal.directives.modalDirective(element);
 		const promise = modal.api.open();
@@ -85,8 +93,7 @@ describe('modal', () => {
 	test('do not close on outside click', async () => {
 		const element = {} as HTMLElement;
 		const modal = createModal({
-			modalTransition: noopTransition,
-			closeOnOutsideClick: false,
+			props: {modalTransition: noopTransition, closeOnOutsideClick: false},
 		});
 		const directive = modal.directives.modalDirective(element);
 		let settled = false;
@@ -103,10 +110,12 @@ describe('modal', () => {
 		let onBeforeCloseCalled = 0;
 		const element = {} as HTMLElement;
 		const modal = createModal({
-			modalTransition: noopTransition,
-			onBeforeClose(event) {
-				onBeforeCloseCalled++;
-				event.cancel = true;
+			props: {
+				modalTransition: noopTransition,
+				onBeforeClose(event) {
+					onBeforeCloseCalled++;
+					event.cancel = true;
+				},
 			},
 		});
 		const directive = modal.directives.modalDirective(element);
@@ -129,11 +138,13 @@ describe('modal', () => {
 		const secondResult = {info: 'secondResult'};
 		const element = {} as HTMLElement;
 		const modal = createModal({
-			modalTransition: noopTransition,
-			onBeforeClose(event) {
-				onBeforeCloseCalled++;
-				resultInOnBeforeClose = event.result;
-				event.result = secondResult;
+			props: {
+				modalTransition: noopTransition,
+				onBeforeClose(event) {
+					onBeforeCloseCalled++;
+					resultInOnBeforeClose = event.result;
+					event.result = secondResult;
+				},
 			},
 		});
 		const directive = modal.directives.modalDirective(element);

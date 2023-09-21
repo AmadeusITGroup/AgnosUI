@@ -337,22 +337,26 @@ export const createModal = (config$?: PropsConfig<ModalProps>): ModalWidget => {
 		patch,
 	] = writablesForProps(defaultConfig, config$);
 	const modalTransition = createTransition({
-		transition: modalTransition$,
-		visible: requestedVisible$,
-		animation: animation$,
-		animationOnInit: animation$,
-		onVisibleChange: onVisibleChange$,
-		// TODO: for onHidden and onShown, should we combine with information from the backdrop transition?
-		// (especially in case one of the two transitions takes more time than the other)
-		onHidden: onHidden$,
-		onShown: onShown$,
+		props: {
+			transition: modalTransition$,
+			visible: requestedVisible$,
+			animation: animation$,
+			animationOnInit: animation$,
+			onVisibleChange: onVisibleChange$,
+			// TODO: for onHidden and onShown, should we combine with information from the backdrop transition?
+			// (especially in case one of the two transitions takes more time than the other)
+			onHidden: onHidden$,
+			onShown: onShown$,
+		},
 	});
 	const visible$ = modalTransition.stores.visible$;
 	const backdropTransition = createTransition({
-		transition: backdropTransition$,
-		visible: requestedVisible$,
-		animation: animation$,
-		animationOnInit: animation$,
+		props: {
+			transition: backdropTransition$,
+			visible: requestedVisible$,
+			animation: animation$,
+			animationOnInit: animation$,
+		},
 	});
 	const transitioning$ = computed(() => modalTransition.stores.transitioning$() || (backdrop$() && backdropTransition.stores.transitioning$()));
 	const hidden$ = computed(() => !transitioning$() && !visible$());

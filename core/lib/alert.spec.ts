@@ -63,19 +63,21 @@ describe(`Alert`, () => {
 		const element = document.createElement('div');
 		element.innerHTML = '<div>body</div>';
 		const alertEvents = createAlert({
-			type: 'danger',
-			onShown() {
-				promiseOnShown.resolve();
-				onShownCounter++;
-				promiseOnShown = promiseWithResolve();
-			},
-			onHidden() {
-				promiseOnHidden.resolve();
-				onHiddenCounter++;
-				promiseOnHidden = promiseWithResolve();
-			},
-			onVisibleChange(event) {
-				onVisibleChangeCounter++;
+			props: {
+				type: 'danger',
+				onShown() {
+					promiseOnShown.resolve();
+					onShownCounter++;
+					promiseOnShown = promiseWithResolve();
+				},
+				onHidden() {
+					promiseOnHidden.resolve();
+					onHiddenCounter++;
+					promiseOnHidden = promiseWithResolve();
+				},
+				onVisibleChange(event) {
+					onVisibleChangeCounter++;
+				},
 			},
 		});
 		alertEvents.directives.transitionDirective(element);

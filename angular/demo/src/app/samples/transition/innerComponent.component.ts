@@ -1,4 +1,3 @@
-import type {OnDestroy} from '@angular/core';
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {AgnosUIAngularModule} from '@agnos-ui/angular';
 import type {TransitionFn} from '@agnos-ui/core';
@@ -103,7 +102,7 @@ const paramRemoveFromDom$ = writable(true);
 		</div>
 	`,
 })
-export class InnerComponent implements OnDestroy {
+export class InnerComponent {
 	bootstrap = bootstrap;
 	paramTransition$ = paramTransition$;
 	paramAnimation$ = paramAnimation$;
@@ -111,11 +110,12 @@ export class InnerComponent implements OnDestroy {
 	paramVisible$ = paramVisible$;
 	paramRemoveFromDom$ = paramRemoveFromDom$;
 	transition = createTransition({
-		animationOnInit: paramAnimationOnInit$(),
-		animation: paramAnimation$(),
-		visible: paramVisible$(),
+		props: {
+			animationOnInit: paramAnimationOnInit$,
+			animation: paramAnimation$,
+			visible: paramVisible$,
+		},
 	});
-	private _unSyncParamVisible = this.transition.stores.visible$.subscribe(paramVisible$.set);
 
 	changeTransition(newTransition: TransitionFn) {
 		// Make sure the element is removed from the DOM
@@ -123,9 +123,5 @@ export class InnerComponent implements OnDestroy {
 		this.transition.api.toggle(false, false);
 		paramRemoveFromDom$.set(true);
 		paramTransition$.set(newTransition);
-	}
-
-	ngOnDestroy(): void {
-		this._unSyncParamVisible();
 	}
 }

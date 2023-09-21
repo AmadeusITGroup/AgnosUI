@@ -1,7 +1,16 @@
-import type {WritableSignal} from '@amadeus-it-group/tansu';
-import {writable} from '@amadeus-it-group/tansu';
+import type {WritableSignal, Updater} from '@amadeus-it-group/tansu';
+import {asReadable, computed, writable} from '@amadeus-it-group/tansu';
 import {beforeEach, describe, expect, test, vi} from 'vitest';
-import {bindableDerived, createPatch, findChangedProperties, INVALID_VALUE, stateStores, writablesWithDefault, writableWithDefault} from './stores';
+import {
+	bindableDerived,
+	createPatch,
+	findChangedProperties,
+	INVALID_VALUE,
+	mergeConfigStores,
+	stateStores,
+	writablesWithDefault,
+	writableWithDefault,
+} from './stores';
 
 describe(`Stores service`, () => {
 	describe('createPatch', () => {
@@ -76,6 +85,32 @@ describe(`Stores service`, () => {
 		});
 	});
 
+	describe('mergeConfigStores', () => {
+		test('Basic functionalities', () => {
+			const store1 = {a: writable(undefined as number | undefined), b: writable(1 as number | undefined)};
+			const store2 = {a: writable(2 as number | undefined), b: writable(undefined as number | undefined)};
+			const merged = mergeConfigStores(['a', 'b'], store1, store2);
+			const aValues: (number | undefined)[] = [];
+			const bValues: (number | undefined)[] = [];
+			merged.a?.subscribe((a) => aValues.push(a));
+			merged.b?.subscribe((b) => bValues.push(b));
+			expect(aValues).toEqual([2]);
+			expect(bValues).toEqual([1]);
+			store1.a.set(3);
+			expect(aValues).toEqual([2, 3]);
+			store1.b.set(undefined);
+			expect(bValues).toEqual([1, undefined]);
+			store2.b.set(4);
+			expect(bValues).toEqual([1, undefined, 4]);
+			store1.b.set(5);
+			expect(bValues).toEqual([1, undefined, 4, 5]);
+			store2.a.set(6);
+			expect(aValues).toEqual([2, 3]);
+			store1.a.set(undefined);
+			expect(aValues).toEqual([2, 3, 6]);
+		});
+	});
+
 	describe('writableWithDefault', () => {
 		test(`Basic functionalities`, () => {
 			const values: number[] = [];
@@ -97,6 +132,102 @@ describe(`Stores service`, () => {
 			expect(values).toEqual([0, 1, 0, 3, 4]);
 			store$.set(undefined);
 			expect(values).toEqual([0, 1, 0, 3, 4, 6]);
+		});
+
+		test(`Provided prop store`, () => {
+			const spyErrorLog = vi.spyOn(console, 'error').mockImplementation(() => {});
+			const storeValues: number[] = [];
+			const propValues: (number | undefined)[] = [];
+			const config$ = writable(9 as undefined | number);
+			const prop$ = writable(2 as undefined | number);
+			const store$ = writableWithDefault(
+				0,
+				config$,
+				{
+					normalizeValue(value) {
+						if (value < 0) {
+							// negative values are invalid
+							return INVALID_VALUE;
+						}
+						return value;
+					},
+				},
+				prop$
+			);
+			store$.subscribe((a) => storeValues.push(a));
+			prop$.subscribe((a) => propValues.push(a));
+			expect(propValues).toEqual([2]);
+			expect(storeValues).toEqual([2]);
+			config$.set(10); // no change
+			expect(propValues).toEqual([2]);
+			expect(storeValues).toEqual([2]);
+			prop$.set(5);
+			expect(propValues).toEqual([2, 5]);
+			expect(storeValues).toEqual([2, 5]);
+			expect(spyErrorLog).not.toBeCalled();
+			prop$.set(-1); // invalid value, replaced with value from config
+			expect(spyErrorLog).toBeCalledTimes(1);
+			expect(spyErrorLog.mock.calls[0][0]).to.match(/invalid value/i);
+			spyErrorLog.mockReset();
+			expect(propValues).toEqual([2, 5, -1]);
+			expect(storeValues).toEqual([2, 5, 10]);
+			store$.set(22);
+			expect(propValues).toEqual([2, 5, -1, 22]);
+			expect(storeValues).toEqual([2, 5, 10, 22]);
+			expect(spyErrorLog).not.toBeCalled();
+			store$.set(-2); // invalid value, ignored
+			expect(spyErrorLog).toBeCalledTimes(1);
+			expect(spyErrorLog.mock.calls[0][0]).to.match(/invalid value/i);
+			spyErrorLog.mockReset();
+			expect(propValues).toEqual([2, 5, -1, 22]);
+			expect(storeValues).toEqual([2, 5, 10, 22]);
+			prop$.set(undefined);
+			expect(propValues).toEqual([2, 5, -1, 22, undefined]);
+			expect(storeValues).toEqual([2, 5, 10, 22, 10]);
+		});
+
+		test(`Provided prop store with custom set`, () => {
+			const storeValues: number[] = [];
+			const config$ = writable(20 as number | undefined);
+			const refValues: (number | undefined)[] = [];
+			const refValue$ = writable(0 as number | undefined);
+			const prop$: WritableSignal<number | undefined> = asReadable(
+				computed(() => {
+					const refValue = refValue$();
+					return refValue !== undefined ? refValue + 1 : undefined;
+				}),
+				{
+					set(newValue: number | undefined) {
+						refValue$.set(newValue !== undefined ? newValue - 1 : undefined);
+					},
+					update(updater: Updater<number | undefined>) {
+						refValue$.update((curValue) => {
+							const res = updater(curValue !== undefined ? curValue + 1 : undefined);
+							return res !== undefined ? res - 1 : undefined;
+						});
+					},
+				}
+			);
+			const store$ = writableWithDefault(50, config$, undefined, prop$);
+			store$.subscribe((a) => storeValues.push(a));
+			refValue$.subscribe((a) => refValues.push(a));
+			expect(refValues).toEqual([0]);
+			expect(storeValues).toEqual([1]);
+			store$.set(5);
+			expect(refValues).toEqual([0, 4]);
+			expect(storeValues).toEqual([1, 5]);
+			store$.update((value) => value * 2);
+			expect(refValues).toEqual([0, 4, 9]);
+			expect(storeValues).toEqual([1, 5, 10]);
+			store$.set(undefined);
+			expect(refValues).toEqual([0, 4, 9, undefined]);
+			expect(storeValues).toEqual([1, 5, 10, 20]);
+			config$.set(undefined);
+			expect(refValues).toEqual([0, 4, 9, undefined]);
+			expect(storeValues).toEqual([1, 5, 10, 20, 50]);
+			refValue$.set(1);
+			expect(refValues).toEqual([0, 4, 9, undefined, 1]);
+			expect(storeValues).toEqual([1, 5, 10, 20, 50, 2]);
 		});
 
 		test(`Invalid values`, () => {
@@ -135,7 +266,7 @@ describe(`Stores service`, () => {
 		test(`Basic functionalities with a store`, () => {
 			const defConfig = {a: 1, b: 2};
 			const config$ = writable<Partial<typeof defConfig>>({});
-			const props = writablesWithDefault(defConfig, config$);
+			const props = writablesWithDefault(defConfig, {config: config$});
 			const a: number[] = [];
 			const b: number[] = [];
 			const unsubscribeA = props.a$.subscribe((value) => a.push(value));
@@ -161,7 +292,7 @@ describe(`Stores service`, () => {
 		test(`Basic functionalities with an object containing a store and a value`, () => {
 			const defConfig = {a: 1, b: 2};
 			const config = {a: writable(4 as number | undefined), b: 3};
-			const props = writablesWithDefault(defConfig, config);
+			const props = writablesWithDefault(defConfig, {config});
 			const a: number[] = [];
 			const b: number[] = [];
 			const unsubscribeA = props.a$.subscribe((value) => a.push(value));
@@ -191,17 +322,21 @@ describe(`Stores service`, () => {
 			const spyErrorLog = vi.spyOn(console, 'error');
 			const defConfig = {a: 1, b: 2};
 			const config$ = writable<Partial<typeof defConfig>>({});
-			const props = writablesWithDefault(defConfig, config$, {
-				a: {
-					normalizeValue(value) {
-						if (value < 0) {
-							// negative values are invalid
-							return INVALID_VALUE;
-						}
-						return value;
+			const props = writablesWithDefault(
+				defConfig,
+				{config: config$},
+				{
+					a: {
+						normalizeValue(value) {
+							if (value < 0) {
+								// negative values are invalid
+								return INVALID_VALUE;
+							}
+							return value;
+						},
 					},
-				},
-			});
+				}
+			);
 			const a: number[] = [];
 			props.a$.subscribe((value) => a.push(value));
 			expect(a).toEqual([1]);

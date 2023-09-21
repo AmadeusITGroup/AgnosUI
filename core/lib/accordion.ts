@@ -1,4 +1,4 @@
-import type {ConfigValidator, PropsConfig} from './services';
+import type {ConfigValidator, PropsConfig, ReadableSignals} from './services';
 import {
 	bindDirectiveNoArg,
 	bindableDerived,
@@ -9,6 +9,8 @@ import {
 	typeFunction,
 	typeString,
 	writablesForProps,
+	normalizeConfigStores,
+	mergeConfigStores,
 } from './services';
 import type {TransitionFn} from './transitions';
 import {createTransition} from './transitions';
@@ -218,7 +220,7 @@ export interface AccordionApi {
 	 */
 	collapseAll(): void;
 	/**
-	 * Creates a new in accordionItem.
+	 * Creates a new accordionItem.
 	 */
 	registerItem(itemConfig?: PropsConfig<AccordionItemProps>): AccordionItemWidget;
 }
@@ -404,6 +406,8 @@ const defaultItemConfig: AccordionItemProps = {
 	itemCollapseClass: defaultAccordionConfig.itemCollapseClass,
 	itemBodyClass: defaultAccordionConfig.itemBodyClass,
 };
+const accordionItemProps = Object.keys(defaultItemConfig) as (keyof AccordionItemProps)[];
+
 /**
  * Retrieve a shallow copy of the default accordion config
  * @returns the default accordion config
@@ -476,19 +480,21 @@ function createAccordionItem(
 		return itemDestroyOnHide$() === false || !itemTransition.state$().hidden;
 	});
 	const itemTransition = createTransition({
-		transition: itemTransition$,
-		visible: itemVisible$,
-		onVisibleChange: onItemVisibleChange$,
-		animation: itemAnimation$,
-		animationOnInit: false,
-		initDone: initDone$,
-		onHidden: () => {
-			accordionOnHidden()(itemId$());
-			onItemHidden$()();
-		},
-		onShown: () => {
-			accordionOnShown()(itemId$());
-			onItemShown$()();
+		props: {
+			transition: itemTransition$,
+			visible: itemVisible$,
+			onVisibleChange: onItemVisibleChange$,
+			animation: itemAnimation$,
+			animationOnInit: false,
+			initDone: initDone$,
+			onHidden: () => {
+				accordionOnHidden()(itemId$());
+				onItemHidden$()();
+			},
+			onShown: () => {
+				accordionOnShown()(itemId$());
+				onItemShown$()();
+			},
 		},
 	});
 
@@ -557,6 +563,25 @@ export function createAccordion(config?: PropsConfig<AccordionProps>): Accordion
 		},
 		patch,
 	] = writablesForProps(defaultAccordionConfig, config, configAccordionValidator);
+	const accordionItemConfig: ReadableSignals<AccordionItemProps> = {
+		itemId: itemId$,
+		itemClass: itemClass$,
+		itemAnimation: itemAnimation$,
+		itemDisabled: itemDisabled$,
+		itemVisible: itemVisible$,
+		itemTransition: itemTransition$,
+		itemDestroyOnHide: itemDestroyOnHide$,
+		itemBodyClass: itemBodyClass$,
+		itemButtonClass: itemButtonClass$,
+		itemCollapseClass: itemCollapseClass$,
+		itemHeaderClass: itemHeaderClass$,
+		onItemVisibleChange: onItemVisibleChange$,
+		onItemHidden: onItemHidden$,
+		onItemShown: onItemShown$,
+		slotItemStructure: slotItemStructure$,
+		slotItemBody: slotItemBody$,
+		slotItemHeader: slotItemHeader$,
+	};
 	const itemsWidget$ = registrationArray<AccordionItemWidget>();
 	const openItems$ = computed(() => {
 		const openItems: string[] = [];
@@ -609,31 +634,11 @@ export function createAccordion(config?: PropsConfig<AccordionProps>): Accordion
 			collapseAll: () => {
 				itemsWidget$().forEach((i) => i.api.collapse());
 			},
-			registerItem: (itemConfig?: ReadableSignal<Partial<AccordionItemProps>>) => {
-				const item = createAccordionItem(
-					onShown$,
-					onHidden$,
-					computed(() => ({
-						itemId: itemId$(),
-						itemClass: itemClass$(),
-						itemAnimation: itemAnimation$(),
-						itemDisabled: itemDisabled$(),
-						itemVisible: itemVisible$(),
-						itemTransition: itemTransition$(),
-						itemDestroyOnHide: itemDestroyOnHide$(),
-						itemBodyClass: itemBodyClass$(),
-						itemButtonClass: itemButtonClass$(),
-						itemCollapseClass: itemCollapseClass$(),
-						itemHeaderClass: itemHeaderClass$(),
-						onItemVisibleChange: onItemVisibleChange$(),
-						onItemHidden: onItemHidden$(),
-						onItemShown: onItemShown$(),
-						slotItemStructure: slotItemStructure$(),
-						slotItemBody: slotItemBody$(),
-						slotItemHeader: slotItemHeader$(),
-						...itemConfig?.(),
-					}))
-				);
+			registerItem: (propsConfig?: PropsConfig<AccordionItemProps>) => {
+				const item = createAccordionItem(onShown$, onHidden$, {
+					config: mergeConfigStores(accordionItemProps, normalizeConfigStores(accordionItemProps, propsConfig?.config), accordionItemConfig),
+					props: propsConfig?.props,
+				});
 				item.directives.accordionItemDirective = () => ({destroy: itemsWidget$.register(item)});
 				return item;
 			},
