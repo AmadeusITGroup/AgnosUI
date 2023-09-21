@@ -17,9 +17,11 @@
 		directives: {directive},
 		patch,
 	} = createTransition({
-		animationOnInit: $paramAnimationOnInit$,
-		animation: $paramAnimation$,
-		visible: $paramVisible$,
+		props: {
+			animationOnInit: paramAnimationOnInit$,
+			animation: paramAnimation$,
+			visible: paramVisible$,
+		},
 	});
 
 	const checkBoxVisible$ = {
@@ -34,8 +36,6 @@
 		$paramRemoveFromDom$ = true;
 		$paramTransition$ = newTransition;
 	};
-
-	$: $paramVisible$ = $visible$;
 </script>
 
 <div class="transition-inner">

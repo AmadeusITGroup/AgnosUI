@@ -28,8 +28,10 @@ describe('createSimpleClassTransition', () => {
 			showClasses: ['show'],
 		});
 		transition = createTransition({
-			visible: false,
-			transition: myTransition,
+			props: {
+				visible: false,
+				transition: myTransition,
+			},
 		});
 		directiveInstance = transition.directives.directive(element);
 	});

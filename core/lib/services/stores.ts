@@ -1,13 +1,21 @@
-import {batch, computed, derived, get, readable, writable, asReadable} from '@amadeus-it-group/tansu';
-import type {ReadableSignal, Updater, WritableSignal, StoreOptions, StoreInput, StoresInputValues} from '@amadeus-it-group/tansu';
+import type {ReadableSignal, StoreInput, StoreOptions, StoresInputValues, Updater, WritableSignal} from '@amadeus-it-group/tansu';
+import {asReadable, batch, computed, derived, get, readable, writable} from '@amadeus-it-group/tansu';
 import {identity} from '../utils';
 
 export type ToWritableSignal<P, V = P> = {
 	[K in keyof P & keyof V as `${K & string}$`]-?: WritableSignal<P[K], V[K] | undefined>;
 };
 
-export type ValuesOrStores<T extends object> = {
-	[K in keyof T]?: ReadableSignal<T[K]> | T[K];
+export type ReadableSignals<T extends object> = {
+	[K in keyof T]?: ReadableSignal<T[K] | undefined>;
+};
+
+export type ValuesOrReadableSignals<T extends object> = {
+	[K in keyof T]?: ReadableSignal<T[K] | undefined> | T[K];
+};
+
+export type ValuesOrWritableSignals<T extends object> = {
+	[K in keyof T]?: WritableSignal<T[K] | undefined> | T[K];
 };
 
 export type WithoutDollar<S extends `${string}$`> = S extends `${infer U}$` ? U : never;
@@ -92,7 +100,6 @@ export interface WritableWithDefaultOptions<T, U = T> {
 	equal?: StoreOptions<T>['equal'];
 }
 
-/* eslint-disable jsdoc/check-param-names, jsdoc/require-param */
 /**
  * Returns a writable store whose value is either its own value (when it is not undefined) or a default value
  * that comes either from the `config$` store (when it is not undefined) or from `defValue`.
@@ -102,57 +109,95 @@ export interface WritableWithDefaultOptions<T, U = T> {
  * `set` or `update` functions), or the `defValue` is used instead (if the invalid value comes from the `config$` store).
  *
  * @param defValue - Default value used when both the own value and the config$ value are undefined.
- * @param config$ - Default value used when the own value is undefined
+ * @param config$ - Store containing the default value used when the own value is undefined
  * @param options - Object which can contain the following optional functions: normalizeValue and equal
+ * @param own$ - Store containing the own value
  * @returns a writable store with the extra default value and normalization logic described above
  */
-export function writableWithDefault<T, U = T>(
+export function writableWithDefault<T extends U, U = T>(
 	defValue: T,
 	config$: ReadableSignal<U | undefined> = readable(undefined),
-	{normalizeValue = identity as any, equal = Object.is}: WritableWithDefaultOptions<T, U> = {}
+	options: WritableWithDefaultOptions<T, U> = {},
+	own$: WritableSignal<U | undefined> = writable(undefined)
 ): WritableSignal<T, U | undefined> {
-	const own$ = writable(undefined as T | undefined);
-	const validatedDefConfig$ = computed(
-		() => {
-			const value = config$();
-			const normalizedValue = value === undefined ? undefined : normalizeValue(value);
-			if (normalizedValue === INVALID_VALUE) {
-				console.error('Not using invalid value from default config', value);
-				return defValue;
-			}
-			if (normalizedValue === undefined) {
-				return defValue;
-			}
-			return normalizedValue as T;
-		},
-		{equal}
-	);
-	return asReadable(
-		computed(
-			() => {
-				const ownValue = own$();
-				return ownValue !== undefined ? ownValue : validatedDefConfig$();
-			},
-			{equal}
-		),
-		{
-			set(value: U | undefined) {
-				const normalizedValue = value === undefined ? undefined : normalizeValue(value);
+	const {normalizeValue = identity as any, equal = Object.is} = options;
+	const getDefValue = () => defValue;
+	const callNormalizeValue = (value: U | undefined, defValue = getDefValue) => {
+		const normalizedValue = value === undefined ? undefined : normalizeValue(value);
+		if (normalizedValue === INVALID_VALUE) {
+			console.error('Not using invalid value', value);
+			return defValue();
+		}
+		if (normalizedValue === undefined) {
+			return defValue();
+		}
+		return normalizedValue as T;
+	};
+	const validatedDefConfig$ = computed(() => callNormalizeValue(config$()), {equal});
+	const validatedOwnValue$ = computed(() => callNormalizeValue(own$(), validatedDefConfig$), {equal});
+	return asReadable(validatedOwnValue$, {
+		set(value: U | undefined) {
+			if (value !== undefined) {
+				const normalizedValue = normalizeValue(value);
 				if (normalizedValue === INVALID_VALUE) {
 					console.error('Not setting invalid value', value);
-				} else {
-					own$.set(normalizedValue as T);
+					return;
 				}
-			},
-			update,
-		}
-	);
+				value = normalizedValue as T;
+			}
+			own$.set(value);
+		},
+		update,
+	});
 }
-/* eslint-enable */
 
 export type ConfigValidator<T extends object, U extends object = T> = {[K in keyof T & keyof U]?: WritableWithDefaultOptions<T[K], U[K]>};
 
-const isStore = (x: any): x is ReadableSignal<any> => !!(x && typeof x === 'function' && 'subscribe' in x);
+/**
+ * Returns true if the provided argument is a store (ReadableSignal).
+ * @param x - argument that is tested
+ * @returns true if the argument is a store (ReadableSignal)
+ */
+export const isStore = (x: any): x is ReadableSignal<any> => !!(x && typeof x === 'function' && 'subscribe' in x);
+
+/**
+ * If the provided argument is already a store, it is returned as is, otherwise, a readable store is created with the provided argument as its initial value.
+ * @param x - either a store or a simple value
+ * @returns either x if x is already a store, or readable(x) otherwise
+ */
+export const toReadableStore = <T>(x: ReadableSignal<T> | T) => (isStore(x) ? x : readable(x));
+
+/**
+ * If the provided argument is already a store, it is returned as is, otherwise, a writable store is created with the provided argument as its initial value.
+ * @param x - either a writable store or a simple value
+ * @returns either x if x is already a store, or writable(x) otherwise
+ */
+export const toWritableStore = <T>(x: WritableSignal<T> | T) => (isStore(x) ? x : writable(x));
+
+export const normalizeConfigStores = <T extends object>(
+	keys: (keyof T)[],
+	config?: ReadableSignal<T> | ValuesOrReadableSignals<T>
+): ReadableSignals<T> => {
+	const res: ReadableSignals<T> = {};
+	if (config) {
+		const configIsStore = isStore(config);
+		for (const key of keys) {
+			res[key] = configIsStore
+				? computed(() => config()[key])
+				: toReadableStore(config[key] as ReadableSignal<T[typeof key] | undefined> | T[typeof key] | undefined);
+		}
+	}
+	return res;
+};
+export const mergeConfigStores = <T extends object>(keys: (keyof T)[], config1?: ReadableSignals<T>, config2?: ReadableSignals<T>) => {
+	const res: ReadableSignals<T> = {};
+	for (const key of keys) {
+		const config1Store = config1?.[key];
+		const config2Store = config2?.[key];
+		res[key] = config1Store && config2Store ? computed(() => config1Store() ?? config2Store()) : config1Store || config2Store;
+	}
+	return res;
+};
 
 /**
  * Returns an object containing, for each property of `defConfig`, a corresponding writable with the normalization and default value logic
@@ -161,8 +206,7 @@ const isStore = (x: any): x is ReadableSignal<any> => !!(x && typeof x === 'func
  *
  * @param defConfig - object containing, for each property, a default value to use in case `config$` does not provide the suitable default
  * value for that property
- * @param config - either a store of objects containing, for each property of `defConfig`, the default value or an object containing
- * for each property of `defConfig` either a store containing the default value or the default value itself
+ * @param propsConfig - object defining the config and props
  * @param options - object containing, for each property of `defConfig`, an optional object with the following optional functions: normalizeValue and equal
  * @returns an object containing writables
  *
@@ -170,8 +214,8 @@ const isStore = (x: any): x is ReadableSignal<any> => !!(x && typeof x === 'func
  * ```ts
  * const defConfig = {propA: 1};
  * const validation = {propA: {normalizeValue: value => +value}};
- * const config$ = writable({propA: 5});
- * const {propA$} = writablesWithDefault(defConfig, config$, validation);
+ * const config = writable({propA: 5});
+ * const {propA$} = writablesWithDefault(defConfig, {config}, validation);
  * ```
  *
  * @example With an object containing a value and a store
@@ -179,23 +223,21 @@ const isStore = (x: any): x is ReadableSignal<any> => !!(x && typeof x === 'func
  * const defConfig = {propA: 1, propB: 2};
  * const validation = {propA: {normalizeValue: value => +value}};
  * const config = {propA: 5, propB: writable(3)};
- * const {propA$, propB$} = writablesWithDefault(defConfig, config, validation);
+ * const {propA$, propB$} = writablesWithDefault(defConfig, {config}, validation);
  * ```
  */
-export const writablesWithDefault = <T extends object, U extends object = T>(
+export const writablesWithDefault = <T extends U, U extends object = T>(
 	defConfig: T,
-	config?: PropsConfig<U>,
+	propsConfig?: PropsConfig<U>,
 	options?: ConfigValidator<T, U>
 ): ToWritableSignal<T, U> => {
 	const res: any = {};
-	const configIsStore = isStore(config);
-	for (const key of Object.keys(defConfig) as (string & keyof T & keyof U)[]) {
-		let store: ReadableSignal<any> | undefined = configIsStore ? computed(() => config()[key]) : undefined;
-		if (!configIsStore && config) {
-			const value = config[key];
-			store = isStore(value) ? value : readable(value);
-		}
-		res[`${key}$`] = writableWithDefault(defConfig[key], store, options?.[key]);
+	const keys = Object.keys(defConfig) as (string & keyof T & keyof U)[];
+	const configStores = normalizeConfigStores(keys, propsConfig?.config);
+	const props = propsConfig?.props;
+	for (const key of keys) {
+		const propValue = props?.[key] as undefined | WritableSignal<U[typeof key] | undefined> | U[typeof key];
+		res[`${key}$`] = writableWithDefault(defConfig[key], configStores[key], options?.[key], toWritableStore(propValue));
 	}
 	return res as ToWritableSignal<T, U>;
 };
@@ -204,7 +246,7 @@ export const writablesWithDefault = <T extends object, U extends object = T>(
  * Shortcut for calling both {@link writablesWithDefault} and {@link createPatch} in one call.
  * @param defConfig - object containing, for each property, a default value to use in case `config` does not provide the suitable default
  * value for that property
- * @param config - either a store of objects containing, for each property of `defConfig`, the default value or an object containing
+ * @param propsConfig - either a store of objects containing, for each property of `defConfig`, the default value or an object containing
  * for each property of `defConfig` either a store containing the default value or the default value itself
  * @param options - object containing, for each property of `defConfig`, an optional object with the following optional functions: normalizeValue and equal
  * @returns an array with two items: the first one containing the writables (returned by {@link writablesWithDefault}),
@@ -226,16 +268,28 @@ export const writablesWithDefault = <T extends object, U extends object = T>(
  * const [{propA$, propB$}, patch] = writablesForProps(defConfig, config, validation);
  * ```
  */
-export const writablesForProps = <T extends object, U extends object = T>(
+export const writablesForProps = <T extends U, U extends object = T>(
 	defConfig: T,
-	config?: PropsConfig<U>,
+	propsConfig?: PropsConfig<U>,
 	options?: {[K in keyof T & keyof U]?: WritableWithDefaultOptions<T[K], U[K]>}
 ): [ToWritableSignal<T, U>, ReturnType<typeof createPatch<T, U>>] => {
-	const stores = writablesWithDefault(defConfig, config, options);
+	const stores = writablesWithDefault(defConfig, propsConfig, options);
 	return [stores, createPatch(stores)];
 };
 
-export type PropsConfig<T extends object> = ReadableSignal<Partial<T>> | ValuesOrStores<T>;
+export interface PropsConfig<U extends object> {
+	/**
+	 * Object containing, for each property, either its initial value, or a store that will contain the value at any time.
+	 * When the value of a property is undefined or invalid, the value from the config is used.
+	 */
+	props?: ValuesOrWritableSignals<U>;
+
+	/**
+	 * Either a store of objects containing, for each property, the default value,
+	 * or an object containing, for each property, either a store containing the default value or the default value itself.
+	 */
+	config?: ReadableSignal<Partial<U>> | ValuesOrReadableSignals<Partial<U>>;
+}
 
 export const stateStores = <A extends {[key in `${string}$`]: ReadableSignal<any>}>(
 	inputStores: A

@@ -161,13 +161,15 @@ export function createAlert(config?: PropsConfig<AlertProps>): AlertWidget {
 	] = writablesForProps(defaultConfig, config, configValidator);
 
 	const transition = createTransition({
-		transition: transition$,
-		visible: requestedVisible$,
-		animation: animation$,
-		animationOnInit: animationOnInit$,
-		onVisibleChange: onVisibleChange$,
-		onHidden: onHidden$,
-		onShown: onShown$,
+		props: {
+			transition: transition$,
+			visible: requestedVisible$,
+			animation: animation$,
+			animationOnInit: animationOnInit$,
+			onVisibleChange: onVisibleChange$,
+			onHidden: onHidden$,
+			onShown: onShown$,
+		},
 	});
 	const close = () => {
 		patch({visible: false});

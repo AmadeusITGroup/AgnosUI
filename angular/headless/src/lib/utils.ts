@@ -167,9 +167,9 @@ export const callWidgetFactory = <W extends Widget>(
 	const slots$ = writable({});
 	const widgetsConfig = widgetName ? inject(widgetsConfigInjectionToken, {optional: true}) : undefined;
 	return {
-		...(factory(
-			computed(() => ({...(defaultConfigStore() as any), ...(widgetName ? widgetsConfig?.()[widgetName] : undefined), ...slots$()}))
-		) as any),
+		...(factory({
+			config: computed(() => ({...(defaultConfigStore() as any), ...(widgetName ? widgetsConfig?.()[widgetName] : undefined), ...slots$()})),
+		}) as any),
 		patchSlots: createPatchSlots(slots$.set),
 	};
 };
