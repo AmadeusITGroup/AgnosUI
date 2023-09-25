@@ -69,12 +69,12 @@ export class AccordionItemStructureDirective {
 					type="button"
 					id="{{ state.itemId }}-toggle"
 					(click)="widget.actions.click()"
-					[class.collapsed]="state.itemCollapsed"
+					[class.collapsed]="!state.itemVisible"
 					class="accordion-button {{ state.itemButtonClass }}"
 					[disabled]="state.itemDisabled"
 					attr.aria-controls="{{ state.itemId }}-collapse"
 					[attr.aria-disabled]="state.itemDisabled"
-					[attr.aria-expanded]="!state.itemCollapsed"
+					[attr.aria-expanded]="state.itemVisible"
 				>
 					<ng-template [auSlotProps]="{state, widget}" [auSlot]="state.slotItemHeader"></ng-template>
 				</button>
@@ -151,10 +151,11 @@ export class AccordionItemComponent implements OnChanges, AfterContentChecked, A
 	 * It will not react to user's clicks, but still will be possible to toggle programmatically.
 	 */
 	@Input('auItemDisabled') itemDisabled: boolean | undefined;
+
 	/**
-	 * If `true`, the accordion-item will be collapsed. Otherwise, it will be expanded.
+	 * If `true`, the accordion-item will be visible (expanded). Otherwise, it will be hidden (collapsed).
 	 */
-	@Input('auItemCollapsed') itemCollapsed: boolean | undefined;
+	@Input('auItemVisible') itemVisible: boolean | undefined;
 	/**
 	 * If `true`, accordion-item will be animated.
 	 */
@@ -184,11 +185,11 @@ export class AccordionItemComponent implements OnChanges, AfterContentChecked, A
 	 */
 	@Output('auItemHidden') itemHidden = new EventEmitter<void>();
 	/**
-	 * An event fired when the `collapsed` value changes.
+	 * An event fired when the `visible` value changes.
 	 *
-	 * Event payload is the new value of collapsed.
+	 * Event payload is the new value of visible.
 	 */
-	@Output('auItemCollapsedChange') itemCollapsedChange = new EventEmitter<boolean>();
+	@Output('auItemVisibleChange') itemVisibleChange = new EventEmitter<boolean>();
 
 	defaultSlots = writable(defaultConfig);
 	readonly ad = inject(AccordionDirective);
@@ -201,7 +202,7 @@ export class AccordionItemComponent implements OnChanges, AfterContentChecked, A
 
 	constructor() {
 		this._widget.patch({
-			onItemCollapsedChange: (collapsed) => this.itemCollapsedChange.emit(collapsed),
+			onItemVisibleChange: (visible) => this.itemVisibleChange.emit(visible),
 			onItemHidden: () => this.itemHidden.emit(),
 			onItemShown: () => this.itemShown.emit(),
 		});
@@ -294,12 +295,13 @@ export class AccordionDirective implements OnChanges {
 	 * It is a prop of the accordion-item.
 	 */
 	@Input('auItemDisabled') itemDisabled: boolean | undefined;
+
 	/**
-	 * If `true`, the accordion-item will be collapsed. Otherwise, it will be expanded.
+	 * If `true`, the accordion-item will be visible (expanded). Otherwise, it will be hidden (collapsed).
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	@Input('auItemCollapsed') itemCollapsed: boolean | undefined;
+	@Input('auItemVisible') itemVisible: boolean | undefined;
 	/**
 	 * If `true`, accordion-item will be animated.
 	 *
@@ -360,13 +362,13 @@ export class AccordionDirective implements OnChanges {
 	 */
 	@Output('auItemHidden') itemHidden = new EventEmitter<void>();
 	/**
-	 * An event fired when the `collapsed` value changes.
+	 * An event fired when the `visible` value changes.
 	 *
-	 * Event payload is the new value of collapsed.
+	 * Event payload is the new value of visible.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	@Output('auItemCollapsedChange') itemCollapsedChange = new EventEmitter<boolean>();
+	@Output('auItemVisibleChange') itemVisibleChange = new EventEmitter<boolean>();
 
 	readonly _widget = callWidgetFactory(createAccordion, 'accordion', {});
 	readonly api = this._widget.api;
@@ -385,7 +387,7 @@ export class AccordionDirective implements OnChanges {
 			},
 		});
 		this._widget.patch({
-			onItemCollapsedChange: (collapsed) => this.itemCollapsedChange.emit(collapsed),
+			onItemVisibleChange: (visible) => this.itemVisibleChange.emit(visible),
 			onItemHidden: () => this.itemHidden.emit(),
 			onItemShown: () => this.itemShown.emit(),
 			onShown: (id) => this.shown.emit(id),

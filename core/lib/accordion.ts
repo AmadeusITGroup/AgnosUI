@@ -26,20 +26,18 @@ function getItemId() {
 }
 
 function adjustItemsCloseOthers(items: AccordionItemWidget[], openItems: string[], oldOpen?: string): AccordionItemWidget[] {
+	let keepOpen: undefined | string;
 	if (openItems.length == 2) {
 		oldOpen = oldOpen ?? openItems[0];
-		const keepOpen = openItems.find((id) => id !== oldOpen)!;
-		items.forEach((item) => {
-			if (item.state$().itemId !== keepOpen && !item.state$().itemCollapsed) {
-				item.patch({itemCollapsed: true});
-			}
-		});
+		keepOpen = openItems.find((id) => id !== oldOpen)!;
 	} else if (openItems.length > 2) {
 		//this case can happen when you have multiple items open and you toggle the close others
-		const keepOpen = openItems[0];
+		keepOpen = openItems[0];
+	}
+	if (keepOpen) {
 		items.forEach((item) => {
-			if (item.state$().itemId !== keepOpen && !item.state$().itemCollapsed) {
-				item.patch({itemCollapsed: true});
+			if (item.state$().itemId !== keepOpen && item.state$().itemVisible) {
+				item.patch({itemVisible: false});
 			}
 		});
 	}
@@ -88,11 +86,11 @@ export interface AccordionProps extends WidgetsCommonPropsAndState {
 	 */
 	itemDisabled: boolean;
 	/**
-	 * If `true`, the accordion-item will be collapsed. Otherwise, it will be expanded.
+	 * If `true`, the accordion-item will be visible (expanded). Otherwise, it will be hidden (collapsed).
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	itemCollapsed: boolean;
+	itemVisible: boolean;
 	/**
 	 * If `true`, accordion-item will be animated.
 	 *
@@ -118,13 +116,13 @@ export interface AccordionProps extends WidgetsCommonPropsAndState {
 	 */
 	onItemHidden: () => void;
 	/**
-	 * An event fired when the `collapsed` value changes.
+	 * An event fired when the `visible` value changes.
 	 *
-	 * Event payload is the new value of collapsed.
+	 * Event payload is the new value of visible.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	onItemCollapsedChange: (collapsed: boolean) => void;
+	onItemVisibleChange: (visible: boolean) => void;
 	/**
 	 * Structure of the accordion-item. The default item structure is: accordion-item
 	 * contains accordion header and accordion collapse; the accordion header contains the accordion button
@@ -186,7 +184,7 @@ export interface AccordionState extends WidgetsCommonPropsAndState {
 
 export interface AccordionApi {
 	/**
-	 * Given the itemId, it will return if such item is expanded or not.
+	 * Given the itemId, it will return if such item is visible (expanded) or not.
 	 *
 	 * If the itemId is not a valid id it will return `false`.
 	 */
@@ -276,9 +274,9 @@ export interface AccordionItemDirectives {
 
 export interface AccordionItemCommonPropsAndState {
 	/**
-	 * If `true`, the accordion-item will be collapsed. Otherwise, it will be expanded.
+	 * If `true`, the accordion-item will be visible (expanded). Otherwise, it will be hidden (collapsed).
 	 */
-	itemCollapsed: boolean;
+	itemVisible: boolean;
 	/**
 	 * If `true`, the accordion-item will be disabled.
 	 * It will not react to user's clicks, but still will be possible to toggle programmatically.
@@ -346,17 +344,17 @@ export interface AccordionItemProps extends AccordionItemCommonPropsAndState {
 	 */
 	onItemHidden: () => void;
 	/**
-	 * An event fired when the `collapsed` value changes.
+	 * An event fired when the `visible` value changes.
 	 *
-	 * Event payload is the new value of collapsed.
+	 * Event payload is the new value of visible.
 	 */
-	onItemCollapsedChange: (collapsed: boolean) => void;
+	onItemVisibleChange: (visible: boolean) => void;
 }
 
 export interface AccordionItemState extends AccordionItemCommonPropsAndState {
 	/**
-	 * If `true` the collapse inside the accordion-item should be in DOM. Its value depends on the
-	 * value of the `itemCollapse` and `itemDestroyOnHide`.
+	 * If `true` the content of the accordion-item collapse should be in DOM. Its value depends on the
+	 * value of the `itemVisible` and `itemDestroyOnHide`.
 	 */
 	shouldBeInDOM: boolean;
 }
@@ -371,12 +369,12 @@ const defaultAccordionConfig: AccordionProps = {
 	itemId: '',
 	itemDestroyOnHide: false,
 	itemDisabled: false,
-	itemCollapsed: true,
+	itemVisible: false,
 	itemAnimation: true,
 	itemTransition: collapseVerticalTransition,
 	onItemShown: noop,
 	onItemHidden: noop,
-	onItemCollapsedChange: noop,
+	onItemVisibleChange: noop,
 	slotItemStructure: undefined,
 	slotItemBody: undefined,
 	slotItemHeader: undefined,
@@ -391,12 +389,12 @@ const defaultItemConfig: AccordionItemProps = {
 	itemId: defaultAccordionConfig.itemId,
 	itemDestroyOnHide: defaultAccordionConfig.itemDestroyOnHide,
 	itemDisabled: defaultAccordionConfig.itemDisabled,
-	itemCollapsed: defaultAccordionConfig.itemCollapsed,
+	itemVisible: defaultAccordionConfig.itemVisible,
 	itemAnimation: defaultAccordionConfig.itemAnimation,
 	itemTransition: defaultAccordionConfig.itemTransition,
 	onItemShown: defaultAccordionConfig.onItemShown,
 	onItemHidden: defaultAccordionConfig.onItemHidden,
-	onItemCollapsedChange: defaultAccordionConfig.onItemCollapsedChange,
+	onItemVisibleChange: defaultAccordionConfig.onItemVisibleChange,
 	slotItemStructure: defaultAccordionConfig.slotItemStructure,
 	slotItemBody: defaultAccordionConfig.slotItemBody,
 	slotItemHeader: defaultAccordionConfig.slotItemHeader,
@@ -421,12 +419,12 @@ const configAccordionValidator: ConfigValidator<AccordionProps> = {
 	itemId: typeString,
 	itemDestroyOnHide: typeBoolean,
 	itemDisabled: typeBoolean,
-	itemCollapsed: typeBoolean,
+	itemVisible: typeBoolean,
 	itemAnimation: typeBoolean,
 	itemTransition: typeFunction,
 	onItemShown: typeFunction,
 	onItemHidden: typeFunction,
-	onItemCollapsedChange: typeFunction,
+	onItemVisibleChange: typeFunction,
 	itemClass: typeString,
 	itemHeaderClass: typeString,
 	itemButtonClass: typeString,
@@ -438,12 +436,12 @@ const configItemValidator: ConfigValidator<AccordionItemProps> = {
 	itemId: typeString,
 	itemDestroyOnHide: typeBoolean,
 	itemDisabled: typeBoolean,
-	itemCollapsed: typeBoolean,
+	itemVisible: typeBoolean,
 	itemAnimation: typeBoolean,
 	itemTransition: typeFunction,
 	onItemShown: typeFunction,
 	onItemHidden: typeFunction,
-	onItemCollapsedChange: typeFunction,
+	onItemVisibleChange: typeFunction,
 	itemClass: typeString,
 	itemHeaderClass: typeString,
 	itemButtonClass: typeString,
@@ -463,8 +461,8 @@ function createAccordionItem(
 			itemDestroyOnHide$,
 			onItemShown$,
 			onItemHidden$,
-			onItemCollapsedChange$,
-			itemCollapsed$,
+			onItemVisibleChange$,
+			itemVisible$,
 			itemId$: _dirtyItemId$,
 			itemDisabled$,
 			...stateProps
@@ -479,11 +477,8 @@ function createAccordionItem(
 	});
 	const itemTransition = createTransition({
 		transition: itemTransition$,
-		visible: computed(() => {
-			const collapsed = itemCollapsed$();
-			onItemCollapsedChange$()(collapsed);
-			return !collapsed;
-		}),
+		visible: itemVisible$,
+		onVisibleChange: onItemVisibleChange$,
 		animation: itemAnimation$,
 		animationOnInit: false,
 		initDone: initDone$,
@@ -499,7 +494,7 @@ function createAccordionItem(
 
 	return {
 		...stateStores({
-			itemCollapsed$,
+			itemVisible$,
 			itemId$,
 			shouldBeInDOM$,
 			itemDisabled$,
@@ -509,7 +504,7 @@ function createAccordionItem(
 		actions: {
 			click: () => {
 				if (!itemDisabled$()) {
-					itemCollapsed$.update((c: boolean) => !c);
+					itemVisible$.update((c: boolean) => !c);
 				}
 			},
 		},
@@ -518,13 +513,13 @@ function createAccordionItem(
 				initDone$.set(true);
 			},
 			collapse: () => {
-				itemCollapsed$.set(true);
+				itemVisible$.set(false);
 			},
 			expand: () => {
-				itemCollapsed$.set(false);
+				itemVisible$.set(true);
 			},
 			toggle: () => {
-				itemCollapsed$.update((c: boolean) => !c);
+				itemVisible$.update((c: boolean) => !c);
 			},
 		},
 		directives: {collapseDirective: bindDirectiveNoArg(itemTransition.directives.directive), accordionItemDirective: noop},
@@ -545,14 +540,14 @@ export function createAccordion(config?: PropsConfig<AccordionProps>): Accordion
 			itemAnimation$,
 			itemClass$,
 			itemDisabled$,
-			itemCollapsed$,
+			itemVisible$,
 			itemTransition$,
 			itemDestroyOnHide$,
 			itemBodyClass$,
 			itemButtonClass$,
 			itemCollapseClass$,
 			itemHeaderClass$,
-			onItemCollapsedChange$,
+			onItemVisibleChange$,
 			onItemHidden$,
 			onItemShown$,
 			slotItemStructure$,
@@ -566,7 +561,7 @@ export function createAccordion(config?: PropsConfig<AccordionProps>): Accordion
 	const openItems$ = computed(() => {
 		const openItems: string[] = [];
 		itemsWidget$().forEach((item) => {
-			if (!item.state$().itemCollapsed) {
+			if (item.state$().itemVisible) {
 				openItems.push(item.state$().itemId);
 			}
 		});
@@ -594,7 +589,7 @@ export function createAccordion(config?: PropsConfig<AccordionProps>): Accordion
 			isExpanded: (id: string) => {
 				const item = getItem(itemsWidget$(), id);
 				if (item) {
-					return !item.state$().itemCollapsed;
+					return item.state$().itemVisible;
 				} else {
 					return false;
 				}
@@ -623,14 +618,14 @@ export function createAccordion(config?: PropsConfig<AccordionProps>): Accordion
 						itemClass: itemClass$(),
 						itemAnimation: itemAnimation$(),
 						itemDisabled: itemDisabled$(),
-						itemCollapsed: itemCollapsed$(),
+						itemVisible: itemVisible$(),
 						itemTransition: itemTransition$(),
 						itemDestroyOnHide: itemDestroyOnHide$(),
 						itemBodyClass: itemBodyClass$(),
 						itemButtonClass: itemButtonClass$(),
 						itemCollapseClass: itemCollapseClass$(),
 						itemHeaderClass: itemHeaderClass$(),
-						onItemCollapsedChange: onItemCollapsedChange$(),
+						onItemVisibleChange: onItemVisibleChange$(),
 						onItemHidden: onItemHidden$(),
 						onItemShown: onItemShown$(),
 						slotItemStructure: slotItemStructure$(),

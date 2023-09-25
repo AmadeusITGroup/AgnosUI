@@ -12,21 +12,21 @@ import BODY from '!raw-loader!@agnos-ui/common/samples/accordion/body.txt';
 				<ng-template auAccordionItemStructure let-state="state" let-widget="widget">
 					<div
 						class="{{ state.itemHeaderClass }} accordion-button accordion-header custom-header justify-content-between"
-						[class.collapsed]="state.itemCollapsed"
+						[class.collapsed]="!state.itemVisible"
 						role="heading"
 						aria-level="2"
 					>
-						<p class="m-0">First panel - {{ state.itemCollapsed ? 'collapsed' : 'opened' }}</p>
+						<p class="m-0">First panel - {{ state.itemVisible ? 'opened' : 'collapsed' }}</p>
 						<button
 							type="button"
 							id="{{ state.itemId }}-toggle"
 							(click)="widget.actions.click()"
 							class="btn btn-link p-0 {{ state.itemButtonClass }}"
-							[class.collapsed]="state.itemCollapsed"
+							[class.collapsed]="!state.itemVisible"
 							[disabled]="state.itemDisabled"
 							attr.aria-controls="{{ state.itemId }}-collapse"
 							[attr.aria-disabled]="state.itemDisabled"
-							[attr.aria-expanded]="!state.itemCollapsed"
+							[attr.aria-expanded]="state.itemVisible"
 						>
 							Toggle first
 						</button>
@@ -48,7 +48,7 @@ import BODY from '!raw-loader!@agnos-ui/common/samples/accordion/body.txt';
 				<ng-template auAccordionItemStructure let-state="state" let-widget="widget">
 					<div
 						class="{{ state.itemHeaderClass }} accordion-button accordion-header custom-header justify-content-between"
-						[class.collapsed]="state.itemCollapsed"
+						[class.collapsed]="!state.itemVisible"
 						role="heading"
 						aria-level="2"
 					>
@@ -57,12 +57,12 @@ import BODY from '!raw-loader!@agnos-ui/common/samples/accordion/body.txt';
 							<button
 								type="button"
 								class="btn btn-sm btn-outline-primary me-2 {{ state.itemButtonClass }}"
-								[class.collapsed]="state.itemCollapsed"
+								[class.collapsed]="!state.itemVisible"
 								id="{{ state.itemId }}-toggle"
 								(click)="widget.actions.click()"
 								[disabled]="state.itemDisabled"
 								[attr.aria-disabled]="state.itemDisabled"
-								[attr.aria-expanded]="!state.itemCollapsed"
+								[attr.aria-expanded]="state.itemVisible"
 								attr.aria-controls="{{ state.itemId }}-collapse"
 							>
 								Toggle second
@@ -90,20 +90,20 @@ import BODY from '!raw-loader!@agnos-ui/common/samples/accordion/body.txt';
 				<ng-template auAccordionItemStructure let-state="state" let-widget="widget">
 					<div
 						class="{{ state.itemHeaderClass }} accordion-button accordion-header custom-header justify-content-between"
-						[class.collapsed]="state.itemCollapsed"
+						[class.collapsed]="!state.itemVisible"
 						role="heading"
 						aria-level="2"
 					>
 						<button
 							type="button"
 							class="p-0 btn btn-link container-fluid text-start {{ state.itemButtonClass }}"
-							[class.collapsed]="state.itemCollapsed"
+							[class.collapsed]="!state.itemVisible"
 							id="{{ state.itemId }}-toggle"
 							(click)="widget.actions.click()"
 							[disabled]="state.itemDisabled"
 							[attr.aria-disabled]="state.itemDisabled"
 							attr.aria-controls="{{ state.itemId }}-collapse"
-							[attr.aria-expanded]="!state.itemCollapsed"
+							[attr.aria-expanded]="state.itemVisible"
 						>
 							Third panel
 						</button>

@@ -19,11 +19,11 @@
 		id={toggleId}
 		on:click={widget.actions.click}
 		class="accordion-button {state.itemButtonClass}"
-		class:collapsed={state.itemCollapsed}
+		class:collapsed={!state.itemVisible}
 		disabled={state.itemDisabled}
 		aria-controls={collapseId}
 		aria-disabled={state.itemDisabled}
-		aria-expanded={!state.itemCollapsed}
+		aria-expanded={state.itemVisible}
 	>
 		<Slot slotContent={state.slotItemHeader} props={slotContext} let:component let:props>
 			<slot slot="slot" name="itemHeader" let:props {...props} />

@@ -7,7 +7,7 @@ import BODY from '!raw-loader!@agnos-ui/common/samples/accordion/body.txt';
 	imports: [AgnosUIAngularModule],
 	template: `
 		<div auAccordion>
-			<div auAccordionItem [auItemCollapsed]="false">
+			<div auAccordionItem [auItemVisible]="true">
 				<ng-template auAccordionItemHeader>Simple</ng-template>
 				<ng-template auAccordionItemBody>{{ BODY }} </ng-template>
 			</div>
