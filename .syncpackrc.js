@@ -15,13 +15,19 @@ module.exports = {
 	semverGroups: [
 		{
 			range: '~',
-			dependencies: ['typescript'],
+			dependencies: ['typescript', 'zone.js'],
 			packages: ['**'],
 		},
 		{
 			range: '',
 			dependencies: ['@amadeus-it-group/tansu', '@agnos-ui/*'],
 			packages: ['**'],
+		},
+		{
+			label: 'Use glob 10.3.6 until https://github.com/isaacs/node-glob/issues/557 is solved',
+			range: '',
+			packages: ['**'],
+			dependencies: ['glob'],
 		},
 	],
 };
