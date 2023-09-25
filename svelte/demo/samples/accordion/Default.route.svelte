@@ -4,7 +4,7 @@
 </script>
 
 <Accordion>
-	<AccordionItem itemCollapsed={false}>
+	<AccordionItem itemVisible={true}>
 		<slot slot="itemHeader">Simple</slot>
 		<slot slot="itemBody">{BODY}</slot>
 	</AccordionItem>

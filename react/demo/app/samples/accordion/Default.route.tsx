@@ -9,7 +9,7 @@ const fancyHeader = () => (
 
 const AccordionDemo = () => (
 	<Accordion>
-		<AccordionItem slotItemHeader="Simple" slotItemBody={BODY} itemCollapsed={false} />
+		<AccordionItem slotItemHeader="Simple" slotItemBody={BODY} itemVisible={true} />
 		<AccordionItem slotItemHeader={fancyHeader} slotItemBody={BODY} />
 		<AccordionItem slotItemHeader="Disabled" slotItemBody={BODY} itemDisabled />
 	</Accordion>

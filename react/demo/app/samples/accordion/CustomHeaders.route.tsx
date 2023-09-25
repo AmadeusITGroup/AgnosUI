@@ -33,21 +33,21 @@ const AccordionDemo = () => {
 			<>
 				<div
 					className={`${slotContext.state.itemHeaderClass} accordion-button accordion-header custom-header justify-content-between ${
-						slotContext.state.itemCollapsed ? 'collapsed' : ''
+						slotContext.state.itemVisible ? '' : 'collapsed'
 					}`}
 					role="heading"
 					aria-level={2}
 				>
-					<p className="m-0">First panel - {slotContext.state.itemCollapsed ? 'collapsed' : 'opened'}</p>
+					<p className="m-0">First panel - {slotContext.state.itemVisible ? 'opened' : 'collapsed'}</p>
 					<button
 						type="button"
 						id={`${slotContext.state.itemId}-toggle`}
 						onClick={slotContext.widget.actions.click}
-						className={`btn btn-link p-0 ${slotContext.state.itemButtonClass} ${slotContext.state.itemCollapsed ? 'collapsed' : ''}`}
+						className={`btn btn-link p-0 ${slotContext.state.itemButtonClass} ${slotContext.state.itemVisible ? '' : 'collapsed'}`}
 						disabled={slotContext.state.itemDisabled}
 						aria-controls={`${slotContext.state.itemId}-collapse`}
 						aria-disabled={slotContext.state.itemDisabled}
-						aria-expanded={!slotContext.state.itemCollapsed}
+						aria-expanded={slotContext.state.itemVisible}
 					>
 						Toggle first
 					</button>
@@ -61,7 +61,7 @@ const AccordionDemo = () => {
 			<>
 				<div
 					className={`${slotContext.state.itemHeaderClass} accordion-button accordion-header custom-header justify-content-between ${
-						slotContext.state.itemCollapsed ? 'collapsed' : ''
+						slotContext.state.itemVisible ? '' : 'collapsed'
 					}`}
 					role="heading"
 					aria-level={2}
@@ -71,14 +71,14 @@ const AccordionDemo = () => {
 						<button
 							type="button"
 							className={`btn btn-sm btn-outline-primary me-2 ${slotContext.state.itemButtonClass} ${
-								slotContext.state.itemCollapsed ? 'collapsed' : ''
+								slotContext.state.itemVisible ? '' : 'collapsed'
 							}`}
 							id={`${slotContext.state.itemId}-toggle`}
 							onClick={slotContext.widget.actions.click}
 							disabled={slotContext.state.itemDisabled}
 							aria-controls={`${slotContext.state.itemId}-collapse`}
 							aria-disabled={slotContext.state.itemDisabled}
-							aria-expanded={!slotContext.state.itemCollapsed}
+							aria-expanded={slotContext.state.itemVisible}
 						>
 							Toggle second
 						</button>
@@ -99,7 +99,7 @@ const AccordionDemo = () => {
 			<>
 				<div
 					className={`${slotContext.state.itemHeaderClass} accordion-button accordion-header custom-header justify-content-between ${
-						slotContext.state.itemCollapsed ? 'collapsed' : ''
+						slotContext.state.itemVisible ? '' : 'collapsed'
 					}`}
 					role="heading"
 					aria-level={2}
@@ -107,14 +107,14 @@ const AccordionDemo = () => {
 					<button
 						type="button"
 						className={`p-0 btn btn-link container-fluid text-start ${slotContext.state.itemButtonClass} ${
-							slotContext.state.itemCollapsed ? 'collapsed' : ''
+							slotContext.state.itemVisible ? '' : 'collapsed'
 						} `}
 						id={`${slotContext.state.itemId}-toggle`}
 						onClick={slotContext.widget.actions.click}
 						disabled={slotContext.state.itemDisabled}
 						aria-disabled={slotContext.state.itemDisabled}
 						aria-controls={`${slotContext.state.itemId}-collapse`}
-						aria-expanded={!slotContext.state.itemCollapsed}
+						aria-expanded={slotContext.state.itemVisible}
 					>
 						Third panel
 					</button>

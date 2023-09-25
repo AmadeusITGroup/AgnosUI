@@ -20,7 +20,7 @@
 
 	const accordionApi = getAccordionApi();
 	const {registerItem} = accordionApi;
-	export let itemCollapsed: boolean | undefined = undefined;
+	export let itemVisible: boolean | undefined = undefined;
 	const widget = callWidgetFactory(registerItem, null, $$slots, defaultConfig);
 	const {
 		stores: {itemId$, itemClass$, slotItemStructure$},
@@ -30,9 +30,9 @@
 	export const api = widget.api;
 
 	widget.patch({
-		onItemCollapsedChange: (event) => {
-			itemCollapsed = event;
-			dispatch('itemCollapsedChange', event);
+		onItemVisibleChange: (event) => {
+			itemVisible = event;
+			dispatch('itemVisibleChange', event);
 		},
 		onItemHidden: () => dispatch('itemHidden'),
 		onItemShown: () => dispatch('itemShown'),

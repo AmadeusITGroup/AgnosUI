@@ -11,7 +11,7 @@
 	type $$Slots = {default: Record<string, never>} & Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
 	const dispatch = createEventDispatcher<$$Events>();
 
-	export let itemCollapsed: boolean | undefined = undefined;
+	export let itemVisible: boolean | undefined = undefined;
 	const widget = callWidgetFactory(createAccordion, 'accordion', $$slots as any, {});
 	export const api = widget.api;
 	const {
@@ -19,9 +19,9 @@
 		stores: {className$},
 	} = widget;
 	widget.patch({
-		onItemCollapsedChange: (event) => {
-			itemCollapsed = event;
-			dispatch('itemCollapsedChange', event);
+		onItemVisibleChange: (event) => {
+			itemVisible = event;
+			dispatch('itemVisibleChange', event);
 		},
 		onItemHidden: () => dispatch('itemHidden'),
 		onItemShown: () => dispatch('itemShown'),

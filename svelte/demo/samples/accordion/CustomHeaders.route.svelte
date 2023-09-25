@@ -15,21 +15,21 @@
 		<slot slot="itemStructure" let:state let:widget>
 			<div
 				class="{state.itemHeaderClass} accordion-button accordion-header custom-header justify-content-between"
-				class:collapsed={state.itemCollapsed}
+				class:collapsed={!state.itemVisible}
 				role="heading"
 				aria-level={2}
 			>
-				<p class="m-0">First panel - {state.itemCollapsed ? 'collapsed' : 'opened'}</p>
+				<p class="m-0">First panel - {state.itemVisible ? 'opened' : 'collapsed'}</p>
 				<button
 					type="button"
 					id={state.itemId + '-toggle'}
 					on:click={widget.actions.click}
 					class="btn btn-link p-0 {state.itemButtonClass}"
-					class:collapsed={state.itemCollapsed}
+					class:collapsed={!state.itemVisible}
 					disabled={state.itemDisabled}
 					aria-controls={state.itemId + '-collapse'}
 					aria-disabled={state.itemDisabled}
-					aria-expanded={!state.itemCollapsed}>Toggle first</button
+					aria-expanded={state.itemVisible}>Toggle first</button
 				>
 			</div>
 			{#if state.shouldBeInDOM}
@@ -50,7 +50,7 @@
 		<slot slot="itemStructure" let:state let:widget>
 			<div
 				class="{state.itemHeaderClass} accordion-button accordion-header custom-header justify-content-between"
-				class:collapsed={state.itemCollapsed}
+				class:collapsed={!state.itemVisible}
 				role="heading"
 				aria-level={2}
 			>
@@ -59,13 +59,13 @@
 					<button
 						type="button"
 						class="btn btn-sm btn-outline-primary me-2 {state.itemButtonClass}"
-						class:collapsed={state.itemCollapsed}
+						class:collapsed={!state.itemVisible}
 						id={state.itemId + '-toggle'}
 						on:click={widget.actions.click}
 						disabled={state.itemDisabled}
 						aria-controls={state.itemId + '-collapse'}
 						aria-disabled={state.itemDisabled}
-						aria-expanded={!state.itemCollapsed}>Toggle second</button
+						aria-expanded={state.itemVisible}>Toggle second</button
 					>
 					<button type="button" class="btn btn-sm btn-outline-secondary me-2" on:click={() => thirdItemDisabled$.update((disabled) => !disabled)}>
 						{$thirdItemDisabled$ ? 'En' : 'Dis'}able third
@@ -91,20 +91,20 @@
 		<slot slot="itemStructure" let:state let:widget>
 			<div
 				class="accordion-header {state.itemHeaderClass} accordion-button custom-header justify-content-between"
-				class:collapsed={state.itemCollapsed}
+				class:collapsed={!state.itemVisible}
 				role="heading"
 				aria-level={2}
 			>
 				<button
 					type="button"
 					class="p-0 btn btn-link container-fluid text-start {state.itemButtonClass}"
-					class:collapsed={state.itemCollapsed}
+					class:collapsed={!state.itemVisible}
 					id={state.itemId + '-toggle'}
 					on:click={widget.actions.click}
 					disabled={state.itemDisabled}
 					aria-disabled={state.itemDisabled}
 					aria-controls={state.itemId + '-collapse'}
-					aria-expanded={!state.itemCollapsed}>Third panel</button
+					aria-expanded={state.itemVisible}>Third panel</button
 				>
 				{#if state.itemDisabled}<p class="text-muted m-0 small">[I'm&nbsp;disabled]</p>{/if}
 			</div>
