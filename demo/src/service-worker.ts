@@ -6,7 +6,8 @@ declare const self: ServiceWorkerGlobalScope;
 
 import {build, files, prerendered, version} from '$service-worker';
 
-const CACHE = `cache-${version}`;
+const CACHE_PREFIX = `cache-${self.registration.scope}-`;
+const CACHE = `${CACHE_PREFIX}${version}`;
 
 const ASSETS = [...build.map((file) => file.replace(/\/index\.html$/, '/')), ...prerendered, ...files];
 
@@ -46,7 +47,7 @@ self.addEventListener('activate', (event) => {
 	event.waitUntil(
 		(async () => {
 			await self.clients.claim();
-			await Promise.all((await caches.keys()).filter((key) => key !== CACHE).map((key) => caches.delete(key)));
+			await Promise.all((await caches.keys()).filter((key) => key.startsWith(CACHE_PREFIX) && key !== CACHE).map((key) => caches.delete(key)));
 		})()
 	);
 });
