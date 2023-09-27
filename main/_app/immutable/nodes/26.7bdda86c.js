@@ -1,1 +1,0 @@
-import{s as t,o as s}from"../chunks/scheduler.a1d8fa32.js";import{S as r,i as n}from"../chunks/index.2c402ab5.js";import{g as a}from"../chunks/navigation.2ebf3601.js";function p(e){return s(()=>a("progressbar/examples",{replaceState:!0})),[]}class u extends r{constructor(o){super(),n(this,o,p,null,t,{})}}export{u as component};
