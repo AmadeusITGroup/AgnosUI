@@ -46,8 +46,10 @@
 					role="tab"
 					class="nav-link link-body-emphasis"
 					aria-selected={isActive}
-					class:active={isActive}>{title}</a
+					class:active={isActive}
 				>
+					{title}
+				</a>
 			</li>
 		{/each}
 	</ul>
