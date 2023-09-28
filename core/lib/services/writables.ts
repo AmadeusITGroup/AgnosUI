@@ -15,7 +15,7 @@ export const typeBoolean: WritableWithDefaultOptions<boolean> = {
 	normalizeValue: testToNormalizeValue(isBoolean),
 };
 
-export const typeString: WritableWithDefaultOptions<string, any> = {
+export const typeString: WritableWithDefaultOptions<string> = {
 	normalizeValue: testToNormalizeValue(isString),
 };
 

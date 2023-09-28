@@ -2,8 +2,8 @@ import type {ReadableSignal, StoreInput, StoreOptions, StoresInputValues, Update
 import {asReadable, batch, computed, derived, get, readable, writable} from '@amadeus-it-group/tansu';
 import {identity} from '../utils';
 
-export type ToWritableSignal<P, V = P> = {
-	[K in keyof P & keyof V as `${K & string}$`]-?: WritableSignal<P[K], V[K] | undefined>;
+export type ToWritableSignal<P> = {
+	[K in keyof P as `${K & string}$`]-?: WritableSignal<P[K], P[K] | undefined>;
 };
 
 export type ReadableSignals<T extends object> = {
@@ -44,7 +44,7 @@ export type ToState<S extends {[K in keyof S & `${string}$`]: ReadableSignal<any
  * @param stores - object of stores
  * @returns the patch function
  */
-export function createPatch<T extends object, V extends object = T>(stores: ToWritableSignal<T, V>) {
+export function createPatch<T extends object>(stores: ToWritableSignal<T>) {
 	return function <U extends Partial<T>>(storesValues?: U | void) {
 		batch(() => {
 			for (const [name, value] of Object.entries(storesValues ?? {})) {
@@ -87,13 +87,13 @@ const update = function <T, U>(this: WritableSignal<T, U>, updater: Updater<T, U
 };
 
 export const INVALID_VALUE = Symbol();
-export type NormalizeValue<T, U = T> = (value: U) => T | typeof INVALID_VALUE;
+export type NormalizeValue<T> = (value: T) => T | typeof INVALID_VALUE;
 
-export interface WritableWithDefaultOptions<T, U = T> {
+export interface WritableWithDefaultOptions<T> {
 	/**
 	 * the normalize value function. should return the invalidValue symbol when the provided value is invalid
 	 */
-	normalizeValue?: NormalizeValue<T, U>;
+	normalizeValue?: NormalizeValue<T>;
 	/**
 	 * the equal function, allowing to compare two values. used to check if a previous and current values are equals.
 	 */
@@ -114,15 +114,15 @@ export interface WritableWithDefaultOptions<T, U = T> {
  * @param own$ - Store containing the own value
  * @returns a writable store with the extra default value and normalization logic described above
  */
-export function writableWithDefault<T extends U, U = T>(
+export function writableWithDefault<T>(
 	defValue: T,
-	config$: ReadableSignal<U | undefined> = readable(undefined),
-	options: WritableWithDefaultOptions<T, U> = {},
-	own$: WritableSignal<U | undefined> = writable(undefined)
-): WritableSignal<T, U | undefined> {
-	const {normalizeValue = identity as any, equal = Object.is} = options;
+	config$: ReadableSignal<T | undefined> = readable(undefined),
+	options: WritableWithDefaultOptions<T> = {},
+	own$: WritableSignal<T | undefined> = writable(undefined)
+): WritableSignal<T, T | undefined> {
+	const {normalizeValue = identity, equal = Object.is} = options;
 	const getDefValue = () => defValue;
-	const callNormalizeValue = (value: U | undefined, defValue = getDefValue) => {
+	const callNormalizeValue = (value: T | undefined, defValue = getDefValue) => {
 		const normalizedValue = value === undefined ? undefined : normalizeValue(value);
 		if (normalizedValue === INVALID_VALUE) {
 			console.error('Not using invalid value', value);
@@ -136,7 +136,7 @@ export function writableWithDefault<T extends U, U = T>(
 	const validatedDefConfig$ = computed(() => callNormalizeValue(config$()), {equal});
 	const validatedOwnValue$ = computed(() => callNormalizeValue(own$(), validatedDefConfig$), {equal});
 	return asReadable(validatedOwnValue$, {
-		set(value: U | undefined) {
+		set(value: T | undefined) {
 			if (value !== undefined) {
 				const normalizedValue = normalizeValue(value);
 				if (normalizedValue === INVALID_VALUE) {
@@ -151,7 +151,7 @@ export function writableWithDefault<T extends U, U = T>(
 	});
 }
 
-export type ConfigValidator<T extends object, U extends object = T> = {[K in keyof T & keyof U]?: WritableWithDefaultOptions<T[K], U[K]>};
+export type ConfigValidator<T extends object> = {[K in keyof T]?: WritableWithDefaultOptions<T[K]>};
 
 /**
  * Returns true if the provided argument is a store (ReadableSignal).
@@ -176,7 +176,7 @@ export const toWritableStore = <T>(x: WritableSignal<T> | T) => (isStore(x) ? x 
 
 export const normalizeConfigStores = <T extends object>(
 	keys: (keyof T)[],
-	config?: ReadableSignal<T> | ValuesOrReadableSignals<T>
+	config?: ReadableSignal<Partial<T>> | ValuesOrReadableSignals<T>
 ): ReadableSignals<T> => {
 	const res: ReadableSignals<T> = {};
 	if (config) {
@@ -226,20 +226,20 @@ export const mergeConfigStores = <T extends object>(keys: (keyof T)[], config1?:
  * const {propA$, propB$} = writablesWithDefault(defConfig, {config}, validation);
  * ```
  */
-export const writablesWithDefault = <T extends U, U extends object = T>(
+export const writablesWithDefault = <T extends object>(
 	defConfig: T,
-	propsConfig?: PropsConfig<U>,
-	options?: ConfigValidator<T, U>
-): ToWritableSignal<T, U> => {
+	propsConfig?: PropsConfig<T>,
+	options?: ConfigValidator<T>
+): ToWritableSignal<T> => {
 	const res: any = {};
-	const keys = Object.keys(defConfig) as (string & keyof T & keyof U)[];
-	const configStores = normalizeConfigStores(keys, propsConfig?.config);
+	const keys = Object.keys(defConfig) as (string & keyof T)[];
+	const configStores = normalizeConfigStores<T>(keys, propsConfig?.config);
 	const props = propsConfig?.props;
 	for (const key of keys) {
-		const propValue = props?.[key] as undefined | WritableSignal<U[typeof key] | undefined> | U[typeof key];
+		const propValue = props?.[key] as undefined | WritableSignal<T[typeof key] | undefined> | T[typeof key];
 		res[`${key}$`] = writableWithDefault(defConfig[key], configStores[key], options?.[key], toWritableStore(propValue));
 	}
-	return res as ToWritableSignal<T, U>;
+	return res as ToWritableSignal<T>;
 };
 
 /**
@@ -268,11 +268,11 @@ export const writablesWithDefault = <T extends U, U extends object = T>(
  * const [{propA$, propB$}, patch] = writablesForProps(defConfig, config, validation);
  * ```
  */
-export const writablesForProps = <T extends U, U extends object = T>(
+export const writablesForProps = <T extends object>(
 	defConfig: T,
-	propsConfig?: PropsConfig<U>,
-	options?: {[K in keyof T & keyof U]?: WritableWithDefaultOptions<T[K], U[K]>}
-): [ToWritableSignal<T, U>, ReturnType<typeof createPatch<T, U>>] => {
+	propsConfig?: PropsConfig<T>,
+	options?: {[K in keyof T]?: WritableWithDefaultOptions<T[K]>}
+): [ToWritableSignal<T>, ReturnType<typeof createPatch<T>>] => {
 	const stores = writablesWithDefault(defConfig, propsConfig, options);
 	return [stores, createPatch(stores)];
 };
