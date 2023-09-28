@@ -16,7 +16,6 @@ import {
 	patchSimpleChanges,
 	toSlotContextWidget,
 } from '@agnos-ui/angular-headless';
-import {writable} from '@amadeus-it-group/tansu';
 import {NgIf} from '@angular/common';
 import type {AfterContentChecked, AfterViewInit, OnChanges, Signal, SimpleChanges} from '@angular/core';
 import {
@@ -191,7 +190,6 @@ export class AccordionItemComponent implements OnChanges, AfterContentChecked, A
 	 */
 	@Output('auItemVisibleChange') itemVisibleChange = new EventEmitter<boolean>();
 
-	defaultSlots = writable(defaultConfig);
 	readonly ad = inject(AccordionDirective);
 	readonly _widget = callWidgetFactory(this.ad.api.registerItem, null, defaultConfig);
 	readonly widget = toSlotContextWidget(this._widget);
