@@ -17,7 +17,7 @@ const defaultState = (): State => ({
 const disableAnimationSetting = async (po: TransitionPO, expectedState: State) => {
 	await po.locatorAnimationCheckbox.click();
 	expectedState.animation = false;
-	expect(await po.getState()).toEqual(expectedState);
+	await expect.poll(() => po.getState()).toEqual(expectedState);
 };
 
 const test = getTest();
@@ -69,12 +69,12 @@ test.describe.parallel('Transition tests', () => {
 				await po.waitLoaded();
 				const expectedState = defaultState();
 				const button = await scenario.setup(po, expectedState, true);
-				expect(await po.getState()).toEqual(expectedState);
+				await expect.poll(() => po.getState()).toEqual(expectedState);
 
 				if (!scenario.removingDomElement) {
 					await po.locatorRemoveFromDOMCheckbox.click();
 					expectedState.removeFromDOM = false;
-					expect(await po.getState()).toEqual(expectedState);
+					await expect.poll(() => po.getState()).toEqual(expectedState);
 				}
 
 				await button.click();
@@ -82,26 +82,32 @@ test.describe.parallel('Transition tests', () => {
 				expectedState.visible = false;
 				expectedState.shown = false;
 				expectedState.classes = ['collapsing'];
-				expect(await po.getState()).toEqual(expectedState);
 
+				// transition started
+				await expect.poll(() => po.getState()).toEqual(expectedState);
+
+				// transition ended
 				await expect.poll(() => po.getState()).not.toEqual(expectedState);
 				expectedState.transitioning = false;
 				expectedState.hidden = true;
 				expectedState.classes = scenario.removingDomElement ? undefined : ['collapse'];
-				expect(await po.getState()).toEqual(expectedState);
+				await expect.poll(() => po.getState()).toEqual(expectedState);
 
 				await button.click();
 				expectedState.visible = true;
 				expectedState.transitioning = true;
 				expectedState.hidden = false;
 				expectedState.classes = ['collapsing'];
-				expect(await po.getState()).toEqual(expectedState);
 
+				// transition started
+				await expect.poll(() => po.getState()).toEqual(expectedState);
+
+				// transition ended
 				await expect.poll(() => po.getState()).not.toEqual(expectedState);
 				expectedState.transitioning = false;
 				expectedState.shown = true;
 				expectedState.classes = ['collapse', 'show'];
-				expect(await po.getState()).toEqual(expectedState);
+				await expect.poll(() => po.getState()).toEqual(expectedState);
 			});
 
 			test('toggle without animation', async ({page}) => {
@@ -109,12 +115,12 @@ test.describe.parallel('Transition tests', () => {
 				await po.waitLoaded();
 				const expectedState = defaultState();
 				const button = await scenario.setup(po, expectedState, false);
-				expect(await po.getState()).toEqual(expectedState);
+				await expect.poll(() => po.getState()).toEqual(expectedState);
 
 				if (!scenario.removingDomElement) {
 					await po.locatorRemoveFromDOMCheckbox.click();
 					expectedState.removeFromDOM = false;
-					expect(await po.getState()).toEqual(expectedState);
+					await expect.poll(() => po.getState()).toEqual(expectedState);
 				}
 
 				await button.click();
@@ -122,14 +128,14 @@ test.describe.parallel('Transition tests', () => {
 				expectedState.shown = false;
 				expectedState.hidden = true;
 				expectedState.classes = scenario.removingDomElement ? undefined : ['collapse'];
-				expect(await po.getState()).toEqual(expectedState);
+				await expect.poll(() => po.getState()).toEqual(expectedState);
 
 				await button.click();
 				expectedState.visible = true;
 				expectedState.hidden = false;
 				expectedState.shown = true;
 				expectedState.classes = ['collapse', 'show'];
-				expect(await po.getState()).toEqual(expectedState);
+				await expect.poll(() => po.getState()).toEqual(expectedState);
 			});
 		});
 	}
@@ -139,7 +145,7 @@ test.describe.parallel('Transition tests', () => {
 			const po = new TransitionPO(page);
 			await po.waitLoaded();
 			const expectedState = defaultState();
-			expect(await po.getState()).toEqual(expectedState);
+			await expect.poll(() => po.getState()).toEqual(expectedState);
 
 			if (!animationEnabled) {
 				await disableAnimationSetting(po, expectedState);
@@ -147,23 +153,23 @@ test.describe.parallel('Transition tests', () => {
 
 			await po.locatorAnimationOnInitCheckbox.click();
 			expectedState.animationOnInit = true;
-			expect(await po.getState()).toEqual(expectedState);
+			await expect.poll(() => po.getState()).toEqual(expectedState);
 
 			await po.locatorToggleComponent.click();
-			expect(po.locatorInnerContainer).toBeHidden();
+			await expect(po.locatorInnerContainer).toBeHidden();
 			await po.locatorToggleComponent.click();
-			expect(po.locatorInnerContainer).toBeVisible();
+			await expect(po.locatorInnerContainer).toBeVisible();
 
 			expectedState.transitioning = true;
 			expectedState.shown = false;
 			expectedState.classes = ['collapsing'];
-			expect(await po.getState()).toEqual(expectedState);
+			await expect.poll(() => po.getState()).toEqual(expectedState);
 
 			await expect.poll(() => po.getState()).not.toEqual(expectedState);
 			expectedState.transitioning = false;
 			expectedState.shown = true;
 			expectedState.classes = ['collapse', 'show'];
-			expect(await po.getState()).toEqual(expectedState);
+			await expect.poll(() => po.getState()).toEqual(expectedState);
 		});
 	}
 });
