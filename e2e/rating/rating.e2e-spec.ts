@@ -34,8 +34,8 @@ test.describe.parallel(`Rating tests`, () => {
 				classes: createArray(10, ['au-rating-star']),
 			};
 
-			expect(await ratingPO.state()).toEqual(expectedState);
-			expect(await ratingDemoPO.defaultRatingDemoState()).toEqual({rating: 3, hovered: 0, left: 0});
+			await expect.poll(() => ratingPO.state()).toEqual(expectedState);
+			await expect.poll(() => ratingDemoPO.defaultRatingDemoState()).toEqual({rating: 3, hovered: 0, left: 0});
 
 			const star = ratingPO.locatorStar(4);
 
@@ -46,17 +46,17 @@ test.describe.parallel(`Rating tests`, () => {
 				text: '5 out of 10',
 				stars: ['★', '★', '★', '★', '★', '☆', '☆', '☆', '☆', '☆'],
 			};
-			expect(await ratingDemoPO.defaultRatingDemoState()).toEqual({rating: 3, hovered: 5, left: 0});
-			expect(await ratingPO.state()).toEqual(expectedState);
+			await expect.poll(() => ratingDemoPO.defaultRatingDemoState()).toEqual({rating: 3, hovered: 5, left: 0});
+			await expect.poll(() => ratingPO.state()).toEqual(expectedState);
 
 			await star.click();
-			expect(await ratingPO.state()).toEqual(expectedState);
-			expect(await ratingDemoPO.defaultRatingDemoState()).toEqual({rating: 5, hovered: 5, left: 0});
+			await expect.poll(() => ratingPO.state()).toEqual(expectedState);
+			await expect.poll(() => ratingDemoPO.defaultRatingDemoState()).toEqual({rating: 5, hovered: 5, left: 0});
 
 			await page.locator('body').hover(); // Leave the first rating
 
-			expect(await ratingPO.state()).toEqual(expectedState);
-			expect(await ratingDemoPO.defaultRatingDemoState()).toEqual({rating: 5, hovered: 5, left: 5});
+			await expect.poll(() => ratingPO.state()).toEqual(expectedState);
+			await expect.poll(() => ratingDemoPO.defaultRatingDemoState()).toEqual({rating: 5, hovered: 5, left: 5});
 
 			await star.click();
 			await page.locator('body').hover(); // Leave the first rating
@@ -66,24 +66,26 @@ test.describe.parallel(`Rating tests`, () => {
 				text: '0 out of 10',
 				stars: ['☆', '☆', '☆', '☆', '☆', '☆', '☆', '☆', '☆', '☆'],
 			};
-			expect(await ratingPO.state()).toEqual(expectedState);
-			expect(await ratingDemoPO.defaultRatingDemoState()).toEqual({rating: 0, hovered: 5, left: 5});
+			await expect.poll(() => ratingPO.state()).toEqual(expectedState);
+			await expect.poll(() => ratingDemoPO.defaultRatingDemoState()).toEqual({rating: 0, hovered: 5, left: 5});
 		});
 		await test.step('keyboard interactions', async () => {
 			await ratingPO.locatorRoot.focus();
 			const expectValue = async (value: number) => {
-				expect(await ratingPO.state()).toEqual({
-					rootClasses: ['d-inline-flex', 'au-rating'],
-					min: '0',
-					max: '10',
-					value: value.toString(),
-					text: `${value} out of 10`,
-					disabled: null,
-					readonly: null,
-					stars: createArray(value, '★').concat(createArray(10 - value, '☆')),
-					classes: createArray(10, ['au-rating-star']),
-				});
-				expect(await ratingDemoPO.defaultRatingDemoState()).toEqual({rating: value, hovered: 5, left: 5});
+				await expect
+					.poll(() => ratingPO.state())
+					.toEqual({
+						rootClasses: ['d-inline-flex', 'au-rating'],
+						min: '0',
+						max: '10',
+						value: value.toString(),
+						text: `${value} out of 10`,
+						disabled: null,
+						readonly: null,
+						stars: createArray(value, '★').concat(createArray(10 - value, '☆')),
+						classes: createArray(10, ['au-rating-star']),
+					});
+				await expect.poll(() => ratingDemoPO.defaultRatingDemoState()).toEqual({rating: value, hovered: 5, left: 5});
 			};
 			await page.keyboard.press('ArrowRight');
 			await expectValue(1);
@@ -125,10 +127,10 @@ test.describe.parallel(`Rating tests`, () => {
 			stars: ['', '', '', '', ''],
 			classes: expectedClasses,
 		};
-		expect(await ratingPO.state()).toEqual(expectedState);
+		await expect.poll(() => ratingPO.state()).toEqual(expectedState);
 
 		await ratingPO.locatorStar(4).click({force: true});
-		expect(await ratingPO.state()).toEqual(expectedState);
+		await expect.poll(() => ratingPO.state()).toEqual(expectedState);
 	});
 
 	test(`Form`, async ({page}) => {
@@ -139,7 +141,7 @@ test.describe.parallel(`Rating tests`, () => {
 
 		let expectedState = {msg: 'Please rate us', model: 0, enabledBtnText: 'control enabled'};
 
-		expect(await ratingDemoPO.formRatingDemoState()).toEqual(expectedState);
+		await expect.poll(() => ratingDemoPO.formRatingDemoState()).toEqual(expectedState);
 
 		await ratingPO.locatorStar(2).click();
 		expectedState = {
@@ -147,7 +149,7 @@ test.describe.parallel(`Rating tests`, () => {
 			msg: 'Thanks!',
 			model: 3,
 		};
-		expect(await ratingDemoPO.formRatingDemoState()).toEqual(expectedState);
+		await expect.poll(() => ratingDemoPO.formRatingDemoState()).toEqual(expectedState);
 
 		await ratingDemoPO.locatorBtnClear.click();
 		expectedState = {
@@ -155,7 +157,7 @@ test.describe.parallel(`Rating tests`, () => {
 			msg: 'Please rate us',
 			model: 0,
 		};
-		expect(await ratingDemoPO.formRatingDemoState()).toEqual(expectedState);
+		await expect.poll(() => ratingDemoPO.formRatingDemoState()).toEqual(expectedState);
 
 		await ratingDemoPO.locatorBtnEnabled.click();
 		await ratingPO.locatorStar(2).click({force: true});
@@ -164,7 +166,7 @@ test.describe.parallel(`Rating tests`, () => {
 			msg: '',
 			enabledBtnText: 'control disabled',
 		};
-		expect(await ratingDemoPO.formRatingDemoState()).toEqual(expectedState);
+		await expect.poll(() => ratingDemoPO.formRatingDemoState()).toEqual(expectedState);
 	});
 
 	test(`Config`, async ({page}) => {
@@ -187,7 +189,7 @@ test.describe.parallel(`Rating tests`, () => {
 
 		await ratingDemoPO.locatorBtnConfigDisabled('true').click();
 		expectedState = {...expectedState, disabled: 'true'};
-		expect(await ratingPO.state()).toEqual(expectedState);
+		await expect.poll(() => ratingPO.state()).toEqual(expectedState);
 
 		await ratingDemoPO.locatorBtnConfigMaxRating('20').click();
 		expectedState = {
@@ -197,27 +199,27 @@ test.describe.parallel(`Rating tests`, () => {
 			text: '3 out of 20',
 			classes: createArray(20, ['au-rating-star']),
 		};
-		expect(await ratingPO.state()).toEqual(expectedState);
+		await expect.poll(() => ratingPO.state()).toEqual(expectedState);
 
 		await ratingDemoPO.locatorBtnConfigSlotStar("'*'").click();
 		expectedState = {
 			...expectedState,
 			stars: createArray(20, '*'),
 		};
-		expect(await ratingPO.state()).toEqual(expectedState);
+		await expect.poll(() => ratingPO.state()).toEqual(expectedState);
 
 		await ratingDemoPO.locatorBtnConfigSlotStar('custom').click();
 		expectedState = {
 			...expectedState,
 			stars: createArray(20, '♥♥'),
 		};
-		expect(await ratingPO.state()).toEqual(expectedState);
+		await expect.poll(() => ratingPO.state()).toEqual(expectedState);
 
 		await ratingDemoPO.locatorBtnConfigClassName('fs-1').click();
 		expectedState = {
 			...expectedState,
 			rootClasses: [...expectedState.rootClasses, 'fs-1'],
 		};
-		expect(await ratingPO.state()).toEqual(expectedState);
+		await expect.poll(() => ratingPO.state()).toEqual(expectedState);
 	});
 });

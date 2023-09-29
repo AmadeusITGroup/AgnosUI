@@ -78,32 +78,36 @@ test.describe.parallel(`Pagination tests`, () => {
 		const paginationPO = new PaginationPO(page, 0);
 		await page.goto('#/pagination/default');
 		await paginationPO.locatorRoot.waitFor();
-		expect(await paginationState(paginationPO)).toEqual(initState);
-		expect(await paginationDemoPO.defaultPaginationDemoState()).toEqual({page: 4});
+		await expect.poll(() => paginationState(paginationPO)).toEqual(initState);
+		await expect.poll(() => paginationDemoPO.defaultPaginationDemoState()).toEqual({page: 4});
 		await expect(paginationPO.locatorPreviousButton).not.toBeDisabled();
 		await expect(paginationPO.locatorNextButton).not.toBeDisabled();
 		const disabledPaginationPO = new PaginationPO(page, 3);
-		expect(await paginationState(disabledPaginationPO)).toEqual(disabledInitState);
+		await expect.poll(() => paginationState(disabledPaginationPO)).toEqual(disabledInitState);
 		const paginationWithBoundariesPO = new PaginationPO(page, 2);
 		await paginationWithBoundariesPO.locatorFirstButton.click();
-		expect(await paginationDemoPO.defaultPaginationDemoState()).toEqual({page: 1});
-		expect(await paginationState(paginationWithBoundariesPO)).toEqual({
-			...initState,
-			isFirstDisabled: true,
-			isLastDisabled: false,
-			isPreviousDisabled: true,
-			pages: ['1(current)', '2', '3', '4', '5', '6'],
-		});
+		await expect.poll(() => paginationDemoPO.defaultPaginationDemoState()).toEqual({page: 1});
+		await expect
+			.poll(() => paginationState(paginationWithBoundariesPO))
+			.toEqual({
+				...initState,
+				isFirstDisabled: true,
+				isLastDisabled: false,
+				isPreviousDisabled: true,
+				pages: ['1(current)', '2', '3', '4', '5', '6'],
+			});
 		await paginationWithBoundariesPO.locatorLastButton.click();
-		expect(await paginationDemoPO.defaultPaginationDemoState()).toEqual({page: 6});
-		expect(await paginationState(paginationWithBoundariesPO)).toEqual({
-			...initState,
-			isFirstDisabled: false,
-			isLastDisabled: true,
-			isNextDisabled: true,
-			isPreviousDisabled: false,
-			pages: ['1', '2', '3', '4', '5', '6(current)'],
-		});
+		await expect.poll(() => paginationDemoPO.defaultPaginationDemoState()).toEqual({page: 6});
+		await expect
+			.poll(() => paginationState(paginationWithBoundariesPO))
+			.toEqual({
+				...initState,
+				isFirstDisabled: false,
+				isLastDisabled: true,
+				isNextDisabled: true,
+				isPreviousDisabled: false,
+				pages: ['1', '2', '3', '4', '5', '6(current)'],
+			});
 	});
 
 	// TODO add test with the custom template, className...
@@ -113,9 +117,9 @@ test.describe.parallel(`Pagination tests`, () => {
 		const paginationPO2 = new PaginationPO(page, 1);
 		await page.goto('#/pagination/custom');
 		await paginationPO1.locatorRoot.waitFor();
-		expect(await paginationState(paginationPO1)).toEqual(expectedState);
+		await expect.poll(() => paginationState(paginationPO1)).toEqual(expectedState);
 		await paginationPO2.locatorNextButton.click();
 		expectedState.pages = ['A', 'B', 'C', 'D', 'E(current)', 'F'];
-		expect(await paginationState(paginationPO1)).toEqual(expectedState);
+		await expect.poll(() => paginationState(paginationPO1)).toEqual(expectedState);
 	});
 });

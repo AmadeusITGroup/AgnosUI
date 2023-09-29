@@ -19,23 +19,23 @@ test.describe(`Select tests`, () => {
 			isInContainer: false,
 		};
 
-		expect(await focustrackPO.getState()).toEqual(expectedState);
+		await expect.poll(() => focustrackPO.getState()).toEqual(expectedState);
 
 		await focustrackPO.locatorFocusableInput.click();
 
 		expectedState.activeElements.push({tagName: 'input', id: 'focusableInput'});
 		expectedState.isInContainer = true;
-		await expect.poll(async () => await focustrackPO.getState()).toEqual(expectedState);
+		await expect.poll(() => focustrackPO.getState()).toEqual(expectedState);
 
 		await focustrackPO.locatorOtherFocusableInput.click();
 
 		expectedState.activeElements.push({tagName: 'input', id: 'otherFocusableInput'});
-		await expect.poll(async () => await focustrackPO.getState()).toEqual(expectedState);
+		await expect.poll(() => focustrackPO.getState()).toEqual(expectedState);
 
 		await focustrackPO.locatorDisabledInput.click({force: true});
 
 		expectedState.activeElements.push({tagName: 'body'});
 		expectedState.isInContainer = false;
-		await expect.poll(async () => await focustrackPO.getState()).toEqual(expectedState);
+		await expect.poll(() => focustrackPO.getState()).toEqual(expectedState);
 	});
 });

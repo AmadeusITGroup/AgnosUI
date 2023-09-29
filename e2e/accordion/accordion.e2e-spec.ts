@@ -49,7 +49,7 @@ test.describe.parallel(`Accordion tests`, () => {
 			],
 			rootClasses: ['accordion'],
 		};
-		expect(await accordionPO.state()).toEqual(expectedState);
+		await expect.poll(() => accordionPO.state()).toEqual(expectedState);
 		//We are using the 'header' since if we would use the 'buttons' wouldn't be possible to click on the disabled one
 		await accordionPO.locatorAccordionHeaders.nth(0).click();
 		await accordionPO.locatorAccordionHeaders.nth(1).click();
@@ -57,7 +57,7 @@ test.describe.parallel(`Accordion tests`, () => {
 
 		expectedState.items[0].expanded = 'false';
 		expectedState.items[1].expanded = 'true';
-		expect(await accordionPO.state()).toEqual(expectedState);
+		await expect.poll(() => accordionPO.state()).toEqual(expectedState);
 	});
 	test(`Toggle Panels`, async ({page}) => {
 		const accordionDemoPO = new AccordionTogglePanels(page);
@@ -92,21 +92,21 @@ test.describe.parallel(`Accordion tests`, () => {
 			],
 			rootClasses: ['accordion'],
 		};
-		expect(await accordionPO.state()).toEqual(expectedState);
+		await expect.poll(() => accordionPO.state()).toEqual(expectedState);
 		await accordionDemoPO.locatorToggleFirst().click();
 		expectedState.items[0].expanded = 'true';
-		expect(await accordionPO.state()).toEqual(expectedState);
+		await expect.poll(() => accordionPO.state()).toEqual(expectedState);
 		await accordionDemoPO.locatorToggleFirst().click();
 		await accordionDemoPO.locatorToggleSecond().click();
 		expectedState.items[0].expanded = 'false';
 		expectedState.items[1].expanded = 'true';
-		expect(await accordionPO.state()).toEqual(expectedState);
+		await expect.poll(() => accordionPO.state()).toEqual(expectedState);
 		await accordionDemoPO.locatorExpandAll().click();
 		expectedState.items[0].expanded = 'true';
-		expect(await accordionPO.state()).toEqual(expectedState);
+		await expect.poll(() => accordionPO.state()).toEqual(expectedState);
 		await accordionDemoPO.locatorCollapseAll().click();
 		expectedState.items[0].expanded = 'false';
 		expectedState.items[1].expanded = 'false';
-		expect(await accordionPO.state()).toEqual(expectedState);
+		await expect.poll(() => accordionPO.state()).toEqual(expectedState);
 	});
 });
