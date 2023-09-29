@@ -598,8 +598,6 @@ export function createAccordion(config?: PropsConfig<AccordionProps>): Accordion
 		if (closeOthers$()) {
 			adjustItemsCloseOthers(itemsWidget$(), openItems$(), oldOpenItem$());
 			oldOpenItem$.set(openItems$()[0]);
-		} else {
-			itemsWidget$();
 		}
 	});
 
