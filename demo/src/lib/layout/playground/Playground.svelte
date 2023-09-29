@@ -5,6 +5,7 @@
 	import PlaygroundLine from './PlaygroundLine.svelte';
 	import {createPlayground} from './playground';
 	import type {SampleInfo} from '../sample';
+	import type {PropsValues} from '@agnos-ui/common/propsValues';
 
 	export let sample: SampleInfo;
 	export let config: Record<string, any>;
@@ -12,8 +13,8 @@
 	export let types: Record<string, string> = {};
 	export let height = 100;
 	export let noresize = false;
-
-	const {values$, sampleParameters$, help$} = createPlayground({config, types, doc});
+	export let listPropsValues: Record<string, PropsValues[]> = {};
+	const {values$, sampleParameters$, help$} = createPlayground({config, types, doc, listPropsValues});
 </script>
 
 <div class="row">

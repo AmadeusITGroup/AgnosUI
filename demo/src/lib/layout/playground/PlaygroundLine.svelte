@@ -4,9 +4,7 @@
 	import {getPlaygroundContext} from './playground';
 
 	export let valueContext: ValueContextApi;
-
 	$: ({key, defaultValue, config, prop, type} = valueContext);
-
 	const {showHelp} = getPlaygroundContext();
 </script>
 

@@ -23,6 +23,7 @@
 		"paths": {
 			"@agnos-ui/core": ["./core/lib"],
 			"@agnos-ui/angular": ["./angular/lib/src/public-api"],
+			"@agnos-ui/common/*": ["./common/*"],
 			"@agnos-ui/angular-headless": ["./angular/headless/src/public-api"]
 		}
 	},
