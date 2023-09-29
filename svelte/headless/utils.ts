@@ -117,10 +117,9 @@ const getContextWidgetConfig = <Props extends object>(
 export const callWidgetFactory = <W extends Widget>(
 	factory: WidgetFactory<W>,
 	widgetName: keyof WidgetsConfig | null,
-	slots: SlotsPresent<WidgetProps<AdaptWidgetSlots<W>>>,
-	defaultConfig?: Partial<WidgetProps<AdaptWidgetSlots<W>>>
-): AdaptWidgetSlots<W> & {patchChangedProps: AdaptWidgetSlots<W>['patch']} =>
-	withPatchChangedProps(factory({config: getContextWidgetConfig(widgetName, slots, defaultConfig)}) as any);
+	slots: SlotsPresent<WidgetProps<W>>,
+	defaultConfig?: Partial<WidgetProps<W>>
+): W & {patchChangedProps: W['patch']} => withPatchChangedProps(factory({config: getContextWidgetConfig(widgetName, slots, defaultConfig)}) as any);
 
 export const useSvelteSlot = Symbol('useSvelteSlot');
 
@@ -142,10 +141,14 @@ export type WidgetsConfig = {
 	[WidgetName in keyof CoreWidgetsConfig]: AdaptPropsSlots<CoreWidgetsConfig[WidgetName]>;
 };
 
+export type AdaptWidgetFactories<T> = {
+	[K in keyof T]: T[K] extends WidgetFactory<infer U> ? WidgetFactory<AdaptWidgetSlots<U>> : T[K];
+};
+
 export type AdaptWidgetSlots<W extends Widget> = Widget<
 	AdaptPropsSlots<WidgetProps<W>>,
 	AdaptPropsSlots<WidgetState<W>>,
-	W['api'],
+	AdaptWidgetFactories<W['api']>,
 	W['actions'],
 	W['directives']
 >;
