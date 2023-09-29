@@ -1,5 +1,5 @@
 import {Component} from 'react';
-import type {SlotContent} from './utils';
+import type {SlotContent} from './slotTypes';
 
 type SlotFunction<Props = Record<string, never>> = ((props: Props) => React.ReactNode) | React.FunctionComponent<Props>;
 
