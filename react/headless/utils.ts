@@ -25,10 +25,14 @@ export type WidgetsConfig = {
 	[WidgetName in keyof CoreWidgetsConfig]: AdaptPropsSlots<CoreWidgetsConfig[WidgetName]>;
 };
 
+export type AdaptWidgetFactories<T> = {
+	[K in keyof T]: T[K] extends WidgetFactory<infer U> ? WidgetFactory<AdaptWidgetSlots<U>> : T[K];
+};
+
 export type AdaptWidgetSlots<W extends Widget> = Widget<
 	AdaptPropsSlots<WidgetProps<W>>,
 	AdaptPropsSlots<WidgetState<W>>,
-	W['api'],
+	AdaptWidgetFactories<W['api']>,
 	W['actions'],
 	W['directives']
 >;
@@ -123,8 +127,7 @@ const useWidgetContext = <Props extends object>(widgetName: keyof WidgetsConfig 
 
 export const useWidgetWithConfig = <W extends Widget>(
 	factory: WidgetFactory<W>,
-	props: Partial<AdaptPropsSlots<WidgetProps<W>>> | undefined,
+	props: Partial<WidgetProps<W>> | undefined,
 	widgetName: keyof WidgetsConfig | null,
-	defaultProps?: Partial<AdaptPropsSlots<WidgetProps<W>>>
-): [AdaptPropsSlots<WidgetState<W>>, AdaptWidgetSlots<W>] =>
-	useWidget(factory, props as any, {config: useWidgetContext(widgetName, defaultProps) as any}) as any;
+	defaultProps?: Partial<WidgetProps<W>>
+): [WidgetState<W>, W] => useWidget(factory, props, {config: useWidgetContext(widgetName, defaultProps)});

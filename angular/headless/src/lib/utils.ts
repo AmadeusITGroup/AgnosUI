@@ -33,10 +33,14 @@ export type AdaptPropsSlots<Props> = Omit<Props, `slot${string}`> & {
 	[K in keyof Props & `slot${string}`]: Props[K] extends CoreSlotContent<infer U> ? SlotContent<AdaptSlotContentProps<U>> : Props[K];
 };
 
+export type AdaptWidgetFactories<T> = {
+	[K in keyof T]: T[K] extends WidgetFactory<infer U> ? WidgetFactory<AdaptWidgetSlots<U>> : T[K];
+};
+
 export type AdaptWidgetSlots<W extends Widget> = Widget<
 	AdaptPropsSlots<WidgetProps<W>>,
 	AdaptPropsSlots<WidgetState<W>>,
-	W['api'],
+	AdaptWidgetFactories<W['api']>,
 	W['actions'],
 	W['directives']
 >;
@@ -150,18 +154,16 @@ const createPatchSlots = <T extends object>(set: (object: Partial<T>) => void) =
 	};
 };
 
-export type WithPatchSlots<W extends Widget> = AdaptWidgetSlots<W> & {
+export type WithPatchSlots<W extends Widget> = W & {
 	patchSlots(slots: {
-		[K in keyof WidgetProps<W> & `slot${string}`]: WidgetProps<W>[K] extends CoreSlotContent<infer U>
-			? TemplateRef<AdaptSlotContentProps<U>> | undefined
-			: never;
+		[K in keyof WidgetProps<W> & `slot${string}`]: WidgetProps<W>[K] extends SlotContent<infer U> ? TemplateRef<U> | undefined : never;
 	}): void;
 };
 
 export const callWidgetFactory = <W extends Widget>(
 	factory: WidgetFactory<W>,
 	widgetName: keyof WidgetsConfig | null,
-	defaultConfig: Partial<AdaptPropsSlots<WidgetProps<W>>> | ReadableSignal<Partial<AdaptPropsSlots<WidgetProps<W>>>> = {}
+	defaultConfig: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>>> = {}
 ): WithPatchSlots<W> => {
 	const defaultConfigStore = typeof defaultConfig !== 'function' ? readable(defaultConfig) : defaultConfig;
 	const slots$ = writable({});
