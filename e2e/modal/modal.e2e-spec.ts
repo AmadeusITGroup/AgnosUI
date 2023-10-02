@@ -10,32 +10,32 @@ test.describe.parallel(`Modal tests`, () => {
 		await modalDemoPO.locatorRoot.waitFor();
 		await test.step('open modal and click on close', async () => {
 			await modalDemoPO.locatorLaunchDemoModalButton.click();
-			expect(modalPO.locatorTitle).toContainText('Save changes');
-			expect(modalPO.locatorBody).toContainText('Do you want to save your changes?');
+			await expect(modalPO.locatorTitle).toContainText('Save changes');
+			await expect(modalPO.locatorBody).toContainText('Do you want to save your changes?');
 			await modalPO.locatorCloseButton.click();
 			await modalPO.locatorRoot.waitFor({state: 'hidden'});
 			await expect(modalDemoPO.locatorMessage).toContainText('You clicked on the close button');
 		});
 		await test.step('open modal and click on yes', async () => {
 			await modalDemoPO.locatorLaunchDemoModalButton.click();
-			expect(modalPO.locatorTitle).toContainText('Save changes');
-			expect(modalPO.locatorBody).toContainText('Do you want to save your changes?');
+			await expect(modalPO.locatorTitle).toContainText('Save changes');
+			await expect(modalPO.locatorBody).toContainText('Do you want to save your changes?');
 			await modalPO.locatorYesButton.click();
 			await modalPO.locatorRoot.waitFor({state: 'hidden'});
 			await expect(modalDemoPO.locatorMessage).toContainText('You answered the question with "Yes"');
 		});
 		await test.step('open modal and click on no', async () => {
 			await modalDemoPO.locatorLaunchDemoModalButton.click();
-			expect(modalPO.locatorTitle).toContainText('Save changes');
-			expect(modalPO.locatorBody).toContainText('Do you want to save your changes?');
+			await expect(modalPO.locatorTitle).toContainText('Save changes');
+			await expect(modalPO.locatorBody).toContainText('Do you want to save your changes?');
 			await modalPO.locatorNoButton.click();
 			await modalPO.locatorRoot.waitFor({state: 'hidden'});
 			await expect(modalDemoPO.locatorMessage).toContainText('You answered the question with "No"');
 		});
 		await test.step('open modal and click on backdrop', async () => {
 			await modalDemoPO.locatorLaunchDemoModalButton.click();
-			expect(modalPO.locatorTitle).toContainText('Save changes');
-			expect(modalPO.locatorBody).toContainText('Do you want to save your changes?');
+			await expect(modalPO.locatorTitle).toContainText('Save changes');
+			await expect(modalPO.locatorBody).toContainText('Do you want to save your changes?');
 			await modalPO.locatorRoot.click();
 			await modalPO.locatorRoot.waitFor({state: 'hidden'});
 			await expect(modalDemoPO.locatorMessage).toContainText('You clicked outside the modal');

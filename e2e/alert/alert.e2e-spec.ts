@@ -11,7 +11,7 @@ test.describe(`Alert tests`, () => {
 		await page.goto('#/alert/config');
 		await alertDemoPO.locatorRoot.waitFor();
 
-		expect(await alertPO.locatorRoot.getAttribute('class')).toContain('success');
+		await expect(alertPO.locatorRoot).toHaveClass(/alert-success/);
 
 		await alertPO.locatorCloseButton.click();
 
@@ -21,7 +21,7 @@ test.describe(`Alert tests`, () => {
 		await alertDemoPO.locatorTypeSelect.selectOption('danger');
 		await alertDemoPO.locatorShowAlertButton.click();
 
-		expect(await alertPO.locatorRoot.getAttribute('class')).toContain('danger');
+		await expect(alertPO.locatorRoot).toHaveClass(/alert-danger/);
 		await expect(alertPO.locatorCloseButton).toHaveCount(0);
 	});
 
@@ -31,13 +31,13 @@ test.describe(`Alert tests`, () => {
 
 		await page.goto('#/alert/dynamic');
 		await alertDemoPO.locatorRoot.waitFor();
-		expect(await alertDemoPO.locatorAlertCountLabel.innerText()).toContain('0');
+		await expect(alertDemoPO.locatorAlertCountLabel).toContainText('0');
 
 		await alertDemoPO.locatorAddErrorButton.click();
 		await alertDemoPO.locatorAddInfoButton.click();
 		await alertDemoPO.locatorAddWarningButton.click();
 
-		expect(await alertDemoPO.locatorAlertCountLabel.innerText()).toContain('3');
+		await expect(alertDemoPO.locatorAlertCountLabel).toContainText('3');
 
 		await alertPO.locatorCloseButton.click();
 		await expect(alertPO.locatorCloseButton).toHaveCount(0);
