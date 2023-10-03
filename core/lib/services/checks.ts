@@ -34,6 +34,12 @@ export function isString(value: any): value is string {
 	return typeof value === 'string';
 }
 
+/**
+ * an array type guard
+ * @returns true if the value is an array
+ */
+export const isArray = Array.isArray;
+
 // TODO should we check that max > min?
 /**
  * Clamp the value based on a maximum and optional minimum

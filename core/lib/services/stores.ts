@@ -321,21 +321,25 @@ export const stateStores = <A extends {[key in `${string}$`]: ReadableSignal<any
 export const bindableDerived = <T, U extends [WritableSignal<T>, ...StoreInput<any>[]]>(
 	onChange$: ReadableSignal<(value: T) => void>,
 	stores: U,
-	adjustValue: (arg: StoresInputValues<U>) => T
+	adjustValue: (arg: StoresInputValues<U>) => T,
+	equal = (currentValue: T, newValue: T) => newValue === currentValue
 ) => {
 	let currentValue = stores[0]();
-	return derived(stores, (values) => {
-		const newValue = adjustValue(values);
-		const rectifiedValue = newValue !== values[0];
-		if (rectifiedValue) {
-			stores[0].set(newValue);
-		}
-		if (rectifiedValue || newValue !== currentValue) {
-			currentValue = newValue;
-			// TODO check if we should do this async to avoid issue
-			// with angular and react only when rectifiedValue is true?
-			onChange$()(newValue);
-		}
-		return newValue;
+	return derived(stores, {
+		derive(values) {
+			const newValue = adjustValue(values);
+			const rectifiedValue = !equal(values[0], newValue);
+			if (rectifiedValue) {
+				stores[0].set(newValue);
+			}
+			if (rectifiedValue || !equal(currentValue, newValue)) {
+				currentValue = newValue;
+				// TODO check if we should do this async to avoid issue
+				// with angular and react only when rectifiedValue is true?
+				onChange$()(newValue);
+			}
+			return newValue;
+		},
+		equal,
 	});
 };
