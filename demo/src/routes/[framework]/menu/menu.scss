@@ -22,20 +22,23 @@ $mobileMargin: 16px;
 }
 
 .menu-item-sidenav {
-	padding: 0.5rem;
+	padding: 0.1rem 0.5rem;
 	border: 0px solid var(--bs-body-bg);
 	border-width: 2px 0;
 
 	&.active {
-		background-color: var(--bs-secondary-bg);
-		border-color: var(--bs-secondary-bg);
-	}
-
-	&:focus {
-		border-color: var(--bs-primary-border-subtle);
+		color: var(--bs-primary);
 	}
 
 	@include media-breakpoint-down(md) {
+		&:focus {
+			border-color: var(--bs-primary-border-subtle);
+		}
+	}
+
+	@include media-breakpoint-down(md) {
+		padding-top: 0.5rem;
+		padding-bottom: 0.5rem;
 		padding-left: $mobileMargin * 2;
 		padding-right: $mobileMargin * 2;
 	}
