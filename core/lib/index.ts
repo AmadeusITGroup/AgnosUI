@@ -12,3 +12,4 @@ export * from './accordion';
 export * from './commonProps';
 export * from './progressbar';
 export * from './extendWidget';
+export * from './slider';

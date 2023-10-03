@@ -5,3 +5,4 @@ export * from './select.po';
 export * from './alert.po';
 export * from './accordion.po';
 export * from './progressbar.po';
+export * from './slider.po';

@@ -12,7 +12,8 @@
 		"alert",
 		"modal",
 		"pagination",
-		"rating"
+		"rating",
+		"slider"
 	],
 	"repository": {
 		"type": "git",
