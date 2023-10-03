@@ -1,17 +1,17 @@
-import {AgnosUIAngularModule, injectWidgetsConfig, provideWidgetsConfig} from '@agnos-ui/angular';
-import {CommonModule} from '@angular/common';
+import {SelectComponent, injectWidgetsConfig, provideWidgetsConfig} from '@agnos-ui/angular';
+import {AsyncPipe} from '@angular/common';
 import {Component} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
 @Component({
 	standalone: true,
-	imports: [AgnosUIAngularModule, CommonModule, FormsModule],
+	imports: [AsyncPipe, FormsModule, SelectComponent],
 	providers: [provideWidgetsConfig()],
 	template: `
 		<h2>Multiselect example</h2>
 		<div class="mb-3">
 			<label class="form-label">Multiselect</label>
-			<div auSelect [auItems]="items" [(auFilterText)]="filterText"></div>
+			<div auSelect [auItems]="items" [auFilterText]="filterText" (auFilterTextChange)="onFilterTextChange($event)"></div>
 		</div>
 		<div class="demo-select-config">
 			<strong>Default config</strong><br />
@@ -29,8 +29,9 @@ import {FormsModule} from '@angular/forms';
 		</div>
 	`,
 })
-export default class SelectComponent {
-	items = ['Action 1', 'Action 2', 'Action 3', 'Other 1', 'Other 2', 'Other 3'];
+export default class SelectSelectComponent {
+	mainList = ['Action 1', 'Action 2', 'Action 3', 'Other 1', 'Other 2', 'Other 3'];
+	items: string[] = [];
 
 	filterText: string | undefined;
 
@@ -44,5 +45,13 @@ export default class SelectComponent {
 				filterText: url.searchParams.get('filterText') ?? '',
 			},
 		});
+	}
+
+	onFilterTextChange(filterText: string) {
+		if (this.filterText !== filterText) {
+			this.filterText = filterText;
+			const mainList = this.mainList;
+			this.items = filterText ? mainList.filter((item) => item.toLowerCase().startsWith(filterText ?? '')) : mainList.slice(0, 10);
+		}
 	}
 }

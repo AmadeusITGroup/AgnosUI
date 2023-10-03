@@ -318,10 +318,18 @@ export const stateStores = <A extends {[key in `${string}$`]: ReadableSignal<any
 	};
 };
 
+/**
+ * Creates a computed store that binds to multiple stores and triggers a callback when the value changes.
+ * @param onChange$ - A readable signal callback function to execute when the value changes.
+ * @param stores - An array of Svelte stores, with the main store at index 0.
+ * @param adjustValue - A function to adjust the value of the main store. By default, the value of the main store is returned.
+ * @param equal - A function to determine if two values are equal. Used to compare the ajusted value with the current one.
+ * @returns The derived store that reflects the combined state of the input stores.
+ */
 export const bindableDerived = <T, U extends [WritableSignal<T>, ...StoreInput<any>[]]>(
 	onChange$: ReadableSignal<(value: T) => void>,
 	stores: U,
-	adjustValue: (arg: StoresInputValues<U>) => T,
+	adjustValue = (arg: StoresInputValues<U>) => arg[0] as T,
 	equal = (currentValue: T, newValue: T) => newValue === currentValue,
 ) => {
 	let currentValue = stores[0]();

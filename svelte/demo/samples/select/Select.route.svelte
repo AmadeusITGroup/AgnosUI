@@ -1,7 +1,7 @@
 <script lang="ts">
 	import {Select, createWidgetsDefaultConfig} from '@agnos-ui/svelte';
 
-	const items = ['Action 1', 'Action 2', 'Action 3', 'Other 1', 'Other 2', 'Other 3'];
+	const mainList = ['Action 1', 'Action 2', 'Action 3', 'Other 1', 'Other 2', 'Other 3'];
 
 	const widgetsConfig$ = createWidgetsDefaultConfig();
 	const params = location.hash.split('?')[1];
@@ -10,6 +10,7 @@
 	$: $widgetsConfig$.select = {filterText: defaultFilterText};
 
 	let filterText: string | undefined;
+	$: items = filterText ? mainList.filter((item) => item.toLowerCase().startsWith(filterText ?? '')) : mainList.slice(0, 10);
 </script>
 
 <h2>Multiselect example</h2>

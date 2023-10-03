@@ -1,14 +1,37 @@
-import {asReadable, batch, computed, writable} from '@amadeus-it-group/tansu';
+import {asReadable, computed, writable} from '@amadeus-it-group/tansu';
+import type {WidgetsCommonPropsAndState} from './commonProps';
 import type {HasFocus} from './services/focustrack';
 import {createHasFocus} from './services/focustrack';
 import type {PropsConfig} from './services/stores';
-import {stateStores, writablesForProps} from './services/stores';
-import type {Widget} from './types';
-import type {WidgetsCommonPropsAndState} from './commonProps';
+import {bindableDerived, stateStores, writablesForProps} from './services/stores';
+import type {SlotContent, Widget, WidgetSlotContext} from './types';
+import {noop} from './utils';
+
+/**
+ * A type for the slot context of the pagination widget
+ */
+export type SelectContext<Item> = WidgetSlotContext<SelectWidget<Item>>;
+
+export interface SelectItemContext<Item> extends SelectContext<Item> {
+	/**
+	 * Contextual data related to an item
+	 */
+	itemContext: ItemContext<Item>;
+}
 
 export interface SelectCommonPropsAndState<Item> extends WidgetsCommonPropsAndState {
 	/**
-	 * List of selected items
+	 * id used for the input inside the select
+	 */
+	id: string | undefined;
+
+	/**
+	 * aria-label used for the input inside the select
+	 */
+	ariaLabel: string | undefined;
+
+	/**
+	 * List of selected item ids
 	 */
 	selected: Item[];
 
@@ -25,12 +48,39 @@ export interface SelectCommonPropsAndState<Item> extends WidgetsCommonPropsAndSt
 	/**
 	 * true if the select is open
 	 */
-	opened: boolean;
+	open: boolean;
+
+	/**
+	 * Class to be added on the dropdown menu container
+	 */
+	menuClassName: string;
+
+	/**
+	 * Class to be added on menu items
+	 */
+	menuItemClassName: string;
+
+	/**
+	 * Class to be added on selected items (displayed in the input zone)
+	 */
+	badgeClassName: string;
 
 	/**
 	 * true if a loading process is being done
 	 */
 	loading: boolean;
+
+	/**
+	 * The template to override the way each badge on the left of the input is displayed.
+	 * This define the content of the badge inside the badge container.
+	 */
+	slotBadgeLabel: SlotContent<SelectItemContext<Item>>;
+
+	/**
+	 * The template to override the way each item is displayed in the list.
+	 * This define the content of the badge inside the badge container.
+	 */
+	slotItem: SlotContent<SelectItemContext<Item>>;
 }
 
 export interface SelectProps<T> extends SelectCommonPropsAndState<T> {
@@ -40,30 +90,35 @@ export interface SelectProps<T> extends SelectCommonPropsAndState<T> {
 	items: T[];
 
 	/**
-	 * Custom function to filter an item.
-	 * By default, item is considered as a string, and the function returns true if the text is found
-	 */
-	matchFn(item: T, text: string): boolean;
-
-	/**
 	 * Custom function to get the id of an item
 	 * By default, the item is returned
 	 */
-	itemId(item: T): string;
+	itemIdFn(item: T): string;
 
 	// Event callbacks
+
+	/**
+	 * Callback called dropdown open state change
+	 * @param isOpen - updated open state
+	 */
+	onOpenChange(isOpen: boolean): void;
 
 	/**
 	 * Callback called when the text filter change
 	 * @param text - Filtered text
 	 */
-	onFilterTextChange?(text: string): void;
+	onFilterTextChange(text: string): void;
+
+	/**
+	 * Callback called when the selection change
+	 */
+	onSelectedChange(selected: T[]): void;
 }
 
 /**
  * Item representation built from the items provided in parameters
  */
-export interface ItemCtx<T> {
+export interface ItemContext<T> {
 	/**
 	 * Original item given in the parameters
 	 */
@@ -78,34 +133,25 @@ export interface ItemCtx<T> {
 	 * Specify if the item is checked
 	 */
 	selected: boolean;
-
-	/**
-	 * Select the item
-	 */
-	select(): void;
-
-	/**
-	 * Unselect the item
-	 */
-	unselect(): void;
-
-	/**
-	 * Toggle the item selection
-	 */
-	toggle(): void;
 }
 
 export interface SelectState<Item> extends SelectCommonPropsAndState<Item> {
 	/**
-	 * List of visible items displayed in the menu
+	 * List of item contexts, to be displayed in the menu
 	 */
-	visible: ItemCtx<Item>[];
+	visibleItems: ItemContext<Item>[];
+
+	/**
+	/**
+	 * List of selected items to be display
+	 */
+	selectedContexts: ItemContext<Item>[];
 
 	/**
 	 * Highlighted item context.
 	 * It is designed to define the highlighted item in the dropdown menu
 	 */
-	highlighted: ItemCtx<Item> | undefined;
+	highlighted: ItemContext<Item> | undefined;
 }
 
 export interface SelectApi<Item> {
@@ -225,26 +271,36 @@ export interface SelectActions {
 
 export type SelectWidget<Item> = Widget<SelectProps<Item>, SelectState<Item>, SelectApi<Item>, SelectActions, SelectDirectives>;
 
-function defaultMatchFn(item: any, text: string) {
-	return JSON.stringify(item).toLowerCase().includes(text.toLowerCase());
-}
-
-function defaultItemId(item: any) {
-	return '' + item;
-}
+const defaultItemId = (item: any) => '' + item;
 
 const defaultConfig: SelectProps<any> = {
-	opened: false,
+	id: undefined,
+	ariaLabel: 'Select',
+	open: false,
 	disabled: false,
 	items: [],
 	filterText: '',
 	loading: false,
 	selected: [],
-	itemId: defaultItemId,
-	matchFn: defaultMatchFn,
-	onFilterTextChange: undefined,
+	itemIdFn: defaultItemId,
+	onOpenChange: noop,
+	onFilterTextChange: noop,
+	onSelectedChange: noop,
 	className: '',
+	menuClassName: '',
+	menuItemClassName: '',
+	badgeClassName: '',
+	slotBadgeLabel: ({itemContext}) => itemContext.item,
+	slotItem: ({itemContext}) => itemContext.item,
 };
+
+/**
+ * Returns a shallow copy of the default select config.
+ * @returns a copy of the default config
+ */
+export function getSelectDefaultConfig() {
+	return {...defaultConfig};
+}
 
 /**
  * Create a SelectWidget with given config props
@@ -253,28 +309,39 @@ const defaultConfig: SelectProps<any> = {
  */
 export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): SelectWidget<Item> {
 	// Props
-	const [{opened$: _dirtyOpened$, items$, itemId$, matchFn$, onFilterTextChange$, ...otherProps}, patch] = writablesForProps<SelectProps<Item>>(
-		defaultConfig,
-		config,
-	);
-	const {selected$, filterText$} = otherProps;
+	const [
+		{open$: _dirtyOpen$, filterText$: _dirtyFilterText$, items$, itemIdFn$, onOpenChange$, onFilterTextChange$, onSelectedChange$, ...stateProps},
+		patch,
+	] = writablesForProps<SelectProps<Item>>(defaultConfig, config);
+	const {selected$} = stateProps;
+
+	const filterText$ = bindableDerived(onFilterTextChange$, [_dirtyFilterText$]);
 
 	const {hasFocus$, directive: hasFocusDirective} = createHasFocus();
-	const opened$ = computed(() => {
-		const _dirtyOpened = _dirtyOpened$();
-		const hasFocus = hasFocus$();
-		if (!hasFocus && _dirtyOpened) {
-			_dirtyOpened$.set(false);
+	const open$ = bindableDerived(onOpenChange$, [_dirtyOpen$, hasFocus$], ([_dirtyOpen, hasFocus]) => _dirtyOpen && hasFocus);
+
+	const selectedContextsMap$ = computed(() => {
+		const selectedItemsContext = new Map<string, ItemContext<Item>>();
+		const itemIdFn = itemIdFn$();
+		for (const item of selected$()) {
+			const id = itemIdFn(item);
+			selectedItemsContext.set(id, {
+				item,
+				id: itemIdFn(item),
+				selected: true,
+			});
 		}
-		return _dirtyOpened && hasFocus;
+		return selectedItemsContext;
 	});
+
+	const selectedContexts$ = computed(() => [...selectedContextsMap$().values()]);
 
 	const highlightedIndex$ = (function () {
 		const store = writable(<number | undefined>0);
 
 		const newStore = asReadable(store, {
 			set(index: number | undefined) {
-				const {length} = visible$();
+				const {length} = visibleItems$();
 				if (index != undefined) {
 					if (!length) {
 						index = undefined;
@@ -294,47 +361,40 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 		return newStore;
 	})();
 
-	const visible$ = computed(() => {
-		const list: ItemCtx<Item>[] = [];
-		if (opened$()) {
-			const selected = selected$();
-			const filterText = filterText$();
-			const matchFn = !filterText ? () => true : matchFn$();
-			const itemId = itemId$();
+	const itemContexts$ = computed(() => {
+		const itemContexts = new Map<string, ItemContext<Item>>();
+		if (open$()) {
+			const selectedContextsMap = selectedContextsMap$();
+			const itemIdFn = itemIdFn$();
 			for (const item of items$()) {
-				if (matchFn(item, filterText)) {
-					list.push({
-						item,
-						id: itemId(item),
-						selected: selected.includes(item),
-						select: function (this: Item) {
-							widget.api.select(this);
-						}.bind(item),
-						unselect: function (this: Item) {
-							widget.api.unselect(this);
-						}.bind(item),
-						toggle: function (this: Item) {
-							widget.api.toggleItem(this);
-						}.bind(item),
-					});
-				}
+				const id = itemIdFn(item);
+				itemContexts.set(id, {
+					item,
+					id,
+					selected: selectedContextsMap.has(id),
+				});
 			}
 		}
-		return list;
+		return itemContexts;
 	});
 
+	const visibleItems$ = computed(() => (open$() ? [...itemContexts$().values()] : <ItemContext<Item>[]>[]));
+
 	const highlighted$ = computed(() => {
-		const visible = visible$();
+		const visibleItems = visibleItems$();
 		const highlightedIndex = highlightedIndex$();
-		return visible.length && highlightedIndex != undefined ? visible[highlightedIndex] : undefined;
+		return visibleItems.length && highlightedIndex != undefined ? visibleItems[highlightedIndex] : undefined;
 	});
 
 	const widget: SelectWidget<Item> = {
 		...stateStores({
-			visible$,
+			visibleItems$,
 			highlighted$,
-			opened$,
-			...otherProps,
+			open$,
+			selectedContexts$,
+			filterText$,
+
+			...stateProps,
 		}),
 
 		patch,
@@ -350,21 +410,31 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 				widget.api.toggleItem(item, false);
 			},
 			toggleItem(item: Item, selected?: boolean) {
-				if (!items$().includes(item)) {
+				const itemIdFn = itemIdFn$();
+				const itemId = itemIdFn(item);
+
+				const selectedContextsMap = selectedContextsMap$();
+				const isInSelected = selectedContextsMap.has(itemId);
+				if (selected == null) {
+					selected = !isInSelected;
+				}
+
+				if ((selected && !itemContexts$().has(itemId)) || (!selected && !isInSelected)) {
+					// Nothing to do in this case
 					return;
 				}
+
 				selected$.update((selectedItems) => {
-					selectedItems = [...selectedItems];
-					const index = selectedItems.indexOf(item);
-					if (selected == null) {
-						selected = index === -1;
-					}
-					if (selected && index === -1) {
+					selectedItems = [...selectedItems]; // Mutate the array
+
+					if (selected && !isInSelected) {
 						selectedItems.push(item);
-					} else if (!selected && index !== -1) {
+					} else if (!selected && isInSelected) {
+						const index = selectedItems.findIndex((item) => itemIdFn(item) === itemId);
 						selectedItems.splice(index, 1);
 					}
 
+					onSelectedChange$()?.(selectedItems);
 					return selectedItems;
 				});
 			},
@@ -374,7 +444,7 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 			},
 
 			highlight(item: Item) {
-				const index = visible$().findIndex((itemCtx) => itemCtx.item === item);
+				const index = visibleItems$().findIndex((itemCtx) => itemCtx.item === item);
 				highlightedIndex$.set(index === -1 ? undefined : index);
 			},
 			highlightFirst() {
@@ -413,7 +483,7 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 			open: () => widget.api.toggle(true),
 			close: () => widget.api.toggle(false),
 			toggle(isOpen?: boolean) {
-				_dirtyOpened$.update((value) => (isOpen != null ? isOpen : !value));
+				_dirtyOpen$.update((value) => (isOpen != null ? isOpen : !value));
 			},
 		},
 		directives: {
@@ -422,12 +492,9 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 		actions: {
 			onInput({target}: {target: HTMLInputElement}) {
 				const value = target.value;
-				batch(() => {
-					patch({
-						opened: value != null && value !== '',
-						filterText: value,
-					});
-					onFilterTextChange$()?.(value);
+				patch({
+					open: value != null && value !== '',
+					filterText: value,
 				});
 			},
 			onInputKeydown(e: KeyboardEvent) {
@@ -436,7 +503,7 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 				let keyManaged = true;
 				switch (key) {
 					case 'ArrowDown': {
-						const isOpen = opened$();
+						const isOpen = open$();
 						if (isOpen) {
 							if (ctrlKey) {
 								widget.api.highlightLast();
@@ -464,7 +531,7 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 						break;
 					}
 					case 'Escape':
-						_dirtyOpened$.set(false);
+						_dirtyOpen$.set(false);
 						break;
 					default:
 						keyManaged = false;

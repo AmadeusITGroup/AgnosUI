@@ -9,16 +9,23 @@ function getFilterTextParam() {
 }
 
 const Select = () => {
-	const [items] = useState(['Action 1', 'Action 2', 'Action 3', 'Other 1', 'Other 2', 'Other 3']);
+	const [mainList] = useState(['Action 1', 'Action 2', 'Action 3', 'Other 1', 'Other 2', 'Other 3']);
+
 	const [configFilterText, setConfigFilterText] = useState(getFilterTextParam);
-	const [filterTextProp, setFilterTextProp] = useState(undefined as string | undefined);
 	const changeConfigFilterText = useCallback((event: ChangeEvent<HTMLInputElement>) => setConfigFilterText(event.target.value), []);
+
+	const [items, setItems] = useState([] as string[]);
+	const [filterTextProp, setFilterTextProp] = useState(undefined as string | undefined);
+	const onFilterTextChange = useCallback((filterText: string) => {
+		setFilterTextProp(filterText);
+		setItems(filterText ? mainList.filter((item) => item.toLowerCase().startsWith(filterText)) : mainList.slice(0, 10));
+	}, []);
 	return (
 		<WidgetsDefaultConfig select={{filterText: configFilterText}}>
 			<h2>Multiselect example</h2>
 			<div className="mb-3">
 				<label className="form-label">Multiselect</label>
-				<SelectAgnosUI items={items} filterText={filterTextProp} onFilterTextChange={setFilterTextProp} />
+				<SelectAgnosUI items={items} filterText={filterTextProp} onFilterTextChange={onFilterTextChange} />
 			</div>
 			<div className="demo-select-config">
 				<strong>Default config</strong>

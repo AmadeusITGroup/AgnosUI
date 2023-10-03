@@ -1,59 +1,50 @@
-import type {ItemCtx, SelectProps, SelectWidget} from '@agnos-ui/react-headless';
-import {createSelect, useDirective, useWidgetWithConfig} from '@agnos-ui/react-headless';
+import type {SelectContext, SelectItemContext, SelectProps, SelectWidget} from '@agnos-ui/react-headless';
+import {Slot, createSelect, toSlotContextWidget, useDirective, useWidgetWithConfig} from '@agnos-ui/react-headless';
 import type {SyntheticEvent} from 'react';
-
-const inputGroupText = {
-	backgroundColor: 'transparent',
-};
 
 function preventDefault(e: SyntheticEvent) {
 	e.preventDefault();
 }
 
-function Badges<Item>({api, selected}: {api: SelectWidget<Item>; selected: Item[]}) {
+function DefaultBadge<Item>(slotContext: SelectItemContext<Item>) {
+	return <>{'' + slotContext.itemContext.item}</>;
+}
+
+function DefaultItem<Item>(slotContext: SelectItemContext<Item>) {
+	return <>{'' + slotContext.itemContext.item}</>;
+}
+
+function Badges<Item>({slotContext}: {slotContext: SelectContext<Item>}) {
 	const badges = [];
-	for (const item of selected) {
+	const state = slotContext.state;
+	for (const itemContext of slotContext.state.selectedContexts) {
 		badges.push(
-			<div className="badge rounded-pill text-bg-primary d-inline-flex align-items-center m-1" onMouseDown={preventDefault}>
-				<div className="me-1">{'' + item}</div>
-				<span role="button" tabIndex={-1} aria-label="Close" onClick={() => api.api.unselect(item)}>
-					x
-				</span>
+			<div className={`au-select-badge me-1 ${state.badgeClassName}`}>
+				<Slot slotContent={state.slotBadgeLabel} props={{...slotContext, itemContext}}></Slot>
 			</div>,
 		);
 	}
 
-	return badges.length ? (
-		<div className="input-group-text" style={inputGroupText}>
-			{badges}
-		</div>
-	) : null;
+	return badges.length ? <>{badges}</> : null;
 }
 
-function Rows<Item>({visible, highlighted}: {visible: ItemCtx<Item>[]; highlighted: ItemCtx<Item> | undefined}) {
+function Rows<Item>({slotContext}: {slotContext: SelectContext<Item>}) {
+	const {widget, state} = slotContext;
+	const highlighted = state.highlighted;
 	return (
 		<>
-			{visible.map((itemCtx) => {
-				const id = `au-select-checkbox-${itemCtx.id}`;
-				const classname = ['dropdown-item position-relative'];
-				if (itemCtx === highlighted) {
+			{state.visibleItems.map((itemContext) => {
+				const {id} = itemContext;
+				const classname = ['au-select-item dropdown-item position-relative'];
+				if (itemContext === highlighted) {
 					classname.push('bg-light');
 				}
+				if (itemContext.selected) {
+					classname.push('selected');
+				}
 				return (
-					<li key={itemCtx.id} className={classname.join(' ')}>
-						<div className="form-check">
-							<input id={id} tabIndex={-1} type="checkbox" className="form-check-input" checked={itemCtx.selected} onChange={itemCtx.toggle} />
-							<label
-								htmlFor={id}
-								className="form-check-label stretched-link"
-								onClick={(e) => {
-									itemCtx.toggle();
-									e.preventDefault();
-								}}
-							>
-								{'' + itemCtx.item}
-							</label>
-						</div>
+					<li key={id} className={classname.join(' ')} onClick={() => widget.api.toggleItem(itemContext.item)}>
+						<Slot slotContent={state.slotItem} props={{...slotContext, itemContext}}></Slot>
 					</li>
 				);
 			})}
@@ -61,9 +52,15 @@ function Rows<Item>({visible, highlighted}: {visible: ItemCtx<Item>[]; highlight
 	);
 }
 
+const defaultConfig: Partial<SelectProps<any>> = {
+	slotBadgeLabel: DefaultBadge,
+	slotItem: DefaultItem,
+};
+
 export function Select<Item>(props: Partial<SelectProps<Item>>) {
-	const [state, widget] = useWidgetWithConfig<SelectWidget<Item>>(createSelect, props, 'select');
-	const {visible, selected, highlighted, filterText, opened, className} = state;
+	const [state, widget] = useWidgetWithConfig<SelectWidget<Item>>(createSelect, props, 'select', defaultConfig);
+	const slotContext: SelectContext<Item> = {state, widget: toSlotContextWidget(widget)};
+	const {id, ariaLabel, visibleItems, filterText, open, className, menuClassName} = state;
 
 	const {
 		directives: {hasFocusDirective},
@@ -72,11 +69,13 @@ export function Select<Item>(props: Partial<SelectProps<Item>>) {
 	const refSetMenu = useDirective(hasFocusDirective);
 
 	return (
-		<div className={`au-select dropdown input-group input-group-sm mb-3 d-block ${className}`}>
-			<div ref={refSetInput} role="combobox" className="input-group" aria-haspopup="listbox" aria-expanded="true">
-				<Badges api={widget} selected={selected}></Badges>
+		<div className={`au-select dropdown border border-1 p-1 mb-3 d-block ${className}`}>
+			<div ref={refSetInput} role="combobox" className="d-flex align-items-center flex-wrap" aria-haspopup="listbox" aria-expanded={open}>
+				<Badges slotContext={slotContext}></Badges>
 				<input
-					className="form-control"
+					id={id}
+					aria-label={ariaLabel}
+					className="au-select-input flex-grow-1 border-0"
 					type="text"
 					value={filterText}
 					aria-autocomplete="list"
@@ -87,20 +86,15 @@ export function Select<Item>(props: Partial<SelectProps<Item>>) {
 					onInput={widget.actions.onInput}
 				/>
 			</div>
-			{opened && visible.length > 0 && (
+			{open && visibleItems.length > 0 && (
 				<ul
 					ref={refSetMenu}
-					className="dropdown-menu show w-100"
-					style={{
-						position: 'absolute',
-						inset: '0px auto auto 0px',
-						margin: '0px',
-						transform: 'translate3d(0px, 45px, 0px)',
-					}}
+					className={`dropdown-menu show ${menuClassName}`}
 					data-popper-placement="bottom-start"
+					data-bs-popper="static"
 					onMouseDown={preventDefault}
 				>
-					<Rows visible={visible} highlighted={highlighted}></Rows>
+					<Rows slotContext={slotContext}></Rows>
 				</ul>
 			)}
 		</div>

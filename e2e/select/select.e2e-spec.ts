@@ -1,6 +1,7 @@
-import {expect, test} from '../fixture';
 import {SelectPO} from '@agnos-ui/page-objects';
+import {assign} from '../../common/utils';
 import {SelectDemoPO} from '../demo-po/select.po';
+import {expect, test} from '../fixture';
 
 type PromiseValue<T> = T extends Promise<infer U> ? U : never;
 type State = PromiseValue<ReturnType<SelectPO['state']>>;
@@ -18,6 +19,7 @@ test.describe.parallel(`Select tests`, () => {
 			badges: [],
 			isOpen: false,
 			list: [],
+			checked: [],
 		};
 
 		await expect.poll(() => selectPO.state()).toEqual(expectedState);
@@ -25,46 +27,74 @@ test.describe.parallel(`Select tests`, () => {
 		const locatorInput = selectPO.locatorInput;
 		await locatorInput.fill('a');
 
-		Object.assign(expectedState, {
-			text: 'a',
-			isOpen: true,
-			list: [
-				{text: 'Action 1', hasCheckBox: true, isChecked: false},
-				{text: 'Action 2', hasCheckBox: true, isChecked: false},
-				{text: 'Action 3', hasCheckBox: true, isChecked: false},
-			],
-		});
-		await expect.poll(() => selectPO.state()).toEqual(expectedState);
+		await expect
+			.poll(() => selectPO.state())
+			.toStrictEqual(
+				assign(expectedState, {
+					text: 'a',
+					isOpen: true,
+					list: ['Action 1', 'Action 2', 'Action 3'],
+					checked: [],
+				}),
+			);
 
 		await locatorInput.press('Enter');
-
-		expectedState.badges = [['Action 1', 'x']];
-		expectedState.list[0].isChecked = true;
-		await expect.poll(() => selectPO.state()).toEqual(expectedState);
+		await expect
+			.poll(() => selectPO.state())
+			.toStrictEqual(
+				assign(expectedState, {
+					badges: ['Action 1'],
+					checked: ['Action 1'],
+				}),
+			);
 
 		await page.locator('body').click({position: {x: 0, y: 0}});
-
-		Object.assign(expectedState, {
-			isOpen: false,
-			list: [],
-		});
-		await expect.poll(() => selectPO.state()).toEqual(expectedState);
+		await expect
+			.poll(() => selectPO.state())
+			.toStrictEqual(
+				assign(expectedState, {
+					isOpen: false,
+					list: [],
+					checked: [],
+				}),
+			);
 	});
 
 	test(`Close actions`, async ({page}) => {
 		const selectPO = new SelectPO(page);
 		await selectPO.locatorInput.fill('a');
 		await expect.poll(async () => (await selectPO.state()).isOpen).toEqual(true);
+		const expectedState = await selectPO.state();
 
 		await selectPO.locatorMenuItem('action 1').click();
 		await selectPO.locatorMenuItem('action 2').click();
-		await expect.poll(async () => (await selectPO.state()).isOpen).toEqual(true);
+		await expect
+			.poll(() => selectPO.state())
+			.toStrictEqual(
+				assign(expectedState, {
+					badges: ['Action 1', 'Action 2'],
+					list: ['Action 1', 'Action 2', 'Action 3'],
+					checked: ['Action 1', 'Action 2'],
+				}),
+			);
 
-		await selectPO.locatorBadgeItemCross('action 1').click();
-		await expect.poll(async () => (await selectPO.state()).isOpen).toEqual(true);
+		await selectPO.locatorMenuItem('action 1').click();
+		await expect
+			.poll(() => selectPO.state())
+			.toEqual(
+				assign(expectedState, {
+					badges: ['Action 2'],
+					checked: ['Action 2'],
+				}),
+			);
 
 		await page.locator('body').click({position: {x: 0, y: 0}});
-		await expect.poll(async () => (await selectPO.state()).isOpen).toEqual(false);
+		assign(expectedState, {
+			isOpen: false,
+			list: [],
+			checked: [],
+		});
+		await expect.poll(() => selectPO.state()).toEqual(expectedState);
 	});
 
 	test(`Config`, async ({page}) => {
@@ -76,6 +106,7 @@ test.describe.parallel(`Select tests`, () => {
 			badges: [],
 			isOpen: false,
 			list: [],
+			checked: [],
 		};
 
 		await expect.poll(() => selectPO.state()).toEqual(expectedState);
