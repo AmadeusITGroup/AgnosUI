@@ -4,9 +4,10 @@ import {ChangeDetectionStrategy, Component, Injectable, Input, ViewChild, inject
 import {toSignal} from '@angular/core/rxjs-interop';
 import {TestBed} from '@angular/core/testing';
 import {describe, expect, it} from 'vitest';
+import {injectWidgetsConfig, provideWidgetsConfig} from './config';
 import {SlotDirective} from './slot.directive';
-import type {SlotContent} from './utils';
-import {ComponentTemplate, injectWidgetsConfig, provideWidgetsConfig} from './utils';
+import type {SlotContent} from './slotTypes';
+import {ComponentTemplate} from './slotTypes';
 
 describe('slot directive', () => {
 	@Component({

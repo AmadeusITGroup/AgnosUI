@@ -1,41 +1,9 @@
-import type {Directive, Widget, WidgetFactory, WidgetProps, WidgetState, WidgetsConfigStore} from '@agnos-ui/core';
+import type {Directive, Widget, WidgetProps, WidgetState} from '@agnos-ui/core';
 import {findChangedProperties} from '@agnos-ui/core';
 import type {ReadableSignal, WritableSignal} from '@amadeus-it-group/tansu';
-import {asReadable, computed, writable} from '@amadeus-it-group/tansu';
+import {asReadable, writable} from '@amadeus-it-group/tansu';
 import type {RefCallback} from 'react';
-import {createContext, useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
-
-import type {SlotContent as CoreSlotContent, WidgetsConfig as CoreWidgetsConfig, WidgetSlotContext} from '@agnos-ui/core';
-
-export type SlotContent<Props extends object = object> =
-	| CoreSlotContent<Props>
-	| ((props: Props) => React.ReactNode)
-	| React.ComponentType<Props>
-	| React.ReactNode;
-
-export type AdaptSlotContentProps<Props extends Record<string, any>> = Props extends WidgetSlotContext<infer U>
-	? WidgetSlotContext<AdaptWidgetSlots<U>> & AdaptPropsSlots<Omit<Props, keyof WidgetSlotContext<any>>>
-	: AdaptPropsSlots<Props>;
-
-export type AdaptPropsSlots<Props> = Omit<Props, `slot${string}`> & {
-	[K in keyof Props & `slot${string}`]: Props[K] extends CoreSlotContent<infer U> ? SlotContent<AdaptSlotContentProps<U>> : Props[K];
-};
-
-export type WidgetsConfig = {
-	[WidgetName in keyof CoreWidgetsConfig]: AdaptPropsSlots<CoreWidgetsConfig[WidgetName]>;
-};
-
-export type AdaptWidgetFactories<T> = {
-	[K in keyof T]: T[K] extends WidgetFactory<infer U> ? WidgetFactory<AdaptWidgetSlots<U>> : T[K];
-};
-
-export type AdaptWidgetSlots<W extends Widget> = Widget<
-	AdaptPropsSlots<WidgetProps<W>>,
-	AdaptPropsSlots<WidgetState<W>>,
-	AdaptWidgetFactories<W['api']>,
-	W['actions'],
-	W['directives']
->;
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 export function useWidget<Factory extends (...arg: any[]) => Widget>(
 	createWidget: Factory,
@@ -101,13 +69,8 @@ export function useDirective<T>(directive: Directive<T>, args?: T) {
 	return ref;
 }
 
-/**
- * React context which can be used to provide or consume the widgets default configuration store.
- */
-export const widgetsConfigContext = createContext(undefined as undefined | WidgetsConfigStore<WidgetsConfig>);
-
 const propsEqual = <T extends object>(a: T, b: T) => !findChangedProperties(a, b);
-const usePropsAsStore = <T extends object>(props?: Partial<T>): ReadableSignal<Partial<T>> => {
+export const usePropsAsStore = <T extends object>(props?: Partial<T>): ReadableSignal<Partial<T>> => {
 	const storeRef = useRef<WritableSignal<Partial<T>>>();
 	if (!storeRef.current) {
 		storeRef.current = writable({...props}, {equal: propsEqual});
@@ -118,16 +81,3 @@ const usePropsAsStore = <T extends object>(props?: Partial<T>): ReadableSignal<P
 
 	return useMemo(() => asReadable(storeRef.current!), [storeRef.current!]);
 };
-
-const useWidgetContext = <Props extends object>(widgetName: keyof WidgetsConfig | null, defaultConfig?: Partial<Props>) => {
-	const widgetsConfig = useContext(widgetsConfigContext);
-	const defaultConfig$ = usePropsAsStore(defaultConfig);
-	return useMemo(() => computed(() => ({...defaultConfig$(), ...(widgetName ? widgetsConfig?.()[widgetName] : undefined)})), [widgetsConfig]);
-};
-
-export const useWidgetWithConfig = <W extends Widget>(
-	factory: WidgetFactory<W>,
-	props: Partial<WidgetProps<W>> | undefined,
-	widgetName: keyof WidgetsConfig | null,
-	defaultProps?: Partial<WidgetProps<W>>
-): [WidgetState<W>, W] => useWidget(factory, props, {config: useWidgetContext(widgetName, defaultProps)});

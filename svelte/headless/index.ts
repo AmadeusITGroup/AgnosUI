@@ -4,10 +4,14 @@ export {Slot};
 import Slot from './Slot.svelte';
 
 export * from './utils';
-export type {SlotContent, WidgetsConfig} from './utils';
+export * from './slotTypes';
+export * from './config';
+
+export type {SlotContent} from './slotTypes';
+export type {WidgetsConfig} from './config';
 
 import type {PropsConfig, WidgetFactory, WidgetProps, WidgetState} from '@agnos-ui/core';
-import type {AdaptSlotContentProps, AdaptWidgetSlots, WidgetPropsSlots} from './utils';
+import type {AdaptSlotContentProps, AdaptWidgetSlots, WidgetPropsSlots} from './slotTypes';
 
 export type AccordionWidget = AdaptWidgetSlots<import('@agnos-ui/core').AccordionWidget>;
 export type AccordionProps = WidgetProps<AccordionWidget>;
