@@ -17,7 +17,7 @@
 		"svelte-check:demo-build": "svelte-check --fail-on-warnings --tsconfig ./demo/tsconfig.build.json --output human-verbose"
 	},
 	"dependencies": {
-		"@amadeus-it-group/tansu": "0.0.22"
+		"@amadeus-it-group/tansu": "0.0.23"
 	},
 	"devDependencies": {
 		"@sveltejs/package": "^2.2.2",
