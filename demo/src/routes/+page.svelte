@@ -19,15 +19,15 @@
 	<h1 class="text-center mb-5 mx-sm-4">
 		<span><Svg svg={agnosUILogo} className="agnosui-logo" />gnosUI, where web widgets shine</span>
 	</h1>
-	<h2 class="text-center mx-sm-5 pe-5">Perfected open-source widget libraries with</h2>
+	<h2 class="text-center mx-sm-5 pe-5">Perfected open-source widget libraries</h2>
 	<ul class="au-landing-list">
-		<li class="d-flex align-items-center">
+		<li class="d-flex align-items-start">
 			<Svg svg={bullet} className="bullet me-3" />configurable Typescript widget factories
 		</li>
-		<li class="d-flex align-items-center">
+		<li class="d-flex align-items-start">
 			<Svg svg={bullet} className="bullet me-3" />headless wrappers for Angular, React and Svelte
 		</li>
-		<li class="d-flex align-items-center">
+		<li class="d-flex align-items-start">
 			<Svg svg={bullet} className="bullet me-3" />Bootstrap-compliant ready-to-use widgets for Angular, React and Svelte.
 		</li>
 	</ul>
@@ -120,8 +120,13 @@
 		list-style-type: none;
 		font-size: 1rem;
 		margin-bottom: 0.5rem;
+
 		:global(.bullet) {
+			width: 20px;
 			height: 20px;
+			min-width: 20px;
+			min-height: 20px;
+			margin-top: 3px;
 			color: $gradient-text-top;
 		}
 	}
