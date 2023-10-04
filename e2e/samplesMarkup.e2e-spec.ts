@@ -31,9 +31,9 @@ test.describe.parallel(`Samples markup consistency check`, () => {
 				test.skip();
 			}
 			await page.goto(`#/${route}${routesExtraHash[route] ?? ''}`);
+			await expect.poll(async () => (await page.locator('#root').innerHTML()).trim().length).toBeGreaterThan(0);
 			await routesExtraAction[route]?.(page);
 			await page.waitForSelector('.fade', {state: 'detached'}); // wait for fade transitions to be finished
-			await expect.poll(async () => (await page.locator('#root').innerHTML()).trim().length).toBeGreaterThan(0);
 			expect(await htmlSnapshot(page.locator('body'))).toMatchSnapshot(`${route}.html`);
 		});
 	}
