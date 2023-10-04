@@ -16,7 +16,7 @@
 		}
 	},
 	"dependencies": {
-		"@amadeus-it-group/tansu": "0.0.22"
+		"@amadeus-it-group/tansu": "0.0.23"
 	},
 	"sideEffects": false
 }

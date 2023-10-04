@@ -13,7 +13,7 @@
 	},
 	"dependencies": {
 		"@agnos-ui/react-headless": "",
-		"@amadeus-it-group/tansu": "0.0.22",
+		"@amadeus-it-group/tansu": "0.0.23",
 		"classnames": "^2.3.2"
 	},
 	"peerDependencies": {
