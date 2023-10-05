@@ -5,3 +5,4 @@ export * from './intersection';
 export * from './portal';
 export * from './stores';
 export * from './writables';
+export * from './navManager';
