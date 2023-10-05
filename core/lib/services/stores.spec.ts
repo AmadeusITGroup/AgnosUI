@@ -387,7 +387,9 @@ describe(`Stores service`, () => {
 			const valueMax$ = writable(2);
 
 			const value$ = bindableDerived(onValueChange$, [dirtyValue$, valueMax$], ([dirtyValue, valueMax]) => Math.min(dirtyValue, valueMax));
-			const unsubscribe = value$.subscribe((value) => values.push(value));
+			const unsubscribe = value$.subscribe((value) => {
+				values.push(value);
+			});
 			expect(values).toEqual([1]);
 			valueMax$.set(3); // no change
 			expect(onChangeCalls).toEqual([]);
@@ -441,6 +443,38 @@ describe(`Stores service`, () => {
 			expect(onChangeCalls).toEqual([2, 2]); // no change compared to the last valid value, but the value was adjusted
 			expect(values).toEqual([1, 2]);
 			unsubscribe();
+		});
+
+		test(`should override equals function`, () => {
+			const onChangeCalls: number[][] = [];
+			const values: number[][] = [];
+			const dirtyValue$ = writable([1]);
+			const onValueChange$ = writable((value: number[]) => {
+				onChangeCalls.push(value);
+			});
+
+			const value$ = bindableDerived(
+				onValueChange$,
+				[dirtyValue$],
+				([dirtyValue]) => dirtyValue.map((dv) => Math.floor(dv)),
+				(a, b) => a.every((val, index) => val === b[index])
+			);
+			value$.subscribe((value) => values.push(value));
+			expect(values).toEqual([[1]]);
+
+			dirtyValue$.set([1]); // no change
+			expect(onChangeCalls).toEqual([]);
+			expect(values).toEqual([[1]]);
+
+			dirtyValue$.set([2.5]);
+			expect(dirtyValue$()).toEqual([2]);
+			expect(onChangeCalls).toEqual([[2]]);
+			expect(values).toEqual([[1], [2]]);
+
+			dirtyValue$.set([5.6, 7.8]);
+			expect(dirtyValue$()).toEqual([5, 7]);
+			expect(onChangeCalls).toEqual([[2], [5, 7]]);
+			expect(values).toEqual([[1], [2], [5, 7]]);
 		});
 	});
 });

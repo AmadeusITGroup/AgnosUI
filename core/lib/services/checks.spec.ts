@@ -1,5 +1,5 @@
 import {describe, expect, test} from 'vitest';
-import {isBoolean, isFunction, isNumber, clamp, isString} from './checks';
+import {isBoolean, isFunction, isNumber, clamp, isString, isArray} from './checks';
 
 describe('Checks', () => {
 	test(`'isNumber' should check if value is a number`, () => {
@@ -77,6 +77,25 @@ describe('Checks', () => {
 		expect(isString(Infinity)).toBe(false);
 		expect(isString(-Infinity)).toBe(false);
 		expect(isString(() => {})).toBe(false);
+	});
+
+	test(`'isArray' should check if the value is an array`, () => {
+		expect(isArray(true)).toBe(false);
+		expect(isArray(false)).toBe(false);
+		expect(isArray(0)).toBe(false);
+		expect(isArray(1)).toBe(false);
+		expect(isArray(1.1)).toBe(false);
+		expect(isArray('1')).toBe(false);
+		expect(isArray('0')).toBe(false);
+		expect(isArray('1.1')).toBe(false);
+		expect(isArray(undefined)).toBe(false);
+		expect(isArray(null)).toBe(false);
+		expect(isArray({})).toBe(false);
+		expect(isArray([])).toBe(true);
+		expect(isArray(NaN)).toBe(false);
+		expect(isArray(Infinity)).toBe(false);
+		expect(isArray(-Infinity)).toBe(false);
+		expect(isArray(() => {})).toBe(false);
 	});
 
 	test(`'getValueInRange' should return a value is within a specific range`, () => {
