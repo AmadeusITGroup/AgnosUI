@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ComponentPage from '../../../../lib/layout/ComponentPage.svelte';
+	import ComponentPage from '$lib/layout/ComponentPage.svelte';
 
 	const componentName = 'Modal';
 	const tabs = [
