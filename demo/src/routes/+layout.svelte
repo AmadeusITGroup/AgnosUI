@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Svg from '$lib/layout/Svg.svelte';
 	import github from 'bootstrap-icons/icons/github.svg?raw';
-	import twitter from 'bootstrap-icons/icons/twitter.svg?raw';
+	import twitter from 'bootstrap-icons/icons/twitter-x.svg?raw';
 	import coneStriped from 'bootstrap-icons/icons/cone-striped.svg?raw';
 	import 'bootstrap/dist/css/bootstrap.css';
 	import {/*canonicalURL$,*/ pathToRoot$} from '$lib/stores';
@@ -48,7 +48,7 @@
 				<a class="nav-link text-white ms-3" href="https://github.com/AmadeusITGroup/AgnosUI" aria-label="link to GitHub repository" target="_blank">
 					<Svg className="icon-24 align-middle" svg={github} />
 				</a>
-				<a class="nav-link text-white ms-3" href="https://twitter.com/AgnosUI" aria-label="link to twitter account" target="_blank">
+				<a class="nav-link text-white ms-3" href="https://twitter.com/AgnosUI" aria-label="link to twitter / x account" target="_blank">
 					<Svg className="icon-24 align-middle" svg={twitter} />
 				</a>
 				<span class="ms-3 text-white">v{import.meta.env.AGNOSUI_VERSION}</span>
