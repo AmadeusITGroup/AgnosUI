@@ -14,7 +14,7 @@
 	},
 	"devDependencies": {
 		"@types/babel__core": "^7.20.2",
-		"vite": "^4.4.9"
+		"vite": "^4.4.11"
 	},
 	"scripts": {
 		"build": "npm run build:rollup && npm run build:dts",
