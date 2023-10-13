@@ -1,25 +1,23 @@
-import {test, describe, beforeAll, afterAll, expect} from 'vitest';
-import {EventEmitter} from 'events';
-import {createCSSTransition} from './cssTransitions';
+import {beforeEach, describe, expect, test} from 'vitest';
 import type {TransitionProps} from './baseTransitions';
 import {createTransition} from './baseTransitions';
+import {createCSSTransition} from './cssTransitions';
 
 describe(`createCSSTransition`, () => {
-	const createElement = (): HTMLElement => {
-		const eventEmitter = new EventEmitter();
-		return {
-			style: {transitionProperty: 'all', transitionDelay: '0s', transitionDuration: '0s'},
-			addEventListener: function (type: string, callback: EventListener): void {
-				eventEmitter.addListener(type, callback);
-			},
-			dispatchEvent: function (event: Event): boolean {
-				eventEmitter.emit(event.type, event);
-				return true;
-			},
-			removeEventListener: function (type: string, callback: EventListener): void {
-				eventEmitter.removeListener(type, callback);
-			},
-		} as any as HTMLElement;
+	let createdElements: HTMLElement[];
+
+	beforeEach(() => {
+		createdElements = [];
+		return () => {
+			createdElements.forEach((element) => element.parentNode?.removeChild(element));
+		};
+	});
+
+	const createElement = (type = 'div') => {
+		const element = document.createElement(type);
+		createdElements.push(element);
+		document.body.appendChild(element);
+		return element;
 	};
 
 	const callTransitionShow = async (element: HTMLElement, props: Partial<TransitionProps>) => {
@@ -28,18 +26,6 @@ describe(`createCSSTransition`, () => {
 		await transitionInstance.api.show();
 		directiveInstance?.destroy?.();
 	};
-
-	beforeAll(() => {
-		(global as any).window = {
-			getComputedStyle(el: HTMLElement) {
-				return el.style;
-			},
-		};
-	});
-
-	afterAll(() => {
-		delete (global as any).window;
-	});
 
 	test(`simple transition (setTimeout)`, async () => {
 		const events: string[] = [];
@@ -107,7 +93,7 @@ describe(`createCSSTransition`, () => {
 		events.push('beforeTimeout');
 		await new Promise((resolve) => setTimeout(resolve, 25));
 		events.push('afterTimeout');
-		element.dispatchEvent({type: 'transitionend', target: element} as any);
+		element.dispatchEvent(new TransitionEvent('transitionend'));
 		await promise;
 		events.push('after');
 		expect(events).toEqual(['before', 'startFn', 'beforeTimeout', 'afterTimeout', 'endFn', 'after']);
@@ -189,7 +175,7 @@ describe(`createCSSTransition`, () => {
 		events.push('middle');
 		const promise2 = cssTransition.api.hide();
 		await new Promise((resolve) => setTimeout(resolve, 200));
-		element.dispatchEvent({type: 'transitionend', target: element} as any);
+		element.dispatchEvent(new TransitionEvent('transitionend'));
 		await promise2;
 		const duration = Math.round(performance.now() - timeBefore);
 		events.push('after');

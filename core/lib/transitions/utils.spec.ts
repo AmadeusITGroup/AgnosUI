@@ -3,7 +3,7 @@ import {writable} from '@amadeus-it-group/tansu';
 import {describe, test, expect, vi} from 'vitest';
 import {promiseFromStore, promiseFromEvent, promiseFromTimeout} from './utils';
 
-const clearTimeoutSpy = vi.spyOn(global, 'clearTimeout');
+const clearTimeoutSpy = vi.spyOn(globalThis, 'clearTimeout');
 
 describe(`promiseFromStore`, () => {
 	test(`already truthy store`, async () => {
