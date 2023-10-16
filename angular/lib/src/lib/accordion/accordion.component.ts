@@ -14,6 +14,7 @@ import {
 	callWidgetFactory,
 	createAccordion,
 	patchSimpleChanges,
+	toAngularSignal,
 	toSlotContextWidget,
 } from '@agnos-ui/angular-headless';
 import {NgIf} from '@angular/common';
@@ -30,7 +31,6 @@ import {
 	ViewChild,
 	inject,
 } from '@angular/core';
-import {toSignal} from '@angular/core/rxjs-interop';
 
 @Directive({selector: 'ng-template[auAccordionItemBody]', standalone: true})
 export class AccordionBodyDirective {
@@ -202,8 +202,7 @@ export class AccordionItemComponent implements OnChanges, AfterContentChecked, A
 	readonly widget = toSlotContextWidget(this._widget);
 	readonly api = this._widget.api;
 	useDirective = inject(UseDirective);
-	// TODO: remove "as any" when https://github.com/angular/angular/pull/50162 is merged
-	state: Signal<AccordionItemState> = toSignal(this._widget.state$ as any, {requireSync: true});
+	state: Signal<AccordionItemState> = toAngularSignal(this._widget.state$);
 
 	constructor() {
 		this.useDirective.use = this._widget.directives.accordionItemDirective;
@@ -379,8 +378,7 @@ export class AccordionDirective implements OnChanges {
 	});
 	readonly api = this._widget.api;
 
-	// TODO: remove "as any" when https://github.com/angular/angular/pull/50162 is merged
-	state$: Signal<AccordionState> = toSignal(this._widget.state$ as any, {requireSync: true});
+	state$: Signal<AccordionState> = toAngularSignal(this._widget.state$);
 
 	constructor() {
 		this.useDirective.use = this._widget.directives.accordionDirective;

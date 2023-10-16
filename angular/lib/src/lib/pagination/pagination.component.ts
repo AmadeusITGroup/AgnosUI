@@ -5,6 +5,7 @@ import {
 	callWidgetFactory,
 	createPagination,
 	patchSimpleChanges,
+	toAngularSignal,
 	toSlotContextWidget,
 } from '@agnos-ui/angular-headless';
 import {AsyncPipe, NgForOf, NgIf} from '@angular/common';
@@ -22,7 +23,6 @@ import {
 	ViewEncapsulation,
 	inject,
 } from '@angular/core';
-import {toSignal} from '@angular/core/rxjs-interop';
 
 /**
  * A directive to use to give the 'ellipsis' link template to the pagination component
@@ -384,7 +384,7 @@ export class PaginationComponent implements OnChanges, AfterContentChecked {
 	 */
 	@Input('auClassName') className: string | undefined;
 
-	state$: Signal<PaginationState> = toSignal(this._widget.state$, {requireSync: true});
+	state$: Signal<PaginationState> = toAngularSignal(this._widget.state$);
 
 	ngOnChanges(changes: SimpleChanges): void {
 		patchSimpleChanges(this._widget.patch, changes);

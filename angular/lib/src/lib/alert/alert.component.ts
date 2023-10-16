@@ -7,6 +7,7 @@ import {
 	callWidgetFactory,
 	createAlert,
 	patchSimpleChanges,
+	toAngularSignal,
 	toSlotContextWidget,
 } from '@agnos-ui/angular-headless';
 import {writable} from '@amadeus-it-group/tansu';
@@ -24,7 +25,6 @@ import {
 	ViewChild,
 	inject,
 } from '@angular/core';
-import {toSignal} from '@angular/core/rxjs-interop';
 
 @Directive({selector: 'ng-template[auAlertBody]', standalone: true})
 export class AlertBodyDirective {
@@ -178,7 +178,7 @@ export class AlertComponent implements OnChanges, AfterContentChecked {
 	});
 	readonly widget = toSlotContextWidget(this._widget);
 	readonly api = this._widget.api;
-	readonly state: Signal<AlertState> = toSignal(this._widget.state$, {requireSync: true});
+	readonly state: Signal<AlertState> = toAngularSignal(this._widget.state$);
 
 	ngAfterContentChecked(): void {
 		this._widget.patchSlots({
