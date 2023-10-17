@@ -96,11 +96,23 @@ export const widgetsConfigFactory = <Config extends {[widgetName: string]: objec
 		return computed(() => widgetsConfig?.()[widgetName]);
 	};
 
-	const callWidgetFactory = <W extends Widget>(
-		factory: WidgetFactory<W>,
-		widgetName?: null | keyof Config,
-		defaultConfig: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>>> = {}
-	): WithPatchSlots<W> => callWidgetFactoryWithConfig(factory, defaultConfig, widgetName ? (injectWidgetConfig(widgetName) as any) : null);
+	const callWidgetFactory = <W extends Widget>({
+		factory,
+		widgetName = null,
+		defaultConfig = {},
+		events,
+	}: {
+		factory: WidgetFactory<W>;
+		widgetName?: null | keyof Config;
+		defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
+		events: Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}`>;
+	}): WithPatchSlots<W> =>
+		callWidgetFactoryWithConfig({
+			factory,
+			widgetConfig: widgetName ? (injectWidgetConfig(widgetName) as any) : null,
+			defaultConfig,
+			events,
+		});
 
 	return {
 		/**

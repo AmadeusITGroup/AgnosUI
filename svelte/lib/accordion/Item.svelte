@@ -21,22 +21,25 @@
 	const accordionApi = getAccordionApi();
 	const {registerItem} = accordionApi;
 	export let itemVisible: boolean | undefined = undefined;
-	const widget = callWidgetFactory(registerItem, null, $$slots, defaultConfig);
+	const widget = callWidgetFactory({
+		factory: registerItem,
+		$$slots,
+		defaultConfig,
+		events: {
+			onItemVisibleChange: (event) => {
+				itemVisible = event;
+				dispatch('itemVisibleChange', event);
+			},
+			onItemHidden: () => dispatch('itemHidden'),
+			onItemShown: () => dispatch('itemShown'),
+		},
+	});
 	const {
 		stores: {itemId$, itemClass$, slotItemStructure$},
 		directives: {accordionItemDirective},
 		state$,
 	} = widget;
 	export const api = widget.api;
-
-	widget.patch({
-		onItemVisibleChange: (event) => {
-			itemVisible = event;
-			dispatch('itemVisibleChange', event);
-		},
-		onItemHidden: () => dispatch('itemHidden'),
-		onItemShown: () => dispatch('itemShown'),
-	});
 
 	$: widget.patchChangedProps($$props);
 	$: slotContext = {widget: toSlotContextWidget(widget), state: $state$};

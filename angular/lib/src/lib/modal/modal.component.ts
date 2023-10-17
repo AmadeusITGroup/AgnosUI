@@ -255,22 +255,23 @@ export class ModalComponent implements OnChanges, AfterContentChecked {
 
 	readonly defaultSlots = writable(defaultConfig);
 
-	readonly _widget = callWidgetFactory(createModal, 'modal', this.defaultSlots);
+	readonly _widget = callWidgetFactory({
+		factory: createModal,
+		widgetName: 'modal',
+		defaultConfig: this.defaultSlots,
+		events: {
+			onShown: () => this.shown.emit(),
+			onHidden: () => this.hidden.emit(),
+			onBeforeClose: (event) => this.beforeClose.emit(event),
+			onVisibleChange: (event) => this.visibleChange.emit(event),
+		},
+	});
 	readonly widget = toSlotContextWidget(this._widget);
 	readonly api = this._widget.api;
 	readonly modalDirective = mergeDirectives(this._widget.directives.modalPortalDirective, this._widget.directives.modalDirective);
 	readonly backdropDirective = mergeDirectives(this._widget.directives.backdropPortalDirective, this._widget.directives.backdropDirective);
 
 	readonly state: Signal<ModalState> = toSignal(this._widget.state$, {requireSync: true});
-
-	constructor() {
-		this._widget.patch({
-			onShown: () => this.shown.emit(),
-			onHidden: () => this.hidden.emit(),
-			onBeforeClose: (event) => this.beforeClose.emit(event),
-			onVisibleChange: (event) => this.visibleChange.emit(event),
-		});
-	}
 
 	ngAfterContentChecked(): void {
 		this._widget.patchSlots({

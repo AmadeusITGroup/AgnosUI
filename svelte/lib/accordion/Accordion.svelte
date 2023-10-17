@@ -12,26 +12,30 @@
 	const dispatch = createEventDispatcher<$$Events>();
 
 	export let itemVisible: boolean | undefined = undefined;
-	const widget = callWidgetFactory(createAccordion, 'accordion', $$slots as any, {});
+	const widget = callWidgetFactory({
+		factory: createAccordion,
+		widgetName: 'accordion',
+		$$slots: $$slots as any,
+		events: {
+			onItemVisibleChange: (event) => {
+				itemVisible = event;
+				dispatch('itemVisibleChange', event);
+			},
+			onItemHidden: () => dispatch('itemHidden'),
+			onItemShown: () => dispatch('itemShown'),
+			onShown: (id: string) => {
+				dispatch('shown', id);
+			},
+			onHidden: (id: string) => {
+				dispatch('hidden', id);
+			},
+		},
+	});
 	export const api = widget.api;
 	const {
 		directives: {accordionDirective},
 		stores: {className$},
 	} = widget;
-	widget.patch({
-		onItemVisibleChange: (event) => {
-			itemVisible = event;
-			dispatch('itemVisibleChange', event);
-		},
-		onItemHidden: () => dispatch('itemHidden'),
-		onItemShown: () => dispatch('itemShown'),
-		onShown: (id: string) => {
-			dispatch('shown', id);
-		},
-		onHidden: (id: string) => {
-			dispatch('hidden', id);
-		},
-	});
 	setAccordionApi(widget.api);
 	$: widget.patchChangedProps($$props);
 </script>

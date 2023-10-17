@@ -166,18 +166,19 @@ export class AlertComponent implements OnChanges, AfterContentChecked {
 	 */
 	@Input('auClassName') className: string | undefined;
 
-	readonly _widget = callWidgetFactory(createAlert, 'alert', this.defaultSlots);
-	readonly widget = toSlotContextWidget(this._widget);
-	readonly api = this._widget.api;
-	readonly state: Signal<AlertState> = toSignal(this._widget.state$, {requireSync: true});
-
-	constructor() {
-		this._widget.patch({
+	readonly _widget = callWidgetFactory({
+		factory: createAlert,
+		widgetName: 'alert',
+		defaultConfig: this.defaultSlots,
+		events: {
 			onVisibleChange: (event) => this.visibleChange.emit(event),
 			onShown: () => this.shown.emit(),
 			onHidden: () => this.hidden.emit(),
-		});
-	}
+		},
+	});
+	readonly widget = toSlotContextWidget(this._widget);
+	readonly api = this._widget.api;
+	readonly state: Signal<AlertState> = toSignal(this._widget.state$, {requireSync: true});
 
 	ngAfterContentChecked(): void {
 		this._widget.patchSlots({

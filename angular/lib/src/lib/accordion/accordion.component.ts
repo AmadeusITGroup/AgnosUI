@@ -28,7 +28,6 @@ import {
 	Output,
 	TemplateRef,
 	ViewChild,
-	effect,
 	inject,
 } from '@angular/core';
 import {toSignal} from '@angular/core/rxjs-interop';
@@ -191,7 +190,15 @@ export class AccordionItemComponent implements OnChanges, AfterContentChecked, A
 	@Output('auItemVisibleChange') itemVisibleChange = new EventEmitter<boolean>();
 
 	readonly ad = inject(AccordionDirective);
-	readonly _widget = callWidgetFactory(this.ad.api.registerItem, null, defaultConfig);
+	readonly _widget = callWidgetFactory({
+		factory: this.ad.api.registerItem,
+		defaultConfig,
+		events: {
+			onItemVisibleChange: (visible) => this.itemVisibleChange.emit(visible),
+			onItemHidden: () => this.itemHidden.emit(),
+			onItemShown: () => this.itemShown.emit(),
+		},
+	});
 	readonly widget = toSlotContextWidget(this._widget);
 	readonly api = this._widget.api;
 	useDirective = inject(UseDirective);
@@ -199,15 +206,6 @@ export class AccordionItemComponent implements OnChanges, AfterContentChecked, A
 	state: Signal<AccordionItemState> = toSignal(this._widget.state$ as any, {requireSync: true});
 
 	constructor() {
-		this._widget.patch({
-			onItemVisibleChange: (visible) => this.itemVisibleChange.emit(visible),
-			onItemHidden: () => this.itemHidden.emit(),
-			onItemShown: () => this.itemShown.emit(),
-		});
-		effect(() => {
-			// TODO: workaround to be removed when https://github.com/angular/angular/issues/50320 is fixed
-			this.state();
-		});
 		this.useDirective.use = this._widget.directives.accordionItemDirective;
 		this.useDirective.ngOnChanges({
 			useDirective: {
@@ -368,7 +366,17 @@ export class AccordionDirective implements OnChanges {
 	 */
 	@Output('auItemVisibleChange') itemVisibleChange = new EventEmitter<boolean>();
 
-	readonly _widget = callWidgetFactory(createAccordion, 'accordion', {});
+	readonly _widget = callWidgetFactory({
+		factory: createAccordion,
+		widgetName: 'accordion',
+		events: {
+			onItemVisibleChange: (visible) => this.itemVisibleChange.emit(visible),
+			onItemHidden: () => this.itemHidden.emit(),
+			onItemShown: () => this.itemShown.emit(),
+			onShown: (id) => this.shown.emit(id),
+			onHidden: (id) => this.hidden.emit(id),
+		},
+	});
 	readonly api = this._widget.api;
 
 	// TODO: remove "as any" when https://github.com/angular/angular/pull/50162 is merged
@@ -383,13 +391,6 @@ export class AccordionDirective implements OnChanges {
 				firstChange: true,
 				isFirstChange: () => true,
 			},
-		});
-		this._widget.patch({
-			onItemVisibleChange: (visible) => this.itemVisibleChange.emit(visible),
-			onItemHidden: () => this.itemHidden.emit(),
-			onItemShown: () => this.itemShown.emit(),
-			onShown: (id) => this.shown.emit(id),
-			onHidden: (id) => this.hidden.emit(id),
 		});
 	}
 

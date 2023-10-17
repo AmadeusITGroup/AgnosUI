@@ -1,16 +1,16 @@
-import {afterAll, describe, test} from 'vitest';
-import {angularCheckPropsRule} from '../src/angular-check-props';
-import type {TSESLint} from '@typescript-eslint/utils';
 import type {InvalidTestCase} from '@typescript-eslint/rule-tester';
 import {RuleTester} from '@typescript-eslint/rule-tester';
+import type {TSESLint} from '@typescript-eslint/utils';
+import {afterAll, describe, test} from 'vitest';
+import {angularCheckPropsRule} from '../src/angular-check-props';
 
 RuleTester.describe = describe;
 RuleTester.it = test;
 RuleTester.afterAll = afterAll;
 
 describe('angular-check-props', () => {
-	const codeTemplate = (classContent: string, widgetProps: string, classContent2 = '') =>
-		`import { Component, EventEmitter } from "@angular/core";\ninterface MyWidgetProps {\n${widgetProps}\n}\ninterface MyWidget {\n\tpatch(props: Partial<MyWidgetProps>): void\n}\n@Component({})\nclass MyComponent {\n${classContent}\n\t_widget: MyWidget;\n${classContent2}\n}`;
+	const codeTemplate = (classContent: string, widgetProps: string, events = '{}') =>
+		`import { Component, EventEmitter } from "@angular/core";\ninterface MyWidgetProps {\n${widgetProps}\n}\ninterface MyWidget {\n\tpatch(props: Partial<MyWidgetProps>): void\n}\nconst callWidgetFactory: (config: any) => MyWidget;\n@Component({})\nclass MyComponent {\n${classContent}\n\t_widget = callWidgetFactory({events: ${events}});\n}`;
 
 	const ruleTester = new RuleTester({
 		parser: require.resolve('@typescript-eslint/parser'),
@@ -43,38 +43,16 @@ describe('angular-check-props', () => {
 			output: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
 				'onMyEvent(value: number): void;',
-				'\n\n\tconstructor() {\n\t\tthis._widget.patch({\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t});\n\t}'
+				'{\n\t\tonMyEvent: (event) => this.myEvent.emit(event),}'
 			),
 		},
 		{
-			code: codeTemplate('', 'onMyEvent(value: number): void;', '\n\n\tconstructor() {\n\t\tsomethingElse();\n\t}'),
+			code: codeTemplate('', 'onMyEvent(value: number): void;', '{\n\t\t\tonMyEvent: undefined,\n\t\t}'),
 			errors: [{messageId: 'missingProp', data: {type: 'output', name: 'myEvent'}}],
 			output: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
 				'onMyEvent(value: number): void;',
-				'\n\n\tconstructor() {\n\t\tsomethingElse();\n\t\n\t\tthis._widget.patch({\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t});\n\t}'
-			),
-		},
-		{
-			code: codeTemplate('', 'onMyEvent(value: number): void;', '\n\n\tconstructor() {}'),
-			errors: [{messageId: 'missingProp', data: {type: 'output', name: 'myEvent'}}],
-			output: codeTemplate(
-				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
-				'onMyEvent(value: number): void;',
-				'\n\n\tconstructor() {\n\t\tthis._widget.patch({\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t});\n\t}'
-			),
-		},
-		{
-			code: codeTemplate(
-				'',
-				'onMyEvent(value: number): void;',
-				'\n\n\tconstructor() {\n\t\tthis._widget.patch({\n\t\t\tonMyEvent: undefined,\n\t\t});\n\t}'
-			),
-			errors: [{messageId: 'missingProp', data: {type: 'output', name: 'myEvent'}}],
-			output: codeTemplate(
-				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
-				'onMyEvent(value: number): void;',
-				'\n\n\tconstructor() {\n\t\tthis._widget.patch({\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t});\n\t}'
+				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}'
 			),
 		},
 		{
@@ -83,59 +61,46 @@ describe('angular-check-props', () => {
 			output: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
 				'onMyEvent(value: number): void;',
-				'\n\n\tconstructor() {\n\t\tthis._widget.patch({\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t});\n\t}'
+				'{\n\t\tonMyEvent: (event) => this.myEvent.emit(event),}'
 			),
 		},
 		{
 			code: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
 				'onMyEvent(value: number): void;',
-				'\n\n\tconstructor() {\n\t\tsomethingElse();\n\t}'
+				'{\n\t\t\tsomethingElse: null\n\t\t}'
 			),
 			errors: [{messageId: 'missingOutputEmit', data: {name: 'myEvent', widgetProp: 'onMyEvent'}}],
 			output: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
 				'onMyEvent(value: number): void;',
-				'\n\n\tconstructor() {\n\t\tsomethingElse();\n\t\n\t\tthis._widget.patch({\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t});\n\t}'
+				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t\tsomethingElse: null\n\t\t}'
 			),
 		},
 		{
 			code: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
 				'onMyEvent(value: number): void;',
-				'\n\n\tconstructor() {\n\t\tthis._widget.patch({\n\t\t\tsomethingElse: null\n\t\t});\n\t}'
+				'{\n\t\t\tonMyEvent: undefined,\n\t\t}'
 			),
 			errors: [{messageId: 'missingOutputEmit', data: {name: 'myEvent', widgetProp: 'onMyEvent'}}],
 			output: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
 				'onMyEvent(value: number): void;',
-				'\n\n\tconstructor() {\n\t\tthis._widget.patch({\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t\tsomethingElse: null\n\t\t});\n\t}'
+				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}'
 			),
 		},
 		{
 			code: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
 				'onMyEvent(value: number): void;',
-				'\n\n\tconstructor() {\n\t\tthis._widget.patch({\n\t\t\tonMyEvent: undefined,\n\t\t});\n\t}'
+				'{\n\t\t\tonMyEvent: (param) => {\n\t\t\t\tsomethingElse();\n\t\t\t},\n\t\t}'
 			),
 			errors: [{messageId: 'missingOutputEmit', data: {name: 'myEvent', widgetProp: 'onMyEvent'}}],
 			output: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
 				'onMyEvent(value: number): void;',
-				'\n\n\tconstructor() {\n\t\tthis._widget.patch({\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t});\n\t}'
-			),
-		},
-		{
-			code: codeTemplate(
-				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
-				'onMyEvent(value: number): void;',
-				'\n\n\tconstructor() {\n\t\tthis._widget.patch({\n\t\t\tonMyEvent: (param) => {\n\t\t\t\tsomethingElse();\n\t\t\t},\n\t\t});\n\t}'
-			),
-			errors: [{messageId: 'missingOutputEmit', data: {name: 'myEvent', widgetProp: 'onMyEvent'}}],
-			output: codeTemplate(
-				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
-				'onMyEvent(value: number): void;',
-				'\n\n\tconstructor() {\n\t\tthis._widget.patch({\n\t\t\tonMyEvent: (param) => {\n\t\t\t\tsomethingElse();\n\t\t\t\n\t\t\t\tthis.myEvent.emit(param);\n\t\t\t},\n\t\t});\n\t}'
+				'{\n\t\t\tonMyEvent: (param) => {\n\t\t\t\tsomethingElse();\n\t\t\t\n\t\t\t\tthis.myEvent.emit(param);\n\t\t\t},\n\t\t}'
 			),
 		},
 		{
@@ -164,20 +129,20 @@ describe('angular-check-props', () => {
 			code: codeTemplate(
 				'\n\t@Output() myEvent = new EventEmitter<string>();\n',
 				'onMyEvent(value: string): void;',
-				'\n\n\tconstructor() {\n\t\tthis._widget.patch({\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t});\n\t}'
+				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}'
 			),
 			errors: [{messageId: 'noValidAlias', data: {name: 'myEvent', type: 'output', alias: 'auMyEvent'}}],
 			output: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<string>();\n",
 				'onMyEvent(value: string): void;',
-				'\n\n\tconstructor() {\n\t\tthis._widget.patch({\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t});\n\t}'
+				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}'
 			),
 		},
 		{
 			code: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
 				'onMyEvent(value: string): void;',
-				'\n\n\tconstructor() {\n\t\tthis._widget.patch({\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t});\n\t}'
+				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}'
 			),
 			errors: [
 				{
@@ -188,14 +153,14 @@ describe('angular-check-props', () => {
 			output: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<string>();\n",
 				'onMyEvent(value: string): void;',
-				'\n\n\tconstructor() {\n\t\tthis._widget.patch({\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t});\n\t}'
+				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}'
 			),
 		},
 		{
 			code: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
 				'onMyEvent(): void;',
-				'\n\n\tconstructor() {\n\t\tthis._widget.patch({\n\t\t\tonMyEvent: () => this.myEvent.emit(),\n\t\t});\n\t}'
+				'{\n\t\t\tonMyEvent: () => this.myEvent.emit(),\n\t\t}'
 			),
 			errors: [
 				{
@@ -206,14 +171,14 @@ describe('angular-check-props', () => {
 			output: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<void>();\n",
 				'onMyEvent(): void;',
-				'\n\n\tconstructor() {\n\t\tthis._widget.patch({\n\t\t\tonMyEvent: () => this.myEvent.emit(),\n\t\t});\n\t}'
+				'{\n\t\t\tonMyEvent: () => this.myEvent.emit(),\n\t\t}'
 			),
 		},
 		{
 			code: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter();\n",
 				'onMyEvent(value: string | number): void;',
-				'\n\n\tconstructor() {\n\t\tthis._widget.patch({\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t});\n\t}'
+				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}'
 			),
 			errors: [
 				{
@@ -224,20 +189,20 @@ describe('angular-check-props', () => {
 			output: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<string | number>();\n",
 				'onMyEvent(value: string | number): void;',
-				'\n\n\tconstructor() {\n\t\tthis._widget.patch({\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t});\n\t}'
+				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}'
 			),
 		},
 		{
 			code: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent;\n",
 				'onMyEvent(value: Date): void;',
-				'\n\n\tconstructor() {\n\t\tthis._widget.patch({\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t});\n\t}'
+				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}'
 			),
 			errors: [{messageId: 'invalidPropType', data: {type: 'output', name: 'myEvent', expectedType: 'EventEmitter<Date>', foundType: 'any'}}],
 			output: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<Date>();\n",
 				'onMyEvent(value: Date): void;',
-				'\n\n\tconstructor() {\n\t\tthis._widget.patch({\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t});\n\t}'
+				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}'
 			),
 		},
 		{
@@ -260,26 +225,26 @@ describe('angular-check-props', () => {
 			code: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
 				'/** myeventdoc */\nonMyEvent(value: number): void;',
-				'\n\n\tconstructor() {\n\t\tthis._widget.patch({\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t});\n\t}'
+				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}'
 			),
 			errors: [{messageId: 'nonMatchingPropDoc', data: {type: 'output', name: 'myEvent'}}],
 			output: codeTemplate(
 				"\n\t/**\n\t * myeventdoc\n\t */\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
 				'/** myeventdoc */\nonMyEvent(value: number): void;',
-				'\n\n\tconstructor() {\n\t\tthis._widget.patch({\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t});\n\t}'
+				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}'
 			),
 		},
 		{
 			code: codeTemplate(
 				"\n\t/**\n\t * myeventwrongdoc\n\t */\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
 				'/** myeventrightdoc */\nonMyEvent(value: number): void;',
-				'\n\n\tconstructor() {\n\t\tthis._widget.patch({\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t});\n\t}'
+				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}'
 			),
 			errors: [{messageId: 'nonMatchingPropDoc', data: {type: 'output', name: 'myEvent'}}],
 			output: codeTemplate(
 				"\n\t\n\t/**\n\t * myeventrightdoc\n\t */\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
 				'/** myeventrightdoc */\nonMyEvent(value: number): void;',
-				'\n\n\tconstructor() {\n\t\tthis._widget.patch({\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t});\n\t}'
+				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}'
 			),
 		},
 	];

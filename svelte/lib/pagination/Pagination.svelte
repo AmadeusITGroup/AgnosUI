@@ -23,11 +23,16 @@
 	 */
 	export let page: Props['page'] | undefined = undefined;
 
-	const widget = callWidgetFactory(createPagination, 'pagination', $$slots, defaultConfig);
-	widget.patch({
-		onPageChange: (value: number) => {
-			page = value;
-			dispatch('pageChange', value);
+	const widget = callWidgetFactory({
+		factory: createPagination,
+		widgetName: 'pagination',
+		$$slots,
+		defaultConfig,
+		events: {
+			onPageChange: (value: number) => {
+				page = value;
+				dispatch('pageChange', value);
+			},
 		},
 	});
 

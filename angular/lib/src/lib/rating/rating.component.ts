@@ -66,7 +66,18 @@ export class RatingStarDirective {
 	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => RatingComponent), multi: true}],
 })
 export class RatingComponent implements ControlValueAccessor, OnChanges, AfterContentChecked {
-	readonly _widget = callWidgetFactory(createRating, 'rating');
+	readonly _widget = callWidgetFactory({
+		factory: createRating,
+		widgetName: 'rating',
+		events: {
+			onHover: (event) => this.hover.emit(event),
+			onLeave: (event) => this.leave.emit(event),
+			onRatingChange: (rating: number) => {
+				this.ratingChange.emit(rating);
+				this.onChange(rating);
+			},
+		},
+	});
 	readonly api = this._widget.api;
 
 	state$: Signal<RatingState> = toSignal(this._widget.state$, {requireSync: true});
@@ -155,17 +166,6 @@ export class RatingComponent implements ControlValueAccessor, OnChanges, AfterCo
 	 * Event payload is equal to the newly selected rating.
 	 */
 	@Output('auRatingChange') ratingChange = new EventEmitter<number>();
-
-	constructor() {
-		this._widget.patch({
-			onHover: (event) => this.hover.emit(event),
-			onLeave: (event) => this.leave.emit(event),
-			onRatingChange: (rating: number) => {
-				this.ratingChange.emit(rating);
-				this.onChange(rating);
-			},
-		});
-	}
 
 	writeValue(value: any): void {
 		this._widget.patch({rating: value});

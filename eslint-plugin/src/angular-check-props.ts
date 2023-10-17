@@ -1,17 +1,16 @@
 import type {TSESLint} from '@typescript-eslint/utils';
 import {ASTUtils, ESLintUtils, TSESTree} from '@typescript-eslint/utils';
-import type {CallWithObjectArg, EventInfo, PropInfo} from './ast-utils';
+import type {EventInfo, PropInfo} from './ast-utils';
 import {
 	addIndentation,
 	createDocWithIndentation,
-	extractWidgetPatchProperties,
+	extractEventsObject,
 	getChildIndentation,
 	getIndentation,
 	getInfoFromWidgetNode,
 	getNodeDocumentation,
 	getNodeType,
 	insertNewLineBefore as insertLineBefore,
-	isCallWithObjectArg,
 	isSameDoc,
 } from './ast-utils';
 
@@ -42,11 +41,6 @@ const isThisDotXDotYCallExpression = (node: TSESTree.Node, x: string, y: string)
 	node.callee.object.object.type === TSESTree.AST_NODE_TYPES.ThisExpression &&
 	ASTUtils.getPropertyName(node.callee.object) === x &&
 	ASTUtils.getPropertyName(node.callee) === y;
-
-const isWidgetPatch = (node: TSESTree.Node): node is TSESTree.ExpressionStatement & {expression: CallWithObjectArg} =>
-	node.type === TSESTree.AST_NODE_TYPES.ExpressionStatement &&
-	isThisDotXDotYCallExpression(node.expression, '_widget', 'patch') &&
-	isCallWithObjectArg(node.expression);
 
 const reportExtraProp = (node: TSESTree.Node, name: string, type: 'input' | 'output', context: Readonly<TSESLint.RuleContext<'extraProp', any>>) => {
 	context.report({
@@ -82,8 +76,7 @@ const reportMissingOutputProp = (
 	node: TSESTree.Node,
 	name: string,
 	prop: EventInfo,
-	classBody: TSESTree.ClassBody,
-	widgetPatch: ReturnType<typeof findEventWidgetPatch>,
+	eventsObject: ReturnType<typeof extractEventsObject>,
 	context: Readonly<TSESLint.RuleContext<'missingProp', any>>
 ) => {
 	context.report({
@@ -97,10 +90,13 @@ const reportMissingOutputProp = (
 			const indentation = getIndentation(node, context);
 			const doc = createDocWithIndentation(prop.doc, indentation);
 			yield fixer.insertTextBefore(node, `${doc}@Output('${validAlias(name)}') ${name} = new EventEmitter<${prop.type}>();\n\n${indentation}`);
-			const eventInApiPatch = widgetPatch?.properties.get(prop.widgetProp);
+			const eventInApiPatch = eventsObject?.properties.get(prop.widgetProp);
 			const emitInFunction = eventInApiPatch ? findCallToEventEmitter(eventInApiPatch, name) : null;
 			if (!emitInFunction) {
-				yield fixOutputEmit(fixer, name, prop, classBody, widgetPatch?.node, eventInApiPatch, context);
+				const res = fixOutputEmit(fixer, name, prop, eventsObject?.node, eventInApiPatch, context);
+				if (res) {
+					yield res;
+				}
 			}
 		},
 	});
@@ -217,16 +213,6 @@ const reportNonMatchingPropDoc = (
 	});
 };
 
-const findEventWidgetPatch = (classDeclaration: TSESTree.ClassDeclaration) => {
-	const constructor = classDeclaration.body.body.find(ASTUtils.isConstructor);
-	if (constructor) {
-		const widgetPatch = constructor.value.body?.body.find(isWidgetPatch);
-		if (widgetPatch) {
-			return extractWidgetPatchProperties(widgetPatch.expression);
-		}
-	}
-};
-
 const isEventEmitterNextExpressionStatement = (outputName: string) => (node: TSESTree.Node) =>
 	node.type === TSESTree.AST_NODE_TYPES.ExpressionStatement && isThisDotXDotYCallExpression(node.expression, outputName, 'emit');
 
@@ -245,56 +231,41 @@ const fixOutputEmit = (
 	fixer: TSESLint.RuleFixer,
 	name: string,
 	prop: EventInfo,
-	classBody: TSESTree.ClassBody,
-	widgetPatchArgNode: TSESTree.ObjectExpression | undefined,
-	eventInWidgetPatch: TSESTree.Node | undefined,
+	eventsObject: TSESTree.ObjectExpression | undefined,
+	eventInEventsObject: TSESTree.Node | undefined,
 	context: Readonly<TSESLint.RuleContext<any, any>>
 ) => {
 	const arrowFunction = `(event) => this.${name}.emit(event)`;
-	if (eventInWidgetPatch) {
+	if (eventInEventsObject) {
 		if (
-			eventInWidgetPatch.type === TSESTree.AST_NODE_TYPES.ArrowFunctionExpression &&
-			eventInWidgetPatch.body.type === TSESTree.AST_NODE_TYPES.BlockStatement &&
-			eventInWidgetPatch.params[0]?.type === TSESTree.AST_NODE_TYPES.Identifier
+			eventInEventsObject.type === TSESTree.AST_NODE_TYPES.ArrowFunctionExpression &&
+			eventInEventsObject.body.type === TSESTree.AST_NODE_TYPES.BlockStatement &&
+			eventInEventsObject.params[0]?.type === TSESTree.AST_NODE_TYPES.Identifier
 		) {
-			const indentation = getChildIndentation(eventInWidgetPatch.body.body[0], eventInWidgetPatch.body, context);
+			const indentation = getChildIndentation(eventInEventsObject.body.body[0], eventInEventsObject.body, context);
 			return insertLineBefore(
 				fixer,
-				context.getSourceCode().getLastToken(eventInWidgetPatch.body)!,
-				addIndentation(`\nthis.${name}.emit(${eventInWidgetPatch.params[0].name});`, indentation),
+				context.getSourceCode().getLastToken(eventInEventsObject.body)!,
+				addIndentation(`\nthis.${name}.emit(${eventInEventsObject.params[0].name});`, indentation),
 				context
 			);
 		}
-		return fixer.replaceText(eventInWidgetPatch, arrowFunction);
+		return fixer.replaceText(eventInEventsObject, arrowFunction);
 	}
 	const propText = `\n${prop.widgetProp}: ${arrowFunction},`;
-	if (widgetPatchArgNode) {
-		const indentation = getChildIndentation(widgetPatchArgNode.properties[0], widgetPatchArgNode, context);
-		return fixer.insertTextAfter(context.getSourceCode().getFirstToken(widgetPatchArgNode)!, addIndentation(propText, indentation));
+	if (eventsObject) {
+		const indentation = getChildIndentation(eventsObject.properties[0], eventsObject, context);
+		return fixer.insertTextAfter(context.getSourceCode().getFirstToken(eventsObject)!, addIndentation(propText, indentation));
 	}
-	const constructor = classBody.body.find(ASTUtils.isConstructor);
-	const widgetPatchCall = `\nthis._widget.patch({${addIndentation(propText, '\t')}\n});`;
-	if (constructor) {
-		const indentation = getChildIndentation(constructor.value.body?.body[0], constructor, context);
-		return insertLineBefore(
-			fixer,
-			context.getSourceCode().getLastToken(constructor.value.body!)!,
-			addIndentation(widgetPatchCall, indentation),
-			context
-		);
-	}
-	const constructorText = `\nconstructor() {${addIndentation(widgetPatchCall, '\t')}\n}`;
-	const indentation = getChildIndentation(classBody.body[classBody.body.length - 1], classBody, context);
-	return insertLineBefore(fixer, context.getSourceCode().getLastToken(classBody)!, addIndentation(constructorText, indentation), context);
+	return null;
 };
 
 const reportMissingOutputEmit = (
 	node: TSESTree.Node,
 	name: string,
 	prop: EventInfo,
-	classBody: TSESTree.ClassBody,
-	widgetPatchArgNode: TSESTree.ObjectExpression | undefined,
-	eventInApiPatch: TSESTree.Node | undefined,
+	eventsObject: TSESTree.ObjectExpression | undefined,
+	eventInEventsObject: TSESTree.Node | undefined,
 	context: Readonly<TSESLint.RuleContext<'missingOutputEmit', any>>
 ) => {
 	context.report({
@@ -305,7 +276,7 @@ const reportMissingOutputEmit = (
 			widgetProp: prop.widgetProp,
 		},
 		fix(fixer) {
-			return fixOutputEmit(fixer, name, prop, classBody, widgetPatchArgNode, eventInApiPatch, context);
+			return fixOutputEmit(fixer, name, prop, eventsObject, eventInEventsObject, context);
 		},
 	});
 };
@@ -319,7 +290,7 @@ export const angularCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 					const widgetNode = content.find(isFieldWithName('_widget'));
 					const widgetInfo = widgetNode ? getInfoFromWidgetNode(widgetNode, context) : undefined;
 					if (widgetNode && widgetInfo) {
-						const widgetPatch = findEventWidgetPatch(node);
+						const eventsObject = extractEventsObject(widgetNode.value);
 						for (const classMember of content) {
 							if (!isNonStaticPropertyDefinition(classMember)) continue;
 							const name = ASTUtils.getPropertyName(classMember);
@@ -358,10 +329,10 @@ export const angularCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 									if (!isSameDoc(nodeComment, outputInfo.doc)) {
 										reportNonMatchingPropDoc(classMember, name, 'output', outputInfo, context);
 									}
-									const eventInApiPatch = widgetPatch?.properties.get(outputInfo.widgetProp);
-									const emitInFunction = eventInApiPatch ? findCallToEventEmitter(eventInApiPatch, name) : null;
+									const eventInEventsObject = eventsObject?.properties.get(outputInfo.widgetProp);
+									const emitInFunction = eventInEventsObject ? findCallToEventEmitter(eventInEventsObject, name) : null;
 									if (!emitInFunction) {
-										reportMissingOutputEmit(classMember, name, outputInfo, node.body, widgetPatch?.node, eventInApiPatch, context);
+										reportMissingOutputEmit(classMember, name, outputInfo, eventsObject?.node, eventInEventsObject, context);
 									}
 									const outputValidAlias = validAlias(name);
 									const decoratorArguments = (getDecorator(classMember, 'Output')!.expression as TSESTree.CallExpression).arguments;
@@ -377,7 +348,7 @@ export const angularCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 							reportMissingInputProp(widgetNode, name, info, context);
 						}
 						for (const [name, info] of widgetInfo.events) {
-							reportMissingOutputProp(widgetNode, name, info, node.body, widgetPatch, context);
+							reportMissingOutputProp(widgetNode, name, info, eventsObject, context);
 						}
 					}
 				}

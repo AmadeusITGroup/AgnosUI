@@ -74,14 +74,26 @@ export const insertNewLineBefore = (
 
 export type CallWithObjectArg = TSESTree.CallExpression & {arguments: [TSESTree.ObjectExpression]};
 
-export const isCallWithObjectArg = (node: TSESTree.Node): node is CallWithObjectArg =>
-	node.type === TSESTree.AST_NODE_TYPES.CallExpression &&
+export const isCallWithObjectArg = (node: TSESTree.Node | null | undefined): node is CallWithObjectArg =>
+	node?.type === TSESTree.AST_NODE_TYPES.CallExpression &&
 	node.arguments.length === 1 &&
 	node.arguments[0].type === TSESTree.AST_NODE_TYPES.ObjectExpression;
 
-export const extractWidgetPatchProperties = (widgetPatch: CallWithObjectArg) => {
+export const extractEventsObject = (callWidgetFactoryNode: TSESTree.Expression | null | undefined) => {
+	if (!isCallWithObjectArg(callWidgetFactoryNode)) {
+		return;
+	}
+	const arg = callWidgetFactoryNode.arguments[0];
+	const events = (
+		arg.properties.find((node) => node.type === TSESTree.AST_NODE_TYPES.Property && ASTUtils.getPropertyName(node) === 'events') as
+			| undefined
+			| TSESTree.Property
+	)?.value;
+	if (events?.type !== TSESTree.AST_NODE_TYPES.ObjectExpression) {
+		return;
+	}
 	const properties = new Map<string, TSESTree.Node>();
-	for (const item of widgetPatch.arguments[0].properties) {
+	for (const item of events.properties) {
 		if (item.type === TSESTree.AST_NODE_TYPES.Property) {
 			const propertyName = ASTUtils.getPropertyName(item);
 			if (propertyName) {
@@ -89,7 +101,7 @@ export const extractWidgetPatchProperties = (widgetPatch: CallWithObjectArg) => 
 			}
 		}
 	}
-	return {properties, node: widgetPatch.arguments[0]};
+	return {properties, node: events};
 };
 
 export const getInfoFromWidgetNode = (widgetNode: TSESTree.Node, context: Readonly<TSESLint.RuleContext<any, any>>) => {
