@@ -12,7 +12,7 @@
 		}
 	},
 	"dependencies": {
-		"@agnos-ui/react-headless": "",
+		"@agnos-ui/react-headless": "0.0.1-alpha.3",
 		"@amadeus-it-group/tansu": "0.0.23",
 		"classnames": "^2.3.2"
 	},
@@ -20,5 +20,6 @@
 		"react": "*",
 		"react-dom": "*"
 	},
-	"sideEffects": false
+	"sideEffects": false,
+	"version": "0.0.1-alpha.3"
 }
