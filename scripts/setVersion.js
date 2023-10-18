@@ -3,7 +3,7 @@ const {join} = require('path');
 const {writeFileSync, readFileSync} = require('fs');
 
 const setVersion = (version) => {
-	if (version != undefined && !valid(version)) {
+	if (version != undefined && !(valid(version) && !version.startsWith('v'))) {
 		throw new Error(`Invalid version number: ${version}`);
 	}
 	const directories = [
