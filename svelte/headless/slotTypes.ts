@@ -16,7 +16,7 @@ export type WidgetPropsSlots<Props extends object> = {
 };
 
 export type SlotsPresent<Props extends object> = {
-	[K in keyof Props & `slot${string}` as K extends `slot${infer U}` ? Uncapitalize<U> : never]: boolean;
+	[K in keyof Props & `slot${string}` as K extends `slot${infer U}` ? Uncapitalize<U> : never]?: boolean;
 };
 
 export type SlotSvelteComponent<Props extends object = object> = ComponentType<

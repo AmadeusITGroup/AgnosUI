@@ -123,7 +123,7 @@ export class ProgressbarComponent implements AfterContentChecked, OnChanges {
 	 */
 	@Input('auAriaValueTextFn') ariaValueTextFn: ((value: number, minimum: number, maximum: number) => string | undefined) | undefined;
 
-	readonly _widget = callWidgetFactory(createProgressbar, 'progressbar', this.defaultSlots);
+	readonly _widget = callWidgetFactory({factory: createProgressbar, widgetName: 'progressbar', defaultConfig: this.defaultSlots, events: {}});
 	readonly widget = toSlotContextWidget(this._widget);
 	readonly api = this._widget.api;
 	readonly state: Signal<ProgressbarState> = toSignal(this._widget.state$, {requireSync: true});

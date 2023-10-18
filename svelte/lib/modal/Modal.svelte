@@ -20,24 +20,29 @@
 
 	export let visible: boolean | undefined = undefined;
 
-	const widget = callWidgetFactory(createModal, 'modal', $$slots, defaultConfig);
-	export const api = widget.api;
-	widget.patch({
-		onShown: () => dispatch('shown'),
-		onHidden: () => dispatch('hidden'),
-		onBeforeClose: (event) => {
-			const shouldContinue = dispatch('beforeClose', event, {
-				cancelable: true,
-			});
-			if (!shouldContinue) {
-				event.cancel = true;
-			}
-		},
-		onVisibleChange: (event) => {
-			visible = event;
-			dispatch('visibleChange', event);
+	const widget = callWidgetFactory({
+		factory: createModal,
+		widgetName: 'modal',
+		$$slots,
+		defaultConfig,
+		events: {
+			onShown: () => dispatch('shown'),
+			onHidden: () => dispatch('hidden'),
+			onBeforeClose: (event) => {
+				const shouldContinue = dispatch('beforeClose', event, {
+					cancelable: true,
+				});
+				if (!shouldContinue) {
+					event.cancel = true;
+				}
+			},
+			onVisibleChange: (event) => {
+				visible = event;
+				dispatch('visibleChange', event);
+			},
 		},
 	});
+	export const api = widget.api;
 
 	const {
 		stores: {backdropClass$, backdropHidden$, hidden$, className$, slotStructure$},

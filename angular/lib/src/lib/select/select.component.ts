@@ -68,16 +68,16 @@ export class SelectComponent<Item> implements OnChanges {
 	 */
 	@Input('auLoading') loading: boolean | undefined;
 
-	readonly _widget = callWidgetFactory<SelectWidget<Item>>(createSelect, 'select');
+	readonly _widget = callWidgetFactory<SelectWidget<Item>>({
+		factory: createSelect,
+		widgetName: 'select',
+		events: {
+			onFilterTextChange: (event) => this.filterTextChange.emit(event),
+		},
+	});
 	readonly api = this._widget.api;
 
 	state$: Signal<WidgetState<SelectWidget<Item>>> = toSignal(this._widget.state$, {requireSync: true});
-
-	constructor() {
-		this._widget.patch({
-			onFilterTextChange: (event) => this.filterTextChange.emit(event),
-		});
-	}
 
 	ngOnChanges(changes: SimpleChanges) {
 		patchSimpleChanges(this._widget.patch, changes);

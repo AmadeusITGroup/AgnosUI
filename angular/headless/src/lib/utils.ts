@@ -33,17 +33,25 @@ export type WithPatchSlots<W extends Widget> = W & {
 	}): void;
 };
 
-export const callWidgetFactoryWithConfig = <W extends Widget>(
-	factory: WidgetFactory<W>,
-	defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined>,
-	widgetConfig?: null | undefined | ReadableSignal<Partial<WidgetProps<W>> | undefined>
-): WithPatchSlots<W> => {
+export const callWidgetFactoryWithConfig = <W extends Widget>({
+	factory,
+	defaultConfig,
+	widgetConfig,
+	events,
+}: {
+	factory: WidgetFactory<W>;
+	defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
+	widgetConfig?: null | undefined | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
+	events: Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}`>;
+}): WithPatchSlots<W> => {
 	const defaultConfig$ = toReadableStore(defaultConfig);
 	const slots$ = writable({});
+	const widget = factory({
+		config: computed(() => ({...defaultConfig$(), ...widgetConfig?.(), ...slots$()})),
+	});
+	widget.patch(events);
 	return {
-		...factory({
-			config: computed(() => ({...defaultConfig$(), ...widgetConfig?.(), ...slots$()})),
-		}),
+		...widget,
 		patchSlots: createPatchSlots(slots$.set),
 	};
 };

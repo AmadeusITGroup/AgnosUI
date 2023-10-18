@@ -14,19 +14,23 @@
 
 	export let filterText: string | undefined = undefined;
 
-	const widget = callWidgetFactory<SelectWidget<Item>>(createSelect, 'select', $$slots);
+	const widget = callWidgetFactory<SelectWidget<Item>>({
+		factory: createSelect,
+		widgetName: 'select',
+		$$slots,
+		events: {
+			onFilterTextChange: (value) => {
+				filterText = value;
+				dispatch('filterTextChange', value);
+			},
+		},
+	});
 	const {
 		stores: {opened$, visible$, selected$, highlighted$, filterText$, className$},
 		actions: {onInputKeydown, onInput},
 		api: {unselect},
 		directives: {hasFocusDirective},
 	} = widget;
-	widget.patch({
-		onFilterTextChange: (value) => {
-			filterText = value;
-			dispatch('filterTextChange', value);
-		},
-	});
 	$: widget.patchChangedProps($$props);
 </script>
 

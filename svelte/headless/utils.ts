@@ -20,15 +20,22 @@ export function createPatchChangedProps<T extends object>(patchFn: (arg: Partial
 export const createEventDispatcher = <T extends object>() =>
 	svelteCreateEventDispatcher<{[K in keyof T]: T[K] extends CustomEvent<infer U> ? U : never}>();
 
-export const callWidgetFactoryWithConfig = <W extends Widget>(
-	factory: WidgetFactory<W>,
-	slots: SlotsPresent<WidgetProps<W>>,
-	defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined>,
-	widgetConfig?: null | undefined | ReadableSignal<Partial<WidgetProps<W>> | undefined>
-): W & {patchChangedProps: W['patch']} => {
+export const callWidgetFactoryWithConfig = <W extends Widget>({
+	factory,
+	$$slots,
+	defaultConfig,
+	widgetConfig,
+	events,
+}: {
+	factory: WidgetFactory<W>;
+	$$slots: SlotsPresent<WidgetProps<W>>;
+	defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
+	widgetConfig?: null | undefined | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
+	events: Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}`>;
+}): W & {patchChangedProps: W['patch']} => {
 	const defaultConfig$ = toReadableStore(defaultConfig);
 	const processedSlots: any = {};
-	for (const [name, present] of Object.entries(slots)) {
+	for (const [name, present] of Object.entries($$slots)) {
 		if (present) {
 			processedSlots[`slot${name[0].toUpperCase()}${name.substring(1)}`] = useSvelteSlot;
 		}
@@ -36,6 +43,7 @@ export const callWidgetFactoryWithConfig = <W extends Widget>(
 	const widget = factory({
 		config: computed(() => ({...defaultConfig$(), ...widgetConfig?.(), ...processedSlots})),
 	});
+	widget.patch(events);
 	return {...widget, patchChangedProps: createPatchChangedProps(widget.patch)};
 };
 

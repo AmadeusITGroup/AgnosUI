@@ -13,13 +13,17 @@
 
 	export let rating: number | undefined = undefined;
 
-	const widget = callWidgetFactory(createRating, 'rating', $$slots);
-	widget.patch({
-		onHover: (value: number) => dispatch('hover', value),
-		onLeave: (value: number) => dispatch('leave', value),
-		onRatingChange: (value: number) => {
-			rating = value;
-			dispatch('ratingChange', value);
+	const widget = callWidgetFactory({
+		factory: createRating,
+		widgetName: 'rating',
+		$$slots,
+		events: {
+			onHover: (value: number) => dispatch('hover', value),
+			onLeave: (value: number) => dispatch('leave', value),
+			onRatingChange: (value: number) => {
+				rating = value;
+				dispatch('ratingChange', value);
+			},
 		},
 	});
 

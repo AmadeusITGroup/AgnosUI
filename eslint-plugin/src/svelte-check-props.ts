@@ -1,16 +1,15 @@
 import type {TSESLint} from '@typescript-eslint/utils';
-import {ASTUtils, ESLintUtils, TSESTree} from '@typescript-eslint/utils';
+import {ESLintUtils, TSESTree} from '@typescript-eslint/utils';
 import type {AST as SvelteAST} from 'svelte-eslint-parser';
-import type {CallWithObjectArg, EventInfo, PropInfo} from './ast-utils';
+import type {EventInfo, PropInfo} from './ast-utils';
 import {
 	addIndentation,
-	extractWidgetPatchProperties,
+	extractEventsObject,
 	getChildIndentation,
 	getIndentation,
 	getInfoFromWidgetNode,
 	getNodeType,
 	insertNewLineBefore,
-	isCallWithObjectArg,
 } from './ast-utils';
 
 type ExportLetNode = TSESTree.VariableDeclarator & {
@@ -40,12 +39,6 @@ const getStatementNode = (node: any) => {
 	}
 	return node;
 };
-
-const isXdotYCall = (node: TSESTree.CallExpression, x: string, y: string) =>
-	node.callee.type === TSESTree.AST_NODE_TYPES.MemberExpression &&
-	node.callee.object.type === TSESTree.AST_NODE_TYPES.Identifier &&
-	node.callee.object.name === x &&
-	ASTUtils.getPropertyName(node.callee) === y;
 
 const reportExtraProp = (
 	node: ExportLetNode,
@@ -266,7 +259,6 @@ export const svelteCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 	create(context) {
 		let inContextModule = false;
 		const exportLetNodes: ExportLetNode[] = [];
-		const widgetPatchNodes: CallWithObjectArg[] = [];
 		let scriptScope: any;
 		let widgetNode: TSESTree.VariableDeclarator | undefined;
 		return {
@@ -292,14 +284,6 @@ export const svelteCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 					) {
 						exportLetNodes.push(node as ExportLetNode);
 					}
-				}
-			},
-			CallExpression(node) {
-				// only take into account calls done in the top-most scope (with no upper scope),
-				// and not in a context="module" script
-				if (inContextModule || context.getScope() !== scriptScope) return;
-				if (isXdotYCall(node, 'widget', 'patch') && isCallWithObjectArg(node)) {
-					widgetPatchNodes.push(node);
 				}
 			},
 			'Program:exit'(node) {
@@ -331,17 +315,9 @@ export const svelteCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 							reportMissingProp(widgetNode, widgetStatementNode, binding, widgetInfo.props.get(binding)!, context);
 						}
 						if (widgetInfo.events.size > 0) {
-							if (widgetPatchNodes.length > 1) {
-								for (const widgetPatchNode of widgetPatchNodes) {
-									context.report({
-										node: widgetPatchNode,
-										messageId: 'multipleWidgetPatchCalls',
-									});
-								}
-							}
-							const widgetPatchInfo = widgetPatchNodes[0] ? extractWidgetPatchProperties(widgetPatchNodes[0]) : undefined;
+							const eventsObject = extractEventsObject(widgetNode.init);
 							for (const [eventName, eventInfo] of widgetInfo.events) {
-								const eventInApiPatch = widgetPatchInfo?.properties.get(eventInfo.widgetProp);
+								const eventInApiPatch = eventsObject?.properties.get(eventInfo.widgetProp);
 								const callToDispatch = eventInApiPatch ? findCallToDispatch(eventInApiPatch, eventName) : undefined;
 								const bindingAssignment =
 									eventInApiPatch && eventInfo.propBinding ? findBindingAssignment(eventInApiPatch, eventInfo.propBinding) : undefined;
@@ -350,7 +326,7 @@ export const svelteCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 										eventName,
 										eventInfo,
 										widgetStatementNode,
-										widgetPatchInfo?.node,
+										eventsObject?.node,
 										eventInApiPatch,
 										callToDispatch,
 										bindingAssignment,
@@ -376,7 +352,6 @@ export const svelteCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 			missingBoundProp: 'Missing "export let {{ name }}" declaration, as it is a bound property in the API.',
 			missingDispatchCall: 'Could not find call to dispatch("{{name}}") in {{ widgetProp }} listener in call to widget.patch.',
 			missingBindingAssignment: 'Could not find assignment to {{ propBinding }} in {{ widgetProp }} listener in call to widget.patch.',
-			multipleWidgetPatchCalls: 'Expected only one call to widget.patch.',
 		},
 		type: 'problem',
 		schema: [],

@@ -276,7 +276,14 @@ export class PaginationComponent implements OnChanges, AfterContentChecked {
 	 */
 	@Input('auAriaLastLabel') ariaLastLabel: string | undefined;
 
-	readonly _widget = callWidgetFactory(createPagination, 'pagination', defaultConfig);
+	readonly _widget = callWidgetFactory({
+		factory: createPagination,
+		widgetName: 'pagination',
+		defaultConfig,
+		events: {
+			onPageChange: (page: number) => this.pageChange.emit(page),
+		},
+	});
 	readonly widget = toSlotContextWidget(this._widget);
 	readonly api = this._widget.api;
 
@@ -378,12 +385,6 @@ export class PaginationComponent implements OnChanges, AfterContentChecked {
 	@Input('auClassName') className: string | undefined;
 
 	state$: Signal<PaginationState> = toSignal(this._widget.state$, {requireSync: true});
-
-	constructor() {
-		this._widget.patch({
-			onPageChange: (page: number) => this.pageChange.emit(page),
-		});
-	}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		patchSimpleChanges(this._widget.patch, changes);

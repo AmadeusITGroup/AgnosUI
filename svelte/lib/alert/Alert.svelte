@@ -13,18 +13,23 @@
 	type $$Events = WidgetPropsEvents<Props>;
 	type $$Slots = Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
 	const dispatch = createEventDispatcher<$$Events>();
-	const widget = callWidgetFactory(createAlert, 'alert', $$slots, defaultConfig);
+	const widget = callWidgetFactory({
+		factory: createAlert,
+		widgetName: 'alert',
+		$$slots,
+		defaultConfig,
+		events: {
+			onShown: () => dispatch('shown'),
+			onHidden: () => dispatch('hidden'),
+			onVisibleChange: (event) => {
+				visible = event;
+				dispatch('visibleChange', event);
+			},
+		},
+	});
 	export let visible: boolean | undefined = undefined;
 	export const api = widget.api;
 
-	widget.patch({
-		onShown: () => dispatch('shown'),
-		onHidden: () => dispatch('hidden'),
-		onVisibleChange: (event) => {
-			visible = event;
-			dispatch('visibleChange', event);
-		},
-	});
 	const {
 		stores: {slotStructure$, hidden$},
 		directives: {transitionDirective},
