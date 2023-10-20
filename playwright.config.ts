@@ -1,5 +1,6 @@
 import type {PlaywrightTestConfig} from '@playwright/test';
 import {devices} from '@playwright/test';
+import type {FixtureOptions} from 'e2e/fixture';
 
 const isCI = process.env.CI === 'true';
 const includeCoverage = process.env.COVERAGE === 'true';
@@ -31,7 +32,7 @@ const devicesToTest = [devices['Desktop Chrome'], devices['Desktop Firefox'], de
 
 const includesDemo = !envFramework || envFramework === 'demo';
 
-const projects: PlaywrightTestConfig['projects'] = includesDemo
+const projects: PlaywrightTestConfig<FixtureOptions>['projects'] = includesDemo
 	? [
 			{
 				name: 'demo',
@@ -50,6 +51,7 @@ frameworks.forEach((framework) => {
 			name: `${framework.name}:${browser.defaultBrowserType}`,
 			use: {
 				...browser,
+				framework: framework.name,
 				baseURL: framework.url,
 			},
 		});
@@ -63,7 +65,7 @@ if (includesDemo) {
 	});
 }
 
-const config: PlaywrightTestConfig = {
+const config: PlaywrightTestConfig<FixtureOptions> = {
 	globalSetup: require.resolve('./e2e/global-setup'),
 	testDir: 'e2e',
 	testMatch: '*e2e-spec.ts',

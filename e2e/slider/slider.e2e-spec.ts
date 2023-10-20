@@ -56,11 +56,10 @@ const defaultExpectedHandleStateVertical: {[key: string]: string | null}[] = [
 
 const test = getTest();
 test.describe(`Slider tests`, () => {
+	test.skip(({framework}) => framework !== 'angular');
+
 	test.describe(`Basic slider`, () => {
-		test(`should snap the handle to correct tick on the slider click event`, async ({page}, testInfo) => {
-			if (testInfo.project.name.startsWith('react:') || testInfo.project.name.startsWith('svelte:')) {
-				test.skip();
-			}
+		test(`should snap the handle to correct tick on the slider click event`, async ({page}) => {
 			const sliderDemoPO = new SliderDemoPO(page);
 			const sliderPO = new SliderPO(page, 0);
 
@@ -79,10 +78,7 @@ test.describe(`Slider tests`, () => {
 			expect((await sliderPO.sliderHandleState())[0]).toEqual(expectedState);
 		});
 
-		test(`should snap the handle on mouse drag event`, async ({page}, testInfo) => {
-			if (testInfo.project.name.startsWith('react:') || testInfo.project.name.startsWith('svelte:')) {
-				test.skip();
-			}
+		test(`should snap the handle on mouse drag event`, async ({page}) => {
 			const sliderDemoPO = new SliderDemoPO(page);
 			const sliderPO = new SliderPO(page, 0);
 
@@ -104,10 +100,7 @@ test.describe(`Slider tests`, () => {
 			expect((await sliderPO.sliderHandleState())[0]).toEqual(expectedState);
 		});
 
-		test(`should move handle on key strokes`, async ({page}, testInfo) => {
-			if (testInfo.project.name.startsWith('react:') || testInfo.project.name.startsWith('svelte:')) {
-				test.skip();
-			}
+		test(`should move handle on key strokes`, async ({page}) => {
 			const sliderDemoPO = new SliderDemoPO(page);
 			const sliderPO = new SliderPO(page, 0);
 
@@ -143,10 +136,7 @@ test.describe(`Slider tests`, () => {
 			expect(await maxLabelLocator.isVisible()).toBe(false);
 		});
 
-		test(`should render slider disabled when passing the 'disabled' option`, async ({page}, testInfo) => {
-			if (testInfo.project.name.startsWith('react:') || testInfo.project.name.startsWith('svelte:')) {
-				test.skip();
-			}
+		test(`should render slider disabled when passing the 'disabled' option`, async ({page}) => {
 			const sliderDemoPO = new SliderDemoPO(page);
 			const sliderPO = new SliderPO(page, 2);
 
@@ -162,10 +152,7 @@ test.describe(`Slider tests`, () => {
 			await expect(sliderHandleLocator).toBeEnabled();
 		});
 
-		test(`should ignore all the actions when passing the 'readonly' option`, async ({page}, testInfo) => {
-			if (testInfo.project.name.startsWith('react:') || testInfo.project.name.startsWith('svelte:')) {
-				test.skip();
-			}
+		test(`should ignore all the actions when passing the 'readonly' option`, async ({page}) => {
 			const sliderDemoPO = new SliderDemoPO(page);
 			const sliderPO = new SliderPO(page, 2);
 
@@ -200,10 +187,7 @@ test.describe(`Slider tests`, () => {
 	});
 
 	test.describe(`Range slider`, () => {
-		test(`should move the handle to correct tick on the slider click event`, async ({page}, testInfo) => {
-			if (testInfo.project.name.startsWith('react:') || testInfo.project.name.startsWith('svelte:')) {
-				test.skip();
-			}
+		test(`should move the handle to correct tick on the slider click event`, async ({page}) => {
 			const sliderDemoPO = new SliderDemoPO(page);
 			const sliderPO = new SliderPO(page, 1);
 
@@ -223,10 +207,7 @@ test.describe(`Slider tests`, () => {
 			expect((await sliderPO.sliderProgressState())[0]).toEqual('left: 10%; bottom: 0%; width: 78%; height: 100%;');
 		});
 
-		test(`should interchange the handles on mouse drag event`, async ({page}, testInfo) => {
-			if (testInfo.project.name.startsWith('react:') || testInfo.project.name.startsWith('svelte:')) {
-				test.skip();
-			}
+		test(`should interchange the handles on mouse drag event`, async ({page}) => {
 			const sliderDemoPO = new SliderDemoPO(page);
 			const sliderPO = new SliderPO(page, 1);
 
@@ -253,10 +234,7 @@ test.describe(`Slider tests`, () => {
 			expect((await sliderPO.sliderProgressState())[0]).toEqual('left: 40%; bottom: 0%; width: 43%; height: 100%;');
 		});
 
-		test(`should move handle on key strokes`, async ({page}, testInfo) => {
-			if (testInfo.project.name.startsWith('react:') || testInfo.project.name.startsWith('svelte:')) {
-				test.skip();
-			}
+		test(`should move handle on key strokes`, async ({page}) => {
 			const sliderDemoPO = new SliderDemoPO(page);
 			const sliderPO = new SliderPO(page, 1);
 
@@ -303,10 +281,7 @@ test.describe(`Slider tests`, () => {
 	});
 
 	test.describe(`Vertical slider`, () => {
-		test(`should move the handle to correct tick on the slider click event`, async ({page}, testInfo) => {
-			if (testInfo.project.name.startsWith('react:') || testInfo.project.name.startsWith('svelte:')) {
-				test.skip();
-			}
+		test(`should move the handle to correct tick on the slider click event`, async ({page}) => {
 			const sliderDemoPO = new SliderDemoPO(page);
 			const sliderPO = new SliderPO(page, 0);
 
@@ -326,10 +301,7 @@ test.describe(`Slider tests`, () => {
 			expect((await sliderPO.sliderProgressState())[0]).toEqual('left: 0%; bottom: 10%; width: 100%; height: 70%;');
 		});
 
-		test(`should move handle on key strokes`, async ({page}, testInfo) => {
-			if (testInfo.project.name.startsWith('react:') || testInfo.project.name.startsWith('svelte:')) {
-				test.skip();
-			}
+		test(`should move handle on key strokes`, async ({page}) => {
 			const sliderDemoPO = new SliderDemoPO(page);
 			const sliderPO = new SliderPO(page, 0);
 

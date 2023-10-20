@@ -34,13 +34,13 @@ import {take} from 'rxjs';
 	template: `
 		<div [class]="state().vertical ? 'au-clickable-slider-area-vertical' : 'au-clickable-slider-area'" (click)="sliderClick($event)"></div>
 		<div
-			*ngFor="let repeat of [].constructor(state().values.length - 1 || 1); let i = index"
+			*ngFor="let option of state().progressDisplayOptions"
 			class="au-slider-progress"
 			[attr.disabled]="state().disabled ? true : null"
-			[style.left.%]="state().progressLeft[i]"
-			[style.bottom.%]="state().progressBottom[i]"
-			[style.width.%]="state().progressWidth[i]"
-			[style.height.%]="state().progressHeight[i]"
+			[style.left.%]="option.left"
+			[style.bottom.%]="option.bottom"
+			[style.width.%]="option.width"
+			[style.height.%]="option.height"
 		></div>
 		<div
 			[class]="state().vertical ? 'au-slider-label-vertical au-slider-label-vertical-min' : 'au-slider-label au-slider-label-min'"
@@ -79,8 +79,8 @@ import {take} from 'rxjs';
 				[attr.aria-valuetext]="item.value"
 				[attr.disabled]="state().disabled ? true : null"
 				[class]="state().vertical ? 'au-slider-handle-vertical' : 'au-slider-handle-horizontal'"
-				[style.left.%]="state().handleTooltipLeft[item.id]"
-				[style.top.%]="state().handleTooltipTop[item.id]"
+				[style.left.%]="state().handleDisplayOptions[item.id].left"
+				[style.top.%]="state().handleDisplayOptions[item.id].top"
 				(keydown)="onKeyDown($event, item.id)"
 				(mousedown)="widget.actions.mouseDown($event, item.id)"
 			>
@@ -88,8 +88,8 @@ import {take} from 'rxjs';
 			</button>
 			<div
 				[class]="state().vertical ? 'au-slider-label-vertical au-slider-label-vertical-now' : 'au-slider-label au-slider-label-now'"
-				[style.left.%]="state().handleTooltipLeft[i]"
-				[style.top.%]="state().handleTooltipTop[i]"
+				[style.left.%]="state().handleDisplayOptions[i].left"
+				[style.top.%]="state().handleDisplayOptions[i].top"
 				[style.visibility]="state().combinedLabelDisplay === 'visible' ? 'hidden' : 'visible'"
 				[attr.disabled]="state().disabled ? true : null"
 			>

@@ -7,6 +7,36 @@ import {typeArray, typeBoolean, typeFunction, typeNumber} from './services/writa
 import type {Directive, Widget} from './types';
 import {noop} from './utils';
 
+export interface ProgressDisplayOptions {
+	/**
+	 * Left offset of the progress in %
+	 */
+	left: number;
+	/**
+	 * Bottom offset of the progresss in %
+	 */
+	bottom: number;
+	/**
+	 * Width of the progress in %
+	 */
+	width: number;
+	/**
+	 * Height of hte progress in %
+	 */
+	height: number;
+}
+
+export interface HandleDisplayOptions {
+	/**
+	 * Left offset of the handle in %
+	 */
+	left: number;
+	/**
+	 * Top offset of the handle in %
+	 */
+	top: number;
+}
+
 export interface SliderCommonPropsAndState extends WidgetsCommonPropsAndState {
 	/**
 	 * Minimum value that can be assigned to the slider
@@ -46,26 +76,6 @@ export interface SliderCommonPropsAndState extends WidgetsCommonPropsAndState {
 
 export interface SliderState extends SliderCommonPropsAndState {
 	/**
-	 * Progress bar left position in %
-	 */
-	progressLeft: number[];
-
-	/**
-	 * Progress bar bottom position in %
-	 */
-	progressBottom: number[];
-
-	/**
-	 * Progress bar height in %
-	 */
-	progressHeight: number[];
-
-	/**
-	 * Progress bar width in %
-	 */
-	progressWidth: number[];
-
-	/**
 	 * Sorted slider values
 	 */
 	sortedValues: number[];
@@ -79,16 +89,6 @@ export interface SliderState extends SliderCommonPropsAndState {
 	 * Combined label top offset in %
 	 */
 	combinedLabelPositionTop: number;
-
-	/**
-	 * Array of the left offsets for the tooltips in %
-	 */
-	handleTooltipLeft: number[];
-
-	/**
-	 * Array of the top offsets for the tooltips in %
-	 */
-	handleTooltipTop: number[];
 
 	/**
 	 * If `visible` the minimum label will be displayed
@@ -109,6 +109,16 @@ export interface SliderState extends SliderCommonPropsAndState {
 	 * Array of the sorted handles to display
 	 */
 	sortedHandles: {value: number; id: number}[];
+
+	/**
+	 * Array of objects representing progress display options
+	 */
+	progressDisplayOptions: ProgressDisplayOptions[];
+
+	/**
+	 * Array of objects representing handle display options
+	 */
+	handleDisplayOptions: HandleDisplayOptions[];
 }
 
 export interface SliderProps extends SliderCommonPropsAndState {
@@ -260,7 +270,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			return sliderDom$()?.getBoundingClientRect() ?? ({} as DOMRect);
 		},
 		{
-			equal: (a, b) => Object.is(a, b),
+			equal: Object.is,
 		}
 	);
 	const minLabelDomRect$ = computed(
@@ -311,41 +321,42 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 		vertical$() && sortedValuesPercent$().length == 2 ? 100 - (sortedValuesPercent$()[0] + sortedValuesPercent$()[1]) / 2 : 0
 	);
 
-	const handleTooltipLeft$ = computed(() => (vertical$() ? Array(valuesPercent$().length).fill(0) : valuesPercent$()));
-	const handleTooltipTop$ = computed(() => (vertical$() ? valuesPercent$().map((vp) => 100 - vp) : Array(valuesPercent$().length).fill(0)));
+	// const handleTooltipLeft$ = computed(() => (vertical$() ? Array(valuesPercent$().length).fill(0) : valuesPercent$()));
+	// const handleTooltipTop$ = computed(() => (vertical$() ? valuesPercent$().map((vp) => 100 - vp) : Array(valuesPercent$().length).fill(0)));
 
-	const progressLeft$ = computed(() =>
-		vertical$() ? Array(sortedValuesPercent$().length).fill(0) : sortedValuesPercent$().length === 1 ? [0] : sortedValuesPercent$()
+	const handleDisplayOptions$ = computed(() =>
+		valuesPercent$().map((vp) => {
+			return {
+				left: vertical$() ? 0 : vp,
+				top: vertical$() ? 100 - vp : 0,
+			};
+		})
 	);
-	const progressBottom$ = computed(() =>
-		vertical$() ? (sortedValuesPercent$().length === 1 ? [0] : sortedValuesPercent$()) : Array(sortedValuesPercent$().length).fill(0)
-	);
-	const progressWidth$ = computed(() =>
-		vertical$()
-			? Array(sortedValuesPercent$().length).fill(100)
-			: sortedValuesPercent$().length === 1
-			? sortedValuesPercent$()
-			: sortedValuesPercent$().map((svp, index, array) => {
-					if (index === array.length - 1) {
-						return svp;
-					} else {
-						return array[index + 1] - svp;
-					}
-			  })
-	);
-	const progressHeight$ = computed(() =>
-		vertical$()
-			? sortedValuesPercent$().length === 1
-				? sortedValuesPercent$()
-				: sortedValuesPercent$().map((svp, index, array) => {
-						if (index === array.length) {
-							return svp;
-						} else {
-							return array[index + 1] - svp;
-						}
-				  })
-			: Array(sortedValuesPercent$().length).fill(100)
-	);
+
+	const progressDisplayOptions$ = computed(() => {
+		if (sortedValuesPercent$().length === 1) {
+			return [
+				{
+					left: 0,
+					bottom: 0,
+					width: vertical$() ? 100 : sortedValuesPercent$()[0],
+					height: vertical$() ? sortedValuesPercent$()[0] : 100,
+				},
+			];
+		} else {
+			return sortedValuesPercent$()
+				.map((svp, index, array) => {
+					return {
+						left: vertical$() ? 0 : svp,
+						bottom: vertical$() ? svp : 0,
+						width: vertical$() ? 100 : index === array.length - 1 ? svp : array[index + 1] - svp,
+						height: vertical$() ? (index === array.length - 1 ? svp : array[index + 1] - svp) : 100,
+					};
+				})
+				.slice(0, sortedValuesPercent$().length - 1);
+		}
+	});
+
 	// functions
 	const computeCleanValue = (value: number) => {
 		if (value >= max$()) {
@@ -401,15 +412,11 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			minValueLabelDisplay$,
 			maxValueLabelDisplay$,
 			combinedLabelDisplay$,
-			progressLeft$,
-			progressBottom$,
-			progressWidth$,
-			progressHeight$,
 			isInteractable$,
 			combinedLabelPositionLeft$,
 			combinedLabelPositionTop$,
-			handleTooltipLeft$,
-			handleTooltipTop$,
+			progressDisplayOptions$,
+			handleDisplayOptions$,
 			...stateProps,
 		}),
 		patch,
@@ -472,28 +479,28 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 				}
 			},
 			mouseDown(event: MouseEvent, handleId: number) {
-				(event.target as HTMLElement).focus();
 				event.preventDefault();
 				const handleDrag = (e: MouseEvent) => {
 					e.preventDefault();
 					const newCoord = vertical$() ? e.clientY : e.clientX;
-					if (isInteractable$()) {
-						(event.target as HTMLElement).focus();
-					}
+					(event.target as HTMLElement).focus();
 					if (_prevCoordinate !== newCoord) {
 						_prevCoordinate = newCoord;
 						adjustCoordinate(newCoord, handleId);
 					}
 				};
-				document.addEventListener('mousemove', handleDrag);
-				// TODO mouse up doesn't work outside the handle area
-				document.addEventListener(
-					'mouseup',
-					() => {
-						document.removeEventListener('mousemove', handleDrag);
-					},
-					{once: true}
-				);
+				if (isInteractable$()) {
+					(event.target as HTMLElement).focus();
+					document.addEventListener('mousemove', handleDrag);
+					// TODO mouse up doesn't work outside the handle area
+					document.addEventListener(
+						'mouseup',
+						() => {
+							document.removeEventListener('mousemove', handleDrag);
+						},
+						{once: true}
+					);
+				}
 			},
 		},
 	};
