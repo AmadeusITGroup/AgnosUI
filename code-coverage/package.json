@@ -13,8 +13,8 @@
 		"vite": "*"
 	},
 	"devDependencies": {
-		"@types/babel__core": "^7.20.2",
-		"vite": "^4.4.11"
+		"@types/babel__core": "^7.20.3",
+		"vite": "^4.5.0"
 	},
 	"scripts": {
 		"build": "npm run build:rollup && npm run build:dts",

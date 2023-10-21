@@ -24,7 +24,7 @@
 		"@sveltejs/vite-plugin-svelte": "^2.4.6",
 		"eslint-plugin-svelte": "^2.34.0",
 		"prettier-plugin-svelte": "^2.10.1",
-		"svelte": "^4.2.1",
+		"svelte": "^4.2.2",
 		"svelte-check": "^3.5.2"
 	}
 }
