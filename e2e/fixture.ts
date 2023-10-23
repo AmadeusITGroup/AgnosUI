@@ -11,8 +11,15 @@ async function afterEach({page}: {page: Page}, testInfo: TestInfo) {
 	}
 }
 export {expect} from '@playwright/test';
+
+export type FixtureOptions = {
+	framework?: string;
+};
+
 export function getTest() {
-	const test = base.extend({});
+	const test = base.extend<FixtureOptions>({
+		framework: [undefined, {option: true}],
+	});
 	test.afterEach(afterEach);
 	return test;
 }

@@ -8,6 +8,7 @@ import type {SelectProps} from './select';
 import type {AccordionProps} from './accordion';
 import type {ProgressbarProps} from './progressbar';
 import {identity} from './utils';
+import type {SliderProps} from './slider';
 
 export type Partial2Levels<T> = Partial<{
 	[Level1 in keyof T]: Partial<T[Level1]>;
@@ -106,4 +107,8 @@ export interface WidgetsConfig {
 	 * the progress bar widget config
 	 */
 	progressbar: ProgressbarProps;
+	/**
+	 * slider widget config
+	 */
+	slider: SliderProps;
 }

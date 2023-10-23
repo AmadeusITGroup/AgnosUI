@@ -28,6 +28,7 @@ import {
 	AccordionBodyDirective,
 	AccordionItemStructureDirective,
 } from './accordion/accordion.component';
+import {SliderComponent} from './slider/slider.component';
 
 /* istanbul ignore next */
 const components = [
@@ -56,6 +57,7 @@ const components = [
 	AccordionHeaderDirective,
 	AccordionBodyDirective,
 	AccordionItemStructureDirective,
+	SliderComponent,
 ];
 
 @NgModule({

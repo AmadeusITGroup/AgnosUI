@@ -30,6 +30,10 @@ test.describe.parallel(`Samples markup consistency check`, () => {
 			if (route === 'accordion/playground' && testInfo.project.name.startsWith('angular:')) {
 				test.skip();
 			}
+			// skipping consistency checks for react and svelte for slider
+			if (route.startsWith('slider') && (testInfo.project.name.startsWith('react:') || testInfo.project.name.startsWith('svelte:'))) {
+				test.skip();
+			}
 			await page.goto(`#/${route}${routesExtraHash[route] ?? ''}`);
 			await expect.poll(async () => (await page.locator('#root').innerHTML()).trim().length).toBeGreaterThan(0);
 			await routesExtraAction[route]?.(page);

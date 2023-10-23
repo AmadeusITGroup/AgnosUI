@@ -12,6 +12,7 @@ export const menu = [
 			{label: 'Pagination', path: '/components/pagination'},
 			{label: 'Progressbar', path: '/components/progressbar'},
 			{label: 'Rating', path: '/components/rating'},
+			{label: 'Slider', path: '/components/slider'},
 		],
 	} /*,
 	{
