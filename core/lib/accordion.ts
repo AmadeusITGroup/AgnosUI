@@ -175,6 +175,12 @@ export interface AccordionProps extends WidgetsCommonPropsAndState {
 	 * It is a prop of the accordion-item.
 	 */
 	itemBodyClass: string;
+	/**
+	 * The html tag to use for the accordion-item-header.
+	 *
+	 * It is a prop of the accordion-item.
+	 */
+	itemHeadingTag: string;
 }
 
 export interface AccordionState extends WidgetsCommonPropsAndState {
@@ -322,6 +328,10 @@ export interface AccordionItemCommonPropsAndState {
 	 * Classes to add on the accordion-item body DOM element.
 	 */
 	itemBodyClass: string;
+	/**
+	 * The html tag to use for the accordion-item-header.
+	 */
+	itemHeadingTag: string;
 }
 
 export interface AccordionItemProps extends AccordionItemCommonPropsAndState {
@@ -374,6 +384,7 @@ const defaultAccordionConfig: AccordionProps = {
 	itemVisible: false,
 	itemAnimation: true,
 	itemTransition: collapseVerticalTransition,
+	itemHeadingTag: '',
 	onItemShown: noop,
 	onItemHidden: noop,
 	onItemVisibleChange: noop,
@@ -405,6 +416,7 @@ const defaultItemConfig: AccordionItemProps = {
 	itemButtonClass: defaultAccordionConfig.itemButtonClass,
 	itemCollapseClass: defaultAccordionConfig.itemCollapseClass,
 	itemBodyClass: defaultAccordionConfig.itemBodyClass,
+	itemHeadingTag: defaultAccordionConfig.itemHeadingTag,
 };
 const accordionItemProps = Object.keys(defaultItemConfig) as (keyof AccordionItemProps)[];
 
@@ -434,6 +446,7 @@ const configAccordionValidator: ConfigValidator<AccordionProps> = {
 	itemButtonClass: typeString,
 	itemCollapseClass: typeString,
 	itemBodyClass: typeString,
+	itemHeadingTag: typeString,
 };
 
 const configItemValidator: ConfigValidator<AccordionItemProps> = {
@@ -451,6 +464,7 @@ const configItemValidator: ConfigValidator<AccordionItemProps> = {
 	itemButtonClass: typeString,
 	itemCollapseClass: typeString,
 	itemBodyClass: typeString,
+	itemHeadingTag: typeString,
 };
 
 function createAccordionItem(
@@ -553,6 +567,7 @@ export function createAccordion(config?: PropsConfig<AccordionProps>): Accordion
 			itemButtonClass$,
 			itemCollapseClass$,
 			itemHeaderClass$,
+			itemHeadingTag$,
 			onItemVisibleChange$,
 			onItemHidden$,
 			onItemShown$,
@@ -575,6 +590,7 @@ export function createAccordion(config?: PropsConfig<AccordionProps>): Accordion
 		itemButtonClass: itemButtonClass$,
 		itemCollapseClass: itemCollapseClass$,
 		itemHeaderClass: itemHeaderClass$,
+		itemHeadingTag: itemHeadingTag$,
 		onItemVisibleChange: onItemVisibleChange$,
 		onItemHidden: onItemHidden$,
 		onItemShown: onItemShown$,

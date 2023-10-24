@@ -16,7 +16,7 @@ import {
 	patchSimpleChanges,
 	toSlotContextWidget,
 } from '@agnos-ui/angular-headless';
-import {NgIf} from '@angular/common';
+import {NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, NgTemplateOutlet} from '@angular/common';
 import type {AfterContentChecked, AfterViewInit, OnChanges, Signal, SimpleChanges} from '@angular/core';
 import {
 	ChangeDetectionStrategy,
@@ -59,10 +59,65 @@ export class AccordionItemStructureDirective {
 @Component({
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [UseDirective, SlotDirective, NgIf, AccordionHeaderDirective, AccordionBodyDirective],
+	imports: [
+		UseDirective,
+		SlotDirective,
+		NgIf,
+		AccordionHeaderDirective,
+		AccordionBodyDirective,
+		NgSwitch,
+		NgSwitchCase,
+		NgSwitchDefault,
+		NgTemplateOutlet,
+	],
 	template: `
 		<ng-template #structure let-state="state" let-widget="widget">
-			<h2 class="accordion-header {{ state.itemHeaderClass }}">
+			<ng-container [ngSwitch]="state.itemHeadingTag">
+				<ng-container *ngSwitchCase="'h1'" [ngTemplateOutlet]="h1"></ng-container>
+				<ng-container *ngSwitchCase="'h2'" [ngTemplateOutlet]="h2"></ng-container>
+				<ng-container *ngSwitchCase="'h3'" [ngTemplateOutlet]="h3"></ng-container>
+				<ng-container *ngSwitchCase="'h4'" [ngTemplateOutlet]="h4"></ng-container>
+				<ng-container *ngSwitchCase="'h5'" [ngTemplateOutlet]="h5"></ng-container>
+				<ng-container *ngSwitchCase="'h6'" [ngTemplateOutlet]="h6"></ng-container>
+				<ng-container *ngSwitchDefault [ngTemplateOutlet]="h2"></ng-container>
+			</ng-container>
+
+			<ng-template #h1>
+				<h1 class="accordion-header {{ state.itemHeaderClass }}">
+					<ng-template [ngTemplateOutlet]="button"></ng-template>
+				</h1>
+			</ng-template>
+
+			<ng-template #h2>
+				<h2 class="accordion-header {{ state.itemHeaderClass }}">
+					<ng-template [ngTemplateOutlet]="button"></ng-template>
+				</h2>
+			</ng-template>
+
+			<ng-template #h3>
+				<h3 class="accordion-header {{ state.itemHeaderClass }}">
+					<ng-template [ngTemplateOutlet]="button"></ng-template>
+				</h3>
+			</ng-template>
+
+			<ng-template #h4>
+				<h4 class="accordion-header {{ state.itemHeaderClass }}">
+					<ng-template [ngTemplateOutlet]="button"></ng-template>
+				</h4>
+			</ng-template>
+
+			<ng-template #h5>
+				<h5 class="accordion-header {{ state.itemHeaderClass }}">
+					<ng-template [ngTemplateOutlet]="button"></ng-template>
+				</h5>
+			</ng-template>
+			<ng-template #h6>
+				<h6 class="accordion-header {{ state.itemHeaderClass }}">
+					<ng-template [ngTemplateOutlet]="button"></ng-template>
+				</h6>
+			</ng-template>
+
+			<ng-template #button>
 				<button
 					type="button"
 					id="{{ state.itemId }}-toggle"
@@ -76,7 +131,7 @@ export class AccordionItemStructureDirective {
 				>
 					<ng-template [auSlotProps]="{state, widget}" [auSlot]="state.slotItemHeader"></ng-template>
 				</button>
-			</h2>
+			</ng-template>
 			<div
 				*ngIf="state.shouldBeInDOM"
 				[auUse]="widget.directives.collapseDirective"
@@ -174,6 +229,10 @@ export class AccordionItemComponent implements OnChanges, AfterContentChecked, A
 	 * Classes to add on the accordion-item body DOM element.
 	 */
 	@Input('auItemBodyClass') itemBodyClass: string | undefined;
+	/**
+	 * The html tag to use for the accordion-item-header.
+	 */
+	@Input('auItemHeadingTag') itemHeadingTag: string | undefined;
 	/**
 	 * An event fired when an item is shown.
 	 */
@@ -343,6 +402,12 @@ export class AccordionDirective implements OnChanges {
 	 * It is a prop of the accordion-item.
 	 */
 	@Input('auItemBodyClass') itemBodyClass: string | undefined;
+	/**
+	 * The html tag to use for the accordion-item-header.
+	 *
+	 * It is a prop of the accordion-item.
+	 */
+	@Input('auItemHeadingTag') itemHeadingTag: string | undefined;
 
 	//should not be documented
 	/**
