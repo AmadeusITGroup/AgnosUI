@@ -8,6 +8,7 @@ import {
 	createModal,
 	mergeDirectives,
 	patchSimpleChanges,
+	toAngularSignal,
 	toSlotContextWidget,
 } from '@agnos-ui/angular-headless';
 import {writable} from '@amadeus-it-group/tansu';
@@ -25,7 +26,6 @@ import {
 	ViewChild,
 	inject,
 } from '@angular/core';
-import {toSignal} from '@angular/core/rxjs-interop';
 
 /**
  * Directive to provide the slot structure for the modal widget.
@@ -271,7 +271,7 @@ export class ModalComponent implements OnChanges, AfterContentChecked {
 	readonly modalDirective = mergeDirectives(this._widget.directives.modalPortalDirective, this._widget.directives.modalDirective);
 	readonly backdropDirective = mergeDirectives(this._widget.directives.backdropPortalDirective, this._widget.directives.backdropDirective);
 
-	readonly state: Signal<ModalState> = toSignal(this._widget.state$, {requireSync: true});
+	readonly state: Signal<ModalState> = toAngularSignal(this._widget.state$);
 
 	ngAfterContentChecked(): void {
 		this._widget.patchSlots({

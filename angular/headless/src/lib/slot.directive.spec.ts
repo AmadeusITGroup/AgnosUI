@@ -1,13 +1,13 @@
 import {writable} from '@amadeus-it-group/tansu';
 import type {TemplateRef} from '@angular/core';
 import {ChangeDetectionStrategy, Component, Injectable, Input, ViewChild, inject} from '@angular/core';
-import {toSignal} from '@angular/core/rxjs-interop';
 import {TestBed} from '@angular/core/testing';
 import {describe, expect, it} from 'vitest';
 import {injectWidgetsConfig, provideWidgetsConfig} from './config';
 import {SlotDirective} from './slot.directive';
 import type {SlotContent} from './slotTypes';
 import {ComponentTemplate} from './slotTypes';
+import {toAngularSignal} from './utils';
 
 describe('slot directive', () => {
 	@Component({
@@ -192,7 +192,7 @@ describe('widgets config', () => {
 			],
 		})
 		class MyTestComponent {
-			myConfig = toSignal(injectWidgetsConfig(), {requireSync: true});
+			myConfig = toAngularSignal(injectWidgetsConfig());
 		}
 
 		const component = TestBed.createComponent(MyTestComponent);

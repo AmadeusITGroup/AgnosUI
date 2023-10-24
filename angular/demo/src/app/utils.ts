@@ -1,12 +1,11 @@
+import type {WidgetsConfig} from '@agnos-ui/angular';
+import {provideWidgetsConfig, toAngularSignal} from '@agnos-ui/angular';
+import {getPropValues} from '@agnos-ui/common/propsValues';
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {computed, get} from '@amadeus-it-group/tansu';
-import type {WidgetsConfig} from '@agnos-ui/angular';
-import {provideWidgetsConfig} from '@agnos-ui/angular';
 import type {Provider} from '@angular/core';
 import {InjectionToken, effect, inject} from '@angular/core';
-import {toSignal} from '@angular/core/rxjs-interop';
 import {ActivatedRoute} from '@angular/router';
-import {getPropValues} from '@agnos-ui/common/propsValues';
 
 function getJsonHash(json: string) {
 	const {config = {}, props = {}} = JSON.parse(json ?? '{}');
@@ -35,7 +34,7 @@ export function provideHashConfig(widgetName: keyof WidgetsConfig): Provider[] {
 }
 
 export function hashChangeHook(propsCallback: (props: any) => void) {
-	const hashConfig$ = toSignal(inject(hashConfigToken), {requireSync: true});
+	const hashConfig$ = toAngularSignal(inject(hashConfigToken));
 	let lastProps;
 
 	async function callPropsCallback(props: any) {

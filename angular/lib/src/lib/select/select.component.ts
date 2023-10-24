@@ -1,9 +1,8 @@
 import type {ItemCtx, SelectWidget, WidgetState} from '@agnos-ui/angular-headless';
-import {UseDirective, callWidgetFactory, createSelect, patchSimpleChanges} from '@agnos-ui/angular-headless';
+import {UseDirective, callWidgetFactory, createSelect, patchSimpleChanges, toAngularSignal} from '@agnos-ui/angular-headless';
 import {CommonModule} from '@angular/common';
 import type {OnChanges, Signal, SimpleChanges} from '@angular/core';
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
-import {toSignal} from '@angular/core/rxjs-interop';
 
 @Component({
 	standalone: true,
@@ -77,7 +76,7 @@ export class SelectComponent<Item> implements OnChanges {
 	});
 	readonly api = this._widget.api;
 
-	state$: Signal<WidgetState<SelectWidget<Item>>> = toSignal(this._widget.state$, {requireSync: true});
+	state$: Signal<WidgetState<SelectWidget<Item>>> = toAngularSignal(this._widget.state$);
 
 	ngOnChanges(changes: SimpleChanges) {
 		patchSimpleChanges(this._widget.patch, changes);

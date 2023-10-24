@@ -1,5 +1,5 @@
 import type {SliderState} from '@agnos-ui/angular-headless';
-import {callWidgetFactory, createSlider, patchSimpleChanges, toSlotContextWidget, UseDirective} from '@agnos-ui/angular-headless';
+import {callWidgetFactory, createSlider, patchSimpleChanges, toAngularSignal, toSlotContextWidget, UseDirective} from '@agnos-ui/angular-headless';
 import type {Directive} from '@agnos-ui/core';
 import {NgFor, NgIf} from '@angular/common';
 import type {AfterViewInit, OnChanges, OnDestroy, Signal, SimpleChanges} from '@angular/core';
@@ -15,7 +15,6 @@ import {
 	Output,
 	ViewEncapsulation,
 } from '@angular/core';
-import {toSignal} from '@angular/core/rxjs-interop';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {take} from 'rxjs';
 
@@ -242,7 +241,7 @@ export class SliderComponent implements OnChanges, AfterViewInit, OnDestroy {
 	 * SliderWidget hold the state and actions applicable to the auSliderComponent
 	 */
 	readonly widget = toSlotContextWidget(this._widget);
-	readonly state: Signal<SliderState> = toSignal(this._widget.state$, {requireSync: true});
+	readonly state: Signal<SliderState> = toAngularSignal(this._widget.state$);
 	readonly api = this._widget.api;
 
 	/**

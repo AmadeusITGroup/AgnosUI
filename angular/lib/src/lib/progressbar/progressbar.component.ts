@@ -1,18 +1,18 @@
 import type {ProgressbarContext, ProgressbarProps, ProgressbarState, SlotContent} from '@agnos-ui/angular-headless';
 import {
 	ComponentTemplate,
+	SlotDefaultDirective,
 	SlotDirective,
 	callWidgetFactory,
 	createProgressbar,
 	patchSimpleChanges,
+	toAngularSignal,
 	toSlotContextWidget,
-	SlotDefaultDirective,
 } from '@agnos-ui/angular-headless';
-import type {AfterContentChecked, OnChanges, Signal, SimpleChanges} from '@angular/core';
-import {NgClass, NgIf} from '@angular/common';
-import {ChangeDetectionStrategy, Component, ContentChild, Directive, Input, TemplateRef, ViewChild, inject} from '@angular/core';
 import {writable} from '@amadeus-it-group/tansu';
-import {toSignal} from '@angular/core/rxjs-interop';
+import {NgClass, NgIf} from '@angular/common';
+import type {AfterContentChecked, OnChanges, Signal, SimpleChanges} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ContentChild, Directive, Input, TemplateRef, ViewChild, inject} from '@angular/core';
 
 @Directive({selector: 'ng-template[auProgressbarContent]', standalone: true})
 export class ProgressbarContentDirective {
@@ -126,7 +126,7 @@ export class ProgressbarComponent implements AfterContentChecked, OnChanges {
 	readonly _widget = callWidgetFactory({factory: createProgressbar, widgetName: 'progressbar', defaultConfig: this.defaultSlots, events: {}});
 	readonly widget = toSlotContextWidget(this._widget);
 	readonly api = this._widget.api;
-	readonly state: Signal<ProgressbarState> = toSignal(this._widget.state$, {requireSync: true});
+	readonly state: Signal<ProgressbarState> = toAngularSignal(this._widget.state$);
 
 	ngAfterContentChecked(): void {
 		this._widget.patch({

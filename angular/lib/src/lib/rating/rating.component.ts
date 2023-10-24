@@ -1,5 +1,5 @@
 import type {AdaptSlotContentProps, RatingState, SlotContent, StarContext} from '@agnos-ui/angular-headless';
-import {SlotDirective, callWidgetFactory, createRating, patchSimpleChanges} from '@agnos-ui/angular-headless';
+import {SlotDirective, callWidgetFactory, createRating, patchSimpleChanges, toAngularSignal} from '@agnos-ui/angular-headless';
 import {NgForOf} from '@angular/common';
 import type {AfterContentChecked, OnChanges, Signal, SimpleChanges} from '@angular/core';
 import {
@@ -16,7 +16,6 @@ import {
 	forwardRef,
 	inject,
 } from '@angular/core';
-import {toSignal} from '@angular/core/rxjs-interop';
 import type {ControlValueAccessor} from '@angular/forms';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 
@@ -80,7 +79,7 @@ export class RatingComponent implements ControlValueAccessor, OnChanges, AfterCo
 	});
 	readonly api = this._widget.api;
 
-	state$: Signal<RatingState> = toSignal(this._widget.state$, {requireSync: true});
+	state$: Signal<RatingState> = toAngularSignal(this._widget.state$);
 
 	onChange = (_: any) => {};
 	onTouched = () => {};
