@@ -13,9 +13,13 @@ import {createContext, forwardRef, useContext, useEffect, useImperativeHandle} f
 const AccordionDIContext: React.Context<Partial<AccordionApi>> = createContext({});
 const DefaultSlotStructure = (slotContext: AccordionItemContext) => {
 	const collapseSetRef = useDirective(slotContext.widget.directives.collapseDirective);
+	const re = new RegExp('^h[1-6]$');
+	const Heading: keyof JSX.IntrinsicElements = re.test(slotContext.state.itemHeadingTag)
+		? (slotContext.state.itemHeadingTag as keyof JSX.IntrinsicElements)
+		: 'h2';
 	return (
 		<>
-			<h2 className={`accordion-header ${slotContext.state.itemHeaderClass}`}>
+			<Heading className={`accordion-header ${slotContext.state.itemHeaderClass}`}>
 				<button
 					type="button"
 					id={`${slotContext.state.itemId}-toggle`}
@@ -28,7 +32,7 @@ const DefaultSlotStructure = (slotContext: AccordionItemContext) => {
 				>
 					<Slot slotContent={slotContext.state.slotItemHeader} props={slotContext}></Slot>
 				</button>
-			</h2>
+			</Heading>
 			{slotContext.state.shouldBeInDOM ? (
 				<div
 					className={`accordion-collapse ${slotContext.state.itemCollapseClass}`}

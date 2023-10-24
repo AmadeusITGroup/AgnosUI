@@ -8,12 +8,15 @@
 
 	export let state: $$Props['state'];
 	export let widget: $$Props['widget'];
+	const re = new RegExp('^h[1-6]$');
+
 	$: slotContext = {widget, state};
 	$: collapseId = state.itemId + '-collapse';
 	$: toggleId = state.itemId + '-toggle';
+	$: headingTag = re.test(state.itemHeadingTag) ? state.itemHeadingTag : 'h2';
 </script>
 
-<h2 class="accordion-header {state.itemHeaderClass}">
+<svelte:element this={headingTag} class="accordion-header {state.itemHeaderClass}">
 	<button
 		type="button"
 		id={toggleId}
@@ -34,7 +37,7 @@
 			</svelte:component>
 		</Slot>
 	</button>
-</h2>
+</svelte:element>
 {#if state.shouldBeInDOM}
 	<div class="accordion-collapse {state.itemCollapseClass}" use:widget.directives.collapseDirective id={collapseId} aria-labelledby={toggleId}>
 		<div class="accordion-body {state.itemBodyClass}">
