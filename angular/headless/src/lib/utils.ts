@@ -56,7 +56,7 @@ const createReturnValueWrapper =
 })
 class ZoneWrapper {
 	readonly #zone = inject(NgZone);
-	readonly #hasZone = this.#zone.run(() => NgZone.isInAngularZone());
+	readonly #hasZone = this.#zone.run(() => NgZone.isInAngularZone()); // check if zone is enabled (can be NoopZone, cf https://angular.io/guide/zone#noopzone)
 	#runNeeded = false;
 	#runPlanned = false;
 
