@@ -8,12 +8,12 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 	template: `
 		<h2>Slider with form control</h2>
 		<au-component auSlider [auMin]="0" [auMax]="100" [auStepSize]="1" [formControl]="sliderControl"></au-component>
-		Form control values: {{ sliderControl.value }}
+		Form control values: {{ sliderControl.value?.join(', ') }}
 		<hr />
 
-		<h2>Slider with value</h2>
+		<h2>Slider with values</h2>
 		<au-component auSlider [auMin]="0" [auMax]="100" [auStepSize]="1" [(auValues)]="sliderValues"></au-component>
-		Values: {{ sliderValues }}
+		Values: {{ sliderValues.join(', ') }}
 	`,
 })
 export default class RangeSliderComponent {
