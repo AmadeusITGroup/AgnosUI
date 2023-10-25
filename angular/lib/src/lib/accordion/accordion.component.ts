@@ -16,6 +16,7 @@ import {
 	patchSimpleChanges,
 	toAngularSignal,
 	toSlotContextWidget,
+	useDirectiveForHost,
 } from '@agnos-ui/angular-headless';
 import {NgIf} from '@angular/common';
 import type {AfterContentChecked, AfterViewInit, OnChanges, Signal, SimpleChanges} from '@angular/core';
@@ -109,11 +110,6 @@ const defaultConfig: Partial<AccordionItemProps> = {
 		'[class]': '"accordion-item " + state().itemClass',
 		'[id]': 'state().itemId',
 	},
-	hostDirectives: [
-		{
-			directive: UseDirective,
-		},
-	],
 	imports: [SlotDirective, UseDirective],
 	template: ` <ng-template [auSlotProps]="{state: state(), widget}" [auSlot]="state().slotItemStructure"></ng-template> `,
 })
@@ -201,19 +197,10 @@ export class AccordionItemComponent implements OnChanges, AfterContentChecked, A
 	});
 	readonly widget = toSlotContextWidget(this._widget);
 	readonly api = this._widget.api;
-	useDirective = inject(UseDirective);
 	state: Signal<AccordionItemState> = toAngularSignal(this._widget.state$);
 
 	constructor() {
-		this.useDirective.use = this._widget.directives.accordionItemDirective;
-		this.useDirective.ngOnChanges({
-			useDirective: {
-				previousValue: undefined,
-				currentValue: this.useDirective.use,
-				firstChange: true,
-				isFirstChange: () => true,
-			},
-		});
+		useDirectiveForHost(this._widget.directives.accordionItemDirective);
 	}
 
 	ngAfterContentChecked(): void {
@@ -239,15 +226,8 @@ export class AccordionItemComponent implements OnChanges, AfterContentChecked, A
 	host: {
 		'[class]': '"accordion " + state$().className',
 	},
-	hostDirectives: [
-		{
-			directive: UseDirective,
-		},
-	],
 })
 export class AccordionDirective implements OnChanges {
-	useDirective = inject(UseDirective);
-
 	/**
 	 * If `true`, only one item at the time can stay open.
 	 */
@@ -381,15 +361,7 @@ export class AccordionDirective implements OnChanges {
 	state$: Signal<AccordionState> = toAngularSignal(this._widget.state$);
 
 	constructor() {
-		this.useDirective.use = this._widget.directives.accordionDirective;
-		this.useDirective.ngOnChanges({
-			useDirective: {
-				previousValue: undefined,
-				currentValue: this.useDirective.use,
-				firstChange: true,
-				isFirstChange: () => true,
-			},
-		});
+		useDirectiveForHost(this._widget.directives.accordionDirective);
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
