@@ -1,20 +1,16 @@
 import type {SliderState} from '@agnos-ui/angular-headless';
-import {callWidgetFactory, createSlider, patchSimpleChanges, toAngularSignal, toSlotContextWidget, UseDirective} from '@agnos-ui/angular-headless';
-import type {Directive} from '@agnos-ui/core';
-import {NgFor, NgIf} from '@angular/common';
-import type {AfterViewInit, OnChanges, OnDestroy, Signal, SimpleChanges} from '@angular/core';
 import {
-	ChangeDetectionStrategy,
-	Component,
-	ElementRef,
-	EventEmitter,
-	forwardRef,
-	inject,
-	Input,
-	NgZone,
-	Output,
-	ViewEncapsulation,
-} from '@angular/core';
+	UseDirective,
+	callWidgetFactory,
+	createSlider,
+	patchSimpleChanges,
+	toAngularSignal,
+	toSlotContextWidget,
+	useDirectiveForHost,
+} from '@agnos-ui/angular-headless';
+import {NgFor, NgIf} from '@angular/common';
+import type {OnChanges, Signal, SimpleChanges} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, NgZone, Output, ViewEncapsulation, forwardRef, inject} from '@angular/core';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {take} from 'rxjs';
 
@@ -218,12 +214,7 @@ import {take} from 'rxjs';
 		`,
 	],
 })
-export class SliderComponent implements OnChanges, AfterViewInit, OnDestroy {
-	/**
-	 * auSlider element reference
-	 */
-	private _elementRef = inject(ElementRef);
-	private _sliderDirective: ReturnType<Directive>;
+export class SliderComponent implements OnChanges {
 	private _zone = inject(NgZone);
 
 	readonly _widget = callWidgetFactory({
@@ -299,6 +290,10 @@ export class SliderComponent implements OnChanges, AfterViewInit, OnDestroy {
 	@Output('auValuesChange')
 	valuesChange = new EventEmitter<number[]>();
 
+	constructor() {
+		useDirectiveForHost(this._widget.directives.sliderDirective);
+	}
+
 	/**
 	 * Control value accessor methods
 	 */
@@ -334,14 +329,6 @@ export class SliderComponent implements OnChanges, AfterViewInit, OnDestroy {
 
 	ngOnChanges(changes: SimpleChanges) {
 		patchSimpleChanges(this._widget.patch, changes);
-	}
-
-	ngAfterViewInit() {
-		this._sliderDirective = this._widget.directives.sliderDirective(this._elementRef.nativeElement);
-	}
-
-	ngOnDestroy() {
-		this._sliderDirective?.destroy?.();
 	}
 
 	handleBlur() {
