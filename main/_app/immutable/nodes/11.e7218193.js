@@ -1,0 +1,1 @@
+import{s as e,o as n}from"../chunks/scheduler.cb6605ed.js";import{S as s,i as a}from"../chunks/index.9e31da9f.js";import{g as r}from"../chunks/navigation.49b32a77.js";function i(o){return n(()=>r("accordion/examples",{replaceState:!0})),[]}class l extends s{constructor(t){super(),a(this,t,i,null,e,{})}}export{l as component};
