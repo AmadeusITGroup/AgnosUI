@@ -13,10 +13,10 @@ describe(`navManager`, () => {
 
 	test('Basic functionalities', () => {
 		parentElement.innerHTML = `
-			<span id="element1"></span>
+			<span id="element1" tabindex="-1"></span>
 			<input type="checkbox" id="element2">
 			<input type="text" id="element3" value="some content">
-			<span id="element4"></span>
+			<span id="element4" tabindex="-1"></span>
 		`;
 		const element1 = document.getElementById('element1')!;
 		const element2 = document.getElementById('element2')!;

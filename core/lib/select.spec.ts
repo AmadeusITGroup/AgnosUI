@@ -2,9 +2,6 @@ import {expect, test, describe, beforeEach, vi} from 'vitest';
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import type {ItemCtx, SelectWidget, SelectProps} from './select';
 import {createSelect} from './select';
-import {createHasFocusMock} from './services/__mocks__/focustrack';
-
-vi.mock('./services/focustrack');
 
 type ExtractReadable<T> = T extends ReadableSignal<infer U> ? U : never;
 type ExtractState<T> = T extends SelectWidget<infer U> ? ExtractReadable<SelectWidget<U>['state$']> : never;
@@ -42,12 +39,6 @@ function cloneData(objectToBeCloned: any) {
 }
 
 describe(`Select model`, () => {
-	let setMockedFocus: ReturnType<typeof createHasFocusMock>['setMockedFocus'];
-	beforeEach(() => {
-		setMockedFocus = createHasFocusMock().setMockedFocus;
-		setMockedFocus(true);
-	});
-
 	let props: Partial<SelectProps<string>> & {items: any[]};
 	let selectWidget: SelectWidget<string>;
 	let states: Array<Partial<ExtractState<SelectWidget<string>>> | undefined> = [];
@@ -98,6 +89,22 @@ describe(`Select model`, () => {
 			currentStateCloned = clonedValue;
 			currentState = value;
 		});
+	});
+
+	let setMockedFocus: (value: boolean) => void;
+	beforeEach(() => {
+		const itemInside = document.body.appendChild(document.createElement('div'));
+		const itemOutside = document.body.appendChild(document.createElement('div'));
+		itemInside.tabIndex = -1;
+		itemOutside.tabIndex = -1;
+		const hasFocusInstance = selectWidget.directives.hasFocusDirective(itemInside);
+		setMockedFocus = (value) => (value ? itemInside : itemOutside).focus();
+		setMockedFocus(true);
+		return () => {
+			hasFocusInstance?.destroy?.();
+			itemInside.parentElement?.removeChild(itemInside);
+			itemOutside.parentElement?.removeChild(itemOutside);
+		};
 	});
 
 	describe(`simple list`, () => {
