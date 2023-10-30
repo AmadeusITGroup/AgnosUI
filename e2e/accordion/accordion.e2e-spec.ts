@@ -5,8 +5,15 @@ import {AccordionTogglePanels} from '../demo-po/accordion.po';
 type PromiseValue<T> = T extends Promise<infer U> ? U : never;
 type State = PromiseValue<ReturnType<AccordionPO['state']>>;
 
+function updateAccordionState(state: State, index: number, expanded: boolean) {
+	state.items[index].expanded = expanded ? 'true' : 'false';
+	state.items[index].isInDOM = expanded;
+	state.items[index].collapseId = expanded ? `${state.items[index].id}-collapse` : undefined;
+	state.items[index].labeledBy = expanded ? `${state.items[index].id}-toggle` : undefined;
+}
+
 test.describe.parallel(`Accordion tests`, () => {
-	test(`Default accordion behaviour`, async ({page}) => {
+	test(`Default accordion behavior`, async ({page}) => {
 		await page.goto('#/accordion/default');
 		const accordionPO = new AccordionPO(page, 0);
 
@@ -27,23 +34,23 @@ test.describe.parallel(`Accordion tests`, () => {
 				{
 					classes: ['accordion-item'],
 					id: itemsIds[1]!,
-					isInDOM: true,
-					collapseId: `${itemsIds[1]!}-collapse`,
+					isInDOM: false,
+					collapseId: undefined,
 					buttonId: `${itemsIds[1]!}-toggle`,
 					expanded: 'false',
 					disabled: 'false',
-					labeledBy: `${itemsIds[1]!}-toggle`,
+					labeledBy: undefined,
 					buttonControls: `${itemsIds[1]!}-collapse`,
 				},
 				{
 					classes: ['accordion-item'],
 					id: itemsIds[2]!,
-					isInDOM: true,
-					collapseId: `${itemsIds[2]!}-collapse`,
+					isInDOM: false,
+					collapseId: undefined,
 					buttonId: `${itemsIds[2]!}-toggle`,
 					expanded: 'false',
 					disabled: 'true',
-					labeledBy: `${itemsIds[2]!}-toggle`,
+					labeledBy: undefined,
 					buttonControls: `${itemsIds[2]!}-collapse`,
 				},
 			],
@@ -55,8 +62,8 @@ test.describe.parallel(`Accordion tests`, () => {
 		await accordionPO.locatorAccordionHeaders.nth(1).click();
 		await accordionPO.locatorAccordionHeaders.nth(2).click();
 
-		expectedState.items[0].expanded = 'false';
-		expectedState.items[1].expanded = 'true';
+		updateAccordionState(expectedState, 0, false);
+		updateAccordionState(expectedState, 1, true);
 		await expect.poll(() => accordionPO.state()).toEqual(expectedState);
 	});
 	test(`Toggle Panels`, async ({page}) => {
@@ -64,6 +71,56 @@ test.describe.parallel(`Accordion tests`, () => {
 		await page.goto('#/accordion/togglepanels');
 		const accordionPO = new AccordionPO(page, 0);
 		await accordionDemoPO.locatorRoot.waitFor();
+		const itemsIds = await Promise.all((await accordionPO.locatorAccordionItems.all()).map((item) => item.getAttribute('id')));
+		const expectedState: State = {
+			items: [
+				{
+					classes: ['accordion-item'],
+					id: itemsIds[0]!,
+					isInDOM: false,
+					collapseId: undefined,
+					buttonId: `${itemsIds[0]!}-toggle`,
+					expanded: 'false',
+					disabled: 'false',
+					labeledBy: undefined,
+					buttonControls: `${itemsIds[0]!}-collapse`,
+				},
+				{
+					classes: ['accordion-item'],
+					id: itemsIds[1]!,
+					isInDOM: false,
+					collapseId: undefined,
+					buttonId: `${itemsIds[1]!}-toggle`,
+					expanded: 'false',
+					disabled: 'false',
+					labeledBy: undefined,
+					buttonControls: `${itemsIds[1]!}-collapse`,
+				},
+			],
+			rootClasses: ['accordion'],
+		};
+		await expect.poll(() => accordionPO.state()).toEqual(expectedState);
+		await accordionDemoPO.locatorToggleFirst().click();
+		updateAccordionState(expectedState, 0, true);
+		await expect.poll(() => accordionPO.state()).toEqual(expectedState);
+		await accordionDemoPO.locatorToggleFirst().click();
+		await accordionDemoPO.locatorToggleSecond().click();
+		updateAccordionState(expectedState, 0, false);
+		updateAccordionState(expectedState, 1, true);
+		await expect.poll(() => accordionPO.state()).toEqual(expectedState);
+		await accordionDemoPO.locatorExpandAll().click();
+		updateAccordionState(expectedState, 0, true);
+		await expect.poll(() => accordionPO.state()).toEqual(expectedState);
+		await accordionDemoPO.locatorCollapseAll().click();
+		updateAccordionState(expectedState, 0, false);
+		updateAccordionState(expectedState, 1, false);
+		await expect.poll(() => accordionPO.state()).toEqual(expectedState);
+	});
+
+	test(`Playground accordion behavior no destroy on hide`, async ({page}) => {
+		await page.goto('#/accordion/playground#{"config":{"itemDestroyOnHide":false}}');
+		const accordionPO = new AccordionPO(page, 0);
+
 		const itemsIds = await Promise.all((await accordionPO.locatorAccordionItems.all()).map((item) => item.getAttribute('id')));
 		const expectedState: State = {
 			items: [
@@ -93,20 +150,12 @@ test.describe.parallel(`Accordion tests`, () => {
 			rootClasses: ['accordion'],
 		};
 		await expect.poll(() => accordionPO.state()).toEqual(expectedState);
-		await accordionDemoPO.locatorToggleFirst().click();
+		//We are using the 'header' since if we would use the 'buttons' wouldn't be possible to click on the disabled one
+		await accordionPO.locatorAccordionHeaders.nth(0).click();
+		await accordionPO.locatorAccordionHeaders.nth(1).click();
+
 		expectedState.items[0].expanded = 'true';
-		await expect.poll(() => accordionPO.state()).toEqual(expectedState);
-		await accordionDemoPO.locatorToggleFirst().click();
-		await accordionDemoPO.locatorToggleSecond().click();
-		expectedState.items[0].expanded = 'false';
 		expectedState.items[1].expanded = 'true';
-		await expect.poll(() => accordionPO.state()).toEqual(expectedState);
-		await accordionDemoPO.locatorExpandAll().click();
-		expectedState.items[0].expanded = 'true';
-		await expect.poll(() => accordionPO.state()).toEqual(expectedState);
-		await accordionDemoPO.locatorCollapseAll().click();
-		expectedState.items[0].expanded = 'false';
-		expectedState.items[1].expanded = 'false';
 		await expect.poll(() => accordionPO.state()).toEqual(expectedState);
 	});
 });

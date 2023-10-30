@@ -259,7 +259,7 @@ describe(`Accordion`, () => {
 	});
 
 	test(`should have correct value for shouldBeInDOM`, () => {
-		const i = accordion.api.registerItem({props: {itemDestroyOnHide: true, itemVisible: true}});
+		const i = accordion.api.registerItem({props: {itemVisible: true}});
 		expect(i.state$().shouldBeInDOM).toBe(true);
 		i.api.collapse();
 		expect(i.state$().shouldBeInDOM).toBe(false);
