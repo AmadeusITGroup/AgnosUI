@@ -18,12 +18,12 @@ export const activeElement$ = readable(<Element | null>null, {
 			setTimeout(setActiveElement);
 		}
 
-		container.addEventListener(evtFocusIn, setActiveElement);
-		container.addEventListener(evtFocusOut, onFocusOut);
+		container.addEventListener(evtFocusIn, setActiveElement, {capture: true});
+		container.addEventListener(evtFocusOut, onFocusOut, {capture: true});
 
 		return () => {
-			container.removeEventListener(evtFocusIn, setActiveElement);
-			container.removeEventListener(evtFocusOut, onFocusOut);
+			container.removeEventListener(evtFocusIn, setActiveElement, {capture: true});
+			container.removeEventListener(evtFocusOut, onFocusOut, {capture: true});
 		};
 	},
 	equal: Object.is,
