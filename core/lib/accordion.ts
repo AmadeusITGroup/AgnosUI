@@ -379,7 +379,7 @@ const defaultAccordionConfig: AccordionProps = {
 	onHidden: noop,
 	className: '',
 	itemId: '',
-	itemDestroyOnHide: false,
+	itemDestroyOnHide: true,
 	itemDisabled: false,
 	itemVisible: false,
 	itemAnimation: true,
