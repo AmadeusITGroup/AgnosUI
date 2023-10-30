@@ -14,8 +14,8 @@ describe(`Focustrack service`, () => {
 				activeElement = el;
 			});
 			expect(addEventListenerSpy).toHaveBeenCalledTimes(2);
-			expect(addEventListenerSpy).toHaveBeenCalledWith('focusin', expect.anything());
-			expect(addEventListenerSpy).toHaveBeenCalledWith('focusout', expect.anything());
+			expect(addEventListenerSpy).toHaveBeenCalledWith('focusin', expect.anything(), expect.anything());
+			expect(addEventListenerSpy).toHaveBeenCalledWith('focusout', expect.anything(), expect.anything());
 
 			expect(activeElement).toBe(document.body);
 			const element = document.getElementById('id')!;
@@ -23,8 +23,8 @@ describe(`Focustrack service`, () => {
 			expect(activeElement).toBe(element);
 
 			unsubscribe();
-			expect(removeEventListenerSpy).toHaveBeenCalledWith('focusin', expect.anything());
-			expect(removeEventListenerSpy).toHaveBeenCalledWith('focusout', expect.anything());
+			expect(removeEventListenerSpy).toHaveBeenCalledWith('focusin', expect.anything(), expect.anything());
+			expect(removeEventListenerSpy).toHaveBeenCalledWith('focusout', expect.anything(), expect.anything());
 			expect(removeEventListenerSpy).toHaveBeenCalledTimes(2);
 
 			vi.clearAllMocks();
