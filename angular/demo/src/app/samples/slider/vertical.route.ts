@@ -10,11 +10,11 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 		<div class="d-flex" style="height: 350px">
 			<div class="col-6" style="height: 300px">
 				<au-component auSlider [auMin]="0" [auMax]="100" [auStepSize]="1" [auVertical]="true" [formControl]="sliderControl"></au-component>
-				Form control values: {{ sliderControl.value }}
+				Form control values: {{ sliderControl.value?.join(', ') }}
 			</div>
 			<div class="col-6" style="height: 300px">
 				<au-component auSlider [auMin]="0" [auMax]="100" [auStepSize]="1" [auVertical]="true" [formControl]="sliderControlRange"></au-component>
-				From control values: {{ sliderControlRange.value }}
+				From control value: {{ sliderControlRange.value }}
 			</div>
 		</div>
 	`,
