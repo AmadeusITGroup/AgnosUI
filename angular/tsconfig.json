@@ -10,7 +10,6 @@
 		"noImplicitOverride": true,
 		"strictPropertyInitialization": false,
 		"noPropertyAccessFromIndexSignature": true,
-		"noImplicitReturns": true,
 		"sourceMap": true,
 		"declaration": false,
 		"downlevelIteration": true,

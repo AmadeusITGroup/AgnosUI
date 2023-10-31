@@ -225,6 +225,7 @@ const findCallToEventEmitter = (functionNode: TSESTree.Node, outputName: string)
 			return body;
 		}
 	}
+	return undefined;
 };
 
 const fixOutputEmit = (
