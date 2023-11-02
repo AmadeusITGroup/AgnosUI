@@ -5,6 +5,7 @@
 		"module": "esnext",
 		"strict": true,
 		"skipLibCheck": true,
+		"noImplicitReturns": true,
 		"esModuleInterop": true,
 		"resolveJsonModule": true,
 		"moduleResolution": "bundler",

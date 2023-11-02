@@ -152,6 +152,7 @@ const findCallToDispatch = (functionNode: TSESTree.Node, eventName: string) => {
 			return body;
 		}
 	}
+	return undefined;
 };
 
 const isBindingAssignment = (node: TSESTree.Node, propName: string) =>
@@ -175,6 +176,7 @@ const findBindingAssignment = (functionNode: TSESTree.Node, propName: string) =>
 			return body;
 		}
 	}
+	return undefined;
 };
 
 const fixApiPatchEventHandler = (
