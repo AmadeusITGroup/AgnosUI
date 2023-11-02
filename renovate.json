@@ -13,6 +13,14 @@
 			"groupSlug": "typescript-dependencies"
 		},
 		{
+			"matchPackagePatterns": ["^."],
+			"postUpgradeTasks": {
+				"commands": ["rm package-lock.json", "npm install"],
+				"executionMode": "branch",
+				"fileFilters": ["**"]
+			}
+		},
+		{
 			"matchPackageNames": ["@angular/core"],
 			"postUpgradeTasks": {
 				"commands": [
