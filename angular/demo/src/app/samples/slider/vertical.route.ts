@@ -6,15 +6,14 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 	standalone: true,
 	imports: [AgnosUIAngularModule, ReactiveFormsModule, FormsModule],
 	template: `
-		<h2>Vertical slider</h2>
 		<div class="d-flex" style="height: 350px">
 			<div class="col-6" style="height: 300px">
-				<au-component auSlider [auMin]="0" [auMax]="100" [auStepSize]="1" [auVertical]="true" [formControl]="sliderControl"></au-component>
-				Form control values: {{ sliderControl.value?.join(', ') }}
+				<div auSlider [auMin]="0" [auMax]="100" [auStepSize]="1" [auVertical]="true" [formControl]="sliderControl" auClassName="my-0"></div>
+				<div class="mt-3">Form control values: {{ sliderControl.value?.join(', ') }}</div>
 			</div>
 			<div class="col-6" style="height: 300px">
-				<au-component auSlider [auMin]="0" [auMax]="100" [auStepSize]="1" [auVertical]="true" [formControl]="sliderControlRange"></au-component>
-				From control value: {{ sliderControlRange.value }}
+				<div auSlider [auMin]="0" [auMax]="100" [auStepSize]="1" [auVertical]="true" [formControl]="sliderControlRange" auClassName="my-0"></div>
+				<div class="mt-3">From control value: {{ sliderControlRange.value?.join(', ') }}</div>
 			</div>
 		</div>
 	`,

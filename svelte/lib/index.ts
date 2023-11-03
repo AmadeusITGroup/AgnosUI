@@ -1,30 +1,32 @@
 export * from '@agnos-ui/svelte-headless';
 
-import Select from './select/Select.svelte';
-import Rating from './rating/Rating.svelte';
-import Pagination from './pagination/Pagination.svelte';
-import PaginationDefaultPages from './pagination/PaginationDefaultPages.svelte';
+import Accordion from './accordion/Accordion.svelte';
+import AccordionItem from './accordion/Item.svelte';
+import Alert from './alert/Alert.svelte';
 import Modal from './modal/Modal.svelte';
 import ModalDefaultHeader from './modal/ModalDefaultHeader.svelte';
 import ModalDefaultStructure from './modal/ModalDefaultStructure.svelte';
-import Alert from './alert/Alert.svelte';
-import Accordion from './accordion/Accordion.svelte';
-import AccordionItem from './accordion/Item.svelte';
+import Pagination from './pagination/Pagination.svelte';
+import PaginationDefaultPages from './pagination/PaginationDefaultPages.svelte';
 import Progressbar from './progressbar/Progressbar.svelte';
+import Rating from './rating/Rating.svelte';
+import Select from './select/Select.svelte';
+import Slider from './slider/Slider.svelte';
 
-export * from './modal/modalService';
 export * from './accordion/accordion';
+export * from './modal/modalService';
 
 export {
-	Select,
-	Rating,
-	Pagination,
-	PaginationDefaultPages,
+	Accordion,
+	AccordionItem,
+	Alert,
 	Modal,
 	ModalDefaultHeader,
 	ModalDefaultStructure,
-	Alert,
-	Accordion,
-	AccordionItem,
+	Pagination,
+	PaginationDefaultPages,
 	Progressbar,
+	Rating,
+	Select,
+	Slider,
 };
