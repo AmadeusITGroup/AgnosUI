@@ -24,14 +24,14 @@ import {take} from 'rxjs';
 	host: {
 		class: 'au-slider',
 		'[class]': 'state().vertical ? "au-slider-vertical" : "au-slider-horizontal"',
+		'[class.disabled]': 'state().disabled',
 		'(blur)': 'handleBlur()',
 	},
 	template: `
-		<div [class]="state().vertical ? 'au-clickable-slider-area-vertical' : 'au-clickable-slider-area'" (click)="sliderClick($event)"></div>
+		<div [class]="state().vertical ? 'au-slider-clickable-area-vertical' : 'au-slider-clickable-area'" (click)="sliderClick($event)"></div>
 		<div
 			*ngFor="let option of state().progressDisplayOptions"
 			class="au-slider-progress"
-			[attr.disabled]="state().disabled ? true : null"
 			[style.left.%]="option.left"
 			[style.bottom.%]="option.bottom"
 			[style.width.%]="option.width"
@@ -40,7 +40,6 @@ import {take} from 'rxjs';
 		<div
 			[class]="state().vertical ? 'au-slider-label-vertical au-slider-label-vertical-min' : 'au-slider-label au-slider-label-min'"
 			[style.visibility]="state().minValueLabelDisplay"
-			[attr.disabled]="state().disabled ? true : null"
 			[auUse]="widget.directives.minLabelDirective"
 		>
 			{{ state().min }}
@@ -48,7 +47,6 @@ import {take} from 'rxjs';
 		<div
 			[class]="state().vertical ? 'au-slider-label-vertical au-slider-label-vertical-max' : 'au-slider-label au-slider-label-max'"
 			[style.visibility]="state().maxValueLabelDisplay"
-			[attr.disabled]="state().disabled ? true : null"
 			[auUse]="widget.directives.maxLabelDirective"
 		>
 			{{ state().max }}
@@ -58,7 +56,6 @@ import {take} from 'rxjs';
 			[style.visibility]="state().combinedLabelDisplay"
 			[style.left.%]="state().combinedLabelPositionLeft"
 			[style.top.%]="state().combinedLabelPositionTop"
-			[attr.disabled]="state().disabled ? true : null"
 		>
 			{{ state().sortedValues[0] }} - {{ state().sortedValues[1] }}
 		</div>
@@ -86,13 +83,11 @@ import {take} from 'rxjs';
 				[style.left.%]="state().handleDisplayOptions[i].left"
 				[style.top.%]="state().handleDisplayOptions[i].top"
 				[style.visibility]="state().combinedLabelDisplay === 'visible' ? 'hidden' : 'visible'"
-				[attr.disabled]="state().disabled ? true : null"
 			>
 				{{ state().values[i] }}
 			</div>
 		</ng-template>
 	`,
-	styles: ["@import '@agnos-ui/common/lib/slider.scss';"],
 })
 export class SliderComponent implements OnChanges {
 	private _zone = inject(NgZone);

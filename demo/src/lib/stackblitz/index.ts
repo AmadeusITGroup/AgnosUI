@@ -31,7 +31,9 @@ const frameworkCreateStackblitz: Record<Frameworks, StackblitzProcessor[]> = {
 	react: [
 		addAsyncFiles(import.meta.glob('./react/**', {as: 'raw', import: 'default'}) as any, '', './react/'),
 		async (project, sample) => {
-			project.files['src/main.tsx'] = `import {createRoot} from "react-dom/client";\nimport App from ${JSON.stringify(
+			project.files[
+				'src/main.tsx'
+			] = `import {createRoot} from "react-dom/client";\nimport "@agnos-ui/style-bootstrap/css/agnosui.css";\nimport App from ${JSON.stringify(
 				`./${sample.files.react.entryPoint.replace(/\.tsx?$/, '')}`
 			)};\nconst rootElement = document.getElementById('root');\nconst root = createRoot(rootElement);\nroot.render(<App />)`;
 		},
@@ -39,7 +41,7 @@ const frameworkCreateStackblitz: Record<Frameworks, StackblitzProcessor[]> = {
 	svelte: [
 		addAsyncFiles(import.meta.glob('./svelte/**', {as: 'raw', import: 'default'}) as any, '', './svelte/'),
 		async (project, sample) => {
-			project.files['src/main.ts'] = `import App from ${JSON.stringify(
+			project.files['src/main.ts'] = `import "@agnos-ui/style-bootstrap/css/agnosui.css";\nimport App from ${JSON.stringify(
 				`./${sample.files.svelte.entryPoint}`
 			)};\nconst app = new App({target: document.getElementById('root')});\nexport default app;`;
 			project.template = 'node';
@@ -65,7 +67,7 @@ if (isReleased) {
 			if (file.startsWith('packages/') && file.endsWith('/package.json')) {
 				const pkg = JSON.parse(files[file]);
 				packageJson.devDependencies[pkg.name] = `file:./packages/${pkg.name}`;
-				for (const key of Object.keys(pkg.dependencies)) {
+				for (const key of Object.keys(pkg.dependencies ?? {})) {
 					if (!files[`packages/${key}/package.json`]) {
 						packageJson.devDependencies[key] = pkg.dependencies[key];
 					}
@@ -83,8 +85,17 @@ if (isReleased) {
 		'packages/@agnos-ui/core/',
 		'../../../../core/dist/lib/'
 	);
+	const stylePackage = addAsyncFiles(
+		import.meta.glob(['../../../../style-bootstrap/**', '!**/*.map', '!**/*.scss'], {
+			as: 'raw',
+			import: 'default',
+		}) as any,
+		'packages/@agnos-ui/style-bootstrap/',
+		'../../../../style-bootstrap/'
+	);
 	frameworkCreateStackblitz.angular.push(
 		corePackage,
+		stylePackage,
 		addAsyncFiles(
 			import.meta.glob(['../../../../angular/dist/headless/**', '!**/*.map'], {
 				as: 'raw',
@@ -105,6 +116,7 @@ if (isReleased) {
 	);
 	frameworkCreateStackblitz.react.push(
 		corePackage,
+		stylePackage,
 		addAsyncFiles(
 			import.meta.glob(['../../../../react/dist/headless/**', '!**/*.map'], {
 				as: 'raw',
@@ -125,6 +137,7 @@ if (isReleased) {
 	);
 	frameworkCreateStackblitz.svelte.push(
 		corePackage,
+		stylePackage,
 		addAsyncFiles(
 			import.meta.glob(['../../../../svelte/dist/headless/**', '!**/*.map'], {
 				as: 'raw',

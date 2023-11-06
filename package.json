@@ -72,6 +72,7 @@
 	"workspaces": [
 		"code-coverage",
 		"core",
+		"style-bootstrap",
 		"angular",
 		"react",
 		"svelte",

@@ -13,6 +13,7 @@
 	},
 	"dependencies": {
 		"@agnos-ui/react-headless": "",
+		"@agnos-ui/style-bootstrap": "",
 		"@amadeus-it-group/tansu": "0.0.23",
 		"classnames": "^2.3.2"
 	},

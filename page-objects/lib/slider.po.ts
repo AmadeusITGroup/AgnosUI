@@ -3,7 +3,7 @@ import type {Locator} from '@playwright/test';
 
 export const sliderSelectors = {
 	rootComponent: '.au-slider',
-	clickableArea: '.au-clickable-slider-area',
+	clickableArea: '.au-slider-clickable-area',
 	handle: '.au-slider-handle',
 	minLabelHorizontal: '.au-slider-label-min',
 	maxLabelHorizontal: '.au-slider-label-max',
