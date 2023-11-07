@@ -29,6 +29,9 @@ SOFTWARE.
 
 @agnos-ui/core
 
+@agnos-ui/style-bootstrap
+MIT
+
 @amadeus-it-group/tansu
 MIT
 
