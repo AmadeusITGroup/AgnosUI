@@ -8,6 +8,7 @@ const setVersion = (version) => {
 	}
 	const directories = [
 		'core/lib',
+		'style-bootstrap',
 		'svelte/headless',
 		'svelte/lib',
 		'react/headless',

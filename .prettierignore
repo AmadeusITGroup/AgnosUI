@@ -7,3 +7,4 @@ playwright-report/
 test-results/
 .svelte-kit/
 *-snapshots/
+style-bootstrap/css/

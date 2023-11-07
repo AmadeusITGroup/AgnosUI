@@ -8,3 +8,4 @@ test-results/
 dist.tar.gz
 .nyc_output/
 .idea
+style-bootstrap/css/

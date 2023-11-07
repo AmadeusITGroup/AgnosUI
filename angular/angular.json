@@ -23,7 +23,7 @@
 						"polyfills": "demo/src/polyfills.ts",
 						"tsConfig": "demo/tsconfig.app.json",
 						"assets": ["demo/src/agnosui-logo.svg", "demo/src/assets"],
-						"styles": ["demo/src/styles.css", "../common/demo.scss"],
+						"styles": ["demo/src/styles.css", "../common/demo.scss", "@agnos-ui/style-bootstrap/scss/agnosui.scss"],
 						"scripts": [],
 						"inlineStyleLanguage": "scss",
 						"extraWebpackConfig": "./demo/webpack.js"
