@@ -1,6 +1,7 @@
 import type {TSESLint} from '@typescript-eslint/utils';
 import {ESLintUtils, TSESTree} from '@typescript-eslint/utils';
 import type {AST as SvelteAST} from 'svelte-eslint-parser';
+import type {Type} from 'typescript';
 import type {EventInfo, PropInfo} from './ast-utils';
 import {
 	addIndentation,
@@ -10,6 +11,8 @@ import {
 	getInfoFromWidgetNode,
 	getNodeType,
 	insertNewLineBefore,
+	isSameType,
+	typeToString,
 } from './ast-utils';
 
 type ExportLetNode = TSESTree.VariableDeclarator & {
@@ -97,7 +100,7 @@ const reportMissingProp = (
 			name,
 		},
 		fix(fixer) {
-			return insertNewLineBefore(fixer, insertPosition, `export let ${name}: ${prop.type} = undefined;`, context);
+			return insertNewLineBefore(fixer, insertPosition, `export let ${name}: ${typeToString(prop.type, node, context)} = undefined;`, context);
 		},
 	});
 };
@@ -105,20 +108,21 @@ const reportMissingProp = (
 const reportInvalidPropType = (
 	node: ExportLetNode,
 	info: PropInfo,
-	foundType: string,
+	foundType: Type,
 	context: Readonly<TSESLint.RuleContext<'invalidPropType', any>>
 ) => {
+	const expectedType = typeToString(info.type, node, context);
 	context.report({
 		node,
 		messageId: 'invalidPropType',
 		data: {
 			name: node.id.name,
-			expectedType: info.type,
-			foundType,
+			expectedType,
+			foundType: typeToString(foundType, node, context),
 		},
 		fix(fixer) {
 			const typeAnnotation = node.id.typeAnnotation;
-			const typeText = `: ${info.type}`;
+			const typeText = `: ${expectedType}`;
 			if (typeAnnotation) {
 				return fixer.replaceText(typeAnnotation, typeText);
 			} else {
@@ -302,7 +306,7 @@ export const svelteCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 									if (validProp) {
 										const propInfo = widgetInfo.props.get(name)!;
 										const nodeType = getNodeType(exportNode, context);
-										if (propInfo.type !== nodeType) {
+										if (!isSameType(propInfo.type, nodeType, context)) {
 											reportInvalidPropType(exportNode, propInfo, nodeType, context);
 										}
 									}
