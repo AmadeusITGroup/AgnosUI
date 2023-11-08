@@ -2,18 +2,19 @@ import type {TSESLint} from '@typescript-eslint/utils';
 import {ASTUtils, ESLintUtils, TSESTree} from '@typescript-eslint/utils';
 import type {AST as SvelteAST} from 'svelte-eslint-parser';
 import type ts from 'typescript';
-import {SignatureKind} from 'typescript';
+import type {Type} from 'typescript';
+import {SignatureKind, TypeFormatFlags} from 'typescript';
 
 export interface EventInfo {
 	doc: string;
 	propBinding: string | undefined;
-	type: string;
+	type: Type;
 	widgetProp: string;
 }
 
 export interface PropInfo {
 	doc: string;
-	type: string;
+	type: Type;
 }
 
 export const docFromSymbol = (symbol: ts.Symbol, checker: ts.TypeChecker) => {
@@ -125,20 +126,18 @@ export const getInfoFromWidgetNode = (widgetNode: TSESTree.Node, context: Readon
 			const eventName = `${name[2].toLowerCase()}${name.slice(3)}`;
 			const binding = name.endsWith('Change');
 			const propBinding = binding ? eventName.substring(0, eventName.length - 6) : undefined;
-			let type = 'void';
+			let type = checker.getVoidType();
 			tsType = checker.getNonNullableType(tsType);
 			const eventParamSymbol = checker.getSignaturesOfType(tsType, SignatureKind.Call)[0]?.getParameters()?.[0];
 			if (eventParamSymbol) {
-				tsType = checker.getTypeOfSymbolAtLocation(eventParamSymbol, widgetTSNode);
-				type = checker.typeToString(tsType, widgetTSNode);
+				type = checker.getTypeOfSymbolAtLocation(eventParamSymbol, widgetTSNode);
 			}
 			events.set(eventName, {doc, propBinding, type, widgetProp: name});
 			if (propBinding) {
 				bindings.push(propBinding);
 			}
 		} else {
-			const type = checker.typeToString(tsType, widgetTSNode);
-			props.set(name, {doc, type});
+			props.set(name, {doc, type: tsType});
 		}
 	}
 	return {
@@ -148,12 +147,37 @@ export const getInfoFromWidgetNode = (widgetNode: TSESTree.Node, context: Readon
 	};
 };
 
+export const isSameType = (type1: Type, type2: Type, context: Readonly<TSESLint.RuleContext<any, any>>): boolean => {
+	const parserServices = ESLintUtils.getParserServices(context);
+	const checker = parserServices.program.getTypeChecker();
+	const sameTypeFlags = TypeFormatFlags.NoTruncation | TypeFormatFlags.UseFullyQualifiedType | TypeFormatFlags.InTypeAlias;
+	const strType1 = checker.typeToString(type1, undefined, sameTypeFlags);
+	const strType2 = checker.typeToString(type2, undefined, sameTypeFlags);
+	if (strType1 === strType2) {
+		return true;
+	}
+	if (strType1 === 'any' || strType2 === 'any') {
+		// any is assignable to any other type, and any other type is assignable to any
+		// but it does not mean they are the same type
+		return false;
+	}
+	// isTypeAssignableTo is not publicly exposed, cf https://github.com/microsoft/TypeScript/issues/9879#issuecomment-1758108764
+	const isTypeAssignableTo: (type1: Type, type2: Type) => boolean = (checker as any).isTypeAssignableTo.bind(checker);
+	return isTypeAssignableTo(type1, type2) && isTypeAssignableTo(type2, type1);
+};
+
+export const typeToString = (type: Type, node: TSESTree.Node, context: Readonly<TSESLint.RuleContext<any, any>>) => {
+	const parserServices = ESLintUtils.getParserServices(context);
+	const checker = parserServices.program.getTypeChecker();
+	const tsNode = parserServices.esTreeNodeToTSNodeMap.get(node);
+	return checker.typeToString(type, tsNode, TypeFormatFlags.NoTruncation);
+};
+
 export const getNodeType = (node: TSESTree.Node, context: Readonly<TSESLint.RuleContext<any, any>>) => {
 	const parserServices = ESLintUtils.getParserServices(context);
 	const checker = parserServices.program.getTypeChecker();
 	const tsNode = parserServices.esTreeNodeToTSNodeMap.get(node);
-	const nodeType = checker.getTypeAtLocation(tsNode);
-	return checker.typeToString(nodeType, tsNode);
+	return checker.getTypeAtLocation(tsNode);
 };
 
 export const getNodeDocumentation = (node: TSESTree.Node, context: Readonly<TSESLint.RuleContext<any, any>>) => {

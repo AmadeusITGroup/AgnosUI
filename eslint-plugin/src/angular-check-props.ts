@@ -1,5 +1,6 @@
 import type {TSESLint} from '@typescript-eslint/utils';
 import {ASTUtils, ESLintUtils, TSESTree} from '@typescript-eslint/utils';
+import type {Type, TypeReference} from 'typescript';
 import type {EventInfo, PropInfo} from './ast-utils';
 import {
 	addIndentation,
@@ -12,6 +13,8 @@ import {
 	getNodeType,
 	insertNewLineBefore as insertLineBefore,
 	isSameDoc,
+	isSameType,
+	typeToString,
 } from './ast-utils';
 
 const getDecorator = ({decorators}: {decorators?: TSESTree.Decorator[]}, decoratorName: string) =>
@@ -67,7 +70,10 @@ const reportMissingInputProp = (node: TSESTree.Node, name: string, prop: PropInf
 		fix(fixer) {
 			const indentation = getIndentation(node, context);
 			const doc = createDocWithIndentation(prop.doc, indentation);
-			return fixer.insertTextBefore(node, `${doc}@Input('${validAlias(name)}') ${name}: ${prop.type};\n\n${indentation}`);
+			return fixer.insertTextBefore(
+				node,
+				`${doc}@Input('${validAlias(name)}') ${name}: ${typeToString(prop.type, node, context)};\n\n${indentation}`
+			);
 		},
 	});
 };
@@ -89,7 +95,10 @@ const reportMissingOutputProp = (
 		*fix(fixer) {
 			const indentation = getIndentation(node, context);
 			const doc = createDocWithIndentation(prop.doc, indentation);
-			yield fixer.insertTextBefore(node, `${doc}@Output('${validAlias(name)}') ${name} = new EventEmitter<${prop.type}>();\n\n${indentation}`);
+			yield fixer.insertTextBefore(
+				node,
+				`${doc}@Output('${validAlias(name)}') ${name} = new EventEmitter<${typeToString(prop.type, node, context)}>();\n\n${indentation}`
+			);
 			const eventInApiPatch = eventsObject?.properties.get(prop.widgetProp);
 			const emitInFunction = eventInApiPatch ? findCallToEventEmitter(eventInApiPatch, name) : null;
 			if (!emitInFunction) {
@@ -105,22 +114,23 @@ const reportMissingOutputProp = (
 const reportInvalidInputPropType = (
 	node: TSESTree.PropertyDefinition,
 	name: string,
-	foundType: string,
+	foundType: Type,
 	info: PropInfo,
 	context: Readonly<TSESLint.RuleContext<'invalidPropType', any>>
 ) => {
+	const expectedType = typeToString(info.type, node, context);
 	context.report({
 		node,
 		messageId: 'invalidPropType',
 		data: {
 			name,
 			type: 'input',
-			foundType,
-			expectedType: info.type,
+			foundType: typeToString(foundType, node, context),
+			expectedType,
 		},
 		fix(fixer) {
 			const typeAnnotation = node.typeAnnotation;
-			const typeText = `: ${info.type}`;
+			const typeText = `: ${expectedType}`;
 			if (typeAnnotation) {
 				return fixer.replaceText(typeAnnotation, typeText);
 			} else {
@@ -133,22 +143,22 @@ const reportInvalidInputPropType = (
 const reportInvalidOutputPropType = (
 	node: TSESTree.PropertyDefinition,
 	name: string,
-	foundType: string,
-	expectedType: string,
+	foundType: Type,
 	info: PropInfo,
 	context: Readonly<TSESLint.RuleContext<'invalidPropType', any>>
 ) => {
+	const expectedType = `EventEmitter<${typeToString(info.type, node, context)}>`;
 	context.report({
 		node,
 		messageId: 'invalidPropType',
 		data: {
 			name,
 			type: 'output',
-			foundType,
+			foundType: typeToString(foundType, node, context),
 			expectedType,
 		},
 		fix(fixer) {
-			const newValue = `new EventEmitter<${info.type}>()`;
+			const newValue = `new ${expectedType}()`;
 			if (node.value) {
 				return fixer.replaceText(node.value, newValue);
 			} else {
@@ -301,7 +311,7 @@ export const angularCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 								if (inputInfo) {
 									widgetInfo.props.delete(name);
 									const nodeType = getNodeType(classMember, context);
-									if (nodeType !== inputInfo.type) {
+									if (!isSameType(nodeType, inputInfo.type, context)) {
 										reportInvalidInputPropType(classMember, name, nodeType, inputInfo, context);
 									}
 									const nodeComment = getNodeDocumentation(classMember.key, context);
@@ -321,10 +331,13 @@ export const angularCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 								const outputInfo = widgetInfo.events.get(name);
 								if (outputInfo) {
 									widgetInfo.events.delete(name);
-									const nodeType = getNodeType(classMember, context);
-									const expectedNodeType = `EventEmitter<${outputInfo.type}>`;
-									if (nodeType !== expectedNodeType) {
-										reportInvalidOutputPropType(classMember, name, nodeType, expectedNodeType, outputInfo, context);
+									const nodeType = getNodeType(classMember, context) as TypeReference;
+									if (
+										nodeType.target?.symbol?.name != 'EventEmitter' ||
+										nodeType.typeArguments?.length !== 1 ||
+										!isSameType(nodeType.typeArguments![0], outputInfo.type, context)
+									) {
+										reportInvalidOutputPropType(classMember, name, nodeType, outputInfo, context);
 									}
 									const nodeComment = getNodeDocumentation(classMember.key, context);
 									if (!isSameDoc(nodeComment, outputInfo.doc)) {
