@@ -9,8 +9,6 @@ $prefix: au-;
 	--#{$prefix}slider-margin-block-end: #{$slider-margin-block-end};
 	--#{$prefix}slider-vertical-margin-inline-start: #{$slider-vertical-margin-inline-start};
 	--#{$prefix}slider-vertical-margin-inline-end: #{$slider-vertical-margin-inline-end};
-	--#{$prefix}slider-vertical-margin-block: #{$slider-vertical-margin-block};
-
 	--#{$prefix}slider-translate-vertical: #{$slider-translate-vertical};
 	--#{$prefix}slider-translate-horizontal: #{$slider-translate-horizontal};
 
@@ -32,7 +30,8 @@ $prefix: au-;
 	--#{$prefix}slider-label-now-transform: #{$slider-label-now-transform};
 
 	--#{$prefix}slider-label-vertical-margin-inline-start: #{$slider-label-vertical-margin-inline-start};
-	--#{$prefix}slider-label-vertical-transform: #{$slider-label-vertical-transform};
+	--#{$prefix}slider-label-vertical-min-transform: #{$slider-label-vertical-min-transform};
+	--#{$prefix}slider-label-vertical-max-transform: #{$slider-label-vertical-max-transform};
 	--#{$prefix}slider-label-vertical-white-space: #{$slider-label-vertical-white-space};
 	--#{$prefix}slider-label-vertical-min-top: #{$slider-label-vertical-min-top};
 	--#{$prefix}slider-label-vertical-max-top: #{$slider-label-vertical-max-top};
@@ -66,7 +65,6 @@ $prefix: au-;
 		width: var(--#{$prefix}slider-secondary-size);
 		margin-inline-start: var(--#{$prefix}slider-vertical-margin-inline-start);
 		margin-inline-end: var(--#{$prefix}slider-vertical-margin-inline-end);
-		margin-block: var(--#{$prefix}slider-vertical-margin-block);
 		.au-slider-handle-vertical {
 			transform: var(--#{$prefix}slider-translate-vertical);
 		}
@@ -116,15 +114,16 @@ $prefix: au-;
 	.au-slider-label-vertical {
 		position: absolute;
 		margin-inline-start: var(--#{$prefix}slider-label-vertical-margin-inline-start);
-		transform: var(--#{$prefix}slider-label-vertical-transform);
 		white-space: var(--#{$prefix}slider-label-vertical-white-space);
 
 		&.au-slider-label-vertical-min {
 			top: var(--#{$prefix}slider-label-vertical-min-top);
+			transform: var(--#{$prefix}slider-label-vertical-min-transform);
 		}
 
 		&.au-slider-label-vertical-max {
 			top: var(--#{$prefix}slider-label-vertical-max-top);
+			transform: var(--#{$prefix}slider-label-vertical-max-transform);
 		}
 
 		&.au-slider-label-vertical-now {
