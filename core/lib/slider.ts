@@ -3,7 +3,7 @@ import type {WidgetsCommonPropsAndState} from './commonProps';
 import {bindableDerived, createStoreDirective, writablesForProps} from './services';
 import type {ConfigValidator, PropsConfig} from './services';
 import {stateStores} from './services/stores';
-import {typeArray, typeBoolean, typeFunction, typeNumber} from './services/writables';
+import {typeArray, typeBoolean, typeFunction, typeNumber, typeNumberInRangeFactory} from './services/writables';
 import type {Directive, Widget} from './types';
 import {noop} from './utils';
 
@@ -91,19 +91,19 @@ export interface SliderState extends SliderCommonPropsAndState {
 	combinedLabelPositionTop: number;
 
 	/**
-	 * If `visible` the minimum label will be displayed
+	 * If true, the minimum label will be visible
 	 */
-	minValueLabelDisplay: string;
+	minValueLabelDisplay: boolean;
 
 	/**
-	 * If `visible` the maximum label will be displayed
+	 * If true, the maximum label will be visible
 	 */
-	maxValueLabelDisplay: string;
+	maxValueLabelDisplay: boolean;
 
 	/**
-	 * If `visible` the label when the handles are close is displayed
+	 * If true, the label when the handles are close is visible
 	 */
-	combinedLabelDisplay: string;
+	combinedLabelDisplay: boolean;
 
 	/**
 	 * Array of the sorted handles to display
@@ -195,7 +195,7 @@ export function getSliderDefaultConfig() {
 const configValidator: ConfigValidator<SliderProps> = {
 	min: typeNumber,
 	max: typeNumber,
-	stepSize: typeNumber,
+	stepSize: typeNumberInRangeFactory(0, +Infinity),
 	readonly: typeBoolean,
 	disabled: typeBoolean,
 	vertical: typeBoolean,
@@ -214,7 +214,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			// dirty inputs that need adjustment:
 			min$: _dirtyMinimum$,
 			max$: _dirtyMaximum$,
-			stepSize$: _dirtyStepSize$,
+			stepSize$,
 			values$: _dirtyValues$,
 
 			onValuesChange$,
@@ -234,7 +234,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 		if (_dirtyMinimum$() === _dirtyMaximum$()) return defaultSliderConfig.max;
 		return Math.max(_dirtyMinimum$(), _dirtyMaximum$());
 	});
-	const stepSize$ = computed(() => _dirtyStepSize$() || defaultSliderConfig.stepSize);
+
 	const values$ = bindableDerived(
 		onValuesChange$,
 		[_dirtyValues$],
@@ -308,10 +308,19 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 	const sortedValuesPercent$ = computed(() => [...valuesPercent$()].sort((a, b) => a - b));
 	const minLabelWidth$ = computed(() => (minLabelDomRect$().width / sliderDomRectSize$()) * 100);
 	const maxLabelWidth$ = computed(() => (maxLabelDomRect$().width / sliderDomRectSize$()) * 100);
-	const minValueLabelDisplay$ = computed(() => (valuesPercent$().some((percent) => percent < minLabelWidth$() + 1) ? 'hidden' : 'visible'));
-	const maxValueLabelDisplay$ = computed(() => (valuesPercent$().some((percent) => percent > 100 - maxLabelWidth$() - 1) ? 'hidden' : 'visible'));
+	const minValueLabelDisplay$ = computed(() => {
+		const minLabelWidth = minLabelWidth$();
+		return !valuesPercent$().some((percent) => percent < minLabelWidth + 1);
+	});
+	const maxValueLabelDisplay$ = computed(() => {
+		const maxLabelWidth = maxLabelWidth$();
+		return !valuesPercent$().some((percent) => percent > 100 - maxLabelWidth - 1);
+	});
 	// TODO define the intersection value
-	const combinedLabelDisplay$ = computed(() => (values$().length == 2 && Math.abs(values$()[0] - values$()[1]) < 10 ? 'visible' : 'hidden'));
+	const combinedLabelDisplay$ = computed(() => {
+		const values = values$();
+		return values.length == 2 && Math.abs(values[0] - values[1]) < 10;
+	});
 	const isInteractable$ = computed(() => !disabled$() && !readonly$());
 
 	const combinedLabelPositionLeft$ = computed(() =>

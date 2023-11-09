@@ -7,12 +7,12 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 	imports: [AgnosUIAngularModule, ReactiveFormsModule, FormsModule],
 	template: `
 		<h2>Slider with form control</h2>
-		<au-component auSlider [auMin]="0" [auMax]="100" [auStepSize]="1" [formControl]="sliderControl"></au-component>
+		<div auSlider [auMin]="0" [auMax]="100" [auStepSize]="1" [formControl]="sliderControl"></div>
 		Form control values: {{ sliderControl.value?.join(', ') }}
 		<hr />
 
 		<h2>Slider with values</h2>
-		<au-component auSlider [auMin]="0" [auMax]="100" [auStepSize]="1" [(auValues)]="sliderValues"></au-component>
+		<div auSlider [auMin]="0" [auMax]="100" [auStepSize]="1" [(auValues)]="sliderValues"></div>
 		Values: {{ sliderValues.join(', ') }}
 	`,
 })

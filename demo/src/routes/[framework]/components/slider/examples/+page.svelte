@@ -15,3 +15,10 @@
 <Section label="Vertical slider" id="range" level={2}>
 	<Sample title="Vertical slider" sample={verticalSample} height={627} />
 </Section>
+<Section label="Accessibility" id="accessibility" level={2}>
+	<p>
+		The slider component implements the <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_role" target="_blank"
+			>ARIA slider role</a
+		>.
+	</p>
+</Section>

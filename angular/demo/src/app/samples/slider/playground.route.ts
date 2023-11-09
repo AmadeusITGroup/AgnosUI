@@ -10,7 +10,7 @@ const undefinedConfig = getUndefinedValues(getSliderDefaultConfig());
 	standalone: true,
 	imports: [AgnosUIAngularModule],
 	providers: provideHashConfig('slider'),
-	template: `<au-component auSlider #widget></au-component>`,
+	template: `<div auSlider #widget></div>`,
 })
 export default class PlaygroundComponent {
 	@ViewChild('widget') widget: SliderComponent;

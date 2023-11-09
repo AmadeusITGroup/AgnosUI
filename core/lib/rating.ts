@@ -1,7 +1,7 @@
 import {computed, writable} from '@amadeus-it-group/tansu';
 import type {ConfigValidator, PropsConfig} from './services';
 import {INVALID_VALUE, bindableDerived, stateStores, writablesForProps} from './services';
-import {isNumber} from './services/checks';
+import {clamp, isNumber} from './services/checks';
 import {typeBoolean, typeFunction, typeNumber, typeString} from './services/writables';
 import type {SlotContent, Widget} from './types';
 import type {WidgetsCommonPropsAndState} from './commonProps';
@@ -150,11 +150,6 @@ export interface RatingActions {
 
 export type RatingWidget = Widget<RatingProps, RatingState, object, RatingActions>;
 
-// TODO use getValueInRange
-function adjustRating(rating: number, maxRating: number): number {
-	return Math.max(Math.min(rating, maxRating), 0);
-}
-
 const noop = () => {};
 
 const defaultConfig: RatingProps = {
@@ -227,7 +222,7 @@ export function createRating(config?: PropsConfig<RatingProps>): RatingWidget {
 	// clean inputs adjustment to valid range
 	const tabindex$ = computed(() => (disabled$() ? -1 : _dirtyTabindex$()));
 
-	const rating$ = bindableDerived(onRatingChange$, [_dirtyRating$, maxRating$], ([dirtyRating, maxRating]) => adjustRating(dirtyRating, maxRating));
+	const rating$ = bindableDerived(onRatingChange$, [_dirtyRating$, maxRating$], ([dirtyRating, maxRating]) => clamp(dirtyRating, maxRating));
 
 	// internal inputs
 	const _hoveredRating$ = writable(0);

@@ -1,8 +1,8 @@
 import {writable} from '@amadeus-it-group/tansu';
 import type {SpyInstance} from 'vitest';
 import {beforeEach, describe, expect, test, vi} from 'vitest';
-import {writableWithDefault} from './stores';
-import {typeArray} from './writables';
+import {INVALID_VALUE, writableWithDefault} from './stores';
+import {typeArray, typeNumberInRangeFactory} from './writables';
 
 describe(`Writables service`, () => {
 	const equal = typeArray.equal!;
@@ -34,5 +34,15 @@ describe(`Writables service`, () => {
 		expect(equal(arr, arr)).toBe(true);
 		expect(equal([15], [15, 15])).toBe(false);
 		expect(equal([15, 15], [15])).toBe(false);
+	});
+
+	test(`typeNumberInRangeFactory should normalized the value in a range`, () => {
+		const normalizeValueFn = typeNumberInRangeFactory(1, 3).normalizeValue!;
+		expect(normalizeValueFn(0)).toBe(1);
+		expect(normalizeValueFn(1)).toBe(1);
+		expect(normalizeValueFn(2)).toBe(2);
+		expect(normalizeValueFn(3)).toBe(3);
+		expect(normalizeValueFn(4)).toBe(3);
+		expect(normalizeValueFn(+'a')).toBe(INVALID_VALUE);
 	});
 });

@@ -5,7 +5,7 @@ import App from './app/App';
 import Links from './app/Links';
 import Page404 from './app/Page404';
 
-import './index.css';
+import '@agnos-ui/style-bootstrap/scss/agnosui.scss';
 
 const componentRegExp = /samples\/([^/]*)\/([^/]*).route.tsx/;
 function replacePattern(components: Record<string, any>) {

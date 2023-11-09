@@ -22,8 +22,8 @@ import {take} from 'rxjs';
 	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SliderComponent), multi: true}],
 	imports: [NgIf, NgFor, UseDirective],
 	host: {
-		class: 'au-slider',
-		'[class]': 'state().vertical ? "au-slider-vertical" : "au-slider-horizontal"',
+		class: `au-slider`,
+		'[class]': '(state().vertical ? "au-slider-vertical" : "au-slider-horizontal") + " " + state().className',
 		'[class.disabled]': 'state().disabled',
 		'(blur)': 'handleBlur()',
 	},
@@ -39,21 +39,21 @@ import {take} from 'rxjs';
 		></div>
 		<div
 			[class]="state().vertical ? 'au-slider-label-vertical au-slider-label-vertical-min' : 'au-slider-label au-slider-label-min'"
-			[style.visibility]="state().minValueLabelDisplay"
+			[style.visibility]="state().minValueLabelDisplay ? 'visible' : 'hidden'"
 			[auUse]="widget.directives.minLabelDirective"
 		>
 			{{ state().min }}
 		</div>
 		<div
 			[class]="state().vertical ? 'au-slider-label-vertical au-slider-label-vertical-max' : 'au-slider-label au-slider-label-max'"
-			[style.visibility]="state().maxValueLabelDisplay"
+			[style.visibility]="state().maxValueLabelDisplay ? 'visible' : 'hidden'"
 			[auUse]="widget.directives.maxLabelDirective"
 		>
 			{{ state().max }}
 		</div>
 		<div
 			[class]="state().vertical ? 'au-slider-label-vertical au-slider-label-vertical-now' : 'au-slider-label au-slider-label-now'"
-			[style.visibility]="state().combinedLabelDisplay"
+			[style.visibility]="state().combinedLabelDisplay ? 'visible' : 'hidden'"
 			[style.left.%]="state().combinedLabelPositionLeft"
 			[style.top.%]="state().combinedLabelPositionTop"
 		>
@@ -69,7 +69,8 @@ import {take} from 'rxjs';
 				[attr.aria-disabled]="state().disabled ? true : null"
 				[attr.aria-valuenow]="item.value"
 				[attr.aria-valuetext]="item.value"
-				[attr.disabled]="state().disabled ? true : null"
+				[attr.aria-orientation]="state().vertical ? 'vertical' : null"
+				[disabled]="state().disabled"
 				[class]="state().vertical ? 'au-slider-handle-vertical' : 'au-slider-handle-horizontal'"
 				[style.left.%]="state().handleDisplayOptions[item.id].left"
 				[style.top.%]="state().handleDisplayOptions[item.id].top"
@@ -82,7 +83,7 @@ import {take} from 'rxjs';
 				[class]="state().vertical ? 'au-slider-label-vertical au-slider-label-vertical-now' : 'au-slider-label au-slider-label-now'"
 				[style.left.%]="state().handleDisplayOptions[i].left"
 				[style.top.%]="state().handleDisplayOptions[i].top"
-				[style.visibility]="state().combinedLabelDisplay === 'visible' ? 'hidden' : 'visible'"
+				[style.visibility]="state().combinedLabelDisplay ? 'hidden' : 'visible'"
 			>
 				{{ state().values[i] }}
 			</div>

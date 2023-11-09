@@ -56,8 +56,6 @@ const defaultExpectedHandleStateVertical: {[key: string]: string | null}[] = [
 
 const test = getTest();
 test.describe(`Slider tests`, () => {
-	test.skip(({framework}) => framework !== 'angular');
-
 	test.describe(`Basic slider`, () => {
 		test(`should snap the handle to correct tick on the slider click event`, async ({page}) => {
 			const sliderDemoPO = new SliderDemoPO(page);
