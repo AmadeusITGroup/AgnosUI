@@ -1,5 +1,5 @@
 import '@agnos-ui/common/samples/rating/readonly.scss';
-import type {StarContext} from '@agnos-ui/core';
+import type {StarContext} from '@agnos-ui/react';
 import {Rating} from '@agnos-ui/react';
 import heartFill from 'bootstrap-icons/icons/heart-fill.svg?raw';
 

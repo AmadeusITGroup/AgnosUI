@@ -1,12 +1,11 @@
 import {Accordion, AccordionItem, useDirective} from '@agnos-ui/react';
-import type {AccordionItemContext} from '@agnos-ui/react';
+import type {AccordionApi, AccordionItemContext} from '@agnos-ui/react';
 import {useRef, useState} from 'react';
-import type {AccordionWidget} from '@agnos-ui/core';
 import '@agnos-ui/common/samples/accordion/custom.scss';
 import BODY from '@agnos-ui/common/samples/accordion/body.txt?raw';
 
 const AccordionDemo = () => {
-	const refAccordion = useRef<AccordionWidget['api']>();
+	const refAccordion = useRef<AccordionApi>();
 	const [thirdItemDisabled, setThirdItemDisabled] = useState<boolean>(false);
 
 	const Collapse = (props: {slotContext: AccordionItemContext}) => {

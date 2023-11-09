@@ -1,5 +1,4 @@
-import type {AlertProps} from '@agnos-ui/core';
-import type {AdaptPropsSlots, AlertContext} from '@agnos-ui/react';
+import type {AlertProps, AdaptPropsSlots, AlertContext} from '@agnos-ui/react';
 import {Alert, Slot, WidgetsDefaultConfig} from '@agnos-ui/react';
 import biCheckCircleFill from 'bootstrap-icons/icons/check-circle-fill.svg?raw';
 import biDashCircleFill from 'bootstrap-icons/icons/dash-circle-fill.svg?raw';

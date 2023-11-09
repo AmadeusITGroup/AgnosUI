@@ -1,6 +1,6 @@
-import type {ModalContext, ModalProps, ModalWidget} from '@agnos-ui/react-headless';
+import type {ModalApi, ModalContext, ModalProps} from '@agnos-ui/react-headless';
 import {Portal, Slot, createModal, toSlotContextWidget, useDirective, useWidgetWithConfig} from '@agnos-ui/react-headless';
-import type {PropsWithChildren, Ref} from 'react';
+import type {PropsWithChildren, Ref, RefAttributes} from 'react';
 import {forwardRef, useImperativeHandle} from 'react';
 
 const DefaultSlotHeader = <Data,>(slotContext: ModalContext<Data>) => (
@@ -42,7 +42,7 @@ const defaultConfig: Partial<ModalProps<any>> = {
 	slotStructure: DefaultSlotStructure,
 };
 
-function ModalInner<Data>(props: PropsWithChildren<Partial<ModalProps<Data>>>, ref: Ref<ModalWidget<Data>['api']>) {
+export const Modal = forwardRef(function Modal<Data>(props: PropsWithChildren<Partial<ModalProps<Data>>>, ref: Ref<ModalApi<Data>>) {
 	const [state, widget] = useWidgetWithConfig(createModal<Data>, props, 'modal', {...defaultConfig, slotDefault: props.children});
 	useImperativeHandle(ref, () => widget.api, []);
 	const refSetBackdrop = useDirective(widget.directives.backdropDirective);
@@ -65,8 +65,4 @@ function ModalInner<Data>(props: PropsWithChildren<Partial<ModalProps<Data>>>, r
 			)}
 		</Portal>
 	);
-}
-
-export const Modal = forwardRef(ModalInner) as <Data>(
-	props: PropsWithChildren<Partial<ModalProps<Data>>> & {ref: Ref<ModalWidget<Data>['api']>}
-) => ReturnType<typeof ModalInner>;
+}) as <Data>(props: PropsWithChildren<Partial<ModalProps<Data>>> & RefAttributes<ModalApi<Data>>) => JSX.Element;

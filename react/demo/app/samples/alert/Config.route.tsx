@@ -1,4 +1,4 @@
-import type {AlertWidget} from '@agnos-ui/core';
+import type {AlertApi} from '@agnos-ui/react';
 import {Alert} from '@agnos-ui/react';
 import {useRef, useState} from 'react';
 
@@ -14,7 +14,7 @@ export enum AlertStatus {
 }
 
 const DefaultDemo = () => {
-	const alertRef = useRef<AlertWidget['api']>();
+	const alertRef = useRef<AlertApi>();
 
 	const [animationOnInit, setAnimationOnInit] = useState(true);
 	const [animation, setanimation] = useState(true);

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type {StarContext} from '@agnos-ui/core';
+	import type {StarContext} from '@agnos-ui/svelte';
 	type $$Props = StarContext; // eslint-disable-line @typescript-eslint/no-unused-vars
 
 	export let fill: number;

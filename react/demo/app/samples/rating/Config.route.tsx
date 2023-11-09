@@ -1,5 +1,4 @@
-import type {StarContext} from '@agnos-ui/core';
-import type {RatingProps} from '@agnos-ui/react';
+import type {RatingProps, StarContext} from '@agnos-ui/react';
 import {Rating, WidgetsDefaultConfig} from '@agnos-ui/react';
 import {useState} from 'react';
 

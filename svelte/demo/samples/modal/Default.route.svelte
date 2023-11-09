@@ -1,6 +1,5 @@
 <script lang="ts">
-	import {modalCloseButtonClick, modalOutsideClick} from '@agnos-ui/core';
-	import {Modal} from '@agnos-ui/svelte';
+	import {Modal, modalCloseButtonClick, modalOutsideClick} from '@agnos-ui/svelte';
 
 	let modal: Modal<unknown>;
 	let message = '';

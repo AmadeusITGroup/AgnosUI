@@ -1,11 +1,11 @@
+import type {AccordionApi, AccordionItemApi} from '@agnos-ui/react';
 import {Accordion, AccordionItem} from '@agnos-ui/react';
 import {useRef} from 'react';
-import type {AccordionWidget, AccordionItemWidget} from '@agnos-ui/core';
 import BODY from '@agnos-ui/common/samples/accordion/body.txt?raw';
 
 const AccordionDemo = () => {
-	const refAccordion = useRef<AccordionWidget['api']>();
-	const refSecondPanel = useRef<AccordionItemWidget['api']>();
+	const refAccordion = useRef<AccordionApi>();
+	const refSecondPanel = useRef<AccordionItemApi>();
 	return (
 		<>
 			<Accordion ref={refAccordion}>
