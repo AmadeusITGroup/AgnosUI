@@ -20,7 +20,7 @@ import {
 } from './pagination/pagination.component';
 import {RatingComponent, RatingStarDirective} from './rating/rating.component';
 import {SelectComponent} from './select/select.component';
-import {AlertComponent} from './alert/alert.component';
+import {AlertBodyDirective, AlertComponent, AlertStructureDirective} from './alert/alert.component';
 import {
 	AccordionDirective,
 	AccordionItemComponent,
@@ -29,6 +29,7 @@ import {
 	AccordionItemStructureDirective,
 } from './accordion/accordion.component';
 import {SliderComponent} from './slider/slider.component';
+import {ProgressbarComponent, ProgressbarContentDirective} from './progressbar/progressbar.component';
 
 /* istanbul ignore next */
 const components = [
@@ -52,12 +53,16 @@ const components = [
 	ModalBodyDirective,
 	ModalFooterDirective,
 	AlertComponent,
+	AlertStructureDirective,
+	AlertBodyDirective,
 	AccordionDirective,
 	AccordionItemComponent,
 	AccordionHeaderDirective,
 	AccordionBodyDirective,
 	AccordionItemStructureDirective,
 	SliderComponent,
+	ProgressbarComponent,
+	ProgressbarContentDirective,
 ];
 
 @NgModule({

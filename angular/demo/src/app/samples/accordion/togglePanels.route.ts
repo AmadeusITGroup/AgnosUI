@@ -1,11 +1,10 @@
 import {AgnosUIAngularModule} from '@agnos-ui/angular';
 import {Component} from '@angular/core';
-import {NgFor} from '@angular/common';
 import BODY from '!raw-loader!@agnos-ui/common/samples/accordion/body.txt';
 
 @Component({
 	standalone: true,
-	imports: [AgnosUIAngularModule, NgFor],
+	imports: [AgnosUIAngularModule],
 	template: `
 		<div auAccordion #accordion="auAccordion">
 			<div auAccordionItem auItemId="first">

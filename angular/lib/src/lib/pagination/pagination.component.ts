@@ -104,6 +104,7 @@ export class PaginationPagesDirective {
 @Component({
 	standalone: true,
 	imports: [NgForOf, NgIf, SlotDirective, PaginationPagesDirective],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `<ng-template auPaginationPages #pages let-state="state" let-widget="widget">
 		<li
 			*ngFor="let page of state.pages; index as i"

@@ -2,6 +2,7 @@ import type {Plugin} from 'vite';
 import path from 'path';
 import type {Frameworks} from '$lib/stores';
 import {readFile} from 'fs/promises';
+import {existsSync} from 'fs';
 
 const samplePrefix = '@agnos-ui/samples/';
 const rawSampleSuffix = '?raw&sample';
@@ -54,7 +55,16 @@ export const includeSamples = (): Plugin => {
 						for (const dependency of dependencies) {
 							const dependencyParts = dependency.split('/');
 							if (dependencyParts[0] === '.') {
-								await addFile(framework, path.basename(dependency), path.join(directory, dependency));
+								let depPath = dependency;
+								// if file is not found, the relative import is most likely targetting a ts or tsx
+								if (!existsSync(path.join(directory, depPath))) {
+									if (existsSync(path.join(directory, depPath + '.ts'))) {
+										depPath = depPath + '.ts';
+									} else if (existsSync(path.join(directory, depPath + '.tsx'))) {
+										depPath = depPath + '.tsx';
+									}
+								}
+								await addFile(framework, path.basename(depPath), path.join(directory, depPath));
 							} else if (dependency.match(commonImport)) {
 								const cleanedDependency = dependency.replace(commonImport, './$2');
 								await addFile(framework, path.basename(cleanedDependency), path.join(__dirname, '..', '..', 'common', 'samples', cleanedDependency));

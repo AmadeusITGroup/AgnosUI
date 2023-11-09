@@ -1,26 +1,27 @@
 <script lang="ts" context="module">
-	import type {ModalProps as Props, ModalSlots as Slots, WidgetPropsEvents, WidgetPropsProps} from '@agnos-ui/svelte-headless';
+	import type {ModalWidget, ModalProps as Props, ModalSlots as Slots, WidgetPropsEvents, WidgetPropsProps} from '@agnos-ui/svelte-headless';
 	import {Slot, callWidgetFactory, createEventDispatcher, createModal, toSlotContextWidget} from '@agnos-ui/svelte-headless';
 	import ModalDefaultHeader from './ModalDefaultHeader.svelte';
 	import ModalDefaultStructure from './ModalDefaultStructure.svelte';
 
-	const defaultConfig: Partial<Props> = {
+	const defaultConfig: Partial<Props<any>> = {
 		slotStructure: ModalDefaultStructure,
 		slotHeader: ModalDefaultHeader,
 	};
 </script>
 
 <script lang="ts">
+	type Data = $$Generic; // eslint-disable-line no-undef
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Props = WidgetPropsProps<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
-	type $$Events = WidgetPropsEvents<Props>;
+	type $$Props = WidgetPropsProps<Props<Data>>; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Events = WidgetPropsEvents<Props<Data>>;
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Slots = Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Slots = Slots<Data>; // eslint-disable-line @typescript-eslint/no-unused-vars
 	const dispatch = createEventDispatcher<$$Events>();
 
 	export let visible: boolean | undefined = undefined;
 
-	const widget = callWidgetFactory({
+	const widget = callWidgetFactory<ModalWidget<Data>>({
 		factory: createModal,
 		widgetName: 'modal',
 		$$slots,

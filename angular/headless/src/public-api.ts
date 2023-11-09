@@ -40,11 +40,11 @@ export type AlertState = WidgetState<AlertWidget>;
 export type AlertContext = AdaptSlotContentProps<import('@agnos-ui/core').AlertContext>;
 export const createAlert: WidgetFactory<AlertWidget> = coreCreateAlert as any;
 
-export type ModalWidget = AdaptWidgetSlots<import('@agnos-ui/core').ModalWidget>;
-export type ModalProps = WidgetProps<ModalWidget>;
-export type ModalState = WidgetState<ModalWidget>;
-export type ModalContext = AdaptSlotContentProps<import('@agnos-ui/core').ModalContext>;
-export const createModal: WidgetFactory<ModalWidget> = coreCreateModal as any;
+export type ModalWidget<Data> = AdaptWidgetSlots<import('@agnos-ui/core').ModalWidget<Data>>;
+export type ModalProps<Data> = WidgetProps<ModalWidget<Data>>;
+export type ModalState<Data> = WidgetState<ModalWidget<Data>>;
+export type ModalContext<Data> = AdaptSlotContentProps<import('@agnos-ui/core').ModalContext<Data>>;
+export const createModal: <Data>(props?: PropsConfig<ModalProps<Data>>) => ModalWidget<Data> = coreCreateModal as any;
 
 export type PaginationWidget = AdaptWidgetSlots<import('@agnos-ui/core').PaginationWidget>;
 export type PaginationProps = WidgetProps<PaginationWidget>;

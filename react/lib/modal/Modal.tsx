@@ -1,9 +1,9 @@
-import type {ModalContext, ModalProps} from '@agnos-ui/react-headless';
+import type {ModalContext, ModalProps, ModalWidget} from '@agnos-ui/react-headless';
 import {Portal, Slot, createModal, toSlotContextWidget, useDirective, useWidgetWithConfig} from '@agnos-ui/react-headless';
-import type {PropsWithChildren} from 'react';
+import type {PropsWithChildren, Ref} from 'react';
 import {forwardRef, useImperativeHandle} from 'react';
 
-const DefaultSlotHeader = (slotContext: ModalContext) => (
+const DefaultSlotHeader = <Data,>(slotContext: ModalContext<Data>) => (
 	<>
 		<h5 className="modal-title">
 			<Slot slotContent={slotContext.state.slotTitle} props={slotContext} />
@@ -19,7 +19,7 @@ const DefaultSlotHeader = (slotContext: ModalContext) => (
 	</>
 );
 
-const DefaultSlotStructure = (slotContext: ModalContext) => (
+const DefaultSlotStructure = <Data,>(slotContext: ModalContext<Data>) => (
 	<>
 		{!slotContext.state.slotTitle ? null : (
 			<div className="modal-header">
@@ -37,34 +37,36 @@ const DefaultSlotStructure = (slotContext: ModalContext) => (
 	</>
 );
 
-const defaultConfig: Partial<ModalProps> = {
+const defaultConfig: Partial<ModalProps<any>> = {
 	slotHeader: DefaultSlotHeader,
 	slotStructure: DefaultSlotStructure,
 };
 
-export const Modal = forwardRef(function Modal(props: PropsWithChildren<Partial<ModalProps>>, ref) {
-	const [state, widget] = useWidgetWithConfig(createModal, props, 'modal', {...defaultConfig, slotDefault: props.children});
+function ModalInner<Data>(props: PropsWithChildren<Partial<ModalProps<Data>>>, ref: Ref<ModalWidget<Data>['api']>) {
+	const [state, widget] = useWidgetWithConfig(createModal<Data>, props, 'modal', {...defaultConfig, slotDefault: props.children});
 	useImperativeHandle(ref, () => widget.api, []);
 	const refSetBackdrop = useDirective(widget.directives.backdropDirective);
 	const refSetModal = useDirective(widget.directives.modalDirective);
-	const slotContext: ModalContext = {
+	const slotContext: ModalContext<Data> = {
 		state,
 		widget: toSlotContextWidget(widget),
 	};
 	return (
-		<>
-			<Portal container={state.container}>
-				{state.backdropHidden ? null : <div className={`modal-backdrop ${state.backdropClass}`} ref={refSetBackdrop} />}
-				{state.hidden ? null : (
-					<div className={`modal d-block ${state.className}`} ref={refSetModal} onClick={widget.actions.modalClick}>
-						<div className="modal-dialog">
-							<div className="modal-content">
-								<Slot slotContent={state.slotStructure} props={slotContext} />
-							</div>
+		<Portal container={state.container}>
+			{state.backdropHidden ? null : <div className={`modal-backdrop ${state.backdropClass}`} ref={refSetBackdrop} />}
+			{state.hidden ? null : (
+				<div className={`modal d-block ${state.className}`} ref={refSetModal} onClick={widget.actions.modalClick}>
+					<div className="modal-dialog">
+						<div className="modal-content">
+							<Slot slotContent={state.slotStructure} props={slotContext} />
 						</div>
 					</div>
-				)}
-			</Portal>
-		</>
+				</div>
+			)}
+		</Portal>
 	);
-});
+}
+
+export const Modal = forwardRef(ModalInner) as <Data>(
+	props: PropsWithChildren<Partial<ModalProps<Data>>> & {ref: Ref<ModalWidget<Data>['api']>}
+) => ReturnType<typeof ModalInner>;

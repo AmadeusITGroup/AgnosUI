@@ -13,7 +13,7 @@ const undefinedConfig = getUndefinedValues(getModalDefaultConfig());
 	template: `<au-component auModal #widget></au-component>`,
 })
 export default class PlaygroundComponent {
-	@ViewChild('widget') widget: ModalComponent;
+	@ViewChild('widget') widget: ModalComponent<any>;
 
 	constructor() {
 		hashChangeHook((props) => {

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import sampleDefault from '@agnos-ui/samples/modal/default';
+	import sampleComponent from '@agnos-ui/samples/modal/component';
 	import sampleStack from '@agnos-ui/samples/modal/stack';
 	import Sample from '$lib/layout/Sample.svelte';
 	import Section from '$lib/layout/Section.svelte';
@@ -7,6 +8,11 @@
 
 <Section label="Default modal" id="default" level={2}>
 	<Sample title="Default example" sample={sampleDefault} height={300} noresize />
+</Section>
+
+<Section label="Component as content" id="component" level={2}>
+	<p>You may use an existing component as content.</p>
+	<Sample title="Component as content example" sample={sampleComponent} height={300} noresize />
 </Section>
 
 <Section label="Modal stack" id="stack" level={2}>

@@ -35,12 +35,12 @@ export const modalCloseButtonClick = Symbol();
 /**
  * Context of the modal slots.
  */
-export type ModalContext = WidgetSlotContext<ModalWidget>;
+export type ModalContext<Data> = WidgetSlotContext<ModalWidget<Data>>;
 
 /**
  * Properties of the modal widget that are also in the state of the modal.
  */
-export interface ModalCommonPropsAndState extends WidgetsCommonPropsAndState {
+export interface ModalCommonPropsAndState<Data> extends WidgetsCommonPropsAndState {
 	/**
 	 * Value of the aria-label attribute to put on the close button.
 	 */
@@ -66,33 +66,37 @@ export interface ModalCommonPropsAndState extends WidgetsCommonPropsAndState {
 	/**
 	 * Body of the modal.
 	 */
-	slotDefault: SlotContent<ModalContext>;
+	slotDefault: SlotContent<ModalContext<Data>>;
 
 	/**
 	 * Footer of the modal.
 	 */
-	slotFooter: SlotContent<ModalContext>;
+	slotFooter: SlotContent<ModalContext<Data>>;
 
 	/**
 	 * Header of the modal. The default header includes {@link ModalCommonPropsAndState.slotTitle|slotTitle}.
 	 */
-	slotHeader: SlotContent<ModalContext>;
+	slotHeader: SlotContent<ModalContext<Data>>;
 
 	/**
 	 * Structure of the modal.
 	 * The default structure uses {@link ModalCommonPropsAndState.slotHeader|slotHeader}, {@link ModalCommonPropsAndState.slotDefault|slotDefault} and {@link ModalCommonPropsAndState.slotFooter|slotFooter}.
 	 */
-	slotStructure: SlotContent<ModalContext>;
+	slotStructure: SlotContent<ModalContext<Data>>;
 
 	/**
 	 * Title of the modal.
 	 */
-	slotTitle: SlotContent<ModalContext>;
+	slotTitle: SlotContent<ModalContext<Data>>;
 
 	/**
 	 * Whether the modal should be visible when the transition is completed.
 	 */
 	visible: boolean;
+	/**
+	 * Data to use in content slots
+	 */
+	contentData: Data;
 }
 
 /**
@@ -116,7 +120,7 @@ export interface ModalBeforeCloseEvent {
 /**
  * Properties of the modal widget.
  */
-export interface ModalProps extends ModalCommonPropsAndState {
+export interface ModalProps<Data> extends ModalCommonPropsAndState<Data> {
 	/**
 	 * Whether the modal and its backdrop (if present) should be animated when shown or hidden.
 	 */
@@ -171,7 +175,7 @@ export interface ModalProps extends ModalCommonPropsAndState {
 /**
  * State of the modal widget.
  */
-export interface ModalState extends ModalCommonPropsAndState {
+export interface ModalState<Data> extends ModalCommonPropsAndState<Data> {
 	/**
 	 * Whether the backdrop is fully hidden. This can be true either because {@link ModalProps.backdrop|backdrop} is false or
 	 * because {@link ModalCommonPropsAndState.visible|visible} is false and there is no current transition.
@@ -197,7 +201,7 @@ export interface ModalState extends ModalCommonPropsAndState {
 /**
  * API of the modal widget.
  */
-export interface ModalApi {
+export interface ModalApi<Data> {
 	/**
 	 * Closes the modal with the given result.
 	 *
@@ -216,7 +220,7 @@ export interface ModalApi {
 	/**
 	 * Method to change some modal properties.
 	 */
-	patch: ModalWidget['patch'];
+	patch: ModalWidget<Data>['patch'];
 }
 
 /**
@@ -267,9 +271,9 @@ export interface ModalDirectives {
 /**
  * Modal widget.
  */
-export type ModalWidget = Widget<ModalProps, ModalState, ModalApi, ModalActions, ModalDirectives>;
+export type ModalWidget<Data> = Widget<ModalProps<Data>, ModalState<Data>, ModalApi<Data>, ModalActions, ModalDirectives>;
 
-const defaultConfig: ModalProps = {
+const defaultConfig: ModalProps<any> = {
 	animation: true,
 	ariaCloseButtonLabel: 'Close',
 	backdrop: true,
@@ -290,6 +294,7 @@ const defaultConfig: ModalProps = {
 	slotStructure: undefined,
 	slotTitle: undefined,
 	visible: false,
+	contentData: undefined,
 };
 
 /**
@@ -300,7 +305,7 @@ export function getModalDefaultConfig() {
 	return {...defaultConfig};
 }
 
-const modals$ = registrationArray<ModalWidget>();
+const modals$ = registrationArray<ModalWidget<any>>();
 const hasModals$ = computed(() => modals$().length > 0);
 const scrollbarsAction$ = computed(() => {
 	if (hasModals$()) {
@@ -318,7 +323,7 @@ const modalsAction$ = computed(() => {
  * @param config$ - config of the modal, either as a store or as an object containing values or stores.
  * @returns a new modal widget instance
  */
-export const createModal = (config$?: PropsConfig<ModalProps>): ModalWidget => {
+export function createModal<Data>(config$?: PropsConfig<ModalProps<Data>>): ModalWidget<Data> {
 	const [
 		{
 			animation$,
@@ -400,7 +405,7 @@ export const createModal = (config$?: PropsConfig<ModalProps>): ModalWidget => {
 		modalsAction$();
 	});
 
-	const res: ModalWidget = {
+	const res: ModalWidget<Data> = {
 		...stateStores({
 			backdropHidden$,
 			container$,
@@ -439,4 +444,4 @@ export const createModal = (config$?: PropsConfig<ModalProps>): ModalWidget => {
 	};
 
 	return res;
-};
+}

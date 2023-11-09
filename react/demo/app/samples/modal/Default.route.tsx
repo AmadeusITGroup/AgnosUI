@@ -4,7 +4,7 @@ import {Modal} from '@agnos-ui/react';
 import {useRef, useState} from 'react';
 
 const DefaultDemo = () => {
-	const modal = useRef<ModalWidget['api']>();
+	const modal = useRef<ModalWidget<void>['api']>();
 	const [message, setMessage] = useState('');
 	return (
 		<>
@@ -31,11 +31,11 @@ const DefaultDemo = () => {
 					setMessage('');
 					const result = await modal.current!.open();
 					if (result === modalCloseButtonClick) {
-						setMessage('You clicked on the close button');
+						setMessage('You clicked on the close button.');
 					} else if (result === modalOutsideClick) {
-						setMessage('You clicked outside the modal');
+						setMessage('You clicked outside the modal.');
 					} else {
-						setMessage(`You answered the question with "${result ? 'Yes' : 'No'}"`);
+						setMessage(`You answered the question with "${result ? 'Yes' : 'No'}".`);
 					}
 				}}
 			>

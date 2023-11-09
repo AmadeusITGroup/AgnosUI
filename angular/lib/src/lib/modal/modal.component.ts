@@ -1,4 +1,4 @@
-import type {ModalBeforeCloseEvent, ModalContext, ModalProps, ModalState, SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
+import type {ModalBeforeCloseEvent, ModalContext, ModalProps, ModalState, ModalWidget, SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
 import {
 	ComponentTemplate,
 	SlotDefaultDirective,
@@ -31,9 +31,9 @@ import {
  * Directive to provide the slot structure for the modal widget.
  */
 @Directive({selector: 'ng-template[auModalStructure]', standalone: true})
-export class ModalStructureDirective {
-	public templateRef = inject(TemplateRef<ModalContext>);
-	static ngTemplateContextGuard(dir: ModalStructureDirective, context: unknown): context is ModalContext {
+export class ModalStructureDirective<Data> {
+	public templateRef = inject(TemplateRef<ModalContext<Data>>);
+	static ngTemplateContextGuard<Data>(dir: ModalStructureDirective<Data>, context: unknown): context is ModalContext<Data> {
 		return true;
 	}
 }
@@ -42,9 +42,9 @@ export class ModalStructureDirective {
  * Directive to provide the slot header for the modal widget.
  */
 @Directive({selector: 'ng-template[auModalHeader]', standalone: true})
-export class ModalHeaderDirective {
-	public templateRef = inject(TemplateRef<ModalContext>);
-	static ngTemplateContextGuard(_dir: ModalHeaderDirective, context: unknown): context is ModalContext {
+export class ModalHeaderDirective<Data> {
+	public templateRef = inject(TemplateRef<ModalContext<Data>>);
+	static ngTemplateContextGuard<Data>(_dir: ModalHeaderDirective<Data>, context: unknown): context is ModalContext<Data> {
 		return true;
 	}
 }
@@ -53,9 +53,9 @@ export class ModalHeaderDirective {
  * Directive to provide the slot title for the modal widget.
  */
 @Directive({selector: 'ng-template[auModalTitle]', standalone: true})
-export class ModalTitleDirective {
-	public templateRef = inject(TemplateRef<ModalContext>);
-	static ngTemplateContextGuard(_dir: ModalTitleDirective, context: unknown): context is ModalContext {
+export class ModalTitleDirective<Data> {
+	public templateRef = inject(TemplateRef<ModalContext<Data>>);
+	static ngTemplateContextGuard<Data>(_dir: ModalTitleDirective<Data>, context: unknown): context is ModalContext<Data> {
 		return true;
 	}
 }
@@ -64,9 +64,9 @@ export class ModalTitleDirective {
  * Directive to provide the default slot for the modal widget.
  */
 @Directive({selector: 'ng-template[auModalBody]', standalone: true})
-export class ModalBodyDirective {
-	public templateRef = inject(TemplateRef<ModalContext>);
-	static ngTemplateContextGuard(_dir: ModalBodyDirective, context: unknown): context is ModalContext {
+export class ModalBodyDirective<Data> {
+	public templateRef = inject(TemplateRef<ModalContext<Data>>);
+	static ngTemplateContextGuard<Data>(_dir: ModalBodyDirective<Data>, context: unknown): context is ModalContext<Data> {
 		return true;
 	}
 }
@@ -75,9 +75,9 @@ export class ModalBodyDirective {
  * Directive to provide the slot footer for the modal widget.
  */
 @Directive({selector: 'ng-template[auModalFooter]', standalone: true})
-export class ModalFooterDirective {
-	public templateRef = inject(TemplateRef<ModalContext>);
-	static ngTemplateContextGuard(_dir: ModalFooterDirective, context: unknown): context is ModalContext {
+export class ModalFooterDirective<Data> {
+	public templateRef = inject(TemplateRef<ModalContext<Data>>);
+	static ngTemplateContextGuard<Data>(_dir: ModalFooterDirective<Data>, context: unknown): context is ModalContext<Data> {
 		return true;
 	}
 }
@@ -115,9 +115,9 @@ export class ModalFooterDirective {
 		</ng-template>
 	`,
 })
-export class ModalDefaultSlotsComponent {
-	@ViewChild('header', {static: true}) header: TemplateRef<ModalContext>;
-	@ViewChild('structure', {static: true}) structure: TemplateRef<ModalContext>;
+export class ModalDefaultSlotsComponent<Data> {
+	@ViewChild('header', {static: true}) header: TemplateRef<ModalContext<Data>>;
+	@ViewChild('structure', {static: true}) structure: TemplateRef<ModalContext<Data>>;
 }
 
 /**
@@ -130,7 +130,7 @@ export const modalDefaultSlotHeader = new ComponentTemplate(ModalDefaultSlotsCom
  */
 export const modalDefaultSlotStructure = new ComponentTemplate(ModalDefaultSlotsComponent, 'structure');
 
-const defaultConfig: Partial<ModalProps> = {
+const defaultConfig: Partial<ModalProps<any>> = {
 	slotHeader: modalDefaultSlotHeader,
 	slotStructure: modalDefaultSlotStructure,
 };
@@ -155,7 +155,7 @@ const defaultConfig: Partial<ModalProps> = {
 		</div>
 	`,
 })
-export class ModalComponent implements OnChanges, AfterContentChecked {
+export class ModalComponent<Data> implements OnChanges, AfterContentChecked {
 	/**
 	 * Whether the modal and its backdrop (if present) should be animated when shown or hidden.
 	 */
@@ -213,25 +213,30 @@ export class ModalComponent implements OnChanges, AfterContentChecked {
 	 */
 	@Input('auClassName') className: string | undefined;
 
-	@Input('auSlotStructure') slotStructure: SlotContent<ModalContext>;
+	@Input('auSlotStructure') slotStructure: SlotContent<ModalContext<Data>>;
 	@ContentChild(ModalStructureDirective, {static: false})
-	slotStructureFromContent: ModalStructureDirective | null;
+	slotStructureFromContent: ModalStructureDirective<Data> | null;
 
-	@Input('auSlotHeader') slotHeader: SlotContent<ModalContext>;
+	@Input('auSlotHeader') slotHeader: SlotContent<ModalContext<Data>>;
 	@ContentChild(ModalHeaderDirective, {static: false})
-	slotHeaderFromContent: ModalHeaderDirective | null;
+	slotHeaderFromContent: ModalHeaderDirective<Data> | null;
 
-	@Input('auSlotTitle') slotTitle: SlotContent<ModalContext>;
+	@Input('auSlotTitle') slotTitle: SlotContent<ModalContext<Data>>;
 	@ContentChild(ModalTitleDirective, {static: false})
-	slotTitleFromContent: ModalTitleDirective | null;
+	slotTitleFromContent: ModalTitleDirective<Data> | null;
 
-	@Input('auSlotDefault') slotDefault: SlotContent<ModalContext>;
+	@Input('auSlotDefault') slotDefault: SlotContent<ModalContext<Data>>;
 	@ContentChild(ModalBodyDirective, {static: false})
-	slotDefaultFromContent: ModalBodyDirective | null;
+	slotDefaultFromContent: ModalBodyDirective<Data> | null;
 
-	@Input('auSlotFooter') slotFooter: SlotContent<ModalContext>;
+	@Input('auSlotFooter') slotFooter: SlotContent<ModalContext<Data>>;
 	@ContentChild(ModalFooterDirective, {static: false})
-	slotFooterFromContent: ModalFooterDirective | null;
+	slotFooterFromContent: ModalFooterDirective<Data> | null;
+
+	/**
+	 * Data to use in content slots
+	 */
+	@Input('auContentData') contentData: Data | undefined;
 
 	/**
 	 * Event to be triggered when the visible property changes.
@@ -255,7 +260,7 @@ export class ModalComponent implements OnChanges, AfterContentChecked {
 
 	readonly defaultSlots = writable(defaultConfig);
 
-	readonly _widget = callWidgetFactory({
+	readonly _widget = callWidgetFactory<ModalWidget<Data>>({
 		factory: createModal,
 		widgetName: 'modal',
 		defaultConfig: this.defaultSlots,
@@ -271,7 +276,7 @@ export class ModalComponent implements OnChanges, AfterContentChecked {
 	readonly modalDirective = mergeDirectives(this._widget.directives.modalPortalDirective, this._widget.directives.modalDirective);
 	readonly backdropDirective = mergeDirectives(this._widget.directives.backdropPortalDirective, this._widget.directives.backdropDirective);
 
-	readonly state: Signal<ModalState> = toAngularSignal(this._widget.state$);
+	readonly state: Signal<ModalState<Data>> = toAngularSignal(this._widget.state$);
 
 	ngAfterContentChecked(): void {
 		this._widget.patchSlots({

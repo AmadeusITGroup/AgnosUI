@@ -1,7 +1,7 @@
 import type {ModalProps} from '@agnos-ui/svelte-headless';
 import Modal from './Modal.svelte';
 
-export const openModal = async (options: Partial<ModalProps>, {context}: {context?: Map<any, any>} = {}) => {
+export async function openModal<Data>(options: Partial<ModalProps<Data>>, {context}: {context?: Map<any, any>} = {}) {
 	const target = document.createElement('div');
 	const component = new Modal({
 		target,
@@ -14,4 +14,4 @@ export const openModal = async (options: Partial<ModalProps>, {context}: {contex
 	} finally {
 		component.$destroy();
 	}
-};
+}
