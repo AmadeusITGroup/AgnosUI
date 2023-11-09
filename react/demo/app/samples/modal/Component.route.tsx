@@ -16,7 +16,7 @@ const ComponentDemo = () => (
 	<button
 		type="button"
 		className="btn btn-primary"
-		onClick={() => openModal<ModalContent>({slotTitle: 'Hi there!', slotDefault: ModalBody, contentData: {name: 'World'}})}
+		onClick={() => openModal({slotTitle: 'Hi there!', slotDefault: ModalBody, contentData: {name: 'World'}})}
 	>
 		Launch demo modal
 	</button>

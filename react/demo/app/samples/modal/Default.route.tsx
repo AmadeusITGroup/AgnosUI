@@ -1,10 +1,9 @@
-import {modalCloseButtonClick, modalOutsideClick} from '@agnos-ui/core';
-import type {ModalWidget} from '@agnos-ui/react';
-import {Modal} from '@agnos-ui/react';
+import type {ModalApi} from '@agnos-ui/react';
+import {Modal, modalCloseButtonClick, modalOutsideClick} from '@agnos-ui/react';
 import {useRef, useState} from 'react';
 
 const DefaultDemo = () => {
-	const modal = useRef<ModalWidget<void>['api']>();
+	const modal = useRef<ModalApi<void>>(null);
 	const [message, setMessage] = useState('');
 	return (
 		<>

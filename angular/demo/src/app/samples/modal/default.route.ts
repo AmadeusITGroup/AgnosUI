@@ -1,6 +1,5 @@
 import type {ModalComponent} from '@agnos-ui/angular';
-import {AgnosUIAngularModule} from '@agnos-ui/angular';
-import {modalCloseButtonClick, modalOutsideClick} from '@agnos-ui/core';
+import {AgnosUIAngularModule, modalCloseButtonClick, modalOutsideClick} from '@agnos-ui/angular';
 import {Component} from '@angular/core';
 
 @Component({

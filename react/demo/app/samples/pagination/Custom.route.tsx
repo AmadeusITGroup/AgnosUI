@@ -1,8 +1,7 @@
 import {Pagination, WidgetsDefaultConfig} from '@agnos-ui/react';
-import type {AdaptSlotContentProps} from '@agnos-ui/react';
+import type {AdaptSlotContentProps, PaginationContext, PaginationNumberContext} from '@agnos-ui/react';
 import {useEffect, useState} from 'react';
 import type {FormEvent, FocusEvent, KeyboardEvent} from 'react';
-import type {PaginationContext, PaginationNumberContext} from '@agnos-ui/core';
 
 const FILTER_PAG_REGEX = /[^0-9]/g;
 
