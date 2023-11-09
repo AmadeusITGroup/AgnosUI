@@ -36,6 +36,8 @@ export interface Widget<
 	api: Api;
 }
 
+export type ContextWidget<W extends Widget> = Pick<W, 'actions' | 'api' | 'directives' | 'state$' | 'stores'>;
+
 export interface WidgetSlotContext<W extends Widget> {
 	/**
 	 * the state of the widget
@@ -44,10 +46,10 @@ export interface WidgetSlotContext<W extends Widget> {
 	/**
 	 * the widget
 	 */
-	widget: Pick<W, 'actions' | 'api' | 'directives' | 'state$' | 'stores'>;
+	widget: ContextWidget<W>;
 }
 
-export const toSlotContextWidget = <W extends Widget>(w: W): WidgetSlotContext<W>['widget'] => ({
+export const toSlotContextWidget = <W extends Widget>(w: W): ContextWidget<W> => ({
 	actions: w.actions,
 	api: w.api,
 	directives: w.directives,

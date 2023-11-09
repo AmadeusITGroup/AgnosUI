@@ -1,13 +1,11 @@
 import type {ModalComponent} from '@agnos-ui/angular';
 import {AgnosUIAngularModule} from '@agnos-ui/angular';
 import {modalCloseButtonClick, modalOutsideClick} from '@agnos-ui/core';
-import {CommonModule} from '@angular/common';
 import {Component} from '@angular/core';
-import {FormsModule} from '@angular/forms';
 
 @Component({
 	standalone: true,
-	imports: [AgnosUIAngularModule, CommonModule, FormsModule],
+	imports: [AgnosUIAngularModule],
 	template: `
 		<button class="btn btn-primary" type="button" (click)="show(modal)">Launch demo modal</button>
 		<div class="mt-3" data-testid="message">{{ message }}</div>
@@ -23,15 +21,15 @@ import {FormsModule} from '@angular/forms';
 export default class DefaultModalComponent {
 	message = '';
 
-	async show(modal: ModalComponent) {
+	async show(modal: ModalComponent<void>) {
 		this.message = '';
 		const result = await modal.api.open();
 		if (result === modalCloseButtonClick) {
-			this.message = 'You clicked on the close button';
+			this.message = 'You clicked on the close button.';
 		} else if (result === modalOutsideClick) {
-			this.message = 'You clicked outside the modal';
+			this.message = 'You clicked outside the modal.';
 		} else {
-			this.message = `You answered the question with "${result ? 'Yes' : 'No'}"`;
+			this.message = `You answered the question with "${result ? 'Yes' : 'No'}".`;
 		}
 	}
 }

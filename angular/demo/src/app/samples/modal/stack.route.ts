@@ -1,11 +1,9 @@
 import {AgnosUIAngularModule, ModalService} from '@agnos-ui/angular';
-import {CommonModule} from '@angular/common';
 import {Component, inject} from '@angular/core';
-import {FormsModule} from '@angular/forms';
 
 @Component({
 	standalone: true,
-	imports: [AgnosUIAngularModule, CommonModule, FormsModule],
+	imports: [AgnosUIAngularModule],
 	template: `
 		<button class="btn btn-primary" (click)="modalService.open({slotTitle: 'First modal', className: 'modal-sm', slotDefault: recursiveModal})">
 			Launch demo modal

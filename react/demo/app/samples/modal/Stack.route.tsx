@@ -1,7 +1,7 @@
 import type {ModalContext} from '@agnos-ui/react';
 import {openModal} from '@agnos-ui/react';
 
-const ModalBody = ({widget, state}: ModalContext) => (
+const ModalBody = ({widget, state}: ModalContext<void>) => (
 	<>
 		This is a modal
 		<br />

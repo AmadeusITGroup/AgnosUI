@@ -2,7 +2,7 @@
 	import {modalCloseButtonClick, modalOutsideClick} from '@agnos-ui/core';
 	import {Modal} from '@agnos-ui/svelte';
 
-	let modal: Modal;
+	let modal: Modal<unknown>;
 	let message = '';
 </script>
 
@@ -20,11 +20,11 @@
 		message = '';
 		const result = await modal.api.open();
 		if (result === modalCloseButtonClick) {
-			message = 'You clicked on the close button';
+			message = 'You clicked on the close button.';
 		} else if (result === modalOutsideClick) {
-			message = 'You clicked outside the modal';
+			message = 'You clicked outside the modal.';
 		} else {
-			message = `You answered the question with "${result ? 'Yes' : 'No'}"`;
+			message = `You answered the question with "${result ? 'Yes' : 'No'}".`;
 		}
 	}}>Launch demo modal</button
 >

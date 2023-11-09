@@ -1,10 +1,11 @@
 <script lang="ts">
 	import type {ModalSlots} from '@agnos-ui/svelte-headless';
 	import {Slot} from '@agnos-ui/svelte-headless';
+	type Data = $$Generic; // eslint-disable-line no-undef
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Props = ModalSlots['header']; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Props = ModalSlots<Data>['header']; // eslint-disable-line @typescript-eslint/no-unused-vars
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Slots = ModalSlots; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Slots = ModalSlots<Data>; // eslint-disable-line @typescript-eslint/no-unused-vars
 
 	export let state: $$Props['state'];
 	export let widget: $$Props['widget'];

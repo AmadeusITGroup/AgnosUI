@@ -1,21 +1,14 @@
-import biCheckCircleFill from '!raw-loader!bootstrap-icons/icons/check-circle-fill.svg';
-import biDashCircleFill from '!raw-loader!bootstrap-icons/icons/dash-circle-fill.svg';
-import biExclamationTriangleFill from '!raw-loader!bootstrap-icons/icons/exclamation-triangle-fill.svg';
-import biInfoCircleFill from '!raw-loader!bootstrap-icons/icons/info-circle-fill.svg';
-import biLightbulb from '!raw-loader!bootstrap-icons/icons/lightbulb.svg';
-import type {AlertComponent} from '@agnos-ui/angular';
-import {AgnosUIAngularModule, ComponentTemplate, provideWidgetsConfig, SlotDirective} from '@agnos-ui/angular';
-import {AsyncPipe, NgFor, NgIf} from '@angular/common';
-import {Component, inject, ViewChild} from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {DomSanitizer} from '@angular/platform-browser';
+import {AlertComponent} from '@agnos-ui/angular';
+import {provideWidgetsConfig} from '@agnos-ui/angular';
+import {Component} from '@angular/core';
+import AlertIconComponent from './alert-icon.component';
 
 @Component({
 	standalone: true,
-	imports: [AgnosUIAngularModule, NgFor, FormsModule],
+	imports: [AlertComponent],
 	providers: [
 		provideWidgetsConfig((config) => {
-			config.alert = {...config.alert, dismissible: false, slotStructure: new ComponentTemplate(AlertIconComponent, 'iconDemo')};
+			config.alert = {...config.alert, dismissible: false, slotStructure: AlertIconComponent};
 			return config;
 		}),
 	],
@@ -27,42 +20,4 @@ import {DomSanitizer} from '@angular/platform-browser';
 		<au-component auAlert auType="light">Alert light with a customisable icon</au-component>
 	`,
 })
-export default class IconAlertComponent {
-	async showAlert(alert: AlertComponent) {
-		alert.api.open();
-	}
-}
-
-@Component({
-	standalone: true,
-	imports: [AgnosUIAngularModule, NgIf, AsyncPipe, NgFor, SlotDirective],
-	providers: [SlotDirective],
-	template: `
-		<ng-template #iconDemo let-state="state" let-widget="widget">
-			<span class="d-flex align-items-center me-2" [innerHTML]="sanitizer.bypassSecurityTrustHtml(typeIcon[state.type])"> </span>
-			<div class="d-flex w-100 alert-body">
-				<ng-template [auSlot]="state.slotDefault" [auSlotProps]="{widget, state}"></ng-template>
-				<button
-					*ngIf="state.dismissible"
-					type="button"
-					class="btn-close ms-auto"
-					(click)="widget.api.close()"
-					[attr.aria-label]="state.ariaCloseButtonLabel"
-				></button>
-			</div>
-		</ng-template>
-	`,
-})
-export class AlertIconComponent {
-	sanitizer = inject(DomSanitizer);
-
-	@ViewChild('iconDemo', {static: true}) iconDemo: any;
-
-	typeIcon: Record<string, string> = {
-		success: biCheckCircleFill,
-		info: biInfoCircleFill,
-		warning: biExclamationTriangleFill,
-		danger: biDashCircleFill,
-		light: biLightbulb,
-	};
-}
+export default class IconAlertComponent {}
