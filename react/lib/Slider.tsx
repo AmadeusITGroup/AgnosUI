@@ -81,6 +81,7 @@ export function Slider(props: Partial<SliderProps>) {
 						aria-valuemax={max}
 						aria-valuenow={item.value}
 						aria-valuetext={'' + item.value}
+						aria-label={item.ariaLabel}
 						aria-readonly={readonly ? 'true' : undefined}
 						aria-disabled={disabled ? 'true' : undefined}
 						aria-orientation={vertical ? 'vertical' : undefined}

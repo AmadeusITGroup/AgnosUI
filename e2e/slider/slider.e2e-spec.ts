@@ -7,6 +7,7 @@ const defaultExpectedState: {[key: string]: string | null} = {
 	min: '0',
 	max: '100',
 	text: '60',
+	ariaLabel: '60',
 	readonly: null,
 	disabled: null,
 	style: 'left: 60%; top: 0%;',
@@ -18,6 +19,7 @@ const defaultExpectedHandleState: {[key: string]: string | null}[] = [
 		min: '0',
 		max: '100',
 		text: '10',
+		ariaLabel: '10',
 		readonly: null,
 		disabled: null,
 		style: 'left: 10%; top: 0%;',
@@ -27,6 +29,7 @@ const defaultExpectedHandleState: {[key: string]: string | null}[] = [
 		min: '0',
 		max: '100',
 		text: '40',
+		ariaLabel: '40',
 		readonly: null,
 		disabled: null,
 		style: 'left: 40%; top: 0%;',
@@ -39,6 +42,7 @@ const defaultExpectedHandleStateVertical: {[key: string]: string | null}[] = [
 		min: '0',
 		max: '100',
 		text: '10',
+		ariaLabel: '10',
 		readonly: null,
 		disabled: null,
 		style: 'left: 0%; top: 90%;',
@@ -48,6 +52,7 @@ const defaultExpectedHandleStateVertical: {[key: string]: string | null}[] = [
 		min: '0',
 		max: '100',
 		text: '40',
+		ariaLabel: '40',
 		readonly: null,
 		disabled: null,
 		style: 'left: 0%; top: 60%;',
@@ -67,6 +72,7 @@ test.describe(`Slider tests`, () => {
 			const expectedState = {...defaultExpectedState};
 			expectedState.value = '88';
 			expectedState.text = '88';
+			expectedState.ariaLabel = '88';
 			expectedState.style = 'left: 88%; top: 0%;';
 
 			const sliderLocator = sliderPO.locatorRoot;
@@ -86,6 +92,7 @@ test.describe(`Slider tests`, () => {
 			const expectedState = {...defaultExpectedState};
 			expectedState.value = '88';
 			expectedState.text = '88';
+			expectedState.ariaLabel = '88';
 			expectedState.style = 'left: 88%; top: 0%;';
 
 			const sliderHandleLocator = sliderPO.locatorHandle;
@@ -108,6 +115,7 @@ test.describe(`Slider tests`, () => {
 			const expectedState = {...defaultExpectedState};
 			expectedState.value = '0';
 			expectedState.text = '0';
+			expectedState.ariaLabel = '0';
 			expectedState.style = 'left: 0%; top: 0%;';
 
 			const minLabelLocator = sliderPO.locatorMinLabelHorizontal;
@@ -125,6 +133,7 @@ test.describe(`Slider tests`, () => {
 			await page.keyboard.press('End');
 
 			expectedState.text = '100';
+			expectedState.ariaLabel = '100';
 			expectedState.value = '100';
 			expectedState.style = 'left: 100%; top: 0%;';
 
@@ -177,6 +186,7 @@ test.describe(`Slider tests`, () => {
 
 			expectedState.value = '88';
 			expectedState.text = '88';
+			expectedState.ariaLabel = '88';
 			expectedState.style = 'left: 88%; top: 0%;';
 			expectedState.readonly = null;
 
@@ -195,6 +205,7 @@ test.describe(`Slider tests`, () => {
 			const expectedState = {...defaultExpectedHandleState[1]};
 			expectedState.value = '88';
 			expectedState.text = '88';
+			expectedState.ariaLabel = '88';
 			expectedState.style = 'left: 88%; top: 0%;';
 
 			const sliderLocator = sliderPO.locatorRoot;
@@ -215,9 +226,11 @@ test.describe(`Slider tests`, () => {
 			const expectedState = {...defaultExpectedHandleState};
 			expectedState[0].value = '40';
 			expectedState[0].text = '40';
+			expectedState[0].ariaLabel = '40';
 			expectedState[0].style = 'left: 40%; top: 0%;';
 			expectedState[1].value = '83';
 			expectedState[1].text = '83';
+			expectedState[1].ariaLabel = '83';
 			expectedState[1].style = 'left: 83%; top: 0%;';
 
 			const sliderHandleLocator = sliderPO.locatorHandle;
@@ -242,8 +255,10 @@ test.describe(`Slider tests`, () => {
 			const expectedState = {...defaultExpectedHandleState};
 			expectedState[0].value = '0';
 			expectedState[0].text = '0';
+			expectedState[0].ariaLabel = '0';
 			expectedState[0].style = 'left: 0%; top: 0%;';
 			expectedState[1].text = '40';
+			expectedState[1].ariaLabel = '40';
 			expectedState[1].value = '40';
 			expectedState[1].style = 'left: 40%; top: 0%;';
 
@@ -263,9 +278,11 @@ test.describe(`Slider tests`, () => {
 			await page.keyboard.press('End');
 
 			expectedState[0].text = '40';
+			expectedState[0].ariaLabel = '40';
 			expectedState[0].value = '40';
 			expectedState[0].style = 'left: 40%; top: 0%;';
 			expectedState[1].text = '100';
+			expectedState[1].ariaLabel = '100';
 			expectedState[1].value = '100';
 			expectedState[1].style = 'left: 100%; top: 0%;';
 
@@ -289,6 +306,7 @@ test.describe(`Slider tests`, () => {
 			const expectedState = {...defaultExpectedHandleStateVertical[1]};
 			expectedState.value = '80';
 			expectedState.text = '80';
+			expectedState.ariaLabel = '80';
 			expectedState.style = 'left: 0%; top: 20%;';
 
 			const sliderLocator = sliderPO.locatorRoot;
@@ -309,6 +327,7 @@ test.describe(`Slider tests`, () => {
 			const expectedState = {...defaultExpectedHandleStateVertical};
 			expectedState[0].value = '0';
 			expectedState[0].text = '0';
+			expectedState[0].ariaLabel = '0';
 			expectedState[0].style = 'left: 0%; top: 100%;';
 
 			const minLabelLocator = sliderPO.locatorMinLabelVertical;
@@ -327,9 +346,11 @@ test.describe(`Slider tests`, () => {
 			await page.keyboard.press('End');
 
 			expectedState[0].text = '40';
+			expectedState[0].ariaLabel = '40';
 			expectedState[0].value = '40';
 			expectedState[0].style = 'left: 0%; top: 60%;';
 			expectedState[1].text = '100';
+			expectedState[1].ariaLabel = '100';
 			expectedState[1].value = '100';
 			expectedState[1].style = 'left: 0%; top: 0%;';
 

@@ -50,6 +50,7 @@ export class SliderPO extends BasePO {
 					text: rn.getAttribute('aria-valuetext'),
 					disabled: rn.getAttribute('aria-disabled'),
 					readonly: rn.getAttribute('aria-readonly'),
+					ariaLabel: rn.getAttribute('aria-label'),
 				};
 			});
 		});

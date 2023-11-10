@@ -38,7 +38,7 @@ const defaultStateValues = {
 			top: 0,
 		},
 	],
-	sortedHandles: [{id: 0, value: 0}],
+	sortedHandles: [{id: 0, value: 0, ariaLabel: '0'}],
 	className: '',
 	isInteractable: true,
 };
@@ -96,7 +96,7 @@ describe(`Slider basic`, () => {
 			...expectedStateValue.handleDisplayOptions[0],
 			left: 50,
 		};
-		expectedStateValue.sortedHandles = [{id: 0, value: 150}];
+		expectedStateValue.sortedHandles = [{id: 0, value: 150, ariaLabel: '150'}];
 		expectedStateValue.minValueLabelDisplay = true;
 		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
 		expectedStateValue.progressDisplayOptions[0] = {
@@ -147,7 +147,7 @@ describe(`Slider basic`, () => {
 			...expectedStateValue.handleDisplayOptions[0],
 			left: 50,
 		};
-		expectedStateValue.sortedHandles = [{id: 0, value: 50}];
+		expectedStateValue.sortedHandles = [{id: 0, value: 50, ariaLabel: '50'}];
 		expectedStateValue.minValueLabelDisplay = true;
 		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
 		expectedStateValue.progressDisplayOptions[0] = {
@@ -171,7 +171,7 @@ describe(`Slider basic`, () => {
 			...expectedStateValue.handleDisplayOptions[0],
 			left: 50,
 		};
-		expectedStateValue.sortedHandles = [{id: 0, value: 50}];
+		expectedStateValue.sortedHandles = [{id: 0, value: 50, ariaLabel: '50'}];
 		expectedStateValue.minValueLabelDisplay = true;
 		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
 		expectedStateValue.progressDisplayOptions[0] = {
@@ -188,7 +188,7 @@ describe(`Slider basic`, () => {
 		expectedStateValue.handleDisplayOptions = [...expectedStateValue.handleDisplayOptions];
 		expectedStateValue.handleDisplayOptions = [...expectedStateValue.handleDisplayOptions];
 		expectedStateValue.handleDisplayOptions[0].left = 0;
-		expectedStateValue.sortedHandles = [{id: 0, value: 0}];
+		expectedStateValue.sortedHandles = [{id: 0, value: 0, ariaLabel: '0'}];
 		expectedStateValue.minValueLabelDisplay = false;
 		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
 		expectedStateValue.progressDisplayOptions[0] = {
@@ -208,7 +208,7 @@ describe(`Slider basic`, () => {
 			...expectedStateValue.handleDisplayOptions[0],
 			left: 100,
 		};
-		expectedStateValue.sortedHandles = [{id: 0, value: 100}];
+		expectedStateValue.sortedHandles = [{id: 0, value: 100, ariaLabel: '100'}];
 		expectedStateValue.minValueLabelDisplay = true;
 		expectedStateValue.maxValueLabelDisplay = false;
 		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
@@ -231,7 +231,7 @@ describe(`Slider basic`, () => {
 			...expectedStateValue.handleDisplayOptions[0],
 			left: 70,
 		};
-		expectedStateValue.sortedHandles = [{id: 0, value: 70}];
+		expectedStateValue.sortedHandles = [{id: 0, value: 70, ariaLabel: '70'}];
 		expectedStateValue.minValueLabelDisplay = true;
 		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
 		expectedStateValue.progressDisplayOptions[0] = {
@@ -253,7 +253,7 @@ describe(`Slider basic`, () => {
 			...expectedStateValue.handleDisplayOptions[0],
 			left: 0,
 		};
-		expectedStateValue.sortedHandles = [{id: 0, value: 0}];
+		expectedStateValue.sortedHandles = [{id: 0, value: 0, ariaLabel: '0'}];
 		expectedStateValue.minValueLabelDisplay = false;
 		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
 		expectedStateValue.progressDisplayOptions[0] = {
@@ -281,7 +281,7 @@ describe(`Slider basic`, () => {
 			...expectedStateValue.handleDisplayOptions[0],
 			left: 50,
 		};
-		expectedStateValue.sortedHandles = [{id: 0, value: 50}];
+		expectedStateValue.sortedHandles = [{id: 0, value: 50, ariaLabel: '50'}];
 		expectedStateValue.minValueLabelDisplay = true;
 		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
 		expectedStateValue.progressDisplayOptions[0] = {
@@ -300,7 +300,7 @@ describe(`Slider basic`, () => {
 			...expectedStateValue.handleDisplayOptions[0],
 			left: 49,
 		};
-		expectedStateValue.sortedHandles = [{id: 0, value: 49}];
+		expectedStateValue.sortedHandles = [{id: 0, value: 49, ariaLabel: '49'}];
 		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
 		expectedStateValue.progressDisplayOptions[0] = {
 			...expectedStateValue.progressDisplayOptions[0],
@@ -318,7 +318,7 @@ describe(`Slider basic`, () => {
 			...expectedStateValue.handleDisplayOptions[0],
 			left: 48,
 		};
-		expectedStateValue.sortedHandles = [{id: 0, value: 48}];
+		expectedStateValue.sortedHandles = [{id: 0, value: 48, ariaLabel: '48'}];
 		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
 		expectedStateValue.progressDisplayOptions[0] = {
 			...expectedStateValue.progressDisplayOptions[0],
@@ -343,7 +343,7 @@ describe(`Slider basic`, () => {
 			...expectedStateValue.handleDisplayOptions[0],
 			left: 100,
 		};
-		expectedStateValue.sortedHandles = [{id: 0, value: 100}];
+		expectedStateValue.sortedHandles = [{id: 0, value: 100, ariaLabel: '100'}];
 		expectedStateValue.minValueLabelDisplay = true;
 		expectedStateValue.maxValueLabelDisplay = false;
 		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
@@ -372,7 +372,7 @@ describe(`Slider basic`, () => {
 			...expectedStateValue.handleDisplayOptions[0],
 			left: 50,
 		};
-		expectedStateValue.sortedHandles = [{id: 0, value: 50}];
+		expectedStateValue.sortedHandles = [{id: 0, value: 50, ariaLabel: '50'}];
 		expectedStateValue.minValueLabelDisplay = true;
 		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
 		expectedStateValue.progressDisplayOptions[0] = {
@@ -391,7 +391,7 @@ describe(`Slider basic`, () => {
 			...expectedStateValue.handleDisplayOptions[0],
 			left: 51,
 		};
-		expectedStateValue.sortedHandles = [{id: 0, value: 51}];
+		expectedStateValue.sortedHandles = [{id: 0, value: 51, ariaLabel: '51'}];
 		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
 		expectedStateValue.progressDisplayOptions[0] = {
 			...expectedStateValue.progressDisplayOptions[0],
@@ -409,7 +409,7 @@ describe(`Slider basic`, () => {
 			...expectedStateValue.handleDisplayOptions[0],
 			left: 52,
 		};
-		expectedStateValue.sortedHandles = [{id: 0, value: 52}];
+		expectedStateValue.sortedHandles = [{id: 0, value: 52, ariaLabel: '52'}];
 		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
 		expectedStateValue.progressDisplayOptions[0] = {
 			...expectedStateValue.progressDisplayOptions[0],
@@ -432,7 +432,7 @@ describe(`Slider basic`, () => {
 			...expectedStateValue.handleDisplayOptions[0],
 			left: 50,
 		};
-		expectedStateValue.sortedHandles = [{id: 0, value: 50}];
+		expectedStateValue.sortedHandles = [{id: 0, value: 50, ariaLabel: '50'}];
 		expectedStateValue.minValueLabelDisplay = true;
 		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
 		expectedStateValue.progressDisplayOptions[0] = {
@@ -451,7 +451,7 @@ describe(`Slider basic`, () => {
 			...expectedStateValue.handleDisplayOptions[0],
 			left: 0,
 		};
-		expectedStateValue.sortedHandles = [{id: 0, value: 0}];
+		expectedStateValue.sortedHandles = [{id: 0, value: 0, ariaLabel: '0'}];
 		expectedStateValue.minValueLabelDisplay = false;
 		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
 		expectedStateValue.progressDisplayOptions[0] = {
@@ -475,7 +475,7 @@ describe(`Slider basic`, () => {
 			...expectedStateValue.handleDisplayOptions[0],
 			left: 50,
 		};
-		expectedStateValue.sortedHandles = [{id: 0, value: 50}];
+		expectedStateValue.sortedHandles = [{id: 0, value: 50, ariaLabel: '50'}];
 		expectedStateValue.minValueLabelDisplay = true;
 		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
 		expectedStateValue.progressDisplayOptions[0] = {
@@ -494,7 +494,7 @@ describe(`Slider basic`, () => {
 			...expectedStateValue.handleDisplayOptions[0],
 			left: 100,
 		};
-		expectedStateValue.sortedHandles = [{id: 0, value: 100}];
+		expectedStateValue.sortedHandles = [{id: 0, value: 100, ariaLabel: '100'}];
 		expectedStateValue.maxValueLabelDisplay = false;
 		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
 		expectedStateValue.progressDisplayOptions[0] = {
@@ -606,8 +606,8 @@ describe(`Slider range`, () => {
 			height: 100,
 		};
 		expectedStateValue.sortedHandles = [
-			{id: 0, value: 150},
-			{id: 1, value: 175},
+			{id: 0, value: 150, ariaLabel: '150'},
+			{id: 1, value: 175, ariaLabel: '175'},
 		];
 		expectedStateValue.minValueLabelDisplay = true;
 
@@ -640,8 +640,8 @@ describe(`Slider range`, () => {
 		};
 
 		expectedStateValue.sortedHandles = [
-			{id: 0, value: 10},
-			{id: 1, value: 50},
+			{id: 0, value: 10, ariaLabel: '10'},
+			{id: 1, value: 50, ariaLabel: '50'},
 		];
 		expectedStateValue.minValueLabelDisplay = true;
 
@@ -669,8 +669,8 @@ describe(`Slider range`, () => {
 			height: 100,
 		};
 		expectedStateValue.sortedHandles = [
-			{id: 0, value: 10},
-			{id: 1, value: 60},
+			{id: 0, value: 10, ariaLabel: '10'},
+			{id: 1, value: 60, ariaLabel: '60'},
 		];
 		expectedStateValue.minValueLabelDisplay = true;
 
@@ -702,8 +702,8 @@ describe(`Slider range`, () => {
 			height: 100,
 		};
 		expectedStateValue.sortedHandles = [
-			{id: 0, value: 10},
-			{id: 1, value: 50},
+			{id: 0, value: 10, ariaLabel: '10'},
+			{id: 1, value: 50, ariaLabel: '50'},
 		];
 		expectedStateValue.minValueLabelDisplay = true;
 
@@ -731,8 +731,8 @@ describe(`Slider range`, () => {
 			height: 100,
 		};
 		expectedStateValue.sortedHandles = [
-			{id: 1, value: 50},
-			{id: 0, value: 100},
+			{id: 1, value: 50, ariaLabel: '50'},
+			{id: 0, value: 100, ariaLabel: '100'},
 		];
 		expectedStateValue.maxValueLabelDisplay = false;
 
@@ -760,8 +760,8 @@ describe(`Slider range`, () => {
 			height: 100,
 		};
 		expectedStateValue.sortedHandles = [
-			{id: 1, value: 70},
-			{id: 0, value: 100},
+			{id: 1, value: 70, ariaLabel: '70'},
+			{id: 0, value: 100, ariaLabel: '100'},
 		];
 
 		expect(state).toStrictEqual(expectedStateValue);
@@ -792,8 +792,8 @@ describe(`Slider range`, () => {
 			height: 100,
 		};
 		expectedStateValue.sortedHandles = [
-			{id: 0, value: 45},
-			{id: 1, value: 50},
+			{id: 0, value: 45, ariaLabel: '45'},
+			{id: 1, value: 50, ariaLabel: '50'},
 		];
 		expectedStateValue.minValueLabelDisplay = true;
 		expectedStateValue.combinedLabelDisplay = true;
@@ -822,8 +822,8 @@ describe(`Slider range`, () => {
 			height: 100,
 		};
 		expectedStateValue.sortedHandles = [
-			{id: 0, value: 45},
-			{id: 1, value: 70},
+			{id: 0, value: 45, ariaLabel: '45'},
+			{id: 1, value: 70, ariaLabel: '70'},
 		];
 		expectedStateValue.minValueLabelDisplay = true;
 		expectedStateValue.combinedLabelDisplay = false;
@@ -882,6 +882,7 @@ describe(`Slider vertical`, () => {
 			{
 				id: 0,
 				value: 30,
+				ariaLabel: '30',
 			},
 		];
 
