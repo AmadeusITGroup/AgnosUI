@@ -1,7 +1,7 @@
 import type {Widget, WidgetFactory, WidgetProps} from '@agnos-ui/core';
 import {findChangedProperties, toReadableStore} from '@agnos-ui/core';
-import type {ReadableSignal} from '@amadeus-it-group/tansu';
-import {computed} from '@amadeus-it-group/tansu';
+import type {ReadableSignal, WritableSignal} from '@amadeus-it-group/tansu';
+import {asReadable, computed, writable} from '@amadeus-it-group/tansu';
 import {createEventDispatcher as svelteCreateEventDispatcher} from 'svelte';
 import type {SlotContent, SlotSvelteComponent, SlotsPresent} from './slotTypes';
 import {useSvelteSlot} from './slotTypes';
@@ -19,6 +19,36 @@ export function createPatchChangedProps<T extends object>(patchFn: (arg: Partial
 
 export const createEventDispatcher = <T extends object>() =>
 	svelteCreateEventDispatcher<{[K in keyof T]: T[K] extends CustomEvent<infer U> ? U : never}>();
+
+/**
+ * Merges two functions.
+ * @param fn1 - first function
+ * @param fn2 - second function (or undefined or null)
+ * @returns a function that successively calls fn1 and fn2 (if defined)
+ */
+const mergeEventFns = <T extends any[]>(fn1: (...args: T) => void, fn2: undefined | null | ((...args: T) => void)) =>
+	fn2
+		? (...args: any) => {
+				fn1(...args);
+				fn2(...args);
+		  }
+		: fn1;
+
+/**
+ * Creates a writable store to be used for an event handler.
+ * @param event - function that will be merged with the value of the store so that it is always called first when the event handler is called
+ * @returns a writable store to be used for an event handler
+ */
+const eventStore = <T extends any[]>(event: (...args: T) => void): WritableSignal<undefined | null | ((...args: T) => void)> => {
+	const store$ = writable<undefined | null | ((...args: T) => void)>(undefined, {equal: Object.is});
+	return asReadable(
+		computed(() => mergeEventFns(event, store$()) as any),
+		{
+			set: store$.set,
+			update: store$.update,
+		},
+	);
+};
 
 export const callWidgetFactoryWithConfig = <W extends Widget>({
 	factory,
@@ -40,10 +70,14 @@ export const callWidgetFactoryWithConfig = <W extends Widget>({
 			processedSlots[`slot${name[0].toUpperCase()}${name.substring(1)}`] = useSvelteSlot;
 		}
 	}
+	const props: {[key in keyof WidgetProps<W>]: WritableSignal<WidgetProps<W>[key]>} = {} as any;
+	for (const event of Object.keys(events) as (keyof WidgetProps<W> & `on${string}`)[]) {
+		props[event] = eventStore(events[event] as any) as any;
+	}
 	const widget = factory({
 		config: computed(() => ({...defaultConfig$(), ...widgetConfig?.(), ...processedSlots})),
+		props,
 	});
-	widget.patch(events);
 	return {...widget, patchChangedProps: createPatchChangedProps(widget.patch)};
 };
 
