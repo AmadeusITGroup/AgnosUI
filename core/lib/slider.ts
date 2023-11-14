@@ -323,83 +323,91 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 	});
 	const isInteractable$ = computed(() => !disabled$() && !readonly$());
 
-	const combinedLabelPositionLeft$ = computed(() =>
-		vertical$() || sortedValuesPercent$().length != 2 ? 0 : (sortedValuesPercent$()[0] + sortedValuesPercent$()[1]) / 2
-	);
-	const combinedLabelPositionTop$ = computed(() =>
-		vertical$() && sortedValuesPercent$().length == 2 ? 100 - (sortedValuesPercent$()[0] + sortedValuesPercent$()[1]) / 2 : 0
-	);
+	const combinedLabelPositionLeft$ = computed(() => {
+		const sortedValuesPercent = sortedValuesPercent$();
+		return vertical$() || sortedValuesPercent.length != 2 ? 0 : (sortedValuesPercent[0] + sortedValuesPercent[1]) / 2;
+	});
+	const combinedLabelPositionTop$ = computed(() => {
+		const sortedValuesPercent = sortedValuesPercent$();
+		return vertical$() && sortedValuesPercent.length == 2 ? 100 - (sortedValuesPercent[0] + sortedValuesPercent[1]) / 2 : 0;
+	});
 
 	// const handleTooltipLeft$ = computed(() => (vertical$() ? Array(valuesPercent$().length).fill(0) : valuesPercent$()));
 	// const handleTooltipTop$ = computed(() => (vertical$() ? valuesPercent$().map((vp) => 100 - vp) : Array(valuesPercent$().length).fill(0)));
 
-	const handleDisplayOptions$ = computed(() =>
-		valuesPercent$().map((vp) => {
+	const handleDisplayOptions$ = computed(() => {
+		const vertical = vertical$();
+		return valuesPercent$().map((vp, index) => {
 			return {
-				left: vertical$() ? 0 : vp,
-				top: vertical$() ? 100 - vp : 0,
+				left: vertical ? 0 : vp,
+				top: vertical ? 100 - vp : 0,
 			};
-		})
-	);
+		});
+	});
 
 	const progressDisplayOptions$ = computed(() => {
-		if (sortedValuesPercent$().length === 1) {
+		const vertical = vertical$(),
+			sortedValuesPercent = sortedValuesPercent$();
+		if (sortedValuesPercent.length === 1) {
 			return [
 				{
 					left: 0,
 					bottom: 0,
-					width: vertical$() ? 100 : sortedValuesPercent$()[0],
-					height: vertical$() ? sortedValuesPercent$()[0] : 100,
+					width: vertical ? 100 : sortedValuesPercent[0],
+					height: vertical ? sortedValuesPercent[0] : 100,
 				},
 			];
 		} else {
-			return sortedValuesPercent$()
+			return sortedValuesPercent
 				.map((svp, index, array) => {
 					return {
-						left: vertical$() ? 0 : svp,
-						bottom: vertical$() ? svp : 0,
-						width: vertical$() ? 100 : index === array.length - 1 ? svp : array[index + 1] - svp,
-						height: vertical$() ? (index === array.length - 1 ? svp : array[index + 1] - svp) : 100,
+						left: vertical ? 0 : svp,
+						bottom: vertical ? svp : 0,
+						width: vertical ? 100 : index === array.length - 1 ? svp : array[index + 1] - svp,
+						height: vertical ? (index === array.length - 1 ? svp : array[index + 1] - svp) : 100,
 					};
 				})
-				.slice(0, sortedValuesPercent$().length - 1);
+				.slice(0, sortedValuesPercent.length - 1);
 		}
 	});
 
 	// functions
 	const computeCleanValue = (value: number) => {
-		if (value >= max$()) {
-			return max$();
-		} else if (value <= min$()) {
-			return min$();
+		const min = min$(),
+			max = max$(),
+			stepSize = stepSize$();
+		if (value >= max) {
+			return max;
+		} else if (value <= min) {
+			return min;
 		}
 		const indexMin = Math.floor(value / stepSize$());
-		return value % stepSize$() < stepSize$() / 2 ? indexMin * stepSize$() : (indexMin + 1) * stepSize$();
+		return value % stepSize < stepSize / 2 ? indexMin * stepSize : (indexMin + 1) * stepSize;
 	};
 	const percentCompute = (value: number) => {
-		return ((value - min$()) * 100) / (max$() - min$());
+		const min = min$();
+		return ((value - min) * 100) / (max$() - min);
 	};
 	const getClosestSliderHandle = (clickedPercent: number) => {
-		if (values$().length === 1) {
+		const values = values$();
+		if (values.length === 1) {
 			return 0;
 		}
-		const closestBigger = sortedValues$().find((sv) => sv > clickedPercent * 100);
-		const closestBiggerIndex = closestBigger ? sortedValues$().indexOf(closestBigger!) : sortedValues$().length - 1;
-		const midPoint = sortedValues$()[closestBiggerIndex - 1] + (sortedValues$()[closestBiggerIndex] - sortedValues$()[closestBiggerIndex - 1]) / 2;
-		let closestValue: number;
-		if (clickedPercent * 100 <= midPoint) {
-			closestValue = sortedValues$()[closestBiggerIndex - 1];
-		} else {
-			closestValue = sortedValues$()[closestBiggerIndex];
-		}
-		return values$().indexOf(closestValue);
+		const sortedValues = sortedValues$();
+		const closestBigger = sortedValues.find((sv) => sv > clickedPercent * 100);
+		const closestBiggerIndex = closestBigger ? sortedValues.indexOf(closestBigger!) : sortedValues.length - 1;
+		const midPoint = sortedValues[closestBiggerIndex - 1] + (sortedValues[closestBiggerIndex] - sortedValues[closestBiggerIndex - 1]) / 2;
+		const closestValue = sortedValues[clickedPercent * 100 <= midPoint ? closestBiggerIndex - 1 : closestBiggerIndex];
+		return values.indexOf(closestValue);
 	};
 
 	const adjustCoordinate = (clickedCoordinate: number, handleNumber?: number) => {
 		if (isInteractable$()) {
+			const sliderDomRectSize = sliderDomRectSize$(),
+				sliderDomRectOffset = sliderDomRectOffset$();
 			const clickedPercent = vertical$()
-				? (sliderDomRectSize$() - clickedCoordinate + sliderDomRectOffset$()) / sliderDomRectSize$()
-				: (clickedCoordinate - sliderDomRectOffset$()) / sliderDomRectSize$();
+				? (sliderDomRectSize - clickedCoordinate + sliderDomRectOffset) / sliderDomRectSize
+				: (clickedCoordinate - sliderDomRectOffset) / sliderDomRectSize;
 			const derivedHandleIndex = handleNumber ?? getClosestSliderHandle(clickedPercent);
 			const newValue = clickedPercent * (max$() - min$()) + min$();
 			_dirtyValues$.update((dh) => {
