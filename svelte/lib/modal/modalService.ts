@@ -7,7 +7,6 @@ export async function openModal<Data>(options: Partial<ModalProps<Data>>, {conte
 		target,
 		props: options,
 		context,
-		// TODO: exclude events? it seems to work like this, but it is probably not the correct way
 	});
 	try {
 		return await component.api.open();
