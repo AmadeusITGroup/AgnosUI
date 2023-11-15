@@ -1,11 +1,26 @@
 import {computed, derived, writable} from '@amadeus-it-group/tansu';
 import type {WidgetsCommonPropsAndState} from './commonProps';
-import {bindableDerived, createStoreDirective, writablesForProps} from './services';
 import type {ConfigValidator, PropsConfig} from './services';
+import {bindableDerived, createStoreDirective, writablesForProps} from './services';
 import {stateStores} from './services/stores';
 import {typeArray, typeBoolean, typeFunction, typeNumber, typeNumberInRangeFactory} from './services/writables';
 import type {Directive, Widget} from './types';
 import {noop} from './utils';
+
+export interface SortedHandle {
+	/**
+	 * Handle value
+	 */
+	value: number;
+	/**
+	 * Handle id
+	 */
+	id: number;
+	/**
+	 * Accessibility aria label
+	 */
+	ariaLabel: string;
+}
 
 export interface ProgressDisplayOptions {
 	/**
@@ -108,7 +123,7 @@ export interface SliderState extends SliderCommonPropsAndState {
 	/**
 	 * Array of the sorted handles to display
 	 */
-	sortedHandles: {value: number; id: number; ariaLabel: string}[];
+	sortedHandles: SortedHandle[];
 
 	/**
 	 * Array of objects representing progress display options
@@ -190,7 +205,7 @@ const defaultSliderConfig: SliderProps = {
 	className: '',
 	ariaLabelHandle: (value, _index) => '' + value,
 	onValuesChange: noop,
-	values: [0],
+	values: [],
 };
 
 /**
