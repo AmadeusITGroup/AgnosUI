@@ -1,6 +1,5 @@
 <script lang="ts">
-	import {selectedFramework$} from '../stores';
-	import {pathToRoot$, frameworkLessUrl$} from '../stores';
+	import {pathToRoot$, frameworkLessUrl$, selectedFramework$} from '../stores';
 
 	export let title: string;
 	export let tabs: {title: string; key: string; path: string}[];

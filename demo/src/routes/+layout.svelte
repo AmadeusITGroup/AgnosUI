@@ -6,7 +6,7 @@
 	import 'bootstrap/dist/css/bootstrap.css';
 	import {/*canonicalURL$,*/ pathToRoot$} from '$lib/stores';
 	import './styles.scss';
-	import {beforeNavigate} from '$app/navigation';
+	import {beforeNavigate, onNavigate} from '$app/navigation';
 	import {updated} from '$app/stores';
 	import {onMount} from 'svelte';
 	import MobileMenu from './[framework]/menu/MobileMenu.svelte';
@@ -27,6 +27,15 @@
 			// force reload of the page on navigation when a new version of the site has been detected
 			location.href = to.url.href;
 		}
+	});
+	onNavigate((navigation) => {
+		if (!document.startViewTransition) return;
+		return new Promise((resolve) => {
+			document.startViewTransition(async () => {
+				resolve();
+				await navigation.complete;
+			});
+		});
 	});
 </script>
 
@@ -94,5 +103,6 @@
 	.demo-main {
 		grid-area: main;
 		overflow: auto;
+		scrollbar-gutter: stable;
 	}
 </style>
