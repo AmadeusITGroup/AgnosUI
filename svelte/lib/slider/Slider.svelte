@@ -95,6 +95,7 @@
 			aria-disabled={$disabled$ ? true : null}
 			aria-valuenow={item.value}
 			aria-valuetext={'' + item.value}
+			aria-label={item.ariaLabel}
 			aria-orientation={$vertical$ ? 'vertical' : null}
 			disabled={$disabled$ ? true : null}
 			style:left={`${$handleDisplayOptions$[item.id].left}%`}

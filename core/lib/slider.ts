@@ -108,7 +108,7 @@ export interface SliderState extends SliderCommonPropsAndState {
 	/**
 	 * Array of the sorted handles to display
 	 */
-	sortedHandles: {value: number; id: number}[];
+	sortedHandles: {value: number; id: number; ariaLabel: string}[];
 
 	/**
 	 * Array of objects representing progress display options
@@ -122,6 +122,14 @@ export interface SliderState extends SliderCommonPropsAndState {
 }
 
 export interface SliderProps extends SliderCommonPropsAndState {
+	/**
+	 * Return the value for the 'aria-label' attribute for the handle
+	 * @param value - value of the handle
+	 * @param sortedIndex - index of the handle in the sorted list
+	 * @param index - index of the handle in the original list
+	 */
+	ariaLabelHandle: (value: number, sortedIndex: number, index: number) => string;
+
 	/**
 	 * An event emitted when slider values are changed
 	 *
@@ -180,6 +188,7 @@ const defaultSliderConfig: SliderProps = {
 	disabled: false,
 	vertical: false,
 	className: '',
+	ariaLabelHandle: (value, _index) => '' + value,
 	onValuesChange: noop,
 	values: [0],
 };
@@ -199,6 +208,7 @@ const configValidator: ConfigValidator<SliderProps> = {
 	readonly: typeBoolean,
 	disabled: typeBoolean,
 	vertical: typeBoolean,
+	ariaLabelHandle: typeFunction,
 	onValuesChange: typeFunction,
 	values: typeArray,
 };
@@ -217,6 +227,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			stepSize$,
 			values$: _dirtyValues$,
 
+			ariaLabelHandle$,
 			onValuesChange$,
 
 			...stateProps
@@ -239,7 +250,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 		onValuesChange$,
 		[_dirtyValues$],
 		([dirtyValues]) => dirtyValues.map((dv) => computeCleanValue(dv)),
-		(a, b) => a.every((val, index) => val === b[index]),
+		typeArray.equal,
 	);
 
 	// computed
@@ -297,13 +308,19 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 	const sliderDomRectOffset$ = computed(() => (vertical$() ? sliderDomRect$().top : sliderDomRect$().left));
 	const sliderDomRectSize$ = computed(() => (vertical$() ? sliderDomRect$().height : sliderDomRect$().width));
 	const sortedValues$ = computed(() => [...values$()].sort((a, b) => a - b));
-	const sortedHandles$ = computed(() =>
-		values$()
+	const sortedHandlesValues$ = computed(() => {
+		return values$()
 			.map((val, index) => {
 				return {id: index, value: val};
 			})
-			.sort((a, b) => a.value - b.value),
-	);
+			.sort((a, b) => a.value - b.value);
+	});
+	const sortedHandles$ = computed(() => {
+		const ariaLabelHandle = ariaLabelHandle$();
+		return sortedHandlesValues$().map((sortedValue, index) => {
+			return {...sortedValue, ariaLabel: ariaLabelHandle(sortedValue.value, index, sortedValue.id)};
+		});
+	});
 	const valuesPercent$ = computed(() => values$().map((val) => percentCompute(val)));
 	const sortedValuesPercent$ = computed(() => [...valuesPercent$()].sort((a, b) => a - b));
 	const minLabelWidth$ = computed(() => (minLabelDomRect$().width / sliderDomRectSize$()) * 100);

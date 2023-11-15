@@ -69,6 +69,7 @@ import {take} from 'rxjs';
 				[attr.aria-disabled]="state().disabled ? true : null"
 				[attr.aria-valuenow]="item.value"
 				[attr.aria-valuetext]="item.value"
+				[attr.aria-label]="item.ariaLabel"
 				[attr.aria-orientation]="state().vertical ? 'vertical' : null"
 				[disabled]="state().disabled"
 				[class]="state().vertical ? 'au-slider-handle-vertical' : 'au-slider-handle-horizontal'"
@@ -139,6 +140,11 @@ export class SliderComponent implements OnChanges {
 	 */
 	@Input('auValues')
 	values: number[] | undefined;
+
+	/**
+	 * Return the value for the 'aria-label' attribute for the handle
+	 */
+	@Input('auAriaLabelHandle') ariaLabelHandle: ((value: number, sortedIndex: number, index: number) => string) | undefined;
 
 	/**
 	 * If `true` slider value cannot be changed but the slider is still focusable
