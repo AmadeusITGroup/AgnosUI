@@ -1,6 +1,5 @@
 import type {AdaptSlotContentProps, RatingState, SlotContent, StarContext} from '@agnos-ui/angular-headless';
 import {SlotDirective, callWidgetFactory, createRating, patchSimpleChanges, toAngularSignal} from '@agnos-ui/angular-headless';
-import {NgForOf} from '@angular/common';
 import type {AfterContentChecked, OnChanges, Signal, SimpleChanges} from '@angular/core';
 import {
 	ChangeDetectionStrategy,
@@ -30,7 +29,7 @@ export class RatingStarDirective {
 @Component({
 	selector: '[auRating]',
 	standalone: true,
-	imports: [NgForOf, SlotDirective],
+	imports: [SlotDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	encapsulation: ViewEncapsulation.None,
 	host: {
@@ -50,7 +49,7 @@ export class RatingStarDirective {
 		'[class]': 'state$().className',
 	},
 	template: `
-		<ng-template ngFor [ngForOf]="state$().stars" [ngForTrackBy]="trackByIndex" let-index="index">
+		@for (item of state$().stars; track trackByIndex(index); let index = $index) {
 			<span class="visually-hidden">({{ index < state$().visibleRating ? '*' : ' ' }})</span>
 			<span
 				class="au-rating-star"
@@ -60,7 +59,7 @@ export class RatingStarDirective {
 			>
 				<ng-template [auSlot]="state$().slotStar" [auSlotProps]="state$().stars[index]"></ng-template>
 			</span>
-		</ng-template>
+		}
 	`,
 	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => RatingComponent), multi: true}],
 })

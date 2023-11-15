@@ -255,7 +255,7 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 	// Props
 	const [{opened$: _dirtyOpened$, items$, itemId$, matchFn$, onFilterTextChange$, ...otherProps}, patch] = writablesForProps<SelectProps<Item>>(
 		defaultConfig,
-		config
+		config,
 	);
 	const {selected$, filterText$} = otherProps;
 

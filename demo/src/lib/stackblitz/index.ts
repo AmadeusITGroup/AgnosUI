@@ -12,7 +12,7 @@ const addAsyncFiles =
 			Object.keys(files).map(async (fileName) => {
 				const finalName = prefix + (removePrefix && fileName.startsWith(removePrefix) ? fileName.substring(removePrefix.length) : fileName);
 				project.files[finalName] = await files[fileName]();
-			})
+			}),
 		);
 	};
 
@@ -20,29 +20,27 @@ const frameworkCreateStackblitz: Record<Frameworks, StackblitzProcessor[]> = {
 	angular: [
 		addAsyncFiles(import.meta.glob('./angular/**', {as: 'raw', import: 'default'}) as any, '', './angular/'),
 		async (project, sample) => {
-			project.files[
-				'src/main.ts'
-			] = `import {bootstrapApplication} from '@angular/platform-browser';\nimport MainComponent from './${sample.files.angular.entryPoint.replace(
-				/\.ts$/,
-				''
-			)}';\nbootstrapApplication(MainComponent).catch((err) => console.error(err));`;
+			project.files['src/main.ts'] =
+				`import {bootstrapApplication} from '@angular/platform-browser';\nimport MainComponent from './${sample.files.angular.entryPoint.replace(
+					/\.ts$/,
+					'',
+				)}';\nbootstrapApplication(MainComponent).catch((err) => console.error(err));`;
 		},
 	],
 	react: [
 		addAsyncFiles(import.meta.glob('./react/**', {as: 'raw', import: 'default'}) as any, '', './react/'),
 		async (project, sample) => {
-			project.files[
-				'src/main.tsx'
-			] = `import {createRoot} from "react-dom/client";\nimport "@agnos-ui/style-bootstrap/css/agnosui.css";\nimport App from ${JSON.stringify(
-				`./${sample.files.react.entryPoint.replace(/\.tsx?$/, '')}`
-			)};\nconst rootElement = document.getElementById('root');\nconst root = createRoot(rootElement);\nroot.render(<App />)`;
+			project.files['src/main.tsx'] =
+				`import {createRoot} from "react-dom/client";\nimport "@agnos-ui/style-bootstrap/css/agnosui.css";\nimport App from ${JSON.stringify(
+					`./${sample.files.react.entryPoint.replace(/\.tsx?$/, '')}`,
+				)};\nconst rootElement = document.getElementById('root');\nconst root = createRoot(rootElement);\nroot.render(<App />)`;
 		},
 	],
 	svelte: [
 		addAsyncFiles(import.meta.glob('./svelte/**', {as: 'raw', import: 'default'}) as any, '', './svelte/'),
 		async (project, sample) => {
 			project.files['src/main.ts'] = `import "@agnos-ui/style-bootstrap/css/agnosui.css";\nimport App from ${JSON.stringify(
-				`./${sample.files.svelte.entryPoint}`
+				`./${sample.files.svelte.entryPoint}`,
 			)};\nconst app = new App({target: document.getElementById('root')});\nexport default app;`;
 			project.template = 'node';
 		},
@@ -83,7 +81,7 @@ if (isReleased) {
 			import: 'default',
 		}) as any,
 		'packages/@agnos-ui/core/',
-		'../../../../core/dist/lib/'
+		'../../../../core/dist/lib/',
 	);
 	const stylePackage = addAsyncFiles(
 		import.meta.glob(['../../../../style-bootstrap/**', '!**/*.map', '!**/*.scss'], {
@@ -91,7 +89,7 @@ if (isReleased) {
 			import: 'default',
 		}) as any,
 		'packages/@agnos-ui/style-bootstrap/',
-		'../../../../style-bootstrap/'
+		'../../../../style-bootstrap/',
 	);
 	frameworkCreateStackblitz.angular.push(
 		corePackage,
@@ -102,7 +100,7 @@ if (isReleased) {
 				import: 'default',
 			}) as any,
 			'packages/@agnos-ui/angular-headless/',
-			'../../../../angular/dist/headless/'
+			'../../../../angular/dist/headless/',
 		),
 		addAsyncFiles(
 			import.meta.glob(['../../../../angular/dist/lib/**', '!**/*.map'], {
@@ -110,9 +108,9 @@ if (isReleased) {
 				import: 'default',
 			}) as any,
 			'packages/@agnos-ui/angular/',
-			'../../../../angular/dist/lib/'
+			'../../../../angular/dist/lib/',
 		),
-		mergePackageJson
+		mergePackageJson,
 	);
 	frameworkCreateStackblitz.react.push(
 		corePackage,
@@ -123,7 +121,7 @@ if (isReleased) {
 				import: 'default',
 			}) as any,
 			'packages/@agnos-ui/react-headless/',
-			'../../../../react/dist/headless/'
+			'../../../../react/dist/headless/',
 		),
 		addAsyncFiles(
 			import.meta.glob(['../../../../react/dist/lib/**', '!**/*.map'], {
@@ -131,9 +129,9 @@ if (isReleased) {
 				import: 'default',
 			}) as any,
 			'packages/@agnos-ui/react/',
-			'../../../../react/dist/lib/'
+			'../../../../react/dist/lib/',
 		),
-		mergePackageJson
+		mergePackageJson,
 	);
 	frameworkCreateStackblitz.svelte.push(
 		corePackage,
@@ -144,7 +142,7 @@ if (isReleased) {
 				import: 'default',
 			}) as any,
 			'packages/@agnos-ui/svelte-headless/',
-			'../../../../svelte/dist/headless/'
+			'../../../../svelte/dist/headless/',
 		),
 		addAsyncFiles(
 			import.meta.glob(['../../../../svelte/dist/lib/**', '!**/*.map'], {
@@ -152,9 +150,9 @@ if (isReleased) {
 				import: 'default',
 			}) as any,
 			'packages/@agnos-ui/svelte/',
-			'../../../../svelte/dist/lib/'
+			'../../../../svelte/dist/lib/',
 		),
-		mergePackageJson
+		mergePackageJson,
 	);
 }
 

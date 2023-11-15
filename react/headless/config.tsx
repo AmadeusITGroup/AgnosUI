@@ -18,7 +18,7 @@ export type WidgetsConfig = {
 };
 
 export const widgetsConfigFactory = <Config extends {[widgetName: string]: object} = WidgetsConfig>(
-	widgetsConfigContext = createContext(undefined as undefined | WidgetsConfigStore<Config>)
+	widgetsConfigContext = createContext(undefined as undefined | WidgetsConfigStore<Config>),
 ) => {
 	const useWidgetContext = <Props extends object>(widgetName: keyof Config | null, defaultConfig?: Partial<Props>) => {
 		const widgetsConfig = useContext(widgetsConfigContext);
@@ -30,7 +30,7 @@ export const widgetsConfigFactory = <Config extends {[widgetName: string]: objec
 		factory: WidgetFactory<W>,
 		props: Partial<WidgetProps<W>> | undefined,
 		widgetName: keyof Config | null,
-		defaultProps?: Partial<WidgetProps<W>>
+		defaultProps?: Partial<WidgetProps<W>>,
 	): [WidgetState<W>, W] => useWidget(factory, props, {config: useWidgetContext(widgetName, defaultProps)});
 
 	/**

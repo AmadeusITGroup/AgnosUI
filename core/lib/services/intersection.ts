@@ -54,7 +54,7 @@ export const createIntersection = (config?: PropsConfig<IntersectionProps>) => {
 
 			return noop;
 		},
-		new Map<Element, IntersectionObserverEntry>()
+		new Map<Element, IntersectionObserverEntry>(),
 	);
 
 	return {

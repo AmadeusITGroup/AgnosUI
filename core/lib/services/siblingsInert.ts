@@ -41,7 +41,7 @@ const lastElement$ = computed(
 		const elements = elements$();
 		return elements[elements.length - 1];
 	},
-	{equal: Object.is}
+	{equal: Object.is},
 );
 const inertAction$ = computed(() => setSiblingsInert(lastElement$()));
 

@@ -1,11 +1,10 @@
 import {AgnosUIAngularModule} from '@agnos-ui/angular';
 import {Component} from '@angular/core';
-import {NgIf} from '@angular/common';
 import BODY from '!raw-loader!@agnos-ui/common/samples/accordion/body.txt';
 
 @Component({
 	standalone: true,
-	imports: [AgnosUIAngularModule, NgIf],
+	imports: [AgnosUIAngularModule],
 	template: `
 		<div auAccordion #accordion="auAccordion">
 			<div auAccordionItem>
@@ -31,17 +30,18 @@ import BODY from '!raw-loader!@agnos-ui/common/samples/accordion/body.txt';
 							Toggle first
 						</button>
 					</div>
-					<div
-						*ngIf="state!.shouldBeInDOM"
-						[auUse]="widget!.directives.collapseDirective"
-						attr.aria-labelledby="{{ state!.itemId }}-toggle"
-						id="{{ state!.itemId }}-collapse"
-						class="accordion-collapse {{ state!.itemCollapseClass }}"
-					>
-						<div class="accordion-body {{ state!.itemBodyClass }}">
-							{{ BODY }}
+					@if (state!.shouldBeInDOM) {
+						<div
+							[auUse]="widget!.directives.collapseDirective"
+							attr.aria-labelledby="{{ state!.itemId }}-toggle"
+							id="{{ state!.itemId }}-collapse"
+							class="accordion-collapse {{ state!.itemCollapseClass }}"
+						>
+							<div class="accordion-body {{ state!.itemBodyClass }}">
+								{{ BODY }}
+							</div>
 						</div>
-					</div>
+					}
 				</ng-template>
 			</div>
 			<div auAccordionItem>
@@ -73,17 +73,18 @@ import BODY from '!raw-loader!@agnos-ui/common/samples/accordion/body.txt';
 							<button type="button" class="btn btn-sm btn-outline-danger me-2" (click)="accordion.api.collapseAll()">Collapse all</button>
 						</div>
 					</div>
-					<div
-						*ngIf="state!.shouldBeInDOM"
-						[auUse]="widget!.directives.collapseDirective"
-						attr.aria-labelledby="{{ state!.itemId }}-toggle"
-						id="{{ state!.itemId }}-collapse"
-						class="accordion-collapse {{ state!.itemCollapseClass }}"
-					>
-						<div class="accordion-body {{ state!.itemBodyClass }}">
-							{{ BODY }}
+					@if (state!.shouldBeInDOM) {
+						<div
+							[auUse]="widget!.directives.collapseDirective"
+							attr.aria-labelledby="{{ state!.itemId }}-toggle"
+							id="{{ state!.itemId }}-collapse"
+							class="accordion-collapse {{ state!.itemCollapseClass }}"
+						>
+							<div class="accordion-body {{ state!.itemBodyClass }}">
+								{{ BODY }}
+							</div>
 						</div>
-					</div>
+					}
 				</ng-template>
 			</div>
 			<div auAccordionItem [auItemDisabled]="thirdDisabled">
@@ -107,24 +108,27 @@ import BODY from '!raw-loader!@agnos-ui/common/samples/accordion/body.txt';
 						>
 							Third panel
 						</button>
-						<p *ngIf="thirdDisabled" class="text-muted m-0 small">[I'm&nbsp;disabled]</p>
+						@if (thirdDisabled) {
+							<p class="text-muted m-0 small">[I'm&nbsp;disabled]</p>
+						}
 					</div>
-					<div
-						*ngIf="state!.shouldBeInDOM"
-						[auUse]="widget!.directives.collapseDirective"
-						attr.aria-labelledby="{{ state!.itemId }}-toggle"
-						id="{{ state!.itemId }}-collapse"
-						class="accordion-collapse {{ state!.itemCollapseClass }}"
-					>
-						<div class="accordion-body {{ state!.itemBodyClass }}">
-							{{ BODY }}
+					@if (state!.shouldBeInDOM) {
+						<div
+							[auUse]="widget!.directives.collapseDirective"
+							attr.aria-labelledby="{{ state!.itemId }}-toggle"
+							id="{{ state!.itemId }}-collapse"
+							class="accordion-collapse {{ state!.itemCollapseClass }}"
+						>
+							<div class="accordion-body {{ state!.itemBodyClass }}">
+								{{ BODY }}
+							</div>
 						</div>
-					</div>
+					}
 				</ng-template>
 			</div>
 		</div>
 	`,
-	styles: ["@import '@agnos-ui/common/samples/accordion/custom.scss';"],
+	styles: "@import '@agnos-ui/common/samples/accordion/custom.scss';",
 })
 export default class AccordionComponent {
 	thirdDisabled = false;

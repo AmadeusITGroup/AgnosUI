@@ -12,7 +12,6 @@ import {
 	toSlotContextWidget,
 } from '@agnos-ui/angular-headless';
 import {writable} from '@amadeus-it-group/tansu';
-import {NgIf} from '@angular/common';
 import type {AfterContentChecked, OnChanges, Signal, SimpleChanges} from '@angular/core';
 import {
 	ChangeDetectionStrategy,
@@ -88,30 +87,35 @@ export class ModalFooterDirective<Data> {
 @Component({
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [NgIf, SlotDirective, ModalHeaderDirective, ModalStructureDirective],
+	imports: [SlotDirective, ModalHeaderDirective, ModalStructureDirective],
 	template: `
 		<ng-template auModalHeader #header let-state="state" let-widget="widget">
 			<h5 class="modal-title">
 				<ng-template [auSlot]="state.slotTitle" [auSlotProps]="{state, widget}"></ng-template>
 			</h5>
-			<button
-				*ngIf="state.closeButton"
-				type="button"
-				class="btn-close"
-				[attr.aria-label]="state.ariaCloseButtonLabel"
-				(click)="widget.actions.closeButtonClick($event)"
-			></button>
+			@if (state.closeButton) {
+				<button
+					type="button"
+					class="btn-close"
+					[attr.aria-label]="state.ariaCloseButtonLabel"
+					(click)="widget.actions.closeButtonClick($event)"
+				></button>
+			}
 		</ng-template>
 		<ng-template auModalStructure #structure let-state="state" let-widget="widget">
-			<div class="modal-header" *ngIf="state.slotTitle">
-				<ng-template [auSlot]="state.slotHeader" [auSlotProps]="{state, widget}"></ng-template>
-			</div>
+			@if (state.slotTitle) {
+				<div class="modal-header">
+					<ng-template [auSlot]="state.slotHeader" [auSlotProps]="{state, widget}"></ng-template>
+				</div>
+			}
 			<div class="modal-body">
 				<ng-template [auSlot]="state.slotDefault" [auSlotProps]="{state, widget}"></ng-template>
 			</div>
-			<div class="modal-footer" *ngIf="state.slotFooter">
-				<ng-template [auSlot]="state.slotFooter" [auSlotProps]="{state, widget}"></ng-template>
-			</div>
+			@if (state.slotFooter) {
+				<div class="modal-footer">
+					<ng-template [auSlot]="state.slotFooter" [auSlotProps]="{state, widget}"></ng-template>
+				</div>
+			}
 		</ng-template>
 	`,
 })
@@ -142,17 +146,21 @@ const defaultConfig: Partial<ModalProps<any>> = {
 	selector: '[auModal]',
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [UseDirective, NgIf, SlotDirective, SlotDefaultDirective],
+	imports: [UseDirective, SlotDirective, SlotDefaultDirective],
 	template: `
 		<ng-template [auSlotDefault]="defaultSlots"><ng-content></ng-content></ng-template>
-		<div *ngIf="!state().backdropHidden" class="modal-backdrop {{ state().backdropClass }}" [auUse]="backdropDirective"></div>
-		<div *ngIf="!state().hidden" class="modal d-block {{ state().className }}" [auUse]="modalDirective" (click)="widget.actions.modalClick($event)">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<ng-template [auSlot]="state().slotStructure" [auSlotProps]="{state: state(), widget}"></ng-template>
+		@if (!state().backdropHidden) {
+			<div class="modal-backdrop {{ state().backdropClass }}" [auUse]="backdropDirective"></div>
+		}
+		@if (!state().hidden) {
+			<div class="modal d-block {{ state().className }}" [auUse]="modalDirective" (click)="widget.actions.modalClick($event)">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<ng-template [auSlot]="state().slotStructure" [auSlotProps]="{state: state(), widget}"></ng-template>
+					</div>
 				</div>
 			</div>
-		</div>
+		}
 	`,
 })
 export class ModalComponent<Data> implements OnChanges, AfterContentChecked {

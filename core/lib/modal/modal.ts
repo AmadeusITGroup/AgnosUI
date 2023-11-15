@@ -388,14 +388,14 @@ export function createModal<Data>(config$?: PropsConfig<ModalProps<Data>>): Moda
 
 	const modalPortalDirective = bindDirective(
 		portal,
-		computed(() => ({container: container$()}))
+		computed(() => ({container: container$()})),
 	);
 	const backdropPortalDirective = bindDirective(
 		portal,
 		computed(() => ({
 			container: container$(),
 			insertBefore: container$() && modalTransition.stores.element$()?.parentElement === container$() ? modalTransition.stores.element$() : undefined,
-		}))
+		})),
 	);
 	const registerModalAction$ = readable(undefined, () => modals$.register(res));
 	const action$ = computed(() => {

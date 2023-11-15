@@ -18,7 +18,7 @@ describe(`extendWidgetProps`, () => {
 			{
 				myNewProp: typeNumber,
 				myOtherNewProp: typeString,
-			}
+			},
 		);
 		const originalWidget = createRating({
 			config: {

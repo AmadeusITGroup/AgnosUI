@@ -39,7 +39,7 @@ export type TransitionFn = (
 	/**
 	 * Context of the current transition. It is reused between calls if the previous transition was stopped while running on the same element.
 	 */
-	context: object
+	context: object,
 ) => Promise<void>;
 
 export interface TransitionProps {
@@ -220,7 +220,7 @@ export const createTransition = (config?: PropsConfig<TransitionProps>): Transit
 			element: HTMLElement;
 			transitionFn: TransitionFn;
 			promise: Promise<void>;
-		}
+		},
 	);
 	const transitioning$ = computed(() => !!currentTransition$());
 	const stop = () => {
@@ -261,7 +261,7 @@ export const createTransition = (config?: PropsConfig<TransitionProps>): Transit
 							(visible ? onShown$ : onHidden$)()?.();
 						}
 					}
-				})()
+				})(),
 			);
 			return currentTransition;
 		});
@@ -314,7 +314,7 @@ export const createTransition = (config?: PropsConfig<TransitionProps>): Transit
 				}
 			}
 			return pendingTransition?.promise ?? currentTransition?.promise;
-		}
+		},
 	);
 
 	let lastToggle = {};

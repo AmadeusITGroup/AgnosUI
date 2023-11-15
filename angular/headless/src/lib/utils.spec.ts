@@ -50,7 +50,7 @@ describe('utils', () => {
 					const signal = TestBed.runInInjectionContext(() => toAngularSignal(tansuStore));
 					expect(signal()).toBe(1);
 					TestBed.resetTestingModule();
-				})
+				}),
 			);
 			expect(log).toStrictEqual([
 				'begin ngZone.run, ngZone = true',
@@ -131,7 +131,7 @@ describe('utils', () => {
 					{
 						onMyAction: typeFunction,
 						myValue: typeString,
-					}
+					},
 				);
 				const derivedValue$ = computed(createZoneCheckFn('computeDerivedValue', () => `derived from ${myValue$()}`));
 				const counter$ = writable(0);
@@ -178,7 +178,7 @@ describe('utils', () => {
 
 				_widget = createZoneCheckFn(
 					'callWidgetFactoryWithConfig',
-					callWidgetFactoryWithConfig
+					callWidgetFactoryWithConfig,
 				)({
 					factory,
 					events: {
@@ -217,7 +217,7 @@ describe('utils', () => {
 				createZoneCheckFn('ngZone.run', () => {
 					fixture.componentRef.setInput('auMyValue', 'newValue');
 					fixture.componentInstance.api.myApiFn();
-				})
+				}),
 			);
 			log.push('after ngZone.run');
 			expect(fixture.nativeElement.innerText.trim()).toBe('derived from newValue 0');

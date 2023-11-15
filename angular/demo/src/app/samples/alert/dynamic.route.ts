@@ -1,6 +1,5 @@
 import {AlertComponent} from '@agnos-ui/angular';
 import type {AlertProps} from '@agnos-ui/angular';
-import {NgFor} from '@angular/common';
 import {Component, Injectable} from '@angular/core';
 
 @Injectable({providedIn: 'root'})
@@ -22,18 +21,19 @@ class AlertContainerService {
 @Component({
 	selector: 'app-alert-child',
 	standalone: true,
-	imports: [AlertComponent, NgFor],
+	imports: [AlertComponent],
 	template: `
-		<au-component
-			auAlert
-			*ngFor="let alert of alertContainerService.alerts"
-			[auAnimation]="alert.animation"
-			[auAnimationOnInit]="alert.animationOnInit"
-			[auDismissible]="alert.dismissible"
-			[auType]="alert.type"
-			[auSlotDefault]="alert.slotDefault"
-			(auHidden)="removeAlert(alert)"
-		></au-component>
+		@for (alert of alertContainerService.alerts; track alert) {
+			<au-component
+				auAlert
+				[auAnimation]="alert.animation"
+				[auAnimationOnInit]="alert.animationOnInit"
+				[auDismissible]="alert.dismissible"
+				[auType]="alert.type"
+				[auSlotDefault]="alert.slotDefault"
+				(auHidden)="removeAlert(alert)"
+			></au-component>
+		}
 	`,
 })
 export class ChildComponent {

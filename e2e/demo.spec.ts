@@ -8,7 +8,7 @@ import {normalizePath} from './utils';
 
 const pathToFrameworkDir = normalizePath(path.join(__dirname, '../demo/src/routes'));
 const allRoutes = globSync(`${pathToFrameworkDir}/**/+page.svelte`).map((route) =>
-	normalizePath(route).replace(pathToFrameworkDir, '').replace('/+page.svelte', '')
+	normalizePath(route).replace(pathToFrameworkDir, '').replace('/+page.svelte', ''),
 );
 
 async function analyze(page: Page): Promise<AxeResults> {

@@ -1,6 +1,5 @@
 import {AgnosUIAngularModule} from '@agnos-ui/angular';
 import type {AlertComponent} from '@agnos-ui/angular';
-import {NgFor} from '@angular/common';
 import {Component} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
@@ -17,7 +16,7 @@ export enum AlertStatus {
 
 @Component({
 	standalone: true,
-	imports: [AgnosUIAngularModule, NgFor, FormsModule],
+	imports: [AgnosUIAngularModule, FormsModule],
 	template: ` <button class="btn btn-primary showAlert" (click)="showAlert(alert)" type="button">Show alert</button>
 		<br />
 		<br />
@@ -25,7 +24,9 @@ export enum AlertStatus {
 			<div class="d-flex form-group">
 				<label class="align-self-center me-3" for="typeSelect">Alert type: </label>
 				<select id="typeSelect" class="form-select w-auto" [(ngModel)]="type">
-					<option *ngFor="let style of styleList" [value]="style.value">{{ style.label }}</option>
+					@for (style of styleList; track style) {
+						<option [value]="style.value">{{ style.label }}</option>
+					}
 				</select>
 			</div>
 

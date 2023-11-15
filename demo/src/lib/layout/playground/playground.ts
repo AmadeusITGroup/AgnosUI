@@ -66,7 +66,7 @@ function createValueContext(
 	configValue: any,
 	propValue: any,
 	type: string = typeof defaultValue,
-	selectValues?: PropsValues[]
+	selectValues?: PropsValues[],
 ) {
 	const api = {
 		key,

@@ -11,7 +11,7 @@ export type WidgetsConfig = {
 };
 
 export const widgetsConfigFactory = <Config extends {[widgetName: string]: object} = WidgetsConfig>(
-	widgetsDefaultConfigKey = Symbol('widgetsConfig')
+	widgetsDefaultConfigKey = Symbol('widgetsConfig'),
 ) => {
 	/**
 	 * Creates in the Svelte context hierarchy a new widgets default configuration store that inherits from any widgets default configuration

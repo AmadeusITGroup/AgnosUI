@@ -26,7 +26,7 @@ export const PageItem = React.forwardRef<HTMLLIElement, PageItemProps>(
 				</a>
 			</li>
 		);
-	}
+	},
 );
 
 PageItem.displayName = 'PageItem';

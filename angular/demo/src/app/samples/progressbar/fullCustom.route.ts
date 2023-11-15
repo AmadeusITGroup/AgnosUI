@@ -1,5 +1,4 @@
 import {ProgressbarComponent, ProgressbarContentDirective} from '@agnos-ui/angular';
-import {NgIf} from '@angular/common';
 import type {OnDestroy} from '@angular/core';
 import {Component} from '@angular/core';
 import type {Subscription} from 'rxjs';
@@ -7,7 +6,7 @@ import {interval, takeWhile} from 'rxjs';
 
 @Component({
 	standalone: true,
-	imports: [ProgressbarComponent, ProgressbarContentDirective, NgIf],
+	imports: [ProgressbarComponent, ProgressbarContentDirective],
 	template: `
 		<div class="d-flex align-items-center flex-wrap">
 			<div style="width: 350px">
@@ -17,9 +16,11 @@ import {interval, takeWhile} from 'rxjs';
 							<div class="cup">
 								<div class="cup-fill-parent">
 									<div class="cup-fill" [style.height.px]="value * 1.7">
-										<div class="bubble bubble-1" *ngIf="value >= 50"></div>
-										<div class="bubble bubble-2" *ngIf="value >= 50"></div>
-										<div class="bubble bubble-3" *ngIf="value >= 50"></div>
+										@if (value >= 50) {
+											<div class="bubble bubble-1"></div>
+											<div class="bubble bubble-2"></div>
+											<div class="bubble bubble-3"></div>
+										}
 									</div>
 								</div>
 							</div>
@@ -45,7 +46,7 @@ import {interval, takeWhile} from 'rxjs';
 			</div>
 		</div>
 	`,
-	styles: ["@import '@agnos-ui/common/samples/progressbar/custom.scss';"],
+	styles: "@import '@agnos-ui/common/samples/progressbar/custom.scss';",
 })
 export default class FullCustomProgressBarComponent implements OnDestroy {
 	value = 0;

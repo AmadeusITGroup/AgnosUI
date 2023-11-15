@@ -6,7 +6,7 @@ export interface Widget<
 	State extends object = object,
 	Api extends object = object,
 	Actions extends object = object,
-	Directives extends object = object
+	Directives extends object = object,
 > {
 	/**
 	 * the reactive state of the widget, combining all the values served by the stores

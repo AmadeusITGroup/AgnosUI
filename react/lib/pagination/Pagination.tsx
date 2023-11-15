@@ -11,7 +11,7 @@ export function DefaultPages(slotContext: PaginationContext) {
 			jsxPages.push(
 				<NavButton disabled={true} key={'Ellipsis' + i} tabIndex={-1} className={'au-ellipsis'}>
 					<Slot slotContent={state.slotEllipsis} props={slotContext}></Slot>
-				</NavButton>
+				</NavButton>,
 			);
 		} else {
 			jsxPages.push(
@@ -28,7 +28,7 @@ export function DefaultPages(slotContext: PaginationContext) {
 					activeLabel={state.activeLabel}
 				>
 					<Slot slotContent={state.slotNumberLabel} props={{...slotContext, displayedPage: state.pages[i]}}></Slot>
-				</PageItem>
+				</PageItem>,
 			);
 		}
 	}
@@ -59,7 +59,7 @@ export function Pagination(props: Partial<PaginationProps>) {
 				disabled={state.previousDisabled}
 			>
 				<Slot slotContent={state.slotFirst} props={slotContext}></Slot>
-			</NavButton>
+			</NavButton>,
 		);
 	}
 	if (state.directionLinks) {
@@ -75,7 +75,7 @@ export function Pagination(props: Partial<PaginationProps>) {
 				disabled={state.previousDisabled}
 			>
 				<Slot slotContent={state.slotPrevious} props={slotContext}></Slot>
-			</NavButton>
+			</NavButton>,
 		);
 	}
 	if (state.directionLinks) {
@@ -91,7 +91,7 @@ export function Pagination(props: Partial<PaginationProps>) {
 				disabled={state.nextDisabled}
 			>
 				<Slot slotContent={state.slotNext} props={slotContext}></Slot>
-			</NavButton>
+			</NavButton>,
 		);
 	}
 	if (state.boundaryLinks) {
@@ -107,7 +107,7 @@ export function Pagination(props: Partial<PaginationProps>) {
 				disabled={state.nextDisabled}
 			>
 				<Slot slotContent={state.slotLast} props={slotContext}></Slot>
-			</NavButton>
+			</NavButton>,
 		);
 	}
 	return (

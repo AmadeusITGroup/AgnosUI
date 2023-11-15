@@ -11,5 +11,5 @@ export const filter = createFilter(
 	['node_modules', '**/*.spec.ts', '**/__mocks__/**'],
 	{
 		resolve: rootFolder,
-	}
+	},
 );

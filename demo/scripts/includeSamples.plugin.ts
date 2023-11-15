@@ -77,17 +77,17 @@ export const includeSamples = (): Plugin => {
 					await addFile(
 						'angular',
 						`${sampleName}.component.ts`,
-						path.join(__dirname, `../../angular/demo/src/app/samples/${componentName}/${sampleName}.route.ts`)
+						path.join(__dirname, `../../angular/demo/src/app/samples/${componentName}/${sampleName}.route.ts`),
 					);
 					await addFile(
 						'react',
 						`${sampleName}.tsx`,
-						path.join(__dirname, `../../react/demo/app/samples/${componentName}/${normalizedSampleName}.route.tsx`)
+						path.join(__dirname, `../../react/demo/app/samples/${componentName}/${normalizedSampleName}.route.tsx`),
 					);
 					await addFile(
 						'svelte',
 						`${sampleName}.svelte`,
-						path.join(__dirname, `../../svelte/demo/samples/${componentName}/${normalizedSampleName}.route.svelte`)
+						path.join(__dirname, `../../svelte/demo/samples/${componentName}/${normalizedSampleName}.route.svelte`),
 					);
 
 					let output = `export default {componentName:${JSON.stringify(componentName)},sampleName:${JSON.stringify(sampleName)},files:{`;

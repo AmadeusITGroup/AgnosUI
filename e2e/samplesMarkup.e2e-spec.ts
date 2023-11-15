@@ -11,7 +11,7 @@ test.describe.parallel(`Samples markup consistency check`, () => {
 		(route) =>
 			`${normalizePath(route)
 				.replace(/\.route\.svelte$/, '')
-				.toLowerCase()}`
+				.toLowerCase()}`,
 	);
 
 	const routesExtraHash: Record<string, string> = {

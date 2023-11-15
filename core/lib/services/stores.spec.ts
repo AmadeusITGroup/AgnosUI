@@ -152,7 +152,7 @@ describe(`Stores service`, () => {
 						return value;
 					},
 				},
-				prop$
+				prop$,
 			);
 			store$.subscribe((a) => storeValues.push(a));
 			prop$.subscribe((a) => propValues.push(a));
@@ -206,7 +206,7 @@ describe(`Stores service`, () => {
 							return res !== undefined ? res - 1 : undefined;
 						});
 					},
-				}
+				},
 			);
 			const store$ = writableWithDefault(50, config$, undefined, prop$);
 			store$.subscribe((a) => storeValues.push(a));
@@ -335,7 +335,7 @@ describe(`Stores service`, () => {
 							return value;
 						},
 					},
-				}
+				},
 			);
 			const a: number[] = [];
 			props.a$.subscribe((value) => a.push(value));
@@ -457,7 +457,7 @@ describe(`Stores service`, () => {
 				onValueChange$,
 				[dirtyValue$],
 				([dirtyValue]) => dirtyValue.map((dv) => Math.floor(dv)),
-				(a, b) => a.every((val, index) => val === b[index])
+				(a, b) => a.every((val, index) => val === b[index]),
 			);
 			value$.subscribe((value) => values.push(value));
 			expect(values).toEqual([[1]]);

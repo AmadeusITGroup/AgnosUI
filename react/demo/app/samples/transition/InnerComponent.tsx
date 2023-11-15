@@ -24,7 +24,7 @@ const InnerComponent = () => {
 				animationOnInit: paramAnimationOnInit$,
 				visible: paramVisible$,
 			},
-		}
+		},
 	);
 	const transitionRef = useDirective(transitionWidget.directives.directive);
 

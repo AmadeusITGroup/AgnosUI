@@ -13,7 +13,7 @@ export type WidgetsConfig = {
 };
 
 export const widgetsConfigFactory = <Config extends {[widgetName: string]: object} = WidgetsConfig>(
-	widgetsConfigInjectionToken = new InjectionToken<WidgetsConfigStore<Config>>('widgetsConfig')
+	widgetsConfigInjectionToken = new InjectionToken<WidgetsConfigStore<Config>>('widgetsConfig'),
 ) => {
 	/**
 	 * Creates a provider of widgets default configuration that inherits from any widgets default configuration already defined at an upper level

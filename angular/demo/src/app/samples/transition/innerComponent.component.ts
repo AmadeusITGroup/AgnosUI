@@ -89,16 +89,17 @@ const paramRemoveFromDom$ = writable(true);
 				<li>hidden = {{ transition.stores.hidden$ | async }}</li>
 			</ul>
 
-			<div
-				*ngIf="(paramRemoveFromDom$ | async) === false || (transition.stores.hidden$ | async) === false"
-				[auUse]="transition.directives.directive"
-				[auUseParams]="{transition: (paramTransition$ | async)!, animation: (paramAnimation$ | async)!}"
-				style="max-width: 300px;"
-			>
-				<div class="card" style="width: 300px;">
-					<div class="card-body">You can collapse this card by clicking Toggle</div>
+			@if ((paramRemoveFromDom$ | async) === false || (transition.stores.hidden$ | async) === false) {
+				<div
+					[auUse]="transition.directives.directive"
+					[auUseParams]="{transition: (paramTransition$ | async)!, animation: (paramAnimation$ | async)!}"
+					style="max-width: 300px;"
+				>
+					<div class="card" style="width: 300px;">
+						<div class="card-body">You can collapse this card by clicking Toggle</div>
+					</div>
 				</div>
-			</div>
+			}
 		</div>
 	`,
 })

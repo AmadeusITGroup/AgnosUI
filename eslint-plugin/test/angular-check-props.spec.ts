@@ -43,7 +43,7 @@ describe('angular-check-props', () => {
 			output: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
 				'onMyEvent(value: number): void;',
-				'{\n\t\tonMyEvent: (event) => this.myEvent.emit(event),}'
+				'{\n\t\tonMyEvent: (event) => this.myEvent.emit(event),}',
 			),
 		},
 		{
@@ -52,7 +52,7 @@ describe('angular-check-props', () => {
 			output: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
 				'onMyEvent(value: number): void;',
-				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}'
+				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}',
 			),
 		},
 		{
@@ -61,46 +61,46 @@ describe('angular-check-props', () => {
 			output: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
 				'onMyEvent(value: number): void;',
-				'{\n\t\tonMyEvent: (event) => this.myEvent.emit(event),}'
+				'{\n\t\tonMyEvent: (event) => this.myEvent.emit(event),}',
 			),
 		},
 		{
 			code: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
 				'onMyEvent(value: number): void;',
-				'{\n\t\t\tsomethingElse: null\n\t\t}'
+				'{\n\t\t\tsomethingElse: null\n\t\t}',
 			),
 			errors: [{messageId: 'missingOutputEmit', data: {name: 'myEvent', widgetProp: 'onMyEvent'}}],
 			output: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
 				'onMyEvent(value: number): void;',
-				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t\tsomethingElse: null\n\t\t}'
+				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t\tsomethingElse: null\n\t\t}',
 			),
 		},
 		{
 			code: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
 				'onMyEvent(value: number): void;',
-				'{\n\t\t\tonMyEvent: undefined,\n\t\t}'
+				'{\n\t\t\tonMyEvent: undefined,\n\t\t}',
 			),
 			errors: [{messageId: 'missingOutputEmit', data: {name: 'myEvent', widgetProp: 'onMyEvent'}}],
 			output: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
 				'onMyEvent(value: number): void;',
-				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}'
+				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}',
 			),
 		},
 		{
 			code: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
 				'onMyEvent(value: number): void;',
-				'{\n\t\t\tonMyEvent: (param) => {\n\t\t\t\tsomethingElse();\n\t\t\t},\n\t\t}'
+				'{\n\t\t\tonMyEvent: (param) => {\n\t\t\t\tsomethingElse();\n\t\t\t},\n\t\t}',
 			),
 			errors: [{messageId: 'missingOutputEmit', data: {name: 'myEvent', widgetProp: 'onMyEvent'}}],
 			output: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
 				'onMyEvent(value: number): void;',
-				'{\n\t\t\tonMyEvent: (param) => {\n\t\t\t\tsomethingElse();\n\t\t\t\n\t\t\t\tthis.myEvent.emit(param);\n\t\t\t},\n\t\t}'
+				'{\n\t\t\tonMyEvent: (param) => {\n\t\t\t\tsomethingElse();\n\t\t\t\n\t\t\t\tthis.myEvent.emit(param);\n\t\t\t},\n\t\t}',
 			),
 		},
 		{
@@ -129,20 +129,20 @@ describe('angular-check-props', () => {
 			code: codeTemplate(
 				'\n\t@Output() myEvent = new EventEmitter<string>();\n',
 				'onMyEvent(value: string): void;',
-				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}'
+				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}',
 			),
 			errors: [{messageId: 'noValidAlias', data: {name: 'myEvent', type: 'output', alias: 'auMyEvent'}}],
 			output: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<string>();\n",
 				'onMyEvent(value: string): void;',
-				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}'
+				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}',
 			),
 		},
 		{
 			code: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
 				'onMyEvent(value: string): void;',
-				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}'
+				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}',
 			),
 			errors: [
 				{
@@ -153,14 +153,14 @@ describe('angular-check-props', () => {
 			output: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<string>();\n",
 				'onMyEvent(value: string): void;',
-				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}'
+				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}',
 			),
 		},
 		{
 			code: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
 				'onMyEvent(): void;',
-				'{\n\t\t\tonMyEvent: () => this.myEvent.emit(),\n\t\t}'
+				'{\n\t\t\tonMyEvent: () => this.myEvent.emit(),\n\t\t}',
 			),
 			errors: [
 				{
@@ -171,14 +171,14 @@ describe('angular-check-props', () => {
 			output: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<void>();\n",
 				'onMyEvent(): void;',
-				'{\n\t\t\tonMyEvent: () => this.myEvent.emit(),\n\t\t}'
+				'{\n\t\t\tonMyEvent: () => this.myEvent.emit(),\n\t\t}',
 			),
 		},
 		{
 			code: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter();\n",
 				'onMyEvent(value: string | number): void;',
-				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}'
+				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}',
 			),
 			errors: [
 				{
@@ -189,20 +189,20 @@ describe('angular-check-props', () => {
 			output: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<string | number>();\n",
 				'onMyEvent(value: string | number): void;',
-				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}'
+				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}',
 			),
 		},
 		{
 			code: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent;\n",
 				'onMyEvent(value: Date): void;',
-				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}'
+				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}',
 			),
 			errors: [{messageId: 'invalidPropType', data: {type: 'output', name: 'myEvent', expectedType: 'EventEmitter<Date>', foundType: 'any'}}],
 			output: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<Date>();\n",
 				'onMyEvent(value: Date): void;',
-				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}'
+				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}',
 			),
 		},
 		{
@@ -213,38 +213,38 @@ describe('angular-check-props', () => {
 		{
 			code: codeTemplate(
 				"\n\t/**\n\t * mywrongpropdoc\n\t */\n\t@Input('auMyProp') myProp: string | undefined;\n",
-				'/** myrightpropdoc */\nmyProp: string;'
+				'/** myrightpropdoc */\nmyProp: string;',
 			),
 			errors: [{messageId: 'nonMatchingPropDoc', data: {type: 'input', name: 'myProp'}}],
 			output: codeTemplate(
 				"\n\t\n\t/**\n\t * myrightpropdoc\n\t */\n\t@Input('auMyProp') myProp: string | undefined;\n",
-				'/** myrightpropdoc */\nmyProp: string;'
+				'/** myrightpropdoc */\nmyProp: string;',
 			),
 		},
 		{
 			code: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
 				'/** myeventdoc */\nonMyEvent(value: number): void;',
-				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}'
+				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}',
 			),
 			errors: [{messageId: 'nonMatchingPropDoc', data: {type: 'output', name: 'myEvent'}}],
 			output: codeTemplate(
 				"\n\t/**\n\t * myeventdoc\n\t */\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
 				'/** myeventdoc */\nonMyEvent(value: number): void;',
-				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}'
+				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}',
 			),
 		},
 		{
 			code: codeTemplate(
 				"\n\t/**\n\t * myeventwrongdoc\n\t */\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
 				'/** myeventrightdoc */\nonMyEvent(value: number): void;',
-				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}'
+				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}',
 			),
 			errors: [{messageId: 'nonMatchingPropDoc', data: {type: 'output', name: 'myEvent'}}],
 			output: codeTemplate(
 				"\n\t\n\t/**\n\t * myeventrightdoc\n\t */\n\t@Output('auMyEvent') myEvent = new EventEmitter<number>();\n",
 				'/** myeventrightdoc */\nonMyEvent(value: number): void;',
-				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}'
+				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}',
 			),
 		},
 	];

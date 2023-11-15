@@ -11,7 +11,6 @@ import {
 	toSlotContextWidget,
 } from '@agnos-ui/angular-headless';
 import {writable} from '@amadeus-it-group/tansu';
-import {NgIf} from '@angular/common';
 import type {AfterContentChecked, OnChanges, Signal, SimpleChanges} from '@angular/core';
 import {
 	ChangeDetectionStrategy,
@@ -44,18 +43,14 @@ export class AlertStructureDirective {
 @Component({
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [NgIf, SlotDirective, AlertStructureDirective],
+	imports: [SlotDirective, AlertStructureDirective],
 	template: ` <ng-template auAlertStructure #structure let-state="state" let-widget="widget">
 		<div class="alert-body">
 			<ng-template [auSlot]="state.slotDefault" [auSlotProps]="{state, widget}"></ng-template>
 		</div>
-		<button
-			*ngIf="state.dismissible"
-			type="button"
-			class="btn-close ms-auto"
-			(click)="widget.api.close()"
-			[attr.aria-label]="state.ariaCloseButtonLabel"
-		></button>
+		@if (state.dismissible) {
+			<button type="button" class="btn-close ms-auto" (click)="widget.api.close()" [attr.aria-label]="state.ariaCloseButtonLabel"></button>
+		}
 	</ng-template>`,
 })
 export class AlertDefaultSlotsComponent {
@@ -72,19 +67,20 @@ const defaultConfig: Partial<AlertProps> = {
 	selector: '[auAlert]',
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [NgIf, SlotDirective, UseDirective, SlotDefaultDirective],
+	imports: [SlotDirective, UseDirective, SlotDefaultDirective],
 	template: ` <ng-template [auSlotDefault]="defaultSlots">
 			<ng-content></ng-content>
 		</ng-template>
 
-		<div
-			*ngIf="!state().hidden"
-			[auUse]="widget.directives.transitionDirective"
-			class="au-alert d-flex w-100 alert alert-{{ state().type }} {{ state().className }}"
-			role="alert"
-		>
-			<ng-template [auSlot]="state().slotStructure" [auSlotProps]="{state: state(), widget}"></ng-template>
-		</div>`,
+		@if (!state().hidden) {
+			<div
+				[auUse]="widget.directives.transitionDirective"
+				class="au-alert d-flex w-100 alert alert-{{ state().type }} {{ state().className }}"
+				role="alert"
+			>
+				<ng-template [auSlot]="state().slotStructure" [auSlotProps]="{state: state(), widget}"></ng-template>
+			</div>
+		}`,
 })
 export class AlertComponent implements OnChanges, AfterContentChecked {
 	/**
