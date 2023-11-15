@@ -86,10 +86,15 @@ export function Slider(props: Partial<SliderProps>) {
 						aria-disabled={disabled ? 'true' : undefined}
 						aria-orientation={vertical ? 'vertical' : undefined}
 						disabled={disabled}
-						style={{
-							left: `${handleDisplayOptions[item.id].left}%`,
-							top: `${handleDisplayOptions[item.id].top}%`,
-						}}
+						style={
+							vertical
+								? {
+										top: `${handleDisplayOptions[item.id].top}%`,
+								  }
+								: {
+										left: `${handleDisplayOptions[item.id].left}%`,
+								  }
+						}
 						onKeyDown={(e) => keydown(e as unknown as KeyboardEvent, item.id)}
 						onMouseDown={(e) => mouseDown(e as unknown as MouseEvent, item.id)}
 					>
