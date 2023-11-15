@@ -59,7 +59,33 @@ const reportExtraProp = (node: TSESTree.Node, name: string, type: 'input' | 'out
 	});
 };
 
+const validAlias = (name: string) => `au${name.substring(0, 1).toUpperCase()}${name.substring(1)}`;
+
+type transformedInputType = 'Number' | 'Boolean';
+const getTransformedInputType: (
+	type: Type,
+	node: TSESTree.Node,
+	context: Readonly<TSESLint.RuleContext<any, any>>,
+) => transformedInputType | undefined = (type, node, context) => {
+	const typeAsString = typeToString(type, node, context);
+	if (typeAsString === 'boolean | undefined') {
+		return 'Boolean';
+	}
+	if (typeAsString === 'number | undefined') {
+		return 'Number';
+	}
+	return undefined;
+};
+
+const transformedInputValidMetadata = (alias: string, type: transformedInputType) => {
+	const transform = type === 'Boolean' ? 'auBooleanAttribute' : 'auNumberAttribute';
+	return `{alias: '${alias}', transform: ${transform}}`;
+};
+
 const reportMissingInputProp = (node: TSESTree.Node, name: string, prop: PropInfo, context: Readonly<TSESLint.RuleContext<'missingProp', any>>) => {
+	const inputType = getTransformedInputType(prop.type, node, context);
+	const alias = validAlias(name);
+	const metadata = inputType ? transformedInputValidMetadata(alias, inputType) : `'${alias}'`;
 	context.report({
 		node,
 		messageId: 'missingProp',
@@ -70,10 +96,7 @@ const reportMissingInputProp = (node: TSESTree.Node, name: string, prop: PropInf
 		fix(fixer) {
 			const indentation = getIndentation(node, context);
 			const doc = createDocWithIndentation(prop.doc, indentation);
-			return fixer.insertTextBefore(
-				node,
-				`${doc}@Input('${validAlias(name)}') ${name}: ${typeToString(prop.type, node, context)};\n\n${indentation}`,
-			);
+			return fixer.insertTextBefore(node, `${doc}@Input(${metadata}) ${name}: ${typeToString(prop.type, node, context)};\n\n${indentation}`);
 		},
 	});
 };
@@ -168,18 +191,39 @@ const reportInvalidOutputPropType = (
 	});
 };
 
-const validAlias = (name: string) => `au${name.substring(0, 1).toUpperCase()}${name.substring(1)}`;
+const reportInvalidBooleanOrNumberInput = <T extends transformedInputType>(
+	type: T,
+	node: TSESTree.PropertyDefinition,
+	name: string,
+	alias: string,
+	context: Readonly<TSESLint.RuleContext<`invalid${T}Meta`, any>>,
+) => {
+	const metadata = transformedInputValidMetadata(alias, type);
+	context.report({
+		node,
+		messageId: `invalid${type}Meta`,
+		data: {
+			name,
+			metadata,
+		},
+		*fix(fixer) {
+			const decorator = getDecorator(node, 'Input')!;
+			yield fixer.remove(decorator);
+			yield fixer.insertTextBefore(node, `@Input(${metadata})`);
+		},
+	});
+};
 
 const reportInvalidAlias = (
 	node: TSESTree.PropertyDefinition,
 	name: string,
 	type: 'input' | 'output',
 	alias: string,
-	context: Readonly<TSESLint.RuleContext<'noValidAlias', any>>,
+	context: Readonly<TSESLint.RuleContext<'invalidAlias', any>>,
 ) => {
 	context.report({
 		node,
-		messageId: 'noValidAlias',
+		messageId: 'invalidAlias',
 		data: {
 			name,
 			type,
@@ -320,7 +364,35 @@ export const angularCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 									}
 									const decoratorArguments = (getDecorator(classMember, 'Input')!.expression as TSESTree.CallExpression).arguments;
 									const inputValidAlias = validAlias(name);
-									if (!decoratorArguments.length || decoratorArguments[0].type !== 'Literal' || decoratorArguments[0].value !== inputValidAlias) {
+									const inputType = getTransformedInputType(inputInfo.type, node, context);
+									if (inputType) {
+										if (
+											!decoratorArguments.length ||
+											decoratorArguments[0].type !== 'ObjectExpression' ||
+											!decoratorArguments[0].properties.some(
+												(prop) =>
+													prop.type === 'Property' &&
+													prop.key.type === 'Identifier' &&
+													prop.key.name === 'alias' &&
+													prop.value.type === 'Literal' &&
+													prop.value.value === inputValidAlias,
+											) ||
+											!decoratorArguments[0].properties.some(
+												(prop) =>
+													prop.type === 'Property' &&
+													prop.key.type === 'Identifier' &&
+													prop.key.name === 'transform' &&
+													prop.value.type === 'Identifier' &&
+													prop.value.name === (inputType === 'Boolean' ? 'auBooleanAttribute' : 'auNumberAttribute'),
+											)
+										) {
+											reportInvalidBooleanOrNumberInput(inputType, classMember, name, inputValidAlias, context);
+										}
+									} else if (
+										!decoratorArguments.length ||
+										decoratorArguments[0].type !== 'Literal' ||
+										decoratorArguments[0].value !== inputValidAlias
+									) {
 										reportInvalidAlias(classMember, name, 'input', inputValidAlias, context);
 									}
 								} else {
@@ -377,7 +449,9 @@ export const angularCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 		fixable: 'code',
 		messages: {
 			extraProp: 'Extra {{ type }} "{{ name }}" not present in the API.',
-			noValidAlias: 'No proper alias for {{ type }} "{{ name }}": expected \'{{ alias }}\'.',
+			invalidAlias: 'No proper alias for {{ type }} "{{ name }}": expected \'{{ alias }}\'.',
+			invalidBooleanMeta: 'No proper metadata for boolean input "{{ name }}": expected \'{{ metadata }}\'.',
+			invalidNumberMeta: 'No proper metadata for number input "{{ name }}": expected \'{{ metadata }}\'.',
 			invalidPropType: 'Invalid type for {{ type }} "{{ name }}": expected {{ expectedType }}, found {{ foundType }}.',
 			nonMatchingPropDoc: 'Documentation for {{ type }} "{{ name }}" does not match the API documentation.',
 			missingProp: 'Missing {{ type }} "{{ name }}" which is present in the API.',

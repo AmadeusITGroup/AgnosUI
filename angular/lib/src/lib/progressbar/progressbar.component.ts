@@ -3,6 +3,8 @@ import {
 	ComponentTemplate,
 	SlotDefaultDirective,
 	SlotDirective,
+	auBooleanAttribute,
+	auNumberAttribute,
 	callWidgetFactory,
 	createProgressbar,
 	patchSimpleChanges,
@@ -81,17 +83,17 @@ export class ProgressbarComponent implements AfterContentChecked, OnChanges {
 	/**
 	 * The minimum value.
 	 */
-	@Input('auMin') min: number | undefined;
+	@Input({alias: 'auMin', transform: auNumberAttribute}) min: number | undefined;
 
 	/**
 	 * The maximum value.
 	 */
-	@Input('auMax') max: number | undefined;
+	@Input({alias: 'auMax', transform: auNumberAttribute}) max: number | undefined;
 
 	/**
 	 * The current value.
 	 */
-	@Input('auValue') value: number | undefined;
+	@Input({alias: 'auValue', transform: auNumberAttribute}) value: number | undefined;
 
 	/**
 	 * CSS classes to be applied on the widget main container
@@ -111,12 +113,12 @@ export class ProgressbarComponent implements AfterContentChecked, OnChanges {
 	 * If `true`, animates a striped progressbar.
 	 * Takes effect only for browsers supporting CSS3 animations, and if `striped` is `true`.
 	 */
-	@Input('auAnimated') animated: boolean | undefined;
+	@Input({alias: 'auAnimated', transform: auBooleanAttribute}) animated: boolean | undefined;
 
 	/**
 	 * If `true`, shows a striped progressbar.
 	 */
-	@Input('auStriped') striped: boolean | undefined;
+	@Input({alias: 'auStriped', transform: auBooleanAttribute}) striped: boolean | undefined;
 
 	/**
 	 * Return the value for the 'aria-valuetext' attribute.

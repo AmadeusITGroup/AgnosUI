@@ -4,6 +4,7 @@ import {
 	SlotDefaultDirective,
 	SlotDirective,
 	UseDirective,
+	auBooleanAttribute,
 	callWidgetFactory,
 	createModal,
 	mergeDirectives,
@@ -167,7 +168,7 @@ export class ModalComponent<Data> implements OnChanges, AfterContentChecked {
 	/**
 	 * Whether the modal and its backdrop (if present) should be animated when shown or hidden.
 	 */
-	@Input('auAnimation') animation: boolean | undefined;
+	@Input({alias: 'auAnimation', transform: auBooleanAttribute}) animation: boolean | undefined;
 
 	/**
 	 * The transition to use for the backdrop behind the modal (if present).
@@ -182,17 +183,17 @@ export class ModalComponent<Data> implements OnChanges, AfterContentChecked {
 	/**
 	 * Whether the modal should be visible when the transition is completed.
 	 */
-	@Input('auVisible') visible: boolean | undefined;
+	@Input({alias: 'auVisible', transform: auBooleanAttribute}) visible: boolean | undefined;
 
 	/**
 	 * Whether a backdrop should be created behind the modal.
 	 */
-	@Input('auBackdrop') backdrop: boolean | undefined;
+	@Input({alias: 'auBackdrop', transform: auBooleanAttribute}) backdrop: boolean | undefined;
 
 	/**
 	 * Whether the modal should be closed when clicking on the viewport outside the modal.
 	 */
-	@Input('auCloseOnOutsideClick') closeOnOutsideClick: boolean | undefined;
+	@Input({alias: 'auCloseOnOutsideClick', transform: auBooleanAttribute}) closeOnOutsideClick: boolean | undefined;
 
 	/**
 	 * Which element should contain the modal and backdrop DOM elements.
@@ -214,7 +215,7 @@ export class ModalComponent<Data> implements OnChanges, AfterContentChecked {
 	/**
 	 * Whether to display the close button.
 	 */
-	@Input('auCloseButton') closeButton: boolean | undefined;
+	@Input({alias: 'auCloseButton', transform: auBooleanAttribute}) closeButton: boolean | undefined;
 
 	/**
 	 * CSS classes to be applied on the widget main container

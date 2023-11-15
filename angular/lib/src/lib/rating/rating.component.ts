@@ -1,5 +1,13 @@
 import type {AdaptSlotContentProps, RatingState, SlotContent, StarContext} from '@agnos-ui/angular-headless';
-import {SlotDirective, callWidgetFactory, createRating, patchSimpleChanges, toAngularSignal} from '@agnos-ui/angular-headless';
+import {
+	SlotDirective,
+	auBooleanAttribute,
+	auNumberAttribute,
+	callWidgetFactory,
+	createRating,
+	patchSimpleChanges,
+	toAngularSignal,
+} from '@agnos-ui/angular-headless';
 import type {AfterContentChecked, OnChanges, Signal, SimpleChanges} from '@angular/core';
 import {
 	ChangeDetectionStrategy,
@@ -96,29 +104,29 @@ export class RatingComponent implements ControlValueAccessor, OnChanges, AfterCo
 	/**
 	 * If `true`, the rating is disabled.
 	 */
-	@Input('auDisabled') disabled: boolean | undefined;
+	@Input({alias: 'auDisabled', transform: auBooleanAttribute}) disabled: boolean | undefined;
 
 	/**
 	 * The maximum rating that can be given.
 	 */
-	@Input('auMaxRating') maxRating: number | undefined;
+	@Input({alias: 'auMaxRating', transform: auNumberAttribute}) maxRating: number | undefined;
 
 	/**
 	 * The current rating. Could be a decimal value like `3.75`.
 	 */
-	@Input('auRating') rating: number | undefined;
+	@Input({alias: 'auRating', transform: auNumberAttribute}) rating: number | undefined;
 
 	/**
 	 * If `true`, the rating can't be changed.
 	 */
-	@Input('auReadonly') readonly: boolean | undefined;
+	@Input({alias: 'auReadonly', transform: auBooleanAttribute}) readonly: boolean | undefined;
 
 	/**
 	 * Define if the rating can be reset.
 	 *
 	 * If set to true, the user can 'unset' the rating value by cliking on the current rating value.
 	 */
-	@Input('auResettable') resettable: boolean | undefined;
+	@Input({alias: 'auResettable', transform: auBooleanAttribute}) resettable: boolean | undefined;
 
 	@Input('auSlotStar') slotStar: SlotContent<AdaptSlotContentProps<StarContext>>;
 	@ContentChild(RatingStarDirective, {static: false}) slotStarFromContent: RatingStarDirective | undefined;
@@ -127,7 +135,7 @@ export class RatingComponent implements ControlValueAccessor, OnChanges, AfterCo
 	 * Allows setting a custom rating tabindex.
 	 * If the component is disabled, `tabindex` will still be set to `-1`.
 	 */
-	@Input('auTabindex') tabindex: number | undefined;
+	@Input({alias: 'auTabindex', transform: auNumberAttribute}) tabindex: number | undefined;
 
 	/**
 	 * CSS classes to be applied on the widget main container

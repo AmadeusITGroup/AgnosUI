@@ -11,6 +11,7 @@ export * from './lib/slotTypes';
 export type {SlotContent} from './lib/slotTypes';
 export * from './lib/use.directive';
 export * from './lib/utils';
+export * from './lib/coercion';
 
 import type {PropsConfig, WidgetFactory, WidgetProps, WidgetState} from '@agnos-ui/core';
 import {
