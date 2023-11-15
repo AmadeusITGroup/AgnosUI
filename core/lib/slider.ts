@@ -239,7 +239,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 		onValuesChange$,
 		[_dirtyValues$],
 		([dirtyValues]) => dirtyValues.map((dv) => computeCleanValue(dv)),
-		(a, b) => a.every((val, index) => val === b[index])
+		(a, b) => a.every((val, index) => val === b[index]),
 	);
 
 	// computed
@@ -260,7 +260,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			resizeObserver.observe(sliderDom);
 			return () => resizeObserver.disconnect();
 		},
-		{}
+		{},
 	);
 	const updateSliderSize$ = writable({});
 	const sliderDomRect$ = computed(
@@ -271,7 +271,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 		},
 		{
 			equal: Object.is,
-		}
+		},
 	);
 	const minLabelDomRect$ = computed(
 		() => {
@@ -281,7 +281,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 		},
 		{
 			equal: (a, b) => Object.is(a, b),
-		}
+		},
 	);
 	const maxLabelDomRect$ = computed(
 		() => {
@@ -291,7 +291,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 		},
 		{
 			equal: (a, b) => Object.is(a, b),
-		}
+		},
 	);
 
 	const sliderDomRectOffset$ = computed(() => (vertical$() ? sliderDomRect$().top : sliderDomRect$().left));
@@ -302,7 +302,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			.map((val, index) => {
 				return {id: index, value: val};
 			})
-			.sort((a, b) => a.value - b.value)
+			.sort((a, b) => a.value - b.value),
 	);
 	const valuesPercent$ = computed(() => values$().map((val) => percentCompute(val)));
 	const sortedValuesPercent$ = computed(() => [...valuesPercent$()].sort((a, b) => a - b));
@@ -515,7 +515,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 						() => {
 							document.removeEventListener('mousemove', handleDrag);
 						},
-						{once: true}
+						{once: true},
 					);
 				}
 			},

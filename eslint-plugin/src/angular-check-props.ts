@@ -22,7 +22,7 @@ const getDecorator = ({decorators}: {decorators?: TSESTree.Decorator[]}, decorat
 		({expression}) =>
 			expression.type === TSESTree.AST_NODE_TYPES.CallExpression &&
 			expression.callee.type === TSESTree.AST_NODE_TYPES.Identifier &&
-			expression.callee.name === decoratorName
+			expression.callee.name === decoratorName,
 	);
 
 const findDecorator = ({decorators}: {decorators?: TSESTree.Decorator[]}, decoratorName: string) => !!getDecorator({decorators}, decoratorName);
@@ -72,7 +72,7 @@ const reportMissingInputProp = (node: TSESTree.Node, name: string, prop: PropInf
 			const doc = createDocWithIndentation(prop.doc, indentation);
 			return fixer.insertTextBefore(
 				node,
-				`${doc}@Input('${validAlias(name)}') ${name}: ${typeToString(prop.type, node, context)};\n\n${indentation}`
+				`${doc}@Input('${validAlias(name)}') ${name}: ${typeToString(prop.type, node, context)};\n\n${indentation}`,
 			);
 		},
 	});
@@ -83,7 +83,7 @@ const reportMissingOutputProp = (
 	name: string,
 	prop: EventInfo,
 	eventsObject: ReturnType<typeof extractEventsObject>,
-	context: Readonly<TSESLint.RuleContext<'missingProp', any>>
+	context: Readonly<TSESLint.RuleContext<'missingProp', any>>,
 ) => {
 	context.report({
 		node,
@@ -97,7 +97,7 @@ const reportMissingOutputProp = (
 			const doc = createDocWithIndentation(prop.doc, indentation);
 			yield fixer.insertTextBefore(
 				node,
-				`${doc}@Output('${validAlias(name)}') ${name} = new EventEmitter<${typeToString(prop.type, node, context)}>();\n\n${indentation}`
+				`${doc}@Output('${validAlias(name)}') ${name} = new EventEmitter<${typeToString(prop.type, node, context)}>();\n\n${indentation}`,
 			);
 			const eventInApiPatch = eventsObject?.properties.get(prop.widgetProp);
 			const emitInFunction = eventInApiPatch ? findCallToEventEmitter(eventInApiPatch, name) : null;
@@ -116,7 +116,7 @@ const reportInvalidInputPropType = (
 	name: string,
 	foundType: Type,
 	info: PropInfo,
-	context: Readonly<TSESLint.RuleContext<'invalidPropType', any>>
+	context: Readonly<TSESLint.RuleContext<'invalidPropType', any>>,
 ) => {
 	const expectedType = typeToString(info.type, node, context);
 	context.report({
@@ -145,7 +145,7 @@ const reportInvalidOutputPropType = (
 	name: string,
 	foundType: Type,
 	info: PropInfo,
-	context: Readonly<TSESLint.RuleContext<'invalidPropType', any>>
+	context: Readonly<TSESLint.RuleContext<'invalidPropType', any>>,
 ) => {
 	const expectedType = `EventEmitter<${typeToString(info.type, node, context)}>`;
 	context.report({
@@ -175,7 +175,7 @@ const reportInvalidAlias = (
 	name: string,
 	type: 'input' | 'output',
 	alias: string,
-	context: Readonly<TSESLint.RuleContext<'noValidAlias', any>>
+	context: Readonly<TSESLint.RuleContext<'noValidAlias', any>>,
 ) => {
 	context.report({
 		node,
@@ -199,7 +199,7 @@ const reportNonMatchingPropDoc = (
 	name: string,
 	type: 'input' | 'output',
 	prop: PropInfo,
-	context: Readonly<TSESLint.RuleContext<'nonMatchingPropDoc', any>>
+	context: Readonly<TSESLint.RuleContext<'nonMatchingPropDoc', any>>,
 ) => {
 	context.report({
 		node,
@@ -244,7 +244,7 @@ const fixOutputEmit = (
 	prop: EventInfo,
 	eventsObject: TSESTree.ObjectExpression | undefined,
 	eventInEventsObject: TSESTree.Node | undefined,
-	context: Readonly<TSESLint.RuleContext<any, any>>
+	context: Readonly<TSESLint.RuleContext<any, any>>,
 ) => {
 	const arrowFunction = `(event) => this.${name}.emit(event)`;
 	if (eventInEventsObject) {
@@ -258,7 +258,7 @@ const fixOutputEmit = (
 				fixer,
 				context.getSourceCode().getLastToken(eventInEventsObject.body)!,
 				addIndentation(`\nthis.${name}.emit(${eventInEventsObject.params[0].name});`, indentation),
-				context
+				context,
 			);
 		}
 		return fixer.replaceText(eventInEventsObject, arrowFunction);
@@ -277,7 +277,7 @@ const reportMissingOutputEmit = (
 	prop: EventInfo,
 	eventsObject: TSESTree.ObjectExpression | undefined,
 	eventInEventsObject: TSESTree.Node | undefined,
-	context: Readonly<TSESLint.RuleContext<'missingOutputEmit', any>>
+	context: Readonly<TSESLint.RuleContext<'missingOutputEmit', any>>,
 ) => {
 	context.report({
 		node,

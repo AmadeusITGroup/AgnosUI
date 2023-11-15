@@ -2,7 +2,10 @@ import type {ContextWidget, SlotContent as CoreSlotContent, Widget, WidgetFactor
 import {Directive, Input, type TemplateRef, type Type} from '@angular/core';
 
 export class ComponentTemplate<Props, K extends string, T extends {[key in K]: TemplateRef<Props>}> {
-	constructor(public readonly component: Type<T>, public readonly templateProp: K) {}
+	constructor(
+		public readonly component: Type<T>,
+		public readonly templateProp: K,
+	) {}
 }
 
 export type SlotContent<Props extends object = object> =

@@ -19,7 +19,7 @@ function Badges<Item>({api, selected}: {api: SelectWidget<Item>; selected: Item[
 				<span role="button" tabIndex={-1} aria-label="Close" onClick={() => api.api.unselect(item)}>
 					x
 				</span>
-			</div>
+			</div>,
 		);
 	}
 

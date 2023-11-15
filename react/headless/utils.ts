@@ -62,7 +62,7 @@ export function useDirective<T>(directive: Directive<T>, args?: T) {
 				instance.current = directive(element, propsRef.current as T);
 			}
 		},
-		[directive]
+		[directive],
 	);
 	propsRef.current = args;
 	instance.current?.update?.(args as T);

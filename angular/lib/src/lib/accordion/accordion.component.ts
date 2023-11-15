@@ -18,7 +18,7 @@ import {
 	toSlotContextWidget,
 	useDirectiveForHost,
 } from '@agnos-ui/angular-headless';
-import {NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, NgTemplateOutlet} from '@angular/common';
+import {NgTemplateOutlet} from '@angular/common';
 import type {AfterContentChecked, AfterViewInit, OnChanges, Signal, SimpleChanges} from '@angular/core';
 import {
 	ChangeDetectionStrategy,
@@ -60,28 +60,32 @@ export class AccordionItemStructureDirective {
 @Component({
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [
-		UseDirective,
-		SlotDirective,
-		NgIf,
-		AccordionHeaderDirective,
-		AccordionBodyDirective,
-		NgSwitch,
-		NgSwitchCase,
-		NgSwitchDefault,
-		NgTemplateOutlet,
-	],
+	imports: [UseDirective, SlotDirective, AccordionHeaderDirective, AccordionBodyDirective, NgTemplateOutlet],
 	template: `
 		<ng-template #structure let-state="state" let-widget="widget">
-			<ng-container [ngSwitch]="state.itemHeadingTag">
-				<ng-container *ngSwitchCase="'h1'" [ngTemplateOutlet]="h1"></ng-container>
-				<ng-container *ngSwitchCase="'h2'" [ngTemplateOutlet]="h2"></ng-container>
-				<ng-container *ngSwitchCase="'h3'" [ngTemplateOutlet]="h3"></ng-container>
-				<ng-container *ngSwitchCase="'h4'" [ngTemplateOutlet]="h4"></ng-container>
-				<ng-container *ngSwitchCase="'h5'" [ngTemplateOutlet]="h5"></ng-container>
-				<ng-container *ngSwitchCase="'h6'" [ngTemplateOutlet]="h6"></ng-container>
-				<ng-container *ngSwitchDefault [ngTemplateOutlet]="h2"></ng-container>
-			</ng-container>
+			@switch (state.itemHeadingTag) {
+				@case ('h1') {
+					<ng-container [ngTemplateOutlet]="h1"></ng-container>
+				}
+				@case ('h2') {
+					<ng-container [ngTemplateOutlet]="h2"></ng-container>
+				}
+				@case ('h3') {
+					<ng-container [ngTemplateOutlet]="h3"></ng-container>
+				}
+				@case ('h4') {
+					<ng-container [ngTemplateOutlet]="h4"></ng-container>
+				}
+				@case ('h5') {
+					<ng-container [ngTemplateOutlet]="h5"></ng-container>
+				}
+				@case ('h6') {
+					<ng-container [ngTemplateOutlet]="h6"></ng-container>
+				}
+				@default {
+					<ng-container [ngTemplateOutlet]="h2"></ng-container>
+				}
+			}
 
 			<ng-template #h1>
 				<h1 class="accordion-header {{ state.itemHeaderClass }}">
@@ -133,17 +137,18 @@ export class AccordionItemStructureDirective {
 					<ng-template [auSlotProps]="{state, widget}" [auSlot]="state.slotItemHeader"></ng-template>
 				</button>
 			</ng-template>
-			<div
-				*ngIf="state.shouldBeInDOM"
-				[auUse]="widget.directives.collapseDirective"
-				attr.aria-labelledby="{{ state.itemId }}-toggle"
-				id="{{ state.itemId }}-collapse"
-				class="accordion-collapse {{ state.itemCollapseClass }}"
-			>
-				<div class="accordion-body {{ state.itemBodyClass }}">
-					<ng-template [auSlotProps]="{state, widget}" [auSlot]="state.slotItemBody"></ng-template>
+			@if (state.shouldBeInDOM) {
+				<div
+					[auUse]="widget.directives.collapseDirective"
+					attr.aria-labelledby="{{ state.itemId }}-toggle"
+					id="{{ state.itemId }}-collapse"
+					class="accordion-collapse {{ state.itemCollapseClass }}"
+				>
+					<div class="accordion-body {{ state.itemBodyClass }}">
+						<ng-template [auSlotProps]="{state, widget}" [auSlot]="state.slotItemBody"></ng-template>
+					</div>
 				</div>
-			</div>
+			}
 		</ng-template>
 	`,
 })

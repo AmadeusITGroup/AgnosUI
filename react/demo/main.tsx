@@ -35,5 +35,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 				</Routes>
 			</HashRouter>
 		</div>
-	</React.StrictMode>
+	</React.StrictMode>,
 );

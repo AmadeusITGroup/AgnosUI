@@ -35,11 +35,11 @@ self.addEventListener('install', (event) => {
 					} else {
 						missingWithHash.push(url);
 					}
-				})
+				}),
 			);
 			await cache.addAll([...missingWithHash, ...withoutHash]);
 			await self.skipWaiting();
-		})()
+		})(),
 	);
 });
 
@@ -48,7 +48,7 @@ self.addEventListener('activate', (event) => {
 		(async () => {
 			await self.clients.claim();
 			await Promise.all((await caches.keys()).filter((key) => key.startsWith(CACHE_PREFIX) && key !== CACHE).map((key) => caches.delete(key)));
-		})()
+		})(),
 	);
 });
 
@@ -65,7 +65,7 @@ self.addEventListener('fetch', (event) => {
 					await cache.add(url.pathname);
 					return (await cache.match(url.pathname))!;
 				}
-			})()
+			})(),
 		);
 	}
 });

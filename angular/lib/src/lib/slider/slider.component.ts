@@ -8,7 +8,6 @@ import {
 	toSlotContextWidget,
 	useDirectiveForHost,
 } from '@agnos-ui/angular-headless';
-import {NgFor, NgIf} from '@angular/common';
 import type {OnChanges, Signal, SimpleChanges} from '@angular/core';
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, NgZone, Output, ViewEncapsulation, forwardRef, inject} from '@angular/core';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
@@ -20,7 +19,7 @@ import {take} from 'rxjs';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	encapsulation: ViewEncapsulation.None,
 	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SliderComponent), multi: true}],
-	imports: [NgIf, NgFor, UseDirective],
+	imports: [UseDirective],
 	host: {
 		class: `au-slider`,
 		'[class]': '(state().vertical ? "au-slider-vertical" : "au-slider-horizontal") + " " + state().className',
@@ -29,14 +28,15 @@ import {take} from 'rxjs';
 	},
 	template: `
 		<div [class]="state().vertical ? 'au-slider-clickable-area-vertical' : 'au-slider-clickable-area'" (click)="sliderClick($event)"></div>
-		<div
-			*ngFor="let option of state().progressDisplayOptions"
-			class="au-slider-progress"
-			[style.left.%]="option.left"
-			[style.bottom.%]="option.bottom"
-			[style.width.%]="option.width"
-			[style.height.%]="option.height"
-		></div>
+		@for (option of state().progressDisplayOptions; track option) {
+			<div
+				class="au-slider-progress"
+				[style.left.%]="option.left"
+				[style.bottom.%]="option.bottom"
+				[style.width.%]="option.width"
+				[style.height.%]="option.height"
+			></div>
+		}
 		<div
 			[class]="state().vertical ? 'au-slider-label-vertical au-slider-label-vertical-min' : 'au-slider-label au-slider-label-min'"
 			[style.visibility]="state().minValueLabelDisplay ? 'visible' : 'hidden'"
@@ -59,7 +59,7 @@ import {take} from 'rxjs';
 		>
 			{{ state().sortedValues[0] }} - {{ state().sortedValues[1] }}
 		</div>
-		<ng-template ngFor let-item [ngForOf]="state().sortedHandles" let-i="index" ; [ngForTrackBy]="trackHandle">
+		@for (item of state().sortedHandles; track item.id; let i = $index) {
 			<button
 				class="au-slider-handle"
 				role="slider"
@@ -87,7 +87,7 @@ import {take} from 'rxjs';
 			>
 				{{ state().values[i] }}
 			</div>
-		</ng-template>
+		}
 	`,
 })
 export class SliderComponent implements OnChanges {
@@ -213,10 +213,6 @@ export class SliderComponent implements OnChanges {
 
 	sliderClick($event: MouseEvent) {
 		this.widget.actions.click($event);
-	}
-
-	trackHandle(index: number, handle: {id: number; value: number}) {
-		return handle.id;
 	}
 
 	onKeyDown(event: KeyboardEvent, handleId: number) {

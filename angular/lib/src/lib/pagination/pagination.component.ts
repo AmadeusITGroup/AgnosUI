@@ -8,7 +8,7 @@ import {
 	toAngularSignal,
 	toSlotContextWidget,
 } from '@agnos-ui/angular-headless';
-import {AsyncPipe, NgForOf, NgIf} from '@angular/common';
+import {AsyncPipe} from '@angular/common';
 import type {AfterContentChecked, OnChanges, Signal, SimpleChanges} from '@angular/core';
 import {
 	ChangeDetectionStrategy,
@@ -103,32 +103,37 @@ export class PaginationPagesDirective {
 
 @Component({
 	standalone: true,
-	imports: [NgForOf, NgIf, SlotDirective, PaginationPagesDirective],
+	imports: [SlotDirective, PaginationPagesDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `<ng-template auPaginationPages #pages let-state="state" let-widget="widget">
-		<li
-			*ngFor="let page of state.pages; index as i"
-			class="page-item"
-			[class.active]="page === state.page"
-			[class.disabled]="widget.api.isEllipsis(page) || state.disabled"
-			[attr.aria-current]="page === state.page ? 'page' : null"
-		>
-			<a *ngIf="widget.api.isEllipsis(page)" class="page-link au-ellipsis" tabindex="-1" aria-disabled="true">
-				<ng-template [auSlot]="state.slotEllipsis" [auSlotProps]="{state, widget}"></ng-template>
-			</a>
-			<a
-				*ngIf="!widget.api.isEllipsis(page)"
-				[attr.aria-label]="state.pagesLabel[i]"
-				class="page-link au-page"
-				href="#"
-				(click)="widget.actions.select(page); $event.preventDefault()"
-				[attr.tabindex]="state.disabled ? '-1' : null"
-				[attr.aria-disabled]="state.disabled ? 'true' : null"
+		@for (page of state.pages; track page; let i = $index) {
+			<li
+				class="page-item"
+				[class.active]="page === state.page"
+				[class.disabled]="widget.api.isEllipsis(page) || state.disabled"
+				[attr.aria-current]="page === state.page ? 'page' : null"
 			>
-				<ng-template [auSlot]="state.slotNumberLabel" [auSlotProps]="{state, widget, displayedPage: page}"></ng-template>
-				<span *ngIf="state.page === page" class="visually-hidden">{{ state.activeLabel }}</span>
-			</a>
-		</li>
+				@if (widget.api.isEllipsis(page)) {
+					<a class="page-link au-ellipsis" tabindex="-1" aria-disabled="true">
+						<ng-template [auSlot]="state.slotEllipsis" [auSlotProps]="{state, widget}"></ng-template>
+					</a>
+				} @else {
+					<a
+						[attr.aria-label]="state.pagesLabel[i]"
+						class="page-link au-page"
+						href="#"
+						(click)="widget.actions.select(page); $event.preventDefault()"
+						[attr.tabindex]="state.disabled ? '-1' : null"
+						[attr.aria-disabled]="state.disabled ? 'true' : null"
+					>
+						<ng-template [auSlot]="state.slotNumberLabel" [auSlotProps]="{state, widget, displayedPage: page}"></ng-template>
+						@if (state.page === page) {
+							<span class="visually-hidden">{{ state.activeLabel }}</span>
+						}
+					</a>
+				}
+			</li>
+		}
 	</ng-template>`,
 })
 export class PaginationDefaultSlotsComponent {
@@ -146,75 +151,83 @@ const defaultConfig: Partial<PaginationProps> = {
 @Component({
 	selector: '[auPagination]',
 	standalone: true,
-	imports: [NgIf, AsyncPipe, SlotDirective],
+	imports: [AsyncPipe, SlotDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	host: {
 		'[attr.aria-label]': 'state$().ariaLabel',
 	},
 	encapsulation: ViewEncapsulation.None,
 	template: `
-		<ng-container *ngIf="widget.state$ | async as state">
+		@if (widget.state$ | async; as state) {
 			<ul [class]="'au-pagination pagination' + (state.size ? ' pagination-' + state.size : '') + ' ' + state.className">
-				<li *ngIf="state.boundaryLinks" class="page-item" [class.disabled]="state.previousDisabled">
-					<a
-						[attr.aria-label]="state.ariaFirstLabel"
-						class="page-link au-first"
-						href="#"
-						(click)="widget.actions.first(); $event.preventDefault()"
-						[attr.tabindex]="state.previousDisabled ? '-1' : null"
-						[attr.aria-disabled]="state.previousDisabled ? 'true' : null"
-					>
-						<span aria-hidden="true">
-							<ng-template [auSlot]="state.slotFirst" [auSlotProps]="{widget, state}"></ng-template>
-						</span>
-					</a>
-				</li>
-				<li *ngIf="state.directionLinks" class="page-item" [class.disabled]="state.previousDisabled">
-					<a
-						[attr.aria-label]="state.ariaPreviousLabel"
-						class="page-link au-previous"
-						href="#"
-						(click)="widget.actions.previous(); $event.preventDefault()"
-						[attr.tabindex]="state.previousDisabled ? '-1' : null"
-						[attr.aria-disabled]="state.previousDisabled ? 'true' : null"
-					>
-						<span aria-hidden="true">
-							<ng-template [auSlot]="state.slotPrevious" [auSlotProps]="{widget, state}"></ng-template>
-						</span>
-					</a>
-				</li>
+				@if (state.boundaryLinks) {
+					<li class="page-item" [class.disabled]="state.previousDisabled">
+						<a
+							[attr.aria-label]="state.ariaFirstLabel"
+							class="page-link au-first"
+							href="#"
+							(click)="widget.actions.first(); $event.preventDefault()"
+							[attr.tabindex]="state.previousDisabled ? '-1' : null"
+							[attr.aria-disabled]="state.previousDisabled ? 'true' : null"
+						>
+							<span aria-hidden="true">
+								<ng-template [auSlot]="state.slotFirst" [auSlotProps]="{widget, state}"></ng-template>
+							</span>
+						</a>
+					</li>
+				}
+				@if (state.directionLinks) {
+					<li class="page-item" [class.disabled]="state.previousDisabled">
+						<a
+							[attr.aria-label]="state.ariaPreviousLabel"
+							class="page-link au-previous"
+							href="#"
+							(click)="widget.actions.previous(); $event.preventDefault()"
+							[attr.tabindex]="state.previousDisabled ? '-1' : null"
+							[attr.aria-disabled]="state.previousDisabled ? 'true' : null"
+						>
+							<span aria-hidden="true">
+								<ng-template [auSlot]="state.slotPrevious" [auSlotProps]="{widget, state}"></ng-template>
+							</span>
+						</a>
+					</li>
+				}
 				<ng-template [auSlot]="state.slotPages" [auSlotProps]="{widget, state}"></ng-template>
-				<li *ngIf="state.directionLinks" class="page-item" [class.disabled]="state.nextDisabled">
-					<a
-						[attr.aria-label]="state.ariaNextLabel"
-						class="page-link au-next"
-						href="#"
-						(click)="widget.actions.next(); $event.preventDefault()"
-						[attr.tabindex]="state.nextDisabled ? '-1' : null"
-						[attr.aria-disabled]="state.nextDisabled ? 'true' : null"
-					>
-						<span aria-hidden="true">
-							<ng-template [auSlot]="state.slotNext" [auSlotProps]="{widget, state}"></ng-template>
-						</span>
-					</a>
-				</li>
-				<li *ngIf="state.boundaryLinks" class="page-item" [class.disabled]="state.nextDisabled">
-					<a
-						[attr.aria-label]="state.ariaLastLabel"
-						class="page-link au-last"
-						href="#"
-						(click)="widget.actions.last(); $event.preventDefault()"
-						[attr.tabindex]="state.nextDisabled ? '-1' : null"
-						[attr.aria-disabled]="state.nextDisabled ? 'true' : null"
-					>
-						<span aria-hidden="true">
-							<ng-template [auSlot]="state.slotLast" [auSlotProps]="{widget, state}"></ng-template>
-						</span>
-					</a>
-				</li>
+				@if (state.directionLinks) {
+					<li class="page-item" [class.disabled]="state.nextDisabled">
+						<a
+							[attr.aria-label]="state.ariaNextLabel"
+							class="page-link au-next"
+							href="#"
+							(click)="widget.actions.next(); $event.preventDefault()"
+							[attr.tabindex]="state.nextDisabled ? '-1' : null"
+							[attr.aria-disabled]="state.nextDisabled ? 'true' : null"
+						>
+							<span aria-hidden="true">
+								<ng-template [auSlot]="state.slotNext" [auSlotProps]="{widget, state}"></ng-template>
+							</span>
+						</a>
+					</li>
+				}
+				@if (state.boundaryLinks) {
+					<li class="page-item" [class.disabled]="state.nextDisabled">
+						<a
+							[attr.aria-label]="state.ariaLastLabel"
+							class="page-link au-last"
+							href="#"
+							(click)="widget.actions.last(); $event.preventDefault()"
+							[attr.tabindex]="state.nextDisabled ? '-1' : null"
+							[attr.aria-disabled]="state.nextDisabled ? 'true' : null"
+						>
+							<span aria-hidden="true">
+								<ng-template [auSlot]="state.slotLast" [auSlotProps]="{widget, state}"></ng-template>
+							</span>
+						</a>
+					</li>
+				}
 			</ul>
 			<div aria-live="polite" class="visually-hidden">Current page is {{ state.page }}</div>
-		</ng-container>
+		}
 	`,
 })
 export class PaginationComponent implements OnChanges, AfterContentChecked {

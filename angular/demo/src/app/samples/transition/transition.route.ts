@@ -10,9 +10,9 @@ import {InnerComponent} from './innerComponent.component';
 		<h2>Transition example</h2>
 		<div class="demo-transition mb-3">
 			<button id="toggle-component" class="btn btn-outline-secondary" (click)="showComponent = !showComponent">Toggle component</button>
-			<ng-container *ngIf="showComponent">
+			@if (showComponent) {
 				<app-transition-inner />
-			</ng-container>
+			}
 		</div>
 	`,
 })

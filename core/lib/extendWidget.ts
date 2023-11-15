@@ -7,7 +7,7 @@ export const extendWidgetProps =
 	<W extends Widget, ExtraProps extends object>(
 		factory: WidgetFactory<W>,
 		extraPropsDefaults: ExtraProps,
-		extraPropsConfig?: ConfigValidator<ExtraProps>
+		extraPropsConfig?: ConfigValidator<ExtraProps>,
 	): WidgetFactory<Widget<WidgetProps<W> & ExtraProps, WidgetState<W> & ExtraProps, W['api'], W['actions'], W['directives']>> =>
 	(propsConfig) => {
 		const extraPropsWritables = writablesWithDefault(extraPropsDefaults, propsConfig as PropsConfig<ExtraProps>, extraPropsConfig);

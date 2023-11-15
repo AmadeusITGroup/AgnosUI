@@ -470,7 +470,7 @@ const configItemValidator: ConfigValidator<AccordionItemProps> = {
 function createAccordionItem(
 	accordionOnShown: ReadableSignal<(itemId: string) => void>,
 	accordionOnHidden: ReadableSignal<(itemId: string) => void>,
-	config?: PropsConfig<AccordionItemProps>
+	config?: PropsConfig<AccordionItemProps>,
 ): AccordionItemWidget {
 	const [
 		{

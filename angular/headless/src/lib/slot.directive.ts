@@ -5,7 +5,10 @@ import type {SlotContent} from './slotTypes';
 import {ComponentTemplate} from './slotTypes';
 
 abstract class SlotHandler<Props extends Record<string, any>, Slot extends SlotContent<Props> = SlotContent<Props>> {
-	constructor(public viewContainerRef: ViewContainerRef, public document: Document) {}
+	constructor(
+		public viewContainerRef: ViewContainerRef,
+		public document: Document,
+	) {}
 	slotChange(slot: Slot, props: Props) {}
 	propsChange(slot: Slot, props: Props) {}
 	destroy() {}
@@ -125,7 +128,7 @@ class TemplateRefSlotHandler<Props extends Record<string, any>> extends SlotHand
 class ComponentTemplateSlotHandler<
 	Props extends Record<string, any>,
 	K extends string,
-	T extends {[key in K]: TemplateRef<Props>}
+	T extends {[key in K]: TemplateRef<Props>},
 > extends SlotHandler<Props, ComponentTemplate<Props, K, T>> {
 	#componentRef: ComponentRef<T> | undefined;
 	#templateSlotHandler = new TemplateRefSlotHandler(this.viewContainerRef, this.document);

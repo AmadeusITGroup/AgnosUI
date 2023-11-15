@@ -63,7 +63,7 @@ export const mergeInto = <T>(destination: T, source: T | undefined, levels = Inf
  */
 export const createWidgetsConfig = <T>(
 	parent$?: WidgetsConfigStore<T> | undefined,
-	adaptParentConfig: (config: Partial2Levels<T>) => Partial2Levels<T> = identity
+	adaptParentConfig: (config: Partial2Levels<T>) => Partial2Levels<T> = identity,
 ): WidgetsConfigStore<T> => {
 	const own$ = writable({} as Partial2Levels<T>);
 	const adaptedParent$ = adaptParentConfig === identity ? parent$ : computed(() => adaptParentConfig(mergeInto({}, parent$?.(), 2)));
@@ -74,7 +74,7 @@ export const createWidgetsConfig = <T>(
 			own$,
 			adaptedParent$,
 			parent$,
-		}
+		},
 	);
 };
 

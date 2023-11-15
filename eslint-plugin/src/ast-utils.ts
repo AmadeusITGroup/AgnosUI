@@ -51,7 +51,7 @@ export const getIndentation = (node: TSESTree.Node | TSESTree.Token | SvelteAST.
 export const getChildIndentation = (
 	child: TSESTree.Node | TSESTree.Token | undefined,
 	parent: TSESTree.Node | TSESTree.Token,
-	context: Readonly<TSESLint.RuleContext<any, any>>
+	context: Readonly<TSESLint.RuleContext<any, any>>,
 ) => (child ? getIndentation(child, context) : `${getIndentation(parent, context)}\t`);
 
 const newLine = /\r?\n\r?/g;
@@ -67,7 +67,7 @@ export const insertNewLineBefore = (
 	fixer: TSESLint.RuleFixer,
 	token: TSESTree.Node | TSESTree.Token,
 	text: string,
-	context: Readonly<TSESLint.RuleContext<any, any>>
+	context: Readonly<TSESLint.RuleContext<any, any>>,
 ) => {
 	const tokenIndentation = getIndentation(token, context);
 	return fixer.insertTextBefore(token, `${text}\n${tokenIndentation}`);

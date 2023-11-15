@@ -118,7 +118,7 @@ export function writableWithDefault<T>(
 	defValue: T,
 	config$: ReadableSignal<T | undefined> = readable(undefined),
 	options: WritableWithDefaultOptions<T> = {},
-	own$: WritableSignal<T | undefined> = writable(undefined)
+	own$: WritableSignal<T | undefined> = writable(undefined),
 ): WritableSignal<T, T | undefined> {
 	const {normalizeValue = identity, equal = Object.is} = options;
 	const getDefValue = () => defValue;
@@ -176,7 +176,7 @@ export const toWritableStore = <T>(x: WritableSignal<T> | T) => (isStore(x) ? x 
 
 export const normalizeConfigStores = <T extends object>(
 	keys: (keyof T)[],
-	config?: ReadableSignal<Partial<T>> | ValuesOrReadableSignals<T>
+	config?: ReadableSignal<Partial<T>> | ValuesOrReadableSignals<T>,
 ): ReadableSignals<T> => {
 	const res: ReadableSignals<T> = {};
 	if (config) {
@@ -229,7 +229,7 @@ export const mergeConfigStores = <T extends object>(keys: (keyof T)[], config1?:
 export const writablesWithDefault = <T extends object>(
 	defConfig: T,
 	propsConfig?: PropsConfig<T>,
-	options?: ConfigValidator<T>
+	options?: ConfigValidator<T>,
 ): ToWritableSignal<T> => {
 	const res: any = {};
 	const keys = Object.keys(defConfig) as (string & keyof T)[];
@@ -271,7 +271,7 @@ export const writablesWithDefault = <T extends object>(
 export const writablesForProps = <T extends object>(
 	defConfig: T,
 	propsConfig?: PropsConfig<T>,
-	options?: {[K in keyof T]?: WritableWithDefaultOptions<T[K]>}
+	options?: {[K in keyof T]?: WritableWithDefaultOptions<T[K]>},
 ): [ToWritableSignal<T>, ReturnType<typeof createPatch<T>>] => {
 	const stores = writablesWithDefault(defConfig, propsConfig, options);
 	return [stores, createPatch(stores)];
@@ -292,7 +292,7 @@ export interface PropsConfig<U extends object> {
 }
 
 export const stateStores = <A extends {[key in `${string}$`]: ReadableSignal<any>}>(
-	inputStores: A
+	inputStores: A,
 ): {state$: ReadableSignal<ToState<A>>; stores: {[key in `${string}$` & keyof A]: ReadableSignal<ValueOfStore<A[key]>>}} => {
 	const storesNames: string[] = [];
 	const storesArray: any = [];
@@ -322,7 +322,7 @@ export const bindableDerived = <T, U extends [WritableSignal<T>, ...StoreInput<a
 	onChange$: ReadableSignal<(value: T) => void>,
 	stores: U,
 	adjustValue: (arg: StoresInputValues<U>) => T,
-	equal = (currentValue: T, newValue: T) => newValue === currentValue
+	equal = (currentValue: T, newValue: T) => newValue === currentValue,
 ) => {
 	let currentValue = stores[0]();
 	return derived(stores, {

@@ -27,7 +27,7 @@ const frameworks = [
 
 const envBrowser = process.env.BROWSER?.toLowerCase();
 const devicesToTest = [devices['Desktop Chrome'], devices['Desktop Firefox'], devices['Desktop Safari']].filter(
-	envBrowser ? (browser) => browser.defaultBrowserType === envBrowser : () => true
+	envBrowser ? (browser) => browser.defaultBrowserType === envBrowser : () => true,
 );
 
 const includesDemo = !envFramework || envFramework === 'demo';

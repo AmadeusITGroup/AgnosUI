@@ -69,20 +69,14 @@
 					"configurations": {
 						"production": {
 							"servePath": "/angular/samples",
-							"browserTarget": "demo:build:production"
+							"buildTarget": "demo:build:production"
 						},
 						"development": {
 							"servePath": "/angular/samples",
-							"browserTarget": "demo:build:development"
+							"buildTarget": "demo:build:development"
 						}
 					},
 					"defaultConfiguration": "development"
-				},
-				"extract-i18n": {
-					"builder": "@angular-devkit/build-angular:extract-i18n",
-					"options": {
-						"browserTarget": "demo:build"
-					}
 				}
 			}
 		},

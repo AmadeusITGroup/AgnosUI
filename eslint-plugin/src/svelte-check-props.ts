@@ -27,7 +27,7 @@ const isContextModuleScript = (node: SvelteAST.SvelteScriptElement) => {
 			attribute.key.name === 'context' &&
 			attribute.value.length === 1 &&
 			attribute.value[0].type === 'SvelteLiteral' &&
-			attribute.value[0].value === 'module'
+			attribute.value[0].value === 'module',
 	);
 };
 
@@ -46,7 +46,7 @@ const getStatementNode = (node: any) => {
 const reportExtraProp = (
 	node: ExportLetNode,
 	allExtraProps: Map<ExportLetNode, boolean>,
-	context: Readonly<TSESLint.RuleContext<'extraProp', any>>
+	context: Readonly<TSESLint.RuleContext<'extraProp', any>>,
 ) => {
 	context.report({
 		node,
@@ -91,7 +91,7 @@ const reportMissingProp = (
 	insertPosition: TSESTree.Node,
 	name: string,
 	prop: PropInfo,
-	context: Readonly<TSESLint.RuleContext<'missingBoundProp', any>>
+	context: Readonly<TSESLint.RuleContext<'missingBoundProp', any>>,
 ) => {
 	context.report({
 		node,
@@ -109,7 +109,7 @@ const reportInvalidPropType = (
 	node: ExportLetNode,
 	info: PropInfo,
 	foundType: Type,
-	context: Readonly<TSESLint.RuleContext<'invalidPropType', any>>
+	context: Readonly<TSESLint.RuleContext<'invalidPropType', any>>,
 ) => {
 	const expectedType = typeToString(info.type, node, context);
 	context.report({
@@ -192,7 +192,7 @@ const fixApiPatchEventHandler = (
 	eventInApiPatch: TSESTree.Node | undefined,
 	callToDispatch: TSESTree.Node | undefined,
 	bindingAssignment: TSESTree.Node | undefined,
-	context: Readonly<TSESLint.RuleContext<any, any>>
+	context: Readonly<TSESLint.RuleContext<any, any>>,
 ) => {
 	const arrowFunction = prop.propBinding
 		? `(event) => {\n\t${prop.propBinding} = event;\n\tdispatch(${JSON.stringify(name)}, event);\n}`
@@ -235,7 +235,7 @@ const reportApiPatchEventHandlerIssue = (
 	eventInWidgetPatch: TSESTree.Node | undefined,
 	callToDispatch: TSESTree.Node | undefined,
 	bindingAssignment: TSESTree.Node | undefined,
-	context: Readonly<TSESLint.RuleContext<'missingDispatchCall' | 'missingBindingAssignment', any>>
+	context: Readonly<TSESLint.RuleContext<'missingDispatchCall' | 'missingBindingAssignment', any>>,
 ) => {
 	context.report({
 		node: eventInWidgetPatch || widgetPatchArgNode || widgetStatementNode,
@@ -255,7 +255,7 @@ const reportApiPatchEventHandlerIssue = (
 				eventInWidgetPatch,
 				callToDispatch,
 				bindingAssignment,
-				context
+				context,
 			);
 		},
 	});
@@ -312,7 +312,7 @@ export const svelteCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 									}
 									return !validProp;
 								})
-								.map((item) => [item, false])
+								.map((item) => [item, false]),
 						);
 						for (const [prop] of extraProps) {
 							reportExtraProp(prop, extraProps, context);
@@ -336,7 +336,7 @@ export const svelteCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 										eventInApiPatch,
 										callToDispatch,
 										bindingAssignment,
-										context
+										context,
 									);
 								}
 							}

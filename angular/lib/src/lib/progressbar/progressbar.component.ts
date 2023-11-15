@@ -10,7 +10,7 @@ import {
 	toSlotContextWidget,
 } from '@agnos-ui/angular-headless';
 import {writable} from '@amadeus-it-group/tansu';
-import {NgClass, NgIf} from '@angular/common';
+import {NgClass} from '@angular/common';
 import type {AfterContentChecked, OnChanges, Signal, SimpleChanges} from '@angular/core';
 import {ChangeDetectionStrategy, Component, ContentChild, Directive, Input, TemplateRef, ViewChild, inject} from '@angular/core';
 
@@ -25,7 +25,7 @@ export class ProgressbarContentDirective {
 @Component({
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [NgClass, NgIf, SlotDirective, ProgressbarContentDirective],
+	imports: [NgClass, SlotDirective, ProgressbarContentDirective],
 	template: `
 		<ng-template auProgressbarContent #content let-state="state" let-widget="widget">
 			<div class="progress" [style.height]="state.height">
