@@ -6,13 +6,13 @@ export const menu = [
 	{
 		title: 'Components',
 		submenu: [
-			{label: 'Accordion', path: '/components/accordion'},
-			{label: 'Alert', path: '/components/alert'},
-			{label: 'Modal', path: '/components/modal'},
-			{label: 'Pagination', path: '/components/pagination'},
-			{label: 'Progressbar', path: '/components/progressbar'},
-			{label: 'Rating', path: '/components/rating'},
-			{label: 'Slider', path: '/components/slider'},
+			{label: 'Accordion', path: '/components/accordion/examples'},
+			{label: 'Alert', path: '/components/alert/examples'},
+			{label: 'Modal', path: '/components/modal/examples'},
+			{label: 'Pagination', path: '/components/pagination/examples'},
+			{label: 'Progressbar', path: '/components/progressbar/examples'},
+			{label: 'Rating', path: '/components/rating/examples'},
+			{label: 'Slider', path: '/components/slider/examples'},
 		],
 	} /*,
 	{
