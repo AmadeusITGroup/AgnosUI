@@ -4,6 +4,7 @@ import {
 	SlotDefaultDirective,
 	SlotDirective,
 	UseDirective,
+	auBooleanAttribute,
 	callWidgetFactory,
 	createAlert,
 	patchSimpleChanges,
@@ -94,7 +95,7 @@ export class AlertComponent implements OnChanges, AfterContentChecked {
 	 * If `true`, alert can be dismissed by the user.
 	 * The close button (×) will be displayed and you can be notified of the event with the (close) output.
 	 */
-	@Input('auDismissible')
+	@Input({alias: 'auDismissible', transform: auBooleanAttribute})
 	dismissible: boolean | undefined;
 
 	/**
@@ -108,7 +109,7 @@ export class AlertComponent implements OnChanges, AfterContentChecked {
 	/**
 	 * If `true` the alert is visible to the user
 	 */
-	@Input('auVisible')
+	@Input({alias: 'auVisible', transform: auBooleanAttribute})
 	visible: boolean | undefined;
 
 	/**
@@ -117,7 +118,7 @@ export class AlertComponent implements OnChanges, AfterContentChecked {
 	 * Animation is triggered  when the `.open()` function is called
 	 * or the visible prop is changed
 	 */
-	@Input('auAnimationOnInit')
+	@Input({alias: 'auAnimationOnInit', transform: auBooleanAttribute})
 	animationOnInit: boolean | undefined;
 
 	/**
@@ -126,7 +127,7 @@ export class AlertComponent implements OnChanges, AfterContentChecked {
 	 * Animation is triggered  when clicked on the close button (×),
 	 * via the `.close()` function or the visible prop is changed
 	 */
-	@Input('auAnimation')
+	@Input({alias: 'auAnimation', transform: auBooleanAttribute})
 	animation: boolean | undefined;
 
 	/**

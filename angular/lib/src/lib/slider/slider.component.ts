@@ -1,6 +1,8 @@
 import type {SliderState} from '@agnos-ui/angular-headless';
 import {
 	UseDirective,
+	auBooleanAttribute,
+	auNumberAttribute,
 	callWidgetFactory,
 	createSlider,
 	patchSimpleChanges,
@@ -119,19 +121,19 @@ export class SliderComponent implements OnChanges {
 	/**
 	 * Minimum value that can be assigned to the slider
 	 */
-	@Input('auMin')
+	@Input({alias: 'auMin', transform: auNumberAttribute})
 	min: number | undefined;
 
 	/**
 	 * Maximum value that can be assigned to the slider
 	 */
-	@Input('auMax')
+	@Input({alias: 'auMax', transform: auNumberAttribute})
 	max: number | undefined;
 
 	/**
 	 * Unit value between slider steps
 	 */
-	@Input('auStepSize')
+	@Input({alias: 'auStepSize', transform: auNumberAttribute})
 	stepSize: number | undefined;
 
 	/**
@@ -143,19 +145,19 @@ export class SliderComponent implements OnChanges {
 	/**
 	 * If `true` slider value cannot be changed but the slider is still focusable
 	 */
-	@Input('auReadonly')
+	@Input({alias: 'auReadonly', transform: auBooleanAttribute})
 	readonly: boolean | undefined;
 
 	/**
 	 * If `true` slider value cannot be changed and the slider cannot be focused
 	 */
-	@Input('auDisabled')
+	@Input({alias: 'auDisabled', transform: auBooleanAttribute})
 	disabled: boolean | undefined;
 
 	/**
 	 * If `true` is vertically positioned otherwise it is horizontal
 	 */
-	@Input('auVertical')
+	@Input({alias: 'auVertical', transform: auBooleanAttribute})
 	vertical: boolean | undefined;
 
 	/**

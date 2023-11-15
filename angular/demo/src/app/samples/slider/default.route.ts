@@ -8,19 +8,19 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 	imports: [AgnosUIAngularModule, ReactiveFormsModule, FormsModule],
 	template: `
 		<h2>Slider with form control</h2>
-		<div auSlider [auMin]="0" [auMax]="100" [auStepSize]="1" [formControl]="sliderControl"></div>
+		<div auSlider auMin="0" auMax="100" auStepSize="1" [formControl]="sliderControl"></div>
 		Form control value:
 		{{ sliderControl.value }}
 		<hr />
 
 		<h2>Slider with value</h2>
-		<div auSlider [auMin]="0" [auMax]="100" [auStepSize]="1" [(auValues)]="sliderValues"></div>
+		<div auSlider auMin="0" auMax="100" auStepSize="1" [(auValues)]="sliderValues"></div>
 		Value:
 		{{ sliderValues }}
 		<hr />
 
 		<h2>Disabled slider</h2>
-		<div auSlider [auMin]="0" [auMax]="100" [auStepSize]="1" [formControl]="disabledControl" [auReadonly]="readonlyToggle"></div>
+		<div auSlider auMin="0" auMax="100" auStepSize="1" [formControl]="disabledControl" [auReadonly]="readonlyToggle"></div>
 
 		<div class="form-check form-switch">
 			<input class="form-check-input" type="checkbox" role="switch" id="disabled" [(ngModel)]="disabledToggle" (change)="handleDisabled()" />

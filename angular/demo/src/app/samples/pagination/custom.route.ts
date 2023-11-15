@@ -9,7 +9,7 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
 	imports: [AgnosUIAngularModule],
 	template: `
 		<p>A pagination with customized links:</p>
-		<nav auPagination [auCollectionSize]="60" [(auPage)]="customPage" auAriaLabel="Page navigation with customized links">
+		<nav auPagination auCollectionSize="60" [(auPage)]="customPage" auAriaLabel="Page navigation with customized links">
 			<ng-template auPaginationPrevious>Prev</ng-template>
 			<ng-template auPaginationNext>Next</ng-template>
 			<ng-template auPaginationNumber let-displayedPage="displayedPage">{{ getPageSymbol(displayedPage) }}</ng-template>
@@ -17,7 +17,7 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
 		<hr />
 
 		<p>A pagination with customized pages:</p>
-		<nav auPagination [auCollectionSize]="60" [(auPage)]="customPage" auAriaLabel="Page navigation with customized pages">
+		<nav auPagination auCollectionSize="60" [(auPage)]="customPage" auAriaLabel="Page navigation with customized pages">
 			<ng-template auPaginationPages let-widget="widget" let-state="state">
 				@if (state.pages.length > 0) {
 					<li class="au-custom-pages-item">

@@ -2,6 +2,8 @@ import type {PaginationContext, PaginationNumberContext, PaginationProps, Pagina
 import {
 	ComponentTemplate,
 	SlotDirective,
+	auBooleanAttribute,
+	auNumberAttribute,
 	callWidgetFactory,
 	createPagination,
 	patchSimpleChanges,
@@ -332,17 +334,17 @@ export class PaginationComponent implements OnChanges, AfterContentChecked {
 	/**
 	 * If `true`, pagination links will be disabled.
 	 */
-	@Input('auDisabled') disabled: boolean | undefined;
+	@Input({alias: 'auDisabled', transform: auBooleanAttribute}) disabled: boolean | undefined;
 
 	/**
 	 * If `true`, the "First" and "Last" page links are shown.
 	 */
-	@Input('auBoundaryLinks') boundaryLinks: boolean | undefined;
+	@Input({alias: 'auBoundaryLinks', transform: auBooleanAttribute}) boundaryLinks: boolean | undefined;
 
 	/**
 	 * If `true`, the "Next" and "Previous" page links are shown.
 	 */
-	@Input('auDirectionLinks') directionLinks: boolean | undefined;
+	@Input({alias: 'auDirectionLinks', transform: auBooleanAttribute}) directionLinks: boolean | undefined;
 
 	/**
 	 * The number of items in your paginated collection.
@@ -353,7 +355,7 @@ export class PaginationComponent implements OnChanges, AfterContentChecked {
 	 * Whatever the collectionSize the page number is of minimum 1.
 	 * @defaultValue 0
 	 */
-	@Input('auCollectionSize') collectionSize: number | undefined;
+	@Input({alias: 'auCollectionSize', transform: auNumberAttribute}) collectionSize: number | undefined;
 
 	/**
 	 * The current page.
@@ -361,13 +363,13 @@ export class PaginationComponent implements OnChanges, AfterContentChecked {
 	 * Page numbers start with `1`.
 	 * @defaultValue 1
 	 */
-	@Input('auPage') page: number | undefined;
+	@Input({alias: 'auPage', transform: auNumberAttribute}) page: number | undefined;
 
 	/**
 	 * The number of items per page.
 	 * @defaultValue 10
 	 */
-	@Input('auPageSize') pageSize: number | undefined;
+	@Input({alias: 'auPageSize', transform: auNumberAttribute}) pageSize: number | undefined;
 
 	/**
 	 * The pagination display size.

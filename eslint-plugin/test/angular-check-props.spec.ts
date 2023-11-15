@@ -38,6 +38,16 @@ describe('angular-check-props', () => {
 			output: codeTemplate("\n\t@Input('auMyProp') myProp: string | undefined;\n", 'myProp: string;'),
 		},
 		{
+			code: codeTemplate('', 'myProp: boolean;'),
+			errors: [{messageId: 'missingProp', data: {type: 'input', name: 'myProp'}}],
+			output: codeTemplate("\n\t@Input({alias: 'auMyProp', transform: auBooleanAttribute}) myProp: boolean | undefined;\n", 'myProp: boolean;'),
+		},
+		{
+			code: codeTemplate('', 'myProp: number;'),
+			errors: [{messageId: 'missingProp', data: {type: 'input', name: 'myProp'}}],
+			output: codeTemplate("\n\t@Input({alias: 'auMyProp', transform: auNumberAttribute}) myProp: number | undefined;\n", 'myProp: number;'),
+		},
+		{
 			code: codeTemplate('', 'onMyEvent(value: number): void;'),
 			errors: [{messageId: 'missingProp', data: {type: 'output', name: 'myEvent'}}],
 			output: codeTemplate(
@@ -104,9 +114,9 @@ describe('angular-check-props', () => {
 			),
 		},
 		{
-			code: codeTemplate("\n\t@Input('auMyProp') myProp: boolean;\n", 'myProp: boolean;'),
+			code: codeTemplate("\n\t@Input({alias: 'auMyProp', transform: auBooleanAttribute}) myProp: boolean;\n", 'myProp: boolean;'),
 			errors: [{messageId: 'invalidPropType', data: {type: 'input', name: 'myProp', expectedType: 'boolean | undefined', foundType: 'boolean'}}],
-			output: codeTemplate("\n\t@Input('auMyProp') myProp: boolean | undefined;\n", 'myProp: boolean;'),
+			output: codeTemplate("\n\t@Input({alias: 'auMyProp', transform: auBooleanAttribute}) myProp: boolean | undefined;\n", 'myProp: boolean;'),
 		},
 		{
 			code: codeTemplate("\n\t@Input('auMyProp') myProp: number | undefined;\n", 'myProp: RegExp;'),
@@ -117,13 +127,18 @@ describe('angular-check-props', () => {
 		},
 		{
 			code: codeTemplate('\n\t@Input() myProp: string | undefined;\n', 'myProp: string;'),
-			errors: [{messageId: 'noValidAlias', data: {name: 'myProp', type: 'input', alias: 'auMyProp'}}],
+			errors: [{messageId: 'invalidAlias', data: {name: 'myProp', type: 'input', alias: 'auMyProp'}}],
 			output: codeTemplate("\n\t@Input('auMyProp') myProp: string | undefined;\n", 'myProp: string;'),
 		},
 		{
-			code: codeTemplate("\n\t@Input('auMyProp') myProp: boolean;\n", 'myProp: boolean;'),
-			errors: [{messageId: 'invalidPropType', data: {type: 'input', name: 'myProp', expectedType: 'boolean | undefined', foundType: 'boolean'}}],
-			output: codeTemplate("\n\t@Input('auMyProp') myProp: boolean | undefined;\n", 'myProp: boolean;'),
+			code: codeTemplate('\n\t@Input() myProp: boolean | undefined;\n', 'myProp: boolean;'),
+			errors: [{messageId: 'invalidBooleanMeta', data: {name: 'myProp', metadata: "{alias: 'auMyProp', transform: auBooleanAttribute}"}}],
+			output: codeTemplate("\n\t@Input({alias: 'auMyProp', transform: auBooleanAttribute}) myProp: boolean | undefined;\n", 'myProp: boolean;'),
+		},
+		{
+			code: codeTemplate('\n\t@Input() myProp: number | undefined;\n', 'myProp: number;'),
+			errors: [{messageId: 'invalidNumberMeta', data: {name: 'myProp', metadata: "{alias: 'auMyProp', transform: auNumberAttribute}"}}],
+			output: codeTemplate("\n\t@Input({alias: 'auMyProp', transform: auNumberAttribute}) myProp: number | undefined;\n", 'myProp: number;'),
 		},
 		{
 			code: codeTemplate(
@@ -131,7 +146,7 @@ describe('angular-check-props', () => {
 				'onMyEvent(value: string): void;',
 				'{\n\t\t\tonMyEvent: (event) => this.myEvent.emit(event),\n\t\t}',
 			),
-			errors: [{messageId: 'noValidAlias', data: {name: 'myEvent', type: 'output', alias: 'auMyEvent'}}],
+			errors: [{messageId: 'invalidAlias', data: {name: 'myEvent', type: 'output', alias: 'auMyEvent'}}],
 			output: codeTemplate(
 				"\n\t@Output('auMyEvent') myEvent = new EventEmitter<string>();\n",
 				'onMyEvent(value: string): void;',

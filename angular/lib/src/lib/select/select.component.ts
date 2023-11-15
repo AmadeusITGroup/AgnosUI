@@ -1,5 +1,5 @@
 import type {ItemCtx, SelectWidget, WidgetState} from '@agnos-ui/angular-headless';
-import {UseDirective, callWidgetFactory, createSelect, patchSimpleChanges, toAngularSignal} from '@agnos-ui/angular-headless';
+import {UseDirective, auBooleanAttribute, callWidgetFactory, createSelect, patchSimpleChanges, toAngularSignal} from '@agnos-ui/angular-headless';
 import {CommonModule} from '@angular/common';
 import type {OnChanges, Signal, SimpleChanges} from '@angular/core';
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
@@ -23,7 +23,7 @@ export class SelectComponent<Item> implements OnChanges {
 	/**
 	 * true if the select is open
 	 */
-	@Input('auOpened') opened: boolean | undefined;
+	@Input({alias: 'auOpened', transform: auBooleanAttribute}) opened: boolean | undefined;
 
 	/**
 	 * Filtered text to be display in the filter input
@@ -43,7 +43,7 @@ export class SelectComponent<Item> implements OnChanges {
 	/**
 	 * true if the select is disabled
 	 */
-	@Input('auDisabled') disabled: boolean | undefined;
+	@Input({alias: 'auDisabled', transform: auBooleanAttribute}) disabled: boolean | undefined;
 
 	/**
 	 * Custom function to filter an item.
@@ -65,7 +65,7 @@ export class SelectComponent<Item> implements OnChanges {
 	/**
 	 * true if a loading process is being done
 	 */
-	@Input('auLoading') loading: boolean | undefined;
+	@Input({alias: 'auLoading', transform: auBooleanAttribute}) loading: boolean | undefined;
 
 	readonly _widget = callWidgetFactory<SelectWidget<Item>>({
 		factory: createSelect,

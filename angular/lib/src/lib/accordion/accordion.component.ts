@@ -11,6 +11,7 @@ import {
 	ComponentTemplate,
 	SlotDirective,
 	UseDirective,
+	auBooleanAttribute,
 	callWidgetFactory,
 	createAccordion,
 	patchSimpleChanges,
@@ -199,21 +200,21 @@ export class AccordionItemComponent implements OnChanges, AfterContentChecked, A
 	/**
 	 * If `true`, the content of the accordion-item collapse will be removed from the DOM. It will be just hidden otherwise.
 	 */
-	@Input('auItemDestroyOnHide') itemDestroyOnHide: boolean | undefined;
+	@Input({alias: 'auItemDestroyOnHide', transform: auBooleanAttribute}) itemDestroyOnHide: boolean | undefined;
 	/**
 	 * If `true`, the accordion-item will be disabled.
 	 * It will not react to user's clicks, but still will be possible to toggle programmatically.
 	 */
-	@Input('auItemDisabled') itemDisabled: boolean | undefined;
+	@Input({alias: 'auItemDisabled', transform: auBooleanAttribute}) itemDisabled: boolean | undefined;
 
 	/**
 	 * If `true`, the accordion-item will be visible (expanded). Otherwise, it will be hidden (collapsed).
 	 */
-	@Input('auItemVisible') itemVisible: boolean | undefined;
+	@Input({alias: 'auItemVisible', transform: auBooleanAttribute}) itemVisible: boolean | undefined;
 	/**
 	 * If `true`, accordion-item will be animated.
 	 */
-	@Input('auItemAnimation') itemAnimation: boolean | undefined;
+	@Input({alias: 'auItemAnimation', transform: auBooleanAttribute}) itemAnimation: boolean | undefined;
 	/**
 	 * Classes to add on the accordion-item header DOM element.
 	 */
@@ -295,7 +296,7 @@ export class AccordionDirective implements OnChanges {
 	/**
 	 * If `true`, only one item at the time can stay open.
 	 */
-	@Input('auCloseOthers') closeOthers: boolean | undefined;
+	@Input({alias: 'auCloseOthers', transform: auBooleanAttribute}) closeOthers: boolean | undefined;
 
 	/**
 	 * CSS classes to be applied on the widget main container
@@ -326,27 +327,27 @@ export class AccordionDirective implements OnChanges {
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	@Input('auItemDestroyOnHide') itemDestroyOnHide: boolean | undefined;
+	@Input({alias: 'auItemDestroyOnHide', transform: auBooleanAttribute}) itemDestroyOnHide: boolean | undefined;
 	/**
 	 * If `true`, the accordion-item will be disabled.
 	 * It will not react to user's clicks, but still will be possible to toggle programmatically.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	@Input('auItemDisabled') itemDisabled: boolean | undefined;
+	@Input({alias: 'auItemDisabled', transform: auBooleanAttribute}) itemDisabled: boolean | undefined;
 
 	/**
 	 * If `true`, the accordion-item will be visible (expanded). Otherwise, it will be hidden (collapsed).
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	@Input('auItemVisible') itemVisible: boolean | undefined;
+	@Input({alias: 'auItemVisible', transform: auBooleanAttribute}) itemVisible: boolean | undefined;
 	/**
 	 * If `true`, accordion-item will be animated.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	@Input('auItemAnimation') itemAnimation: boolean | undefined;
+	@Input({alias: 'auItemAnimation', transform: auBooleanAttribute}) itemAnimation: boolean | undefined;
 	/**
 	 * The transition to use for the accordion-item collapse when is toggled.
 	 *
