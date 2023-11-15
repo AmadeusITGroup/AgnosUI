@@ -1,7 +1,7 @@
 import {BasePO} from '@agnos-ui/base-po';
 
 export class PaginationDemoPO extends BasePO {
-	getComponentSelector(): string {
+	override getComponentSelector(): string {
 		return '.container';
 	}
 

@@ -7,3 +7,4 @@ export * from './stores';
 export * from './writables';
 export * from './navManager';
 export * from './isFocusable';
+export * from './domUtils';
