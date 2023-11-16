@@ -77,6 +77,144 @@ describe(`Slider basic`, () => {
 		expect(state).toStrictEqual(defaultStateValues);
 	});
 
+	test(`should recompute clean value if min has changed`, () => {
+		const expectedStateValue = {...defaultStateValues};
+		expect(state).toStrictEqual(expectedStateValue);
+
+		slider.patch({
+			min: 50,
+		});
+
+		expectedStateValue.min = 50;
+		expectedStateValue.values = [50];
+		expectedStateValue.sortedValues = [50];
+		expectedStateValue.handleDisplayOptions = [
+			{
+				top: 0,
+				left: 0,
+			},
+		];
+		expectedStateValue.sortedHandles = [{id: 0, value: 50, ariaLabel: '50'}];
+		expectedStateValue.minValueLabelDisplay = false;
+		expectedStateValue.progressDisplayOptions = [
+			{
+				left: 0,
+				bottom: 0,
+				height: 100,
+				width: 0,
+			},
+		];
+
+		expect(state).toStrictEqual(expectedStateValue);
+	});
+
+	test(`should recompute clean value if max has changed`, () => {
+		slider.patch({
+			values: [60],
+		});
+
+		const expectedStateValue = {...defaultStateValues};
+		expectedStateValue.values = [60];
+		expectedStateValue.sortedValues = [60];
+		expectedStateValue.handleDisplayOptions = [
+			{
+				top: 0,
+				left: 60,
+			},
+		];
+		expectedStateValue.sortedHandles = [{id: 0, value: 60, ariaLabel: '60'}];
+		expectedStateValue.minValueLabelDisplay = true;
+		expectedStateValue.progressDisplayOptions = [
+			{
+				left: 0,
+				bottom: 0,
+				height: 100,
+				width: 60,
+			},
+		];
+
+		expect(state).toStrictEqual(expectedStateValue);
+
+		slider.patch({
+			max: 50,
+		});
+
+		expectedStateValue.max = 50;
+		expectedStateValue.values = [50];
+		expectedStateValue.sortedValues = [50];
+		expectedStateValue.handleDisplayOptions = [
+			{
+				top: 0,
+				left: 100,
+			},
+		];
+		expectedStateValue.sortedHandles = [{id: 0, value: 50, ariaLabel: '50'}];
+		expectedStateValue.maxValueLabelDisplay = false;
+		expectedStateValue.progressDisplayOptions = [
+			{
+				left: 0,
+				bottom: 0,
+				height: 100,
+				width: 100,
+			},
+		];
+
+		expect(state).toStrictEqual(expectedStateValue);
+	});
+
+	test(`should recompute clean value if stepSize has changed`, () => {
+		slider.patch({
+			values: [60],
+		});
+
+		const expectedStateValue = {...defaultStateValues};
+		expectedStateValue.values = [60];
+		expectedStateValue.sortedValues = [60];
+		expectedStateValue.handleDisplayOptions = [
+			{
+				top: 0,
+				left: 60,
+			},
+		];
+		expectedStateValue.sortedHandles = [{id: 0, value: 60, ariaLabel: '60'}];
+		expectedStateValue.minValueLabelDisplay = true;
+		expectedStateValue.progressDisplayOptions = [
+			{
+				left: 0,
+				bottom: 0,
+				height: 100,
+				width: 60,
+			},
+		];
+
+		expect(state).toStrictEqual(expectedStateValue);
+
+		slider.patch({
+			stepSize: 25,
+		});
+
+		expectedStateValue.stepSize = 25;
+		expectedStateValue.values = [50];
+		expectedStateValue.sortedValues = [50];
+		expectedStateValue.handleDisplayOptions = [
+			{
+				top: 0,
+				left: 50,
+			},
+		];
+		expectedStateValue.sortedHandles = [{id: 0, value: 50, ariaLabel: '50'}];
+		expectedStateValue.progressDisplayOptions = [
+			{
+				left: 0,
+				bottom: 0,
+				height: 100,
+				width: 50,
+			},
+		];
+
+		expect(state).toStrictEqual(expectedStateValue);
+	});
+
 	test(`should create the configuration for the model based on the input`, () => {
 		slider.patch({
 			min: 100,
