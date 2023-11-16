@@ -12,7 +12,8 @@
 		"test:coverage": "node -r @agnos-ui/code-coverage/interceptReadFile ../node_modules/vitest/vitest.mjs run --coverage"
 	},
 	"dependencies": {
-		"@amadeus-it-group/tansu": "0.0.23"
+		"@amadeus-it-group/tansu": "0.0.23",
+		"@floating-ui/dom": "^1.5.3"
 	},
 	"devDependencies": {
 		"eslint-plugin-jsdoc": "^46.9.0"
