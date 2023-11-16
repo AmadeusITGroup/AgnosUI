@@ -5,7 +5,7 @@ import type {ConfigValidator, PropsConfig} from './services';
 import {stateStores} from './services/stores';
 import {typeArray, typeBoolean, typeFunction, typeNumber, typeNumberInRangeFactory} from './services/writables';
 import type {Directive, Widget} from './types';
-import {noop} from './utils';
+import {getDecimalPrecision, noop} from './utils';
 
 export interface ProgressDisplayOptions {
 	/**
@@ -214,21 +214,25 @@ const configValidator: ConfigValidator<SliderProps> = {
 };
 
 /**
- * Computes slider clean value based on the imput parameters
+ * Computes slider clean value based on the input parameters
  * @param value - dirty value
  * @param min  - minimum value
  * @param max - maximum value
- * @param stepSize - step size
+ * @param intStepSize - step size converted to integer
+ * @param decimalPrecision - maximum decimum precision of slider values
  * @returns adjusted clean value
  */
-const computeCleanValue = (value: number, min: number, max: number, stepSize: number) => {
+const computeCleanValue = (value: number, min: number, max: number, intStepSize: number, decimalPrecision: number) => {
+	const magnitude = Math.pow(10, decimalPrecision);
 	if (value >= max) {
 		return max;
 	} else if (value <= min) {
 		return min;
 	}
-	const indexMin = Math.floor(value / stepSize);
-	return value % stepSize < stepSize / 2 ? indexMin * stepSize : (indexMin + 1) * stepSize;
+	const indexMin = Math.floor(((value - min) * magnitude) / intStepSize);
+	return +(((((value - min) * magnitude) % intStepSize < intStepSize / 2 ? indexMin : indexMin + 1) * intStepSize) / magnitude + min).toFixed(
+		decimalPrecision,
+	);
 };
 
 /**
@@ -263,11 +267,14 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 		if (_dirtyMinimum$() === _dirtyMaximum$()) return defaultSliderConfig.max;
 		return Math.max(_dirtyMinimum$(), _dirtyMaximum$());
 	});
+	const _decimalPrecision$ = computed(() => Math.max(getDecimalPrecision(stepSize$()), getDecimalPrecision(min$()), getDecimalPrecision(max$())));
+	const _intStepSize$ = computed(() => stepSize$() * Math.pow(10, _decimalPrecision$()));
 
 	const values$ = bindableDerived(
 		onValuesChange$,
-		[_dirtyValues$, min$, max$, stepSize$],
-		([dirtyValues, min, max, stepSize]) => dirtyValues.map((dv) => computeCleanValue(dv, min, max, stepSize)),
+		[_dirtyValues$, min$, max$, _intStepSize$, _decimalPrecision$],
+		([dirtyValues, min, max, intStepSize, decimalPrecision]) =>
+			dirtyValues.map((dv) => computeCleanValue(dv, min, max, intStepSize, decimalPrecision)),
 		typeArray.equal,
 	);
 
@@ -326,7 +333,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 	const sliderDomRectOffset$ = computed(() => (vertical$() ? sliderDomRect$().top : sliderDomRect$().left));
 	const sliderDomRectSize$ = computed(() => (vertical$() ? sliderDomRect$().height : sliderDomRect$().width));
 	const sortedValues$ = computed(() => [...values$()].sort((a, b) => a - b));
-	const sortedHandlesValues$ = computed(() => {
+	const _sortedHandlesValues$ = computed(() => {
 		return values$()
 			.map((val, index) => {
 				return {id: index, value: val};
@@ -335,7 +342,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 	});
 	const sortedHandles$ = computed(() => {
 		const ariaLabelHandle = ariaLabelHandle$();
-		return sortedHandlesValues$().map((sortedValue, index) => {
+		return _sortedHandlesValues$().map((sortedValue, index) => {
 			return {...sortedValue, ariaLabel: ariaLabelHandle(sortedValue.value, index, sortedValue.id)};
 		});
 	});
@@ -366,9 +373,6 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 		const sortedValuesPercent = sortedValuesPercent$();
 		return vertical$() && sortedValuesPercent.length == 2 ? 100 - (sortedValuesPercent[0] + sortedValuesPercent[1]) / 2 : 0;
 	});
-
-	// const handleTooltipLeft$ = computed(() => (vertical$() ? Array(valuesPercent$().length).fill(0) : valuesPercent$()));
-	// const handleTooltipTop$ = computed(() => (vertical$() ? valuesPercent$().map((vp) => 100 - vp) : Array(valuesPercent$().length).fill(0)));
 
 	const handleDisplayOptions$ = computed(() => {
 		const vertical = vertical$();

@@ -682,6 +682,127 @@ describe(`Slider basic`, () => {
 
 		expect(state).toStrictEqual(expectedStateValue);
 	});
+
+	test(`should correctly increment the handle value when the min is decimal and step is integer`, () => {
+		slider.patch({
+			min: 0.5,
+			max: 3.5,
+			values: [0.5],
+		});
+
+		const expectedStateValue = {...defaultStateValues};
+		expectedStateValue.min = 0.5;
+		expectedStateValue.max = 3.5;
+		expectedStateValue.values = [0.5];
+		expectedStateValue.sortedValues = [0.5];
+		expectedStateValue.sortedHandles = [{id: 0, value: 0.5, ariaLabel: '0.5'}];
+		expect(state).toStrictEqual(expectedStateValue);
+
+		slider.actions.keydown(keyboardEvent('ArrowUp'), 0);
+
+		expectedStateValue.minValueLabelDisplay = true;
+		expectedStateValue.handleDisplayOptions = [
+			{
+				left: 33.333333333333336,
+				top: 0,
+			},
+		];
+		expectedStateValue.progressDisplayOptions = [
+			{
+				left: 0,
+				bottom: 0,
+				height: 100,
+				width: 33.333333333333336,
+			},
+		];
+		expectedStateValue.values = [1.5];
+		expectedStateValue.sortedValues = [1.5];
+		expectedStateValue.sortedHandles = [{id: 0, value: 1.5, ariaLabel: '1.5'}];
+
+		expect(state).toStrictEqual(expectedStateValue);
+	});
+
+	test(`should base the value on the min value of the slider for step calculation`, () => {
+		slider.patch({
+			min: 0.5,
+			max: 3,
+			stepSize: 1,
+			values: [3],
+		});
+
+		const expectedStateValue = {...defaultStateValues};
+		expectedStateValue.min = 0.5;
+		expectedStateValue.max = 3;
+		expectedStateValue.stepSize = 1;
+		expectedStateValue.values = [3];
+		expectedStateValue.sortedValues = [3];
+		expectedStateValue.sortedHandles = [{id: 0, value: 3, ariaLabel: '3'}];
+		expectedStateValue.minValueLabelDisplay = true;
+		expectedStateValue.maxValueLabelDisplay = false;
+		expectedStateValue.progressDisplayOptions = [
+			{
+				left: 0,
+				bottom: 0,
+				height: 100,
+				width: 100,
+			},
+		];
+		expectedStateValue.handleDisplayOptions = [{left: 100, top: 0}];
+
+		expect(state).toStrictEqual(expectedStateValue);
+
+		slider.actions.keydown(keyboardEvent('ArrowLeft'), 0);
+
+		expectedStateValue.handleDisplayOptions = [
+			{
+				left: 80,
+				top: 0,
+			},
+		];
+		expectedStateValue.progressDisplayOptions = [
+			{
+				left: 0,
+				bottom: 0,
+				height: 100,
+				width: 80,
+			},
+		];
+		expectedStateValue.values = [2.5];
+		expectedStateValue.sortedValues = [2.5];
+		expectedStateValue.sortedHandles = [{id: 0, value: 2.5, ariaLabel: '2.5'}];
+		expectedStateValue.maxValueLabelDisplay = true;
+
+		expect(state).toStrictEqual(expectedStateValue);
+	});
+
+	test(`should round the value to specific decimal precision (2) based on input values`, () => {
+		slider.patch({
+			min: 0.33,
+			max: 5.55,
+			stepSize: 0.2,
+			values: [1],
+		});
+
+		const expectedStateValue = {...defaultStateValues};
+		expectedStateValue.min = 0.33;
+		expectedStateValue.max = 5.55;
+		expectedStateValue.stepSize = 0.2;
+		expectedStateValue.values = [0.93];
+		expectedStateValue.sortedValues = [0.93];
+		expectedStateValue.sortedHandles = [{id: 0, value: 0.93, ariaLabel: '0.93'}];
+		expectedStateValue.minValueLabelDisplay = true;
+		expectedStateValue.progressDisplayOptions = [
+			{
+				left: 0,
+				bottom: 0,
+				height: 100,
+				width: 11.49425287356322,
+			},
+		];
+		expectedStateValue.handleDisplayOptions = [{left: 11.49425287356322, top: 0}];
+
+		expect(state).toStrictEqual(expectedStateValue);
+	});
 });
 
 describe(`Slider range`, () => {
