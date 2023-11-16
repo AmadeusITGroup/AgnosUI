@@ -214,6 +214,24 @@ const configValidator: ConfigValidator<SliderProps> = {
 };
 
 /**
+ * Computes slider clean value based on the imput parameters
+ * @param value - dirty value
+ * @param min  - minimum value
+ * @param max - maximum value
+ * @param stepSize - step size
+ * @returns adjusted clean value
+ */
+const computeCleanValue = (value: number, min: number, max: number, stepSize: number) => {
+	if (value >= max) {
+		return max;
+	} else if (value <= min) {
+		return min;
+	}
+	const indexMin = Math.floor(value / stepSize);
+	return value % stepSize < stepSize / 2 ? indexMin * stepSize : (indexMin + 1) * stepSize;
+};
+
+/**
  * Create a slider widget with given config props
  * @param config - an optional slider config
  * @returns a SliderWidget
@@ -248,8 +266,8 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 
 	const values$ = bindableDerived(
 		onValuesChange$,
-		[_dirtyValues$],
-		([dirtyValues]) => dirtyValues.map((dv) => computeCleanValue(dv)),
+		[_dirtyValues$, min$, max$, stepSize$],
+		([dirtyValues, min, max, stepSize]) => dirtyValues.map((dv) => computeCleanValue(dv, min, max, stepSize)),
 		typeArray.equal,
 	);
 
@@ -389,18 +407,6 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 	});
 
 	// functions
-	const computeCleanValue = (value: number) => {
-		const min = min$(),
-			max = max$(),
-			stepSize = stepSize$();
-		if (value >= max) {
-			return max;
-		} else if (value <= min) {
-			return min;
-		}
-		const indexMin = Math.floor(value / stepSize$());
-		return value % stepSize < stepSize / 2 ? indexMin * stepSize : (indexMin + 1) * stepSize;
-	};
 	const percentCompute = (value: number) => {
 		const min = min$();
 		return ((value - min) * 100) / (max$() - min);
