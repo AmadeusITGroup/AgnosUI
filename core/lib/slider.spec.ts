@@ -263,12 +263,12 @@ describe(`Slider basic`, () => {
 		expect(state).toStrictEqual(defaultStateValues);
 	});
 
-	test(`should set the step as 0 if the provided value less than 0`, () => {
+	test(`shouldn't accept 0 as a valid value`, () => {
 		slider.patch({
-			stepSize: -1,
+			stepSize: 0,
 		});
 
-		expect(state).toStrictEqual({...defaultStateValues, stepSize: 0});
+		expect(state).toStrictEqual(defaultStateValues);
 	});
 
 	test(`should snap the value to the valid step`, () => {
