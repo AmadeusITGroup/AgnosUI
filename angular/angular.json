@@ -29,6 +29,15 @@
 						"extraWebpackConfig": "./demo/webpack.js"
 					},
 					"configurations": {
+						"coverage": {
+							"fileReplacements": [
+								{
+									"replace": "demo/src/environments/environment.ts",
+									"with": "demo/src/environments/environment.prod.ts"
+								}
+							],
+							"outputHashing": "all"
+						},
 						"production": {
 							"budgets": [
 								{
