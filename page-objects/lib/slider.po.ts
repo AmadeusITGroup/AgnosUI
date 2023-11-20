@@ -9,7 +9,7 @@ export const sliderSelectors = {
 	maxLabelHorizontal: '.au-slider-label-max',
 	minLabelVertical: '.au-slider-label-vertical-min',
 	maxLabelVertical: '.au-slider-label-vertical-max',
-	sliderProgress: '.au-slider-progress',
+	progress: '.au-slider-progress',
 };
 
 export class SliderPO extends BasePO {
@@ -39,6 +39,10 @@ export class SliderPO extends BasePO {
 		return this.locatorRoot.locator(this.selectors.maxLabelVertical);
 	}
 
+	get locatorProgress(): Locator {
+		return this.locatorRoot.locator(this.selectors.progress);
+	}
+
 	async sliderHandleState() {
 		return this.locatorRoot.locator(this.selectors.handle).evaluateAll((rootNode: HTMLElement[]) => {
 			return rootNode.map((rn) => {
@@ -57,7 +61,7 @@ export class SliderPO extends BasePO {
 	}
 
 	async sliderProgressState() {
-		return this.locatorRoot.locator(this.selectors.sliderProgress).evaluateAll((rootNode: HTMLElement[]) => {
+		return this.locatorRoot.locator(this.selectors.progress).evaluateAll((rootNode: HTMLElement[]) => {
 			return rootNode.map((rn) => rn.getAttribute('style'));
 		});
 	}

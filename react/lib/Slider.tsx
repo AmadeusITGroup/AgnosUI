@@ -37,10 +37,6 @@ export function Slider(props: Partial<SliderProps>) {
 			ref={sliderSetRef}
 			className={`au-slider ${vertical ? 'au-slider-vertical' : 'au-slider-horizontal'} ${className} ${disabled ? ' disabled' : ''}`}
 		>
-			<div
-				className={vertical ? 'au-slider-clickable-area-vertical' : 'au-slider-clickable-area'}
-				onClick={(e) => click(e as unknown as MouseEvent)}
-			/>
 			{progressDisplayOptions.map((option, index) => (
 				<div
 					key={index}
@@ -48,6 +44,10 @@ export function Slider(props: Partial<SliderProps>) {
 					style={{left: `${option.left}%`, bottom: `${option.bottom}%`, width: `${option.width}%`, height: `${option.height}%`}}
 				/>
 			))}
+			<div
+				className={vertical ? 'au-slider-clickable-area-vertical' : 'au-slider-clickable-area'}
+				onClick={(e) => click(e as unknown as MouseEvent)}
+			/>
 			<div
 				ref={minSetRef}
 				className={vertical ? 'au-slider-label-vertical au-slider-label-vertical-min' : 'au-slider-label au-slider-label-min'}
