@@ -51,9 +51,6 @@
 
 <!-- on:blur={onTouched} ?? -->
 <div use:sliderDirective class={`au-slider ${$vertical$ ? 'au-slider-vertical' : 'au-slider-horizontal'} ${$className$}`} class:disabled={$disabled$}>
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<div class={$vertical$ ? 'au-slider-clickable-area-vertical' : 'au-slider-clickable-area'} on:click={click} />
 	{#each $progressDisplayOptions$ as option}
 		<div
 			class="au-slider-progress"
@@ -63,6 +60,9 @@
 			style:height={`${option.height}%`}
 		/>
 	{/each}
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
+	<!-- svelte-ignore a11y-no-static-element-interactions -->
+	<div class={$vertical$ ? 'au-slider-clickable-area-vertical' : 'au-slider-clickable-area'} on:click={click} />
 	<div
 		class={$vertical$ ? 'au-slider-label-vertical au-slider-label-vertical-min' : 'au-slider-label au-slider-label-min'}
 		style:visibility={$minValueLabelDisplay$ ? 'visible' : 'hidden'}

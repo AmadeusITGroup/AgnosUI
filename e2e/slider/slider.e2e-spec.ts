@@ -70,14 +70,15 @@ test.describe(`Slider tests`, () => {
 			await sliderDemoPO.locatorRoot.waitFor();
 
 			const expectedState = {...defaultExpectedState};
-			expectedState.value = '88';
-			expectedState.text = '88';
-			expectedState.ariaLabel = '88';
-			expectedState.style = 'left: 88%; top: 0%;';
+			expectedState.value = '43';
+			expectedState.text = '43';
+			expectedState.ariaLabel = '43';
+			expectedState.style = 'left: 43%; top: 0%;';
 
-			const sliderLocator = sliderPO.locatorRoot;
-			const boundingBox = await sliderLocator.boundingBox();
-			await sliderLocator.click({position: {x: boundingBox!.x + boundingBox!.width * 0.8, y: 1}});
+			const sliderProgressLocator = sliderPO.locatorProgress;
+			const boundingBox = await sliderProgressLocator.boundingBox();
+			// force the click though the progress bar
+			await sliderProgressLocator.click({position: {x: boundingBox!.x + boundingBox!.width * 0.5, y: 1}, force: true});
 
 			expect((await sliderPO.sliderHandleState())[0]).toEqual(expectedState);
 		});

@@ -29,7 +29,6 @@ import {take} from 'rxjs';
 		'(blur)': 'handleBlur()',
 	},
 	template: `
-		<div [class]="state().vertical ? 'au-slider-clickable-area-vertical' : 'au-slider-clickable-area'" (click)="sliderClick($event)"></div>
 		@for (option of state().progressDisplayOptions; track option) {
 			<div
 				class="au-slider-progress"
@@ -39,6 +38,7 @@ import {take} from 'rxjs';
 				[style.height.%]="option.height"
 			></div>
 		}
+		<div [class]="state().vertical ? 'au-slider-clickable-area-vertical' : 'au-slider-clickable-area'" (click)="sliderClick($event)"></div>
 		<div
 			[class]="state().vertical ? 'au-slider-label-vertical au-slider-label-vertical-min' : 'au-slider-label au-slider-label-min'"
 			[style.visibility]="state().minValueLabelDisplay ? 'visible' : 'hidden'"
