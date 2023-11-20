@@ -17,8 +17,8 @@ import {DomSanitizer} from '@angular/platform-browser';
 		style: 'display: contents;',
 	},
 	template: `
-		<span class="d-flex align-items-center me-2" [innerHTML]="sanitizer.bypassSecurityTrustHtml(typeIcon[state.type])"></span>
-		<div class="d-flex w-100 alert-body">
+		<span class="d-flex me-2" [innerHTML]="sanitizer.bypassSecurityTrustHtml(typeIcon[state.type])"></span>
+		<div class="alert-body">
 			<ng-template [auSlot]="state.slotDefault" [auSlotProps]="{widget, state}"></ng-template>
 			@if (state.dismissible) {
 				<button type="button" class="btn-close ms-auto" (click)="widget.api.close()" [attr.aria-label]="state.ariaCloseButtonLabel"></button>

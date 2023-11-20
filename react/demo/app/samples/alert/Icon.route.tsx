@@ -18,8 +18,8 @@ const AlertIcon = ({widget, state}: AlertContext) => {
 
 	return (
 		<>
-			<span className="d-flex align-items-center me-2" dangerouslySetInnerHTML={{__html: typeIcon[state.type]}}></span>
-			<div className="alert-body d-flex w-100">
+			<span className="d-flex me-2" dangerouslySetInnerHTML={{__html: typeIcon[state.type]}}></span>
+			<div className="alert-body">
 				<Slot slotContent={state.slotDefault} props={{widget, state}}></Slot>
 			</div>
 			{state.dismissible ? (
@@ -30,7 +30,11 @@ const AlertIcon = ({widget, state}: AlertContext) => {
 };
 
 const IconDemo = () => {
-	const [alertConfig] = useState<Partial<AdaptPropsSlots<AlertProps>>>({dismissible: false, slotStructure: AlertIcon});
+	const [alertConfig] = useState<Partial<AdaptPropsSlots<AlertProps>>>({
+		dismissible: false,
+		className: 'd-flex align-items-center',
+		slotStructure: AlertIcon,
+	});
 
 	return (
 		<WidgetsDefaultConfig alert={alertConfig}>

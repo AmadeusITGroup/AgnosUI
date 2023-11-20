@@ -74,11 +74,7 @@ const defaultConfig: Partial<AlertProps> = {
 		</ng-template>
 
 		@if (!state().hidden) {
-			<div
-				[auUse]="widget.directives.transitionDirective"
-				class="au-alert d-flex w-100 alert alert-{{ state().type }} {{ state().className }}"
-				role="alert"
-			>
+			<div [auUse]="widget.directives.transitionDirective" class="au-alert alert alert-{{ state().type }} {{ state().className }}" role="alert">
 				<ng-template [auSlot]="state().slotStructure" [auSlotProps]="{state: state(), widget}"></ng-template>
 			</div>
 		}`,

@@ -23,8 +23,8 @@
 </script>
 
 <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-<span class="d-flex align-items-center me-2">{@html typeIcon[state.type]}</span>
-<div class="alert-body d-flex w-100">
+<span class="d-flex me-2">{@html typeIcon[state.type]}</span>
+<div class="alert-body">
 	<Slot slotContent={state.slotDefault} props={{widget, state}} let:component let:props>
 		<slot slot="slot" let:props {...props} />
 		<svelte:component this={component} {...props}>
