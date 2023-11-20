@@ -35,7 +35,7 @@ export const Alert = forwardRef(function Alert(props: PropsWithChildren<Partial<
 	return (
 		<>
 			{state.hidden ? null : (
-				<div className={`au-alert d-flex alert w-100 alert-${state.type} ${state.className}`} role="alert" ref={refTransition}>
+				<div className={`au-alert alert alert-${state.type} ${state.className}`} role="alert" ref={refTransition}>
 					<Slot slotContent={state.slotStructure} props={slotContext}></Slot>
 				</div>
 			)}

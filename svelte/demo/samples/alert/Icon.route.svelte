@@ -4,7 +4,7 @@
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const widgetsConfig$ = createWidgetsDefaultConfig();
-	$widgetsConfig$.alert = {...$widgetsConfig$.alert, dismissible: false, slotStructure: Icon};
+	$widgetsConfig$.alert = {...$widgetsConfig$.alert, dismissible: false, className: 'd-flex align-items-center', slotStructure: Icon};
 </script>
 
 <Alert type="success">Alert success with a customisable icon</Alert>
