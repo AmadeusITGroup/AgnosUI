@@ -201,6 +201,13 @@ export interface SliderActions {
 	 * @param handleId - numeric id of the handle
 	 */
 	mouseDown(event: MouseEvent, handleId: number): void;
+
+	/**
+	 * Method describing the behavior of the slider handle on touch start event
+	 * @param event - touch event
+	 * @param handleId - number id of the handle
+	 */
+	touchStart(event: TouchEvent, handleId: number): void;
 }
 
 export type SliderWidget = Widget<SliderProps, SliderState, SliderApi, SliderActions, SliderDirectives>;
@@ -645,6 +652,38 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 						'mouseup',
 						() => {
 							document.removeEventListener('mousemove', handleDrag);
+						},
+						{once: true},
+					);
+				}
+			},
+			touchStart(event: TouchEvent, handleId: number) {
+				event.preventDefault();
+				const handleDrag = (e: TouchEvent) => {
+					e.preventDefault();
+					const newCoord = vertical$() ? e.touches[0].clientY : e.touches[0].clientX;
+					(event.target as HTMLElement).focus();
+					if (_prevCoordinate !== newCoord) {
+						_prevCoordinate = newCoord;
+						adjustCoordinate(newCoord, handleId);
+					}
+				};
+				if (isInteractable$()) {
+					(event.target as HTMLElement).focus();
+					document.addEventListener('touchmove', handleDrag);
+					document.addEventListener(
+						'touchend',
+						() => {
+							document.removeEventListener('touchmove', handleDrag);
+							document.removeEventListener('touchcancel', handleDrag);
+						},
+						{once: true},
+					);
+					document.addEventListener(
+						'touchcancel',
+						() => {
+							document.removeEventListener('touchmove', handleDrag);
+							document.removeEventListener('touchend', handleDrag);
 						},
 						{once: true},
 					);
