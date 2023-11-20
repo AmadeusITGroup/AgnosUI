@@ -30,7 +30,7 @@ export function Slider(props: Partial<SliderProps>) {
 			rtl,
 		},
 		{
-			actions: {click, keydown, mouseDown},
+			actions: {click, keydown, mouseDown, touchStart},
 			directives: {sliderDirective, minLabelDirective, maxLabelDirective},
 		},
 	] = useWidgetWithConfig(createSlider, props, 'slider');
@@ -127,6 +127,7 @@ export function Slider(props: Partial<SliderProps>) {
 						}}
 						onKeyDown={(e) => keydown(e as unknown as KeyboardEvent, item.id)}
 						onMouseDown={(e) => mouseDown(e as unknown as MouseEvent, item.id)}
+						onTouchStart={(e) => touchStart(e as unknown as TouchEvent, item.id)}
 					>
 						&nbsp;
 					</button>
