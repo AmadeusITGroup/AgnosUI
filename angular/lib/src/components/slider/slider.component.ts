@@ -87,6 +87,7 @@ import {take} from 'rxjs';
 				[style.top.%]="state().handleDisplayOptions[item.id].top"
 				(keydown)="onKeyDown($event, item.id)"
 				(mousedown)="widget.actions.mouseDown($event, item.id)"
+				(touchstart)="widget.actions.touchStart($event, item.id)"
 			>
 				&nbsp;
 			</button>
