@@ -1,7 +1,30 @@
 $prefix: au-;
 
+/// Mixin used to redefine css variable for different size of slider
+/// In particular the size bar and the size of the handle
+/// The offset is used to add some space between the text and the slider
+@mixin setSliderSize($barSize, $handleSize, $fontSize, $offset) {
+	--#{$prefix}slider-font-size: #{$fontSize};
+	--#{$prefix}slider-border-radius: calc(#{$barSize} / 2);
+
+	--#{$prefix}slider-secondary-size: #{$barSize};
+
+	--#{$prefix}slider-margin-block-start: calc((#{$handleSize} - #{$barSize}) / 2 + #{$fontSize} * 1.5 + #{$offset});
+	--#{$prefix}slider-margin-block-end: calc((#{$handleSize} - #{$barSize}) / 2 + #{$offset});
+	--#{$prefix}slider-vertical-margin-inline-start: calc((#{$handleSize} - #{$barSize}) / 2 + #{$offset});
+	--#{$prefix}slider-vertical-margin-inline-end: calc((#{$handleSize} - #{$barSize}) / 2 + #{$offset} + 3ch + #{$offset});
+
+	--#{$prefix}slider-handle-size: #{$handleSize};
+
+	--#{$prefix}slider-label-margin-block-start: calc(-1 * (#{$fontSize} * 1.5 + (#{$handleSize} - #{$barSize}) / 2));
+	--#{$prefix}slider-label-vertical-margin-inline-start: calc((#{$handleSize} - #{$barSize}) / 2 + #{$barSize} + #{$offset});
+}
+
 .au-slider {
 	--#{$prefix}slider-background-color: #{$slider-color-background};
+	--#{$prefix}slider-font-size: #{$slider-font-size};
+	--#{$prefix}slider-border-radius: #{$slider-border-radius};
+	--#{$prefix}slider-line-height: #{$slider-line-height};
 
 	--#{$prefix}slider-primary-size: #{$slider-primary-size};
 	--#{$prefix}slider-secondary-size: #{$slider-secondary-size};
@@ -48,6 +71,9 @@ $prefix: au-;
 
 	display: flex;
 	background-color: var(--#{$prefix}slider-background-color);
+	border-radius: var(--#{$prefix}slider-border-radius);
+	font-size: var(--#{$prefix}slider-font-size);
+	line-height: var(--#{$prefix}slider-line-height);
 	position: relative;
 
 	&.au-slider-horizontal {
@@ -56,6 +82,7 @@ $prefix: au-;
 		margin-block-start: var(--#{$prefix}slider-margin-block-start);
 		margin-block-end: var(--#{$prefix}slider-margin-block-end);
 		.au-slider-handle-horizontal {
+			top: calc(50% - var(--#{$prefix}slider-handle-size) / 2);
 			transform: var(--#{$prefix}slider-translate-horizontal);
 		}
 	}
@@ -66,6 +93,7 @@ $prefix: au-;
 		margin-inline-start: var(--#{$prefix}slider-vertical-margin-inline-start);
 		margin-inline-end: var(--#{$prefix}slider-vertical-margin-inline-end);
 		.au-slider-handle-vertical {
+			left: calc(50% - var(--#{$prefix}slider-handle-size) / 2);
 			transform: var(--#{$prefix}slider-translate-vertical);
 		}
 	}
@@ -73,11 +101,11 @@ $prefix: au-;
 	.au-slider-handle {
 		background-color: var(--#{$prefix}slider-handle-color);
 		border: var(--#{$prefix}slider-handle-border);
-		width: var(--#{$prefix}slider-handle-size);
-		height: var(--#{$prefix}slider-handle-size);
 		border-radius: var(--#{$prefix}slider-handle-border-radius);
 		outline: var(--#{$prefix}slider-handle-outline);
 		position: absolute;
+		width: var(--#{$prefix}slider-handle-size);
+		height: var(--#{$prefix}slider-handle-size);
 
 		&:focus {
 			box-shadow: var(--#{$prefix}slider-handle-focus-box-shadow);
@@ -86,7 +114,7 @@ $prefix: au-;
 
 	.au-slider-progress {
 		background-color: var(--#{$prefix}slider-progress-color);
-		height: var(--#{$prefix}slider-progress-height);
+		border-radius: var(--#{$prefix}slider-border-radius);
 		position: absolute;
 	}
 

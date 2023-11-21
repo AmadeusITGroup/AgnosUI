@@ -98,8 +98,8 @@
 			aria-label={item.ariaLabel}
 			aria-orientation={$vertical$ ? 'vertical' : null}
 			disabled={$disabled$ ? true : null}
-			style:left={`${$handleDisplayOptions$[item.id].left}%`}
-			style:top={`${$handleDisplayOptions$[item.id].top}%`}
+			style:left={$vertical$ ? null : `${$handleDisplayOptions$[item.id].left}%`}
+			style:top={$vertical$ ? `${$handleDisplayOptions$[item.id].top}%` : null}
 			on:keydown={(e) => keydown(e, item.id)}
 			on:mousedown={(e) => mouseDown(e, item.id)}
 		>

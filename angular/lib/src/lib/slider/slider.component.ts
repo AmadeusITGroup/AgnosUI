@@ -75,8 +75,8 @@ import {take} from 'rxjs';
 				[attr.aria-orientation]="state().vertical ? 'vertical' : null"
 				[disabled]="state().disabled"
 				[class]="state().vertical ? 'au-slider-handle-vertical' : 'au-slider-handle-horizontal'"
-				[style.left.%]="state().handleDisplayOptions[item.id].left"
-				[style.top.%]="state().handleDisplayOptions[item.id].top"
+				[style.left.%]="state().vertical ? null : state().handleDisplayOptions[item.id].left"
+				[style.top.%]="state().vertical ? state().handleDisplayOptions[item.id].top : null"
 				(keydown)="onKeyDown($event, item.id)"
 				(mousedown)="widget.actions.mouseDown($event, item.id)"
 			>
