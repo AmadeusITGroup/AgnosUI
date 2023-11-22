@@ -1,5 +1,6 @@
 {
 	"name": "@agnos-ui/base-po",
+	"type": "module",
 	"description": "Base class to build page objects for end-to-end tests with Playwright.",
 	"keywords": [
 		"playwright",

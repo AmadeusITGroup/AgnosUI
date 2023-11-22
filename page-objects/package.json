@@ -1,5 +1,6 @@
 {
 	"name": "@agnos-ui/page-objects",
+	"type": "module",
 	"description": "Page objects to be used when testing AgnosUI-based applications with Playwright.",
 	"keywords": [
 		"playwright",

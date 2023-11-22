@@ -1,5 +1,6 @@
 {
 	"name": "@agnos-ui/core",
+	"type": "module",
 	"private": true,
 	"scripts": {
 		"build": "npm run build:lib && npm run build:tsc && npm run build:api-extractor",
@@ -9,7 +10,7 @@
 		"test": "vitest run",
 		"tdd": "vitest",
 		"tdd:ui": "vitest --ui",
-		"test:coverage": "node -r @agnos-ui/code-coverage/interceptReadFile ../node_modules/vitest/vitest.mjs run --coverage"
+		"test:coverage": "node --import @agnos-ui/code-coverage/interceptReadFile ../node_modules/vitest/vitest.mjs run --coverage"
 	},
 	"dependencies": {
 		"@amadeus-it-group/tansu": "0.0.23"

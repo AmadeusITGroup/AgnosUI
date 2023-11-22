@@ -1,7 +1,8 @@
 {
 	"name": "@agnos-ui/eslint-plugin",
+	"type": "module",
 	"private": true,
-	"main": "dist/index.js",
+	"main": "dist/index.cjs",
 	"dependencies": {
 		"@typescript-eslint/utils": "^6.11.0"
 	},

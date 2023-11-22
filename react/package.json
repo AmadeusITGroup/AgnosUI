@@ -1,5 +1,6 @@
 {
 	"name": "@agnos-ui/react",
+	"type": "module",
 	"private": true,
 	"scripts": {
 		"dev": "vite -c vite.demo.config.ts",

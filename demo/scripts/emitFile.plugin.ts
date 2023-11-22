@@ -1,5 +1,5 @@
 import type {Plugin} from 'vite';
-import type {EmittedFile} from 'rollup';
+import type {EmittedFile} from 'vite/node_modules/rollup';
 
 export const emitFile = (emittedFile: EmittedFile): Plugin => {
 	return {
