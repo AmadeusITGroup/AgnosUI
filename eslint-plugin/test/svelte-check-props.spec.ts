@@ -24,7 +24,7 @@ describe('svelte-check-props', () => {
 	});
 	type MessageIds<T extends TSESLint.RuleModule<any, any>> = T extends TSESLint.RuleModule<infer U, any> ? U : never;
 
-	const invalid: InvalidTestCase<MessageIds<typeof svelteCheckPropsRule>, []>[] = [
+	const invalid: (InvalidTestCase<MessageIds<typeof svelteCheckPropsRule>, []> & {outputError?: boolean})[] = [
 		{
 			filename: 'file.svelte',
 			code: codeTemplate('export let someProp: string | undefined;', ''),
@@ -150,6 +150,33 @@ describe('svelte-check-props', () => {
 				'someProp: string; onSomePropChange: (event: string) => void;',
 				'{onSomePropChange: (event) => {dispatch("somePropChange", event); someProp = event;}}',
 			),
+		},
+		{
+			filename: 'file.svelte',
+			code: codeTemplate(
+				'let someProp: string | undefined;',
+				'onSomePropChange: (event: string) => void;',
+				'{onSomePropChange: (event) => {dispatch("somePropChange", event); someProp = event;}}',
+			),
+			errors: [{messageId: 'missingBoundPropInAPI', data: {name: 'someProp'}}],
+		},
+		{
+			filename: 'file.svelte',
+			code: codeTemplate(
+				'export let someProp: string | undefined;',
+				'onSomePropChange: (event: string) => void;',
+				'{onSomePropChange: (event) => {dispatch("somePropChange", event); someProp = event;}}',
+			),
+			errors: [
+				{messageId: 'extraProp', data: {name: 'someProp'}},
+				{messageId: 'missingBoundPropInAPI', data: {name: 'someProp'}},
+			],
+			output: codeTemplate(
+				'',
+				'onSomePropChange: (event: string) => void;',
+				'{onSomePropChange: (event) => {dispatch("somePropChange", event); someProp = event;}}',
+			),
+			outputError: true,
 		},
 		{
 			filename: 'file.svelte',
@@ -324,11 +351,11 @@ describe('svelte-check-props', () => {
 				code: codeTemplate('', ''),
 			},
 			...invalid
-				.filter(({output}) => !!output)
+				.filter(({output, outputError}) => !!output && !outputError)
 				.map(({output}) => ({
 					code: output!,
 				})),
 		],
-		invalid,
+		invalid: invalid.map(({outputError, ...testCase}) => testCase),
 	});
 });

@@ -5,6 +5,7 @@ import {dependencies, peerDependencies} from './package.json';
 // https://vitejs.dev/config/
 export default defineConfig({
 	build: {
+		minify: false,
 		lib: {
 			entry: 'src/index',
 			fileName: 'index',
