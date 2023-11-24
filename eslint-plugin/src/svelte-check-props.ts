@@ -86,6 +86,16 @@ const reportExtraProp = (
 	});
 };
 
+const reportMissingPropInAPI = (node: TSESTree.Node, name: string, context: Readonly<TSESLint.RuleContext<'missingBoundPropInAPI', any>>) => {
+	context.report({
+		node,
+		messageId: 'missingBoundPropInAPI',
+		data: {
+			name,
+		},
+	});
+};
+
 const reportMissingProp = (
 	node: TSESTree.Node,
 	insertPosition: TSESTree.Node,
@@ -302,9 +312,9 @@ export const svelteCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 							exportLetNodes
 								.filter((exportNode) => {
 									const name = exportNode.id.name;
-									const validProp = bindings.delete(name);
+									const propInfo = widgetInfo.props.get(name);
+									const validProp = propInfo && bindings.delete(name);
 									if (validProp) {
-										const propInfo = widgetInfo.props.get(name)!;
 										const nodeType = getNodeType(exportNode, context);
 										if (!isSameType(propInfo.type, nodeType, context)) {
 											reportInvalidPropType(exportNode, propInfo, nodeType, context);
@@ -318,7 +328,12 @@ export const svelteCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 							reportExtraProp(prop, extraProps, context);
 						}
 						for (const binding of bindings) {
-							reportMissingProp(widgetNode, widgetStatementNode, binding, widgetInfo.props.get(binding)!, context);
+							const prop = widgetInfo.props.get(binding);
+							if (prop) {
+								reportMissingProp(widgetNode, widgetStatementNode, binding, prop, context);
+							} else {
+								reportMissingPropInAPI(widgetNode, binding, context);
+							}
 						}
 						if (widgetInfo.events.size > 0) {
 							const eventsObject = extractEventsObject(widgetNode.init);
@@ -356,6 +371,7 @@ export const svelteCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 			extraProp: 'Extra "export let {{ name }}" declaration, not corresponding to a bound property in the API.',
 			invalidPropType: 'Invalid type for "export let {{ name }}" declaration: expected {{ expectedType }}, found {{ foundType }}.',
 			missingBoundProp: 'Missing "export let {{ name }}" declaration, as it is a bound property in the API.',
+			missingBoundPropInAPI: 'Missing property {{ name }} in the API.',
 			missingDispatchCall: 'Could not find call to dispatch("{{name}}") in {{ widgetProp }} listener in call to widget.patch.',
 			missingBindingAssignment: 'Could not find assignment to {{ propBinding }} in {{ widgetProp }} listener in call to widget.patch.',
 		},
