@@ -23,5 +23,5 @@
 	</Slot>
 </div>
 {#if state.dismissible}
-	<button type="button" class="btn-close ms-auto" on:click={() => widget.api.close()} aria-label={state.ariaCloseButtonLabel} />
+	<button type="button" class="btn-close" on:click={() => widget.api.close()} aria-label={state.ariaCloseButtonLabel} />
 {/if}

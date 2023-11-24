@@ -50,7 +50,7 @@ export class AlertStructureDirective {
 			<ng-template [auSlot]="state.slotDefault" [auSlotProps]="{state, widget}"></ng-template>
 		</div>
 		@if (state.dismissible) {
-			<button type="button" class="btn-close ms-auto" (click)="widget.api.close()" [attr.aria-label]="state.ariaCloseButtonLabel"></button>
+			<button type="button" class="btn-close" (click)="widget.api.close()" [attr.aria-label]="state.ariaCloseButtonLabel"></button>
 		}
 	</ng-template>`,
 })
@@ -74,7 +74,11 @@ const defaultConfig: Partial<AlertProps> = {
 		</ng-template>
 
 		@if (!state().hidden) {
-			<div [auUse]="widget.directives.transitionDirective" class="au-alert alert alert-{{ state().type }} {{ state().className }}" role="alert">
+			<div
+				[auUse]="widget.directives.transitionDirective"
+				class="au-alert alert alert-{{ state().type }} {{ state().className }} {{ state().dismissible ? 'alert-dismissible' : '' }}"
+				role="alert"
+			>
 				<ng-template [auSlot]="state().slotStructure" [auSlotProps]="{state: state(), widget}"></ng-template>
 			</div>
 		}`,

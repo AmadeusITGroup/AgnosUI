@@ -9,12 +9,7 @@ const DefaultSlotStructure = (slotContext: AlertContext) => (
 			<Slot slotContent={slotContext.state.slotDefault} props={slotContext}></Slot>
 		</div>
 		{slotContext.state.dismissible ? (
-			<button
-				type="button"
-				className="btn-close ms-auto"
-				onClick={slotContext.widget.api.close}
-				aria-label={slotContext.state.ariaCloseButtonLabel}
-			></button>
+			<button type="button" className="btn-close" onClick={slotContext.widget.api.close} aria-label={slotContext.state.ariaCloseButtonLabel}></button>
 		) : null}
 	</>
 );
@@ -35,7 +30,11 @@ export const Alert = forwardRef(function Alert(props: PropsWithChildren<Partial<
 	return (
 		<>
 			{state.hidden ? null : (
-				<div className={`au-alert alert alert-${state.type} ${state.className}`} role="alert" ref={refTransition}>
+				<div
+					className={`au-alert alert alert-${state.type} ${state.className} ${state.dismissible ? 'alert-dismissible' : ''}`}
+					role="alert"
+					ref={refTransition}
+				>
 					<Slot slotContent={state.slotStructure} props={slotContext}></Slot>
 				</div>
 			)}
