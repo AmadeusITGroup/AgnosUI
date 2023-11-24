@@ -42,7 +42,11 @@
 </script>
 
 {#if !$hidden$}
-	<div class="au-alert alert alert-{$state$.type} {$state$.className}" role="alert" use:transitionDirective>
+	<div
+		class="au-alert alert alert-{$state$.type} {$state$.className} {$state$.dismissible ? 'alert-dismissible' : ''}"
+		role="alert"
+		use:transitionDirective
+	>
 		<Slot slotContent={$slotStructure$} props={slotContext} let:component let:props>
 			<slot slot="slot" name="structure" let:props {...props} />
 			<svelte:component this={component} {...props}>

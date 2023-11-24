@@ -12,6 +12,7 @@ test.describe(`Alert tests`, () => {
 		await alertDemoPO.locatorRoot.waitFor();
 
 		await expect(alertPO.locatorRoot).toHaveClass(/alert-success/);
+		await expect(alertPO.locatorRoot).toHaveClass(/alert-dismissible/);
 
 		await alertPO.locatorCloseButton.click();
 
@@ -22,6 +23,7 @@ test.describe(`Alert tests`, () => {
 		await alertDemoPO.locatorShowAlertButton.click();
 
 		await expect(alertPO.locatorRoot).toHaveClass(/alert-danger/);
+		await expect(alertPO.locatorRoot).not.toHaveClass(/alert-dismissible/);
 		await expect(alertPO.locatorCloseButton).toHaveCount(0);
 	});
 
