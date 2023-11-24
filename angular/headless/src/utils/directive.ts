@@ -1,13 +1,8 @@
 import type {Directive as AgnosUIDirective} from '@agnos-ui/core/types';
 import type {OnChanges} from '@angular/core';
-import {DestroyRef, Directive, ElementRef, Input, inject} from '@angular/core';
+import {DestroyRef, Directive, ElementRef, Injector, Input, afterNextRender, inject, runInInjectionContext} from '@angular/core';
 
 export * from '@agnos-ui/core/utils/directive';
-
-// All calls of the directive in this class are done asynchronously (with await 0)
-// in order to avoid ExpressionChangedAfterItHasBeenCheckedError
-// or the corresponding issue with signals (https://github.com/angular/angular/issues/50320)
-// This is relevant especially if calling the directive changes variables used in a template.
 
 /**
  * Set up an agnos-ui directive as an angular host directive.
@@ -17,41 +12,47 @@ export * from '@agnos-ui/core/utils/directive';
  * @returns the update function to change the directive or params
  */
 export const useDirectiveForHost = <T>(directive?: AgnosUIDirective<T>, params?: T) => {
+	const injector = inject(Injector);
 	const ref = inject(ElementRef);
 
-	let instance = directive?.(ref.nativeElement, params as T);
+	let instance: undefined | ReturnType<AgnosUIDirective<T>>;
+	let plannedCallDirective = false;
 
-	async function destroyDirectiveInstance() {
+	const callDirective = () => {
+		if (plannedCallDirective || !directive) {
+			return;
+		}
+		plannedCallDirective = true;
+		runInInjectionContext(injector, () => {
+			afterNextRender(() => {
+				plannedCallDirective = false;
+				instance = directive?.(ref.nativeElement, params as T);
+			});
+		});
+	};
+
+	function destroyDirectiveInstance() {
 		const oldInstance = instance;
 		instance = undefined;
 		directive = undefined;
-		if (oldInstance?.destroy) {
-			await 0;
-			oldInstance.destroy?.();
-		}
+		oldInstance?.destroy?.();
 	}
 
 	inject(DestroyRef).onDestroy(destroyDirectiveInstance);
 
-	async function update(newDirective?: AgnosUIDirective<T>, newParams?: T) {
+	function update(newDirective?: AgnosUIDirective<T>, newParams?: T) {
 		if (newDirective !== directive) {
 			void destroyDirectiveInstance();
 			directive = newDirective;
 			params = newParams;
-			if (newDirective) {
-				await 0;
-				// checks that the directive did not change while waiting:
-				if (directive === newDirective && !instance) {
-					instance = directive(ref.nativeElement, params as T);
-				}
-			}
+			callDirective();
 		} else if (newParams != params) {
 			params = newParams;
-			await 0;
 			instance?.update?.(params as T);
 		}
 	}
 
+	callDirective();
 	return {update};
 };
 
@@ -70,6 +71,6 @@ export class UseDirective<T> implements OnChanges {
 
 	/** @inheritdoc */
 	ngOnChanges() {
-		void this.#useDirective.update(this.use, this.params);
+		this.#useDirective.update(this.use, this.params);
 	}
 }
