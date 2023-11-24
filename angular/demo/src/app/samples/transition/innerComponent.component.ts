@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {AgnosUIAngularModule} from '@agnos-ui/angular';
+import {AgnosUIAngularModule, toAngularSignal} from '@agnos-ui/angular';
 import type {TransitionFn} from '@agnos-ui/core';
 import {collapseHorizontalTransition, collapseVerticalTransition, createTransition, fadeTransition} from '@agnos-ui/core';
 import {writable} from '@amadeus-it-group/tansu';
@@ -83,13 +83,13 @@ const paramRemoveFromDom$ = writable(true);
 			<button type="button" class="ms-2 btn btn-outline-primary" (click)="transition.api.toggle(undefined, true)">Toggle with animation</button>
 			<button type="button" class="ms-2 btn btn-outline-primary" (click)="transition.api.toggle(undefined, false)">Toggle without animation</button>
 			<ul class="mt-2">
-				<li>visible = {{ transition.stores.visible$ | async }}</li>
-				<li>transitioning = {{ transition.stores.transitioning$ | async }}</li>
-				<li>shown = {{ transition.stores.shown$ | async }}</li>
-				<li>hidden = {{ transition.stores.hidden$ | async }}</li>
+				<li>visible = {{ state().visible }}</li>
+				<li>transitioning = {{ state().transitioning }}</li>
+				<li>shown = {{ state().shown }}</li>
+				<li>hidden = {{ state().hidden }}</li>
 			</ul>
 
-			@if ((paramRemoveFromDom$ | async) === false || (transition.stores.hidden$ | async) === false) {
+			@if ((paramRemoveFromDom$ | async) === false || state().hidden === false) {
 				<div
 					[auUse]="transition.directives.directive"
 					[auUseParams]="{transition: (paramTransition$ | async)!, animation: (paramAnimation$ | async)!}"
@@ -108,7 +108,6 @@ export class InnerComponent {
 	paramTransition$ = paramTransition$;
 	paramAnimation$ = paramAnimation$;
 	paramAnimationOnInit$ = paramAnimationOnInit$;
-	paramVisible$ = paramVisible$;
 	paramRemoveFromDom$ = paramRemoveFromDom$;
 	transition = createTransition({
 		props: {
@@ -117,6 +116,7 @@ export class InnerComponent {
 			visible: paramVisible$,
 		},
 	});
+	state = toAngularSignal(this.transition.state$);
 
 	changeTransition(newTransition: TransitionFn) {
 		// Make sure the element is removed from the DOM
