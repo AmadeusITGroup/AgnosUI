@@ -9,7 +9,7 @@
 		"build:headless": "node ../scripts/rm.js dist/headless && ng build headless && node ../scripts/buildPackageJson.js dist/headless dist/headless headless",
 		"build:lib": "node ../scripts/rm.js dist/lib && ng build lib && node ../scripts/buildPackageJson.js dist/lib dist/lib lib",
 		"build:demo": "ng build demo",
-		"build:coverage": "node -r @agnos-ui/code-coverage/interceptReadFile ../node_modules/@angular/cli/bin/ng.js build demo",
+		"build:coverage": "node -r @agnos-ui/code-coverage/interceptReadFile ../node_modules/@angular/cli/bin/ng.js build --configuration=coverage demo",
 		"watch": "ng build --watch --configuration development",
 		"preview": "node ./scripts/preview.cjs dist/demo --port 4200 --single",
 		"test": "vitest run",
