@@ -13,18 +13,39 @@ export const typeNumber: WritableWithDefaultOptions<number> = {
 	normalizeValue: numberNormalizeFn,
 };
 
+export interface TypeNumberInRangeOptions {
+	/** If `true`, the range checking will be strict, excluding the minimum and maximum values. Default is `false`. */
+	strict?: boolean;
+
+	/** If `true`, values outside the range will be clamped to the minimum or maximum. Default is `true`. */
+	useClamp?: boolean;
+}
+
 /**
- * A factory function that creates a type guard function to check and rectify a value is within a specified range.
+ * Factory function for creating a type constraint for numbers within a specified range.
  *
- * @param min - The minimum value allowed.
- * @param max - The maximum value allowed.
- * @returns A type guard function that returns the clamp value if the value is a value number, and INVALID_VALUE otherwise.
+ * @param min - The minimum value.
+ * @param max - The maximum value.
+ * @param options - Additional options to customize the behavior.
+ *
+ * @returns A type guard function that returns the clamp value or INVALID_VALUE depending on the provided options.
  */
-export function typeNumberInRangeFactory(min: number, max: number) {
+export function typeNumberInRangeFactory(min: number, max: number, options: TypeNumberInRangeOptions = {}) {
+	const {strict = false, useClamp = true} = options;
 	return <WritableWithDefaultOptions<number>>{
 		normalizeValue: (value) => {
-			const normalizedNumber = numberNormalizeFn(value);
-			return normalizedNumber === INVALID_VALUE ? INVALID_VALUE : clamp(normalizedNumber, max, min);
+			let normalizedNumber = numberNormalizeFn(value);
+			if (normalizedNumber !== INVALID_VALUE) {
+				if (!strict && useClamp) {
+					normalizedNumber = clamp(normalizedNumber, max, min);
+				}
+				if (normalizedNumber >= min && normalizedNumber <= max) {
+					if (!strict || (normalizedNumber !== min && normalizedNumber !== max)) {
+						return normalizedNumber;
+					}
+				}
+			}
+			return INVALID_VALUE;
 		},
 	};
 }

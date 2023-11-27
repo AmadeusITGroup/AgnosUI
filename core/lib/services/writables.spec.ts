@@ -43,6 +43,46 @@ describe(`Writables service`, () => {
 		expect(normalizeValueFn(2)).toBe(2);
 		expect(normalizeValueFn(3)).toBe(3);
 		expect(normalizeValueFn(4)).toBe(3);
-		expect(normalizeValueFn(+'a')).toBe(INVALID_VALUE);
+		expect(normalizeValueFn(NaN)).toBe(INVALID_VALUE);
+		expect(normalizeValueFn('a' as any)).toBe(INVALID_VALUE);
+		expect(normalizeValueFn(true as any)).toBe(INVALID_VALUE);
+		expect(normalizeValueFn({} as any)).toBe(INVALID_VALUE);
+		expect(normalizeValueFn(null as any)).toBe(INVALID_VALUE);
+
+		const normalizeStrictFn = typeNumberInRangeFactory(1, 3, {strict: true}).normalizeValue!;
+		expect(normalizeStrictFn(0)).toBe(INVALID_VALUE);
+		expect(normalizeStrictFn(1)).toBe(INVALID_VALUE);
+		expect(normalizeStrictFn(2)).toBe(2);
+		expect(normalizeStrictFn(3)).toBe(INVALID_VALUE);
+		expect(normalizeStrictFn(4)).toBe(INVALID_VALUE);
+		expect(normalizeValueFn(NaN)).toBe(INVALID_VALUE);
+		expect(normalizeValueFn('a' as any)).toBe(INVALID_VALUE);
+		expect(normalizeValueFn(true as any)).toBe(INVALID_VALUE);
+		expect(normalizeValueFn({} as any)).toBe(INVALID_VALUE);
+		expect(normalizeValueFn(null as any)).toBe(INVALID_VALUE);
+
+		const normalizeNoClampFn = typeNumberInRangeFactory(1, 3, {useClamp: false}).normalizeValue!;
+		expect(normalizeNoClampFn(0)).toBe(INVALID_VALUE);
+		expect(normalizeNoClampFn(1)).toBe(1);
+		expect(normalizeNoClampFn(2)).toBe(2);
+		expect(normalizeNoClampFn(3)).toBe(3);
+		expect(normalizeNoClampFn(4)).toBe(INVALID_VALUE);
+		expect(normalizeValueFn(NaN)).toBe(INVALID_VALUE);
+		expect(normalizeValueFn('a' as any)).toBe(INVALID_VALUE);
+		expect(normalizeValueFn(true as any)).toBe(INVALID_VALUE);
+		expect(normalizeValueFn({} as any)).toBe(INVALID_VALUE);
+		expect(normalizeValueFn(null as any)).toBe(INVALID_VALUE);
+
+		const normalizeCombineFn = typeNumberInRangeFactory(1, 3, {strict: true, useClamp: false}).normalizeValue!;
+		expect(normalizeCombineFn(0)).toBe(INVALID_VALUE);
+		expect(normalizeCombineFn(1)).toBe(INVALID_VALUE);
+		expect(normalizeCombineFn(2)).toBe(2);
+		expect(normalizeCombineFn(3)).toBe(INVALID_VALUE);
+		expect(normalizeCombineFn(4)).toBe(INVALID_VALUE);
+		expect(normalizeValueFn(NaN)).toBe(INVALID_VALUE);
+		expect(normalizeValueFn('a' as any)).toBe(INVALID_VALUE);
+		expect(normalizeValueFn(true as any)).toBe(INVALID_VALUE);
+		expect(normalizeValueFn({} as any)).toBe(INVALID_VALUE);
+		expect(normalizeValueFn(null as any)).toBe(INVALID_VALUE);
 	});
 });

@@ -204,7 +204,7 @@ export function getSliderDefaultConfig() {
 const configValidator: ConfigValidator<SliderProps> = {
 	min: typeNumber,
 	max: typeNumber,
-	stepSize: typeNumberInRangeFactory(0, +Infinity),
+	stepSize: typeNumberInRangeFactory(0, +Infinity, {strict: true}),
 	readonly: typeBoolean,
 	disabled: typeBoolean,
 	vertical: typeBoolean,
