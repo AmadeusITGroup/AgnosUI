@@ -20,11 +20,11 @@
 		"@amadeus-it-group/tansu": "0.0.23"
 	},
 	"devDependencies": {
-		"@sveltejs/package": "^2.2.2",
-		"@sveltejs/vite-plugin-svelte": "^2.5.2",
-		"eslint-plugin-svelte": "^2.35.0",
-		"prettier-plugin-svelte": "^3.1.0",
-		"svelte": "^4.2.5",
-		"svelte-check": "^3.6.0"
+		"@sveltejs/package": "^2.2.3",
+		"@sveltejs/vite-plugin-svelte": "^2.5.3",
+		"eslint-plugin-svelte": "^2.35.1",
+		"prettier-plugin-svelte": "^3.1.2",
+		"svelte": "^4.2.7",
+		"svelte-check": "^3.6.2"
 	}
 }
