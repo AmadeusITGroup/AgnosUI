@@ -1,4 +1,4 @@
-import {expect, getTest} from '../fixture';
+import {expect, test} from '../fixture';
 import {PaginationPO} from '@agnos-ui/page-objects';
 import {PaginationDemoPO} from '../demo-po/pagination.po';
 interface returnState {
@@ -11,7 +11,6 @@ interface returnState {
 	isLastDisabled?: boolean;
 }
 
-const test = getTest();
 async function paginationState(paginationPO: PaginationPO) {
 	return paginationPO.locatorRoot.evaluate((rootNode: HTMLElement) => {
 		const returnState: returnState = {rootClasses: [], disabled: null, pages: []};

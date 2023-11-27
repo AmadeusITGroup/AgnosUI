@@ -1,5 +1,5 @@
 import type {Page} from '@playwright/test';
-import {test, expect} from '@playwright/test';
+import {test, expect} from './fixture';
 import AxeBuilder from '@axe-core/playwright';
 import type {AxeResults} from 'axe-core';
 import {globSync} from 'glob';

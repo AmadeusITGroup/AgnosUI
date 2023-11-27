@@ -1,4 +1,4 @@
-import {expect, test} from '@playwright/test';
+import {expect, test} from '../fixture';
 import {AccordionPO} from '@agnos-ui/page-objects';
 import {AccordionTogglePanels} from '../demo-po/accordion.po';
 

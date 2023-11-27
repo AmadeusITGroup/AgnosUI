@@ -1,4 +1,4 @@
-import {expect, getTest} from '../fixture';
+import {expect, test} from '../fixture';
 import {RatingPO} from '@agnos-ui/page-objects';
 import {RatingDemoPO} from '../demo-po/rating.po';
 
@@ -12,7 +12,6 @@ function createArray<T>(length: number, value: T) {
 	return array;
 }
 
-const test = getTest();
 test.describe.parallel(`Rating tests`, () => {
 	test(`Basic features`, async ({page}) => {
 		const ratingDemoPO = new RatingDemoPO(page);

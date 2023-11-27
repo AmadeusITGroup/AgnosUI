@@ -1,8 +1,7 @@
-import {expect, getTest} from '../fixture';
+import {expect, test} from '../fixture';
 import {ModalDefaultDemoModalPO, ModalDemoPO, ModalStackDemoModalPO} from '../demo-po/modal.po';
 import {ModalPO} from '@agnos-ui/page-objects';
 
-const test = getTest();
 test.describe.parallel(`Modal tests`, () => {
 	test(`Default modal`, async ({page}) => {
 		const modalDemoPO = new ModalDemoPO(page);

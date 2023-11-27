@@ -1,8 +1,7 @@
 import type {Page} from '@playwright/test';
 import {NavManagerLinePO, NavManagerPO} from '../demo-po/navmanager.po';
-import {expect, getTest} from '../fixture';
+import {expect, test} from '../fixture';
 
-const test = getTest();
 for (const sample of ['navmanager', 'navmanagerwithselector']) {
 	test.describe(sample, () => {
 		test.beforeEach(async ({page}) => {
