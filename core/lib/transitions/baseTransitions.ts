@@ -11,6 +11,7 @@ import {
 } from '../services';
 import {typeBoolean, typeBooleanOrNull, typeFunction} from '../services/writables';
 import type {Directive, Widget} from '../types';
+import {promiseWithResolve} from '../utils';
 
 /**
  * Function that implements a transition.
@@ -197,14 +198,6 @@ const configValidator: ConfigValidator<TransitionProps> = {
 	onHidden: typeFunction,
 	onVisibleChange: typeFunction,
 	initDone: typeBooleanOrNull,
-};
-
-const promiseWithResolve = () => {
-	let resolve: (value: void | Promise<void>) => void;
-	const promise = new Promise<void>((r) => {
-		resolve = r;
-	});
-	return {promise, resolve: resolve!};
 };
 
 export const createTransition = (config?: PropsConfig<TransitionProps>): TransitionWidget => {

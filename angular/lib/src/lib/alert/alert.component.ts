@@ -101,7 +101,7 @@ export class AlertComponent implements OnChanges, AfterContentChecked {
 	/**
 	 * The transition function will be executed when the alert is displayed or hidden.
 	 *
-	 * Depending on the value of AlertProps.animationOnInit, the animation can be optionally skipped during the showing process.
+	 * Depending on the value of CommonAlertProps.animationOnInit, the animation can be optionally skipped during the showing process.
 	 */
 	@Input('auTransition')
 	transition: TransitionFn | undefined;

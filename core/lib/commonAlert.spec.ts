@@ -1,27 +1,26 @@
 import {beforeEach, describe, expect, test} from 'vitest';
-import {createAlert} from './alert';
-import type {AlertWidget} from './alert';
+import type {CommonAlertWidget} from './commonAlert';
+import {createCommonAlert} from './commonAlert';
 import type {WidgetState} from './types';
 import {promiseWithResolve} from './utils';
 
-describe(`Alert`, () => {
-	let alert: AlertWidget;
-	let state: WidgetState<AlertWidget>;
+describe(`Common Alert`, () => {
+	let commonAlert: CommonAlertWidget;
+	let state: WidgetState<CommonAlertWidget>;
 
 	beforeEach(() => {
-		alert = createAlert();
-		alert.state$.subscribe((newState) => {
+		commonAlert = createCommonAlert();
+		commonAlert.state$.subscribe((newState) => {
 			state = newState;
 		});
 	});
 
-	test(`should create alert with a default state`, () => {
+	test(`should create common alert with a default state`, () => {
 		expect(state).toEqual({
 			className: '',
 			dismissible: true,
 			slotDefault: undefined,
 			slotStructure: undefined,
-			type: 'primary',
 			visible: true,
 			hidden: false,
 			ariaCloseButtonLabel: 'Close',
@@ -31,17 +30,17 @@ describe(`Alert`, () => {
 	test(`should close on method call`, () => {
 		const expectedState = state;
 		expect(expectedState.visible).toBe(true);
-		alert.api.close();
+		commonAlert.api.close();
 		expectedState.visible = false;
 		expectedState.hidden = true;
 		expect(state).toEqual(expectedState);
 	});
 
 	test(`should open on method call`, () => {
-		alert.patch({visible: false});
+		commonAlert.patch({visible: false});
 		const expectedState = state;
 		expect(expectedState.visible).toBe(false);
-		alert.api.open();
+		commonAlert.api.open();
 		expectedState.visible = true;
 		expectedState.hidden = false;
 		expect(state).toEqual(expectedState);
@@ -55,9 +54,8 @@ describe(`Alert`, () => {
 		let promiseOnHidden = promiseWithResolve();
 		const element = document.createElement('div');
 		element.innerHTML = '<div>body</div>';
-		const alertEvents = createAlert({
+		const alertEvents = createCommonAlert({
 			props: {
-				type: 'danger',
 				onShown() {
 					promiseOnShown.resolve();
 					onShownCounter++;
