@@ -8,6 +8,7 @@
 	let isMenuExpanded = false;
 	let isOnThisPageExpanded = false;
 	let dialog: HTMLDialogElement;
+	export let isMainPage = true;
 
 	$: dialogTitle = isMenuExpanded ? 'Menu' : isOnThisPageExpanded ? 'On this page' : '';
 	$: isOpen = isMenuExpanded || isOnThisPageExpanded;
@@ -37,16 +38,18 @@
 	>
 		<Svg svg={menuIcon} className="icon-20 me-1" /><span class="menu-text">Menu</span>
 	</button>
-	<button
-		class="text-dark d-flex align-items-center btn btn-link link-underline link-underline-opacity-0"
-		aria-expanded={isOnThisPageExpanded}
-		on:click={() => {
-			isOnThisPageExpanded = true;
-		}}
-	>
-		<span class="menu-text">On this page</span>
-		<Svg svg={chevronRight} className="icon-20 me-1" />
-	</button>
+	{#if !isMainPage}
+		<button
+			class="text-dark d-flex align-items-center btn btn-link link-underline link-underline-opacity-0"
+			aria-expanded={isOnThisPageExpanded}
+			on:click={() => {
+				isOnThisPageExpanded = true;
+			}}
+		>
+			<span class="menu-text">On this page</span>
+			<Svg svg={chevronRight} className="icon-20 me-1" />
+		</button>
+	{/if}
 </div>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -84,8 +87,9 @@
 		width: 100vw;
 		max-width: 100vw;
 		height: 100vh;
+		height: 100dvh;
 		max-height: 100vh;
-		position: absolute;
+		position: fixed;
 		padding-top: 0;
 		top: 0;
 		left: 0;

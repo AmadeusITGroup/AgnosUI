@@ -4,7 +4,7 @@
 	import twitter from 'bootstrap-icons/icons/twitter-x.svg?raw';
 	import coneStriped from 'bootstrap-icons/icons/cone-striped.svg?raw';
 	import 'bootstrap/dist/css/bootstrap.css';
-	import {/*canonicalURL$,*/ pathToRoot$} from '$lib/stores';
+	import {/*canonicalURL$,*/ pathToRoot$, routeLevel$} from '$lib/stores';
 	import './styles.scss';
 	import {beforeNavigate, onNavigate} from '$app/navigation';
 	import {updated} from '$app/stores';
@@ -14,6 +14,8 @@
 	const onServiceWorkerUpdate = () => {
 		updated.check();
 	};
+
+	$: isMainPage = $routeLevel$ === 0;
 
 	onMount(() => {
 		navigator.serviceWorker?.addEventListener('controllerchange', onServiceWorkerUpdate);
@@ -65,7 +67,7 @@
 		</div>
 	</nav>
 	<div class="demo-mobile-menu d-block d-md-none">
-		<MobileMenu />
+		<MobileMenu {isMainPage} />
 	</div>
 	<div class="demo-main d-flex flex-column">
 		<slot />
