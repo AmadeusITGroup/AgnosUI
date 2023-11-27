@@ -8,6 +8,7 @@ export * from './pagination.utils';
 export * from './config';
 export * from './modal/modal';
 export * from './alert';
+export * from './commonAlert';
 export * from './accordion';
 export * from './commonProps';
 export * from './progressbar';

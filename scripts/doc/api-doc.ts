@@ -1,5 +1,6 @@
 import path from 'path';
 import {
+	ModifierFlags,
 	createProgram,
 	getCombinedModifierFlags,
 	isFunctionDeclaration,
@@ -13,7 +14,6 @@ import {
 	isSpreadAssignment,
 	isTypeAliasDeclaration,
 	isVariableDeclaration,
-	ModifierFlags,
 } from 'typescript';
 
 import type {
@@ -244,7 +244,18 @@ export function parseDocs(indexFile: string) {
 		const properties: PropertyDoc[] = [];
 
 		for (const symbol of members) {
-			const member = symbol.getDeclarations()![0];
+			let member;
+			if (!symbol.getDeclarations()) {
+				// mapped properties have their original declaration in the mapper targets
+				const linkedDeclaration = (symbol as any).links.mappedType.mapper.mapper2.targets[0].members.get(symbol.escapedName).getDeclarations()[0];
+				if (linkedDeclaration) {
+					member = linkedDeclaration;
+				} else {
+					continue;
+				}
+			} else {
+				member = symbol.getDeclarations()![0];
+			}
 			// skipping private and internal
 			if (isPrivate(member) || isInternalMember(symbol) || isAngularLifecycleHook(symbol.name)) {
 				continue;

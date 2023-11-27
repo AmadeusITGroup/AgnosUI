@@ -5,6 +5,7 @@ import {computed, writable} from '@amadeus-it-group/tansu';
 import type {MockInstance} from 'vitest';
 import {afterEach, beforeEach, describe, expect, test, vi} from 'vitest';
 import type {WidgetProps, WidgetState} from './types';
+import {promiseWithResolve} from './utils';
 
 function expectOpenItems(state: WidgetState<AccordionWidget>, expected: boolean[]) {
 	const openItems: boolean[] = state.itemsWidget.map((itemWidget) => itemWidget.state$().itemVisible);
@@ -30,14 +31,6 @@ describe(`Accordion`, () => {
 
 	let itemShown = 0;
 	let itemHidden = 0;
-
-	const promiseWithResolve = () => {
-		let resolve: (value: void | Promise<void>) => void;
-		const promise = new Promise<void>((r) => {
-			resolve = r;
-		});
-		return {promise, resolve: resolve!};
-	};
 
 	let promiseOnShownItem = promiseWithResolve();
 	let promiseOnHiddenItem = promiseWithResolve();
