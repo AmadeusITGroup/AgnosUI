@@ -1,6 +1,6 @@
 import {SliderPO} from '@agnos-ui/page-objects';
 import {SliderDemoPO} from '../demo-po/slider.po';
-import {getTest, expect} from '../fixture';
+import {test, expect} from '../fixture';
 
 const defaultExpectedState: {[key: string]: string | null} = {
 	value: '60',
@@ -59,7 +59,6 @@ const defaultExpectedHandleStateVertical: {[key: string]: string | null}[] = [
 	},
 ];
 
-const test = getTest();
 test.describe(`Slider tests`, () => {
 	test.describe(`Basic slider`, () => {
 		test(`should snap the handle to correct tick on the slider click event`, async ({page}) => {

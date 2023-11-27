@@ -1,8 +1,6 @@
 import {ProgressbarPO} from '@agnos-ui/page-objects';
-import {expect, getTest} from '../fixture';
+import {expect, test} from '../fixture';
 import {ProgressbarDemoPO} from 'e2e/demo-po/progressbar.po';
-
-const test = getTest();
 
 test.describe(`Progressbar tests`, () => {
 	test(`Default progressbar`, async ({page}) => {
