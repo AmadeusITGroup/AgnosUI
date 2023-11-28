@@ -1,0 +1,15 @@
+{
+	"$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
+	"schematics": {
+		"ng-add": {
+			"description": "Add AgnosUI to the project and install dependencies.",
+			"factory": "./ng-add/index#ngAdd",
+			"schema": "./ng-add/schema.json"
+		},
+		"migrate-from-ng-bootstrap": {
+			"description": "Attemps to migrate ng-bootstrap components as best as possible.",
+			"factory": "./migrate-ng-bootstrap/index#migrateNgBootstrap",
+			"schema": "./migrate-ng-bootstrap/schema.json"
+		}
+	}
+}

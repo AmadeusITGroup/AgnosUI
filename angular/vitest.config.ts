@@ -14,7 +14,7 @@ export default defineConfig({
 			},
 		},
 		setupFiles: ['./headless/src/test.ts'],
-		include: ['./**/*.spec.ts'],
+		include: ['./headless/**/*.spec.ts'],
 		coverage: {
 			provider: 'custom',
 			customProviderModule: '@agnos-ui/code-coverage/vitestProvider',

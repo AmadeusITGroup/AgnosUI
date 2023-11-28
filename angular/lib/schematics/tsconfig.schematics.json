@@ -1,0 +1,25 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"lib": ["es2017"],
+		"declaration": false,
+		"module": "esnext",
+		"moduleResolution": "node",
+		"noEmitOnError": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitAny": true,
+		"noImplicitThis": true,
+		"noUnusedParameters": true,
+		"noUnusedLocals": true,
+		"rootDir": ".",
+		"outDir": "../../dist/lib/schematics",
+		"skipDefaultLibCheck": true,
+		"skipLibCheck": true,
+		"strictNullChecks": true,
+		"types": ["node"],
+		"target": "es6",
+		"sourceMap": false
+	},
+	"include": ["**/*"],
+	"exclude": ["*/files/**/*", "**/*.spec.ts", "vitest.config.ts"]
+}

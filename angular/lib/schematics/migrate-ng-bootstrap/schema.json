@@ -1,0 +1,50 @@
+{
+	"$schema": "http://json-schema.org/schema",
+	"$id": "SchematicsNgAdd",
+	"title": "Ng Add Schema",
+	"type": "object",
+	"properties": {
+		"project": {
+			"type": "string",
+			"description": "Name of the project",
+			"$default": {
+				"$source": "projectName"
+			}
+		},
+		"components": {
+			"type": "array",
+			"items": {
+				"type": "string",
+				"enum": ["all", "accordion", "alert", "pagination", "progressbar", "rating"]
+			},
+			"description": "The components to migrate.",
+			"x-prompt": {
+				"message": "Which ng-bootstrap components do you want to migrate to AgnosUI ?",
+				"type": "list",
+				"multiselect": true,
+				"items": [
+					{
+						"value": "accordion",
+						"label": "Accordion"
+					},
+					{
+						"value": "alert",
+						"label": "Alert"
+					},
+					{
+						"value": "pagination",
+						"label": "Pagination"
+					},
+					{
+						"value": "progressbar",
+						"label": "Progressbar"
+					},
+					{
+						"value": "rating",
+						"label": "Rating"
+					}
+				]
+			}
+		}
+	}
+}

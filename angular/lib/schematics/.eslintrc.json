@@ -1,0 +1,12 @@
+{
+	"extends": "../../../.eslintrc.json",
+	"overrides": [
+		{
+			"files": ["*.ts"],
+			"parserOptions": {
+				"project": ["angular/lib/schematics/tsconfig.schematics.json", "angular/lib/schematics/tsconfig.spec.json"],
+				"createDefaultProgram": true
+			}
+		}
+	]
+}

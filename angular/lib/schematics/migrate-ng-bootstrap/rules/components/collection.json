@@ -1,0 +1,11 @@
+{
+	"$schema": "../../../../../../node_modules/@angular-devkit/schematics/collection-schema.json",
+	"schematics": {
+		"migrate-from-ng-bootstrap": {
+			"private": true,
+			"description": "Attemps to migrate ng-bootstrap components as best as possible.",
+			"factory": "../../../../../dist/lib/schematics/migrate-ng-bootstrap/index#migrateNgBootstrap",
+			"schema": "../../../../../dist/lib/schematics/migrate-ng-bootstrap/schema.json"
+		}
+	}
+}

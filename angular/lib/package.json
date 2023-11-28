@@ -11,5 +11,9 @@
 		"@amadeus-it-group/tansu": "0.0.23",
 		"tslib": "^2.6.2"
 	},
-	"sideEffects": false
+	"sideEffects": false,
+	"schematics": "./schematics/collection.json",
+	"ng-add": {
+		"save": true
+	}
 }
