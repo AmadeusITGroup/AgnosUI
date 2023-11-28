@@ -50,6 +50,15 @@ jobs:
       - run: npm run build:ci
       - run: npm run format:check
       - run: npm run lint
+      - name: check stackblitz angular lockfile
+        run: npm ci --dry-run
+        working-directory: demo/src/lib/stackblitz/angular
+      - name: check stackblitz react lockfile
+        run: npm ci --dry-run
+        working-directory: demo/src/lib/stackblitz/react
+      - name: check stackblitz svelte lockfile
+        run: npm ci --dry-run
+        working-directory: demo/src/lib/stackblitz/svelte
       - run: npm run test:coverage
       - uses: codecov/codecov-action@v3
         with:
