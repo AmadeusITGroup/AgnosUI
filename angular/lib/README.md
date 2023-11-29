@@ -7,7 +7,7 @@
 ## Installation
 
 ```sh
-npm install @agnos-ui/angular
+ng add @agnos-ui/angular
 ```
 
 ## Usage
