@@ -1,0 +1,1 @@
+import"./stores.7616d376.js";const a={min:0,max:100,value:0,ariaLabel:"Progressbar",className:"",slotContent:void 0,slotDefault:void 0,height:"",striped:!1,animated:!1,ariaValueTextFn:()=>{}};function t(){return{...a}}export{t as g};
