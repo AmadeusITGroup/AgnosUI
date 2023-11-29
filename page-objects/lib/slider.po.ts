@@ -9,6 +9,7 @@ export const sliderSelectors = {
 	maxLabelHorizontal: '.au-slider-label-max',
 	minLabelVertical: '.au-slider-label-vertical-min',
 	maxLabelVertical: '.au-slider-label-vertical-max',
+	valueLabel: '.au-slider-label-now',
 	progress: '.au-slider-progress',
 };
 
@@ -41,6 +42,10 @@ export class SliderPO extends BasePO {
 
 	get locatorProgress(): Locator {
 		return this.locatorRoot.locator(this.selectors.progress);
+	}
+
+	get locatorValueLabel(): Locator {
+		return this.locatorRoot.locator(this.selectors.valueLabel);
 	}
 
 	async sliderHandleState() {

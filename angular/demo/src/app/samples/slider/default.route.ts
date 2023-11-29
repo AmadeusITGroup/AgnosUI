@@ -8,7 +8,15 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 	imports: [AgnosUIAngularModule, ReactiveFormsModule, FormsModule],
 	template: `
 		<h2>Slider with form control</h2>
-		<div auSlider auMin="0" auMax="100" auStepSize="1" [formControl]="sliderControl"></div>
+		<div
+			auSlider
+			auMin="0"
+			auMax="100"
+			auStepSize="1"
+			[formControl]="sliderControl"
+			[auShowMinMaxLabels]="showMinMax"
+			[auShowValueLabels]="showValues"
+		></div>
 		Form control value:
 		{{ sliderControl.value }}
 		<hr />
@@ -30,6 +38,15 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 			<input class="form-check-input" type="checkbox" role="switch" id="readonly" [(ngModel)]="readonlyToggle" />
 			<label class="form-check-label" for="readonly">Readonly</label>
 		</div>
+
+		<div class="form-check form-switch">
+			<input class="form-check-input" type="checkbox" role="switch" id="showMinMax" [(ngModel)]="showMinMax" />
+			<label class="form-check-label" for="showMinMax">Min-Max label visibility</label>
+		</div>
+		<div class="form-check form-switch">
+			<input class="form-check-input" type="checkbox" role="switch" id="showValues" [(ngModel)]="showValues" />
+			<label class="form-check-label" for="showValues">Value label visibility</label>
+		</div>
 	`,
 })
 export default class DefaultSliderComponent implements OnInit {
@@ -38,6 +55,8 @@ export default class DefaultSliderComponent implements OnInit {
 	sliderValues = [20];
 	disabledToggle = true;
 	readonlyToggle = true;
+	showMinMax = true;
+	showValues = true;
 
 	ngOnInit() {
 		this.disabledControl.disable();

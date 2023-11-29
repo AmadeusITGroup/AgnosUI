@@ -13,4 +13,12 @@ export class SliderDemoPO extends BasePO {
 	get readonlyToggle(): Locator {
 		return this.locatorRoot.locator('input[id=readonly]');
 	}
+
+	get showMinMaxToggle(): Locator {
+		return this.locatorRoot.locator('input[id=showMinMax]');
+	}
+
+	get showValuesToggle(): Locator {
+		return this.locatorRoot.locator('input[id=showValues]');
+	}
 }

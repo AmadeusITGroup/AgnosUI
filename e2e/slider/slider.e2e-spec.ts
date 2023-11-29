@@ -189,6 +189,37 @@ test.describe(`Slider tests`, () => {
 
 			expect((await sliderPO.sliderHandleState())[0]).toEqual(expectedState);
 		});
+
+		test(`should remove min - max labels from the dom when showMinMaxLabels is false`, async ({page}) => {
+			const sliderDemoPO = new SliderDemoPO(page);
+			const sliderPO = new SliderPO(page, 0);
+
+			await page.goto('#/slider/default');
+			await sliderDemoPO.locatorRoot.waitFor();
+
+			await expect(sliderPO.locatorMinLabelHorizontal).toBeVisible();
+			await expect(sliderPO.locatorMaxLabelHorizontal).toBeVisible();
+			await expect(sliderPO.locatorValueLabel).toBeVisible();
+
+			await sliderPO.locatorHandle.click();
+			await page.keyboard.press('Home');
+
+			await expect(sliderPO.locatorMinLabelHorizontal).not.toBeVisible();
+
+			await sliderDemoPO.showMinMaxToggle.click();
+
+			await expect(sliderPO.locatorMinLabelHorizontal).not.toBeAttached();
+			await expect(sliderPO.locatorMaxLabelHorizontal).not.toBeAttached();
+
+			await sliderDemoPO.showValuesToggle.click();
+
+			await expect(sliderPO.locatorValueLabel).not.toBeAttached();
+
+			await sliderDemoPO.showMinMaxToggle.click();
+
+			await expect(sliderPO.locatorMinLabelHorizontal).toBeVisible();
+			await expect(sliderPO.locatorMaxLabelHorizontal).toBeVisible();
+		});
 	});
 
 	test.describe(`Range slider`, () => {
@@ -286,6 +317,24 @@ test.describe(`Slider tests`, () => {
 
 			expect(await minLabelLocator.isVisible()).toBe(true);
 			expect(await maxLabelLocator.isVisible()).toBe(false);
+		});
+
+		test(`should add / remove combined label from dom`, async ({page}) => {
+			const sliderDemoPO = new SliderDemoPO(page);
+			const sliderPO = new SliderPO(page, 1);
+
+			await page.goto('#/slider/range');
+			await sliderDemoPO.locatorRoot.waitFor();
+
+			expect((await sliderPO.locatorValueLabel.all()).length).toBe(2);
+
+			const sliderLocator = sliderPO.locatorRoot;
+			const boundingBox = await sliderLocator.boundingBox();
+			await (await sliderPO.locatorHandle.all()).at(0)!.dragTo(sliderLocator, {
+				targetPosition: {x: boundingBox!.x + boundingBox!.width * 0.35, y: 1},
+			});
+
+			expect((await sliderPO.locatorValueLabel.all()).length).toBe(1);
 		});
 	});
 
