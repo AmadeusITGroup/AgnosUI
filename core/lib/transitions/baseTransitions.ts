@@ -9,7 +9,7 @@ import {
 	stateStores,
 	writablesForProps,
 } from '../services';
-import {typeBoolean, typeFunction} from '../services/writables';
+import {typeBoolean, typeBooleanOrNull, typeFunction} from '../services/writables';
 import type {Directive, Widget} from '../types';
 
 /**
@@ -195,6 +195,8 @@ const configValidator: ConfigValidator<TransitionProps> = {
 	transition: typeFunction,
 	onShown: typeFunction,
 	onHidden: typeFunction,
+	onVisibleChange: typeFunction,
+	initDone: typeBooleanOrNull,
 };
 
 const promiseWithResolve = () => {

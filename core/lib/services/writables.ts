@@ -1,10 +1,10 @@
-import {clamp, isArray, isBoolean, isFunction, isNumber, isString} from './checks';
+import {allowNull, clamp, isArray, isBoolean, isFunction, isHTMLElement, isNumber, isString} from './checks';
 import type {WritableWithDefaultOptions} from './stores';
 import {INVALID_VALUE} from './stores';
 
 export const testToNormalizeValue =
-	<T>(filter: (value: T) => boolean) =>
-	(value: T) =>
+	<T>(filter: (value: any) => value is T) =>
+	(value: any) =>
 		filter(value) ? value : INVALID_VALUE;
 
 const numberNormalizeFn = testToNormalizeValue(isNumber);
@@ -54,12 +54,21 @@ export const typeBoolean: WritableWithDefaultOptions<boolean> = {
 	normalizeValue: testToNormalizeValue(isBoolean),
 };
 
+export const typeBooleanOrNull: WritableWithDefaultOptions<boolean | null> = {
+	normalizeValue: testToNormalizeValue(allowNull(isBoolean)),
+};
+
 export const typeString: WritableWithDefaultOptions<string> = {
 	normalizeValue: testToNormalizeValue(isString),
 };
 
 export const typeFunction: WritableWithDefaultOptions<(...args: any[]) => any> = {
 	normalizeValue: testToNormalizeValue(isFunction),
+	equal: Object.is,
+};
+
+export const typeHTMLElementOrNull: WritableWithDefaultOptions<HTMLElement | null> = {
+	normalizeValue: testToNormalizeValue(allowNull(isHTMLElement)),
 	equal: Object.is,
 };
 
