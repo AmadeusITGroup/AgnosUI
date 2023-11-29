@@ -20,14 +20,18 @@ export const portal: Directive<PortalDirectiveArg> = (content, newArg) => {
 	};
 
 	const update = (newArg: PortalDirectiveArg) => {
-		if (newArg !== arg) {
+		if (newArg !== arg && (newArg?.container !== arg?.container || newArg?.insertBefore !== arg?.insertBefore)) {
 			arg = newArg;
 			const container = arg?.container ?? arg?.insertBefore?.parentElement;
 			if (container) {
-				if (!replaceComment) {
-					replaceComment = content.parentNode?.insertBefore(content.ownerDocument.createComment('portal'), content);
+				const insertBefore = arg?.insertBefore ?? null;
+				const moveNeeded = content.parentElement !== container || content.nextSibling !== insertBefore;
+				if (moveNeeded) {
+					if (!replaceComment) {
+						replaceComment = content.parentNode?.insertBefore(content.ownerDocument.createComment('portal'), content);
+					}
+					container.insertBefore(content, insertBefore);
 				}
-				container.insertBefore(content, arg?.insertBefore ?? null);
 			} else {
 				removeReplaceComment();
 			}
