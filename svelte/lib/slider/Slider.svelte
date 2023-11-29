@@ -41,6 +41,8 @@
 			sortedValues$,
 			values$,
 			vertical$,
+			showValueLabels$,
+			showMinMaxLabels$,
 		},
 		actions: {click, keydown, mouseDown},
 		directives: {sliderDirective, minLabelDirective, maxLabelDirective},
@@ -63,28 +65,32 @@
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div class={$vertical$ ? 'au-slider-clickable-area-vertical' : 'au-slider-clickable-area'} on:click={click} />
-	<div
-		class={$vertical$ ? 'au-slider-label-vertical au-slider-label-vertical-min' : 'au-slider-label au-slider-label-min'}
-		style:visibility={$minValueLabelDisplay$ ? 'visible' : 'hidden'}
-		use:minLabelDirective
-	>
-		{$min$}
-	</div>
-	<div
-		class={$vertical$ ? 'au-slider-label-vertical au-slider-label-vertical-max' : 'au-slider-label au-slider-label-max'}
-		style:visibility={$maxValueLabelDisplay$ ? 'visible' : 'hidden'}
-		use:maxLabelDirective
-	>
-		{$max$}
-	</div>
-	<div
-		class={$vertical$ ? 'au-slider-label-vertical au-slider-label-vertical-now' : 'au-slider-label au-slider-label-now'}
-		style:visibility={$combinedLabelDisplay$ ? 'visible' : 'hidden'}
-		style:left={`${$combinedLabelPositionLeft$}%`}
-		style:top={`${$combinedLabelPositionTop$}%`}
-	>
-		{$sortedValues$[0]} - {$sortedValues$[1] ?? ''}
-	</div>
+	{#if $showMinMaxLabels$}
+		<div
+			class={$vertical$ ? 'au-slider-label-vertical au-slider-label-vertical-min' : 'au-slider-label au-slider-label-min'}
+			style:visibility={$minValueLabelDisplay$ ? 'visible' : 'hidden'}
+			use:minLabelDirective
+		>
+			{$min$}
+		</div>
+		<div
+			class={$vertical$ ? 'au-slider-label-vertical au-slider-label-vertical-max' : 'au-slider-label au-slider-label-max'}
+			style:visibility={$maxValueLabelDisplay$ ? 'visible' : 'hidden'}
+			use:maxLabelDirective
+		>
+			{$max$}
+		</div>
+	{/if}
+	{#if $showValueLabels$}
+		<div
+			class={$vertical$ ? 'au-slider-label-vertical au-slider-label-vertical-now' : 'au-slider-label au-slider-label-now'}
+			style:visibility={$combinedLabelDisplay$ ? 'visible' : 'hidden'}
+			style:left={`${$combinedLabelPositionLeft$}%`}
+			style:top={`${$combinedLabelPositionTop$}%`}
+		>
+			{$sortedValues$[0]} - {$sortedValues$[1] ?? ''}
+		</div>
+	{/if}
 	{#each $sortedHandles$ as item, i (item.id)}
 		<button
 			class={`au-slider-handle ${$vertical$ ? 'au-slider-handle-vertical' : 'au-slider-handle-horizontal'}`}
@@ -105,13 +111,15 @@
 		>
 			&nbsp;
 		</button>
-		<div
-			class={$vertical$ ? 'au-slider-label-vertical au-slider-label-vertical-now' : 'au-slider-label au-slider-label-now'}
-			style:left={`${$handleDisplayOptions$[i].left}%`}
-			style:top={`${$handleDisplayOptions$[i].top}%`}
-			style:visibility={$combinedLabelDisplay$ ? 'hidden' : 'visible'}
-		>
-			{$values$[i]}
-		</div>
+		{#if $showValueLabels$}
+			<div
+				class={$vertical$ ? 'au-slider-label-vertical au-slider-label-vertical-now' : 'au-slider-label au-slider-label-now'}
+				style:left={`${$handleDisplayOptions$[i].left}%`}
+				style:top={`${$handleDisplayOptions$[i].top}%`}
+				style:visibility={$combinedLabelDisplay$ ? 'hidden' : 'visible'}
+			>
+				{$values$[i]}
+			</div>
+		{/if}
 	{/each}
 </div>

@@ -77,6 +77,14 @@ describe(`Slider basic`, () => {
 		expect(state).toStrictEqual(defaultStateValues);
 	});
 
+	test(`should update visibility of min and max label accordingly`, () => {
+		const expectedStateValue = {...defaultStateValues, minValueLabelDisplay: true, maxValueLabelDisplay: true};
+		slider.patch({
+			values: [50],
+		});
+		expect(state).toStrictEqual(expectedStateValue);
+	});
+
 	test(`should recompute clean value if min has changed`, () => {
 		const expectedStateValue = {...defaultStateValues};
 		expect(state).toStrictEqual(expectedStateValue);
