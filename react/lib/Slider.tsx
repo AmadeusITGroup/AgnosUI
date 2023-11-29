@@ -21,6 +21,8 @@ export function Slider(props: Partial<SliderProps>) {
 			sortedValues,
 			values,
 			vertical,
+			showValueLabels,
+			showMinMaxLabels,
 		},
 		{
 			actions: {click, keydown, mouseDown},
@@ -48,30 +50,43 @@ export function Slider(props: Partial<SliderProps>) {
 				className={vertical ? 'au-slider-clickable-area-vertical' : 'au-slider-clickable-area'}
 				onClick={(e) => click(e as unknown as MouseEvent)}
 			/>
-			<div
-				ref={minSetRef}
-				className={vertical ? 'au-slider-label-vertical au-slider-label-vertical-min' : 'au-slider-label au-slider-label-min'}
-				style={{visibility: minValueLabelDisplay ? 'visible' : 'hidden'}}
-			>
-				{min}
-			</div>
-			<div
-				ref={maxSetRef}
-				className={vertical ? 'au-slider-label-vertical au-slider-label-vertical-max' : 'au-slider-label au-slider-label-max'}
-				style={{visibility: maxValueLabelDisplay ? 'visible' : 'hidden'}}
-			>
-				{max}
-			</div>
-			<div
-				className={vertical ? 'au-slider-label-vertical au-slider-label-vertical-now' : 'au-slider-label au-slider-label-now'}
-				style={{
-					visibility: combinedLabelDisplay ? 'visible' : 'hidden',
-					left: `${combinedLabelPositionLeft}%`,
-					top: `${combinedLabelPositionTop}%`,
-				}}
-			>
-				{sortedValues[0]} - {sortedValues[1]}
-			</div>
+			{showMinMaxLabels ? (
+				<>
+					<div
+						ref={minSetRef}
+						className={`${vertical ? 'au-slider-label-vertical au-slider-label-vertical-min' : 'au-slider-label au-slider-label-min'} ${
+							!minValueLabelDisplay ? ' invisible' : ''
+						}
+						`}
+					>
+						{min}
+					</div>
+					<div
+						ref={maxSetRef}
+						className={`${vertical ? 'au-slider-label-vertical au-slider-label-vertical-max' : 'au-slider-label au-slider-label-max'} ${
+							!maxValueLabelDisplay ? ' invisible' : ''
+						}`}
+					>
+						{max}
+					</div>
+				</>
+			) : (
+				<></>
+			)}
+			{showValueLabels && combinedLabelDisplay ? (
+				<div
+					className={vertical ? 'au-slider-label-vertical au-slider-label-vertical-now' : 'au-slider-label au-slider-label-now'}
+					style={{
+						left: `${combinedLabelPositionLeft}%`,
+						top: `${combinedLabelPositionTop}%`,
+					}}
+				>
+					{sortedValues[0]} - {sortedValues[1]}
+				</div>
+			) : (
+				<></>
+			)}
+
 			{sortedHandles.map((item, i) => (
 				<React.Fragment key={item.id}>
 					<button
@@ -100,16 +115,19 @@ export function Slider(props: Partial<SliderProps>) {
 					>
 						&nbsp;
 					</button>
-					<div
-						className={vertical ? 'au-slider-label-vertical au-slider-label-vertical-now' : 'au-slider-label au-slider-label-now'}
-						style={{
-							left: `${handleDisplayOptions[i].left}%`,
-							top: `${handleDisplayOptions[i].top}%`,
-							visibility: combinedLabelDisplay ? 'hidden' : 'visible',
-						}}
-					>
-						{values[i]}
-					</div>
+					{showValueLabels && !combinedLabelDisplay ? (
+						<div
+							className={vertical ? 'au-slider-label-vertical au-slider-label-vertical-now' : 'au-slider-label au-slider-label-now'}
+							style={{
+								left: `${handleDisplayOptions[i].left}%`,
+								top: `${handleDisplayOptions[i].top}%`,
+							}}
+						>
+							{values[i]}
+						</div>
+					) : (
+						<></>
+					)}
 				</React.Fragment>
 			))}
 		</div>

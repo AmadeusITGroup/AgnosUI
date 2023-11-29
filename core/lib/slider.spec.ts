@@ -41,6 +41,8 @@ const defaultStateValues = {
 	sortedHandles: [{id: 0, value: 0, ariaLabel: '0'}],
 	className: '',
 	isInteractable: true,
+	showMinMaxLabels: true,
+	showValueLabels: true,
 };
 
 describe(`Slider basic`, () => {
@@ -333,6 +335,45 @@ describe(`Slider basic`, () => {
 			...expectedStateValue.progressDisplayOptions[0],
 			width: 0,
 		};
+	});
+
+	test(`should hide the min - max labels if the showMinMaxLabels is false`, () => {
+		slider.patch({
+			showMinMaxLabels: false,
+			values: [50],
+		});
+
+		const expectedStateValue = {...defaultStateValues};
+		expectedStateValue.values = [50];
+		expectedStateValue.sortedValues = [50];
+		expectedStateValue.handleDisplayOptions = [...expectedStateValue.handleDisplayOptions];
+		expectedStateValue.handleDisplayOptions[0] = {
+			...expectedStateValue.handleDisplayOptions[0],
+			left: 50,
+		};
+		expectedStateValue.sortedHandles = [{id: 0, value: 50, ariaLabel: '50'}];
+		expectedStateValue.minValueLabelDisplay = false;
+		expectedStateValue.maxValueLabelDisplay = false;
+		expectedStateValue.showMinMaxLabels = false;
+		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
+		expectedStateValue.progressDisplayOptions[0] = {
+			...expectedStateValue.progressDisplayOptions[0],
+			width: 50,
+		};
+
+		expect(state).toStrictEqual(expectedStateValue);
+	});
+
+	test(`should not hide the min - max labels when showValueLabels is false`, () => {
+		slider.patch({
+			showValueLabels: false,
+		});
+
+		const expectedStateValue = {...defaultStateValues};
+		expectedStateValue.showValueLabels = false;
+		expectedStateValue.minValueLabelDisplay = true;
+
+		expect(state).toStrictEqual(expectedStateValue);
 	});
 
 	test(`should set handle to 100 and hide the max label when clicked outside the slider on the right side`, () => {

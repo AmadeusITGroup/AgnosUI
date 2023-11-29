@@ -7,11 +7,21 @@ const DefaultSliderDemo = () => {
 	const [sliderValues, setSliderValues] = useState([20]);
 	const [disabledToggle, setDisabledToggle] = useState(true);
 	const [readonlyToggle, setReadonlyToggle] = useState(true);
+	const [minMaxLabelToggle, setMinMaxLabelToggle] = useState(true);
+	const [valueLabelToggle, setValueLabelToggle] = useState(true);
 
 	return (
 		<>
 			<h2>Slider with form control</h2>
-			<Slider min={0} max={100} stepSize={1} values={sliderControl} onValuesChange={setSliderControl} />
+			<Slider
+				min={0}
+				max={100}
+				stepSize={1}
+				values={sliderControl}
+				onValuesChange={setSliderControl}
+				showMinMaxLabels={minMaxLabelToggle}
+				showValueLabels={valueLabelToggle}
+			/>
 			Form control value: {sliderControl.join(', ')}
 			<hr />
 			<h2>Slider with value</h2>
@@ -52,6 +62,32 @@ const DefaultSliderDemo = () => {
 				/>
 				<label className="form-check-label" htmlFor="readonly">
 					Readonly
+				</label>
+			</div>
+			<div className="form-check form-switch">
+				<input
+					className="form-check-input"
+					type="checkbox"
+					role="switch"
+					id="showMinMax"
+					checked={minMaxLabelToggle}
+					onChange={() => setMinMaxLabelToggle(!minMaxLabelToggle)}
+				/>
+				<label className="form-check-label" htmlFor="showMinMax">
+					Min-Max label visibility
+				</label>
+			</div>
+			<div className="form-check form-switch">
+				<input
+					className="form-check-input"
+					type="checkbox"
+					role="switch"
+					id="showValues"
+					checked={valueLabelToggle}
+					onChange={() => setValueLabelToggle(!valueLabelToggle)}
+				/>
+				<label className="form-check-label" htmlFor="showValues">
+					Value label visibility
 				</label>
 			</div>
 		</>

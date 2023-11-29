@@ -6,6 +6,7 @@ import {stateStores} from './services/stores';
 import {typeArray, typeBoolean, typeFunction, typeNumber, typeNumberInRangeFactory} from './services/writables';
 import type {Directive, Widget} from './types';
 import {getDecimalPrecision, noop} from './utils';
+import {mergeDirectives, directiveSubscribe} from './services';
 
 export interface ProgressDisplayOptions {
 	/**
@@ -13,7 +14,7 @@ export interface ProgressDisplayOptions {
 	 */
 	left: number;
 	/**
-	 * Bottom offset of the progresss in %
+	 * Bottom offset of the progress in %
 	 */
 	bottom: number;
 	/**
@@ -72,6 +73,16 @@ export interface SliderCommonPropsAndState extends WidgetsCommonPropsAndState {
 	 * Current slider values
 	 */
 	values: number[];
+
+	/**
+	 * If `true` the value labels are displayed on the slider
+	 */
+	showValueLabels: boolean;
+
+	/**
+	 * If `true` the min and max labels are displayed on the slider
+	 */
+	showMinMaxLabels: boolean;
 }
 
 export interface SliderState extends SliderCommonPropsAndState {
@@ -191,6 +202,8 @@ const defaultSliderConfig: SliderProps = {
 	ariaLabelHandle: (value, _index) => '' + value,
 	onValuesChange: noop,
 	values: [0],
+	showValueLabels: true,
+	showMinMaxLabels: true,
 };
 
 /**
@@ -211,6 +224,8 @@ const configValidator: ConfigValidator<SliderProps> = {
 	ariaLabelHandle: typeFunction,
 	onValuesChange: typeFunction,
 	values: typeArray,
+	showValueLabels: typeBoolean,
+	showMinMaxLabels: typeBoolean,
 };
 
 /**
@@ -251,6 +266,8 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 
 			ariaLabelHandle$,
 			onValuesChange$,
+			showValueLabels$,
+			showMinMaxLabels$,
 
 			...stateProps
 		},
@@ -351,10 +368,20 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 	const minLabelWidth$ = computed(() => (minLabelDomRect$().width / sliderDomRectSize$()) * 100);
 	const maxLabelWidth$ = computed(() => (maxLabelDomRect$().width / sliderDomRectSize$()) * 100);
 	const minValueLabelDisplay$ = computed(() => {
+		if (!showMinMaxLabels$()) {
+			return false;
+		} else if (!showValueLabels$()) {
+			return true;
+		}
 		const minLabelWidth = minLabelWidth$();
 		return !valuesPercent$().some((percent) => percent < minLabelWidth + 1);
 	});
 	const maxValueLabelDisplay$ = computed(() => {
+		if (!showMinMaxLabels$()) {
+			return false;
+		} else if (!showValueLabels$()) {
+			return true;
+		}
 		const maxLabelWidth = maxLabelWidth$();
 		return !valuesPercent$().some((percent) => percent > 100 - maxLabelWidth - 1);
 	});
@@ -461,18 +488,19 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			combinedLabelPositionTop$,
 			progressDisplayOptions$,
 			handleDisplayOptions$,
+			showValueLabels$,
+			showMinMaxLabels$,
 			...stateProps,
 		}),
 		patch,
 		api: {},
 		directives: {
-			sliderDirective,
+			sliderDirective: mergeDirectives(sliderDirective, directiveSubscribe(sliderResized$)),
 			minLabelDirective,
 			maxLabelDirective,
 		},
 		actions: {
 			click(event: MouseEvent) {
-				updateSliderSize$.set({});
 				adjustCoordinate(vertical$() ? event.clientY : event.clientX);
 			},
 			keydown(event: KeyboardEvent, handleIndex: number) {

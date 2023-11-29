@@ -39,28 +39,31 @@ import {take} from 'rxjs';
 			></div>
 		}
 		<div [class]="state().vertical ? 'au-slider-clickable-area-vertical' : 'au-slider-clickable-area'" (click)="sliderClick($event)"></div>
-		<div
-			[class]="state().vertical ? 'au-slider-label-vertical au-slider-label-vertical-min' : 'au-slider-label au-slider-label-min'"
-			[style.visibility]="state().minValueLabelDisplay ? 'visible' : 'hidden'"
-			[auUse]="widget.directives.minLabelDirective"
-		>
-			{{ state().min }}
-		</div>
-		<div
-			[class]="state().vertical ? 'au-slider-label-vertical au-slider-label-vertical-max' : 'au-slider-label au-slider-label-max'"
-			[style.visibility]="state().maxValueLabelDisplay ? 'visible' : 'hidden'"
-			[auUse]="widget.directives.maxLabelDirective"
-		>
-			{{ state().max }}
-		</div>
-		<div
-			[class]="state().vertical ? 'au-slider-label-vertical au-slider-label-vertical-now' : 'au-slider-label au-slider-label-now'"
-			[style.visibility]="state().combinedLabelDisplay ? 'visible' : 'hidden'"
-			[style.left.%]="state().combinedLabelPositionLeft"
-			[style.top.%]="state().combinedLabelPositionTop"
-		>
-			{{ state().sortedValues[0] }} - {{ state().sortedValues[1] }}
-		</div>
+		@if (state().showMinMaxLabels) {
+			<div
+				[class]="state().vertical ? 'au-slider-label-vertical au-slider-label-vertical-min' : 'au-slider-label au-slider-label-min'"
+				[class.invisible]="!state().minValueLabelDisplay"
+				[auUse]="widget.directives.minLabelDirective"
+			>
+				{{ state().min }}
+			</div>
+			<div
+				[class]="state().vertical ? 'au-slider-label-vertical au-slider-label-vertical-max' : 'au-slider-label au-slider-label-max'"
+				[class.invisible]="!state().maxValueLabelDisplay"
+				[auUse]="widget.directives.maxLabelDirective"
+			>
+				{{ state().max }}
+			</div>
+		}
+		@if (state().showValueLabels && state().combinedLabelDisplay) {
+			<div
+				[class]="state().vertical ? 'au-slider-label-vertical au-slider-label-vertical-now' : 'au-slider-label au-slider-label-now'"
+				[style.left.%]="state().combinedLabelPositionLeft"
+				[style.top.%]="state().combinedLabelPositionTop"
+			>
+				{{ state().sortedValues[0] }} - {{ state().sortedValues[1] }}
+			</div>
+		}
 		@for (item of state().sortedHandles; track item.id; let i = $index) {
 			<button
 				class="au-slider-handle"
@@ -82,14 +85,15 @@ import {take} from 'rxjs';
 			>
 				&nbsp;
 			</button>
-			<div
-				[class]="state().vertical ? 'au-slider-label-vertical au-slider-label-vertical-now' : 'au-slider-label au-slider-label-now'"
-				[style.left.%]="state().handleDisplayOptions[i].left"
-				[style.top.%]="state().handleDisplayOptions[i].top"
-				[style.visibility]="state().combinedLabelDisplay ? 'hidden' : 'visible'"
-			>
-				{{ state().values[i] }}
-			</div>
+			@if (state().showValueLabels && !state().combinedLabelDisplay) {
+				<div
+					[class]="state().vertical ? 'au-slider-label-vertical au-slider-label-vertical-now' : 'au-slider-label au-slider-label-now'"
+					[style.left.%]="state().handleDisplayOptions[i].left"
+					[style.top.%]="state().handleDisplayOptions[i].top"
+				>
+					{{ state().values[i] }}
+				</div>
+			}
 		}
 	`,
 })
@@ -143,6 +147,15 @@ export class SliderComponent implements OnChanges {
 	@Input('auValues')
 	values: number[] | undefined;
 
+	/**
+	 * If `true` the value labels are displayed on the slider
+	 */
+	@Input({alias: 'auShowValueLabels', transform: auBooleanAttribute}) showValueLabels: boolean | undefined;
+
+	/**
+	 * If `true` the min and max labels are displayed on the slider
+	 */
+	@Input({alias: 'auShowMinMaxLabels', transform: auBooleanAttribute}) showMinMaxLabels: boolean | undefined;
 	/**
 	 * Return the value for the 'aria-label' attribute for the handle
 	 */
