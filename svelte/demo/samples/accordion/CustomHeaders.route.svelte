@@ -12,7 +12,7 @@
 
 <Accordion bind:this={accordion}>
 	<AccordionItem>
-		<slot slot="itemStructure" let:state let:widget>
+		<svelte:fragment slot="itemStructure" let:state let:widget>
 			<div
 				class="{state.itemHeaderClass} accordion-button accordion-header custom-header justify-content-between"
 				class:collapsed={!state.itemVisible}
@@ -44,10 +44,10 @@
 					</div>
 				</div>
 			{/if}
-		</slot>
+		</svelte:fragment>
 	</AccordionItem>
 	<AccordionItem>
-		<slot slot="itemStructure" let:state let:widget>
+		<svelte:fragment slot="itemStructure" let:state let:widget>
 			<div
 				class="{state.itemHeaderClass} accordion-button accordion-header custom-header justify-content-between"
 				class:collapsed={!state.itemVisible}
@@ -85,10 +85,10 @@
 					</div>
 				</div>
 			{/if}
-		</slot>
+		</svelte:fragment>
 	</AccordionItem>
 	<AccordionItem itemDisabled={$thirdItemDisabled$}>
-		<slot slot="itemStructure" let:state let:widget>
+		<svelte:fragment slot="itemStructure" let:state let:widget>
 			<div
 				class="accordion-header {state.itemHeaderClass} accordion-button custom-header justify-content-between"
 				class:collapsed={!state.itemVisible}
@@ -120,6 +120,6 @@
 					</div>
 				</div>
 			{/if}
-		</slot>
+		</svelte:fragment>
 	</AccordionItem>
 </Accordion>
