@@ -159,4 +159,37 @@ describe(`Portal`, () => {
 		portalInstance?.destroy?.();
 		expect(testArea.innerHTML).toBe(initialMarkup.replace('<div id="element"></div>', ''));
 	});
+
+	test(`should not move when not needed`, () => {
+		const initialMarkup = '<div><iframe id="element"></iframe><div id="nextElement"></div></div>';
+		testArea.innerHTML = initialMarkup;
+		const element = document.getElementById('element') as HTMLIFrameElement;
+		(element.contentWindow as any).something = 1; // when removing an iframe from the DOM, variables on the window are lost
+		const nextElement = document.getElementById('nextElement')!;
+		expect(element.nextSibling).toBe(nextElement);
+		const portalInstance = portal(element, {insertBefore: nextElement});
+		expect((element.contentWindow as any).something).toBe(1); // the variable is still here, so the iframe was not removed from the DOM
+		expect(testArea.innerHTML).toBe(initialMarkup); // the markup should not have changed
+		portalInstance?.destroy?.();
+		expect(testArea.innerHTML).toBe(initialMarkup.replace('<iframe id="element"></iframe>', ''));
+	});
+
+	test(`should not move a second time when not needed`, () => {
+		const initialMarkup = '<div><iframe id="element"></iframe></div><div id="container"></div>';
+		testArea.innerHTML = initialMarkup;
+		const element = document.getElementById('element') as HTMLIFrameElement;
+		const container = document.getElementById('container')!;
+		const portalInstance = portal(element, {container});
+		expect(element.parentElement).toBe(container);
+		(element.contentWindow as any).something = 1; // when removing an iframe from the DOM, variables on the window are lost
+		const newElement = document.createElement('div');
+		newElement.setAttribute('id', 'newElement');
+		container.appendChild(newElement);
+		const beforeUpdateMarkup = testArea.innerHTML;
+		portalInstance?.update?.({container, insertBefore: newElement}); // should do nothing, as the element is already at the right place
+		expect((element.contentWindow as any).something).toBe(1);
+		expect(testArea.innerHTML).toBe(beforeUpdateMarkup);
+		portalInstance?.destroy?.();
+		expect(testArea.innerHTML).toBe('<div></div><div id="container"><div id="newElement"></div></div>');
+	});
 });
