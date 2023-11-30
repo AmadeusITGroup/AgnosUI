@@ -8,12 +8,12 @@
 {#key $props$}
 	<Accordion {...$props$}>
 		<AccordionItem>
-			<slot slot="itemHeader">Header 1</slot>
-			<slot slot="itemBody">Body 1</slot>
+			<svelte:fragment slot="itemHeader">Header 1</svelte:fragment>
+			<svelte:fragment slot="itemBody">Body 1</svelte:fragment>
 		</AccordionItem>
 		<AccordionItem>
-			<slot slot="itemHeader">Header 2</slot>
-			<slot slot="itemBody">Body 2</slot>
+			<svelte:fragment slot="itemHeader">Header 2</svelte:fragment>
+			<svelte:fragment slot="itemBody">Body 2</svelte:fragment>
 		</AccordionItem>
 	</Accordion>
 {/key}

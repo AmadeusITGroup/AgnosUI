@@ -10,12 +10,12 @@
 
 <Accordion bind:this={accordion}>
 	<AccordionItem itemId="first">
-		<slot slot="itemHeader">First panel</slot>
-		<slot slot="itemBody">{BODY}</slot>
+		<svelte:fragment slot="itemHeader">First panel</svelte:fragment>
+		<svelte:fragment slot="itemBody">{BODY}</svelte:fragment>
 	</AccordionItem>
 	<AccordionItem itemId="second" bind:this={secondAccordionItem}>
-		<slot slot="itemHeader">Second panel</slot>
-		<slot slot="itemBody">{BODY}</slot>
+		<svelte:fragment slot="itemHeader">Second panel</svelte:fragment>
+		<svelte:fragment slot="itemBody">{BODY}</svelte:fragment>
 	</AccordionItem>
 </Accordion>
 <hr />
