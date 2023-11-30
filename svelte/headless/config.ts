@@ -74,7 +74,7 @@ export const widgetsConfigFactory = <Config extends {[widgetName: string]: objec
 		widgetName?: null | keyof Config;
 		$$slots: SlotsPresent<WidgetProps<W>>;
 		defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
-		events: Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}`>;
+		events: Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}Change`>;
 	}) =>
 		callWidgetFactoryWithConfig({
 			factory,

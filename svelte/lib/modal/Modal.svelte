@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
-	import type {ModalWidget, ModalProps as Props, ModalSlots as Slots, WidgetPropsEvents, WidgetPropsProps} from '@agnos-ui/svelte-headless';
-	import {Slot, callWidgetFactory, createEventDispatcher, createModal, toSlotContextWidget} from '@agnos-ui/svelte-headless';
+	import type {ModalWidget, ModalProps as Props, ModalSlots as Slots, WidgetPropsProps} from '@agnos-ui/svelte-headless';
+	import {Slot, callWidgetFactory, createModal, toSlotContextWidget} from '@agnos-ui/svelte-headless';
 	import ModalDefaultHeader from './ModalDefaultHeader.svelte';
 	import ModalDefaultStructure from './ModalDefaultStructure.svelte';
 
@@ -14,10 +14,8 @@
 	type Data = $$Generic; // eslint-disable-line no-undef
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
 	type $$Props = WidgetPropsProps<Props<Data>>; // eslint-disable-line @typescript-eslint/no-unused-vars
-	type $$Events = WidgetPropsEvents<Props<Data>>;
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
 	type $$Slots = Slots<Data>; // eslint-disable-line @typescript-eslint/no-unused-vars
-	const dispatch = createEventDispatcher<$$Events>();
 
 	export let visible: boolean | undefined = undefined;
 
@@ -27,19 +25,8 @@
 		$$slots,
 		defaultConfig,
 		events: {
-			onShown: () => dispatch('shown'),
-			onHidden: () => dispatch('hidden'),
-			onBeforeClose: (event) => {
-				const shouldContinue = dispatch('beforeClose', event, {
-					cancelable: true,
-				});
-				if (!shouldContinue) {
-					event.cancel = true;
-				}
-			},
 			onVisibleChange: (event) => {
 				visible = event;
-				dispatch('visibleChange', event);
 			},
 		},
 	});

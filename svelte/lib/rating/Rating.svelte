@@ -1,15 +1,13 @@
 <script lang="ts" context="module">
-	import type {RatingProps as Props, RatingSlots as Slots, WidgetPropsEvents, WidgetPropsProps} from '@agnos-ui/svelte-headless';
-	import {Slot, callWidgetFactory, createEventDispatcher, createRating} from '@agnos-ui/svelte-headless';
+	import type {RatingProps as Props, RatingSlots as Slots, WidgetPropsProps} from '@agnos-ui/svelte-headless';
+	import {Slot, callWidgetFactory, createRating} from '@agnos-ui/svelte-headless';
 </script>
 
 <script lang="ts">
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
 	type $$Props = WidgetPropsProps<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
-	type $$Events = WidgetPropsEvents<Props>;
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
 	type $$Slots = Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
-	const dispatch = createEventDispatcher<$$Events>();
 
 	export let rating: number | undefined = undefined;
 
@@ -18,11 +16,8 @@
 		widgetName: 'rating',
 		$$slots,
 		events: {
-			onHover: (value: number) => dispatch('hover', value),
-			onLeave: (value: number) => dispatch('leave', value),
 			onRatingChange: (value: number) => {
 				rating = value;
-				dispatch('ratingChange', value);
 			},
 		},
 	});

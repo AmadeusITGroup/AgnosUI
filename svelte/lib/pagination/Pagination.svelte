@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
-	import type {PaginationProps as Props, PaginationSlots as Slots, WidgetPropsEvents, WidgetPropsProps} from '@agnos-ui/svelte-headless';
-	import {Slot, callWidgetFactory, createEventDispatcher, createPagination, toSlotContextWidget} from '@agnos-ui/svelte-headless';
+	import type {PaginationProps as Props, PaginationSlots as Slots, WidgetPropsProps} from '@agnos-ui/svelte-headless';
+	import {Slot, callWidgetFactory, createPagination, toSlotContextWidget} from '@agnos-ui/svelte-headless';
 	import PaginationDefaultPages from './PaginationDefaultPages.svelte';
 
 	const defaultConfig: Partial<Props> = {
@@ -11,10 +11,8 @@
 <script lang="ts">
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
 	type $$Props = WidgetPropsProps<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
-	type $$Events = WidgetPropsEvents<Props>;
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
 	type $$Slots = Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
-	const dispatch = createEventDispatcher<$$Events>();
 
 	/**
 	 *  The current page.
@@ -31,7 +29,6 @@
 		events: {
 			onPageChange: (value: number) => {
 				page = value;
-				dispatch('pageChange', value);
 			},
 		},
 	});

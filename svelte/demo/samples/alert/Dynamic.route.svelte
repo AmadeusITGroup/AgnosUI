@@ -35,5 +35,5 @@
 {#each $alerts$ as alert (alert)}
 	{@const {dismissible, animationOnInit, animation, type, slotDefault} = alert}
 
-	<Alert {dismissible} {animationOnInit} {animation} {type} {slotDefault} on:hidden={() => alerts$.remove(alert)} />
+	<Alert {dismissible} {animationOnInit} {animation} {type} {slotDefault} onHidden={() => alerts$.remove(alert)} />
 {/each}

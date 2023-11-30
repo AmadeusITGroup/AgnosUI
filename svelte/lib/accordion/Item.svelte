@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
-	import type {AccordionItemProps as Props, AccordionSlots as Slots, WidgetPropsEvents, WidgetPropsProps} from '@agnos-ui/svelte-headless';
-	import {Slot, callWidgetFactory, createEventDispatcher, toSlotContextWidget} from '@agnos-ui/svelte-headless';
+	import type {AccordionItemProps as Props, AccordionSlots as Slots, WidgetPropsProps} from '@agnos-ui/svelte-headless';
+	import {Slot, callWidgetFactory, toSlotContextWidget} from '@agnos-ui/svelte-headless';
 	import {onMount} from 'svelte';
 	import ItemDefaultStructure from './ItemDefaultStructure.svelte';
 	import {getAccordionApi} from './accordion';
@@ -13,10 +13,8 @@
 <script lang="ts">
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
 	type $$Props = WidgetPropsProps<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
-	type $$Events = WidgetPropsEvents<Props>;
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
 	type $$Slots = Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
-	const dispatch = createEventDispatcher<$$Events>();
 
 	const accordionApi = getAccordionApi();
 	const {registerItem} = accordionApi;
@@ -28,10 +26,7 @@
 		events: {
 			onItemVisibleChange: (event) => {
 				itemVisible = event;
-				dispatch('itemVisibleChange', event);
 			},
-			onItemHidden: () => dispatch('itemHidden'),
-			onItemShown: () => dispatch('itemShown'),
 		},
 	});
 	const {
