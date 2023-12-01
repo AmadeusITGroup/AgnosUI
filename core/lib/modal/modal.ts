@@ -1,24 +1,28 @@
 import {computed, readable} from '@amadeus-it-group/tansu';
-import type {PropsConfig} from '../services';
+import type {WidgetsCommonPropsAndState} from '../commonProps';
+import type {ConfigValidator, PropsConfig} from '../services';
 import {
-	sliblingsInert,
 	bindDirective,
 	bindDirectiveNoArg,
 	directiveSubscribe,
 	mergeDirectives,
 	portal,
 	registrationArray,
+	sliblingsInert,
 	stateStores,
+	typeBoolean,
+	typeFunction,
+	typeHTMLElementOrNull,
+	typeString,
 	writablesForProps,
 } from '../services';
 import type {TransitionFn} from '../transitions';
 import {createTransition} from '../transitions';
 import {fadeTransition} from '../transitions/bootstrap/fade';
 import {promiseFromStore} from '../transitions/utils';
-import type {Widget, Directive, SlotContent, WidgetSlotContext} from '../types';
+import type {Directive, SlotContent, Widget, WidgetSlotContext} from '../types';
 import {noop} from '../utils';
 import {removeScrollbars, revertScrollbars} from './scrollbars';
-import type {WidgetsCommonPropsAndState} from '../commonProps';
 
 /**
  * Value present in the {@link ModalBeforeCloseEvent.result|result} property of the {@link ModalProps.onBeforeClose|onBeforeClose} event
@@ -297,6 +301,24 @@ const defaultConfig: ModalProps<any> = {
 	contentData: undefined,
 };
 
+const configValidator: ConfigValidator<ModalProps<any>> = {
+	animation: typeBoolean,
+	ariaCloseButtonLabel: typeString,
+	backdrop: typeBoolean,
+	backdropClass: typeString,
+	backdropTransition: typeFunction,
+	closeButton: typeBoolean,
+	closeOnOutsideClick: typeBoolean,
+	container: typeHTMLElementOrNull,
+	className: typeString,
+	modalTransition: typeFunction,
+	onBeforeClose: typeFunction,
+	onVisibleChange: typeFunction,
+	onHidden: typeFunction,
+	onShown: typeFunction,
+	visible: typeBoolean,
+};
+
 /**
  * Returns a copy of the default modal config.
  * @returns a copy of the default modal config
@@ -340,7 +362,7 @@ export function createModal<Data>(config$?: PropsConfig<ModalProps<Data>>): Moda
 			...stateProps
 		},
 		patch,
-	] = writablesForProps(defaultConfig, config$);
+	] = writablesForProps(defaultConfig, config$, configValidator);
 	const modalTransition = createTransition({
 		props: {
 			transition: modalTransition$,
@@ -392,10 +414,14 @@ export function createModal<Data>(config$?: PropsConfig<ModalProps<Data>>): Moda
 	);
 	const backdropPortalDirective = bindDirective(
 		portal,
-		computed(() => ({
-			container: container$(),
-			insertBefore: container$() && modalTransition.stores.element$()?.parentElement === container$() ? modalTransition.stores.element$() : undefined,
-		})),
+		computed(() => {
+			const container = container$();
+			const element = container ? modalTransition.stores.element$() : undefined;
+			return {
+				container,
+				insertBefore: element?.parentElement === container ? element : undefined,
+			};
+		}),
 	);
 	const registerModalAction$ = readable(undefined, () => modals$.register(res));
 	const action$ = computed(() => {

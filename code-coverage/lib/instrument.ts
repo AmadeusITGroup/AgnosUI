@@ -27,7 +27,7 @@ export const instrumentFile = (code: string, filename: string) => {
 		],
 	});
 	if (result?.code) {
-		return result.code;
+		return `// @ts-nocheck\n${result.code}`;
 	}
 	return code;
 };

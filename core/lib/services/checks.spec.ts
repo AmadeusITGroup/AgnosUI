@@ -1,5 +1,5 @@
-import {describe, expect, test} from 'vitest';
-import {isBoolean, isFunction, isNumber, clamp, isString, isArray} from './checks';
+import {describe, expect, test, vi} from 'vitest';
+import {allowNull, clamp, isArray, isBoolean, isFunction, isHTMLElement, isNumber, isString} from './checks';
 
 describe('Checks', () => {
 	test(`'isNumber' should check if value is a number`, () => {
@@ -113,5 +113,31 @@ describe('Checks', () => {
 		expect(clamp(6, 10, 5)).toBe(6);
 		expect(clamp(10, 10, 5)).toBe(10);
 		expect(clamp(2022, 10, 5)).toBe(10);
+	});
+
+	test(`'isHTMLElement' should check if value is an HTML element`, () => {
+		expect(isHTMLElement(document.createElement('div'))).toBe(true);
+		expect(isHTMLElement(document.body)).toBe(true);
+		expect(isHTMLElement(document.documentElement)).toBe(true);
+		expect(isHTMLElement(null)).toBe(false);
+		expect(isHTMLElement('test')).toBe(false);
+		expect(isHTMLElement('')).toBe(false);
+		expect(isHTMLElement(1)).toBe(false);
+		expect(isHTMLElement(0)).toBe(false);
+		expect(isHTMLElement(false)).toBe(false);
+		expect(isHTMLElement(true)).toBe(false);
+		expect(isHTMLElement({})).toBe(false);
+		expect(isHTMLElement(() => {})).toBe(false);
+	});
+
+	test(`'allowNull' should add null to accepted values of a type guard`, () => {
+		const alwaysFalse = vi.fn((value: any) => false);
+		const withAllowNull = allowNull(alwaysFalse as unknown as (value: any) => value is never);
+		expect(withAllowNull(null)).toBe(true);
+		expect(alwaysFalse).not.toHaveBeenCalled();
+		expect(withAllowNull(undefined)).toBe(false);
+		expect(alwaysFalse).toHaveBeenCalledTimes(1);
+		expect(withAllowNull(0)).toBe(false);
+		expect(alwaysFalse).toHaveBeenCalledTimes(2);
 	});
 });

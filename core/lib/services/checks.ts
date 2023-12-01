@@ -51,3 +51,20 @@ export const isArray = Array.isArray;
 export function clamp(value: number, max: number, min = 0): number {
 	return Math.max(Math.min(value, max), min);
 }
+
+/**
+ * an html element type guard
+ * @param value the value to check
+ * @returns true if the value is an instance of HTMLElement
+ */
+export const isHTMLElement = (value: any): value is HTMLElement => value instanceof HTMLElement;
+
+/**
+ * Returns a new type guard that is based on the provided type guard and also returns true for null values.
+ * @param isType base type guard
+ * @returns A type guard function that returns true for null values and calls the provided type guard for other values.
+ */
+export const allowNull =
+	<T>(isType: (value: any) => value is T) =>
+	(value: any): value is T | null =>
+		value === null || isType(value);
