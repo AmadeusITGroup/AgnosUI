@@ -240,7 +240,7 @@ test.describe(`Slider tests`, () => {
 				targetPosition: {x: boundingBox!.x + boundingBox!.width * 0.75, y: 1},
 			});
 
-			expect((await sliderPO.sliderHandleState()).at(0)).toEqual(expectedState[0]);
+			await expect.poll(async () => (await sliderPO.sliderHandleState()).at(0)).toEqual(expectedState[0]);
 			expect((await sliderPO.sliderHandleState()).at(1)).toEqual(expectedState[1]);
 			expect((await sliderPO.sliderProgressState())[0]).toEqual('left: 40%; bottom: 0%; width: 43%; height: 100%;');
 		});
