@@ -37,7 +37,7 @@
 			"groupSlug": "angular-dependencies"
 		},
 		{
-			"matchFileNames": [".github/workflows/*.(yaml|yml)"],
+			"matchFileNames": [".github/workflows/*.+(yaml|yml)"],
 			"groupName": "Github Actions",
 			"groupSlug": "github-actions"
 		}
