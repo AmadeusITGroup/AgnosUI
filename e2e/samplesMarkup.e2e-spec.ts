@@ -3,6 +3,7 @@ import {expect, test} from './fixture';
 import {globSync} from 'glob';
 import path from 'path';
 import {openDemoModal} from './demo-po/modal.po';
+import {typeAndSelect} from './demo-po/select.po';
 import {htmlSnapshot} from './htmlSnapshot';
 import {normalizePath} from './utils';
 
@@ -21,6 +22,7 @@ test.describe.parallel(`Samples markup consistency check`, () => {
 	const routesExtraAction: Record<string, (page: Page) => Promise<void>> = {
 		'modal/default': openDemoModal,
 		'modal/stack': openDemoModal,
+		'select/basic': (page: Page) => typeAndSelect(page, 'a'),
 	};
 
 	for (const route of allRoutes) {

@@ -19,7 +19,7 @@ import {
 	PaginationPreviousDirective,
 } from './pagination/pagination.component';
 import {RatingComponent, RatingStarDirective} from './rating/rating.component';
-import {SelectComponent} from './select/select.component';
+import {SelectBadgeLabelDirective, SelectComponent, SelectItemDirective} from './select/select.component';
 import {AlertBodyDirective, AlertComponent, AlertStructureDirective} from './alert/alert.component';
 import {
 	AccordionDirective,
@@ -35,6 +35,8 @@ import {ProgressbarComponent, ProgressbarContentDirective} from './progressbar/p
 const components = [
 	SlotDirective,
 	SelectComponent,
+	SelectBadgeLabelDirective,
+	SelectItemDirective,
 	UseDirective,
 	RatingComponent,
 	RatingStarDirective,

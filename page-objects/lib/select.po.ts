@@ -16,7 +16,7 @@ export class SelectPO extends BasePO {
 	 * Get the main title locator of the feature page
 	 */
 	get locatorInput() {
-		return this.locatorRoot.locator('div.input-group').locator('input');
+		return this.locatorRoot.locator('input[type="text"]').nth(0);
 	}
 
 	/**
@@ -24,6 +24,13 @@ export class SelectPO extends BasePO {
 	 */
 	get locatorMenu() {
 		return this.locatorRoot.locator('.dropdown-menu');
+	}
+
+	/**
+	 * Return the first menu item locator including the text
+	 */
+	get locatorMenuItems() {
+		return this.locatorMenu.locator('.au-select-item');
 	}
 
 	/**
@@ -37,58 +44,41 @@ export class SelectPO extends BasePO {
 	 * Bages container
 	 */
 	get locatorBadges() {
-		return this.locatorRoot.locator('div.input-group').locator('.input-group-text');
+		return this.locatorRoot.locator('div.au-select-badge');
 	}
 
 	/**
 	 * Return the first badge locator including the text
 	 */
 	locatorBadgeItem(text: string) {
-		return this.locatorBadges.locator('div.badge').filter({hasText: text}).nth(0);
+		return this.locatorBadges.filter({hasText: text}).nth(0);
 	}
 
-	/**
-	 * Return the cross locator for the first badge including the text
-	 */
-	locatorBadgeItemCross(text: string) {
-		return this.locatorBadgeItem(text).getByRole('button');
-	}
-
-	// TODO to be pushed to the test itself
-	// We already discuss with Guillaume Saas not to put this in the basic PO which should only return locator basically
 	async state() {
 		return await this.locatorRoot.evaluate((rootNode: HTMLElement) => {
-			const inputGroup = rootNode.querySelector('.input-group')!;
-			const badgesContainer = rootNode.querySelector('div.input-group-text');
-			const input = inputGroup.querySelector('input')!;
+			const badgesContainer = rootNode.querySelector('div[role="combobox"]');
+			const input: HTMLInputElement = rootNode.querySelector('input[type="text"]')!;
 
 			const badges = [];
 			if (badgesContainer) {
-				const badgeElements = badgesContainer.querySelectorAll('div.badge');
+				const badgeElements = badgesContainer.querySelectorAll('div.au-select-badge');
 				for (const badgeElement of badgeElements) {
-					const children = [...badgeElement.children];
-					badges.push([...children.map((node) => (node.textContent ?? '').trim())]);
+					badges.push(badgeElement?.textContent?.trim());
 				}
 			}
 
 			const menuElement = rootNode.querySelector('ul.dropdown-menu');
 			const isOpen = menuElement != null;
-			const list = [];
+			const list: Array<string | undefined> = [];
+			const checked: Array<string | undefined> = [];
 			if (menuElement != null) {
 				const lis = menuElement.querySelectorAll('li.dropdown-item');
 				for (const li of lis) {
-					let hasCheckBox = false;
-					let isChecked = false;
-					const checkbox: HTMLInputElement | null = li.querySelector('input.form-check-input');
-					if (checkbox) {
-						hasCheckBox = true;
-						isChecked = checkbox.checked;
+					const text = li.textContent?.trim();
+					list.push(text);
+					if (li.classList.contains('selected')) {
+						checked.push(text);
 					}
-					list.push({
-						text: li.textContent?.trim(),
-						hasCheckBox,
-						isChecked,
-					});
 				}
 			}
 
@@ -97,6 +87,7 @@ export class SelectPO extends BasePO {
 				badges,
 				isOpen,
 				list,
+				checked,
 			};
 		});
 	}

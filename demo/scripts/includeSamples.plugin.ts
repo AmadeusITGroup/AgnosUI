@@ -17,6 +17,18 @@ const findDependencies = (fileContent: string) => {
 	return dependencies;
 };
 
+const addExtension = (directory: string, depPath: string) => {
+	// if file is not found, the relative import is most likely targetting a ts or tsx
+	if (!existsSync(path.join(directory, depPath))) {
+		if (existsSync(path.join(directory, depPath + '.ts'))) {
+			depPath = depPath + '.ts';
+		} else if (existsSync(path.join(directory, depPath + '.tsx'))) {
+			depPath = depPath + '.tsx';
+		}
+	}
+	return depPath;
+};
+
 export const includeSamples = (): Plugin => {
 	return {
 		name: 'include-samples',
@@ -53,21 +65,15 @@ export const includeSamples = (): Plugin => {
 						const dependencies = findDependencies(fileContent);
 						const directory = path.dirname(filePath);
 						for (const dependency of dependencies) {
+							// @agnos-ui/common/samples/utils/debounce
 							const dependencyParts = dependency.split('/');
 							if (dependencyParts[0] === '.') {
-								let depPath = dependency;
-								// if file is not found, the relative import is most likely targetting a ts or tsx
-								if (!existsSync(path.join(directory, depPath))) {
-									if (existsSync(path.join(directory, depPath + '.ts'))) {
-										depPath = depPath + '.ts';
-									} else if (existsSync(path.join(directory, depPath + '.tsx'))) {
-										depPath = depPath + '.tsx';
-									}
-								}
+								const depPath = addExtension(directory, dependency);
 								await addFile(framework, path.basename(depPath), path.join(directory, depPath));
 							} else if (dependency.match(commonImport)) {
-								const cleanedDependency = dependency.replace(commonImport, './$2');
-								await addFile(framework, path.basename(cleanedDependency), path.join(__dirname, '..', '..', 'common', 'samples', cleanedDependency));
+								const baseDir = path.join(__dirname, '..', '..', 'common', 'samples');
+								const cleanedDependency = addExtension(baseDir, dependency.replace(commonImport, './$2'));
+								await addFile(framework, path.basename(cleanedDependency), path.join(baseDir, cleanedDependency));
 							} else {
 								// TODO: check that the dependency is valid and included in package.json
 							}
