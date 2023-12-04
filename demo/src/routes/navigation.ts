@@ -1,18 +1,18 @@
 export const menu = [
 	{
 		title: 'Getting started',
-		submenu: [{label: 'Installation', path: '/getting-started/installation'}],
+		submenu: [{label: 'Installation', path: '/getting-started/installation', subpath: ''}],
 	},
 	{
 		title: 'Components',
 		submenu: [
-			{label: 'Accordion', path: '/components/accordion/examples'},
-			{label: 'Alert', path: '/components/alert/examples'},
-			{label: 'Modal', path: '/components/modal/examples'},
-			{label: 'Pagination', path: '/components/pagination/examples'},
-			{label: 'Progressbar', path: '/components/progressbar/examples'},
-			{label: 'Rating', path: '/components/rating/examples'},
-			{label: 'Slider', path: '/components/slider/examples'},
+			{label: 'Accordion', path: '/components/accordion/', subpath: 'examples'},
+			{label: 'Alert', path: '/components/alert/', subpath: 'examples'},
+			{label: 'Modal', path: '/components/modal/', subpath: 'examples'},
+			{label: 'Pagination', path: '/components/pagination/', subpath: 'examples'},
+			{label: 'Progressbar', path: '/components/progressbar/', subpath: 'examples'},
+			{label: 'Rating', path: '/components/rating/', subpath: 'examples'},
+			{label: 'Slider', path: '/components/slider/', subpath: 'examples'},
 		],
 	} /*,
 	{
