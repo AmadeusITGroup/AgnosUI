@@ -35,6 +35,11 @@
 			"matchPackagePatterns": ["^@angular", "^ng-packagr", "^zone.js"],
 			"groupName": "Angular dependencies",
 			"groupSlug": "angular-dependencies"
+		},
+		{
+			"matchFileNames": ["^\\.github/workflows/[^/]+\\.ya?ml$"],
+			"groupName": "Github Actions",
+			"groupSlug": "github-actions"
 		}
 	],
 	"allowedPostUpgradeCommands": ["^npm install$", "^cd angular && npm run ng update .*", "^rm package-lock.json$"],
