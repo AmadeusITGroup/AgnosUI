@@ -1,7 +1,6 @@
-import {expect, getTest} from '../fixture';
+import {expect, test} from '../fixture';
 import {FloatingUIDemoPO} from '../demo-po/floatingUI.po';
 
-const test = getTest();
 test.describe(`FloatingUI tests`, () => {
 	test.beforeEach(async ({page}) => {
 		await page.goto('#/floatingui/floatingui');
