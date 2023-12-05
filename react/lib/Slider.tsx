@@ -1,6 +1,9 @@
-import type {SliderProps} from '@agnos-ui/react-headless';
-import {createSlider, useDirective, useWidgetWithConfig} from '@agnos-ui/react-headless';
+import {createSlider, type SliderProps} from '@agnos-ui/react-headless/slider';
+import {useDirective} from '@agnos-ui/react-headless/utils';
+import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
 import React from 'react';
+
+export * from '@agnos-ui/react-headless/slider';
 
 export function Slider(props: Partial<SliderProps>) {
 	const [

@@ -9,6 +9,66 @@
 		".": {
 			"types": "./index.d.ts",
 			"default": "./index.js"
+		},
+		"./accordion": {
+			"types": "./accordion.d.ts",
+			"default": "./accordion.js"
+		},
+		"./alert": {
+			"types": "./alert.d.ts",
+			"default": "./alert.js"
+		},
+		"./config": {
+			"types": "./config.d.ts",
+			"default": "./config.js"
+		},
+		"./modal": {
+			"types": "./modal.d.ts",
+			"default": "./modal.js"
+		},
+		"./pagination": {
+			"types": "./pagination.d.ts",
+			"default": "./pagination.js"
+		},
+		"./Portal": {
+			"types": "./Portal.d.ts",
+			"default": "./Portal.js"
+		},
+		"./progressbar": {
+			"types": "./progressbar.d.ts",
+			"default": "./progressbar.js"
+		},
+		"./rating": {
+			"types": "./rating.d.ts",
+			"default": "./rating.js"
+		},
+		"./select": {
+			"types": "./select.d.ts",
+			"default": "./select.js"
+		},
+		"./services": {
+			"types": "./services.d.ts",
+			"default": "./services.js"
+		},
+		"./slider": {
+			"types": "./slider.d.ts",
+			"default": "./slider.js"
+		},
+		"./Slot": {
+			"types": "./Slot.d.ts",
+			"default": "./Slot.js"
+		},
+		"./slotTypes": {
+			"types": "./slotTypes.d.ts",
+			"default": "./slotTypes.js"
+		},
+		"./types": {
+			"types": "./types.d.ts",
+			"default": "./types.js"
+		},
+		"./utils": {
+			"types": "./utils.d.ts",
+			"default": "./utils.js"
 		}
 	},
 	"dependencies": {

@@ -1,4 +1,4 @@
-import type {ModalApi, ModalProps} from '@agnos-ui/react-headless';
+import type {ModalApi, ModalProps} from '@agnos-ui/react-headless/modal';
 import ReactDOM from 'react-dom/client';
 import {Modal} from './Modal';
 

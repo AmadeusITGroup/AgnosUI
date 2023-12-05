@@ -9,6 +9,54 @@
 		".": {
 			"types": "./index.d.ts",
 			"default": "./index.js"
+		},
+		"./modal/Modal": {
+			"types": "./modal/Modal.d.ts",
+			"default": "./modal/Modal.js"
+		},
+		"./modal/modalService": {
+			"types": "./modal/modalService.d.ts",
+			"default": "./modal/modalService.js"
+		},
+		"./pagination/PageItem": {
+			"types": "./pagination/PageItem.d.ts",
+			"default": "./pagination/PageItem.js"
+		},
+		"./pagination/Pagination": {
+			"types": "./pagination/Pagination.d.ts",
+			"default": "./pagination/Pagination.js"
+		},
+		"./Accordion": {
+			"types": "./Accordion.d.ts",
+			"default": "./Accordion.js"
+		},
+		"./Alert": {
+			"types": "./Alert.d.ts",
+			"default": "./Alert.js"
+		},
+		"./config": {
+			"types": "./config.d.ts",
+			"default": "./config.js"
+		},
+		"./Progressbar": {
+			"types": "./Progressbar.d.ts",
+			"default": "./Progressbar.js"
+		},
+		"./Rating": {
+			"types": "./Rating.d.ts",
+			"default": "./Rating.js"
+		},
+		"./Select": {
+			"types": "./Select.d.ts",
+			"default": "./Select.js"
+		},
+		"./Slider": {
+			"types": "./Slider.d.ts",
+			"default": "./Slider.js"
+		},
+		"./utils": {
+			"types": "./utils.d.ts",
+			"default": "./utils.js"
 		}
 	},
 	"dependencies": {

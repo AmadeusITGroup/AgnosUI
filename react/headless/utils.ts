@@ -1,5 +1,5 @@
-import type {Directive, Widget, WidgetProps, WidgetState} from '@agnos-ui/core';
-import {findChangedProperties} from '@agnos-ui/core';
+import type {Directive, Widget, WidgetProps, WidgetState} from '@agnos-ui/core/types';
+import {findChangedProperties} from '@agnos-ui/core/services';
 import type {ReadableSignal, WritableSignal} from '@amadeus-it-group/tansu';
 import {asReadable, writable} from '@amadeus-it-group/tansu';
 import type {RefCallback} from 'react';

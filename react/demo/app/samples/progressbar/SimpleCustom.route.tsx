@@ -1,4 +1,4 @@
-import {Progressbar} from '@agnos-ui/react';
+import {Progressbar} from '@agnos-ui/react/Progressbar';
 
 const SimpleCustomDemo = () => (
 	<div className="d-flex flex-column gap-2">

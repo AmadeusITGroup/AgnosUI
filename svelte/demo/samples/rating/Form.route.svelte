@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {Rating} from '@agnos-ui/svelte';
+	import {Rating} from '@agnos-ui/svelte/rating';
 
 	let ctrl = {value: 0, valid: false, invalid: true, disabled: false};
 	$: {

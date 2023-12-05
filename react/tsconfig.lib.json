@@ -6,7 +6,9 @@
 		"declaration": true,
 		"paths": {
 			"@agnos-ui/core": ["./core/dist/lib"],
-			"@agnos-ui/react-headless": ["./react/dist/headless"]
+			"@agnos-ui/core/*": ["./core/dist/lib/*"],
+			"@agnos-ui/react-headless": ["./react/dist/headless"],
+			"@agnos-ui/react-headless/*": ["./react/dist/headless/*"]
 		}
 	},
 	"include": ["lib"]

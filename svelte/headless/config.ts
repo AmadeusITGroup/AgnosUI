@@ -1,9 +1,10 @@
-import type {WidgetsConfig as CoreWidgetsConfig, Partial2Levels, Widget, WidgetFactory, WidgetProps, WidgetsConfigStore} from '@agnos-ui/core';
-import {createWidgetsConfig} from '@agnos-ui/core';
+import type {WidgetsConfig as CoreWidgetsConfig, Partial2Levels, WidgetsConfigStore} from '@agnos-ui/core/config';
+import {createWidgetsConfig} from '@agnos-ui/core/config';
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {computed} from '@amadeus-it-group/tansu';
 import {getContext, setContext} from 'svelte';
-import {callWidgetFactoryWithConfig} from '.';
+import type {Widget, WidgetFactory, WidgetProps} from '@agnos-ui/core/types';
+import {callWidgetFactoryWithConfig} from './utils';
 import type {AdaptPropsSlots, SlotsPresent} from './slotTypes';
 
 export type WidgetsConfig = {

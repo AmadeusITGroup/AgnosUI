@@ -10,6 +10,46 @@
 		".": {
 			"types": "./index.d.ts",
 			"svelte": "./index.js"
+		},
+		"./accordion": {
+			"types": "./accordion/index.d.ts",
+			"svelte": "./accordion/index.js"
+		},
+		"./alert": {
+			"types": "./alert/index.d.ts",
+			"svelte": "./alert/index.js"
+		},
+		"./config": {
+			"types": "./config/index.d.ts",
+			"svelte": "./config/index.js"
+		},
+		"./modal": {
+			"types": "./modal/index.d.ts",
+			"svelte": "./modal/index.js"
+		},
+		"./pagination": {
+			"types": "./pagination/index.d.ts",
+			"svelte": "./pagination/index.js"
+		},
+		"./progressbar": {
+			"types": "./progressbar/index.d.ts",
+			"svelte": "./progressbar/index.js"
+		},
+		"./rating": {
+			"types": "./rating/index.d.ts",
+			"svelte": "./rating/index.js"
+		},
+		"./select": {
+			"types": "./select/index.d.ts",
+			"svelte": "./select/index.js"
+		},
+		"./slider": {
+			"types": "./slider/index.d.ts",
+			"svelte": "./slider/index.js"
+		},
+		"./slot": {
+			"types": "./slot/index.d.ts",
+			"svelte": "./slot/index.js"
 		}
 	},
 	"dependencies": {

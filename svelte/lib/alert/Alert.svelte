@@ -1,7 +1,10 @@
 <script lang="ts" context="module">
-	import type {AlertProps as Props, AlertSlots as Slots, WidgetPropsProps} from '@agnos-ui/svelte-headless';
-	import {Slot, callWidgetFactory, createAlert} from '@agnos-ui/svelte-headless';
+	import type {AlertProps as Props, AlertSlots as Slots} from '@agnos-ui/svelte-headless/alert';
+	import {createAlert} from '@agnos-ui/svelte-headless/alert';
+	import Slot from '@agnos-ui/svelte-headless/Slot.svelte';
 	import AlertDefaultStructure from './AlertDefaultStructure.svelte';
+	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
+	import type {WidgetPropsProps} from '@agnos-ui/svelte-headless/slotTypes';
 
 	const defaultConfig: Partial<Props> = {
 		slotStructure: AlertDefaultStructure,

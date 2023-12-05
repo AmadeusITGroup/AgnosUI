@@ -1,4 +1,4 @@
-import {Rating} from '@agnos-ui/react';
+import {Rating} from '@agnos-ui/react/Rating';
 import {useState} from 'react';
 
 const RatingDemo = () => {

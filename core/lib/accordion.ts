@@ -1,25 +1,15 @@
-import type {ConfigValidator, PropsConfig, ReadableSignals} from './services';
-import {
-	bindDirectiveNoArg,
-	bindableDerived,
-	directiveSubscribe,
-	registrationArray,
-	stateStores,
-	typeBoolean,
-	typeFunction,
-	typeString,
-	writablesForProps,
-	normalizeConfigStores,
-	mergeConfigStores,
-} from './services';
-import type {TransitionFn} from './transitions';
-import {createTransition} from './transitions';
-import {collapseVerticalTransition} from './transitions/bootstrap';
-import type {Directive, SlotContent, Widget, WidgetSlotContext} from './types';
+import type {Directive, PropsConfig, SlotContent, Widget, WidgetSlotContext} from './types';
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {computed, readable, writable} from '@amadeus-it-group/tansu';
 import {noop} from './utils';
 import type {WidgetsCommonPropsAndState} from './commonProps';
+import {bindDirectiveNoArg, registrationArray, directiveSubscribe} from './services/directiveUtils';
+import type {ConfigValidator, ReadableSignals} from './services/stores';
+import {writablesForProps, bindableDerived, stateStores, mergeConfigStores, normalizeConfigStores} from './services/stores';
+import {typeBoolean, typeFunction, typeString} from './services/writables';
+import type {TransitionFn} from './transitions/baseTransitions';
+import {createTransition} from './transitions/baseTransitions';
+import {collapseVerticalTransition} from './transitions/bootstrap/collapse';
 
 let itemId = 0;
 

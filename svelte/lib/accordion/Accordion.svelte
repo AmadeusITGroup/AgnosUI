@@ -1,7 +1,9 @@
 <script context="module" lang="ts">
-	import type {AccordionProps as Props, AccordionSlots as Slots, WidgetPropsProps} from '@agnos-ui/svelte-headless';
-	import {callWidgetFactory, createAccordion} from '@agnos-ui/svelte-headless';
+	import type {AccordionProps as Props, AccordionSlots as Slots} from '@agnos-ui/svelte-headless/accordion';
+	import type {WidgetPropsProps} from '@agnos-ui/svelte-headless/slotTypes';
+	import {createAccordion} from '@agnos-ui/svelte-headless/accordion';
 	import {setAccordionApi} from './accordion';
+	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
 </script>
 
 <script lang="ts">

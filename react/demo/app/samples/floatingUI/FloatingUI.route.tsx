@@ -1,5 +1,6 @@
 import '@agnos-ui/common/samples/floatingui/floatingui.scss';
-import {createFloatingUI, floatingUI, useDirective, useObservable} from '@agnos-ui/react';
+import {createFloatingUI, floatingUI} from '@agnos-ui/react-headless/services';
+import {useDirective, useObservable} from '@agnos-ui/react-headless/utils';
 import {useMemo, useState} from 'react';
 
 const scrollToMiddle = (element: HTMLElement) => {

@@ -3,7 +3,9 @@
 	"compilerOptions": {
 		"paths": {
 			"@agnos-ui/core": ["./core/dist/lib"],
-			"@agnos-ui/svelte-headless": ["./svelte/dist/headless"]
+			"@agnos-ui/core/*": ["./core/dist/lib/*"],
+			"@agnos-ui/svelte-headless": ["./svelte/dist/headless"],
+			"@agnos-ui/svelte-headless/*": ["./svelte/dist/headless/*"]
 		}
 	}
 }

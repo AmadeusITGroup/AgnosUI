@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {openModal} from '@agnos-ui/svelte';
+	import {openModal} from '@agnos-ui/svelte/modal';
 	import StackModal from './StackModal.svelte';
 </script>
 

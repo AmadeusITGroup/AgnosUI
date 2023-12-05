@@ -1,5 +1,6 @@
-import type {NavManagerItemConfig} from '@agnos-ui/react';
-import {createNavManager, useDirective} from '@agnos-ui/react';
+import type {NavManagerItemConfig} from '@agnos-ui/core';
+import {createNavManager} from '@agnos-ui/core';
+import {useDirective} from '@agnos-ui/react-headless/utils';
 import {useMemo} from 'react';
 
 const NavmanagerSampleLine = ({text}: {text: string}) => {

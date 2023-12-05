@@ -1,9 +1,12 @@
 <script context="module" lang="ts">
-	import type {AccordionItemProps as Props, AccordionSlots as Slots, WidgetPropsProps} from '@agnos-ui/svelte-headless';
-	import {Slot, callWidgetFactory, toSlotContextWidget} from '@agnos-ui/svelte-headless';
+	import type {AccordionItemProps as Props, AccordionSlots as Slots} from '@agnos-ui/svelte-headless/accordion';
+	import type {WidgetPropsProps} from '@agnos-ui/svelte-headless/slotTypes';
+	import Slot from '@agnos-ui/svelte-headless/Slot.svelte';
 	import {onMount} from 'svelte';
 	import ItemDefaultStructure from './ItemDefaultStructure.svelte';
 	import {getAccordionApi} from './accordion';
+	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
+	import {toSlotContextWidget} from '@agnos-ui/svelte-headless/types';
 
 	const defaultConfig: Partial<Props> = {
 		slotItemStructure: ItemDefaultStructure,

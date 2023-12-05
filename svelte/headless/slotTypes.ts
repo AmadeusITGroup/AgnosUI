@@ -1,4 +1,4 @@
-import type {SlotContent as CoreSlotContent, Widget, WidgetFactory, WidgetProps, WidgetSlotContext, WidgetState} from '@agnos-ui/core';
+import type {SlotContent as CoreSlotContent, Widget, WidgetFactory, WidgetProps, WidgetSlotContext, WidgetState} from '@agnos-ui/core/types';
 import type {ComponentType, SvelteComponent} from 'svelte';
 
 export const useSvelteSlot = Symbol('useSvelteSlot');

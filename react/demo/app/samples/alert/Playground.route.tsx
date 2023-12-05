@@ -1,5 +1,6 @@
-import {Alert, WidgetsDefaultConfig} from '@agnos-ui/react';
+import {WidgetsDefaultConfig} from '@agnos-ui/react-headless/config';
 import {useHashChange} from '../../utils';
+import {Alert} from '@agnos-ui/react/Alert';
 
 const AlertDemo = () => {
 	const {config, props} = useHashChange();

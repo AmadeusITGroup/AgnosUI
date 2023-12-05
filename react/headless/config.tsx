@@ -1,20 +1,13 @@
-import {
-	createWidgetsConfig,
-	type Partial2Levels,
-	type Widget,
-	type WidgetFactory,
-	type WidgetProps,
-	type WidgetState,
-	type WidgetsConfigStore,
-} from '@agnos-ui/core';
+import type {Widget, WidgetFactory, WidgetProps, WidgetState} from '@agnos-ui/core/types';
 import {computed} from '@amadeus-it-group/tansu';
 import type {ReactNode} from 'react';
 import {createContext, useContext, useEffect, useMemo} from 'react';
 import type {AdaptPropsSlots} from './slotTypes';
 import {usePropsAsStore, useWidget} from './utils';
+import {createWidgetsConfig, type Partial2Levels, type WidgetsConfigStore} from '@agnos-ui/core/config';
 
 export type WidgetsConfig = {
-	[WidgetName in keyof import('@agnos-ui/core').WidgetsConfig]: AdaptPropsSlots<import('@agnos-ui/core').WidgetsConfig[WidgetName]>;
+	[WidgetName in keyof import('@agnos-ui/core/config').WidgetsConfig]: AdaptPropsSlots<import('@agnos-ui/core/config').WidgetsConfig[WidgetName]>;
 };
 
 export const widgetsConfigFactory = <Config extends {[widgetName: string]: object} = WidgetsConfig>(

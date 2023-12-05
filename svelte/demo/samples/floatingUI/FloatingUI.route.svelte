@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '@agnos-ui/common/samples/floatingui/floatingui.scss';
-	import {createFloatingUI, floatingUI} from '@agnos-ui/core';
+	import {createFloatingUI, floatingUI} from '@agnos-ui/svelte-headless/services';
 
 	const {
 		directives: {floatingDirective, referenceDirective, arrowDirective},

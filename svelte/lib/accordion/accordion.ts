@@ -1,4 +1,4 @@
-import type {AccordionApi} from '@agnos-ui/svelte-headless';
+import type {AccordionApi} from '@agnos-ui/svelte-headless/accordion';
 import {getContext, setContext} from 'svelte';
 
 // Context specific part

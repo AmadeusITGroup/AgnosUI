@@ -1,7 +1,7 @@
-import type {AdaptSlotContentProps, ProgressbarContext} from '@agnos-ui/react';
-import {Progressbar} from '@agnos-ui/react';
+import {Progressbar, type ProgressbarContext} from '@agnos-ui/react/Progressbar';
 import {useEffect, useState} from 'react';
 import '@agnos-ui/common/samples/progressbar/custom.scss';
+import type {AdaptSlotContentProps} from '@agnos-ui/react-headless/slotTypes';
 
 const CustomContent = ({state}: AdaptSlotContentProps<ProgressbarContext>) => (
 	<div className="position-relative" style={{height: '300px'}}>

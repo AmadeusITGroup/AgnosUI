@@ -1,7 +1,11 @@
 <script lang="ts" context="module">
-	import type {ProgressbarProps as Props, ProgressbarSlots as Slots, WidgetPropsProps} from '@agnos-ui/svelte-headless';
-	import {Slot, callWidgetFactory, createProgressbar} from '@agnos-ui/svelte-headless';
+	import type {ProgressbarProps as Props, ProgressbarSlots as Slots} from '@agnos-ui/svelte-headless/progressbar';
+	import {createProgressbar} from '@agnos-ui/svelte-headless/progressbar';
+	import Slot from '@agnos-ui/svelte-headless/Slot.svelte';
 	import ProgressbarDefaultContent from './ProgressbarDefaultContent.svelte';
+	import type {WidgetPropsProps} from '@agnos-ui/svelte-headless/slotTypes';
+	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
+
 	const defaultConfig: Partial<Props> = {
 		slotContent: ProgressbarDefaultContent,
 	};

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type {AlertSlots} from '@agnos-ui/svelte-headless';
-	import {Slot} from '@agnos-ui/svelte-headless';
+	import type {AlertSlots} from '@agnos-ui/svelte-headless/alert';
+	import Slot from '@agnos-ui/svelte-headless/Slot.svelte';
 
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
 	type $$Props = AlertSlots['structure']; // eslint-disable-line @typescript-eslint/no-unused-vars

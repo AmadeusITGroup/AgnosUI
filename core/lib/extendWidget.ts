@@ -1,7 +1,7 @@
 import {batch} from '@amadeus-it-group/tansu';
-import type {ConfigValidator, PropsConfig} from './services/stores';
+import type {ConfigValidator} from './services/stores';
 import {stateStores, writablesWithDefault} from './services/stores';
-import type {Widget, WidgetFactory, WidgetProps, WidgetState} from './types';
+import type {PropsConfig, Widget, WidgetFactory, WidgetProps, WidgetState} from './types';
 
 export const extendWidgetProps =
 	<W extends Widget, ExtraProps extends object>(

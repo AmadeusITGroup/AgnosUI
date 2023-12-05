@@ -1,7 +1,11 @@
 <script lang="ts" context="module">
-	import type {PaginationProps as Props, PaginationSlots as Slots, WidgetPropsProps} from '@agnos-ui/svelte-headless';
-	import {Slot, callWidgetFactory, createPagination, toSlotContextWidget} from '@agnos-ui/svelte-headless';
+	import type {PaginationProps as Props, PaginationSlots as Slots} from '@agnos-ui/svelte-headless/pagination';
+	import {createPagination} from '@agnos-ui/svelte-headless/pagination';
+	import Slot from '@agnos-ui/svelte-headless/Slot.svelte';
 	import PaginationDefaultPages from './PaginationDefaultPages.svelte';
+	import type {WidgetPropsProps} from '@agnos-ui/svelte-headless/slotTypes';
+	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
+	import {toSlotContextWidget} from '@agnos-ui/svelte-headless/types';
 
 	const defaultConfig: Partial<Props> = {
 		slotPages: PaginationDefaultPages,

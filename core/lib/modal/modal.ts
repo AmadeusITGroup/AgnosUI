@@ -1,28 +1,18 @@
 import {computed, readable} from '@amadeus-it-group/tansu';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
-import type {ConfigValidator, PropsConfig} from '../services';
-import {
-	bindDirective,
-	bindDirectiveNoArg,
-	directiveSubscribe,
-	mergeDirectives,
-	portal,
-	registrationArray,
-	sliblingsInert,
-	stateStores,
-	typeBoolean,
-	typeFunction,
-	typeHTMLElementOrNull,
-	typeString,
-	writablesForProps,
-} from '../services';
-import type {TransitionFn} from '../transitions';
-import {createTransition} from '../transitions';
 import {fadeTransition} from '../transitions/bootstrap/fade';
 import {promiseFromStore} from '../transitions/utils';
-import type {Directive, SlotContent, Widget, WidgetSlotContext} from '../types';
+import type {Directive, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../types';
 import {noop} from '../utils';
 import {removeScrollbars, revertScrollbars} from './scrollbars';
+import {registrationArray, bindDirective, bindDirectiveNoArg, mergeDirectives, directiveSubscribe} from '../services/directiveUtils';
+import {portal} from '../services/portal';
+import {sliblingsInert} from '../services/siblingsInert';
+import type {ConfigValidator} from '../services/stores';
+import {writablesForProps, stateStores} from '../services/stores';
+import {typeBoolean, typeString, typeFunction, typeHTMLElementOrNull} from '../services/writables';
+import type {TransitionFn} from '../transitions/baseTransitions';
+import {createTransition} from '../transitions/baseTransitions';
 
 /**
  * Value present in the {@link ModalBeforeCloseEvent.result|result} property of the {@link ModalProps.onBeforeClose|onBeforeClose} event

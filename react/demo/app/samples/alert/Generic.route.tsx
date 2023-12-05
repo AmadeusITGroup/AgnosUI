@@ -1,4 +1,5 @@
-import {Alert, WidgetsDefaultConfig} from '@agnos-ui/react';
+import {WidgetsDefaultConfig} from '@agnos-ui/react-headless/config';
+import {Alert} from '@agnos-ui/react/Alert';
 
 const GenericDemo = () => {
 	return (

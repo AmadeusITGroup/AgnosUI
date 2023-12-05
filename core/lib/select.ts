@@ -2,9 +2,8 @@ import {asReadable, computed, writable} from '@amadeus-it-group/tansu';
 import type {WidgetsCommonPropsAndState} from './commonProps';
 import type {HasFocus} from './services/focustrack';
 import {createHasFocus} from './services/focustrack';
-import type {PropsConfig} from './services/stores';
 import {bindableDerived, stateStores, writablesForProps} from './services/stores';
-import type {SlotContent, Widget, WidgetSlotContext} from './types';
+import type {PropsConfig, SlotContent, Widget, WidgetSlotContext} from './types';
 import {noop} from './utils';
 
 /**

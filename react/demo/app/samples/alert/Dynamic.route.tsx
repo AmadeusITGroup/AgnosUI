@@ -1,5 +1,5 @@
-import type {AlertProps} from '@agnos-ui/react';
-import {Alert} from '@agnos-ui/react';
+import type {AlertProps} from '@agnos-ui/react/Alert';
+import {Alert} from '@agnos-ui/react/Alert';
 import type {Dispatch} from 'react';
 import {createContext, useContext, useReducer} from 'react';
 

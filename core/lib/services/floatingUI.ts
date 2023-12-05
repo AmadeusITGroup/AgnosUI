@@ -2,10 +2,11 @@ import {computed, derived} from '@amadeus-it-group/tansu';
 import type {ArrowOptions, AutoUpdateOptions, ComputePositionConfig, ComputePositionReturn, Derivable} from '@floating-ui/dom';
 import {arrow, autoUpdate, computePosition} from '@floating-ui/dom';
 import {createStoreDirective, directiveSubscribe, mergeDirectives} from './directiveUtils';
-import {stateStores, writablesForProps, type PropsConfig} from './stores';
+import {stateStores, writablesForProps} from './stores';
 
 import * as floatingUI from '@floating-ui/dom';
 import {promiseStoreToValueStore} from './promiseStoreUtils';
+import type {PropsConfig} from '../types';
 export {floatingUI};
 
 export interface FloatingUIProps {

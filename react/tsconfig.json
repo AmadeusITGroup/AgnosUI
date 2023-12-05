@@ -5,8 +5,11 @@
 		"paths": {
 			"react": ["./node_modules/react"],
 			"@agnos-ui/core": ["./core/lib"],
+			"@agnos-ui/core/*": ["./core/lib/*"],
 			"@agnos-ui/react": ["./react/lib"],
+			"@agnos-ui/react/*": ["./react/lib/*"],
 			"@agnos-ui/react-headless": ["./react/headless"],
+			"@agnos-ui/react-headless/*": ["./react/headless/*"],
 			"@agnos-ui/code-coverage/*": ["./code-coverage/lib/*"],
 			"@agnos-ui/common": ["./common"],
 			"@agnos-ui/common/*": ["./common/*"]

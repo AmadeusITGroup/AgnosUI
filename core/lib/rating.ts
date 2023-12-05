@@ -1,10 +1,10 @@
 import {computed, writable} from '@amadeus-it-group/tansu';
-import type {ConfigValidator, PropsConfig} from './services';
-import {INVALID_VALUE, bindableDerived, stateStores, writablesForProps} from './services';
 import {clamp, isNumber} from './services/checks';
 import {typeBoolean, typeFunction, typeNumber, typeString} from './services/writables';
-import type {SlotContent, Widget} from './types';
+import type {PropsConfig, SlotContent, Widget} from './types';
 import type {WidgetsCommonPropsAndState} from './commonProps';
+import type {ConfigValidator} from './services/stores';
+import {INVALID_VALUE, writablesForProps, bindableDerived, stateStores} from './services/stores';
 
 export interface StarContext {
 	/**

@@ -1,5 +1,5 @@
-import type {ModalApi} from '@agnos-ui/react';
-import {Modal, modalCloseButtonClick, modalOutsideClick} from '@agnos-ui/react';
+import type {ModalApi} from '@agnos-ui/react/modal/Modal';
+import {Modal, modalCloseButtonClick, modalOutsideClick} from '@agnos-ui/react/modal/Modal';
 import {useRef, useState} from 'react';
 
 const DefaultDemo = () => {

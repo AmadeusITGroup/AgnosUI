@@ -13,6 +13,54 @@
 		".": {
 			"types": "./index.d.ts",
 			"default": "./index.js"
+		},
+		"./modal": {
+			"types": "./modal/index.d.ts",
+			"default": "./modal/index.js"
+		},
+		"./services": {
+			"types": "./services/index.d.ts",
+			"default": "./services/index.js"
+		},
+		"./transitions": {
+			"types": "./transitions/index.d.ts",
+			"default": "./transitions/index.js"
+		},
+		"./accordion": {
+			"types": "./accordion.d.ts",
+			"default": "./accordion.js"
+		},
+		"./alert": {
+			"types": "./alert.d.ts",
+			"default": "./alert.js"
+		},
+		"./config": {
+			"types": "./config.d.ts",
+			"default": "./config.js"
+		},
+		"./pagination": {
+			"types": "./pagination.d.ts",
+			"default": "./pagination.js"
+		},
+		"./progressbar": {
+			"types": "./progressbar.d.ts",
+			"default": "./progressbar.js"
+		},
+		"./rating": {
+			"types": "./rating.d.ts",
+			"default": "./rating.js"
+		},
+		"./select": {
+			"types": "./select.d.ts",
+			"default": "./select.js"
+		},
+		"./slider": {
+			"types": "./slider.d.ts",
+			"default": "./slider.js"
+		},
+		"./types": {
+			"types": "./types.d.ts",
+			"default": "./types.js"
 		}
 	},
 	"dependencies": {

@@ -1,5 +1,6 @@
-import {Accordion, AccordionItem, useDirective} from '@agnos-ui/react';
-import type {AccordionApi, AccordionItemContext} from '@agnos-ui/react';
+import {Accordion, AccordionItem} from '@agnos-ui/react/Accordion';
+import type {AccordionApi, AccordionItemContext} from '@agnos-ui/react/Accordion';
+import {useDirective} from '@agnos-ui/react-headless/utils';
 import {useRef, useState} from 'react';
 import '@agnos-ui/common/samples/accordion/custom.scss';
 import BODY from '@agnos-ui/common/samples/accordion/body.txt?raw';

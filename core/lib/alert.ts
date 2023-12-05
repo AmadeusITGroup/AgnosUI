@@ -1,10 +1,12 @@
+import {bindDirectiveNoArg} from './services/directiveUtils';
+import type {ConfigValidator} from './services/stores';
+import {writablesForProps, stateStores} from './services/stores';
+import {typeBoolean, typeString} from './services/writables';
+import type {TransitionFn} from './transitions/baseTransitions';
+import {createTransition} from './transitions/baseTransitions';
+import {fadeTransition} from './transitions/bootstrap/fade';
 import type {WidgetsCommonPropsAndState} from './commonProps';
-import type {ConfigValidator, PropsConfig} from './services';
-import {bindDirectiveNoArg, stateStores, typeBoolean, typeString, writablesForProps} from './services';
-import type {TransitionFn} from './transitions';
-import {createTransition} from './transitions';
-import {fadeTransition} from './transitions/bootstrap';
-import type {Directive, SlotContent, Widget, WidgetSlotContext} from './types';
+import type {Directive, PropsConfig, SlotContent, Widget, WidgetSlotContext} from './types';
 import {noop} from './utils';
 
 export type AlertContext = WidgetSlotContext<AlertWidget>;

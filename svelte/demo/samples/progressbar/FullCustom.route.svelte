@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {Progressbar} from '@agnos-ui/svelte';
+	import {Progressbar} from '@agnos-ui/svelte/progressbar';
 	import Coffee from './Coffee.svelte';
 	import {onDestroy} from 'svelte';
 

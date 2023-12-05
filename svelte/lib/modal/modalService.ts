@@ -1,4 +1,4 @@
-import type {ModalProps} from '@agnos-ui/svelte-headless';
+import type {ModalProps} from '@agnos-ui/svelte-headless/modal';
 import Modal from './Modal.svelte';
 
 export async function openModal<Data>(options: Partial<ModalProps<Data>>, {context}: {context?: Map<any, any>} = {}) {

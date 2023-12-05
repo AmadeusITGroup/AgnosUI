@@ -1,5 +1,26 @@
-import type {ReadableSignal, SubscribableStore} from '@amadeus-it-group/tansu';
-import type {PropsConfig} from './services';
+import type {ReadableSignal, SubscribableStore, WritableSignal} from '@amadeus-it-group/tansu';
+
+export type ValuesOrReadableSignals<T extends object> = {
+	[K in keyof T]?: ReadableSignal<T[K] | undefined> | T[K];
+};
+
+export type ValuesOrWritableSignals<T extends object> = {
+	[K in keyof T]?: WritableSignal<T[K] | undefined> | T[K];
+};
+
+export interface PropsConfig<U extends object> {
+	/**
+	 * Object containing, for each property, either its initial value, or a store that will contain the value at any time.
+	 * When the value of a property is undefined or invalid, the value from the config is used.
+	 */
+	props?: ValuesOrWritableSignals<U>;
+
+	/**
+	 * Either a store of objects containing, for each property, the default value,
+	 * or an object containing, for each property, either a store containing the default value or the default value itself.
+	 */
+	config?: ReadableSignal<Partial<U>> | ValuesOrReadableSignals<Partial<U>>;
+}
 
 export interface Widget<
 	Props extends object = object,

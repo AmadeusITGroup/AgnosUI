@@ -1,5 +1,5 @@
-import type {ModalContext} from '@agnos-ui/react';
-import {openModal} from '@agnos-ui/react';
+import type {ModalContext} from '@agnos-ui/react/modal/Modal';
+import {openModal} from '@agnos-ui/react/modal/modalService';
 
 type ModalContent = {name: string};
 

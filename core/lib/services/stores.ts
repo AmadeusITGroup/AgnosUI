@@ -1,6 +1,7 @@
 import type {ReadableSignal, StoreInput, StoreOptions, StoresInputValues, Updater, WritableSignal} from '@amadeus-it-group/tansu';
 import {asReadable, batch, computed, derived, get, readable, writable} from '@amadeus-it-group/tansu';
 import {identity} from '../utils';
+import type {PropsConfig, ValuesOrReadableSignals} from '../types';
 
 export type ToWritableSignal<P> = {
 	[K in keyof P as `${K & string}$`]-?: WritableSignal<P[K], P[K] | undefined>;
@@ -8,14 +9,6 @@ export type ToWritableSignal<P> = {
 
 export type ReadableSignals<T extends object> = {
 	[K in keyof T]?: ReadableSignal<T[K] | undefined>;
-};
-
-export type ValuesOrReadableSignals<T extends object> = {
-	[K in keyof T]?: ReadableSignal<T[K] | undefined> | T[K];
-};
-
-export type ValuesOrWritableSignals<T extends object> = {
-	[K in keyof T]?: WritableSignal<T[K] | undefined> | T[K];
 };
 
 export type WithoutDollar<S extends `${string}$`> = S extends `${infer U}$` ? U : never;
@@ -276,20 +269,6 @@ export const writablesForProps = <T extends object>(
 	const stores = writablesWithDefault(defConfig, propsConfig, options);
 	return [stores, createPatch(stores)];
 };
-
-export interface PropsConfig<U extends object> {
-	/**
-	 * Object containing, for each property, either its initial value, or a store that will contain the value at any time.
-	 * When the value of a property is undefined or invalid, the value from the config is used.
-	 */
-	props?: ValuesOrWritableSignals<U>;
-
-	/**
-	 * Either a store of objects containing, for each property, the default value,
-	 * or an object containing, for each property, either a store containing the default value or the default value itself.
-	 */
-	config?: ReadableSignal<Partial<U>> | ValuesOrReadableSignals<Partial<U>>;
-}
 
 export const stateStores = <A extends {[key in `${string}$`]: ReadableSignal<any>}>(
 	inputStores: A,

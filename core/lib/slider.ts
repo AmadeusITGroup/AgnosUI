@@ -1,11 +1,11 @@
 import {computed, derived, writable} from '@amadeus-it-group/tansu';
 import type {WidgetsCommonPropsAndState} from './commonProps';
-import {bindableDerived, createStoreDirective, writablesForProps} from './services';
-import type {ConfigValidator, PropsConfig} from './services';
-import {stateStores} from './services/stores';
+import type {ConfigValidator} from './services/stores';
+import {bindableDerived, stateStores, writablesForProps} from './services/stores';
 import {typeArray, typeBoolean, typeFunction, typeNumber, typeNumberInRangeFactory} from './services/writables';
-import type {Directive, Widget} from './types';
+import type {Directive, PropsConfig, Widget} from './types';
 import {getDecimalPrecision, noop} from './utils';
+import {createStoreDirective} from './services/directiveUtils';
 
 export interface ProgressDisplayOptions {
 	/**

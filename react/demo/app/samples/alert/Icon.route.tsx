@@ -1,5 +1,8 @@
-import type {AlertProps, AdaptPropsSlots, AlertContext} from '@agnos-ui/react';
-import {Alert, Slot, WidgetsDefaultConfig} from '@agnos-ui/react';
+import {Slot} from '@agnos-ui/react-headless/Slot';
+import type {AlertContext, AlertProps} from '@agnos-ui/react-headless/alert';
+import {WidgetsDefaultConfig} from '@agnos-ui/react-headless/config';
+import type {AdaptPropsSlots} from '@agnos-ui/react-headless/slotTypes';
+import {Alert} from '@agnos-ui/react/Alert';
 import biCheckCircleFill from 'bootstrap-icons/icons/check-circle-fill.svg?raw';
 import biDashCircleFill from 'bootstrap-icons/icons/dash-circle-fill.svg?raw';
 import biExclamationTriangleFill from 'bootstrap-icons/icons/exclamation-triangle-fill.svg?raw';

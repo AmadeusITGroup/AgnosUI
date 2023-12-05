@@ -1,5 +1,6 @@
-import type {ProgressbarContext} from '@agnos-ui/react';
-import {Progressbar, WidgetsDefaultConfig} from '@agnos-ui/react';
+import {WidgetsDefaultConfig} from '@agnos-ui/react-headless/config';
+import type {ProgressbarContext} from '@agnos-ui/react/Progressbar';
+import {Progressbar} from '@agnos-ui/react/Progressbar';
 
 const DefaultDemo = () => (
 	<WidgetsDefaultConfig progressbar={{slotDefault: ({state}: ProgressbarContext) => `${state.percentage}%`}}>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {Alert} from '@agnos-ui/svelte';
+	import {Alert} from '@agnos-ui/svelte/alert';
 	import {hashChangeHook} from '../../utils';
 
 	const props$ = hashChangeHook('alert');

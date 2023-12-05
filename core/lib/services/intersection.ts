@@ -1,6 +1,6 @@
 import {asReadable, derived} from '@amadeus-it-group/tansu';
 import {noop} from '../utils';
-import type {PropsConfig} from './stores';
+import type {PropsConfig} from '../types';
 import {writablesForProps} from './stores';
 
 export interface IntersectionProps {

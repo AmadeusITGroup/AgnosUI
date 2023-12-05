@@ -1,6 +1,8 @@
 <script lang="ts" context="module">
-	import type {SliderProps as Props, WidgetPropsProps} from '@agnos-ui/svelte-headless';
-	import {callWidgetFactory, createSlider} from '@agnos-ui/svelte-headless';
+	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
+	import type {SliderProps as Props} from '@agnos-ui/svelte-headless/slider';
+	import {createSlider} from '@agnos-ui/svelte-headless/slider';
+	import type {WidgetPropsProps} from '@agnos-ui/svelte-headless/slotTypes';
 </script>
 
 <script lang="ts">

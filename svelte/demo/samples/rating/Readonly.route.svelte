@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {Rating} from '@agnos-ui/svelte';
+	import {Rating} from '@agnos-ui/svelte/rating';
 	import heartFill from 'bootstrap-icons/icons/heart-fill.svg?raw';
 	import '@agnos-ui/common/samples/rating/readonly.scss';
 </script>

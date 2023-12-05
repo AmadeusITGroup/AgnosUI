@@ -1,6 +1,6 @@
 // import {useState} from "react";
 import {activeElement$, createHasFocus} from '@agnos-ui/core';
-import {useDirective, useObservable} from '@agnos-ui/react';
+import {useDirective, useObservable} from '@agnos-ui/react-headless/utils';
 import {useState, useEffect} from 'react';
 
 const Focustrack = () => {

@@ -1,7 +1,7 @@
 import {writable} from '@amadeus-it-group/tansu';
 import type {TransitionFn} from '@agnos-ui/core';
 import {bootstrap, createTransition} from '@agnos-ui/core';
-import {useDirective, useObservable, useWidget} from '@agnos-ui/react';
+import {useDirective, useObservable, useWidget} from '@agnos-ui/react/utils';
 
 const paramTransition$ = writable(bootstrap.collapseVerticalTransition);
 const paramAnimation$ = writable(true);

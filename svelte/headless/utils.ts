@@ -1,9 +1,9 @@
-import type {Widget, WidgetFactory, WidgetProps} from '@agnos-ui/core';
-import {findChangedProperties, toReadableStore} from '@agnos-ui/core';
+import type {Widget, WidgetFactory, WidgetProps} from '@agnos-ui/core/types';
 import type {ReadableSignal, WritableSignal} from '@amadeus-it-group/tansu';
 import {asReadable, computed, writable} from '@amadeus-it-group/tansu';
 import type {SlotContent, SlotSvelteComponent, SlotsPresent} from './slotTypes';
 import {useSvelteSlot} from './slotTypes';
+import {findChangedProperties, toReadableStore} from '@agnos-ui/core/services';
 
 export function createPatchChangedProps<T extends object>(patchFn: (arg: Partial<T>) => void) {
 	let previousProps: Partial<T> = {};

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {Slider} from '@agnos-ui/svelte';
+	import {Slider} from '@agnos-ui/svelte/slider';
 
 	let sliderControl = [10, 40];
 	let sliderControlRange = [40];
