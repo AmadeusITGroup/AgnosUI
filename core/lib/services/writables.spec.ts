@@ -1,12 +1,12 @@
 import {writable} from '@amadeus-it-group/tansu';
-import type {SpyInstance} from 'vitest';
+import type {MockInstance} from 'vitest';
 import {beforeEach, describe, expect, test, vi} from 'vitest';
 import {INVALID_VALUE, writableWithDefault} from './stores';
 import {typeArray, typeNumberInRangeFactory} from './writables';
 
 describe(`Writables service`, () => {
 	const equal = typeArray.equal!;
-	let consoleErrorSpy: SpyInstance<Parameters<typeof console.error>, ReturnType<typeof console.error>>;
+	let consoleErrorSpy: MockInstance<Parameters<typeof console.error>, ReturnType<typeof console.error>>;
 
 	beforeEach(() => {
 		consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});

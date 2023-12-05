@@ -1,4 +1,3 @@
-import EventEmitter from 'events';
 import {writable} from '@amadeus-it-group/tansu';
 import {describe, test, expect, vi} from 'vitest';
 import {promiseFromStore, promiseFromEvent, promiseFromTimeout} from './utils';
@@ -91,27 +90,11 @@ describe(`promiseFromTimeout`, () => {
 });
 
 describe(`promiseFromEvent`, () => {
-	const createEventTarget = (): EventTarget => {
-		const eventEmitter = new EventEmitter();
-		return {
-			addEventListener: function (type: string, callback: EventListener): void {
-				eventEmitter.addListener(type, callback);
-			},
-			dispatchEvent: function (event: Event): boolean {
-				eventEmitter.emit(event.type, event);
-				return true;
-			},
-			removeEventListener: function (type: string, callback: EventListener): void {
-				eventEmitter.removeListener(type, callback);
-			},
-		};
-	};
-
 	test(`not calling unsubscribe in time`, async () => {
-		const target = createEventTarget();
+		const target = document.createElement('div');
 		const removeEventListener = vi.spyOn(target, 'removeEventListener');
 		const res = promiseFromEvent(target, 'something');
-		const event = {type: 'something', target} as Event;
+		const event = new Event('something');
 		target.dispatchEvent(event);
 		expect(removeEventListener).toHaveBeenCalledOnce();
 		res.unsubscribe();
@@ -121,16 +104,17 @@ describe(`promiseFromEvent`, () => {
 	});
 
 	test(`calling unsubscribe in time`, async () => {
-		const target = createEventTarget();
+		const target = document.createElement('div');
+		const otherTarget = target.appendChild(document.createElement('div'));
 		const removeEventListener = vi.spyOn(target, 'removeEventListener');
 		const res = promiseFromEvent(target, 'something');
-		target.dispatchEvent({type: 'something', target: {}} as Event); // not the right target, should be ignored
+		otherTarget.dispatchEvent(new Event('something', {bubbles: true})); // not the right target, should be ignored
 		res.promise.finally(() => {
 			throw new Error('res.promise is expected not to resolve');
 		});
 		res.unsubscribe();
 		expect(removeEventListener).toHaveBeenCalledOnce();
-		target.dispatchEvent({type: 'something', target} as Event);
+		target.dispatchEvent(new Event('something'));
 		await new Promise((resolve) => setTimeout(resolve, 200));
 	});
 });

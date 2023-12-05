@@ -26,7 +26,7 @@
 						"styles": ["demo/src/styles.css", "../common/demo.scss", "@agnos-ui/style-bootstrap/scss/agnosui.scss"],
 						"scripts": [],
 						"inlineStyleLanguage": "scss",
-						"extraWebpackConfig": "./demo/webpack.js"
+						"extraWebpackConfig": "./demo/webpack.cjs"
 					},
 					"configurations": {
 						"coverage": {
@@ -73,7 +73,7 @@
 				"serve": {
 					"builder": "ngx-build-plus:dev-server",
 					"options": {
-						"extraWebpackConfig": "./demo/webpack.js"
+						"extraWebpackConfig": "./demo/webpack.cjs"
 					},
 					"configurations": {
 						"production": {

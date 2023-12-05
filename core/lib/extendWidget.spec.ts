@@ -80,7 +80,7 @@ describe(`extendWidgetProps`, () => {
 		myOtherNewPropConfig$.set('other');
 		classNameConfig$.set('otherCustomClass');
 		originalState = originalWidget.state$();
-		expect(originalState).toContain({className: 'otherCustomClass'});
+		expect(originalState).toMatchObject({className: 'otherCustomClass'});
 		expect(customWidget.state$()).toEqual({
 			...originalState,
 			myNewProp: 6,

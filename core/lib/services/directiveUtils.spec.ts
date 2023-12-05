@@ -1,5 +1,5 @@
 import {asReadable, computed, readable, writable} from '@amadeus-it-group/tansu';
-import type {SpyInstance} from 'vitest';
+import type {MockInstance} from 'vitest';
 import {beforeEach, describe, expect, it, vitest} from 'vitest';
 import {
 	bindDirective,
@@ -14,7 +14,7 @@ import {
 
 describe('directiveUtils', () => {
 	let element: HTMLElement;
-	let consoleErrorSpy: SpyInstance<Parameters<typeof console.error>, ReturnType<typeof console.error>>;
+	let consoleErrorSpy: MockInstance<Parameters<typeof console.error>, ReturnType<typeof console.error>>;
 
 	beforeEach(() => {
 		consoleErrorSpy = vitest.spyOn(console, 'error').mockImplementation(() => {});

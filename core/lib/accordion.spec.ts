@@ -2,7 +2,7 @@ import type {AccordionWidget, AccordionItemWidget} from './accordion';
 import {createAccordion, getAccordionDefaultConfig} from './accordion';
 import type {UnsubscribeFunction, WritableSignal} from '@amadeus-it-group/tansu';
 import {computed, writable} from '@amadeus-it-group/tansu';
-import type {SpyInstance} from 'vitest';
+import type {MockInstance} from 'vitest';
 import {afterEach, beforeEach, describe, expect, test, vi} from 'vitest';
 import type {WidgetProps, WidgetState} from './types';
 
@@ -69,7 +69,7 @@ describe(`Accordion`, () => {
 
 	let defConfigAccordion: WritableSignal<Partial<WidgetProps<AccordionWidget>>>;
 
-	let consoleErrorSpy: SpyInstance<Parameters<typeof console.error>, ReturnType<typeof console.error>>;
+	let consoleErrorSpy: MockInstance<Parameters<typeof console.error>, ReturnType<typeof console.error>>;
 
 	beforeEach(() => {
 		consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});

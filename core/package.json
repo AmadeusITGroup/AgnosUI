@@ -1,5 +1,6 @@
 {
 	"name": "@agnos-ui/core",
+	"type": "module",
 	"private": true,
 	"scripts": {
 		"build": "npm run build:lib && npm run build:tsc && npm run build:api-extractor",
