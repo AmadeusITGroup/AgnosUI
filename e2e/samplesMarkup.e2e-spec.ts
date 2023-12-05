@@ -27,7 +27,7 @@ test.describe.parallel(`Samples markup consistency check`, () => {
 
 	for (const route of allRoutes) {
 		test(`${route} should have a consistent markup`, async ({page}) => {
-			await page.goto(`#/${route}${routesExtraHash[route] ?? ''}`);
+			await page.goto(`#/${route}${routesExtraHash[route] ?? ''}`, {waitUntil: 'networkidle'});
 			await expect.poll(async () => (await page.locator('#root').innerHTML()).trim().length).toBeGreaterThan(0);
 			await routesExtraAction[route]?.(page);
 			await page.waitForSelector('.fade', {state: 'detached'}); // wait for fade transitions to be finished
