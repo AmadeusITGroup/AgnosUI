@@ -1,13 +1,11 @@
 <script lang="ts" context="module">
-	import type {SliderProps as Props, WidgetPropsEvents, WidgetPropsProps} from '@agnos-ui/svelte-headless';
-	import {callWidgetFactory, createEventDispatcher, createSlider} from '@agnos-ui/svelte-headless';
+	import type {SliderProps as Props, WidgetPropsProps} from '@agnos-ui/svelte-headless';
+	import {callWidgetFactory, createSlider} from '@agnos-ui/svelte-headless';
 </script>
 
 <script lang="ts">
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
 	type $$Props = WidgetPropsProps<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
-	type $$Events = WidgetPropsEvents<Props>;
-	const dispatch = createEventDispatcher<$$Events>();
 
 	export let values: number[] | undefined = undefined;
 
@@ -18,7 +16,6 @@
 		events: {
 			onValuesChange: function (newValues: number[]): void {
 				values = newValues;
-				dispatch('valuesChange', values);
 			},
 		},
 	});

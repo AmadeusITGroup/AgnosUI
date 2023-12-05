@@ -2,7 +2,6 @@ import type {Widget, WidgetFactory, WidgetProps} from '@agnos-ui/core';
 import {findChangedProperties, toReadableStore} from '@agnos-ui/core';
 import type {ReadableSignal, WritableSignal} from '@amadeus-it-group/tansu';
 import {asReadable, computed, writable} from '@amadeus-it-group/tansu';
-import {createEventDispatcher as svelteCreateEventDispatcher} from 'svelte';
 import type {SlotContent, SlotSvelteComponent, SlotsPresent} from './slotTypes';
 import {useSvelteSlot} from './slotTypes';
 
@@ -16,9 +15,6 @@ export function createPatchChangedProps<T extends object>(patchFn: (arg: Partial
 		}
 	};
 }
-
-export const createEventDispatcher = <T extends object>() =>
-	svelteCreateEventDispatcher<{[K in keyof T]: T[K] extends CustomEvent<infer U> ? U : never}>();
 
 /**
  * Merges two functions.
@@ -61,7 +57,7 @@ export const callWidgetFactoryWithConfig = <W extends Widget>({
 	$$slots: SlotsPresent<WidgetProps<W>>;
 	defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
 	widgetConfig?: null | undefined | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
-	events: Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}`>;
+	events: Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}Change`>;
 }): W & {patchChangedProps: W['patch']} => {
 	const defaultConfig$ = toReadableStore(defaultConfig);
 	const processedSlots: any = {};
@@ -71,7 +67,7 @@ export const callWidgetFactoryWithConfig = <W extends Widget>({
 		}
 	}
 	const props: {[key in keyof WidgetProps<W>]: WritableSignal<WidgetProps<W>[key]>} = {} as any;
-	for (const event of Object.keys(events) as (keyof WidgetProps<W> & `on${string}`)[]) {
+	for (const event of Object.keys(events) as (keyof WidgetProps<W> & `on${string}Change`)[]) {
 		props[event] = eventStore(events[event] as any) as any;
 	}
 	const widget = factory({

@@ -142,33 +142,6 @@ const reportInvalidPropType = (
 	});
 };
 
-const isDispatchCall = (node: TSESTree.Node | null, eventName: string) =>
-	node &&
-	node.type === TSESTree.AST_NODE_TYPES.CallExpression &&
-	node.callee.type === TSESTree.AST_NODE_TYPES.Identifier &&
-	node.callee.name === 'dispatch' &&
-	node.arguments[0]?.type === TSESTree.AST_NODE_TYPES.Literal &&
-	node.arguments[0].value === eventName;
-
-const isDispatchCallStatement = (eventName: string) => (node: TSESTree.Node) =>
-	(node.type === TSESTree.AST_NODE_TYPES.ExpressionStatement && isDispatchCall(node.expression, eventName)) ||
-	(node.type === TSESTree.AST_NODE_TYPES.VariableDeclaration && node.declarations.find((declaration) => isDispatchCall(declaration.init, eventName)));
-
-const findCallToDispatch = (functionNode: TSESTree.Node, eventName: string) => {
-	const body =
-		functionNode.type === TSESTree.AST_NODE_TYPES.ArrowFunctionExpression || functionNode.type === TSESTree.AST_NODE_TYPES.FunctionExpression
-			? functionNode.body
-			: undefined;
-	if (body) {
-		if (body.type === TSESTree.AST_NODE_TYPES.BlockStatement) {
-			return body.body.find(isDispatchCallStatement(eventName));
-		} else if (isDispatchCall(body, eventName)) {
-			return body;
-		}
-	}
-	return undefined;
-};
-
 const isBindingAssignment = (node: TSESTree.Node, propName: string) =>
 	node.type === TSESTree.AST_NODE_TYPES.AssignmentExpression &&
 	node.operator === '=' &&
@@ -195,18 +168,14 @@ const findBindingAssignment = (functionNode: TSESTree.Node, propName: string) =>
 
 const fixApiPatchEventHandler = (
 	fixer: TSESLint.RuleFixer,
-	name: string,
 	prop: EventInfo,
 	widgetStatementNode: TSESTree.Node,
 	widgetPatchArgNode: TSESTree.ObjectExpression | undefined,
 	eventInApiPatch: TSESTree.Node | undefined,
-	callToDispatch: TSESTree.Node | undefined,
 	bindingAssignment: TSESTree.Node | undefined,
 	context: Readonly<TSESLint.RuleContext<any, any>>,
 ) => {
-	const arrowFunction = prop.propBinding
-		? `(event) => {\n\t${prop.propBinding} = event;\n\tdispatch(${JSON.stringify(name)}, event);\n}`
-		: `(event) => dispatch(${JSON.stringify(name)}, event)`;
+	const arrowFunction = `(event) => {\n\t${prop.propBinding} = event;\n}`;
 	if (eventInApiPatch) {
 		if (
 			(eventInApiPatch.type === TSESTree.AST_NODE_TYPES.ArrowFunctionExpression ||
@@ -217,9 +186,6 @@ const fixApiPatchEventHandler = (
 			let content = '';
 			if (prop.propBinding && !bindingAssignment) {
 				content += `\n${prop.propBinding} = ${eventInApiPatch.params[0].name};`;
-			}
-			if (!callToDispatch) {
-				content += `\ndispatch(${JSON.stringify(name)}, ${eventInApiPatch.params[0].name});`;
 			}
 			const indentation = getChildIndentation(eventInApiPatch.body.body[0], eventInApiPatch.body, context);
 			return insertNewLineBefore(fixer, context.getSourceCode().getLastToken(eventInApiPatch.body)!, addIndentation(content, indentation), context);
@@ -243,30 +209,19 @@ const reportApiPatchEventHandlerIssue = (
 	widgetStatementNode: TSESTree.Node,
 	widgetPatchArgNode: TSESTree.ObjectExpression | undefined,
 	eventInWidgetPatch: TSESTree.Node | undefined,
-	callToDispatch: TSESTree.Node | undefined,
 	bindingAssignment: TSESTree.Node | undefined,
-	context: Readonly<TSESLint.RuleContext<'missingDispatchCall' | 'missingBindingAssignment', any>>,
+	context: Readonly<TSESLint.RuleContext<'missingBindingAssignment', any>>,
 ) => {
 	context.report({
 		node: eventInWidgetPatch || widgetPatchArgNode || widgetStatementNode,
-		messageId: !callToDispatch ? 'missingDispatchCall' : 'missingBindingAssignment',
+		messageId: 'missingBindingAssignment',
 		data: {
 			name,
 			widgetProp: prop.widgetProp,
 			propBinding: prop.propBinding,
 		},
 		fix(fixer) {
-			return fixApiPatchEventHandler(
-				fixer,
-				name,
-				prop,
-				widgetStatementNode,
-				widgetPatchArgNode,
-				eventInWidgetPatch,
-				callToDispatch,
-				bindingAssignment,
-				context,
-			);
+			return fixApiPatchEventHandler(fixer, prop, widgetStatementNode, widgetPatchArgNode, eventInWidgetPatch, bindingAssignment, context);
 		},
 	});
 };
@@ -339,17 +294,15 @@ export const svelteCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 							const eventsObject = extractEventsObject(widgetNode.init);
 							for (const [eventName, eventInfo] of widgetInfo.events) {
 								const eventInApiPatch = eventsObject?.properties.get(eventInfo.widgetProp);
-								const callToDispatch = eventInApiPatch ? findCallToDispatch(eventInApiPatch, eventName) : undefined;
 								const bindingAssignment =
 									eventInApiPatch && eventInfo.propBinding ? findBindingAssignment(eventInApiPatch, eventInfo.propBinding) : undefined;
-								if (!callToDispatch || (!bindingAssignment && eventInfo.propBinding)) {
+								if (!bindingAssignment && eventInfo.propBinding) {
 									reportApiPatchEventHandlerIssue(
 										eventName,
 										eventInfo,
 										widgetStatementNode,
 										eventsObject?.node,
 										eventInApiPatch,
-										callToDispatch,
 										bindingAssignment,
 										context,
 									);
@@ -372,7 +325,6 @@ export const svelteCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 			invalidPropType: 'Invalid type for "export let {{ name }}" declaration: expected {{ expectedType }}, found {{ foundType }}.',
 			missingBoundProp: 'Missing "export let {{ name }}" declaration, as it is a bound property in the API.',
 			missingBoundPropInAPI: 'Missing property {{ name }} in the API.',
-			missingDispatchCall: 'Could not find call to dispatch("{{name}}") in {{ widgetProp }} listener in call to widget.patch.',
 			missingBindingAssignment: 'Could not find assignment to {{ propBinding }} in {{ widgetProp }} listener in call to widget.patch.',
 		},
 		type: 'problem',

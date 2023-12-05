@@ -5,12 +5,6 @@ export const useSvelteSlot = Symbol('useSvelteSlot');
 
 export type WidgetPropsProps<Props extends object> = Partial<Props>;
 
-export type WidgetPropsEvents<Props extends object> = {
-	[K in keyof Props & `on${string}` as K extends `on${infer U}` ? Uncapitalize<U> : never]: NonNullable<Props[K]> extends (arg: infer U) => void
-		? CustomEvent<U>
-		: never;
-};
-
 export type WidgetPropsSlots<Props extends object> = {
 	[K in keyof Props & `slot${string}` as K extends `slot${infer U}` ? Uncapitalize<U> : never]: Props[K] extends SlotContent<infer U> ? U : never;
 };
