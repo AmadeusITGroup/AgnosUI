@@ -58,9 +58,16 @@ export const createSimpleClassTransition = ({
 			addClasses(element, direction === 'show' ? animationPendingShowClasses : animationPendingHideClasses);
 		}
 		return () => {
-			removeClasses(element, animationPendingClasses);
-			removeClasses(element, animationPendingShowClasses);
-			removeClasses(element, animationPendingHideClasses);
-			addClasses(element, direction === 'show' ? showClasses : hideClasses);
+			const toRemove = new Set<string>(
+				...(animationPendingClasses ?? []),
+				...(animationPendingShowClasses ?? []),
+				...(animationPendingHideClasses ?? []),
+			);
+			const toAdd = (direction === 'show' ? showClasses : hideClasses) ?? [];
+			for (const toAddClass of toAdd) {
+				toRemove.delete(toAddClass);
+			}
+			removeClasses(element, [...toRemove.values()]);
+			addClasses(element, toAdd);
 		};
 	});
