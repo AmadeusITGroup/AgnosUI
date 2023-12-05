@@ -1,11 +1,11 @@
 <script lang="ts">
 	import {computed} from '@amadeus-it-group/tansu';
-	import Page404 from './Page404.svelte';
 	import {hash$} from '@agnos-ui/common/utils';
 
 	import 'bootstrap/dist/css/bootstrap.css';
 	import '@agnos-ui/common/demo.scss';
 	import '@agnos-ui/common/samples/links.scss';
+	import Lazy from './Lazy.svelte';
 
 	const componentRegExp = /samples\/([^/]*)\/([^/]*).route.svelte/;
 	function replacePattern(components: Record<string, any>) {
@@ -18,17 +18,30 @@
 		}
 		return directComponents;
 	}
-	const components = replacePattern(import.meta.glob('./samples/*/*.route.svelte', {eager: true, import: 'default'}));
+	const components = replacePattern(import.meta.glob('./samples/*/*.route.svelte'));
 
 	const component$ = computed(() => {
 		const hash = hash$();
-		return hash ? components[hash.split('#')[0].split('?')[0]] || Page404 : undefined;
+		return hash
+			? async () => {
+					const componentLoader = components[hash.split('#')[0].split('?')[0]];
+					if (componentLoader) {
+						const component = await componentLoader();
+						if (window.parent) {
+							window.parent.postMessage({type: 'sampleload'});
+						}
+						return component;
+					} else {
+						return import('./Page404.svelte');
+					}
+			  }
+			: undefined;
 	});
 </script>
 
 <div class="container p-3">
 	{#if $component$}
-		<svelte:component this={$component$} />
+		<Lazy component={$component$} />
 	{:else}
 		<h3>Samples:</h3>
 		<div class="sample-links">

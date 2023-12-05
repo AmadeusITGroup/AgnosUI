@@ -16,6 +16,7 @@ test.describe.parallel(`Accordion tests`, () => {
 	test(`Default accordion behavior`, async ({page}) => {
 		await page.goto('#/accordion/default');
 		const accordionPO = new AccordionPO(page, 0);
+		await accordionPO.locatorRoot.waitFor();
 
 		const itemsIds = await Promise.all((await accordionPO.locatorAccordionItems.all()).map((item) => item.getAttribute('id')));
 		const expectedState: State = {
@@ -70,7 +71,8 @@ test.describe.parallel(`Accordion tests`, () => {
 		const accordionDemoPO = new AccordionTogglePanels(page);
 		await page.goto('#/accordion/togglepanels');
 		const accordionPO = new AccordionPO(page, 0);
-		await accordionDemoPO.locatorRoot.waitFor();
+		await accordionPO.locatorRoot.waitFor();
+
 		const itemsIds = await Promise.all((await accordionPO.locatorAccordionItems.all()).map((item) => item.getAttribute('id')));
 		const expectedState: State = {
 			items: [
@@ -120,6 +122,7 @@ test.describe.parallel(`Accordion tests`, () => {
 	test(`Playground accordion behavior no destroy on hide`, async ({page}) => {
 		await page.goto('#/accordion/playground#{"config":{"itemDestroyOnHide":false}}');
 		const accordionPO = new AccordionPO(page, 0);
+		await accordionPO.locatorRoot.waitFor();
 
 		const itemsIds = await Promise.all((await accordionPO.locatorAccordionItems.all()).map((item) => item.getAttribute('id')));
 		const expectedState: State = {

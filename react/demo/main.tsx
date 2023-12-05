@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import {HashRouter, Route, Routes} from 'react-router-dom';
+import {RouterProvider, createHashRouter} from 'react-router-dom';
 import App from './app/App';
-import Links from './app/Links';
-import Page404 from './app/Page404';
 
 import '@agnos-ui/style-bootstrap/scss/agnosui.scss';
 
@@ -18,22 +16,47 @@ function replacePattern(components: Record<string, any>) {
 	}
 	return directComponents;
 }
-const components = replacePattern(import.meta.glob('./app/samples/*/*.route.tsx', {eager: true, import: 'default'}));
+const components = replacePattern(import.meta.glob('./app/samples/*/*.route.tsx', {import: 'default'}));
+
+const lazyLinks = async () => {
+	const Links = (await import('./app/Links')).default;
+	return {
+		Component: () => Links({links: Object.keys(components)}),
+	};
+};
+
+const router = createHashRouter([
+	{
+		path: '/',
+		lazy: lazyLinks,
+	},
+	{
+		path: '*',
+		element: <App />,
+		children: [
+			{path: '', lazy: lazyLinks},
+			...Object.entries(components).map(([path, component]) => ({
+				path,
+				lazy: async () => {
+					const Component = await component();
+					if (window.parent) {
+						window.parent.postMessage({type: 'sampleload'});
+					}
+					return {Component};
+				},
+			})),
+			{
+				path: '*',
+				lazy: async () => ({Component: ((await import('./app/Page404')) as any).default}),
+			},
+		],
+	},
+]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
 	<React.StrictMode>
 		<div className="container p-3">
-			<HashRouter>
-				<Routes>
-					<Route path="/" element={<App />}>
-						{Object.entries(components).map(([path, component]) => (
-							<Route key={path} path={path} element={React.createElement(component)} />
-						))}
-						<Route path="/" element={<Links links={Object.keys(components)} />}></Route>
-						<Route path="*" element={<Page404 />}></Route>
-					</Route>
-				</Routes>
-			</HashRouter>
+			<RouterProvider router={router} />
 		</div>
 	</React.StrictMode>,
 );

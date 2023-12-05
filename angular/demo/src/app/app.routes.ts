@@ -1,8 +1,9 @@
 import type {Routes} from '@angular/router';
-import {links, LinksComponent} from './links.component';
+import {links} from './links.component';
 
 const context = import.meta.webpackContext?.('./', {
 	regExp: /[^/]*\.route\.ts$/,
+	mode: 'lazy',
 });
 
 const componentRegExp = /samples\/([^/]*)\/([^/]*).route\.ts$/;
@@ -18,15 +19,23 @@ function replacePattern(webpackContext: __WebpackModuleApi.RequireContext) {
 	return directComponents;
 }
 const components = replacePattern(context!);
-
 export const ROUTES: Routes = [
 	{
 		path: '',
 		pathMatch: 'full',
-		component: LinksComponent,
+		loadComponent: () => import('./links.component').then((c) => c.LinksComponent),
 		providers: [{provide: links, useValue: Object.keys(components)}],
 	},
 	...Object.entries(components).map(([path, component]) => {
-		return {path, loadComponent: async () => (await context!(component)).default};
+		return {
+			path,
+			loadComponent: async () => {
+				const comp = (await context!(component)).default;
+				if (window.parent) {
+					window.parent.postMessage({type: 'sampleload'});
+				}
+				return comp;
+			},
+		};
 	}),
 ];

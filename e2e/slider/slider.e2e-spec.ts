@@ -62,11 +62,10 @@ const defaultExpectedHandleStateVertical: {[key: string]: string | null}[] = [
 test.describe(`Slider tests`, () => {
 	test.describe(`Basic slider`, () => {
 		test(`should snap the handle to correct tick on the slider click event`, async ({page}) => {
-			const sliderDemoPO = new SliderDemoPO(page);
 			const sliderPO = new SliderPO(page, 0);
 
 			await page.goto('#/slider/default');
-			await sliderDemoPO.locatorRoot.waitFor();
+			await sliderPO.locatorRoot.waitFor();
 
 			const expectedState = {...defaultExpectedState};
 			expectedState.value = '43';
@@ -83,11 +82,10 @@ test.describe(`Slider tests`, () => {
 		});
 
 		test(`should snap the handle on mouse drag event`, async ({page}) => {
-			const sliderDemoPO = new SliderDemoPO(page);
 			const sliderPO = new SliderPO(page, 0);
 
 			await page.goto('#/slider/default');
-			await sliderDemoPO.locatorRoot.waitFor();
+			await sliderPO.locatorRoot.waitFor();
 
 			const expectedState = {...defaultExpectedState};
 			expectedState.value = '88';
@@ -106,11 +104,10 @@ test.describe(`Slider tests`, () => {
 		});
 
 		test(`should move handle on key strokes`, async ({page}) => {
-			const sliderDemoPO = new SliderDemoPO(page);
 			const sliderPO = new SliderPO(page, 0);
 
 			await page.goto('#/slider/default');
-			await sliderDemoPO.locatorRoot.waitFor();
+			await sliderPO.locatorRoot.waitFor();
 
 			const expectedState = {...defaultExpectedState};
 			expectedState.value = '0';
@@ -148,7 +145,7 @@ test.describe(`Slider tests`, () => {
 			const sliderPO = new SliderPO(page, 2);
 
 			await page.goto('#/slider/default');
-			await sliderDemoPO.locatorRoot.waitFor();
+			await sliderPO.locatorRoot.waitFor();
 
 			const sliderHandleLocator = sliderPO.locatorHandle;
 
@@ -164,7 +161,7 @@ test.describe(`Slider tests`, () => {
 			const sliderPO = new SliderPO(page, 2);
 
 			await page.goto('#/slider/default');
-			await sliderDemoPO.locatorRoot.waitFor();
+			await sliderPO.locatorRoot.waitFor();
 
 			await sliderDemoPO.disabledToggle.click();
 
@@ -196,11 +193,10 @@ test.describe(`Slider tests`, () => {
 
 	test.describe(`Range slider`, () => {
 		test(`should move the handle to correct tick on the slider click event`, async ({page}) => {
-			const sliderDemoPO = new SliderDemoPO(page);
 			const sliderPO = new SliderPO(page, 1);
 
 			await page.goto('#/slider/range');
-			await sliderDemoPO.locatorRoot.waitFor();
+			await sliderPO.locatorRoot.waitFor();
 
 			const expectedState = {...defaultExpectedHandleState[1]};
 			expectedState.value = '88';
@@ -217,11 +213,10 @@ test.describe(`Slider tests`, () => {
 		});
 
 		test(`should interchange the handles on mouse drag event`, async ({page}) => {
-			const sliderDemoPO = new SliderDemoPO(page);
 			const sliderPO = new SliderPO(page, 1);
 
 			await page.goto('#/slider/range');
-			await sliderDemoPO.locatorRoot.waitFor();
+			await sliderPO.locatorRoot.waitFor();
 
 			const expectedState = {...defaultExpectedHandleState};
 			expectedState[0].value = '40';
@@ -246,11 +241,10 @@ test.describe(`Slider tests`, () => {
 		});
 
 		test(`should move handle on key strokes`, async ({page}) => {
-			const sliderDemoPO = new SliderDemoPO(page);
 			const sliderPO = new SliderPO(page, 1);
 
 			await page.goto('#/slider/range');
-			await sliderDemoPO.locatorRoot.waitFor();
+			await sliderPO.locatorRoot.waitFor();
 
 			const expectedState = {...defaultExpectedHandleState};
 			expectedState[0].value = '0';
@@ -297,11 +291,10 @@ test.describe(`Slider tests`, () => {
 
 	test.describe(`Vertical slider`, () => {
 		test(`should move the handle to correct tick on the slider click event`, async ({page}) => {
-			const sliderDemoPO = new SliderDemoPO(page);
 			const sliderPO = new SliderPO(page, 0);
 
 			await page.goto('#/slider/vertical');
-			await sliderDemoPO.locatorRoot.waitFor();
+			await sliderPO.locatorRoot.waitFor();
 
 			const expectedState = {...defaultExpectedHandleStateVertical[1]};
 			expectedState.value = '80';
@@ -318,11 +311,10 @@ test.describe(`Slider tests`, () => {
 		});
 
 		test(`should move handle on key strokes`, async ({page}) => {
-			const sliderDemoPO = new SliderDemoPO(page);
 			const sliderPO = new SliderPO(page, 0);
 
 			await page.goto('#/slider/vertical');
-			await sliderDemoPO.locatorRoot.waitFor();
+			await sliderPO.locatorRoot.waitFor();
 
 			const expectedState = {...defaultExpectedHandleStateVertical};
 			expectedState[0].value = '0';

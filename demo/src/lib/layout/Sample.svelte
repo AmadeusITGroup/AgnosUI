@@ -12,13 +12,13 @@
 	import {tooltip} from '$lib/tooltip/tooltip';
 	import openLink from 'bootstrap-icons/icons/box-arrow-up-right.svg?raw';
 	import codeSvg from 'bootstrap-icons/icons/code.svg?raw';
-	import {onDestroy} from 'svelte';
 	import stackblitz from '../../resources/icons/stackblitz.svg?raw';
 	import type {Frameworks} from '../stores';
 	import {pathToRoot$, selectedFramework$} from '../stores';
 	import Lazy from './Lazy.svelte';
 	import Svg from './Svg.svelte';
 	import type {SampleInfo} from './sample';
+	import {createIframeHandler} from '$lib/layout/iframe';
 
 	/**
 	 * iFrame title
@@ -74,71 +74,19 @@
 	$: sampleBaseUrl = `${$pathToRoot$}${$selectedFramework$}/samples/#/${path}`;
 	$: sampleUrl = sampleBaseUrl + (urlParameters ? `#${JSON.stringify(urlParameters)}` : '');
 
-	let iframeLoaded = true;
-	let resizeObserver: ResizeObserver;
-
-	let iframeHeight = 0;
-
-	const setupObserver = (iframe: HTMLIFrameElement) => {
-		if (!resizeObserver) {
-			resizeObserver = new ResizeObserver((entries) => {
-				if (entries.length === 1) {
-					iframeHeight = entries[0].contentRect.height || iframeHeight;
-				}
-			});
-		}
-		resizeObserver.disconnect();
-		const root = iframe.contentDocument?.getElementById('root');
-		if (root) {
-			resizeObserver.observe(root);
-		}
-	};
-
-	const updateLoaded = (iframe: HTMLIFrameElement, baseSrc: string) => {
-		const update = (baseSrc: string) => {
-			if (!iframe.contentWindow?.location?.href?.startsWith(baseSrc)) {
-				iframeLoaded = false;
-			}
-		};
-		update(baseSrc);
-		// the onLoad event is never called when loading a tab that was discarded through Chrome Tab Discarding
-		// so we use the first execution of this directive to check if the iframe is loaded and if we can setup a resize observer
-		if (iframe.contentDocument?.getElementById('root')) {
-			setupObserver(iframe);
-		}
-		return {
-			update,
-		};
-	};
-	function onLoad(event: Event) {
-		iframeLoaded = true;
-		if (event.target instanceof HTMLIFrameElement) {
-			setupObserver(event.target);
-		}
-	}
-	onDestroy(() => {
-		resizeObserver?.disconnect();
-	});
+	const {showSpinner$, handler} = createIframeHandler(height, !noresize);
 </script>
 
 <div class="mb-4 py-2 px-0 px-sm-3">
 	<div class="position-relative border">
-		{#if !iframeLoaded}
+		{#if $showSpinner$}
 			<div class="position-absolute top-50 start-50 translate-middle iframeSpinner">
 				<div class="spinner-border text-primary" role="status">
 					<span class="visually-hidden">Loading...</span>
 				</div>
 			</div>
 		{/if}
-		<iframe
-			class="demo-sample d-block"
-			use:iframeSrc={sampleUrl}
-			{title}
-			height={noresize ? height : iframeHeight || height}
-			use:updateLoaded={sampleBaseUrl}
-			on:load={onLoad}
-			loading="lazy"
-		/>
+		<iframe class="demo-sample d-block" use:iframeSrc={sampleUrl} {title} use:handler={sampleBaseUrl} loading="lazy" />
 	</div>
 	<div class="btn-toolbar border border-top-0 d-flex align-items-center p-1" role="toolbar" aria-label="Toolbar with button groups">
 		{#if showCodeButton}
