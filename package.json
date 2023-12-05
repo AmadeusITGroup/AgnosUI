@@ -32,8 +32,8 @@
 		"@types/uuid": "^9.0.7",
 		"@typescript-eslint/eslint-plugin": "^6.12.0",
 		"@typescript-eslint/parser": "^6.12.0",
-		"@vitest/browser": "^0.34.6",
-		"@vitest/ui": "^0.34.6",
+		"@vitest/browser": "^1.0.1",
+		"@vitest/ui": "^1.0.1",
 		"bootstrap": "^5.3.2",
 		"eslint": "^8.54.0",
 		"eslint-config-prettier": "^9.0.0",
@@ -47,7 +47,7 @@
 		"ts-node": "^10.9.1",
 		"typescript": "~5.2.2",
 		"vite": "^4.5.0",
-		"vitest": "^0.34.6"
+		"vitest": "^1.0.1"
 	},
 	"scripts": {
 		"build:ci": "npm run doc && npm run build",

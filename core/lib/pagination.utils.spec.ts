@@ -1,10 +1,10 @@
-import type {SpyInstance} from 'vitest';
+import type {MockInstance} from 'vitest';
 import {beforeEach, describe, expect, test, vi} from 'vitest';
 import {ngBootstrapPagination} from './pagination.utils';
 
 describe(`Pagination utils`, () => {
 	let pageFactory: (page: number, pageCount: number) => number[];
-	let consoleErrorSpy: SpyInstance<Parameters<typeof console.error>, ReturnType<typeof console.error>>;
+	let consoleErrorSpy: MockInstance<Parameters<typeof console.error>, ReturnType<typeof console.error>>;
 
 	beforeEach(() => {
 		consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});

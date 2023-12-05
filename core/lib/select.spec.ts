@@ -266,11 +266,11 @@ describe(`Select model`, () => {
 
 				selectWidget.patch({items: []});
 				selectWidget.api.highlight('not in list');
-				expect(getState(), 'highlight api with a non existant item').toContain({highlighted: undefined});
+				expect(getState(), 'highlight api with a non existant item').toMatchObject({highlighted: undefined});
 				selectWidget.api.highlightPrevious();
-				expect(getState(), 'highlight api with a non existant item').toContain({highlighted: undefined});
+				expect(getState(), 'highlight api with a non existant item').toMatchObject({highlighted: undefined});
 				selectWidget.api.highlightNext();
-				expect(getState(), 'highlight api with a non existant item').toContain({highlighted: undefined});
+				expect(getState(), 'highlight api with a non existant item').toMatchObject({highlighted: undefined});
 			});
 		});
 

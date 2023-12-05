@@ -1,4 +1,4 @@
-import type {SpyInstance} from 'vitest';
+import type {MockInstance} from 'vitest';
 import {beforeEach, describe, expect, test, vi} from 'vitest';
 import type {PaginationState, PaginationWidget} from './pagination';
 import {createPagination, getPaginationDefaultConfig} from './pagination';
@@ -8,7 +8,7 @@ describe(`Pagination`, () => {
 	let pagination: PaginationWidget;
 	let state: PaginationState;
 
-	let consoleErrorSpy: SpyInstance<Parameters<typeof console.error>, ReturnType<typeof console.error>>;
+	let consoleErrorSpy: MockInstance<Parameters<typeof console.error>, ReturnType<typeof console.error>>;
 
 	beforeEach(() => {
 		consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
@@ -73,15 +73,15 @@ describe(`Pagination`, () => {
 	test('actions should update the state', () => {
 		pagination.patch({collectionSize: 200});
 		pagination.actions.first();
-		expect(state).toContain({page: 1, pageCount: 20});
+		expect(state).toMatchObject({page: 1, pageCount: 20});
 		pagination.actions.next();
-		expect(state).toContain({page: 2, pageCount: 20});
+		expect(state).toMatchObject({page: 2, pageCount: 20});
 		pagination.actions.select(5);
-		expect(state).toContain({page: 5, pageCount: 20});
+		expect(state).toMatchObject({page: 5, pageCount: 20});
 		pagination.actions.last();
-		expect(state).toContain({page: 20, pageCount: 20});
+		expect(state).toMatchObject({page: 20, pageCount: 20});
 		pagination.actions.previous();
-		expect(state).toContain({page: 19, pageCount: 20});
+		expect(state).toMatchObject({page: 19, pageCount: 20});
 	});
 
 	test('should return api isEllipisis', () => {
@@ -90,91 +90,91 @@ describe(`Pagination`, () => {
 	});
 
 	test('should calculate and update no of pages (default page size)', () => {
-		expect(state).toContain({page: 1, pageCount: 1});
+		expect(state).toMatchObject({page: 1, pageCount: 1});
 
 		pagination.patch({collectionSize: 100});
-		expect(state).toContain({page: 1, pageCount: 10});
+		expect(state).toMatchObject({page: 1, pageCount: 10});
 
 		pagination.patch({collectionSize: 200});
-		expect(state).toContain({page: 1, pageCount: 20});
+		expect(state).toMatchObject({page: 1, pageCount: 20});
 	});
 
 	test('should calculate and update no of pages (custom page size)', () => {
-		expect(state).toContain({page: 1, pageCount: 1});
+		expect(state).toMatchObject({page: 1, pageCount: 1});
 
 		pagination.patch({collectionSize: 100, pageSize: 20});
-		expect(state).toContain({page: 1, pageCount: 5});
+		expect(state).toMatchObject({page: 1, pageCount: 5});
 
 		pagination.patch({collectionSize: 200});
-		expect(state).toContain({page: 1, pageCount: 10});
+		expect(state).toMatchObject({page: 1, pageCount: 10});
 
 		pagination.patch({pageSize: 10});
-		expect(state).toContain({page: 1, pageCount: 20});
+		expect(state).toMatchObject({page: 1, pageCount: 20});
 	});
 
 	test('should allow setting a page within a valid range (default page size)', () => {
 		pagination.patch({collectionSize: 100, page: 2});
-		expect(state).toContain({page: 2, pageCount: 10});
+		expect(state).toMatchObject({page: 2, pageCount: 10});
 	});
 
 	test(`should set page within [1, pageCount]`, () => {
-		expect(state).toContain({page: 1, pageCount: 1});
+		expect(state).toMatchObject({page: 1, pageCount: 1});
 
 		pagination.patch({page: 5});
-		expect(state).toContain({page: 1, pageCount: 1});
+		expect(state).toMatchObject({page: 1, pageCount: 1});
 
 		pagination.patch({collectionSize: 60});
-		expect(state).toContain({page: 1, pageCount: 6});
+		expect(state).toMatchObject({page: 1, pageCount: 6});
 
 		pagination.patch({page: 5});
-		expect(state).toContain({page: 5, pageCount: 6});
+		expect(state).toMatchObject({page: 5, pageCount: 6});
 
 		pagination.patch({page: 0});
-		expect(state).toContain({page: 1, pageCount: 6});
+		expect(state).toMatchObject({page: 1, pageCount: 6});
 
 		pagination.patch({page: 10});
-		expect(state).toContain({page: 6, pageCount: 6});
+		expect(state).toMatchObject({page: 6, pageCount: 6});
 
 		pagination.patch({page: -1});
-		expect(state).toContain({page: 1, pageCount: 6});
+		expect(state).toMatchObject({page: 1, pageCount: 6});
 
 		pagination.patch({page: 5, collectionSize: 40});
-		expect(state).toContain({page: 4, pageCount: 4});
+		expect(state).toMatchObject({page: 4, pageCount: 4});
 	});
 
 	test(`should nextDisabled react correctly`, () => {
-		expect(state).toContain({page: 1, pageCount: 1, nextDisabled: true});
+		expect(state).toMatchObject({page: 1, pageCount: 1, nextDisabled: true});
 
 		pagination.patch({collectionSize: 60});
-		expect(state).toContain({page: 1, pageCount: 6, nextDisabled: false});
+		expect(state).toMatchObject({page: 1, pageCount: 6, nextDisabled: false});
 
 		pagination.patch({page: 6});
-		expect(state).toContain({page: 6, pageCount: 6, nextDisabled: true});
+		expect(state).toMatchObject({page: 6, pageCount: 6, nextDisabled: true});
 
 		pagination.patch({page: 0});
-		expect(state).toContain({page: 1, pageCount: 6, nextDisabled: false});
+		expect(state).toMatchObject({page: 1, pageCount: 6, nextDisabled: false});
 
 		pagination.patch({page: 10});
-		expect(state).toContain({page: 6, pageCount: 6, nextDisabled: true});
+		expect(state).toMatchObject({page: 6, pageCount: 6, nextDisabled: true});
 	});
 
 	test(`should previousDisabled react correctly`, () => {
-		expect(state).toContain({page: 1, previousDisabled: true});
+		expect(state).toMatchObject({page: 1, previousDisabled: true});
 
 		pagination.patch({collectionSize: 60});
-		expect(state).toContain({page: 1, previousDisabled: true});
+		expect(state).toMatchObject({page: 1, previousDisabled: true});
 
 		pagination.patch({page: 6});
-		expect(state).toContain({page: 6, previousDisabled: false});
+		expect(state).toMatchObject({page: 6, previousDisabled: false});
 
 		pagination.patch({page: 0});
-		expect(state).toContain({page: 1, previousDisabled: true});
+		expect(state).toMatchObject({page: 1, previousDisabled: true});
 
 		pagination.patch({page: 10});
-		expect(state).toContain({page: 6, previousDisabled: false});
+		expect(state).toMatchObject({page: 6, previousDisabled: false});
 
 		pagination.patch({collectionSize: 10});
-		expect(state).toContain({page: 1, previousDisabled: true});
+		expect(state).toMatchObject({page: 1, previousDisabled: true});
 	});
 
 	test(`should pages changes according to collectionSize`, () => {
@@ -212,105 +212,105 @@ describe(`Pagination`, () => {
 
 		pagination.patch({page: 3});
 		expect(state.pages).toStrictEqual([1, 2, 3]);
-		expect(state).toContain({page: 3, nextDisabled: false});
+		expect(state).toMatchObject({page: 3, nextDisabled: false});
 
 		pagination.patch({page: 4});
 		expect(state.pages).toStrictEqual([4, 5, 6]);
-		expect(state).toContain({page: 4, previousDisabled: false});
+		expect(state).toMatchObject({page: 4, previousDisabled: false});
 
 		pagination.patch({page: 7});
 		expect(state.pages).toStrictEqual([7]);
-		expect(state).toContain({page: 7, nextDisabled: true});
+		expect(state).toMatchObject({page: 7, nextDisabled: true});
 
 		pagination.patch({pagesFactory: ngBootstrapPagination(100, false, false)});
 		expect(state.pages).toStrictEqual([1, 2, 3, 4, 5, 6, 7]);
-		expect(state).toContain({page: 7, nextDisabled: true});
+		expect(state).toMatchObject({page: 7, nextDisabled: true});
 	});
 
 	test('should rotate pages correctly', () => {
 		pagination.patch({pageSize: 10, collectionSize: 70});
 		expect(state.pages).toStrictEqual([1, 2, 3, 4, 5, 6, 7]);
-		expect(state).toContain({page: 1, previousDisabled: true});
+		expect(state).toMatchObject({page: 1, previousDisabled: true});
 
 		pagination.patch({pagesFactory: ngBootstrapPagination(3, true, false)});
 		expect(state.pages).toStrictEqual([1, 2, 3]);
-		expect(state).toContain({page: 1, previousDisabled: true});
+		expect(state).toMatchObject({page: 1, previousDisabled: true});
 
 		pagination.patch({page: 2});
 		expect(state.pages).toStrictEqual([1, 2, 3]);
-		expect(state).toContain({page: 2, previousDisabled: false});
+		expect(state).toMatchObject({page: 2, previousDisabled: false});
 
 		pagination.patch({page: 3});
 		expect(state.pages).toStrictEqual([2, 3, 4]);
-		expect(state).toContain({page: 3, previousDisabled: false});
+		expect(state).toMatchObject({page: 3, previousDisabled: false});
 
 		pagination.patch({page: 7});
 		expect(state.pages).toStrictEqual([5, 6, 7]);
-		expect(state).toContain({page: 7, nextDisabled: true});
+		expect(state).toMatchObject({page: 7, nextDisabled: true});
 
 		pagination.patch({pagesFactory: ngBootstrapPagination(4, true, false)});
 		expect(state.pages).toStrictEqual([4, 5, 6, 7]);
-		expect(state).toContain({page: 7, nextDisabled: true});
+		expect(state).toMatchObject({page: 7, nextDisabled: true});
 
 		pagination.patch({page: 5});
 		expect(state.pages).toStrictEqual([3, 4, 5, 6]);
-		expect(state).toContain({page: 5, nextDisabled: false});
+		expect(state).toMatchObject({page: 5, nextDisabled: false});
 
 		pagination.patch({page: 3});
 		expect(state.pages).toStrictEqual([1, 2, 3, 4]);
-		expect(state).toContain({page: 3, nextDisabled: false});
+		expect(state).toMatchObject({page: 3, nextDisabled: false});
 	});
 
 	test('should display ellipsis correctly', () => {
 		pagination.patch({pageSize: 10, collectionSize: 70});
 		expect(state.pages).toStrictEqual([1, 2, 3, 4, 5, 6, 7]);
-		expect(state).toContain({page: 1, previousDisabled: true});
+		expect(state).toMatchObject({page: 1, previousDisabled: true});
 
 		pagination.patch({pagesFactory: ngBootstrapPagination(3, false, true)});
 		expect(state.pages).toStrictEqual([1, 2, 3, -1, 7]);
-		expect(state).toContain({page: 1, previousDisabled: true});
+		expect(state).toMatchObject({page: 1, previousDisabled: true});
 
 		pagination.patch({page: 4});
 		expect(state.pages).toStrictEqual([1, -1, 4, 5, 6, 7]);
-		expect(state).toContain({page: 4, previousDisabled: false});
+		expect(state).toMatchObject({page: 4, previousDisabled: false});
 
 		pagination.patch({page: 7});
 		expect(state.pages).toStrictEqual([1, -1, 7]);
-		expect(state).toContain({page: 7, nextDisabled: true});
+		expect(state).toMatchObject({page: 7, nextDisabled: true});
 
 		pagination.patch({pagesFactory: ngBootstrapPagination(3, true, true)});
 		pagination.patch({page: 1});
 		expect(state.pages).toStrictEqual([1, 2, 3, -1, 7]);
-		expect(state).toContain({page: 1, previousDisabled: true});
+		expect(state).toMatchObject({page: 1, previousDisabled: true});
 
 		pagination.patch({page: 2});
 		expect(state.pages).toStrictEqual([1, 2, 3, -1, 7]);
-		expect(state).toContain({page: 2, previousDisabled: false});
+		expect(state).toMatchObject({page: 2, previousDisabled: false});
 
 		pagination.patch({page: 3});
 		expect(state.pages).toStrictEqual([1, 2, 3, 4, -1, 7]);
-		expect(state).toContain({page: 3, previousDisabled: false});
+		expect(state).toMatchObject({page: 3, previousDisabled: false});
 
 		pagination.patch({page: 4});
 		expect(state.pages).toStrictEqual([1, 2, 3, 4, 5, 6, 7]);
-		expect(state).toContain({page: 4, previousDisabled: false});
+		expect(state).toMatchObject({page: 4, previousDisabled: false});
 
 		pagination.patch({page: 5});
 		expect(state.pages).toStrictEqual([1, -1, 4, 5, 6, 7]);
-		expect(state).toContain({page: 5, previousDisabled: false});
+		expect(state).toMatchObject({page: 5, previousDisabled: false});
 
 		pagination.patch({page: 6});
 		expect(state.pages).toStrictEqual([1, -1, 5, 6, 7]);
-		expect(state).toContain({page: 6, previousDisabled: false});
+		expect(state).toMatchObject({page: 6, previousDisabled: false});
 
 		pagination.patch({page: 7});
 		expect(state.pages).toStrictEqual([1, -1, 5, 6, 7]);
-		expect(state).toContain({page: 7, nextDisabled: true});
+		expect(state).toMatchObject({page: 7, nextDisabled: true});
 
 		pagination.patch({pagesFactory: ngBootstrapPagination(100, true, true)});
 		pagination.patch({page: 5});
 		expect(state.pages).toStrictEqual([1, 2, 3, 4, 5, 6, 7]);
-		expect(state).toContain({page: 5, nextDisabled: false});
+		expect(state).toMatchObject({page: 5, nextDisabled: false});
 	});
 
 	test('should use page number instead of ellipsis when ellipsis hides a single page', () => {
@@ -379,15 +379,15 @@ describe(`Pagination`, () => {
 	test('should handle edge "page" values', () => {
 		pagination.patch({page: 0, collectionSize: 20});
 		expect(state.pages).toStrictEqual([1, 2]);
-		expect(state).toContain({page: 1});
+		expect(state).toMatchObject({page: 1});
 
 		pagination.patch({page: 2022});
 		expect(state.pages).toStrictEqual([1, 2]);
-		expect(state).toContain({page: 2});
+		expect(state).toMatchObject({page: 2});
 
 		pagination.patch({page: NaN});
 		expect(state.pages).toStrictEqual([1, 2]);
-		expect(state).toContain({page: 2});
+		expect(state).toMatchObject({page: 2});
 		expectLogInvalidValue();
 	});
 
