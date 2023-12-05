@@ -43,5 +43,6 @@
 		}
 	],
 	"allowedPostUpgradeCommands": ["^npm install$", "^cd angular && npm run ng update .*", "^rm package-lock.json$"],
-	"lockFileMaintenance": {"enabled": true, "schedule": ["every weekend"]}
+	"lockFileMaintenance": {"enabled": true, "schedule": ["every weekend"]},
+	"skipInstalls": false
 }
