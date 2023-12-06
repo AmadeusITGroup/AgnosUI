@@ -1,16 +1,37 @@
+// types
+export * from './components/commonProps';
 export * from './types';
-export * from './select';
-export * from './services';
-export * from './transitions';
-export * from './rating';
-export * from './pagination';
-export * from './pagination.utils';
-export * from './config';
-export * from './modal/modal';
-export * from './alert';
-export * from './commonAlert';
-export * from './accordion';
-export * from './commonProps';
-export * from './progressbar';
-export * from './extendWidget';
-export * from './slider';
+
+// components
+export * from './components/accordion/accordion';
+export * from './components/alert/alert';
+export * from './components/modal/modal';
+export * from './components/pagination/pagination';
+export * from './components/progressbar/progressbar';
+export * from './components/rating/rating';
+export * from './components/select/select';
+export * from './components/slider/slider';
+
+// config
+export * from './config/config';
+
+// services
+export * from './services/extendWidget';
+export * from './services/floatingUI';
+export * from './services/focustrack';
+export * from './services/intersection';
+export * from './services/navManager';
+export * from './services/portal';
+export * from './services/siblingsInert';
+
+// services transitions
+export * from './services/transitions/baseTransitions';
+export * from './services/transitions/cssTransitions';
+export * from './services/transitions/simpleClassTransition';
+import * as bootstrap from './services/transitions/bootstrap';
+export {bootstrap};
+
+// public utils
+export * from './utils/directive';
+export * from './utils/stores';
+export * from './utils/writables';

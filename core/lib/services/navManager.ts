@@ -1,10 +1,10 @@
 import {computed, writable} from '@amadeus-it-group/tansu';
 import type {Directive} from '../types';
-import {registrationArray} from './directiveUtils';
-import {computeCommonAncestor} from './domUtils';
-import {isFocusable} from './isFocusable';
-import {compareDomOrder} from './sortUtils';
-import {getTextDirection} from './textDirection';
+import {registrationArray} from '../utils/directive';
+import {computeCommonAncestor} from '../utils/internal/dom';
+import {isFocusable} from '../utils/internal/isFocusable';
+import {compareDomOrder} from '../utils/internal/sort';
+import {getTextDirection} from '../utils/internal/textDirection';
 
 export type NavManager = ReturnType<typeof createNavManager>;
 
