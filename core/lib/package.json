@@ -13,6 +13,30 @@
 		".": {
 			"types": "./index.d.ts",
 			"default": "./index.js"
+		},
+		"./components/*": {
+			"types": "./components/*/*.d.ts",
+			"default": "./components/*/*.js"
+		},
+		"./config": {
+			"types": "./config.d.ts",
+			"default": "./config.js"
+		},
+		"./types": {
+			"types": "./types.d.ts",
+			"default": "./types.js"
+		},
+		"./services/*": {
+			"types": "./services/*.d.ts",
+			"default": "./services/*.js"
+		},
+		"./services/transitions/*": {
+			"types": "./services/transitions/*.d.ts",
+			"default": "./services/transitions/*.js"
+		},
+		"./utils/*": {
+			"types": "./utils/*.d.ts",
+			"default": "./utils/*.js"
 		}
 	},
 	"dependencies": {

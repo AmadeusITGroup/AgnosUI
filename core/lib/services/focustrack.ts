@@ -1,7 +1,7 @@
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {computed, readable} from '@amadeus-it-group/tansu';
 import type {Directive} from '../types';
-import {createStoreArrayDirective} from './directiveUtils';
+import {createStoreArrayDirective} from '../utils/directive';
 
 const evtFocusIn = 'focusin';
 const evtFocusOut = 'focusout';
