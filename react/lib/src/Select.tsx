@@ -1,5 +1,5 @@
 import type {SelectContext, SelectItemContext, SelectProps, SelectWidget} from '@agnos-ui/react-headless';
-import {Slot, createSelect, toSlotContextWidget, useDirective, useWidgetWithConfig} from '@agnos-ui/react-headless';
+import {Slot, createSelect, toSlotContextWidget, useDirective, useDirectives, useWidgetWithConfig} from '@agnos-ui/react-headless';
 import type {SyntheticEvent} from 'react';
 
 function preventDefault(e: SyntheticEvent) {
@@ -60,16 +60,16 @@ const defaultConfig: Partial<SelectProps<any>> = {
 export function Select<Item>(props: Partial<SelectProps<Item>>) {
 	const [state, widget] = useWidgetWithConfig<SelectWidget<Item>>(createSelect, props, 'select', defaultConfig);
 	const slotContext: SelectContext<Item> = {state, widget: toSlotContextWidget(widget)};
-	const {id, ariaLabel, visibleItems, filterText, open, className, menuClassName} = state;
+	const {id, ariaLabel, visibleItems, filterText, open, className, menuClassName, placement} = state;
 
 	const {
-		directives: {hasFocusDirective},
+		directives: {floatingDirective, hasFocusDirective, referenceDirective},
 	} = widget;
+	const refSetContainer = useDirective(referenceDirective);
 	const refSetInput = useDirective(hasFocusDirective);
-	const refSetMenu = useDirective(hasFocusDirective);
-
+	const refSetMenu = useDirectives([hasFocusDirective, floatingDirective]);
 	return (
-		<div className={`au-select dropdown border border-1 p-1 mb-3 d-block ${className}`}>
+		<div ref={refSetContainer} className={`au-select dropdown border border-1 p-1 mb-3 d-block ${className}`}>
 			<div ref={refSetInput} role="combobox" className="d-flex align-items-center flex-wrap" aria-haspopup="listbox" aria-expanded={open}>
 				<Badges slotContext={slotContext}></Badges>
 				<input
@@ -87,13 +87,7 @@ export function Select<Item>(props: Partial<SelectProps<Item>>) {
 				/>
 			</div>
 			{open && visibleItems.length > 0 && (
-				<ul
-					ref={refSetMenu}
-					className={`dropdown-menu show ${menuClassName}`}
-					data-popper-placement="bottom-start"
-					data-bs-popper="static"
-					onMouseDown={preventDefault}
-				>
+				<ul ref={refSetMenu} className={`dropdown-menu show ${menuClassName}`} data-popper-placement={placement} onMouseDown={preventDefault}>
 					<Rows slotContext={slotContext}></Rows>
 				</ul>
 			)}

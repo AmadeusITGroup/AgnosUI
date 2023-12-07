@@ -41,6 +41,7 @@
 			menuClassName$,
 			menuItemClassName$,
 			open$,
+			placement$,
 			selectedContexts$,
 			slotBadgeLabel$,
 			slotItem$,
@@ -48,12 +49,12 @@
 		},
 		state$,
 		actions: {onInputKeydown, onInput},
-		directives: {hasFocusDirective},
+		directives: {floatingDirective, hasFocusDirective, referenceDirective},
 	} = widget;
 	$: widget.patchChangedProps($$props);
 </script>
 
-<div class="au-select dropdown border border-1 p-1 mb-3 d-block {$className$}">
+<div use:referenceDirective class="au-select dropdown border border-1 p-1 mb-3 d-block {$className$}">
 	<!-- svelte-ignore a11y-role-has-required-aria-props -->
 	<div use:hasFocusDirective role="combobox" class="d-flex align-items-center flex-wrap" aria-haspopup="listbox" aria-expanded={$open$}>
 		{#each $selectedContexts$ as itemContext (itemContext.id)}
@@ -85,9 +86,9 @@
 		<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 		<ul
 			use:hasFocusDirective
+			use:floatingDirective
 			class="dropdown-menu show {$menuClassName$}"
-			data-popper-placement="bottom-start"
-			data-bs-popper="static"
+			data-popper-placement={$placement$}
 			on:mousedown|preventDefault
 		>
 			{#each $visibleItems$ as itemContext (itemContext.id)}

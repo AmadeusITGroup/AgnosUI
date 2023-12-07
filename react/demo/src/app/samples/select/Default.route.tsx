@@ -16,7 +16,6 @@ const Default = () => {
 	return (
 		<div style={{height: '400px'}}>
 			<div className="mb-3">
-				<label className="form-label">Start typing with a, b or c</label>
 				<Select items={items} filterText={filterTextProp} onFilterTextChange={onFilterTextChange} badgeClassName="badge text-bg-light" />
 			</div>
 		</div>

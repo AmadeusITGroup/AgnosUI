@@ -32,6 +32,8 @@ const defaultConfig: FloatingUIProps = {
 	arrowOptions: {},
 };
 
+export type FloatingUI = ReturnType<typeof createFloatingUI>;
+
 export const createFloatingUI = (propsConfig?: PropsConfig<FloatingUIProps>) => {
 	const [{autoUpdateOptions$, computePositionOptions$: computePositionInputOptions$, arrowOptions$: arrowInputOptions$}, patch] = writablesForProps(
 		defaultConfig,
@@ -124,8 +126,18 @@ export const createFloatingUI = (propsConfig?: PropsConfig<FloatingUIProps>) => 
 			middlewareData$,
 		}),
 		directives: {
+			/**
+			 * Directive to be used on the reference element from where the floating element will be positioned
+			 */
 			referenceDirective,
+			/**
+			 * Directive to be used on the floating element
+			 */
 			floatingDirective: mergeDirectives(floatingDirective, directiveSubscribe(floatingStyleApplyAction$)),
+
+			/**
+			 * Directive to be used on the arrow element, if any
+			 */
 			arrowDirective: mergeDirectives(arrowDirective, directiveSubscribe(arrowStyleApplyAction$)),
 		},
 	};

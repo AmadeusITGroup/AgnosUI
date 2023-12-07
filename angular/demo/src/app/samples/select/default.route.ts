@@ -7,7 +7,6 @@ import {Component} from '@angular/core';
 	template: `
 		<div style="height: 400px;">
 			<div class="mb-3">
-				<label class="form-label">Start typing with a, b or c</label>
 				<div
 					auSelect
 					[auItems]="items"
