@@ -7,19 +7,23 @@ import {copySamples} from './scripts/copySamples.plugin';
 import {docExtractor} from './scripts/doc.plugin';
 import {includeSamples} from './scripts/includeSamples.plugin';
 import {emitFile} from './scripts/emitFile.plugin';
+import http from 'http';
 
 const proxy: Record<string, string | ProxyOptions> = {
 	'/angular/samples': {
 		target: 'http://localhost:4200',
 		ws: true,
+		agent: new http.Agent({keepAlive: true}),
 	},
 	'/react/samples': {
 		target: 'http://localhost:3000',
 		ws: true,
+		agent: new http.Agent({keepAlive: true}),
 	},
 	'/svelte/samples': {
 		target: 'http://localhost:3001',
 		ws: true,
+		agent: new http.Agent({keepAlive: true}),
 	},
 };
 
