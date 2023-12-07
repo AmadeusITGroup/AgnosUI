@@ -25,8 +25,7 @@
 	}
 
 	const onFilterTextChange = debounce(
-		abortPrevious(async (signal: AbortSignal, e) => {
-			const text: string = e.detail;
+		abortPrevious(async (signal: AbortSignal, text: string) => {
 			const response = await fetch(
 				'https://en.wikipedia.org/w/api.php?action=query&list=search&prop=info&inprop=url&utf8=&format=json&origin=*&srlimit=5&srsearch=' + text,
 				{signal},
@@ -44,13 +43,7 @@
 </script>
 
 <div class="custom-select my-auto mb-3">
-	<Select
-		{items}
-		{itemIdFn}
-		on:filterTextChange={onFilterTextChange}
-		on:selectedChange={onSelectedChange}
-		badgeClassName="badge text-bg-light d-flex align-items-center"
-	>
+	<Select {items} {itemIdFn} {onFilterTextChange} {onSelectedChange} badgeClassName="badge text-bg-light d-flex align-items-center">
 		<svelte:fragment slot="badgeLabel" let:itemContext let:widget>
 			<a href={`${basePageUrl}${itemContext.item.pageid}`} target="_blank" rel="noreferrer">{itemContext.item.title}</a>
 			<button type="button" class="btn-close ms-1 wiki-btn-close" aria-label="Close" on:click={() => widget.api.unselect(itemContext.item)}></button>
