@@ -19,7 +19,7 @@ function Badges<Item>({slotContext}: {slotContext: SelectContext<Item>}) {
 	const state = slotContext.state;
 	for (const itemContext of slotContext.state.selectedContexts) {
 		badges.push(
-			<div className={`au-select-badge me-1 ${state.badgeClassName}`}>
+			<div key={itemContext.id} className={`au-select-badge me-1 ${state.badgeClassName}`}>
 				<Slot slotContent={state.slotBadgeLabel} props={{...slotContext, itemContext}}></Slot>
 			</div>,
 		);

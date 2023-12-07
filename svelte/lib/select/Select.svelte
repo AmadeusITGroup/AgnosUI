@@ -56,7 +56,7 @@
 <div class="au-select dropdown border border-1 p-1 mb-3 d-block {$className$}">
 	<!-- svelte-ignore a11y-role-has-required-aria-props -->
 	<div use:hasFocusDirective role="combobox" class="d-flex align-items-center flex-wrap" aria-haspopup="listbox" aria-expanded={$open$}>
-		{#each $selectedContexts$ as itemContext}
+		{#each $selectedContexts$ as itemContext (itemContext.id)}
 			<div class={`au-select-badge me-1 ${$badgeClassName$}`}>
 				<Slot slotContent={$slotBadgeLabel$} props={{state: $state$, widget, itemContext}} let:component let:props>
 					<slot slot="slot" name="badgeLabel" let:props {...props} />
