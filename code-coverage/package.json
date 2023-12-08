@@ -18,7 +18,7 @@
 	},
 	"scripts": {
 		"build": "npm run build:rollup && npm run build:dts",
-		"build:rollup": "tsc && vite build -c vite.config.ts",
+		"build:rollup": "tsc && vite build",
 		"build:dts": "tsc -p tsconfig.d.json"
 	},
 	"type": "module",

@@ -1,5 +1,5 @@
 import {defineConfig} from 'vitest/config';
-import {alias} from '../viteAlias';
+import {alias} from '../../viteAlias';
 
 export default defineConfig({
 	test: {

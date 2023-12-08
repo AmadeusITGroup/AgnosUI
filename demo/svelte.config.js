@@ -7,13 +7,13 @@ import child_process from 'child_process';
 const __dirname = fileURLToPath(new URL('./', import.meta.url));
 
 export const alias = {
-	'@agnos-ui/core': path.join(__dirname, '../core/lib'),
-	'@agnos-ui/react': path.join(__dirname, '../react/lib'),
-	'@agnos-ui/svelte': path.join(__dirname, '../svelte/lib'),
-	'@agnos-ui/angular': path.join(__dirname, '../angular/lib/src/public-api'),
 	'@agnos-ui/common': path.join(__dirname, '../common'),
 	'@agnos-ui/doc': path.join(__dirname, '../scripts/doc'),
+	'@agnos-ui/generated': path.join(__dirname, './generated'),
 };
+if (process.env.NODE_ENV === 'development') {
+	alias['@agnos-ui/core'] = path.join(__dirname, '../core/src');
+}
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {

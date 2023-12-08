@@ -1,6 +1,19 @@
 {
 	"name": "@agnos-ui/angular",
 	"description": "Bootstrap-based widget library for Angular.",
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"esm2022": "./dist/esm2022/agnos-ui-angular.mjs",
+			"esm": "./dist/esm2022/agnos-ui-angular.mjs",
+			"default": "./dist/fesm2022/agnos-ui-angular.mjs"
+		}
+	},
+	"scripts": {
+		"ng": "ng",
+		"build": "ng build && node ../../scripts/buildPackageJson.js dist dist ."
+	},
 	"peerDependencies": {
 		"@angular/common": "*",
 		"@angular/core": "*"
@@ -10,6 +23,20 @@
 		"@agnos-ui/style-bootstrap": "",
 		"@amadeus-it-group/tansu": "0.0.24",
 		"tslib": "^2.6.2"
+	},
+	"devDependencies": {
+		"@angular-devkit/build-angular": "^17.0.6",
+		"ng-packagr": "^17.0.2",
+		"@angular/animations": "^17.0.6",
+		"@angular/cli": "^17.0.6",
+		"@angular/common": "^17.0.6",
+		"@angular/compiler": "^17.0.6",
+		"@angular/core": "^17.0.6",
+		"@angular/forms": "^17.0.6",
+		"@angular/platform-browser": "^17.0.6",
+		"@angular/platform-browser-dynamic": "^17.0.6",
+		"rxjs": "^7.8.1",
+		"zone.js": "~0.14.2"
 	},
 	"sideEffects": false
 }

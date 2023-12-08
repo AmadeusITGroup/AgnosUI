@@ -1,6 +1,6 @@
 <script lang="ts">
 	import {getPaginationDefaultConfig} from '@agnos-ui/core';
-	import widgetDoc from '../../../../../../../core/dist/api.json?pagination&extractApi';
+	import widgetDoc from '@agnos-ui/generated/doc/api.json?pagination&extractApi';
 	import ApiDoc from '$lib/layout/doc/ApiDoc.svelte';
 </script>
 

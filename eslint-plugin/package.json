@@ -17,7 +17,7 @@
 		"svelte-eslint-parser": "^0.33.1"
 	},
 	"scripts": {
-		"build": "tsc && vite build -c vite.config.ts",
+		"build": "tsc && vite build",
 		"tdd": "vitest",
 		"tdd:ui": "vitest --ui",
 		"test": "vitest run",

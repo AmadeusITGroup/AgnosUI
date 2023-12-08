@@ -7,7 +7,7 @@ const setVersion = (version) => {
 		throw new Error(`Invalid version number: ${version}`);
 	}
 	const directories = [
-		'core/lib',
+		'core',
 		'style-bootstrap',
 		'svelte/headless',
 		'svelte/lib',

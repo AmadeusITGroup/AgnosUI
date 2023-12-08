@@ -2,7 +2,7 @@
 	"extends": ["../.eslintrc.json", "plugin:svelte/recommended", "plugin:svelte/prettier"],
 	"plugins": ["svelte"],
 	"parserOptions": {
-		"project": ["svelte/demo/tsconfig.json", "svelte/tsconfig.json"],
+		"project": ["svelte/tsconfig.json"],
 		"extraFileExtensions": [".svelte"]
 	},
 	"overrides": [

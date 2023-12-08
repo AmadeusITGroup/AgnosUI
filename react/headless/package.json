@@ -2,14 +2,17 @@
 	"name": "@agnos-ui/react-headless",
 	"private": true,
 	"type": "module",
-	"main": "./index.js",
-	"module": "./index.js",
-	"types": "./index.d.ts",
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
 	"exports": {
 		".": {
-			"types": "./index.d.ts",
-			"default": "./index.js"
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
 		}
+	},
+	"scripts": {
+		"build": "node ../../scripts/rm.js dist && tsc && node ../../scripts/buildPackageJson.js . dist"
 	},
 	"dependencies": {
 		"@agnos-ui/core": "",
@@ -19,6 +22,10 @@
 	"peerDependencies": {
 		"react": "*",
 		"react-dom": "*"
+	},
+	"devDependencies": {
+		"@types/react": "^18.2.43",
+		"@types/react-dom": "^18.2.17"
 	},
 	"sideEffects": false
 }

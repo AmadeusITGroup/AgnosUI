@@ -1,0 +1,97 @@
+{
+	"$schema": "../../node_modules/@angular/cli/lib/config/schema.json",
+	"version": 1,
+	"newProjectRoot": "",
+	"projects": {
+		"demo": {
+			"projectType": "application",
+			"schematics": {
+				"@schematics/angular:application": {
+					"strict": true
+				}
+			},
+			"root": ".",
+			"sourceRoot": "src",
+			"architect": {
+				"build": {
+					"builder": "ngx-build-plus:browser",
+					"options": {
+						"outputPath": "dist",
+						"index": "src/index.html",
+						"main": "src/main.ts",
+						"polyfills": "src/polyfills.ts",
+						"tsConfig": "tsconfig.json",
+						"assets": ["src/agnosui-logo.svg", "src/assets"],
+						"styles": ["src/styles.css", "../../common/demo.scss", "@agnos-ui/style-bootstrap/scss/agnosui.scss"],
+						"scripts": [],
+						"inlineStyleLanguage": "scss",
+						"extraWebpackConfig": "./webpack.cjs"
+					},
+					"configurations": {
+						"coverage": {
+							"fileReplacements": [
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.prod.ts"
+								}
+							],
+							"outputHashing": "all",
+							"tsConfig": "tsconfig.dev.json"
+						},
+						"production": {
+							"budgets": [
+								{
+									"type": "initial",
+									"maximumWarning": "500kb",
+									"maximumError": "1mb"
+								},
+								{
+									"type": "anyComponentStyle",
+									"maximumWarning": "2kb",
+									"maximumError": "4kb"
+								}
+							],
+							"fileReplacements": [
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.prod.ts"
+								}
+							],
+							"outputHashing": "all"
+						},
+						"development": {
+							"buildOptimizer": false,
+							"optimization": false,
+							"vendorChunk": true,
+							"extractLicenses": false,
+							"sourceMap": true,
+							"namedChunks": true,
+							"tsConfig": "tsconfig.dev.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"serve": {
+					"builder": "ngx-build-plus:dev-server",
+					"options": {
+						"extraWebpackConfig": "./webpack.cjs"
+					},
+					"configurations": {
+						"production": {
+							"servePath": "/angular/samples",
+							"buildTarget": "demo:build:production"
+						},
+						"development": {
+							"servePath": "/angular/samples",
+							"buildTarget": "demo:build:development"
+						}
+					},
+					"defaultConfiguration": "development"
+				}
+			}
+		}
+	},
+	"cli": {
+		"analytics": false
+	}
+}

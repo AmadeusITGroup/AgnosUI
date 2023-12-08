@@ -1,11 +1,11 @@
 {
 	"$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
 	"extends": "../api-extractor.json",
-	"mainEntryPointFilePath": "<projectFolder>/dist/lib/index.d.ts",
+	"mainEntryPointFilePath": "<projectFolder>/dist/index.d.ts",
 	"dtsRollup": {
 		"enabled": false
 	},
 	"compiler": {
-		"tsconfigFilePath": "<projectFolder>/tsconfig.lib.json"
+		"tsconfigFilePath": "<projectFolder>/tsconfig.json"
 	}
 }

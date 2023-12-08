@@ -1,8 +1,3 @@
 {
-	"extends": "../../tsconfig.json",
-	"compilerOptions": {
-		"paths": {
-			"@agnos-ui/core": ["./core/dist/lib"]
-		}
-	}
+	"extends": "../tsconfig.json"
 }

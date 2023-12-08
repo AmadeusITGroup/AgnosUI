@@ -38,6 +38,25 @@ if (!isCore) {
 pkg.keywords.push(...rootPackage.keywords);
 pkg.repository.directory = directory;
 delete pkg.private;
+delete pkg.scripts;
+delete pkg.devDependencies;
+
+const cleanObjDistPrefix = (obj, ...keys) => {
+	for (const key of keys) {
+		if (obj[key]?.startsWith('./dist/')) {
+			obj[key] = '.' + obj[key].substring(6);
+		}
+	}
+};
+cleanObjDistPrefix(pkg, 'main');
+cleanObjDistPrefix(pkg, 'module');
+cleanObjDistPrefix(pkg, 'types');
+if (pkg.exports) {
+	for (const key of Object.keys(pkg.exports)) {
+		const pkgExport = pkg.exports[key];
+		cleanObjDistPrefix(pkgExport, 'types', 'default', 'svelte', 'esm', 'esm2022');
+	}
+}
 
 const packageJsonOutputFile = path.join(outputFolder, 'package.json');
 console.log(`Writing ${packageJsonOutputFile}`);

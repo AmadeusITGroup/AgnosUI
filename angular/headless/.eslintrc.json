@@ -4,7 +4,7 @@
 		{
 			"files": ["*.ts"],
 			"parserOptions": {
-				"project": ["angular/headless/tsconfig.lib.dev.json", "angular/headless/tsconfig.spec.json"],
+				"project": ["angular/headless/tsconfig.json", "angular/headless/tsconfig.spec.json"],
 				"createDefaultProgram": true
 			},
 			"rules": {

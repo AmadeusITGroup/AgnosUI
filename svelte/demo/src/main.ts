@@ -1,4 +1,4 @@
-import App from './App.svelte';
+import App from './app/App.svelte';
 import '@agnos-ui/style-bootstrap/scss/agnosui.scss';
 
 export const main = new App({

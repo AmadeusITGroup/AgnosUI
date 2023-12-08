@@ -3,15 +3,15 @@
  */
 
 export * from '@agnos-ui/core';
-export * from './lib/config';
-export type {WidgetsConfig} from './lib/config';
-export * from './lib/slot.directive';
-export * from './lib/slotDefault.directive';
-export * from './lib/slotTypes';
-export type {SlotContent} from './lib/slotTypes';
-export * from './lib/use.directive';
-export * from './lib/utils';
-export * from './lib/coercion';
+export * from './config';
+export type {WidgetsConfig} from './config';
+export * from './slot.directive';
+export * from './slotDefault.directive';
+export * from './slotTypes';
+export type {SlotContent} from './slotTypes';
+export * from './use.directive';
+export * from './utils';
+export * from './coercion';
 
 import type {PropsConfig, WidgetFactory, WidgetProps, WidgetState} from '@agnos-ui/core';
 import {
@@ -23,7 +23,7 @@ import {
 	createRating as coreCreateRating,
 	createSelect as coreCreateSelect,
 } from '@agnos-ui/core';
-import type {AdaptSlotContentProps, AdaptWidgetSlots} from './lib/slotTypes';
+import type {AdaptSlotContentProps, AdaptWidgetSlots} from './slotTypes';
 
 export type AccordionWidget = AdaptWidgetSlots<import('@agnos-ui/core').AccordionWidget>;
 export type AccordionProps = WidgetProps<AccordionWidget>;

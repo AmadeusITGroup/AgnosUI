@@ -11,6 +11,10 @@
 		"moduleResolution": "bundler",
 		"isolatedModules": true,
 		"forceConsistentCasingInFileNames": true,
-		"noEmit": true
+		"noEmit": true,
+		"paths": {
+			"@agnos-ui/common": ["./common"],
+			"@agnos-ui/common/*": ["./common/*"]
+		}
 	}
 }

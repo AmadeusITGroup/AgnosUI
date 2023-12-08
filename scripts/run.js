@@ -24,8 +24,11 @@ function run() {
 	const restParams = [];
 	for (let i = 0; i < args.length; i++) {
 		const arg = args[i];
-		if (workspaces.indexOf(arg) > -1) {
-			commands.push(`${scriptname} -w ${arg}`);
+		const workspacesToRun = workspaces.filter((wk) => wk === arg || wk.startsWith(arg + '/'));
+		if (workspacesToRun?.length) {
+			for (const workspace of workspacesToRun) {
+				commands.push(`${scriptname} -w ${workspace}`);
+			}
 			hasFramework = true;
 		} else if (arg === 'serial') {
 			parallel = false;

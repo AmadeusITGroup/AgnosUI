@@ -195,7 +195,7 @@ test.describe(`Slider tests`, () => {
 			const sliderPO = new SliderPO(page, 0);
 
 			await page.goto('#/slider/default');
-			await sliderDemoPO.locatorRoot.waitFor();
+			await sliderPO.locatorRoot.waitFor();
 
 			await expect(sliderPO.locatorMinLabelHorizontal).toBeVisible();
 			await expect(sliderPO.locatorMaxLabelHorizontal).toBeVisible();
@@ -320,11 +320,10 @@ test.describe(`Slider tests`, () => {
 		});
 
 		test(`should add / remove combined label from dom`, async ({page}) => {
-			const sliderDemoPO = new SliderDemoPO(page);
 			const sliderPO = new SliderPO(page, 1);
 
 			await page.goto('#/slider/range');
-			await sliderDemoPO.locatorRoot.waitFor();
+			await sliderPO.locatorRoot.waitFor();
 
 			expect((await sliderPO.locatorValueLabel.all()).length).toBe(2);
 

@@ -1,0 +1,35 @@
+{
+	"name": "@agnos-ui/react-demo",
+	"private": true,
+	"scripts": {
+		"dev": "vite",
+		"dev:coverage": "vite -c vite.coverage.config.ts",
+		"build:coverage": "vite build -c vite.coverage.config.ts",
+		"build:demo": "vite build",
+		"build": "npm run build:demo && npm run build:tsc",
+		"build:tsc": "tsc",
+		"preview": "vite preview"
+	},
+	"devDependencies": {
+		"@types/react": "^18.2.42",
+		"@types/react-dom": "^18.2.17",
+		"@vitejs/plugin-react": "^4.2.1",
+		"classnames": "^2.3.2",
+		"eslint-plugin-react": "^7.33.2",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-router-dom": "^6.20.1"
+	},
+	"dependencies": {
+		"@agnos-ui/react-headless": "*",
+		"@agnos-ui/react": "*",
+		"@agnos-ui/style-bootstrap": "*",
+		"@amadeus-it-group/tansu": "0.0.24",
+		"classnames": "^2.3.2"
+	},
+	"peerDependencies": {
+		"react": "*",
+		"react-dom": "*"
+	},
+	"sideEffects": false
+}
