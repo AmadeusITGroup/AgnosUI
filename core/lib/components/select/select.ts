@@ -1,4 +1,4 @@
-import {asReadable, computed, writable} from '@amadeus-it-group/tansu';
+import {asWritable, computed, writable} from '@amadeus-it-group/tansu';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 import type {HasFocus} from '../../services/focustrack';
 import {createHasFocus} from '../../services/focustrack';
@@ -338,26 +338,19 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 	const highlightedIndex$ = (function () {
 		const store = writable(<number | undefined>0);
 
-		const newStore = asReadable(store, {
-			set(index: number | undefined) {
-				const {length} = visibleItems$();
-				if (index != undefined) {
-					if (!length) {
-						index = undefined;
-					} else if (index < 0) {
-						index = length - 1;
-					} else if (index >= length) {
-						index = 0;
-					}
+		return asWritable(store, (index: number | undefined) => {
+			const {length} = visibleItems$();
+			if (index != undefined) {
+				if (!length) {
+					index = undefined;
+				} else if (index < 0) {
+					index = length - 1;
+				} else if (index >= length) {
+					index = 0;
 				}
-				store.set(index);
-			},
-			update(fn: (index: number | undefined) => number | undefined) {
-				newStore.set(fn(store()));
-			},
+			}
+			store.set(index);
 		});
-
-		return newStore;
 	})();
 
 	const itemContexts$ = computed(() => {

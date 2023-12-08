@@ -1,5 +1,5 @@
 import type {WritableSignal, Updater} from '@amadeus-it-group/tansu';
-import {asReadable, computed, writable} from '@amadeus-it-group/tansu';
+import {asWritable, computed, writable} from '@amadeus-it-group/tansu';
 import {beforeEach, describe, expect, test, vi} from 'vitest';
 import {
 	bindableDerived,
@@ -191,7 +191,7 @@ describe(`Stores service`, () => {
 			const config$ = writable(20 as number | undefined);
 			const refValues: (number | undefined)[] = [];
 			const refValue$ = writable(0 as number | undefined);
-			const prop$: WritableSignal<number | undefined> = asReadable(
+			const prop$: WritableSignal<number | undefined> = asWritable(
 				computed(() => {
 					const refValue = refValue$();
 					return refValue !== undefined ? refValue + 1 : undefined;

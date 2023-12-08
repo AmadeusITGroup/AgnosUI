@@ -1,8 +1,8 @@
-import type {ReadableSignal, StoreInput, StoresInputValues, Updater, WritableSignal} from '@amadeus-it-group/tansu';
-import {asReadable, batch, computed, derived, get, readable, writable} from '@amadeus-it-group/tansu';
-import {identity} from './internal/func';
+import type {ReadableSignal, StoreInput, StoresInputValues, WritableSignal} from '@amadeus-it-group/tansu';
+import {asReadable, asWritable, batch, computed, derived, get, readable, writable} from '@amadeus-it-group/tansu';
 import type {ConfigValidator, PropsConfig, ValuesOrReadableSignals, WritableWithDefaultOptions} from '../types';
 import {INVALID_VALUE} from '../types';
+import {identity} from './internal/func';
 
 export type ToWritableSignal<P> = {
 	[K in keyof P as `${K & string}$`]-?: WritableSignal<P[K], P[K] | undefined>;
@@ -76,10 +76,6 @@ export function findChangedProperties<T extends Record<string, any>>(obj1: Parti
 	return hasUpdate ? changedValues : null;
 }
 
-const update = function <T, U>(this: WritableSignal<T, U>, updater: Updater<T, U>) {
-	this.set(updater(this()));
-};
-
 /**
  * Returns a writable store whose value is either its own value (when it is not undefined) or a default value
  * that comes either from the `config$` store (when it is not undefined) or from `defValue`.
@@ -115,19 +111,16 @@ export function writableWithDefault<T>(
 	};
 	const validatedDefConfig$ = computed(() => callNormalizeValue(config$()), {equal});
 	const validatedOwnValue$ = computed(() => callNormalizeValue(own$(), validatedDefConfig$), {equal});
-	return asReadable(validatedOwnValue$, {
-		set(value: T | undefined) {
-			if (value !== undefined) {
-				const normalizedValue = normalizeValue(value);
-				if (normalizedValue === INVALID_VALUE) {
-					console.error('Not setting invalid value', value);
-					return;
-				}
-				value = normalizedValue as T;
+	return asWritable(validatedOwnValue$, (value: T | undefined) => {
+		if (value !== undefined) {
+			const normalizedValue = normalizeValue(value);
+			if (normalizedValue === INVALID_VALUE) {
+				console.error('Not setting invalid value', value);
+				return;
 			}
-			own$.set(value);
-		},
-		update,
+			value = normalizedValue as T;
+		}
+		own$.set(value);
 	});
 }
 

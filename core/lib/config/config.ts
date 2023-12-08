@@ -1,5 +1,5 @@
 import type {ReadableSignal, WritableSignal} from '@amadeus-it-group/tansu';
-import {asReadable, computed, writable} from '@amadeus-it-group/tansu';
+import {asWritable, computed, writable} from '@amadeus-it-group/tansu';
 import type {ModalProps} from '../components/modal/modal';
 import type {AlertProps} from '../components/alert/alert';
 import type {PaginationProps} from '../components/pagination/pagination';
@@ -67,7 +67,7 @@ export const createWidgetsConfig = <T>(
 ): WidgetsConfigStore<T> => {
 	const own$ = writable({} as Partial2Levels<T>);
 	const adaptedParent$ = adaptParentConfig === identity ? parent$ : computed(() => adaptParentConfig(mergeInto({}, parent$?.(), 2)));
-	return asReadable(
+	return asWritable(
 		computed(() => mergeInto(mergeInto({}, adaptedParent$?.(), 2), own$(), 2)),
 		{
 			...own$,
