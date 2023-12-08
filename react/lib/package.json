@@ -2,17 +2,20 @@
 	"name": "@agnos-ui/react",
 	"private": true,
 	"type": "module",
-	"main": "./index.js",
-	"module": "./index.js",
-	"types": "./index.d.ts",
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
 	"exports": {
 		".": {
-			"types": "./index.d.ts",
-			"default": "./index.js"
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
 		}
 	},
+	"scripts": {
+		"build": "node ../../scripts/rm.js dist && tsc && node ../../scripts/buildPackageJson.js . dist"
+	},
 	"dependencies": {
-		"@agnos-ui/react-headless": "",
+		"@agnos-ui/react-headless": "*",
 		"@agnos-ui/style-bootstrap": "",
 		"@amadeus-it-group/tansu": "0.0.24",
 		"classnames": "^2.3.2"

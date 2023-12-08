@@ -11,7 +11,7 @@ console.log('Doc extraction started');
  */
 
 const root = path.resolve(__dirname, '../..');
-const allDoc = parseDocs(path.join(root, 'core/lib/index.ts'));
+const allDoc = parseDocs(path.join(root, 'core/src/index.ts'));
 
 const doc = {
 	widgets: {} as Record<string, WidgetDoc>,
@@ -53,7 +53,7 @@ for (const widgetName of widgetNames) {
 	widgets[`${widgetName[0].toLowerCase()}${widgetName.substring(1)}`] = json;
 }
 
-const dstDir = path.join(root, 'core/dist');
+const dstDir = path.join(root, 'demo/generated/doc');
 fs.mkdirSync(dstDir, {recursive: true});
 fs.writeFileSync(path.join(dstDir, 'api.json'), JSON.stringify(doc, null, '\t'));
 

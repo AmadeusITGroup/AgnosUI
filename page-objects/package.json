@@ -15,7 +15,7 @@
 	"types": "dist/lib/index.d.ts",
 	"scripts": {
 		"build": "npm run build:rollup && npm run build:dts && npm run build:api-extractor",
-		"build:rollup": "tsc && vite build -c vite.config.ts",
+		"build:rollup": "tsc && vite build",
 		"build:dts": "tsc -p tsconfig.d.json",
 		"build:api-extractor": "api-extractor run"
 	},

@@ -47,7 +47,7 @@ jobs:
           git commit -a -m v${{ inputs.version }}
           git tag v${{ inputs.version }}
           git show HEAD
-      - run: npm run build:ci
+      - run: npm run build
       - run: npm run format:check
       - run: npm run lint
       - name: check stackblitz angular lockfile

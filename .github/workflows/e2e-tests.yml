@@ -17,7 +17,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
       - run: npx playwright install --with-deps
-      - run: npm run build code-coverage
+      - run: npm run build code-coverage core
       - run: npm run build:coverage
       - run: npm run e2e -- --shard=${{ matrix.shard }}/${{ strategy.job-total}}
       - id: check_lcov

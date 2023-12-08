@@ -1,8 +1,7 @@
 {
-	"$schema": "../node_modules/ng-packagr/ng-package.schema.json",
-	"dest": "../dist/headless",
+	"$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
 	"allowedNonPeerDependencies": ["@agnos-ui/core", "@amadeus-it-group/tansu"],
 	"lib": {
-		"entryFile": "src/public-api.ts"
+		"entryFile": "src/index.ts"
 	}
 }

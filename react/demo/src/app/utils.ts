@@ -1,5 +1,5 @@
 import {useObservable} from '@agnos-ui/react';
-import {hashObject$} from '../../../common/utils';
+import {hashObject$} from '@agnos-ui/common/utils';
 import {getPropValues} from '@agnos-ui/common/propsValues';
 
 export function useHashChange() {

@@ -1,0 +1,25 @@
+{
+	"name": "@agnos-ui/svelte-demo",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"dev": "vite",
+		"dev:coverage": "vite -c vite.coverage.config.ts",
+		"build": "npm run build:demo && npm run check",
+		"build:coverage": "vite build -c vite.coverage.config.ts",
+		"build:demo": "vite build",
+		"preview": "vite preview",
+		"check": "svelte-check --fail-on-warnings --output human-verbose"
+	},
+	"dependencies": {
+		"@amadeus-it-group/tansu": "0.0.24"
+	},
+	"devDependencies": {
+		"@sveltejs/package": "^2.2.3",
+		"@sveltejs/vite-plugin-svelte": "^2.5.3",
+		"eslint-plugin-svelte": "^2.35.1",
+		"prettier-plugin-svelte": "^3.1.2",
+		"svelte": "^4.2.8",
+		"svelte-check": "^3.6.2"
+	}
+}

@@ -4,7 +4,7 @@
 		{
 			"files": ["*.ts"],
 			"parserOptions": {
-				"project": ["angular/demo/tsconfig.app.json", "angular/demo/tsconfig.spec.json"],
+				"project": ["angular/demo/tsconfig.json"],
 				"createDefaultProgram": true
 			},
 			"rules": {

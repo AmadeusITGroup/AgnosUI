@@ -2,7 +2,7 @@
 {
 	"extends": "../tsconfig.json",
 	"compilerOptions": {
-		"outDir": "../out-tsc/app",
+		"outDir": "./dist/out-tsc",
 		"types": ["@types/webpack-env"]
 	},
 	"files": ["src/main.ts", "src/polyfills.ts", "src/environments/environment.prod.ts"],

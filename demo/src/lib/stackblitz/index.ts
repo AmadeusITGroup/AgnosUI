@@ -76,12 +76,12 @@ if (isReleased) {
 	};
 
 	const corePackage = addAsyncFiles(
-		import.meta.glob(['../../../../core/dist/lib/**', '!**/*.map'], {
+		import.meta.glob(['../../../../core/dist/**', '!**/*.map'], {
 			as: 'raw',
 			import: 'default',
 		}) as any,
 		'packages/@agnos-ui/core/',
-		'../../../../core/dist/lib/',
+		'../../../../core/dist/',
 	);
 	const stylePackage = addAsyncFiles(
 		import.meta.glob(['../../../../style-bootstrap/**', '!**/*.map', '!**/*.scss'], {
@@ -95,20 +95,20 @@ if (isReleased) {
 		corePackage,
 		stylePackage,
 		addAsyncFiles(
-			import.meta.glob(['../../../../angular/dist/headless/**', '!**/*.map'], {
+			import.meta.glob(['../../../../angular/headless/dist/**', '!**/*.map'], {
 				as: 'raw',
 				import: 'default',
 			}) as any,
 			'packages/@agnos-ui/angular-headless/',
-			'../../../../angular/dist/headless/',
+			'../../../../angular/headless/dist/',
 		),
 		addAsyncFiles(
-			import.meta.glob(['../../../../angular/dist/lib/**', '!**/*.map'], {
+			import.meta.glob(['../../../../angular/lib/dist/**', '!**/*.map'], {
 				as: 'raw',
 				import: 'default',
 			}) as any,
 			'packages/@agnos-ui/angular/',
-			'../../../../angular/dist/lib/',
+			'../../../../angular/lib/dist/',
 		),
 		mergePackageJson,
 	);
@@ -116,20 +116,20 @@ if (isReleased) {
 		corePackage,
 		stylePackage,
 		addAsyncFiles(
-			import.meta.glob(['../../../../react/dist/headless/**', '!**/*.map'], {
+			import.meta.glob(['../../../../react/headless/dist/**', '!**/*.map'], {
 				as: 'raw',
 				import: 'default',
 			}) as any,
 			'packages/@agnos-ui/react-headless/',
-			'../../../../react/dist/headless/',
+			'../../../../react/headless/dist/',
 		),
 		addAsyncFiles(
-			import.meta.glob(['../../../../react/dist/lib/**', '!**/*.map'], {
+			import.meta.glob(['../../../../react/lib/dist/**', '!**/*.map'], {
 				as: 'raw',
 				import: 'default',
 			}) as any,
 			'packages/@agnos-ui/react/',
-			'../../../../react/dist/lib/',
+			'../../../../react/lib/dist/',
 		),
 		mergePackageJson,
 	);
@@ -137,20 +137,20 @@ if (isReleased) {
 		corePackage,
 		stylePackage,
 		addAsyncFiles(
-			import.meta.glob(['../../../../svelte/dist/headless/**', '!**/*.map'], {
+			import.meta.glob(['../../../../svelte/headless/dist/**', '!**/*.map'], {
 				as: 'raw',
 				import: 'default',
 			}) as any,
 			'packages/@agnos-ui/svelte-headless/',
-			'../../../../svelte/dist/headless/',
+			'../../../../svelte/headless/dist/',
 		),
 		addAsyncFiles(
-			import.meta.glob(['../../../../svelte/dist/lib/**', '!**/*.map'], {
+			import.meta.glob(['../../../../svelte/lib/dist/**', '!**/*.map'], {
 				as: 'raw',
 				import: 'default',
 			}) as any,
 			'packages/@agnos-ui/svelte/',
-			'../../../../svelte/dist/lib/',
+			'../../../../svelte/lib/dist/',
 		),
 		mergePackageJson,
 	);
