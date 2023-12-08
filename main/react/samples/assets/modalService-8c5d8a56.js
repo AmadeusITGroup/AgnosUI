@@ -1,1 +1,0 @@
-import{c as n,j as a}from"./index-fb141f24.js";import{M as r}from"./Modal-329a1a7a.js";async function m(t){const o=n.createRoot(document.createElement("div"));try{return await(await new Promise(e=>{o.render(a.jsx(r,{...t,ref:e}))})).open()}finally{o.unmount()}}export{m as o};

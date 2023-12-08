@@ -1,0 +1,1 @@
+import{c as n,j as a}from"./index-ffc26b19.js";import{M as r}from"./Modal-1e0128fa.js";async function m(t){const o=n.createRoot(document.createElement("div"));try{return await(await new Promise(e=>{o.render(a.jsx(r,{...t,ref:e}))})).open()}finally{o.unmount()}}export{m as o};
