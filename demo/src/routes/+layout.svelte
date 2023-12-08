@@ -79,7 +79,7 @@
 
 	.agnos-ui {
 		width: 100vw;
-		height: 100vh;
+		height: 100dvh;
 		display: grid;
 		grid-template-areas:
 			'top'
