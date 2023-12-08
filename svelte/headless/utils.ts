@@ -1,7 +1,7 @@
 import type {Widget, WidgetFactory, WidgetProps} from '@agnos-ui/core';
 import {findChangedProperties, toReadableStore} from '@agnos-ui/core';
 import type {ReadableSignal, WritableSignal} from '@amadeus-it-group/tansu';
-import {asReadable, computed, writable} from '@amadeus-it-group/tansu';
+import {asWritable, computed, writable} from '@amadeus-it-group/tansu';
 import type {SlotContent, SlotSvelteComponent, SlotsPresent} from './slotTypes';
 import {useSvelteSlot} from './slotTypes';
 
@@ -37,7 +37,7 @@ const mergeEventFns = <T extends any[]>(fn1: (...args: T) => void, fn2: undefine
  */
 const eventStore = <T extends any[]>(event: (...args: T) => void): WritableSignal<undefined | null | ((...args: T) => void)> => {
 	const store$ = writable<undefined | null | ((...args: T) => void)>(undefined, {equal: Object.is});
-	return asReadable(
+	return asWritable(
 		computed(() => mergeEventFns(event, store$()) as any),
 		{
 			set: store$.set,

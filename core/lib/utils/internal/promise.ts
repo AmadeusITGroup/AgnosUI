@@ -1,5 +1,5 @@
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
-import {asReadable, computed, derived, readable, writable} from '@amadeus-it-group/tansu';
+import {asReadable, computed, derived, equal, readable, writable} from '@amadeus-it-group/tansu';
 import {noop} from './func';
 
 export interface PromisePendingResult {
@@ -37,9 +37,6 @@ export const promiseStateStore = <T>(value: T): ReadableSignal<Readonly<PromiseS
 	}
 	return response;
 };
-
-// same equal as in tansu:
-const equal = <T>(a: T, b: T): boolean => Object.is(a, b) && (!a || typeof a !== 'object') && typeof a !== 'function';
 
 const promiseStateStoreEqual = <T>(a: PromiseState<T>, b: PromiseState<T>) =>
 	Object.is(a, b) ||

@@ -14,7 +14,7 @@
 	},
 	"dependencies": {
 		"@agnos-ui/core": "",
-		"@amadeus-it-group/tansu": "0.0.23"
+		"@amadeus-it-group/tansu": "0.0.24"
 	},
 	"peerDependencies": {
 		"svelte": "*"
