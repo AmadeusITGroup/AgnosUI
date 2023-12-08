@@ -13,7 +13,7 @@ export * from './components/select/select';
 export * from './components/slider/slider';
 
 // config
-export * from './config/config';
+export * from './config';
 
 // services
 export * from './services/extendWidget';
@@ -28,8 +28,7 @@ export * from './services/siblingsInert';
 export * from './services/transitions/baseTransitions';
 export * from './services/transitions/cssTransitions';
 export * from './services/transitions/simpleClassTransition';
-import * as bootstrap from './services/transitions/bootstrap';
-export {bootstrap};
+export * from './services/transitions/bootstrap';
 
 // public utils
 export * from './utils/directive';

@@ -1,5 +1,5 @@
-import type {AccordionApi, AccordionItemApi} from '@agnos-ui/react';
-import {Accordion, AccordionItem} from '@agnos-ui/react';
+import type {AccordionApi, AccordionItemApi} from '@agnos-ui/react/components/accordion';
+import {Accordion, AccordionItem} from '@agnos-ui/react/components/accordion';
 import {useRef} from 'react';
 import BODY from '@agnos-ui/common/samples/accordion/body.txt?raw';
 

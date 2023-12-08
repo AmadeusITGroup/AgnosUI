@@ -1,14 +1,14 @@
 import type {ReadableSignal, WritableSignal} from '@amadeus-it-group/tansu';
 import {asWritable, computed, writable} from '@amadeus-it-group/tansu';
-import type {ModalProps} from '../components/modal/modal';
-import type {AlertProps} from '../components/alert/alert';
-import type {PaginationProps} from '../components/pagination/pagination';
-import type {RatingProps} from '../components/rating/rating';
-import type {SelectProps} from '../components/select/select';
-import type {AccordionProps} from '../components/accordion/accordion';
-import type {ProgressbarProps} from '../components/progressbar/progressbar';
-import {identity} from '../utils/internal/func';
-import type {SliderProps} from '../components/slider/slider';
+import type {ModalProps} from './components/modal/modal';
+import type {AlertProps} from './components/alert/alert';
+import type {PaginationProps} from './components/pagination/pagination';
+import type {RatingProps} from './components/rating/rating';
+import type {SelectProps} from './components/select/select';
+import type {AccordionProps} from './components/accordion/accordion';
+import type {ProgressbarProps} from './components/progressbar/progressbar';
+import {identity} from './utils/internal/func';
+import type {SliderProps} from './components/slider/slider';
 
 export type Partial2Levels<T> = Partial<{
 	[Level1 in keyof T]: Partial<T[Level1]>;

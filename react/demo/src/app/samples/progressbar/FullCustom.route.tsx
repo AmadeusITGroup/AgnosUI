@@ -1,5 +1,6 @@
-import type {AdaptSlotContentProps, ProgressbarContext} from '@agnos-ui/react';
-import {Progressbar} from '@agnos-ui/react';
+import type {ProgressbarContext} from '@agnos-ui/react/components/progressbar';
+import type {AdaptSlotContentProps} from '@agnos-ui/react/types';
+import {Progressbar} from '@agnos-ui/react/components/progressbar';
 import {useEffect, useState} from 'react';
 import '@agnos-ui/common/samples/progressbar/custom.scss';
 

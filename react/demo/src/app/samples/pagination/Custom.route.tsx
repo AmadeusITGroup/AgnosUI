@@ -1,5 +1,7 @@
-import {Pagination, WidgetsDefaultConfig} from '@agnos-ui/react';
-import type {AdaptSlotContentProps, PaginationContext, PaginationNumberContext} from '@agnos-ui/react';
+import {Pagination} from '@agnos-ui/react/components/pagination';
+import {WidgetsDefaultConfig} from '@agnos-ui/react/config';
+import type {PaginationContext, PaginationNumberContext} from '@agnos-ui/react/components/pagination';
+import type {AdaptSlotContentProps} from '@agnos-ui/react/types';
 import {useEffect, useState} from 'react';
 import type {FormEvent, FocusEvent, KeyboardEvent} from 'react';
 

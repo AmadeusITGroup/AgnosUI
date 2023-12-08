@@ -70,7 +70,9 @@
 		"e2e:ui": "playwright test --ui",
 		"postinstall": "husky install",
 		"syncpack:check": "syncpack lint",
-		"syncpack:fix": "syncpack fix-mismatches"
+		"syncpack:fix": "syncpack fix-mismatches",
+		"generate:exports": "node scripts/run.js generate:exports serial",
+		"prepare": "npm run generate:exports"
 	},
 	"workspaces": [
 		"code-coverage",

@@ -1,6 +1,10 @@
-import type {RatingProps} from '@agnos-ui/react-headless';
-import {Slot, createRating, useWidgetWithConfig} from '@agnos-ui/react-headless';
+import type {RatingProps} from '@agnos-ui/react-headless/components/rating';
+import {createRating} from '@agnos-ui/react-headless/components/rating';
+import {Slot} from '@agnos-ui/react-headless/slot';
+import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
 import React from 'react';
+
+export * from '@agnos-ui/react-headless/components/rating';
 
 export function Rating(props: Partial<RatingProps>) {
 	const [

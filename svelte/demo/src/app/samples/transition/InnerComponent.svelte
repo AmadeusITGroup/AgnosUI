@@ -1,9 +1,9 @@
 <script context="module" lang="ts">
 	import {writable} from '@amadeus-it-group/tansu';
 	import type {TransitionFn} from '@agnos-ui/core';
-	import {bootstrap, createTransition} from '@agnos-ui/core';
+	import {collapseHorizontalTransition, collapseVerticalTransition, createTransition, fadeTransition} from '@agnos-ui/core';
 
-	const paramTransition$ = writable(bootstrap.collapseVerticalTransition);
+	const paramTransition$ = writable(collapseVerticalTransition);
 	const paramAnimation$ = writable(true);
 	const paramAnimationOnInit$ = writable(false);
 	const paramVisible$ = writable(true);
@@ -44,20 +44,20 @@
 		<button
 			type="button"
 			class="ms-2 btn btn-sm btn-outline-secondary"
-			class:active={$paramTransition$ === bootstrap.collapseVerticalTransition}
-			on:click={() => changeTransition(bootstrap.collapseVerticalTransition)}>Vertical collapse</button
+			class:active={$paramTransition$ === collapseVerticalTransition}
+			on:click={() => changeTransition(collapseVerticalTransition)}>Vertical collapse</button
 		>
 		<button
 			type="button"
 			class="ms-2 btn btn-sm btn-outline-secondary"
-			class:active={$paramTransition$ === bootstrap.collapseHorizontalTransition}
-			on:click={() => changeTransition(bootstrap.collapseHorizontalTransition)}>Horizontal collapse</button
+			class:active={$paramTransition$ === collapseHorizontalTransition}
+			on:click={() => changeTransition(collapseHorizontalTransition)}>Horizontal collapse</button
 		>
 		<button
 			type="button"
 			class="ms-2 btn btn-sm btn-outline-secondary"
-			class:active={$paramTransition$ === bootstrap.fadeTransition}
-			on:click={() => changeTransition(bootstrap.fadeTransition)}>Fade</button
+			class:active={$paramTransition$ === fadeTransition}
+			on:click={() => changeTransition(fadeTransition)}>Fade</button
 		>
 	</p>
 	<label class="form-check"><input type="checkbox" class="form-check-input" bind:checked={$paramAnimation$} />Animation</label>

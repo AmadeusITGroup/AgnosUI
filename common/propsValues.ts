@@ -1,4 +1,4 @@
-import {bootstrap, getPaginationDefaultConfig, getRatingDefaultConfig} from '@agnos-ui/core';
+import {collapseVerticalTransition, fadeTransition, getPaginationDefaultConfig, getRatingDefaultConfig} from '@agnos-ui/core';
 
 export type PropsValues = keyof typeof propsValuesList;
 
@@ -7,8 +7,8 @@ const propsValuesList = {
 	log: {value: (x: any) => console.log(x), label: 'Log'},
 	noop: {value: () => {}, label: 'Noop'},
 	//transitions
-	collapse: {value: bootstrap.collapseVerticalTransition, label: 'Collapse'},
-	fade: {value: bootstrap.fadeTransition, label: 'Fade'},
+	collapse: {value: collapseVerticalTransition, label: 'Collapse'},
+	fade: {value: fadeTransition, label: 'Fade'},
 	//rating
 	ratingValueFunction: {value: getRatingDefaultConfig().ariaValueTextFn, label: 'RatingValue'},
 	heartsRatingValue: {

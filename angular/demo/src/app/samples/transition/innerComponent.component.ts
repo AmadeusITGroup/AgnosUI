@@ -1,12 +1,12 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {AgnosUIAngularModule} from '@agnos-ui/angular';
 import type {TransitionFn} from '@agnos-ui/core';
-import {bootstrap, createTransition} from '@agnos-ui/core';
+import {collapseHorizontalTransition, collapseVerticalTransition, createTransition, fadeTransition} from '@agnos-ui/core';
 import {writable} from '@amadeus-it-group/tansu';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 
-const paramTransition$ = writable(bootstrap.collapseVerticalTransition);
+const paramTransition$ = writable(collapseVerticalTransition);
 const paramAnimation$ = writable(true);
 const paramAnimationOnInit$ = writable(false);
 const paramVisible$ = writable(true);
@@ -104,7 +104,7 @@ const paramRemoveFromDom$ = writable(true);
 	`,
 })
 export class InnerComponent {
-	bootstrap = bootstrap;
+	bootstrap = {collapseHorizontalTransition, collapseVerticalTransition, fadeTransition};
 	paramTransition$ = paramTransition$;
 	paramAnimation$ = paramAnimation$;
 	paramAnimationOnInit$ = paramAnimationOnInit$;

@@ -1,14 +1,19 @@
+import {createAccordion} from '@agnos-ui/react-headless/components/accordion';
 import type {
 	AccordionApi,
 	AccordionItemContext,
 	AccordionItemProps,
 	AccordionItemWidget,
 	AccordionProps,
-	WidgetFactory,
-} from '@agnos-ui/react-headless';
-import {Slot, createAccordion, useDirective, useWidgetWithConfig} from '@agnos-ui/react-headless';
+} from '@agnos-ui/react-headless/components/accordion';
+import {Slot} from '@agnos-ui/react-headless/slot';
 import type {PropsWithChildren} from 'react';
 import {createContext, forwardRef, useContext, useEffect, useImperativeHandle} from 'react';
+import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
+import {useDirective} from '@agnos-ui/react-headless/utils/directive';
+import type {WidgetFactory} from '@agnos-ui/react-headless/types';
+
+export * from '@agnos-ui/react-headless/components/accordion';
 
 const AccordionDIContext: React.Context<Partial<AccordionApi>> = createContext({});
 const DefaultSlotStructure = (slotContext: AccordionItemContext) => {

@@ -1,4 +1,4 @@
-import {Select} from '@agnos-ui/react';
+import {Select} from '@agnos-ui/react/components/select';
 import {useCallback, useState} from 'react';
 
 const wordsA = ['apple', 'apricot', 'asparagus', 'astronaut', 'athletic', 'autumn', 'avocado'];
