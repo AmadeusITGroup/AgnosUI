@@ -1,4 +1,5 @@
-import {Modal, WidgetsDefaultConfig} from '@agnos-ui/react';
+import {Modal} from '@agnos-ui/react/components/modal';
+import {WidgetsDefaultConfig} from '@agnos-ui/react/config';
 import {useHashChange} from '../../utils';
 
 const ModalDemo = () => {

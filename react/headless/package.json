@@ -9,10 +9,39 @@
 		".": {
 			"types": "./dist/index.d.ts",
 			"default": "./dist/index.js"
+		},
+		"./components/*": {
+			"types": "./dist/components/*/*.d.ts",
+			"default": "./dist/components/*/*.js"
+		},
+		"./config": {
+			"types": "./dist/config.d.ts",
+			"default": "./dist/config.js"
+		},
+		"./slot": {
+			"types": "./dist/slot.d.ts",
+			"default": "./dist/slot.js"
+		},
+		"./types": {
+			"types": "./dist/types.d.ts",
+			"default": "./dist/types.js"
+		},
+		"./services/*": {
+			"types": "./dist/generated/services/*.d.ts",
+			"default": "./dist/generated/services/*.js"
+		},
+		"./services/transitions/*": {
+			"types": "./dist/generated/services/transitions/*.d.ts",
+			"default": "./dist/generated/services/transitions/*.js"
+		},
+		"./utils/*": {
+			"types": "./dist/generated/utils/*.d.ts",
+			"default": "./dist/generated/utils/*.js"
 		}
 	},
 	"scripts": {
-		"build": "node ../../scripts/rm.js dist && tsc && node ../../scripts/buildPackageJson.js . dist"
+		"build": "node ../../scripts/rm.js dist && npm run generate:exports && tsc && node ../../scripts/buildPackageJson.js . dist",
+		"generate:exports": "node ../../scripts/generateExports.js react/headless core @agnos-ui/core"
 	},
 	"dependencies": {
 		"@agnos-ui/core": "",

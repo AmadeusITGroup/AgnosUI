@@ -1,4 +1,4 @@
-import {Pagination} from '@agnos-ui/react';
+import {Pagination} from '@agnos-ui/react/components/pagination';
 import {useState} from 'react';
 
 const PaginationDemo = () => {

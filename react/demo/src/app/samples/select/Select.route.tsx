@@ -1,6 +1,7 @@
 import type {ChangeEvent} from 'react';
 import {useState, useCallback} from 'react';
-import {Select as SelectAgnosUI, WidgetsDefaultConfig} from '@agnos-ui/react';
+import {Select} from '@agnos-ui/react/components/select';
+import {WidgetsDefaultConfig} from '@agnos-ui/react/config';
 
 function getFilterTextParam() {
 	const params = location.hash.split('?')[1];
@@ -8,7 +9,7 @@ function getFilterTextParam() {
 	return url.searchParams.get('filterText') ?? '';
 }
 
-const Select = () => {
+const MultiSelect = () => {
 	const [mainList] = useState(['Action 1', 'Action 2', 'Action 3', 'Other 1', 'Other 2', 'Other 3']);
 
 	const [configFilterText, setConfigFilterText] = useState(getFilterTextParam);
@@ -25,7 +26,7 @@ const Select = () => {
 			<h2>Multiselect example</h2>
 			<div className="mb-3">
 				<label className="form-label">Multiselect</label>
-				<SelectAgnosUI items={items} filterText={filterTextProp} onFilterTextChange={onFilterTextChange} />
+				<Select items={items} filterText={filterTextProp} onFilterTextChange={onFilterTextChange} />
 			</div>
 			<div className="demo-select-config">
 				<strong>Default config</strong>
@@ -42,4 +43,4 @@ const Select = () => {
 		</WidgetsDefaultConfig>
 	);
 };
-export default Select;
+export default MultiSelect;

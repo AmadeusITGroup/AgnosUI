@@ -1,4 +1,5 @@
-import {Alert, WidgetsDefaultConfig} from '@agnos-ui/react';
+import {Alert} from '@agnos-ui/react/components/alert';
+import {WidgetsDefaultConfig} from '@agnos-ui/react/config';
 
 const GenericDemo = () => {
 	return (

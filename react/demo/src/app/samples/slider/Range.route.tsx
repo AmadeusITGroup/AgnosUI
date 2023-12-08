@@ -1,4 +1,4 @@
-import {Slider} from '@agnos-ui/react';
+import {Slider} from '@agnos-ui/react/components/slider';
 import {useState} from 'react';
 
 const RangeSliderDemo = () => {

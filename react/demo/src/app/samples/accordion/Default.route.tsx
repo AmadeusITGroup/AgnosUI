@@ -1,4 +1,4 @@
-import {Accordion, AccordionItem} from '@agnos-ui/react';
+import {Accordion, AccordionItem} from '@agnos-ui/react/components/accordion';
 import BODY from '@agnos-ui/common/samples/accordion/body.txt?raw';
 
 const fancyHeader = () => (

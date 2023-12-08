@@ -1,7 +1,12 @@
-import type {AlertContext, AlertProps} from '@agnos-ui/react-headless';
-import {Slot, createAlert, useDirective, useWidgetWithConfig} from '@agnos-ui/react-headless';
+import type {AlertContext, AlertProps} from '@agnos-ui/react-headless/components/alert';
+import {createAlert} from '@agnos-ui/react-headless/components/alert';
+import {Slot} from '@agnos-ui/react-headless/slot';
+import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
+import {useDirective} from '@agnos-ui/react-headless/utils/directive';
 import type {PropsWithChildren} from 'react';
 import {forwardRef, useImperativeHandle} from 'react';
+
+export * from '@agnos-ui/react-headless/components/alert';
 
 const DefaultSlotStructure = (slotContext: AlertContext) => (
 	<>

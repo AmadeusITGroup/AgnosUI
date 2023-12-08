@@ -1,6 +1,12 @@
-import type {SelectContext, SelectItemContext, SelectProps, SelectWidget} from '@agnos-ui/react-headless';
-import {Slot, createSelect, toSlotContextWidget, useDirective, useDirectives, useWidgetWithConfig} from '@agnos-ui/react-headless';
+import type {SelectContext, SelectItemContext, SelectProps, SelectWidget} from '@agnos-ui/react-headless/components/select';
+import {createSelect} from '@agnos-ui/react-headless/components/select';
+import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
+import {Slot} from '@agnos-ui/react-headless/slot';
+import {toSlotContextWidget} from '@agnos-ui/react-headless/types';
+import {useDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
 import type {SyntheticEvent} from 'react';
+
+export * from '@agnos-ui/react-headless/components/select';
 
 function preventDefault(e: SyntheticEvent) {
 	e.preventDefault();

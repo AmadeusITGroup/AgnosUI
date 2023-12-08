@@ -19,8 +19,8 @@
 			"default": "./dist/components/*/*.js"
 		},
 		"./config": {
-			"types": "./dist/config/config.d.ts",
-			"default": "./dist/config/config.js"
+			"types": "./dist/config.d.ts",
+			"default": "./dist/config.js"
 		},
 		"./types": {
 			"types": "./dist/types.d.ts",

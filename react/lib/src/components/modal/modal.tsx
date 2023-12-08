@@ -1,7 +1,15 @@
-import type {ModalApi, ModalContext, ModalProps} from '@agnos-ui/react-headless';
-import {Portal, Slot, createModal, toSlotContextWidget, useDirective, useWidgetWithConfig} from '@agnos-ui/react-headless';
+import type {ModalApi, ModalContext, ModalProps} from '@agnos-ui/react-headless/components/modal';
+import {createModal} from '@agnos-ui/react-headless/components/modal';
+import {Portal} from '@agnos-ui/react-headless/utils/portal';
+import {toSlotContextWidget} from '@agnos-ui/react-headless/types';
+import {Slot} from '@agnos-ui/react-headless/slot';
+import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
+import {useDirective} from '@agnos-ui/react-headless/utils/directive';
 import type {PropsWithChildren, Ref, RefAttributes} from 'react';
+import ReactDOM from 'react-dom/client';
 import {forwardRef, useImperativeHandle} from 'react';
+
+export * from '@agnos-ui/react-headless/components/modal';
 
 const DefaultSlotHeader = <Data,>(slotContext: ModalContext<Data>) => (
 	<>
@@ -66,3 +74,15 @@ export const Modal = forwardRef(function Modal<Data>(props: PropsWithChildren<Pa
 		</Portal>
 	);
 }) as <Data>(props: PropsWithChildren<Partial<ModalProps<Data>>> & RefAttributes<ModalApi<Data>>) => JSX.Element;
+
+export async function openModal<Data>(options: Partial<ModalProps<Data>>) {
+	const root = ReactDOM.createRoot(document.createElement('div'));
+	try {
+		const api = await new Promise<ModalApi<Data> | null>((resolve) => {
+			root.render(<Modal {...options} ref={resolve} />);
+		});
+		return await api!.open();
+	} finally {
+		root.unmount();
+	}
+}

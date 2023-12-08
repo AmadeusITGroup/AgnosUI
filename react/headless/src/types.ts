@@ -1,4 +1,6 @@
-import type {SlotContent as CoreSlotContent, Widget, WidgetFactory, WidgetProps, WidgetSlotContext, WidgetState} from '@agnos-ui/core';
+export * from '@agnos-ui/core/types';
+
+import type {SlotContent as CoreSlotContent, Widget, WidgetFactory, WidgetProps, WidgetSlotContext, WidgetState} from '@agnos-ui/core/types';
 
 export type SlotContent<Props extends object = object> =
 	| CoreSlotContent<Props>

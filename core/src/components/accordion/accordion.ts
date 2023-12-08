@@ -2,7 +2,7 @@ import type {ReadableSignals} from '../../utils/stores';
 import {bindableDerived, stateStores, writablesForProps, normalizeConfigStores, mergeConfigStores} from '../../utils/stores';
 import type {TransitionFn} from '../../services/transitions/baseTransitions';
 import {createTransition} from '../../services/transitions/baseTransitions';
-import {collapseVerticalTransition} from '../../services/transitions/bootstrap';
+import {collapseVerticalTransition} from '../../services/transitions/bootstrap/collapse';
 import type {ConfigValidator, Directive, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../../types';
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {computed, readable, writable} from '@amadeus-it-group/tansu';

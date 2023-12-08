@@ -1,9 +1,12 @@
 import {writable} from '@amadeus-it-group/tansu';
-import type {TransitionFn} from '@agnos-ui/core';
-import {bootstrap, createTransition} from '@agnos-ui/core';
-import {useDirective, useObservable, useWidget} from '@agnos-ui/react';
+import type {TransitionFn} from '@agnos-ui/react/services/transitions/baseTransitions';
+import {collapseHorizontalTransition, collapseVerticalTransition, fadeTransition} from '@agnos-ui/react/services/transitions/bootstrap';
+import {createTransition} from '@agnos-ui/react/services/transitions/baseTransitions';
+import {useDirective} from '@agnos-ui/react/utils/directive';
+import {useObservable} from '@agnos-ui/react/utils/stores';
+import {useWidget} from '@agnos-ui/react/utils/widget';
 
-const paramTransition$ = writable(bootstrap.collapseVerticalTransition);
+const paramTransition$ = writable(collapseVerticalTransition);
 const paramAnimation$ = writable(true);
 const paramAnimationOnInit$ = writable(false);
 const paramVisible$ = writable(true);
@@ -43,22 +46,22 @@ const InnerComponent = () => {
 					Transition:
 					<button
 						type="button"
-						className={`ms-2 btn btn-sm btn-outline-secondary ${paramTransition === bootstrap.collapseVerticalTransition ? 'active' : ''}`}
-						onClick={() => changeTransition(bootstrap.collapseVerticalTransition)}
+						className={`ms-2 btn btn-sm btn-outline-secondary ${paramTransition === collapseVerticalTransition ? 'active' : ''}`}
+						onClick={() => changeTransition(collapseVerticalTransition)}
 					>
 						Vertical collapse
 					</button>
 					<button
 						type="button"
-						className={`ms-2 btn btn-sm btn-outline-secondary ${paramTransition === bootstrap.collapseHorizontalTransition ? 'active' : ''}`}
-						onClick={() => changeTransition(bootstrap.collapseHorizontalTransition)}
+						className={`ms-2 btn btn-sm btn-outline-secondary ${paramTransition === collapseHorizontalTransition ? 'active' : ''}`}
+						onClick={() => changeTransition(collapseHorizontalTransition)}
 					>
 						Horizontal collapse
 					</button>
 					<button
 						type="button"
-						className={`ms-2 btn btn-sm btn-outline-secondary ${paramTransition === bootstrap.fadeTransition ? 'active' : ''}`}
-						onClick={() => changeTransition(bootstrap.fadeTransition)}
+						className={`ms-2 btn btn-sm btn-outline-secondary ${paramTransition === fadeTransition ? 'active' : ''}`}
+						onClick={() => changeTransition(fadeTransition)}
 					>
 						Fade
 					</button>

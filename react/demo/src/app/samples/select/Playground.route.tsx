@@ -1,4 +1,5 @@
-import {Select, WidgetsDefaultConfig} from '@agnos-ui/react';
+import {Select} from '@agnos-ui/react/components/select';
+import {WidgetsDefaultConfig} from '@agnos-ui/react/config';
 import {useHashChange} from '../../utils';
 
 const SelectDemo = () => {

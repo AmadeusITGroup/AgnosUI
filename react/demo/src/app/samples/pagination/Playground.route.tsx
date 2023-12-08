@@ -1,4 +1,5 @@
-import {Pagination, WidgetsDefaultConfig} from '@agnos-ui/react';
+import {Pagination} from '@agnos-ui/react/components/pagination';
+import {WidgetsDefaultConfig} from '@agnos-ui/react/config';
 import {useHashChange} from '../../utils';
 
 const PaginationDemo = () => {
