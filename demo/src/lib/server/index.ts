@@ -12,6 +12,7 @@ const componentsSubMenu = [
 	{...componentsMetadata.Rating, slug: `components/rating/`, subpath: 'examples'},
 	{...componentsMetadata.Select, slug: `components/select/`, subpath: 'examples'},
 	{...componentsMetadata.Slider, slug: `components/slider/`, subpath: 'examples'},
+	{...componentsMetadata.Toast, slug: `components/toast/`, subpath: 'examples'},
 ];
 
 export async function listPages() {

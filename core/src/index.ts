@@ -11,7 +11,7 @@ export * from './components/progressbar';
 export * from './components/rating';
 export * from './components/select';
 export * from './components/slider';
-
+export * from './components/toast';
 // config
 export * from './config';
 

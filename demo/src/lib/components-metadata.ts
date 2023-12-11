@@ -41,4 +41,8 @@ export const componentsMetadata: {[key: string]: ComponentMetadata} = {
 		title: 'Slider',
 		status: 'stable',
 	},
+	Toast: {
+		title: 'Toast',
+		status: 'beta',
+	},
 };

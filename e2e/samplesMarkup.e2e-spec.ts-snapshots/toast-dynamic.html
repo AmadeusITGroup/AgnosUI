@@ -1,0 +1,131 @@
+<body>
+	<div
+	 id="root"
+	>
+		<div
+		 class="container p-3"
+		>
+			<p
+			 class="mb-2"
+			>
+				"To position toast wherever you want you should have a"
+				<code>
+					"toast-container"
+				</code>
+				"with a custom position defined by CSS classes."
+			</p>
+			<p
+			 class="mb-2"
+			>
+				"To"
+				<strong>
+					"stack"
+				</strong>
+				"toasts vertically, put them in the same container."
+			</p>
+			<div
+			 class="d-flex justify-content-between"
+			>
+				<div
+				 class="align-items-center d-flex form-group"
+				>
+					<label
+					 class="me-3"
+					 for="positionSelect"
+					>
+						"Position:"
+					</label>
+					<select
+					 class="form-select w-auto"
+					 id="positionSelect"
+					>
+						<option
+						 value="top-0 start-0"
+						>
+							"topLeft"
+						</option>
+						<option
+						 value="top-0 start-50 translate-middle-x"
+						>
+							"topCenter"
+						</option>
+						<option
+						 value="top-0 end-0"
+						>
+							"topRight"
+						</option>
+						<option
+						 value="top-50 start-0 translate-middle-y"
+						>
+							"middleLeft"
+						</option>
+						<option
+						 value="top-50 start-50 translate-middle"
+						>
+							"middleCenter"
+						</option>
+						<option
+						 value="top-50 end-0 translate-middle-y"
+						>
+							"middleRight"
+						</option>
+						<option
+						 value="bottom-0 start-0"
+						>
+							"bottomLeft"
+						</option>
+						<option
+						 value="bottom-0 start-50 translate-middle-x"
+						>
+							"bottomCenter"
+						</option>
+						<option
+						 value="bottom-0 end-0"
+						>
+							"bottomRight"
+						</option>
+					</select>
+					<button
+					 class="addToast btn btn-primary ms-2"
+					>
+						"Show toast"
+					</button>
+				</div>
+			</div>
+			<div
+			 aria-atomic="true"
+			 aria-live="polite"
+			 class="d-flex mt-2 position-relative w-100"
+			 style="height: 500px; background-color: gray;"
+			>
+				<div
+				 class="p-3 start-0 toast-container top-0"
+				/>
+				<div
+				 class="p-3 start-50 toast-container top-0 translate-middle-x"
+				/>
+				<div
+				 class="end-0 p-3 toast-container top-0"
+				/>
+				<div
+				 class="p-3 start-0 toast-container top-50 translate-middle-y"
+				/>
+				<div
+				 class="p-3 start-50 toast-container top-50 translate-middle"
+				/>
+				<div
+				 class="end-0 p-3 toast-container top-50 translate-middle-y"
+				/>
+				<div
+				 class="bottom-0 p-3 start-0 toast-container"
+				/>
+				<div
+				 class="bottom-0 p-3 start-50 toast-container translate-middle-x"
+				/>
+				<div
+				 class="bottom-0 end-0 p-3 toast-container"
+				/>
+			</div>
+		</div>
+	</div>
+</body>

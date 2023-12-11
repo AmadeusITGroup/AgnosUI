@@ -14,9 +14,9 @@ export const load = async () => {
 			subpath: 'examples',
 		},
 		next: {
-			title: 'Services: Introduction',
-			slug: 'services/introduction',
-			subpath: '',
+			title: 'Toast',
+			slug: 'components/toast/',
+			subpath: 'examples',
 		},
 	};
 };
