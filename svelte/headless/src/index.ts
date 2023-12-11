@@ -6,5 +6,6 @@ export * from './components/progressbar/progressbar';
 export * from './components/rating/rating';
 export * from './components/select/select';
 export * from './components/slider/slider';
+export * from './components/toast/toast';
 
 export * from './generated';

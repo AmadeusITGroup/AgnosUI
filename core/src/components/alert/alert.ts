@@ -15,9 +15,9 @@ export interface AlertExtraProps {
 	type: string;
 }
 
-export interface AlertState extends ExtendWidgetAdaptSlotWidgetProps<CommonAlertState, AlertExtraProps> {}
+export interface AlertState extends ExtendWidgetAdaptSlotWidgetProps<CommonAlertState, AlertExtraProps, object> {}
 
-export interface AlertProps extends ExtendWidgetAdaptSlotWidgetProps<CommonAlertProps, AlertExtraProps> {}
+export interface AlertProps extends ExtendWidgetAdaptSlotWidgetProps<CommonAlertProps, AlertExtraProps, object> {}
 
 export interface AlertApi extends CommonAlertApi {}
 

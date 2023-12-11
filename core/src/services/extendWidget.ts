@@ -5,27 +5,34 @@ import type {ConfigValidator, PropsConfig, SlotContent, Widget, WidgetFactory, W
 /**
  * Type extending the original Widget props and state with ExtraProps
  */
-export type ExtendWidgetProps<W extends Widget, ExtraProps extends object> = Widget<
-	ExtendWidgetAdaptSlotWidgetProps<WidgetProps<W>, ExtraProps>,
-	ExtendWidgetAdaptSlotWidgetProps<WidgetState<W>, ExtraProps>,
+export type ExtendWidgetProps<W extends Widget, ExtraProps extends object, ExtraDirectives extends object = object> = Widget<
+	ExtendWidgetAdaptSlotWidgetProps<WidgetProps<W>, ExtraProps, ExtraDirectives>,
+	ExtendWidgetAdaptSlotWidgetProps<WidgetState<W>, ExtraProps, ExtraDirectives>,
 	W['api'],
 	W['actions'],
-	W['directives']
+	ExtendWidgetInterfaces<W['directives'], ExtraDirectives>
 >;
+
+/**
+ * Type merging the passed interfaces together
+ */
+export type ExtendWidgetInterfaces<Interfaces, ExtraInterfaces> = Interfaces & ExtraInterfaces;
 
 /**
  * Type replacing the original Props with WidgetSlotContext contaning ExtraProps
  */
-export type ExtendWidgetAdaptSlotContentProps<Props extends Record<string, any>, ExtraProps extends object> =
-	Props extends WidgetSlotContext<infer U> ? WidgetSlotContext<ExtendWidgetProps<U, ExtraProps>> & Omit<Props, keyof WidgetSlotContext<any>> : Props;
+export type ExtendWidgetAdaptSlotContentProps<Props extends Record<string, any>, ExtraProps extends object, ExtraDirectives extends object> =
+	Props extends WidgetSlotContext<infer U>
+		? WidgetSlotContext<ExtendWidgetProps<U, ExtraProps, ExtraDirectives>> & Omit<Props, keyof WidgetSlotContext<any>>
+		: Props;
 
 /**
  * Type enriching the original widget slot Props with ExtraProps slots
  */
-export type ExtendWidgetAdaptSlotWidgetProps<Props, ExtraProps extends object> = Omit<Props, `slot${string}`> &
+export type ExtendWidgetAdaptSlotWidgetProps<Props, ExtraProps extends object, ExtraDirectives extends object> = Omit<Props, `slot${string}`> &
 	ExtraProps & {
 		[K in keyof Props & `slot${string}`]: Props[K] extends SlotContent<infer U>
-			? SlotContent<ExtendWidgetAdaptSlotContentProps<U, ExtraProps>>
+			? SlotContent<ExtendWidgetAdaptSlotContentProps<U, ExtraProps, ExtraDirectives>>
 			: Props[K];
 	};
 
@@ -37,11 +44,11 @@ export type ExtendWidgetAdaptSlotWidgetProps<Props, ExtraProps extends object> =
  * @returns widget factory with the extra props
  */
 export const extendWidgetProps =
-	<W extends Widget, ExtraProps extends object>(
+	<W extends Widget, ExtraProps extends object, ExtraDirectives extends object = object>(
 		factory: WidgetFactory<W>,
 		extraPropsDefaults: ExtraProps,
 		extraPropsConfig?: ConfigValidator<ExtraProps>,
-	): WidgetFactory<ExtendWidgetProps<W, ExtraProps>> =>
+	): WidgetFactory<ExtendWidgetProps<W, ExtraProps, ExtraDirectives>> =>
 	(propsConfig) => {
 		const extraPropsWritables = writablesWithDefault(extraPropsDefaults, propsConfig as PropsConfig<ExtraProps>, extraPropsConfig);
 		const widget = factory(propsConfig as any);
