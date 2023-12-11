@@ -42,7 +42,7 @@ const projects: PlaywrightTestConfig<FixtureOptions>['projects'] = includesDemo
 					baseURL: demoUrl,
 				},
 			},
-	  ]
+		]
 	: [];
 
 frameworks.forEach((framework) => {

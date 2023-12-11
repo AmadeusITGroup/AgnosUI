@@ -27,7 +27,7 @@ const mergeEventFns = <T extends any[]>(fn1: (...args: T) => void, fn2: undefine
 		? (...args: any) => {
 				fn1(...args);
 				fn2(...args);
-		  }
+			}
 		: fn1;
 
 /**

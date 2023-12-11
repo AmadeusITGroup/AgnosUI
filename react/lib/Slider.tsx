@@ -105,10 +105,10 @@ export function Slider(props: Partial<SliderProps>) {
 							vertical
 								? {
 										top: `${handleDisplayOptions[item.id].top}%`,
-								  }
+									}
 								: {
 										left: `${handleDisplayOptions[item.id].left}%`,
-								  }
+									}
 						}
 						onKeyDown={(e) => keydown(e as unknown as KeyboardEvent, item.id)}
 						onMouseDown={(e) => mouseDown(e as unknown as MouseEvent, item.id)}

@@ -34,7 +34,7 @@
 					} else {
 						return import('./Page404.svelte');
 					}
-			  }
+				}
 			: undefined;
 	});
 </script>
