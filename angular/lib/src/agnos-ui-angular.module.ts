@@ -30,7 +30,7 @@ import {
 } from './components/accordion/accordion.component';
 import {SliderComponent} from './components/slider/slider.component';
 import {ProgressbarComponent, ProgressbarContentDirective} from './components/progressbar/progressbar.component';
-
+import {ToastBodyDirective, ToastComponent, ToastStructureDirective} from './components/toast/toast.component';
 /* istanbul ignore next */
 const components = [
 	SlotDirective,
@@ -65,6 +65,9 @@ const components = [
 	SliderComponent,
 	ProgressbarComponent,
 	ProgressbarContentDirective,
+	ToastComponent,
+	ToastStructureDirective,
+	ToastBodyDirective,
 ];
 
 @NgModule({

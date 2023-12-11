@@ -14,3 +14,4 @@ export * from './components/rating/rating.component';
 export * from './components/select/select.component';
 export * from './components/progressbar/progressbar.component';
 export * from './components/slider/slider.component';
+export * from './components/toast/toast.component';

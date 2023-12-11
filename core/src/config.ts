@@ -9,6 +9,7 @@ import type {AccordionProps} from './components/accordion/accordion';
 import type {ProgressbarProps} from './components/progressbar/progressbar';
 import {identity} from './utils/internal/func';
 import type {SliderProps} from './components/slider/slider';
+import type {ToastProps} from './components/toast/toast';
 
 export type Partial2Levels<T> = Partial<{
 	[Level1 in keyof T]: Partial<T[Level1]>;
@@ -111,4 +112,8 @@ export interface WidgetsConfig {
 	 * slider widget config
 	 */
 	slider: SliderProps;
+	/**
+	 * toast widget config
+	 */
+	toast: ToastProps;
 }

@@ -1,0 +1,19 @@
+import type {Locator} from '@playwright/test';
+import {BasePO} from '@agnos-ui/base-po';
+
+export const toastSelectors = {
+	rootComponent: '.toast',
+	closeButton: '.btn-close',
+};
+
+export class ToastPO extends BasePO {
+	selectors = structuredClone(toastSelectors);
+
+	override getComponentSelector(): string {
+		return this.selectors.rootComponent;
+	}
+
+	get locatorCloseButton(): Locator {
+		return this.locatorRoot.locator(this.selectors.closeButton);
+	}
+}
