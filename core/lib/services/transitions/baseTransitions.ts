@@ -295,7 +295,7 @@ export const createTransition = (config?: PropsConfig<TransitionProps>): Transit
 									// let's keep the animation setting from toggle and provide the promise for the end of toggle
 									animation: animationFromToggle,
 									...promiseWithResolve(),
-							  }
+								}
 							: null;
 				}
 			}

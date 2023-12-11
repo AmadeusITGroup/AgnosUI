@@ -12,7 +12,7 @@ export const hash$ =
 				window.addEventListener('hashchange', updateFromHash);
 				updateFromHash();
 				return () => window.removeEventListener('hashchange', updateFromHash);
-		  });
+			});
 
 export const hashObject$ = computed(() => {
 	let hashString = hash$().split('#').at(-1);

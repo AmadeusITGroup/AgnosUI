@@ -173,7 +173,7 @@ export const createStoreDirective = (): {directive: Directive; element$: Readabl
 						destroy() {
 							element$.update((currentElement) => (element === currentElement ? null : currentElement));
 						},
-				  }
+					}
 				: undefined;
 		},
 	};

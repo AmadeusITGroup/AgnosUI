@@ -75,7 +75,7 @@ class ZoneWrapper {
 						})();
 					}
 				}
-		  }
+			}
 		: noop;
 
 	ngZoneRun<T>(fn: () => T): T {
