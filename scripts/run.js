@@ -50,6 +50,9 @@ function run() {
 
 	try {
 		console.log('npm scripts : ', commands);
+		process.stdin.setMaxListeners(Infinity);
+		process.stderr.setMaxListeners(Infinity);
+		process.stdout.setMaxListeners(Infinity);
 		runAll(commands, {parallel, printName: true, printLabel: true, stdout: process.stdout, stderr: process.stderr, stdin: process.stdin});
 	} catch (e) {
 		console.log(e);
