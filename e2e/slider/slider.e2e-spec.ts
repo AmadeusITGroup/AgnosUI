@@ -259,10 +259,9 @@ test.describe(`Slider tests`, () => {
 			expectedState[1].ariaLabel = '83';
 			expectedState[1].style = 'left: 83%;';
 
-			const sliderHandleLocator = sliderPO.locatorHandle;
 			const sliderLocator = sliderPO.locatorRoot;
 			const boundingBox = await sliderLocator.boundingBox();
-			await (await sliderHandleLocator.all()).at(0)!.dragTo(sliderLocator, {
+			await sliderPO.locatorHandle.nth(0).dragTo(sliderLocator, {
 				targetPosition: {x: boundingBox!.x + boundingBox!.width * 0.75, y: 1},
 			});
 
@@ -290,7 +289,7 @@ test.describe(`Slider tests`, () => {
 			const minLabelLocator = sliderPO.locatorMinLabelHorizontal;
 			const maxLabelLocator = sliderPO.locatorMaxLabelHorizontal;
 
-			await (await sliderPO.locatorHandle.all()).at(0)!.click();
+			await sliderPO.locatorHandle.nth(0).click();
 			await page.keyboard.press('Home');
 
 			expect((await sliderPO.sliderHandleState()).at(0)).toEqual(expectedState[0]);
@@ -325,15 +324,15 @@ test.describe(`Slider tests`, () => {
 			await page.goto('#/slider/range');
 			await sliderPO.locatorRoot.waitFor();
 
-			expect((await sliderPO.locatorValueLabel.all()).length).toBe(2);
+			await expect(sliderPO.locatorValueLabel).toHaveCount(2);
 
 			const sliderLocator = sliderPO.locatorRoot;
 			const boundingBox = await sliderLocator.boundingBox();
-			await (await sliderPO.locatorHandle.all()).at(0)!.dragTo(sliderLocator, {
+			await sliderPO.locatorHandle.nth(0).dragTo(sliderLocator, {
 				targetPosition: {x: boundingBox!.x + boundingBox!.width * 0.35, y: 1},
 			});
 
-			expect((await sliderPO.locatorValueLabel.all()).length).toBe(1);
+			await expect(sliderPO.locatorValueLabel).toHaveCount(1);
 		});
 	});
 
@@ -373,7 +372,7 @@ test.describe(`Slider tests`, () => {
 			const minLabelLocator = sliderPO.locatorMinLabelVertical;
 			const maxLabelLocator = sliderPO.locatorMaxLabelVertical;
 
-			await (await sliderPO.locatorHandle.all()).at(0)!.click();
+			await sliderPO.locatorHandle.nth(0).click();
 			await page.keyboard.press('Home');
 
 			expect((await sliderPO.sliderHandleState()).at(0)).toEqual(expectedState[0]);
