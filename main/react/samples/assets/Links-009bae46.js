@@ -1,0 +1,1 @@
+import{j as s}from"./index-60324781.js";const a=({links:i})=>s.jsxs(s.Fragment,{children:[s.jsx("h3",{children:"Samples:"}),s.jsx("div",{className:"sample-links",children:i.map(e=>s.jsx("div",{children:s.jsx("a",{href:"#/"+e,children:e})},e))})]});export{a as default};

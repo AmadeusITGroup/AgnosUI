@@ -24,10 +24,13 @@ SOFTWARE.
 
 
 @agnos-ui/angular
+MIT
 
 @agnos-ui/angular-headless
+MIT
 
 @agnos-ui/core
+MIT
 
 @agnos-ui/style-bootstrap
 MIT
