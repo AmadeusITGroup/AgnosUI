@@ -32,7 +32,7 @@ const isContextModuleScript = (node: SvelteAST.SvelteScriptElement) => {
 };
 
 const followingComma = (node: TSESTree.Node, context: Readonly<TSESLint.RuleContext<any, any>>) => {
-	const followingComma = context.getSourceCode().getTokenAfter(node);
+	const followingComma = context.sourceCode.getTokenAfter(node);
 	return followingComma?.value === ',' ? followingComma : null;
 };
 
@@ -188,7 +188,7 @@ const fixApiPatchEventHandler = (
 				content += `\n${prop.propBinding} = ${eventInApiPatch.params[0].name};`;
 			}
 			const indentation = getChildIndentation(eventInApiPatch.body.body[0], eventInApiPatch.body, context);
-			return insertNewLineBefore(fixer, context.getSourceCode().getLastToken(eventInApiPatch.body)!, addIndentation(content, indentation), context);
+			return insertNewLineBefore(fixer, context.sourceCode.getLastToken(eventInApiPatch.body)!, addIndentation(content, indentation), context);
 		}
 		const indentation = getIndentation(eventInApiPatch, context);
 		return fixer.replaceText(eventInApiPatch, addIndentation(arrowFunction, indentation));
@@ -196,7 +196,7 @@ const fixApiPatchEventHandler = (
 	const propText = `\n${prop.widgetProp}: ${arrowFunction},`;
 	if (widgetPatchArgNode) {
 		const indentation = getChildIndentation(widgetPatchArgNode.properties[0], widgetPatchArgNode, context);
-		return fixer.insertTextAfter(context.getSourceCode().getFirstToken(widgetPatchArgNode)!, addIndentation(propText, indentation));
+		return fixer.insertTextAfter(context.sourceCode.getFirstToken(widgetPatchArgNode)!, addIndentation(propText, indentation));
 	}
 	const widgetPatchCall = `\nwidget.patch({${addIndentation(propText, '\t')}\n});`;
 	const indentation = getIndentation(widgetStatementNode, context);

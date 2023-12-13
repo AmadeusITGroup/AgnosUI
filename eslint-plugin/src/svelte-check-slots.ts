@@ -149,7 +149,7 @@ export const svelteCheckSlotsRule = ESLintUtils.RuleCreator.withoutDocs({
 		return {
 			SvelteElement(node: SvelteAST.SvelteElement) {
 				if (node.kind === 'component' && node.name.type === 'Identifier' && node.name.name === 'Slot') {
-					const sourceText = context.getSourceCode().text;
+					const sourceText = context.sourceCode.text;
 					const nodeText = sourceText.substring(...node.range);
 					const slotName = extractSlotName(node);
 					if (slotName) {

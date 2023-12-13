@@ -43,7 +43,7 @@ const everythingAfterNonSpaceRegExp = /\S.*$/;
 export const getIndentation = (node: TSESTree.Node | TSESTree.Token | SvelteAST.SvelteNode, context: Readonly<TSESLint.RuleContext<any, any>>) => {
 	const position = node.range[0];
 	const column = node.loc.start.column;
-	const text = context.getSourceCode().text;
+	const text = context.sourceCode.text;
 	const indentation = text.substring(position - column, position).replace(everythingAfterNonSpaceRegExp, '');
 	return indentation;
 };
