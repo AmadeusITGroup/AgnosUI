@@ -1,5 +1,5 @@
 import type {Directive, Widget, WidgetProps, WidgetState} from '@agnos-ui/core';
-import {findChangedProperties} from '@agnos-ui/core';
+import {findChangedProperties, mergeDirectives} from '@agnos-ui/core';
 import type {ReadableSignal, WritableSignal} from '@amadeus-it-group/tansu';
 import {asReadable, writable} from '@amadeus-it-group/tansu';
 import type {RefCallback} from 'react';
@@ -51,7 +51,7 @@ export function useObservable<T>(store$: ReadableSignal<T>) {
 
 export function useDirective(directive: Directive<void>): RefCallback<HTMLElement>;
 export function useDirective<T>(directive: Directive<T>, args: T): RefCallback<HTMLElement>;
-export function useDirective<T>(directive: Directive<T>, args?: T) {
+export function useDirective<T>(directive: Directive<T>, args?: T): RefCallback<HTMLElement> {
 	const instance = useRef<ReturnType<typeof directive>>();
 	const propsRef = useRef<T>();
 	const ref = useCallback(
@@ -67,6 +67,13 @@ export function useDirective<T>(directive: Directive<T>, args?: T) {
 	propsRef.current = args;
 	instance.current?.update?.(args as T);
 	return ref;
+}
+
+export function useDirectives(directives: Directive<void>[]): RefCallback<HTMLElement>;
+export function useDirectives<T>(directives: Directive<T>[], args: T): RefCallback<HTMLElement>;
+export function useDirectives<T>(directives: Directive<T>[], args?: T): RefCallback<HTMLElement> {
+	const mergedDirectives = useMemo(() => mergeDirectives(...directives), directives);
+	return useDirective(mergedDirectives, args as any);
 }
 
 const propsEqual = <T extends object>(a: T, b: T) => !findChangedProperties(a, b);
