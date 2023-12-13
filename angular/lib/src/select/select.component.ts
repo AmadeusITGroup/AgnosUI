@@ -1,12 +1,4 @@
-import type {
-	AdaptSlotContentProps,
-	ItemContext,
-	SelectItemContext,
-	SelectWidget,
-	SlotContent,
-	WidgetState,
-	floatingUI,
-} from '@agnos-ui/angular-headless';
+import type {AdaptSlotContentProps, ItemContext, SelectItemContext, SelectWidget, SlotContent, WidgetState} from '@agnos-ui/angular-headless';
 import {
 	SlotDirective,
 	UseDirective,
@@ -21,6 +13,7 @@ import {
 } from '@agnos-ui/angular-headless';
 import type {AfterContentChecked, OnChanges, Signal, SimpleChanges} from '@angular/core';
 import {ChangeDetectionStrategy, Component, ContentChild, Directive, EventEmitter, Input, Output, TemplateRef, inject} from '@angular/core';
+import type {Placement} from '@floating-ui/dom';
 
 @Directive({selector: 'ng-template[auSelectBadgeLabel]', standalone: true})
 export class SelectBadgeLabelDirective<Item> {
@@ -119,7 +112,7 @@ export class SelectComponent<Item> implements OnChanges, AfterContentChecked {
 	 * List of allowed placements for the dropdown.
 	 * This refers to the [allowedPlacements from floating UI](https://floating-ui.com/docs/autoPlacement#allowedplacements), given the different [Placement possibilities](https://floating-ui.com/docs/computePosition#placement).
 	 */
-	@Input('auAllowedPlacements') allowedPlacements: floatingUI.Placement[] | undefined;
+	@Input('auAllowedPlacements') allowedPlacements: Placement[] | undefined;
 
 	/**
 	 * true if the select is open

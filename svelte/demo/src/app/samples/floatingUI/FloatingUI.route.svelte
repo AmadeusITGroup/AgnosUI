@@ -1,6 +1,7 @@
 <script lang="ts">
 	import '@agnos-ui/common/samples/floatingui/floatingui.scss';
-	import {createFloatingUI, floatingUI} from '@agnos-ui/core';
+	import {createFloatingUI} from '@agnos-ui/core';
+	import {autoPlacement, hide, offset, shift} from '@floating-ui/dom';
 
 	const {
 		directives: {floatingDirective, referenceDirective, arrowDirective},
@@ -12,12 +13,12 @@
 			},
 			computePositionOptions: {
 				middleware: [
-					floatingUI.offset(10),
-					floatingUI.autoPlacement(),
-					floatingUI.shift({
+					offset(10),
+					autoPlacement(),
+					shift({
 						padding: 5,
 					}),
-					floatingUI.hide(),
+					hide(),
 				],
 			},
 		},

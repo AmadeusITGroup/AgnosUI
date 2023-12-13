@@ -12,7 +12,8 @@
 		"check": "svelte-check --fail-on-warnings --output human-verbose"
 	},
 	"dependencies": {
-		"@amadeus-it-group/tansu": "0.0.24"
+		"@amadeus-it-group/tansu": "0.0.24",
+		"@floating-ui/dom": "^1.5.3"
 	},
 	"devDependencies": {
 		"@sveltejs/package": "^2.2.3",
