@@ -100,7 +100,7 @@ test.describe(`Slider tests`, () => {
 				targetPosition: {x: boundingBox!.x + boundingBox!.width * 0.8, y: 1},
 			});
 
-			expect((await sliderPO.sliderHandleState())[0]).toEqual(expectedState);
+			await expect.poll(async () => (await sliderPO.sliderHandleState()).at(0)).toEqual(expectedState);
 		});
 
 		test(`should move handle on key strokes`, async ({page}) => {
