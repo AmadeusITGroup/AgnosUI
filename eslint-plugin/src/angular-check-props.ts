@@ -253,8 +253,7 @@ const reportNonMatchingPropDoc = (
 			type,
 		},
 		*fix(fixer) {
-			const commentsBefore = context
-				.getSourceCode()
+			const commentsBefore = context.sourceCode
 				.getCommentsBefore(node)
 				.filter((comment) => comment.type === TSESTree.AST_TOKEN_TYPES.Block && comment.value.startsWith('*'));
 			for (const comment of commentsBefore) {
@@ -300,7 +299,7 @@ const fixOutputEmit = (
 			const indentation = getChildIndentation(eventInEventsObject.body.body[0], eventInEventsObject.body, context);
 			return insertLineBefore(
 				fixer,
-				context.getSourceCode().getLastToken(eventInEventsObject.body)!,
+				context.sourceCode.getLastToken(eventInEventsObject.body)!,
 				addIndentation(`\nthis.${name}.emit(${eventInEventsObject.params[0].name});`, indentation),
 				context,
 			);
@@ -310,7 +309,7 @@ const fixOutputEmit = (
 	const propText = `\n${prop.widgetProp}: ${arrowFunction},`;
 	if (eventsObject) {
 		const indentation = getChildIndentation(eventsObject.properties[0], eventsObject, context);
-		return fixer.insertTextAfter(context.getSourceCode().getFirstToken(eventsObject)!, addIndentation(propText, indentation));
+		return fixer.insertTextAfter(context.sourceCode.getFirstToken(eventsObject)!, addIndentation(propText, indentation));
 	}
 	return null;
 };
