@@ -1,10 +1,12 @@
 import {asWritable, computed, writable} from '@amadeus-it-group/tansu';
-import type {WidgetsCommonPropsAndState} from '../commonProps';
+import type {FloatingUI} from '../../services/floatingUI';
+import {createFloatingUI, floatingUI} from '../../services/floatingUI';
 import type {HasFocus} from '../../services/focustrack';
 import {createHasFocus} from '../../services/focustrack';
-import {bindableDerived, stateStores, writablesForProps} from '../../utils/stores';
 import type {PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../../types';
 import {noop} from '../../utils/internal/func';
+import {bindableDerived, stateStores, writablesForProps} from '../../utils/stores';
+import type {WidgetsCommonPropsAndState} from '../commonProps';
 
 /**
  * A type for the slot context of the pagination widget
@@ -89,6 +91,12 @@ export interface SelectProps<T> extends SelectCommonPropsAndState<T> {
 	items: T[];
 
 	/**
+	 * List of allowed placements for the dropdown.
+	 * This refers to the [allowedPlacements from floating UI](https://floating-ui.com/docs/autoPlacement#allowedplacements), given the different [Placement possibilities](https://floating-ui.com/docs/computePosition#placement).
+	 */
+	allowedPlacements: floatingUI.Placement[];
+
+	/**
 	 * Custom function to get the id of an item
 	 * By default, the item is returned
 	 */
@@ -151,6 +159,11 @@ export interface SelectState<Item> extends SelectCommonPropsAndState<Item> {
 	 * It is designed to define the highlighted item in the dropdown menu
 	 */
 	highlighted: ItemContext<Item> | undefined;
+
+	/**
+	 * Current placement of the dropdown
+	 */
+	placement: floatingUI.Placement | undefined;
 }
 
 export interface SelectApi<Item> {
@@ -251,6 +264,16 @@ export interface SelectDirectives {
 	 * Directive to be used in the input group and the menu containers
 	 */
 	hasFocusDirective: HasFocus['directive'];
+
+	/**
+	 * Directive that enables dynamic positioning of menu element
+	 */
+	floatingDirective: FloatingUI['directives']['floatingDirective'];
+
+	/**
+	 * A directive to be applied to the input group element serves as the base for menu positioning
+	 */
+	referenceDirective: FloatingUI['directives']['referenceDirective'];
 }
 
 export interface SelectActions {
@@ -272,7 +295,7 @@ export type SelectWidget<Item> = Widget<SelectProps<Item>, SelectState<Item>, Se
 
 const defaultItemId = (item: any) => '' + item;
 
-const defaultConfig: SelectProps<any> = {
+export const defaultConfig: SelectProps<any> = {
 	id: undefined,
 	ariaLabel: 'Select',
 	open: false,
@@ -285,6 +308,7 @@ const defaultConfig: SelectProps<any> = {
 	onOpenChange: noop,
 	onFilterTextChange: noop,
 	onSelectedChange: noop,
+	allowedPlacements: ['bottom-start', 'top-start', 'bottom-end', 'top-end'],
 	className: '',
 	menuClassName: '',
 	menuItemClassName: '',
@@ -309,7 +333,17 @@ export function getSelectDefaultConfig() {
 export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): SelectWidget<Item> {
 	// Props
 	const [
-		{open$: _dirtyOpen$, filterText$: _dirtyFilterText$, items$, itemIdFn$, onOpenChange$, onFilterTextChange$, onSelectedChange$, ...stateProps},
+		{
+			open$: _dirtyOpen$,
+			filterText$: _dirtyFilterText$,
+			items$,
+			itemIdFn$,
+			onOpenChange$,
+			onFilterTextChange$,
+			onSelectedChange$,
+			allowedPlacements$,
+			...stateProps
+		},
 		patch,
 	] = writablesForProps<SelectProps<Item>>(defaultConfig, config);
 	const {selected$} = stateProps;
@@ -378,6 +412,25 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 		return visibleItems.length && highlightedIndex != undefined ? visibleItems[highlightedIndex] : undefined;
 	});
 
+	const {
+		directives: {floatingDirective, referenceDirective},
+		stores: {placement$},
+	} = createFloatingUI({
+		props: {
+			computePositionOptions: asWritable(
+				computed(() => ({
+					middleware: [
+						floatingUI.offset(5),
+						floatingUI.autoPlacement({
+							allowedPlacements: allowedPlacements$(),
+						}),
+						floatingUI.size(),
+					],
+				})),
+			),
+		},
+	});
+
 	const widget: SelectWidget<Item> = {
 		...stateStores({
 			visibleItems$,
@@ -385,6 +438,7 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 			open$,
 			selectedContexts$,
 			filterText$,
+			placement$,
 
 			...stateProps,
 		}),
@@ -480,6 +534,8 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 		},
 		directives: {
 			hasFocusDirective,
+			floatingDirective,
+			referenceDirective,
 		},
 		actions: {
 			onInput({target}: {target: HTMLInputElement}) {

@@ -12,8 +12,6 @@
 
 <div style="height: 400px">
 	<div class="mb-3">
-		<!-- svelte-ignore a11y-label-has-associated-control -->
-		<label class="form-label">Start typing with a, b or c</label>
 		<Select {items} bind:filterText badgeClassName="badge text-bg-light" />
 	</div>
 </div>

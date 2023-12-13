@@ -22,7 +22,7 @@ test.describe.parallel(`Samples markup consistency check`, () => {
 	const routesExtraAction: Record<string, (page: Page) => Promise<void>> = {
 		'modal/default': openDemoModal,
 		'modal/stack': openDemoModal,
-		'select/basic': (page: Page) => typeAndSelect(page, 'a'),
+		'select/default': (page: Page) => typeAndSelect(page, 'a'),
 	};
 
 	for (const route of allRoutes) {

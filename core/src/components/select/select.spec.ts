@@ -109,6 +109,7 @@ describe(`Select model`, () => {
 					menuClassName: '',
 					menuItemClassName: '',
 					open: false,
+					placement: undefined,
 					selected: [],
 					selectedContexts: [],
 					slotBadgeLabel: '(function)',
@@ -133,6 +134,7 @@ describe(`Select model`, () => {
 					menuClassName: '',
 					menuItemClassName: '',
 					open: true,
+					placement: undefined,
 					selected: [],
 					selectedContexts: [],
 					slotBadgeLabel: '(function)',
@@ -619,6 +621,7 @@ describe(`Select model`, () => {
 				menuClassName: '',
 				menuItemClassName: '',
 				badgeClassName: '',
+				placement: undefined,
 				slotBadgeLabel: '(function)',
 				slotItem: '(function)',
 			};

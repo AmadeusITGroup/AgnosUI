@@ -1,13 +1,23 @@
-import type {AdaptSlotContentProps, ItemContext, SelectItemContext, SelectWidget, SlotContent, WidgetState} from '@agnos-ui/angular-headless';
+import type {
+	AdaptSlotContentProps,
+	ItemContext,
+	SelectItemContext,
+	SelectWidget,
+	SlotContent,
+	WidgetState,
+	floatingUI,
+} from '@agnos-ui/angular-headless';
 import {
 	SlotDirective,
 	UseDirective,
 	auBooleanAttribute,
 	callWidgetFactory,
 	createSelect,
+	mergeDirectives,
 	patchSimpleChanges,
 	toAngularSignal,
 	toSlotContextWidget,
+	useDirectiveForHost,
 } from '@agnos-ui/angular-headless';
 import type {AfterContentChecked, OnChanges, Signal, SimpleChanges} from '@angular/core';
 import {ChangeDetectionStrategy, Component, ContentChild, Directive, EventEmitter, Input, Output, TemplateRef, inject} from '@angular/core';
@@ -69,10 +79,9 @@ export class SelectItemDirective<Item> {
 			</div>
 			@if (state$().open && state$().visibleItems.length) {
 				<ul
-					[auUse]="_widget.directives.hasFocusDirective"
+					[auUse]="menuDirective"
 					[class]="'dropdown-menu show ' + (menuClassName || '')"
-					data-popper-placement="bottom-start"
-					data-bs-popper="static"
+					[attr.data-popper-placement]="state$().placement"
 					(mousedown)="$event.preventDefault()"
 				>
 					@for (itemContext of state$().visibleItems; track itemCtxTrackBy($index, itemContext)) {
@@ -105,6 +114,12 @@ export class SelectComponent<Item> implements OnChanges, AfterContentChecked {
 	 * List of available items for the dropdown
 	 */
 	@Input('auItems') items: Item[] | undefined;
+
+	/**
+	 * List of allowed placements for the dropdown.
+	 * This refers to the [allowedPlacements from floating UI](https://floating-ui.com/docs/autoPlacement#allowedplacements), given the different [Placement possibilities](https://floating-ui.com/docs/computePosition#placement).
+	 */
+	@Input('auAllowedPlacements') allowedPlacements: floatingUI.Placement[] | undefined;
 
 	/**
 	 * true if the select is open
@@ -190,7 +205,13 @@ export class SelectComponent<Item> implements OnChanges, AfterContentChecked {
 	readonly widget = toSlotContextWidget(this._widget);
 	readonly api = this._widget.api;
 
+	readonly menuDirective = mergeDirectives(this._widget.directives.hasFocusDirective, this._widget.directives.floatingDirective);
+
 	state$: Signal<WidgetState<SelectWidget<Item>>> = toAngularSignal(this._widget.state$);
+
+	constructor() {
+		useDirectiveForHost(this._widget.directives.referenceDirective);
+	}
 
 	ngOnChanges(changes: SimpleChanges) {
 		patchSimpleChanges(this._widget.patch, changes);
