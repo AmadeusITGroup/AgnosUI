@@ -5,5 +5,25 @@
 		"react": {
 			"version": "detect"
 		}
-	}
+	},
+	"overrides": [
+		{
+			"files": ["headless/**"],
+			"rules": {
+				"@agnos-ui/check-replace-imports": ["error", "@agnos-ui/core"]
+			}
+		},
+		{
+			"files": ["lib/**"],
+			"rules": {
+				"@agnos-ui/check-replace-imports": ["error", "@agnos-ui/react-headless"]
+			}
+		},
+		{
+			"files": ["demo/**"],
+			"rules": {
+				"@agnos-ui/check-replace-imports": ["error", "@agnos-ui/react"]
+			}
+		}
+	]
 }
