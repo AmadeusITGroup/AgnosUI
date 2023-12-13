@@ -1,5 +1,6 @@
 import '@agnos-ui/common/samples/floatingui/floatingui.scss';
-import {createFloatingUI, floatingUI, useDirective, useObservable} from '@agnos-ui/react';
+import {createFloatingUI, useDirective, useObservable} from '@agnos-ui/react';
+import {autoPlacement, hide, offset, shift} from '@floating-ui/dom';
 import {useMemo, useState} from 'react';
 
 const scrollToMiddle = (element: HTMLElement) => {
@@ -17,12 +18,12 @@ const FloatingUI = () => {
 					},
 					computePositionOptions: {
 						middleware: [
-							floatingUI.offset(10),
-							floatingUI.autoPlacement(),
-							floatingUI.shift({
+							offset(10),
+							autoPlacement(),
+							shift({
 								padding: 5,
 							}),
-							floatingUI.hide(),
+							hide(),
 						],
 					},
 				},

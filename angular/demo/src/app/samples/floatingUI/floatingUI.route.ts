@@ -1,5 +1,6 @@
-import {AgnosUIAngularModule, createFloatingUI, floatingUI, toAngularSignal} from '@agnos-ui/angular';
+import {AgnosUIAngularModule, createFloatingUI, toAngularSignal} from '@agnos-ui/angular';
 import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {autoPlacement, hide, offset, shift} from '@floating-ui/dom';
 
 const scrollToMiddle = (element: HTMLElement) => {
 	element.scrollTo({left: 326, top: 420});
@@ -39,12 +40,12 @@ export default class FloatingUIComponent {
 			},
 			computePositionOptions: {
 				middleware: [
-					floatingUI.offset(10),
-					floatingUI.autoPlacement(),
-					floatingUI.shift({
+					offset(10),
+					autoPlacement(),
+					shift({
 						padding: 5,
 					}),
-					floatingUI.hide(),
+					hide(),
 				],
 			},
 		},

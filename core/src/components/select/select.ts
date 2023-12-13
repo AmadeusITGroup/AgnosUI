@@ -1,6 +1,8 @@
 import {asWritable, computed, writable} from '@amadeus-it-group/tansu';
+import type {Placement} from '@floating-ui/dom';
+import {autoPlacement, offset, size} from '@floating-ui/dom';
 import type {FloatingUI} from '../../services/floatingUI';
-import {createFloatingUI, floatingUI} from '../../services/floatingUI';
+import {createFloatingUI} from '../../services/floatingUI';
 import type {HasFocus} from '../../services/focustrack';
 import {createHasFocus} from '../../services/focustrack';
 import type {PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../../types';
@@ -94,7 +96,7 @@ export interface SelectProps<T> extends SelectCommonPropsAndState<T> {
 	 * List of allowed placements for the dropdown.
 	 * This refers to the [allowedPlacements from floating UI](https://floating-ui.com/docs/autoPlacement#allowedplacements), given the different [Placement possibilities](https://floating-ui.com/docs/computePosition#placement).
 	 */
-	allowedPlacements: floatingUI.Placement[];
+	allowedPlacements: Placement[];
 
 	/**
 	 * Custom function to get the id of an item
@@ -163,7 +165,7 @@ export interface SelectState<Item> extends SelectCommonPropsAndState<Item> {
 	/**
 	 * Current placement of the dropdown
 	 */
-	placement: floatingUI.Placement | undefined;
+	placement: Placement | undefined;
 }
 
 export interface SelectApi<Item> {
@@ -420,11 +422,11 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 			computePositionOptions: asWritable(
 				computed(() => ({
 					middleware: [
-						floatingUI.offset(5),
-						floatingUI.autoPlacement({
+						offset(5),
+						autoPlacement({
 							allowedPlacements: allowedPlacements$(),
 						}),
-						floatingUI.size(),
+						size(),
 					],
 				})),
 			),
