@@ -20,6 +20,24 @@
 			"rules": {
 				"@agnos-ui/svelte-check-props": "error"
 			}
+		},
+		{
+			"files": ["headless/**"],
+			"rules": {
+				"@agnos-ui/check-replace-imports": ["error", "@agnos-ui/core"]
+			}
+		},
+		{
+			"files": ["lib/**"],
+			"rules": {
+				"@agnos-ui/check-replace-imports": ["error", "@agnos-ui/svelte-headless"]
+			}
+		},
+		{
+			"files": ["demo/**"],
+			"rules": {
+				"@agnos-ui/check-replace-imports": ["error", "@agnos-ui/svelte"]
+			}
 		}
 	]
 }
