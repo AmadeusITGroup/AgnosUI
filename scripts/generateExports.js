@@ -3,6 +3,9 @@ const {existsSync, promises} = require('fs');
 const {glob} = require('glob');
 const os = require('os');
 
+const pathRegExp = /\\/g;
+const normalizePath = (str) => str.replace(pathRegExp, '/');
+
 const parallel = Math.ceil(os.cpus().length / 2);
 
 const worker = async (tasks, initialIndex) => {
@@ -44,7 +47,9 @@ const generateExports = async (destination, source, dependencyPkg) => {
 	};
 
 	// first we go through all files in the source source folder
-	const srcFiles = await glob(`**/*.{ts,tsx}`, {cwd: sourceFolder, ignore: ['components/**', '**/internal/**', '**/*.spec.ts', 'index.ts']});
+	const srcFiles = (
+		await glob(`{generated/**,services,services/transitions,utils,.}/*.{ts,tsx}`, {cwd: sourceFolder, ignore: ['**/*.spec.ts', 'index.ts']})
+	).map(normalizePath);
 	for (const srcFile of srcFiles) {
 		// removing a potential generated/ prefix, as the lib will go through the generated folder of the headless
 		const file = srcFile.startsWith('generated/') ? srcFile.substring(10) : srcFile;
@@ -52,10 +57,12 @@ const generateExports = async (destination, source, dependencyPkg) => {
 	}
 
 	// then we check if there is any override present in the destination source folder
-	const destFiles = await glob(`**/*.{ts,tsx}`, {
-		cwd: destFolder,
-		ignore: ['components/**', 'generated/**', '**/internal/**', '**/*.spec.ts', 'index.ts'],
-	});
+	const destFiles = (
+		await glob(`{services,services/transitions,utils,.}/*.{ts,tsx}`, {
+			cwd: destFolder,
+			ignore: ['**/*.spec.ts', 'index.ts'],
+		})
+	).map(normalizePath);
 	for (const destFile of destFiles) {
 		await addGenerationFile(destFile, true);
 	}
@@ -63,7 +70,7 @@ const generateExports = async (destination, source, dependencyPkg) => {
 	const generationInfos = [...generationMap.values()];
 	const tasks = generationInfos.map((generationInfo) => () => {
 		const path = join(generationFolder, generationInfo.import) + '.ts';
-		const importPrefix = generationInfo.isDest ? './' + relative(dirname(path), destFolder) : dependencyPkg;
+		const importPrefix = generationInfo.isDest ? './' + normalizePath(relative(dirname(path), destFolder)) : dependencyPkg;
 		return promises.writeFile(path, `export * from '${importPrefix}/${generationInfo.import}';`);
 	});
 	// final task, the index in the generation folder that will reference all the generated files
