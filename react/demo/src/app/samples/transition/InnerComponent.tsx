@@ -21,7 +21,7 @@ const InnerComponent = () => {
 		createTransition,
 		{},
 		{
-			props: {
+			propsStores: {
 				transition: paramTransition$,
 				animation: paramAnimation$,
 				animationOnInit: paramAnimationOnInit$,

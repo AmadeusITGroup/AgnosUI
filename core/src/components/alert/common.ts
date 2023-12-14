@@ -154,7 +154,7 @@ export function createCommonAlert(config?: PropsConfig<CommonAlertProps>): Commo
 	] = writablesForProps(defaultCommonAlertConfig, config, commonAlertConfigValidator);
 
 	const transition = createTransition({
-		props: {
+		propsStores: {
 			transition: transition$,
 			visible: requestedVisible$,
 			animation: animation$,

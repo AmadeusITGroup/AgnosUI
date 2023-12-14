@@ -1,23 +1,16 @@
-import type {Widget, WidgetProps, WidgetState} from '@agnos-ui/core/types';
+import type {PropsConfig, Widget, WidgetFactory, WidgetProps, WidgetState} from '@agnos-ui/core/types';
 import {findChangedProperties} from '@agnos-ui/core/utils/stores';
-import {useEffect, useRef} from 'react';
+import {useEffect, useMemo, useRef} from 'react';
 import {useObservable} from './stores';
 
-export function useWidget<Factory extends (...arg: any[]) => Widget>(
-	createWidget: Factory,
-	props: Partial<WidgetProps<ReturnType<Factory>>> = {},
-	...initProps: Parameters<Factory>
+export function useWidget<W extends Widget>(
+	createWidget: WidgetFactory<W>,
+	props: Partial<WidgetProps<W>> = {},
+	propsConfig?: Omit<PropsConfig<WidgetProps<W>>, 'props'>,
 ) {
-	type W = ReturnType<Factory>;
 	type State = WidgetState<W>;
 
-	const apiRef = useRef<W | undefined>(undefined);
-
-	if (!apiRef.current) {
-		apiRef.current = createWidget(...initProps) as W;
-		apiRef.current.patch(props);
-	}
-	const api = apiRef.current;
+	const api = useMemo(() => createWidget({...propsConfig, props}), []);
 	const previousProps = useRef(props);
 
 	useEffect(() => {

@@ -418,7 +418,7 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 		directives: {floatingDirective, referenceDirective},
 		stores: {placement$},
 	} = createFloatingUI({
-		props: {
+		propsStores: {
 			computePositionOptions: asWritable(
 				computed(() => ({
 					middleware: [

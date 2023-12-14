@@ -17,7 +17,7 @@
 		directives: {directive},
 		patch,
 	} = createTransition({
-		props: {
+		propsStores: {
 			animationOnInit: paramAnimationOnInit$,
 			animation: paramAnimation$,
 			visible: paramVisible$,

@@ -313,9 +313,11 @@ describe(`createTransition`, () => {
 		const initDone = writable(false);
 		const shownCalledPromise = new Promise<void>((resolve) => (shownCalled = resolve));
 		const transitionInstance = createTransition({
+			propsStores: {
+				initDone,
+			},
 			props: {
 				visible: false,
-				initDone,
 				onHidden,
 				onVisibleChange,
 				onShown: function () {

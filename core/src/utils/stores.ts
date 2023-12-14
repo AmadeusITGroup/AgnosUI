@@ -138,13 +138,6 @@ export const isStore = (x: any): x is ReadableSignal<any> => !!(x && typeof x ==
  */
 export const toReadableStore = <T>(x: ReadableSignal<T> | T) => (isStore(x) ? x : readable(x));
 
-/**
- * If the provided argument is already a store, it is returned as is, otherwise, a writable store is created with the provided argument as its initial value.
- * @param x - either a writable store or a simple value
- * @returns either x if x is already a store, or writable(x) otherwise
- */
-export const toWritableStore = <T>(x: WritableSignal<T> | T) => (isStore(x) ? x : writable(x));
-
 export const normalizeConfigStores = <T extends object>(
 	keys: (keyof T)[],
 	config?: ReadableSignal<Partial<T>> | ValuesOrReadableSignals<T>,
@@ -206,9 +199,9 @@ export const writablesWithDefault = <T extends object>(
 	const keys = Object.keys(defConfig) as (string & keyof T)[];
 	const configStores = normalizeConfigStores<T>(keys, propsConfig?.config);
 	const props = propsConfig?.props;
+	const propsStores = propsConfig?.propsStores;
 	for (const key of keys) {
-		const propValue = props?.[key] as undefined | WritableSignal<T[typeof key] | undefined> | T[typeof key];
-		res[`${key}$`] = writableWithDefault(defConfig[key], configStores[key], options?.[key], toWritableStore(propValue));
+		res[`${key}$`] = writableWithDefault(defConfig[key], configStores[key], options?.[key], propsStores?.[key] ?? writable(props?.[key]));
 	}
 	return res as ToWritableSignal<T>;
 };

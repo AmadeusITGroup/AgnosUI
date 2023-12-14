@@ -66,13 +66,13 @@ export const callWidgetFactoryWithConfig = <W extends Widget>({
 			processedSlots[`slot${name[0].toUpperCase()}${name.substring(1)}`] = useSvelteSlot;
 		}
 	}
-	const props: {[key in keyof WidgetProps<W>]: WritableSignal<WidgetProps<W>[key]>} = {} as any;
+	const propsStores: {[key in keyof WidgetProps<W>]: WritableSignal<WidgetProps<W>[key]>} = {} as any;
 	for (const event of Object.keys(events) as (keyof WidgetProps<W> & `on${string}Change`)[]) {
-		props[event] = eventStore(events[event] as any) as any;
+		propsStores[event] = eventStore(events[event] as any) as any;
 	}
 	const widget = factory({
 		config: computed(() => ({...defaultConfig$(), ...widgetConfig?.(), ...processedSlots})),
-		props,
+		propsStores,
 	});
 	return {...widget, patchChangedProps: createPatchChangedProps(widget.patch)};
 };

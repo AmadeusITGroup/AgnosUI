@@ -353,7 +353,7 @@ export function createModal<Data>(config$?: PropsConfig<ModalProps<Data>>): Moda
 		patch,
 	] = writablesForProps(defaultConfig, config$, configValidator);
 	const modalTransition = createTransition({
-		props: {
+		propsStores: {
 			transition: modalTransition$,
 			visible: requestedVisible$,
 			animation: animation$,
@@ -367,7 +367,7 @@ export function createModal<Data>(config$?: PropsConfig<ModalProps<Data>>): Moda
 	});
 	const visible$ = modalTransition.stores.visible$;
 	const backdropTransition = createTransition({
-		props: {
+		propsStores: {
 			transition: backdropTransition$,
 			visible: requestedVisible$,
 			animation: animation$,

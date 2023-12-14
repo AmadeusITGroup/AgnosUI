@@ -111,7 +111,7 @@ export class InnerComponent {
 	paramVisible$ = paramVisible$;
 	paramRemoveFromDom$ = paramRemoveFromDom$;
 	transition = createTransition({
-		props: {
+		propsStores: {
 			animationOnInit: paramAnimationOnInit$,
 			animation: paramAnimation$,
 			visible: paramVisible$,

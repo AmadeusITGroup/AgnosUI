@@ -484,13 +484,15 @@ function createAccordionItem(
 		return itemDestroyOnHide$() === false || !itemTransition.state$().hidden;
 	});
 	const itemTransition = createTransition({
-		props: {
+		propsStores: {
 			transition: itemTransition$,
 			visible: itemVisible$,
 			onVisibleChange: onItemVisibleChange$,
 			animation: itemAnimation$,
-			animationOnInit: false,
 			initDone: initDone$,
+		},
+		props: {
+			animationOnInit: false,
 			onHidden: () => {
 				accordionOnHidden()(itemId$());
 				onItemHidden$()();
@@ -640,8 +642,8 @@ export function createAccordion(config?: PropsConfig<AccordionProps>): Accordion
 			},
 			registerItem: (propsConfig?: PropsConfig<AccordionItemProps>) => {
 				const item = createAccordionItem(onShown$, onHidden$, {
+					...propsConfig,
 					config: mergeConfigStores(accordionItemProps, normalizeConfigStores(accordionItemProps, propsConfig?.config), accordionItemConfig),
-					props: propsConfig?.props,
 				});
 				item.directives.accordionItemDirective = () => ({destroy: itemsWidget$.register(item)});
 				return item;

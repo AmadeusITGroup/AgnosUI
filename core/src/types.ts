@@ -4,16 +4,24 @@ export type ValuesOrReadableSignals<T extends object> = {
 	[K in keyof T]?: ReadableSignal<T[K] | undefined> | T[K];
 };
 
-export type ValuesOrWritableSignals<T extends object> = {
-	[K in keyof T]?: WritableSignal<T[K] | undefined> | T[K];
+export type WritableSignals<T extends object> = {
+	[K in keyof T]?: WritableSignal<T[K] | undefined>;
 };
 
 export interface PropsConfig<U extends object> {
 	/**
-	 * Object containing, for each property, either its initial value, or a store that will contain the value at any time.
+	 * Object containing, for each property a store that will contain the value at any time.
 	 * When the value of a property is undefined or invalid, the value from the config is used.
 	 */
-	props?: ValuesOrWritableSignals<U>;
+	propsStores?: WritableSignals<U>;
+
+	/**
+	 * Object containing, for each property its initial value.
+	 * If a store is provided in {@link PropsConfig.propsStores|propsStores} for the same property,
+	 * the initial value provided in props is ignored.
+	 * When the value of a property is undefined or invalid, the value from the config is used.
+	 */
+	props?: Partial<U>;
 
 	/**
 	 * Either a store of objects containing, for each property, the default value,
