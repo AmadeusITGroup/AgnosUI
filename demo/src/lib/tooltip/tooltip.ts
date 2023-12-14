@@ -1,49 +1,52 @@
 import Tooltip from '$lib/tooltip/Tooltip.svelte';
-import type {Instance} from '@popperjs/core';
-import {createPopper} from '@popperjs/core';
+import {createFloatingUI} from '@agnos-ui/core/services/floatingUI';
+import {flip, offset} from '@floating-ui/dom';
 
-export function tooltip(node: HTMLElement, options: {content: string; placement?: 'top' | 'right' | 'bottom' | 'left'}) {
-	const button = node;
+export function tooltip(button: HTMLElement, options: {content: string}) {
 	const content = options.content;
-	const placement = options.placement;
 
-	let popperInstance: Instance | null;
-	let componentInstance: Tooltip;
+	let componentInstance: Tooltip | undefined;
 
-	button.addEventListener('mouseover', show);
-	button.addEventListener('mouseout', hide);
+	const {
+		directives: {floatingDirective, referenceDirective, arrowDirective},
+		stores: {placement$},
+	} = createFloatingUI({
+		props: {
+			arrowOptions: {
+				padding: 6,
+			},
+			computePositionOptions: {
+				placement: 'top',
+				middleware: [offset(8), flip()],
+			},
+		},
+	});
+
+	const directiveInstance = referenceDirective(button);
+
+	button.addEventListener('mouseenter', show);
+	button.addEventListener('mouseleave', hide);
 
 	function show() {
-		componentInstance = new Tooltip({
-			target: document.body,
-			props: {content, placement},
-		});
-
-		const tooltip = document.querySelector('#tooltip') as HTMLElement;
-		popperInstance = createPopper(button, tooltip, {
-			modifiers: [
-				{
-					name: 'offset',
-					options: {
-						offset: [0, 8],
-					},
-				},
-			],
-		});
+		if (!componentInstance) {
+			componentInstance = new Tooltip({
+				target: document.body,
+				props: {content, placement$, directive: floatingDirective, arrowDirective},
+			});
+		}
 	}
 
 	function hide() {
-		if (popperInstance) {
-			popperInstance.destroy();
-			popperInstance = null;
-		}
-		componentInstance.$destroy();
+		componentInstance?.$destroy();
+		componentInstance = undefined;
 	}
 
 	return {
 		destroy() {
-			button.removeEventListener('mouseover', show);
-			button.removeEventListener('mouseout', hide);
+			hide();
+			directiveInstance?.destroy?.();
+			button.removeEventListener('mouseenter', show);
+			button.removeEventListener('mouseleave', hide);
 		},
 	};
 }
