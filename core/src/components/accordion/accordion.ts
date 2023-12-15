@@ -1,11 +1,11 @@
 import type {ReadableSignals} from '../../utils/stores';
-import {bindableDerived, stateStores, writablesForProps, normalizeConfigStores, mergeConfigStores} from '../../utils/stores';
+import {stateStores, writablesForProps, normalizeConfigStores, mergeConfigStores} from '../../utils/stores';
 import type {TransitionFn} from '../../services/transitions/baseTransitions';
 import {createTransition} from '../../services/transitions/baseTransitions';
 import {collapseVerticalTransition} from '../../services/transitions/bootstrap/collapse';
 import type {ConfigValidator, Directive, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../../types';
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
-import {computed, readable, writable} from '@amadeus-it-group/tansu';
+import {computed, writable} from '@amadeus-it-group/tansu';
 import {noop} from '../../utils/internal/func';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 import {typeBoolean, typeFunction, typeString} from '../../utils/writables';
@@ -479,10 +479,9 @@ function createAccordionItem(
 	] = writablesForProps(defaultItemConfig, config, configItemValidator);
 
 	const initDone$ = writable(false);
-	const itemId$ = bindableDerived(readable(noop), [_dirtyItemId$], ([dirtyItemId]) => (dirtyItemId ? dirtyItemId : getItemId()));
-	const shouldBeInDOM$ = computed(() => {
-		return itemDestroyOnHide$() === false || !itemTransition.state$().hidden;
-	});
+	const _autoItemId$ = computed(() => getItemId());
+	const itemId$ = computed(() => _dirtyItemId$() || _autoItemId$());
+	const shouldBeInDOM$ = computed(() => itemDestroyOnHide$() === false || !itemTransition.state$().hidden);
 	const itemTransition = createTransition({
 		props: {
 			transition: itemTransition$,
