@@ -1,1 +1,0 @@
-import{f,u as i}from"./stores-ae26ce61.js";import{r as n}from"./index-a1897422.js";function m(u,e={},...a){const t=n.useRef(void 0);t.current||(t.current=u(...a),t.current.patch(e));const r=t.current,s=n.useRef(e);return n.useEffect(()=>{const c=f(s.current,e);s.current=e,c&&r.patch(c)},[e]),[i(r.state$),r]}export{m as u};
