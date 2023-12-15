@@ -308,3 +308,20 @@ export const bindableDerived = <T, U extends [WritableSignal<T>, ...StoreInput<a
 		equal,
 	});
 };
+
+export const bindableProp = <T>(
+	store$: WritableSignal<T, T | undefined>,
+	onChange$: ReadableSignal<(newValue: T) => void>,
+	adjustValue: (value: T) => T = identity,
+	equal?: (a: T, b: T) => boolean,
+) =>
+	asWritable(
+		computed(() => adjustValue(store$()), {equal}),
+		(newValue) => {
+			const adjustedValue = adjustValue(newValue);
+			// TODO: should we call equal to compare with the previous value before calling set and onChange?
+			// TODO: should we call onChange before set (optionnally onChange could cancel the change or modify the value)
+			store$.set(adjustedValue);
+			onChange$()(adjustedValue);
+		},
+	);

@@ -284,7 +284,7 @@ describe(`Rating`, () => {
 			expect(state).toMatchObject({rating: 10, visibleRating: 10, maxRating: 10});
 
 			rating.patch({maxRating: 11});
-			expect(state).toMatchObject({rating: 10, visibleRating: 10, maxRating: 11});
+			expect(state).toMatchObject({rating: 11, visibleRating: 11, maxRating: 11});
 
 			rating.patch({rating: -100});
 			expect(state).toMatchObject({rating: 0, visibleRating: 0, maxRating: 11});
@@ -619,12 +619,9 @@ describe(`Rating`, () => {
 			defConfig.set({rating: 5});
 			expect(state).toMatchObject({rating: 5});
 
-			rating.patch({maxRating: 4}); // this sets the rating to 4
+			rating.patch({maxRating: 4}); // the rating is corrected to 4, but not written in the prop
 			expect(state).toMatchObject({rating: 4});
-			defConfig.set({rating: 2}); // now this has no effect anymore
-			expect(state).toMatchObject({rating: 4});
-
-			rating.patch({rating: undefined}); // resetting the own value to undefined allows to follow again the defaults
+			defConfig.set({rating: 2}); // so changing the config continues to work
 			expect(state).toMatchObject({rating: 2});
 		});
 	});
