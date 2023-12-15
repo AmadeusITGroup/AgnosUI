@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-	import type {AccordionItemProps as Props, AccordionSlots as Slots, WidgetPropsProps} from '@agnos-ui/svelte-headless';
+	import type {AccordionItemProps as Props, AccordionSlots as Slots} from '@agnos-ui/svelte-headless';
 	import {Slot, callWidgetFactory, toSlotContextWidget} from '@agnos-ui/svelte-headless';
 	import {onMount} from 'svelte';
 	import ItemDefaultStructure from './ItemDefaultStructure.svelte';
@@ -12,7 +12,7 @@
 
 <script lang="ts">
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Props = WidgetPropsProps<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Props = Partial<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
 	type $$Slots = Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
 

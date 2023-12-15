@@ -3,8 +3,6 @@ import type {ComponentType, SvelteComponent} from 'svelte';
 
 export const useSvelteSlot = Symbol('useSvelteSlot');
 
-export type WidgetPropsProps<Props extends object> = Partial<Props>;
-
 export type WidgetPropsSlots<Props extends object> = {
 	[K in keyof Props & `slot${string}` as K extends `slot${infer U}` ? Uncapitalize<U> : never]: Props[K] extends SlotContent<infer U> ? U : never;
 };
