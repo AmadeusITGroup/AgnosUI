@@ -1,5 +1,5 @@
 import type {ReadableSignal, StoreInput, StoresInputValues, WritableSignal} from '@amadeus-it-group/tansu';
-import {asReadable, asWritable, batch, computed, derived, get, readable, writable} from '@amadeus-it-group/tansu';
+import {asReadable, asWritable, batch, computed, derived, equal as tansuDefaultEqual, get, readable, writable} from '@amadeus-it-group/tansu';
 import type {ConfigValidator, PropsConfig, ValuesOrReadableSignals, WritableWithDefaultOptions} from '../types';
 import {INVALID_VALUE} from '../types';
 import {identity} from './internal/func';
@@ -298,8 +298,8 @@ export const stateStores = <A extends {[key in `${string}$`]: ReadableSignal<any
 };
 
 /**
- * Creates a computed store that binds to multiple stores and triggers a callback when the value changes.
- * @param onChange$ - A readable signal callback function to execute when the value changes.
+ * Creates a derived store that binds to multiple stores and triggers a callback when the value changes for any reason.
+ * @param onChange$ - A readable signal containing a callback function to execute when the value changes.
  * @param stores - An array of Svelte stores, with the main store at index 0.
  * @param adjustValue - A function to adjust the value of the main store. By default, the value of the main store is returned.
  * @param equal - A function to determine if two values are equal. Used to compare the ajusted value with the current one.
@@ -312,21 +312,51 @@ export const bindableDerived = <T, U extends [WritableSignal<T>, ...StoreInput<a
 	equal = (currentValue: T, newValue: T) => newValue === currentValue,
 ) => {
 	let currentValue = stores[0]();
-	return derived(stores, {
-		derive(values) {
-			const newValue = adjustValue(values);
-			const rectifiedValue = !equal(values[0], newValue);
-			if (rectifiedValue) {
-				stores[0].set(newValue);
-			}
-			if (rectifiedValue || !equal(currentValue, newValue)) {
-				currentValue = newValue;
-				// TODO check if we should do this async to avoid issue
-				// with angular and react only when rectifiedValue is true?
-				onChange$()(newValue);
-			}
-			return newValue;
-		},
-		equal,
-	});
+	return asWritable(
+		derived(stores, {
+			derive(values) {
+				const newValue = adjustValue(values);
+				const rectifiedValue = !equal(values[0], newValue);
+				if (rectifiedValue) {
+					stores[0].set(newValue);
+				}
+				if (rectifiedValue || !equal(currentValue, newValue)) {
+					currentValue = newValue;
+					// TODO check if we should do this async to avoid issue
+					// with angular and react only when rectifiedValue is true?
+					onChange$()(newValue);
+				}
+				return newValue;
+			},
+			equal,
+		}),
+		stores[0].set.bind(stores[0]),
+	);
 };
+
+/**
+ * Creates a computed store that contains the adjusted value of the given store and that triggers a callback when the value changes from the set or update
+ * method of the returned writable store.
+ * @param store$ - store to be bound
+ * @param onChange$ - A readable signal containing a callback function to execute when the value changes from the set or update method of the returned writable store.
+ * @param adjustValue - A function to adjust the value of the store, called in a reactive context each time the value changes or any called dependency changes.
+ * By default, the value of store$ is returned.
+ * @param equal - A function to determine if two values are equal.
+ * @returns A writable store that contains the adjusted value of the given store, with the set or update functions that trigger the onChange$ callback.
+ */
+export const bindableProp = <T>(
+	store$: WritableSignal<T, T | undefined>,
+	onChange$: ReadableSignal<(newValue: T) => void>,
+	adjustValue: (value: T) => T = identity,
+	equal: (a: T, b: T) => boolean = tansuDefaultEqual,
+) =>
+	asWritable(
+		computed(() => adjustValue(store$()), {equal}),
+		(newValue) => {
+			const adjustedValue = adjustValue(newValue);
+			if (!equal(store$(), adjustedValue)) {
+				store$.set(adjustedValue);
+				onChange$()(adjustedValue);
+			}
+		},
+	);

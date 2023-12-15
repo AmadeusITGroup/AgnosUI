@@ -1,7 +1,7 @@
 import type {WritableSignal} from '@amadeus-it-group/tansu';
 import {computed, derived, writable} from '@amadeus-it-group/tansu';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
-import {bindableDerived, writablesForProps} from '../../utils/stores';
+import {bindableProp, writablesForProps} from '../../utils/stores';
 import {createStoreDirective, directiveSubscribe, mergeDirectives} from '../../utils/directive';
 import {stateStores} from '../../utils/stores';
 import {typeArray, typeBoolean, typeFunction, typeNumber, typeNumberInRangeFactory} from '../../utils/writables';
@@ -274,23 +274,16 @@ const computeCleanValue = (value: number, min: number, max: number, intStepSize:
 };
 
 /**
- * Method to update the dirtyValues for the slider keyboard navigation
+ * Method to update the values for the slider keyboard navigation
  * @param handleIndex - index of the handle to update
- * @param _dirtyValues$ - writable signal that contains dirtyValues
- * @param values - slider values
+ * @param values$ - writable signal that contains values
  * @param stepSize - slider step size
- * @param updateDirection - if equals 1 - value is increased, if equals -1 values is decreased
+ * @param updateDirection - if equals 1 value is increased, if equals -1 value is decreased
  */
-const updateDirtyValue = (
-	handleIndex: number,
-	_dirtyValues$: WritableSignal<number[]>,
-	values: number[],
-	stepSize: number,
-	updateDirection: number,
-) => {
-	_dirtyValues$.update((value) => {
+const updateValue = (handleIndex: number, values$: WritableSignal<number[]>, stepSize: number, updateDirection: number) => {
+	values$.update((value) => {
 		value = [...value];
-		value[handleIndex] = values[handleIndex] + stepSize * updateDirection;
+		value[handleIndex] = value[handleIndex] + stepSize * updateDirection;
 		return value;
 	});
 };
@@ -354,11 +347,16 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 	const _decimalPrecision$ = computed(() => Math.max(getDecimalPrecision(stepSize$()), getDecimalPrecision(min$()), getDecimalPrecision(max$())));
 	const _intStepSize$ = computed(() => stepSize$() * Math.pow(10, _decimalPrecision$()));
 
-	const values$ = bindableDerived(
+	const values$ = bindableProp(
+		_dirtyValues$,
 		onValuesChange$,
-		[_dirtyValues$, min$, max$, _intStepSize$, _decimalPrecision$],
-		([dirtyValues, min, max, intStepSize, decimalPrecision]) =>
-			dirtyValues.map((dv) => computeCleanValue(dv, min, max, intStepSize, decimalPrecision)),
+		(dirtyValues) => {
+			const min = min$();
+			const max = max$();
+			const intStepSize = _intStepSize$();
+			const decimalPrecision = _decimalPrecision$();
+			return dirtyValues.map((dv) => computeCleanValue(dv, min, max, intStepSize, decimalPrecision));
+		},
 		typeArray.equal,
 	);
 
@@ -544,7 +542,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			clickedPercent = rtl$() ? 1 - clickedPercent : clickedPercent;
 			const derivedHandleIndex = handleNumber ?? getClosestSliderHandle(clickedPercent);
 			const newValue = clickedPercent * (max$() - min$()) + min$();
-			_dirtyValues$.update((dh) => {
+			values$.update((dh) => {
 				dh = [...dh];
 				dh[derivedHandleIndex] = newValue;
 				return dh;
@@ -587,7 +585,6 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			keydown(event: KeyboardEvent, handleIndex: number) {
 				const {key} = event;
 				const rtl = rtl$(),
-					values = values$(),
 					stepSize = stepSize$(),
 					min = min$(),
 					max = max$(),
@@ -595,26 +592,26 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 				if (isInteractable$()) {
 					switch (key) {
 						case 'ArrowDown':
-							updateDirtyValue(handleIndex, _dirtyValues$, values, stepSize, getUpdateDirection(vertical, rtl, true));
+							updateValue(handleIndex, values$, stepSize, getUpdateDirection(vertical, rtl, true));
 							break;
 						case 'ArrowLeft':
-							updateDirtyValue(handleIndex, _dirtyValues$, values, stepSize, getUpdateDirection(vertical, rtl, false));
+							updateValue(handleIndex, values$, stepSize, getUpdateDirection(vertical, rtl, false));
 							break;
 						case 'ArrowUp':
-							updateDirtyValue(handleIndex, _dirtyValues$, values, stepSize, -1 * getUpdateDirection(vertical, rtl, true));
+							updateValue(handleIndex, values$, stepSize, -1 * getUpdateDirection(vertical, rtl, true));
 							break;
 						case 'ArrowRight':
-							updateDirtyValue(handleIndex, _dirtyValues$, values, stepSize, -1 * getUpdateDirection(vertical, rtl, false));
+							updateValue(handleIndex, values$, stepSize, -1 * getUpdateDirection(vertical, rtl, false));
 							break;
 						case 'Home':
-							_dirtyValues$.update((value) => {
+							values$.update((value) => {
 								value = [...value];
 								value[handleIndex] = min;
 								return value;
 							});
 							break;
 						case 'End':
-							_dirtyValues$.update((value) => {
+							values$.update((value) => {
 								value = [...value];
 								value[handleIndex] = max;
 								return value;

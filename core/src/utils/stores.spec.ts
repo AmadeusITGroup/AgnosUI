@@ -3,6 +3,7 @@ import {asWritable, computed, writable} from '@amadeus-it-group/tansu';
 import {beforeEach, describe, expect, test, vi} from 'vitest';
 import {
 	bindableDerived,
+	bindableProp,
 	createPatch,
 	findChangedProperties,
 	mergeConfigStores,
@@ -472,6 +473,113 @@ describe(`Stores service`, () => {
 			expect(values).toEqual([[1], [2]]);
 
 			dirtyValue$.set([5.6, 7.8]);
+			expect(dirtyValue$()).toEqual([5, 7]);
+			expect(onChangeCalls).toEqual([[2], [5, 7]]);
+			expect(values).toEqual([[1], [2], [5, 7]]);
+		});
+	});
+
+	describe('bindableProps', () => {
+		test('Basic functionalities', () => {
+			const onChangeCalls: number[] = [];
+			const values: number[] = [];
+			const dirtyValue$ = writable(1);
+			const onValueChange$ = writable((value: number) => {
+				onChangeCalls.push(value);
+			});
+			const valueMax$ = writable(2);
+
+			const value$ = bindableProp(dirtyValue$, onValueChange$, (dirtyValue) => Math.min(dirtyValue, valueMax$()));
+			const unsubscribe = value$.subscribe((value) => {
+				values.push(value);
+			});
+			expect(values).toEqual([1]);
+			valueMax$.set(3); // no change
+			expect(onChangeCalls).toEqual([]);
+			expect(values).toEqual([1]);
+
+			dirtyValue$.set(3); // changing the value from outside the widget does not raise onValueChange
+			expect(onChangeCalls).toEqual([]);
+			expect(values).toEqual([1, 3]);
+
+			value$.set(2); // changing the value from inside the widget raises onValueChange
+			expect(onChangeCalls).toEqual([2]);
+			expect(values).toEqual([1, 3, 2]);
+
+			valueMax$.set(4); // no change to the value
+			expect(onChangeCalls).toEqual([2]);
+			expect(values).toEqual([1, 3, 2]);
+
+			value$.set(5); // value changed from inside the widget above valueMax, it is adjusted (to 4) before being set
+			expect(onChangeCalls).toEqual([2, 4]);
+			expect(values).toEqual([1, 3, 2, 4]);
+
+			valueMax$.set(3); // value is now above valueMax, this is adjusted, but 4 is kept as the real value
+			expect(onChangeCalls).toEqual([2, 4]);
+			expect(values).toEqual([1, 3, 2, 4, 3]);
+
+			valueMax$.set(5); // when valueMax is again above the value, the real value 4 is used again
+			expect(onChangeCalls).toEqual([2, 4]);
+			expect(values).toEqual([1, 3, 2, 4, 3, 4]);
+
+			valueMax$.set(3); // when valueMax is again below the value, the value is adjusted to 3
+			expect(onChangeCalls).toEqual([2, 4]);
+			expect(values).toEqual([1, 3, 2, 4, 3, 4, 3]);
+
+			value$.set(3); // the user touches the value, even though it does not change in a visible way, onValueChange is called
+			expect(onChangeCalls).toEqual([2, 4, 3]);
+			expect(values).toEqual([1, 3, 2, 4, 3, 4, 3]);
+
+			const newListener = vi.fn((value) => {
+				// this should do nothing
+				valueMax$.set(5);
+			});
+			onValueChange$.set(newListener);
+			value$.set(2);
+			expect(onChangeCalls).toEqual([2, 4, 3]); // listener was changed, old listener not called
+			expect(newListener).toHaveBeenCalledWith(2);
+			expect(newListener).toHaveBeenCalledOnce();
+			expect(values).toEqual([1, 3, 2, 4, 3, 4, 3, 2]);
+			unsubscribe();
+		});
+
+		test(`should override equals function`, () => {
+			const onChangeCalls: number[][] = [];
+			const values: number[][] = [];
+			const dirtyValue$ = writable([1]);
+			const onValueChange$ = writable((value: number[]) => {
+				onChangeCalls.push(value);
+			});
+
+			const value$ = bindableProp(
+				dirtyValue$,
+				onValueChange$,
+				(dirtyValue) => dirtyValue.map((dv) => Math.floor(dv)),
+				(a, b) => a.every((val, index) => val === b[index]),
+			);
+			value$.subscribe((value) => values.push(value));
+			expect(values).toEqual([[1]]);
+
+			value$.set([1]); // no change
+			expect(onChangeCalls).toEqual([]);
+			expect(values).toEqual([[1]]);
+
+			value$.set([2.5]);
+			expect(dirtyValue$()).toEqual([2]);
+			expect(onChangeCalls).toEqual([[2]]);
+			expect(values).toEqual([[1], [2]]);
+
+			dirtyValue$.set([5.6, 7.8]);
+			expect(dirtyValue$()).toEqual([5.6, 7.8]);
+			expect(onChangeCalls).toEqual([[2]]);
+			expect(values).toEqual([[1], [2], [5, 7]]);
+
+			value$.set([5.5, 7.4]); // actually sets [5, 7]
+			expect(dirtyValue$()).toEqual([5, 7]);
+			expect(onChangeCalls).toEqual([[2], [5, 7]]);
+			expect(values).toEqual([[1], [2], [5, 7]]);
+
+			value$.set([5, 7]); // no change
 			expect(dirtyValue$()).toEqual([5, 7]);
 			expect(onChangeCalls).toEqual([[2], [5, 7]]);
 			expect(values).toEqual([[1], [2], [5, 7]]);

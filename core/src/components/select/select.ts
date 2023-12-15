@@ -1,4 +1,4 @@
-import {asWritable, computed, writable} from '@amadeus-it-group/tansu';
+import {asWritable, batch, computed, writable} from '@amadeus-it-group/tansu';
 import type {Placement} from '@floating-ui/dom';
 import {autoPlacement, offset, size} from '@floating-ui/dom';
 import type {FloatingUI} from '../../services/floatingUI';
@@ -10,7 +10,7 @@ import {createNavManager} from '../../services/navManager';
 import type {Directive, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../../types';
 import {bindDirective} from '../../utils/directive';
 import {noop} from '../../utils/internal/func';
-import {bindableDerived, stateStores, writablesForProps} from '../../utils/stores';
+import {bindableDerived, bindableProp, stateStores, writablesForProps} from '../../utils/stores';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 
 /**
@@ -358,7 +358,7 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 	] = writablesForProps<SelectProps<Item>>(defaultConfig, config);
 	const {selected$} = stateProps;
 
-	const filterText$ = bindableDerived(onFilterTextChange$, [_dirtyFilterText$]);
+	const filterText$ = bindableProp(_dirtyFilterText$, onFilterTextChange$);
 
 	const {hasFocus$, directive: hasFocusDirective} = createHasFocus();
 	const open$ = bindableDerived(onOpenChange$, [_dirtyOpen$, hasFocus$], ([_dirtyOpen, hasFocus]) => _dirtyOpen && hasFocus);
@@ -551,7 +551,7 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 			open: () => widget.api.toggle(true),
 			close: () => widget.api.toggle(false),
 			toggle(isOpen?: boolean) {
-				_dirtyOpen$.update((value) => (isOpen != null ? isOpen : !value));
+				open$.update((value) => (isOpen != null ? isOpen : !value));
 			},
 		},
 		directives: {
@@ -563,9 +563,9 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 		actions: {
 			onInput({target}: {target: HTMLInputElement}) {
 				const value = target.value;
-				patch({
-					open: value != null && value !== '',
-					filterText: value,
+				batch(() => {
+					open$.set(value != null && value !== '');
+					filterText$.set(value);
 				});
 			},
 
@@ -607,7 +607,7 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 						break;
 					}
 					case 'Escape':
-						_dirtyOpen$.set(false);
+						open$.set(false);
 						break;
 					default:
 						keyManaged = false;

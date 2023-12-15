@@ -124,7 +124,7 @@ describe(`Pagination`, () => {
 		expect(state).toMatchObject({page: 1, pageCount: 1});
 
 		pagination.patch({collectionSize: 60});
-		expect(state).toMatchObject({page: 1, pageCount: 6});
+		expect(state).toMatchObject({page: 5, pageCount: 6});
 
 		pagination.patch({page: 5});
 		expect(state).toMatchObject({page: 5, pageCount: 6});
@@ -395,20 +395,15 @@ describe(`Pagination`, () => {
 		function onPageChangeCustom(page: number) {}
 		const mock = vi.fn().mockImplementation(onPageChangeCustom);
 		pagination.patch({onPageChange: mock});
-		pagination.patch({collectionSize: 70, page: 2});
+		pagination.patch({collectionSize: 70, page: 4});
+		expect(mock).not.toHaveBeenCalled();
+		pagination.actions.previous();
 		expect(mock).toHaveBeenCalledTimes(1);
-		expect(mock).toHaveBeenCalledWith(2);
+		expect(mock).toHaveBeenCalledWith(3);
 		mock.mockRestore();
 		pagination.patch({collectionSize: 150, page: 2});
 		expect(mock).not.toHaveBeenCalled();
 		pagination.patch({collectionSize: 1});
-		expect(mock).toHaveBeenCalledTimes(1);
-		expect(mock).toHaveBeenCalledWith(1);
-		mock.mockRestore();
-		pagination.patch({collectionSize: 1, page: 10});
-		// value was adjusted, onPageChange has to be called even though the new value
-		// is the same as the previous call to onPageChange
-		expect(mock).toHaveBeenCalledWith(1);
-		mock.mockRestore();
+		expect(mock).not.toHaveBeenCalled();
 	});
 });
