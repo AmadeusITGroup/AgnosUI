@@ -1,5 +1,5 @@
-import type {ReadableSignal, StoreInput, StoresInputValues, WritableSignal} from '@amadeus-it-group/tansu';
-import {asReadable, asWritable, batch, computed, derived, get, readable, writable} from '@amadeus-it-group/tansu';
+import type {ReadableSignal, WritableSignal} from '@amadeus-it-group/tansu';
+import {asReadable, asWritable, batch, computed, get, readable, writable} from '@amadeus-it-group/tansu';
 import type {ConfigValidator, PropsConfig, ValuesOrReadableSignals, WritableWithDefaultOptions} from '../types';
 import {INVALID_VALUE} from '../types';
 import {identity} from './internal/func';
@@ -275,36 +275,18 @@ export const stateStores = <A extends {[key in `${string}$`]: ReadableSignal<any
 	};
 };
 
-/**
- * Creates a computed store that binds to multiple stores and triggers a callback when the value changes.
- * @param onChange$ - A readable signal callback function to execute when the value changes.
- * @param stores - An array of Svelte stores, with the main store at index 0.
- * @param adjustValue - A function to adjust the value of the main store. By default, the value of the main store is returned.
- * @param equal - A function to determine if two values are equal. Used to compare the ajusted value with the current one.
- * @returns The derived store that reflects the combined state of the input stores.
- */
-export const bindableDerived = <T, U extends [WritableSignal<T>, ...StoreInput<any>[]]>(
-	onChange$: ReadableSignal<(value: T) => void>,
-	stores: U,
-	adjustValue = (arg: StoresInputValues<U>) => arg[0] as T,
-	equal = (currentValue: T, newValue: T) => newValue === currentValue,
-) => {
-	let currentValue = stores[0]();
-	return derived(stores, {
-		derive(values) {
-			const newValue = adjustValue(values);
-			const rectifiedValue = !equal(values[0], newValue);
-			if (rectifiedValue) {
-				stores[0].set(newValue);
-			}
-			if (rectifiedValue || !equal(currentValue, newValue)) {
-				currentValue = newValue;
-				// TODO check if we should do this async to avoid issue
-				// with angular and react only when rectifiedValue is true?
-				onChange$()(newValue);
-			}
-			return newValue;
+export const bindableProp = <T>(
+	store$: WritableSignal<T, T | undefined>,
+	onChange: ReadableSignal<(newValue: T) => void>,
+	adjustValue: (value: T) => T = identity,
+	equal?: (a: T, b: T) => boolean,
+) =>
+	asWritable(
+		computed(() => adjustValue(store$()), {equal}),
+		(newValue) => {
+			const adjustedValue = adjustValue(newValue);
+			// TODO: should we call equal to compare with the previous value before calling set and onChange?
+			store$.set(adjustedValue);
+			onChange()(adjustedValue);
 		},
-		equal,
-	});
-};
+	);

@@ -1,4 +1,4 @@
-import {asWritable, computed, writable} from '@amadeus-it-group/tansu';
+import {asWritable, batch, computed, writable} from '@amadeus-it-group/tansu';
 import type {Placement} from '@floating-ui/dom';
 import {autoPlacement, offset, size} from '@floating-ui/dom';
 import type {FloatingUI} from '../../services/floatingUI';
@@ -7,7 +7,7 @@ import type {HasFocus} from '../../services/focustrack';
 import {createHasFocus} from '../../services/focustrack';
 import type {PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../../types';
 import {noop} from '../../utils/internal/func';
-import {bindableDerived, stateStores, writablesForProps} from '../../utils/stores';
+import {bindableProp, stateStores, writablesForProps} from '../../utils/stores';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 
 /**
@@ -337,23 +337,25 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 	const [
 		{
 			open$: _dirtyOpen$,
+			onOpenChange$,
 			filterText$: _dirtyFilterText$,
+			onFilterTextChange$,
 			items$,
 			itemIdFn$,
-			onOpenChange$,
-			onFilterTextChange$,
-			onSelectedChange$,
 			allowedPlacements$,
+			selected$: _dirtySelected$,
+			onSelectedChange$,
 			...stateProps
 		},
 		patch,
 	] = writablesForProps<SelectProps<Item>>(defaultConfig, config);
-	const {selected$} = stateProps;
 
-	const filterText$ = bindableDerived(onFilterTextChange$, [_dirtyFilterText$]);
+	const filterText$ = bindableProp(_dirtyFilterText$, onFilterTextChange$);
 
 	const {hasFocus$, directive: hasFocusDirective} = createHasFocus();
-	const open$ = bindableDerived(onOpenChange$, [_dirtyOpen$, hasFocus$], ([_dirtyOpen, hasFocus]) => _dirtyOpen && hasFocus);
+	// TODO: should onOpenChange be called when the popup is closed because the focus changes?
+	const open$ = bindableProp(_dirtyOpen$, onOpenChange$, (_dirtyOpen) => _dirtyOpen && hasFocus$());
+	const selected$ = bindableProp(_dirtySelected$, onSelectedChange$);
 
 	const selectedContextsMap$ = computed(() => {
 		const selectedItemsContext = new Map<string, ItemContext<Item>>();
@@ -441,6 +443,7 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 			selectedContexts$,
 			filterText$,
 			placement$,
+			selected$,
 
 			...stateProps,
 		}),
@@ -482,7 +485,6 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 						selectedItems.splice(index, 1);
 					}
 
-					onSelectedChange$()?.(selectedItems);
 					return selectedItems;
 				});
 			},
@@ -531,7 +533,7 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 			open: () => widget.api.toggle(true),
 			close: () => widget.api.toggle(false),
 			toggle(isOpen?: boolean) {
-				_dirtyOpen$.update((value) => (isOpen != null ? isOpen : !value));
+				open$.update((value) => (isOpen != null ? isOpen : !value));
 			},
 		},
 		directives: {
@@ -541,10 +543,10 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 		},
 		actions: {
 			onInput({target}: {target: HTMLInputElement}) {
-				const value = target.value;
-				patch({
-					open: value != null && value !== '',
-					filterText: value,
+				batch(() => {
+					const filterText = target.value;
+					open$.set(filterText != null && filterText !== '');
+					filterText$.set(filterText);
 				});
 			},
 			onInputKeydown(e: KeyboardEvent) {
@@ -581,7 +583,7 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 						break;
 					}
 					case 'Escape':
-						_dirtyOpen$.set(false);
+						open$.set(false);
 						break;
 					default:
 						keyManaged = false;
