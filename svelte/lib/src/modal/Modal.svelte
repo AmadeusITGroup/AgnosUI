@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-	import type {ModalWidget, ModalProps as Props, ModalSlots as Slots, WidgetPropsProps} from '@agnos-ui/svelte-headless';
+	import type {ModalWidget, ModalProps as Props, ModalSlots as Slots} from '@agnos-ui/svelte-headless';
 	import {Slot, callWidgetFactory, createModal, toSlotContextWidget} from '@agnos-ui/svelte-headless';
 	import ModalDefaultHeader from './ModalDefaultHeader.svelte';
 	import ModalDefaultStructure from './ModalDefaultStructure.svelte';
@@ -13,7 +13,7 @@
 <script lang="ts">
 	type Data = $$Generic; // eslint-disable-line no-undef
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Props = WidgetPropsProps<Props<Data>>; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Props = Partial<Props<Data>>; // eslint-disable-line @typescript-eslint/no-unused-vars
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
 	type $$Slots = Slots<Data>; // eslint-disable-line @typescript-eslint/no-unused-vars
 

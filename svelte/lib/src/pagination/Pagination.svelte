@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-	import type {PaginationProps as Props, PaginationSlots as Slots, WidgetPropsProps} from '@agnos-ui/svelte-headless';
+	import type {PaginationProps as Props, PaginationSlots as Slots} from '@agnos-ui/svelte-headless';
 	import {Slot, callWidgetFactory, createPagination, toSlotContextWidget} from '@agnos-ui/svelte-headless';
 	import PaginationDefaultPages from './PaginationDefaultPages.svelte';
 
@@ -10,7 +10,7 @@
 
 <script lang="ts">
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Props = WidgetPropsProps<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Props = Partial<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
 	type $$Slots = Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
 

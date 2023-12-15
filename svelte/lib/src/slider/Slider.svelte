@@ -1,11 +1,11 @@
 <script lang="ts" context="module">
-	import type {SliderProps as Props, WidgetPropsProps} from '@agnos-ui/svelte-headless';
+	import type {SliderProps as Props} from '@agnos-ui/svelte-headless';
 	import {callWidgetFactory, createSlider} from '@agnos-ui/svelte-headless';
 </script>
 
 <script lang="ts">
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Props = WidgetPropsProps<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Props = Partial<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
 
 	export let values: number[] | undefined = undefined;
 

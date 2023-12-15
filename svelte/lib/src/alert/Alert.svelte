@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-	import type {AlertProps as Props, AlertSlots as Slots, WidgetPropsProps} from '@agnos-ui/svelte-headless';
+	import type {AlertProps as Props, AlertSlots as Slots} from '@agnos-ui/svelte-headless';
 	import {Slot, callWidgetFactory, createAlert} from '@agnos-ui/svelte-headless';
 	import AlertDefaultStructure from './AlertDefaultStructure.svelte';
 
@@ -9,7 +9,7 @@
 </script>
 
 <script lang="ts">
-	type $$Props = WidgetPropsProps<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Props = Partial<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
 	type $$Slots = Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
 	const widget = callWidgetFactory({
 		factory: createAlert,
