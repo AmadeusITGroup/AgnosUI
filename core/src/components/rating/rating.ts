@@ -1,6 +1,6 @@
 import {computed, writable} from '@amadeus-it-group/tansu';
 import {INVALID_VALUE} from '../../types';
-import {bindableDerived, stateStores, writablesForProps} from '../../utils/stores';
+import {bindableProp, stateStores, writablesForProps} from '../../utils/stores';
 import {clamp, isNumber} from '../../utils/internal/checks';
 import {typeBoolean, typeFunction, typeNumber, typeString} from '../../utils/writables';
 import type {ConfigValidator, PropsConfig, SlotContent, Widget} from '../../types';
@@ -221,7 +221,7 @@ export function createRating(config?: PropsConfig<RatingProps>): RatingWidget {
 	// clean inputs adjustment to valid range
 	const tabindex$ = computed(() => (disabled$() ? -1 : _dirtyTabindex$()));
 
-	const rating$ = bindableDerived(onRatingChange$, [_dirtyRating$, maxRating$], ([dirtyRating, maxRating]) => clamp(dirtyRating, maxRating));
+	const rating$ = bindableProp(_dirtyRating$, onRatingChange$, (dirtyRating) => clamp(dirtyRating, maxRating$()));
 
 	// internal inputs
 	const _hoveredRating$ = writable(0);
@@ -229,9 +229,8 @@ export function createRating(config?: PropsConfig<RatingProps>): RatingWidget {
 	// computed
 	const isInteractive$ = computed(() => !disabled$() && !readonly$());
 	const visibleRating$ = computed(() => {
-		const rating = rating$(); // call rating unconditionnally (for the bindableDerived to stay active)
 		const hoveredRating = _hoveredRating$();
-		return hoveredRating !== 0 ? hoveredRating : rating;
+		return hoveredRating !== 0 ? hoveredRating : rating$();
 	});
 	const ariaValueText$ = computed(() => ariaValueTextFn$()(visibleRating$(), maxRating$()));
 	const stars$ = computed(() => {
@@ -256,7 +255,7 @@ export function createRating(config?: PropsConfig<RatingProps>): RatingWidget {
 		actions: {
 			click: (index: number) => {
 				if (isInteractive$() && index > 0 && index <= maxRating$()) {
-					patch({rating: rating$() === index && resettable$() ? 0 : index});
+					rating$.update((rating) => (rating === index && resettable$() ? 0 : index));
 				}
 			},
 			hover: (index: number) => {
@@ -277,19 +276,19 @@ export function createRating(config?: PropsConfig<RatingProps>): RatingWidget {
 					switch (key) {
 						case 'ArrowLeft':
 						case 'ArrowDown':
-							patch({rating: rating$() - 1});
+							rating$.update((rating) => rating - 1);
 							break;
 						case 'ArrowRight':
 						case 'ArrowUp':
-							patch({rating: rating$() + 1});
+							rating$.update((rating) => rating + 1);
 							break;
 						case 'Home':
 						case 'PageDown':
-							patch({rating: 0});
+							rating$.set(0);
 							break;
 						case 'End':
 						case 'PageUp':
-							patch({rating: maxRating$()});
+							rating$.set(maxRating$());
 							break;
 						default:
 							return;

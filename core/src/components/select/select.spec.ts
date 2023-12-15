@@ -195,7 +195,7 @@ describe(`Select model`, () => {
 					visibleItems: expectedState.visibleItems.filter(({item}) => item.includes(text)),
 				});
 
-				selectWidget.patch({filterText: text});
+				selectWidget.actions.onInput({target: {value: text}});
 				expect(getState(), 'state after text filtering').toStrictEqual(expectedState);
 
 				text = 'Bb';
@@ -203,7 +203,7 @@ describe(`Select model`, () => {
 					filterText: text,
 				});
 
-				selectWidget.patch({filterText: text});
+				selectWidget.actions.onInput({target: {value: text}});
 				expect(getState(), 'filtering with different case').toEqual(expectedState);
 			});
 
