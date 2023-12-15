@@ -1,9 +1,8 @@
 import {clamp} from '../../utils/internal/checks';
 import {typeBoolean, typeFunction, typeNumber, typeString} from '../../utils/writables';
-import {bindableDerived, stateStores, writablesForProps} from '../../utils/stores';
+import {stateStores, writablesForProps} from '../../utils/stores';
 import type {ConfigValidator, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../../types';
-import {computed, readable} from '@amadeus-it-group/tansu';
-import {noop} from '../../utils/internal/func';
+import {computed} from '@amadeus-it-group/tansu';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 
 export type ProgressbarContext = WidgetSlotContext<ProgressbarWidget>;
@@ -138,8 +137,8 @@ export function createProgressbar(config?: PropsConfig<ProgressbarProps>): Progr
 		patch,
 	] = writablesForProps(defaultConfig, config, configValidator);
 
-	const max$ = bindableDerived(readable(noop), [_dirtyMaximum$, min$], ([dirtyMaximum, minimum]) => Math.max(minimum, dirtyMaximum));
-	const value$ = bindableDerived(readable(noop), [_dirtyValue$, min$, max$], ([dirtyValue, min, max]) => clamp(dirtyValue, max, min));
+	const max$ = computed(() => Math.max(min$(), _dirtyMaximum$()));
+	const value$ = computed(() => clamp(_dirtyValue$(), max$(), min$()));
 	const percentage$ = computed(() => {
 		const max = max$();
 		const min = min$();

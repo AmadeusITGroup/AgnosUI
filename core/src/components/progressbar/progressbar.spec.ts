@@ -45,7 +45,7 @@ describe(`Progressbar`, () => {
 		expect(state).toStrictEqual(expectedState);
 
 		progressbar.patch({min: 5});
-		expectedState = {...expectedState, min: 5, max: 10, value: 10, percentage: 100, started: true, finished: true};
+		expectedState = {...expectedState, min: 5, max: 5, value: 5, finished: true};
 		expect(state).toStrictEqual(expectedState);
 
 		progressbar.patch({max: 0});
@@ -65,7 +65,7 @@ describe(`Progressbar`, () => {
 		expect(state).toStrictEqual(expectedState);
 
 		progressbar.patch({max: 5});
-		expectedState = {...expectedState, min: 1, max: 5, percentage: 50, finished: false};
+		expectedState = {...expectedState, min: 1, max: 5, percentage: 75, value: 4, finished: false};
 		expect(state).toStrictEqual(expectedState);
 
 		progressbar.patch({min: 4});
