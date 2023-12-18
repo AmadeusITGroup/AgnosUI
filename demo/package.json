@@ -18,7 +18,7 @@
 	"devDependencies": {
 		"@stackblitz/sdk": "^1.9.0",
 		"@sveltejs/adapter-static": "^2.0.3",
-		"@sveltejs/kit": "^1.28.0",
+		"@sveltejs/kit": "^1.30.3",
 		"@sveltejs/vite-plugin-svelte": "^2.5.3",
 		"@types/dom-view-transitions": "^1.0.4",
 		"bootstrap-icons": "^1.11.2",
