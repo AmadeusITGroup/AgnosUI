@@ -1,6 +1,7 @@
 <script lang="ts">
-	import type {RatingProps} from '@agnos-ui/svelte';
-	import {createWidgetsDefaultConfig, Rating} from '@agnos-ui/svelte';
+	import type {RatingProps} from '@agnos-ui/svelte/components/rating';
+	import {Rating} from '@agnos-ui/svelte/components/rating';
+	import {createWidgetsDefaultConfig} from '@agnos-ui/svelte/config';
 	import CustomStar from './CustomStar.svelte';
 
 	const widgetsConfig$ = createWidgetsDefaultConfig();

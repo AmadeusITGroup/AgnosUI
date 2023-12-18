@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {Slider} from '@agnos-ui/svelte';
+	import {Slider} from '@agnos-ui/svelte/components/slider';
 	import {hashChangeHook} from '../../utils';
 
 	const props$ = hashChangeHook('slider');

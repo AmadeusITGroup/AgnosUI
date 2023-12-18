@@ -1,5 +1,5 @@
 import {computed} from '@amadeus-it-group/tansu';
-import {createWidgetsDefaultConfig} from '@agnos-ui/svelte';
+import {createWidgetsDefaultConfig} from '@agnos-ui/svelte/config';
 import {hashObject$} from '@agnos-ui/common/utils';
 import {getPropValues} from '@agnos-ui/common/propsValues';
 

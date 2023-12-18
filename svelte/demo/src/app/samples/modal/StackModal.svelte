@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type {ModalSlots} from '@agnos-ui/svelte';
-	import {openModal} from '@agnos-ui/svelte';
+	import type {ModalSlots} from '@agnos-ui/svelte/components/modal';
+	import {openModal} from '@agnos-ui/svelte/components/modal';
 	import Self from './StackModal.svelte';
 
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348

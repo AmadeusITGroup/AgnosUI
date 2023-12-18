@@ -1,6 +1,6 @@
 <script lang="ts">
 	import {abortPrevious, debounce} from '@agnos-ui/common/samples/utils/debounce';
-	import {Select} from '@agnos-ui/svelte';
+	import {Select} from '@agnos-ui/svelte/components/select';
 
 	import '@agnos-ui/common/samples/select/custom.scss';
 

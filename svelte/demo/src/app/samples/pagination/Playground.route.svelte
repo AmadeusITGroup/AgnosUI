@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {Pagination} from '@agnos-ui/svelte';
+	import {Pagination} from '@agnos-ui/svelte/components/pagination';
 	import {hashChangeHook} from '../../utils';
 
 	const props$ = hashChangeHook('pagination');

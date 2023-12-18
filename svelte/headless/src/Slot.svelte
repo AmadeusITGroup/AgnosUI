@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type {SlotContent, SlotSvelteComponent} from './slotTypes';
-	import {isSvelteComponent} from './utils';
-	import {useSvelteSlot} from './slotTypes';
+	import type {SlotContent, SlotSvelteComponent} from './types';
+	import {isSvelteComponent} from './utils/widget';
+	import {useSvelteSlot} from './types';
 	type Props = $$Generic<object>; // eslint-disable-line no-undef
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars

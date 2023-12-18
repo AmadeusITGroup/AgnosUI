@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '@agnos-ui/common/samples/rating/custom.scss';
-	import {Rating} from '@agnos-ui/svelte';
+	import {Rating} from '@agnos-ui/svelte/components/rating';
 </script>
 
 <Rating className="rating-custom" rating={7} ariaLabel="custom rating">
