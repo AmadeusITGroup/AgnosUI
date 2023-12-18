@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {Alert} from '@agnos-ui/svelte';
+	import {Alert} from '@agnos-ui/svelte/components/alert';
 
 	let alert: Alert;
 	let [animationOnInit, animation, dismissible] = [true, true, true];

@@ -1,10 +1,12 @@
-import type {WidgetsConfig as CoreWidgetsConfig, Partial2Levels, Widget, WidgetFactory, WidgetProps, WidgetsConfigStore} from '@agnos-ui/core';
-import {createWidgetsConfig} from '@agnos-ui/core';
+import {createWidgetsConfig} from '@agnos-ui/core/config';
+import type {WidgetsConfig as CoreWidgetsConfig, Partial2Levels, WidgetsConfigStore} from '@agnos-ui/core/config';
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {computed} from '@amadeus-it-group/tansu';
 import {getContext, setContext} from 'svelte';
-import {callWidgetFactoryWithConfig} from '.';
-import type {AdaptPropsSlots, SlotsPresent} from './slotTypes';
+import {callWidgetFactoryWithConfig} from './utils/widget';
+import type {AdaptPropsSlots, SlotsPresent, Widget, WidgetProps, WidgetFactory} from './types';
+
+export * from '@agnos-ui/core/config';
 
 export type WidgetsConfig = {
 	[WidgetName in keyof CoreWidgetsConfig]: AdaptPropsSlots<CoreWidgetsConfig[WidgetName]>;
@@ -51,7 +53,7 @@ export const widgetsConfigFactory = <Config extends {[widgetName: string]: objec
 	 * });
 	 * ```
 	 */
-	const createWidgetsDefaultConfig = (adaptParentConfig?: (config: Partial2Levels<Config>) => Partial2Levels<Config>) => {
+	const createWidgetsDefaultConfig = (adaptParentConfig?: (config: Partial2Levels<Config>) => Partial2Levels<Config>): WidgetsConfigStore<Config> => {
 		const parent$ = getContext<WidgetsConfigStore<Config>>(widgetsDefaultConfigKey);
 		const child$ = createWidgetsConfig(parent$, adaptParentConfig);
 		setContext(widgetsDefaultConfigKey, child$);

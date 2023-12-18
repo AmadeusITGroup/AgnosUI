@@ -1,5 +1,6 @@
 <script lang="ts">
-	import {Select, createWidgetsDefaultConfig} from '@agnos-ui/svelte';
+	import {Select} from '@agnos-ui/svelte/components/select';
+	import {createWidgetsDefaultConfig} from '@agnos-ui/svelte/config';
 
 	const mainList = ['Action 1', 'Action 2', 'Action 3', 'Other 1', 'Other 2', 'Other 3'];
 

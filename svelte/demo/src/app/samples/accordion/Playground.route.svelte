@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {Accordion, AccordionItem} from '@agnos-ui/svelte';
+	import {Accordion, AccordionItem} from '@agnos-ui/svelte/components/accordion';
 	import {hashChangeHook} from '../../utils';
 
 	const props$ = hashChangeHook('accordion');

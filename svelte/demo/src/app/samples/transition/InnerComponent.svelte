@@ -1,7 +1,8 @@
 <script context="module" lang="ts">
 	import {writable} from '@amadeus-it-group/tansu';
-	import type {TransitionFn} from '@agnos-ui/core';
-	import {collapseHorizontalTransition, collapseVerticalTransition, createTransition, fadeTransition} from '@agnos-ui/core';
+	import type {TransitionFn} from '@agnos-ui/svelte/services/transitions/baseTransitions';
+	import {createTransition} from '@agnos-ui/svelte/services/transitions/baseTransitions';
+	import {collapseHorizontalTransition, collapseVerticalTransition, fadeTransition} from '@agnos-ui/svelte/services/transitions/bootstrap';
 
 	const paramTransition$ = writable(collapseVerticalTransition);
 	const paramAnimation$ = writable(true);

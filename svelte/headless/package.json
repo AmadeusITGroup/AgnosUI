@@ -9,13 +9,42 @@
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
-			"svelte": "./dist/index.js"
+			"default": "./dist/index.js"
+		},
+		"./components/*": {
+			"types": "./dist/components/*/*.d.ts",
+			"default": "./dist/components/*/*.js"
+		},
+		"./config": {
+			"types": "./dist/config.d.ts",
+			"default": "./dist/config.js"
+		},
+		"./slot": {
+			"types": "./dist/slot.d.ts",
+			"default": "./dist/slot.js"
+		},
+		"./types": {
+			"types": "./dist/types.d.ts",
+			"default": "./dist/types.js"
+		},
+		"./services/*": {
+			"types": "./dist/generated/services/*.d.ts",
+			"default": "./dist/generated/services/*.js"
+		},
+		"./services/transitions/*": {
+			"types": "./dist/generated/services/transitions/*.d.ts",
+			"default": "./dist/generated/services/transitions/*.js"
+		},
+		"./utils/*": {
+			"types": "./dist/generated/utils/*.d.ts",
+			"default": "./dist/generated/utils/*.js"
 		}
 	},
 	"scripts": {
-		"build:package": "svelte-package -i src && node ../../scripts/buildPackageJson.js . dist",
+		"build:package": "npm run generate:exports && svelte-package -i src && node ../../scripts/buildPackageJson.js . dist",
 		"build": "npm run build:package && npm run check",
-		"check": "svelte-check --fail-on-warnings --output human-verbose"
+		"check": "svelte-check --fail-on-warnings --output human-verbose",
+		"generate:exports": "node ../../scripts/generateExports.js svelte/headless core @agnos-ui/core"
 	},
 	"dependencies": {
 		"@agnos-ui/core": "",

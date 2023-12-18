@@ -1,5 +1,6 @@
 <script lang="ts">
-	import {Alert, createWidgetsDefaultConfig} from '@agnos-ui/svelte';
+	import {Alert} from '@agnos-ui/svelte/components/alert';
+	import {createWidgetsDefaultConfig} from '@agnos-ui/svelte/config';
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const widgetsConfig$ = createWidgetsDefaultConfig();

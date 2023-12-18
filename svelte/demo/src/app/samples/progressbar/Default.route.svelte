@@ -1,5 +1,6 @@
 <script lang="ts">
-	import {Progressbar, createWidgetsDefaultConfig} from '@agnos-ui/svelte';
+	import {Progressbar} from '@agnos-ui/svelte/components/progressbar';
+	import {createWidgetsDefaultConfig} from '@agnos-ui/svelte/config';
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const widgetsConfig$ = createWidgetsDefaultConfig();

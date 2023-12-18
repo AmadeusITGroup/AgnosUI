@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type {NavManagerItemConfig} from '@agnos-ui/core';
-	import {createNavManager} from '@agnos-ui/core';
+	import type {NavManagerItemConfig} from '@agnos-ui/svelte/services/navManager';
+	import {createNavManager} from '@agnos-ui/svelte/services/navManager';
 
 	const {directive, focusLeft, focusRight, focusFirst, focusLast} = createNavManager();
 

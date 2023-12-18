@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type {PaginationSlots} from '@agnos-ui/svelte';
-	import {Slot} from '@agnos-ui/svelte';
+	import type {PaginationSlots} from '@agnos-ui/svelte/components/pagination';
+	import {Slot} from '@agnos-ui/svelte/slot';
 
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
 	type $$Props = PaginationSlots['pages']; // eslint-disable-line @typescript-eslint/no-unused-vars

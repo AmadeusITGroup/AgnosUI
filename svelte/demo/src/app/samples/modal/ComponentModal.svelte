@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type {ModalSlots} from '@agnos-ui/svelte';
+	import type {ModalSlots} from '@agnos-ui/svelte/components/modal';
 	type ModalContent = {name: string};
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
 	type $$Props = ModalSlots<ModalContent>['default']; // eslint-disable-line @typescript-eslint/no-unused-vars
