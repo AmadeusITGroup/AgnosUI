@@ -12,7 +12,7 @@
 		"svelte-check": "svelte-check"
 	},
 	"dependencies": {
-		"@popperjs/core": "^2.11.8",
+		"@floating-ui/dom": "^1.5.3",
 		"highlight.js": "^11.9.0"
 	},
 	"devDependencies": {
