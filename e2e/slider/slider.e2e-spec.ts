@@ -78,7 +78,7 @@ test.describe(`Slider tests`, () => {
 			// force the click though the progress bar
 			await sliderProgressLocator.click({position: {x: boundingBox!.x + boundingBox!.width * 0.5, y: 1}, force: true});
 
-			expect((await sliderPO.sliderHandleState())[0]).toEqual(expectedState);
+			await expect.poll(async () => (await sliderPO.sliderHandleState()).at(0)).toEqual(expectedState);
 		});
 
 		test(`should snap the handle on mouse drag event`, async ({page}) => {
@@ -122,7 +122,7 @@ test.describe(`Slider tests`, () => {
 			await sliderHandleLocator.click();
 			await page.keyboard.press('Home');
 
-			expect((await sliderPO.sliderHandleState())[0]).toEqual(expectedState);
+			await expect.poll(async () => (await sliderPO.sliderHandleState()).at(0)).toEqual(expectedState);
 
 			expect(await minLabelLocator.isVisible()).toBe(false);
 			expect(await maxLabelLocator.isVisible()).toBe(true);
@@ -134,7 +134,7 @@ test.describe(`Slider tests`, () => {
 			expectedState.value = '100';
 			expectedState.style = 'left: 100%;';
 
-			expect((await sliderPO.sliderHandleState())[0]).toEqual(expectedState);
+			await expect.poll(async () => (await sliderPO.sliderHandleState()).at(0)).toEqual(expectedState);
 
 			expect(await minLabelLocator.isVisible()).toBe(true);
 			expect(await maxLabelLocator.isVisible()).toBe(false);
@@ -173,7 +173,7 @@ test.describe(`Slider tests`, () => {
 			const boundingBox = await sliderLocator.boundingBox();
 			await sliderLocator.click({position: {x: boundingBox!.x + boundingBox!.width * 0.8, y: 1}});
 
-			expect((await sliderPO.sliderHandleState())[0]).toEqual(expectedState);
+			await expect.poll(async () => (await sliderPO.sliderHandleState()).at(0)).toEqual(expectedState);
 
 			await expect(sliderHandleLocator).toBeEnabled();
 
@@ -187,7 +187,7 @@ test.describe(`Slider tests`, () => {
 			expectedState.style = 'left: 88%;';
 			expectedState.readonly = null;
 
-			expect((await sliderPO.sliderHandleState())[0]).toEqual(expectedState);
+			await expect.poll(async () => (await sliderPO.sliderHandleState()).at(0)).toEqual(expectedState);
 		});
 
 		test(`should remove min - max labels from the dom when showMinMaxLabels is false`, async ({page}) => {
@@ -239,7 +239,7 @@ test.describe(`Slider tests`, () => {
 			const boundingBox = await sliderLocator.boundingBox();
 			await sliderLocator.click({position: {x: boundingBox!.x + boundingBox!.width * 0.8, y: 1}});
 
-			expect((await sliderPO.sliderHandleState())[1]).toEqual(expectedState);
+			await expect.poll(async () => (await sliderPO.sliderHandleState()).at(1)).toEqual(expectedState);
 			expect((await sliderPO.sliderProgressState())[0]).toEqual('left: 10%; bottom: 0%; width: 78%; height: 100%;');
 		});
 
@@ -292,7 +292,7 @@ test.describe(`Slider tests`, () => {
 			await sliderPO.locatorHandle.nth(0).click();
 			await page.keyboard.press('Home');
 
-			expect((await sliderPO.sliderHandleState()).at(0)).toEqual(expectedState[0]);
+			await expect.poll(async () => (await sliderPO.sliderHandleState()).at(0)).toEqual(expectedState[0]);
 			expect((await sliderPO.sliderHandleState()).at(1)).toEqual(expectedState[1]);
 			expect((await sliderPO.sliderProgressState())[0]).toEqual('left: 0%; bottom: 0%; width: 40%; height: 100%;');
 
@@ -310,7 +310,7 @@ test.describe(`Slider tests`, () => {
 			expectedState[1].value = '100';
 			expectedState[1].style = 'left: 100%;';
 
-			expect((await sliderPO.sliderHandleState()).at(0)).toEqual(expectedState[0]);
+			await expect.poll(async () => (await sliderPO.sliderHandleState()).at(0)).toEqual(expectedState[0]);
 			expect((await sliderPO.sliderHandleState()).at(1)).toEqual(expectedState[1]);
 			expect((await sliderPO.sliderProgressState())[0]).toEqual('left: 40%; bottom: 0%; width: 60%; height: 100%;');
 
@@ -353,7 +353,7 @@ test.describe(`Slider tests`, () => {
 			const boundingBox = await sliderLocator.boundingBox();
 			await sliderLocator.click({position: {y: boundingBox!.height * 0.2, x: 1}});
 
-			expect((await sliderPO.sliderHandleState())[1]).toEqual(expectedState);
+			await expect.poll(async () => (await sliderPO.sliderHandleState()).at(1)).toEqual(expectedState);
 			expect((await sliderPO.sliderProgressState())[0]).toEqual('left: 0%; bottom: 10%; width: 100%; height: 70%;');
 		});
 
@@ -375,7 +375,7 @@ test.describe(`Slider tests`, () => {
 			await sliderPO.locatorHandle.nth(0).click();
 			await page.keyboard.press('Home');
 
-			expect((await sliderPO.sliderHandleState()).at(0)).toEqual(expectedState[0]);
+			await expect.poll(async () => (await sliderPO.sliderHandleState()).at(0)).toEqual(expectedState[0]);
 			expect((await sliderPO.sliderHandleState()).at(1)).toEqual(expectedState[1]);
 			expect((await sliderPO.sliderProgressState())[0]).toEqual('left: 0%; bottom: 0%; width: 100%; height: 40%;');
 
@@ -393,7 +393,7 @@ test.describe(`Slider tests`, () => {
 			expectedState[1].value = '100';
 			expectedState[1].style = 'top: 0%;';
 
-			expect((await sliderPO.sliderHandleState()).at(0)).toEqual(expectedState[0]);
+			await expect.poll(async () => (await sliderPO.sliderHandleState()).at(0)).toEqual(expectedState[0]);
 			expect((await sliderPO.sliderHandleState()).at(1)).toEqual(expectedState[1]);
 			expect((await sliderPO.sliderProgressState())[0]).toEqual('left: 0%; bottom: 40%; width: 100%; height: 60%;');
 
