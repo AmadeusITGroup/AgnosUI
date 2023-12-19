@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Playground from '$lib/layout/playground/Playground.svelte';
-	import {getAccordionDefaultConfig} from '@agnos-ui/core';
+	import {getAccordionDefaultConfig} from '@agnos-ui/core/components/accordion';
 	import sample from '@agnos-ui/samples/accordion/playground';
 	import doc from '@agnos-ui/generated/doc/api.json?accordion&extractApi';
 	import type {PropsValues} from '@agnos-ui/common/propsValues';

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ApiDoc from '$lib/layout/doc/ApiDoc.svelte';
-	import {getSelectDefaultConfig} from '@agnos-ui/core';
+	import {getSelectDefaultConfig} from '@agnos-ui/core/components/select';
 	import widgetDoc from '@agnos-ui/generated/doc/api.json?select&extractApi';
 </script>
 

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Playground from '$lib/layout/playground/Playground.svelte';
-	import {getRatingDefaultConfig} from '@agnos-ui/core';
+	import {getRatingDefaultConfig} from '@agnos-ui/core/components/rating';
 	import sample from '@agnos-ui/samples/rating/playground';
 	import doc from '@agnos-ui/generated/doc/api.json?rating&extractApi';
 	import type {PropsValues} from '@agnos-ui/common/propsValues';
