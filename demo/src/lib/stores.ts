@@ -1,7 +1,7 @@
 import {computed, get} from '@amadeus-it-group/tansu';
 import {browser} from '$app/environment';
 import {page} from '$app/stores';
-import {createIntersection} from '@agnos-ui/core';
+import {createIntersection} from '@agnos-ui/core/services/intersection';
 
 // Return how deep the current route is compared to base
 export const routeLevel$ = computed(() => {
