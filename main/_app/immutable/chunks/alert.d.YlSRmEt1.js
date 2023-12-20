@@ -1,9 +1,0 @@
-const t=`/// <reference types="react" />
-export * from '@agnos-ui/react-headless/components/alert';
-export declare const Alert: import("react").ForwardRefExoticComponent<Partial<Omit<import("core/dist").AlertProps, \`slot\${string}\`> & {
-    slotDefault: import("react/headless/dist/types").SlotContent<import("core/dist").WidgetSlotContext<import("react/headless/dist/types").AdaptWidgetSlots<import("core/dist").ExtendWidgetProps<import("@agnos-ui/react-headless/components/alert").CommonAlertWidget, import("@agnos-ui/react-headless/components/alert").AlertExtraProps>>> & Omit<Omit<import("core/dist").WidgetSlotContext<import("core/dist").ExtendWidgetProps<import("@agnos-ui/react-headless/components/alert").CommonAlertWidget, import("@agnos-ui/react-headless/components/alert").AlertExtraProps>> & Omit<import("@agnos-ui/react-headless/components/alert").CommonAlertContext, keyof import("core/dist").WidgetSlotContext<any>>, keyof import("core/dist").WidgetSlotContext<any>>, \`slot\${string}\`> & {}>;
-    slotStructure: import("react/headless/dist/types").SlotContent<import("core/dist").WidgetSlotContext<import("react/headless/dist/types").AdaptWidgetSlots<import("core/dist").ExtendWidgetProps<import("@agnos-ui/react-headless/components/alert").CommonAlertWidget, import("@agnos-ui/react-headless/components/alert").AlertExtraProps>>> & Omit<Omit<import("core/dist").WidgetSlotContext<import("core/dist").ExtendWidgetProps<import("@agnos-ui/react-headless/components/alert").CommonAlertWidget, import("@agnos-ui/react-headless/components/alert").AlertExtraProps>> & Omit<import("@agnos-ui/react-headless/components/alert").CommonAlertContext, keyof import("core/dist").WidgetSlotContext<any>>, keyof import("core/dist").WidgetSlotContext<any>>, \`slot\${string}\`> & {}>;
-}> & {
-    children?: import("react").ReactNode;
-} & import("react").RefAttributes<unknown>>;
-`;export{t as default};
