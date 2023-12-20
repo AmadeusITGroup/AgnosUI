@@ -6,7 +6,7 @@ import '@agnos-ui/common/samples/accordion/custom.scss';
 import BODY from '@agnos-ui/common/samples/accordion/body.txt?raw';
 
 const AccordionDemo = () => {
-	const refAccordion = useRef<AccordionApi>();
+	const refAccordion = useRef<AccordionApi>(null);
 	const [thirdItemDisabled, setThirdItemDisabled] = useState<boolean>(false);
 
 	const Collapse = (props: {slotContext: AccordionItemContext}) => {

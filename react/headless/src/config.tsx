@@ -1,5 +1,5 @@
 import type {Widget, WidgetFactory, WidgetProps, WidgetState} from '@agnos-ui/core/types';
-import {createWidgetsConfig, type Partial2Levels, type WidgetsConfigStore} from '@agnos-ui/core/config';
+import {createWidgetsConfig, type WidgetsConfigStore, type WidgetsConfig as CoreWidgetsConfig, type Partial2Levels} from '@agnos-ui/core/config';
 import {computed} from '@amadeus-it-group/tansu';
 import type {ReactNode} from 'react';
 import {createContext, useContext, useEffect, useMemo} from 'react';
@@ -10,7 +10,11 @@ import {usePropsAsStore} from './utils/stores';
 export * from '@agnos-ui/core/config';
 
 export type WidgetsConfig = {
-	[WidgetName in keyof import('@agnos-ui/core/config').WidgetsConfig]: AdaptPropsSlots<import('@agnos-ui/core/config').WidgetsConfig[WidgetName]>;
+	[WidgetName in keyof CoreWidgetsConfig]: AdaptPropsSlots<CoreWidgetsConfig[WidgetName]>;
+};
+type DefaultConfigInput<Config> = Partial2Levels<Config> & {
+	adaptParentConfig?: (config: Partial2Levels<Config>) => Partial2Levels<Config>;
+	children?: ReactNode | undefined;
 };
 
 export const widgetsConfigFactory = <Config extends {[widgetName: string]: object} = WidgetsConfig>(
@@ -62,14 +66,7 @@ export const widgetsConfigFactory = <Config extends {[widgetName: string]: objec
 	 * />
 	 * ```
 	 */
-	const WidgetsDefaultConfig = ({
-		children,
-		adaptParentConfig,
-		...props
-	}: Partial2Levels<Config> & {
-		adaptParentConfig?: (config: Partial2Levels<Config>) => Partial2Levels<Config>;
-		children?: ReactNode | undefined;
-	}) => {
+	const WidgetsDefaultConfig = ({children, adaptParentConfig, ...props}: DefaultConfigInput<Config>) => {
 		const config$ = useContext(widgetsConfigContext);
 		let storeRecreated = false;
 
@@ -97,5 +94,4 @@ export const widgetsConfigFactory = <Config extends {[widgetName: string]: objec
 		WidgetsDefaultConfig,
 	};
 };
-
-export const {widgetsConfigContext, useWidgetContext, useWidgetWithConfig, WidgetsDefaultConfig} = widgetsConfigFactory();
+export const {widgetsConfigContext, WidgetsDefaultConfig, useWidgetContext, useWidgetWithConfig} = widgetsConfigFactory();

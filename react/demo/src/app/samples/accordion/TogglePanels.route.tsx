@@ -4,8 +4,8 @@ import {useRef} from 'react';
 import BODY from '@agnos-ui/common/samples/accordion/body.txt?raw';
 
 const AccordionDemo = () => {
-	const refAccordion = useRef<AccordionApi>();
-	const refSecondPanel = useRef<AccordionItemApi>();
+	const refAccordion = useRef<AccordionApi>(null);
+	const refSecondPanel = useRef<AccordionItemApi>(null);
 	return (
 		<>
 			<Accordion ref={refAccordion}>
