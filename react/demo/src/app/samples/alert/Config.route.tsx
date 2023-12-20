@@ -14,7 +14,7 @@ export enum AlertStatus {
 }
 
 const DefaultDemo = () => {
-	const alertRef = useRef<AlertApi>();
+	const alertRef = useRef<AlertApi>(null);
 
 	const [animationOnInit, setAnimationOnInit] = useState(true);
 	const [animation, setanimation] = useState(true);
