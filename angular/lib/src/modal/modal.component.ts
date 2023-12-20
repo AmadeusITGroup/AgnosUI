@@ -1,5 +1,6 @@
-import type {ModalBeforeCloseEvent, ModalContext, ModalProps, ModalState, ModalWidget, SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
+import type {ModalBeforeCloseEvent, ModalContext, ModalProps, ModalWidget, SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
 import {
+	BaseWidgetDirective,
 	ComponentTemplate,
 	SlotDefaultDirective,
 	SlotDirective,
@@ -8,12 +9,9 @@ import {
 	callWidgetFactory,
 	createModal,
 	mergeDirectives,
-	patchSimpleChanges,
-	toAngularSignal,
-	toSlotContextWidget,
 } from '@agnos-ui/angular-headless';
 import {writable} from '@amadeus-it-group/tansu';
-import type {AfterContentChecked, OnChanges, Signal, SimpleChanges} from '@angular/core';
+import type {AfterContentChecked, OnChanges} from '@angular/core';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -164,7 +162,7 @@ const defaultConfig: Partial<ModalProps<any>> = {
 		}
 	`,
 })
-export class ModalComponent<Data> implements OnChanges, AfterContentChecked {
+export class ModalComponent<Data> extends BaseWidgetDirective<ModalWidget<Data>> implements OnChanges, AfterContentChecked {
 	/**
 	 * Whether the modal and its backdrop (if present) should be animated when shown or hidden.
 	 */
@@ -280,12 +278,8 @@ export class ModalComponent<Data> implements OnChanges, AfterContentChecked {
 			onVisibleChange: (event) => this.visibleChange.emit(event),
 		},
 	});
-	readonly widget = toSlotContextWidget(this._widget);
-	readonly api = this._widget.api;
 	readonly modalDirective = mergeDirectives(this._widget.directives.modalPortalDirective, this._widget.directives.modalDirective);
 	readonly backdropDirective = mergeDirectives(this._widget.directives.backdropPortalDirective, this._widget.directives.backdropDirective);
-
-	readonly state: Signal<ModalState<Data>> = toAngularSignal(this._widget.state$);
 
 	ngAfterContentChecked(): void {
 		this._widget.patchSlots({
@@ -295,9 +289,5 @@ export class ModalComponent<Data> implements OnChanges, AfterContentChecked {
 			slotStructure: this.slotStructureFromContent?.templateRef,
 			slotTitle: this.slotTitleFromContent?.templateRef,
 		});
-	}
-
-	ngOnChanges(changes: SimpleChanges): void {
-		patchSimpleChanges(this._widget.patch, changes);
 	}
 }

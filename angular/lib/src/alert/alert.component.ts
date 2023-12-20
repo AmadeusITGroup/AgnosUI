@@ -1,5 +1,6 @@
-import type {AlertContext, AlertProps, AlertState, SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
+import type {AlertContext, AlertProps, AlertWidget, SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
 import {
+	BaseWidgetDirective,
 	ComponentTemplate,
 	SlotDefaultDirective,
 	SlotDirective,
@@ -7,12 +8,9 @@ import {
 	auBooleanAttribute,
 	callWidgetFactory,
 	createAlert,
-	patchSimpleChanges,
-	toAngularSignal,
-	toSlotContextWidget,
 } from '@agnos-ui/angular-headless';
 import {writable} from '@amadeus-it-group/tansu';
-import type {AfterContentChecked, OnChanges, Signal, SimpleChanges} from '@angular/core';
+import type {AfterContentChecked} from '@angular/core';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -83,7 +81,7 @@ const defaultConfig: Partial<AlertProps> = {
 			</div>
 		}`,
 })
-export class AlertComponent implements OnChanges, AfterContentChecked {
+export class AlertComponent extends BaseWidgetDirective<AlertWidget> implements AfterContentChecked {
 	/**
 	 * Type of the alert.
 	 * There are the following types: 'success', 'info', 'warning', 'danger', 'primary', 'secondary', 'light' and 'dark'.
@@ -173,18 +171,11 @@ export class AlertComponent implements OnChanges, AfterContentChecked {
 			onHidden: () => this.hidden.emit(),
 		},
 	});
-	readonly widget = toSlotContextWidget(this._widget);
-	readonly api = this._widget.api;
-	readonly state: Signal<AlertState> = toAngularSignal(this._widget.state$);
 
 	ngAfterContentChecked(): void {
 		this._widget.patchSlots({
 			slotDefault: this.slotDefaultFromContent?.templateRef,
 			slotStructure: this.slotStructureFromContent?.templateRef,
 		});
-	}
-
-	ngOnChanges(changes: SimpleChanges): void {
-		patchSimpleChanges(this._widget.patch, changes);
 	}
 }

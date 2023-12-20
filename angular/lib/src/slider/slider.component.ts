@@ -1,16 +1,13 @@
-import type {SliderState} from '@agnos-ui/angular-headless';
+import type {SliderWidget} from '@agnos-ui/angular-headless';
 import {
+	BaseWidgetDirective,
 	UseDirective,
 	auBooleanAttribute,
 	auNumberAttribute,
 	callWidgetFactory,
 	createSlider,
-	patchSimpleChanges,
-	toAngularSignal,
-	toSlotContextWidget,
 	useDirectiveForHost,
 } from '@agnos-ui/angular-headless';
-import type {OnChanges, Signal, SimpleChanges} from '@angular/core';
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, NgZone, Output, ViewEncapsulation, forwardRef, inject} from '@angular/core';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {take} from 'rxjs';
@@ -97,7 +94,7 @@ import {take} from 'rxjs';
 		}
 	`,
 })
-export class SliderComponent implements OnChanges {
+export class SliderComponent extends BaseWidgetDirective<SliderWidget> {
 	private _zone = inject(NgZone);
 
 	readonly _widget = callWidgetFactory({
@@ -111,12 +108,6 @@ export class SliderComponent implements OnChanges {
 			},
 		},
 	});
-	/**
-	 * SliderWidget hold the state and actions applicable to the auSliderComponent
-	 */
-	readonly widget = toSlotContextWidget(this._widget);
-	readonly state: Signal<SliderState> = toAngularSignal(this._widget.state$);
-	readonly api = this._widget.api;
 
 	/**
 	 * CSS classes to be applied on the widget main container
@@ -188,6 +179,7 @@ export class SliderComponent implements OnChanges {
 	valuesChange = new EventEmitter<number[]>();
 
 	constructor() {
+		super();
 		useDirectiveForHost(this._widget.directives.sliderDirective);
 	}
 
@@ -222,10 +214,6 @@ export class SliderComponent implements OnChanges {
 		this._widget.patch({
 			disabled: isDisabled,
 		});
-	}
-
-	ngOnChanges(changes: SimpleChanges) {
-		patchSimpleChanges(this._widget.patch, changes);
 	}
 
 	handleBlur() {

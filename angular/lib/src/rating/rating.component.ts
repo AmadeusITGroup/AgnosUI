@@ -1,14 +1,6 @@
-import type {AdaptSlotContentProps, RatingState, SlotContent, StarContext} from '@agnos-ui/angular-headless';
-import {
-	SlotDirective,
-	auBooleanAttribute,
-	auNumberAttribute,
-	callWidgetFactory,
-	createRating,
-	patchSimpleChanges,
-	toAngularSignal,
-} from '@agnos-ui/angular-headless';
-import type {AfterContentChecked, OnChanges, Signal, SimpleChanges} from '@angular/core';
+import type {AdaptSlotContentProps, RatingWidget, SlotContent, StarContext} from '@agnos-ui/angular-headless';
+import {BaseWidgetDirective, SlotDirective, auBooleanAttribute, auNumberAttribute, callWidgetFactory, createRating} from '@agnos-ui/angular-headless';
+import type {AfterContentChecked} from '@angular/core';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -42,36 +34,36 @@ export class RatingStarDirective {
 	encapsulation: ViewEncapsulation.None,
 	host: {
 		class: 'd-inline-flex au-rating',
-		'[tabindex]': 'state$().tabindex',
+		'[tabindex]': 'state().tabindex',
 		role: 'slider',
 		'aria-valuemin': '0',
-		'[attr.aria-valuemax]': 'state$().maxRating',
-		'[attr.aria-valuenow]': 'state$().visibleRating',
-		'[attr.aria-valuetext]': 'state$().ariaValueText',
-		'[attr.aria-disabled]': 'state$().disabled ? true : null',
-		'[attr.aria-readonly]': 'state$().readonly ? true : null',
-		'[attr.aria-label]': 'state$().ariaLabel || null',
+		'[attr.aria-valuemax]': 'state().maxRating',
+		'[attr.aria-valuenow]': 'state().visibleRating',
+		'[attr.aria-valuetext]': 'state().ariaValueText',
+		'[attr.aria-disabled]': 'state().disabled ? true : null',
+		'[attr.aria-readonly]': 'state().readonly ? true : null',
+		'[attr.aria-label]': 'state().ariaLabel || null',
 		'(blur)': 'onTouched()',
 		'(keydown)': '_widget.actions.handleKey($event)',
 		'(mouseleave)': '_widget.actions.leave()',
-		'[class]': 'state$().className',
+		'[class]': 'state().className',
 	},
 	template: `
-		@for (item of state$().stars; track trackByIndex(index); let index = $index) {
-			<span class="visually-hidden">({{ index < state$().visibleRating ? '*' : ' ' }})</span>
+		@for (item of state().stars; track trackByIndex(index); let index = $index) {
+			<span class="visually-hidden">({{ index < state().visibleRating ? '*' : ' ' }})</span>
 			<span
 				class="au-rating-star"
 				(mouseenter)="_widget.actions.hover(index + 1)"
 				(click)="_widget.actions.click(index + 1)"
-				[style.cursor]="state$().isInteractive ? 'pointer' : 'default'"
+				[style.cursor]="state().isInteractive ? 'pointer' : 'default'"
 			>
-				<ng-template [auSlot]="state$().slotStar" [auSlotProps]="state$().stars[index]"></ng-template>
+				<ng-template [auSlot]="state().slotStar" [auSlotProps]="state().stars[index]"></ng-template>
 			</span>
 		}
 	`,
 	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => RatingComponent), multi: true}],
 })
-export class RatingComponent implements ControlValueAccessor, OnChanges, AfterContentChecked {
+export class RatingComponent extends BaseWidgetDirective<RatingWidget> implements ControlValueAccessor, AfterContentChecked {
 	readonly _widget = callWidgetFactory({
 		factory: createRating,
 		widgetName: 'rating',
@@ -84,16 +76,13 @@ export class RatingComponent implements ControlValueAccessor, OnChanges, AfterCo
 			},
 		},
 	});
-	readonly api = this._widget.api;
-
-	state$: Signal<RatingState> = toAngularSignal(this._widget.state$);
 
 	onChange = (_: any) => {};
 	onTouched = () => {};
 
 	// TODO angular is failing when adding this host binding in decorator part
 	@HostBinding('[attr.aria-labelledby]') get hostAriaLabelledBy() {
-		return this.state$().ariaLabelledBy || null;
+		return this.state().ariaLabelledBy || null;
 	}
 
 	/**
@@ -187,10 +176,6 @@ export class RatingComponent implements ControlValueAccessor, OnChanges, AfterCo
 
 	setDisabledState(disabled: boolean): void {
 		this._widget.patch({disabled});
-	}
-
-	ngOnChanges(changes: SimpleChanges): void {
-		patchSimpleChanges(this._widget.patch, changes);
 	}
 
 	ngAfterContentChecked(): void {

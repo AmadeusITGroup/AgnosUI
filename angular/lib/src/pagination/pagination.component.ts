@@ -1,17 +1,15 @@
-import type {PaginationContext, PaginationNumberContext, PaginationProps, PaginationState, SlotContent} from '@agnos-ui/angular-headless';
+import type {PaginationContext, PaginationNumberContext, PaginationProps, PaginationWidget, SlotContent} from '@agnos-ui/angular-headless';
 import {
+	BaseWidgetDirective,
 	ComponentTemplate,
 	SlotDirective,
 	auBooleanAttribute,
 	auNumberAttribute,
 	callWidgetFactory,
 	createPagination,
-	patchSimpleChanges,
-	toAngularSignal,
-	toSlotContextWidget,
 } from '@agnos-ui/angular-headless';
 import {AsyncPipe} from '@angular/common';
-import type {AfterContentChecked, OnChanges, Signal, SimpleChanges} from '@angular/core';
+import type {AfterContentChecked} from '@angular/core';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -156,7 +154,7 @@ const defaultConfig: Partial<PaginationProps> = {
 	imports: [AsyncPipe, SlotDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	host: {
-		'[attr.aria-label]': 'state$().ariaLabel',
+		'[attr.aria-label]': 'state().ariaLabel',
 	},
 	encapsulation: ViewEncapsulation.None,
 	template: `
@@ -232,7 +230,7 @@ const defaultConfig: Partial<PaginationProps> = {
 		}
 	`,
 })
-export class PaginationComponent implements OnChanges, AfterContentChecked {
+export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> implements AfterContentChecked {
 	/**
 	 * Provide the label for each "Page" page button.
 	 * This is used for accessibility purposes.
@@ -300,8 +298,6 @@ export class PaginationComponent implements OnChanges, AfterContentChecked {
 			onPageChange: (page: number) => this.pageChange.emit(page),
 		},
 	});
-	readonly widget = toSlotContextWidget(this._widget);
-	readonly api = this._widget.api;
 
 	@Input('auSlotEllipsis') slotEllipsis: SlotContent<PaginationContext>;
 	@ContentChild(PaginationEllipsisDirective, {static: false})
@@ -399,12 +395,6 @@ export class PaginationComponent implements OnChanges, AfterContentChecked {
 	 * CSS classes to be applied on the widget main container
 	 */
 	@Input('auClassName') className: string | undefined;
-
-	state$: Signal<PaginationState> = toAngularSignal(this._widget.state$);
-
-	ngOnChanges(changes: SimpleChanges): void {
-		patchSimpleChanges(this._widget.patch, changes);
-	}
 
 	ngAfterContentChecked(): void {
 		this._widget.patchSlots({

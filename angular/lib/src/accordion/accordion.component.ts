@@ -1,26 +1,24 @@
 import type {
 	AccordionItemContext,
 	AccordionItemProps,
-	AccordionItemState,
-	AccordionState,
+	AccordionItemWidget,
+	AccordionWidget,
 	AdaptSlotContentProps,
 	SlotContent,
 	TransitionFn,
 } from '@agnos-ui/angular-headless';
 import {
+	BaseWidgetDirective,
 	ComponentTemplate,
 	SlotDirective,
 	UseDirective,
 	auBooleanAttribute,
 	callWidgetFactory,
 	createAccordion,
-	patchSimpleChanges,
-	toAngularSignal,
-	toSlotContextWidget,
 	useDirectiveForHost,
 } from '@agnos-ui/angular-headless';
 import {NgTemplateOutlet} from '@angular/common';
-import type {AfterContentChecked, AfterViewInit, OnChanges, Signal, SimpleChanges} from '@angular/core';
+import type {AfterContentChecked, AfterViewInit} from '@angular/core';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -174,7 +172,7 @@ const defaultConfig: Partial<AccordionItemProps> = {
 	imports: [SlotDirective, UseDirective],
 	template: ` <ng-template [auSlotProps]="{state: state(), widget}" [auSlot]="state().slotItemStructure"></ng-template> `,
 })
-export class AccordionItemComponent implements OnChanges, AfterContentChecked, AfterViewInit {
+export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWidget> implements AfterContentChecked, AfterViewInit {
 	@Input('auSlotItemHeader') slotItemHeader: SlotContent<AccordionItemContext>;
 	@ContentChild(AccordionHeaderDirective, {static: false})
 	slotItemHeaderFromContent: AccordionHeaderDirective | null;
@@ -260,11 +258,9 @@ export class AccordionItemComponent implements OnChanges, AfterContentChecked, A
 			onItemShown: () => this.itemShown.emit(),
 		},
 	});
-	readonly widget = toSlotContextWidget(this._widget);
-	readonly api = this._widget.api;
-	state: Signal<AccordionItemState> = toAngularSignal(this._widget.state$);
 
 	constructor() {
+		super();
 		useDirectiveForHost(this._widget.directives.accordionItemDirective);
 	}
 
@@ -276,9 +272,6 @@ export class AccordionItemComponent implements OnChanges, AfterContentChecked, A
 		});
 	}
 
-	ngOnChanges(changes: SimpleChanges): void {
-		patchSimpleChanges(this._widget.patch, changes);
-	}
 	ngAfterViewInit() {
 		queueMicrotask(() => this.api.initDone());
 	}
@@ -289,10 +282,10 @@ export class AccordionItemComponent implements OnChanges, AfterContentChecked, A
 	exportAs: 'auAccordion',
 	standalone: true,
 	host: {
-		'[class]': '"accordion " + state$().className',
+		'[class]': '"accordion " + state().className',
 	},
 })
-export class AccordionDirective implements OnChanges {
+export class AccordionDirective extends BaseWidgetDirective<AccordionWidget> {
 	/**
 	 * If `true`, only one item at the time can stay open.
 	 */
@@ -427,15 +420,9 @@ export class AccordionDirective implements OnChanges {
 			onHidden: (id) => this.hidden.emit(id),
 		},
 	});
-	readonly api = this._widget.api;
-
-	state$: Signal<AccordionState> = toAngularSignal(this._widget.state$);
 
 	constructor() {
+		super();
 		useDirectiveForHost(this._widget.directives.accordionDirective);
-	}
-
-	ngOnChanges(changes: SimpleChanges): void {
-		patchSimpleChanges(this._widget.patch, changes);
 	}
 }
