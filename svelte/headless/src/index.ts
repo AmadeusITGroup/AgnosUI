@@ -1,7 +1,3 @@
-export * from './types';
-export * from './slot';
-export * from './config';
-
 export * from './components/accordion/accordion';
 export * from './components/alert/alert';
 export * from './components/modal/modal';
