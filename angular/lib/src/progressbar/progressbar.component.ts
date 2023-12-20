@@ -1,5 +1,6 @@
-import type {ProgressbarContext, ProgressbarProps, ProgressbarState, SlotContent} from '@agnos-ui/angular-headless';
+import type {ProgressbarContext, ProgressbarProps, ProgressbarWidget, SlotContent} from '@agnos-ui/angular-headless';
 import {
+	BaseWidgetDirective,
 	ComponentTemplate,
 	SlotDefaultDirective,
 	SlotDirective,
@@ -7,13 +8,10 @@ import {
 	auNumberAttribute,
 	callWidgetFactory,
 	createProgressbar,
-	patchSimpleChanges,
-	toAngularSignal,
-	toSlotContextWidget,
 } from '@agnos-ui/angular-headless';
 import {writable} from '@amadeus-it-group/tansu';
 import {NgClass} from '@angular/common';
-import type {AfterContentChecked, OnChanges, Signal, SimpleChanges} from '@angular/core';
+import type {AfterContentChecked, OnChanges} from '@angular/core';
 import {ChangeDetectionStrategy, Component, ContentChild, Directive, Input, TemplateRef, ViewChild, inject} from '@angular/core';
 
 @Directive({selector: 'ng-template[auProgressbarContent]', standalone: true})
@@ -72,7 +70,7 @@ const defaultConfig: Partial<ProgressbarProps> = {
 		<ng-template [auSlot]="state().slotContent" [auSlotProps]="{state: state(), widget}"></ng-template>
 	`,
 })
-export class ProgressbarComponent implements AfterContentChecked, OnChanges {
+export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget> implements AfterContentChecked, OnChanges {
 	readonly defaultSlots = writable(defaultConfig);
 
 	/**
@@ -126,17 +124,10 @@ export class ProgressbarComponent implements AfterContentChecked, OnChanges {
 	@Input('auAriaValueTextFn') ariaValueTextFn: ((value: number, minimum: number, maximum: number) => string | undefined) | undefined;
 
 	readonly _widget = callWidgetFactory({factory: createProgressbar, widgetName: 'progressbar', defaultConfig: this.defaultSlots, events: {}});
-	readonly widget = toSlotContextWidget(this._widget);
-	readonly api = this._widget.api;
-	readonly state: Signal<ProgressbarState> = toAngularSignal(this._widget.state$);
 
 	ngAfterContentChecked(): void {
 		this._widget.patch({
 			slotContent: this.slotContentFromContent?.templateRef,
 		});
-	}
-
-	ngOnChanges(changes: SimpleChanges): void {
-		patchSimpleChanges(this._widget.patch, changes);
 	}
 }

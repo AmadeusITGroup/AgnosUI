@@ -1,12 +1,11 @@
 import type {Directive, Widget, WidgetFactory} from '@agnos-ui/core';
 import {stateStores, typeFunction, typeString, writablesForProps} from '@agnos-ui/core';
 import {computed, readable, writable} from '@amadeus-it-group/tansu';
-import type {OnChanges, SimpleChanges} from '@angular/core';
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, NgZone, Output, effect} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 import {beforeEach, describe, expect, it} from 'vitest';
 import {UseDirective} from './use.directive';
-import {callWidgetFactoryWithConfig, patchSimpleChanges, toAngularSignal} from './utils';
+import {BaseWidgetDirective, callWidgetFactoryWithConfig, toAngularSignal} from './utils';
 
 describe('utils', () => {
 	let log: string[] = [];
@@ -167,11 +166,11 @@ describe('utils', () => {
 				standalone: true,
 				imports: [UseDirective],
 				template: `<button type="button" [auUse]="_widget.directives.myDirective" (click)="onClick()">
-					{{ state$().derivedValue }} {{ state$().counter }}
+					{{ state().derivedValue }} {{ state().counter }}
 				</button>`,
 				changeDetection: ChangeDetectionStrategy.OnPush,
 			})
-			class MyWidgetComponent implements OnChanges {
+			class MyWidgetComponent extends BaseWidgetDirective<MyWidget> {
 				@Output('auMyAction') myAction = new EventEmitter<void>();
 				@Output('auCounterChange') counterChange = new EventEmitter<number>();
 				@Input('auMyValue') myValue: string | undefined;
@@ -186,12 +185,6 @@ describe('utils', () => {
 						onMyAction: () => this.myAction.emit(),
 					},
 				});
-				api = this._widget.api;
-				state$ = toAngularSignal(this._widget.state$);
-
-				ngOnChanges(changes: SimpleChanges): void {
-					patchSimpleChanges(this._widget.patch, changes);
-				}
 
 				onClick = createZoneCheckFn('onClick', this._widget.actions.myAction);
 			}
@@ -239,9 +232,9 @@ describe('utils', () => {
 				'begin callWidgetFactoryWithConfig, ngZone = true',
 				'begin factory, ngZone = false',
 				'end factory, ngZone = false',
-				'end callWidgetFactoryWithConfig, ngZone = true',
 				'begin computeDerivedValue, ngZone = false',
 				'end computeDerivedValue, ngZone = false',
+				'end callWidgetFactoryWithConfig, ngZone = true',
 				'leave ngZone',
 				'before autoDetectChanges',
 				'enter ngZone',

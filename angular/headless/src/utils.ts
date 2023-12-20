@@ -1,9 +1,9 @@
-import type {Widget, WidgetFactory, WidgetProps} from '@agnos-ui/core';
-import {toReadableStore} from '@agnos-ui/core';
+import type {ContextWidget, Widget, WidgetFactory, WidgetProps, WidgetState} from '@agnos-ui/core';
+import {toReadableStore, toSlotContextWidget} from '@agnos-ui/core';
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {computed, writable} from '@amadeus-it-group/tansu';
-import type {Signal, SimpleChanges, TemplateRef} from '@angular/core';
-import {DestroyRef, Injectable, NgZone, inject, signal} from '@angular/core';
+import type {OnChanges, Signal, SimpleChanges, TemplateRef} from '@angular/core';
+import {DestroyRef, Directive, Injectable, NgZone, inject, signal} from '@angular/core';
 import type {SlotContent} from './slotTypes';
 
 const createPatchSlots = <T extends object>(set: (object: Partial<T>) => void) => {
@@ -108,7 +108,9 @@ export const toAngularSignal = <T>(tansuSignal: ReadableSignal<T>): Signal<T> =>
 	return res;
 };
 
-export type WithPatchSlots<W extends Widget> = W & {
+export type AngularWidget<W extends Widget> = W & {
+	widget: ContextWidget<W>;
+	ngState: Signal<WidgetState<W>>;
 	patchSlots(slots: {
 		[K in keyof WidgetProps<W> & `slot${string}`]: WidgetProps<W>[K] extends SlotContent<infer U> ? TemplateRef<U> | undefined : never;
 	}): void;
@@ -124,7 +126,7 @@ export const callWidgetFactoryWithConfig = <W extends Widget>({
 	defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
 	widgetConfig?: null | undefined | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
 	events: Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}`>;
-}): WithPatchSlots<W> => {
+}): AngularWidget<W> => {
 	const zoneWrapper = inject(ZoneWrapper);
 	factory = zoneWrapper.outsideNgZone(factory);
 	const defaultConfig$ = toReadableStore(defaultConfig);
@@ -133,13 +135,18 @@ export const callWidgetFactoryWithConfig = <W extends Widget>({
 	const widget = factory({
 		config: computed(() => ({...defaultConfig$(), ...widgetConfig?.(), ...slots$(), ...(events as Partial<WidgetProps<W>>)})),
 	});
-	return {
+	const wrappedWidget: W = {
 		...widget,
 		patch: zoneWrapper.outsideNgZone(widget.patch),
 		directives: zoneWrapper.outsideNgZoneWrapDirectivesObject(widget.directives),
 		actions: zoneWrapper.outsideNgZoneWrapFunctionsObject(widget.actions),
 		api: zoneWrapper.outsideNgZoneWrapFunctionsObject(widget.api),
+	};
+	return {
+		...wrappedWidget,
 		patchSlots: createPatchSlots(slots$.set),
+		widget: toSlotContextWidget(wrappedWidget),
+		ngState: toAngularSignal(wrappedWidget.state$ as ReadableSignal<WidgetState<W>>),
 	};
 };
 
@@ -151,4 +158,25 @@ export function patchSimpleChanges(patchFn: (obj: any) => void, changes: SimpleC
 		}
 	}
 	patchFn(obj);
+}
+
+@Directive()
+export abstract class BaseWidgetDirective<W extends Widget> implements OnChanges {
+	protected abstract readonly _widget: AngularWidget<W>;
+
+	get api(): W['api'] {
+		return this._widget.api;
+	}
+
+	get state(): Signal<WidgetState<W>> {
+		return this._widget.ngState;
+	}
+
+	get widget(): ContextWidget<W> {
+		return this._widget.widget;
+	}
+
+	ngOnChanges(changes: SimpleChanges): void {
+		patchSimpleChanges(this._widget.patch, changes);
+	}
 }

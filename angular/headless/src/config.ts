@@ -5,7 +5,7 @@ import {computed} from '@amadeus-it-group/tansu';
 import type {FactoryProvider} from '@angular/core';
 import {InjectionToken, Injector, Optional, SkipSelf, inject, runInInjectionContext} from '@angular/core';
 import type {AdaptPropsSlots} from './slotTypes';
-import type {WithPatchSlots} from './utils';
+import type {AngularWidget} from './utils';
 import {callWidgetFactoryWithConfig} from './utils';
 
 export type WidgetsConfig = {
@@ -106,7 +106,7 @@ export const widgetsConfigFactory = <Config extends {[widgetName: string]: objec
 		widgetName?: null | keyof Config;
 		defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
 		events: Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}`>;
-	}): WithPatchSlots<W> =>
+	}): AngularWidget<W> =>
 		callWidgetFactoryWithConfig({
 			factory,
 			widgetConfig: widgetName ? (injectWidgetConfig(widgetName) as any) : null,
