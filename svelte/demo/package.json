@@ -5,11 +5,11 @@
 	"scripts": {
 		"dev": "vite",
 		"dev:coverage": "vite -c vite.coverage.config.ts",
-		"build": "npm run build:demo && npm run check",
+		"build": "run-s build:demo check:svelte",
 		"build:coverage": "vite build -c vite.coverage.config.ts",
 		"build:demo": "vite build",
 		"preview": "vite preview",
-		"check": "svelte-check --fail-on-warnings --output human-verbose"
+		"check:svelte": "svelte-check --fail-on-warnings --output human-verbose"
 	},
 	"dependencies": {
 		"@amadeus-it-group/tansu": "0.0.24",

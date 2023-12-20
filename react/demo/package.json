@@ -5,9 +5,9 @@
 		"dev": "vite",
 		"dev:coverage": "vite -c vite.coverage.config.ts",
 		"build:coverage": "vite build -c vite.coverage.config.ts",
+		"build": "run-s build:demo check:types",
 		"build:demo": "vite build",
-		"build": "npm run build:demo && npm run build:tsc",
-		"build:tsc": "tsc",
+		"check:types": "tsc",
 		"preview": "vite preview"
 	},
 	"devDependencies": {
