@@ -1,15 +1,7 @@
 import type {WritableSignal, Updater} from '@amadeus-it-group/tansu';
 import {asWritable, computed, writable} from '@amadeus-it-group/tansu';
 import {beforeEach, describe, expect, test, vi} from 'vitest';
-import {
-	bindableDerived,
-	createPatch,
-	findChangedProperties,
-	mergeConfigStores,
-	stateStores,
-	writablesWithDefault,
-	writableWithDefault,
-} from './stores';
+import {createPatch, findChangedProperties, mergeConfigStores, stateStores, writablesWithDefault, writableWithDefault} from './stores';
 import {INVALID_VALUE} from '../types';
 
 describe(`Stores service`, () => {
@@ -373,108 +365,6 @@ describe(`Stores service`, () => {
 			expect(stateValues[1]).toEqual({a: 9, b: 6});
 			expect(res.stores.a$()).toBe(9);
 			unsubscribeState();
-		});
-	});
-
-	describe('bindableDerived', () => {
-		test('Basic functionalities', () => {
-			const onChangeCalls: number[] = [];
-			const values: number[] = [];
-			const dirtyValue$ = writable(1);
-			const onValueChange$ = writable((value: number) => {
-				onChangeCalls.push(value);
-			});
-			const valueMax$ = writable(2);
-
-			const value$ = bindableDerived(onValueChange$, [dirtyValue$, valueMax$], ([dirtyValue, valueMax]) => Math.min(dirtyValue, valueMax));
-			const unsubscribe = value$.subscribe((value) => {
-				values.push(value);
-			});
-			expect(values).toEqual([1]);
-			valueMax$.set(3); // no change
-			expect(onChangeCalls).toEqual([]);
-			expect(values).toEqual([1]);
-
-			dirtyValue$.set(2);
-			expect(onChangeCalls).toEqual([2]);
-			expect(values).toEqual([1, 2]);
-
-			valueMax$.set(4); // no change
-			expect(onChangeCalls).toEqual([2]);
-
-			dirtyValue$.set(5);
-			expect(onChangeCalls).toEqual([2, 4]);
-			expect(values).toEqual([1, 2, 4]);
-
-			valueMax$.set(3);
-			expect(onChangeCalls).toEqual([2, 4, 3]);
-			expect(values).toEqual([1, 2, 4, 3]);
-
-			const newListener = vi.fn((value) => {
-				// this should do nothing
-				valueMax$.set(5);
-			});
-			onValueChange$.set(newListener);
-			dirtyValue$.set(2);
-			expect(onChangeCalls).toEqual([2, 4, 3]); // listener was changed, old listener not called
-			expect(newListener).toHaveBeenCalledWith(2);
-			expect(newListener).toHaveBeenCalledOnce();
-			expect(values).toEqual([1, 2, 4, 3, 2]);
-			unsubscribe();
-		});
-
-		test('Should always call the onChange listener when the value was adjusted', () => {
-			const onChangeCalls: number[] = [];
-			const values: number[] = [];
-			const dirtyValue$ = writable(1);
-			const onValueChange$ = writable((value: number) => {
-				onChangeCalls.push(value);
-			});
-			const valueMax$ = writable(2);
-
-			const value$ = bindableDerived(onValueChange$, [dirtyValue$, valueMax$], ([dirtyValue, valueMax]) => Math.min(dirtyValue, valueMax));
-			const unsubscribe = value$.subscribe((value) => values.push(value));
-			expect(onChangeCalls).toEqual([]);
-			expect(values).toEqual([1]);
-			dirtyValue$.set(3);
-			expect(onChangeCalls).toEqual([2]);
-			expect(values).toEqual([1, 2]);
-			dirtyValue$.set(3);
-			expect(onChangeCalls).toEqual([2, 2]); // no change compared to the last valid value, but the value was adjusted
-			expect(values).toEqual([1, 2]);
-			unsubscribe();
-		});
-
-		test(`should override equals function`, () => {
-			const onChangeCalls: number[][] = [];
-			const values: number[][] = [];
-			const dirtyValue$ = writable([1]);
-			const onValueChange$ = writable((value: number[]) => {
-				onChangeCalls.push(value);
-			});
-
-			const value$ = bindableDerived(
-				onValueChange$,
-				[dirtyValue$],
-				([dirtyValue]) => dirtyValue.map((dv) => Math.floor(dv)),
-				(a, b) => a.every((val, index) => val === b[index]),
-			);
-			value$.subscribe((value) => values.push(value));
-			expect(values).toEqual([[1]]);
-
-			dirtyValue$.set([1]); // no change
-			expect(onChangeCalls).toEqual([]);
-			expect(values).toEqual([[1]]);
-
-			dirtyValue$.set([2.5]);
-			expect(dirtyValue$()).toEqual([2]);
-			expect(onChangeCalls).toEqual([[2]]);
-			expect(values).toEqual([[1], [2]]);
-
-			dirtyValue$.set([5.6, 7.8]);
-			expect(dirtyValue$()).toEqual([5, 7]);
-			expect(onChangeCalls).toEqual([[2], [5, 7]]);
-			expect(values).toEqual([[1], [2], [5, 7]]);
 		});
 	});
 });
