@@ -40,8 +40,11 @@
 		}
 	},
 	"scripts": {
-		"build": "node ../../scripts/rm.js dist && npm run generate:exports && tsc && node ../../scripts/buildPackageJson.js . dist",
-		"generate:exports": "node ../../scripts/generateExports.js react/headless core @agnos-ui/core"
+		"build": "run-s clean:dist generate:exports build:*",
+		"clean:dist": "node ../../scripts/rm dist",
+		"generate:exports": "node ../../scripts/generateExports.js react/headless core @agnos-ui/core",
+		"build:src": "tsc",
+		"build:pkg": "node ../../scripts/buildPackageJson . dist"
 	},
 	"dependencies": {
 		"@agnos-ui/core": "",

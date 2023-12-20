@@ -49,10 +49,11 @@
 		}
 	},
 	"scripts": {
-		"build:package": "npm run generate:exports && svelte-package -i src && node ../../scripts/buildPackageJson.js . dist",
-		"build": "npm run build:package && npm run check",
-		"check": "svelte-check --fail-on-warnings --output human-verbose",
-		"generate:exports": "node ../../scripts/generateExports.js svelte/lib svelte/headless @agnos-ui/svelte-headless"
+		"build": "run-s generate:exports build:* check:svelte",
+		"generate:exports": "node ../../scripts/generateExports.js svelte/lib svelte/headless @agnos-ui/svelte-headless",
+		"build:src": "svelte-package -i src",
+		"build:pkg": "node ../../scripts/buildPackageJson.js . dist",
+		"check:svelte": "svelte-check --fail-on-warnings --output human-verbose"
 	},
 	"dependencies": {
 		"@agnos-ui/style-bootstrap": "",

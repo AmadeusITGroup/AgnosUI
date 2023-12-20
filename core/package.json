@@ -40,14 +40,16 @@
 		}
 	},
 	"scripts": {
-		"build": "npm run build:lib && npm run build:tsc && npm run build:api-extractor",
-		"build:lib": "node ../scripts/rm.js dist && tsc && node ../scripts/buildPackageJson.js . dist",
-		"build:tsc": "tsc -p tsconfig.check.json",
+		"build": "run-s clean:dist build:*",
+		"clean:dist": "node ../scripts/rm.js dist",
+		"build:src": "tsc",
+		"build:pkg": "node ../scripts/buildPackageJson.js . dist",
 		"build:api-extractor": "api-extractor run",
-		"test": "vitest run",
+		"check:tests": "tsc -p tsconfig.tests.json",
+		"test": "npm run check:tests && vitest run",
 		"tdd": "vitest",
 		"tdd:ui": "vitest --ui",
-		"test:coverage": "node -r @agnos-ui/code-coverage/interceptReadFile ../node_modules/vitest/vitest.mjs run --coverage"
+		"test:coverage": "node --import @agnos-ui/code-coverage/interceptReadFile ../node_modules/vitest/vitest.mjs run --coverage"
 	},
 	"dependencies": {
 		"@amadeus-it-group/tansu": "0.0.24"

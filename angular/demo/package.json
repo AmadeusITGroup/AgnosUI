@@ -5,9 +5,9 @@
 	"scripts": {
 		"ng": "ng",
 		"dev": "ng serve",
-		"dev:coverage": "node -r @agnos-ui/code-coverage/interceptReadFile ../../node_modules/@angular/cli/bin/ng.js serve",
+		"dev:coverage": "node --import @agnos-ui/code-coverage/interceptReadFile ../../node_modules/@angular/cli/bin/ng.js serve",
 		"build": "ng build",
-		"build:coverage": "node -r @agnos-ui/code-coverage/interceptReadFile ../../node_modules/@angular/cli/bin/ng.js build --configuration=coverage",
+		"build:coverage": "node --import @agnos-ui/code-coverage/interceptReadFile ../../node_modules/@angular/cli/bin/ng.js build --configuration=coverage",
 		"watch": "ng build --watch --configuration development",
 		"preview": "node scripts/preview.cjs dist --port 4200 --single"
 	},
