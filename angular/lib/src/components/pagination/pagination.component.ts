@@ -389,7 +389,7 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 *
 	 * Page numbers start with `1`.
 	 */
-	@Output('auPageChange') pageChange = new EventEmitter<number>(true);
+	@Output('auPageChange') pageChange = new EventEmitter<number>();
 
 	/**
 	 * CSS classes to be applied on the widget main container

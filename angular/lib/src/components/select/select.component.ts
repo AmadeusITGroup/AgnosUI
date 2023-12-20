@@ -163,17 +163,17 @@ export class SelectComponent<Item> extends BaseWidgetDirective<SelectWidget<Item
 	/**
 	 * Callback called when the text filter change
 	 */
-	@Output('auFilterTextChange') filterTextChange = new EventEmitter<string>(true);
+	@Output('auFilterTextChange') filterTextChange = new EventEmitter<string>();
 
 	/**
 	 * Callback called when the selection change
 	 */
-	@Output('auSelectedChange') selectedChange = new EventEmitter<Item[]>(true);
+	@Output('auSelectedChange') selectedChange = new EventEmitter<Item[]>();
 
 	/**
 	 * Callback called dropdown open state change
 	 */
-	@Output('auOpenChange') openChange = new EventEmitter<boolean>(true);
+	@Output('auOpenChange') openChange = new EventEmitter<boolean>();
 
 	/**
 	 * Class to be added on menu items
