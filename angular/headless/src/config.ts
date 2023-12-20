@@ -1,15 +1,17 @@
-import type {Partial2Levels, Widget, WidgetFactory, WidgetProps, WidgetsConfigStore} from '@agnos-ui/core';
-import {createWidgetsConfig} from '@agnos-ui/core';
+import type {Widget, WidgetFactory, WidgetProps} from '@agnos-ui/core/types';
+import type {Partial2Levels, WidgetsConfigStore} from '@agnos-ui/core/config';
+import {createWidgetsConfig} from '@agnos-ui/core/config';
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {computed} from '@amadeus-it-group/tansu';
 import type {FactoryProvider} from '@angular/core';
 import {InjectionToken, Injector, Optional, SkipSelf, inject, runInInjectionContext} from '@angular/core';
-import type {AdaptPropsSlots} from './slotTypes';
-import type {AngularWidget} from './utils';
-import {callWidgetFactoryWithConfig} from './utils';
+import type {AdaptPropsSlots, AngularWidget} from './types';
+import {callWidgetFactoryWithConfig} from './utils/widget';
+
+export * from '@agnos-ui/core/config';
 
 export type WidgetsConfig = {
-	[WidgetName in keyof import('@agnos-ui/core').WidgetsConfig]: AdaptPropsSlots<import('@agnos-ui/core').WidgetsConfig[WidgetName]>;
+	[WidgetName in keyof import('@agnos-ui/core/config').WidgetsConfig]: AdaptPropsSlots<import('@agnos-ui/core/config').WidgetsConfig[WidgetName]>;
 };
 
 export const widgetsConfigFactory = <Config extends {[widgetName: string]: object} = WidgetsConfig>(

@@ -12,7 +12,10 @@
 	},
 	"scripts": {
 		"ng": "ng",
-		"build": "ng build && node ../../scripts/buildPackageJson.js dist dist .",
+		"build": "run-s generate:exports build:*",
+		"generate:exports": "node ../../scripts/generateExports.js angular/headless core @agnos-ui/core",
+		"build:src": "ng build",
+		"build:pkg": "node ../../scripts/buildPackageJson.js dist dist .",
 		"test": "vitest run",
 		"tdd": "vitest",
 		"tdd:ui": "vitest --ui",

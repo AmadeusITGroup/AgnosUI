@@ -13,7 +13,7 @@ export default defineConfig({
 				host: '127.0.0.1',
 			},
 		},
-		setupFiles: ['./headless/src/test.ts'],
+		setupFiles: ['./headless/test.ts'],
 		include: ['./**/*.spec.ts'],
 		coverage: {
 			provider: 'custom',

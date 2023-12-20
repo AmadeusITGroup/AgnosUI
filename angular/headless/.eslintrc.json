@@ -25,7 +25,8 @@
 					}
 				],
 				"@angular-eslint/no-input-rename": "off",
-				"@angular-eslint/no-output-rename": "off"
+				"@angular-eslint/no-output-rename": "off",
+				"@agnos-ui/check-replace-imports": ["error", "@agnos-ui/core"]
 			}
 		},
 		{

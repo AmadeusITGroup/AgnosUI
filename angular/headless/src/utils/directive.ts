@@ -1,6 +1,8 @@
+import type {Directive as AgnosUIDirective} from '@agnos-ui/core/types';
 import type {OnChanges} from '@angular/core';
-import {DestroyRef, Directive, ElementRef, inject, Input} from '@angular/core';
-import type {Directive as AgnosUIDirective} from '@agnos-ui/core';
+import {DestroyRef, Directive, ElementRef, Input, inject} from '@angular/core';
+
+export * from '@agnos-ui/core/utils/directive';
 
 // All calls of the directive in this class are done asynchronously (with await 0)
 // in order to avoid ExpressionChangedAfterItHasBeenCheckedError

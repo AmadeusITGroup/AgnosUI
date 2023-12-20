@@ -1,8 +1,8 @@
 import {DOCUMENT} from '@angular/common';
 import type {ComponentRef, EmbeddedViewRef, OnChanges, OnDestroy, SimpleChanges, Type} from '@angular/core';
 import {Directive, EnvironmentInjector, Input, TemplateRef, ViewContainerRef, createComponent, inject, reflectComponentType} from '@angular/core';
-import type {SlotContent} from './slotTypes';
-import {ComponentTemplate} from './slotTypes';
+import type {SlotContent} from './types';
+import {ComponentTemplate} from './types';
 
 abstract class SlotHandler<Props extends Record<string, any>, Slot extends SlotContent<Props> = SlotContent<Props>> {
 	constructor(
