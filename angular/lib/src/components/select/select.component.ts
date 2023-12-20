@@ -1,17 +1,15 @@
-import type {AdaptSlotContentProps, ItemContext, SelectItemContext, SelectWidget, SlotContent, WidgetState} from '@agnos-ui/angular-headless';
+import type {AdaptSlotContentProps, ItemContext, SelectItemContext, SelectWidget, SlotContent} from '@agnos-ui/angular-headless';
 import {
+	BaseWidgetDirective,
 	SlotDirective,
 	UseDirective,
 	auBooleanAttribute,
 	callWidgetFactory,
 	createSelect,
 	mergeDirectives,
-	patchSimpleChanges,
-	toAngularSignal,
-	toSlotContextWidget,
 	useDirectiveForHost,
 } from '@agnos-ui/angular-headless';
-import type {AfterContentChecked, OnChanges, Signal, SimpleChanges} from '@angular/core';
+import type {AfterContentChecked} from '@angular/core';
 import {ChangeDetectionStrategy, Component, ContentChild, Directive, EventEmitter, Input, Output, TemplateRef, inject} from '@angular/core';
 import type {Placement} from '@floating-ui/dom';
 
@@ -37,11 +35,11 @@ export class SelectItemDirective<Item> {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: '[auSelect]',
 	host: {
-		'[class]': '"au-select dropdown border border-1 p-1 mb-3 d-block" + state$().className',
+		'[class]': '"au-select dropdown border border-1 p-1 mb-3 d-block" + state().className',
 	},
 
 	template: `
-		@if (widget.state$(); as state) {
+		@if (state(); as state) {
 			<div
 				[auUse]="_widget.directives.hasFocusDirective"
 				role="combobox"
@@ -57,11 +55,11 @@ export class SelectItemDirective<Item> {
 					}
 				}
 				<input
-					attr.id="{{ state$().id }}"
-					attr.aria-label="{{ state$().ariaLabel }}"
+					attr.id="{{ state.id }}"
+					attr.aria-label="{{ state.ariaLabel }}"
 					type="text"
 					class="au-select-input flex-grow-1 border-0"
-					[value]="state$().filterText"
+					[value]="state.filterText"
 					aria-autocomplete="list"
 					autoCorrect="off"
 					autoCapitalize="none"
@@ -70,17 +68,17 @@ export class SelectItemDirective<Item> {
 					(input)="_widget.actions.onInput($event)"
 				/>
 			</div>
-			@if (state$().open && state$().visibleItems.length) {
+			@if (state.open && state.visibleItems.length) {
 				<ul
 					[auUse]="menuDirective"
 					[class]="'dropdown-menu show ' + (menuClassName || '')"
-					[attr.data-popper-placement]="state$().placement"
+					[attr.data-popper-placement]="state.placement"
 					(mousedown)="$event.preventDefault()"
 				>
-					@for (itemContext of state$().visibleItems; track itemCtxTrackBy($index, itemContext)) {
+					@for (itemContext of state.visibleItems; track itemCtxTrackBy($index, itemContext)) {
 						<li
 							class="au-select-item dropdown-item position-relative"
-							[class.bg-light]="itemContext === state$().highlighted"
+							[class.bg-light]="itemContext === state.highlighted"
 							[class.selected]="itemContext.selected"
 							(click)="widget.api.toggleItem(itemContext.item)"
 						>
@@ -92,7 +90,7 @@ export class SelectItemDirective<Item> {
 		}
 	`,
 })
-export class SelectComponent<Item> implements OnChanges, AfterContentChecked {
+export class SelectComponent<Item> extends BaseWidgetDirective<SelectWidget<Item>> implements AfterContentChecked {
 	/**
 	 * aria-label used for the input inside the select
 	 */
@@ -195,19 +193,12 @@ export class SelectComponent<Item> implements OnChanges, AfterContentChecked {
 			onFilterTextChange: (event) => this.filterTextChange.emit(event),
 		},
 	});
-	readonly widget = toSlotContextWidget(this._widget);
-	readonly api = this._widget.api;
 
 	readonly menuDirective = mergeDirectives(this._widget.directives.hasFocusDirective, this._widget.directives.floatingDirective);
 
-	state$: Signal<WidgetState<SelectWidget<Item>>> = toAngularSignal(this._widget.state$);
-
 	constructor() {
+		super();
 		useDirectiveForHost(this._widget.directives.referenceDirective);
-	}
-
-	ngOnChanges(changes: SimpleChanges) {
-		patchSimpleChanges(this._widget.patch, changes);
 	}
 
 	itemCtxTrackBy(_: number, itemContext: ItemContext<Item>) {

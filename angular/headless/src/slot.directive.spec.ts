@@ -5,9 +5,9 @@ import {TestBed} from '@angular/core/testing';
 import {describe, expect, it} from 'vitest';
 import {injectWidgetsConfig, provideWidgetsConfig} from './config';
 import {SlotDirective} from './slot.directive';
-import type {SlotContent} from './slotTypes';
-import {ComponentTemplate} from './slotTypes';
-import {toAngularSignal} from './utils';
+import type {SlotContent} from './types';
+import {ComponentTemplate} from './types';
+import {toAngularSignal} from './utils/stores';
 
 describe('slot directive', () => {
 	@Component({

@@ -1,6 +1,7 @@
 import {computed} from '@amadeus-it-group/tansu';
 import {noop} from '../utils/internal/func';
 import {createStoreArrayDirective, directiveSubscribe, mergeDirectives} from '../utils/directive';
+import type {Directive} from '../types';
 
 const internalSetSiblingsInert = (element: Element) => {
 	const inertValues = new Map<Element, boolean>();
@@ -51,4 +52,4 @@ const inertAction$ = computed(() => setSiblingsInert(lastElement$()));
  * In case it is used on multiple elements, only the last one has an effect (the directive keeps a stack of elements
  * on which it is used, so when the last one disappears, the previous one in the list becomes the one in effect).
  */
-export const sliblingsInert = mergeDirectives(storeArrayDirective, directiveSubscribe(inertAction$));
+export const sliblingsInert: Directive = mergeDirectives(storeArrayDirective, directiveSubscribe(inertAction$));

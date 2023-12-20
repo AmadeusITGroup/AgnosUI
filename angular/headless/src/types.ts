@@ -1,5 +1,16 @@
-import type {ContextWidget, SlotContent as CoreSlotContent, Widget, WidgetFactory, WidgetProps, WidgetSlotContext, WidgetState} from '@agnos-ui/core';
-import {Directive, Input, type TemplateRef, type Type} from '@angular/core';
+import type {
+	ContextWidget,
+	SlotContent as CoreSlotContent,
+	Widget,
+	WidgetFactory,
+	WidgetProps,
+	WidgetSlotContext,
+	WidgetState,
+} from '@agnos-ui/core/types';
+import type {Signal, TemplateRef, Type} from '@angular/core';
+import {Directive, Input} from '@angular/core';
+
+export * from '@agnos-ui/core/types';
 
 export class ComponentTemplate<Props, K extends string, T extends {[key in K]: TemplateRef<Props>}> {
 	constructor(
@@ -41,3 +52,11 @@ export abstract class SlotComponent<W extends Widget> {
 	@Input()
 	widget!: ContextWidget<W>;
 }
+
+export type AngularWidget<W extends Widget> = W & {
+	widget: ContextWidget<W>;
+	ngState: Signal<WidgetState<W>>;
+	patchSlots(slots: {
+		[K in keyof WidgetProps<W> & `slot${string}`]: WidgetProps<W>[K] extends SlotContent<infer U> ? TemplateRef<U> | undefined : never;
+	}): void;
+};

@@ -18,13 +18,7 @@
 		"target": "ES2022",
 		"module": "es2020",
 		"lib": ["es2022", "dom", "dom.iterable"],
-		"useDefineForClassFields": false,
-		"paths": {
-			"@agnos-ui/core": ["./core"],
-			"@agnos-ui/angular": ["./angular/lib/src/public-api"],
-			"@agnos-ui/common/*": ["./common/*"],
-			"@agnos-ui/angular-headless": ["./angular/headless/src/public-api"]
-		}
+		"useDefineForClassFields": false
 	},
 	"angularCompilerOptions": {
 		"enableI18nLegacyMessageIdFormat": false,

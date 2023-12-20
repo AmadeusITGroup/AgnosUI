@@ -1,77 +1,13 @@
 /*
  * Public API Surface of @agnos-ui/angular-headless
  */
+export * from './components/accordion/accordion';
+export * from './components/alert/alert';
+export * from './components/modal/modal';
+export * from './components/pagination/pagination';
+export * from './components/progressbar/progressbar';
+export * from './components/rating/rating';
+export * from './components/select/select';
+export * from './components/slider/slider';
 
-export * from '@agnos-ui/core';
-export * from './config';
-export type {WidgetsConfig} from './config';
-export * from './slot.directive';
-export * from './slotDefault.directive';
-export * from './slotTypes';
-export type {SlotContent} from './slotTypes';
-export * from './use.directive';
-export * from './utils';
-export * from './coercion';
-
-import type {PropsConfig, WidgetFactory, WidgetProps, WidgetState} from '@agnos-ui/core';
-import {
-	createAccordion as coreCreateAccordion,
-	createAlert as coreCreateAlert,
-	createModal as coreCreateModal,
-	createPagination as coreCreatePagination,
-	createProgressbar as coreCreateProgressbar,
-	createRating as coreCreateRating,
-	createSelect as coreCreateSelect,
-} from '@agnos-ui/core';
-import type {AdaptSlotContentProps, AdaptWidgetSlots} from './slotTypes';
-
-export type AccordionWidget = AdaptWidgetSlots<import('@agnos-ui/core').AccordionWidget>;
-export type AccordionProps = WidgetProps<AccordionWidget>;
-export type AccordionState = WidgetState<AccordionWidget>;
-export type AccordionApi = AccordionWidget['api'];
-export type AccordionItemWidget = AdaptWidgetSlots<import('@agnos-ui/core').AccordionItemWidget>;
-export type AccordionItemProps = WidgetProps<AccordionItemWidget>;
-export type AccordionItemState = WidgetState<AccordionItemWidget>;
-export type AccordionItemContext = AdaptSlotContentProps<import('@agnos-ui/core').AccordionItemContext>;
-export const createAccordion: WidgetFactory<AccordionWidget> = coreCreateAccordion as any;
-
-export type AlertWidget = AdaptWidgetSlots<import('@agnos-ui/core').AlertWidget>;
-export type AlertProps = WidgetProps<AlertWidget>;
-export type AlertState = WidgetState<AlertWidget>;
-export type AlertContext = AdaptSlotContentProps<import('@agnos-ui/core').AlertContext>;
-export const createAlert: WidgetFactory<AlertWidget> = coreCreateAlert as any;
-
-export type ModalWidget<Data> = AdaptWidgetSlots<import('@agnos-ui/core').ModalWidget<Data>>;
-export type ModalProps<Data> = WidgetProps<ModalWidget<Data>>;
-export type ModalState<Data> = WidgetState<ModalWidget<Data>>;
-export type ModalContext<Data> = AdaptSlotContentProps<import('@agnos-ui/core').ModalContext<Data>>;
-export const createModal: <Data>(props?: PropsConfig<ModalProps<Data>>) => ModalWidget<Data> = coreCreateModal as any;
-
-export type PaginationWidget = AdaptWidgetSlots<import('@agnos-ui/core').PaginationWidget>;
-export type PaginationProps = WidgetProps<PaginationWidget>;
-export type PaginationState = WidgetState<PaginationWidget>;
-export type PaginationContext = AdaptSlotContentProps<import('@agnos-ui/core').PaginationContext>;
-export type PaginationNumberContext = AdaptSlotContentProps<import('@agnos-ui/core').PaginationNumberContext>;
-export const createPagination: WidgetFactory<PaginationWidget> = coreCreatePagination as any;
-
-export type RatingWidget = AdaptWidgetSlots<import('@agnos-ui/core').RatingWidget>;
-export type RatingProps = WidgetProps<RatingWidget>;
-export type RatingState = WidgetState<RatingWidget>;
-export const createRating: WidgetFactory<RatingWidget> = coreCreateRating as any;
-
-export type SelectWidget<Item> = AdaptWidgetSlots<import('@agnos-ui/core').SelectWidget<Item>>;
-export type SelectProps<Item> = WidgetProps<SelectWidget<Item>>;
-export type SelectState<Item> = WidgetState<SelectWidget<Item>>;
-export type SelectContext<Item> = AdaptSlotContentProps<import('@agnos-ui/core').SelectContext<Item>>;
-export type SelectItemContext<Item> = AdaptSlotContentProps<import('@agnos-ui/core').SelectItemContext<Item>>;
-export const createSelect: <Item>(propsConfig?: PropsConfig<SelectProps<Item>>) => SelectWidget<Item> = coreCreateSelect as any;
-
-export type SliderWidget = AdaptWidgetSlots<import('@agnos-ui/core').SliderWidget>;
-export type SliderProps = WidgetProps<SliderWidget>;
-export type SliderState = WidgetState<SliderWidget>;
-
-export type ProgressbarWidget = AdaptWidgetSlots<import('@agnos-ui/core').ProgressbarWidget>;
-export type ProgressbarProps = WidgetProps<ProgressbarWidget>;
-export type ProgressbarState = WidgetState<ProgressbarWidget>;
-export type ProgressbarContext = AdaptSlotContentProps<import('@agnos-ui/core').ProgressbarContext>;
-export const createProgressbar: WidgetFactory<ProgressbarWidget> = coreCreateProgressbar as any;
+export * from './generated';
