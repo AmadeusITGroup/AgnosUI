@@ -9,34 +9,42 @@
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
+			"svelte": "./dist/index.js",
 			"default": "./dist/index.js"
 		},
 		"./components/*": {
 			"types": "./dist/components/*/index.d.ts",
+			"svelte": "./dist/components/*/index.js",
 			"default": "./dist/components/*/index.js"
 		},
 		"./config": {
 			"types": "./dist/generated/config.d.ts",
+			"svelte": "./dist/generated/config.js",
 			"default": "./dist/generated/config.js"
 		},
 		"./slot": {
 			"types": "./dist/generated/slot.d.ts",
+			"svelte": "./dist/generated/slot.js",
 			"default": "./dist/generated/slot.js"
 		},
 		"./types": {
 			"types": "./dist/generated/types.d.ts",
+			"svelte": "./dist/generated/types.js",
 			"default": "./dist/generated/types.js"
 		},
 		"./services/*": {
 			"types": "./dist/generated/services/*.d.ts",
+			"svelte": "./dist/generated/services/*.js",
 			"default": "./dist/generated/services/*.js"
 		},
 		"./services/transitions/*": {
 			"types": "./dist/generated/services/transitions/*.d.ts",
+			"svelte": "./dist/generated/services/transitions/*.js",
 			"default": "./dist/generated/services/transitions/*.js"
 		},
 		"./utils/*": {
 			"types": "./dist/generated/utils/*.d.ts",
+			"svelte": "./dist/generated/utils/*.js",
 			"default": "./dist/generated/utils/*.js"
 		}
 	},
