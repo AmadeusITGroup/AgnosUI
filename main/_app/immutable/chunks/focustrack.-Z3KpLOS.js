@@ -1,0 +1,2 @@
+const c=`export * from '@agnos-ui/core/services/focustrack';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZm9jdXN0cmFjay5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3NyYy9nZW5lcmF0ZWQvc2VydmljZXMvZm9jdXN0cmFjay50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxjQUFjLG9DQUFvQyxDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0ICogZnJvbSAnQGFnbm9zLXVpL2NvcmUvc2VydmljZXMvZm9jdXN0cmFjayc7Il19`;export{c as default};
