@@ -3,6 +3,7 @@ import {vitePreprocess} from '@sveltejs/vite-plugin-svelte';
 import path from 'path';
 import {fileURLToPath} from 'url';
 import child_process from 'child_process';
+import {globSync} from 'glob';
 
 const __dirname = fileURLToPath(new URL('./', import.meta.url));
 
@@ -12,6 +13,10 @@ export const alias = {
 	'@agnos-ui/generated': path.join(__dirname, './generated'),
 };
 if (process.env.NODE_ENV === 'development') {
+	const components = globSync('*', {cwd: path.join(__dirname, '../core/src/components'), ignore: '*.ts'});
+	components.forEach(
+		(component) => (alias[`@agnos-ui/core/components/${component}`] = path.join(__dirname, `../core/src/components/${component}/${component}.ts`)),
+	);
 	alias['@agnos-ui/core'] = path.join(__dirname, '../core/src');
 }
 
