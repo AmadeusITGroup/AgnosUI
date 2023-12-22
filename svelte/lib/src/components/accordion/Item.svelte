@@ -24,6 +24,7 @@
 	const widget = callWidgetFactory({
 		factory: registerItem,
 		$$slots,
+		$$props,
 		defaultConfig,
 		events: {
 			onItemVisibleChange: (event) => {

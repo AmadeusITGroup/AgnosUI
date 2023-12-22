@@ -17,6 +17,7 @@
 		factory: createRating,
 		widgetName: 'rating',
 		$$slots,
+		$$props,
 		events: {
 			onRatingChange: (value: number) => {
 				rating = value;

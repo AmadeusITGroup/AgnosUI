@@ -17,6 +17,7 @@
 		factory: createAlert,
 		widgetName: 'alert',
 		$$slots,
+		$$props,
 		defaultConfig,
 		events: {
 			onVisibleChange: (event) => {

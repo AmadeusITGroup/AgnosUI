@@ -26,6 +26,7 @@
 		factory: createModal,
 		widgetName: 'modal',
 		$$slots,
+		$$props,
 		defaultConfig,
 		events: {
 			onVisibleChange: (event) => {

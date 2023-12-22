@@ -14,6 +14,7 @@
 		factory: createSlider,
 		widgetName: 'slider',
 		$$slots,
+		$$props,
 		events: {
 			onValuesChange: function (newValues: number[]): void {
 				values = newValues;

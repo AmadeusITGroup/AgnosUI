@@ -20,6 +20,7 @@
 		factory: createSelect,
 		widgetName: 'select',
 		$$slots,
+		$$props,
 		events: {
 			onOpenChange: function (isOpen: boolean): void {
 				open = isOpen;

@@ -28,6 +28,7 @@
 		factory: createPagination,
 		widgetName: 'pagination',
 		$$slots,
+		$$props,
 		defaultConfig,
 		events: {
 			onPageChange: (value: number) => {
