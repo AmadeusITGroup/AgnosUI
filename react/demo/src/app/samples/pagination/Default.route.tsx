@@ -8,25 +8,19 @@ const PaginationDemo = () => {
 	return (
 		<>
 			<h5>Basic pagination:</h5>
-			<Pagination page={page} collectionSize={60} onPageChange={(page) => setTimeout(() => setPage(page), 0)} />
+			<Pagination page={page} collectionSize={60} onPageChange={setPage} />
 
 			<h5>No direction links:</h5>
-			<Pagination page={page} collectionSize={60} directionLinks={false} onPageChange={(page) => setTimeout(() => setPage(page), 0)} />
+			<Pagination page={page} collectionSize={60} directionLinks={false} onPageChange={setPage} />
 
 			<h5>With boundary links:</h5>
-			<Pagination page={page} collectionSize={60} boundaryLinks={true} onPageChange={(page) => setTimeout(() => setPage(page), 0)} />
+			<Pagination page={page} collectionSize={60} boundaryLinks={true} onPageChange={setPage} />
 
 			<div className="mb-3">
 				Current page: <span id="defaultPage">{page}</span>
 			</div>
 			<h5>Disabled pagination:</h5>
-			<Pagination
-				page={pageAlone}
-				collectionSize={60}
-				ariaLabel="Disabled pagination"
-				disabled={true}
-				onPageChange={(page) => setTimeout(() => setPageAlone(page), 0)}
-			/>
+			<Pagination page={pageAlone} collectionSize={60} ariaLabel="Disabled pagination" disabled={true} onPageChange={setPageAlone} />
 		</>
 	);
 };
