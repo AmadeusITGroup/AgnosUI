@@ -54,8 +54,10 @@ export abstract class SlotComponent<W extends Widget> {
 }
 
 export type AngularWidget<W extends Widget> = W & {
+	initialized: Promise<void>;
 	widget: ContextWidget<W>;
 	ngState: Signal<WidgetState<W>>;
+	ngInit: () => void;
 	patchSlots(slots: {
 		[K in keyof WidgetProps<W> & `slot${string}`]: WidgetProps<W>[K] extends SlotContent<infer U> ? TemplateRef<U> | undefined : never;
 	}): void;

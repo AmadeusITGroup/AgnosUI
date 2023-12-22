@@ -158,7 +158,7 @@ const defaultConfig: Partial<PaginationProps> = {
 	},
 	encapsulation: ViewEncapsulation.None,
 	template: `
-		@if (widget.state$ | async; as state) {
+		@if (state(); as state) {
 			<ul [class]="'au-pagination pagination' + (state.size ? ' pagination-' + state.size : '') + ' ' + state.className">
 				@if (state.boundaryLinks) {
 					<li class="page-item" [class.disabled]="state.previousDisabled">

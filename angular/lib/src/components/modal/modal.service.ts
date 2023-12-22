@@ -32,6 +32,7 @@ export class ModalService {
 				}
 			}
 			this._applicationRef.attachView(component.hostView);
+			await component.instance._widget.initialized;
 			return await component.instance.api.open();
 		} finally {
 			component.destroy();

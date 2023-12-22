@@ -1,6 +1,7 @@
 import type {AdaptSlotContentProps, ItemContext, SelectItemContext, SelectWidget, SlotContent} from '@agnos-ui/angular-headless';
 import {
 	BaseWidgetDirective,
+	CachedProperty,
 	SlotDirective,
 	UseDirective,
 	auBooleanAttribute,
@@ -192,13 +193,14 @@ export class SelectComponent<Item> extends BaseWidgetDirective<SelectWidget<Item
 			onSelectedChange: (event) => this.selectedChange.emit(event),
 			onFilterTextChange: (event) => this.filterTextChange.emit(event),
 		},
+		afterInit: () => {
+			useDirectiveForHost(this._widget.directives.referenceDirective);
+		},
 	});
 
-	readonly menuDirective = mergeDirectives(this._widget.directives.hasFocusDirective, this._widget.directives.floatingDirective);
-
-	constructor() {
-		super();
-		useDirectiveForHost(this._widget.directives.referenceDirective);
+	@CachedProperty
+	get menuDirective() {
+		return mergeDirectives(this._widget.directives.hasFocusDirective, this._widget.directives.floatingDirective);
 	}
 
 	itemCtxTrackBy(_: number, itemContext: ItemContext<Item>) {

@@ -107,6 +107,9 @@ export class SliderComponent extends BaseWidgetDirective<SliderWidget> {
 				this.valuesChange.emit(event);
 			},
 		},
+		afterInit: () => {
+			useDirectiveForHost(this._widget.directives.sliderDirective);
+		},
 	});
 
 	/**
@@ -177,11 +180,6 @@ export class SliderComponent extends BaseWidgetDirective<SliderWidget> {
 	 */
 	@Output('auValuesChange')
 	valuesChange = new EventEmitter<number[]>();
-
-	constructor() {
-		super();
-		useDirectiveForHost(this._widget.directives.sliderDirective);
-	}
 
 	/**
 	 * Control value accessor methods
