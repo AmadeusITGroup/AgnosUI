@@ -7,7 +7,7 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, NgZone, Output}
 import {TestBed} from '@angular/core/testing';
 import {beforeEach, describe, expect, it} from 'vitest';
 import {UseDirective} from './directive';
-import {BaseWidgetDirective, callWidgetFactoryWithConfig} from './widget';
+import {BaseWidgetDirective, CachedProperty, callWidgetFactoryWithConfig} from './widget';
 
 describe('callWidgetFactoryWithConfig', () => {
 	let log: string[] = [];
@@ -104,7 +104,10 @@ describe('callWidgetFactoryWithConfig', () => {
 				},
 			});
 
-			onClick = createZoneCheckFn('onClick', this._widget.actions.myAction);
+			@CachedProperty
+			get onClick() {
+				return createZoneCheckFn('onClick', this._widget.actions.myAction);
+			}
 		}
 
 		const ngZone = TestBed.inject(NgZone);
@@ -148,14 +151,14 @@ describe('callWidgetFactoryWithConfig', () => {
 		expect(log).toStrictEqual([
 			'enter ngZone',
 			'begin callWidgetFactoryWithConfig, ngZone = true',
-			'begin factory, ngZone = false',
-			'end factory, ngZone = false',
-			'begin computeDerivedValue, ngZone = false',
-			'end computeDerivedValue, ngZone = false',
 			'end callWidgetFactoryWithConfig, ngZone = true',
 			'leave ngZone',
 			'before autoDetectChanges',
 			'enter ngZone',
+			'begin factory, ngZone = false',
+			'end factory, ngZone = false',
+			'begin computeDerivedValue, ngZone = false',
+			'end computeDerivedValue, ngZone = false',
 			'leave ngZone',
 			'after autoDetectChanges',
 			'before first await 0',
@@ -197,6 +200,121 @@ describe('callWidgetFactoryWithConfig', () => {
 			'begin myDirectiveDestroy, ngZone = false',
 			'end myDirectiveDestroy, ngZone = false',
 			'after last await 0',
+		]);
+	});
+
+	it('calls the core with the correct init values', async () => {
+		type MyWidget = Widget<{myValue: string}, {myValue: string}, Record<string, never>, Record<string, never>, Record<string, never>>;
+
+		const factory: WidgetFactory<MyWidget> = (propsConfig) => {
+			const [{myValue$}, patch] = writablesForProps(
+				{
+					myValue: 'defValue',
+				},
+				propsConfig,
+				{
+					myValue: typeString,
+				},
+			);
+			log.push(`in factory: myValue = ${myValue$()}`);
+			return {
+				...stateStores({
+					myValue$,
+				}),
+				api: {},
+				actions: {},
+				directives: {},
+				patch,
+			};
+		};
+
+		@Component({
+			standalone: true,
+			template: `{{ state().myValue }}`,
+			changeDetection: ChangeDetectionStrategy.OnPush,
+			selector: '[auTestMyWidget]',
+		})
+		class MyWidgetComponent extends BaseWidgetDirective<MyWidget> {
+			@Input('auMyValue') myValue: string | undefined;
+
+			_widget = callWidgetFactoryWithConfig({
+				factory,
+				events: {},
+			});
+		}
+		@Component({
+			standalone: true,
+			imports: [MyWidgetComponent],
+			template: `<div auTestMyWidget [auMyValue]="value"></div>`,
+			changeDetection: ChangeDetectionStrategy.OnPush,
+		})
+		class MyTestComponent {
+			value = 'myInitValue';
+		}
+
+		const fixture = TestBed.createComponent(MyTestComponent);
+		log.push('before autoDetectChanges');
+		fixture.autoDetectChanges(true);
+		log.push('after autoDetectChanges');
+		expect((fixture.nativeElement as HTMLElement).firstElementChild?.innerHTML).toBe('myInitValue');
+		fixture.destroy();
+		expect(log).toStrictEqual(['before autoDetectChanges', 'in factory: myValue = myInitValue', 'after autoDetectChanges']);
+	});
+});
+
+describe('CachedProperty', () => {
+	it('should work', () => {
+		const logs: string[] = [];
+		class Person {
+			constructor(
+				private readonly firstName: string,
+				private readonly lastName: string,
+			) {}
+
+			@CachedProperty
+			get fullName() {
+				const res = `${this.firstName} ${this.lastName}`;
+				logs.push(`computing fullName: ${res}`);
+				return res;
+			}
+
+			@CachedProperty
+			get lastNameUpperCase() {
+				const res = `${this.lastName.toUpperCase()}`;
+				logs.push(`computing lastNameUpperCase: ${res}`);
+				return res;
+			}
+		}
+		logs.push('before creating person 1');
+		const person1 = new Person('Arsène', 'Lupin');
+		logs.push('before creating person 2');
+		const person2 = new Person('Sherlock', 'Holmes');
+		logs.push('before person1.fullName');
+		expect(person1.fullName).toBe('Arsène Lupin');
+		logs.push('before person1.fullName again');
+		expect(person1.fullName).toBe('Arsène Lupin');
+		logs.push('before person2.fullName');
+		expect(person2.fullName).toBe('Sherlock Holmes');
+		logs.push('before person2.fullName again');
+		expect(person2.fullName).toBe('Sherlock Holmes');
+		logs.push('before person1.fullName again');
+		expect(person1.fullName).toBe('Arsène Lupin');
+		logs.push('before person1.lastNameUpperCase');
+		expect(person1.lastNameUpperCase).toBe('LUPIN');
+		logs.push('end');
+		expect(logs).toEqual([
+			'before creating person 1',
+			'before creating person 2',
+			'before person1.fullName',
+			'computing fullName: Arsène Lupin',
+			'before person1.fullName again',
+			'before person2.fullName',
+			'computing fullName: Sherlock Holmes',
+			'before person2.fullName again',
+			'before person1.fullName again',
+			'before person1.lastNameUpperCase',
+			'computing lastNameUpperCase: LUPIN',
+			'end',
 		]);
 	});
 });

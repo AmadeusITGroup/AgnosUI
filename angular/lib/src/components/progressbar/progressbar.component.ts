@@ -11,7 +11,7 @@ import {
 } from '@agnos-ui/angular-headless';
 import {writable} from '@amadeus-it-group/tansu';
 import {NgClass} from '@angular/common';
-import type {AfterContentChecked, OnChanges} from '@angular/core';
+import type {AfterContentChecked} from '@angular/core';
 import {ChangeDetectionStrategy, Component, ContentChild, Directive, Input, TemplateRef, ViewChild, inject} from '@angular/core';
 
 @Directive({selector: 'ng-template[auProgressbarContent]', standalone: true})
@@ -70,7 +70,7 @@ const defaultConfig: Partial<ProgressbarProps> = {
 		<ng-template [auSlot]="state().slotContent" [auSlotProps]="{state: state(), widget}"></ng-template>
 	`,
 })
-export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget> implements AfterContentChecked, OnChanges {
+export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget> implements AfterContentChecked {
 	readonly defaultSlots = writable(defaultConfig);
 
 	/**

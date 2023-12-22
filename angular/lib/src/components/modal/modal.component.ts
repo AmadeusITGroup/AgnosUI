@@ -1,6 +1,7 @@
 import type {ModalBeforeCloseEvent, ModalContext, ModalProps, ModalWidget, SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
 import {
 	BaseWidgetDirective,
+	CachedProperty,
 	ComponentTemplate,
 	SlotDefaultDirective,
 	SlotDirective,
@@ -11,7 +12,7 @@ import {
 	mergeDirectives,
 } from '@agnos-ui/angular-headless';
 import {writable} from '@amadeus-it-group/tansu';
-import type {AfterContentChecked, OnChanges} from '@angular/core';
+import type {AfterContentChecked} from '@angular/core';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -162,7 +163,7 @@ const defaultConfig: Partial<ModalProps<any>> = {
 		}
 	`,
 })
-export class ModalComponent<Data> extends BaseWidgetDirective<ModalWidget<Data>> implements OnChanges, AfterContentChecked {
+export class ModalComponent<Data> extends BaseWidgetDirective<ModalWidget<Data>> implements AfterContentChecked {
 	/**
 	 * Whether the modal and its backdrop (if present) should be animated when shown or hidden.
 	 */
@@ -278,8 +279,16 @@ export class ModalComponent<Data> extends BaseWidgetDirective<ModalWidget<Data>>
 			onVisibleChange: (event) => this.visibleChange.emit(event),
 		},
 	});
-	readonly modalDirective = mergeDirectives(this._widget.directives.modalPortalDirective, this._widget.directives.modalDirective);
-	readonly backdropDirective = mergeDirectives(this._widget.directives.backdropPortalDirective, this._widget.directives.backdropDirective);
+
+	@CachedProperty
+	get modalDirective() {
+		return mergeDirectives(this._widget.directives.modalPortalDirective, this._widget.directives.modalDirective);
+	}
+
+	@CachedProperty
+	get backdropDirective() {
+		return mergeDirectives(this._widget.directives.backdropPortalDirective, this._widget.directives.backdropDirective);
+	}
 
 	ngAfterContentChecked(): void {
 		this._widget.patchSlots({

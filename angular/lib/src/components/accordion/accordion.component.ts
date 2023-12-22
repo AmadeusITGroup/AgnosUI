@@ -250,19 +250,17 @@ export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWid
 
 	readonly ad = inject(AccordionDirective);
 	readonly _widget = callWidgetFactory({
-		factory: this.ad.api.registerItem,
+		factory: ((arg) => this.ad.api.registerItem(arg)) as typeof this.ad.api.registerItem,
 		defaultConfig,
 		events: {
 			onItemVisibleChange: (visible) => this.itemVisibleChange.emit(visible),
 			onItemHidden: () => this.itemHidden.emit(),
 			onItemShown: () => this.itemShown.emit(),
 		},
+		afterInit: () => {
+			useDirectiveForHost(this._widget.directives.accordionItemDirective);
+		},
 	});
-
-	constructor() {
-		super();
-		useDirectiveForHost(this._widget.directives.accordionItemDirective);
-	}
 
 	ngAfterContentChecked(): void {
 		this._widget.patchSlots({
@@ -419,10 +417,8 @@ export class AccordionDirective extends BaseWidgetDirective<AccordionWidget> {
 			onShown: (id) => this.shown.emit(id),
 			onHidden: (id) => this.hidden.emit(id),
 		},
+		afterInit: () => {
+			useDirectiveForHost(this._widget.directives.accordionDirective);
+		},
 	});
-
-	constructor() {
-		super();
-		useDirectiveForHost(this._widget.directives.accordionDirective);
-	}
 }

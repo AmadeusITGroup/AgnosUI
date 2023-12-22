@@ -103,17 +103,20 @@ export const widgetsConfigFactory = <Config extends {[widgetName: string]: objec
 		widgetName = null,
 		defaultConfig = {},
 		events,
+		afterInit,
 	}: {
 		factory: WidgetFactory<W>;
 		widgetName?: null | keyof Config;
 		defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
 		events: Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}`>;
+		afterInit?: () => void;
 	}): AngularWidget<W> =>
 		callWidgetFactoryWithConfig({
 			factory,
 			widgetConfig: widgetName ? (injectWidgetConfig(widgetName) as any) : null,
 			defaultConfig,
 			events,
+			afterInit,
 		});
 
 	return {
