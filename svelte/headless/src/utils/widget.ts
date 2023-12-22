@@ -1,11 +1,10 @@
 import {findChangedProperties, toReadableStore} from '@agnos-ui/core/utils/stores';
 import type {ReadableSignal, WritableSignal} from '@amadeus-it-group/tansu';
 import {asWritable, computed, writable} from '@amadeus-it-group/tansu';
-import type {SlotContent, SlotSvelteComponent, SlotsPresent, Widget, WidgetFactory, WidgetProps} from '../types';
+import type {PropsConfig, SlotContent, SlotSvelteComponent, SlotsPresent, Widget, WidgetFactory, WidgetProps} from '../types';
 import {useSvelteSlot} from '../types';
 
-export function createPatchChangedProps<T extends object>(patchFn: (arg: Partial<T>) => void) {
-	let previousProps: Partial<T> = {};
+function createPatchChangedProps<T extends object>(previousProps: Partial<T>, patchFn: (arg: Partial<T>) => void) {
 	return (props: Partial<T>) => {
 		const changedProps = findChangedProperties(previousProps, props);
 		previousProps = props;
@@ -34,8 +33,11 @@ const mergeEventFns = <T extends any[]>(fn1: (...args: T) => void, fn2: undefine
  * @param event - function that will be merged with the value of the store so that it is always called first when the event handler is called
  * @returns a writable store to be used for an event handler
  */
-const eventStore = <T extends any[]>(event: (...args: T) => void): WritableSignal<undefined | null | ((...args: T) => void)> => {
-	const store$ = writable<undefined | null | ((...args: T) => void)>(undefined, {equal: Object.is});
+const eventStore = <T extends any[]>(
+	event: (...args: T) => void,
+	prop: undefined | null | ((...args: T) => void),
+): WritableSignal<undefined | null | ((...args: T) => void)> => {
+	const store$ = writable(prop, {equal: Object.is});
 	return asWritable(
 		computed(() => mergeEventFns(event, store$()) as any),
 		{
@@ -51,12 +53,14 @@ export const callWidgetFactoryWithConfig = <W extends Widget>({
 	defaultConfig,
 	widgetConfig,
 	events,
+	$$props,
 }: {
 	factory: WidgetFactory<W>;
 	$$slots: SlotsPresent<WidgetProps<W>>;
 	defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
 	widgetConfig?: null | undefined | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
 	events: Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}Change`>;
+	$$props: Partial<WidgetProps<W>>;
 }): W & {patchChangedProps: W['patch']} => {
 	const defaultConfig$ = toReadableStore(defaultConfig);
 	const processedSlots: any = {};
@@ -65,15 +69,15 @@ export const callWidgetFactoryWithConfig = <W extends Widget>({
 			processedSlots[`slot${name[0].toUpperCase()}${name.substring(1)}`] = useSvelteSlot;
 		}
 	}
-	const props: {[key in keyof WidgetProps<W>]: WritableSignal<WidgetProps<W>[key]>} = {} as any;
+	const props: PropsConfig<WidgetProps<W>>['props'] = {...$$props};
 	for (const event of Object.keys(events) as (keyof WidgetProps<W> & `on${string}Change`)[]) {
-		props[event] = eventStore(events[event] as any) as any;
+		props[event] = eventStore(events[event] as any, $$props[event] as any) as any;
 	}
 	const widget = factory({
 		config: computed(() => ({...defaultConfig$(), ...widgetConfig?.(), ...processedSlots})),
 		props,
 	});
-	return {...widget, patchChangedProps: createPatchChangedProps(widget.patch)};
+	return {...widget, patchChangedProps: createPatchChangedProps($$props, widget.patch)};
 };
 
 export const isSvelteComponent = <Props extends object>(content: SlotContent<Props>): content is SlotSvelteComponent<Props> => {

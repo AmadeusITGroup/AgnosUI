@@ -18,6 +18,7 @@ type WidgetFactoryInput<Config extends {[widgetName: string]: object}, W extends
 	$$slots: SlotsPresent<WidgetProps<W>>;
 	defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
 	events: Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}Change`>;
+	$$props: Partial<WidgetProps<W>>;
 };
 type AdaptParentConfig<Config> = (config: Partial2Levels<Config>) => Partial2Levels<Config>;
 type CreateWidgetsDefaultConfig<Config extends {[widgetName: string]: object}> = (
@@ -79,13 +80,21 @@ export const widgetsConfigFactory = <Config extends {[widgetName: string]: objec
 		return computed(() => widgetsConfig?.()[widgetName]);
 	};
 
-	const callWidgetFactory = <W extends Widget>({factory, widgetName = null, $$slots, defaultConfig = {}, events}: WidgetFactoryInput<Config, W>) =>
+	const callWidgetFactory = <W extends Widget>({
+		factory,
+		widgetName = null,
+		$$slots,
+		defaultConfig = {},
+		events,
+		$$props,
+	}: WidgetFactoryInput<Config, W>) =>
 		callWidgetFactoryWithConfig<W>({
 			factory,
 			$$slots,
 			defaultConfig,
 			widgetConfig: widgetName ? (getContextWidgetConfig(widgetName) as any) : null,
 			events,
+			$$props,
 		});
 
 	return {

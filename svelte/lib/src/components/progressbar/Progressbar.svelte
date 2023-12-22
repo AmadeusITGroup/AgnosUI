@@ -13,7 +13,7 @@
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
 	type $$Props = Partial<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
 	type $$Slots = Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
-	export const widget = callWidgetFactory({factory: createProgressbar, widgetName: 'progressbar', $$slots, defaultConfig, events: {}});
+	export const widget = callWidgetFactory({factory: createProgressbar, widgetName: 'progressbar', $$slots, $$props, defaultConfig, events: {}});
 	const {
 		stores: {slotContent$, ariaLabel$, value$, min$, max$, ariaValueText$},
 		state$,

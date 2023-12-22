@@ -15,6 +15,7 @@
 		factory: createAccordion,
 		widgetName: 'accordion',
 		$$slots: $$slots as any,
+		$$props,
 		events: {
 			onItemVisibleChange: (event) => {
 				itemVisible = event;
