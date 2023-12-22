@@ -1,0 +1,1 @@
+import{f as n,u as m}from"./stores-RmWnK2ql.js";import{r as a}from"./index-xMq0hjgL.js";function o(c,e={},t){const s=a.useMemo(()=>c({...t,props:{...t==null?void 0:t.props,...e}}),[]),r=a.useRef(e);return a.useEffect(()=>{const u=n(r.current,e);r.current=e,u&&s.patch(u)},[e]),[m(s.state$),s]}export{o as u};
