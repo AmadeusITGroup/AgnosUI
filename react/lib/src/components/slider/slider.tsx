@@ -27,6 +27,7 @@ export function Slider(props: Partial<SliderProps>) {
 			vertical,
 			showValueLabels,
 			showMinMaxLabels,
+			rtl,
 		},
 		{
 			actions: {click, keydown, mouseDown},
@@ -47,7 +48,14 @@ export function Slider(props: Partial<SliderProps>) {
 				<div
 					key={index}
 					className={'au-slider-progress'}
-					style={{left: `${option.left}%`, bottom: `${option.bottom}%`, width: `${option.width}%`, height: `${option.height}%`}}
+					style={{
+						left: `${option.left}%`,
+						right: `${option.right}%`,
+						bottom: `${option.bottom}%`,
+						top: `${option.top}%`,
+						width: `${option.width}%`,
+						height: `${option.height}%`,
+					}}
 				/>
 			))}
 			<div
@@ -58,18 +66,18 @@ export function Slider(props: Partial<SliderProps>) {
 				<>
 					<div
 						ref={minSetRef}
-						className={`${vertical ? 'au-slider-label-vertical au-slider-label-vertical-min' : 'au-slider-label au-slider-label-min'} ${
-							!minValueLabelDisplay ? ' invisible' : ''
-						}
+						className={`${rtl ? 'au-slider-rtl' : ''} ${
+							vertical ? 'au-slider-label-vertical au-slider-label-vertical-min' : 'au-slider-label au-slider-label-min'
+						} ${!minValueLabelDisplay ? ' invisible' : ''}
 						`}
 					>
 						{min}
 					</div>
 					<div
 						ref={maxSetRef}
-						className={`${vertical ? 'au-slider-label-vertical au-slider-label-vertical-max' : 'au-slider-label au-slider-label-max'} ${
-							!maxValueLabelDisplay ? ' invisible' : ''
-						}`}
+						className={`${rtl ? 'au-slider-rtl' : ''} ${
+							vertical ? 'au-slider-label-vertical au-slider-label-vertical-max' : 'au-slider-label au-slider-label-max'
+						} ${!maxValueLabelDisplay ? ' invisible' : ''}`}
 					>
 						{max}
 					</div>
@@ -85,7 +93,15 @@ export function Slider(props: Partial<SliderProps>) {
 						top: `${combinedLabelPositionTop}%`,
 					}}
 				>
-					{sortedValues[0]} - {sortedValues[1]}
+					{rtl ? (
+						<>
+							{sortedValues[1]} - {sortedValues[0]}
+						</>
+					) : (
+						<>
+							{sortedValues[0]} - {sortedValues[1]}
+						</>
+					)}
 				</div>
 			) : (
 				<></>
@@ -105,15 +121,10 @@ export function Slider(props: Partial<SliderProps>) {
 						aria-disabled={disabled ? 'true' : undefined}
 						aria-orientation={vertical ? 'vertical' : undefined}
 						disabled={disabled}
-						style={
-							vertical
-								? {
-										top: `${handleDisplayOptions[item.id].top}%`,
-									}
-								: {
-										left: `${handleDisplayOptions[item.id].left}%`,
-									}
-						}
+						style={{
+							top: `${handleDisplayOptions[item.id].top}%`,
+							left: `${handleDisplayOptions[item.id].left}%`,
+						}}
 						onKeyDown={(e) => keydown(e as unknown as KeyboardEvent, item.id)}
 						onMouseDown={(e) => mouseDown(e as unknown as MouseEvent, item.id)}
 					>

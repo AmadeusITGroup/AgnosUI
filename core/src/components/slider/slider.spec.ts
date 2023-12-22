@@ -1,7 +1,7 @@
 import type {WritableSignal} from '@amadeus-it-group/tansu';
 import {computed, writable} from '@amadeus-it-group/tansu';
 import {beforeEach, describe, expect, test, vi} from 'vitest';
-import type {SliderProps, SliderWidget} from './slider';
+import type {HandleDisplayOptions, ProgressDisplayOptions, SliderProps, SliderWidget} from './slider';
 import {createSlider} from './slider';
 import type {WidgetState} from '../../types';
 
@@ -25,24 +25,27 @@ const defaultStateValues = {
 	progressDisplayOptions: [
 		{
 			left: 0,
-			bottom: 0,
+			right: null,
+			bottom: null,
+			top: null,
 			height: 100,
 			width: 0,
 		},
-	],
+	] as ProgressDisplayOptions[],
 	combinedLabelPositionLeft: 0,
 	combinedLabelPositionTop: 0,
 	handleDisplayOptions: [
 		{
 			left: 0,
-			top: 0,
+			top: null,
 		},
-	],
+	] as HandleDisplayOptions[],
 	sortedHandles: [{id: 0, value: 0, ariaLabel: '0'}],
 	className: '',
 	isInteractable: true,
 	showMinMaxLabels: true,
 	showValueLabels: true,
+	rtl: false,
 };
 
 describe(`Slider basic`, () => {
@@ -92,7 +95,7 @@ describe(`Slider basic`, () => {
 		expectedStateValue.sortedValues = [50];
 		expectedStateValue.handleDisplayOptions = [
 			{
-				top: 0,
+				...defaultStateValues.handleDisplayOptions[0],
 				left: 0,
 			},
 		];
@@ -101,7 +104,9 @@ describe(`Slider basic`, () => {
 		expectedStateValue.progressDisplayOptions = [
 			{
 				left: 0,
-				bottom: 0,
+				right: null,
+				bottom: null,
+				top: null,
 				height: 100,
 				width: 0,
 			},
@@ -120,7 +125,7 @@ describe(`Slider basic`, () => {
 		expectedStateValue.sortedValues = [60];
 		expectedStateValue.handleDisplayOptions = [
 			{
-				top: 0,
+				...defaultStateValues.handleDisplayOptions[0],
 				left: 60,
 			},
 		];
@@ -129,7 +134,9 @@ describe(`Slider basic`, () => {
 		expectedStateValue.progressDisplayOptions = [
 			{
 				left: 0,
-				bottom: 0,
+				right: null,
+				bottom: null,
+				top: null,
 				height: 100,
 				width: 60,
 			},
@@ -146,7 +153,7 @@ describe(`Slider basic`, () => {
 		expectedStateValue.sortedValues = [50];
 		expectedStateValue.handleDisplayOptions = [
 			{
-				top: 0,
+				...defaultStateValues.handleDisplayOptions[0],
 				left: 100,
 			},
 		];
@@ -155,7 +162,9 @@ describe(`Slider basic`, () => {
 		expectedStateValue.progressDisplayOptions = [
 			{
 				left: 0,
-				bottom: 0,
+				right: null,
+				bottom: null,
+				top: null,
 				height: 100,
 				width: 100,
 			},
@@ -174,7 +183,7 @@ describe(`Slider basic`, () => {
 		expectedStateValue.sortedValues = [60];
 		expectedStateValue.handleDisplayOptions = [
 			{
-				top: 0,
+				...defaultStateValues.handleDisplayOptions[0],
 				left: 60,
 			},
 		];
@@ -183,7 +192,9 @@ describe(`Slider basic`, () => {
 		expectedStateValue.progressDisplayOptions = [
 			{
 				left: 0,
-				bottom: 0,
+				right: null,
+				bottom: null,
+				top: null,
 				height: 100,
 				width: 60,
 			},
@@ -200,7 +211,7 @@ describe(`Slider basic`, () => {
 		expectedStateValue.sortedValues = [50];
 		expectedStateValue.handleDisplayOptions = [
 			{
-				top: 0,
+				...defaultStateValues.handleDisplayOptions[0],
 				left: 50,
 			},
 		];
@@ -208,7 +219,9 @@ describe(`Slider basic`, () => {
 		expectedStateValue.progressDisplayOptions = [
 			{
 				left: 0,
-				bottom: 0,
+				right: null,
+				bottom: null,
+				top: null,
 				height: 100,
 				width: 50,
 			},
@@ -744,14 +757,16 @@ describe(`Slider basic`, () => {
 		expectedStateValue.minValueLabelDisplay = true;
 		expectedStateValue.handleDisplayOptions = [
 			{
+				...defaultStateValues.handleDisplayOptions[0],
 				left: 33.333333333333336,
-				top: 0,
 			},
 		];
 		expectedStateValue.progressDisplayOptions = [
 			{
 				left: 0,
-				bottom: 0,
+				right: null,
+				bottom: null,
+				top: null,
 				height: 100,
 				width: 33.333333333333336,
 			},
@@ -783,12 +798,14 @@ describe(`Slider basic`, () => {
 		expectedStateValue.progressDisplayOptions = [
 			{
 				left: 0,
-				bottom: 0,
+				right: null,
+				bottom: null,
+				top: null,
 				height: 100,
 				width: 100,
 			},
 		];
-		expectedStateValue.handleDisplayOptions = [{left: 100, top: 0}];
+		expectedStateValue.handleDisplayOptions = [{...defaultStateValues.handleDisplayOptions[0], left: 100}];
 
 		expect(state).toStrictEqual(expectedStateValue);
 
@@ -796,14 +813,16 @@ describe(`Slider basic`, () => {
 
 		expectedStateValue.handleDisplayOptions = [
 			{
+				...defaultStateValues.handleDisplayOptions[0],
 				left: 80,
-				top: 0,
 			},
 		];
 		expectedStateValue.progressDisplayOptions = [
 			{
 				left: 0,
-				bottom: 0,
+				right: null,
+				bottom: null,
+				top: null,
 				height: 100,
 				width: 80,
 			},
@@ -835,14 +854,180 @@ describe(`Slider basic`, () => {
 		expectedStateValue.progressDisplayOptions = [
 			{
 				left: 0,
-				bottom: 0,
+				right: null,
+				bottom: null,
+				top: null,
 				height: 100,
 				width: 11.49425287356322,
 			},
 		];
-		expectedStateValue.handleDisplayOptions = [{left: 11.49425287356322, top: 0}];
+		expectedStateValue.handleDisplayOptions = [{...defaultStateValues.handleDisplayOptions[0], left: 11.49425287356322}];
 
 		expect(state).toStrictEqual(expectedStateValue);
+	});
+
+	test(`should properly set the state in RTL case`, () => {
+		slider.patch({
+			rtl: true,
+		});
+
+		const expectedStateValue = {...defaultStateValues};
+		expectedStateValue.rtl = true;
+		expectedStateValue.progressDisplayOptions = [
+			{
+				...defaultStateValues.progressDisplayOptions[0],
+				left: null,
+				right: 0,
+				bottom: null,
+				top: null,
+			},
+		];
+		expectedStateValue.handleDisplayOptions = [
+			{
+				...defaultStateValues.handleDisplayOptions[0],
+				left: 100,
+			},
+		];
+
+		expect(state).toStrictEqual(expectedStateValue);
+	});
+
+	test(`should properly handle keyboard in RTL case`, () => {
+		slider.patch({
+			rtl: true,
+		});
+
+		const expectedStateValue = {...defaultStateValues};
+		expectedStateValue.rtl = true;
+		expectedStateValue.progressDisplayOptions = [
+			{
+				...defaultStateValues.progressDisplayOptions[0],
+				left: null,
+				right: 0,
+				bottom: null,
+				top: null,
+			},
+		];
+		expectedStateValue.handleDisplayOptions = [
+			{
+				...defaultStateValues.handleDisplayOptions[0],
+				left: 100,
+			},
+		];
+
+		expect(state).toStrictEqual(expectedStateValue);
+
+		slider.actions.keydown(keyboardEvent('ArrowUp'), 0);
+		expectedStateValue.progressDisplayOptions = [
+			{
+				...defaultStateValues.progressDisplayOptions[0],
+				left: null,
+				right: 0,
+				bottom: null,
+				top: null,
+				width: 1,
+			},
+		];
+		expectedStateValue.handleDisplayOptions = [
+			{
+				...defaultStateValues.handleDisplayOptions[0],
+				left: 99,
+			},
+		];
+		expectedStateValue.values = [1];
+		expectedStateValue.sortedValues = [1];
+		expectedStateValue.sortedHandles = [
+			{
+				id: 0,
+				value: 1,
+				ariaLabel: '1',
+			},
+		];
+		expect(state).toEqual(expectedStateValue);
+
+		slider.actions.keydown(keyboardEvent('ArrowLeft'), 0);
+		expectedStateValue.progressDisplayOptions = [
+			{
+				...defaultStateValues.progressDisplayOptions[0],
+				left: null,
+				right: 0,
+				bottom: null,
+				top: null,
+				width: 2,
+			},
+		];
+		expectedStateValue.handleDisplayOptions = [
+			{
+				...defaultStateValues.handleDisplayOptions[0],
+				left: 98,
+			},
+		];
+		expectedStateValue.values = [2];
+		expectedStateValue.sortedValues = [2];
+		expectedStateValue.sortedHandles = [
+			{
+				id: 0,
+				value: 2,
+				ariaLabel: '2',
+			},
+		];
+		expect(state).toEqual(expectedStateValue);
+
+		slider.actions.keydown(keyboardEvent('ArrowDown'), 0);
+		expectedStateValue.progressDisplayOptions = [
+			{
+				...defaultStateValues.progressDisplayOptions[0],
+				left: null,
+				right: 0,
+				bottom: null,
+				top: null,
+				width: 1,
+			},
+		];
+		expectedStateValue.handleDisplayOptions = [
+			{
+				...defaultStateValues.handleDisplayOptions[0],
+				left: 99,
+			},
+		];
+		expectedStateValue.values = [1];
+		expectedStateValue.sortedValues = [1];
+		expectedStateValue.sortedHandles = [
+			{
+				id: 0,
+				value: 1,
+				ariaLabel: '1',
+			},
+		];
+		expect(state).toEqual(expectedStateValue);
+
+		slider.actions.keydown(keyboardEvent('ArrowRight'), 0);
+		expectedStateValue.progressDisplayOptions = [
+			{
+				...defaultStateValues.progressDisplayOptions[0],
+				left: null,
+				right: 0,
+				bottom: null,
+				top: null,
+				width: 0,
+			},
+		];
+		expectedStateValue.handleDisplayOptions = [
+			{
+				...defaultStateValues.handleDisplayOptions[0],
+				left: 100,
+			},
+		];
+		expectedStateValue.values = [0];
+		expectedStateValue.sortedValues = [0];
+		expectedStateValue.sortedHandles = [
+			{
+				id: 0,
+				value: 0,
+				ariaLabel: '0',
+			},
+		];
+		expect(state).toEqual(expectedStateValue);
 	});
 });
 
@@ -891,17 +1076,19 @@ describe(`Slider range`, () => {
 		expectedStateValue.handleDisplayOptions = [...expectedStateValue.handleDisplayOptions];
 		expectedStateValue.handleDisplayOptions[0] = {
 			left: 50,
-			top: 0,
+			top: null,
 		};
 		expectedStateValue.handleDisplayOptions[1] = {
 			left: 75,
-			top: 0,
+			top: null,
 		};
 		expectedStateValue.combinedLabelPositionLeft = 62.5;
 		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
 		expectedStateValue.progressDisplayOptions[0] = {
 			left: 50,
-			bottom: 0,
+			right: null,
+			bottom: null,
+			top: null,
 			width: 25,
 			height: 100,
 		};
@@ -924,17 +1111,19 @@ describe(`Slider range`, () => {
 		expectedStateValue.handleDisplayOptions = [...expectedStateValue.handleDisplayOptions];
 		expectedStateValue.handleDisplayOptions[0] = {
 			left: 10,
-			top: 0,
+			top: null,
 		};
 		expectedStateValue.handleDisplayOptions[1] = {
 			left: 50,
-			top: 0,
+			top: null,
 		};
 		expectedStateValue.combinedLabelPositionLeft = 30;
 		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
 		expectedStateValue.progressDisplayOptions[0] = {
 			left: 10,
-			bottom: 0,
+			right: null,
+			bottom: null,
+			top: null,
 			width: 40,
 			height: 100,
 		};
@@ -954,17 +1143,19 @@ describe(`Slider range`, () => {
 		expectedStateValue.handleDisplayOptions = [...expectedStateValue.handleDisplayOptions];
 		expectedStateValue.handleDisplayOptions[0] = {
 			left: 10,
-			top: 0,
+			top: null,
 		};
 		expectedStateValue.handleDisplayOptions[1] = {
 			left: 60,
-			top: 0,
+			top: null,
 		};
 		expectedStateValue.combinedLabelPositionLeft = 35;
 		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
 		expectedStateValue.progressDisplayOptions[0] = {
 			left: 10,
-			bottom: 0,
+			right: null,
+			bottom: null,
+			top: null,
 			width: 50,
 			height: 100,
 		};
@@ -987,17 +1178,19 @@ describe(`Slider range`, () => {
 		expectedStateValue.handleDisplayOptions = [...expectedStateValue.handleDisplayOptions];
 		expectedStateValue.handleDisplayOptions[0] = {
 			left: 10,
-			top: 0,
+			top: null,
 		};
 		expectedStateValue.handleDisplayOptions[1] = {
 			left: 50,
-			top: 0,
+			top: null,
 		};
 		expectedStateValue.combinedLabelPositionLeft = 30;
 		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
 		expectedStateValue.progressDisplayOptions[0] = {
 			left: 10,
-			bottom: 0,
+			right: null,
+			bottom: null,
+			top: null,
 			width: 40,
 			height: 100,
 		};
@@ -1016,17 +1209,19 @@ describe(`Slider range`, () => {
 		expectedStateValue.handleDisplayOptions = [...expectedStateValue.handleDisplayOptions];
 		expectedStateValue.handleDisplayOptions[0] = {
 			left: 100,
-			top: 0,
+			top: null,
 		};
 		expectedStateValue.handleDisplayOptions[1] = {
 			left: 50,
-			top: 0,
+			top: null,
 		};
 		expectedStateValue.combinedLabelPositionLeft = 75;
 		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
 		expectedStateValue.progressDisplayOptions[0] = {
 			left: 50,
-			bottom: 0,
+			right: null,
+			bottom: null,
+			top: null,
 			width: 50,
 			height: 100,
 		};
@@ -1045,17 +1240,19 @@ describe(`Slider range`, () => {
 		expectedStateValue.handleDisplayOptions = [...expectedStateValue.handleDisplayOptions];
 		expectedStateValue.handleDisplayOptions[0] = {
 			left: 100,
-			top: 0,
+			top: null,
 		};
 		expectedStateValue.handleDisplayOptions[1] = {
 			left: 70,
-			top: 0,
+			top: null,
 		};
 		expectedStateValue.combinedLabelPositionLeft = 85;
 		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
 		expectedStateValue.progressDisplayOptions[0] = {
 			left: 70,
-			bottom: 0,
+			right: null,
+			bottom: null,
+			top: null,
 			width: 30,
 			height: 100,
 		};
@@ -1077,17 +1274,19 @@ describe(`Slider range`, () => {
 		expectedStateValue.handleDisplayOptions = [...expectedStateValue.handleDisplayOptions];
 		expectedStateValue.handleDisplayOptions[0] = {
 			left: 45,
-			top: 0,
+			top: null,
 		};
 		expectedStateValue.handleDisplayOptions[1] = {
 			left: 50,
-			top: 0,
+			top: null,
 		};
 		expectedStateValue.combinedLabelPositionLeft = 47.5;
 		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
 		expectedStateValue.progressDisplayOptions[0] = {
 			left: 45,
-			bottom: 0,
+			right: null,
+			bottom: null,
+			top: null,
 			width: 5,
 			height: 100,
 		};
@@ -1107,17 +1306,19 @@ describe(`Slider range`, () => {
 		expectedStateValue.handleDisplayOptions = [...expectedStateValue.handleDisplayOptions];
 		expectedStateValue.handleDisplayOptions[0] = {
 			left: 45,
-			top: 0,
+			top: null,
 		};
 		expectedStateValue.handleDisplayOptions[1] = {
 			left: 70,
-			top: 0,
+			top: null,
 		};
 		expectedStateValue.combinedLabelPositionLeft = 57.5;
 		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
 		expectedStateValue.progressDisplayOptions[0] = {
 			left: 45,
-			bottom: 0,
+			right: null,
+			bottom: null,
+			top: null,
 			width: 25,
 			height: 100,
 		};
@@ -1127,6 +1328,43 @@ describe(`Slider range`, () => {
 		];
 		expectedStateValue.minValueLabelDisplay = true;
 		expectedStateValue.combinedLabelDisplay = false;
+
+		expect(state).toStrictEqual(expectedStateValue);
+	});
+
+	test(`should properly set the state for RTL case`, () => {
+		slider.patch({
+			values: [10, 50],
+			rtl: true,
+		});
+		const expectedStateValue = {...defaultStateValues};
+		expectedStateValue.values = [10, 50];
+		expectedStateValue.sortedValues = [10, 50];
+		expectedStateValue.handleDisplayOptions = [...expectedStateValue.handleDisplayOptions];
+		expectedStateValue.handleDisplayOptions[0] = {
+			left: 90,
+			top: null,
+		};
+		expectedStateValue.handleDisplayOptions[1] = {
+			left: 50,
+			top: null,
+		};
+		expectedStateValue.combinedLabelPositionLeft = 70;
+		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
+		expectedStateValue.progressDisplayOptions[0] = {
+			left: null,
+			right: 10,
+			bottom: null,
+			top: null,
+			width: 40,
+			height: 100,
+		};
+		expectedStateValue.rtl = true;
+		expectedStateValue.sortedHandles = [
+			{id: 0, value: 10, ariaLabel: '10'},
+			{id: 1, value: 50, ariaLabel: '50'},
+		];
+		expectedStateValue.minValueLabelDisplay = true;
 
 		expect(state).toStrictEqual(expectedStateValue);
 	});
@@ -1164,16 +1402,22 @@ describe(`Slider vertical`, () => {
 			unsubscribe();
 		};
 	});
+
 	test(`should calculate the clicked percent from the bottom to the top of the slider`, () => {
 		const expectedStateValue = {...defaultStateValues};
 		expectedStateValue.handleDisplayOptions = [...expectedStateValue.handleDisplayOptions];
 		expectedStateValue.handleDisplayOptions[0] = {
-			left: 0,
+			left: null,
 			top: 70,
 		};
 		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
-		expectedStateValue.progressDisplayOptions[0].height = 30;
-		expectedStateValue.progressDisplayOptions[0].width = 100;
+		expectedStateValue.progressDisplayOptions[0] = {
+			...expectedStateValue.progressDisplayOptions[0],
+			height: 30,
+			width: 100,
+			bottom: 0,
+			left: null,
+		};
 		expectedStateValue.vertical = true;
 		expectedStateValue.minValueLabelDisplay = true;
 		expectedStateValue.values = [30];
@@ -1186,6 +1430,288 @@ describe(`Slider vertical`, () => {
 			},
 		];
 
+		expect(state).toEqual(expectedStateValue);
+	});
+
+	test(`should properly set the state for RTL case`, () => {
+		slider.patch({
+			rtl: true,
+		});
+		const expectedStateValue = {...defaultStateValues};
+		expectedStateValue.handleDisplayOptions = [...expectedStateValue.handleDisplayOptions];
+		expectedStateValue.handleDisplayOptions[0] = {
+			left: null,
+			top: 30,
+		};
+		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
+		expectedStateValue.progressDisplayOptions[0] = {
+			...expectedStateValue.progressDisplayOptions[0],
+			height: 30,
+			width: 100,
+			top: 0,
+			left: null,
+		};
+		expectedStateValue.vertical = true;
+		expectedStateValue.minValueLabelDisplay = true;
+		expectedStateValue.values = [30];
+		expectedStateValue.sortedValues = [30];
+		expectedStateValue.sortedHandles = [
+			{
+				id: 0,
+				value: 30,
+				ariaLabel: '30',
+			},
+		];
+		expectedStateValue.rtl = true;
+
+		expect(state).toEqual(expectedStateValue);
+	});
+
+	test(`should properly handle keyboard in LTR case`, () => {
+		const expectedStateValue = {...defaultStateValues};
+		expectedStateValue.handleDisplayOptions = [...expectedStateValue.handleDisplayOptions];
+		expectedStateValue.handleDisplayOptions[0] = {
+			left: null,
+			top: 70,
+		};
+		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
+		expectedStateValue.progressDisplayOptions[0] = {
+			...expectedStateValue.progressDisplayOptions[0],
+			height: 30,
+			width: 100,
+			bottom: 0,
+			left: null,
+		};
+		expectedStateValue.vertical = true;
+		expectedStateValue.minValueLabelDisplay = true;
+		expectedStateValue.values = [30];
+		expectedStateValue.sortedValues = [30];
+		expectedStateValue.sortedHandles = [
+			{
+				id: 0,
+				value: 30,
+				ariaLabel: '30',
+			},
+		];
+
+		expect(state).toEqual(expectedStateValue);
+
+		slider.actions.keydown(keyboardEvent('ArrowDown'), 0);
+		expectedStateValue.handleDisplayOptions[0] = {
+			left: null,
+			top: 71,
+		};
+		expectedStateValue.progressDisplayOptions[0] = {
+			...expectedStateValue.progressDisplayOptions[0],
+			height: 29,
+			width: 100,
+			bottom: 0,
+			left: null,
+		};
+		expectedStateValue.values = [29];
+		expectedStateValue.sortedValues = [29];
+		expectedStateValue.sortedHandles = [
+			{
+				id: 0,
+				value: 29,
+				ariaLabel: '29',
+			},
+		];
+		expect(state).toEqual(expectedStateValue);
+
+		slider.actions.keydown(keyboardEvent('ArrowRight'), 0);
+		expectedStateValue.handleDisplayOptions[0] = {
+			left: null,
+			top: 70,
+		};
+		expectedStateValue.progressDisplayOptions[0] = {
+			...expectedStateValue.progressDisplayOptions[0],
+			height: 30,
+			width: 100,
+			bottom: 0,
+			left: null,
+		};
+		expectedStateValue.values = [30];
+		expectedStateValue.sortedValues = [30];
+		expectedStateValue.sortedHandles = [
+			{
+				id: 0,
+				value: 30,
+				ariaLabel: '30',
+			},
+		];
+		expect(state).toEqual(expectedStateValue);
+
+		slider.actions.keydown(keyboardEvent('ArrowUp'), 0);
+		expectedStateValue.handleDisplayOptions[0] = {
+			left: null,
+			top: 69,
+		};
+		expectedStateValue.progressDisplayOptions[0] = {
+			...expectedStateValue.progressDisplayOptions[0],
+			height: 31,
+			width: 100,
+			bottom: 0,
+			left: null,
+		};
+		expectedStateValue.values = [31];
+		expectedStateValue.sortedValues = [31];
+		expectedStateValue.sortedHandles = [
+			{
+				id: 0,
+				value: 31,
+				ariaLabel: '31',
+			},
+		];
+		expect(state).toEqual(expectedStateValue);
+
+		slider.actions.keydown(keyboardEvent('ArrowLeft'), 0);
+		expectedStateValue.handleDisplayOptions[0] = {
+			left: null,
+			top: 70,
+		};
+		expectedStateValue.progressDisplayOptions[0] = {
+			...expectedStateValue.progressDisplayOptions[0],
+			height: 30,
+			width: 100,
+			bottom: 0,
+			left: null,
+		};
+		expectedStateValue.values = [30];
+		expectedStateValue.sortedValues = [30];
+		expectedStateValue.sortedHandles = [
+			{
+				id: 0,
+				value: 30,
+				ariaLabel: '30',
+			},
+		];
+		expect(state).toEqual(expectedStateValue);
+	});
+
+	test(`should properly handle keyboard in RTL case`, () => {
+		slider.patch({
+			rtl: true,
+		});
+		const expectedStateValue = {...defaultStateValues};
+		expectedStateValue.handleDisplayOptions = [...expectedStateValue.handleDisplayOptions];
+		expectedStateValue.handleDisplayOptions[0] = {
+			left: null,
+			top: 30,
+		};
+		expectedStateValue.progressDisplayOptions = [...expectedStateValue.progressDisplayOptions];
+		expectedStateValue.progressDisplayOptions[0] = {
+			...expectedStateValue.progressDisplayOptions[0],
+			height: 30,
+			width: 100,
+			top: 0,
+			left: null,
+		};
+		expectedStateValue.vertical = true;
+		expectedStateValue.minValueLabelDisplay = true;
+		expectedStateValue.values = [30];
+		expectedStateValue.sortedValues = [30];
+		expectedStateValue.sortedHandles = [
+			{
+				id: 0,
+				value: 30,
+				ariaLabel: '30',
+			},
+		];
+		expectedStateValue.rtl = true;
+
+		expect(state).toEqual(expectedStateValue);
+
+		slider.actions.keydown(keyboardEvent('ArrowDown'), 0);
+		expectedStateValue.handleDisplayOptions[0] = {
+			left: null,
+			top: 31,
+		};
+		expectedStateValue.progressDisplayOptions[0] = {
+			...expectedStateValue.progressDisplayOptions[0],
+			height: 31,
+			width: 100,
+			top: 0,
+			left: null,
+		};
+		expectedStateValue.values = [31];
+		expectedStateValue.sortedValues = [31];
+		expectedStateValue.sortedHandles = [
+			{
+				id: 0,
+				value: 31,
+				ariaLabel: '31',
+			},
+		];
+		expect(state).toEqual(expectedStateValue);
+
+		slider.actions.keydown(keyboardEvent('ArrowRight'), 0);
+		expectedStateValue.handleDisplayOptions[0] = {
+			left: null,
+			top: 32,
+		};
+		expectedStateValue.progressDisplayOptions[0] = {
+			...expectedStateValue.progressDisplayOptions[0],
+			height: 32,
+			width: 100,
+			top: 0,
+			left: null,
+		};
+		expectedStateValue.values = [32];
+		expectedStateValue.sortedValues = [32];
+		expectedStateValue.sortedHandles = [
+			{
+				id: 0,
+				value: 32,
+				ariaLabel: '32',
+			},
+		];
+		expect(state).toEqual(expectedStateValue);
+
+		slider.actions.keydown(keyboardEvent('ArrowUp'), 0);
+		expectedStateValue.handleDisplayOptions[0] = {
+			left: null,
+			top: 31,
+		};
+		expectedStateValue.progressDisplayOptions[0] = {
+			...expectedStateValue.progressDisplayOptions[0],
+			height: 31,
+			width: 100,
+			top: 0,
+			left: null,
+		};
+		expectedStateValue.values = [31];
+		expectedStateValue.sortedValues = [31];
+		expectedStateValue.sortedHandles = [
+			{
+				id: 0,
+				value: 31,
+				ariaLabel: '31',
+			},
+		];
+		expect(state).toEqual(expectedStateValue);
+
+		slider.actions.keydown(keyboardEvent('ArrowLeft'), 0);
+		expectedStateValue.handleDisplayOptions[0] = {
+			left: null,
+			top: 30,
+		};
+		expectedStateValue.progressDisplayOptions[0] = {
+			...expectedStateValue.progressDisplayOptions[0],
+			height: 30,
+			width: 100,
+			top: 0,
+			left: null,
+		};
+		expectedStateValue.values = [30];
+		expectedStateValue.sortedValues = [30];
+		expectedStateValue.sortedHandles = [
+			{
+				id: 0,
+				value: 30,
+				ariaLabel: '30',
+			},
+		];
 		expect(state).toEqual(expectedStateValue);
 	});
 });

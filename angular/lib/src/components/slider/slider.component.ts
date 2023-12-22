@@ -30,7 +30,9 @@ import {take} from 'rxjs';
 			<div
 				class="au-slider-progress"
 				[style.left.%]="option.left"
+				[style.right.%]="option.right"
 				[style.bottom.%]="option.bottom"
+				[style.top.%]="option.top"
 				[style.width.%]="option.width"
 				[style.height.%]="option.height"
 			></div>
@@ -39,6 +41,7 @@ import {take} from 'rxjs';
 		@if (state().showMinMaxLabels) {
 			<div
 				[class]="state().vertical ? 'au-slider-label-vertical au-slider-label-vertical-min' : 'au-slider-label au-slider-label-min'"
+				[class.au-slider-rtl]="state().rtl"
 				[class.invisible]="!state().minValueLabelDisplay"
 				[auUse]="widget.directives.minLabelDirective"
 			>
@@ -46,6 +49,7 @@ import {take} from 'rxjs';
 			</div>
 			<div
 				[class]="state().vertical ? 'au-slider-label-vertical au-slider-label-vertical-max' : 'au-slider-label au-slider-label-max'"
+				[class.au-slider-rtl]="state().rtl"
 				[class.invisible]="!state().maxValueLabelDisplay"
 				[auUse]="widget.directives.maxLabelDirective"
 			>
@@ -58,7 +62,11 @@ import {take} from 'rxjs';
 				[style.left.%]="state().combinedLabelPositionLeft"
 				[style.top.%]="state().combinedLabelPositionTop"
 			>
-				{{ state().sortedValues[0] }} - {{ state().sortedValues[1] }}
+				@if (state().rtl) {
+					{{ state().sortedValues[1] }} - {{ state().sortedValues[0] }}
+				} @else {
+					{{ state().sortedValues[0] }} - {{ state().sortedValues[1] }}
+				}
 			</div>
 		}
 		@for (item of state().sortedHandles; track item.id; let i = $index) {
@@ -75,8 +83,8 @@ import {take} from 'rxjs';
 				[attr.aria-orientation]="state().vertical ? 'vertical' : null"
 				[disabled]="state().disabled"
 				[class]="state().vertical ? 'au-slider-handle-vertical' : 'au-slider-handle-horizontal'"
-				[style.left.%]="state().vertical ? null : state().handleDisplayOptions[item.id].left"
-				[style.top.%]="state().vertical ? state().handleDisplayOptions[item.id].top : null"
+				[style.left.%]="state().handleDisplayOptions[item.id].left"
+				[style.top.%]="state().handleDisplayOptions[item.id].top"
 				(keydown)="onKeyDown($event, item.id)"
 				(mousedown)="widget.actions.mouseDown($event, item.id)"
 			>
@@ -140,6 +148,12 @@ export class SliderComponent extends BaseWidgetDirective<SliderWidget> {
 	 */
 	@Input('auValues')
 	values: number[] | undefined;
+
+	/**
+	 * It `true` slider display is inversed
+	 */
+	@Input({alias: 'auRtl', transform: auBooleanAttribute})
+	rtl: boolean | undefined;
 
 	/**
 	 * If `true` the value labels are displayed on the slider

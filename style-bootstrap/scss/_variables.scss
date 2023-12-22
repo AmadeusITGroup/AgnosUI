@@ -28,8 +28,8 @@ $slider-progress-vertical-transform: rotate(90deg) !default;
 $slider-label-margin-block-start: calc(
 	-1 * (#{$slider-font-size} * #{$slider-line-height} + (#{$slider-handle-size} - #{$slider-secondary-size}) / 2)
 ) !default;
-$slider-label-min-left: 0 !default;
-$slider-label-max-right: 0 !default;
+$slider-label-min-position: 0 !default;
+$slider-label-max-position: 0 !default;
 $slider-label-now-transform: translateX(-50%) !default;
 $slider-label-vertical-margin-inline-start: 1rem !default;
 $slider-label-vertical-min-transform: translateY(-75%) !default;
