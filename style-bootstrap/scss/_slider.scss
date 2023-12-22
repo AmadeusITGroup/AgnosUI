@@ -48,8 +48,8 @@ $prefix: au-;
 
 	--#{$prefix}slider-label-margin-block-start: #{$slider-label-margin-block-start};
 
-	--#{$prefix}slider-label-min-left: #{$slider-label-min-left};
-	--#{$prefix}slider-label-max-right: #{$slider-label-max-right};
+	--#{$prefix}slider-label-min-position: #{$slider-label-min-position};
+	--#{$prefix}slider-label-max-position: #{$slider-label-max-position};
 	--#{$prefix}slider-label-now-transform: #{$slider-label-now-transform};
 
 	--#{$prefix}slider-label-vertical-margin-inline-start: #{$slider-label-vertical-margin-inline-start};
@@ -126,12 +126,20 @@ $prefix: au-;
 		margin-block-start: var(--#{$prefix}slider-label-margin-block-start);
 		position: absolute;
 
-		&.au-slider-label-min {
-			left: var(--#{$prefix}slider-label-min-left);
+		&.au-slider-label-min:not(.au-slider-rtl) {
+			left: var(--#{$prefix}slider-label-min-position);
 		}
 
-		&.au-slider-label-max {
-			right: var(--#{$prefix}slider-label-max-right);
+		&.au-slider-label-min.au-slider-rtl {
+			right: var(--#{$prefix}slider-label-max-position);
+		}
+
+		&.au-slider-label-max:not(.au-slider-rtl) {
+			right: var(--#{$prefix}slider-label-max-position);
+		}
+
+		&.au-slider-label-max.au-slider-rtl {
+			left: var(--#{$prefix}slider-label-min-position);
 		}
 
 		&.au-slider-label-now {
@@ -144,14 +152,24 @@ $prefix: au-;
 		margin-inline-start: var(--#{$prefix}slider-label-vertical-margin-inline-start);
 		white-space: var(--#{$prefix}slider-label-vertical-white-space);
 
-		&.au-slider-label-vertical-min {
+		&.au-slider-label-vertical-min:not(.au-slider-rtl) {
 			top: var(--#{$prefix}slider-label-vertical-min-top);
 			transform: var(--#{$prefix}slider-label-vertical-min-transform);
 		}
 
-		&.au-slider-label-vertical-max {
+		&.au-slider-label-vertical-min.au-slider-rtl {
 			top: var(--#{$prefix}slider-label-vertical-max-top);
 			transform: var(--#{$prefix}slider-label-vertical-max-transform);
+		}
+
+		&.au-slider-label-vertical-max:not(.au-slider-rtl) {
+			top: var(--#{$prefix}slider-label-vertical-max-top);
+			transform: var(--#{$prefix}slider-label-vertical-max-transform);
+		}
+
+		&.au-slider-label-vertical-max.au-slider-rtl {
+			top: var(--#{$prefix}slider-label-vertical-min-top);
+			transform: var(--#{$prefix}slider-label-vertical-min-transform);
 		}
 
 		&.au-slider-label-vertical-now {

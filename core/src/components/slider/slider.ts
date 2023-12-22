@@ -1,3 +1,4 @@
+import type {WritableSignal} from '@amadeus-it-group/tansu';
 import {computed, derived, writable} from '@amadeus-it-group/tansu';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 import {bindableDerived, writablesForProps} from '../../utils/stores';
@@ -10,13 +11,21 @@ import {getDecimalPrecision} from '../../utils/internal/math';
 
 export interface ProgressDisplayOptions {
 	/**
+	 * Right offset of the progress in %
+	 */
+	left: number | null;
+	/**
 	 * Left offset of the progress in %
 	 */
-	left: number;
+	right: number | null;
+	/**
+	 * Top offset of the progress in %
+	 */
+	top: number | null;
 	/**
 	 * Bottom offset of the progress in %
 	 */
-	bottom: number;
+	bottom: number | null;
 	/**
 	 * Width of the progress in %
 	 */
@@ -31,11 +40,11 @@ export interface HandleDisplayOptions {
 	/**
 	 * Left offset of the handle in %
 	 */
-	left: number;
+	left: number | null;
 	/**
 	 * Top offset of the handle in %
 	 */
-	top: number;
+	top: number | null;
 }
 
 export interface SliderCommonPropsAndState extends WidgetsCommonPropsAndState {
@@ -83,6 +92,11 @@ export interface SliderCommonPropsAndState extends WidgetsCommonPropsAndState {
 	 * If `true` the min and max labels are displayed on the slider
 	 */
 	showMinMaxLabels: boolean;
+
+	/**
+	 * It `true` slider display is inversed
+	 */
+	rtl: boolean;
 }
 
 export interface SliderState extends SliderCommonPropsAndState {
@@ -204,6 +218,7 @@ const defaultSliderConfig: SliderProps = {
 	values: [0],
 	showValueLabels: true,
 	showMinMaxLabels: true,
+	rtl: false,
 };
 
 /**
@@ -226,6 +241,7 @@ const configValidator: ConfigValidator<SliderProps> = {
 	values: typeArray,
 	showValueLabels: typeBoolean,
 	showMinMaxLabels: typeBoolean,
+	rtl: typeBoolean,
 };
 
 /**
@@ -251,6 +267,41 @@ const computeCleanValue = (value: number, min: number, max: number, intStepSize:
 };
 
 /**
+ * Method to update the dirtyValues for the slider keyboard navigation
+ * @param handleIndex - index of the handle to update
+ * @param _dirtyValues$ - writable signal that contains dirtyValues
+ * @param values - slider values
+ * @param stepSize - slider step size
+ * @param updateDirection - if equals 1 - value is increased, if equals -1 values is decreased
+ */
+const updateDirtyValue = (
+	handleIndex: number,
+	_dirtyValues$: WritableSignal<number[]>,
+	values: number[],
+	stepSize: number,
+	updateDirection: number,
+) => {
+	_dirtyValues$.update((value) => {
+		value = [...value];
+		value[handleIndex] = values[handleIndex] + stepSize * updateDirection;
+		return value;
+	});
+};
+
+const getUpdateDirection = (vertical: boolean, rtl: boolean, keysVertical: boolean) => {
+	if (vertical && rtl) {
+		return keysVertical ? 1 : -1;
+	} else if (vertical && !rtl) {
+		return -1;
+	} else if (!vertical && rtl) {
+		return keysVertical ? -1 : 1;
+	} else if (!vertical && !rtl) {
+		return -1;
+	}
+	return 1;
+};
+
+/**
  * Create a slider widget with given config props
  * @param config - an optional slider config
  * @returns a SliderWidget
@@ -262,6 +313,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			min$: _dirtyMinimum$,
 			max$: _dirtyMaximum$,
 			stepSize$,
+			rtl$,
 			values$: _dirtyValues$,
 
 			ariaLabelHandle$,
@@ -277,12 +329,20 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 	let _prevCoordinate = -1;
 	// clean inputs adjustment
 	const min$ = computed(() => {
-		if (_dirtyMinimum$() === _dirtyMaximum$()) return defaultSliderConfig.min;
-		return Math.min(_dirtyMinimum$(), _dirtyMaximum$());
+		const _dirtyMinimum = _dirtyMinimum$(),
+			_dirtyMaximum = _dirtyMaximum$();
+		if (_dirtyMinimum === _dirtyMaximum) {
+			return defaultSliderConfig.min;
+		}
+		return Math.min(_dirtyMinimum, _dirtyMaximum);
 	});
 	const max$ = computed(() => {
-		if (_dirtyMinimum$() === _dirtyMaximum$()) return defaultSliderConfig.max;
-		return Math.max(_dirtyMinimum$(), _dirtyMaximum$());
+		const _dirtyMinimum = _dirtyMinimum$(),
+			_dirtyMaximum = _dirtyMaximum$();
+		if (_dirtyMinimum === _dirtyMaximum) {
+			return defaultSliderConfig.max;
+		}
+		return Math.max(_dirtyMinimum, _dirtyMaximum);
 	});
 	const _decimalPrecision$ = computed(() => Math.max(getDecimalPrecision(stepSize$()), getDecimalPrecision(min$()), getDecimalPrecision(max$())));
 	const _intStepSize$ = computed(() => stepSize$() * Math.pow(10, _decimalPrecision$()));
@@ -374,7 +434,9 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			return true;
 		}
 		const minLabelWidth = minLabelWidth$();
-		return !valuesPercent$().some((percent) => percent < minLabelWidth + 1);
+		return rtl$()
+			? !valuesPercent$().some((percent) => 100 - percent > 100 - minLabelWidth - 1)
+			: !valuesPercent$().some((percent) => percent < minLabelWidth + 1);
 	});
 	const maxValueLabelDisplay$ = computed(() => {
 		if (!showMinMaxLabels$()) {
@@ -383,7 +445,9 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			return true;
 		}
 		const maxLabelWidth = maxLabelWidth$();
-		return !valuesPercent$().some((percent) => percent > 100 - maxLabelWidth - 1);
+		return rtl$()
+			? !valuesPercent$().some((percent) => 100 - percent < maxLabelWidth + 1)
+			: !valuesPercent$().some((percent) => percent > 100 - maxLabelWidth - 1);
 	});
 	// TODO define the intersection value
 	const combinedLabelDisplay$ = computed(() => {
@@ -394,31 +458,37 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 
 	const combinedLabelPositionLeft$ = computed(() => {
 		const sortedValuesPercent = sortedValuesPercent$();
-		return vertical$() || sortedValuesPercent.length != 2 ? 0 : (sortedValuesPercent[0] + sortedValuesPercent[1]) / 2;
+		const combinedPosition = (sortedValuesPercent[0] + sortedValuesPercent[1]) / 2;
+		return vertical$() || sortedValuesPercent.length != 2 ? 0 : rtl$() ? 100 - combinedPosition : combinedPosition;
 	});
 	const combinedLabelPositionTop$ = computed(() => {
 		const sortedValuesPercent = sortedValuesPercent$();
-		return vertical$() && sortedValuesPercent.length == 2 ? 100 - (sortedValuesPercent[0] + sortedValuesPercent[1]) / 2 : 0;
+		const combinedPosition = 100 - (sortedValuesPercent[0] + sortedValuesPercent[1]) / 2;
+		return vertical$() && sortedValuesPercent.length == 2 ? (rtl$() ? 100 - combinedPosition : combinedPosition) : 0;
 	});
 
 	const handleDisplayOptions$ = computed(() => {
-		const vertical = vertical$();
+		const vertical = vertical$(),
+			rtl = rtl$();
 		return valuesPercent$().map((vp, index) => {
 			return {
-				left: vertical ? 0 : vp,
-				top: vertical ? 100 - vp : 0,
+				left: rtl ? (vertical ? null : 100 - vp) : vertical ? null : vp,
+				top: rtl ? (vertical ? vp : null) : vertical ? 100 - vp : null,
 			};
 		});
 	});
 
 	const progressDisplayOptions$ = computed(() => {
 		const vertical = vertical$(),
-			sortedValuesPercent = sortedValuesPercent$();
+			sortedValuesPercent = sortedValuesPercent$(),
+			rtl = rtl$();
 		if (sortedValuesPercent.length === 1) {
 			return [
 				{
-					left: 0,
-					bottom: 0,
+					left: vertical ? null : rtl ? null : 0,
+					right: vertical ? null : rtl ? 0 : null,
+					bottom: vertical ? (rtl ? null : 0) : null,
+					top: vertical ? (rtl ? 0 : null) : null,
 					width: vertical ? 100 : sortedValuesPercent[0],
 					height: vertical ? sortedValuesPercent[0] : 100,
 				},
@@ -427,8 +497,10 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			return sortedValuesPercent
 				.map((svp, index, array) => {
 					return {
-						left: vertical ? 0 : svp,
-						bottom: vertical ? svp : 0,
+						left: vertical ? null : rtl ? null : svp,
+						right: vertical ? null : rtl ? array[index] : null,
+						bottom: vertical ? (rtl ? null : svp) : null,
+						top: vertical ? (rtl ? array[index] : null) : null,
 						width: vertical ? 100 : index === array.length - 1 ? svp : array[index + 1] - svp,
 						height: vertical ? (index === array.length - 1 ? svp : array[index + 1] - svp) : 100,
 					};
@@ -459,9 +531,10 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 		if (isInteractable$()) {
 			const sliderDomRectSize = sliderDomRectSize$(),
 				sliderDomRectOffset = sliderDomRectOffset$();
-			const clickedPercent = vertical$()
+			let clickedPercent = vertical$()
 				? (sliderDomRectSize - clickedCoordinate + sliderDomRectOffset) / sliderDomRectSize
 				: (clickedCoordinate - sliderDomRectOffset) / sliderDomRectSize;
+			clickedPercent = rtl$() ? 1 - clickedPercent : clickedPercent;
 			const derivedHandleIndex = handleNumber ?? getClosestSliderHandle(clickedPercent);
 			const newValue = clickedPercent * (max$() - min$()) + min$();
 			_dirtyValues$.update((dh) => {
@@ -490,6 +563,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			handleDisplayOptions$,
 			showValueLabels$,
 			showMinMaxLabels$,
+			rtl$,
 			...stateProps,
 		}),
 		patch,
@@ -505,35 +579,37 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			},
 			keydown(event: KeyboardEvent, handleIndex: number) {
 				const {key} = event;
+				const rtl = rtl$(),
+					values = values$(),
+					stepSize = stepSize$(),
+					min = min$(),
+					max = max$(),
+					vertical = vertical$();
 				if (isInteractable$()) {
 					switch (key) {
 						case 'ArrowDown':
+							updateDirtyValue(handleIndex, _dirtyValues$, values, stepSize, getUpdateDirection(vertical, rtl, true));
+							break;
 						case 'ArrowLeft':
-							_dirtyValues$.update((value) => {
-								value = [...value];
-								value[handleIndex] = values$()[handleIndex] - stepSize$();
-								return value;
-							});
+							updateDirtyValue(handleIndex, _dirtyValues$, values, stepSize, getUpdateDirection(vertical, rtl, false));
 							break;
 						case 'ArrowUp':
+							updateDirtyValue(handleIndex, _dirtyValues$, values, stepSize, -1 * getUpdateDirection(vertical, rtl, true));
+							break;
 						case 'ArrowRight':
-							_dirtyValues$.update((value) => {
-								value = [...value];
-								value[handleIndex] = values$()[handleIndex] + stepSize$();
-								return value;
-							});
+							updateDirtyValue(handleIndex, _dirtyValues$, values, stepSize, -1 * getUpdateDirection(vertical, rtl, false));
 							break;
 						case 'Home':
 							_dirtyValues$.update((value) => {
 								value = [...value];
-								value[handleIndex] = min$();
+								value[handleIndex] = min;
 								return value;
 							});
 							break;
 						case 'End':
 							_dirtyValues$.update((value) => {
 								value = [...value];
-								value[handleIndex] = max$();
+								value[handleIndex] = max;
 								return value;
 							});
 							break;

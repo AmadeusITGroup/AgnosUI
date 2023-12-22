@@ -2,6 +2,7 @@
 	import basicSample from '@agnos-ui/samples/slider/default';
 	import rangeSample from '@agnos-ui/samples/slider/range';
 	import verticalSample from '@agnos-ui/samples/slider/vertical';
+	import rightToLeftSample from '@agnos-ui/samples/slider/right-to-left';
 	import Sample from '$lib/layout/Sample.svelte';
 	import Section from '$lib/layout/Section.svelte';
 </script>
@@ -12,8 +13,11 @@
 <Section label="Range slider" id="range" level={2}>
 	<Sample title="Range slider" sample={rangeSample} height={627} />
 </Section>
-<Section label="Vertical slider" id="range" level={2}>
+<Section label="Vertical slider" id="vertical" level={2}>
 	<Sample title="Vertical slider" sample={verticalSample} height={627} />
+</Section>
+<Section label="Right to left slider" id="rightToLeft" level={2}>
+	<Sample title="Right to left slider" sample={rightToLeftSample} height={627} />
 </Section>
 <Section label="Accessibility" id="accessibility" level={2}>
 	<p>

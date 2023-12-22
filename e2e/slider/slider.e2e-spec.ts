@@ -240,7 +240,7 @@ test.describe(`Slider tests`, () => {
 			await sliderLocator.click({position: {x: boundingBox!.x + boundingBox!.width * 0.8, y: 1}});
 
 			await expect.poll(async () => (await sliderPO.sliderHandleState()).at(1)).toEqual(expectedState);
-			expect((await sliderPO.sliderProgressState())[0]).toEqual('left: 10%; bottom: 0%; width: 78%; height: 100%;');
+			expect((await sliderPO.sliderProgressState())[0]).toEqual('left: 10%; width: 78%; height: 100%;');
 		});
 
 		test(`should interchange the handles on mouse drag event`, async ({page}) => {
@@ -267,7 +267,7 @@ test.describe(`Slider tests`, () => {
 
 			await expect.poll(async () => (await sliderPO.sliderHandleState()).at(0)).toEqual(expectedState[0]);
 			expect((await sliderPO.sliderHandleState()).at(1)).toEqual(expectedState[1]);
-			expect((await sliderPO.sliderProgressState())[0]).toEqual('left: 40%; bottom: 0%; width: 43%; height: 100%;');
+			expect((await sliderPO.sliderProgressState())[0]).toEqual('left: 40%; width: 43%; height: 100%;');
 		});
 
 		test(`should move handle on key strokes`, async ({page}) => {
@@ -294,7 +294,7 @@ test.describe(`Slider tests`, () => {
 
 			await expect.poll(async () => (await sliderPO.sliderHandleState()).at(0)).toEqual(expectedState[0]);
 			expect((await sliderPO.sliderHandleState()).at(1)).toEqual(expectedState[1]);
-			expect((await sliderPO.sliderProgressState())[0]).toEqual('left: 0%; bottom: 0%; width: 40%; height: 100%;');
+			expect((await sliderPO.sliderProgressState())[0]).toEqual('left: 0%; width: 40%; height: 100%;');
 
 			expect(await minLabelLocator.isVisible()).toBe(false);
 			expect(await maxLabelLocator.isVisible()).toBe(true);
@@ -312,7 +312,7 @@ test.describe(`Slider tests`, () => {
 
 			await expect.poll(async () => (await sliderPO.sliderHandleState()).at(0)).toEqual(expectedState[0]);
 			expect((await sliderPO.sliderHandleState()).at(1)).toEqual(expectedState[1]);
-			expect((await sliderPO.sliderProgressState())[0]).toEqual('left: 40%; bottom: 0%; width: 60%; height: 100%;');
+			expect((await sliderPO.sliderProgressState())[0]).toEqual('left: 40%; width: 60%; height: 100%;');
 
 			expect(await minLabelLocator.isVisible()).toBe(true);
 			expect(await maxLabelLocator.isVisible()).toBe(false);
@@ -334,6 +334,27 @@ test.describe(`Slider tests`, () => {
 
 			await expect(sliderPO.locatorValueLabel).toHaveCount(1);
 		});
+
+		test(`should invert the slider display for the RTL case`, async ({page}) => {
+			const sliderPO = new SliderPO(page, 1);
+
+			await page.goto('#/slider/right-to-left');
+			await sliderPO.locatorRoot.waitFor();
+
+			await expect(sliderPO.locatorValueLabel).toHaveCount(2);
+
+			const sliderLocator = sliderPO.locatorRoot;
+			const boundingBox = await sliderLocator.boundingBox();
+			await sliderPO.locatorHandle.nth(0).dragTo(sliderLocator, {
+				targetPosition: {x: boundingBox!.x + boundingBox!.width * 0.3, y: 1},
+			});
+
+			await expect(sliderPO.locatorValueLabel).toHaveCount(1);
+			await expect(sliderPO.locatorValueLabel).toHaveText('70 - 62');
+
+			await expect(sliderPO.locatorMinLabelHorizontal).toHaveClass(/au-slider-rtl/);
+			await expect(sliderPO.locatorMaxLabelHorizontal).toHaveClass(/au-slider-rtl/);
+		});
 	});
 
 	test.describe(`Vertical slider`, () => {
@@ -354,7 +375,7 @@ test.describe(`Slider tests`, () => {
 			await sliderLocator.click({position: {y: boundingBox!.height * 0.2, x: 1}});
 
 			await expect.poll(async () => (await sliderPO.sliderHandleState()).at(1)).toEqual(expectedState);
-			expect((await sliderPO.sliderProgressState())[0]).toEqual('left: 0%; bottom: 10%; width: 100%; height: 70%;');
+			expect((await sliderPO.sliderProgressState())[0]).toEqual('bottom: 10%; width: 100%; height: 70%;');
 		});
 
 		test(`should move handle on key strokes`, async ({page}) => {
@@ -377,7 +398,7 @@ test.describe(`Slider tests`, () => {
 
 			await expect.poll(async () => (await sliderPO.sliderHandleState()).at(0)).toEqual(expectedState[0]);
 			expect((await sliderPO.sliderHandleState()).at(1)).toEqual(expectedState[1]);
-			expect((await sliderPO.sliderProgressState())[0]).toEqual('left: 0%; bottom: 0%; width: 100%; height: 40%;');
+			expect((await sliderPO.sliderProgressState())[0]).toEqual('bottom: 0%; width: 100%; height: 40%;');
 
 			expect(await minLabelLocator.isVisible()).toBe(false);
 			expect(await maxLabelLocator.isVisible()).toBe(true);
@@ -395,7 +416,7 @@ test.describe(`Slider tests`, () => {
 
 			await expect.poll(async () => (await sliderPO.sliderHandleState()).at(0)).toEqual(expectedState[0]);
 			expect((await sliderPO.sliderHandleState()).at(1)).toEqual(expectedState[1]);
-			expect((await sliderPO.sliderProgressState())[0]).toEqual('left: 0%; bottom: 40%; width: 100%; height: 60%;');
+			expect((await sliderPO.sliderProgressState())[0]).toEqual('bottom: 40%; width: 100%; height: 60%;');
 
 			expect(await minLabelLocator.isVisible()).toBe(true);
 			expect(await maxLabelLocator.isVisible()).toBe(false);

@@ -42,6 +42,7 @@
 			vertical$,
 			showValueLabels$,
 			showMinMaxLabels$,
+			rtl$,
 		},
 		actions: {click, keydown, mouseDown},
 		directives: {sliderDirective, minLabelDirective, maxLabelDirective},
@@ -56,7 +57,9 @@
 		<div
 			class="au-slider-progress"
 			style:left={`${option.left}%`}
+			style:right={`${option.right}%`}
 			style:bottom={`${option.bottom}%`}
+			style:top={`${option.top}%`}
 			style:width={`${option.width}%`}
 			style:height={`${option.height}%`}
 		/>
@@ -68,6 +71,7 @@
 		<div
 			class={`${$vertical$ ? 'au-slider-label-vertical au-slider-label-vertical-min' : 'au-slider-label au-slider-label-min'}`}
 			class:invisible={!$minValueLabelDisplay$}
+			class:au-slider-rtl={$rtl$}
 			use:minLabelDirective
 		>
 			{$min$}
@@ -75,6 +79,7 @@
 		<div
 			class={`${$vertical$ ? 'au-slider-label-vertical au-slider-label-vertical-max' : 'au-slider-label au-slider-label-max'}`}
 			class:invisible={!$maxValueLabelDisplay$}
+			class:au-slider-rtl={$rtl$}
 			use:maxLabelDirective
 		>
 			{$max$}
@@ -86,7 +91,11 @@
 			style:left={`${$combinedLabelPositionLeft$}%`}
 			style:top={`${$combinedLabelPositionTop$}%`}
 		>
-			{$sortedValues$[0]} - {$sortedValues$[1] ?? ''}
+			{#if $rtl$}
+				{$sortedValues$[1]} - {$sortedValues$[0]}
+			{:else}
+				{$sortedValues$[0]} - {$sortedValues$[1]}
+			{/if}
 		</div>
 	{/if}
 	{#each $sortedHandles$ as item, i (item.id)}
@@ -102,8 +111,8 @@
 			aria-label={item.ariaLabel}
 			aria-orientation={$vertical$ ? 'vertical' : null}
 			disabled={$disabled$ ? true : null}
-			style:left={$vertical$ ? null : `${$handleDisplayOptions$[item.id].left}%`}
-			style:top={$vertical$ ? `${$handleDisplayOptions$[item.id].top}%` : null}
+			style:left={`${$handleDisplayOptions$[item.id].left}%`}
+			style:top={`${$handleDisplayOptions$[item.id].top}%`}
 			on:keydown={(e) => keydown(e, item.id)}
 			on:mousedown={(e) => mouseDown(e, item.id)}
 		>
