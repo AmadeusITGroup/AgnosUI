@@ -38,7 +38,7 @@ export class ZoneWrapper {
 					this.#runNeeded = true;
 					if (!this.#runPlanned) {
 						this.#runPlanned = true;
-						(async () => {
+						void (async () => {
 							await 0;
 							this.#runPlanned = false;
 							if (this.#runNeeded) {

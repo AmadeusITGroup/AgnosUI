@@ -100,7 +100,7 @@ describe('modal', () => {
 		const promise = modal.api.open();
 		// should not close the modal:
 		modal.actions.modalClick({currentTarget: element, target: element} as any as MouseEvent);
-		promise.finally(() => (settled = true));
+		void promise.finally(() => (settled = true));
 		await new Promise((resolve) => setTimeout(resolve, 100));
 		directive?.destroy?.();
 		expect(settled).toBe(false);
@@ -125,7 +125,7 @@ describe('modal', () => {
 		// should not close the modal:
 		modal.api.close(null);
 		expect(onBeforeCloseCalled).toBe(1);
-		promise.finally(() => (settled = true));
+		void promise.finally(() => (settled = true));
 		await new Promise((resolve) => setTimeout(resolve, 100));
 		directive?.destroy?.();
 		expect(settled).toBe(false);

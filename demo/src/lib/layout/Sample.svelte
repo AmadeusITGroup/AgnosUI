@@ -69,7 +69,7 @@
 	async function getCode(showCode: boolean, frameworkName: Frameworks, sample: SampleInfo, fileName: string) {
 		code = showCode ? await sample.files[frameworkName].files[fileName]() : '';
 	}
-	$: getCode(showCode, $selectedFramework$!, sample, selectedFileName);
+	$: void getCode(showCode, $selectedFramework$!, sample, selectedFileName);
 
 	$: sampleBaseUrl = `${$pathToRoot$}${$selectedFramework$}/samples/#/${path}`;
 	$: sampleUrl = sampleBaseUrl + (urlParameters ? `#${JSON.stringify(urlParameters)}` : '');

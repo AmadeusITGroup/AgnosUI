@@ -28,7 +28,7 @@ export const useDirectiveForHost = <T>(use?: AgnosUIDirective<T>, params?: T) =>
 
 	async function update(newUse?: AgnosUIDirective<T>, newParams?: T) {
 		if (newUse !== use) {
-			destroyDirectiveInstance();
+			void destroyDirectiveInstance();
 			use = newUse;
 			params = newParams;
 			if (newUse) {
@@ -62,6 +62,6 @@ export class UseDirective<T> implements OnChanges {
 	#useDirective = useDirectiveForHost<T>();
 
 	ngOnChanges() {
-		this.#useDirective.update(this.use, this.params);
+		void this.#useDirective.update(this.use, this.params);
 	}
 }

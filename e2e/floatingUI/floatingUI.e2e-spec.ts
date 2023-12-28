@@ -10,7 +10,7 @@ test.describe(`FloatingUI tests`, () => {
 		const demoPO = new FloatingUIDemoPO(page);
 		await expect(demoPO.locatorPopover).toBeVisible();
 		await demoPO.locatorTogglePopoverButton.click();
-		expect(demoPO.locatorPopover).not.toBeVisible();
+		await expect(demoPO.locatorPopover).not.toBeVisible();
 		await demoPO.locatorTogglePopoverButton.click();
 		await expect(demoPO.locatorPopover).toBeVisible();
 		expect(await demoPO.locatorPopover.boundingBox()).toEqual({x: 211, y: 32, width: 250, height: 55});

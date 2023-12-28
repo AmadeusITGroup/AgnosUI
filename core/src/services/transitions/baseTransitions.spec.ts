@@ -79,7 +79,7 @@ describe(`createTransition`, () => {
 		});
 		const directiveInstance = transitionInstance.directives.directive(element);
 		const transition1 = transitionInstance.api.show();
-		transition1.finally(() => {
+		void transition1.finally(() => {
 			throw new Error('transition1 is expected not to resolve');
 		});
 		events.push('afterRunTransition1');
@@ -119,14 +119,14 @@ describe(`createTransition`, () => {
 		});
 		const directiveInstance = transitionInstance.directives.directive(element);
 		const transition1 = transitionInstance.api.show();
-		transition1.finally(() => {
+		void transition1.finally(() => {
 			throw new Error('transition1 is expected not to resolve');
 		});
 		events.push('afterRunTransition1');
 		await new Promise((resolve) => setTimeout(resolve, 2));
 		events.push('afterTimeoutTransition1');
 		const transition2 = transitionInstance.api.hide();
-		transition2.finally(() => {
+		void transition2.finally(() => {
 			throw new Error('transition2 is expected not to resolve');
 		});
 		events.push('afterRunTransition2');
@@ -177,7 +177,7 @@ describe(`createTransition`, () => {
 		const transition1 = transitionInstance.api.show();
 		events.push('afterRunTransition1');
 		const transition2 = transitionInstance.api.show();
-		transition1.finally(() => {
+		void transition1.finally(() => {
 			throw new Error('transition1 is expected not to resolve');
 		});
 		events.push('afterRunTransition2');
