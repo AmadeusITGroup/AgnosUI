@@ -55,7 +55,7 @@
 		"@amadeus-it-group/tansu": "0.0.24"
 	},
 	"devDependencies": {
-		"eslint-plugin-jsdoc": "^46.9.1"
+		"eslint-plugin-jsdoc": "^47.0.2"
 	},
 	"peerDependencies": {
 		"@floating-ui/dom": "*"
