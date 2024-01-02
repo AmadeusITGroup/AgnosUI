@@ -1,6 +1,6 @@
 {
 	"name": "@agnos-ui/code-coverage",
-	"private": true,
+	"version": "0.0.0",
 	"dependencies": {
 		"@babel/core": "^7.23.7",
 		"@babel/plugin-syntax-decorators": "^7.23.3",
@@ -9,19 +9,10 @@
 		"nyc": "^15.1.0",
 		"uuid": "^9.0.1"
 	},
-	"peerDependencies": {
-		"vite": "*"
-	},
 	"devDependencies": {
 		"@types/babel__core": "^7.20.5",
 		"vite": "^5.0.10"
 	},
-	"scripts": {
-		"build": "npm run build:rollup && npm run build:dts",
-		"build:rollup": "tsc && vite build",
-		"build:dts": "tsc -p tsconfig.d.json"
-	},
-	"type": "module",
 	"exports": {
 		"./vitePlugin": {
 			"types": "./dist/lib/vitePlugin.d.ts",
@@ -48,5 +39,15 @@
 			"require": "./dist/lib/reportCoverage.cjs",
 			"default": "./dist/lib/reportCoverage.js"
 		}
-	}
+	},
+	"peerDependencies": {
+		"vite": "*"
+	},
+	"private": true,
+	"scripts": {
+		"build": "npm run build:rollup && npm run build:dts",
+		"build:rollup": "tsc && vite build",
+		"build:dts": "tsc -p tsconfig.d.json"
+	},
+	"type": "module"
 }

@@ -1,10 +1,12 @@
 {
 	"name": "@agnos-ui/react",
-	"private": true,
-	"type": "module",
-	"main": "./dist/index.js",
-	"module": "./dist/index.js",
-	"types": "./dist/index.d.ts",
+	"version": "0.0.0",
+	"dependencies": {
+		"@agnos-ui/react-headless": "0.0.0",
+		"@agnos-ui/style-bootstrap": "0.0.0",
+		"@amadeus-it-group/tansu": "0.0.24",
+		"classnames": "^2.5.1"
+	},
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
@@ -39,6 +41,13 @@
 			"default": "./dist/generated/utils/*.js"
 		}
 	},
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"peerDependencies": {
+		"react": "*",
+		"react-dom": "*"
+	},
+	"private": true,
 	"scripts": {
 		"build": "run-s clean:dist generate:exports build:*",
 		"clean:dist": "node ../../scripts/rm.js dist",
@@ -46,15 +55,7 @@
 		"build:src": "tsc",
 		"build:pkg": "node ../../scripts/buildPackageJson.js . dist"
 	},
-	"dependencies": {
-		"@agnos-ui/react-headless": "",
-		"@agnos-ui/style-bootstrap": "",
-		"@amadeus-it-group/tansu": "0.0.24",
-		"classnames": "^2.5.1"
-	},
-	"peerDependencies": {
-		"react": "*",
-		"react-dom": "*"
-	},
-	"sideEffects": false
+	"sideEffects": false,
+	"type": "module",
+	"types": "./dist/index.d.ts"
 }

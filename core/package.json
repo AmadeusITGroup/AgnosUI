@@ -1,14 +1,13 @@
 {
-	"private": true,
 	"name": "@agnos-ui/core",
 	"description": "Framework-agnostic headless widget library.",
-	"keywords": [
-		"agnostic"
-	],
-	"type": "module",
-	"main": "./dist/index.js",
-	"module": "./dist/index.js",
-	"types": "./dist/index.d.ts",
+	"version": "0.0.0",
+	"dependencies": {
+		"@amadeus-it-group/tansu": "0.0.24"
+	},
+	"devDependencies": {
+		"eslint-plugin-jsdoc": "^47.0.2"
+	},
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
@@ -39,6 +38,15 @@
 			"default": "./dist/utils/*.js"
 		}
 	},
+	"keywords": [
+		"agnostic"
+	],
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"peerDependencies": {
+		"@floating-ui/dom": "*"
+	},
+	"private": true,
 	"scripts": {
 		"build": "run-s clean:dist build:*",
 		"clean:dist": "node ../scripts/rm.js dist",
@@ -51,14 +59,7 @@
 		"tdd:ui": "vitest --ui",
 		"test:coverage": "node --import @agnos-ui/code-coverage/interceptReadFile ../node_modules/vitest/vitest.mjs run --coverage"
 	},
-	"dependencies": {
-		"@amadeus-it-group/tansu": "0.0.24"
-	},
-	"devDependencies": {
-		"eslint-plugin-jsdoc": "^47.0.2"
-	},
-	"peerDependencies": {
-		"@floating-ui/dom": "*"
-	},
-	"sideEffects": false
+	"sideEffects": false,
+	"type": "module",
+	"types": "./dist/index.d.ts"
 }

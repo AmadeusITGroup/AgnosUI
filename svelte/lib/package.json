@@ -1,11 +1,15 @@
 {
 	"name": "@agnos-ui/svelte",
-	"private": true,
 	"description": "Bootstrap-based widget library for Svelte.",
-	"type": "module",
-	"main": "./dist/index.js",
-	"module": "./dist/index.js",
-	"types": "./dist/index.d.ts",
+	"version": "0.0.0",
+	"dependencies": {
+		"@agnos-ui/style-bootstrap": "0.0.0",
+		"@agnos-ui/svelte-headless": "0.0.0",
+		"@amadeus-it-group/tansu": "0.0.24"
+	},
+	"devDependencies": {
+		"@sveltejs/package": "^2.2.5"
+	},
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
@@ -48,6 +52,12 @@
 			"default": "./dist/generated/utils/*.js"
 		}
 	},
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"peerDependencies": {
+		"svelte": "*"
+	},
+	"private": true,
 	"scripts": {
 		"build": "run-s generate:exports build:* check:svelte",
 		"generate:exports": "node ../../scripts/generateExports.js svelte/lib svelte/headless @agnos-ui/svelte-headless",
@@ -55,16 +65,7 @@
 		"build:pkg": "node ../../scripts/buildPackageJson.js . dist",
 		"check:svelte": "svelte-check --fail-on-warnings --output human-verbose"
 	},
-	"dependencies": {
-		"@agnos-ui/style-bootstrap": "",
-		"@agnos-ui/svelte-headless": "",
-		"@amadeus-it-group/tansu": "0.0.24"
-	},
-	"peerDependencies": {
-		"svelte": "*"
-	},
-	"devDependencies": {
-		"@sveltejs/package": "^2.2.5"
-	},
-	"sideEffects": false
+	"sideEffects": false,
+	"type": "module",
+	"types": "./dist/index.d.ts"
 }

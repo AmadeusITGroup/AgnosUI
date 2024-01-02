@@ -30,4 +30,6 @@ module.exports = {
 			dependencies: ['glob'],
 		},
 	],
+	sortAz: ['bin', 'contributors', 'dependencies', 'devDependencies', 'keywords', 'peerDependencies', 'resolutions'],
+	sortExports: [],
 };
