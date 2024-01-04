@@ -50,7 +50,10 @@
 <div class="agnos-ui">
 	<nav class="demo-nav-top navbar navbar-dark bg-primary bg-gradient">
 		<div class="container-fluid">
-			<a class="navbar-brand" href={$pathToRoot$}> AgnosUI </a>
+			<div class="d-flex align-items-start">
+				<a class="navbar-brand" href={$pathToRoot$}> AgnosUI </a>
+				<a class="navbar-brand" href={'/blog'}>Blog</a>
+			</div>
 			<div class="d-flex align-items-center">
 				<span class="badge bg-warning text-bg-warning d-none d-sm-block">Work In Progress</span>
 				<span class="badge rounded-pill bg-warning text-bg-warning d-block d-sm-none" aria-label="Work In Progress">
