@@ -14,6 +14,7 @@ export const menu = [
 			{label: 'Rating', path: '/components/rating/', subpath: 'examples'},
 			{label: 'Select', path: '/components/select/', subpath: 'examples'},
 			{label: 'Slider', path: '/components/slider/', subpath: 'examples'},
+			{label: 'Toast', path: '/components/toast/', subpath: 'examples'},
 		],
 	} /*,
 	{
