@@ -47,8 +47,8 @@
 		"build:pkg": "node ../../scripts/buildPackageJson.js . dist"
 	},
 	"dependencies": {
-		"@agnos-ui/react-headless": "",
-		"@agnos-ui/style-bootstrap": "",
+		"@agnos-ui/react-headless": "0.0.1-alpha.5",
+		"@agnos-ui/style-bootstrap": "0.0.1-alpha.5",
 		"@amadeus-it-group/tansu": "0.0.24",
 		"classnames": "^2.5.1"
 	},
@@ -56,5 +56,6 @@
 		"react": "*",
 		"react-dom": "*"
 	},
-	"sideEffects": false
+	"sideEffects": false,
+	"version": "0.0.1-alpha.5"
 }

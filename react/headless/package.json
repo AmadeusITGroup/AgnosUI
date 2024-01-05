@@ -47,7 +47,7 @@
 		"build:pkg": "node ../../scripts/buildPackageJson . dist"
 	},
 	"dependencies": {
-		"@agnos-ui/core": "",
+		"@agnos-ui/core": "0.0.1-alpha.5",
 		"@amadeus-it-group/tansu": "0.0.24",
 		"classnames": "^2.5.1"
 	},
@@ -59,5 +59,6 @@
 		"@types/react": "^18.2.46",
 		"@types/react-dom": "^18.2.18"
 	},
-	"sideEffects": false
+	"sideEffects": false,
+	"version": "0.0.1-alpha.5"
 }
