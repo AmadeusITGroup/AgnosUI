@@ -49,6 +49,24 @@ const noArg = readable(undefined);
 export const bindDirectiveNoArg = <T>(directive: Directive<T | void>) => bindDirective(directive, noArg);
 
 /**
+ * Maps the argument to another argument of a directive using a provided function.
+ *
+ * @param directive - The directive to be applied.
+ * @param fn - The function to map the argument.
+ * @returns A new directive that applies the mapping function to the argument.
+ */
+export const mapDirectiveArg =
+	<T, U>(directive: Directive<U>, fn: (arg: T) => U): Directive<T> =>
+	(node, arg) => {
+		const instance = directive(node, fn(arg));
+		return {
+			update: (arg) => {
+				instance?.update?.(fn(arg));
+			},
+			destroy: () => instance?.destroy?.(),
+		};
+	};
+/**
  * Returns a directive that subscribes to the given store while it is used on a DOM element,
  * and that unsubscribes from it when it is no longer used.
  *

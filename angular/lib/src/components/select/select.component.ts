@@ -50,12 +50,19 @@ export class SelectItemDirective<Item> {
 			>
 				@if (state.selectedContexts; as selectedContexts) {
 					@for (itemContext of selectedContexts; track itemCtxTrackBy($index, itemContext)) {
-						<div class="au-select-badge me-1" [class]="state.badgeClassName">
+						<div
+							[auUse]="_widget.directives.badgeDirective"
+							[auUseParams]="itemContext"
+							tabindex="-1"
+							class="au-select-badge me-1"
+							[class]="state.badgeClassName"
+						>
 							<ng-template [auSlot]="state.slotBadgeLabel" [auSlotProps]="{state, widget, itemContext}"></ng-template>
 						</div>
 					}
 				}
 				<input
+					[auUse]="_widget.directives.inputDirective"
 					attr.id="{{ state.id }}"
 					attr.aria-label="{{ state.ariaLabel }}"
 					type="text"
@@ -65,7 +72,6 @@ export class SelectItemDirective<Item> {
 					autoCorrect="off"
 					autoCapitalize="none"
 					autoComplete="off"
-					(keydown)="_widget.actions.onInputKeydown($event)"
 					(input)="_widget.actions.onInput($event)"
 				/>
 			</div>

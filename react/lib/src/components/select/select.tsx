@@ -1,7 +1,8 @@
-import type {SelectContext, SelectItemContext, SelectProps, SelectWidget} from '@agnos-ui/react-headless/components/select';
+import type {ItemContext, SelectContext, SelectItemContext, SelectProps, SelectWidget} from '@agnos-ui/react-headless/components/select';
 import {createSelect} from '@agnos-ui/react-headless/components/select';
 import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
 import {Slot} from '@agnos-ui/react-headless/slot';
+import type {Directive} from '@agnos-ui/react-headless/types';
 import {toSlotContextWidget} from '@agnos-ui/react-headless/types';
 import {useDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
 import type {SyntheticEvent} from 'react';
@@ -20,15 +21,28 @@ function DefaultItem<Item>(slotContext: SelectItemContext<Item>) {
 	return <>{'' + slotContext.itemContext.item}</>;
 }
 
-function Badges<Item>({slotContext}: {slotContext: SelectContext<Item>}) {
-	const badges = [];
+function BadgeContainer<Item>({
+	itemContext,
+	slotContext,
+	badgeDirective,
+}: {
+	itemContext: ItemContext<Item>;
+	slotContext: SelectContext<Item>;
+	badgeDirective: Directive<ItemContext<Item>[]>;
+}) {
 	const state = slotContext.state;
+	const refBadge = useDirective(badgeDirective, [itemContext]);
+	return (
+		<div ref={refBadge} key={itemContext.id} tabIndex={-1} className={`au-select-badge me-1 ${state.badgeClassName}`}>
+			<Slot slotContent={state.slotBadgeLabel} props={{...slotContext, itemContext}}></Slot>
+		</div>
+	);
+}
+
+function Badges<Item>({slotContext, badgeDirective}: {slotContext: SelectContext<Item>; badgeDirective: Directive<ItemContext<Item>[]>}) {
+	const badges = [];
 	for (const itemContext of slotContext.state.selectedContexts) {
-		badges.push(
-			<div key={itemContext.id} className={`au-select-badge me-1 ${state.badgeClassName}`}>
-				<Slot slotContent={state.slotBadgeLabel} props={{...slotContext, itemContext}}></Slot>
-			</div>,
-		);
+		badges.push(<BadgeContainer itemContext={itemContext} slotContext={slotContext} badgeDirective={badgeDirective} />);
 	}
 
 	return badges.length ? <>{badges}</> : null;
@@ -69,16 +83,18 @@ export function Select<Item>(props: Partial<SelectProps<Item>>) {
 	const {id, ariaLabel, visibleItems, filterText, open, className, menuClassName, placement} = state;
 
 	const {
-		directives: {floatingDirective, hasFocusDirective, referenceDirective},
+		directives: {floatingDirective, hasFocusDirective, referenceDirective, inputDirective, badgeDirective},
 	} = widget;
 	const refSetContainer = useDirective(referenceDirective);
-	const refSetInput = useDirective(hasFocusDirective);
+	const refSetInputContainer = useDirective(hasFocusDirective);
 	const refSetMenu = useDirectives([hasFocusDirective, floatingDirective]);
+	const refSetInput = useDirective(inputDirective);
 	return (
 		<div ref={refSetContainer} className={`au-select dropdown border border-1 p-1 mb-3 d-block ${className}`}>
-			<div ref={refSetInput} role="combobox" className="d-flex align-items-center flex-wrap" aria-haspopup="listbox" aria-expanded={open}>
-				<Badges slotContext={slotContext}></Badges>
+			<div ref={refSetInputContainer} role="combobox" className="d-flex align-items-center flex-wrap" aria-haspopup="listbox" aria-expanded={open}>
+				<Badges slotContext={slotContext} badgeDirective={badgeDirective}></Badges>
 				<input
+					ref={refSetInput}
 					id={id}
 					aria-label={ariaLabel}
 					className="au-select-input flex-grow-1 border-0"
@@ -88,7 +104,6 @@ export function Select<Item>(props: Partial<SelectProps<Item>>) {
 					autoCorrect="off"
 					autoCapitalize="none"
 					autoComplete="off"
-					onKeyDown={widget.actions.onInputKeydown}
 					onInput={widget.actions.onInput}
 				/>
 			</div>
