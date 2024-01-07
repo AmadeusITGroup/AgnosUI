@@ -22,6 +22,6 @@
 		"directory": "style-bootstrap"
 	},
 	"devDependencies": {
-		"sass": "^1.69.6"
+		"sass": "^1.69.7"
 	}
 }

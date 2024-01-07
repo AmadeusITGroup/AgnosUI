@@ -56,7 +56,7 @@
 		"react-dom": "*"
 	},
 	"devDependencies": {
-		"@types/react": "^18.2.46",
+		"@types/react": "^18.2.47",
 		"@types/react-dom": "^18.2.18"
 	},
 	"sideEffects": false
