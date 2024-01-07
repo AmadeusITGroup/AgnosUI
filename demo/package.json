@@ -12,7 +12,7 @@
 		"svelte-check": "svelte-check"
 	},
 	"dependencies": {
-		"@floating-ui/dom": "^1.5.3",
+		"@floating-ui/dom": "^1.5.4",
 		"highlight.js": "^11.9.0"
 	},
 	"devDependencies": {
@@ -21,7 +21,7 @@
 		"@sveltejs/kit": "^2.0.6",
 		"@sveltejs/vite-plugin-svelte": "^3.0.1",
 		"@types/dom-view-transitions": "^1.0.4",
-		"bootstrap-icons": "^1.11.2",
+		"bootstrap-icons": "^1.11.3",
 		"eslint-plugin-svelte": "^2.35.1",
 		"prettier-plugin-svelte": "^3.1.2",
 		"svelte": "^4.2.8",

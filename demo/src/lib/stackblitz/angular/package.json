@@ -19,7 +19,7 @@
 		"@angular/platform-browser": "^17.0.8",
 		"@angular/platform-browser-dynamic": "^17.0.8",
 		"@angular/router": "^17.0.8",
-		"bootstrap-icons": "^1.11.2",
+		"bootstrap-icons": "^1.11.3",
 		"raw-loader": "^4.0.2",
 		"rxjs": "^7.8.1",
 		"tslib": "^2.6.2",

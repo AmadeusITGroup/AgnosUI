@@ -24,7 +24,7 @@
 		"@angular/platform-browser": "^17.0.8",
 		"@angular/platform-browser-dynamic": "^17.0.8",
 		"@angular/router": "^17.0.8",
-		"@floating-ui/dom": "^1.5.3",
+		"@floating-ui/dom": "^1.5.4",
 		"rxjs": "^7.8.1",
 		"tslib": "^2.6.2",
 		"zone.js": "~0.14.2"
