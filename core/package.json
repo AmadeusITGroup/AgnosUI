@@ -40,8 +40,7 @@
 		}
 	},
 	"scripts": {
-		"build": "run-s clean:dist build:*",
-		"clean:dist": "node ../scripts/rm.js dist",
+		"build": "wireit",
 		"build:src": "tsc",
 		"build:pkg": "node ../scripts/buildPackageJson.js . dist",
 		"build:api-extractor": "api-extractor run",
@@ -49,7 +48,33 @@
 		"test": "npm run check:tests && vitest run",
 		"tdd": "vitest",
 		"tdd:ui": "vitest --ui",
-		"test:coverage": "node --import @agnos-ui/code-coverage/interceptReadFile ../node_modules/vitest/vitest.mjs run --coverage"
+		"test:coverage": "wireit"
+	},
+	"wireit": {
+		"build": {
+			"command": "run-s build:*",
+			"files": [
+				"src/**",
+				"tsconfig.json"
+			],
+			"output": [
+				"dist/**"
+			]
+		},
+		"test:coverage": {
+			"command": "node --import @agnos-ui/code-coverage/interceptReadFile ../node_modules/vitest/vitest.mjs run --coverage",
+			"dependencies": [
+				"../code-coverage:build"
+			],
+			"files": [
+				"src/**",
+				"tsconfig.tests.json",
+				"vitest.config.ts"
+			],
+			"output": [
+				"coverage/**"
+			]
+		}
 	},
 	"dependencies": {
 		"@amadeus-it-group/tansu": "0.0.24"

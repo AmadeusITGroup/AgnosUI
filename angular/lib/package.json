@@ -12,7 +12,23 @@
 	},
 	"scripts": {
 		"ng": "ng",
-		"build": "ng build && node ../../scripts/buildPackageJson.js dist dist ."
+		"build": "wireit"
+	},
+	"wireit": {
+		"build": {
+			"command": "ng build && node ../../scripts/buildPackageJson.js dist dist .",
+			"dependencies": [
+				"../headless:build"
+			],
+			"files": [
+				"src/**",
+				"tsconfig.json",
+				"angular.json"
+			],
+			"output": [
+				"dist/**"
+			]
+		}
 	},
 	"peerDependencies": {
 		"@angular/common": "*",

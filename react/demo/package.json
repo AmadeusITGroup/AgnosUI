@@ -4,11 +4,43 @@
 	"scripts": {
 		"dev": "vite",
 		"dev:coverage": "vite -c vite.coverage.config.ts",
-		"build:coverage": "vite build -c vite.coverage.config.ts",
-		"build": "run-s build:demo check:types",
+		"build:coverage": "wireit",
+		"build": "wireit",
 		"build:demo": "vite build",
 		"check:types": "tsc",
 		"preview": "vite preview"
+	},
+	"wireit": {
+		"build": {
+			"command": "run-s build:demo check:types",
+			"dependencies": [
+				"../lib:build",
+				"../../style-bootstrap:build"
+			],
+			"files": [
+				"src/**",
+				"tsconfig.json",
+				"vite.config.ts"
+			],
+			"output": [
+				"dist/**"
+			]
+		},
+		"build:coverage": {
+			"command": "vite build -c vite.coverage.config.ts",
+			"dependencies": [
+				"../../code-coverage:build"
+			],
+			"files": [
+				"src/**",
+				"tsconfig.json",
+				"vite.config.ts",
+				"vite.coverage.config.ts"
+			],
+			"output": [
+				"dist/**"
+			]
+		}
 	},
 	"devDependencies": {
 		"@types/react": "^18.2.47",

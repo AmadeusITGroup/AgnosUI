@@ -14,10 +14,27 @@
 	"module": "dist/lib/index.mjs",
 	"types": "dist/lib/index.d.ts",
 	"scripts": {
-		"build": "npm run build:rollup && npm run build:dts && npm run build:api-extractor",
+		"build": "wireit",
 		"build:rollup": "tsc && vite build",
 		"build:dts": "tsc -p tsconfig.d.json",
 		"build:api-extractor": "api-extractor run"
+	},
+	"wireit": {
+		"build": {
+			"command": "npm run build:rollup && npm run build:dts && npm run build:api-extractor",
+			"dependencies": [
+				"../base-po:build"
+			],
+			"files": [
+				"lib/**",
+				"tsconfig.json",
+				"tsconfig.d.json",
+				"vite.config.ts"
+			],
+			"output": [
+				"dist/**"
+			]
+		}
 	},
 	"dependencies": {
 		"@agnos-ui/base-po": ""

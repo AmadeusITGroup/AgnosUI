@@ -17,10 +17,35 @@
 		"svelte-eslint-parser": "^0.33.1"
 	},
 	"scripts": {
-		"build": "tsc && vite build",
+		"build": "wireit",
 		"tdd": "vitest",
 		"tdd:ui": "vitest --ui",
 		"test": "vitest run",
-		"test:coverage": "vitest run --coverage"
+		"test:coverage": "wireit"
+	},
+	"wireit": {
+		"build": {
+			"command": "tsc && vite build",
+			"files": [
+				"src/**",
+				"tsconfig.json",
+				"vite.config.ts"
+			],
+			"output": [
+				"dist/**"
+			]
+		},
+		"test:coverage": {
+			"command": "vitest run --coverage",
+			"files": [
+				"src/**",
+				"test/**",
+				"tsconfig.json",
+				"vitest.config.ts"
+			],
+			"output": [
+				"coverage/**"
+			]
+		}
 	}
 }

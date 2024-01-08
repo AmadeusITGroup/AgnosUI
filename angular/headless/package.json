@@ -12,14 +12,46 @@
 	},
 	"scripts": {
 		"ng": "ng",
-		"build": "run-s generate:exports build:*",
+		"build": "wireit",
 		"generate:exports": "node ../../scripts/generateExports.js angular/headless core @agnos-ui/core",
 		"build:src": "ng build",
 		"build:pkg": "node ../../scripts/buildPackageJson.js dist dist .",
 		"test": "vitest run",
 		"tdd": "vitest",
 		"tdd:ui": "vitest --ui",
-		"test:coverage": "node --import @agnos-ui/code-coverage/interceptReadFile ../../node_modules/vitest/vitest.mjs run --coverage"
+		"test:coverage": "wireit"
+	},
+	"wireit": {
+		"build": {
+			"command": "run-s generate:exports build:*",
+			"dependencies": [
+				"../../core:build"
+			],
+			"files": [
+				"src/**",
+				"!src/generated",
+				"tsconfig.json",
+				"angular.json"
+			],
+			"output": [
+				"dist/**"
+			]
+		},
+		"test:coverage": {
+			"command": "node --import @agnos-ui/code-coverage/interceptReadFile ../../node_modules/vitest/vitest.mjs run --coverage",
+			"dependencies": [
+				"../../code-coverage:build"
+			],
+			"files": [
+				"src/**",
+				"!src/generated",
+				"tsconfig.spec.json",
+				"vitest.config.ts"
+			],
+			"output": [
+				"coverage/**"
+			]
+		}
 	},
 	"peerDependencies": {
 		"@angular/common": "*",
