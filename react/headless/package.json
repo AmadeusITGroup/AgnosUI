@@ -40,11 +40,26 @@
 		}
 	},
 	"scripts": {
-		"build": "run-s clean:dist generate:exports build:*",
-		"clean:dist": "node ../../scripts/rm dist",
+		"build": "wireit",
 		"generate:exports": "node ../../scripts/generateExports.js react/headless core @agnos-ui/core",
 		"build:src": "tsc",
 		"build:pkg": "node ../../scripts/buildPackageJson . dist"
+	},
+	"wireit": {
+		"build": {
+			"command": "run-s generate:exports build:*",
+			"dependencies": [
+				"../../core:build"
+			],
+			"files": [
+				"src/**",
+				"!src/generated",
+				"tsconfig.json"
+			],
+			"output": [
+				"dist/**"
+			]
+		}
 	},
 	"dependencies": {
 		"@agnos-ui/core": "",

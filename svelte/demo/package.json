@@ -5,11 +5,44 @@
 	"scripts": {
 		"dev": "vite",
 		"dev:coverage": "vite -c vite.coverage.config.ts",
-		"build": "run-s build:demo check:svelte",
-		"build:coverage": "vite build -c vite.coverage.config.ts",
+		"build": "wireit",
+		"build:coverage": "wireit",
 		"build:demo": "vite build",
 		"preview": "vite preview",
 		"check:svelte": "svelte-check --fail-on-warnings --output human-verbose"
+	},
+	"wireit": {
+		"build": {
+			"command": "run-s build:demo check:svelte",
+			"dependencies": [
+				"../lib:build",
+				"../../style-bootstrap:build"
+			],
+			"files": [
+				"src/**",
+				"tsconfig.json",
+				"vite.config.ts"
+			],
+			"output": [
+				"dist/**"
+			]
+		},
+		"build:coverage": {
+			"command": "vite build -c vite.coverage.config.ts",
+			"dependencies": [
+				"../lib:build",
+				"../../style-bootstrap:build"
+			],
+			"files": [
+				"src/**",
+				"tsconfig.json",
+				"vite.config.ts",
+				"vite.coverage.config.ts"
+			],
+			"output": [
+				"dist/**"
+			]
+		}
 	},
 	"dependencies": {
 		"@amadeus-it-group/tansu": "0.0.24",

@@ -47,11 +47,13 @@
 		"ts-node": "^10.9.2",
 		"typescript": "~5.2.2",
 		"vite": "^5.0.11",
-		"vitest": "^1.1.3"
+		"vitest": "^1.1.3",
+		"wireit": "^0.14.1"
 	},
 	"scripts": {
-		"build:coverage": "node scripts/run.js build:coverage serial",
+		"build:coverage": "wireit",
 		"build": "node scripts/run.js build serial",
+		"build:ci": "wireit",
 		"build:rollup": "node scripts/run.js build:rollup serial",
 		"build:demo": "node scripts/run.js build:demo serial",
 		"build:dts": "node scripts/run.js build:dts serial",
@@ -62,7 +64,7 @@
 		"test": "node scripts/run.js test serial",
 		"format:fix": "prettier . \"**/*.svelte\" --write --cache .",
 		"format:check": "prettier . \"**/*.svelte\" --check --cache .",
-		"lint": "eslint --ext ts,tsx,svelte .",
+		"lint": "wireit",
 		"dev": "node scripts/run.js dev",
 		"dev:coverage": "node scripts/run.js dev:coverage",
 		"preview": "node scripts/run.js preview",
@@ -73,6 +75,29 @@
 		"syncpack:fix": "syncpack fix-mismatches",
 		"generate:exports": "node scripts/run.js generate:exports serial",
 		"prepare": "npm run generate:exports"
+	},
+	"wireit": {
+		"build:ci": {
+			"command": "echo 'CI build successful'",
+			"dependencies": [
+				"./code-coverage:build",
+				"./demo:build",
+				"./eslint-plugin:build",
+				"./page-objects:build"
+			]
+		},
+		"build:coverage": {
+			"command": "echo 'CI build:coverage successful'",
+			"dependencies": [
+				"./demo:build:coverage"
+			]
+		},
+		"lint": {
+			"command": "eslint --cache --cache-location .eslintcache --ext ts,tsx,svelte .",
+			"dependencies": [
+				"./eslint-plugin:build"
+			]
+		}
 	},
 	"workspaces": [
 		"code-coverage",

@@ -49,11 +49,28 @@
 		}
 	},
 	"scripts": {
-		"build": "run-s generate:exports build:* check:svelte",
+		"build": "wireit",
 		"generate:exports": "node ../../scripts/generateExports.js svelte/headless core @agnos-ui/core",
 		"build:src": "svelte-package -i src",
 		"build:pkg": "node ../../scripts/buildPackageJson.js . dist",
 		"check:svelte": "svelte-check --fail-on-warnings --output human-verbose"
+	},
+	"wireit": {
+		"build": {
+			"command": "run-s generate:exports build:* check:svelte",
+			"dependencies": [
+				"../../core:build"
+			],
+			"files": [
+				"src/**",
+				"!src/generated",
+				"tsconfig.json"
+			],
+			"output": [
+				"dist/**",
+				".svelte-kit/**"
+			]
+		}
 	},
 	"dependencies": {
 		"@agnos-ui/core": "",
