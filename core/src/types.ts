@@ -70,6 +70,12 @@ export interface WidgetSlotContext<W extends Widget> {
 	widget: ContextWidget<W>;
 }
 
+/**
+ * Extract actions, api, directives, state and stores from the widget to be passed to slots as context.
+ *
+ * @param w - the widget
+ * @returns the slot context
+ */
 export const toSlotContextWidget = <W extends Widget>(w: W): ContextWidget<W> => ({
 	actions: w.actions,
 	api: w.api,

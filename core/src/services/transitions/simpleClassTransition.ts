@@ -31,14 +31,20 @@ export interface SimpleClassTransitionContext {
 	started?: boolean;
 }
 
-export const createSimpleClassTransition = ({
-	animationPendingClasses,
-	animationPendingShowClasses,
-	animationPendingHideClasses,
-	showClasses,
-	hideClasses,
-}: SimpleClassTransitionConfig) =>
-	createCSSTransition((element, direction, animation, context: SimpleClassTransitionContext) => {
+/**
+ * Create a transition based on css classes to attach.
+ *
+ * The config includes the classes that will be attached / removed depending on the transition state.
+ * `animationPendingClasses` are the classes attached when the transition is in a pending state
+ * `animationPendingShowClasses` and `animationPendingHideClasses` are attached when transitionning towards one direction
+ * `showClasses` and `hideClasses` are attached when the transition has reached the show or hide state respectively
+ *
+ * @param config - the transition config
+ * @returns the simple class transition
+ */
+export const createSimpleClassTransition = (config: SimpleClassTransitionConfig) => {
+	const {animationPendingClasses, animationPendingShowClasses, animationPendingHideClasses, showClasses, hideClasses} = config;
+	return createCSSTransition((element, direction, animation, context: SimpleClassTransitionContext) => {
 		removeClasses(element, showClasses);
 		removeClasses(element, hideClasses);
 		if (animation) {
@@ -64,3 +70,4 @@ export const createSimpleClassTransition = ({
 			addClasses(element, direction === 'show' ? showClasses : hideClasses);
 		};
 	});
+};

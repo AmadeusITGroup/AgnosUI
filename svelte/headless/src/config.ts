@@ -25,6 +25,14 @@ type CreateWidgetsDefaultConfig<Config extends {[widgetName: string]: object}> =
 	adaptParentConfig?: AdaptParentConfig<Config>,
 ) => WidgetsConfigStore<Config>;
 
+/**
+ * A factory to create the utilities to allow widgets to be context-aware.
+ *
+ * It can be used when extending the core and creating new widgets.
+ *
+ * @param widgetsDefaultConfigKey - the widgets config key
+ * @returns the utilities to create / manage widgets and contexts
+ */
 export const widgetsConfigFactory = <Config extends {[widgetName: string]: object} = WidgetsConfig>(
 	widgetsDefaultConfigKey = Symbol('widgetsConfig'),
 ) => {

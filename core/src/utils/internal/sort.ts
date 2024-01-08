@@ -1,5 +1,19 @@
+/**
+ * The default comparision between two inputs, using the javascript < and > signs.
+ *
+ * @param a - the first input
+ * @param b - the second input
+ * @returns 1, 0 or -1 depending on the default compare
+ */
 export const compareDefault = (a: any, b: any) => (a < b ? -1 : a > b ? 1 : 0);
 
+/**
+ * A comparision function between DOM elements, based on `Node.compareDocumentPosition`.
+ *
+ * @param element1 - the first node
+ * @param element2 - the second node
+ * @returns 1, 0 or -1
+ */
 export const compareDomOrder = (element1: Node, element2: Node) => {
 	if (element1 === element2) {
 		return 0;

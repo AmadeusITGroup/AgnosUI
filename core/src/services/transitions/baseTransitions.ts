@@ -165,6 +165,12 @@ export type TransitionWidget = Widget<TransitionProps, TransitionState, Transiti
 
 const neverEndingPromise = new Promise<never>(noop);
 
+/**
+ * A transition to show / hide an element without any animation. It uses the HTML `display` attribute.
+ *
+ * @param element - the element to animate
+ * @param direction - the direction
+ */
 export const noAnimation: TransitionFn = async (element, direction) => {
 	element.style.display = direction === 'show' ? '' : 'none';
 };
@@ -191,6 +197,14 @@ const configValidator: ConfigValidator<TransitionProps> = {
 	initDone: typeBooleanOrNull,
 };
 
+/**
+ * Create a transition widget.
+ *
+ * The widget will include a patch function, stores to track the animation states and a directive to apply the animation to an element.
+ *
+ * @param config - the props config of the transition
+ * @returns the transition widget
+ */
 export const createTransition = (config?: PropsConfig<TransitionProps>): TransitionWidget => {
 	const [{animation$, initDone$, visible$: requestedVisible$, transition$, onShown$, onHidden$, onVisibleChange$, animationOnInit$}, patch] =
 		writablesForProps(defaultValues, config, configValidator);
