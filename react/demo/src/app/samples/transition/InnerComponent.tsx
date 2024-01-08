@@ -34,7 +34,7 @@ const InnerComponent = () => {
 	const changeTransition = (newTransition: TransitionFn) => {
 		// Make sure the element is removed from the DOM
 		// so that it does not keep state from the previous transition
-		transitionWidget.api.toggle(false, false);
+		void transitionWidget.api.toggle(false, false);
 		paramRemoveFromDom$.set(true);
 		paramTransition$.set(newTransition);
 	};

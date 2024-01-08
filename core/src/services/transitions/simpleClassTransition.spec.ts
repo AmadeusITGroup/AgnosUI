@@ -65,7 +65,7 @@ describe('createSimpleClassTransition', () => {
 		checkClasses(['anim', 'anim-hide']);
 		await promise2;
 		checkClasses(['hide']);
-		promise1.finally(() => {
+		void promise1.finally(() => {
 			throw new Error('promise1 is expected not to resolve');
 		});
 	});
@@ -80,7 +80,7 @@ describe('createSimpleClassTransition', () => {
 		checkClasses(['anim', 'anim-show']);
 		await promise2;
 		checkClasses(['show']);
-		promise1.finally(() => {
+		void promise1.finally(() => {
 			throw new Error('promise1 is expected not to resolve');
 		});
 	});

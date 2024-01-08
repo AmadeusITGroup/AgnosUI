@@ -31,7 +31,7 @@ self.addEventListener('install', (event) => {
 				withHash.map(async (url) => {
 					const response = await caches.match(url);
 					if (response?.ok) {
-						cache.put(url, response);
+						void cache.put(url, response);
 					} else {
 						missingWithHash.push(url);
 					}

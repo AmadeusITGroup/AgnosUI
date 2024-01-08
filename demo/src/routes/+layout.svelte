@@ -12,7 +12,7 @@
 	import MobileMenu from './[framework]/menu/MobileMenu.svelte';
 
 	const onServiceWorkerUpdate = () => {
-		updated.check();
+		void updated.check();
 	};
 
 	$: isMainPage = $routeLevel$ === 0;

@@ -168,7 +168,7 @@ describe(`createCSSTransition`, () => {
 		const timeBefore = performance.now();
 		const directiveInstance = cssTransition.directives.directive(element);
 		const promise1 = cssTransition.api.show();
-		promise1.finally(() => {
+		void promise1.finally(() => {
 			throw new Error('promise1 is expected not to resolve');
 		});
 		await new Promise((resolve) => setTimeout(resolve, 200));

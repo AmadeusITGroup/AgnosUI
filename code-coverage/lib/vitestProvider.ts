@@ -19,7 +19,7 @@ const customCoverageProviderModule: CoverageProviderModule = {
 			async onAfterSuiteRun({coverage}: AfterSuiteRunMeta) {
 				if (coverage) {
 					const {default: reportCoverage} = await import('./reportCoverage');
-					reportCoverage(ctx!.config.root, JSON.stringify(coverage));
+					await reportCoverage(ctx!.config.root, JSON.stringify(coverage));
 				}
 			},
 			async reportCoverage(reportContext?: ReportContext) {

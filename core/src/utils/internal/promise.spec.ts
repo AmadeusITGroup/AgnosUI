@@ -258,7 +258,7 @@ describe(`promiseFromStore`, () => {
 		const res = promiseFromStore(store);
 		expect(onUse).toHaveBeenCalledTimes(1);
 		expect(onUnsubscribe).not.toHaveBeenCalled();
-		res.promise.finally(() => {
+		void res.promise.finally(() => {
 			throw new Error('res.promise is expected not to resolve');
 		});
 		// non-truthy values should not trigger promise resolution:
@@ -290,7 +290,7 @@ describe(`promiseFromTimeout`, () => {
 	test(`calling unsubscribe`, async () => {
 		clearTimeoutSpy.mockClear();
 		const res = promiseFromTimeout(100);
-		res.promise.finally(() => {
+		void res.promise.finally(() => {
 			throw new Error('res.promise is expected not to resolve');
 		});
 		await new Promise((resolve) => setTimeout(resolve, 20));
@@ -322,7 +322,7 @@ describe(`promiseFromEvent`, () => {
 		const removeEventListener = vi.spyOn(target, 'removeEventListener');
 		const res = promiseFromEvent(target, 'something');
 		otherTarget.dispatchEvent(new Event('something', {bubbles: true})); // not the right target, should be ignored
-		res.promise.finally(() => {
+		void res.promise.finally(() => {
 			throw new Error('res.promise is expected not to resolve');
 		});
 		res.unsubscribe();

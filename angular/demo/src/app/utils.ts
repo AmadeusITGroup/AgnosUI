@@ -46,7 +46,7 @@ export function hashChangeHook(propsCallback: (props: any) => void) {
 	}
 
 	effect(() => {
-		callPropsCallback(getPropValues(hashConfig$().props));
+		void callPropsCallback(getPropValues(hashConfig$().props));
 	});
 }
 
