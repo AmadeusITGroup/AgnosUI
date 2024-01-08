@@ -44,7 +44,7 @@
 			showMinMaxLabels$,
 			rtl$,
 		},
-		actions: {click, keydown, mouseDown},
+		actions: {click, keydown, mouseDown, touchStart},
 		directives: {sliderDirective, minLabelDirective, maxLabelDirective},
 		patchChangedProps,
 	} = widget;
@@ -115,6 +115,7 @@
 			style:top={`${$handleDisplayOptions$[item.id].top}%`}
 			on:keydown={(e) => keydown(e, item.id)}
 			on:mousedown={(e) => mouseDown(e, item.id)}
+			on:touchstart={(e) => touchStart(e, item.id)}
 		>
 			&nbsp;
 		</button>
