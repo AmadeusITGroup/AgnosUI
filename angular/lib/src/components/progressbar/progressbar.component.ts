@@ -9,7 +9,7 @@ import {
 	callWidgetFactory,
 	createProgressbar,
 } from '@agnos-ui/angular-headless';
-import {writable} from '@amadeus-it-group/tansu';
+import {type WritableSignal, writable} from '@amadeus-it-group/tansu';
 import {NgClass} from '@angular/common';
 import type {AfterContentChecked} from '@angular/core';
 import {ChangeDetectionStrategy, Component, ContentChild, Directive, Input, TemplateRef, ViewChild, inject} from '@angular/core';
@@ -48,7 +48,8 @@ export class ProgressbarDefaultSlotsComponent {
 
 export const progressbarDefaultSlotContent = new ComponentTemplate(ProgressbarDefaultSlotsComponent, 'content');
 
-const defaultConfig: Partial<ProgressbarProps> = {
+export type PartialProgressbarProps = Partial<ProgressbarProps>;
+const defaultConfig: PartialProgressbarProps = {
 	slotContent: progressbarDefaultSlotContent,
 };
 
@@ -71,7 +72,7 @@ const defaultConfig: Partial<ProgressbarProps> = {
 	`,
 })
 export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget> implements AfterContentChecked {
-	readonly defaultSlots = writable(defaultConfig);
+	readonly defaultSlots: WritableSignal<PartialProgressbarProps> = writable(defaultConfig);
 
 	/**
 	 * The aria label.

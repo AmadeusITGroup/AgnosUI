@@ -249,7 +249,7 @@ export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWid
 	@Output('auItemVisibleChange') itemVisibleChange = new EventEmitter<boolean>();
 
 	readonly ad = inject(AccordionDirective);
-	readonly _widget = callWidgetFactory({
+	readonly _widget = callWidgetFactory<AccordionItemWidget>({
 		factory: ((arg) => this.ad.api.registerItem(arg)) as typeof this.ad.api.registerItem,
 		defaultConfig,
 		events: {

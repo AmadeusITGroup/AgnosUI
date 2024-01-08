@@ -9,7 +9,7 @@ import {
 	callWidgetFactory,
 	createAlert,
 } from '@agnos-ui/angular-headless';
-import {writable} from '@amadeus-it-group/tansu';
+import {type WritableSignal, writable} from '@amadeus-it-group/tansu';
 import type {AfterContentChecked} from '@angular/core';
 import {
 	ChangeDetectionStrategy,
@@ -58,7 +58,8 @@ export class AlertDefaultSlotsComponent {
 
 export const alertDefaultSlotStructure = new ComponentTemplate(AlertDefaultSlotsComponent, 'structure');
 
-const defaultConfig: Partial<AlertProps> = {
+export type PartialAlertProps = Partial<AlertProps>;
+const defaultConfig: PartialAlertProps = {
 	slotStructure: alertDefaultSlotStructure,
 };
 
@@ -155,7 +156,7 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> implements 
 	 */
 	@Output('auShown') shown = new EventEmitter<void>();
 
-	readonly defaultSlots = writable(defaultConfig);
+	readonly defaultSlots: WritableSignal<PartialAlertProps> = writable(defaultConfig);
 	/**
 	 * CSS classes to be applied on the widget main container
 	 */

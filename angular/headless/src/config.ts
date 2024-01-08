@@ -1,5 +1,5 @@
 import type {Widget, WidgetFactory, WidgetProps} from '@agnos-ui/core/types';
-import type {Partial2Levels, WidgetsConfigStore} from '@agnos-ui/core/config';
+import type {Partial2Levels, WidgetsConfigStore, WidgetsConfig as CoreWidgetsConfig} from '@agnos-ui/core/config';
 import {createWidgetsConfig} from '@agnos-ui/core/config';
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {computed} from '@amadeus-it-group/tansu';
@@ -11,8 +11,9 @@ import {callWidgetFactoryWithConfig} from './utils/widget';
 export * from '@agnos-ui/core/config';
 
 export type WidgetsConfig = {
-	[WidgetName in keyof import('@agnos-ui/core/config').WidgetsConfig]: AdaptPropsSlots<import('@agnos-ui/core/config').WidgetsConfig[WidgetName]>;
+	[WidgetName in keyof CoreWidgetsConfig]: AdaptPropsSlots<CoreWidgetsConfig[WidgetName]>;
 };
+type AdaptParentConfig<Config> = (config: Partial2Levels<Config>) => Partial2Levels<Config>;
 
 export const widgetsConfigFactory = <Config extends {[widgetName: string]: object} = WidgetsConfig>(
 	widgetsConfigInjectionToken = new InjectionToken<WidgetsConfigStore<Config>>('widgetsConfig'),
@@ -68,7 +69,7 @@ export const widgetsConfigFactory = <Config extends {[widgetName: string]: objec
 	* }
 	* ```
 	*/
-	const provideWidgetsConfig = (adaptParentConfig?: (config: Partial2Levels<Config>) => Partial2Levels<Config>): FactoryProvider => ({
+	const provideWidgetsConfig = (adaptParentConfig?: AdaptParentConfig<Config>): FactoryProvider => ({
 		provide: widgetsConfigInjectionToken,
 		useFactory: (parent: WidgetsConfigStore<Config> | null) => {
 			if (adaptParentConfig) {
