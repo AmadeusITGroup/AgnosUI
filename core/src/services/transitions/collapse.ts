@@ -1,5 +1,6 @@
 import {createCSSTransition} from './cssTransitions';
 import {addClasses, reflow, removeClasses} from '../../utils/internal/dom';
+import type {TransitionFn} from './baseTransitions';
 
 export interface CollapseContext {
 	/**
@@ -31,7 +32,25 @@ export interface CollapseConfig {
 	animationPendingClasses?: string[];
 }
 
-export const createCollapseTransition = ({dimension = 'height', showClasses, hideClasses, animationPendingClasses}: CollapseConfig = {}) =>
+/**
+ * Create a collapse transition.
+ *
+ * The transition attaches / removes classes during the different states of the collapse transition.
+ * It also updates the dimension value when reaching a non-pending state.
+ *
+ * @param config - the collapse config
+ * @param config.dimension - the dimension, `height` or `width`, on which the collapse applies
+ * @param config.showClasses - the classes to attach when the element is fully visible
+ * @param config.hideClasses - the classes to attach when the element is fully collapsed
+ * @param config.animationPendingClasses - the classes to attach when the transition is pending
+ * @returns the collapse transition
+ */
+export const createCollapseTransition = ({
+	dimension = 'height',
+	showClasses,
+	hideClasses,
+	animationPendingClasses,
+}: CollapseConfig = {}): TransitionFn =>
 	createCSSTransition((element: HTMLElement, direction, animation, context: CollapseContext) => {
 		if (animation) {
 			let {maxSize, minSize} = context;

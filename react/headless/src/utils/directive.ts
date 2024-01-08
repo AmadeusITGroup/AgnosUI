@@ -7,7 +7,16 @@ export * from '@agnos-ui/core/utils/directive';
 
 export function useDirective(directive: Directive<void>): RefCallback<HTMLElement>;
 export function useDirective<T>(directive: Directive<T>, args: T): RefCallback<HTMLElement>;
-export function useDirective<T>(directive: Directive<T>, args?: T) {
+/**
+ * The useDirective function.
+ *
+ * Allows to attach a provided directive to the current react component.
+ *
+ * @param directive - the directive
+ * @param args - the args to pass to the directive
+ * @returns the ref callback
+ */
+export function useDirective<T>(directive: Directive<T>, args?: T): RefCallback<HTMLElement> {
 	const instance = useRef<ReturnType<typeof directive>>();
 	const propsRef = useRef<T>();
 	const ref = useCallback(
@@ -27,6 +36,15 @@ export function useDirective<T>(directive: Directive<T>, args?: T) {
 
 export function useDirectives(directives: Directive<void>[]): RefCallback<HTMLElement>;
 export function useDirectives<T>(directives: Directive<T>[], args: T): RefCallback<HTMLElement>;
+/**
+ * The useDirectives function.
+ *
+ * Allows to attach multiple directives to the current react component.
+ *
+ * @param directives - directives
+ * @param args - the args to pass to the directives
+ * @returns the ref callback
+ */
 export function useDirectives<T>(directives: Directive<T>[], args?: T): RefCallback<HTMLElement> {
 	const mergedDirectives = useMemo(() => mergeDirectives(...directives), directives);
 	return useDirective(mergedDirectives, args as any);

@@ -3,6 +3,16 @@ import {findChangedProperties} from '@agnos-ui/core/utils/stores';
 import {useEffect, useMemo, useRef} from 'react';
 import {useObservable} from './stores';
 
+/**
+ * The useWidget function.
+ *
+ * Allows to create and attach an agnos-ui/core widget to the current react component.
+ *
+ * @param createWidget - the widget factory
+ * @param props - the props
+ * @param propsConfig - the props config
+ * @returns the state and api to track and interact with the widget
+ */
 export function useWidget<W extends Widget>(
 	createWidget: WidgetFactory<W>,
 	props: Partial<WidgetProps<W>> = {},

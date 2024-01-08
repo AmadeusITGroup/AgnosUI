@@ -26,6 +26,12 @@ export function getTransitionDurationMs(element: HTMLElement): number {
 
 export type CSSTransitionFn = (element: HTMLElement, direction: 'show' | 'hide', animation: boolean, context: object) => void | (() => void);
 
+/**
+ * Create a simple css transition.
+ *
+ * @param start - a function that creates the css animation and returns a clean-up function
+ * @returns the css transition
+ */
 export const createCSSTransition =
 	(start: CSSTransitionFn): TransitionFn =>
 	async (element, direction, animation, signal, context) => {

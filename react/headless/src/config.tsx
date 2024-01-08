@@ -17,6 +17,14 @@ type DefaultConfigInput<Config> = Partial2Levels<Config> & {
 	children?: ReactNode | undefined;
 };
 
+/**
+ * A factory to create the use functions and react component to allow widgets to be context-aware.
+ *
+ * It can be used when extending the core and creating new widgets.
+ *
+ * @param widgetsConfigContext - the widgets config context
+ * @returns the use functions and react component
+ */
 export const widgetsConfigFactory = <Config extends {[widgetName: string]: object} = WidgetsConfig>(
 	widgetsConfigContext = createContext(undefined as undefined | WidgetsConfigStore<Config>),
 ) => {
@@ -44,7 +52,9 @@ export const widgetsConfigFactory = <Config extends {[widgetName: string]: objec
 	 * If adaptParentConfig is not specified, this step is skipped.
 	 * - second step: the configuration from step 1 is merged (2-levels deep) with the properties of the component.
 	 *
-	 * @param adaptParentConfig - optional function that receives a 2-levels copy of the widgets default configuration
+	 * @param componentInputs - the react component inputs
+	 * @param componentInputs.children - the react component children
+	 * @param componentInputs.adaptParentConfig - optional function that receives a 2-levels copy of the widgets default configuration
 	 * defined at an upper level in the Svelte context hierarchy (or an empty object if there is none) and returns the widgets
 	 * default configuration to be used.
 	 * It is called only if the configuration is needed, and was not yet computed for the current value of the parent configuration.

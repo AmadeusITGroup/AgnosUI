@@ -26,6 +26,15 @@ const createPromiseStateStore = <T>(promise: PromiseLike<T>): ReadableSignal<Pro
 };
 
 const promiseWeakMap = new WeakMap<PromiseLike<any>, ReadableSignal<PromiseState<any>>>();
+
+/**
+ * Create a readable promise state store from a promise.
+ *
+ * The state of the returned store tracks the state of the promise and the resolved value or rejection reason.
+ *
+ * @param value - the promise
+ * @returns the readable promise state store
+ */
 export const promiseStateStore = <T>(value: T): ReadableSignal<Readonly<PromiseState<Awaited<T>>>> => {
 	if (!isThenable(value)) {
 		return readable({status: 'fulfilled', value: value as Awaited<T>});
@@ -44,9 +53,25 @@ const promiseStateStoreEqual = <T>(a: PromiseState<T>, b: PromiseState<T>) =>
 		(a.status !== 'fulfilled' || equal(a.value, (b as PromiseFulfilledResult<T>).value)) &&
 		(a.status !== 'rejected' || equal(a.reason, (b as PromiseRejectedResult).reason)));
 
+/**
+ * Create a readable promise state store from a promise store.
+ *
+ * @param promiseStore$ - the promise store
+ * @returns the readable promise state store
+ */
 export const promiseStoreToPromiseStateStore = <T>(promiseStore$: ReadableSignal<T>): ReadableSignal<PromiseState<Awaited<T>>> =>
 	computed(() => promiseStateStore(promiseStore$())(), {equal: promiseStateStoreEqual});
 
+/**
+ * Create a value store from a promise state store
+ *
+ * The returned value store is only updated if the promise is fulfilled.
+ *
+ * @param store$ - the promise state store
+ * @param initialValue - the initial value of the returned value store
+ * @param equal - an equal function to compare values
+ * @returns the value store
+ */
 export const promiseStateStoreToValueStore = <T>(
 	store$: ReadableSignal<PromiseState<T>>,
 	initialValue: T,
@@ -65,6 +90,16 @@ export const promiseStateStoreToValueStore = <T>(
 		initialValue,
 	);
 
+/**
+ * Create a value store from a promise store
+ *
+ * The returned value store is only updated if the promise is fulfilled.
+ *
+ * @param promiseStore$ - the promise store
+ * @param initialValue - the initial value of the returned value store
+ * @param equal - an equal function to compare values
+ * @returns the value store
+ */
 export const promiseStoreToValueStore = <T>(
 	promiseStore$: ReadableSignal<T>,
 	initialValue: Awaited<T>,
@@ -73,6 +108,15 @@ export const promiseStoreToValueStore = <T>(
 
 const truthyValue = (value: unknown) => !!value;
 
+/**
+ * Create a promise from a readable store and a fulfilled condition function.
+ *
+ * The promise is fulfilled when the state of the store respects the provided condition function.
+ *
+ * @param store - the readable store
+ * @param condition - the condition function
+ * @returns the promise and an unsubscribe function
+ */
 export const promiseFromStore = <T>(store: ReadableSignal<T>, condition: (value: T) => boolean = truthyValue) => {
 	let resolve: (value: T) => void;
 	const promise = new Promise<T>((r) => (resolve = r));
@@ -98,6 +142,13 @@ export const promiseFromStore = <T>(store: ReadableSignal<T>, condition: (value:
 	};
 };
 
+/**
+ * Create a promise from an HTML element event.
+ *
+ * @param element - the event target
+ * @param event - the event to listen to
+ * @returns the promise and an unsubscribe function
+ */
 export const promiseFromEvent = (element: EventTarget, event: string) => {
 	let resolve: (event: Event) => void;
 	const promise = new Promise<Event>((r) => (resolve = r));
@@ -120,6 +171,12 @@ export const promiseFromEvent = (element: EventTarget, event: string) => {
 	};
 };
 
+/**
+ * Create a promise that resolves once a timeout has been reached.
+ *
+ * @param delay - the delay in milli seconds
+ * @returns a promise and an unsubscribe function
+ */
 export const promiseFromTimeout = (delay: number) => {
 	let timeout: any;
 	return {

@@ -9,6 +9,7 @@ export class SlotDefaultDirective<T extends object> implements OnInit {
 
 	templateRef = inject(TemplateRef<T>);
 
+	/** @inheritdoc */
 	ngOnInit(): void {
 		this.auSlotDefault.update((value) => ({...value, slotDefault: this.templateRef}));
 	}

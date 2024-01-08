@@ -30,7 +30,9 @@ const mergeEventFns = <T extends any[]>(fn1: (...args: T) => void, fn2: undefine
 
 /**
  * Creates a writable store to be used for an event handler.
+ *
  * @param event - function that will be merged with the value of the store so that it is always called first when the event handler is called
+ * @param prop - the initial value of the store
  * @returns a writable store to be used for an event handler
  */
 const eventStore = <T extends any[]>(
@@ -47,6 +49,18 @@ const eventStore = <T extends any[]>(
 	);
 };
 
+/**
+ * Call a widget factory using provided configs.
+ *
+ * @param inputs - the inputs
+ * @param inputs.factory - the widget factory to call
+ * @param inputs.$$slots - the slots of the widget
+ * @param inputs.defaultConfig - the default config of the widget
+ * @param inputs.widgetConfig - the config of the widget, overriding the defaultConfig
+ * @param inputs.events - the events of the widget
+ * @param inputs.$$props - the props of the widget
+ * @returns the widget
+ */
 export const callWidgetFactoryWithConfig = <W extends Widget>({
 	factory,
 	$$slots,
@@ -80,6 +94,12 @@ export const callWidgetFactoryWithConfig = <W extends Widget>({
 	return {...widget, patchChangedProps: createPatchChangedProps($$props, widget.patch)};
 };
 
+/**
+ * A type guard checking if a provided slot content is a Svelte component.
+ *
+ * @param content - the slot content
+ * @returns true if the slot content is a svelte component
+ */
 export const isSvelteComponent = <Props extends object>(content: SlotContent<Props>): content is SlotSvelteComponent<Props> => {
 	// in prod mode, a svelte component has $set on its prototype
 	// in dev mode with hmr (hot module reload), a svelte component has nothing on its prototype, but its name starts with Proxy<

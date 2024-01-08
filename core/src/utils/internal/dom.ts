@@ -36,11 +36,23 @@ export function reflow(element: HTMLElement = document.body) {
 	element.getBoundingClientRect();
 }
 
+/**
+ * Attach the given css classes to the element
+ *
+ * @param element - the HTML element
+ * @param classes - the css lcasses
+ */
 export const addClasses = (element: HTMLElement, classes?: string[]) => {
 	if (classes && classes.length > 0) {
 		element.classList.add(...classes);
 	}
 };
+/**
+ * Remove the given css classes to the element
+ *
+ * @param element - the HTML element
+ * @param classes - the css classes
+ */
 export const removeClasses = (element: HTMLElement, classes?: string[]) => {
 	if (classes && classes.length > 0) {
 		element.classList.remove(...classes);

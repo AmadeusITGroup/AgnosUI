@@ -50,6 +50,12 @@ export class ZoneWrapper {
 			}
 		: noop;
 
+	/**
+	 * Run the input function synchronously within the Angular zone
+	 *
+	 * @param fn - a function to run
+	 * @returns the value returned by the function
+	 */
 	ngZoneRun<T>(fn: () => T): T {
 		this.#runNeeded = false;
 		return this.#zone.run(fn);
