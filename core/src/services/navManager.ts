@@ -69,18 +69,23 @@ export const isInternalInputNavigation = (event: KeyboardEvent) => {
  * - directiveElement: DOM element which has the navigation manager directive
  * - navManager: navigation manager instance
  */
-export type NavManagerKeyHandler = (info: {directiveElement: HTMLElement; event: KeyboardEvent; navManager: NavManager}) => void;
+export type NavManagerKeyHandler<T = any> = (info: {
+	directiveElement: HTMLElement;
+	event: KeyboardEvent;
+	navManager: NavManager;
+	context?: T;
+}) => void;
 
 /**
  * Type of the parameter of the navigation manager directive.
  */
-export interface NavManagerItemConfig {
+export interface NavManagerItemConfig<T = any> {
 	/**
 	 * Map of key handlers.
 	 * The key in the map should match the result of calling {@link getKeyName} on the key event (for example "ArrowLeft" or "Ctrl+PageDown").
 	 * The value in the map is the corresponding key handler.
 	 */
-	keys?: Record<string, NavManagerKeyHandler>;
+	keys?: Record<string, NavManagerKeyHandler<T>>;
 
 	/**
 	 * Function returning DOM elements to include in the navigation manager.
@@ -88,9 +93,14 @@ export interface NavManagerItemConfig {
 	 * If not specified, the default selector function only returns the element on which the navigation manager directive is used.
 	 */
 	selector?: (directiveElement: HTMLElement) => Iterable<HTMLElement>;
+
+	/**
+	 *
+	 */
+	context?: T;
 }
 
-const defaultSelector: NavManagerItemConfig['selector'] = (directiveElement: HTMLElement) => [directiveElement];
+const defaultSelector: NavManagerItemConfig<any>['selector'] = (directiveElement: HTMLElement) => [directiveElement];
 
 /**
  * Returns a new instance of the navigation manager.
@@ -169,7 +179,7 @@ export const createNavManager = () => {
 			return null;
 		};
 
-	const directive: Directive<NavManagerItemConfig> = (directiveElement, config) => {
+	const directive = <T = any>(directiveElement: HTMLElement, config: NavManagerItemConfig<T>) => {
 		const onKeyDown = (event: KeyboardEvent) => {
 			if (isInternalInputNavigation(event)) {
 				return;
@@ -178,13 +188,13 @@ export const createNavManager = () => {
 			const handler = config.keys?.[keyName];
 			if (handler) {
 				refreshElements();
-				handler({event, directiveElement, navManager});
+				handler({event, directiveElement, navManager, context: config.context});
 			}
 		};
 		directiveElement.addEventListener('keydown', onKeyDown);
 		const unregister = directiveInstances$.register(() => (config?.selector ?? defaultSelector)(directiveElement));
 		return {
-			update(newConfig) {
+			update(newConfig: NavManagerItemConfig<T>) {
 				config = newConfig;
 			},
 			destroy() {

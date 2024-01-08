@@ -51,8 +51,8 @@
 			visibleItems$,
 		},
 		state$,
-		actions: {onInputKeydown, onInput},
-		directives: {floatingDirective, hasFocusDirective, referenceDirective},
+		actions: {onInput},
+		directives: {floatingDirective, hasFocusDirective, referenceDirective, badgeDirective, inputDirective},
 	} = widget;
 	$: widget.patchChangedProps($$props);
 </script>
@@ -61,7 +61,7 @@
 	<!-- svelte-ignore a11y-role-has-required-aria-props -->
 	<div use:hasFocusDirective role="combobox" class="d-flex align-items-center flex-wrap" aria-haspopup="listbox" aria-expanded={$open$}>
 		{#each $selectedContexts$ as itemContext (itemContext.id)}
-			<div class={`au-select-badge me-1 ${$badgeClassName$}`}>
+			<div use:badgeDirective={itemContext} tabindex="-1" class={`au-select-badge me-1 ${$badgeClassName$}`}>
 				<Slot slotContent={$slotBadgeLabel$} props={{state: $state$, widget, itemContext}} let:component let:props>
 					<slot slot="slot" name="badgeLabel" let:props {...props} />
 					<svelte:component this={component} {...props}>
@@ -72,6 +72,7 @@
 			</div>
 		{/each}
 		<input
+			use:inputDirective
 			id={$id$}
 			aria-label={$ariaLabel$}
 			type="text"
@@ -81,7 +82,6 @@
 			autoCorrect="off"
 			autoCapitalize="none"
 			autoComplete="off"
-			on:keydown={onInputKeydown}
 			on:input={onInput}
 		/>
 	</div>

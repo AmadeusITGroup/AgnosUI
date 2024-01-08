@@ -1,14 +1,17 @@
-import {asWritable, computed, writable} from '@amadeus-it-group/tansu';
+import {asWritable, computed, readable, writable} from '@amadeus-it-group/tansu';
 import type {Placement} from '@floating-ui/dom';
 import {autoPlacement, offset, size} from '@floating-ui/dom';
 import type {FloatingUI} from '../../services/floatingUI';
 import {createFloatingUI} from '../../services/floatingUI';
 import type {HasFocus} from '../../services/focustrack';
 import {createHasFocus} from '../../services/focustrack';
-import type {PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../../types';
+import type {NavManagerItemConfig} from '../../services/navManager';
+import {createNavManager} from '../../services/navManager';
+import type {Directive, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../../types';
 import {noop} from '../../utils/internal/func';
 import {bindableDerived, stateStores, writablesForProps} from '../../utils/stores';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
+import {bindDirective, mapDirectiveArg} from '../../utils/directive';
 
 /**
  * A type for the slot context of the pagination widget
@@ -261,7 +264,7 @@ export interface SelectApi<Item> {
 	toggle(isOpen?: boolean): void;
 }
 
-export interface SelectDirectives {
+export interface SelectDirectives<Item> {
 	/**
 	 * Directive to be used in the input group and the menu containers
 	 */
@@ -276,6 +279,16 @@ export interface SelectDirectives {
 	 * A directive to be applied to the input group element serves as the base for menu positioning
 	 */
 	referenceDirective: FloatingUI['directives']['referenceDirective'];
+
+	/**
+	 * A directive to be applied to badge elements
+	 */
+	badgeDirective: Directive<ItemContext<Item>>;
+
+	/**
+	 * A directive to be applied to the main input
+	 */
+	inputDirective: Directive;
 }
 
 export interface SelectActions {
@@ -285,15 +298,9 @@ export interface SelectActions {
 	 * Method to be plugged to on the 'input' event. The input text will be used as the filter text.
 	 */
 	onInput: (e: {target: any}) => void;
-
-	/**
-	 * Method to be plugged to on an keydown event, in order to control the keyboard interactions with the highlighted item.
-	 * It manages arrow keys to move the highlighted item, or enter to toggle the item.
-	 */
-	onInputKeydown: (e: any) => void;
 }
 
-export type SelectWidget<Item> = Widget<SelectProps<Item>, SelectState<Item>, SelectApi<Item>, SelectActions, SelectDirectives>;
+export type SelectWidget<Item> = Widget<SelectProps<Item>, SelectState<Item>, SelectApi<Item>, SelectActions, SelectDirectives<Item>>;
 
 const defaultItemId = (item: any) => '' + item;
 
@@ -433,6 +440,65 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 		},
 	});
 
+	const {directive: navDirective, focusFirst, focusLast, focusLeft, focusRight} = createNavManager();
+
+	function manageArrowDown(e: KeyboardEvent) {
+		const ctrlKey = e.ctrlKey;
+		const isOpen = open$();
+		const {highlightLast, highlightNext, open, highlightFirst} = widget.api;
+		if (isOpen) {
+			if (ctrlKey) {
+				highlightLast();
+			} else {
+				highlightNext();
+			}
+		} else {
+			open();
+			highlightFirst();
+		}
+		e.preventDefault();
+	}
+	const navManagerInputConfig: NavManagerItemConfig = {
+		keys: {
+			Home: focusFirst,
+			End: focusLast,
+			ArrowLeft: focusLeft,
+			ArrowRight: focusRight,
+			ArrowDown: ({event}) => manageArrowDown(event),
+			'Ctrl+ArrowDown': ({event}) => manageArrowDown(event),
+			ArrowUp: ({event}) => {
+				widget.api.highlightPrevious();
+				event.preventDefault();
+			},
+			'Ctrl+ArrowUp': ({event}) => {
+				widget.api.highlightFirst();
+				event.preventDefault();
+			},
+			Enter: () => {
+				const itemCtx = highlighted$();
+				if (itemCtx) {
+					widget.api.toggleItem(itemCtx.item);
+				}
+			},
+			Escape: ({event}) => {
+				_dirtyOpen$.set(false);
+				event.preventDefault();
+			},
+		},
+	};
+
+	const navManagerBadgeConfig: NavManagerItemConfig<ItemContext<Item>> = {
+		keys: {
+			Home: focusFirst,
+			End: focusLast,
+			ArrowLeft: focusLeft,
+			ArrowRight: focusRight,
+			Delete: ({context}) => {
+				console.log('(DEBUG)   context:', context);
+			},
+		},
+	};
+
 	const widget: SelectWidget<Item> = {
 		...stateStores({
 			visibleItems$,
@@ -538,6 +604,8 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 			hasFocusDirective,
 			floatingDirective,
 			referenceDirective,
+			badgeDirective: mapDirectiveArg(navDirective, (context: ItemContext<Item>) => ({...navManagerBadgeConfig, context})),
+			inputDirective: bindDirective(navDirective, readable(navManagerInputConfig)),
 		},
 		actions: {
 			onInput({target}: {target: HTMLInputElement}) {
@@ -546,49 +614,6 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 					open: value != null && value !== '',
 					filterText: value,
 				});
-			},
-			onInputKeydown(e: KeyboardEvent) {
-				const {ctrlKey, key} = e;
-
-				let keyManaged = true;
-				switch (key) {
-					case 'ArrowDown': {
-						const isOpen = open$();
-						if (isOpen) {
-							if (ctrlKey) {
-								widget.api.highlightLast();
-							} else {
-								widget.api.highlightNext();
-							}
-						} else {
-							widget.api.open();
-							widget.api.highlightFirst();
-						}
-						break;
-					}
-					case 'ArrowUp':
-						if (ctrlKey) {
-							widget.api.highlightFirst();
-						} else {
-							widget.api.highlightPrevious();
-						}
-						break;
-					case 'Enter': {
-						const itemCtx = highlighted$();
-						if (itemCtx) {
-							widget.api.toggleItem(itemCtx.item);
-						}
-						break;
-					}
-					case 'Escape':
-						_dirtyOpen$.set(false);
-						break;
-					default:
-						keyManaged = false;
-				}
-				if (keyManaged) {
-					e.preventDefault();
-				}
 			},
 		},
 	};
