@@ -1,11 +1,8 @@
 <script lang="ts">
 	import {selectedFramework$} from '$lib/stores';
 	import Code from '$lib/layout/Code.svelte';
-	import {pathToRoot$, frameworkLessUrl$} from '$lib/stores';
 	import Section from '$lib/layout/Section.svelte';
-	$: isAngular = $selectedFramework$ === 'angular';
-	$: isReact = $selectedFramework$ === 'react';
-	$: isSvelte = $selectedFramework$ === 'svelte';
+
 	$: capitalizedFramework = $selectedFramework$?.[0]?.toUpperCase() + $selectedFramework$?.substring(1);
 
 	$: fwkDir = `./fwk/${$selectedFramework$}/`;
@@ -20,25 +17,6 @@
 <!-- TODO refactor it with the header part to use the same component -->
 <div class="row mb-4 align-items-center">
 	<h1 class="col-auto me-auto me-md-none mb-0 p-3">AgnosUI <span class="text-capitalize">{$selectedFramework$}</span> Installation Guide</h1>
-	<div class="col flex-grow-0">
-		<div class="btn-group btn-group-sm me-2 bg-white" role="group" aria-label="Basic radio toggle button group">
-			<a
-				href={`${$pathToRoot$}angular/${$frameworkLessUrl$}`}
-				class="btn btn-outline-primary"
-				class:active={isAngular}
-				aria-current={!isAngular || 'page'}>Angular</a
-			>
-			<a href={`${$pathToRoot$}react/${$frameworkLessUrl$}`} class="btn btn-outline-primary" class:active={isReact} aria-current={!isReact || 'page'}
-				>React</a
-			>
-			<a
-				href={`${$pathToRoot$}svelte/${$frameworkLessUrl$}`}
-				class="btn btn-outline-primary"
-				class:active={isSvelte}
-				aria-current={!isSvelte || 'page'}>Svelte</a
-			>
-		</div>
-	</div>
 </div>
 
 <Section label="Prerequisites" id="Prerequisites" level={2}>
