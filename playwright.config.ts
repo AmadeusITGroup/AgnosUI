@@ -46,9 +46,22 @@ const projects: PlaywrightTestConfig<FixtureOptions>['projects'] = includesDemo
 	: [];
 
 frameworks.forEach((framework) => {
+	projects.push({
+		name: `${framework.name}:samplesMarkup`,
+		testMatch: 'samplesMarkup.e2e-spec.ts',
+		use: {
+			...devices['Desktop Chrome'],
+			framework: framework.name,
+			baseURL: framework.url,
+		},
+	});
+});
+
+frameworks.forEach((framework) => {
 	devicesToTest.forEach((browser) => {
 		projects.push({
 			name: `${framework.name}:${browser.defaultBrowserType}`,
+			testIgnore: 'samplesMarkup.e2e-spec.ts',
 			use: {
 				...browser,
 				framework: framework.name,
@@ -57,6 +70,7 @@ frameworks.forEach((framework) => {
 		});
 	});
 });
+
 if (includesDemo) {
 	frameworks.push({
 		name: 'demo',

@@ -7,14 +7,18 @@ import {typeAndSelect} from './demo-po/select.po';
 import {htmlSnapshot} from './htmlSnapshot';
 import {normalizePath} from './utils';
 
-test.describe.parallel(`Samples markup consistency check`, () => {
-	const allRoutes = globSync('**/*.route.svelte', {cwd: path.join(__dirname, '../svelte/demo/samples')}).map(
-		(route) =>
-			`${normalizePath(route)
-				.replace(/\.route\.svelte$/, '')
-				.toLowerCase()}`,
-	);
+const allRoutes = globSync('**/*.route.svelte', {cwd: path.join(__dirname, '../svelte/demo/src/app/samples')}).map(
+	(route) =>
+		`${normalizePath(route)
+			.replace(/\.route\.svelte$/, '')
+			.toLowerCase()}`,
+);
 
+test(`Routes check`, () => {
+	expect(allRoutes.length, `markup routes musn't be empty`).toBeGreaterThan(0);
+});
+
+test.describe.parallel(`Samples markup consistency check`, () => {
 	const routesExtraHash: Record<string, string> = {
 		'modal/playground': '#{"props":{"visible":true,"slotDefault":"Dialog content","slotTitle":"Dialog"}}',
 	};

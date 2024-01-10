@@ -2,9 +2,9 @@ import {Slider} from '@agnos-ui/react/components/slider';
 import {useState} from 'react';
 
 const RightToLeftDemo = () => {
-	const [sliderControl, setSliderControl] = useState([70]);
+	const [sliderControl, setSliderControl] = useState([30]);
 	const [sliderRangeControl, setSliderRangeControl] = useState([30, 70]);
-	const [sliderVerticalControl, setSliderVerticalControl] = useState([70]);
+	const [sliderVerticalControl, setSliderVerticalControl] = useState([30]);
 	const [sliderRangeVerticalControl, setSliderRangeVerticalControl] = useState([30, 70]);
 
 	return (
