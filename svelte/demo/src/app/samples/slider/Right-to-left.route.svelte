@@ -1,9 +1,9 @@
 <script lang="ts">
 	import {Slider} from '@agnos-ui/svelte/components/slider';
 
-	let sliderControl = [70];
+	let sliderControl = [30];
 	let sliderRangeControl = [30, 70];
-	let sliderVerticalControl = [70];
+	let sliderVerticalControl = [30];
 	let sliderRangeVerticalControl = [30, 70];
 </script>
 
