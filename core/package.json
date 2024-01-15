@@ -88,6 +88,8 @@
 				"build:src"
 			],
 			"files": [
+				"api-extractor.json",
+				"../api-extractor.json",
 				"src/**",
 				"tsconfig.json"
 			],

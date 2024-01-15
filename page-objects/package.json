@@ -52,7 +52,8 @@
 				"build:dts"
 			],
 			"files": [
-				"lib/**",
+				"api-extractor.json",
+				"../api-extractor.json",
 				"tsconfig.json",
 				"tsconfig.d.json"
 			],
