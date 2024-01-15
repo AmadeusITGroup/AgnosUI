@@ -1,6 +1,8 @@
 import {intersectionApi} from '$lib/stores';
 import {afterUpdate} from 'svelte';
 
+const textToLinesRegex = /\r/g;
+
 export function getTitle(title: string, frameworkName = '') {
 	return `AgnosUI - ${title}` + (frameworkName ? ` for ${frameworkName}` : '');
 }
@@ -14,7 +16,7 @@ export function getWidgetDescription(name: string, frameworkName = '') {
  * @param text text to split
  */
 export function textToLines(text: string) {
-	return text.replaceAll('\r', '').split('\n\n');
+	return text.replace(textToLinesRegex, '').split('\n\n');
 }
 
 const arrowFunctionRegExp = /^\([^(]*\)[^=]*=>/;

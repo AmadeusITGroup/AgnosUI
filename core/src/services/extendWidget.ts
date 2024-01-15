@@ -16,9 +16,8 @@ export type ExtendWidgetProps<W extends Widget, ExtraProps extends object> = Wid
 /**
  * Type replacing the original Props with WidgetSlotContext contaning ExtraProps
  */
-export type ExtendWidgetAdaptSlotContentProps<Props extends Record<string, any>, ExtraProps extends object> = Props extends WidgetSlotContext<infer U>
-	? WidgetSlotContext<ExtendWidgetProps<U, ExtraProps>> & Omit<Props, keyof WidgetSlotContext<any>>
-	: Props;
+export type ExtendWidgetAdaptSlotContentProps<Props extends Record<string, any>, ExtraProps extends object> =
+	Props extends WidgetSlotContext<infer U> ? WidgetSlotContext<ExtendWidgetProps<U, ExtraProps>> & Omit<Props, keyof WidgetSlotContext<any>> : Props;
 
 /**
  * Type enriching the original widget slot Props with ExtraProps slots
