@@ -17,9 +17,21 @@
 		"vite": "^5.0.11"
 	},
 	"scripts": {
-		"build": "npm run build:rollup && npm run build:dts",
-		"build:rollup": "tsc && vite build",
-		"build:dts": "tsc -p tsconfig.d.json"
+		"build": "wireit"
+	},
+	"wireit": {
+		"build": {
+			"command": "vite build && tsc -p tsconfig.d.json",
+			"files": [
+				"lib/**",
+				"tsconfig.json",
+				"tsconfig.d.json",
+				"vite.config.ts"
+			],
+			"output": [
+				"dist/**"
+			]
+		}
 	},
 	"type": "module",
 	"exports": {

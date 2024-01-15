@@ -8,7 +8,18 @@
 		"css"
 	],
 	"scripts": {
-		"build": "sass scss/agnosui.scss css/agnosui.css"
+		"build": "wireit"
+	},
+	"wireit": {
+		"build": {
+			"command": "sass scss/agnosui.scss css/agnosui.css",
+			"files": [
+				"scss"
+			],
+			"output": [
+				"css"
+			]
+		}
 	},
 	"files": [
 		"scss",

@@ -9,6 +9,7 @@ export default defineConfig((config) => ({
 	base: config.command === 'serve' ? '/svelte/samples' : './',
 	server: {
 		port: 3001,
+		strictPort: true,
 	},
 	build: {
 		emptyOutDir: true,

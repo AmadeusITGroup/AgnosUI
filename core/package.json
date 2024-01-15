@@ -40,16 +40,88 @@
 		}
 	},
 	"scripts": {
-		"build": "run-s clean:dist build:*",
-		"clean:dist": "node ../scripts/rm.js dist",
-		"build:src": "tsc",
-		"build:pkg": "node ../scripts/buildPackageJson.js . dist",
-		"build:api-extractor": "api-extractor run",
-		"check:tests": "tsc -p tsconfig.tests.json",
-		"test": "npm run check:tests && vitest run",
+		"build": "wireit",
+		"build:src": "wireit",
+		"build:pkg": "wireit",
+		"check": "wireit",
+		"check:api-extractor": "wireit",
+		"check:tests": "wireit",
+		"test": "vitest run",
 		"tdd": "vitest",
 		"tdd:ui": "vitest --ui",
-		"test:coverage": "node --import @agnos-ui/code-coverage/interceptReadFile ../node_modules/vitest/vitest.mjs run --coverage"
+		"test:coverage": "wireit"
+	},
+	"wireit": {
+		"build:src": {
+			"command": "tsc",
+			"files": [
+				"src/**",
+				"tsconfig.json"
+			],
+			"output": [
+				"dist/**",
+				"!dist/package.json",
+				"!dist/README.md"
+			]
+		},
+		"build:pkg": {
+			"command": "node ../scripts/buildPackageJson.js . dist",
+			"files": [
+				"package.json",
+				"README.md",
+				"../scripts/buildPackageJson.js"
+			],
+			"output": [
+				"dist/package.json",
+				"dist/README.md"
+			]
+		},
+		"build": {
+			"dependencies": [
+				"build:src",
+				"build:pkg"
+			]
+		},
+		"check:api-extractor": {
+			"command": "api-extractor run",
+			"dependencies": [
+				"build:src"
+			],
+			"files": [
+				"src/**",
+				"tsconfig.json"
+			],
+			"output": []
+		},
+		"check:tests": {
+			"command": "tsc -p tsconfig.tests.json",
+			"files": [
+				"src/**",
+				"tsconfig.tests.json",
+				"vitest.config.ts"
+			],
+			"output": []
+		},
+		"check": {
+			"dependencies": [
+				"check:api-extractor",
+				"check:tests"
+			]
+		},
+		"test:coverage": {
+			"command": "node --import @agnos-ui/code-coverage/interceptReadFile ../node_modules/vitest/vitest.mjs run --coverage",
+			"dependencies": [
+				"../code-coverage:build"
+			],
+			"files": [
+				"src/**",
+				"tsconfig.tests.json",
+				"vitest.config.ts"
+			],
+			"output": [
+				"coverage/**"
+			]
+		}
 	},
 	"dependencies": {
 		"@amadeus-it-group/tansu": "0.0.24"
