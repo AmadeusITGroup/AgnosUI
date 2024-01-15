@@ -9,6 +9,7 @@ export default defineConfig((config) => ({
 	base: config.command === 'serve' ? '/react/samples' : './',
 	server: {
 		port: 3000,
+		strictPort: true,
 	},
 	build: {
 		emptyOutDir: true,

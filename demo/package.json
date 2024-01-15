@@ -3,13 +3,76 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"dev": "npm run generate:doc && vite dev",
-		"build": "npm run generate:doc && npm run build:demo && npm run svelte-check",
-		"build:coverage": "npm run generate:doc && npm run build:demo",
-		"build:demo": "vite build",
-		"generate:doc": "ts-node --project ../scripts/doc/tsconfig.json ../scripts/doc/generate-docs.ts",
+		"dev": "wireit",
+		"build": "wireit",
+		"generate:doc": "wireit",
+		"build:coverage": "wireit",
 		"preview": "vite preview",
-		"svelte-check": "svelte-check"
+		"check": "wireit"
+	},
+	"wireit": {
+		"generate:doc": {
+			"command": "ts-node --project ../scripts/doc/tsconfig.json ../scripts/doc/generate-docs.ts",
+			"files": [
+				"../core/src/**",
+				"../scripts/doc/tsconfig.json",
+				"../scripts/doc/generate-docs.ts"
+			],
+			"output": [
+				"generated/**"
+			]
+		},
+		"dev": {
+			"command": "vite dev",
+			"dependencies": [
+				"generate:doc",
+				"../angular/demo:dev",
+				"../react/demo:dev",
+				"../svelte/demo:dev"
+			],
+			"service": true
+		},
+		"build": {
+			"command": "vite build",
+			"dependencies": [
+				"generate:doc",
+				"../angular/demo:build",
+				"../react/demo:build",
+				"../svelte/demo:build"
+			],
+			"files": [
+				"src/**",
+				"static/**",
+				"svelte.config.js",
+				"vite.config.ts",
+				"vite-env.d.ts",
+				"tsconfig.json",
+				"tsconfig.sw.json"
+			],
+			"output": [
+				"dist/**",
+				".svelte-kit/**"
+			]
+		},
+		"build:coverage": {
+			"command": "vite build",
+			"dependencies": [
+				"generate:doc",
+				"../angular/demo:build:coverage",
+				"../react/demo:build:coverage",
+				"../svelte/demo:build:coverage"
+			]
+		},
+		"check": {
+			"command": "svelte-check",
+			"dependencies": [
+				"build"
+			],
+			"files": [
+				"src/**"
+			],
+			"output": []
+		}
 	},
 	"dependencies": {
 		"@floating-ui/dom": "^1.5.4",

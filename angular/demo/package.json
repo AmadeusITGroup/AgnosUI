@@ -4,12 +4,55 @@
 	"type": "module",
 	"scripts": {
 		"ng": "ng",
-		"dev": "ng serve",
-		"dev:coverage": "node --import @agnos-ui/code-coverage/interceptReadFile ../../node_modules/@angular/cli/bin/ng.js serve",
-		"build": "ng build",
-		"build:coverage": "node --import @agnos-ui/code-coverage/interceptReadFile ../../node_modules/@angular/cli/bin/ng.js build --configuration=coverage",
+		"dev": "wireit",
+		"dev:coverage": "wireit",
+		"build": "wireit",
+		"build:coverage": "wireit",
 		"watch": "ng build --watch --configuration development",
 		"preview": "node scripts/preview.cjs dist --port 4200 --single"
+	},
+	"wireit": {
+		"dev": {
+			"command": "ng serve",
+			"dependencies": [
+				"build",
+				"../headless:generate:exports"
+			],
+			"service": true
+		},
+		"dev:coverage": {
+			"command": "node --import @agnos-ui/code-coverage/interceptReadFile ../../node_modules/@angular/cli/bin/ng.js serve",
+			"dependencies": [
+				"build",
+				"../../code-coverage:build",
+				"../headless:generate:exports"
+			],
+			"service": true
+		},
+		"build": {
+			"command": "ng build",
+			"dependencies": [
+				"../lib:build",
+				"../../style-bootstrap:build"
+			],
+			"files": [
+				"src/**",
+				"angular.json",
+				"tsconfig.json",
+				"webpack.cjs"
+			],
+			"output": [
+				"dist/**"
+			]
+		},
+		"build:coverage": {
+			"command": "node --import @agnos-ui/code-coverage/interceptReadFile ../../node_modules/@angular/cli/bin/ng.js build --configuration=coverage",
+			"dependencies": [
+				"../lib:build",
+				"../../style-bootstrap:build",
+				"../../code-coverage:build"
+			]
+		}
 	},
 	"dependencies": {
 		"@agnos-ui/angular-headless": "",

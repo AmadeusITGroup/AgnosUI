@@ -49,11 +49,72 @@
 		}
 	},
 	"scripts": {
-		"build": "run-s generate:exports build:* check:svelte",
-		"generate:exports": "node ../../scripts/generateExports.js svelte/headless core @agnos-ui/core",
-		"build:src": "svelte-package -i src",
-		"build:pkg": "node ../../scripts/buildPackageJson.js . dist",
-		"check:svelte": "svelte-check --fail-on-warnings --output human-verbose"
+		"build": "wireit",
+		"check": "wireit"
+	},
+	"wireit": {
+		"generate:exports": {
+			"command": "node ../../scripts/generateExports.js svelte/headless core @agnos-ui/core",
+			"files": [
+				"src/**",
+				"../../core/src/**",
+				"!src/generated/**",
+				"../../scripts/generateExports.js"
+			],
+			"output": [
+				"src/generated/**"
+			]
+		},
+		"build:src": {
+			"command": "svelte-package -i src",
+			"dependencies": [
+				"generate:exports",
+				"../../core:build"
+			],
+			"files": [
+				"src/**",
+				"!src/generated/**",
+				"tsconfig.json"
+			],
+			"output": [
+				"dist/**",
+				".svelte-kit/**",
+				"!dist/README.md",
+				"!dist/package.json"
+			]
+		},
+		"build:pkg": {
+			"command": "node ../../scripts/buildPackageJson.js . dist",
+			"dependencies": [
+				"build:src"
+			],
+			"files": [
+				"../../scripts/buildPackageJson.js",
+				"package.json",
+				"README.md"
+			],
+			"output": [
+				"dist/README.md",
+				"dist/package.json"
+			]
+		},
+		"build": {
+			"dependencies": [
+				"build:pkg"
+			]
+		},
+		"check": {
+			"command": "svelte-check --fail-on-warnings --output human-verbose",
+			"dependencies": [
+				"generate:exports",
+				"../../core:build"
+			],
+			"files": [
+				"src/**",
+				"tsconfig.json"
+			],
+			"output": []
+		}
 	},
 	"dependencies": {
 		"@agnos-ui/core": "",

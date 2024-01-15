@@ -12,14 +12,79 @@
 	},
 	"scripts": {
 		"ng": "ng",
-		"build": "run-s generate:exports build:*",
-		"generate:exports": "node ../../scripts/generateExports.js angular/headless core @agnos-ui/core",
-		"build:src": "ng build",
-		"build:pkg": "node ../../scripts/buildPackageJson.js dist dist .",
+		"build": "wireit",
 		"test": "vitest run",
 		"tdd": "vitest",
 		"tdd:ui": "vitest --ui",
-		"test:coverage": "node --import @agnos-ui/code-coverage/interceptReadFile ../../node_modules/vitest/vitest.mjs run --coverage"
+		"test:coverage": "wireit"
+	},
+	"wireit": {
+		"generate:exports": {
+			"command": "node ../../scripts/generateExports.js angular/headless core @agnos-ui/core",
+			"files": [
+				"src/**",
+				"../../core/src/**",
+				"!src/generated/**",
+				"../../scripts/generateExports.js"
+			],
+			"output": [
+				"src/generated/**"
+			]
+		},
+		"build:src": {
+			"command": "ng build",
+			"dependencies": [
+				"generate:exports",
+				"../../core:build"
+			],
+			"files": [
+				"src/**",
+				"!src/generated/**",
+				"tsconfig.json",
+				"angular.json",
+				"ng-package.json"
+			],
+			"output": [
+				"dist/**",
+				"!dist/README.md",
+				"!dist/package.json"
+			]
+		},
+		"build:pkg": {
+			"command": "node ../../scripts/buildPackageJson.js . dist",
+			"dependencies": [
+				"build:src"
+			],
+			"files": [
+				"../../scripts/buildPackageJson.js",
+				"package.json",
+				"README.md"
+			],
+			"output": [
+				"dist/README.md",
+				"dist/package.json"
+			]
+		},
+		"build": {
+			"dependencies": [
+				"build:pkg"
+			]
+		},
+		"test:coverage": {
+			"command": "node --import @agnos-ui/code-coverage/interceptReadFile ../../node_modules/vitest/vitest.mjs run --coverage",
+			"dependencies": [
+				"../../code-coverage:build"
+			],
+			"files": [
+				"src/**",
+				"!src/generated/**",
+				"tsconfig.spec.json",
+				"vitest.config.ts"
+			],
+			"output": [
+				"coverage"
+			]
+		}
 	},
 	"peerDependencies": {
 		"@angular/common": "*",

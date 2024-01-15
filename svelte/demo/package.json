@@ -3,13 +3,66 @@
 	"type": "module",
 	"private": true,
 	"scripts": {
-		"dev": "vite",
-		"dev:coverage": "vite -c vite.coverage.config.ts",
-		"build": "run-s build:demo check:svelte",
-		"build:coverage": "vite build -c vite.coverage.config.ts",
-		"build:demo": "vite build",
+		"dev": "wireit",
+		"dev:coverage": "wireit",
+		"build": "wireit",
+		"build:coverage": "wireit",
 		"preview": "vite preview",
-		"check:svelte": "svelte-check --fail-on-warnings --output human-verbose"
+		"check": "wireit"
+	},
+	"wireit": {
+		"dev": {
+			"command": "vite",
+			"service": true,
+			"dependencies": [
+				"../lib:generate:exports",
+				"../headless:generate:exports"
+			]
+		},
+		"dev:coverage": {
+			"command": "vite -c vite.coverage.config.ts",
+			"service": true,
+			"dependencies": [
+				"../../code-coverage:build",
+				"../lib:generate:exports",
+				"../headless:generate:exports"
+			]
+		},
+		"build": {
+			"command": "vite build",
+			"dependencies": [
+				"../lib:build",
+				"../../style-bootstrap:build"
+			],
+			"files": [
+				"src/**",
+				"tsconfig.json",
+				"vite.config.ts"
+			],
+			"output": [
+				"dist/**"
+			]
+		},
+		"build:coverage": {
+			"command": "vite build -c vite.coverage.config.ts",
+			"dependencies": [
+				"../../code-coverage:build",
+				"../../style-bootstrap:build",
+				"../lib:generate:exports",
+				"../headless:generate:exports"
+			]
+		},
+		"check": {
+			"command": "svelte-check --fail-on-warnings --output human-verbose",
+			"dependencies": [
+				"../lib:build"
+			],
+			"files": [
+				"src/**",
+				"tsconfig.json"
+			],
+			"output": []
+		}
 	},
 	"dependencies": {
 		"@amadeus-it-group/tansu": "0.0.24",

@@ -1,11 +1,10 @@
-const {writeFileSync, cpSync, existsSync} = require('fs');
+const {writeFileSync, cpSync, existsSync, mkdirSync} = require('fs');
 const path = require('path');
 
-let [, , sourceFolder, outputFolder, repositoryDirectory] = process.argv;
+let [, , sourceFolder, outputFolder] = process.argv;
 
 sourceFolder = path.resolve(sourceFolder);
 outputFolder = path.resolve(outputFolder);
-repositoryDirectory = repositoryDirectory != null ? path.resolve(repositoryDirectory) : sourceFolder;
 
 const rootPath = path.join(__dirname, '..');
 const rootPackage = require('../package.json');
@@ -17,7 +16,7 @@ const pkg = {
 };
 
 const packageName = sourcePackage.name;
-const directory = path.posix.relative(rootPath, repositoryDirectory);
+const directory = path.posix.relative(rootPath, sourceFolder);
 const frameworkName = directory.split('/')[0];
 const isCore = frameworkName === 'core';
 const isHeadless = isCore || packageName.endsWith('-headless');
@@ -39,6 +38,7 @@ pkg.keywords.push(...rootPackage.keywords);
 pkg.repository.directory = directory;
 delete pkg.private;
 delete pkg.scripts;
+delete pkg.wireit;
 delete pkg.devDependencies;
 
 const cleanObjDistPrefix = (obj, ...keys) => {
@@ -58,12 +58,14 @@ if (pkg.exports) {
 	}
 }
 
+mkdirSync(outputFolder, {recursive: true});
+
 const packageJsonOutputFile = path.join(outputFolder, 'package.json');
 console.log(`Writing ${packageJsonOutputFile}`);
 writeFileSync(packageJsonOutputFile, JSON.stringify(pkg, null, '\t'));
 
-// Copy README.md from repositoryDirectory
+// Copy README.md from sourceFolder
 const readmeOutputFile = path.join(outputFolder, 'README.md');
-const readmeSourceFile = path.join(repositoryDirectory, 'README.md');
+const readmeSourceFile = path.join(sourceFolder, 'README.md');
 console.log(`Copying ${readmeSourceFile} to ${readmeOutputFile}`);
 cpSync(readmeSourceFile, readmeOutputFile);

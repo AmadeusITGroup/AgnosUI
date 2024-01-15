@@ -40,11 +40,58 @@
 		}
 	},
 	"scripts": {
-		"build": "run-s clean:dist generate:exports build:*",
-		"clean:dist": "node ../../scripts/rm.js dist",
-		"generate:exports": "node ../../scripts/generateExports.js react/lib react/headless @agnos-ui/react-headless",
-		"build:src": "tsc",
-		"build:pkg": "node ../../scripts/buildPackageJson.js . dist"
+		"build": "wireit"
+	},
+	"wireit": {
+		"generate:exports": {
+			"command": "node ../../scripts/generateExports.js react/lib react/headless @agnos-ui/react-headless",
+			"dependencies": [
+				"../headless:generate:exports"
+			],
+			"files": [
+				"src/**",
+				"!src/generated/**",
+				"../../scripts/generateExports.js"
+			],
+			"output": [
+				"src/generated/**"
+			]
+		},
+		"build:src": {
+			"command": "tsc",
+			"dependencies": [
+				"generate:exports",
+				"../headless:build"
+			],
+			"files": [
+				"src/**",
+				"!src/generated/**",
+				"tsconfig.json"
+			],
+			"output": [
+				"dist/**",
+				"!dist/README.md",
+				"!dist/package.json"
+			]
+		},
+		"build:pkg": {
+			"command": "node ../../scripts/buildPackageJson.js . dist",
+			"files": [
+				"../../scripts/buildPackageJson.js",
+				"package.json",
+				"README.md"
+			],
+			"output": [
+				"dist/README.md",
+				"dist/package.json"
+			]
+		},
+		"build": {
+			"dependencies": [
+				"build:src",
+				"build:pkg"
+			]
+		}
 	},
 	"dependencies": {
 		"@agnos-ui/react-headless": "",

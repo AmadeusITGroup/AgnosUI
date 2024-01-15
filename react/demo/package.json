@@ -2,13 +2,66 @@
 	"name": "@agnos-ui/react-demo",
 	"private": true,
 	"scripts": {
-		"dev": "vite",
-		"dev:coverage": "vite -c vite.coverage.config.ts",
-		"build:coverage": "vite build -c vite.coverage.config.ts",
-		"build": "run-s build:demo check:types",
-		"build:demo": "vite build",
-		"check:types": "tsc",
+		"dev": "wireit",
+		"dev:coverage": "wireit",
+		"build:coverage": "wireit",
+		"build": "wireit",
+		"check": "wireit",
 		"preview": "vite preview"
+	},
+	"wireit": {
+		"dev": {
+			"command": "vite",
+			"dependencies": [
+				"../lib:generate:exports",
+				"../headless:generate:exports"
+			],
+			"service": true
+		},
+		"dev:coverage": {
+			"command": "vite -c vite.coverage.config.ts",
+			"dependencies": [
+				"../../code-coverage:build",
+				"../lib:generate:exports",
+				"../headless:generate:exports"
+			],
+			"service": true
+		},
+		"build": {
+			"command": "vite build",
+			"dependencies": [
+				"../lib:build",
+				"../../style-bootstrap:build"
+			],
+			"files": [
+				"src/**",
+				"tsconfig.json",
+				"vite.config.ts"
+			],
+			"output": [
+				"dist/**"
+			]
+		},
+		"build:coverage": {
+			"command": "vite build -c vite.coverage.config.ts",
+			"dependencies": [
+				"../../code-coverage:build",
+				"../../style-bootstrap:build",
+				"../lib:generate:exports",
+				"../headless:generate:exports"
+			]
+		},
+		"check": {
+			"command": "tsc",
+			"files": [
+				"src/**",
+				"tsconfig.json"
+			],
+			"output": [],
+			"dependencies": [
+				"../lib:build"
+			]
+		}
 	},
 	"devDependencies": {
 		"@types/react": "^18.2.47",

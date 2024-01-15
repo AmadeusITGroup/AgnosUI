@@ -12,12 +12,55 @@
 	],
 	"main": "dist/lib/index.js",
 	"module": "dist/lib/index.mjs",
-	"types": "dist/lib/index.d.ts",
+	"types": "dist/dts/index.d.ts",
 	"scripts": {
-		"build": "npm run build:rollup && npm run build:dts && npm run build:api-extractor",
-		"build:rollup": "tsc && vite build",
-		"build:dts": "tsc -p tsconfig.d.json",
-		"build:api-extractor": "api-extractor run"
+		"build": "wireit"
+	},
+	"wireit": {
+		"build:src": {
+			"command": "vite build",
+			"dependencies": [
+				"../base-po:build"
+			],
+			"files": [
+				"lib/**",
+				"vite.config.ts"
+			],
+			"output": [
+				"dist/lib/index.js",
+				"dist/lib/index.mjs"
+			]
+		},
+		"build:dts": {
+			"command": "tsc -p tsconfig.d.json",
+			"dependencies": [
+				"../base-po:build"
+			],
+			"files": [
+				"lib/**",
+				"tsconfig.json",
+				"tsconfig.d.json"
+			],
+			"output": [
+				"dist/dts/**"
+			]
+		},
+		"build": {
+			"command": "api-extractor run",
+			"dependencies": [
+				"build:src",
+				"build:dts"
+			],
+			"files": [
+				"api-extractor.json",
+				"../api-extractor.json",
+				"tsconfig.json",
+				"tsconfig.d.json"
+			],
+			"output": [
+				"dist/lib/index.d.ts"
+			]
+		}
 	},
 	"dependencies": {
 		"@agnos-ui/base-po": ""

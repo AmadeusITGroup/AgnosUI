@@ -47,32 +47,84 @@
 		"ts-node": "^10.9.2",
 		"typescript": "~5.2.2",
 		"vite": "^5.0.11",
-		"vitest": "^1.2.0"
+		"vitest": "^1.2.0",
+		"wireit": "^0.14.3"
 	},
 	"scripts": {
-		"build:coverage": "node scripts/run.js build:coverage serial",
+		"build:coverage": "wireit",
 		"build": "node scripts/run.js build serial",
-		"build:rollup": "node scripts/run.js build:rollup serial",
-		"build:demo": "node scripts/run.js build:demo serial",
-		"build:dts": "node scripts/run.js build:dts serial",
-		"build:api-extractor": "node scripts/run.js build:api-extractor serial",
+		"build:ci": "wireit",
+		"check": "wireit",
 		"tdd": "node scripts/run.js tdd",
 		"tdd:ui": "node scripts/run.js tdd:ui",
 		"test:coverage": "node scripts/run.js test:coverage",
 		"test": "node scripts/run.js test serial",
 		"format:fix": "prettier . \"**/*.svelte\" --write --cache .",
 		"format:check": "prettier . \"**/*.svelte\" --check --cache .",
-		"lint": "eslint --ext ts,tsx,svelte .",
+		"lint": "wireit",
 		"dev": "node scripts/run.js dev",
 		"dev:coverage": "node scripts/run.js dev:coverage",
 		"preview": "node scripts/run.js preview",
-		"e2e": "node scripts/e2e.js",
-		"e2e:ui": "playwright test --ui",
+		"e2e": "wireit",
+		"e2e:ui": "wireit",
 		"postinstall": "husky install",
 		"syncpack:check": "syncpack lint",
 		"syncpack:fix": "syncpack fix-mismatches",
-		"generate:exports": "node scripts/run.js generate:exports serial",
-		"prepare": "npm run generate:exports"
+		"prepare": "wireit"
+	},
+	"wireit": {
+		"build:ci": {
+			"dependencies": [
+				"./code-coverage:build",
+				"./demo:build",
+				"./eslint-plugin:build",
+				"./page-objects:build"
+			]
+		},
+		"build:coverage": {
+			"dependencies": [
+				"./demo:build:coverage"
+			]
+		},
+		"e2e": {
+			"command": "node scripts/e2e.js",
+			"dependencies": [
+				"./code-coverage:build"
+			]
+		},
+		"e2e:ui": {
+			"command": "playwright test --ui",
+			"dependencies": [
+				"./code-coverage:build"
+			]
+		},
+		"prepare": {
+			"dependencies": [
+				"./angular/headless:generate:exports",
+				"./react/headless:generate:exports",
+				"./react/lib:generate:exports",
+				"./svelte/headless:generate:exports",
+				"./svelte/lib:generate:exports"
+			]
+		},
+		"check": {
+			"dependencies": [
+				"./core:check",
+				"./eslint-plugin:check",
+				"./react/demo:check",
+				"./svelte/headless:check",
+				"./svelte/lib:check",
+				"./svelte/demo:check",
+				"./demo:check"
+			]
+		},
+		"lint": {
+			"command": "eslint --ext ts,tsx,svelte .",
+			"dependencies": [
+				"./eslint-plugin:build",
+				"./svelte/lib:build"
+			]
+		}
 	},
 	"workspaces": [
 		"code-coverage",

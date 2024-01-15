@@ -12,7 +12,47 @@
 	},
 	"scripts": {
 		"ng": "ng",
-		"build": "ng build && node ../../scripts/buildPackageJson.js dist dist ."
+		"build": "wireit"
+	},
+	"wireit": {
+		"build:src": {
+			"command": "ng build",
+			"dependencies": [
+				"../headless:build"
+			],
+			"files": [
+				"src/**",
+				"!src/generated/**",
+				"tsconfig.json",
+				"angular.json",
+				"ng-package.json"
+			],
+			"output": [
+				"dist/**",
+				"!dist/README.md",
+				"!dist/package.json"
+			]
+		},
+		"build:pkg": {
+			"command": "node ../../scripts/buildPackageJson.js . dist",
+			"dependencies": [
+				"build:src"
+			],
+			"files": [
+				"../../scripts/buildPackageJson.js",
+				"package.json",
+				"README.md"
+			],
+			"output": [
+				"dist/README.md",
+				"dist/package.json"
+			]
+		},
+		"build": {
+			"dependencies": [
+				"build:pkg"
+			]
+		}
 	},
 	"peerDependencies": {
 		"@angular/common": "*",
