@@ -25,9 +25,10 @@ export type SlotContent<Props extends object = object> =
 	| Type<unknown>
 	| ComponentTemplate<Props, any, any>;
 
-export type AdaptSlotContentProps<Props extends Record<string, any>> = Props extends WidgetSlotContext<infer U>
-	? WidgetSlotContext<AdaptWidgetSlots<U>> & AdaptPropsSlots<Omit<Props, keyof WidgetSlotContext<any>>>
-	: AdaptPropsSlots<Props>;
+export type AdaptSlotContentProps<Props extends Record<string, any>> =
+	Props extends WidgetSlotContext<infer U>
+		? WidgetSlotContext<AdaptWidgetSlots<U>> & AdaptPropsSlots<Omit<Props, keyof WidgetSlotContext<any>>>
+		: AdaptPropsSlots<Props>;
 
 export type AdaptPropsSlots<Props> = Omit<Props, `slot${string}`> & {
 	[K in keyof Props & `slot${string}`]: Props[K] extends CoreSlotContent<infer U> ? SlotContent<AdaptSlotContentProps<U>> : Props[K];
