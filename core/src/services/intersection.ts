@@ -23,6 +23,14 @@ const defaultValues: IntersectionProps = {
 	options: undefined,
 };
 
+/**
+ * Create an intersection service.
+ *
+ * The returned service includes the patch method to set the elements to observe / intersection options and the states to track the visible elements.
+ *
+ * @param config - the props config for the intersection service
+ * @returns the intersection service
+ */
 export const createIntersection = (config?: PropsConfig<IntersectionProps>) => {
 	const [{elements$, options$}, patch] = writablesForProps(defaultValues, config);
 

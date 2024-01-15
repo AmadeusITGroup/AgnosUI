@@ -31,6 +31,14 @@ const defaultConfig: FloatingUIProps = {
 
 export type FloatingUI = ReturnType<typeof createFloatingUI>;
 
+/**
+ * Create a floating UI service.
+ *
+ * The returned service includes the patch method to patch the states, the stores to track the states and directives to apply.
+ *
+ * @param propsConfig - the props config for the floating UI service
+ * @returns the floating UI service
+ */
 export const createFloatingUI = (propsConfig?: PropsConfig<FloatingUIProps>) => {
 	const [{autoUpdateOptions$, computePositionOptions$: computePositionInputOptions$, arrowOptions$: arrowInputOptions$}, patch] = writablesForProps(
 		defaultConfig,

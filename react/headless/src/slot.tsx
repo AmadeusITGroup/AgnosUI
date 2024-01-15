@@ -22,6 +22,16 @@ const slotWrapper = <Props,>(slotContent: SlotFunction<Props>) => {
 /* eslint-disable-next-line @typescript-eslint/ban-types */
 const isReactComponent = <Props,>(item: Function): item is React.ComponentClass<Props, any> => item.prototype instanceof Component;
 
+/**
+ * The React Slot component, allowing to extensively customize widgets.
+ *
+ * The input slotContent can be a react component, a function or jsx.
+ *
+ * @param inputs - the react component inputs
+ * @param inputs.slotContent - the slot content
+ * @param inputs.props - the react component props
+ * @returns the slot component
+ */
 export const Slot = <Props extends object>({slotContent, props}: {slotContent: SlotContent<Props>; props: Props}) => {
 	const isFunction = typeof slotContent === 'function';
 	if (isFunction) {

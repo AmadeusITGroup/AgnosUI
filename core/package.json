@@ -128,9 +128,6 @@
 	"dependencies": {
 		"@amadeus-it-group/tansu": "0.0.24"
 	},
-	"devDependencies": {
-		"eslint-plugin-jsdoc": "^48.0.2"
-	},
 	"peerDependencies": {
 		"@floating-ui/dom": "*"
 	},
