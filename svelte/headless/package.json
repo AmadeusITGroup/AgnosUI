@@ -56,7 +56,7 @@
 		"check:svelte": "svelte-check --fail-on-warnings --output human-verbose"
 	},
 	"dependencies": {
-		"@agnos-ui/core": "",
+		"@agnos-ui/core": "0.0.1-alpha.6",
 		"@amadeus-it-group/tansu": "0.0.24"
 	},
 	"peerDependencies": {
@@ -65,5 +65,6 @@
 	"devDependencies": {
 		"@sveltejs/package": "^2.2.5"
 	},
-	"sideEffects": false
+	"sideEffects": false,
+	"version": "0.0.1-alpha.6"
 }
