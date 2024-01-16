@@ -1,7 +1,7 @@
 <script lang="ts">
-	import {getAlertDefaultConfig} from '@agnos-ui/core/components/alert';
+	import {getSliderDefaultConfig} from '@agnos-ui/core/components/slider';
 	import widgetDoc from '@agnos-ui/generated/doc/api.json?slider&extractApi';
 	import ApiDoc from '$lib/layout/doc/ApiDoc.svelte';
 </script>
 
-<ApiDoc doc={widgetDoc} defaultValues={getAlertDefaultConfig()} />
+<ApiDoc doc={widgetDoc} defaultValues={getSliderDefaultConfig()} />
