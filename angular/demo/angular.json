@@ -20,7 +20,7 @@
 						"index": "src/index.html",
 						"main": "src/main.ts",
 						"polyfills": "src/polyfills.ts",
-						"tsConfig": "tsconfig.json",
+						"tsConfig": "tsconfig.build.json",
 						"assets": ["src/agnosui-logo.svg", "src/assets"],
 						"styles": ["src/styles.css", "../../common/demo.scss", "@agnos-ui/style-bootstrap/scss/agnosui.scss"],
 						"scripts": [],
@@ -36,7 +36,7 @@
 								}
 							],
 							"outputHashing": "all",
-							"tsConfig": "tsconfig.dev.json"
+							"tsConfig": "tsconfig.json"
 						},
 						"production": {
 							"budgets": [
@@ -66,7 +66,7 @@
 							"extractLicenses": false,
 							"sourceMap": true,
 							"namedChunks": true,
-							"tsConfig": "tsconfig.dev.json"
+							"tsConfig": "tsconfig.json"
 						}
 					},
 					"defaultConfiguration": "production"

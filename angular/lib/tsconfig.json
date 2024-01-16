@@ -1,5 +1,10 @@
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
-	"extends": "../tsconfig.json",
-	"exclude": ["src/test.ts", "**/*.spec.ts"]
+	"extends": "./tsconfig.build.json",
+	"compilerOptions": {
+		"paths": {
+			"@agnos-ui/core/*": ["./core/src/*"],
+			"@agnos-ui/angular-headless": ["./angular/headless/src"]
+		}
+	}
 }

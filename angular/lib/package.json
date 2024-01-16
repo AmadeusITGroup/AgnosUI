@@ -23,7 +23,7 @@
 			"files": [
 				"src/**",
 				"!src/generated/**",
-				"tsconfig.json",
+				"tsconfig.build.json",
 				"angular.json",
 				"ng-package.json"
 			],

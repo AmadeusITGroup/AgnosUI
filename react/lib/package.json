@@ -58,7 +58,7 @@
 			]
 		},
 		"build:src": {
-			"command": "tsc",
+			"command": "tsc -p tsconfig.build.json",
 			"dependencies": [
 				"generate:exports",
 				"../headless:build"
@@ -66,7 +66,7 @@
 			"files": [
 				"src/**",
 				"!src/generated/**",
-				"tsconfig.json"
+				"tsconfig.build.json"
 			],
 			"output": [
 				"dist/**",

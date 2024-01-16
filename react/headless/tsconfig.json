@@ -1,9 +1,9 @@
 {
 	"extends": "../tsconfig.json",
 	"compilerOptions": {
-		"outDir": "dist",
-		"noEmit": false,
-		"declaration": true
+		"paths": {
+			"@agnos-ui/core/*": ["./core/src/*"]
+		}
 	},
 	"include": ["src"]
 }
