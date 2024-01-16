@@ -12,7 +12,7 @@ export type PortalDirectiveArg =
  * Creates a portal directive, allowing to attach content to any element.
  *
  * @param content - the content of the portal
- * @param newArg - the new directive args
+ * @param newArg - {@link PortalDirectiveArg} args
  * @returns the portal directive
  */
 export const portal: Directive<PortalDirectiveArg> = (content: HTMLElement, newArg: PortalDirectiveArg) => {

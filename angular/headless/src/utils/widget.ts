@@ -38,12 +38,12 @@ const createPatchSlots = <T extends object>(set: (object: Partial<T>) => void) =
 /**
  * Call a widget factory using provided configs.
  *
- * @param inputs - the inputs
- * @param inputs.factory - the widget factory to call
- * @param inputs.defaultConfig - the default config of the widget
- * @param inputs.widgetConfig - the config of the widget, overriding the defaultConfig
- * @param inputs.events - the events of the widget
- * @param inputs.afterInit - a callback to call after successful setup of the widget
+ * @param parameter - the parameter
+ * @param parameter.factory - the widget factory to call
+ * @param parameter.defaultConfig - the default config of the widget
+ * @param parameter.widgetConfig - the config of the widget, overriding the defaultConfig
+ * @param parameter.events - the events of the widget
+ * @param parameter.afterInit - a callback to call after successful setup of the widget
  * @returns the widget
  */
 export const callWidgetFactoryWithConfig = <W extends Widget>({

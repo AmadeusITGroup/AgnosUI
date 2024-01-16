@@ -265,7 +265,7 @@ export const writablesForProps = <T extends object>(
 };
 
 /**
- * Using input stores, builds an object containing the stores as readable and a global state.
+ * Using input stores, this function builds an object containing the stores as readable and a global state.
  *
  * @param inputStores - the input stores
  * @returns the object containing the stores as readable and the global state

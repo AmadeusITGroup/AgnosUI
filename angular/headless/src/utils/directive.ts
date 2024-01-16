@@ -10,7 +10,7 @@ export * from '@agnos-ui/core/utils/directive';
 // This is relevant especially if calling the directive changes variables used in a template.
 
 /**
- * Set up an agnos-ui directive as angular host directive.
+ * Set up an agnos-ui directive as an angular host directive.
  *
  * @param directive - the directive
  * @param params - the params to pass to the directive

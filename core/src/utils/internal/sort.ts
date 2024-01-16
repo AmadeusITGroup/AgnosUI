@@ -1,5 +1,5 @@
 /**
- * The default comparision between two inputs, using the javascript < and > signs.
+ * The default comparision between two values, using the javascript < and > signs.
  *
  * @param a - the first input
  * @param b - the second input
@@ -8,7 +8,7 @@
 export const compareDefault = (a: any, b: any) => (a < b ? -1 : a > b ? 1 : 0);
 
 /**
- * A comparision function between DOM elements, based on `Node.compareDocumentPosition`.
+ * A comparision function between DOM elements, based on [Node.compareDocumentPosition](https://developer.mozilla.org/fr/docs/Web/API/Node/compareDocumentPosition).
  *
  * @param element1 - the first node
  * @param element2 - the second node

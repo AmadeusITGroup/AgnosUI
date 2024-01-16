@@ -27,9 +27,9 @@ const isReactComponent = <Props,>(item: Function): item is React.ComponentClass<
  *
  * The input slotContent can be a react component, a function or jsx.
  *
- * @param inputs - the react component inputs
- * @param inputs.slotContent - the slot content
- * @param inputs.props - the react component props
+ * @param parameter - the react component parameter
+ * @param parameter.slotContent - the slot content
+ * @param parameter.props - the react component props
  * @returns the slot component
  */
 export const Slot = <Props extends object>({slotContent, props}: {slotContent: SlotContent<Props>; props: Props}) => {
