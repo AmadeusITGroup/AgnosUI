@@ -1,0 +1,7 @@
+import{s,n as m}from"../chunks/scheduler.MXnwm5xh.js";import{S as l,i,k as p,l as u,m as _,n as f,o as d,p as c}from"../chunks/index.MJGoEjPo.js";import{P as g}from"../chunks/Playground.SkqIuSUo.js";import{g as y,d as P}from"../chunks/api.8O5L_EWS.js";import{_ as r}from"../chunks/preload-helper.0HuHagjb.js";const v={componentName:"slider",sampleName:"playground",files:{angular:{entryPoint:"playground.component.ts",files:{"playground.component.ts":()=>r(()=>import("../chunks/playground.route.peO3pSy4.js"),__vite__mapDeps([]),import.meta.url).then(o=>o.default)}},react:{entryPoint:"playground.tsx",files:{"playground.tsx":()=>r(()=>import("../chunks/Playground.route.e7Qd1U4F.js"),__vite__mapDeps([]),import.meta.url).then(o=>o.default)}},svelte:{entryPoint:"playground.svelte",files:{"playground.svelte":()=>r(()=>import("../chunks/Playground.route.DRVazZFV.js"),__vite__mapDeps([]),import.meta.url).then(o=>o.default)}}}};function $(o){let t,n;return t=new g({props:{sample:v,config:y(),doc:P}}),{c(){p(t.$$.fragment)},l(e){u(t.$$.fragment,e)},m(e,a){_(t,e,a),n=!0},p:m,i(e){n||(f(t.$$.fragment,e),n=!0)},o(e){d(t.$$.fragment,e),n=!1},d(e){c(t,e)}}}class I extends l{constructor(t){super(),i(this,t,null,$,s,{})}}export{I as component};
+function __vite__mapDeps(indexes) {
+  if (!__vite__mapDeps.viteFileDeps) {
+    __vite__mapDeps.viteFileDeps = []
+  }
+  return indexes.map((i) => __vite__mapDeps.viteFileDeps[i])
+}
