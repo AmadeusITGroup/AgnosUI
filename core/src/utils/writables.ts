@@ -2,6 +2,12 @@ import {allowNull, clamp, isArray, isBoolean, isFunction, isHTMLElement, isNumbe
 import type {WritableWithDefaultOptions} from '../types';
 import {INVALID_VALUE} from '../types';
 
+/**
+ * Check if a value respects a provided type guard.
+ *
+ * @param filter - the guard function
+ * @returns a function that takes a value as input, checks if it respects the type guard and returns `INVALID_VALUE` otherwise
+ */
 export const testToNormalizeValue =
 	<T>(filter: (value: any) => value is T) =>
 	(value: any) =>

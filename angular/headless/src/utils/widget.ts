@@ -35,6 +35,17 @@ const createPatchSlots = <T extends object>(set: (object: Partial<T>) => void) =
 	};
 };
 
+/**
+ * Call a widget factory using provided configs.
+ *
+ * @param parameter - the parameter
+ * @param parameter.factory - the widget factory to call
+ * @param parameter.defaultConfig - the default config of the widget
+ * @param parameter.widgetConfig - the config of the widget, overriding the defaultConfig
+ * @param parameter.events - the events of the widget
+ * @param parameter.afterInit - a callback to call after successful setup of the widget
+ * @returns the widget
+ */
 export const callWidgetFactoryWithConfig = <W extends Widget>({
 	factory,
 	defaultConfig,
@@ -105,6 +116,10 @@ function patchSimpleChanges(patchFn: (obj: any) => void, changes: SimpleChanges)
  * Stores the result of the first call to the getter and returns that result directly for subsequent calls
  *
  * Applies to: class getters
+ *
+ * @param target - the target
+ * @param property - the property
+ * @param descriptor - the property descriptor
  */
 export const CachedProperty = (target: any, property: PropertyKey, descriptor: PropertyDescriptor) => {
 	const originalGet = descriptor.get;
@@ -131,10 +146,12 @@ export abstract class BaseWidgetDirective<W extends Widget> implements OnChanges
 		return this._widget.widget;
 	}
 
+	/** @inheritdoc */
 	ngOnChanges(changes: SimpleChanges): void {
 		patchSimpleChanges(this._widget.patch, changes);
 	}
 
+	/** @inheritdoc */
 	ngOnInit(): void {
 		this._widget.ngInit();
 	}

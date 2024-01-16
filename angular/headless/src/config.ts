@@ -15,6 +15,14 @@ export type WidgetsConfig = {
 };
 type AdaptParentConfig<Config> = (config: Partial2Levels<Config>) => Partial2Levels<Config>;
 
+/**
+ * A factory to create the utilities to allow widgets to be context-aware.
+ *
+ * It can be used when extending the core and creating new widgets.
+ *
+ * @param widgetsConfigInjectionToken - the widgets config injection token
+ * @returns the utilities to create / manage widgets and contexts
+ */
 export const widgetsConfigFactory = <Config extends {[widgetName: string]: object} = WidgetsConfig>(
 	widgetsConfigInjectionToken = new InjectionToken<WidgetsConfigStore<Config>>('widgetsConfig'),
 ) => {
@@ -38,37 +46,37 @@ export const widgetsConfigFactory = <Config extends {[widgetName: string]: objec
 	 * It is called in a tansu reactive context, so it can use any tansu store and will be called again if those stores change.
 	 * It is also called in an Angular injection context, so it can call the Angular inject function to get and use dependencies from the
 	 * Angular dependency injection system.
-
-	* @returns DI provider to be included a list of `providers` (for example at a component level or
-	* any other level of the Angular dependency injection system)
-	*
-	* @example
-	* ```typescript
-	* @Component({
-	*   // ...
-	*   providers: [
-	*     provideWidgetsConfig((parentConfig) => {
-	*       // first step configuration: transforms the parent configuration
-	*       parentConfig.rating = parentConfig.rating ?? {};
-	*       parentConfig.rating.className = `${parentConfig.rating.className ?? ''} my-rating-extra-class`
-	*       return parentConfig;
-	*     })
-	*   ]
-	* })
-	* class MyComponent {
-	*   widgetsConfig = injectWidgetsConfig();
-	*   constructor() {
-	*     this.widgetsConfig.set({
-	*       // second step configuration: overrides the parent configuration
-	*       rating: {
-	*         slotStar: MyCustomSlotStar
-	*       }
-	*     });
-	*   }
-	*   // ...
-	* }
-	* ```
-	*/
+	 *
+	 * @returns DI provider to be included a list of `providers` (for example at a component level or
+	 * any other level of the Angular dependency injection system)
+	 *
+	 * @example
+	 * ```typescript
+	 * @Component({
+	 *   // ...
+	 *   providers: [
+	 *     provideWidgetsConfig((parentConfig) => {
+	 *       // first step configuration: transforms the parent configuration
+	 *       parentConfig.rating = parentConfig.rating ?? {};
+	 *       parentConfig.rating.className = `${parentConfig.rating.className ?? ''} my-rating-extra-class`
+	 *       return parentConfig;
+	 *     })
+	 *   ]
+	 * })
+	 * class MyComponent {
+	 *   widgetsConfig = injectWidgetsConfig();
+	 *   constructor() {
+	 *     this.widgetsConfig.set({
+	 *       // second step configuration: overrides the parent configuration
+	 *       rating: {
+	 *         slotStar: MyCustomSlotStar
+	 *       }
+	 *     });
+	 *   }
+	 *   // ...
+	 * }
+	 * ```
+	 */
 	const provideWidgetsConfig = (adaptParentConfig?: AdaptParentConfig<Config>): FactoryProvider => ({
 		provide: widgetsConfigInjectionToken,
 		useFactory: (parent: WidgetsConfigStore<Config> | null) => {

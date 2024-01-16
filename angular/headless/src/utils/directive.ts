@@ -9,15 +9,22 @@ export * from '@agnos-ui/core/utils/directive';
 // or the corresponding issue with signals (https://github.com/angular/angular/issues/50320)
 // This is relevant especially if calling the directive changes variables used in a template.
 
-export const useDirectiveForHost = <T>(use?: AgnosUIDirective<T>, params?: T) => {
+/**
+ * Set up an agnos-ui directive as an angular host directive.
+ *
+ * @param directive - the directive
+ * @param params - the params to pass to the directive
+ * @returns the update function to change the directive or params
+ */
+export const useDirectiveForHost = <T>(directive?: AgnosUIDirective<T>, params?: T) => {
 	const ref = inject(ElementRef);
 
-	let instance = use?.(ref.nativeElement, params as T);
+	let instance = directive?.(ref.nativeElement, params as T);
 
 	async function destroyDirectiveInstance() {
 		const oldInstance = instance;
 		instance = undefined;
-		use = undefined;
+		directive = undefined;
 		if (oldInstance?.destroy) {
 			await 0;
 			oldInstance.destroy?.();
@@ -26,16 +33,16 @@ export const useDirectiveForHost = <T>(use?: AgnosUIDirective<T>, params?: T) =>
 
 	inject(DestroyRef).onDestroy(destroyDirectiveInstance);
 
-	async function update(newUse?: AgnosUIDirective<T>, newParams?: T) {
-		if (newUse !== use) {
+	async function update(newDirective?: AgnosUIDirective<T>, newParams?: T) {
+		if (newDirective !== directive) {
 			void destroyDirectiveInstance();
-			use = newUse;
+			directive = newDirective;
 			params = newParams;
-			if (newUse) {
+			if (newDirective) {
 				await 0;
 				// checks that the directive did not change while waiting:
-				if (use === newUse && !instance) {
-					instance = use(ref.nativeElement, params as T);
+				if (directive === newDirective && !instance) {
+					instance = directive(ref.nativeElement, params as T);
 				}
 			}
 		} else if (newParams != params) {
@@ -61,6 +68,7 @@ export class UseDirective<T> implements OnChanges {
 
 	#useDirective = useDirectiveForHost<T>();
 
+	/** @inheritdoc */
 	ngOnChanges() {
 		void this.#useDirective.update(this.use, this.params);
 	}

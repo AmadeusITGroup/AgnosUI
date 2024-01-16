@@ -145,6 +145,13 @@ export const toReadableStore = <T>(x: ReadableSignal<T> | T) => (isStore(x) ? x 
  */
 export const toWritableStore = <T>(x: WritableSignal<T> | T) => (isStore(x) ? x : writable(x));
 
+/**
+ * Extract and normalize config stores.
+ *
+ * @param keys - the keys of the stores to extract / normalize
+ * @param config - the config stores
+ * @returns the normalized config stores
+ */
 export const normalizeConfigStores = <T extends object>(
 	keys: (keyof T)[],
 	config?: ReadableSignal<Partial<T>> | ValuesOrReadableSignals<T>,
@@ -160,6 +167,15 @@ export const normalizeConfigStores = <T extends object>(
 	}
 	return res;
 };
+
+/**
+ * Merge two stores configs into one
+ *
+ * @param keys - the keys of the stores to extract and merge from the two provided configs
+ * @param config1 - the first config
+ * @param config2 - the second config
+ * @returns the merged config
+ */
 export const mergeConfigStores = <T extends object>(keys: (keyof T)[], config1?: ReadableSignals<T>, config2?: ReadableSignals<T>) => {
 	const res: ReadableSignals<T> = {};
 	for (const key of keys) {
@@ -248,6 +264,12 @@ export const writablesForProps = <T extends object>(
 	return [stores, createPatch(stores)];
 };
 
+/**
+ * Using input stores, this function builds an object containing the stores as readable and a global state.
+ *
+ * @param inputStores - the input stores
+ * @returns the object containing the stores as readable and the global state
+ */
 export const stateStores = <A extends {[key in `${string}$`]: ReadableSignal<any>}>(
 	inputStores: A,
 ): {state$: ReadableSignal<ToState<A>>; stores: {[key in `${string}$` & keyof A]: ReadableSignal<ValueOfStore<A[key]>>}} => {

@@ -8,7 +8,14 @@ export type PortalDirectiveArg =
 	| null
 	| undefined;
 
-export const portal: Directive<PortalDirectiveArg> = (content, newArg) => {
+/**
+ * Creates a portal directive, allowing to attach content to any element.
+ *
+ * @param content - the content of the portal
+ * @param newArg - {@link PortalDirectiveArg} args
+ * @returns the portal directive
+ */
+export const portal: Directive<PortalDirectiveArg> = (content: HTMLElement, newArg: PortalDirectiveArg) => {
 	let arg: PortalDirectiveArg;
 	let replaceComment: Comment | null | undefined;
 
