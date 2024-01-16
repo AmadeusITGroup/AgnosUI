@@ -2,10 +2,10 @@
 	// import {Alert} from '@agnos-ui/svelte';
 	import Svg from '$lib/layout/Svg.svelte';
 	import LandingCard from '$lib/snippets/landing-page/LandingCard.svelte';
-	import angularLogo from '../resources/logo-angular.svg?raw';
-	import reactLogo from '../resources/logo-react.svg?raw';
-	import svelteLogo from '../resources/logo-svelte.svg?raw';
-	import agnosUILogo from '../resources/agnosui-logo.svg?raw';
+	import angularLogo from '$resources/logo-angular.svg?raw';
+	import reactLogo from '$resources/logo-react.svg?raw';
+	import svelteLogo from '$resources/logo-svelte.svg?raw';
+	import agnosUILogo from '$resources/agnosui-logo.svg?raw';
 	import bullet from 'bootstrap-icons/icons/arrow-right-square-fill.svg?raw';
 </script>
 
@@ -36,7 +36,7 @@
 		<div class="card-text row">
 			<div class="col-12 col-sm-4">
 				<a
-					href="angular/getting-started/installation"
+					href="docs/angular/getting-started/installation"
 					class="btn-doc d-flex align-items-center justify-content-center"
 					aria-label="link to angular examples"
 					title="Angular"
@@ -47,7 +47,7 @@
 			</div>
 			<div class="col-12 col-sm-4">
 				<a
-					href="react/getting-started/installation"
+					href="docs/react/getting-started/installation"
 					class="btn-doc d-flex align-items-center justify-content-center"
 					aria-label="link to angular examples"
 					title="Angular"
@@ -58,7 +58,7 @@
 			</div>
 			<div class="col-12 col-sm-4">
 				<a
-					href="svelte/getting-started/installation"
+					href="docs/svelte/getting-started/installation"
 					class="btn-doc d-flex align-items-center justify-content-center"
 					aria-label="link to angular examples"
 					title="Svelte"
@@ -95,7 +95,7 @@
 </footer>
 
 <style lang="scss">
-	@import '../../../common/variables';
+	@import '@agnos-ui/common/variables';
 
 	@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
 	$font-name: 'Kanit';

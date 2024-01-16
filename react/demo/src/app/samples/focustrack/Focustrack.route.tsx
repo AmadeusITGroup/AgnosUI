@@ -32,7 +32,7 @@ const Focustrack = () => {
 					Focus in container
 				</label>
 			</div>
-			<label htmlFor="activeElement" className="form-label">
+			<label htmlFor="activeElementHistory" className="form-label">
 				Active element history:
 			</label>
 			<textarea className="form-control mb-2" id="activeElementHistory" value={JSON.stringify(activeElements)} readOnly />

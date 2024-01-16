@@ -9,7 +9,10 @@
 	import {beforeNavigate, onNavigate} from '$app/navigation';
 	import {updated} from '$app/stores';
 	import {onMount} from 'svelte';
-	import MobileMenu from './[framework]/menu/MobileMenu.svelte';
+	import MobileMenu from './menu/MobileMenu.svelte';
+	import MainSection from '$lib/layout/MainSection.svelte';
+	import SideMenu from './menu/SideMenu.svelte';
+	import TOC from './menu/TOC.svelte';
 
 	const onServiceWorkerUpdate = () => {
 		void updated.check();
@@ -70,12 +73,30 @@
 		<MobileMenu {isMainPage} />
 	</div>
 	<div class="demo-main d-flex flex-column">
-		<slot />
+		{#if isMainPage}
+			<slot />
+		{:else}
+			<div class="container-xxl">
+				<div class="row flex-wrap flex-sm-nowrap align-content-between">
+					<aside class="demo-sidebar d-none d-md-flex col-auto flex-column flex-shrink-0 align-items-center align-items-sm-start">
+						<SideMenu />
+					</aside>
+					<div class="pb-4 col">
+						<MainSection>
+							<slot />
+						</MainSection>
+					</div>
+					<div class="demo-toc col-auto d-none d-lg-flex">
+						<TOC />
+					</div>
+				</div>
+			</div>
+		{/if}
 	</div>
 </div>
 
 <style lang="scss">
-	@import '../../../common/variables';
+	@import '@agnos-ui/common/variables';
 
 	.agnos-ui {
 		width: 100vw;
@@ -106,5 +127,20 @@
 		grid-area: main;
 		overflow: auto;
 		scrollbar-gutter: stable;
+	}
+
+	.demo-sidebar {
+		position: sticky;
+		top: 0;
+		height: calc(100vh - 6rem);
+	}
+
+	.demo-toc {
+		position: sticky;
+		top: 0;
+		display: block !important;
+		min-width: 250px;
+		height: calc(100vh - 6rem);
+		overflow-y: auto;
 	}
 </style>
