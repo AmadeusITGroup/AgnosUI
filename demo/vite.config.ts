@@ -36,7 +36,7 @@ export default defineConfig({
 		port: 4000,
 		proxy,
 		fs: {
-			allow: [path.join(__dirname, 'generated')],
+			allow: [path.join(__dirname, 'generated'), path.join(__dirname, '../docs')],
 		},
 	},
 	build: {

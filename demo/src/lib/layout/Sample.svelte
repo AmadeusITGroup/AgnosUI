@@ -12,7 +12,7 @@
 	import {tooltip} from '$lib/tooltip/tooltip';
 	import openLink from 'bootstrap-icons/icons/box-arrow-up-right.svg?raw';
 	import codeSvg from 'bootstrap-icons/icons/code.svg?raw';
-	import stackblitz from '../../resources/icons/stackblitz.svg?raw';
+	import stackblitz from '$resources/icons/stackblitz.svg?raw';
 	import type {Frameworks} from '../stores';
 	import {pathToRoot$, selectedFramework$} from '../stores';
 	import Lazy from './Lazy.svelte';

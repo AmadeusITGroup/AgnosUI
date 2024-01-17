@@ -1,0 +1,1 @@
+npm install @agnos-ui/angular

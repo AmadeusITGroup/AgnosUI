@@ -1,9 +1,16 @@
 <script lang="ts">
-	import {pathToRoot$, selectedFramework$} from '../stores';
+	import {pathToRoot$, selectedFramework$, selectedTabName$} from '../stores';
+	import {page} from '$app/stores';
+	import {getTitle} from '../../app';
+
 	export let title: string;
-	export let tabs: {title: string; key: string; path: string}[];
-	export let tab = '';
+
+	$: tabs = $page.data.tabs ?? [];
 </script>
+
+<svelte:head>
+	<title>{getTitle(title, $selectedFramework$)}</title>
+</svelte:head>
 
 <header class="bg-light pt-4 pb-5 px-4 px-lg-5 d-flex mb-4 align-items-center title">
 	<div class="row mb-4 align-items-center w-100">
@@ -11,10 +18,10 @@
 	</div>
 	<ul class="nav-tabs px-4 px-lg-5 content-tabset justify-content-start nav" role="tablist">
 		{#each tabs as { title, key, path }}
-			{@const isActive = tab === key}
+			{@const isActive = $selectedTabName$ === key}
 			<li class="nav-item" role="presentation">
 				<a
-					href={`${$pathToRoot$}${$selectedFramework$}${path}`}
+					href={`${$pathToRoot$}docs/${$selectedFramework$}${path}`}
 					role="tab"
 					class="nav-link link-body-emphasis"
 					aria-selected={isActive}

@@ -19,7 +19,7 @@ import {Component} from '@angular/core';
 				<input class="form-check-input" type="checkbox" id="containerHasFocus" [checked]="hasFocusApi.hasFocus$ | async" disabled />
 				<label class="form-check-label" for="containerHasFocus">Focus in container</label>
 			</div>
-			<label for="activeElement" class="form-label">Active element history:</label>
+			<label for="activeElementHistory" class="form-label">Active element history:</label>
 			<textarea class="form-control mb-2" id="activeElementHistory" readonly>{{ activeElementsJson }}</textarea>
 			<button class="btn btn-primary" (click)="clear()">Clear</button>
 		</div>

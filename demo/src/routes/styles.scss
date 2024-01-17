@@ -1,4 +1,4 @@
-@import '../../../common/variables';
+@import '@agnos-ui/common/variables';
 
 body {
 	min-height: 100vh;
@@ -23,6 +23,12 @@ main {
 }
 .hljs-built_in {
 	color: #bf5308 !important;
+}
+.hljs-symbol {
+	color: #d33948 !important;
+}
+.hljs-variable {
+	color: #d33948 !important;
 }
 
 .demo-sample {
