@@ -2,15 +2,15 @@ import {computed, get} from '@amadeus-it-group/tansu';
 import {browser} from '$app/environment';
 import {page} from '$app/stores';
 import {createIntersection} from '@agnos-ui/core/services/intersection';
-import {resolveRoute} from '$app/paths';
-
-export const resolvedRoute$ = computed(() => {
-	const $page = get(page);
-	return $page.route.id ? resolveRoute($page.route.id, $page.params) : './';
-});
 
 // Return how deep the current route is compared to base
-export const routeLevel$ = computed(() => resolvedRoute$().split('/').length - 2);
+export const routeLevel$ = computed(() => {
+	const $page = get(page);
+	if (!$page.route.id) {
+		throw new Error('Page error');
+	}
+	return $page.route.id.split('/').length - 2 + Object.values($page.params).reduce((pV, cur) => pV + cur.split('/').length - 1, 0);
+});
 
 // Return the url relative path to root, ex './', '../' or '../..'
 export const relativePathToRoot$ = computed(() => {
@@ -46,7 +46,11 @@ export const selectedTabName$ = computed(() => {
 	return match?.[1] || 'examples';
 });
 
-const frameworkKeyRegExp = /^\/docs\/[a-z]*\//;
-export const frameworkLessUrl$ = computed(() => resolvedRoute$().replace(frameworkKeyRegExp, ''));
+const frameworkKeyRegExp = /\/docs\/[a-z]*\//;
+export const frameworkLessUrl$ = computed(() => {
+	const $page = get(page);
+	const match = $page.url.pathname.match(frameworkKeyRegExp);
+	return match ? $page.url.pathname.substring($page.url.pathname.indexOf(match[0]) + match[0].length) : '/';
+});
 
 export const intersectionApi = createIntersection();
