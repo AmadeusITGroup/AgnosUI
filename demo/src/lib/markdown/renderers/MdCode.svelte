@@ -20,14 +20,14 @@
 	async function getCode(text: string, selectedFramework: string, lang: string) {
 		if (lang !== 'sample' && text.trim().match(/^\{[a-z-]+\}$/) && extensions.has(lang)) {
 			const codeKey = text.trim().slice(1, -1);
-			code = (await import(`$lib/markdown/code/${codeKey}/${codeKey}-${selectedFramework}.${extensions.get(lang)}?raw`)).default;
+			code = (await import(`../../../../../docs/code/${codeKey}/${codeKey}-${selectedFramework}.${extensions.get(lang)}?raw`)).default;
 		} else {
 			code = text.trim();
 		}
 	}
 	async function getSample(text: string, lang: string) {
 		if (lang === 'sample') {
-			const match = text.trim().match(/^\{([^:]+):([a-z-/]+):(\d+)\}$/);
+			const match = text.trim().match(/^\{([^:]+):([a-zA-Z-/]+):(\d+)\}$/);
 			if (match) {
 				title = match[1];
 				const sampleKey = match[2];

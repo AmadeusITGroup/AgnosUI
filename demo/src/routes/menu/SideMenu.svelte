@@ -1,6 +1,6 @@
 <script lang="ts">
 	import {page} from '$app/stores';
-	import {pathToRoot$, pathToChildRoot$, frameworkLessUrl$, selectedFramework$} from '$lib/stores';
+	import {pathToRoot$, frameworkLessUrl$, selectedFramework$} from '$lib/stores';
 
 	import './menu.scss';
 
@@ -39,12 +39,12 @@
 		<strong class="d-flex w-100 align-items-center fw-semibold">{title}</strong>
 		<div class="my-2">
 			{#each submenu as { label, path, subpath }}
-				{@const isCurrent = $page.route.id?.includes(path)}
+				{@const isCurrent = $page.url.pathname?.includes(path)}
 				<a
 					class="menu-item menu-item-sidenav"
 					class:active={isCurrent}
 					aria-current={isCurrent ? 'page' : undefined}
-					href="{$pathToChildRoot$}{path}{subpath}"
+					href="{$pathToRoot$}{path}{subpath}"
 				>
 					{label}
 				</a>

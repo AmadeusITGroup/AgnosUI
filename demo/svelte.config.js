@@ -12,6 +12,7 @@ export const alias = {
 	'@agnos-ui/doc': path.join(__dirname, '../scripts/doc'),
 	'@agnos-ui/generated': path.join(__dirname, './generated'),
 	$resources: path.join(__dirname, './src/resources'),
+	$docs: path.join(__dirname, '../docs'),
 };
 if (process.env.NODE_ENV === 'development') {
 	const components = globSync('*', {cwd: path.join(__dirname, '../core/src/components'), ignore: '*.ts'});
