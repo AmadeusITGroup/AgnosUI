@@ -7,6 +7,7 @@ export const load = async ({params}) => {
 	else {
 		return {
 			source,
+			slug: params.slug,
 		};
 	}
 };
