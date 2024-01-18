@@ -12,6 +12,8 @@ const NavmanagerSampleLine = ({text}: {text: string}) => {
 				ArrowRight: navManager.focusRight,
 				Home: navManager.focusFirst,
 				End: navManager.focusLast,
+				'Meta+ArrowLeft': navManager.focusFirstLeft,
+				'Meta+ArrowRight': navManager.focusFirstRight,
 			},
 		}),
 		[navManager],

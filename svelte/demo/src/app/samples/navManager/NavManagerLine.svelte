@@ -2,7 +2,7 @@
 	import type {NavManagerItemConfig} from '@agnos-ui/svelte/services/navManager';
 	import {createNavManager} from '@agnos-ui/svelte/services/navManager';
 
-	const {directive, focusLeft, focusRight, focusFirst, focusLast} = createNavManager();
+	const {directive, focusLeft, focusRight, focusFirst, focusLast, focusFirstLeft, focusFirstRight} = createNavManager();
 
 	const navManagerConfig: NavManagerItemConfig = {
 		keys: {
@@ -10,6 +10,8 @@
 			ArrowRight: focusRight,
 			Home: focusFirst,
 			End: focusLast,
+			'Meta+ArrowLeft': focusFirstLeft,
+			'Meta+ArrowRight': focusFirstRight,
 		},
 	};
 
