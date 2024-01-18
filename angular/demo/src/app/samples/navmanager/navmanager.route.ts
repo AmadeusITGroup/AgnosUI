@@ -41,6 +41,8 @@ export class NavmanagerLineComponent {
 			ArrowRight: this.navManager.focusRight,
 			Home: this.navManager.focusFirst,
 			End: this.navManager.focusLast,
+			'Meta+ArrowLeft': this.navManager.focusFirstLeft,
+			'Meta+ArrowRight': this.navManager.focusFirstRight,
 		},
 	};
 }

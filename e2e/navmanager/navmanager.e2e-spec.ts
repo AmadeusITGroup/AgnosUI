@@ -34,7 +34,7 @@ for (const sample of ['navmanager', 'navmanagerwithselector']) {
 		];
 
 		for (const {name, backwardKey, forwardKey, getLocator, keyPresses} of useCases) {
-			test(name, async ({page}) => {
+			test(name, async ({page, browserName}) => {
 				const navManagerPO = new NavManagerPO(page);
 				const navManagerLine = new NavManagerLinePO(getLocator(navManagerPO));
 				await navManagerLine.waitLoaded();
@@ -99,21 +99,29 @@ for (const sample of ['navmanager', 'navmanagerwithselector']) {
 					await expect.poll(() => getCaretPosition(page)).toEqual([0, 0]);
 				});
 
-				await test.step('fast forward', async () => {
-					await page.keyboard.press('End');
+				if (process.platform === 'darwin' && browserName === 'firefox' && backwardKey === 'ArrowRight') {
+					// Firefox has a bug with RTL on Mac: Meta+ArrowLeft and Meta+ArrowRight are swapped
+					// skip this test in this case
+					return;
+				}
+				const useMeta = process.platform === 'darwin' && browserName != 'chromium';
+				const fastForwardKey = useMeta ? `Meta+${forwardKey}` : 'End';
+				await test.step(`fast forward (${fastForwardKey})`, async () => {
+					await page.keyboard.press(fastForwardKey);
 					await expect.poll(() => getCaretPosition(page)).toEqual([value.length, value.length]);
 					await expect(currentItem).toBeFocused();
-					await page.keyboard.press('End');
+					await page.keyboard.press(fastForwardKey);
 					currentItem = items[4];
 					await expect(currentItem).toBeFocused();
 					await expect.poll(() => getCaretPosition(page)).toEqual([value.length, value.length]);
 				});
 
-				await test.step('fast backward', async () => {
-					await page.keyboard.press('Home');
+				const fastBackwardKey = useMeta ? `Meta+${backwardKey}` : 'Home';
+				await test.step(`fast backward (${fastBackwardKey})`, async () => {
+					await page.keyboard.press(fastBackwardKey);
 					await expect.poll(() => getCaretPosition(page)).toEqual([0, 0]);
 					await expect(currentItem).toBeFocused();
-					await page.keyboard.press('Home');
+					await page.keyboard.press(fastBackwardKey);
 					currentItem = items[0];
 					await expect(currentItem).toBeFocused();
 					await expect.poll(() => getCaretPosition(page)).toEqual([0, 0]);

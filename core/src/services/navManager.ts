@@ -200,6 +200,8 @@ export const createNavManager = () => {
 	const focusLast = ({event}: {event?: KeyboardEvent} = {}) => preventDefaultIfRelevant(focusIndex(elementsInDomOrder$().length - 1, -1), event);
 	const focusLeft = (...args: Parameters<typeof focusNext>) => (ancestorDirection() === 'rtl' ? focusNext : focusPrevious)(...args);
 	const focusRight = (...args: Parameters<typeof focusNext>) => (ancestorDirection() === 'rtl' ? focusPrevious : focusNext)(...args);
+	const focusFirstLeft = (...args: Parameters<typeof focusLast>) => (ancestorDirection() === 'rtl' ? focusLast : focusFirst)(...args);
+	const focusFirstRight = (...args: Parameters<typeof focusLast>) => (ancestorDirection() === 'rtl' ? focusFirst : focusLast)(...args);
 
 	const navManager = {
 		elementsInDomOrder$,
@@ -208,6 +210,8 @@ export const createNavManager = () => {
 		focusPrevious,
 		focusNext,
 		focusFirst,
+		focusFirstLeft,
+		focusFirstRight,
 		focusLast,
 		focusLeft,
 		focusRight,
