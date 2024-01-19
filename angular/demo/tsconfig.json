@@ -1,9 +1,8 @@
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
-	"extends": "../tsconfig.json",
+	"extends": "./tsconfig.build.json",
 	"compilerOptions": {
 		"outDir": "./dist/out-tsc",
-		"types": ["@types/webpack-env"],
 		"paths": {
 			"@agnos-ui/core": ["./core/src"],
 			"@agnos-ui/core/*": ["./core/src/*"],
@@ -13,5 +12,6 @@
 		}
 	},
 	"files": ["src/main.ts", "src/polyfills.ts", "src/environments/environment.prod.ts"],
-	"include": ["src/**/*.d.ts", "src/app/samples/**/*.route.ts", "src/app/samples/**/*.component.ts"]
+	"include": ["src/**/*.d.ts", "src/app/samples/**/*.route.ts", "src/app/samples/**/*.component.ts"],
+	"exclude": []
 }
