@@ -21,12 +21,17 @@
 			"rules": {
 				"@typescript-eslint/no-var-requires": "off"
 			}
+		},
+		{
+			"files": ["*.ts"],
+			"rules": {
+				"@typescript-eslint/no-floating-promises": "error",
+				"@typescript-eslint/no-misused-promises": ["error", {"checksVoidReturn": false}]
+			}
 		}
 	],
 	"rules": {
 		"prefer-const": ["error", {"destructuring": "all"}],
-		"@typescript-eslint/no-floating-promises": "error",
-		"@typescript-eslint/no-misused-promises": ["error", {"checksVoidReturn": false}],
 		"@typescript-eslint/no-unused-vars": ["error", {"vars": "all", "args": "none", "ignoreRestSiblings": false}],
 		"@typescript-eslint/no-non-null-assertion": "off",
 		"@typescript-eslint/no-explicit-any": "off",
