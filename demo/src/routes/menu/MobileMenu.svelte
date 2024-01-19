@@ -1,112 +1,66 @@
 <script lang="ts">
-	import menuIcon from '$resources/icons/menu.svg?raw';
-	import chevronRight from 'bootstrap-icons/icons/chevron-right.svg?raw';
+	import threeDots from 'bootstrap-icons/icons/three-dots-vertical.svg?raw';
+	import github from 'bootstrap-icons/icons/github.svg?raw';
+	import twitter from 'bootstrap-icons/icons/twitter-x.svg?raw';
+	import MobileDialog from './MobileDialog.svelte';
 	import Svg from '$lib/layout/Svg.svelte';
-	import SideMenu from './SideMenu.svelte';
-	import TOC from './TOC.svelte';
+	import {pathToRoot$} from '$lib/stores';
+	import {page} from '$app/stores';
 
-	let isMenuExpanded = false;
-	let isOnThisPageExpanded = false;
-	let dialog: HTMLDialogElement;
-	export let isMainPage = true;
+	let open = false;
 
-	$: dialogTitle = isMenuExpanded ? 'Menu' : isOnThisPageExpanded ? 'On this page' : '';
-	$: isOpen = isMenuExpanded || isOnThisPageExpanded;
-	$: if (isOpen) {
-		dialog?.showModal();
-	}
-
-	function onDialogClose() {
-		isMenuExpanded = isOnThisPageExpanded = false;
-	}
-
-	function onDialogClick(e: any) {
-		const tagName = (e.target as HTMLElement).tagName.toLowerCase();
-		if (tagName === 'button' || tagName === 'a') {
-			dialog.close();
-		}
+	function onClose() {
+		open = false;
 	}
 </script>
 
-<div class="d-flex align-items-center justify-content-between">
-	<button
-		class="text-dark d-flex align-items-center btn btn-link link-underline link-underline-opacity-0"
-		aria-expanded={isMenuExpanded}
-		on:click={() => {
-			isMenuExpanded = true;
-		}}
-	>
-		<Svg svg={menuIcon} className="icon-20 me-1" /><span class="menu-text">Menu</span>
-	</button>
-	{#if !isMainPage}
-		<button
-			class="text-dark d-flex align-items-center btn btn-link link-underline link-underline-opacity-0"
-			aria-expanded={isOnThisPageExpanded}
-			on:click={() => {
-				isOnThisPageExpanded = true;
-			}}
-		>
-			<span class="menu-text">On this page</span>
-			<Svg svg={chevronRight} className="icon-20 me-1" />
-		</button>
-	{/if}
-</div>
+<button
+	class="text-white btn d-flex align-items-center pe-0"
+	aria-expanded={open}
+	on:click={() => {
+		open = true;
+	}}
+>
+	<Svg svg={threeDots} className="icon-20 me-1" />
+</button>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-<dialog bind:this={dialog} on:close={onDialogClose} on:click={onDialogClick}>
-	<div class="menu-title text-center border-bottom pb-2">
-		<span class="menu-title-text">{dialogTitle}</span>
-		<button type="button" class="btn-close pb-3 pe-3" aria-label="Close menu" />
+<MobileDialog title="AgnosUI" {open} on:close={onClose}>
+	<nav class="navbar navbar-light flex-column align-items-stretch">
+		<a
+			class="nav-item nav-link"
+			href="{$pathToRoot$}docs/angular/getting-started/installation"
+			class:active={$page.route.id?.startsWith('/docs/')}
+			aria-current={$page.route.id?.startsWith('/docs/') ? 'page' : undefined}
+		>
+			Documentation
+		</a>
+		<hr />
+		<a
+			class="nav-item nav-link"
+			href="{$pathToRoot$}blog/2024-01-12"
+			class:active={$page.route.id?.startsWith('/blog/')}
+			aria-current={$page.route.id?.startsWith('/blog/') ? 'page' : undefined}
+		>
+			Blog
+		</a>
+		<hr />
+	</nav>
+
+	<div class="d-flex justify-content-center">
+		<a class="nav-link" href="https://github.com/AmadeusITGroup/AgnosUI" aria-label="link to GitHub repository" target="_blank">
+			<Svg className="icon-24 align-middle" svg={github} />
+		</a>
+		<a class="nav-link ms-3" href="https://twitter.com/AgnosUI" aria-label="link to twitter / x account" target="_blank">
+			<Svg className="icon-24 align-middle" svg={twitter} />
+		</a>
+		<div class="ms-3">
+			<span class="mt-4">v{import.meta.env.AGNOSUI_VERSION}</span>
+		</div>
 	</div>
-	{#if isMenuExpanded}
-		<SideMenu />
-	{:else}
-		<TOC />
-	{/if}
-</dialog>
+</MobileDialog>
 
 <style lang="scss">
-	$negativeMargin: -16px;
-	$titleHeight: 3rem;
-
-	.menu-title {
-		position: sticky;
-		top: 0;
-		height: $titleHeight;
-		background-color: var(--bs-body-bg);
-		margin: 0 $negativeMargin 1rem $negativeMargin;
-		z-index: 10;
-	}
-
-	.menu-title-text {
-		line-height: $titleHeight;
-	}
-
-	dialog {
-		width: 100vw;
-		max-width: 100vw;
-		height: 100vh;
-		height: 100dvh;
-		max-height: 100vh;
-		position: fixed;
-		padding-top: 0;
-		top: 0;
-		left: 0;
-		border: none;
-		bottom: 0;
-		right: 0;
-		background-color: var(--bs-body-bg);
-		z-index: 1000;
-
-		:global(.demo-links-link) {
-			display: block !important;
-		}
-	}
-
-	.btn-close {
-		position: absolute;
-		top: 0.3rem;
-		right: 10px;
+	.nav-link.active {
+		font-weight: 600;
 	}
 </style>

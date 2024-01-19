@@ -93,7 +93,7 @@
 			<button
 				class="btn btn-sm btn-link m-1 p-0"
 				aria-label="Show or hide the code"
-				use:tooltip={{content: 'Toogle code'}}
+				use:tooltip={{content: 'Toggle code'}}
 				on:click={() => (showCode = !showCode)}><Svg className="icon-24 align-middle" svg={codeSvg} /></button
 			>
 			<button

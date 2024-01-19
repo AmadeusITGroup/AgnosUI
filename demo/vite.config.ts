@@ -66,6 +66,8 @@ export default defineConfig({
 			'highlight.js/lib/languages/xml',
 			'highlight.js/lib/languages/bash',
 			'@floating-ui/dom',
+			'svelte-markdown',
+			'marked',
 		],
 	},
 });

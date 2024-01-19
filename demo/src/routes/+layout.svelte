@@ -2,13 +2,13 @@
 	import Svg from '$lib/layout/Svg.svelte';
 	import github from 'bootstrap-icons/icons/github.svg?raw';
 	import twitter from 'bootstrap-icons/icons/twitter-x.svg?raw';
-	import coneStriped from 'bootstrap-icons/icons/cone-striped.svg?raw';
 	import 'bootstrap/dist/css/bootstrap.css';
 	import {/*canonicalURL$,*/ pathToRoot$, routeLevel$} from '$lib/stores';
 	import './styles.scss';
 	import {beforeNavigate, onNavigate} from '$app/navigation';
 	import {updated} from '$app/stores';
 	import {onMount} from 'svelte';
+	import MobileSubMenu from './menu/MobileSubMenu.svelte';
 	import MobileMenu from './menu/MobileMenu.svelte';
 	import MainSection from '$lib/layout/MainSection.svelte';
 	import SideMenu from './menu/SideMenu.svelte';
@@ -54,11 +54,10 @@
 	<nav class="demo-nav-top navbar navbar-dark bg-primary bg-gradient">
 		<div class="container-fluid">
 			<a class="navbar-brand" href={$pathToRoot$}> AgnosUI </a>
-			<div class="d-flex align-items-center">
-				<span class="badge bg-warning text-bg-warning d-none d-sm-block">Work In Progress</span>
-				<span class="badge rounded-pill bg-warning text-bg-warning d-block d-sm-none" aria-label="Work In Progress">
-					<Svg className="icon-20 align-middle" svg={coneStriped} />
-				</span>
+			<div class="align-items-center d-none d-md-flex">
+				<div class="d-flex align-items-center"></div>
+				<a class="nav-link text-white ms-3" href="{$pathToRoot$}docs/angular/getting-started/installation">Documentation</a>
+				<a class="nav-link text-white ms-3" href="{$pathToRoot$}blog/2024-01-12">Blog</a>
 				<a class="nav-link text-white ms-3" href="https://github.com/AmadeusITGroup/AgnosUI" aria-label="link to GitHub repository" target="_blank">
 					<Svg className="icon-24 align-middle" svg={github} />
 				</a>
@@ -67,11 +66,16 @@
 				</a>
 				<span class="ms-3 text-white">v{import.meta.env.AGNOSUI_VERSION}</span>
 			</div>
+			<div class="d-block d-md-none">
+				<MobileMenu />
+			</div>
 		</div>
 	</nav>
-	<div class="demo-mobile-menu d-block d-md-none">
-		<MobileMenu {isMainPage} />
-	</div>
+	{#if !isMainPage}
+		<div class="demo-mobile-menu d-block d-md-none">
+			<MobileSubMenu />
+		</div>
+	{/if}
 	<div class="demo-main d-flex flex-column">
 		{#if isMainPage}
 			<slot />
@@ -86,7 +90,7 @@
 							<slot />
 						</MainSection>
 					</div>
-					<div class="demo-toc col-auto d-none d-lg-flex">
+					<div class="demo-toc col-auto d-none d-md-flex">
 						<TOC />
 					</div>
 				</div>
@@ -138,7 +142,6 @@
 	.demo-toc {
 		position: sticky;
 		top: 0;
-		display: block !important;
 		min-width: 250px;
 		height: calc(100vh - 6rem);
 		overflow-y: auto;
