@@ -5,8 +5,6 @@ import {extendWidgetProps} from '../../services/extendWidget';
 import {typeString} from '../../utils/writables';
 import type {ConfigValidator, Widget, WidgetFactory, WidgetSlotContext} from '../../types';
 
-export * from './common';
-
 export type AlertContext = WidgetSlotContext<AlertWidget>;
 
 export interface AlertExtraProps {

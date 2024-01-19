@@ -35,7 +35,6 @@
 			],
 			"files": [
 				"src/**",
-				"tsconfig.json",
 				"vite.config.ts"
 			],
 			"output": [
@@ -52,10 +51,10 @@
 			]
 		},
 		"check": {
-			"command": "tsc",
+			"command": "tsc -p tsconfig.check.json",
 			"files": [
 				"src/**",
-				"tsconfig.json"
+				"tsconfig.check.json"
 			],
 			"output": [],
 			"dependencies": [

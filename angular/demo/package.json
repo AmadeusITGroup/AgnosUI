@@ -15,7 +15,6 @@
 		"dev": {
 			"command": "ng serve",
 			"dependencies": [
-				"build",
 				"../headless:generate:exports"
 			],
 			"service": true
@@ -23,7 +22,6 @@
 		"dev:coverage": {
 			"command": "node --import @agnos-ui/code-coverage/interceptReadFile ../../node_modules/@angular/cli/bin/ng.js serve",
 			"dependencies": [
-				"build",
 				"../../code-coverage:build",
 				"../headless:generate:exports"
 			],
@@ -38,7 +36,7 @@
 			"files": [
 				"src/**",
 				"angular.json",
-				"tsconfig.json",
+				"tsconfig.build.json",
 				"webpack.cjs"
 			],
 			"output": [

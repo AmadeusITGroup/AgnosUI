@@ -36,7 +36,6 @@
 			],
 			"files": [
 				"src/**",
-				"tsconfig.json",
 				"vite.config.ts"
 			],
 			"output": [

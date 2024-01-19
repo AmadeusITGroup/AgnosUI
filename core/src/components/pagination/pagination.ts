@@ -7,8 +7,6 @@ import type {ConfigValidator, PropsConfig, Widget, SlotContent, WidgetSlotContex
 import {noop} from '../../utils/internal/func';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 
-export * from './bootstrap';
-
 /**
  * A type for the slot context of the pagination widget
  */

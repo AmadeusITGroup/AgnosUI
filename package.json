@@ -63,7 +63,7 @@
 		"format:fix": "prettier . \"**/*.svelte\" --write --cache .",
 		"format:check": "prettier . \"**/*.svelte\" --check --cache .",
 		"lint": "wireit",
-		"dev": "node scripts/run.js dev",
+		"dev": "wireit",
 		"dev:coverage": "node scripts/run.js dev:coverage",
 		"preview": "node scripts/run.js preview",
 		"e2e": "wireit",
@@ -74,6 +74,11 @@
 		"prepare": "wireit"
 	},
 	"wireit": {
+		"dev": {
+			"dependencies": [
+				"./demo:dev"
+			]
+		},
 		"build:ci": {
 			"dependencies": [
 				"./code-coverage:build",

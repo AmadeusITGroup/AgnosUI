@@ -1,9 +1,9 @@
 {
-	"extends": "../tsconfig.json",
+	"extends": "./tsconfig.build.json",
 	"compilerOptions": {
-		"outDir": "dist",
-		"noEmit": false,
-		"declaration": true
-	},
-	"include": ["src"]
+		"paths": {
+			"@agnos-ui/core/*": ["./core/src/*"],
+			"@agnos-ui/react-headless/*": ["./react/headless/src/*", "./react/headless/src/generated/*"]
+		}
+	}
 }
