@@ -5,6 +5,7 @@ import type {AxeResults} from 'axe-core';
 import {globSync} from 'glob';
 import path from 'path';
 import {normalizePath} from './utils';
+import {SelectPO} from '@agnos-ui/page-objects';
 
 const pathToFrameworkDir = normalizePath(path.join(__dirname, '../demo/src/routes'));
 const allRoutes = globSync(`${pathToFrameworkDir}/**/+page.svelte`).map((route) =>
@@ -33,4 +34,24 @@ test.describe.parallel('Demo Website', () => {
 			expect((await analyze(page, svelteRoute)).violations).toEqual([]);
 		});
 	}
+
+	const frameworks = [
+		{name: 'Angular', url: '/angular/samples/'},
+		{name: 'React', url: '/react/samples/'},
+		{name: 'Svelte', url: '/svelte/samples/app/'},
+	];
+
+	test.describe.parallel('Select tests', () => {
+		frameworks.forEach(({name, url}) => {
+			test(`[${name}] Select accessibility `, async ({page}) => {
+				const route = `${url}#/select/default`;
+				await page.goto(route);
+				const selectPO = new SelectPO(page);
+				const locatorInput = selectPO.locatorInput;
+				await locatorInput.fill('a');
+				await locatorInput.press('Enter');
+				expect((await analyze(page, route)).violations).toEqual([]);
+			});
+		});
+	});
 });

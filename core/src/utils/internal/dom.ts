@@ -58,3 +58,18 @@ export const removeClasses = (element: HTMLElement, classes?: string[]) => {
 		element.classList.remove(...classes);
 	}
 };
+
+/**
+ * Adds an event listener to the specified element.
+ *
+ * @param element - The HTML element to which the event listener will be added.
+ * @param type - A string representing the event type to listen for.
+ * @param fn - The event listener function or object.
+ * @returns A function that removes the event listener from the element.
+ */
+export function addEvent(element: Element, type: string, fn: EventListenerOrEventListenerObject) {
+	element.addEventListener(type, fn);
+	return function () {
+		element.removeEventListener(type, fn);
+	};
+}

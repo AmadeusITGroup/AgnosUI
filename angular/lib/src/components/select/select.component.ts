@@ -38,11 +38,10 @@ export class SelectItemDirective<Item> {
 	host: {
 		'[class]': '"au-select dropdown border border-1 p-1 mb-3 d-block" + state().className',
 	},
-
 	template: `
 		@if (state(); as state) {
 			<div
-				[auUse]="_widget.directives.hasFocusDirective"
+				[auUse]="controlContainerDirective"
 				role="combobox"
 				class="d-flex align-items-center flex-wrap"
 				aria-haspopup="listbox"
@@ -50,7 +49,12 @@ export class SelectItemDirective<Item> {
 			>
 				@if (state.selectedContexts; as selectedContexts) {
 					@for (itemContext of selectedContexts; track itemCtxTrackBy($index, itemContext)) {
-						<div class="au-select-badge me-1" [class]="state.badgeClassName">
+						<div
+							tabindex="-1"
+							class="au-select-badge me-1"
+							[class]="state.badgeClassName"
+							(keydown)="_widget.actions.onBadgeKeydown($event, itemContext.item)"
+						>
 							<ng-template [auSlot]="state.slotBadgeLabel" [auSlotProps]="{state, widget, itemContext}"></ng-template>
 						</div>
 					}
@@ -65,8 +69,8 @@ export class SelectItemDirective<Item> {
 					autoCorrect="off"
 					autoCapitalize="none"
 					autoComplete="off"
-					(keydown)="_widget.actions.onInputKeydown($event)"
 					(input)="_widget.actions.onInput($event)"
+					(keydown)="_widget.actions.onInputKeydown($event)"
 				/>
 			</div>
 			@if (state.open && state.visibleItems.length) {
@@ -78,8 +82,7 @@ export class SelectItemDirective<Item> {
 				>
 					@for (itemContext of state.visibleItems; track itemCtxTrackBy($index, itemContext)) {
 						<li
-							class="au-select-item dropdown-item position-relative"
-							[class.bg-light]="itemContext === state.highlighted"
+							[class]="'au-select-item dropdown-item position-relative' + (itemContext === state.highlighted ? ' bg-primary text-light' : '')"
 							[class.selected]="itemContext.selected"
 							(click)="widget.api.toggleItem(itemContext.item)"
 						>
@@ -185,6 +188,11 @@ export class SelectComponent<Item> extends BaseWidgetDirective<SelectWidget<Item
 	 */
 	@Input('auBadgeClassName') badgeClassName: string | undefined;
 
+	/**
+	 * Retrieves navigable elements within an HTML element containing badges and the input.
+	 */
+	@Input('auNavSelector') navSelector: ((node: HTMLElement) => NodeListOf<HTMLSpanElement | HTMLInputElement>) | undefined;
+
 	readonly _widget = callWidgetFactory<SelectWidget<Item>>({
 		factory: createSelect,
 		widgetName: 'select',
@@ -201,6 +209,11 @@ export class SelectComponent<Item> extends BaseWidgetDirective<SelectWidget<Item
 	@CachedProperty
 	get menuDirective() {
 		return mergeDirectives(this._widget.directives.hasFocusDirective, this._widget.directives.floatingDirective);
+	}
+
+	@CachedProperty
+	get controlContainerDirective() {
+		return mergeDirectives(this._widget.directives.hasFocusDirective, this._widget.directives.inputContainerDirective);
 	}
 
 	itemCtxTrackBy(_: number, itemContext: ItemContext<Item>) {

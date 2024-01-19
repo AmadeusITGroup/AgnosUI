@@ -5,7 +5,10 @@ import type {FloatingUI} from '../../services/floatingUI';
 import {createFloatingUI} from '../../services/floatingUI';
 import type {HasFocus} from '../../services/focustrack';
 import {createHasFocus} from '../../services/focustrack';
-import type {PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../../types';
+import type {NavManagerItemConfig} from '../../services/navManager';
+import {createNavManager} from '../../services/navManager';
+import type {Directive, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../../types';
+import {bindDirective} from '../../utils/directive';
 import {noop} from '../../utils/internal/func';
 import {bindableDerived, stateStores, writablesForProps} from '../../utils/stores';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
@@ -103,6 +106,13 @@ export interface SelectProps<T> extends SelectCommonPropsAndState<T> {
 	 * By default, the item is returned
 	 */
 	itemIdFn(item: T): string;
+
+	/**
+	 * Retrieves navigable elements within an HTML element containing badges and the input.
+	 *
+	 * @param node - HTMLElement that contains the badges and the input
+	 */
+	navSelector(node: HTMLElement): NodeListOf<HTMLSpanElement | HTMLInputElement>;
 
 	// Event callbacks
 
@@ -207,28 +217,6 @@ export interface SelectApi<Item> {
 	highlightLast(): void;
 
 	/**
-	 * Focus the provided item among the selected list.
-	 * The focus feature is designed to know what item must be focused in the UI, i.e. among the badge elements.
-	 */
-	focus(item: Item): void;
-	/**
-	 * Focus the first element
-	 */
-	focusFirst(): void;
-	/**
-	 * Focus the previous element. If no element was focused before the call, nothing happens.
-	 */
-	focusPrevious(): void;
-	/**
-	 * Focus the next element. If no element was focused before the call, nothing happens.
-	 */
-	focusNext(): void;
-	/**
-	 * Focus the last element. If no element was focused before the call, nothing happens.
-	 */
-	focusLast(): void;
-
-	/**
 	 * Select the provided item.
 	 * The selected list is used to
 	 * @param item - the item to select
@@ -276,9 +264,14 @@ export interface SelectDirectives {
 	 * A directive to be applied to the input group element serves as the base for menu positioning
 	 */
 	referenceDirective: FloatingUI['directives']['referenceDirective'];
+
+	/**
+	 * A directive to be applied to the element that contains the badges and the input
+	 */
+	inputContainerDirective: Directive;
 }
 
-export interface SelectActions {
+export interface SelectActions<Item> {
 	// Dom methods
 
 	/**
@@ -287,13 +280,26 @@ export interface SelectActions {
 	onInput: (e: {target: any}) => void;
 
 	/**
-	 * Method to be plugged to on an keydown event, in order to control the keyboard interactions with the highlighted item.
+	 * Method to be attached to the node element to close a badge on click.
+	 */
+	onRemoveBadgeClick: (event: MouseEvent, item: Item) => void;
+
+	/**
+	 * Method to be plugged to on an keydown event of the main input, in order to control the keyboard interactions with the highlighted item.
 	 * It manages arrow keys to move the highlighted item, or enter to toggle the item.
 	 */
-	onInputKeydown: (e: any) => void;
+	onInputKeydown: (event: any) => void;
+
+	/**
+	 * Method to be plugged to on an keydown event of a badge container, in order to manage main actions on badges.
+	 *
+	 * @param event - keyboard event
+	 * @param item - corresponding item
+	 */
+	onBadgeKeydown: (event: any, item: Item) => void;
 }
 
-export type SelectWidget<Item> = Widget<SelectProps<Item>, SelectState<Item>, SelectApi<Item>, SelectActions, SelectDirectives>;
+export type SelectWidget<Item> = Widget<SelectProps<Item>, SelectState<Item>, SelectApi<Item>, SelectActions<Item>, SelectDirectives>;
 
 const defaultItemId = (item: any) => '' + item;
 
@@ -306,6 +312,7 @@ export const defaultConfig: SelectProps<any> = {
 	filterText: '',
 	loading: false,
 	selected: [],
+	navSelector: (node: HTMLElement) => node.querySelectorAll('.au-select-badge,input'),
 	itemIdFn: defaultItemId,
 	onOpenChange: noop,
 	onFilterTextChange: noop,
@@ -344,6 +351,7 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 			onFilterTextChange$,
 			onSelectedChange$,
 			allowedPlacements$,
+			navSelector$,
 			...stateProps
 		},
 		patch,
@@ -433,6 +441,21 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 		},
 	});
 
+	const {directive: navDirective, refreshElements, focusFirst, focusLast, focusLeft, focusRight} = createNavManager();
+
+	const navManagerConfig$ = computed(
+		() =>
+			<NavManagerItemConfig>{
+				keys: {
+					Home: focusFirst,
+					End: focusLast,
+					ArrowLeft: focusLeft,
+					ArrowRight: focusRight,
+				},
+				selector: navSelector$(),
+			},
+	);
+
 	const widget: SelectWidget<Item> = {
 		...stateStores({
 			visibleItems$,
@@ -512,22 +535,6 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 				highlightedIndex$.set(-1);
 			},
 
-			focus(item: Item) {
-				// FIXME: not implemented yet!
-			},
-			focusFirst() {
-				// FIXME: not implemented yet!
-			},
-			focusPrevious() {
-				// FIXME: not implemented yet!
-			},
-			focusNext() {
-				// FIXME: not implemented yet!
-			},
-			focusLast() {
-				// FIXME: not implemented yet!
-			},
-
 			open: () => widget.api.toggle(true),
 			close: () => widget.api.toggle(false),
 			toggle(isOpen?: boolean) {
@@ -538,6 +545,7 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 			hasFocusDirective,
 			floatingDirective,
 			referenceDirective,
+			inputContainerDirective: bindDirective(navDirective, navManagerConfig$),
 		},
 		actions: {
 			onInput({target}: {target: HTMLInputElement}) {
@@ -547,6 +555,18 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 					filterText: value,
 				});
 			},
+
+			onRemoveBadgeClick(event: any, item: Item) {
+				const element = event.target;
+				refreshElements();
+				widget.api.unselect(item);
+				// Waiting for refresh by the framework, to have the elements inside or outside the dom
+				setTimeout(() => {
+					focusLeft({event, referenceElement: element}) || focusRight({event, referenceElement: element});
+				});
+				event.preventDefault();
+			},
+
 			onInputKeydown(e: KeyboardEvent) {
 				const {ctrlKey, key} = e;
 
@@ -588,6 +608,20 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 				}
 				if (keyManaged) {
 					e.preventDefault();
+				}
+			},
+			onBadgeKeydown(event: KeyboardEvent, item: Item) {
+				let keyManaged = false;
+				switch (event.key) {
+					case 'Backspace':
+					case 'Delete': {
+						widget.actions.onRemoveBadgeClick(event as any, item);
+						keyManaged = true;
+						break;
+					}
+				}
+				if (keyManaged) {
+					event.preventDefault();
 				}
 			},
 		},

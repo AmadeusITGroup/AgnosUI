@@ -35,5 +35,6 @@ const isFocusableByTagName: Record<string, (element: any) => boolean> = {
  * @param element - element to test
  * @returns true if the element is programmatically focusable.
  */
-export const isFocusable = (element: HTMLElement) =>
-	!isInertOrInvisible(element) && (isFocusableByTagName[element.tagName] ?? isFocusableOtherTags)(element);
+export const isFocusable = (element: HTMLElement) => {
+	return document.contains(element) && !isInertOrInvisible(element) && (isFocusableByTagName[element.tagName] ?? isFocusableOtherTags)(element);
+};

@@ -51,17 +51,25 @@
 			visibleItems$,
 		},
 		state$,
-		actions: {onInputKeydown, onInput},
-		directives: {floatingDirective, hasFocusDirective, referenceDirective},
+		actions: {onInput, onInputKeydown, onBadgeKeydown},
+		directives: {floatingDirective, hasFocusDirective, referenceDirective, inputContainerDirective},
 	} = widget;
 	$: widget.patchChangedProps($$props);
 </script>
 
 <div use:referenceDirective class="au-select dropdown border border-1 p-1 mb-3 d-block {$className$}">
 	<!-- svelte-ignore a11y-role-has-required-aria-props -->
-	<div use:hasFocusDirective role="combobox" class="d-flex align-items-center flex-wrap" aria-haspopup="listbox" aria-expanded={$open$}>
+	<div
+		use:hasFocusDirective
+		use:inputContainerDirective
+		role="combobox"
+		class="d-flex align-items-center flex-wrap"
+		aria-haspopup="listbox"
+		aria-expanded={$open$}
+	>
 		{#each $selectedContexts$ as itemContext (itemContext.id)}
-			<div class={`au-select-badge me-1 ${$badgeClassName$}`}>
+			<!-- svelte-ignore a11y-no-static-element-interactions -->
+			<div tabindex="-1" class={`au-select-badge me-1 ${$badgeClassName$}`} on:keydown={(e) => onBadgeKeydown(e, itemContext.item)}>
 				<Slot slotContent={$slotBadgeLabel$} props={{state: $state$, widget, itemContext}} let:component let:props>
 					<slot slot="slot" name="badgeLabel" let:props {...props} />
 					<svelte:component this={component} {...props}>
@@ -81,8 +89,8 @@
 			autoCorrect="off"
 			autoCapitalize="none"
 			autoComplete="off"
-			on:keydown={onInputKeydown}
 			on:input={onInput}
+			on:keydown={onInputKeydown}
 		/>
 	</div>
 	{#if $open$ && $visibleItems$.length > 0}
@@ -95,10 +103,12 @@
 			on:mousedown|preventDefault
 		>
 			{#each $visibleItems$ as itemContext (itemContext.id)}
+				{@const isHighlighted = itemContext === $highlighted$}
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<li
 					class={`au-select-item dropdown-item position-relative ${$menuItemClassName$}`}
-					class:bg-light={itemContext === $highlighted$}
+					class:bg-primary={isHighlighted}
+					class:text-light={isHighlighted}
 					class:selected={itemContext.selected}
 					on:click={() => widget.api.toggleItem(itemContext.item)}
 				>
