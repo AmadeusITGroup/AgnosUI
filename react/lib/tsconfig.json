@@ -3,7 +3,7 @@
 	"compilerOptions": {
 		"paths": {
 			"@agnos-ui/core/*": ["./core/src/*"],
-			"@agnos-ui/react-headless/*": ["./react/headless/src/*", "./react/headless/src/generated/*"]
-		}
-	}
+			"@agnos-ui/react-headless/*": ["./react/headless/src/*", "./react/headless/src/generated/*"],
+		},
+	},
 }

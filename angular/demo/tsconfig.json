@@ -8,10 +8,10 @@
 			"@agnos-ui/core/*": ["./core/src/*"],
 			"@agnos-ui/angular-headless": ["./angular/headless/src"],
 			"@agnos-ui/angular": ["./angular/lib/src"],
-			"@agnos-ui/common/*": ["./common/*"]
-		}
+			"@agnos-ui/common/*": ["./common/*"],
+		},
 	},
 	"files": ["src/main.ts", "src/polyfills.ts", "src/environments/environment.prod.ts"],
 	"include": ["src/**/*.d.ts", "src/app/samples/**/*.route.ts", "src/app/samples/**/*.component.ts"],
-	"exclude": []
+	"exclude": [],
 }

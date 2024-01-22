@@ -3,8 +3,8 @@
 	"compilerOptions": {
 		"noEmit": false,
 		"outDir": "dist",
-		"declaration": true
+		"declaration": true,
 	},
 	"include": ["src"],
-	"exclude": ["**/*.spec.ts", "**/__mocks__/**"]
+	"exclude": ["**/*.spec.ts", "**/__mocks__/**"],
 }
