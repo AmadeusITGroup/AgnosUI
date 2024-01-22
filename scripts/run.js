@@ -1,7 +1,7 @@
 const path = require('path');
 
 function run() {
-	const runAll = require('npm-run-all');
+	const runAll = require('npm-run-all2');
 
 	const [, , ...args] = process.argv;
 
