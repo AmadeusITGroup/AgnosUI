@@ -10,4 +10,4 @@
 	$: void getSrc(href);
 </script>
 
-<img {src} {title} alt={text} />
+<img class="w-100" {src} {title} alt={text} />
