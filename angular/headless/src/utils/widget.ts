@@ -117,13 +117,13 @@ function patchSimpleChanges(patchFn: (obj: any) => void, changes: SimpleChanges)
  *
  * Applies to: class getters
  *
- * @param target - the target
- * @param property - the property
- * @param descriptor - the property descriptor
+ * @param originalGet - the original getter
+ * @param context - information about the property
+ * @returns the modified getter
  */
-export const CachedProperty = (target: any, property: PropertyKey, descriptor: PropertyDescriptor) => {
-	const originalGet = descriptor.get;
-	descriptor.get = function (this: any) {
+export const CachedProperty = <T, U>(originalGet: (this: U) => T, context: ClassGetterDecoratorContext) => {
+	const property = context.name;
+	return function (this: U) {
 		const value = originalGet?.call(this);
 		Object.defineProperty(this, property, {value, writable: false});
 		return value;

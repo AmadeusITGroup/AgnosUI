@@ -13,7 +13,6 @@
 		"sourceMap": true,
 		"declaration": false,
 		"downlevelIteration": true,
-		"experimentalDecorators": true,
 		"importHelpers": true,
 		"target": "ES2022",
 		"module": "es2020",

@@ -1,6 +1,5 @@
 {
 	"compilerOptions": {
-		"experimentalDecorators": true,
 		"baseUrl": "./",
 		"target": "es2022",
 		"module": "esnext",
