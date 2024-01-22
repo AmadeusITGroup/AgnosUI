@@ -4,7 +4,7 @@
 		"paths": {
 			"@agnos-ui/core/*": ["./core/src/*"],
 			"@agnos-ui/react-headless/*": ["./react/headless/src/*", "./react/headless/src/generated/*"],
-			"@agnos-ui/react/*": ["./react/lib/src/*", "./react/lib/src/generated/*"]
-		}
-	}
+			"@agnos-ui/react/*": ["./react/lib/src/*", "./react/lib/src/generated/*"],
+		},
+	},
 }

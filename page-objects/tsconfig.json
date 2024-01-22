@@ -2,8 +2,8 @@
 	"extends": "../tsconfig.json",
 	"compilerOptions": {
 		"paths": {
-			"@agnos-ui/base-po": ["./base-po/lib"]
-		}
+			"@agnos-ui/base-po": ["./base-po/lib"],
+		},
 	},
-	"exclude": ["dist"]
+	"exclude": ["dist"],
 }
