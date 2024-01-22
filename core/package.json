@@ -126,7 +126,7 @@
 		}
 	},
 	"dependencies": {
-		"@amadeus-it-group/tansu": "0.0.24"
+		"@amadeus-it-group/tansu": "1.0.0"
 	},
 	"peerDependencies": {
 		"@floating-ui/dom": "*"

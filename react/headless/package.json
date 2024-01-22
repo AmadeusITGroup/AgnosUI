@@ -93,7 +93,7 @@
 	},
 	"dependencies": {
 		"@agnos-ui/core": "",
-		"@amadeus-it-group/tansu": "0.0.24",
+		"@amadeus-it-group/tansu": "1.0.0",
 		"classnames": "^2.5.1"
 	},
 	"peerDependencies": {

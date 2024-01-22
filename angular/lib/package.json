@@ -61,7 +61,7 @@
 	"dependencies": {
 		"@agnos-ui/angular-headless": "",
 		"@agnos-ui/style-bootstrap": "",
-		"@amadeus-it-group/tansu": "0.0.24",
+		"@amadeus-it-group/tansu": "1.0.0",
 		"tslib": "^2.6.2"
 	},
 	"devDependencies": {

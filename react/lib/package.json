@@ -96,7 +96,7 @@
 	"dependencies": {
 		"@agnos-ui/react-headless": "",
 		"@agnos-ui/style-bootstrap": "",
-		"@amadeus-it-group/tansu": "0.0.24",
+		"@amadeus-it-group/tansu": "1.0.0",
 		"classnames": "^2.5.1"
 	},
 	"peerDependencies": {
