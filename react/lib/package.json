@@ -94,8 +94,8 @@
 		}
 	},
 	"dependencies": {
-		"@agnos-ui/react-headless": "",
-		"@agnos-ui/style-bootstrap": "",
+		"@agnos-ui/react-headless": "0.0.1-alpha.7",
+		"@agnos-ui/style-bootstrap": "0.0.1-alpha.7",
 		"@amadeus-it-group/tansu": "1.0.0",
 		"classnames": "^2.5.1"
 	},
@@ -103,5 +103,6 @@
 		"react": "*",
 		"react-dom": "*"
 	},
-	"sideEffects": false
+	"sideEffects": false,
+	"version": "0.0.1-alpha.7"
 }

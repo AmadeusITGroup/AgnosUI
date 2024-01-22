@@ -131,5 +131,6 @@
 	"peerDependencies": {
 		"@floating-ui/dom": "*"
 	},
-	"sideEffects": false
+	"sideEffects": false,
+	"version": "0.0.1-alpha.7"
 }
