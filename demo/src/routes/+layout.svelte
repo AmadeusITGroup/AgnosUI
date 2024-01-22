@@ -6,7 +6,7 @@
 	import {/*canonicalURL$,*/ pathToRoot$, routeLevel$} from '$lib/stores';
 	import './styles.scss';
 	import {beforeNavigate, onNavigate} from '$app/navigation';
-	import {updated} from '$app/stores';
+	import {page, updated} from '$app/stores';
 	import {onMount} from 'svelte';
 	import MobileSubMenu from './menu/MobileSubMenu.svelte';
 	import MobileMenu from './menu/MobileMenu.svelte';
@@ -56,8 +56,18 @@
 			<a class="navbar-brand" href={$pathToRoot$}> AgnosUI </a>
 			<div class="align-items-center d-none d-md-flex">
 				<div class="d-flex align-items-center"></div>
-				<a class="nav-link text-white ms-3" href="{$pathToRoot$}docs/angular/getting-started/installation">Documentation</a>
-				<a class="nav-link text-white ms-3" href="{$pathToRoot$}blog/2024-01-12">Blog</a>
+				<a
+					class="nav-link text-white ms-3"
+					href="{$pathToRoot$}docs/angular/getting-started/installation"
+					class:active={$page.route.id?.startsWith('/docs/')}
+					aria-current={$page.route.id?.startsWith('/docs/') ? 'page' : undefined}>Documentation</a
+				>
+				<a
+					class="nav-link text-white ms-3"
+					href="{$pathToRoot$}blog/2024-01-12"
+					class:active={$page.route.id?.startsWith('/blog/')}
+					aria-current={$page.route.id?.startsWith('/blog/') ? 'page' : undefined}>Blog</a
+				>
 				<a class="nav-link text-white ms-3" href="https://github.com/AmadeusITGroup/AgnosUI" aria-label="link to GitHub repository" target="_blank">
 					<Svg className="icon-24 align-middle" svg={github} />
 				</a>
@@ -101,6 +111,10 @@
 
 <style lang="scss">
 	@import '@agnos-ui/common/variables';
+
+	.nav-link.active {
+		font-weight: 600;
+	}
 
 	.agnos-ui {
 		width: 100vw;
