@@ -76,7 +76,7 @@
 		"@agnos-ui/react-headless": "*",
 		"@agnos-ui/react": "*",
 		"@agnos-ui/style-bootstrap": "*",
-		"@amadeus-it-group/tansu": "0.0.24",
+		"@amadeus-it-group/tansu": "1.0.0",
 		"@floating-ui/dom": "^1.5.4",
 		"classnames": "^2.5.1"
 	},

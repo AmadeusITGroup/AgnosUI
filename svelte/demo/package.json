@@ -64,7 +64,7 @@
 		}
 	},
 	"dependencies": {
-		"@amadeus-it-group/tansu": "0.0.24",
+		"@amadeus-it-group/tansu": "1.0.0",
 		"@floating-ui/dom": "^1.5.4"
 	},
 	"devDependencies": {
