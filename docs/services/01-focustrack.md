@@ -27,8 +27,8 @@ The event listeners are removed when the number of listeners fall to 0.
 `createHasFocus` is a factory function that creates an object conforming to the `HasFocus` interface.
 It provides:
 
-- `directive` that can be apply to an element to track the focus of the element itself and all its descendent.
-- `hasFocus$` signal, that internally uses the `activeElement$` signal to determine if the active element is one of the elements with the directive or any of their descendants.
+- `directive` that can be apply to elements to track if the focus is on one of the elements or on one of their descendent.
+- `hasFocus$` signal (that internally uses the `activeElement$` signal) that say if the focus is actually among the elements (or their descendent) targeted by the directive.
 
 ## Usage
 
@@ -59,8 +59,10 @@ import {createHasFocus} from '@agnos-ui/core';
 
 const {directive, hasFocus$} = createHasFocus();
 
-// Apply the directive to specific elements (specific to frameworks)
-// ...
+// Apply the directive to specific elements
+// (We provide utilities to apply this in the different framework context too)
+var elementWhereToTrack = document.getElementById('id');
+const instance = directive(elementWhereToTrack);
 
 // Subscribe to the hasFocus$ signal
 const unsubscribe = hasFocus$.subscribe((hasFocus) => {
@@ -69,9 +71,9 @@ const unsubscribe = hasFocus$.subscribe((hasFocus) => {
 
 // Cleanup
 unsubscribe();
+instance?.destroy();
 ```
 
 ## Notes
 
-- The `hasFocus$` signal provides a reactive way to determine if the active element has focus on the elements specified by the directive.
 - The code ensures proper cleanup by removing event listeners when no longer needed.
