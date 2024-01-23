@@ -1,0 +1,1 @@
+import{S as o,i as r,s as i,k as c,g as l,x as a,h as u}from"./index-Ag8v5rxj.js";function f(s){let t;return{c(){t=c("Sample not found")},m(e,n){l(e,t,n)},p:a,i:a,o:a,d(e){e&&u(t)}}}class m extends o{constructor(t){super(),r(this,t,null,f,i,{})}}export{m as default};
