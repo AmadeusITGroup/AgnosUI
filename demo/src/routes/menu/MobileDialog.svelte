@@ -16,7 +16,8 @@
 
 	function onDialogClick(e: any) {
 		const tagName = (e.target as HTMLElement).tagName.toLowerCase();
-		if (tagName === 'button' || tagName === 'a') {
+		const isHeader = (e.target as HTMLElement).className.includes('btn-header');
+		if ((tagName === 'button' && !isHeader) || tagName === 'a') {
 			dialog.close();
 		}
 	}
