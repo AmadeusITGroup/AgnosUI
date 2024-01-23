@@ -10,5 +10,15 @@ export const load = async () => {
 				path: '/components/modal/playground#{"props":{"visible":true,"slotDefault":"Dialog content","slotTitle":"Dialog"}}',
 			},
 		],
+		prev: {
+			title: 'Alert',
+			slug: 'components/alert/',
+			subpath: 'examples',
+		},
+		next: {
+			title: 'Pagination',
+			slug: 'components/pagination/',
+			subpath: 'examples',
+		},
 	};
 };

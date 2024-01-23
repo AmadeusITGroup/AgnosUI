@@ -92,7 +92,7 @@
 		{:else}
 			<div class="container-xxl">
 				<div class="row flex-wrap flex-sm-nowrap align-content-between">
-					<aside class="demo-sidebar d-none d-md-flex align-items-center align-items-sm-start col-auto side-menu">
+					<aside class="demo-sidebar d-none d-md-flex align-items-center align-items-sm-start col-auto side-menu me-3">
 						<SideMenu />
 					</aside>
 					<div class="pb-4 col">
@@ -100,7 +100,7 @@
 							<slot />
 						</MainSection>
 					</div>
-					<div class="demo-toc d-none d-md-flex col-auto side-menu">
+					<div class="demo-toc d-none d-md-flex col-auto side-menu me-auto">
 						<TOC />
 					</div>
 				</div>
@@ -150,14 +150,16 @@
 	.demo-sidebar {
 		position: sticky;
 		top: 0;
-		height: calc(100vh - 6rem);
+		height: calc(100vh - 60px);
+		overflow-y: auto;
+		min-width: 220px;
 	}
 
 	.demo-toc {
 		position: sticky;
 		top: 0;
-		min-width: 250px;
-		height: calc(100vh - 6rem);
+		min-width: 220px;
+		height: calc(100vh - 60px);
 		overflow-y: auto;
 	}
 </style>

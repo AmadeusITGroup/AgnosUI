@@ -6,5 +6,15 @@ export const load = async () => {
 			{title: 'Api', key: 'api', path: '/components/accordion/api'},
 			{title: 'Playground', key: 'playground', path: '/components/accordion/playground#'},
 		],
+		prev: {
+			title: 'Bootstrap flavor: Extending',
+			slug: 'bootstrap-flavor/extending',
+			subpath: '',
+		},
+		next: {
+			title: 'Alert',
+			slug: 'components/alert/',
+			subpath: 'examples',
+		},
 	};
 };

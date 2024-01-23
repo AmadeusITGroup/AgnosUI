@@ -8,4 +8,4 @@
 	<meta name="description" content={`Documentation for ${data.slug.replace('/', ' ').replace('-', ' ')}`} />
 </svelte:head>
 
-<Markdown source={data.source} />
+<Markdown source={data.content} />
