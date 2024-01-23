@@ -1,8 +1,8 @@
 import {readable, writable} from '@amadeus-it-group/tansu';
+import {ChangeDetectionStrategy, Component, NgZone, effect} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 import {beforeEach, describe, expect, it} from 'vitest';
 import {toAngularSignal} from './stores';
-import {Component, NgZone, effect} from '@angular/core';
 
 describe('toAngularSignal', () => {
 	let log: string[] = [];
@@ -60,9 +60,21 @@ describe('toAngularSignal', () => {
 
 	@Component({
 		standalone: true,
+		changeDetection: ChangeDetectionStrategy.OnPush,
 		template: `{{ mySignal() }}`,
 	})
-	class MyTestComponent {
+	class MyTestWithoutEffectComponent {
+		myStore = writable(1);
+		mySignal = toAngularSignal(this.myStore);
+		changes: number[] = [];
+	}
+
+	@Component({
+		standalone: true,
+		changeDetection: ChangeDetectionStrategy.OnPush,
+		template: `{{ mySignal() }}`,
+	})
+	class MyTestWithEffectComponent {
 		myStore = writable(1);
 		mySignal = toAngularSignal(this.myStore);
 		changes = (() => {
@@ -74,33 +86,47 @@ describe('toAngularSignal', () => {
 		})();
 	}
 
-	it('works in a template (inside Angular zone)', () => {
-		const fixture = TestBed.createComponent(MyTestComponent);
-		fixture.autoDetectChanges();
-		expect(fixture.nativeElement.textContent).toBe('1');
-		expect(fixture.componentInstance.changes).toStrictEqual([1]);
-		const zone = TestBed.inject(NgZone);
-		zone.run(() => {
-			expect(NgZone.isInAngularZone()).toBeTruthy();
+	for (const MyComponent of [MyTestWithEffectComponent, MyTestWithoutEffectComponent]) {
+		it(`works in ${MyComponent.name} (inside Angular zone)`, async () => {
+			const fixture = TestBed.createComponent(MyComponent);
+			fixture.autoDetectChanges();
+			await fixture.whenStable();
+			expect(fixture.nativeElement.textContent).toBe('1');
+			if (MyComponent === MyTestWithEffectComponent) {
+				expect(fixture.componentInstance.changes).toStrictEqual([1]);
+			}
+			const zone = TestBed.inject(NgZone);
+			expect(NgZone.isInAngularZone()).toBeFalsy();
+			zone.run(() => {
+				expect(NgZone.isInAngularZone()).toBeTruthy();
+				fixture.componentInstance.myStore.set(2);
+				fixture.componentInstance.myStore.set(3);
+			});
+			await fixture.whenStable();
+			expect(fixture.nativeElement.textContent).toBe('3');
+			if (MyComponent === MyTestWithEffectComponent) {
+				expect(fixture.componentInstance.changes).toStrictEqual([1, 3]);
+			}
+			fixture.destroy();
+		});
+
+		it(`works in ${MyComponent.name} (outside Angular zone)`, async () => {
+			const fixture = TestBed.createComponent(MyComponent);
+			fixture.autoDetectChanges();
+			await fixture.whenStable();
+			expect(fixture.nativeElement.textContent).toBe('1');
+			if (MyComponent === MyTestWithEffectComponent) {
+				expect(fixture.componentInstance.changes).toStrictEqual([1]);
+			}
+			expect(NgZone.isInAngularZone()).toBeFalsy();
 			fixture.componentInstance.myStore.set(2);
 			fixture.componentInstance.myStore.set(3);
+			await fixture.whenStable();
+			expect(fixture.nativeElement.textContent).toBe('3');
+			if (MyComponent === MyTestWithEffectComponent) {
+				expect(fixture.componentInstance.changes).toStrictEqual([1, 3]);
+			}
+			fixture.destroy();
 		});
-		expect(fixture.nativeElement.textContent).toBe('3');
-		expect(fixture.componentInstance.changes).toStrictEqual([1, 3]);
-		fixture.destroy();
-	});
-
-	it('works in a template (outside Angular zone)', async () => {
-		const fixture = TestBed.createComponent(MyTestComponent);
-		fixture.autoDetectChanges();
-		expect(fixture.nativeElement.textContent).toBe('1');
-		expect(fixture.componentInstance.changes).toStrictEqual([1]);
-		expect(NgZone.isInAngularZone()).toBeFalsy();
-		fixture.componentInstance.myStore.set(2);
-		fixture.componentInstance.myStore.set(3);
-		await 0;
-		expect(fixture.nativeElement.textContent).toBe('3');
-		expect(fixture.componentInstance.changes).toStrictEqual([1, 3]);
-		fixture.destroy();
-	});
+	}
 });
