@@ -15,7 +15,7 @@ module.exports = {
 	semverGroups: [
 		{
 			range: '~',
-			dependencies: ['typescript', 'zone.js'],
+			dependencies: ['typescript', 'zone.js', '@angular/*', '@angular-eslint/*', '@angular-devkit/build-angular', 'ng-packagr'],
 			packages: ['**'],
 		},
 		{
