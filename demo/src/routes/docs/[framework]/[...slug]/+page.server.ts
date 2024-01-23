@@ -2,11 +2,13 @@ import {retrieveMarkdown} from '$lib/server';
 import {error} from '@sveltejs/kit';
 
 export const load = async ({params}) => {
-	const source = await retrieveMarkdown(params.slug);
-	if (!source) error(404);
+	const file = await retrieveMarkdown(params.slug);
+	if (!file) error(404);
 	else {
 		return {
-			source,
+			content: file.content,
+			prev: file.prev,
+			next: file.next,
 			slug: params.slug,
 		};
 	}

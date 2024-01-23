@@ -6,5 +6,15 @@ export const load = async () => {
 			{title: 'Api', key: 'api', path: '/components/pagination/api'},
 			{title: 'Playground', key: 'playground', path: '/components/pagination/playground'},
 		],
+		prev: {
+			title: 'Modal',
+			slug: 'components/modal/',
+			subpath: 'examples',
+		},
+		next: {
+			title: 'Progressbar',
+			slug: 'components/progressbar/',
+			subpath: 'examples',
+		},
 	};
 };
