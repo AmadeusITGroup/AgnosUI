@@ -11,33 +11,21 @@ const CACHE = `${CACHE_PREFIX}${version}`;
 
 const ASSETS = [...build.map((file) => file.replace(/\/index\.html$/, '/')), ...prerendered, ...files];
 
-const splitAssets = (assets: string[]) => {
-	const withHash: string[] = [];
-	const withoutHash: string[] = [];
-	const hashRegExp = /[.-]\w{8,}\.\w{2,4}$/;
-	for (const asset of assets) {
-		(hashRegExp.test(asset) ? withHash : withoutHash).push(asset);
-	}
-	return {withHash, withoutHash};
-};
+const hashRegExp = /[.-]\w{8,}\.\w{2,4}$/;
+const hasHash = (asset: string) => hashRegExp.test(asset);
 
 self.addEventListener('install', (event) => {
 	event.waitUntil(
 		(async () => {
 			const cache = await caches.open(CACHE);
-			const {withHash, withoutHash} = splitAssets(ASSETS);
-			const missingWithHash: string[] = [];
 			await Promise.all(
-				withHash.map(async (url) => {
+				ASSETS.filter(hasHash).map(async (url) => {
 					const response = await caches.match(url);
 					if (response?.ok) {
-						void cache.put(url, response);
-					} else {
-						missingWithHash.push(url);
+						await cache.put(url, response);
 					}
 				}),
 			);
-			await cache.addAll([...missingWithHash, ...withoutHash]);
 			await self.skipWaiting();
 		})(),
 	);
