@@ -19,7 +19,7 @@
 
 <div class="d-flex align-items-center justify-content-between">
 	<button
-		class="text-dark d-flex align-items-center btn btn-link link-underline link-underline-opacity-0"
+		class="d-md-none text-dark d-flex align-items-center btn btn-link link-underline link-underline-opacity-0"
 		aria-expanded={isMenuExpanded}
 		on:click={() => {
 			isMenuExpanded = true;
