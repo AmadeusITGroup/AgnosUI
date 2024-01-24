@@ -86,7 +86,7 @@
 				</div>
 			</div>
 		{/if}
-		<iframe class="demo-sample d-block" use:iframeSrc={sampleUrl} {title} use:handler={sampleBaseUrl} loading="lazy" />
+		<iframe class="demo-sample d-block" use:iframeSrc={sampleUrl} {title} use:handler={sampleBaseUrl} />
 	</div>
 	<div class="btn-toolbar border border-top-0 d-flex align-items-center p-1" role="toolbar" aria-label="Toolbar with button groups">
 		{#if showCodeButton}
