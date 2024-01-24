@@ -11,5 +11,8 @@
 		"moduleResolution": "bundler",
 		"isolatedModules": true,
 		"forceConsistentCasingInFileNames": true,
+		"paths": {
+			"bootstrap-icons/icons/*": ["./node_modules/bootstrap-icons/icons/*"],
+		},
 	},
 }

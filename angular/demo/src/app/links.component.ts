@@ -1,7 +1,6 @@
 import {CommonModule} from '@angular/common';
-import {Component, inject, InjectionToken} from '@angular/core';
-
-export const links = new InjectionToken<string[]>('app-links');
+import {Component, inject} from '@angular/core';
+import {links} from './links';
 
 @Component({
 	standalone: true,
@@ -18,6 +17,6 @@ export const links = new InjectionToken<string[]>('app-links');
 	`,
 	styles: "@import '@agnos-ui/common/samples/links.scss';",
 })
-export class LinksComponent {
+export default class LinksComponent {
 	links = inject(links);
 }

@@ -16,7 +16,7 @@
 		"experimentalDecorators": true,
 		"importHelpers": true,
 		"target": "ES2022",
-		"module": "es2020",
+		"module": "esnext",
 		"lib": ["es2022", "dom", "dom.iterable"],
 		"useDefineForClassFields": false,
 	},

@@ -6,7 +6,7 @@ import {existsSync} from 'fs';
 
 const samplePrefix = '@agnos-ui/samples/';
 const rawSampleSuffix = '?raw&sample';
-const commonImport = /^(!raw-loader!)?@agnos-ui\/common\/samples\/([^?]*)(\?raw)?$/;
+const commonImport = /^@agnos-ui\/common\/samples\/([^?]*)(\?raw)?$/;
 
 const importRegExp = /import([^;]+from)?\s*['"]([^'"]+)['"]\s*;/g;
 const findDependencies = (fileContent: string) => {
@@ -72,7 +72,7 @@ export const includeSamples = (): Plugin => {
 								await addFile(framework, path.basename(depPath), path.join(directory, depPath));
 							} else if (dependency.match(commonImport)) {
 								const baseDir = path.join(__dirname, '..', '..', 'common', 'samples');
-								const cleanedDependency = addExtension(baseDir, dependency.replace(commonImport, './$2'));
+								const cleanedDependency = addExtension(baseDir, dependency.replace(commonImport, './$1'));
 								await addFile(framework, path.basename(cleanedDependency), path.join(baseDir, cleanedDependency));
 							} else {
 								// TODO: check that the dependency is valid and included in package.json

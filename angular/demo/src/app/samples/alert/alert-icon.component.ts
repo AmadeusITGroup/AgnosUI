@@ -1,8 +1,8 @@
-import biCheckCircleFill from '!raw-loader!bootstrap-icons/icons/check-circle-fill.svg';
-import biDashCircleFill from '!raw-loader!bootstrap-icons/icons/dash-circle-fill.svg';
-import biExclamationTriangleFill from '!raw-loader!bootstrap-icons/icons/exclamation-triangle-fill.svg';
-import biInfoCircleFill from '!raw-loader!bootstrap-icons/icons/info-circle-fill.svg';
-import biLightbulb from '!raw-loader!bootstrap-icons/icons/lightbulb.svg';
+import biCheckCircleFill from 'bootstrap-icons/icons/check-circle-fill.svg';
+import biDashCircleFill from 'bootstrap-icons/icons/dash-circle-fill.svg';
+import biExclamationTriangleFill from 'bootstrap-icons/icons/exclamation-triangle-fill.svg';
+import biInfoCircleFill from 'bootstrap-icons/icons/info-circle-fill.svg';
+import biLightbulb from 'bootstrap-icons/icons/lightbulb.svg';
 import type {AlertWidget} from '@agnos-ui/angular';
 import {SlotComponent, SlotDirective} from '@agnos-ui/angular';
 import {Component, inject} from '@angular/core';

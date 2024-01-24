@@ -5,27 +5,29 @@
 		"demo": {
 			"architect": {
 				"build": {
-					"builder": "@angular-devkit/build-angular:browser",
+					"builder": "@angular-devkit/build-angular:application",
 					"configurations": {
 						"development": {
-							"buildOptimizer": false,
 							"extractLicenses": false,
 							"namedChunks": true,
 							"optimization": false,
-							"sourceMap": true,
-							"vendorChunk": true
+							"sourceMap": true
 						}
 					},
 					"options": {
 						"assets": [],
 						"index": "index.html",
-						"main": "src/main.ts",
-						"polyfills": "src/polyfills.ts",
+						"browser": "src/main.ts",
+						"polyfills": ["src/polyfills.ts"],
 						"outputPath": "dist/demo",
 						"scripts": [],
 						"inlineStyleLanguage": "scss",
 						"styles": ["@agnos-ui/style-bootstrap/css/agnosui.css"],
-						"tsConfig": "tsconfig.json"
+						"tsConfig": "tsconfig.json",
+						"loader": {
+							".txt": "text",
+							".svg": "text"
+						}
 					}
 				},
 				"serve": {
