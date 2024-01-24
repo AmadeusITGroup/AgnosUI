@@ -59,8 +59,8 @@
 		"@angular/core": "*"
 	},
 	"dependencies": {
-		"@agnos-ui/angular-headless": "",
-		"@agnos-ui/style-bootstrap": "",
+		"@agnos-ui/angular-headless": "0.0.1-alpha.8",
+		"@agnos-ui/style-bootstrap": "0.0.1-alpha.8",
 		"@amadeus-it-group/tansu": "1.0.0",
 		"tslib": "^2.6.2"
 	},
@@ -78,5 +78,6 @@
 		"rxjs": "^7.8.1",
 		"zone.js": "~0.14.3"
 	},
-	"sideEffects": false
+	"sideEffects": false,
+	"version": "0.0.1-alpha.8"
 }
