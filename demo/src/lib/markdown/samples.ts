@@ -6,6 +6,7 @@ import slotsUsage from '@agnos-ui/samples/slots/usage';
 import slotsContext from '@agnos-ui/samples/slots/context';
 import alertsIcon from '@agnos-ui/samples/alert/icon';
 import slotsHeadless from '@agnos-ui/samples/slots/headless';
+import directivesUsage from '@agnos-ui/samples/directives/usage';
 
 const samples: Map<string, SampleInfo> = new Map();
 samples.set('focustrack/focustrack', focustrack);
@@ -14,5 +15,5 @@ samples.set('slots/usage', slotsUsage);
 samples.set('slots/context', slotsContext);
 samples.set('alert/icon', alertsIcon);
 samples.set('slots/headless', slotsHeadless);
-
+samples.set('directives/usage', directivesUsage);
 export default samples;
