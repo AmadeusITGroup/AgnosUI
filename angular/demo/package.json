@@ -12,10 +12,21 @@
 		"preview": "node scripts/preview.cjs dist --port 4200 --single"
 	},
 	"wireit": {
+		"generate:links": {
+			"command": "node scripts/regen-links.mjs",
+			"files": [
+				"scripts/regen-links.mjs",
+				"src/app/samples/**"
+			],
+			"output": [
+				"src/app/generated/samples.route.ts"
+			]
+		},
 		"dev": {
 			"command": "ng serve",
 			"dependencies": [
-				"../headless:generate:exports"
+				"../headless:generate:exports",
+				"generate:links"
 			],
 			"service": true
 		},
@@ -23,21 +34,22 @@
 			"command": "node --import @agnos-ui/code-coverage/interceptReadFile ../../node_modules/@angular/cli/bin/ng.js serve",
 			"dependencies": [
 				"../../code-coverage:build",
-				"../headless:generate:exports"
+				"../headless:generate:exports",
+				"generate:links"
 			],
 			"service": true
 		},
 		"build": {
 			"command": "ng build",
 			"dependencies": [
+				"generate:links",
 				"../lib:build",
 				"../../style-bootstrap:build"
 			],
 			"files": [
 				"src/**",
 				"angular.json",
-				"tsconfig.build.json",
-				"webpack.cjs"
+				"tsconfig.build.json"
 			],
 			"output": [
 				"dist/**"
@@ -46,6 +58,7 @@
 		"build:coverage": {
 			"command": "node --import @agnos-ui/code-coverage/interceptReadFile ../../node_modules/@angular/cli/bin/ng.js build --configuration=coverage",
 			"dependencies": [
+				"generate:links",
 				"../lib:build",
 				"../../style-bootstrap:build",
 				"../../code-coverage:build"
@@ -53,8 +66,8 @@
 		}
 	},
 	"dependencies": {
-		"@agnos-ui/angular-headless": "",
 		"@agnos-ui/angular": "",
+		"@agnos-ui/angular-headless": "",
 		"@agnos-ui/core": "",
 		"@agnos-ui/style-bootstrap": "",
 		"@angular/animations": "~17.1.0",
@@ -77,9 +90,6 @@
 		"@angular-eslint/template-parser": "^17.2.1",
 		"@angular/cli": "~17.1.0",
 		"@angular/compiler-cli": "~17.1.0",
-		"@types/webpack-env": "^1.18.4",
-		"ngx-build-plus": "^17.0.0",
-		"raw-loader": "^4.0.2",
 		"sirv-cli": "^2.0.2",
 		"typescript": "~5.3.3"
 	}

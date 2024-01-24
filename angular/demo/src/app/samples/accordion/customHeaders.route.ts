@@ -1,6 +1,6 @@
 import {AgnosUIAngularModule} from '@agnos-ui/angular';
 import {Component} from '@angular/core';
-import BODY from '!raw-loader!@agnos-ui/common/samples/accordion/body.txt';
+import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 
 @Component({
 	standalone: true,
