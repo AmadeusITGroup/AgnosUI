@@ -81,11 +81,6 @@
 			</div>
 		</div>
 	</nav>
-	{#if !isMainPage}
-		<div class="demo-mobile-menu d-block d-md-none">
-			<MobileSubMenu />
-		</div>
-	{/if}
 	<div class="demo-main d-flex flex-column">
 		{#if isMainPage}
 			<slot />
@@ -96,11 +91,14 @@
 						<SideMenu />
 					</aside>
 					<div class="pb-4 col">
+						<div class="demo-mobile-menu d-block d-lg-none">
+							<MobileSubMenu />
+						</div>
 						<MainSection>
 							<slot />
 						</MainSection>
 					</div>
-					<div class="demo-toc d-none d-md-flex col-auto side-menu me-auto">
+					<div class="demo-toc d-none d-lg-flex col-auto side-menu me-auto">
 						<TOC />
 					</div>
 				</div>
@@ -134,6 +132,8 @@
 		background-color: var(--bs-body-bg);
 		box-shadow: $box-shadow;
 		z-index: 10;
+		margin-left: calc(var(--bs-gutter-x) * -0.5);
+		margin-right: calc(var(--bs-gutter-x) * -0.5);
 	}
 
 	.demo-nav-top {
