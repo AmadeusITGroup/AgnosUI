@@ -14,6 +14,8 @@ export type Partial2Levels<T> = Partial<{
 	[Level1 in keyof T]: Partial<T[Level1]>;
 }>;
 
+export type AdaptParentConfig<Config> = (config: Partial2Levels<Config>) => Partial2Levels<Config>;
+
 export type WidgetsConfigStore<T> = WritableSignal<Partial2Levels<T>> & {
 	own$: WritableSignal<Partial2Levels<T>>;
 	parent$: undefined | WritableSignal<Partial2Levels<T>>;

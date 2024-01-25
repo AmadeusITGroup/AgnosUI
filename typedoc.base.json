@@ -1,0 +1,7 @@
+{
+	"$schema": "https://typedoc.org/schema.json",
+	"excludeInternal": true,
+	"excludePrivate": true,
+	"treatWarningsAsErrors": true,
+	"githubPages": false
+}

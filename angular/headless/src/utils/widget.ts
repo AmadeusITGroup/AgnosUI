@@ -11,7 +11,7 @@ import {
 	type WidgetState,
 } from '../types';
 import {toAngularSignal, toReadableStore} from './stores';
-import {ZoneWrapper} from './zone';
+import {ZoneWrapper} from './internal/zone';
 
 const createPatchSlots = <T extends object>(set: (object: Partial<T>) => void) => {
 	let lastValue: Partial<T> = {};

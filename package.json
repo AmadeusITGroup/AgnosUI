@@ -46,6 +46,7 @@
 		"semver": "^7.5.4",
 		"syncpack": "^11.2.1",
 		"ts-node": "^10.9.2",
+		"typedoc": "^0.25.7",
 		"typescript": "~5.3.3",
 		"vite": "^5.0.12",
 		"vitest": "^1.2.1",
@@ -65,6 +66,7 @@
 		"lint": "wireit",
 		"dev": "wireit",
 		"dev:coverage": "node scripts/run.js dev:coverage",
+		"typedoc": "wireit",
 		"preview": "node scripts/run.js preview",
 		"e2e": "wireit",
 		"e2e:ui": "wireit",
@@ -90,6 +92,29 @@
 		"build:coverage": {
 			"dependencies": [
 				"./demo:build:coverage"
+			]
+		},
+		"typedoc": {
+			"dependencies": [
+				"prepare",
+				"./svelte/headless:build"
+			],
+			"command": "typedoc",
+			"files": [
+				"base-po/lib/**",
+				"page-objects/lib/**",
+				"core/src/**",
+				"angular/lib/src/**",
+				"angular/headless/src/**",
+				"react/lib/src/**",
+				"react/headless/src/**",
+				"svelte/lib/src/**",
+				"svelte/headless/src/**",
+				"typedoc.base.json",
+				"{.,base-po,page-objects,core,angular/lib,angular/headless,react/lib,react/headless,svelte/lib,svelte/headless}/{typedoc.json,tsconfig.json,README.md}"
+			],
+			"output": [
+				"./demo/generated/typedoc/**"
 			]
 		},
 		"e2e": {

@@ -36,4 +36,4 @@ export class CustomComponentPO extends BasePO {
 
 ## Main features
 
-Please refer to the documentation included in [the source code](lib/base.po.ts).
+Please refer to the documentation included in [the source code](https://github.com/AmadeusITGroup/AgnosUI/blob/main/base-po/lib/base.po.ts).

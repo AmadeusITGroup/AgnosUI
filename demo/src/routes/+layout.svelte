@@ -19,6 +19,7 @@
 	};
 
 	$: isMainPage = $routeLevel$ === 0;
+	$: isApi = $page.route.id === '/api';
 
 	onMount(() => {
 		navigator.serviceWorker?.addEventListener('controllerchange', onServiceWorkerUpdate);
@@ -62,6 +63,7 @@
 					class:active={$page.route.id?.startsWith('/docs/')}
 					aria-current={$page.route.id?.startsWith('/docs/') ? 'page' : undefined}>Documentation</a
 				>
+				<a class="nav-link text-white ms-3" href="{$pathToRoot$}api" class:active={isApi} aria-current={isApi ? 'page' : undefined}>API</a>
 				<a
 					class="nav-link text-white ms-3"
 					href="{$pathToRoot$}blog/2024-01-12"
@@ -82,7 +84,7 @@
 		</div>
 	</nav>
 	<div class="demo-main d-flex flex-column">
-		{#if isMainPage}
+		{#if isMainPage || isApi}
 			<slot />
 		{:else}
 			<div class="container-xxl">
