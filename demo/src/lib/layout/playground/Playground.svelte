@@ -19,7 +19,7 @@
 
 <div class="row">
 	<div class="col">
-		<Sample title="Configuration" {sample} urlParameters={$sampleParameters$} showCodeButton={false} {height} {noresize} />
+		<Sample title="Configuration" {sample} urlParameters={$sampleParameters$} showButtons={false} {height} {noresize} />
 	</div>
 </div>
 <div class="row">

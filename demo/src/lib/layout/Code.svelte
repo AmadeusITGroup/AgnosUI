@@ -33,6 +33,9 @@
 	}
 
 	pre {
+		> code {
+			white-space: pre-wrap;
+		}
 		// color: black;
 		tab-size: 1rem;
 	}

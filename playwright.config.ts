@@ -72,7 +72,7 @@ frameworks.forEach((framework) => {
 });
 
 const webServer = includesDemo
-	? {command: isCI ? previewDemoCommand : `npm run dev`, url: demoUrl}
+	? {command: isCI ? previewDemoCommand : `npm run dev`, url: demoUrl, reuseExistingServer: true}
 	: frameworks.map((framework) => ({
 			command: framework.command,
 			url: framework.url,

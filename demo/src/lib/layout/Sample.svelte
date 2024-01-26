@@ -58,9 +58,9 @@
 	/**
 	 * Whether the code button must be displayed
 	 */
-	export let showCodeButton = true;
+	export let showButtons = true;
 
-	let showCode = false;
+	export let showCode = false;
 	let code = '';
 
 	$: path = `${sample.componentName}/${sample.sampleName}`.toLowerCase();
@@ -88,8 +88,8 @@
 		{/if}
 		<iframe class="demo-sample d-block" use:iframeSrc={sampleUrl} {title} use:handler={sampleBaseUrl} />
 	</div>
-	<div class="btn-toolbar border border-top-0 d-flex align-items-center p-1" role="toolbar" aria-label="Toolbar with button groups">
-		{#if showCodeButton}
+	{#if showButtons}
+		<div class="btn-toolbar border border-top-0 d-flex align-items-center p-1" role="toolbar" aria-label="Toolbar with button groups">
 			<button
 				class="btn btn-sm btn-link m-1 p-0"
 				aria-label="Show or hide the code"
@@ -103,25 +103,27 @@
 				on:click={async () => (await import('../stackblitz')).openInStackblitz(sample, $selectedFramework$)}
 				><Svg className="icon-24 align-middle" svg={stackblitz} /></button
 			>
-		{/if}
-		<a
-			href={sampleUrl}
-			class="action m-1 p-0"
-			target="_blank"
-			rel="noreferrer nofollow external"
-			aria-label="View sample in new tab"
-			use:tooltip={{content: 'Open example in a new tab'}}
-			><Svg className="icon-20 align-middle" svg={openLink} />
-		</a>
-	</div>
+			<a
+				href={sampleUrl}
+				class="action m-1 p-0"
+				target="_blank"
+				rel="noreferrer nofollow external"
+				aria-label="View sample in new tab"
+				use:tooltip={{content: 'Open example in a new tab'}}
+				><Svg className="icon-20 align-middle" svg={openLink} />
+			</a>
+		</div>
+	{/if}
 	{#if showCode}
-		<ul class="nav nav-underline p-3 border-start border-end">
-			{#each files as file}
-				<li class="nav-item">
-					<button class="nav-link" class:active={selectedFileName === file} on:click={() => (selectedFileName = file)}>{file}</button>
-				</li>
-			{/each}
-		</ul>
+		{#if files.length > 1}
+			<ul class="nav nav-underline p-3 border-start border-end">
+				{#each files as file}
+					<li class="nav-item">
+						<button class="nav-link" class:active={selectedFileName === file} on:click={() => (selectedFileName = file)}>{file}</button>
+					</li>
+				{/each}
+			</ul>
+		{/if}
 		<div class="border border-top-0">
 			<Lazy component={() => import('./Code.svelte')} {code} fileName={selectedFileName}>
 				<div class="spinner-border text-primary" role="status">
@@ -138,7 +140,7 @@
 	}
 
 	.action {
-		display: inline-block;
+		display: inline-flex;
 
 		> :global(svg) {
 			width: 20px;

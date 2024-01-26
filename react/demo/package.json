@@ -1,6 +1,7 @@
 {
 	"name": "@agnos-ui/react-demo",
 	"private": true,
+	"type": "module",
 	"scripts": {
 		"dev": "wireit",
 		"dev:coverage": "wireit",
