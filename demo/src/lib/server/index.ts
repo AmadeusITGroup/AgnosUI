@@ -41,7 +41,22 @@ export async function listPages() {
 	return categories;
 }
 
-export async function retrieveMarkdown(slug: string) {
+const regexFrameworkSpecific = /<!--\s+<framework-specific\s+src="([^"]*)">\s+-->[\s\S]*?<!--\s+<\/framework-specific>\s+-->/;
+
+async function preparseMarkdown(path: string, framework: string): Promise<string> {
+	let markdown = await readFile(path, 'utf-8');
+	let match;
+	do {
+		match = markdown.match(regexFrameworkSpecific);
+		if (match) {
+			markdown =
+				markdown.slice(0, match.index) + (await readFile(`../${framework}/docs/${match[1]}`)) + markdown.substring(match.index! + match[0].length);
+		}
+	} while (match);
+	return markdown;
+}
+
+export async function retrieveMarkdown(slug: string, framework: string) {
 	const categories = await listPages();
 	let prev;
 	let next;
@@ -66,5 +81,5 @@ export async function retrieveMarkdown(slug: string) {
 			}
 		}
 	}
-	return file ? {prev, next, content: await readFile(file.mdpath!, 'utf-8')} : undefined;
+	return file ? {prev, next, content: await preparseMarkdown(file.mdpath!, framework)} : undefined;
 }

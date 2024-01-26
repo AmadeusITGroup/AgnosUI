@@ -45,7 +45,8 @@
 				"static/**",
 				"svelte.config.js",
 				"vite.config.ts",
-				"vite-env.d.ts"
+				"vite-env.d.ts",
+				"scripts/*"
 			],
 			"output": [
 				"dist/**",

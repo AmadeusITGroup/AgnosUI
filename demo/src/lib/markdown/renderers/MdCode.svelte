@@ -46,7 +46,7 @@
 
 {#if lang === 'sample'}
 	{#if sample}
-		<Sample {title} {sample} {height} />
+		<Sample {title} {sample} {height} showCode showButtons={false} />
 	{:else}
 		Sample not found, make sure to fill the samples.ts file.
 	{/if}
