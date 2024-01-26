@@ -68,6 +68,7 @@ export default defineConfig({
 			'@floating-ui/dom',
 			'svelte-markdown',
 			'marked',
+			'mermaid',
 		],
 	},
 });
