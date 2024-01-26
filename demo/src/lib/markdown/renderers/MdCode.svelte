@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Code from '$lib/layout/Code.svelte';
+	import Mermaid from '$lib/layout/Mermaid.svelte';
 	import Sample from '$lib/layout/Sample.svelte';
 	import type {SampleInfo} from '$lib/layout/sample';
 	import {selectedFramework$} from '$lib/stores';
@@ -49,6 +50,8 @@
 	{:else}
 		Sample not found, make sure to fill the samples.ts file.
 	{/if}
+{:else if lang === 'mermaid'}
+	<Mermaid {code} />
 {:else}
 	<Code language={lang} {code} />
 {/if}
