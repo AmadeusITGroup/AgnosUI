@@ -68,7 +68,7 @@
 		"preview": "node scripts/run.js preview",
 		"e2e": "wireit",
 		"e2e:ui": "wireit",
-		"postinstall": "husky install",
+		"postinstall": "husky",
 		"syncpack:check": "syncpack lint",
 		"syncpack:fix": "syncpack fix-mismatches",
 		"prepare": "wireit"
