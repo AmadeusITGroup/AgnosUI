@@ -77,7 +77,7 @@
 		"@agnos-ui/react": "*",
 		"@agnos-ui/style-bootstrap": "*",
 		"@amadeus-it-group/tansu": "1.0.0",
-		"@floating-ui/dom": "^1.5.4",
+		"@floating-ui/dom": "^1.6.0",
 		"classnames": "^2.5.1"
 	},
 	"peerDependencies": {
