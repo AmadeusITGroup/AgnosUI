@@ -65,7 +65,7 @@
 	},
 	"dependencies": {
 		"@amadeus-it-group/tansu": "1.0.0",
-		"@floating-ui/dom": "^1.5.4"
+		"@floating-ui/dom": "^1.6.0"
 	},
 	"devDependencies": {
 		"@sveltejs/package": "^2.2.6",
