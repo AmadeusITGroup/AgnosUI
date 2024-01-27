@@ -10,7 +10,7 @@
 		"typescript": "*"
 	},
 	"devDependencies": {
-		"@angular/core": "~17.1.0",
+		"@angular/core": "~17.1.1",
 		"@typescript-eslint/rule-tester": "^6.19.1",
 		"@vitest/coverage-v8": "^1.2.2",
 		"svelte": "^4.2.9",
