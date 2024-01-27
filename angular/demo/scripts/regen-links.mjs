@@ -5,12 +5,17 @@ import {writeFile, mkdir, rm} from 'fs/promises';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+const pathRegExp = /\\/g;
+export function normalizePath(str) {
+	return str.replace(pathRegExp, '/');
+}
+
 const files = (
 	await glob('**/*.route.ts', {
 		cwd: path.join(__dirname, '../src/app/samples'),
 		nodir: true,
 	})
-).map((file) => file.slice(0, -9));
+).map((file) => normalizePath(file.slice(0, -9)));
 files.sort();
 
 const content = `
