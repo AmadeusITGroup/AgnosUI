@@ -39,7 +39,7 @@
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-jsdoc": "^48.0.4",
 		"glob": "10.3.10",
-		"husky": "^8.0.3",
+		"husky": "^9.0.6",
 		"lint-staged": "^15.2.0",
 		"npm-run-all2": "^5.0.2",
 		"prettier": "^3.2.4",
@@ -68,7 +68,7 @@
 		"preview": "node scripts/run.js preview",
 		"e2e": "wireit",
 		"e2e:ui": "wireit",
-		"postinstall": "husky install",
+		"postinstall": "husky",
 		"syncpack:check": "syncpack lint",
 		"syncpack:fix": "syncpack fix-mismatches",
 		"prepare": "wireit"
