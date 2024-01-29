@@ -4,6 +4,7 @@ import type {ProxyOptions} from 'vite';
 import {defineConfig} from 'vite';
 import pkg from '../core/package.json';
 import {copySamples} from './scripts/copySamples.plugin';
+import {copyDoc} from './scripts/copyDoc.plugin';
 import {docExtractor} from './scripts/doc.plugin';
 import {includeSamples} from './scripts/includeSamples.plugin';
 import {emitFile} from './scripts/emitFile.plugin';
@@ -48,6 +49,7 @@ export default defineConfig({
 	},
 	plugins: [
 		copySamples(),
+		copyDoc(),
 		includeSamples(),
 		sveltekit(),
 		docExtractor(),

@@ -1,19 +1,31 @@
+import type {AdaptParentConfig, WidgetsConfig as CoreWidgetsConfig, Partial2Levels, WidgetsConfigStore} from '@agnos-ui/core/config';
+import {createWidgetsConfig} from '@agnos-ui/core/config';
 import type {Widget, WidgetFactory, WidgetProps, WidgetState} from '@agnos-ui/core/types';
-import {createWidgetsConfig, type WidgetsConfigStore, type WidgetsConfig as CoreWidgetsConfig, type Partial2Levels} from '@agnos-ui/core/config';
 import {computed} from '@amadeus-it-group/tansu';
 import type {ReactNode} from 'react';
 import {createContext, useContext, useEffect, useMemo} from 'react';
 import type {AdaptPropsSlots} from './types';
-import {useWidget} from './utils/widget';
 import {usePropsAsStore} from './utils/stores';
+import {useWidget} from './utils/widget';
 
 export * from '@agnos-ui/core/config';
 
 export type WidgetsConfig = {
 	[WidgetName in keyof CoreWidgetsConfig]: AdaptPropsSlots<CoreWidgetsConfig[WidgetName]>;
 };
-type DefaultConfigInput<Config> = Partial2Levels<Config> & {
-	adaptParentConfig?: (config: Partial2Levels<Config>) => Partial2Levels<Config>;
+export type DefaultConfigInput<Config> = Partial2Levels<Config> & {
+	/**
+	 * Optional function that receives a 2-levels copy of the widgets default configuration
+	 * defined at an upper level in the Svelte context hierarchy (or an empty object if there is none) and returns the widgets
+	 * default configuration to be used.
+	 * It is called only if the configuration is needed, and was not yet computed for the current value of the parent configuration.
+	 * It is called in a tansu reactive context, so it can use any tansu store and will be called again if those stores change.
+	 */
+	adaptParentConfig?: AdaptParentConfig<Config>;
+
+	/**
+	 * The react component children
+	 */
 	children?: ReactNode | undefined;
 };
 
@@ -53,12 +65,6 @@ export const widgetsConfigFactory = <Config extends {[widgetName: string]: objec
 	 * - second step: the configuration from step 1 is merged (2-levels deep) with the properties of the component.
 	 *
 	 * @param componentInputs - the react component inputs
-	 * @param componentInputs.children - the react component children
-	 * @param componentInputs.adaptParentConfig - optional function that receives a 2-levels copy of the widgets default configuration
-	 * defined at an upper level in the Svelte context hierarchy (or an empty object if there is none) and returns the widgets
-	 * default configuration to be used.
-	 * It is called only if the configuration is needed, and was not yet computed for the current value of the parent configuration.
-	 * It is called in a tansu reactive context, so it can use any tansu store and will be called again if those stores change.
 	 *
 	 * @returns the resulting widgets default configuration store, which contains 3 additional properties that are stores:
 	 * parent$, adaptedParent$ (containing the value computed after the first step), and own$ (that contains only overridding properties).
@@ -76,7 +82,8 @@ export const widgetsConfigFactory = <Config extends {[widgetName: string]: objec
 	 * />
 	 * ```
 	 */
-	const WidgetsDefaultConfig = ({children, adaptParentConfig, ...props}: DefaultConfigInput<Config>) => {
+	const WidgetsDefaultConfig = (componentInputs: DefaultConfigInput<Config>) => {
+		const {children, adaptParentConfig, ...props} = componentInputs;
 		const config$ = useContext(widgetsConfigContext);
 		let storeRecreated = false;
 

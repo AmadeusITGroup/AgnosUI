@@ -26,6 +26,7 @@
 			"command": "vite dev",
 			"dependencies": [
 				"generate:doc",
+				"..:typedoc",
 				"../angular/demo:dev",
 				"../react/demo:dev",
 				"../svelte/demo:dev"
@@ -36,6 +37,7 @@
 			"command": "vite build",
 			"dependencies": [
 				"generate:doc",
+				"..:typedoc",
 				"../angular/demo:build",
 				"../react/demo:build",
 				"../svelte/demo:build"
@@ -57,6 +59,7 @@
 			"command": "vite build",
 			"dependencies": [
 				"generate:doc",
+				"..:typedoc",
 				"../angular/demo:build:coverage",
 				"../react/demo:build:coverage",
 				"../svelte/demo:build:coverage"

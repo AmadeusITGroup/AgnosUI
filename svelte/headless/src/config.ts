@@ -1,5 +1,5 @@
 import {createWidgetsConfig} from '@agnos-ui/core/config';
-import type {WidgetsConfig as CoreWidgetsConfig, Partial2Levels, WidgetsConfigStore} from '@agnos-ui/core/config';
+import type {WidgetsConfig as CoreWidgetsConfig, AdaptParentConfig, WidgetsConfigStore} from '@agnos-ui/core/config';
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {computed} from '@amadeus-it-group/tansu';
 import {getContext, setContext} from 'svelte';
@@ -12,16 +12,39 @@ export type WidgetsConfig = {
 	[WidgetName in keyof CoreWidgetsConfig]: AdaptPropsSlots<CoreWidgetsConfig[WidgetName]>;
 };
 
-type WidgetFactoryInput<Config extends {[widgetName: string]: object}, W extends Widget> = {
+export type WidgetFactoryInput<Config extends {[widgetName: string]: object}, W extends Widget> = {
+	/**
+	 * Widget factory
+	 */
 	factory: WidgetFactory<W>;
+
+	/**
+	 * Widget name, to retrieve the default config
+	 */
 	widgetName?: null | keyof Config;
+
+	/**
+	 * Svelte $$slot object specifying for each slot if it is present.
+	 */
 	$$slots: SlotsPresent<WidgetProps<W>>;
+
+	/**
+	 * Default config
+	 */
 	defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
+
+	/**
+	 * Events
+	 */
 	events: Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}Change`>;
+
+	/**
+	 * Props
+	 */
 	$$props: Partial<WidgetProps<W>>;
 };
-type AdaptParentConfig<Config> = (config: Partial2Levels<Config>) => Partial2Levels<Config>;
-type CreateWidgetsDefaultConfig<Config extends {[widgetName: string]: object}> = (
+
+export type CreateWidgetsDefaultConfig<Config extends {[widgetName: string]: object}> = (
 	adaptParentConfig?: AdaptParentConfig<Config>,
 ) => WidgetsConfigStore<Config>;
 

@@ -1,0 +1,18 @@
+{
+	"$schema": "https://typedoc.org/schema.json",
+	"extends": ["./typedoc.base.json"],
+	"name": "AgnosUI API documentation",
+	"entryPoints": [
+		"base-po",
+		"page-objects",
+		"core",
+		"angular/lib",
+		"angular/headless",
+		"react/lib",
+		"react/headless",
+		"svelte/lib",
+		"svelte/headless"
+	],
+	"entryPointStrategy": "packages",
+	"out": "./demo/generated/typedoc"
+}
