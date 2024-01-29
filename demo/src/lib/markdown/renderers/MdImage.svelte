@@ -3,11 +3,27 @@
 	export let title: string;
 	export let text = '';
 
-	let src: string;
+	const imgRegExp = /resources\/images\/(.*)\.(svg|webp|png|jpg)/i;
+	let srcPromise: Promise<any>;
 	async function getSrc(href: string) {
-		src = (await import(`../../../resources/images/${href.slice(href.indexOf('resources/images/') + 17, -5)}.webp`)).default;
+		try {
+			const matches = href.match(imgRegExp);
+			if (matches) {
+				srcPromise = import(`../../../resources/images/${matches[1]}.${matches[2]}`);
+			}
+		} catch (error) {
+			// Avoid server crash
+		}
 	}
 	$: void getSrc(href);
 </script>
 
-<img class="w-100" {src} {title} alt={text} />
+{#await srcPromise}
+	<div class="d-flex justify-content-center">
+		<div class="spinner-border" role="status">
+			<span class="visually-hidden">Loading...</span>
+		</div>
+	</div>
+{:then srcModule}
+	<img class="w-100" src={srcModule.default} {title} alt={text} />
+{/await}
