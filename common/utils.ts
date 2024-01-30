@@ -1,7 +1,7 @@
 import {computed, readable} from '@amadeus-it-group/tansu';
 
 export const hash$ =
-	typeof window === 'undefined'
+	typeof window === 'undefined' || !location.hash
 		? readable('')
 		: readable('', (set) => {
 				function updateFromHash() {
@@ -14,38 +14,67 @@ export const hash$ =
 				return () => window.removeEventListener('hashchange', updateFromHash);
 			});
 
-export const hashObject$ = computed(() => {
-	let hashString = hash$().split('#').at(-1);
-	if (!hashString || hashString.at(0) !== '{') {
-		hashString = '{}';
+export const query$ =
+	typeof window === 'undefined' || !location.search
+		? readable('')
+		: readable('', (set) => {
+				function updateFromQuery() {
+					const search = location.search;
+					set(search ? search.substring(1) : '');
+				}
+
+				window.addEventListener('querychange', updateFromQuery);
+				updateFromQuery();
+				return () => window.removeEventListener('querychange', updateFromQuery);
+			});
+
+export const urlJsonObject$ = computed(() => {
+	const hashString = hash$();
+	const queryString = query$();
+	if (!hashString && !queryString) {
+		return {};
 	}
-	const {config = {}, props = {}} = JSON.parse(decodeURIComponent(hashString));
-	return {config, props};
+	if (hashString) {
+		const hasStringDecoded = decodeURIComponent(hashString);
+		const jsonOpenIndex = hasStringDecoded.indexOf('{');
+		const jsonCloseIndex = hasStringDecoded.lastIndexOf('}');
+		const jsonString = hasStringDecoded.substring(jsonOpenIndex, jsonCloseIndex + 1);
+		try {
+			const jsonObj = JSON.parse(jsonString);
+			return jsonObj;
+		} catch (e) {
+			return {};
+		}
+	}
+	if (queryString) {
+		const searchParams = new URLSearchParams(decodeURIComponent(queryString));
+		const acc: {[key: string]: any} = {};
+		searchParams.forEach((val, key) => {
+			try {
+				acc[key] = JSON.parse(val);
+			} catch (e) {
+				console.warn(`[URL Json object store] Query param '${key}' is not a JSON. Keeping it as a string.`);
+				acc[key] = val;
+			}
+		});
+		return acc;
+	}
 });
 
 /**
- * Return undefined if the object is empty, the object otherwise
+ * Expose the config and props properties from url JSON object
+ * Return empty objects for each,if they not exist in the parent url json object
  */
-function undefinedIfEmpty(object: object | undefined) {
-	return object ? (Object.entries(object).filter(([, value]) => value !== undefined).length ? object : undefined) : undefined;
-}
-
-/**
- * Update the hash url
- * @param type Type of value to be updated
- * @param key
- * @param value any value, or undefined to remove the key
- */
-export function updateHashValue(type: 'config' | 'props', key: string, value: any) {
-	const hashObj = structuredClone(hashObject$());
-	const hashObjForType: Record<string, any> = hashObj[type] ?? {};
-	hashObjForType[key] = value;
-	hashObj['config'] = undefinedIfEmpty(hashObj['config']);
-	hashObj['props'] = undefinedIfEmpty(hashObj['props']);
-	const hashString = JSON.stringify(undefinedIfEmpty(hashObj));
-	// TODO: prevent the navigation to be recorded in the history.
-	location.hash = hashString ? `#${hashString}` : '#';
-}
+export const urlJsonObjectConfigProps$ = computed(() => {
+	const urlJsonObject = urlJsonObject$();
+	if (!Object.keys(urlJsonObject).length) {
+		return {config: {}, props: {}};
+	}
+	return {
+		config: urlJsonObject.config || {},
+		props: urlJsonObject.props || {},
+	};
+});
 
 /**
  * Assigns the properties of `partial` to `json`, overwriting any existing properties in `json`.

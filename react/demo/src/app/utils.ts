@@ -1,7 +1,10 @@
 import {useObservable} from '@agnos-ui/react/utils/stores';
-import {hashObject$} from '@agnos-ui/common/utils';
+import {urlJsonObjectConfigProps$} from '@agnos-ui/common/utils';
 import {getPropValues} from '@agnos-ui/common/propsValues';
 
 export function useHashChange() {
-	return {config: getPropValues(useObservable(hashObject$).config), props: getPropValues(useObservable(hashObject$).props)};
+	return {
+		config: getPropValues(useObservable(urlJsonObjectConfigProps$).config),
+		props: getPropValues(useObservable(urlJsonObjectConfigProps$).props),
+	};
 }

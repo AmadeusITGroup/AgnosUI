@@ -1,6 +1,6 @@
 import {computed, writable} from '@amadeus-it-group/tansu';
 import {getContext, setContext} from 'svelte';
-import {hashObject$, updateHashValue} from '@agnos-ui/common/utils';
+import {urlJsonObjectConfigProps$} from '@agnos-ui/common/utils';
 import type {WidgetDoc} from '@agnos-ui/doc/types';
 import {normalizedType, textToLines} from '../../../app';
 import type {PropsValues} from '@agnos-ui/common/propsValues';
@@ -14,6 +14,32 @@ function setPlaygroundContext(context: Playground) {
 
 export function getPlaygroundContext() {
 	return getContext(playgroundSymbol) as Playground;
+}
+
+/**
+ * Return undefined if the object is empty, the object otherwise
+ */
+function undefinedIfEmpty(object: object | undefined) {
+	return object ? (Object.entries(object).filter(([, value]) => value !== undefined).length ? object : undefined) : undefined;
+}
+
+/**
+ * Update the hash url
+ * @param type Type of value to be updated
+ * @param key
+ * @param value any value, or undefined to remove the key
+ */
+export function updateHashValue(type: 'config' | 'props', key: string, value: any) {
+	const hashObj = structuredClone(urlJsonObjectConfigProps$());
+	const hashObjForType: Record<string, any> = hashObj[type] ?? {};
+	hashObjForType[key] = value;
+	hashObj['config'] = undefinedIfEmpty(hashObj['config']);
+	hashObj['props'] = undefinedIfEmpty(hashObj['props']);
+	const hashString = JSON.stringify(undefinedIfEmpty(hashObj));
+	// TODO: prevent the navigation to be recorded in the history.
+	location.hash = hashString ? `#${hashString}` : '#';
+	// give priority to hash in playground (TODO remove the ? too)
+	location.search = '';
 }
 
 interface PlaygroundProps {
@@ -90,7 +116,7 @@ export function createPlayground({config: defaultConfig, types, doc, listPropsVa
 	}
 	const values$ = computed(() => {
 		const values: ReturnType<typeof createValueContext>[] = [];
-		const {config, props} = hashObject$();
+		const {config, props} = urlJsonObjectConfigProps$();
 		for (const [key, value] of Object.entries(defaultConfig)) {
 			values.push(createValueContext(key, value, config[key], props[key], types[key], listPropsValues[key]));
 		}
