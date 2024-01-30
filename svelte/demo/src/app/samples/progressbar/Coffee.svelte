@@ -1,8 +1,7 @@
 <script lang="ts">
 	import {type ProgressbarSlots} from '@agnos-ui/svelte/components/progressbar';
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Props = ProgressbarSlots['content']; // eslint-disable-line @typescript-eslint/no-unused-vars
-	type $$Slots = ProgressbarSlots; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Props = ProgressbarSlots['content'];
+	type $$Slots = ProgressbarSlots;
 
 	export let state: $$Props['state'];
 	import '@agnos-ui/common/samples/progressbar/custom.scss';

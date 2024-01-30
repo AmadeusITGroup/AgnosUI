@@ -2,7 +2,6 @@
 	import {Progressbar} from '@agnos-ui/svelte/components/progressbar';
 	import {createWidgetsDefaultConfig} from '@agnos-ui/svelte/config';
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const widgetsConfig$ = createWidgetsDefaultConfig();
 	$widgetsConfig$ = {progressbar: {slotDefault: (widget) => `${widget.state.percentage}%`}};
 </script>

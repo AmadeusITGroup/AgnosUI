@@ -3,10 +3,8 @@
 	import {openModal} from '@agnos-ui/svelte/components/modal';
 	import Self from './StackModal.svelte';
 
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Props = ModalSlots<void>['default']; // eslint-disable-line @typescript-eslint/no-unused-vars
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Slots = ModalSlots<void>; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Props = ModalSlots<void>['default'];
+	type $$Slots = ModalSlots<void>;
 	export let widget: $$Props['widget'];
 	export let state: $$Props['state'];
 </script>

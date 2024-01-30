@@ -7,9 +7,8 @@
 	import biDashCircleFill from 'bootstrap-icons/icons/dash-circle-fill.svg?raw';
 	import biLightbulb from 'bootstrap-icons/icons/lightbulb.svg?raw';
 
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Props = AlertSlots['structure']; // eslint-disable-line @typescript-eslint/no-unused-vars
-	type $$Slots = AlertSlots; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Props = AlertSlots['structure'];
+	type $$Slots = AlertSlots;
 
 	export let state: $$Props['state'];
 	export let widget: $$Props['widget'];
