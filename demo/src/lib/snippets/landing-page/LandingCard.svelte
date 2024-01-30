@@ -6,7 +6,7 @@
 </script>
 
 <div class="col-12 col-md-6 col-lg-4 mb-3">
-	<div class="card">
+	<div class="card bg-light">
 		<div class="row g-0">
 			{#if svg}
 				<div class="col-4 p-2">
@@ -41,6 +41,5 @@
 	.card {
 		height: 100%;
 		border: none;
-		background-color: transparent;
 	}
 </style>

@@ -2,7 +2,7 @@
 	import Svg from '$lib/layout/Svg.svelte';
 	import github from 'bootstrap-icons/icons/github.svg?raw';
 	import twitter from 'bootstrap-icons/icons/twitter-x.svg?raw';
-	import 'bootstrap/dist/css/bootstrap.css';
+	import './bs-customTheme.scss';
 	import {/*canonicalURL$,*/ pathToRoot$, routeLevel$} from '$lib/stores';
 	import './styles.scss';
 	import {beforeNavigate, onNavigate} from '$app/navigation';
@@ -13,6 +13,7 @@
 	import MainSection from '$lib/layout/MainSection.svelte';
 	import SideMenu from './menu/SideMenu.svelte';
 	import TOC from './menu/TOC.svelte';
+	import agnosUILogo from '$resources/agnosui-logo.svg?raw';
 
 	const onServiceWorkerUpdate = () => {
 		void updated.check();
@@ -51,30 +52,30 @@
 -->
 
 <div class="agnos-ui">
-	<nav class="demo-nav-top navbar navbar-dark bg-primary bg-gradient">
-		<div class="container-fluid">
-			<a class="navbar-brand" href={$pathToRoot$}> AgnosUI </a>
+	<nav class="demo-nav-top navbar">
+		<div class="container-xxl">
+			<a class="navbar-brand d-flex align-items-center" href={$pathToRoot$}><Svg svg={agnosUILogo} className="agnosui-logo-brand me-2" /> AgnosUI </a>
 			<div class="align-items-center d-none d-md-flex">
 				<div class="d-flex align-items-center"></div>
 				<a
-					class="nav-link text-white ms-3"
+					class="nav-link ms-3"
 					href="{$pathToRoot$}docs/angular/getting-started/installation"
 					class:active={$page.route.id?.startsWith('/docs/')}
 					aria-current={$page.route.id?.startsWith('/docs/') ? 'page' : undefined}>Documentation</a
 				>
 				<a
-					class="nav-link text-white ms-3"
+					class="nav-link ms-3"
 					href="{$pathToRoot$}blog/2024-01-12"
 					class:active={$page.route.id?.startsWith('/blog/')}
 					aria-current={$page.route.id?.startsWith('/blog/') ? 'page' : undefined}>Blog</a
 				>
-				<a class="nav-link text-white ms-3" href="https://github.com/AmadeusITGroup/AgnosUI" aria-label="link to GitHub repository" target="_blank">
+				<a class="nav-link ms-3" href="https://github.com/AmadeusITGroup/AgnosUI" aria-label="link to GitHub repository" target="_blank">
 					<Svg className="icon-24 align-middle" svg={github} />
 				</a>
-				<a class="nav-link text-white ms-3" href="https://twitter.com/AgnosUI" aria-label="link to twitter / x account" target="_blank">
+				<a class="nav-link ms-3" href="https://twitter.com/AgnosUI" aria-label="link to twitter / x account" target="_blank">
 					<Svg className="icon-24 align-middle" svg={twitter} />
 				</a>
-				<span class="ms-3 text-white">v{import.meta.env.AGNOSUI_VERSION}</span>
+				<span class="ms-3">v{import.meta.env.AGNOSUI_VERSION}</span>
 			</div>
 			<div class="d-block d-md-none">
 				<MobileMenu />
@@ -123,6 +124,10 @@
 			'mobileMenu'
 			'main';
 		grid-template-rows: 60px auto 1fr;
+	}
+
+	:global(.agnosui-logo-brand) {
+		width: 25px;
 	}
 
 	.demo-mobile-menu {
