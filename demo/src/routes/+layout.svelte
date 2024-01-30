@@ -50,7 +50,7 @@
 </svelte:head>
 -->
 
-<div class="agnos-ui">
+<div class="agnos-ui" data-sveltekit-reload={$updated ? '' : 'off'}>
 	<nav class="demo-nav-top navbar navbar-dark bg-primary bg-gradient">
 		<div class="container-fluid">
 			<a class="navbar-brand" href={$pathToRoot$}> AgnosUI </a>
