@@ -3,7 +3,6 @@
 	import {createWidgetsDefaultConfig} from '@agnos-ui/svelte/config';
 	import Icon from './Icon.svelte';
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const widgetsConfig$ = createWidgetsDefaultConfig();
 	$widgetsConfig$.alert = {...$widgetsConfig$.alert, dismissible: false, className: 'd-flex align-items-center', slotStructure: Icon};
 </script>

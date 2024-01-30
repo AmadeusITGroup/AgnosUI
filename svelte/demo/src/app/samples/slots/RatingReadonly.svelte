@@ -6,10 +6,8 @@
 </script>
 
 <script lang="ts">
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Props = Pick<Partial<Props>, 'rating' | 'maxRating' | 'className' | 'slotStar'>; // eslint-disable-line @typescript-eslint/no-unused-vars
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Slots = Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Props = Pick<Partial<Props>, 'rating' | 'maxRating' | 'className' | 'slotStar'>;
+	type $$Slots = Slots;
 
 	const widget = callWidgetFactory({
 		factory: createRating,

@@ -36,7 +36,11 @@
 		{
 			"files": ["demo/**"],
 			"rules": {
-				"@agnos-ui/check-replace-imports": ["error", "@agnos-ui/svelte"]
+				"@agnos-ui/check-replace-imports": ["error", "@agnos-ui/svelte"],
+				"@typescript-eslint/no-unused-vars": [
+					"error",
+					{"vars": "all", "args": "none", "ignoreRestSiblings": false, "varsIgnorePattern": "^\\$\\$(Props|Slots)$"}
+				]
 			}
 		}
 	]
