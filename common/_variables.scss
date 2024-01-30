@@ -2,14 +2,10 @@
 @import '../node_modules/bootstrap/scss/variables';
 @import '../node_modules/bootstrap/scss/mixins/breakpoints';
 
-$light-background: #f3f5fa;
+// $light-background: #e4c7ff;
+$light-background: #f8eeff;
 
-$gradient-top: #006dff;
+$gradient-top: #26005a;
 $gradient-bottom: #0097fe;
 $gradient-text-top: $gradient-top;
-$gradient-text-bottom: #254a64;
-
-// $gradient-top: #bc0cf1;
-// $gradient-bottom: #d40404;
-// $gradient-text-top: #bc0cf1;
-// $gradient-text-bottom: #d40404;
+$gradient-text-bottom: #26005a;

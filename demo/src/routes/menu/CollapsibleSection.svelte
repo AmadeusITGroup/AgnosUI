@@ -39,10 +39,10 @@
 </div>
 
 <style lang="scss">
-	.btn-header:focus,
+	.btn-header:focus-visible,
 	.btn-header:hover,
-	.btn-header:focus:active {
-		background-color: var(--bs-secondary-bg);
+	.btn-header:focus-visible:active {
+		background-color: var(--bs-secondary);
 	}
 
 	svg {
