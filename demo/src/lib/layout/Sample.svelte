@@ -62,16 +62,16 @@
 
 	export let showCode = false;
 	let code = '';
-
-	$: path = `${sample.componentName}/${sample.sampleName}`.toLowerCase();
+	$: isPlaceholder = sample.files[$selectedFramework$].entryPoint === 'placeholder';
+	$: path = isPlaceholder ? `placeholder/placeholdersample` : `${sample.componentName}/${sample.sampleName}`.toLowerCase();
 	$: files = Object.keys(sample.files[$selectedFramework$].files);
 	$: selectedFileName = sample.files[$selectedFramework$].entryPoint;
+	$: complementaryUrl = sample.files[$selectedFramework$].complementaryUrl;
 	async function getCode(showCode: boolean, frameworkName: Frameworks, sample: SampleInfo, fileName: string) {
 		code = showCode ? await sample.files[frameworkName].files[fileName]() : '';
 	}
 	$: void getCode(showCode, $selectedFramework$!, sample, selectedFileName);
-
-	$: sampleBaseUrl = `${$pathToRoot$}${$selectedFramework$}/samples/#/${path}`;
+	$: sampleBaseUrl = `${$pathToRoot$}${$selectedFramework$}/samples${complementaryUrl}/#/${path}`;
 	$: sampleUrl = sampleBaseUrl + (urlParameters ? `#${JSON.stringify(urlParameters)}` : '');
 
 	const {showSpinner$, handler} = createIframeHandler(height, !noresize);
@@ -125,7 +125,7 @@
 			</ul>
 		{/if}
 		<div class="border border-top-0">
-			<Lazy component={() => import('./Code.svelte')} {code} fileName={selectedFileName}>
+			<Lazy component={() => import('./Code.svelte')} {code} fileName={selectedFileName} language={isPlaceholder ? $selectedFramework$ : undefined}>
 				<div class="spinner-border text-primary" role="status">
 					<span class="visually-hidden">Loading...</span>
 				</div>

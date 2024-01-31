@@ -22,7 +22,6 @@
 						"outputPath": "dist/demo",
 						"scripts": [],
 						"inlineStyleLanguage": "scss",
-						"styles": ["@agnos-ui/style-bootstrap/css/agnosui.css"],
 						"tsConfig": "tsconfig.json",
 						"loader": {
 							".txt": "text",
