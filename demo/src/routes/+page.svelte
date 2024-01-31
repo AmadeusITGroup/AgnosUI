@@ -1,11 +1,11 @@
 <script lang="ts">
 	import Svg from '$lib/layout/Svg.svelte';
 	import LandingCard from '$lib/snippets/landing-page/LandingCard.svelte';
+	import angularLogo from '$resources/logo-angular.svg?raw';
 	import reactLogo from '$resources/logo-react.svg?raw';
 	import svelteLogo from '$resources/logo-svelte.svg?raw';
 	import agnosUILogo from '$resources/agnosui-logo.svg?raw';
 	import bullet from 'bootstrap-icons/icons/arrow-right-square-fill.svg?raw';
-	import angularLogoWebp from '$resources/images/angular_gradient_100x100.png';
 </script>
 
 <svelte:head>
@@ -54,7 +54,7 @@
 					aria-label="link to angular examples"
 					title="Angular"
 				>
-					<img src={angularLogoWebp} width="30px" height="30px" alt="angular logo" class="me-2" />
+					<Svg svg={angularLogo} className="pres-card-logo me-2" />
 					Angular
 				</a>
 			</div>
@@ -62,8 +62,8 @@
 				<a
 					href="docs/react/getting-started/installation"
 					class="btn btn-outline-primary rounded-pill d-flex align-items-center justify-content-center px-3"
-					aria-label="link to angular examples"
-					title="Angular"
+					aria-label="link to react examples"
+					title="React"
 				>
 					<Svg svg={reactLogo} className="pres-card-logo me-2" />
 					React
@@ -73,7 +73,7 @@
 				<a
 					href="docs/svelte/getting-started/installation"
 					class="btn btn-outline-primary rounded-pill d-flex align-items-center justify-content-center px-3"
-					aria-label="link to angular examples"
+					aria-label="link to svelte examples"
 					title="Svelte"
 				>
 					<Svg svg={svelteLogo} className="pres-card-logo me-2" />
