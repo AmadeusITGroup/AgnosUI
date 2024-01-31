@@ -139,3 +139,24 @@ header {
 		height: 24px;
 	}
 }
+
+@media (prefers-reduced-motion) {
+	::view-transition-group(*),
+	::view-transition-old(*),
+	::view-transition-new(*) {
+		animation: none !important;
+	}
+}
+
+.demo-nav-top {
+	view-transition-name: demo-nav-top;
+}
+.demo-sidebar {
+	view-transition-name: demo-sidebar;
+}
+.demo-toc {
+	view-transition-name: demo-toc;
+}
+.demo-mobile-menu {
+	view-transition-name: demo-mobile-menu;
+}
