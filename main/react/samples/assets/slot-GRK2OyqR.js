@@ -1,0 +1,1 @@
+import{j as t,r as s}from"./index-sKebvJOW.js";const p=new WeakMap,c=r=>o=>t.jsx(t.Fragment,{children:r(o)}),a=r=>{let e=p.get(r);return e||(e=c(r),p.set(r,e)),e},i=r=>r.prototype instanceof s.Component,u=({slotContent:r,props:e})=>{if(typeof r=="function"){const n=i(r)?r:a(r);return t.jsx(n,{...e})}return t.jsx(t.Fragment,{children:r})};export{u as S};
