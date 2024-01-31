@@ -5,7 +5,7 @@
 	import './bs-customTheme.scss';
 	import {/*canonicalURL$,*/ pathToRoot$, routeLevel$} from '$lib/stores';
 	import './styles.scss';
-	import {beforeNavigate, onNavigate} from '$app/navigation';
+	import {afterNavigate, beforeNavigate, onNavigate} from '$app/navigation';
 	import {page, updated} from '$app/stores';
 	import {onMount} from 'svelte';
 	import MobileSubMenu from './menu/MobileSubMenu.svelte';
@@ -14,6 +14,7 @@
 	import SideMenu from './menu/SideMenu.svelte';
 	import TOC from './menu/TOC.svelte';
 	import agnosUILogo from '$resources/agnosui-logo.svg?raw';
+	import type {Snapshot} from '@sveltejs/kit';
 
 	const onServiceWorkerUpdate = () => {
 		void updated.check();
@@ -43,6 +44,24 @@
 			});
 		});
 	});
+
+	let container: HTMLElement;
+
+	const regexFwkSubPath = /\/docs\/(angular|react|svelte)\/([^#?]*)([#?].*)?$/;
+
+	afterNavigate((navigation) => {
+		if (!navigation.to?.url?.hash) {
+			const toFwkSubPath = navigation.to?.url?.href?.match(regexFwkSubPath)?.[2] as string | undefined;
+			const fromFwkSubPath = navigation.from?.url?.href?.match(regexFwkSubPath)?.[2] as string | undefined;
+			if (!toFwkSubPath || !fromFwkSubPath || toFwkSubPath !== fromFwkSubPath) {
+				container.scrollTo(0, 0);
+			}
+		}
+	});
+	export const snapshot: Snapshot<number> = {
+		capture: () => container.scrollTop,
+		restore: (y) => container.scrollTo(0, y),
+	};
 </script>
 
 <!-- TODO: add canonical URL when noindex is removed
@@ -82,7 +101,7 @@
 			</div>
 		</div>
 	</nav>
-	<div class="demo-main d-flex flex-column">
+	<div class="demo-main d-flex flex-column" bind:this={container}>
 		{#if isMainPage}
 			<slot />
 		{:else}
@@ -150,6 +169,9 @@
 		grid-area: main;
 		overflow: auto;
 		scrollbar-gutter: stable;
+		@media (max-width: 991px) {
+			scroll-padding-top: 43px;
+		}
 	}
 
 	.demo-sidebar {
