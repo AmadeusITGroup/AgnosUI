@@ -91,7 +91,7 @@
 		"@angular/core": "*"
 	},
 	"dependencies": {
-		"@agnos-ui/core": "",
+		"@agnos-ui/core": "0.0.1-alpha.10",
 		"@amadeus-it-group/tansu": "1.0.0",
 		"tslib": "^2.6.2"
 	},
@@ -109,5 +109,6 @@
 		"rxjs": "^7.8.1",
 		"zone.js": "~0.14.3"
 	},
-	"sideEffects": false
+	"sideEffects": false,
+	"version": "0.0.1-alpha.10"
 }

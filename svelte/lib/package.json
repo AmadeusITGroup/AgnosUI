@@ -116,8 +116,8 @@
 		}
 	},
 	"dependencies": {
-		"@agnos-ui/style-bootstrap": "",
-		"@agnos-ui/svelte-headless": "",
+		"@agnos-ui/style-bootstrap": "0.0.1-alpha.10",
+		"@agnos-ui/svelte-headless": "0.0.1-alpha.10",
 		"@amadeus-it-group/tansu": "1.0.0"
 	},
 	"peerDependencies": {
@@ -126,5 +126,6 @@
 	"devDependencies": {
 		"@sveltejs/package": "^2.2.6"
 	},
-	"sideEffects": false
+	"sideEffects": false,
+	"version": "0.0.1-alpha.10"
 }
