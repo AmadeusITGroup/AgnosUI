@@ -21,7 +21,7 @@ const frameworks = [
 	{
 		name: 'svelte',
 		command: isCI ? previewDemoCommand : includeCoverage ? `npm run dev:coverage -w svelte/demo` : `npm run dev -w svelte/demo`,
-		url: `${isCI ? demoUrl : 'http://localhost:3001'}/svelte/samples/`,
+		url: `${isCI ? demoUrl : 'http://localhost:3001'}/svelte/samples/app/`,
 	},
 ].filter(envFramework ? (framework) => framework.name === envFramework : () => true);
 
