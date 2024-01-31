@@ -39,7 +39,7 @@ export function updateHashValue(type: 'config' | 'props', key: string, value: an
 	// TODO: prevent the navigation to be recorded in the history.
 	location.hash = hashString ? `#${hashString}` : '#';
 	// give priority to hash in playground (TODO remove the ? too)
-	location.search = '';
+	// location.search = '';
 }
 
 interface PlaygroundProps {

@@ -6,6 +6,7 @@ import {typeBoolean, typeFunction, typeNumber, typeString} from '../../utils/wri
 import type {ConfigValidator, PropsConfig, Widget, SlotContent, WidgetSlotContext} from '../../types';
 import {noop} from '../../utils/internal/func';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
+import {urlJsonObject$} from '@agnos-ui/common/utils';
 
 /**
  * A type for the slot context of the pagination widget
@@ -385,7 +386,13 @@ export function createPagination(config?: PropsConfig<PaginationProps>): Paginat
 		}
 		return pageCount;
 	});
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const pageFromUrl$ = computed(() => {
+		const {page} = urlJsonObject$();
+		return page;
+	});
 	// current page
+	// const page$ = bindableDerived(onPageChange$, [_dirtyPage$, pageCount$, pageFromUrl$], ([dirtyPage, pageCount, pageFromUrl]) => pageFromUrl ? clamp(pageFromUrl, pageCount, 1) : clamp(dirtyPage, pageCount, 1));
 	const page$ = bindableDerived(onPageChange$, [_dirtyPage$, pageCount$], ([dirtyPage, pageCount]) => clamp(dirtyPage, pageCount, 1));
 
 	const pages$ = computed(() => pagesFactory$()(page$(), pageCount$()));
