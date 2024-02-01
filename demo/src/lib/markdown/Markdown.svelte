@@ -56,4 +56,6 @@
 	} as Partial<Renderers>;
 </script>
 
-<SvelteMarkdown source={tokens} {renderers} />
+{#key tokens}
+	<SvelteMarkdown source={tokens} {renderers} />
+{/key}
