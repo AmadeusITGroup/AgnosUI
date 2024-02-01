@@ -6,6 +6,9 @@
 	import MdSection from '$lib/markdown/renderers/MdSection.svelte';
 	import MdImage from '$lib/markdown/renderers/MdImage.svelte';
 	import MdLink from '$lib/markdown/renderers/MdLink.svelte';
+	import MdParagraph from './renderers/MdParagraph.svelte';
+	import MdListItem from './renderers/MdListItem.svelte';
+	import MdCodeSpan from './renderers/MdCodeSpan.svelte';
 
 	export let source: string;
 
@@ -41,7 +44,16 @@
 	}
 
 	$: tokens = getTokens(source);
-	const renderers: Partial<Renderers> = {image: MdImage, heading: Heading, code: MdCode, section: MdSection, link: MdLink} as Partial<Renderers>;
+	const renderers: Partial<Renderers> = {
+		image: MdImage,
+		heading: Heading,
+		code: MdCode,
+		section: MdSection,
+		link: MdLink,
+		paragraph: MdParagraph,
+		listitem: MdListItem,
+		codespan: MdCodeSpan,
+	} as Partial<Renderers>;
 </script>
 
 <SvelteMarkdown source={tokens} {renderers} />

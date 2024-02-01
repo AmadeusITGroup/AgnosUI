@@ -46,12 +46,12 @@
 
 {#if lang === 'sample'}
 	{#if sample}
-		<Sample {title} {sample} {height} showCode showButtons={false} />
+		<Sample {title} {sample} {height} showCode showButtons={false} isDoc={true} />
 	{:else}
 		Sample not found, make sure to fill the samples.ts file.
 	{/if}
 {:else if lang === 'mermaid'}
 	<Mermaid {code} />
 {:else}
-	<Code language={lang} {code} />
+	<Code language={lang} {code} className="mb-4" />
 {/if}

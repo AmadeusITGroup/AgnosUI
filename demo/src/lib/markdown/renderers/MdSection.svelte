@@ -1,1 +1,1 @@
-<section><slot /></section>
+<section class="mb-5"><slot /></section>

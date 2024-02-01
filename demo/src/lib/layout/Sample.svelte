@@ -34,6 +34,11 @@
 	export let height: number;
 
 	/**
+	 * True if used in the Markdown documentation
+	 */
+	export let isDoc: boolean = false;
+
+	/**
 	 * Object to be stringified and sent in the parameter of the iframe url.
 	 *
 	 * @example
@@ -78,7 +83,7 @@
 </script>
 
 <div class="mb-4 py-2 px-0 px-sm-3">
-	<div class="position-relative border">
+	<div class={`position-relative ${isDoc ? 'border-bottom' : 'border'} `}>
 		{#if $showSpinner$}
 			<div class="position-absolute top-50 start-50 translate-middle iframeSpinner">
 				<div class="spinner-border text-primary" role="status">
