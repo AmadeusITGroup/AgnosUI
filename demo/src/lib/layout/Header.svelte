@@ -23,7 +23,7 @@
 		<h1 class="text-primary col-auto me-auto me-md-none mb-0 p-0 p-md-3 text-center text-md-start w-100">{title}</h1>
 	</div>
 	{#if tabs.length}
-		<ul class="nav-tabs px-4 px-lg-5 content-tabset justify-content-start nav" role="tablist">
+		<ul class="nav-tabs px-4 px-lg-5 d-flex flex-nowrap content-tabset justify-content-start nav" role="tablist">
 			{#each tabs as { title, key, path }}
 				{@const isActive = $selectedTabName$ === key}
 				<li class="nav-item" role="presentation">
