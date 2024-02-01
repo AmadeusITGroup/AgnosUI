@@ -4,7 +4,9 @@
 
 Before you begin, make sure you have the following prerequisites installed on your system:
 
-- Node.js: You can download and install Node.js from the [official website](https://nodejs.org/).
+<ul>
+  <li>Node.js: You can download and install Node.js from the <a href="https://nodejs.org/" target="_blank">official website</a></li>
+</ul>
 
 ## Create a new project
 
