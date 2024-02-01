@@ -49,7 +49,7 @@
 		<div class="card-text row">
 			<div class="col-12 col-sm-4 mb-2 mb-md-0">
 				<a
-					href="docs/angular/getting-started/installation"
+					href="docs/angular/getting-started/introduction"
 					class="btn btn-outline-primary rounded-pill d-flex align-items-center justify-content-center px-3"
 					aria-label="link to angular examples"
 					title="Angular"
@@ -60,7 +60,7 @@
 			</div>
 			<div class="col-12 col-sm-4 mb-2 mb-md-0">
 				<a
-					href="docs/react/getting-started/installation"
+					href="docs/react/getting-started/introduction"
 					class="btn btn-outline-primary rounded-pill d-flex align-items-center justify-content-center px-3"
 					aria-label="link to react examples"
 					title="React"
@@ -71,7 +71,7 @@
 			</div>
 			<div class="col-12 col-sm-4 mb-2 mb-md-0">
 				<a
-					href="docs/svelte/getting-started/installation"
+					href="docs/svelte/getting-started/introduction"
 					class="btn btn-outline-primary rounded-pill d-flex align-items-center justify-content-center px-3"
 					aria-label="link to svelte examples"
 					title="Svelte"

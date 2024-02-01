@@ -1,6 +1,6 @@
-# Introduction
+# Introduction to Services
 
-## TODO
+## Overview
 
-To be done.
-Introducing quickly again what's a service in AgnosUI, and linking to the doc about Directives.
+AgnosUI Services are pure Typescript utilities that handle problematics such as popovers or focus tracking in a reactive and framework-agnostic manner.  
+They are provided in the core package, @agnos-ui/core, and can be used with or without the widgets.

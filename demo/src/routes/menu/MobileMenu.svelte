@@ -28,7 +28,7 @@
 	<nav class="navbar navbar-light flex-column align-items-stretch">
 		<a
 			class="nav-item nav-link"
-			href="{$pathToRoot$}docs/angular/getting-started/installation"
+			href="{$pathToRoot$}docs/angular/getting-started/introduction"
 			class:active={$page.route.id?.startsWith('/docs/')}
 			aria-current={$page.route.id?.startsWith('/docs/') ? 'page' : undefined}
 		>
