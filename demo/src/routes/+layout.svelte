@@ -3,7 +3,7 @@
 	import github from 'bootstrap-icons/icons/github.svg?raw';
 	import twitter from 'bootstrap-icons/icons/twitter-x.svg?raw';
 	import './bs-customTheme.scss';
-	import {/*canonicalURL$,*/ pathToRoot$, routeLevel$} from '$lib/stores';
+	import {canonicalURL$, pathToRoot$, routeLevel$} from '$lib/stores';
 	import './styles.scss';
 	import {afterNavigate, beforeNavigate, onNavigate} from '$app/navigation';
 	import {page, updated} from '$app/stores';
@@ -64,11 +64,9 @@
 	};
 </script>
 
-<!-- TODO: add canonical URL when noindex is removed
 <svelte:head>
 	<link rel="canonical" href={$canonicalURL$} />
 </svelte:head>
--->
 
 <div class="agnos-ui">
 	<nav class="demo-nav-top navbar">
