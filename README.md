@@ -1,11 +1,15 @@
-# AgnosUI: A Versatile Frontend Widget Library for CSS Bootstrap Design
+<h1 align="center">AgnosUI - Where web widgets shine</h1>
+
+<p align="center">
+  <img src="demo/static/agnosui-logo.svg" alt="angular-logo" width="120px" height="120px"/>
+</p>
 
 [![Build Status](https://github.com/AmadeusITGroup/AgnosUI/workflows/ci/badge.svg?branch=main)](https://github.com/AmadeusITGroup/AgnosUI/actions)
 [![codecov](https://codecov.io/gh/AmadeusITGroup/AgnosUI/branch/main/graph/badge.svg)](https://codecov.io/gh/AmadeusITGroup/AgnosUI)
 
 ## Introduction
 
-AgnosUI is a powerful library of widgets designed specifically for the [CSS Bootstrap design](https://getbootstrap.com/). Inspired by the success of [ng-bootstrap](https://ng-bootstrap.github.io/), AgnosUI takes the concept a step further by offering widgets that can seamlessly integrate with any front-end framework of your choice. With support for popular frameworks like [Angular](https://angular.io/), [React](https://react.dev/), and [Svelte](https://svelte.dev/), AgnosUI allows you to effortlessly create consistent and visually appealing UI components across your projects.
+AgnosUI is a powerful library that provides configurable Typescript widget factories, headless wrappers and ready-to-use widgets compliant to the [CSS Bootstrap design](https://getbootstrap.com/). Inspired by the success of [ng-bootstrap](https://ng-bootstrap.github.io/), AgnosUI takes the concept a step further by offering widgets that can seamlessly integrate with any front-end framework of your choice. With support for popular frameworks like [Angular](https://angular.io/), [React](https://react.dev/), and [Svelte](https://svelte.dev/), AgnosUI allows you to effortlessly create consistent and visually appealing UI components across your projects.
 
 Feel free to explore the [demo site](https://amadeusitgroup.github.io/AgnosUI/latest/) to see AgnosUI's capabilities.
 
