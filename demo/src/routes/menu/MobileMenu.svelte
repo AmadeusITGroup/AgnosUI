@@ -37,7 +37,7 @@
 		<hr />
 		<a
 			class="nav-item nav-link"
-			href="{$pathToRoot$}blog/2024-01-12"
+			href="{$pathToRoot$}blog/2024-02-01"
 			class:active={$page.route.id?.startsWith('/blog/')}
 			aria-current={$page.route.id?.startsWith('/blog/') ? 'page' : undefined}
 		>
