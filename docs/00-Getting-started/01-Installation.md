@@ -8,7 +8,7 @@ Before you begin, make sure you have the following prerequisites installed on yo
 
 ## Create a new project
 
-If you haven't already, create a new project where you want to use AgnosUI. You can use the `blabla` for this.
+If you haven't already, create a new project where you want to use AgnosUI.
 
 ## Install AgnosUI
 

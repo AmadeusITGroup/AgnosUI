@@ -7,8 +7,8 @@ export const load = async () => {
 			{title: 'Playground', key: 'playground', path: '/components/accordion/playground#'},
 		],
 		prev: {
-			title: 'Bootstrap flavor: Extending',
-			slug: 'bootstrap-flavor/extending',
+			title: 'Headless: Directives',
+			slug: 'headless/directives',
 			subpath: '',
 		},
 		next: {
