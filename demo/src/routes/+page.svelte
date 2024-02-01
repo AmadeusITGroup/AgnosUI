@@ -92,15 +92,15 @@
 		<LandingCard title="Headless widgets">
 			Each widget is provided in headless mode in Angular, React and Svelte using the same factory. You can use them with any front-end CSS framework.
 		</LandingCard>
-		<LandingCard title="Bootstrap widgets">
-			Highly customizable Bootstrap CSS widgets are available for Angular, React and Svelte in separated packages.
-		</LandingCard>
 		<LandingCard title="Consistent">Widgets are provided for Angular, React and Svelte with the exact same markup and functionalities.</LandingCard>
+		<LandingCard title="Accessible">Widgets are designed with a strong emphasis on accessibility and tested for it</LandingCard>
 		<LandingCard title="Highly configurable">
 			Default values for all widgets props are configurable at any point of the application subtree.
 		</LandingCard>
 		<LandingCard title="Fully tested">Unit tests for headless with Vitest. E2e tests for adapters with Playwright.</LandingCard>
-		<LandingCard title="Accessible">Widgets are tested for accessibility with Axe.</LandingCard>
+		<LandingCard title="Bootstrap widgets">
+			Highly customizable Bootstrap CSS widgets are available for Angular, React and Svelte in separated packages.
+		</LandingCard>
 	</div>
 </div>
 <footer class="au-footer pt-2 mt-2">
