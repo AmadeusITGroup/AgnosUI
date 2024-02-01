@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {computed} from '@amadeus-it-group/tansu';
+	import {derived} from '@amadeus-it-group/tansu';
 	import {hash$} from '@agnos-ui/common/utils';
 
 	import '@agnos-ui/common/demo.scss';
@@ -20,23 +20,34 @@
 	}
 	const components = replacePattern(componentsToBeProcessed);
 
-	const component$ = computed(() => {
-		const hash = hash$();
-		return hash
-			? async () => {
-					const componentLoader = components[hash.split('#')[0].split('?')[0]];
-					if (componentLoader) {
-						const component = await componentLoader();
-						if (window.parent) {
-							window.parent.postMessage({type: 'sampleload'});
-						}
-						return component;
-					} else {
-						return import('./Page404.svelte');
-					}
-				}
-			: undefined;
-	});
+	let oldPath: string;
+	const component$ = derived(
+		hash$,
+		(hash, set) => {
+			const newPath = hash.split('#')[0].split('?')[0];
+			if (oldPath !== newPath) {
+				// do not reload when the hash (route) stays the same
+				oldPath = newPath;
+				set(
+					hash
+						? async () => {
+								const componentLoader = components[hash.split('#')[0].split('?')[0]];
+								if (componentLoader) {
+									const component = await componentLoader();
+									if (window.parent) {
+										window.parent.postMessage({type: 'sampleload'});
+									}
+									return component;
+								} else {
+									return import('./Page404.svelte');
+								}
+							}
+						: undefined,
+				);
+			}
+		},
+		undefined as (() => Promise<any>) | undefined,
+	);
 </script>
 
 {#if $component$}

@@ -34,12 +34,11 @@
 				</Slot>
 			</a>
 		{:else}
-			<!-- svelte-ignore a11y-invalid-attribute -->
 			<a
 				class="page-link au-page"
 				aria-label={state.pagesLabel[i]}
-				href="#"
-				on:click|preventDefault={() => widget.actions.select(page)}
+				href={state.pagesHrefs[i]}
+				on:click={(event) => widget.actions.select(page, event)}
 				tabindex={state.disabled ? -1 : undefined}
 				aria-disabled={state.disabled ? 'true' : null}
 				><!-- Remove the strange formatting with https://github.com/sveltejs/svelte/issues/3080

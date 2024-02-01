@@ -3,10 +3,12 @@ import {beforeEach, describe, expect, test, vi} from 'vitest';
 import type {PaginationState, PaginationWidget} from './pagination';
 import {createPagination, getPaginationDefaultConfig} from './pagination';
 import {ngBootstrapPagination} from './bootstrap';
+import {assign} from '../../../../common/utils';
 
 describe(`Pagination`, () => {
 	let pagination: PaginationWidget;
 	let state: PaginationState;
+	let expectedState: PaginationState;
 
 	let consoleErrorSpy: MockInstance<Parameters<typeof console.error>, ReturnType<typeof console.error>>;
 
@@ -20,6 +22,7 @@ describe(`Pagination`, () => {
 		const unsubscribe = pagination.state$.subscribe((newState) => {
 			state = newState;
 		});
+		expectedState = state;
 		return () => {
 			unsubscribe();
 			expect(consoleErrorSpy).not.toHaveBeenCalled();
@@ -34,22 +37,36 @@ describe(`Pagination`, () => {
 	};
 
 	test(`should have sensible state`, () => {
-		// TODO we don't test ariaPageLabel here...
-		expect(state).toMatchObject({
+		expect(state).toStrictEqual({
 			pageCount: 1, // total number of page
 			page: 1, // current page
 			pages: [1], // list of the visible pages
 			previousDisabled: true,
+			ariaLabel: 'Page navigation',
+			className: '',
 			nextDisabled: true,
 			disabled: false,
 			directionLinks: true,
 			boundaryLinks: false,
+			slotEllipsis: '…',
+			slotFirst: '«',
+			slotLast: '»',
+			slotNext: '›',
+			slotNumberLabel: state.slotNumberLabel,
+			slotPages: undefined,
+			slotPrevious: '‹',
 			size: null,
 			activeLabel: '(current)',
 			ariaFirstLabel: 'Action link for first page',
 			ariaLastLabel: 'Action link for last page',
 			ariaNextLabel: 'Action link for next page',
 			ariaPreviousLabel: 'Action link for previous page',
+			directionsHrefs: {
+				next: '#',
+				previous: '#',
+			},
+			pagesHrefs: ['#'],
+			pagesLabel: ['Page 1 of 1'],
 		});
 	});
 
@@ -64,24 +81,93 @@ describe(`Pagination`, () => {
 
 	test('should warn using invalid size value', () => {
 		pagination.patch({size: 'invalidSize' as 'sm'});
-		expect(state.size).toStrictEqual(null);
+		expect(state).toStrictEqual(assign(expectedState, {size: null}));
 		expectLogInvalidValue();
 		pagination.patch({size: 'sm'});
-		expect(state.size).toStrictEqual('sm');
+		expect(state).toStrictEqual(assign(expectedState, {size: 'sm'}));
 	});
 
 	test('actions should update the state', () => {
 		pagination.patch({collectionSize: 200});
+		const pagesLabel = Array.from({length: 20}, (_, index) => `Page ${index + 1} of 20`);
+		const pages = Array.from({length: 20}, (_, index) => index + 1);
+		const pagesHrefs = Array.from({length: 20}, (_, __) => `#`);
+
 		pagination.actions.first();
-		expect(state).toMatchObject({page: 1, pageCount: 20});
+		expect(state).toStrictEqual(assign(expectedState, {page: 1, pageCount: 20, pagesLabel, nextDisabled: false, pages, pagesHrefs}));
+
 		pagination.actions.next();
-		expect(state).toMatchObject({page: 2, pageCount: 20});
+		expect(state).toStrictEqual(assign(expectedState, {page: 2, previousDisabled: false}));
+
 		pagination.actions.select(5);
-		expect(state).toMatchObject({page: 5, pageCount: 20});
+		expect(state).toStrictEqual(assign(expectedState, {page: 5}));
+
 		pagination.actions.last();
-		expect(state).toMatchObject({page: 20, pageCount: 20});
+		expect(state).toStrictEqual(assign(expectedState, {page: 20, nextDisabled: true}));
+
 		pagination.actions.previous();
-		expect(state).toMatchObject({page: 19, pageCount: 20});
+		expect(state).toStrictEqual(assign(expectedState, {page: 19, nextDisabled: false}));
+	});
+
+	test('should prepare pages hrefs', () => {
+		pagination.patch({page: 3, collectionSize: 50, pageSize: 10, pageLink: (p) => `${p}/5`});
+		const pagesLabel = Array.from({length: 5}, (_, index) => `Page ${index + 1} of 5`);
+		const pages = Array.from({length: 5}, (_, index) => index + 1);
+		const pagesHrefs = Array.from({length: 5}, (_, index) => `${index + 1}/5`);
+		expectedState = {
+			...expectedState,
+			page: 3,
+			pageCount: 5,
+			pagesLabel,
+			nextDisabled: false,
+			pages,
+			pagesHrefs,
+			previousDisabled: false,
+			directionsHrefs: {
+				next: '4/5',
+				previous: '2/5',
+			},
+		};
+		expect(state).toStrictEqual(expectedState);
+
+		pagination.actions.next();
+		expectedState = assign(expectedState, {
+			page: 4,
+			directionsHrefs: {
+				next: '5/5',
+				previous: '3/5',
+			},
+		});
+		expect(state).toStrictEqual(expectedState);
+
+		pagination.actions.next();
+		expectedState = assign(expectedState, {
+			page: 5,
+			nextDisabled: true,
+			directionsHrefs: {
+				next: '5/5',
+				previous: '4/5',
+			},
+		});
+		expect(state).toStrictEqual(expectedState);
+
+		pagination.actions.first();
+		expectedState = assign(expectedState, {
+			page: 1,
+			nextDisabled: false,
+			previousDisabled: true,
+			directionsHrefs: {
+				next: '2/5',
+				previous: '1/5',
+			},
+		});
+		expect(state).toStrictEqual(expectedState);
+	});
+
+	test('should prepare pages hrefs when 1 page', () => {
+		pagination.patch({page: 1, collectionSize: 20, pageSize: 20, pageLink: (p) => `${p}/1`});
+		const pagesHrefs = ['1/1'];
+		expect(state).toStrictEqual(assign(expectedState, {pagesHrefs, directionsHrefs: {previous: '1/1', next: '1/1'}}));
 	});
 
 	test('should return api isEllipisis', () => {
