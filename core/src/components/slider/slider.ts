@@ -645,6 +645,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 					}
 				};
 				if (isInteractable$()) {
+					updateSliderSize$.set({});
 					(event.target as HTMLElement).focus();
 					document.addEventListener('mousemove', handleDrag);
 					// TODO mouse up doesn't work outside the handle area
@@ -669,6 +670,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 					}
 				};
 				if (isInteractable$()) {
+					updateSliderSize$.set({});
 					(event.target as HTMLElement).focus();
 					document.addEventListener('touchmove', handleDrag);
 					document.addEventListener(
