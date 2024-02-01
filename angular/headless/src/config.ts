@@ -94,13 +94,20 @@ export const widgetsConfigFactory = <Config extends {[widgetName: string]: objec
 	 * Returns the widgets default configuration store that was provided in the current injection context.
 	 * Throws if the no widgets default configuration store was provided.
 	 *
+	 * @param defaultConfig - values to set as soon as the config is injected
 	 * @remarks
 	 * This function must be called from an injection context, such as a constructor, a factory function, a field initializer or
 	 * a function used with {@link https://angular.io/api/core/runInInjectionContext | runInInjectionContext}.
 	 *
 	 * @returns the widgets default configuration store.
 	 */
-	const injectWidgetsConfig = () => inject(widgetsConfigInjectionToken);
+	const injectWidgetsConfig = (defaultConfig?: Partial2Levels<Config>) => {
+		const widgetsConfig = inject(widgetsConfigInjectionToken);
+		if (defaultConfig) {
+			widgetsConfig.set(defaultConfig);
+		}
+		return widgetsConfig;
+	};
 
 	const injectWidgetConfig = <N extends keyof Config>(widgetName: N): ReadableSignal<Partial<Config[N]> | undefined> => {
 		const widgetsConfig = inject(widgetsConfigInjectionToken, {optional: true});
