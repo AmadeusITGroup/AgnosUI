@@ -94,11 +94,13 @@
 			"output": [
 				"dist/README.md",
 				"dist/package.json"
+			],
+			"dependencies": [
+				"build:src"
 			]
 		},
 		"build": {
 			"dependencies": [
-				"build:src",
 				"build:pkg"
 			]
 		},
