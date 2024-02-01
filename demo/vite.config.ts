@@ -69,6 +69,7 @@ export default defineConfig({
 			'svelte-markdown',
 			'marked',
 			'mermaid',
+			'@stackblitz/sdk',
 		],
 	},
 });
