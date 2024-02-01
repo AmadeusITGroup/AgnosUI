@@ -13,13 +13,11 @@
 </svelte:head>
 
 <header
-	class="au-header bg-light pt-3 px-4 px-lg-5 d-flex mb-4 align-items-center title"
+	class="au-header bg-light pt-3 px-4 px-lg-5 pb-0 d-flex flex-column mb-4 align-items-start title"
 	class:rounded={!tabs.length}
 	class:rounded-top={tabs.length}
-	class:pb-5={tabs.length}
-	class:pb-3={!tabs.length}
 >
-	<div class="row align-items-center w-100" class:pb-3={tabs.length}>
+	<div class="row align-items-center w-100 flex-grow-1" class:pb-3={tabs.length}>
 		<h1 class="text-primary col-auto me-auto me-md-none mb-0 p-0 p-md-3 text-center text-md-start w-100">{title}</h1>
 	</div>
 	{#if tabs.length}
@@ -44,7 +42,6 @@
 
 <style lang="scss">
 	.au-header {
-		position: relative; // already because of title
 		&:before {
 			content: ' ';
 			display: block;
