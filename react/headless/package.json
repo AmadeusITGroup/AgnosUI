@@ -92,7 +92,7 @@
 		}
 	},
 	"dependencies": {
-		"@agnos-ui/core": "",
+		"@agnos-ui/core": "0.1.1",
 		"@amadeus-it-group/tansu": "1.0.0",
 		"classnames": "^2.5.1"
 	},
@@ -104,5 +104,6 @@
 		"@types/react": "^18.2.48",
 		"@types/react-dom": "^18.2.18"
 	},
-	"sideEffects": false
+	"sideEffects": false,
+	"version": "0.1.1"
 }
