@@ -14,6 +14,7 @@ export type WidgetsConfig = {
 	[WidgetName in keyof CoreWidgetsConfig]: AdaptPropsSlots<CoreWidgetsConfig[WidgetName]>;
 };
 type AdaptParentConfig<Config> = (config: Partial2Levels<Config>) => Partial2Levels<Config>;
+type InjectWidgetsConfig<Config> = (config?: Partial2Levels<Config>) => WidgetsConfigStore<Config>;
 
 /**
  * A factory to create the utilities to allow widgets to be context-aware.
@@ -101,7 +102,7 @@ export const widgetsConfigFactory = <Config extends {[widgetName: string]: objec
 	 *
 	 * @returns the widgets default configuration store.
 	 */
-	const injectWidgetsConfig = (defaultConfig?: Partial2Levels<Config>) => {
+	const injectWidgetsConfig: InjectWidgetsConfig<Config> = (defaultConfig?: Partial2Levels<Config>) => {
 		const widgetsConfig = inject(widgetsConfigInjectionToken);
 		if (defaultConfig) {
 			widgetsConfig.set(defaultConfig);
