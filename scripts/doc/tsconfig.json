@@ -2,7 +2,7 @@
 	"extends": "../../tsconfig.json",
 	"compilerOptions": {
 		"target": "es2020",
-		"module": "NodeNext",
+		"module": "NodeNext"
 	},
-	"include": ["./*.ts"],
+	"include": ["./*.ts"]
 }

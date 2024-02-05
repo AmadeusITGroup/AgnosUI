@@ -11,6 +11,6 @@
 		"moduleResolution": "bundler",
 		"isolatedModules": true,
 		"forceConsistentCasingInFileNames": true,
-		"noEmit": true,
-	},
+		"noEmit": true
+	}
 }
