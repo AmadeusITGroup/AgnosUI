@@ -2,7 +2,7 @@
 	"extends": "./tsconfig.build.json",
 	"compilerOptions": {
 		"paths": {
-			"@agnos-ui/core/*": ["./core/src/*"],
-		},
-	},
+			"@agnos-ui/core/*": ["./core/src/*"]
+		}
+	}
 }

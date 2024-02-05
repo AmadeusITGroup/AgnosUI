@@ -14,7 +14,7 @@
 		"noEmit": true,
 		"paths": {
 			"@agnos-ui/common": ["./common"],
-			"@agnos-ui/common/*": ["./common/*"],
-		},
-	},
+			"@agnos-ui/common/*": ["./common/*"]
+		}
+	}
 }

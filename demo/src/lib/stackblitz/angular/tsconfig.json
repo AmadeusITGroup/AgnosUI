@@ -12,7 +12,7 @@
 		"isolatedModules": true,
 		"forceConsistentCasingInFileNames": true,
 		"paths": {
-			"bootstrap-icons/icons/*": ["./node_modules/bootstrap-icons/icons/*"],
-		},
-	},
+			"bootstrap-icons/icons/*": ["./node_modules/bootstrap-icons/icons/*"]
+		}
+	}
 }

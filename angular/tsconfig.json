@@ -18,12 +18,12 @@
 		"target": "ES2022",
 		"module": "esnext",
 		"lib": ["es2022", "dom", "dom.iterable"],
-		"useDefineForClassFields": false,
+		"useDefineForClassFields": false
 	},
 	"angularCompilerOptions": {
 		"enableI18nLegacyMessageIdFormat": false,
 		"strictInjectionParameters": true,
 		"strictInputAccessModifiers": true,
-		"strictTemplates": true,
-	},
+		"strictTemplates": true
+	}
 }
