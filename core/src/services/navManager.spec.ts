@@ -148,7 +148,7 @@ for (const {direction, arrowNext, arrowPrevious} of [
 			expect(document.activeElement).toBe(element1);
 			expect(navManager.focusFirst()).toBe(element1);
 			expect(selector).not.to.toHaveBeenCalled(); // not called because it was already computed
-			navManager.refreshElements(); // will trigger the call to selector next time it is needed
+			navManager.refreshElements(false); // will trigger the call to selector next time it is needed
 			expect(selector).not.to.toHaveBeenCalled(); // it was not yet needed
 			expect(navManager.focusFirst()).toBe(element1);
 			expect(selector).to.toHaveBeenCalledTimes(1); // it was needed by focusFirst

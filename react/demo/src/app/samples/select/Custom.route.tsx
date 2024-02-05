@@ -33,7 +33,7 @@ const SlotBadgeLabel = ({itemContext, widget}: SelectItemContext<WikiResult>) =>
 				type="button"
 				className="btn-close ms-1 wiki-btn-close"
 				aria-label="Close"
-				onClick={() => widget.api.unselect(itemContext.item)}
+				onClick={(e) => widget.actions.onRemoveBadgeClick(e.nativeEvent, itemContext.item)}
 			></button>
 		</>
 	);
@@ -49,6 +49,7 @@ const SlotItem = ({itemContext}: SelectItemContext<WikiResult>) => {
 	);
 };
 
+const navSelector = (node: HTMLElement) => node.querySelectorAll('a,button,input') as NodeListOf<HTMLSpanElement | HTMLInputElement>;
 const Custom = () => {
 	const [items, setItems] = useState([] as WikiResult[]);
 	const [selected, setSelected] = useState([] as WikiResult[]);
@@ -56,7 +57,7 @@ const Custom = () => {
 	const [, setFilterText] = useState(undefined as string | undefined);
 	const onFilterTextChange = useCallback(
 		debounce(
-			abortPrevious(async (signal: AbortSignal, text) => {
+			abortPrevious(async (signal: AbortSignal, text: string) => {
 				setFilterText(text);
 				const response = await fetch(
 					'https://en.wikipedia.org/w/api.php?action=query&list=search&prop=info&inprop=url&utf8=&format=json&origin=*&srlimit=5&srsearch=' + text,
@@ -79,6 +80,7 @@ const Custom = () => {
 			<Select
 				items={items}
 				itemIdFn={itemIdFn}
+				navSelector={navSelector}
 				onFilterTextChange={onFilterTextChange}
 				onSelectedChange={onSelectedChange}
 				slotBadgeLabel={SlotBadgeLabel}

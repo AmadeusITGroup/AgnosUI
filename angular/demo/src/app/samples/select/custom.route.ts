@@ -25,13 +25,19 @@ function getHtmlText(html: string) {
 				auSelect
 				[auItems]="items"
 				[auItemIdFn]="itemIdFn"
+				[auNavSelector]="navSelector"
 				(auFilterTextChange)="onFilterTextChange($event)"
 				(auSelectedChange)="onSelectedChange($event)"
 				auBadgeClassName="badge text-bg-light d-flex align-items-center"
 			>
 				<ng-template auSelectBadgeLabel let-itemContext="itemContext" let-widget="widget">
 					<a attr.href="{{ basePageUrl + itemContext.item.pageid }}" target="_blank" rel="noreferrer">{{ itemContext.item.title }}</a>
-					<button type="button" class="btn-close ms-1 wiki-btn-close" aria-label="Close" (click)="widget.api.unselect(itemContext.item)"></button>
+					<button
+						type="button"
+						class="btn-close ms-1 wiki-btn-close"
+						aria-label="Close"
+						(click)="widget.actions.onRemoveBadgeClick($event, itemContext.item)"
+					></button>
 				</ng-template>
 				<ng-template auSelectItem let-widget="widget" let-itemContext="itemContext">
 					<div class="fw-bold">{{ itemContext.item.title }}</div>
@@ -58,6 +64,10 @@ export default class CustomSelectComponent {
 
 	itemIdFn(item: WikiResult) {
 		return 'page-' + item.pageid;
+	}
+
+	navSelector(node: HTMLElement) {
+		return node.querySelectorAll('a,button,input') as NodeListOf<HTMLSpanElement | HTMLInputElement>;
 	}
 
 	onFilterTextChange = debounce(

@@ -1,9 +1,10 @@
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {beforeEach, describe, expect, test, vi} from 'vitest';
 import {assign} from '../../../../common/utils';
+import {addEvent} from '../../utils/internal/dom';
+import {createTraversal} from '../../utils/internal/traversal';
 import type {ItemContext, SelectProps, SelectState, SelectWidget} from './select';
 import {createSelect, getSelectDefaultConfig} from './select';
-import {createTraversal} from '../../utils/internal/traversal';
 
 type ExtractReadable<T> = T extends ReadableSignal<infer U> ? U : never;
 type ExtractState<T> = T extends SelectWidget<infer U> ? ExtractReadable<SelectWidget<U>['state$']> : never;
@@ -277,125 +278,240 @@ describe(`Select model`, () => {
 		});
 
 		describe(`Keyboard management`, () => {
+			let container: HTMLElement;
 			let preventDefaultCall = 0;
-			function createEvent({ctrlKey = false} = {}) {
+
+			beforeEach(() => {
 				preventDefaultCall = 0;
-				return {
-					key: '',
-					ctrlKey,
-					preventDefault() {
-						preventDefaultCall++;
-					},
+				container = document.body.appendChild(document.createElement('div'));
+				return () => {
+					container.parentElement?.removeChild(container);
 				};
+			});
+
+			function triggerKeyboardEvent(key: string, {ctrlKey = false} = {}, node: Element | undefined = document.activeElement!) {
+				const event = new KeyboardEvent('keydown', {key, ctrlKey, bubbles: true});
+				const originalPreventDefault = event.preventDefault.bind(event);
+				event.preventDefault = (...args) => {
+					preventDefaultCall++;
+					originalPreventDefault(...args);
+				};
+				node.dispatchEvent(event);
 			}
 
-			test('Arrow keys', () => {
-				const {selectWidget, highlightItem, getState} = testCtx;
-				const event = createEvent();
+			describe(`Input / menu interactions`, () => {
 				let preventDefaultCallNb = 0;
+				let input: HTMLElement;
+				beforeEach(() => {
+					preventDefaultCallNb = 0;
+					container.innerHTML = `<input id="input" />`;
+					input = container.querySelector('#input')! as HTMLElement;
+					const selectWidget = testCtx.selectWidget;
+					const hasFocusDirective = selectWidget.directives.hasFocusDirective(container)!;
+					const containerDirective = selectWidget.directives.inputContainerDirective(container);
+					const removeInputEvent = addEvent(input, 'keydown', selectWidget.actions.onInputKeydown);
 
-				selectWidget.actions.onInputKeydown({...event, key: 'ArrowDown'});
-				const expectedState = getState();
-
-				highlightItem(expectedState, 0);
-				expect(getState(), 'Menu open with arrow down').toEqual(expectedState);
-				expect(preventDefaultCall).toBe(++preventDefaultCallNb);
-
-				selectWidget.actions.onInputKeydown({...event, key: 'ArrowDown'});
-				highlightItem(expectedState, 1);
-				expect(getState(), 'Move to the second item').toEqual(expectedState);
-				expect(preventDefaultCall).toBe(++preventDefaultCallNb);
-
-				selectWidget.actions.onInputKeydown({...event, key: 'ArrowUp'});
-				highlightItem(expectedState, 0);
-				expect(getState(), 'Move back to the first item').toEqual(expectedState);
-				expect(preventDefaultCall).toBe(++preventDefaultCallNb);
-
-				selectWidget.actions.onInputKeydown({...event, key: 'ArrowUp'});
-				highlightItem(expectedState, 2);
-				expect(getState(), 'Loop to the last item').toEqual(expectedState);
-				expect(preventDefaultCall).toBe(++preventDefaultCallNb);
-
-				selectWidget.actions.onInputKeydown({...event, key: 'ArrowDown'});
-				highlightItem(expectedState, 0);
-				expect(getState(), 'Loop back to the first item').toEqual(expectedState);
-				expect(preventDefaultCall).toBe(++preventDefaultCallNb);
-
-				selectWidget.actions.onInputKeydown({...event, key: 'A'});
-				highlightItem(expectedState, 0);
-				expect(getState()).toEqual(expectedState);
-				expect(preventDefaultCall, 'Random text is not prevented').toBe(preventDefaultCallNb);
-			});
-
-			test('Arrow keys with Ctrl', () => {
-				const {selectWidget, highlightItem, getState} = testCtx;
-				selectWidget.api.open();
-				const expectedState = getState();
-				const event = createEvent({ctrlKey: true});
-
-				selectWidget.actions.onInputKeydown({...event, key: 'ArrowDown'});
-				highlightItem(expectedState, 2);
-				expect(getState(), 'Move to the last item').toEqual(expectedState);
-				expect(preventDefaultCall).toBe(1);
-
-				selectWidget.actions.onInputKeydown({...event, key: 'ArrowDown'});
-				highlightItem(expectedState, 2);
-				expect(getState(), 'Second action does not loop').toEqual(expectedState);
-				expect(preventDefaultCall).toBe(2);
-
-				selectWidget.actions.onInputKeydown({...event, key: 'ArrowUp'});
-				highlightItem(expectedState, 0);
-				expect(getState(), 'Move to the first item').toEqual(expectedState);
-				expect(preventDefaultCall).toBe(3);
-
-				selectWidget.actions.onInputKeydown({...event, key: 'ArrowUp'});
-				highlightItem(expectedState, 0);
-				expect(getState(), 'Second action does not loop').toEqual(expectedState);
-				expect(preventDefaultCall).toBe(4);
-			});
-
-			test('Change the selection with enter', () => {
-				const {selectWidget, getState, items} = testCtx;
-				const event = createEvent();
-
-				selectWidget.actions.onInputKeydown({...event, key: 'ArrowDown'});
-				const expectedState = getState();
-				expectedState.highlighted = {...expectedState.highlighted!, item: items[0], selected: false};
-				expect(getState(), 'Menu open with arrow down').toEqual(expectedState);
-
-				selectWidget.actions.onInputKeydown({...event, key: 'Enter'});
-				const expectedStateAfterSelection: SelectState<string> = normalizeState(expectedState);
-				const itemCtx: ItemContext<string> = expectedStateAfterSelection.highlighted!;
-				itemCtx.selected = true;
-				assign(expectedStateAfterSelection, {
-					selected: [itemCtx.item],
-					selectedContexts: [{id: 'aa', item: itemCtx.item, selected: true}],
-					highlighted: {...expectedState.highlighted!, item: items[0], selected: true},
+					return () => {
+						containerDirective?.destroy?.();
+						hasFocusDirective.destroy?.();
+						removeInputEvent();
+					};
 				});
-				expectedStateAfterSelection.visibleItems[0].selected = true;
-				expect(getState(), 'First item selected').toEqual(expectedStateAfterSelection);
 
-				selectWidget.actions.onInputKeydown({...event, key: 'Enter'});
-				expect(getState(), 'Back to first state after un-selection').toEqual(expectedState);
+				test('Open/close dropdown', () => {
+					const {highlightItem, getState} = testCtx;
+
+					input.focus();
+					triggerKeyboardEvent('ArrowDown');
+					const expectedState = getState();
+
+					highlightItem(expectedState, 0);
+					expect(getState(), 'Menu open with arrow down').toEqual(expectedState);
+					expect(preventDefaultCall).toBe(++preventDefaultCallNb);
+
+					triggerKeyboardEvent('ArrowDown');
+					highlightItem(expectedState, 1);
+					expect(getState(), 'Move to the second item').toEqual(expectedState);
+					expect(preventDefaultCall).toBe(++preventDefaultCallNb);
+
+					triggerKeyboardEvent('ArrowUp');
+					highlightItem(expectedState, 0);
+					expect(getState(), 'Move back to the first item').toEqual(expectedState);
+					expect(preventDefaultCall).toBe(++preventDefaultCallNb);
+
+					triggerKeyboardEvent('ArrowUp');
+					highlightItem(expectedState, 2);
+					expect(getState(), 'Loop to the last item').toEqual(expectedState);
+					expect(preventDefaultCall).toBe(++preventDefaultCallNb);
+
+					triggerKeyboardEvent('ArrowDown');
+					highlightItem(expectedState, 0);
+					expect(getState(), 'Loop back to the first item').toEqual(expectedState);
+					expect(preventDefaultCall).toBe(++preventDefaultCallNb);
+
+					triggerKeyboardEvent('A');
+					highlightItem(expectedState, 0);
+					expect(getState()).toEqual(expectedState);
+					expect(preventDefaultCall, 'Random text is not prevented').toBe(preventDefaultCallNb);
+				});
+
+				test('Arrow keys with Ctrl', () => {
+					const {selectWidget, highlightItem, getState} = testCtx;
+					selectWidget.api.open();
+					const expectedState = getState();
+
+					input.focus();
+					triggerKeyboardEvent('ArrowDown', {ctrlKey: true});
+					highlightItem(expectedState, 2);
+					expect(getState(), 'Move to the last item').toEqual(expectedState);
+					expect(preventDefaultCall).toBe(1);
+
+					triggerKeyboardEvent('ArrowDown', {ctrlKey: true});
+					highlightItem(expectedState, 2);
+					expect(getState(), 'Second action does not loop').toEqual(expectedState);
+					expect(preventDefaultCall).toBe(2);
+
+					triggerKeyboardEvent('ArrowUp', {ctrlKey: true});
+					highlightItem(expectedState, 0);
+					expect(getState(), 'Move to the first item').toEqual(expectedState);
+					expect(preventDefaultCall).toBe(3);
+
+					triggerKeyboardEvent('ArrowUp', {ctrlKey: true});
+					highlightItem(expectedState, 0);
+					expect(getState(), 'Second action does not loop').toEqual(expectedState);
+					expect(preventDefaultCall).toBe(4);
+				});
+
+				test('Change the selection with enter', () => {
+					const {getState, items} = testCtx;
+
+					input.focus();
+					triggerKeyboardEvent('ArrowDown');
+					const expectedState = getState();
+					expectedState.highlighted = {...expectedState.highlighted!, item: items[0], selected: false};
+					expect(getState(), 'Menu open with arrow down').toEqual(expectedState);
+
+					triggerKeyboardEvent('Enter');
+					const expectedStateAfterSelection: SelectState<string> = normalizeState(expectedState);
+					const itemCtx: ItemContext<string> = expectedStateAfterSelection.highlighted!;
+					itemCtx.selected = true;
+					assign(expectedStateAfterSelection, {
+						selected: [itemCtx.item],
+						selectedContexts: [{id: 'aa', item: itemCtx.item, selected: true}],
+						highlighted: {...expectedState.highlighted!, item: items[0], selected: true},
+					});
+					expectedStateAfterSelection.visibleItems[0].selected = true;
+					expect(getState(), 'First item selected').toEqual(expectedStateAfterSelection);
+
+					triggerKeyboardEvent('Enter');
+					expect(getState(), 'Back to first state after un-selection').toEqual(expectedState);
+				});
+
+				test('Close with escape', () => {
+					const {selectWidget, getState} = testCtx;
+					selectWidget.api.open();
+					const expectedState = getState();
+
+					input.focus();
+					triggerKeyboardEvent('Escape');
+					expect(getState(), 'Close on escape').toEqual(
+						assign(expectedState, {
+							open: false,
+							highlighted: undefined,
+							visibleItems: [],
+						}),
+					);
+					expect(preventDefaultCall).toBe(1);
+				});
 			});
 
-			test('Close with escape', () => {
-				const {selectWidget, getState} = testCtx;
-				selectWidget.api.open();
-				const expectedState = getState();
-				const event = createEvent();
+			describe(`Input / badges interactions`, () => {
+				let input: HTMLInputElement;
+				let badgeA: HTMLElement;
+				let badgeB: HTMLElement;
 
-				selectWidget.actions.onInputKeydown({...event, key: 'Escape'});
-				expect(getState(), 'Move to the last item').toEqual(
-					assign(expectedState, {
-						open: false,
-						highlighted: undefined,
-						visibleItems: [],
-					}),
-				);
-				expect(preventDefaultCall).toBe(1);
+				beforeEach(() => {
+					const selectWidget = testCtx.selectWidget;
+					selectWidget.patch({
+						selected: ['aa', 'bb'],
+					});
+					container.innerHTML = `
+						<div id="aa" class="au-select-badge" tabindex="-1">aa</div>
+						<div id="bb" class="au-select-badge" tabindex="-1">bb</div>
+						<input id="input"/>
+					`;
+					input = container.querySelector('#input')! as HTMLInputElement;
+					badgeA = container.querySelector('#aa')! as HTMLDivElement;
+					badgeB = container.querySelector('#bb')! as HTMLDivElement;
+
+					const hasFocusDirective = selectWidget.directives.hasFocusDirective(container)!;
+					const containerDirective = selectWidget.directives.inputContainerDirective(container);
+					const removeInputEvent = addEvent(input, 'keydown', selectWidget.actions.onInputKeydown);
+					const removebadgeAEvent = addEvent(badgeA, 'keydown', (e) => selectWidget.actions.onBadgeKeydown(e, 'aa'));
+					const removebadgeBEvent = addEvent(badgeB, 'keydown', (e) => selectWidget.actions.onBadgeKeydown(e, 'bb'));
+
+					return () => {
+						containerDirective?.destroy?.();
+						hasFocusDirective.destroy?.();
+						removeInputEvent();
+						removebadgeAEvent();
+						removebadgeBEvent();
+					};
+				});
+
+				// ['Delete', 'Backspace'].forEach((key) => {
+				['Delete'].forEach((key) => {
+					test(`Remove selected with ${key}`, async () => {
+						const {getState} = testCtx;
+						const expectedState = getState();
+						expect(expectedState.selectedContexts).toStrictEqual([
+							{item: 'aa', id: 'aa', selected: true},
+							{item: 'bb', id: 'bb', selected: true},
+						]);
+
+						badgeB.focus();
+						triggerKeyboardEvent(key);
+						expect(getState()).toStrictEqual(
+							assign(expectedState, {
+								selected: ['aa'],
+								selectedContexts: [{item: 'aa', id: 'aa', selected: true}],
+							}),
+						);
+
+						await 0;
+						badgeB.parentElement?.removeChild(badgeB);
+
+						await vi.waitUntil(() => document.activeElement === badgeA);
+
+						triggerKeyboardEvent(key);
+						expect(getState()).toStrictEqual(
+							assign(expectedState, {
+								selected: [],
+								selectedContexts: [],
+							}),
+						);
+						await vi.waitUntil(() => document.activeElement === input);
+					});
+				});
+
+				test(`Arrow left/Arrow right`, () => {
+					input.focus();
+					triggerKeyboardEvent('ArrowLeft');
+					expect(document.activeElement).toBe(badgeB);
+					triggerKeyboardEvent('ArrowRight');
+					expect(document.activeElement).toBe(input);
+				});
+
+				test(`Home/End keys`, () => {
+					input.focus();
+					triggerKeyboardEvent('Home');
+					expect(document.activeElement).toBe(badgeA);
+					triggerKeyboardEvent('End');
+					expect(document.activeElement).toBe(input);
+				});
 			});
 		});
+
 		describe(`item click`, () => {
 			test(`change the selection with the global api`, () => {
 				const {selectWidget, getState} = testCtx;

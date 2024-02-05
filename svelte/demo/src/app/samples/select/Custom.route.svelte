@@ -37,16 +37,23 @@
 	);
 
 	const compareFn = new Intl.Collator('en').compare;
-	function onSelectedChange(e: any) {
-		selected = (<WikiResult[]>(e.detail || [])).sort((a, b) => compareFn(a.title, b.title));
+	function onSelectedChange(items: WikiResult[]) {
+		selected = (<WikiResult[]>(items || [])).sort((a, b) => compareFn(a.title, b.title));
 	}
+
+	const navSelector = (node: HTMLElement) => node.querySelectorAll('a,button,input');
 </script>
 
 <div class="custom-select my-auto mb-3">
-	<Select {items} {itemIdFn} {onFilterTextChange} {onSelectedChange} badgeClassName="badge text-bg-light d-flex align-items-center">
+	<Select {items} {itemIdFn} {onFilterTextChange} {onSelectedChange} {navSelector} badgeClassName="badge text-bg-light d-flex align-items-center">
 		<svelte:fragment slot="badgeLabel" let:itemContext let:widget>
 			<a href={`${basePageUrl}${itemContext.item.pageid}`} target="_blank" rel="noreferrer">{itemContext.item.title}</a>
-			<button type="button" class="btn-close ms-1 wiki-btn-close" aria-label="Close" on:click={() => widget.api.unselect(itemContext.item)}></button>
+			<button
+				type="button"
+				class="btn-close ms-1 wiki-btn-close"
+				aria-label="Close"
+				on:click={(e) => widget.actions.onRemoveBadgeClick(e, itemContext.item)}
+			></button>
 		</svelte:fragment>
 		<label for={'' + itemContext.id} slot="item" let:itemContext>
 			{@const item = itemContext.item}

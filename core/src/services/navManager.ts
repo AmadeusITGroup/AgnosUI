@@ -1,5 +1,4 @@
 import {computed, writable} from '@amadeus-it-group/tansu';
-import type {Directive} from '../types';
 import {registrationArray} from '../utils/directive';
 import {computeCommonAncestor} from '../utils/internal/dom';
 import {isFocusable} from '../utils/internal/isFocusable';
@@ -69,18 +68,18 @@ export const isInternalInputNavigation = (event: KeyboardEvent) => {
  * - directiveElement: DOM element which has the navigation manager directive
  * - navManager: navigation manager instance
  */
-export type NavManagerKeyHandler = (info: {directiveElement: HTMLElement; event: KeyboardEvent; navManager: NavManager}) => void;
+export type NavManagerKeyHandler<T = any> = (info: {directiveElement: HTMLElement; event: Event; navManager: NavManager; context?: T}) => void;
 
 /**
  * Type of the parameter of the navigation manager directive.
  */
-export interface NavManagerItemConfig {
+export interface NavManagerItemConfig<T = any> {
 	/**
 	 * Map of key handlers.
 	 * The key in the map should match the result of calling {@link getKeyName} on the key event (for example "ArrowLeft" or "Ctrl+PageDown").
 	 * The value in the map is the corresponding key handler.
 	 */
-	keys?: Record<string, NavManagerKeyHandler>;
+	keys?: Record<string, NavManagerKeyHandler<T>>;
 
 	/**
 	 * Function returning DOM elements to include in the navigation manager.
@@ -88,9 +87,14 @@ export interface NavManagerItemConfig {
 	 * If not specified, the default selector function only returns the element on which the navigation manager directive is used.
 	 */
 	selector?: (directiveElement: HTMLElement) => Iterable<HTMLElement>;
+
+	/**
+	 *
+	 */
+	context?: T;
 }
 
-const defaultSelector: NavManagerItemConfig['selector'] = (directiveElement: HTMLElement) => [directiveElement];
+const defaultSelector: NavManagerItemConfig<any>['selector'] = (directiveElement: HTMLElement) => [directiveElement];
 
 /**
  * Returns a new instance of the navigation manager.
@@ -107,7 +111,13 @@ const defaultSelector: NavManagerItemConfig['selector'] = (directiveElement: HTM
 export const createNavManager = () => {
 	const directiveInstances$ = registrationArray<() => Iterable<HTMLElement>>();
 	const elementsRefresh$ = writable({});
-	const refreshElements = () => elementsRefresh$.set({});
+	const refreshElements = (now = true) => {
+		elementsRefresh$.set({});
+		if (now) {
+			commonAncestor$();
+			elementsInDomOrder$();
+		}
+	};
 	const elements$ = computed(() => {
 		elementsRefresh$();
 		const res: HTMLElement[] = [];
@@ -124,7 +134,7 @@ export const createNavManager = () => {
 		return commonAncestor ? getTextDirection(commonAncestor) : 'ltr';
 	};
 
-	const preventDefaultIfRelevant = (value: HTMLElement | null, event?: KeyboardEvent) => {
+	const preventDefaultIfRelevant = (value: HTMLElement | null, event?: Event) => {
 		if (value) {
 			event?.preventDefault();
 		}
@@ -159,7 +169,7 @@ export const createNavManager = () => {
 			event,
 			referenceElement = (event?.target as HTMLElement) ?? document.activeElement,
 		}: {
-			event?: KeyboardEvent;
+			event?: Event;
 			referenceElement?: HTMLElement | null;
 		} = {}): HTMLElement | null => {
 			const curIndex = referenceElement ? elementsInDomOrder$().indexOf(referenceElement) : -1;
@@ -169,7 +179,7 @@ export const createNavManager = () => {
 			return null;
 		};
 
-	const directive: Directive<NavManagerItemConfig> = (directiveElement, config) => {
+	const directive = <T = any>(directiveElement: HTMLElement, config: NavManagerItemConfig<T>) => {
 		const onKeyDown = (event: KeyboardEvent) => {
 			if (isInternalInputNavigation(event)) {
 				return;
@@ -177,14 +187,14 @@ export const createNavManager = () => {
 			const keyName = getKeyName(event);
 			const handler = config.keys?.[keyName];
 			if (handler) {
-				refreshElements();
-				handler({event, directiveElement, navManager});
+				refreshElements(false);
+				handler({event, directiveElement, navManager, context: config.context});
 			}
 		};
 		directiveElement.addEventListener('keydown', onKeyDown);
 		const unregister = directiveInstances$.register(() => (config?.selector ?? defaultSelector)(directiveElement));
 		return {
-			update(newConfig) {
+			update(newConfig: NavManagerItemConfig<T>) {
 				config = newConfig;
 			},
 			destroy() {
@@ -196,8 +206,8 @@ export const createNavManager = () => {
 
 	const focusPrevious = createFocusNeighbour(-1);
 	const focusNext = createFocusNeighbour(1);
-	const focusFirst = ({event}: {event?: KeyboardEvent} = {}) => preventDefaultIfRelevant(focusIndex(0, 1), event);
-	const focusLast = ({event}: {event?: KeyboardEvent} = {}) => preventDefaultIfRelevant(focusIndex(elementsInDomOrder$().length - 1, -1), event);
+	const focusFirst = ({event}: {event?: Event} = {}) => preventDefaultIfRelevant(focusIndex(0, 1), event);
+	const focusLast = ({event}: {event?: Event} = {}) => preventDefaultIfRelevant(focusIndex(elementsInDomOrder$().length - 1, -1), event);
 	const focusLeft = (...args: Parameters<typeof focusNext>) => (ancestorDirection() === 'rtl' ? focusNext : focusPrevious)(...args);
 	const focusRight = (...args: Parameters<typeof focusNext>) => (ancestorDirection() === 'rtl' ? focusPrevious : focusNext)(...args);
 	const focusFirstLeft = (...args: Parameters<typeof focusLast>) => (ancestorDirection() === 'rtl' ? focusLast : focusFirst)(...args);
