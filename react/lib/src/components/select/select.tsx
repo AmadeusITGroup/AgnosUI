@@ -27,7 +27,7 @@ function BadgeContainer<Item>({itemContext, slotContext}: {itemContext: ItemCont
 			key={itemContext.id}
 			tabIndex={-1}
 			className={`au-select-badge me-1 ${state.badgeClassName}`}
-			onKeyDown={(e) => slotContext.widget.actions.onBadgeKeydown(e, itemContext.item)}
+			onKeyDown={(e) => slotContext.widget.actions.onBadgeKeydown(e.nativeEvent, itemContext.item)}
 		>
 			<Slot slotContent={state.slotBadgeLabel} props={{...slotContext, itemContext}}></Slot>
 		</div>
@@ -98,7 +98,7 @@ export function Select<Item>(props: Partial<SelectProps<Item>>) {
 					autoCapitalize="none"
 					autoComplete="off"
 					onInput={widget.actions.onInput}
-					onKeyDown={widget.actions.onInputKeydown}
+					onKeyDown={(e) => widget.actions.onInputKeydown(e.nativeEvent)}
 				/>
 			</div>
 			{open && visibleItems.length > 0 && (

@@ -288,7 +288,7 @@ export interface SelectActions<Item> {
 	 * Method to be plugged to on an keydown event of the main input, in order to control the keyboard interactions with the highlighted item.
 	 * It manages arrow keys to move the highlighted item, or enter to toggle the item.
 	 */
-	onInputKeydown: (event: any) => void;
+	onInputKeydown: (event: KeyboardEvent) => void;
 
 	/**
 	 * Method to be plugged to on an keydown event of a badge container, in order to manage main actions on badges.
@@ -296,7 +296,7 @@ export interface SelectActions<Item> {
 	 * @param event - keyboard event
 	 * @param item - corresponding item
 	 */
-	onBadgeKeydown: (event: any, item: Item) => void;
+	onBadgeKeydown: (event: KeyboardEvent, item: Item) => void;
 }
 
 export type SelectWidget<Item> = Widget<SelectProps<Item>, SelectState<Item>, SelectApi<Item>, SelectActions<Item>, SelectDirectives>;
@@ -456,6 +456,19 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 			},
 	);
 
+	const onRemoveBadge = (event: MouseEvent | KeyboardEvent, item: Item) => {
+		const referenceElement = event.target;
+		refreshElements();
+		widget.api.unselect(item);
+		// Waiting for refresh by the framework, to have the elements inside or outside the dom
+		if (referenceElement instanceof HTMLElement) {
+			setTimeout(() => {
+				focusLeft({referenceElement}) || focusRight({referenceElement});
+			});
+		}
+		event.preventDefault();
+	};
+
 	const widget: SelectWidget<Item> = {
 		...stateStores({
 			visibleItems$,
@@ -556,15 +569,8 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 				});
 			},
 
-			onRemoveBadgeClick(event: any, item: Item) {
-				const element = event.target;
-				refreshElements();
-				widget.api.unselect(item);
-				// Waiting for refresh by the framework, to have the elements inside or outside the dom
-				setTimeout(() => {
-					focusLeft({event, referenceElement: element}) || focusRight({event, referenceElement: element});
-				});
-				event.preventDefault();
+			onRemoveBadgeClick(event: MouseEvent, item: Item) {
+				onRemoveBadge(event, item);
 			},
 
 			onInputKeydown(e: KeyboardEvent) {
@@ -615,7 +621,7 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 				switch (event.key) {
 					case 'Backspace':
 					case 'Delete': {
-						widget.actions.onRemoveBadgeClick(event as any, item);
+						onRemoveBadge(event, item);
 						keyManaged = true;
 						break;
 					}
