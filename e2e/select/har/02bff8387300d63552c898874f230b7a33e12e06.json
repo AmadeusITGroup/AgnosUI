@@ -1,0 +1,61 @@
+{
+	"batchcomplete": "",
+	"continue": {
+		"sroffset": 5,
+		"continue": "-||info"
+	},
+	"query": {
+		"searchinfo": {
+			"totalhits": 4597,
+			"suggestion": "java script",
+			"suggestionsnippet": "java script"
+		},
+		"search": [
+			{
+				"ns": 0,
+				"title": "JavaScript",
+				"pageid": 9845,
+				"size": 99486,
+				"wordcount": 10535,
+				"snippet": "<span class=\"searchmatch\">JavaScript</span> (/ˈdʒɑːvəskrɪpt/), often abbreviated as JS, is a programming language and core technology of the World Wide Web, alongside HTML and CSS. As",
+				"timestamp": "2024-01-19T15:55:18Z"
+			},
+			{
+				"ns": 0,
+				"title": "JSON",
+				"pageid": 1575082,
+				"size": 47382,
+				"wordcount": 5035,
+				"snippet": "JSON (<span class=\"searchmatch\">JavaScript</span> Object Notation, pronounced /ˈdʒeɪsən/; also /ˈdʒeɪˌsɒn/) is an open standard file format and data interchange format that uses human-readable",
+				"timestamp": "2023-12-16T16:30:47Z"
+			},
+			{
+				"ns": 0,
+				"title": "JavaScript engine",
+				"pageid": 1770496,
+				"size": 6835,
+				"wordcount": 574,
+				"snippet": "A <span class=\"searchmatch\">JavaScript</span> engine is a software component that executes <span class=\"searchmatch\">JavaScript</span> code. The first <span class=\"searchmatch\">JavaScript</span> engines were mere interpreters, but all relevant modern",
+				"timestamp": "2024-01-18T19:57:10Z"
+			},
+			{
+				"ns": 0,
+				"title": "Comparison of JavaScript-based web frameworks",
+				"pageid": 16688167,
+				"size": 64549,
+				"wordcount": 2103,
+				"snippet": "frameworks for front-end web development that are heavily reliant on <span class=\"searchmatch\">JavaScript</span> code for their behavior. Dojo Base Archived 28 November 2009 at the Wayback",
+				"timestamp": "2024-01-12T03:58:42Z"
+			},
+			{
+				"ns": 0,
+				"title": "Ajax (programming)",
+				"pageid": 1610950,
+				"size": 19182,
+				"wordcount": 1748,
+				"snippet": "Ajax (also AJAX /ˈeɪdʒæks/; short for &quot;Asynchronous <span class=\"searchmatch\">JavaScript</span> and XML&quot; or &quot;Asynchronous <span class=\"searchmatch\">JavaScript</span> transfer (x-fer)&quot;) is a set of web development techniques",
+				"timestamp": "2023-12-28T22:59:52Z"
+			}
+		]
+	}
+}

@@ -1,4 +1,4 @@
-import type {SelectContext, SelectItemContext, SelectProps, SelectWidget} from '@agnos-ui/react-headless/components/select';
+import type {ItemContext, SelectContext, SelectItemContext, SelectProps, SelectWidget} from '@agnos-ui/react-headless/components/select';
 import {createSelect} from '@agnos-ui/react-headless/components/select';
 import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
 import {Slot} from '@agnos-ui/react-headless/slot';
@@ -20,15 +20,24 @@ function DefaultItem<Item>(slotContext: SelectItemContext<Item>) {
 	return <>{'' + slotContext.itemContext.item}</>;
 }
 
+function BadgeContainer<Item>({itemContext, slotContext}: {itemContext: ItemContext<Item>; slotContext: SelectContext<Item>}) {
+	const state = slotContext.state;
+	return (
+		<div
+			key={itemContext.id}
+			tabIndex={-1}
+			className={`au-select-badge me-1 ${state.badgeClassName}`}
+			onKeyDown={(e) => slotContext.widget.actions.onBadgeKeydown(e.nativeEvent, itemContext.item)}
+		>
+			<Slot slotContent={state.slotBadgeLabel} props={{...slotContext, itemContext}}></Slot>
+		</div>
+	);
+}
+
 function Badges<Item>({slotContext}: {slotContext: SelectContext<Item>}) {
 	const badges = [];
-	const state = slotContext.state;
 	for (const itemContext of slotContext.state.selectedContexts) {
-		badges.push(
-			<div key={itemContext.id} className={`au-select-badge me-1 ${state.badgeClassName}`}>
-				<Slot slotContent={state.slotBadgeLabel} props={{...slotContext, itemContext}}></Slot>
-			</div>,
-		);
+		badges.push(<BadgeContainer key={itemContext.id} itemContext={itemContext} slotContext={slotContext} />);
 	}
 
 	return badges.length ? <>{badges}</> : null;
@@ -43,7 +52,7 @@ function Rows<Item>({slotContext}: {slotContext: SelectContext<Item>}) {
 				const {id} = itemContext;
 				const classname = ['au-select-item dropdown-item position-relative'];
 				if (itemContext === highlighted) {
-					classname.push('bg-light');
+					classname.push('bg-primary text-light');
 				}
 				if (itemContext.selected) {
 					classname.push('selected');
@@ -69,14 +78,14 @@ export function Select<Item>(props: Partial<SelectProps<Item>>) {
 	const {id, ariaLabel, visibleItems, filterText, open, className, menuClassName, placement} = state;
 
 	const {
-		directives: {floatingDirective, hasFocusDirective, referenceDirective},
+		directives: {floatingDirective, hasFocusDirective, referenceDirective, inputContainerDirective},
 	} = widget;
 	const refSetContainer = useDirective(referenceDirective);
-	const refSetInput = useDirective(hasFocusDirective);
+	const refSetInputContainer = useDirectives([hasFocusDirective, inputContainerDirective]);
 	const refSetMenu = useDirectives([hasFocusDirective, floatingDirective]);
 	return (
 		<div ref={refSetContainer} className={`au-select dropdown border border-1 p-1 mb-3 d-block ${className}`}>
-			<div ref={refSetInput} role="combobox" className="d-flex align-items-center flex-wrap" aria-haspopup="listbox" aria-expanded={open}>
+			<div ref={refSetInputContainer} role="combobox" className="d-flex align-items-center flex-wrap" aria-haspopup="listbox" aria-expanded={open}>
 				<Badges slotContext={slotContext}></Badges>
 				<input
 					id={id}
@@ -88,8 +97,8 @@ export function Select<Item>(props: Partial<SelectProps<Item>>) {
 					autoCorrect="off"
 					autoCapitalize="none"
 					autoComplete="off"
-					onKeyDown={widget.actions.onInputKeydown}
 					onInput={widget.actions.onInput}
+					onKeyDown={(e) => widget.actions.onInputKeydown(e.nativeEvent)}
 				/>
 			</div>
 			{open && visibleItems.length > 0 && (
