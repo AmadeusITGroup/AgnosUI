@@ -87,3 +87,11 @@ export function addEvent(element: Element, type: string, fn: EventListenerOrEven
 		element.removeEventListener(type, fn);
 	};
 }
+
+let idCount = 0;
+/**
+ * Generates a unique ID with the format 'auId-[counter]'.
+ *
+ * @returns The generated ID.
+ */
+export const generateId = () => `auId-${idCount++}`;

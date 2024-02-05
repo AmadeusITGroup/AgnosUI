@@ -55,15 +55,17 @@
 		directives: {floatingDirective, hasFocusDirective, referenceDirective, inputContainerDirective},
 	} = widget;
 	$: widget.patchChangedProps($$props);
+
+	$: menuId = `${$id$}-menu`;
 </script>
 
 <div use:referenceDirective class="au-select dropdown border border-1 p-1 mb-3 d-block {$className$}">
-	<!-- svelte-ignore a11y-role-has-required-aria-props -->
 	<div
 		use:hasFocusDirective
 		use:inputContainerDirective
 		role="combobox"
 		class="d-flex align-items-center flex-wrap"
+		aria-controls={menuId}
 		aria-haspopup="listbox"
 		aria-expanded={$open$}
 	>
@@ -94,8 +96,9 @@
 		/>
 	</div>
 	{#if $open$ && $visibleItems$.length > 0}
-		<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 		<ul
+			role="listbox"
+			id={menuId}
 			use:hasFocusDirective
 			use:floatingDirective
 			class="dropdown-menu show {$menuClassName$}"
@@ -104,12 +107,14 @@
 		>
 			{#each $visibleItems$ as itemContext (itemContext.id)}
 				{@const isHighlighted = itemContext === $highlighted$}
+				{@const isSelected = itemContext.selected}
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<li
+					role="option"
+					aria-selected={isSelected}
 					class={`au-select-item dropdown-item position-relative ${$menuItemClassName$}`}
-					class:bg-primary={isHighlighted}
-					class:text-light={isHighlighted}
-					class:selected={itemContext.selected}
+					class:text-bg-primary={isHighlighted}
+					class:selected={isSelected}
 					on:click={() => widget.api.toggleItem(itemContext.item)}
 				>
 					<Slot slotContent={$slotItem$} props={{state: $state$, widget, itemContext}} let:component let:props>

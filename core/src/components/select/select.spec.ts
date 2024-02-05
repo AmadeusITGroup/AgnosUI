@@ -9,7 +9,8 @@ import {createSelect, getSelectDefaultConfig} from './select';
 type ExtractReadable<T> = T extends ReadableSignal<infer U> ? U : never;
 type ExtractState<T> = T extends SelectWidget<infer U> ? ExtractReadable<SelectWidget<U>['state$']> : never;
 
-const normalizeState = createTraversal((_key, value) => {
+const generatedIdRegExp = /^auId-/;
+const normalizeState = createTraversal((path, value) => {
 	const constructor = value?.constructor;
 	switch (constructor) {
 		case RegExp:
@@ -19,6 +20,10 @@ const normalizeState = createTraversal((_key, value) => {
 
 	if (typeof value === 'function') {
 		return '(function)';
+	}
+
+	if (path === 'id') {
+		return generatedIdRegExp.test(value) ? '(generated)' : value;
 	}
 
 	return value;
@@ -105,7 +110,7 @@ describe(`Select model`, () => {
 					disabled: false,
 					filterText: '',
 					highlighted: undefined,
-					id: undefined,
+					id: '(generated)',
 					loading: false,
 					menuClassName: '',
 					menuItemClassName: '',
@@ -130,7 +135,7 @@ describe(`Select model`, () => {
 					disabled: false,
 					filterText: '',
 					highlighted: {item: 'aa', id: 'aa', selected: false},
-					id: undefined,
+					id: '(generated)',
 					loading: false,
 					menuClassName: '',
 					menuItemClassName: '',
@@ -723,7 +728,7 @@ describe(`Select model`, () => {
 			selectWidget.patch({items: [item1, item2]});
 			open();
 			const expectedState: ReturnType<typeof getState> = {
-				id: undefined,
+				id: '(generated)',
 				ariaLabel: 'Select',
 				visibleItems: [{item: item2, id: '1', selected: false}],
 				highlighted: {item: item2, id: '1', selected: false},

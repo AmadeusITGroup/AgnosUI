@@ -44,6 +44,7 @@ export class SelectItemDirective<Item> {
 				[auUse]="controlContainerDirective"
 				role="combobox"
 				class="d-flex align-items-center flex-wrap"
+				[attr.aria-controls]="state.id + '-menu'"
 				aria-haspopup="listbox"
 				[attr.aria-expanded]="state.open"
 			>
@@ -75,6 +76,8 @@ export class SelectItemDirective<Item> {
 			</div>
 			@if (state.open && state.visibleItems.length) {
 				<ul
+					role="listbox"
+					[id]="state.id + '-menu'"
 					[auUse]="menuDirective"
 					[class]="'dropdown-menu show ' + (menuClassName || '')"
 					[attr.data-popper-placement]="state.placement"
@@ -82,7 +85,10 @@ export class SelectItemDirective<Item> {
 				>
 					@for (itemContext of state.visibleItems; track itemCtxTrackBy($index, itemContext)) {
 						<li
-							[class]="'au-select-item dropdown-item position-relative' + (itemContext === state.highlighted ? ' bg-primary text-light' : '')"
+							role="option"
+							[attr.aria-selected]="itemContext.selected"
+							class="au-select-item dropdown-item position-relative"
+							[class.text-bg-primary]="itemContext === state.highlighted"
 							[class.selected]="itemContext.selected"
 							(click)="widget.api.toggleItem(itemContext.item)"
 						>
