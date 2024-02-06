@@ -34,3 +34,32 @@ test.describe.parallel('Demo Website', () => {
 		});
 	}
 });
+
+test.describe('Sitemap', () => {
+	test.skip(process.env.CI !== 'true', 'sitemap tests for CI only');
+
+	test(`sitemap.xml should contain the blog and framework introduction pages`, async ({page}) => {
+		await page.goto('sitemap.xml');
+		const domain = 'https://amadeusitgroup.github.io/AgnosUI/latest';
+		const routes = [
+			'/blog/2024-02-01',
+			'/docs/angular/getting-started/introduction',
+			'/docs/react/getting-started/introduction',
+			'/docs/svelte/getting-started/introduction',
+		];
+		for (const route of routes) {
+			await expect(page.locator('urlset loc', {hasText: `${domain}${route}`})).toBeAttached();
+		}
+	});
+
+	test(`sitemap.xml should not contain the samples`, async ({page}) => {
+		await page.goto('sitemap.xml');
+		const domain = 'https://amadeusitgroup.github.io/AgnosUI/latest';
+		const routes = ['/angular/samples', '/react/samples', '/svelte/samples'];
+		const urlsetLocator = page.locator('urlset');
+		await urlsetLocator.waitFor({state: 'attached'});
+		for (const route of routes) {
+			await expect(page.locator('urlset loc', {hasText: `${domain}${route}`})).not.toBeAttached();
+		}
+	});
+});
