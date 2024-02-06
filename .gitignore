@@ -11,3 +11,4 @@ dist.tar.gz
 style-bootstrap/css/
 generated
 .wireit
+vite.config.ts.timestamp-*
