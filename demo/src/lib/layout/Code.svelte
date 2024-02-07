@@ -1,9 +1,8 @@
 <script lang="ts">
-	import {languageFromFileName} from './highlight';
+	import highlighter, {languageFromFileName} from './highlight';
 	import {tooltip} from '$lib/tooltip/tooltip';
 	import clipboard from 'bootstrap-icons/icons/clipboard.svg?raw';
 	import Svg from './Svg.svelte';
-	import {codeToHtml} from 'shiki';
 
 	export let code: string;
 	export let fileName: string | undefined = undefined;
@@ -18,23 +17,15 @@
 	let showButton = false;
 
 	$: appliedLanguage = language ?? languageFromFileName(fileName);
-	$: formattedCodePromise = appliedLanguage
-		? codeToHtml(code, {lang: appliedLanguage, themes: {light: 'catppuccin-latte', dark: 'catppuccin-mocha'}})
+	$: formattedCode = appliedLanguage
+		? highlighter.codeToHtml(code, {lang: appliedLanguage, themes: {light: 'catppuccin-latte', dark: 'catppuccin-mocha'}})
 		: null;
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div class={`bg-light-subtle doc p-0 d-flex ${className}`} on:mouseenter={() => (showButton = true)} on:mouseleave={() => (showButton = false)}>
-	{#if formattedCodePromise != null}
-		{#await formattedCodePromise}
-			<div class="d-flex justify-content-center">
-				<div class="spinner-border" role="status">
-					<span class="visually-hidden">Loading...</span>
-				</div>
-			</div>
-		{:then formattedCode}
-			<!-- eslint-disable-line svelte/no-at-html-tags -->{@html formattedCode}
-		{/await}
+	{#if formattedCode != null}
+		<!-- eslint-disable-line svelte/no-at-html-tags -->{@html formattedCode}
 	{/if}
 	{#if showButton}
 		<button

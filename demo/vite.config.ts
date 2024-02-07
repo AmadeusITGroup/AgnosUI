@@ -41,6 +41,7 @@ export default defineConfig({
 	},
 	build: {
 		emptyOutDir: true,
+		target: 'esnext',
 	},
 	preview: {
 		port: 4000,

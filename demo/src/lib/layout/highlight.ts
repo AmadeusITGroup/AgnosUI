@@ -1,3 +1,11 @@
+import {getHighlighter} from 'shiki';
+
+const highlighter = await getHighlighter({
+	langs: ['angular-ts', 'tsx', 'html', 'css', 'scss', 'svelte', 'bash', 'typescript'],
+	themes: ['catppuccin-latte', 'catppuccin-mocha'],
+});
+export default highlighter;
+
 const extensionRegExp = /\.\w+$/;
 export const languageFromFileName = (fileName: string | undefined) => {
 	if (fileName) {
