@@ -1,3 +1,5 @@
+<svelte:options accessors />
+
 <script lang="ts">
 	import type {Directive} from '@agnos-ui/core/types';
 	import type {Readable} from '@amadeus-it-group/tansu';

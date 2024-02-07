@@ -160,3 +160,28 @@ header {
 .demo-mobile-menu {
 	view-transition-name: demo-mobile-menu;
 }
+
+html[data-bs-theme='dark'] .shiki,
+html[data-bs-theme='dark'] .shiki span {
+	color: var(--shiki-dark) !important;
+	background-color: var(--shiki-dark-bg) !important;
+	/* Optional, if you also want font styles */
+	font-style: var(--shiki-dark-font-style) !important;
+	font-weight: var(--shiki-dark-font-weight) !important;
+	text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+.shiki {
+	margin-bottom: 0;
+	padding: 0.5rem 1.5rem;
+	tab-size: 1rem;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	code {
+		white-space: pre-wrap;
+	}
+	@media (max-width: 991px) {
+		padding: 0.5rem;
+	}
+}

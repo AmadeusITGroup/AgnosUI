@@ -42,6 +42,11 @@ export function tooltip(button: HTMLElement, options: {content: string}) {
 	}
 
 	return {
+		update(options: {content: string}) {
+			if (componentInstance) {
+				componentInstance.content = options.content;
+			}
+		},
 		destroy() {
 			hide();
 			directiveInstance?.destroy?.();
