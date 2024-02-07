@@ -57,19 +57,6 @@ export default defineConfig({
 		'import.meta.env.AGNOSUI_VERSION': version,
 	},
 	optimizeDeps: {
-		include: [
-			'@amadeus-it-group/tansu',
-			'highlight.js/lib/core',
-			'highlight.js/lib/languages/typescript',
-			'highlight.js/lib/languages/css',
-			'highlight.js/lib/languages/scss',
-			'highlight.js/lib/languages/xml',
-			'highlight.js/lib/languages/bash',
-			'@floating-ui/dom',
-			'svelte-markdown',
-			'marked',
-			'mermaid',
-			'@stackblitz/sdk',
-		],
+		include: ['@amadeus-it-group/tansu', '@floating-ui/dom', 'svelte-markdown', 'marked', 'mermaid', '@stackblitz/sdk', 'shiki'],
 	},
 });

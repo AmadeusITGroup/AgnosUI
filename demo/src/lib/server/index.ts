@@ -44,13 +44,15 @@ export async function listPages() {
 const regexFrameworkSpecific = /<!--\s+<framework-specific\s+src="([^"]*)">\s+-->[\s\S]*?<!--\s+<\/framework-specific>\s+-->/;
 
 async function preparseMarkdown(path: string, framework: string): Promise<string> {
-	let markdown = await readFile(path, 'utf-8');
+	let markdown = await readFile(path, {encoding: 'utf-8'});
 	let match;
 	do {
 		match = markdown.match(regexFrameworkSpecific);
 		if (match) {
 			markdown =
-				markdown.slice(0, match.index) + (await readFile(`../${framework}/docs/${match[1]}`)) + markdown.substring(match.index! + match[0].length);
+				markdown.slice(0, match.index) +
+				(await readFile(`../${framework}/docs/${match[1]}`, {encoding: 'utf-8'})) +
+				markdown.substring(match.index! + match[0].length);
 		}
 	} while (match);
 	return markdown;
