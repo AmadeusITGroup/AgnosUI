@@ -17,9 +17,7 @@
 	let showButton = false;
 
 	$: appliedLanguage = language ?? languageFromFileName(fileName);
-	$: formattedCode = appliedLanguage
-		? highlighter.codeToHtml(code, {lang: appliedLanguage, themes: {light: 'catppuccin-latte', dark: 'catppuccin-mocha'}})
-		: null;
+	$: formattedCode = appliedLanguage ? highlighter.codeToHtml(code, {lang: appliedLanguage, themes: {light: 'light-plus', dark: 'dark-plus'}}) : null;
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
