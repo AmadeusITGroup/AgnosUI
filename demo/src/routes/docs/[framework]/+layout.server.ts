@@ -7,6 +7,7 @@ export const load = async ({params}) => {
 			title: category.name.replace('-', ' '),
 			submenu: category.files.map((file) => ({
 				label: file.title,
+				status: file.status,
 				path: `docs/${params.framework}/${file.slug}`,
 				subpath: file.subpath,
 			})),

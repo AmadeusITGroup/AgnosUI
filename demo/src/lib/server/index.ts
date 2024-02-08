@@ -1,21 +1,22 @@
 import {readFile, readdir} from 'node:fs/promises';
+import {componentsMetadata} from '../components-metadata';
 
 const validMdRegex = /^\d{2}-[a-zA-Z-]*\.md$/g;
 
 const componentsSubMenu = [
-	{title: 'Accordion', slug: 'components/accordion/', subpath: 'examples'},
-	{title: 'Alert', slug: `components/alert/`, subpath: 'examples'},
-	{title: 'Modal', slug: `components/modal/`, subpath: 'examples'},
-	{title: 'Pagination', slug: `components/pagination/`, subpath: 'examples'},
-	{title: 'Progressbar', slug: `components/progressbar/`, subpath: 'examples'},
-	{title: 'Rating', slug: `components/rating/`, subpath: 'examples'},
-	{title: 'Select', slug: `components/select/`, subpath: 'examples'},
-	{title: 'Slider', slug: `components/slider/`, subpath: 'examples'},
+	{...componentsMetadata.Accordion, slug: 'components/accordion/', subpath: 'examples'},
+	{...componentsMetadata.Alert, slug: `components/alert/`, subpath: 'examples'},
+	{...componentsMetadata.Modal, slug: `components/modal/`, subpath: 'examples'},
+	{...componentsMetadata.Pagination, slug: `components/pagination/`, subpath: 'examples'},
+	{...componentsMetadata.Progressbar, slug: `components/progressbar/`, subpath: 'examples'},
+	{...componentsMetadata.Rating, slug: `components/rating/`, subpath: 'examples'},
+	{...componentsMetadata.Select, slug: `components/select/`, subpath: 'examples'},
+	{...componentsMetadata.Slider, slug: `components/slider/`, subpath: 'examples'},
 ];
 
 export async function listPages() {
 	const docFolders = (await readdir(`../docs`)).filter((folder) => folder !== 'code');
-	const categories: {name: string; files: {slug: string; mdpath?: string; title: string; subpath: string}[]}[] = [];
+	const categories: {name: string; files: {slug: string; mdpath?: string; title: string; subpath: string; status: string}[]}[] = [];
 
 	for (const docFolder of docFolders) {
 		const name = docFolder.substring(3);
@@ -34,6 +35,7 @@ export async function listPages() {
 									title: normalizedFileName.replace('-', ' '),
 									name: normalizedFileName,
 									subpath: '',
+									status: '',
 								};
 							}),
 		});

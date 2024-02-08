@@ -1,6 +1,8 @@
+import {componentsMetadata} from '$lib/components-metadata';
+
 export const load = async () => {
 	return {
-		mainTitle: 'Alert',
+		...componentsMetadata.Alert,
 		tabs: [
 			{title: 'Examples', key: 'examples', path: '/components/alert/examples'},
 			{title: 'Api', key: 'api', path: '/components/alert/api'},
