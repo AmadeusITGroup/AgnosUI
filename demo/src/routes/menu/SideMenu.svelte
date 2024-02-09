@@ -8,13 +8,6 @@
 	$: isAngular = $selectedFramework$ === 'angular';
 	$: isReact = $selectedFramework$ === 'react';
 	$: isSvelte = $selectedFramework$ === 'svelte';
-
-	function toKebabCase(original: string): string {
-		return original
-			.match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)!
-			.join('-')
-			.toLowerCase();
-	}
 </script>
 
 <nav class="w-100 mt-1">
@@ -44,7 +37,7 @@
 		</div>
 	{/if}
 	{#each $page.data.menu ?? [] as { title, submenu }}
-		<CollapsibleSection headerText={title} defaultVisible={$page.url.pathname?.includes(toKebabCase(title))}>
+		<CollapsibleSection headerText={title}>
 			<div>
 				{#each submenu as { label, status, path, subpath }}
 					{@const isCurrent = $page.url.pathname?.includes(path)}

@@ -1,25 +1,48 @@
 <script lang="ts">
-	import {collapseVerticalTransition} from '@agnos-ui/core/services/transitions/bootstrap';
+	import {page} from '$app/stores';
 	import {createTransition} from '@agnos-ui/core/services/transitions/baseTransitions';
+	import {collapseVerticalTransition} from '@agnos-ui/core/services/transitions/bootstrap';
 	import {writable} from '@amadeus-it-group/tansu';
+	import type {Page} from '@sveltejs/kit';
+	import {onMount} from 'svelte';
+	import {get} from 'svelte/store';
 
 	export let headerText: string;
-	export let defaultVisible: boolean;
+
+	function toKebabCase(original: string): string {
+		return original
+			.match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)!
+			.join('-')
+			.toLowerCase();
+	}
 
 	const paramTransition$ = writable(collapseVerticalTransition);
-	const paramAnimation$ = writable(true);
+	const paramAnimation$ = writable(false);
+	const defaultVisible = isOnPage(get(page));
 	const paramVisible$ = writable(defaultVisible);
-
+	onMount(() => {
+		paramAnimation$.set(true);
+		return page.subscribe((p) => {
+			if (paramVisible$() === false) {
+				paramVisible$.set(isOnPage(p));
+			}
+		});
+	});
 	const {
-		stores: {visible$},
+		stores: {visible$, hidden$},
 		api: {toggle},
 		directives: {directive},
 	} = createTransition({
 		props: {
 			animation: paramAnimation$,
+			animationOnInit: paramAnimation$,
 			visible: paramVisible$,
 		},
 	});
+
+	function isOnPage(page: Page<Record<string, string>, string | null>) {
+		return page.url.pathname?.includes(toKebabCase(headerText));
+	}
 </script>
 
 <div class="mb-2">
@@ -33,9 +56,11 @@
 			<rect class="vertical" class:expanded={$visible$} x="45" y="20" width="10" height="60" fill="currentColor" />
 		</svg>
 	</button>
-	<div class="contents" class:collapse={!defaultVisible} use:directive={{transition: $paramTransition$, animation: $paramAnimation$}}>
-		<slot />
-	</div>
+	{#if !$hidden$}
+		<div class="contents" use:directive={{transition: $paramTransition$, animation: $paramAnimation$}}>
+			<slot />
+		</div>
+	{/if}
 </div>
 
 <style lang="scss">
