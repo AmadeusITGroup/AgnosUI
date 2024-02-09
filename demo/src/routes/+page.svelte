@@ -17,14 +17,14 @@
 <div class="container-xxl d-flex flex-column align-items-center pt-5">
 	<div class="d-flex flex-md-row flex-column">
 		<div class="order-md-1 order-2">
-			<h1 class="text-primary text-sm-start text-center fs-sm-1 mb-md-5 mb-sm-3">
+			<h1 class="text-primary-emphasis text-sm-start text-center fs-sm-1 mb-md-5 mb-sm-3">
 				<span
 					><span class="au-clip">AgnosUI</span>
 					<br />
 					Where web widgets shine.</span
 				>
 			</h1>
-			<h2 class="text-primary text-sm-start text-center">Perfected open-source widget libraries</h2>
+			<h2 class="text-primary-emphasis text-sm-start text-center">Perfected open-source widget libraries</h2>
 			<ul class="au-landing-list">
 				<li class="d-flex align-items-start">
 					<Svg svg={bullet} className="bullet me-3" />Configurable Typescript widget factories
@@ -111,8 +111,6 @@
 </footer>
 
 <style lang="scss">
-	@import '@agnos-ui/common/variables';
-
 	@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
 	$font-name: 'Kanit';
 
@@ -166,10 +164,10 @@
 			min-width: 20px;
 			min-height: 20px;
 			margin-top: 3px;
-			color: $gradient-text-top;
+			color: var(--bs-primary-text-emphasis);
 		}
 	}
 	.au-footer {
-		border-top: 1px solid $gradient-text-bottom;
+		border-top: 1px solid var(--bs-primary-text-emphasis);
 	}
 </style>

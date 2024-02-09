@@ -1,4 +1,12 @@
-@import '@agnos-ui/common/variables';
+@use 'sass:selector';
+@import './bs-customTheme';
+@import './custom-darkCSS.variables';
+
+// @mixin onlyInMode($mode) {
+// 	@at-root #{selector.nest('[data-bs-theme="#{$mode}"]', &)} {
+// 		@content;
+// 	}
+// }
 
 body {
 	min-height: 100vh;
@@ -9,14 +17,19 @@ main {
 	flex-wrap: nowrap;
 }
 
-.agnos-ui {
-	padding: 0;
-
-	&-logo {
-		height: 30px;
-	}
+.card {
+	color: $primary;
+	background-color: $light;
 }
 
+.agnos-ui {
+	padding: 0;
+}
+.agnos-ui-logo {
+	height: 30px;
+}
+
+// TODO use color of the color palette
 .hljs-keyword {
 	color: #d33948 !important;
 }
@@ -54,6 +67,23 @@ h5,
 	font-size: calc(0.8rem + 0.4vw);
 }
 
+.nav-link.active {
+	font-weight: 600;
+}
+
+.nav-link.au-nav-link-onlightbg:not(.active) {
+	@extend .text-bg-light;
+}
+
+.au-rounded-header {
+	@media (min-width: 768px) {
+		border-top-left-radius: 5px;
+	}
+	@media (min-width: 992px) {
+		border-top-right-radius: 5px;
+	}
+}
+
 header {
 	&.title {
 		margin-left: calc(var(--bs-gutter-x) * -0.5);
@@ -77,7 +107,7 @@ header {
 			}
 
 			.active {
-				border-top-color: #26005a;
+				border-top-color: var(--bs-primary);
 			}
 
 			.navigation-dropdown {
@@ -117,10 +147,6 @@ header {
 	}
 }
 
-// .demo-nav-top {
-// 	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.33), inset 0 -1px 0 rgba(255, 255, 255, 0.15);
-// }
-
 .svg {
 	display: inline-flex;
 	align-items: center;
@@ -128,6 +154,7 @@ header {
 	> svg {
 		width: 100%;
 		height: 100%;
+		fill: currentColor;
 	}
 
 	&.icon-20 {
@@ -161,15 +188,6 @@ header {
 	view-transition-name: demo-mobile-menu;
 }
 
-html[data-bs-theme='dark'] .shiki,
-html[data-bs-theme='dark'] .shiki span {
-	color: var(--shiki-dark) !important;
-	background-color: var(--shiki-dark-bg) !important;
-	/* Optional, if you also want font styles */
-	font-style: var(--shiki-dark-font-style) !important;
-	font-weight: var(--shiki-dark-font-weight) !important;
-	text-decoration: var(--shiki-dark-text-decoration) !important;
-}
 .shiki {
 	margin-bottom: 0;
 	padding: 0.5rem 1.5rem;
@@ -183,5 +201,47 @@ html[data-bs-theme='dark'] .shiki span {
 	}
 	@media (max-width: 991px) {
 		padding: 0.5rem;
+	}
+}
+
+// Dark mode override
+@if $enable-dark-mode {
+	@include color-mode(dark, true) {
+		color-scheme: dark;
+
+		@each $color, $value in $theme-colors-dark-rgb {
+			--#{$prefix}#{$color}-rgb: #{$value};
+		}
+		// This override is not done in BS
+		@each $color, $value in $theme-colors-dark {
+			--#{$prefix}#{$color}: #{$value};
+		}
+
+		// Override some color only for the dark mode
+		@each $color, $value in $theme-colors-dark {
+			.btn-outline-#{$color} {
+				@include button-outline-variant($value);
+			}
+		}
+		@each $color, $value in $theme-colors-dark {
+			.text-bg-#{$color} {
+				color: color-contrast($value) if($enable-important-utilities, !important, null);
+				background-color: RGBA(var(--#{$prefix}#{$color}-rgb), var(--#{$prefix}bg-opacity, 1)) if($enable-important-utilities, !important, null);
+			}
+		}
+		.card {
+			color: $light;
+			background-color: $primary;
+		}
+
+		.shiki,
+		.shiki span {
+			color: var(--shiki-dark) !important;
+			background-color: var(--shiki-dark-bg) !important;
+			/* Optional, if you also want font styles */
+			font-style: var(--shiki-dark-font-style) !important;
+			font-weight: var(--shiki-dark-font-weight) !important;
+			text-decoration: var(--shiki-dark-text-decoration) !important;
+		}
 	}
 }

@@ -6,6 +6,6 @@
 
 <style>
 	code {
-		color: rgba(var(--bs-primary-rgb), 0.8) !important;
+		color: var(--bs-primary-text-emphasis);
 	}
 </style>

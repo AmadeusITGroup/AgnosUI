@@ -1,0 +1,20 @@
+$primary-text-emphasis-dark: #b650ff;
+$primary-text-emphasis: #26005a;
+$primary: #26005a;
+$secondary: #fffce6;
+$light: #f8eeff;
+$secondary-bg-subtle: #fffce6;
+$info: #0c66e1;
+
+// Dark variables override / definition
+$link-color-dark: #f8eeff;
+$link-hover-color-dark: #e4c7ff;
+$color-contrast-dark: #160033;
+$primary-dark: #b650ff;
+$info-dark: #3a8bff;
+$body-bg-dark: #160033;
+$secondary-bg-subtle-dark: #564a00;
+
+@import '../node_modules/bootstrap/scss/functions';
+@import '../node_modules/bootstrap/scss/variables';
+@import '../node_modules/bootstrap/scss/mixins/breakpoints';

@@ -29,8 +29,8 @@
 		on:click={() => toggle()}
 		>{headerText}
 		<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 100 100" class="ms-1">
-			<rect class="horizontal" x="20" y="45" width="60" height="10" fill="black" />
-			<rect class="vertical" class:expanded={$visible$} x="45" y="20" width="10" height="60" fill="black" />
+			<rect class="horizontal" x="20" y="45" width="60" height="10" fill="currentColor" />
+			<rect class="vertical" class:expanded={$visible$} x="45" y="20" width="10" height="60" fill="currentColor" />
 		</svg>
 	</button>
 	<div class="contents" class:collapse={!defaultVisible} use:directive={{transition: $paramTransition$, animation: $paramAnimation$}}>
@@ -42,7 +42,8 @@
 	.btn-header:focus-visible,
 	.btn-header:hover,
 	.btn-header:focus-visible:active {
-		background-color: var(--bs-secondary);
+		background-color: var(--bs-secondary-bg-subtle);
+		border-color: var(--bs-secondary-bg-subtle);
 	}
 
 	svg {

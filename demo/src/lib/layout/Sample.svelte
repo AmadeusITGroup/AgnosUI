@@ -86,7 +86,7 @@
 	<div class={`position-relative ${isDoc ? 'border-bottom' : 'border'} `}>
 		{#if $showSpinner$}
 			<div class="position-absolute top-50 start-50 translate-middle iframeSpinner">
-				<div class="spinner-border text-primary" role="status">
+				<div class="spinner-border text-primary-emphasis" role="status">
 					<span class="visually-hidden">Loading...</span>
 				</div>
 			</div>
@@ -131,7 +131,7 @@
 		{/if}
 		<div class="border border-top-0">
 			<Lazy component={() => import('./Code.svelte')} {code} fileName={selectedFileName} language={isPlaceholder ? $selectedFramework$ : undefined}>
-				<div class="spinner-border text-primary" role="status">
+				<div class="spinner-border text-primary-emphasis" role="status">
 					<span class="visually-hidden">Loading...</span>
 				</div>
 			</Lazy>

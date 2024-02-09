@@ -2,6 +2,6 @@
 
 <style>
 	li::marker {
-		color: var(--bs-primary) !important;
+		color: var(--bs-primary-text-emphasis) !important;
 	}
 </style>

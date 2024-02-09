@@ -1,19 +1,17 @@
-@import '@agnos-ui/common/variables';
+@import '../custom.variables';
 
 $mobileMargin: 16px;
 
 .menu-item {
 	display: block;
-	color: var(--bs-dark);
+	color: var(--bs-dark-text-emphasis);
 	background-color: var(--bs-body-bg);
 	text-decoration: none;
 	outline: none;
 
 	&:hover,
 	&:focus-visible {
-		background-color: var(--bs-secondary);
-		border-color: var(--bs-secondary);
-		color: var(--bs-primary);
+		background-color: var(--bs-secondary-bg-subtle);
 	}
 
 	@include media-breakpoint-down(md) {
@@ -26,17 +24,17 @@ $mobileMargin: 16px;
 	padding: 0.1rem 0.5rem;
 	border: 0px solid var(--bs-body-bg);
 	border-width: 2px 0;
+	border-radius: 5px;
 
 	&.active {
-		color: var(--bs-primary);
-		background-color: #f8eeff;
-		border-radius: 5px;
+		color: var(--bs-dark);
+		background-color: var(--bs-light);
 		font-weight: 500;
 	}
 
 	@include media-breakpoint-down(md) {
 		&:focus {
-			border-color: var(--bs-primary-border-subtle);
+			border-color: var(--bs-primary-text-emphasis-border-subtle);
 		}
 	}
 
@@ -54,8 +52,8 @@ $mobileMargin: 16px;
 	border-width: 0 0 0 2px;
 
 	&.active {
-		border-color: var(--bs-primary);
-		border-left-color: var(--bs-primary);
+		border-color: var(--bs-primary-text-emphasis);
+		border-left-color: var(--bs-primary-text-emphasis);
 	}
 }
 

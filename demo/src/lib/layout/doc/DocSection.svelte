@@ -18,7 +18,7 @@
 	<Section label={title} id={titleLowercase} level={2} headerClassName="my-4">
 		{#each properties as { name, type, description, defaultValue } (name)}
 			{@const lines = textToLines(description)}
-			<Section label={name} id="{titleLowercase}-{name}" level={3} headerClassName="text-primary">
+			<Section label={name} id="{titleLowercase}-{name}" level={3} headerClassName="text-primary-emphasis">
 				<div class="mb-3"><span class="fw-bold">Type:</span> <code>{type}</code></div>
 				<div class="mb-3">
 					{#each lines as line}
