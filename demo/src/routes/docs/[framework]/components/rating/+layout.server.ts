@@ -1,6 +1,8 @@
+import {componentsMetadata} from '$lib/components-metadata';
+
 export const load = async () => {
 	return {
-		mainTitle: 'Rating',
+		...componentsMetadata.Rating,
 		tabs: [
 			{title: 'Examples', key: 'examples', path: '/components/rating/examples'},
 			{title: 'Api', key: 'api', path: '/components/rating/api'},

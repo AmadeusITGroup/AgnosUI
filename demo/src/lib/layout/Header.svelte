@@ -4,6 +4,7 @@
 	import {getTitle} from '../../app';
 
 	export let title: string;
+	export let status: string = '';
 
 	$: tabs = $page.data.tabs ?? [];
 </script>
@@ -20,7 +21,11 @@
 	class:pb-3={!tabs.length}
 >
 	<div class="row align-items-center w-100" class:pb-3={tabs.length}>
-		<h1 class="text-primary col-auto me-auto me-md-none mb-0 p-0 p-md-3 text-center text-md-start w-100">{title}</h1>
+		<h1 class="text-primary col-auto me-2 me-md-none mb-0 p-0 p-md-3 text-center text-md-start">
+			{title}
+		</h1>
+		{#if status === 'inprogress'}<span class="col-auto badge text-bg-warning">In progress</span>{/if}
+		{#if status === 'beta'}<span class="col-auto badge text-bg-primary">Beta</span>{/if}
 	</div>
 	{#if tabs.length}
 		<ul class="nav-tabs px-4 px-lg-5 d-flex flex-nowrap content-tabset justify-content-start nav" role="tablist">

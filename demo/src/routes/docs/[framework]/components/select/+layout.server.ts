@@ -1,6 +1,8 @@
+import {componentsMetadata} from '$lib/components-metadata';
+
 export const load = async () => {
 	return {
-		mainTitle: 'Select',
+		...componentsMetadata.Select,
 		tabs: [
 			{title: 'Examples', key: 'examples', path: '/components/select/examples'},
 			{title: 'Api', key: 'api', path: '/components/select/api'},

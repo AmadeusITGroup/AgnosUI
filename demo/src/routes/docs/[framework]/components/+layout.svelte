@@ -8,14 +8,14 @@
 
 	$: tabs = $page.data.tabs ?? [];
 	$: selectedTab = tabs.find((tabItem: any) => tabItem.key === $selectedTabName$);
-	$: title = `${$page.data.mainTitle} ${selectedTab?.title.toLowerCase() ?? ''}`;
+	$: title = `${$page.data.title} ${selectedTab?.title.toLowerCase() ?? ''}`;
 </script>
 
 <svelte:head>
 	<meta name="description" content={getTitle(title, $selectedFramework$)} />
 </svelte:head>
 
-<Header title={$page.data.mainTitle} />
+<Header title={$page.data.title} status={$page.data.status} />
 <div class="main-content">
 	<slot />
 </div>

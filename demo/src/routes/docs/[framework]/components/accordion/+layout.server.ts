@@ -1,6 +1,8 @@
+import {componentsMetadata} from '$lib/components-metadata';
+
 export const load = async () => {
 	return {
-		mainTitle: 'Accordion',
+		...componentsMetadata.Accordion,
 		tabs: [
 			{title: 'Examples', key: 'examples', path: '/components/accordion/examples'},
 			{title: 'Api', key: 'api', path: '/components/accordion/api'},

@@ -1,6 +1,8 @@
+import {componentsMetadata} from '$lib/components-metadata';
+
 export const load = async () => {
 	return {
-		mainTitle: 'Progressbar',
+		...componentsMetadata.Progressbar,
 		tabs: [
 			{title: 'Examples', key: 'examples', path: '/components/progressbar/examples'},
 			{title: 'Api', key: 'api', path: '/components/progressbar/api'},

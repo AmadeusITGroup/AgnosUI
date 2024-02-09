@@ -46,15 +46,17 @@
 	{#each $page.data.menu ?? [] as { title, submenu }}
 		<CollapsibleSection headerText={title} defaultVisible={$page.url.pathname?.includes(toKebabCase(title))}>
 			<div>
-				{#each submenu as { label, path, subpath }}
+				{#each submenu as { label, status, path, subpath }}
 					{@const isCurrent = $page.url.pathname?.includes(path)}
 					<a
-						class="menu-item menu-item-sidenav"
+						class="menu-item menu-item-sidenav d-flex align-items-center justify-content-between"
 						class:active={isCurrent}
 						aria-current={isCurrent ? 'page' : undefined}
 						href="{$pathToRoot$}{path}{subpath}"
 					>
 						{label}
+						{#if status === 'inprogress'}<span class="badge text-bg-warning">In progress</span>{/if}
+						{#if status === 'beta'}<span class="badge text-bg-primary">Beta</span>{/if}
 					</a>
 				{/each}
 			</div>

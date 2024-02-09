@@ -1,6 +1,8 @@
+import {componentsMetadata} from '$lib/components-metadata';
+
 export const load = async () => {
 	return {
-		mainTitle: 'Modal',
+		...componentsMetadata.Modal,
 		tabs: [
 			{title: 'Examples', key: 'examples', path: '/components/modal/examples'},
 			{title: 'Api', key: 'api', path: '/components/modal/api'},
