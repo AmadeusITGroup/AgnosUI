@@ -19,7 +19,7 @@
 
 <div class="d-flex align-items-center justify-content-between">
 	<button
-		class="d-md-none text-dark d-flex align-items-center btn btn-link link-underline link-underline-opacity-0"
+		class="d-md-none text-dark-emphasis d-flex align-items-center btn btn-link link-underline link-underline-opacity-0"
 		aria-expanded={isMenuExpanded}
 		on:click={() => {
 			isMenuExpanded = true;
@@ -28,7 +28,7 @@
 		<Svg svg={menuIcon} className="icon-20 me-1" /><span class="menu-text">Menu</span>
 	</button>
 	<button
-		class="text-dark d-flex align-items-center btn btn-link link-underline link-underline-opacity-0"
+		class="text-dark-emphasis d-flex align-items-center btn btn-link link-underline link-underline-opacity-0"
 		aria-expanded={isOnThisPageExpanded}
 		on:click={() => {
 			isOnThisPageExpanded = true;

@@ -2,7 +2,6 @@
 	import Svg from '$lib/layout/Svg.svelte';
 	import github from 'bootstrap-icons/icons/github.svg?raw';
 	import twitter from 'bootstrap-icons/icons/twitter-x.svg?raw';
-	import './bs-customTheme.scss';
 	import {canonicalURL$, pathToRoot$, routeLevel$} from '$lib/stores';
 	import './styles.scss';
 	import {afterNavigate, beforeNavigate, onNavigate} from '$app/navigation';
@@ -15,6 +14,7 @@
 	import TOC from './menu/TOC.svelte';
 	import agnosUILogo from '$resources/agnosui-logo.svg?raw';
 	import type {Snapshot} from '@sveltejs/kit';
+	import Theme from './menu/Theme.svelte';
 
 	const onServiceWorkerUpdate = () => {
 		void updated.check();
@@ -69,7 +69,7 @@
 </svelte:head>
 
 <div class="agnos-ui">
-	<nav class="demo-nav-top navbar">
+	<nav class="navbar-nav demo-nav-top navbar z-1">
 		<div class="container-xxl">
 			<a class="navbar-brand d-flex align-items-center" href={$pathToRoot$}><Svg svg={agnosUILogo} className="agnosui-logo-brand me-2" /> AgnosUI </a>
 			<div class="align-items-center d-none d-md-flex">
@@ -86,6 +86,7 @@
 					class:active={$page.route.id?.startsWith('/blog/')}
 					aria-current={$page.route.id?.startsWith('/blog/') ? 'page' : undefined}>Blog</a
 				>
+				<Theme />
 				<a class="nav-link ms-3" href="https://github.com/AmadeusITGroup/AgnosUI" aria-label="link to GitHub repository" target="_blank">
 					<Svg className="icon-24 align-middle" svg={github} />
 				</a>
@@ -94,12 +95,12 @@
 				</a>
 				<span class="ms-3">v{import.meta.env.AGNOSUI_VERSION}</span>
 			</div>
-			<div class="d-block d-md-none">
+			<div class="d-flex d-md-none">
 				<MobileMenu />
 			</div>
 		</div>
 	</nav>
-	<div class="demo-main d-flex flex-column" bind:this={container}>
+	<div class="demo-main d-flex flex-column z-0" bind:this={container}>
 		{#if isMainPage}
 			<slot />
 		{:else}
@@ -126,12 +127,6 @@
 </div>
 
 <style lang="scss">
-	@import '@agnos-ui/common/variables';
-
-	.nav-link.active {
-		font-weight: 600;
-	}
-
 	.agnos-ui {
 		width: 100vw;
 		height: 100dvh;
@@ -152,7 +147,7 @@
 		position: sticky;
 		top: 0;
 		background-color: var(--bs-body-bg);
-		box-shadow: $box-shadow;
+		box-shadow: var(--bs-box-shadow);
 		z-index: 10;
 		margin-left: calc(var(--bs-gutter-x) * -0.5);
 		margin-right: calc(var(--bs-gutter-x) * -0.5);
@@ -160,7 +155,6 @@
 
 	.demo-nav-top {
 		grid-area: top;
-		overflow: auto;
 	}
 
 	.demo-main {

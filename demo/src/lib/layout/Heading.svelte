@@ -10,7 +10,7 @@
 </script>
 
 {#if depth > 1}
-	<svelte:element this={'h' + depth} {id} class={`${headerClassName} text-primary ${depth > 1 ? 'mt-2' : ''}`}>
+	<svelte:element this={'h' + depth} {id} class={`${headerClassName} text-primary-emphasis ${depth > 1 ? 'mt-2' : ''}`}>
 		{text}
 		<a class="anchor-link" href="#{id}" aria-label="link to {text}"><Svg className="icon-24 align-middle" svg={link} /></a>
 	</svelte:element>

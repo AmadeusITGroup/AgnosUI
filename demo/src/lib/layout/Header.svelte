@@ -16,7 +16,7 @@
 <header
 	class="au-header bg-light pt-3 px-4 px-lg-5 d-flex mb-4 align-items-center title"
 	class:rounded={!tabs.length}
-	class:rounded-top={tabs.length}
+	class:au-rounded-header={tabs.length}
 	class:pb-5={tabs.length}
 	class:pb-3={!tabs.length}
 >
@@ -25,7 +25,7 @@
 			{title}
 		</h1>
 		{#if status === 'inprogress'}<span class="col-auto badge text-bg-warning">In progress</span>{/if}
-		{#if status === 'beta'}<span class="col-auto badge text-bg-primary">Beta</span>{/if}
+		{#if status === 'beta'}<span class="col-auto badge text-bg-info">Beta</span>{/if}
 	</div>
 	{#if tabs.length}
 		<ul class="nav-tabs px-4 px-lg-5 d-flex flex-nowrap content-tabset justify-content-start nav" role="tablist">
@@ -35,7 +35,7 @@
 					<a
 						href={`${$pathToRoot$}docs/${$selectedFramework$}${path}`}
 						role="tab"
-						class="nav-link link-body-emphasis"
+						class="nav-link au-nav-link-onlightbg"
 						aria-selected={isActive}
 						class:active={isActive}
 					>

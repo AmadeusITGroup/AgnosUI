@@ -21,7 +21,7 @@
 	{#if $page.data.includesFwk}
 		<strong class="d-flex w-100 align-items-center fw-semibold">Framework </strong>
 		<div class="col flex-grow-0">
-			<div class="btn-group btn-group-sm me-2 my-2 bg-white" role="group" aria-label="Basic radio toggle button group">
+			<div class="btn-group btn-group-sm me-2 my-2" role="group" aria-label="Basic radio toggle button group">
 				<a
 					href={`${$pathToRoot$}docs/angular/${$frameworkLessUrl$}`}
 					class="btn btn-outline-primary"
@@ -56,7 +56,7 @@
 					>
 						{label}
 						{#if status === 'inprogress'}<span class="badge text-bg-warning">In progress</span>{/if}
-						{#if status === 'beta'}<span class="badge text-bg-primary">Beta</span>{/if}
+						{#if status === 'beta'}<span class="badge text-bg-info">Beta</span>{/if}
 					</a>
 				{/each}
 			</div>

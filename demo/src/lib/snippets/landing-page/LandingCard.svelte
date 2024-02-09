@@ -6,7 +6,7 @@
 </script>
 
 <div class="col-12 col-md-6 col-lg-4 mb-3">
-	<div class="card bg-light">
+	<div class="card">
 		<div class="row g-0">
 			{#if svg}
 				<div class="col-4 p-2">
@@ -26,15 +26,12 @@
 </div>
 
 <style lang="scss">
-	@import '../../../../../common/variables';
-
 	:global(.landing-card-svg) {
 		width: 140px;
 		height: 140px;
 	}
 
 	h5 {
-		color: $gradient-text-bottom;
 		font-weight: bold;
 	}
 
