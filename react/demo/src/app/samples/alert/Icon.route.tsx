@@ -1,27 +1,26 @@
-import type {AlertProps, AlertContext} from '@agnos-ui/react/components/alert';
+import type {AlertContext} from '@agnos-ui/react/components/alert';
 import {Alert} from '@agnos-ui/react/components/alert';
 import {Slot} from '@agnos-ui/react/slot';
-import type {AdaptPropsSlots} from '@agnos-ui/react/types';
 import {WidgetsDefaultConfig} from '@agnos-ui/react/config';
-import biCheckCircleFill from 'bootstrap-icons/icons/check-circle-fill.svg?raw';
-import biDashCircleFill from 'bootstrap-icons/icons/dash-circle-fill.svg?raw';
-import biExclamationTriangleFill from 'bootstrap-icons/icons/exclamation-triangle-fill.svg?raw';
-import biInfoCircleFill from 'bootstrap-icons/icons/info-circle-fill.svg?raw';
-import biLightbulb from 'bootstrap-icons/icons/lightbulb.svg?raw';
-import {useState} from 'react';
+import CheckCircle from 'bootstrap-icons/icons/check-circle-fill.svg?react';
+import DashCircle from 'bootstrap-icons/icons/dash-circle-fill.svg?react';
+import ExclamationTriangle from 'bootstrap-icons/icons/exclamation-triangle-fill.svg?react';
+import InfoCircle from 'bootstrap-icons/icons/info-circle-fill.svg?react';
+import LightBulb from 'bootstrap-icons/icons/lightbulb.svg?react';
+import type {FunctionComponent, SVGProps} from 'react';
 
 const AlertIcon = ({widget, state}: AlertContext) => {
-	const typeIcon: Record<string, string> = {
-		success: biCheckCircleFill,
-		info: biInfoCircleFill,
-		warning: biExclamationTriangleFill,
-		danger: biDashCircleFill,
-		light: biLightbulb,
+	const typeIcon: Record<string, FunctionComponent<SVGProps<SVGSVGElement> & {title?: string | undefined}>> = {
+		success: CheckCircle,
+		info: InfoCircle,
+		warning: ExclamationTriangle,
+		danger: DashCircle,
+		light: LightBulb,
 	};
 
 	return (
 		<>
-			<span className="d-flex me-2" dangerouslySetInnerHTML={{__html: typeIcon[state.type]}}></span>
+			<span className="d-flex me-2">{typeIcon[state.type]({})}</span>
 			<div className="alert-body">
 				<Slot slotContent={state.slotDefault} props={{widget, state}}></Slot>
 			</div>
@@ -32,22 +31,20 @@ const AlertIcon = ({widget, state}: AlertContext) => {
 	);
 };
 
-const IconDemo = () => {
-	const [alertConfig] = useState<Partial<AdaptPropsSlots<AlertProps>>>({
-		dismissible: false,
-		className: 'd-flex align-items-center',
-		slotStructure: AlertIcon,
-	});
-
-	return (
-		<WidgetsDefaultConfig alert={alertConfig}>
-			<Alert type="success">Alert success with a customisable icon</Alert>
-			<Alert type="warning">Alert warning with a customisable icon</Alert>
-			<Alert type="danger">Alert danger with a customisable icon</Alert>
-			<Alert type="info">Alert info with a customisable icon</Alert>
-			<Alert type="light">Alert light with a customisable icon</Alert>
-		</WidgetsDefaultConfig>
-	);
-};
+const IconDemo = () => (
+	<WidgetsDefaultConfig
+		alert={{
+			dismissible: false,
+			className: 'd-flex align-items-center',
+			slotStructure: AlertIcon,
+		}}
+	>
+		<Alert type="success">Alert success with a customisable icon</Alert>
+		<Alert type="warning">Alert warning with a customisable icon</Alert>
+		<Alert type="danger">Alert danger with a customisable icon</Alert>
+		<Alert type="info">Alert info with a customisable icon</Alert>
+		<Alert type="light">Alert light with a customisable icon</Alert>
+	</WidgetsDefaultConfig>
+);
 
 export default IconDemo;

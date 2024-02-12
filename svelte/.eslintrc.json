@@ -40,7 +40,8 @@
 				"@typescript-eslint/no-unused-vars": [
 					"error",
 					{"vars": "all", "args": "none", "ignoreRestSiblings": false, "varsIgnorePattern": "^\\$\\$(Props|Slots)$"}
-				]
+				],
+				"svelte/no-at-html-tags": "off"
 			}
 		}
 	]

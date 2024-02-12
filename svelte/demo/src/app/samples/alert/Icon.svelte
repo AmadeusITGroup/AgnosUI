@@ -22,7 +22,6 @@
 	};
 </script>
 
-<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 <span class="d-flex me-2">{@html typeIcon[state.type]}</span>
 <div class="alert-body">
 	<Slot slotContent={state.slotDefault} props={{widget, state}} let:component let:props>
