@@ -71,11 +71,12 @@
 		"eslint-plugin-react": "^7.33.2",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
-		"react-router-dom": "^6.22.0"
+		"react-router-dom": "^6.22.0",
+		"vite-plugin-svgr": "^4.2.0"
 	},
 	"dependencies": {
-		"@agnos-ui/react-headless": "*",
 		"@agnos-ui/react": "*",
+		"@agnos-ui/react-headless": "*",
 		"@agnos-ui/style-bootstrap": "*",
 		"@amadeus-it-group/tansu": "1.0.0",
 		"@floating-ui/dom": "^1.6.2",

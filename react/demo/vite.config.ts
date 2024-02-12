@@ -2,6 +2,7 @@ import {defineConfig} from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import {alias} from '../../viteAlias';
+import svgr from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config/
 export default defineConfig((config) => ({
@@ -26,5 +27,5 @@ export default defineConfig((config) => ({
 					}
 				: alias,
 	},
-	plugins: [react()],
+	plugins: [svgr(), react()],
 }));
