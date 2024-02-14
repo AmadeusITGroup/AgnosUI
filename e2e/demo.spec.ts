@@ -24,9 +24,6 @@ const allRoutes = globSync(`**/+page.svelte`, {cwd: pathToFrameworkDir}).flatMap
 
 async function analyze(page: Page, route: string): Promise<AxeResults> {
 	const analyser = new AxeBuilder({page}).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']);
-	if (route.includes('slider')) {
-		analyser.disableRules('color-contrast');
-	}
 	return analyser.analyze();
 }
 

@@ -43,6 +43,7 @@ export function Slider(props: Partial<SliderProps>) {
 		<div
 			ref={sliderSetRef}
 			className={`au-slider ${vertical ? 'au-slider-vertical' : 'au-slider-horizontal'} ${className} ${disabled ? ' disabled' : ''}`}
+			aria-disabled={disabled ? 'true' : undefined}
 		>
 			{progressDisplayOptions.map((option, index) => (
 				<div

@@ -23,6 +23,7 @@ import {take} from 'rxjs';
 		class: `au-slider`,
 		'[class]': '(state().vertical ? "au-slider-vertical" : "au-slider-horizontal") + " " + state().className',
 		'[class.disabled]': 'state().disabled',
+		'[attr.aria-disabled]': 'state().disabled ? true : null',
 		'(blur)': 'handleBlur()',
 	},
 	template: `
