@@ -56,6 +56,8 @@
 			slotNext$,
 			slotLast$,
 			slotPages$,
+			pagesHrefs$,
+			directionsHrefs$,
 		},
 		state$,
 		actions: {first, previous, next, last},
@@ -72,12 +74,11 @@
 	<ul class="au-pagination pagination {sizeClass} {$className$}">
 		{#if $boundaryLinks$}
 			<li class="page-item" class:disabled={$previousDisabled$}>
-				<!-- svelte-ignore a11y-invalid-attribute -->
 				<a
 					aria-label={$ariaFirstLabel$}
 					class="page-link au-first"
-					href="#"
-					on:click|preventDefault={() => first()}
+					href={$pagesHrefs$[0]}
+					on:click={(event) => first(event)}
 					tabindex={$previousDisabled$ ? -1 : undefined}
 					aria-disabled={$previousDisabled$ ? 'true' : null}
 				>
@@ -100,12 +101,11 @@
 		{/if}
 		{#if $directionLinks$}
 			<li class="page-item" class:disabled={$previousDisabled$}>
-				<!-- svelte-ignore a11y-invalid-attribute -->
 				<a
 					aria-label={$ariaPreviousLabel$}
 					class="page-link au-previous"
-					href="#"
-					on:click|preventDefault={() => previous()}
+					href={$directionsHrefs$.previous}
+					on:click={(event) => previous(event)}
 					tabindex={$previousDisabled$ ? -1 : undefined}
 					aria-disabled={$previousDisabled$ ? 'true' : null}
 				>
@@ -140,12 +140,11 @@
 		</Slot>
 		{#if $directionLinks$}
 			<li class="page-item" class:disabled={$nextDisabled$}>
-				<!-- svelte-ignore a11y-invalid-attribute -->
 				<a
 					aria-label={$ariaNextLabel$}
 					class="page-link au-next"
-					href="#"
-					on:click|preventDefault={() => next()}
+					href={$directionsHrefs$.next}
+					on:click={(event) => next(event)}
 					tabindex={$nextDisabled$ ? -1 : undefined}
 					aria-disabled={$nextDisabled$ ? 'true' : null}
 				>
@@ -168,12 +167,11 @@
 		{/if}
 		{#if $boundaryLinks$}
 			<li class="page-item" class:disabled={$nextDisabled$}>
-				<!-- svelte-ignore a11y-invalid-attribute -->
 				<a
 					aria-label={$ariaLastLabel$}
 					class="page-link au-last"
-					href="#"
-					on:click|preventDefault={() => last()}
+					href={$pagesHrefs$.at(-1)}
+					on:click={(event) => last(event)}
 					tabindex={$nextDisabled$ ? -1 : undefined}
 					aria-disabled={$nextDisabled$ ? 'true' : null}
 				>

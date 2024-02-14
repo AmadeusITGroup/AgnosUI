@@ -121,8 +121,8 @@ export class PaginationPagesDirective {
 					<a
 						[attr.aria-label]="state.pagesLabel[i]"
 						class="page-link au-page"
-						href="#"
-						(click)="widget.actions.select(page); $event.preventDefault()"
+						[attr.href]="state.pagesHrefs[i]"
+						(click)="widget.actions.select(page, $event)"
 						[attr.tabindex]="state.disabled ? '-1' : null"
 						[attr.aria-disabled]="state.disabled ? 'true' : null"
 					>
@@ -165,8 +165,8 @@ const defaultConfig: Partial<PaginationProps> = {
 						<a
 							[attr.aria-label]="state.ariaFirstLabel"
 							class="page-link au-first"
-							href="#"
-							(click)="widget.actions.first(); $event.preventDefault()"
+							[attr.href]="state.pagesHrefs[0]"
+							(click)="widget.actions.first($event)"
 							[attr.tabindex]="state.previousDisabled ? '-1' : null"
 							[attr.aria-disabled]="state.previousDisabled ? 'true' : null"
 						>
@@ -181,8 +181,8 @@ const defaultConfig: Partial<PaginationProps> = {
 						<a
 							[attr.aria-label]="state.ariaPreviousLabel"
 							class="page-link au-previous"
-							href="#"
-							(click)="widget.actions.previous(); $event.preventDefault()"
+							[attr.href]="state.directionsHrefs.previous"
+							(click)="widget.actions.previous($event)"
 							[attr.tabindex]="state.previousDisabled ? '-1' : null"
 							[attr.aria-disabled]="state.previousDisabled ? 'true' : null"
 						>
@@ -198,8 +198,8 @@ const defaultConfig: Partial<PaginationProps> = {
 						<a
 							[attr.aria-label]="state.ariaNextLabel"
 							class="page-link au-next"
-							href="#"
-							(click)="widget.actions.next(); $event.preventDefault()"
+							[attr.href]="state.directionsHrefs.next"
+							(click)="widget.actions.next($event)"
 							[attr.tabindex]="state.nextDisabled ? '-1' : null"
 							[attr.aria-disabled]="state.nextDisabled ? 'true' : null"
 						>
@@ -214,8 +214,8 @@ const defaultConfig: Partial<PaginationProps> = {
 						<a
 							[attr.aria-label]="state.ariaLastLabel"
 							class="page-link au-last"
-							href="#"
-							(click)="widget.actions.last(); $event.preventDefault()"
+							[attr.href]="state.pagesHrefs.at(-1)"
+							(click)="widget.actions.last($event)"
 							[attr.tabindex]="state.nextDisabled ? '-1' : null"
 							[attr.aria-disabled]="state.nextDisabled ? 'true' : null"
 						>
@@ -289,6 +289,14 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * @defaultValue 'Action link for last page'
 	 */
 	@Input('auAriaLastLabel') ariaLastLabel: string | undefined;
+
+	/**
+	 * Factory function providing the href for a "Page" page anchor,
+	 * based on the current page number
+	 * @param pageNumber - The index to use in the link
+	 *
+	 */
+	@Input('auPageLink') pageLink: ((pageNumber: number) => string) | undefined;
 
 	readonly _widget = callWidgetFactory({
 		factory: createPagination,

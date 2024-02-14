@@ -1,6 +1,27 @@
 import type {Locator} from '@playwright/test';
 import {BasePO} from '@agnos-ui/base-po';
 
+/** Pagination navigation buttons hrefs */
+export interface HrefsNavigation {
+	first?: string;
+	previous?: string;
+	next?: string;
+	last?: string;
+}
+
+/** Pagination page object */
+export interface PaginationPOState {
+	rootClasses: string[];
+	disabled: string | null;
+	pages: string[];
+	hrefs: string[];
+	hrefsNavigation?: HrefsNavigation;
+	isFirstDisabled?: boolean;
+	isPreviousDisabled?: boolean;
+	isNextDisabled?: boolean;
+	isLastDisabled?: boolean;
+}
+
 export const paginationSelectors = {
 	rootComponent: '.au-pagination',
 	activePage: '.active',
@@ -81,5 +102,56 @@ export class PaginationPO extends BasePO {
 
 	get locatorEllipses(): Locator {
 		return this.locatorRoot.locator(this.selectors.ellipses);
+	}
+
+	async state() {
+		return this.locatorRoot.evaluate((rootNode: HTMLElement) => {
+			const returnState: PaginationPOState = {rootClasses: [], disabled: null, pages: [], hrefs: []};
+			const pagesElements = [...rootNode.querySelectorAll('.au-page')] as HTMLLinkElement[];
+			const pages = [];
+			const hrefs = [];
+			const hrefsNavigation: HrefsNavigation = {};
+			const getHref = (elem: Element | null) => elem?.getAttribute('href');
+			const firstElem = rootNode.querySelector('a.au-first');
+			const previousElem = rootNode.querySelector('a.au-previous');
+			const nextElem = rootNode.querySelector('a.au-next');
+			const lastElem = rootNode.querySelector('a.au-last');
+			firstElem && (hrefsNavigation.first = getHref(firstElem)!);
+			previousElem && (hrefsNavigation.previous = getHref(previousElem)!);
+			nextElem && (hrefsNavigation.next = getHref(nextElem)!);
+			lastElem && (hrefsNavigation.last = getHref(lastElem)!);
+
+			for (const element of pagesElements) {
+				hrefs.push(element.getAttribute('href') || '');
+				pages.push((element.textContent || '').trim());
+			}
+			const pagesDisabledElements = [...rootNode.querySelectorAll('a.au-page[aria-disabled]')] as HTMLLinkElement[];
+			returnState['pages'] = pages;
+			returnState['hrefs'] = hrefs;
+			returnState['hrefsNavigation'] = hrefsNavigation;
+			returnState['rootClasses'] = rootNode.className.trim().split(' ');
+			returnState['disabled'] = pagesDisabledElements.length === pagesElements.length ? 'true' : null;
+			if (rootNode.querySelector('a.au-previous[aria-disabled]')) {
+				returnState['isPreviousDisabled'] = true;
+			} else if (previousElem) {
+				returnState['isPreviousDisabled'] = false;
+			}
+			if (rootNode.querySelector('a.au-next[aria-disabled]')) {
+				returnState['isNextDisabled'] = true;
+			} else if (nextElem) {
+				returnState['isNextDisabled'] = false;
+			}
+			if (rootNode.querySelector('a.au-first[aria-disabled]')) {
+				returnState['isFirstDisabled'] = true;
+			} else if (firstElem) {
+				returnState['isFirstDisabled'] = false;
+			}
+			if (rootNode.querySelector('a.au-last[aria-disabled]')) {
+				returnState['isLastDisabled'] = true;
+			} else if (lastElem) {
+				returnState['isLastDisabled'] = false;
+			}
+			return returnState;
+		});
 	}
 }

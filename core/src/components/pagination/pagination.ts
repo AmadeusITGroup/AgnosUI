@@ -232,6 +232,28 @@ export interface PaginationProps extends PaginationCommonPropsAndState {
 	 * ```
 	 */
 	ariaPageLabel: (processPage: number, pageCount: number) => string;
+
+	/**
+	 * Factory function providing the href for a "Page" page anchor,
+	 * based on the current page number
+	 * @param pageNumber - The index to use in the link
+	 * @defaultValue
+	 * ```ts
+	 * (_pageNumber) => '#'
+	 * ```
+	 */
+	pageLink: (pageNumber: number) => string;
+}
+
+export interface DirectionsHrefs {
+	/**
+	 * The href for the 'Previous' navigation link
+	 */
+	previous: string;
+	/**
+	 * The href for the 'Next' direction link
+	 */
+	next: string;
 }
 
 export interface PaginationState extends PaginationCommonPropsAndState {
@@ -255,6 +277,12 @@ export interface PaginationState extends PaginationCommonPropsAndState {
 	 * The label for each "Page" page link.
 	 */
 	pagesLabel: string[];
+
+	/** The hrefs for each "Page" page link */
+	pagesHrefs: string[];
+
+	/** The hrefs for the direction links  */
+	directionsHrefs: DirectionsHrefs;
 }
 
 export interface PaginationActions {
@@ -262,23 +290,23 @@ export interface PaginationActions {
 	 * To "go" to a specific page
 	 * @param page - The page number to select
 	 */
-	select(page: number): void;
+	select(page: number, event?: MouseEvent): void;
 	/**
 	 * To "go" to the first page
 	 */
-	first(): void;
+	first(event?: MouseEvent): void;
 	/**
 	 * To "go" to the previous page
 	 */
-	previous(): void;
+	previous(event?: MouseEvent): void;
 	/**
 	 * To "go" to the next page
 	 */
-	next(): void;
+	next(event?: MouseEvent): void;
 	/**
 	 * To "go" to the last page
 	 */
-	last(): void;
+	last(event?: MouseEvent): void;
 }
 
 export interface PaginationApi {
@@ -291,6 +319,8 @@ export interface PaginationApi {
 }
 
 export type PaginationWidget = Widget<PaginationProps, PaginationState, PaginationApi, PaginationActions>;
+
+const PAGE_LINK_DEFAULT = '#';
 
 const defaultConfig: PaginationProps = {
 	page: 1,
@@ -324,6 +354,7 @@ const defaultConfig: PaginationProps = {
 	slotLast: '»',
 	slotPages: undefined,
 	slotNumberLabel: ({displayedPage}) => `${displayedPage}`,
+	pageLink: (_page: number) => PAGE_LINK_DEFAULT,
 };
 
 /**
@@ -352,6 +383,7 @@ const configValidator: ConfigValidator<PaginationProps> = {
 	ariaNextLabel: typeString,
 	ariaLastLabel: typeString,
 	className: typeString,
+	pageLink: typeFunction,
 };
 
 /**
@@ -370,6 +402,7 @@ export function createPagination(config?: PropsConfig<PaginationProps>): Paginat
 			onPageChange$,
 			pagesFactory$,
 			ariaPageLabel$,
+			pageLink$,
 			...stateProps
 		},
 		patch,
@@ -399,6 +432,43 @@ export function createPagination(config?: PropsConfig<PaginationProps>): Paginat
 		return pages$().map((page) => ariaPageLabel(page, pageCount));
 	});
 
+	const pagesHrefs$ = computed(() => {
+		const pageLinkFactory = pageLink$();
+		const pageCount = pageCount$();
+		return Array.from({length: pageCount}, (_, index) => pageLinkFactory(index + 1));
+	});
+
+	const directionsHrefs$ = computed(() => {
+		const pagesHrefs = pagesHrefs$();
+		const pageIndex = page$() - 1;
+		return {
+			previous: pagesHrefs.at(pageIndex > 0 ? pageIndex - 1 : 0)!,
+			next: pagesHrefs.at(pageIndex + 1) ?? pagesHrefs.at(-1)!,
+		};
+	});
+
+	/**
+	 * Stop event propagation when href is the default value;
+	 * Update page number when navigation is in the same tab and stop the event propagation;
+	 * For navigations outside current browser tab let the default behavior, without updating the page number;
+	 * @param pageNumber current page number
+	 * @param event UI event triggered when page changed
+	 * @param pageNavigationHandler change handler callback for navigation elements
+	 */
+	function handleNavigation(pageNumber: number, event?: MouseEvent, pageNavigationHandler?: (pN: number) => number) {
+		if (pagesHrefs$()[pageNumber - 1] === PAGE_LINK_DEFAULT) {
+			event?.preventDefault();
+		}
+		if (!event || !(event.ctrlKey || event.metaKey)) {
+			event?.preventDefault();
+			if (pageNavigationHandler) {
+				page$.update(pageNavigationHandler);
+			} else {
+				page$.set(pageNumber);
+			}
+		}
+	}
+
 	return {
 		...stateStores({
 			pageCount$,
@@ -407,6 +477,8 @@ export function createPagination(config?: PropsConfig<PaginationProps>): Paginat
 			nextDisabled$,
 			previousDisabled$,
 			pagesLabel$,
+			pagesHrefs$,
+			directionsHrefs$,
 			...stateProps,
 		}),
 		patch,
@@ -415,37 +487,42 @@ export function createPagination(config?: PropsConfig<PaginationProps>): Paginat
 			 * Set the current page pageNumber (starting from 1)
 			 * @param pageNumber - Current page number to set.
 			 * Value is normalized between 1 and the number of page
+			 * @param event UI event that triggered the select
 			 */
-			select(pageNumber: number) {
-				page$.set(pageNumber);
+			select(pageNumber: number, event?: MouseEvent) {
+				handleNavigation(pageNumber, event);
 			},
 
 			/**
 			 * Select the first page
+			 * @param event Event triggering the action
 			 */
-			first() {
-				page$.set(1);
+			first(event?: MouseEvent) {
+				handleNavigation(1, event);
 			},
 
 			/**
 			 * Select the previous page
+			 * @param event Event triggering the action
 			 */
-			previous() {
-				page$.update((page) => page - 1);
+			previous(event?: MouseEvent) {
+				handleNavigation(page$() - 1, event, (page) => page - 1);
 			},
 
 			/**
 			 * Select the next page
+			 * @param event Event triggering the action
 			 */
-			next() {
-				page$.update((page) => page + 1);
+			next(event?: MouseEvent) {
+				handleNavigation(page$() + 1, event, (page) => page + 1);
 			},
 
 			/**
 			 * Select the last page
+			 * @param event Event triggering the action
 			 */
-			last() {
-				page$.set(pageCount$());
+			last(event?: MouseEvent) {
+				handleNavigation(pageCount$(), event);
 			},
 		},
 		api: {

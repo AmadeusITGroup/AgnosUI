@@ -6,18 +6,19 @@ export interface PageItemProps extends React.HTMLAttributes<HTMLAnchorElement> {
 	active?: boolean;
 	ariaLabel?: string;
 	activeLabel?: string;
+	href?: string;
 }
 
 // className and children are issue of React.HTMLAttributes
 export const PageItem = React.forwardRef<HTMLLIElement, PageItemProps>(
-	({disabled, active, ariaLabel, activeLabel, className, children, ...props}: PageItemProps, ref) => {
+	({disabled, active, ariaLabel, activeLabel, className, children, href, ...props}: PageItemProps, ref) => {
 		return (
 			<li ref={ref} aria-current={active ? 'page' : undefined} className={classNames('page-item', {active, disabled})}>
 				<a
 					className={classNames('page-link', className)}
 					aria-label={ariaLabel || undefined}
 					{...props}
-					href={'#'}
+					href={href}
 					tabIndex={disabled ? -1 : undefined}
 					aria-disabled={disabled || undefined}
 				>
