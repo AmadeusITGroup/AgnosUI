@@ -7,9 +7,20 @@ import path from 'path';
 import {normalizePath} from './utils';
 
 const pathToFrameworkDir = normalizePath(path.join(__dirname, '../demo/src/routes'));
-const allRoutes = globSync(`${pathToFrameworkDir}/**/+page.svelte`).map((route) =>
-	normalizePath(route).replace(pathToFrameworkDir, '').replace('/+page.svelte', ''),
-);
+const pathToDocsDir = normalizePath(path.join(__dirname, '../docs'));
+
+const allRoutes = globSync(`**/+page.svelte`, {cwd: pathToFrameworkDir}).flatMap((route) => {
+	const normalizedRoute = normalizePath(route)
+		.replace(/\/?\+page\.svelte$/g, '')
+		.replace('[framework]', 'svelte');
+	return normalizedRoute === 'docs/svelte/[...slug]'
+		? globSync('**/*.md', {cwd: pathToDocsDir, ignore: '**/doc.md'}).map((mdRoute) =>
+				normalizePath(mdRoute)
+					.replace(/^\d{2}-([^/]*)\/\d{2}-([^/]*)\.md$/, 'docs/svelte/$1/$2')
+					.toLowerCase(),
+			)
+		: normalizedRoute;
+});
 
 async function analyze(page: Page, route: string): Promise<AxeResults> {
 	const analyser = new AxeBuilder({page}).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']);
@@ -21,16 +32,19 @@ async function analyze(page: Page, route: string): Promise<AxeResults> {
 
 test.describe.parallel('Demo Website', () => {
 	for (const route of allRoutes) {
-		const svelteRoute = route.replace('[framework]', 'svelte');
-		test(`Route ${svelteRoute || '/'} should be accessible`, async ({page}) => {
-			await page.goto(svelteRoute);
+		test(`Route ${route || '/'} should be accessible`, async ({page}) => {
+			await page.goto(route);
 			const frames = page.frames();
 			if (frames.length > 1) {
 				const iframes = frames.slice(1);
 				await Promise.all(iframes.map((frame) => expect.poll(() => frame.url()).not.toBe('about:blank')));
 				await Promise.all(iframes.map((frame) => frame.waitForURL(frame.url())));
 			}
-			expect((await analyze(page, svelteRoute)).violations).toEqual([]);
+			expect((await analyze(page, route)).violations).toEqual([]);
+			await page.evaluate(() => document.documentElement.setAttribute('data-bs-theme', 'dark'));
+			await page.locator('.btn-dark-mode').first().click();
+			await page.locator('.dropdown-menu button:has-text("Dark")').click();
+			expect((await analyze(page, route)).violations).toEqual([]);
 		});
 	}
 });
