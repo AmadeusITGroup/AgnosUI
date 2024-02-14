@@ -52,7 +52,12 @@
 </script>
 
 <!-- on:blur={onTouched} ?? -->
-<div use:sliderDirective class={`au-slider ${$vertical$ ? 'au-slider-vertical' : 'au-slider-horizontal'} ${$className$}`} class:disabled={$disabled$}>
+<div
+	use:sliderDirective
+	class={`au-slider ${$vertical$ ? 'au-slider-vertical' : 'au-slider-horizontal'} ${$className$}`}
+	class:disabled={$disabled$}
+	aria-disabled={$disabled$ ? true : null}
+>
 	{#each $progressDisplayOptions$ as option}
 		<div
 			class="au-slider-progress"
