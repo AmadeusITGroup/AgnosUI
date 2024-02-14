@@ -51,6 +51,10 @@
 		"vitest": "^1.2.2",
 		"wireit": "^0.14.4"
 	},
+	"optionalDependencies": {
+		"@esbuild/darwin-arm64": "0.20.0",
+		"@rollup/rollup-darwin-arm64": "4.10.0"
+	},
 	"scripts": {
 		"build:coverage": "wireit",
 		"build": "node scripts/run.js build serial",
