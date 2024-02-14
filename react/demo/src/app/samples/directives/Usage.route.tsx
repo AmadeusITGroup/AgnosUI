@@ -18,7 +18,14 @@ const Usage = () => {
 				</button>
 			</div>
 			<hr />
-			<input className="form-control" id="clickText" type="text" defaultValue={text} onChange={(data) => setText(data.target.value)} />
+			<input
+				className="form-control"
+				id="clickText"
+				type="text"
+				defaultValue={text}
+				aria-label="text input to configure the directive"
+				onChange={(data) => setText(data.target.value)}
+			/>
 			<hr />
 			<span>(Open the console to see the outputs)</span>
 		</>

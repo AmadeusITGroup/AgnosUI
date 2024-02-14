@@ -6,6 +6,12 @@
 		<link rel="icon" type="image/svg+xml" href="%sveltekit.assets%/agnosui-logo.svg" />
 		%sveltekit.head%
 		<title>AgnosUI</title>
+		<script>
+			const theme = localStorage.getItem('theme');
+			if (theme === 'dark' || ((theme === 'auto' || !theme) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+				document.documentElement.setAttribute('data-bs-theme', 'dark');
+			}
+		</script>
 	</head>
 	<body data-sveltekit-preload-data="hover">
 		<div id="root">%sveltekit.body%</div>

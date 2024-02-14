@@ -72,7 +72,7 @@
 <div class="nav-item ms-3">
 	<div class="dropdown">
 		<button
-			class="btn nav-link dropdown-toggle align-items-center d-flex"
+			class="btn nav-link dropdown-toggle align-items-center d-flex btn-dark-mode"
 			aria-label="toggle the dark mode"
 			on:click={() => ($open$ = !$open$)}
 			type="button"
