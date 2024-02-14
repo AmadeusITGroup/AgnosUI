@@ -17,7 +17,7 @@
 		<div class="text-success">Thanks!</div>
 	{/if}
 	{#if ctrl.invalid}
-		<div class="text-danger">Please rate us</div>
+		<div class="text-danger-emphasis">Please rate us</div>
 	{/if}
 </div>
 <pre>Model: <span id="form-model"><b>{ctrl.value}</b></span></pre>

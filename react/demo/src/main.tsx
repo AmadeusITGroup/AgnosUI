@@ -53,6 +53,14 @@ const router = createHashRouter([
 	},
 ]);
 
+window.addEventListener('storage', (event) => {
+	if (event.key === 'theme') {
+		if (event.newValue) {
+			document.documentElement.setAttribute('data-bs-theme', event.newValue);
+		}
+	}
+});
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
 	<React.StrictMode>
 		<div className="container p-3">

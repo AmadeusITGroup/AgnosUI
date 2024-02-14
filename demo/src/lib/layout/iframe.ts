@@ -41,6 +41,7 @@ export function createIframeHandler(defaultHeight: number, resize = true, messag
 	const onLoad = (event: Event) => {
 		if (event.target instanceof HTMLIFrameElement) {
 			setupObserver(event.target);
+			event.target.classList.add('loaded');
 		}
 	};
 
@@ -58,7 +59,12 @@ export function createIframeHandler(defaultHeight: number, resize = true, messag
 			}
 
 			const update = (baseSrc: string) => {
-				if (!iframe.contentWindow?.location?.href?.startsWith(baseSrc)) {
+				if (
+					!iframe.contentWindow?.location?.href?.startsWith(baseSrc) ||
+					!iframe.contentDocument ||
+					iframe.contentDocument.readyState === 'loading'
+				) {
+					iframe.classList.remove('loaded');
 					_iframeLoaded$.set(false);
 					if (spinnerTimer) {
 						clearTimeout(spinnerTimer);
@@ -79,6 +85,7 @@ export function createIframeHandler(defaultHeight: number, resize = true, messag
 					}
 					_iframeLoaded$.set(true);
 					_showSpinner$.set(false);
+					iframe.classList.add('loaded');
 				}
 			};
 			window.addEventListener('message', sampleLoad, false);

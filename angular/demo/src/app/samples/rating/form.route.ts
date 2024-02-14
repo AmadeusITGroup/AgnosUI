@@ -13,7 +13,7 @@ import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 				<div class="text-success">Thanks!</div>
 			}
 			@if (ctrl.invalid) {
-				<div class="text-danger">Please rate us</div>
+				<div class="text-danger-emphasis">Please rate us</div>
 			}
 		</div>
 		<pre>Model: <span id="form-model"><b>{{ ctrl.value }}</b></span></pre>
