@@ -39,7 +39,7 @@
 		</div>
 		<div class="order-md-2 order-1 m-auto mb-3">
 			<div class="position-relative au-logo-container">
-				<span class="au-blur position-absolute"></span>
+				<span class="au-blur position-absolute p-4 p-sm-0"></span>
 				<Svg svg={agnosUILogo} className="agnosui-big-logo me-2" />
 			</div>
 		</div>
@@ -138,7 +138,8 @@
 		width: 300px;
 		height: 300px;
 		background-image: linear-gradient(-60deg, #9240cc 50%, #fce649 50%);
-		filter: blur(50px);
+		filter: blur(40px);
+		opacity: 0.8;
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
