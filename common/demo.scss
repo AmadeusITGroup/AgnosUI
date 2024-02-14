@@ -14,3 +14,18 @@ main {
 		height: 30px;
 	}
 }
+
+[data-bs-theme='dark'] {
+	.btn-outline-primary {
+		--bs-btn-color: #3f8bfd;
+	}
+	.btn-outline-secondary {
+		--bs-btn-color: #848d94;
+	}
+	.btn-outline-danger {
+		--bs-btn-color: #e36370;
+	}
+	.btn-outline-success {
+		--bs-btn-color: #1d9f63;
+	}
+}

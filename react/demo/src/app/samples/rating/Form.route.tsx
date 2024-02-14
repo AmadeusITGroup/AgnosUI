@@ -27,7 +27,7 @@ const RatingDemo = () => {
 			<Rating rating={ctrl.value} disabled={ctrl.disabled} onRatingChange={(value) => updateCtrl({value})} ariaLabelledBy="ratingLabel" />
 			<div id="form-msg" className="form-text small">
 				{ctrl.valid && <div className="text-success">Thanks!</div>}
-				{ctrl.invalid && <div className="text-danger">Please rate us</div>}
+				{ctrl.invalid && <div className="text-danger-emphasis">Please rate us</div>}
 			</div>
 			<pre>
 				Model:{' '}

@@ -204,10 +204,21 @@ header {
 	}
 }
 
+iframe {
+	opacity: 0;
+	&.loaded {
+		opacity: 1;
+	}
+}
+
 // Dark mode override
 @if $enable-dark-mode {
 	@include color-mode(dark, true) {
 		color-scheme: dark;
+
+		.iframe-container {
+			background-color: #212529;
+		}
 
 		@each $color, $value in $theme-colors-dark-rgb {
 			--#{$prefix}#{$color}-rgb: #{$value};

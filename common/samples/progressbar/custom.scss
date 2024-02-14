@@ -2,7 +2,7 @@
 	padding: 0;
 	height: 210px;
 	width: 190px;
-	border: 10px solid #030303;
+	border: 10px solid var(--bs-body-color);
 	position: absolute;
 	transform: translate(-50%, -50%);
 	top: 50%;
@@ -42,7 +42,7 @@
 	position: absolute;
 	height: 80px;
 	width: 60px;
-	border: 10px solid #030303;
+	border: 10px solid var(--bs-body-color);
 	border-left: none;
 	right: -70px;
 	top: 30px;
@@ -53,7 +53,7 @@
 	content: '';
 	height: 10px;
 	width: 260px;
-	background-color: #030303;
+	background-color: var(--bs-body-color);
 	left: -45px;
 	bottom: -10px;
 	border-radius: 10px;
