@@ -1,23 +1,32 @@
 <script lang="ts">
-	import highlighter, {languageFromFileName} from './highlight';
+	import highlighter, {languageFromFileName, langs} from './highlight';
 	import {tooltip} from '$lib/tooltip/tooltip';
 	import clipboard from 'bootstrap-icons/icons/clipboard.svg?raw';
+	import clipboardCheck from 'bootstrap-icons/icons/clipboard-check.svg?raw';
 	import Svg from './Svg.svelte';
+	import {writable} from '@amadeus-it-group/tansu';
 
 	export let code: string;
 	export let fileName: string | undefined = undefined;
 	export let language: string | undefined = undefined;
 	export let className: string = '';
 
-	let copied = false;
-	function copyCode() {
-		navigator.clipboard.writeText(code);
-		copied = true;
+	const copied = writable(false);
+	async function copyCode() {
+		await navigator.clipboard.writeText(code);
+		copied.set(true);
 	}
 	let showButton = false;
+	$: if (!showButton) copied.set(false);
 
 	$: appliedLanguage = language ?? languageFromFileName(fileName);
-	$: formattedCode = appliedLanguage ? highlighter.codeToHtml(code, {lang: appliedLanguage, themes: {light: 'light-plus', dark: 'dark-plus'}}) : null;
+	$: formattedCode =
+		appliedLanguage && code
+			? highlighter.codeToHtml(code, {
+					lang: langs.includes(appliedLanguage) ? appliedLanguage : 'text',
+					themes: {light: 'light-plus', dark: 'dark-plus'},
+				})
+			: null;
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -27,11 +36,10 @@
 	{/if}
 	{#if showButton}
 		<button
-			class="btn copy d-flex align-items-center justify-content-center"
+			class="btn btn-secondary copy d-flex align-items-center justify-content-center"
 			aria-label="copy to clipboard"
-			use:tooltip={{content: copied ? 'Copied !' : 'Copy to clipboard'}}
-			on:mouseenter={() => (copied = false)}
-			on:click={copyCode}><Svg className={`align-middle icon-20`} svg={clipboard} /></button
+			use:tooltip={{content: $copied ? 'Copied !' : 'Copy to clipboard'}}
+			on:click={copyCode}><Svg className={`align-middle icon-20`} svg={$copied ? clipboardCheck : clipboard} /></button
 		>
 	{/if}
 </div>
@@ -51,6 +59,5 @@
 		height: 44px;
 		border: 1px solid #d7d9ea !important;
 		border-radius: 8px;
-		background-color: white !important;
 	}
 </style>

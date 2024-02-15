@@ -2,8 +2,10 @@ import {getHighlighter, type ThemeInput} from 'shiki';
 import lightPlus from './light-plus.json' with {type: 'json'};
 import darkPlus from './dark-plus.json' with {type: 'json'};
 
+export const langs = ['angular-ts', 'tsx', 'html', 'css', 'scss', 'svelte', 'bash', 'typescript'];
+
 const highlighter = await getHighlighter({
-	langs: ['angular-ts', 'tsx', 'html', 'css', 'scss', 'svelte', 'bash', 'typescript'],
+	langs,
 	themes: [lightPlus as ThemeInput, darkPlus as ThemeInput],
 });
 export default highlighter;
