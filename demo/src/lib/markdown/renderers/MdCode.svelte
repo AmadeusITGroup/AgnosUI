@@ -53,5 +53,5 @@
 {:else if lang === 'mermaid'}
 	<Mermaid {code} />
 {:else}
-	<Code language={lang} {code} className="mb-4" />
+	<Code language={lang.trim() || 'text'} {code} className="mb-4" />
 {/if}
