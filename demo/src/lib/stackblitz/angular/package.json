@@ -8,7 +8,7 @@
 		"watch": "ng build --watch --configuration development"
 	},
 	"devDependencies": {
-		"@angular-devkit/build-angular": "~17.1.3",
+		"@angular-devkit/build-angular": "~17.2.0",
 		"@angular/animations": "~17.1.3",
 		"@angular/cli": "~17.1.3",
 		"@angular/common": "~17.1.3",
