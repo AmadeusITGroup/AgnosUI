@@ -1,5 +1,6 @@
-import type {UnsubscribeFunction, UnsubscribeObject} from '@amadeus-it-group/tansu';
-import {asReadable, writable} from '@amadeus-it-group/tansu';
+import {createResizeObserver} from '@agnos-ui/svelte/services/resizeObserver';
+import {asReadable, writable, type UnsubscribeFunction} from '@amadeus-it-group/tansu';
+import {derived} from 'svelte/store';
 
 /**
  * Creates an iframe handler, allowing to enable dynamic resizing and detect if the parent should display a spinner.
@@ -16,26 +17,27 @@ import {asReadable, writable} from '@amadeus-it-group/tansu';
 export function createIframeHandler(defaultHeight: number, resize = true, messageType = 'sampleload', spinnerDebounce = 300) {
 	const _iframeLoaded$ = writable(true);
 	const _showSpinner$ = writable(false);
-	const _height$ = writable(0);
 
 	let spinnerTimer: any;
-	let resizeObserver: ResizeObserver | undefined;
-	let heightSubscription: (UnsubscribeFunction & UnsubscribeObject) | undefined;
+	const {dimensions$: iframeDimensions$, directive: resizeDirective} = createResizeObserver();
+	let resizeDirectiveApplied: ReturnType<typeof resizeDirective>;
+
+	const height$ = derived(
+		[iframeDimensions$, _iframeLoaded$],
+		([iframeDimensions, iframeLoaded], set) => {
+			const height = iframeDimensions?.contentRect.height;
+			if (iframeLoaded && height) {
+				set(Math.ceil(height));
+			}
+		},
+		defaultHeight,
+	);
 
 	const setupObserver = (iframe: HTMLIFrameElement) => {
-		if (!resizeObserver) {
-			resizeObserver = new ResizeObserver((entries) => {
-				if (entries.length === 1) {
-					if (_iframeLoaded$()) {
-						_height$.set(Math.ceil(entries[0].contentRect.height || _height$()));
-					}
-				}
-			});
-		}
-		resizeObserver.disconnect();
 		const root = iframe.contentDocument?.getElementById('root');
 		if (root) {
-			resizeObserver.observe(root);
+			resizeDirectiveApplied?.destroy?.();
+			resizeDirectiveApplied = resizeDirective(root);
 		}
 	};
 	const onLoad = (event: Event) => {
@@ -47,13 +49,16 @@ export function createIframeHandler(defaultHeight: number, resize = true, messag
 
 	return {
 		showSpinner$: asReadable(_showSpinner$),
-		handler: (iframe: HTMLIFrameElement, baseSrc: string) => {
+		handlerDirective: (iframe: HTMLIFrameElement, baseSrc: string) => {
+			let heightUnsubscribe: UnsubscribeFunction | undefined;
+
 			iframe.onload = onLoad;
 			if (iframe.contentDocument?.getElementById('root')) {
 				setupObserver(iframe);
 			}
 			if (resize) {
-				heightSubscription = _height$.subscribe((height) => (iframe.height = (height || defaultHeight) + 'px'));
+				heightUnsubscribe?.();
+				heightUnsubscribe = height$.subscribe((height) => (iframe.height = height + 'px'));
 			} else {
 				iframe.height = defaultHeight + 'px';
 			}
@@ -94,8 +99,8 @@ export function createIframeHandler(defaultHeight: number, resize = true, messag
 				update,
 				destroy: () => {
 					window.removeEventListener('message', sampleLoad);
-					resizeObserver?.disconnect();
-					heightSubscription?.unsubscribe();
+					heightUnsubscribe?.();
+					resizeDirectiveApplied?.destroy?.();
 				},
 			};
 		},

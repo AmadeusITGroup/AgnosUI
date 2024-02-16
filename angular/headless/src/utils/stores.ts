@@ -16,7 +16,9 @@ export * from '@agnos-ui/core/utils/stores';
  */
 export const toAngularSignal = <T>(tansuSignal: ReadableSignal<T>): Signal<T> => {
 	const zoneWrapper = inject(ZoneWrapper);
-	const res = signal(undefined as any as T);
+	// The equality of objects from 2 sequential emissions is already checked in tansu signal.
+	// Here we'll always emit the value received from tansu signal, therefor the equality function
+	const res = signal(undefined as any as T, {equal: () => false});
 	const subscription = zoneWrapper.outsideNgZone(tansuSignal.subscribe)((value) => {
 		res.set(value);
 		zoneWrapper.planNgZoneRun();

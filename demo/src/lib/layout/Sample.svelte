@@ -79,7 +79,7 @@
 	$: sampleBaseUrl = `${$pathToRoot$}${$selectedFramework$}/samples${complementaryUrl}/#/${path}`;
 	$: sampleUrl = sampleBaseUrl + (urlParameters ? `#${JSON.stringify(urlParameters)}` : '');
 
-	const {showSpinner$, handler} = createIframeHandler(height, !noresize);
+	const {showSpinner$, handlerDirective} = createIframeHandler(height, !noresize);
 </script>
 
 <div class="mb-4 py-2 px-0 px-sm-3">
@@ -91,7 +91,7 @@
 				</div>
 			</div>
 		{/if}
-		<iframe class="demo-sample d-block" use:iframeSrc={sampleUrl} {title} use:handler={sampleBaseUrl} />
+		<iframe class="demo-sample d-block" use:iframeSrc={sampleUrl} {title} use:handlerDirective={sampleBaseUrl} />
 	</div>
 	{#if showButtons}
 		<div class="btn-toolbar border border-top-0 d-flex align-items-center p-1" role="toolbar" aria-label="Toolbar with button groups">

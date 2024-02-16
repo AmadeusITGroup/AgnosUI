@@ -1,12 +1,13 @@
 import type {WritableSignal} from '@amadeus-it-group/tansu';
-import {computed, derived, writable} from '@amadeus-it-group/tansu';
+import {computed, writable} from '@amadeus-it-group/tansu';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
-import {createStoreDirective, directiveSubscribe, mergeDirectives} from '../../utils/directive';
+import {createStoreDirective, mergeDirectives} from '../../utils/directive';
 import type {ConfigValidator, Directive, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../../types';
 import {noop} from '../../utils/internal/func';
 import {getDecimalPrecision} from '../../utils/internal/math';
 import {bindableProp, stateStores, writablesForProps} from '../../utils/stores';
 import {typeArray, typeBoolean, typeFunction, typeNumber, typeNumberInRangeFactory} from '../../utils/writables';
+import {createResizeObserver} from '../../services/resizeObserver';
 
 export type SliderContext = WidgetSlotContext<SliderWidget>;
 export type SliderSlotLabelContext = SliderContext & {value: number};
@@ -421,26 +422,12 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 	const {directive: sliderDirective, element$: sliderDom$} = createStoreDirective();
 	const {directive: minLabelDirective, element$: minLabelDom$} = createStoreDirective();
 	const {directive: maxLabelDirective, element$: maxLabelDom$} = createStoreDirective();
+	const {directive: resizeDirective, dimensions$} = createResizeObserver();
 
-	const sliderResized$ = derived(
-		sliderDom$,
-		(sliderDom, set) => {
-			if (!sliderDom) {
-				set({});
-				return;
-			}
-			const resizeObserver = new ResizeObserver(() => {
-				set({});
-			});
-			resizeObserver.observe(sliderDom);
-			return () => resizeObserver.disconnect();
-		},
-		{},
-	);
 	const updateSliderSize$ = writable({});
 	const sliderDomRect$ = computed(
 		() => {
-			sliderResized$();
+			dimensions$();
 			updateSliderSize$();
 			return sliderDom$()?.getBoundingClientRect() ?? ({} as DOMRect);
 		},
@@ -450,7 +437,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 	);
 	const minLabelDomRect$ = computed(
 		() => {
-			sliderResized$();
+			dimensions$();
 			updateSliderSize$();
 			return minLabelDom$()?.getBoundingClientRect() ?? ({} as DOMRect);
 		},
@@ -460,7 +447,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 	);
 	const maxLabelDomRect$ = computed(
 		() => {
-			sliderResized$();
+			dimensions$();
 			updateSliderSize$();
 			return maxLabelDom$()?.getBoundingClientRect() ?? ({} as DOMRect);
 		},
@@ -636,7 +623,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 		patch,
 		api: {},
 		directives: {
-			sliderDirective: mergeDirectives(sliderDirective, directiveSubscribe(sliderResized$)),
+			sliderDirective: mergeDirectives(sliderDirective, resizeDirective),
 			minLabelDirective,
 			maxLabelDirective,
 		},

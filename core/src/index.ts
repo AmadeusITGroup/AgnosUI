@@ -22,6 +22,7 @@ export * from './services/focustrack';
 export * from './services/intersection';
 export * from './services/navManager';
 export * from './services/portal';
+export * from './services/resizeObserver';
 export * from './services/siblingsInert';
 
 // services transitions
