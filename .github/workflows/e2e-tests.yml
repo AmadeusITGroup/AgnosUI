@@ -26,8 +26,7 @@ jobs:
           fi
       - uses: codecov/codecov-action@v4
         if: steps.check_lcov.outputs.check_lcov == 'true'
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
           file: e2e/coverage/lcov.info
           flags: e2e-${{ matrix.shard }}
+          token: ${{ secrets.CODECOV_TOKEN }}

@@ -62,11 +62,10 @@ jobs:
         working-directory: demo/src/lib/stackblitz/svelte
       - run: npm run test:coverage
       - uses: codecov/codecov-action@v4
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
           files: core/coverage/lcov.info,angular/coverage/lcov.info
           flags: unit
+          token: ${{ secrets.CODECOV_TOKEN }}
       - run: ./scripts/npmPublish.sh --dry-run
       - if: inputs.version != '' && inputs.npmPublish
         run: |
