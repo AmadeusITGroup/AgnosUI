@@ -2,6 +2,7 @@ import type {SampleInfo} from '$lib/layout/sample';
 
 import focustrack from '@agnos-ui/samples/focustrack/focustrack';
 import floatingUI from '@agnos-ui/samples/floatingUI/floatingUI';
+import resizeObserver from '@agnos-ui/samples/resizeObserver/resizeObserver';
 import slotsUsage from '@agnos-ui/samples/slots/usage';
 import slotsContext from '@agnos-ui/samples/slots/context';
 import alertsIcon from '@agnos-ui/samples/alert/icon';
@@ -16,6 +17,7 @@ import transitionTransition from '@agnos-ui/samples/transition/transition';
 const samples: Map<string, SampleInfo> = new Map();
 samples.set('focustrack/focustrack', focustrack);
 samples.set('floatingUI/floatingUI', floatingUI);
+samples.set('resizeObserver/resizeObserver', resizeObserver);
 samples.set('slots/usage', slotsUsage);
 samples.set('slots/context', slotsContext);
 samples.set('alert/icon', alertsIcon);
