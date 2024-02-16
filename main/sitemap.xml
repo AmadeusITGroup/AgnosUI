@@ -172,6 +172,15 @@
     <loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/components/slider/playground</loc>
   </url>
   <url>
+    <loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/components/toast/api</loc>
+  </url>
+  <url>
+    <loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/components/toast/examples</loc>
+  </url>
+  <url>
+    <loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/components/toast/playground</loc>
+  </url>
+  <url>
     <loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/components/accordion/api</loc>
   </url>
   <url>
@@ -247,6 +256,15 @@
     <loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/components/slider/playground</loc>
   </url>
   <url>
+    <loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/components/toast/api</loc>
+  </url>
+  <url>
+    <loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/components/toast/examples</loc>
+  </url>
+  <url>
+    <loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/components/toast/playground</loc>
+  </url>
+  <url>
     <loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/components/accordion/api</loc>
   </url>
   <url>
@@ -320,5 +338,14 @@
   </url>
   <url>
     <loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/components/slider/playground</loc>
+  </url>
+  <url>
+    <loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/components/toast/api</loc>
+  </url>
+  <url>
+    <loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/components/toast/examples</loc>
+  </url>
+  <url>
+    <loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/components/toast/playground</loc>
   </url>
 </urlset>
