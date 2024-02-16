@@ -24,8 +24,10 @@ jobs:
           if test -f "e2e/coverage/lcov.info"; then
             echo "check_lcov=true" >> $GITHUB_OUTPUT
           fi
-      - uses: codecov/codecov-action@v3
+      - uses: codecov/codecov-action@v4
         if: steps.check_lcov.outputs.check_lcov == 'true'
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
           file: e2e/coverage/lcov.info
           flags: e2e-${{ matrix.shard }}
