@@ -1,0 +1,1 @@
+import{n}from"./stores.rs8h726U.js";import{f as o}from"./fade.DJ8snqbP.js";const e={visible:!0,dismissible:!0,ariaCloseButtonLabel:"Close",onVisibleChange:n,onShown:n,onHidden:n,slotStructure:void 0,slotDefault:void 0,animation:!0,animationOnInit:!1,transition:o,className:""};function a(){return{...e}}export{a as g};
