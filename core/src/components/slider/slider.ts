@@ -1,12 +1,16 @@
 import type {WritableSignal} from '@amadeus-it-group/tansu';
 import {computed, derived, writable} from '@amadeus-it-group/tansu';
-import type {ConfigValidator, Directive, PropsConfig, Widget} from '../../types';
+import type {WidgetsCommonPropsAndState} from '../commonProps';
 import {createStoreDirective, directiveSubscribe, mergeDirectives} from '../../utils/directive';
+import type {ConfigValidator, Directive, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../../types';
 import {noop} from '../../utils/internal/func';
 import {getDecimalPrecision} from '../../utils/internal/math';
 import {bindableProp, stateStores, writablesForProps} from '../../utils/stores';
 import {typeArray, typeBoolean, typeFunction, typeNumber, typeNumberInRangeFactory} from '../../utils/writables';
-import type {WidgetsCommonPropsAndState} from '../commonProps';
+
+export type SliderContext = WidgetSlotContext<SliderWidget>;
+export type SliderSlotLabelContext = SliderContext & {value: number};
+export type SliderSlotHandleContext = SliderContext & {item: SliderHandle};
 
 export interface ProgressDisplayOptions {
 	/**
@@ -115,6 +119,21 @@ export interface SliderCommonPropsAndState extends WidgetsCommonPropsAndState {
 	 * It `true` slider display is inversed
 	 */
 	rtl: boolean;
+
+	/**
+	 * Slot to change the default display of the slider
+	 */
+	slotStructure: SlotContent<SliderContext>;
+
+	/**
+	 * Slot to change the default labels of the slider
+	 */
+	slotLabel: SlotContent<SliderSlotLabelContext>;
+
+	/**
+	 *  Slot to change the handlers
+	 */
+	slotHandle: SlotContent<SliderSlotHandleContext>;
 }
 
 export interface SliderState extends SliderCommonPropsAndState {
@@ -162,6 +181,12 @@ export interface SliderState extends SliderCommonPropsAndState {
 	 * Array of objects representing handle display options
 	 */
 	handleDisplayOptions: HandleDisplayOptions[];
+
+	/**
+	 * Check if the slider is interactable, meaning it is not disabled or readonly
+	 * TODO: rename to `interactive`, issue #510
+	 */
+	isInteractable: boolean;
 }
 
 export interface SliderProps extends SliderCommonPropsAndState {
@@ -253,6 +278,9 @@ const defaultSliderConfig: SliderProps = {
 	showValueLabels: true,
 	showMinMaxLabels: true,
 	rtl: false,
+	slotStructure: undefined,
+	slotLabel: ({value}) => '' + value,
+	slotHandle: undefined,
 };
 
 /**
@@ -666,10 +694,11 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			},
 			mouseDown(event: MouseEvent, handleId: number) {
 				event.preventDefault();
+				const currentTarget = event.currentTarget as HTMLElement;
 				const handleDrag = (e: MouseEvent) => {
 					e.preventDefault();
 					const newCoord = vertical$() ? e.clientY : e.clientX;
-					(event.target as HTMLElement).focus();
+					currentTarget.focus();
 					if (_prevCoordinate !== newCoord) {
 						_prevCoordinate = newCoord;
 						adjustCoordinate(newCoord, handleId);
@@ -677,7 +706,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 				};
 				if (isInteractable$()) {
 					updateSliderSize$.set({});
-					(event.target as HTMLElement).focus();
+					currentTarget.focus();
 					document.addEventListener('mousemove', handleDrag);
 					// TODO mouse up doesn't work outside the handle area
 					document.addEventListener(
