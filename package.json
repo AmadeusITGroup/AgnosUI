@@ -62,6 +62,7 @@
 		"check": "wireit",
 		"tdd": "node scripts/run.js tdd",
 		"tdd:ui": "node scripts/run.js tdd:ui",
+		"tdd:debug": "node scripts/run.js tdd:debug",
 		"test:coverage": "node scripts/run.js test:coverage",
 		"test": "node scripts/run.js test serial",
 		"format:fix": "prettier . \"**/*.svelte\" --write --cache .",

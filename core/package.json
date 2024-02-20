@@ -49,6 +49,7 @@
 		"test": "vitest run",
 		"tdd": "vitest",
 		"tdd:ui": "vitest --ui",
+		"tdd:debug": "vitest --no-browser.headless",
 		"test:coverage": "wireit"
 	},
 	"wireit": {
