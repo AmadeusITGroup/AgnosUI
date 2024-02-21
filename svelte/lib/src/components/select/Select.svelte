@@ -116,6 +116,7 @@
 					class:text-bg-primary={isHighlighted}
 					class:selected={isSelected}
 					on:click={() => widget.api.toggleItem(itemContext.item)}
+					style:cursor="pointer"
 				>
 					<Slot slotContent={$slotItem$} props={{state: $state$, widget, itemContext}} let:component let:props>
 						<slot slot="slot" name="item" let:props {...props} />

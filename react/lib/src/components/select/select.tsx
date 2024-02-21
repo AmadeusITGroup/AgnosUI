@@ -64,6 +64,7 @@ function Rows<Item>({slotContext}: {slotContext: SelectContext<Item>}) {
 						aria-selected={itemContext.selected}
 						className={classname.join(' ')}
 						onClick={() => widget.api.toggleItem(itemContext.item)}
+						style={{cursor: 'pointer'}}
 					>
 						<Slot slotContent={state.slotItem} props={{...slotContext, itemContext}}></Slot>
 					</li>

@@ -87,10 +87,11 @@ export class SelectItemDirective<Item> {
 						<li
 							role="option"
 							[attr.aria-selected]="itemContext.selected"
-							class="au-select-item dropdown-item position-relative"
+							class="au-select-item dropdown-item position-relative "
 							[class.text-bg-primary]="itemContext === state.highlighted"
 							[class.selected]="itemContext.selected"
 							(click)="widget.api.toggleItem(itemContext.item)"
+							[style.cursor]="'pointer'"
 						>
 							<ng-template [auSlot]="state.slotItem" [auSlotProps]="{state, widget, itemContext}"></ng-template>
 						</li>
