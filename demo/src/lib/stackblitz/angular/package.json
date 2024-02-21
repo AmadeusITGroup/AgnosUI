@@ -8,6 +8,8 @@
 		"watch": "ng build --watch --configuration development"
 	},
 	"devDependencies": {
+		"@amadeus-it-group/tansu": "1.0.0",
+		"@floating-ui/dom": "^1.6.2",
 		"@angular-devkit/build-angular": "~17.2.0",
 		"@angular/animations": "~17.2.1",
 		"@angular/cli": "~17.2.0",

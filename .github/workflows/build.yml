@@ -60,6 +60,9 @@ jobs:
       - name: check stackblitz svelte lockfile
         run: npm ci --dry-run
         working-directory: demo/src/lib/stackblitz/svelte
+      - name: check stackblitz svelte tailwind lockfile
+        run: npm ci --dry-run
+        working-directory: demo/src/lib/stackblitz/svelte-tailwind
       - run: npm run test:coverage
       - uses: codecov/codecov-action@v4
         with:

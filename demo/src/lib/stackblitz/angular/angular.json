@@ -22,6 +22,7 @@
 						"outputPath": "dist/demo",
 						"scripts": [],
 						"inlineStyleLanguage": "scss",
+						"styles": ["src/main.css"],
 						"tsConfig": "tsconfig.json",
 						"loader": {
 							".txt": "text",
