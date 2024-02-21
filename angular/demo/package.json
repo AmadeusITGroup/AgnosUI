@@ -69,6 +69,7 @@
 		"@agnos-ui/angular": "",
 		"@agnos-ui/angular-headless": "",
 		"@agnos-ui/core": "",
+		"@amadeus-it-group/tansu": "1.0.0",
 		"@agnos-ui/style-bootstrap": "",
 		"@angular/animations": "~17.2.1",
 		"@angular/common": "~17.2.1",

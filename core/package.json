@@ -126,10 +126,8 @@
 			]
 		}
 	},
-	"dependencies": {
-		"@amadeus-it-group/tansu": "1.0.0"
-	},
 	"peerDependencies": {
+		"@amadeus-it-group/tansu": "*",
 		"@floating-ui/dom": "*"
 	},
 	"sideEffects": false

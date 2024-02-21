@@ -117,10 +117,10 @@
 		}
 	},
 	"dependencies": {
-		"@agnos-ui/core": "",
-		"@amadeus-it-group/tansu": "1.0.0"
+		"@agnos-ui/core": ""
 	},
 	"peerDependencies": {
+		"@amadeus-it-group/tansu": "*",
 		"svelte": "*"
 	},
 	"devDependencies": {
