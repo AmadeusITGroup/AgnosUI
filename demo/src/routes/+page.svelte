@@ -111,9 +111,6 @@
 </footer>
 
 <style lang="scss">
-	@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
-	$font-name: 'Kanit';
-
 	:global(.pres-card-logo) {
 		width: 50px;
 		height: 30px;

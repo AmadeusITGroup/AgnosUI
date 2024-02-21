@@ -256,3 +256,28 @@ iframe {
 		}
 	}
 }
+
+[data-agnos-theme='light'] {
+	.svg.auto {
+		display: none;
+	}
+	.svg.dark {
+		display: none;
+	}
+}
+[data-agnos-theme='auto'] {
+	.svg.light {
+		display: none;
+	}
+	.svg.dark {
+		display: none;
+	}
+}
+[data-agnos-theme='dark'] {
+	.svg.light {
+		display: none;
+	}
+	.svg.auto {
+		display: none;
+	}
+}
