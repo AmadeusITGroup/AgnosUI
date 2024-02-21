@@ -3,6 +3,12 @@
 	import {getSliderDefaultConfig} from '@agnos-ui/core/components/slider';
 	import sample from '@agnos-ui/samples/slider/playground';
 	import doc from '@agnos-ui/generated/doc/api.json?slider&extractApi';
+	import type {PropsValues} from '@agnos-ui/common/propsValues';
+
+	const listPropsValues: {[key in keyof ReturnType<typeof getSliderDefaultConfig>]?: PropsValues[]} = {
+		ariaLabelHandle: ['sliderLabelHandleDefault'],
+		ariaValueText: ['sliderValueTextUnits'],
+	};
 </script>
 
-<Playground {sample} config={getSliderDefaultConfig()} {doc} />
+<Playground {sample} config={getSliderDefaultConfig()} {doc} {listPropsValues} />

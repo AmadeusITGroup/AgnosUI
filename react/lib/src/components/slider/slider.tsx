@@ -116,7 +116,7 @@ export function Slider(props: Partial<SliderProps>) {
 						aria-valuemin={min}
 						aria-valuemax={max}
 						aria-valuenow={item.value}
-						aria-valuetext={'' + item.value}
+						aria-valuetext={item.ariaValueText}
 						aria-label={item.ariaLabel}
 						aria-readonly={readonly ? 'true' : undefined}
 						aria-disabled={disabled ? 'true' : undefined}

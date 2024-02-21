@@ -28,6 +28,15 @@ const propsValuesList = {
 	simpleLabel: {value: getPaginationDefaultConfig().ariaPageLabel, label: 'SimpleLabel'},
 	pageLabel: {value: (processPage: number, pageCount: number) => `Page ${processPage} of ${pageCount}`, label: 'PageLabel'},
 	slotNumberLabel: {value: getPaginationDefaultConfig().slotNumberLabel, label: 'SlotNumberLabel'},
+	//slider
+	sliderLabelHandleDefault: {
+		value: (value: number) => `${value}`,
+		label: 'SliderLabelHandleDefault',
+	},
+	sliderValueTextUnits: {
+		value: (value: number) => `${value} units`,
+		label: 'SliderValueTextUnits',
+	},
 };
 
 export const getPropValues = (config: Record<string, any>) => {
