@@ -41,6 +41,7 @@
 		} else {
 			document.documentElement.setAttribute('data-bs-theme', theme.id);
 		}
+		document.documentElement.setAttribute('data-agnos-theme', theme.id);
 	}
 
 	let hasFocus$: ReadableSignal<boolean>;
@@ -79,7 +80,9 @@
 			data-bs-toggle="dropdown"
 			aria-expanded={$open$}
 		>
-			<Svg svg={$currentTheme$.icon} />
+			{#each themes as theme}
+				<Svg svg={theme.icon} className={theme.id} />
+			{/each}
 		</button>
 		{#if $open$}
 			<div
