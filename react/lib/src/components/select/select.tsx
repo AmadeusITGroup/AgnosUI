@@ -52,13 +52,19 @@ function Rows<Item>({slotContext}: {slotContext: SelectContext<Item>}) {
 				const {id} = itemContext;
 				const classname = ['au-select-item dropdown-item position-relative'];
 				if (itemContext === highlighted) {
-					classname.push('bg-primary text-light');
+					classname.push('text-bg-primary');
 				}
 				if (itemContext.selected) {
 					classname.push('selected');
 				}
 				return (
-					<li key={id} className={classname.join(' ')} onClick={() => widget.api.toggleItem(itemContext.item)}>
+					<li
+						key={id}
+						role="option"
+						aria-selected={itemContext.selected}
+						className={classname.join(' ')}
+						onClick={() => widget.api.toggleItem(itemContext.item)}
+					>
 						<Slot slotContent={state.slotItem} props={{...slotContext, itemContext}}></Slot>
 					</li>
 				);
@@ -76,6 +82,7 @@ export function Select<Item>(props: Partial<SelectProps<Item>>) {
 	const [state, widget] = useWidgetWithConfig<SelectWidget<Item>>(createSelect, props, 'select', defaultConfig);
 	const slotContext: SelectContext<Item> = {state, widget: toSlotContextWidget(widget)};
 	const {id, ariaLabel, visibleItems, filterText, open, className, menuClassName, placement} = state;
+	const menuId = `${id}-menu`;
 
 	const {
 		directives: {floatingDirective, hasFocusDirective, referenceDirective, inputContainerDirective},
@@ -85,7 +92,14 @@ export function Select<Item>(props: Partial<SelectProps<Item>>) {
 	const refSetMenu = useDirectives([hasFocusDirective, floatingDirective]);
 	return (
 		<div ref={refSetContainer} className={`au-select dropdown border border-1 p-1 mb-3 d-block ${className}`}>
-			<div ref={refSetInputContainer} role="combobox" className="d-flex align-items-center flex-wrap" aria-haspopup="listbox" aria-expanded={open}>
+			<div
+				ref={refSetInputContainer}
+				role="combobox"
+				className="d-flex align-items-center flex-wrap"
+				aria-controls={menuId}
+				aria-haspopup="listbox"
+				aria-expanded={open}
+			>
 				<Badges slotContext={slotContext}></Badges>
 				<input
 					id={id}
@@ -102,7 +116,14 @@ export function Select<Item>(props: Partial<SelectProps<Item>>) {
 				/>
 			</div>
 			{open && visibleItems.length > 0 && (
-				<ul ref={refSetMenu} className={`dropdown-menu show ${menuClassName}`} data-popper-placement={placement} onMouseDown={preventDefault}>
+				<ul
+					ref={refSetMenu}
+					role="listbox"
+					id={menuId}
+					className={`dropdown-menu show ${menuClassName}`}
+					data-popper-placement={placement}
+					onMouseDown={preventDefault}
+				>
 					<Rows slotContext={slotContext}></Rows>
 				</ul>
 			)}

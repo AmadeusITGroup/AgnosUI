@@ -13,3 +13,10 @@
 	<span class="ps-3">An example that allows to select pages from the WikipediaService</span>
 	<Sample title="Wikipedia example" sample={customSample} height={400} />
 </Section>
+<Section label="Accessibility" level={2}>
+	<p>
+		The select component follows the <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/combobox_role" target="_blank"
+			>ARIA combobox pattern</a
+		>, where the combobox trigger manages a role="listbox" element displayed in a pop-up.
+	</p>
+</Section>

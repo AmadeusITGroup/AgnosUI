@@ -161,7 +161,7 @@ test.describe.parallel('Select tests', () => {
 			await keyboard.press('Enter');
 			await keyboard.press('ArrowDown');
 
-			expect(await getBadgesState()).toStrictEqual(['JavaScript', 'JavaScript engine', 'JSON']);
+			await expect.poll(getBadgesState).toStrictEqual(['JavaScript', 'JavaScript engine', 'JSON']);
 
 			await keyboard.press('Escape');
 			await keyboard.press('Home');
@@ -169,14 +169,14 @@ test.describe.parallel('Select tests', () => {
 			await keyboard.press('ArrowLeft');
 			await keyboard.press('ArrowLeft');
 			await keyboard.press('Enter');
-			expect(await getBadgesState(), 'Middle badge must have been removed').toStrictEqual(['JavaScript', 'JSON']);
+			await expect.poll(getBadgesState, 'Middle badge must have been removed').toStrictEqual(['JavaScript', 'JSON']);
 
 			await keyboard.press('Enter');
-			expect(await getBadgesState(), 'First badge must have been removed').toStrictEqual(['JSON']);
+			await expect.poll(getBadgesState, 'First badge must have been removed').toStrictEqual(['JSON']);
 
 			await keyboard.press('ArrowRight');
 			await keyboard.press('Enter');
-			expect(await getBadgesState(), 'Last badge must have been removed').toStrictEqual([]);
+			await expect.poll(getBadgesState, 'Last badge must have been removed').toStrictEqual([]);
 			expect(await page.evaluate(() => (document.activeElement!.tagName || '').toLowerCase())).toBe('input');
 		});
 	});

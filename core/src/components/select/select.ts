@@ -9,6 +9,7 @@ import type {NavManagerItemConfig} from '../../services/navManager';
 import {createNavManager} from '../../services/navManager';
 import type {Directive, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../../types';
 import {bindDirective} from '../../utils/directive';
+import {generateId} from '../../utils/internal/dom';
 import {noop} from '../../utils/internal/func';
 import {bindableDerived, bindableProp, stateStores, writablesForProps} from '../../utils/stores';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
@@ -343,6 +344,7 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 	// Props
 	const [
 		{
+			id$: _dirtyId$,
 			open$: _dirtyOpen$,
 			filterText$: _dirtyFilterText$,
 			items$,
@@ -358,6 +360,7 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 	] = writablesForProps<SelectProps<Item>>(defaultConfig, config);
 	const {selected$} = stateProps;
 
+	const id$ = computed(() => _dirtyId$() ?? generateId());
 	const filterText$ = bindableProp(_dirtyFilterText$, onFilterTextChange$);
 
 	const {hasFocus$, directive: hasFocusDirective} = createHasFocus();
@@ -471,6 +474,7 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 
 	const widget: SelectWidget<Item> = {
 		...stateStores({
+			id$,
 			visibleItems$,
 			highlighted$,
 			open$,

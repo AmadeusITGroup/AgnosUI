@@ -1,10 +1,7 @@
-import type {Page} from '@playwright/test';
-import {test, expect} from './fixture';
-import AxeBuilder from '@axe-core/playwright';
-import type {AxeResults} from 'axe-core';
 import {globSync} from 'glob';
 import path from 'path';
-import {normalizePath} from './utils';
+import {expect, test} from './fixture';
+import {analyze, normalizePath} from './utils';
 
 const pathToFrameworkDir = normalizePath(path.join(__dirname, '../demo/src/routes'));
 const pathToDocsDir = normalizePath(path.join(__dirname, '../docs'));
@@ -21,11 +18,6 @@ const allRoutes = globSync(`**/+page.svelte`, {cwd: pathToFrameworkDir}).flatMap
 			)
 		: normalizedRoute;
 });
-
-async function analyze(page: Page, route: string): Promise<AxeResults> {
-	const analyser = new AxeBuilder({page}).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']);
-	return analyser.analyze();
-}
 
 test.describe.parallel('Demo Website', () => {
 	for (const route of allRoutes) {
