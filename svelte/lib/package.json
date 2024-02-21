@@ -119,10 +119,10 @@
 	},
 	"dependencies": {
 		"@agnos-ui/style-bootstrap": "",
-		"@agnos-ui/svelte-headless": "",
-		"@amadeus-it-group/tansu": "1.0.0"
+		"@agnos-ui/svelte-headless": ""
 	},
 	"peerDependencies": {
+		"@amadeus-it-group/tansu": "*",
 		"svelte": "*"
 	},
 	"devDependencies": {

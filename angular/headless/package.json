@@ -87,12 +87,12 @@
 		}
 	},
 	"peerDependencies": {
+		"@amadeus-it-group/tansu": "*",
 		"@angular/common": "*",
 		"@angular/core": "*"
 	},
 	"dependencies": {
 		"@agnos-ui/core": "",
-		"@amadeus-it-group/tansu": "1.0.0",
 		"tslib": "^2.6.2"
 	},
 	"devDependencies": {
