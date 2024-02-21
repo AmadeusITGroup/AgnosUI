@@ -6,63 +6,6 @@ import type {AsyncFilesSet, SampleInfo} from '../layout/sample';
 type StackblitzProcessor = (project: Project, sample: SampleInfo, framework: Frameworks) => Promise<void>;
 
 const isBootstrapCondition = (sample: SampleInfo) => sample.style === 'bootstrap';
-const addTailwindConfig = (project: Project, framework: Frameworks) => {
-	const packageJson = JSON.parse(project.files['package.json']);
-	packageJson.devDependencies['autoprefixer'] = '^10.4.16';
-	packageJson.devDependencies['postcss'] = '^8.4.33';
-	packageJson.devDependencies['tailwindcss'] = '^3.4.1';
-	project.files['package.json'] = JSON.stringify(packageJson, null, '\t');
-	project.files['tailwind.config.js'] = `
-		module.exports = {
-			content: ['./src/**/*.{html,js,svelte,ts,tsx}'],
-			theme: {
-				extend: {},
-			},
-			plugins: [],
-		};`;
-	project.files['postcss.config.js'] = `
-		export default {
-			plugins: {
-				'tailwindcss/nesting': {},
-				tailwindcss: {},
-				autoprefixer: {},
-			},
-		};`;
-	project.files['main.css'] = `
-	@import 'tailwindcss/base';
-	@import 'tailwindcss/components';
-	@import 'tailwindcss/utilities';
-	`;
-	const tailwindCss = `<link rel="stylesheet" href="main.css" />`;
-	project.files['index.html'] = project.files['index.html'].replace('<!--	STYLE CONFIG -->', tailwindCss);
-};
-
-const addBootstrapConfig = (project: Project, framework: Frameworks) => {
-	const bootstrapLink = `<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-													integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"/>`;
-	project.files['index.html'] = project.files['index.html'].replace('<!--	STYLE CONFIG -->', bootstrapLink);
-	switch (framework) {
-		case 'angular': {
-			const angularJson = JSON.parse(project.files['angular.json']);
-			angularJson['projects']['demo']['architect']['build']['options']['styles'] = ['@agnos-ui/style-bootstrap/css/agnosui.css'];
-			project.files['angular.json'] = JSON.stringify(angularJson, null, '\t');
-			break;
-		}
-		case 'react': {
-			project.files['src/main.tsx'] = 'import "@agnos-ui/style-bootstrap/css/agnosui.css";\n' + project.files['src/main.tsx'];
-			break;
-		}
-		case 'svelte': {
-			project.files['src/main.ts'] = 'import "@agnos-ui/style-bootstrap/css/agnosui.css";\n' + project.files['src/main.ts'];
-			break;
-		}
-	}
-};
-
-const styleConfiguration: Record<SampleInfo['style'], (project: Project, framework: Frameworks) => void> = {
-	tailwind: addTailwindConfig,
-	bootstrap: addBootstrapConfig,
-};
 
 const addAsyncFiles =
 	(files: AsyncFilesSet, prefix = '', removePrefix?: string, condition: (sample: SampleInfo) => boolean = () => true): StackblitzProcessor =>
@@ -91,15 +34,21 @@ const frameworkCreateStackblitz: Record<Frameworks, StackblitzProcessor[]> = {
 	react: [
 		addAsyncFiles(import.meta.glob('./react/**', {as: 'raw', import: 'default'}) as any, '', './react/'),
 		async (project, sample) => {
-			project.files['src/main.tsx'] = `import {createRoot} from "react-dom/client";\nimport App from ${JSON.stringify(
+			project.files['src/main.tsx'] = `import {createRoot} from "react-dom/client";\nimport "./main.css";\nimport App from ${JSON.stringify(
 				`./${sample.files.react.entryPoint.replace(/\.tsx?$/, '')}`,
 			)};\nconst rootElement = document.getElementById('root');\nconst root = createRoot(rootElement);\nroot.render(<App />)`;
 		},
 	],
 	svelte: [
-		addAsyncFiles(import.meta.glob('./svelte/**', {as: 'raw', import: 'default'}) as any, '', './svelte/'),
+		addAsyncFiles(import.meta.glob('./svelte/**', {as: 'raw', import: 'default'}) as any, '', './svelte/', isBootstrapCondition),
+		addAsyncFiles(
+			import.meta.glob('./svelte-tailwind/**', {as: 'raw', import: 'default'}) as any,
+			'',
+			'./svelte-tailwind/',
+			(sample) => !isBootstrapCondition(sample),
+		),
 		async (project, sample) => {
-			project.files['src/main.ts'] = `import App from ${JSON.stringify(
+			project.files['src/main.ts'] = `import "./main.css";\nimport App from ${JSON.stringify(
 				`./${sample.files.svelte.entryPoint}`,
 			)};\nconst app = new App({target: document.getElementById('root')});\nexport default app;`;
 			project.template = 'node';
@@ -236,7 +185,6 @@ export const openInStackblitz = async (sample: SampleInfo, framework: Frameworks
 	for (const processor of processors) {
 		await processor(project, sample, framework);
 	}
-	styleConfiguration[sample.style](project, framework);
 	const openFile = [entryPoint, ...Object.keys(files).filter((file) => file != entryPoint)].map((file) => `src/${file}`).join(',');
 	stackblitz.openProject(project, {newWindow: true, openFile});
 };
