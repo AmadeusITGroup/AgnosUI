@@ -1,13 +1,12 @@
 import type {WritableSignal} from '@amadeus-it-group/tansu';
 import {computed, derived, writable} from '@amadeus-it-group/tansu';
-import type {WidgetsCommonPropsAndState} from '../commonProps';
-import {bindableProp, writablesForProps} from '../../utils/stores';
-import {createStoreDirective, directiveSubscribe, mergeDirectives} from '../../utils/directive';
-import {stateStores} from '../../utils/stores';
-import {typeArray, typeBoolean, typeFunction, typeNumber, typeNumberInRangeFactory} from '../../utils/writables';
 import type {ConfigValidator, Directive, PropsConfig, Widget} from '../../types';
+import {createStoreDirective, directiveSubscribe, mergeDirectives} from '../../utils/directive';
 import {noop} from '../../utils/internal/func';
 import {getDecimalPrecision} from '../../utils/internal/math';
+import {bindableProp, stateStores, writablesForProps} from '../../utils/stores';
+import {typeArray, typeBoolean, typeFunction, typeNumber, typeNumberInRangeFactory} from '../../utils/writables';
+import type {WidgetsCommonPropsAndState} from '../commonProps';
 
 export interface ProgressDisplayOptions {
 	/**
@@ -45,6 +44,25 @@ export interface HandleDisplayOptions {
 	 * Top offset of the handle in %
 	 */
 	top: number | null;
+}
+
+export interface SliderHandle {
+	/**
+	 * Value of the handle
+	 */
+	value: number;
+	/**
+	 * Handle id
+	 */
+	id: number;
+	/**
+	 * ariaLabel of the handle
+	 */
+	ariaLabel: string;
+	/**
+	 * ariaValueText of the handle
+	 */
+	ariaValueText: string;
 }
 
 export interface SliderCommonPropsAndState extends WidgetsCommonPropsAndState {
@@ -133,7 +151,7 @@ export interface SliderState extends SliderCommonPropsAndState {
 	/**
 	 * Array of the sorted handles to display
 	 */
-	sortedHandles: {value: number; id: number; ariaLabel: string}[];
+	sortedHandles: SliderHandle[];
 
 	/**
 	 * Array of objects representing progress display options
@@ -154,6 +172,14 @@ export interface SliderProps extends SliderCommonPropsAndState {
 	 * @param index - index of the handle in the original list
 	 */
 	ariaLabelHandle: (value: number, sortedIndex: number, index: number) => string;
+
+	/**
+	 * Return the value for the 'aria-valuetext' attribute for the handle
+	 * @param value - value of the handle
+	 * @param sortedIndex - index of the handle in the sorted list
+	 * @param index - index of the handle in the original list
+	 */
+	ariaValueText: (value: number, sortedIndex: number, index: number) => string;
 
 	/**
 	 * An event emitted when slider values are changed
@@ -220,7 +246,8 @@ const defaultSliderConfig: SliderProps = {
 	disabled: false,
 	vertical: false,
 	className: '',
-	ariaLabelHandle: (value, _index) => '' + value,
+	ariaLabelHandle: (value) => '' + value,
+	ariaValueText: (value) => '' + value,
 	onValuesChange: noop,
 	values: [0],
 	showValueLabels: true,
@@ -244,6 +271,7 @@ const configValidator: ConfigValidator<SliderProps> = {
 	disabled: typeBoolean,
 	vertical: typeBoolean,
 	ariaLabelHandle: typeFunction,
+	ariaValueText: typeFunction,
 	onValuesChange: typeFunction,
 	values: typeArray,
 	showValueLabels: typeBoolean,
@@ -317,6 +345,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			values$: _dirtyValues$,
 
 			ariaLabelHandle$,
+			ariaValueText$,
 			onValuesChange$,
 			showValueLabels$,
 			showMinMaxLabels$,
@@ -423,9 +452,14 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			.sort((a, b) => a.value - b.value);
 	});
 	const sortedHandles$ = computed(() => {
-		const ariaLabelHandle = ariaLabelHandle$();
+		const ariaLabelHandle = ariaLabelHandle$(),
+			ariaValueText = ariaValueText$();
 		return _sortedHandlesValues$().map((sortedValue, index) => {
-			return {...sortedValue, ariaLabel: ariaLabelHandle(sortedValue.value, index, sortedValue.id)};
+			return {
+				...sortedValue,
+				ariaLabel: ariaLabelHandle(sortedValue.value, index, sortedValue.id),
+				ariaValueText: ariaValueText(sortedValue.value, index, sortedValue.id),
+			};
 		});
 	});
 	const valuesPercent$ = computed(() => values$().map((val) => percentCompute(val)));

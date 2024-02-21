@@ -112,7 +112,7 @@
 			aria-readonly={$readonly$ ? true : null}
 			aria-disabled={$disabled$ ? true : null}
 			aria-valuenow={item.value}
-			aria-valuetext={'' + item.value}
+			aria-valuetext={item.ariaValueText}
 			aria-label={item.ariaLabel}
 			aria-orientation={$vertical$ ? 'vertical' : null}
 			disabled={$disabled$ ? true : null}

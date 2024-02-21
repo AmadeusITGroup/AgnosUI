@@ -79,7 +79,7 @@ import {take} from 'rxjs';
 				[attr.aria-readonly]="state().readonly ? true : null"
 				[attr.aria-disabled]="state().disabled ? true : null"
 				[attr.aria-valuenow]="item.value"
-				[attr.aria-valuetext]="item.value"
+				[attr.aria-valuetext]="item.ariaValueText"
 				[attr.aria-label]="item.ariaLabel"
 				[attr.aria-orientation]="state().vertical ? 'vertical' : null"
 				[disabled]="state().disabled"
@@ -170,6 +170,10 @@ export class SliderComponent extends BaseWidgetDirective<SliderWidget> {
 	 * Return the value for the 'aria-label' attribute for the handle
 	 */
 	@Input('auAriaLabelHandle') ariaLabelHandle: ((value: number, sortedIndex: number, index: number) => string) | undefined;
+	/**
+	 * Return the value for the 'aria-valuetext' attribute for the handle
+	 */
+	@Input('auAriaValueText') ariaValueText: ((value: number, sortedIndex: number, index: number) => string) | undefined;
 
 	/**
 	 * If `true` slider value cannot be changed but the slider is still focusable
