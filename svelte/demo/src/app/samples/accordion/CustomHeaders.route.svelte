@@ -34,7 +34,7 @@
 			</div>
 			{#if state.shouldBeInDOM}
 				<div
-					class="accordion-collapse {state.itemCollapseClass}"
+					class="accordion-collapse {state.itemBodyContainerClass}"
 					use:widget.directives.collapseDirective
 					id={state.itemId + '-collapse'}
 					aria-labelledby={state.itemId + '-toggle'}
@@ -75,7 +75,7 @@
 			</div>
 			{#if state.shouldBeInDOM}
 				<div
-					class="accordion-collapse {state.itemCollapseClass}"
+					class="accordion-collapse {state.itemBodyContainerClass}"
 					use:widget.directives.collapseDirective
 					id={state.itemId + '-collapse'}
 					aria-labelledby={state.itemId + '-toggle'}
@@ -110,7 +110,7 @@
 			</div>
 			{#if state.shouldBeInDOM}
 				<div
-					class="accordion-collapse {state.itemCollapseClass}"
+					class="accordion-collapse {state.itemBodyContainerClass}"
 					use:widget.directives.collapseDirective
 					id={state.itemId + '-collapse'}
 					aria-labelledby={state.itemId + '-toggle'}

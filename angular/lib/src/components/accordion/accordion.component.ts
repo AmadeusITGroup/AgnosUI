@@ -141,7 +141,7 @@ export class AccordionItemStructureDirective {
 					[auUse]="widget.directives.collapseDirective"
 					attr.aria-labelledby="{{ state.itemId }}-toggle"
 					id="{{ state.itemId }}-collapse"
-					class="accordion-collapse {{ state.itemCollapseClass }}"
+					class="accordion-collapse {{ state.itemBodyContainerClass }}"
 				>
 					<div class="accordion-body {{ state.itemBodyClass }}">
 						<ng-template [auSlotProps]="{state, widget}" [auSlot]="state.slotItemBody"></ng-template>
@@ -188,15 +188,15 @@ export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWid
 	 */
 	@Input('auItemId') itemId: string | undefined;
 	/**
-	 * The transition to use for the accordion-item collapse when is toggled.
+	 * The transition to use for the accordion-item body-container when the accordion-item is toggled.
 	 */
 	@Input('auItemTransition') itemTransition: TransitionFn | undefined;
 	/**
-	 * Classes to add on the accordion-item DOM element.
+	 * CSS classes to add on the accordion-item DOM element.
 	 */
 	@Input('auItemClass') itemClass: string | undefined;
 	/**
-	 * If `true`, the content of the accordion-item collapse will be removed from the DOM. It will be just hidden otherwise.
+	 * If `true`, the accordion-item body container will be removed from the DOM when the accordion-item is collapsed. It will be just hidden otherwise.
 	 */
 	@Input({alias: 'auItemDestroyOnHide', transform: auBooleanAttribute}) itemDestroyOnHide: boolean | undefined;
 	/**
@@ -214,19 +214,20 @@ export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWid
 	 */
 	@Input({alias: 'auItemAnimation', transform: auBooleanAttribute}) itemAnimation: boolean | undefined;
 	/**
-	 * Classes to add on the accordion-item header DOM element.
+	 * CSS classes to add on the accordion-item header DOM element.
 	 */
 	@Input('auItemHeaderClass') itemHeaderClass: string | undefined;
 	/**
-	 * Classes to add on the accordion-item collapse DOM element.
+	 * CSS classes to add on the accordion-item collapse DOM element.
 	 */
 	@Input('auItemButtonClass') itemButtonClass: string | undefined;
 	/**
-	 * Classes to add on the accordion-item collapse DOM element.
+	 * CSS classes to add on the accordion-item body container DOM element.
+	 * The accordion-item body container is the DOM element on what the itemTransition is applied.
 	 */
-	@Input('auItemCollapseClass') itemCollapseClass: string | undefined;
+	@Input('auItemBodyContainerClass') itemBodyContainerClass: string | undefined;
 	/**
-	 * Classes to add on the accordion-item body DOM element.
+	 * CSS classes to add on the accordion-item body DOM element.
 	 */
 	@Input('auItemBodyClass') itemBodyClass: string | undefined;
 	/**
@@ -285,7 +286,7 @@ export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWid
 })
 export class AccordionDirective extends BaseWidgetDirective<AccordionWidget> {
 	/**
-	 * If `true`, only one item at the time can stay open.
+	 * If `true`, only one accordion-item at the time can stay open.
 	 */
 	@Input({alias: 'auCloseOthers', transform: auBooleanAttribute}) closeOthers: boolean | undefined;
 
@@ -314,7 +315,7 @@ export class AccordionDirective extends BaseWidgetDirective<AccordionWidget> {
 	 */
 	@Input('auItemId') itemId: string | undefined;
 	/**
-	 * If `true`, the content of the accordion-item collapse will be removed from the DOM. It will be just hidden otherwise.
+	 * If `true`, the accordion-item body container will be removed from the DOM when the accordion-item is collapsed. It will be just hidden otherwise.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
@@ -340,7 +341,7 @@ export class AccordionDirective extends BaseWidgetDirective<AccordionWidget> {
 	 */
 	@Input({alias: 'auItemAnimation', transform: auBooleanAttribute}) itemAnimation: boolean | undefined;
 	/**
-	 * The transition to use for the accordion-item collapse when is toggled.
+	 * The transition to use for the accordion-item body-container when the accordion-item is toggled.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
@@ -349,31 +350,32 @@ export class AccordionDirective extends BaseWidgetDirective<AccordionWidget> {
 	@Input('auSlotItemBody') slotItemBody: SlotContent<AccordionItemContext>;
 	@Input('auSlotItemHeader') slotItemHeader: SlotContent<AccordionItemContext>;
 	/**
-	 * Classes to add on the accordion-item DOM element.
+	 * CSS classes to add on the accordion-item DOM element.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
 	@Input('auItemClass') itemClass: string | undefined;
 	/**
-	 * Classes to add on the accordion-item header DOM element.
+	 * CSS classes to add on the accordion-item header DOM element.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
 	@Input('auItemHeaderClass') itemHeaderClass: string | undefined;
 	/**
-	 * Classes to add on the accordion-item toggle button DOM element.
+	 * CSS classes to add on the accordion-item toggle button DOM element.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
 	@Input('auItemButtonClass') itemButtonClass: string | undefined;
 	/**
-	 * Classes to add on the accordion-item collapse DOM element.
+	 * CSS classes to add on the accordion-item body container DOM element.
+	 * The accordion-item body container is the DOM element on what the itemTransition is applied.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	@Input('auItemCollapseClass') itemCollapseClass: string | undefined;
+	@Input('auItemBodyContainerClass') itemBodyContainerClass: string | undefined;
 	/**
-	 * Classes to add on the accordion-item body DOM element.
+	 * CSS classes to add on the accordion-item body DOM element.
 	 *
 	 * It is a prop of the accordion-item.
 	 */

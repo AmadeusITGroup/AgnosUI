@@ -39,7 +39,7 @@
 	</button>
 </svelte:element>
 {#if state.shouldBeInDOM}
-	<div class="accordion-collapse {state.itemCollapseClass}" use:widget.directives.collapseDirective id={collapseId} aria-labelledby={toggleId}>
+	<div class="accordion-collapse {state.itemBodyContainerClass}" use:widget.directives.collapseDirective id={collapseId} aria-labelledby={toggleId}>
 		<div class="accordion-body {state.itemBodyClass}">
 			<Slot slotContent={state.slotItemBody} props={slotContext} let:component let:props>
 				<slot slot="slot" name="itemBody" let:props {...props} />

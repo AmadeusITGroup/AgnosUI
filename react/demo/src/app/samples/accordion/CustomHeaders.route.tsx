@@ -16,7 +16,7 @@ const AccordionDemo = () => {
 			<>
 				{state.shouldBeInDOM ? (
 					<div
-						className={`accordion-collapse ${state.itemCollapseClass}`}
+						className={`accordion-collapse ${state.itemBodyContainerClass}`}
 						id={`${state.itemId}-collapse`}
 						aria-labelledby={`${state.itemId}-toggle`}
 						ref={collapseSetRef}

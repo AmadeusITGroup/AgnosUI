@@ -315,7 +315,7 @@ describe(`Accordion`, () => {
 			itemClass: itemStores.itemClass$(),
 			itemHeaderClass: itemStores.itemHeaderClass$(),
 			itemButtonClass: itemStores.itemButtonClass$(),
-			itemCollapseClass: itemStores.itemCollapseClass$(),
+			itemBodyContainerClass: itemStores.itemBodyContainerClass$(),
 			itemBodyClass: itemStores.itemBodyClass$(),
 		};
 		expect(itemStoreValues).toMatchObject({
@@ -327,7 +327,7 @@ describe(`Accordion`, () => {
 			itemClass: '',
 			itemHeaderClass: '',
 			itemButtonClass: '',
-			itemCollapseClass: '',
+			itemBodyContainerClass: '',
 			itemBodyClass: '',
 		});
 	});

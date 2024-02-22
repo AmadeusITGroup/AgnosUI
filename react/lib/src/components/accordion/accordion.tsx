@@ -41,7 +41,7 @@ const DefaultSlotStructure = (slotContext: AccordionItemContext) => {
 			</Heading>
 			{slotContext.state.shouldBeInDOM ? (
 				<div
-					className={`accordion-collapse ${slotContext.state.itemCollapseClass}`}
+					className={`accordion-collapse ${slotContext.state.itemBodyContainerClass}`}
 					id={`${slotContext.state.itemId}-collapse`}
 					aria-labelledby={`${slotContext.state.itemId}-toggle`}
 					ref={collapseSetRef}
