@@ -1,5 +1,14 @@
 import type {AdaptSlotContentProps, RatingWidget, SlotContent, StarContext} from '@agnos-ui/angular-headless';
-import {BaseWidgetDirective, SlotDirective, auBooleanAttribute, auNumberAttribute, callWidgetFactory, createRating} from '@agnos-ui/angular-headless';
+import {
+	BaseWidgetDirective,
+	SlotDirective,
+	UseDirective,
+	auBooleanAttribute,
+	auNumberAttribute,
+	callWidgetFactory,
+	createRating,
+	useDirectiveForHost,
+} from '@agnos-ui/angular-headless';
 import type {AfterContentChecked} from '@angular/core';
 import {
 	ChangeDetectionStrategy,
@@ -28,35 +37,17 @@ export class RatingStarDirective {
 @Component({
 	selector: '[auRating]',
 	standalone: true,
-	imports: [SlotDirective],
+	imports: [UseDirective, SlotDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	encapsulation: ViewEncapsulation.None,
 	host: {
-		class: 'd-inline-flex au-rating',
-		'[tabindex]': 'state().tabindex',
-		role: 'slider',
-		'aria-valuemin': '0',
-		'[attr.aria-valuemax]': 'state().maxRating',
-		'[attr.aria-valuenow]': 'state().visibleRating',
-		'[attr.aria-valuetext]': 'state().ariaValueText',
-		'[attr.aria-disabled]': 'state().disabled ? true : null',
-		'[attr.aria-readonly]': 'state().readonly ? true : null',
-		'[attr.aria-label]': 'state().ariaLabel || null',
-		'[attr.aria-labelledby]': 'state().ariaLabelledBy || null',
+		class: 'd-inline-flex',
 		'(blur)': 'onTouched()',
-		'(keydown)': '_widget.actions.handleKey($event)',
-		'(mouseleave)': '_widget.actions.leave()',
-		'[class]': 'state().className',
 	},
 	template: `
 		@for (item of state().stars; track trackByIndex(index); let index = $index) {
 			<span class="visually-hidden">({{ index < state().visibleRating ? '*' : ' ' }})</span>
-			<span
-				class="au-rating-star"
-				(mouseenter)="_widget.actions.hover(index + 1)"
-				(click)="_widget.actions.click(index + 1)"
-				[style.cursor]="state().interactive ? 'pointer' : 'default'"
-			>
+			<span [auUse]="_widget.directives.starDirective" [auUseParams]="{index}">
 				<ng-template [auSlot]="state().slotStar" [auSlotProps]="state().stars[index]"></ng-template>
 			</span>
 		}
@@ -74,6 +65,9 @@ export class RatingComponent extends BaseWidgetDirective<RatingWidget> implement
 				this.ratingChange.emit(rating);
 				this.onChange(rating);
 			},
+		},
+		afterInit: () => {
+			useDirectiveForHost(this._widget.directives.containerDirective);
 		},
 	});
 

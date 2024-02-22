@@ -1,9 +1,11 @@
-import {asReadable, computed, readable, writable} from '@amadeus-it-group/tansu';
+import type {ReadableSignal} from '@amadeus-it-group/tansu';
+import {asReadable, batch, computed, readable, writable} from '@amadeus-it-group/tansu';
 import type {MockInstance} from 'vitest';
-import {beforeEach, describe, expect, it, vitest} from 'vitest';
+import {beforeEach, describe, expect, test, vi, vitest} from 'vitest';
 import {
 	bindDirective,
 	bindDirectiveNoArg,
+	createAttributesDirective,
 	createStoreArrayDirective,
 	createStoreDirective,
 	directiveSubscribe,
@@ -11,6 +13,18 @@ import {
 	mergeDirectives,
 	registrationArray,
 } from './directive';
+import type {Directive} from '../types';
+
+function directiveAttributes<T = void>(directive: Directive<T>, args?: T) {
+	const node = document.createElement('div');
+	const directiveInstance = directive(node as unknown as HTMLElement, args!);
+	const attributes: Record<string, string> = {};
+	for (const {name, value} of [...node.attributes]) {
+		attributes[name] = value;
+	}
+	directiveInstance?.destroy?.();
+	return attributes;
+}
 
 describe('directive', () => {
 	let element: HTMLElement;
@@ -25,7 +39,7 @@ describe('directive', () => {
 	});
 
 	describe('bindDirective', () => {
-		it('Basic functionalities', () => {
+		test('Basic functionalities', () => {
 			const store = writable(1);
 			const directiveArg$ = asReadable(store);
 			vitest.spyOn(directiveArg$, 'subscribe');
@@ -49,7 +63,7 @@ describe('directive', () => {
 	});
 
 	describe('bindDirectiveNoArg', () => {
-		it('Basic functionalities', () => {
+		test('Basic functionalities', () => {
 			const directive = vitest.fn((element, value) => ({destroy: vitest.fn(), update: vitest.fn()}));
 			const boundDirective = bindDirectiveNoArg(directive);
 			expect(directive).not.toHaveBeenCalled();
@@ -67,7 +81,7 @@ describe('directive', () => {
 	});
 
 	describe('directiveSubscribe', () => {
-		it('Basic functionalities, asynchronous (default behavior)', async () => {
+		test('Basic functionalities, asynchronous (default behavior)', async () => {
 			let hasSubscribers = false;
 			const store = readable(0, () => {
 				hasSubscribers = true;
@@ -85,7 +99,7 @@ describe('directive', () => {
 			expect(hasSubscribers).toBe(false);
 		});
 
-		it('Basic functionalities, synchronous', () => {
+		test('Basic functionalities, synchronous', () => {
 			let hasSubscribers = false;
 			const store = readable(0, () => {
 				hasSubscribers = true;
@@ -103,7 +117,7 @@ describe('directive', () => {
 	});
 
 	describe('directiveUpdate', () => {
-		it('Basic functionalities', () => {
+		test('Basic functionalities', () => {
 			const update = vitest.fn((num: number) => {});
 			const directive = directiveUpdate(update);
 			expect(update).not.toHaveBeenCalled();
@@ -119,7 +133,7 @@ describe('directive', () => {
 	});
 
 	describe('registrationArray', () => {
-		it('Basic functionalities', () => {
+		test('Basic functionalities', () => {
 			const array$ = registrationArray<number>();
 			const values: number[][] = [];
 			const unsubscribe = array$.subscribe((value) => values.push(value));
@@ -137,7 +151,7 @@ describe('directive', () => {
 	});
 
 	describe('createStoreArrayDirective', () => {
-		it('Basic functionalities', () => {
+		test('Basic functionalities', () => {
 			const {directive, elements$} = createStoreArrayDirective();
 			const values: HTMLElement[][] = [];
 			const unsubscribe = elements$.subscribe((value) => values.push(value));
@@ -154,7 +168,7 @@ describe('directive', () => {
 			unsubscribe();
 		});
 
-		it('should behave correctly with the same directive twice on the same item and destroying twice the same directive', () => {
+		test('should behave correctly with the same directive twice on the same item and destroying twice the same directive', () => {
 			const {directive, elements$} = createStoreArrayDirective();
 			const values: HTMLElement[][] = [];
 			const unsubscribe = elements$.subscribe((value) => values.push(value));
@@ -174,7 +188,7 @@ describe('directive', () => {
 	});
 
 	describe('createStoreDirective', () => {
-		it('Basic functionalities', () => {
+		test('Basic functionalities', () => {
 			const {directive, element$} = createStoreDirective();
 			const values: (HTMLElement | null)[] = [];
 			const unsubscribe = element$.subscribe((value) => values.push(value));
@@ -186,7 +200,7 @@ describe('directive', () => {
 			unsubscribe();
 		});
 
-		it('should log an error when using the directive on more than one element', () => {
+		test('should log an error when using the directive on more than one element', () => {
 			const {directive, element$} = createStoreDirective();
 			const values: (HTMLElement | null)[] = [];
 			const unsubscribe = element$.subscribe((value) => values.push(value));
@@ -208,7 +222,7 @@ describe('directive', () => {
 	});
 
 	describe('mergeDirectives', () => {
-		it('Basic functionalities', () => {
+		test('Basic functionalities', () => {
 			const directive1 = vitest.fn((element, value: number) => ({destroy: vitest.fn(), update: vitest.fn()}));
 			const directive2 = vitest.fn((element, value: number) => ({destroy: vitest.fn(), update: vitest.fn()}));
 			const mergedDirective = mergeDirectives(directive1, directive2);
@@ -233,7 +247,7 @@ describe('directive', () => {
 			expect(directive2Instance.destroy).toHaveBeenCalledOnce();
 		});
 
-		it('should wrap calls to directives in batch', () => {
+		test('should wrap calls to directives in batch', () => {
 			const storeAndDirective = () => {
 				const store = writable(0);
 				const directive = (element: HTMLElement, value: number) => {
@@ -264,6 +278,165 @@ describe('directive', () => {
 			directiveInstance?.destroy?.();
 			expect(values).toEqual(['0,0,0', '2,2,2', '1,1,1', '-1,-1,-1']);
 			unsubscribe();
+		});
+	});
+
+	describe('createAttributesDirective', () => {
+		test('should retrieve attributes with static values', () => {
+			const clickFn = vi.fn();
+			const directive = createAttributesDirective(() => ({
+				events: {
+					click: clickFn,
+				},
+				attributes: {
+					'aria-label': 'a',
+					readonly: true,
+					disabled: false,
+					'aria-disabled': undefined,
+				},
+				styles: {
+					cursor: 'pointer',
+					width: undefined,
+				},
+				classNames: {
+					c1: true,
+					c2: false,
+				},
+			}));
+
+			expect(directiveAttributes(directive)).toStrictEqual({
+				'aria-label': 'a',
+				readonly: '',
+				class: 'c1',
+				style: 'cursor: pointer;',
+			});
+			expect(clickFn).not.toHaveBeenCalled();
+		});
+
+		test('should retrieve attributes with stores', () => {
+			const clickFn = vi.fn();
+			const clickFn$ = writable(clickFn);
+			const ariaLabel$ = writable('a');
+			const readonly$ = writable(true);
+			const disabled$ = writable(false);
+			const ariaDisabled$ = writable(undefined);
+			const cursor$ = writable('pointer');
+			const width$ = writable(undefined);
+			const c1$ = writable(true);
+			const c2$ = writable(false);
+
+			const directive = createAttributesDirective(() => ({
+				events: {
+					click: clickFn$,
+				},
+				attributes: {
+					'aria-label': ariaLabel$,
+					readonly: readonly$,
+					disabled: disabled$,
+					'aria-disabled': ariaDisabled$,
+				},
+				styles: {
+					cursor: cursor$,
+					width: width$,
+				},
+				classNames: {
+					c1: c1$,
+					c2: c2$,
+				},
+			}));
+
+			expect(directiveAttributes(directive)).toStrictEqual({'aria-label': 'a', readonly: '', class: 'c1', style: 'cursor: pointer;'});
+			expect(clickFn).not.toHaveBeenCalled();
+		});
+
+		test('should work with classnames', () => {
+			const props = {
+				attributes: {
+					class: 'aa bb',
+				},
+				classNames: {
+					cc: true,
+					dd: false,
+				},
+			};
+
+			const directive = createAttributesDirective(() => props);
+
+			expect(directiveAttributes(directive)).toStrictEqual({
+				class: 'aa bb cc',
+			});
+		});
+
+		test('should work with dynamic classnames on a real node', () => {
+			const classNames$ = writable('a b');
+			const classC$ = writable(true);
+			const classD$ = writable(false);
+
+			const node = document.createElement('div');
+			const props = {
+				attributes: {
+					class: classNames$,
+				},
+				classNames: {
+					c: classC$,
+					d: classD$,
+				},
+			};
+
+			const directive = createAttributesDirective(() => props);
+			const {destroy} = directive(node);
+
+			expect(node.getAttribute('class')).toBe('a b c');
+
+			classNames$.set('a');
+			expect(node.getAttribute('class')).toBe('a c');
+
+			batch(() => {
+				classC$.set(false);
+				classD$.set(true);
+			});
+			expect(node.getAttribute('class')).toBe('a d');
+
+			destroy!();
+		});
+
+		test(`should call the 'destroy' directive`, () => {
+			const destroy = vi.fn();
+			const directive = () => ({
+				destroy,
+			});
+			directiveAttributes(directive);
+			expect(destroy).toHaveBeenCalled();
+		});
+
+		test('should work with update', () => {
+			const node = document.createElement('div');
+			node.setAttribute('class', 'extra');
+
+			function getProps(arg$: ReadableSignal<{classnames: string; classC: boolean; classD: boolean}>) {
+				return {
+					attributes: {
+						class: computed(() => arg$().classnames),
+					},
+					classNames: {
+						cc: computed(() => arg$().classC),
+						dd: computed(() => arg$().classD),
+					},
+				};
+			}
+
+			const directive = createAttributesDirective(getProps);
+			const {update, destroy} = directive(node, {classnames: 'aa bb', classC: true, classD: false});
+
+			expect(node.getAttribute('class')).toBe('extra aa bb cc');
+
+			update({classnames: 'aa', classC: true, classD: false});
+			expect(node.getAttribute('class')).toBe('extra aa cc');
+
+			update({classnames: 'aa', classC: false, classD: true});
+			expect(node.getAttribute('class')).toBe('extra aa dd');
+
+			destroy!();
 		});
 	});
 });

@@ -1,49 +1,37 @@
-import type {RatingProps} from '@agnos-ui/react-headless/components/rating';
+import type {RatingProps, RatingDirectives, StarContext, RatingState} from '@agnos-ui/react-headless/components/rating';
 import {createRating} from '@agnos-ui/react-headless/components/rating';
 import {Slot} from '@agnos-ui/react-headless/slot';
 import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
+import {useDirective} from '@agnos-ui/react-headless/utils/directive';
 import React from 'react';
 
 export * from '@agnos-ui/react-headless/components/rating';
 
-export function Rating(props: Partial<RatingProps>) {
-	const [
-		{tabindex, maxRating, visibleRating, ariaValueText, readonly, disabled, interactive, stars, className, slotStar, ariaLabel, ariaLabelledBy},
-		widget,
-	] = useWidgetWithConfig(createRating, props, 'rating');
+function Star({star, state, directive}: {star: StarContext; state: RatingState; directive: RatingDirectives['starDirective']}) {
+	const starContainer = useDirective(directive, {index: star.index});
+	return (
+		<React.Fragment key={star.index}>
+			<span className="visually-hidden">({star.index < state.visibleRating ? '*' : ' '})</span>
+			<span ref={starContainer}>
+				<Slot slotContent={state.slotStar} props={star}></Slot>
+			</span>
+		</React.Fragment>
+	);
+}
 
-	const starStyle = {
-		cursor: interactive ? 'pointer' : 'default',
-	};
+export function Rating(props: Partial<RatingProps>) {
+	const [state, widget] = useWidgetWithConfig(createRating, props, 'rating');
+
+	const {
+		directives: {containerDirective, starDirective},
+	} = widget;
+
+	const refContainer = useDirective(containerDirective);
 
 	return (
-		<div
-			role="slider"
-			className={`d-inline-flex au-rating ${className}`}
-			tabIndex={tabindex}
-			aria-valuemin={0}
-			aria-valuemax={maxRating}
-			aria-valuenow={visibleRating}
-			aria-valuetext={ariaValueText}
-			aria-readonly={readonly || undefined}
-			aria-disabled={disabled || undefined}
-			aria-label={ariaLabel || undefined}
-			aria-labelledby={ariaLabelledBy || undefined}
-			onKeyDown={(e) => widget.actions.handleKey(e as unknown as KeyboardEvent)}
-			onMouseLeave={widget.actions.leave}
-		>
-			{stars.map((star) => (
-				<React.Fragment key={star.index}>
-					<span className="visually-hidden">({star.index < visibleRating ? '*' : ' '})</span>
-					<span
-						className="au-rating-star"
-						style={starStyle}
-						onMouseEnter={() => widget.actions.hover(star.index + 1)}
-						onClick={() => widget.actions.click(star.index + 1)}
-					>
-						<Slot slotContent={slotStar} props={star}></Slot>
-					</span>
-				</React.Fragment>
+		<div ref={refContainer} className="d-inline-flex">
+			{state.stars.map((star) => (
+				<Star key={star.index} star={star} state={state} directive={starDirective} />
 			))}
 		</div>
 	);

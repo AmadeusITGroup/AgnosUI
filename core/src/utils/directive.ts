@@ -1,7 +1,9 @@
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {asReadable, batch, readable, writable} from '@amadeus-it-group/tansu';
-import type {Directive} from '../types';
+import type {AttributeValue, Directive, StyleValue} from '../types';
+import {addEvent, bindAttribute, bindClassName, bindStyle} from './internal/dom';
 import {noop} from './internal/func';
+import {toReadableStore} from './stores';
 
 /**
  * Binds the given directive to a store that provides its argument.
@@ -221,5 +223,80 @@ export const mergeDirectives =
 			destroy() {
 				batch(() => instances.reverse().forEach((instance) => instance?.destroy?.()));
 			},
+		};
+	};
+
+/**
+ * Properties for configuring server-side rendering directives.
+ */
+export interface AttributesDirectiveProps {
+	/**
+	 * Events to be attached to an HTML element.
+	 * @remarks
+	 * Key-value pairs where keys are event types and values are event handlers.
+	 */
+	events?: Partial<{[K in keyof HTMLElementEventMap]: (this: HTMLElement, event: HTMLElementEventMap[K]) => void}>;
+
+	/**
+	 * Attributes to be added to the provided node.
+	 * @remarks
+	 * The `style` attribute must be added separately.
+	 */
+	attributes?: Record<string, AttributeValue | ReadableSignal<AttributeValue>>;
+
+	/**
+	 * Styles to be added to an HTML element.
+	 * @remarks
+	 * Key-value pairs where keys are CSS style properties and values are style values.
+	 */
+	styles?: Partial<Record<keyof CSSStyleDeclaration, StyleValue | ReadableSignal<StyleValue>>>;
+
+	/**
+	 * Class names to be added to an HTML element.
+	 * @remarks
+	 * Key-value pairs where keys are class names and values indicate whether the class should be added (true) or removed (false).
+	 */
+	classNames?: Record<string, boolean | ReadableSignal<boolean>>;
+}
+
+/**
+ * Creates a directive for server-side rendering with bindable elements.
+ * This directive binds events, attributes, styles, and classNames to an HTML element.
+ *
+ * @param propsFn - A function that returns the AttributesDirectiveProps with the data to bind.
+ * This function can take an optional parameter that corrspond to the second parameter of the created directive.
+ * @returns A directive object with bound events, attributes, styles, and classNames.
+ */
+export const createAttributesDirective =
+	<T = void>(propsFn: (arg: ReadableSignal<T>) => AttributesDirectiveProps) =>
+	(node: HTMLElement, args: T) => {
+		const unsubscribers: (() => void)[] = [];
+		const args$ = writable(args);
+
+		const {events, attributes, styles, classNames} = propsFn(args$);
+
+		for (const [type, eventFn] of Object.entries(events ?? {})) {
+			unsubscribers.push(addEvent(node, type as keyof HTMLElementEventMap, eventFn as any));
+		}
+
+		for (const [attributeName, value] of Object.entries(attributes ?? {})) {
+			if (value != null) {
+				unsubscribers.push(bindAttribute(node, attributeName, toReadableStore(value)));
+			}
+		}
+
+		for (const [styleName, value] of Object.entries(styles ?? {})) {
+			if (value) {
+				unsubscribers.push(bindStyle(node, styleName, toReadableStore(value)));
+			}
+		}
+
+		for (const [className, value] of Object.entries(classNames ?? {})) {
+			unsubscribers.push(bindClassName(node, className, toReadableStore(value)));
+		}
+
+		return {
+			update: (args: T) => args$.set(args),
+			destroy: () => unsubscribers.forEach((fn) => fn()),
 		};
 	};

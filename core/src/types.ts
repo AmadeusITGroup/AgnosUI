@@ -107,3 +107,6 @@ export interface WritableWithDefaultOptions<T> {
 }
 
 export type ConfigValidator<T extends object> = {[K in keyof T]?: WritableWithDefaultOptions<T[K]>};
+
+export type AttributeValue = string | number | boolean | undefined;
+export type StyleValue = string | undefined | null;

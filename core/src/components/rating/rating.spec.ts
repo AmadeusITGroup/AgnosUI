@@ -2,9 +2,9 @@ import type {UnsubscribeFunction, WritableSignal} from '@amadeus-it-group/tansu'
 import {computed, writable} from '@amadeus-it-group/tansu';
 import type {MockInstance} from 'vitest';
 import {afterEach, beforeEach, describe, expect, test, vi} from 'vitest';
-import type {RatingWidget, RatingProps} from './rating';
-import {createRating, getRatingDefaultConfig} from './rating';
 import type {WidgetState} from '../../types';
+import type {RatingProps, RatingWidget} from './rating';
+import {createRating, getRatingDefaultConfig} from './rating';
 
 function keyboardEvent(key: string): KeyboardEvent {
 	return {
@@ -12,6 +12,14 @@ function keyboardEvent(key: string): KeyboardEvent {
 		preventDefault() {},
 		stopPropagation() {},
 	} as KeyboardEvent;
+}
+
+function getAttributes(node: HTMLElement) {
+	const attributes: Record<string, string> = {};
+	for (const {name, value} of [...node.attributes]) {
+		attributes[name] = value;
+	}
+	return attributes;
 }
 
 describe(`Rating`, () => {
@@ -623,6 +631,32 @@ describe(`Rating`, () => {
 			expect(state).toMatchObject({rating: 4});
 			defConfig.set({rating: 2}); // so changing the config continues to work
 			expect(state).toMatchObject({rating: 2});
+		});
+
+		test('containerDirective', () => {
+			const node = document.createElement('div');
+			const directiveInstance = rating.directives.containerDirective(node);
+			expect(getAttributes(node)).toStrictEqual({
+				'aria-valuemin': '0',
+				role: 'slider',
+				class: 'au-rating',
+				tabindex: '0',
+				'aria-valuemax': '10',
+				'aria-valuenow': '0',
+				'aria-valuetext': '0 out of 10',
+				'aria-label': 'Rating',
+			});
+			directiveInstance?.destroy?.();
+		});
+
+		test('starDirective', () => {
+			const node = document.createElement('div');
+			const directiveInstance = rating.directives.starDirective(node, {index: 1});
+			expect(getAttributes(node)).toStrictEqual({
+				class: 'au-rating-star',
+				style: 'cursor: pointer;',
+			});
+			directiveInstance?.destroy?.();
 		});
 	});
 
