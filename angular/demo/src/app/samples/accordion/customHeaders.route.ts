@@ -35,7 +35,7 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 							[auUse]="widget!.directives.collapseDirective"
 							attr.aria-labelledby="{{ state!.itemId }}-toggle"
 							id="{{ state!.itemId }}-collapse"
-							class="accordion-collapse {{ state!.itemCollapseClass }}"
+							class="accordion-collapse {{ state!.itemBodyContainerClass }}"
 						>
 							<div class="accordion-body {{ state!.itemBodyClass }}">
 								{{ BODY }}
@@ -78,7 +78,7 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 							[auUse]="widget!.directives.collapseDirective"
 							attr.aria-labelledby="{{ state!.itemId }}-toggle"
 							id="{{ state!.itemId }}-collapse"
-							class="accordion-collapse {{ state!.itemCollapseClass }}"
+							class="accordion-collapse {{ state!.itemBodyContainerClass }}"
 						>
 							<div class="accordion-body {{ state!.itemBodyClass }}">
 								{{ BODY }}
@@ -117,7 +117,7 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 							[auUse]="widget!.directives.collapseDirective"
 							attr.aria-labelledby="{{ state!.itemId }}-toggle"
 							id="{{ state!.itemId }}-collapse"
-							class="accordion-collapse {{ state!.itemCollapseClass }}"
+							class="accordion-collapse {{ state!.itemBodyContainerClass }}"
 						>
 							<div class="accordion-body {{ state!.itemBodyClass }}">
 								{{ BODY }}

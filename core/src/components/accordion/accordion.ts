@@ -42,7 +42,7 @@ function getItem(items: AccordionItemWidget[], itemId: string): AccordionItemWid
 
 export interface AccordionProps extends WidgetsCommonPropsAndState {
 	/**
-	 * If `true`, only one item at the time can stay open.
+	 * If `true`, only one accordion-item at the time can stay open.
 	 */
 	closeOthers: boolean;
 	/**
@@ -65,7 +65,7 @@ export interface AccordionProps extends WidgetsCommonPropsAndState {
 	 */
 	itemId: string;
 	/**
-	 * If `true`, the content of the accordion-item collapse will be removed from the DOM. It will be just hidden otherwise.
+	 * If `true`, the accordion-item body container will be removed from the DOM when the accordion-item is collapsed. It will be just hidden otherwise.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
@@ -90,7 +90,7 @@ export interface AccordionProps extends WidgetsCommonPropsAndState {
 	 */
 	itemAnimation: boolean;
 	/**
-	 * The transition to use for the accordion-item collapse when is toggled.
+	 * The transition to use for the accordion-item body-container when the accordion-item is toggled.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
@@ -117,8 +117,9 @@ export interface AccordionProps extends WidgetsCommonPropsAndState {
 	onItemVisibleChange: (visible: boolean) => void;
 	/**
 	 * Structure of the accordion-item. The default item structure is: accordion-item
-	 * contains accordion header and accordion collapse; the accordion header contains the accordion button
-	 * (that contains `slotItemHeader`), while the accordion collapse contains the accordion body (that contains slotItemBody).
+	 * contains accordion header and accordion-item body container; the accordion header contains the accordion button
+	 * (that contains `slotItemHeader`), while the accordion-item body container contains the accordion body (that contains `slotItemBody`).
+	 * The itemTransition it applied on this element.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
@@ -136,31 +137,32 @@ export interface AccordionProps extends WidgetsCommonPropsAndState {
 	 */
 	slotItemHeader: SlotContent<AccordionItemContext>;
 	/**
-	 * Classes to add on the accordion-item DOM element.
+	 * CSS classes to add on the accordion-item DOM element.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
 	itemClass: string;
 	/**
-	 * Classes to add on the accordion-item header DOM element.
+	 * CSS classes to add on the accordion-item header DOM element.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
 	itemHeaderClass: string;
 	/**
-	 * Classes to add on the accordion-item toggle button DOM element.
+	 * CSS classes to add on the accordion-item toggle button DOM element.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
 	itemButtonClass: string;
 	/**
-	 * Classes to add on the accordion-item collapse DOM element.
+	 * CSS classes to add on the accordion-item body container DOM element.
+	 * The accordion-item body container is the DOM element on what the itemTransition is applied.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	itemCollapseClass: string;
+	itemBodyContainerClass: string;
 	/**
-	 * Classes to add on the accordion-item body DOM element.
+	 * CSS classes to add on the accordion-item body DOM element.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
@@ -294,28 +296,30 @@ export interface AccordionItemCommonPropsAndState {
 	slotItemBody: SlotContent<AccordionItemContext>;
 	/**
 	 * Structure of the accordion-item. The default item structure is: accordion-item
-	 * contains accordion header and accordion collapse; the accordion header contains the accordion button
-	 * (that contains `slotItemHeader`), while the accordion collapse contains the accordion body (that contains slotItemBody).
+	 * contains accordion header and accordion-item body container; the accordion header contains the accordion button
+	 * (that contains `slotItemHeader`), while the accordion-item body container contains the accordion body (that contains `slotItemBody`).
+	 * The itemTransition it applied on this element.
 	 */
 	slotItemStructure: SlotContent<AccordionItemContext>;
 	/**
-	 * Classes to add on the accordion-item DOM element.
+	 * CSS classes to add on the accordion-item DOM element.
 	 */
 	itemClass: string;
 	/**
-	 * Classes to add on the accordion-item header DOM element.
+	 * CSS classes to add on the accordion-item header DOM element.
 	 */
 	itemHeaderClass: string;
 	/**
-	 * Classes to add on the accordion-item collapse DOM element.
+	 * CSS classes to add on the accordion-item collapse DOM element.
 	 */
 	itemButtonClass: string;
 	/**
-	 * Classes to add on the accordion-item collapse DOM element.
+	 * CSS classes to add on the accordion-item body container DOM element.
+	 * The accordion-item body container is the DOM element on what the itemTransition is applied.
 	 */
-	itemCollapseClass: string;
+	itemBodyContainerClass: string;
 	/**
-	 * Classes to add on the accordion-item body DOM element.
+	 * CSS classes to add on the accordion-item body DOM element.
 	 */
 	itemBodyClass: string;
 	/**
@@ -330,11 +334,11 @@ export interface AccordionItemProps extends AccordionItemCommonPropsAndState {
 	 */
 	itemAnimation: boolean;
 	/**
-	 * The transition to use for the accordion-item collapse when is toggled.
+	 * The transition to use for the accordion-item body-container when the accordion-item is toggled.
 	 */
 	itemTransition: TransitionFn;
 	/**
-	 * If `true`, the content of the accordion-item collapse will be removed from the DOM. It will be just hidden otherwise.
+	 * If `true`, the accordion-item body container will be removed from the DOM when the accordion-item is collapsed. It will be just hidden otherwise.
 	 */
 	itemDestroyOnHide: boolean;
 	/**
@@ -384,7 +388,7 @@ const defaultAccordionConfig: AccordionProps = {
 	itemClass: '',
 	itemHeaderClass: '',
 	itemButtonClass: '',
-	itemCollapseClass: '',
+	itemBodyContainerClass: '',
 	itemBodyClass: '',
 };
 
@@ -404,7 +408,7 @@ const defaultItemConfig: AccordionItemProps = {
 	itemClass: defaultAccordionConfig.itemClass,
 	itemHeaderClass: defaultAccordionConfig.itemHeaderClass,
 	itemButtonClass: defaultAccordionConfig.itemButtonClass,
-	itemCollapseClass: defaultAccordionConfig.itemCollapseClass,
+	itemBodyContainerClass: defaultAccordionConfig.itemBodyContainerClass,
 	itemBodyClass: defaultAccordionConfig.itemBodyClass,
 	itemHeadingTag: defaultAccordionConfig.itemHeadingTag,
 };
@@ -434,7 +438,7 @@ const configAccordionValidator: ConfigValidator<AccordionProps> = {
 	itemClass: typeString,
 	itemHeaderClass: typeString,
 	itemButtonClass: typeString,
-	itemCollapseClass: typeString,
+	itemBodyContainerClass: typeString,
 	itemBodyClass: typeString,
 	itemHeadingTag: typeString,
 };
@@ -452,7 +456,7 @@ const configItemValidator: ConfigValidator<AccordionItemProps> = {
 	itemClass: typeString,
 	itemHeaderClass: typeString,
 	itemButtonClass: typeString,
-	itemCollapseClass: typeString,
+	itemBodyContainerClass: typeString,
 	itemBodyClass: typeString,
 	itemHeadingTag: typeString,
 };
@@ -554,7 +558,7 @@ export function createAccordion(config?: PropsConfig<AccordionProps>): Accordion
 			itemDestroyOnHide$,
 			itemBodyClass$,
 			itemButtonClass$,
-			itemCollapseClass$,
+			itemBodyContainerClass$,
 			itemHeaderClass$,
 			itemHeadingTag$,
 			onItemVisibleChange$,
@@ -577,7 +581,7 @@ export function createAccordion(config?: PropsConfig<AccordionProps>): Accordion
 		itemDestroyOnHide: itemDestroyOnHide$,
 		itemBodyClass: itemBodyClass$,
 		itemButtonClass: itemButtonClass$,
-		itemCollapseClass: itemCollapseClass$,
+		itemBodyContainerClass: itemBodyContainerClass$,
 		itemHeaderClass: itemHeaderClass$,
 		itemHeadingTag: itemHeadingTag$,
 		onItemVisibleChange: onItemVisibleChange$,
