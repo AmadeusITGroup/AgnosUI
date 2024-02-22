@@ -1,33 +1,12 @@
-import type {ReadableSignal} from '@amadeus-it-group/tansu';
+import {computed, type ReadableSignal} from '@amadeus-it-group/tansu';
 import {beforeEach, describe, expect, test, vi} from 'vitest';
 import {assign} from '../../../../common/utils';
 import {addEvent} from '../../utils/internal/dom';
-import {createTraversal} from '../../utils/internal/traversal';
 import type {ItemContext, SelectProps, SelectState, SelectWidget} from './select';
 import {createSelect, getSelectDefaultConfig} from './select';
 
 type ExtractReadable<T> = T extends ReadableSignal<infer U> ? U : never;
 type ExtractState<T> = T extends SelectWidget<infer U> ? ExtractReadable<SelectWidget<U>['state$']> : never;
-
-const generatedIdRegExp = /^auId-/;
-const normalizeState = createTraversal((path, value) => {
-	const constructor = value?.constructor;
-	switch (constructor) {
-		case RegExp:
-		case Date:
-			return value.toString();
-	}
-
-	if (typeof value === 'function') {
-		return '(function)';
-	}
-
-	if (path === 'id') {
-		return generatedIdRegExp.test(value) ? '(generated)' : value;
-	}
-
-	return value;
-});
 
 describe(`Select model`, () => {
 	let setMockedFocus: (value: boolean) => void;
@@ -46,6 +25,7 @@ describe(`Select model`, () => {
 		};
 	}
 
+	const generatedIdRegExp = /^auId-/;
 	function createTestContext<T>(selectProps: Partial<SelectProps<T>>) {
 		const items = selectProps.items!;
 		const selectWidget = createSelect<T>({
@@ -55,8 +35,21 @@ describe(`Select model`, () => {
 		const states: State[] = [];
 		let currentState: State;
 
-		const unsubscribe = selectWidget.state$.subscribe((value) => {
-			states.push(normalizeState(value));
+		const normalizedState$ = computed(() => {
+			const state = selectWidget.state$();
+			const {id, slotBadgeLabel, slotItem} = state;
+			const normalizedState = {
+				...state,
+				id: generatedIdRegExp.test(state.id!) ? '(generated)' : id,
+				slotBadgeLabel: typeof slotBadgeLabel === 'function' ? '(function)' : '(not a function)',
+				slotItem: typeof slotItem === 'function' ? '(function)' : '(not a function)',
+			};
+
+			return normalizedState;
+		});
+
+		const unsubscribe = normalizedState$.subscribe((value) => {
+			states.push(value);
 			currentState = value;
 		});
 
@@ -66,7 +59,7 @@ describe(`Select model`, () => {
 			selectProps,
 			getStates: () => states,
 			getState(): State {
-				return normalizeState(currentState);
+				return currentState;
 			},
 			highlightItem(state: State, itemIndex: number) {
 				const item = items[itemIndex];
@@ -397,7 +390,7 @@ describe(`Select model`, () => {
 					expect(getState(), 'Menu open with arrow down').toEqual(expectedState);
 
 					triggerKeyboardEvent('Enter');
-					const expectedStateAfterSelection: SelectState<string> = normalizeState(expectedState);
+					const expectedStateAfterSelection: SelectState<string> = structuredClone(expectedState);
 					const itemCtx: ItemContext<string> = expectedStateAfterSelection.highlighted!;
 					itemCtx.selected = true;
 					assign(expectedStateAfterSelection, {
