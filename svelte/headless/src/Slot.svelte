@@ -1,7 +1,8 @@
 <script lang="ts">
+	import {BROWSER} from 'esm-env';
 	import type {SlotContent, SlotSvelteComponent} from './types';
-	import {isSvelteComponent} from './utils/widget';
 	import {useSvelteSlot} from './types';
+	import {isSvelteComponent} from './utils/widget';
 	type Props = $$Generic<object>; // eslint-disable-line no-undef
 	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -11,6 +12,13 @@
 	};
 	export let slotContent: SlotContent<Props> = null;
 	export let props: Props;
+
+	// Workaround for a svelte issue that prevents code generation for SSR/slot
+	// To be removed when https://github.com/sveltejs/svelte/issues/9137 is fixed
+	if (!BROWSER) {
+		// @ts-expect-error Setting the global variable `props`, which is not defined in the SSR Svelte-kit compilation
+		globalThis['props'] = props;
+	}
 </script>
 
 {#if slotContent === useSvelteSlot}
