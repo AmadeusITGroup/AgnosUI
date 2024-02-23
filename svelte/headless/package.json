@@ -117,7 +117,8 @@
 		}
 	},
 	"dependencies": {
-		"@agnos-ui/core": ""
+		"@agnos-ui/core": "",
+		"esm-env": "^1.0.0"
 	},
 	"peerDependencies": {
 		"@amadeus-it-group/tansu": "*",
