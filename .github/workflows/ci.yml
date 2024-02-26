@@ -9,5 +9,9 @@ jobs:
     with:
       docPath: main
       docPublish: true
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
   e2e-tests:
     uses: './.github/workflows/e2e-tests.yml'
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
