@@ -48,178 +48,69 @@
 </script>
 
 <nav aria-label={$ariaLabel$}>
-	<ul class="au-pagination pagination {$className$} ">
+	<div class="join {$className$}">
 		{#if $boundaryLinks$}
-			<li class="page-item" class:disabled={$previousDisabled$}>
-				<!-- svelte-ignore a11y-invalid-attribute -->
-				<a
-					aria-label={$ariaFirstLabel$}
-					class="page-link au-first"
-					href="#"
-					on:click|preventDefault={() => first()}
-					tabindex={$previousDisabled$ ? -1 : undefined}
-					aria-disabled={$previousDisabled$ ? 'true' : null}
-				>
-					<span aria-hidden="true"> « </span>
-				</a>
-			</li>
+			<button
+				class="join-item btn btn-outline"
+				aria-label={$ariaFirstLabel$}
+				on:click={() => first()}
+				disabled={$previousDisabled$}
+				aria-disabled={$previousDisabled$ ? 'true' : null}
+				tabindex={$previousDisabled$ ? -1 : undefined}
+			>
+				<span aria-hidden="true"> « </span>
+			</button>
 		{/if}
 		{#if $directionLinks$}
-			<li class="page-item" class:disabled={$previousDisabled$}>
-				<!-- svelte-ignore a11y-invalid-attribute -->
-				<a
-					aria-label={$ariaPreviousLabel$}
-					class="page-link au-previous"
-					href="#"
-					on:click|preventDefault={() => previous()}
-					tabindex={$previousDisabled$ ? -1 : undefined}
-					aria-disabled={$previousDisabled$ ? 'true' : null}
-				>
-					<span aria-hidden="true"> ‹ </span>
-				</a>
-			</li>
+			<button
+				class="join-item btn btn-outline"
+				disabled={$previousDisabled$}
+				aria-label={$ariaPreviousLabel$}
+				on:click={() => previous()}
+				tabindex={$previousDisabled$ ? -1 : undefined}
+				aria-disabled={$previousDisabled$ ? 'true' : null}
+			>
+				<span aria-hidden="true"> ‹ </span>
+			</button>
 		{/if}
 		{#each $state$.pages as page, i}
-			<li
-				class="page-item"
-				class:active={page === $state$.page}
-				class:disabled={widget.api.isEllipsis(page) || $state$.disabled}
+			<button
+				class="join-item btn btn-outline"
+				class:btn-active={page === $state$.page}
 				aria-current={page === $state$.page ? 'page' : null}
-			>
-				{#if widget.api.isEllipsis(page)}
-					<!-- svelte-ignore a11y-invalid-attribute -->
-					<a class="page-link au-ellipsis" tabindex="-1" aria-disabled="true" on:click|preventDefault|stopPropagation href="#"> ... </a>
-				{:else}
-					<!-- svelte-ignore a11y-invalid-attribute -->
-					<a
-						class="page-link au-page"
-						aria-label={$state$.pagesLabel[i]}
-						href="#"
-						on:click|preventDefault={() => widget.actions.select(page)}
-						tabindex={$state$.disabled ? -1 : undefined}
-						aria-disabled={$state$.disabled ? 'true' : null}
-					>
-						{page}
-						{#if $state$.page === page}<span class="visually-hidden">{$state$.activeLabel}</span>{/if}
-					</a>
-				{/if}
-			</li>
+				tabindex={widget.api.isEllipsis(page) ? -1 : $state$.disabled ? -1 : undefined}
+				on:click={widget.api.isEllipsis(page) ? () => {} : () => widget.actions.select(page)}
+				disabled={widget.api.isEllipsis(page) || $state$.disabled}
+				>{page}
+				{#if $state$.page === page}<span class="sr-only">{$state$.activeLabel}</span>{/if}
+			</button>
 		{/each}
 		{#if $directionLinks$}
-			<li class="page-item" class:disabled={$nextDisabled$}>
-				<!-- svelte-ignore a11y-invalid-attribute -->
-				<a
-					aria-label={$ariaNextLabel$}
-					class="page-link au-next"
-					href="#"
-					on:click|preventDefault={() => next()}
-					tabindex={$nextDisabled$ ? -1 : undefined}
-					aria-disabled={$nextDisabled$ ? 'true' : null}
-				>
-					<span aria-hidden="true"> › </span></a
-				>
-			</li>
+			<button
+				class="join-item btn btn-outline"
+				disabled={$nextDisabled$}
+				aria-label={$ariaNextLabel$}
+				on:click={() => next()}
+				tabindex={$nextDisabled$ ? -1 : undefined}
+				aria-disabled={$nextDisabled$ ? 'true' : null}
+			>
+				<span aria-hidden="true"> › </span>
+			</button>
 		{/if}
 		{#if $boundaryLinks$}
-			<li class="page-item" class:disabled={$nextDisabled$}>
-				<!-- svelte-ignore a11y-invalid-attribute -->
-				<a
-					aria-label={$ariaLastLabel$}
-					class="page-link au-last"
-					href="#"
-					on:click|preventDefault={() => last()}
-					tabindex={$nextDisabled$ ? -1 : undefined}
-					aria-disabled={$nextDisabled$ ? 'true' : null}
-				>
-					<span aria-hidden="true"> » </span>
-				</a>
-			</li>
+			<button
+				class="join-item btn btn-outline"
+				aria-label={$ariaLastLabel$}
+				on:click={() => last()}
+				disabled={$nextDisabled$}
+				tabindex={$nextDisabled$ ? -1 : undefined}
+				aria-disabled={$nextDisabled$ ? 'true' : null}
+			>
+				<span aria-hidden="true"> » </span>
+			</button>
 		{/if}
-	</ul>
-	<div aria-live="polite" class="visually-hidden">
+	</div>
+	<div aria-live="polite" class="sr-only">
 		{`Current page is ${$page$}`}
 	</div>
 </nav>
-
-<style lang="postcss">
-	.pagination {
-		& :where(.page-item) {
-			border-start-end-radius: 0;
-			border-end-end-radius: 0;
-			border-end-start-radius: 0;
-			border-start-start-radius: 0;
-		}
-
-		& :where(.page-item:first-child:not(:last-child)) {
-			border-end-start-radius: inherit;
-			border-start-start-radius: inherit;
-		}
-
-		& :where(.page-item:last-child:not(:first-child)) {
-			border-start-end-radius: inherit;
-			border-end-end-radius: inherit;
-		}
-
-		@apply inline-flex;
-		@apply items-stretch;
-		@apply rounded;
-		&:where(*:not(:first-child)) {
-			@apply my-0 -ms-px;
-		}
-
-		.page-item {
-			&.disabled {
-				pointer-events: none;
-			}
-			@apply size-8;
-			@apply flex;
-			@apply items-center;
-			@apply justify-center;
-
-			a.page-link {
-				@apply text-neutral-900;
-				&.au-previous,
-				&.au-next,
-				&.au-first,
-				&.au-last {
-					@apply pb-[0.4rem];
-				}
-			}
-			a,
-			a:hover {
-				@apply no-underline;
-				@apply py-1;
-				@apply px-3;
-			}
-			@apply bg-neutral-100;
-			&:has(a:active) {
-				animation: button-pop 0s ease-out;
-				transform: scale(var(--btn-focus-scale, 0.97));
-			}
-			&:hover {
-				@apply bg-neutral-300;
-			}
-
-			&.active {
-				@apply bg-neutral-400;
-				&:hover {
-					@apply bg-neutral-300;
-				}
-			}
-		}
-	}
-	.visually-hidden {
-		@apply hidden;
-	}
-	@keyframes button-pop {
-		0% {
-			transform: scale(var(--btn-focus-scale, 0.98));
-		}
-		40% {
-			transform: scale(1.02);
-		}
-		100% {
-			transform: scale(1);
-		}
-	}
-</style>
