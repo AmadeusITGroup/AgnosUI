@@ -3,7 +3,7 @@ export const load = async () => {
 		menu: [
 			{
 				title: 'News 2024',
-				submenu: [{label: '02-01-2024 State management with Tansu', path: 'blog/2024-02-01', subpath: ''}],
+				submenu: [{label: 'State management with Tansu', path: 'blog/2024-02-01', subpath: ''}],
 			},
 		],
 	};
