@@ -694,7 +694,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			},
 			mouseDown(event: MouseEvent, handleId: number) {
 				event.preventDefault();
-				const currentTarget = event.currentTarget as HTMLElement;
+				const currentTarget = event.target as HTMLElement;
 				const handleDrag = (e: MouseEvent) => {
 					e.preventDefault();
 					const newCoord = vertical$() ? e.clientY : e.clientX;
