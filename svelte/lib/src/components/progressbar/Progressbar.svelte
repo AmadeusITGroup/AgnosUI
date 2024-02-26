@@ -3,9 +3,9 @@
 	import {createProgressbar} from '@agnos-ui/svelte-headless/components/progressbar';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
-	import ProgressbarDefaultContent from './ProgressbarDefaultContent.svelte';
+	import ProgressbarDefaultStructure from './ProgressbarDefaultStructure.svelte';
 	const defaultConfig: Partial<Props> = {
-		slotContent: ProgressbarDefaultContent,
+		slotStructure: ProgressbarDefaultStructure,
 	};
 </script>
 
@@ -15,7 +15,7 @@
 	type $$Slots = Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
 	export const widget = callWidgetFactory({factory: createProgressbar, widgetName: 'progressbar', $$slots, $$props, defaultConfig, events: {}});
 	const {
-		stores: {slotContent$, ariaLabel$, value$, min$, max$, ariaValueText$},
+		stores: {slotStructure$, ariaLabel$, value$, min$, max$, ariaValueText$},
 		state$,
 	} = widget;
 
@@ -32,11 +32,11 @@
 	aria-valuemax={$max$}
 	aria-valuetext={$ariaValueText$}
 >
-	<Slot slotContent={$slotContent$} props={slotContext} let:component let:props>
-		<slot slot="slot" name="content" let:props {...props} />
+	<Slot slotContent={$slotStructure$} props={slotContext} let:component let:props>
+		<slot slot="slot" name="structure" let:props {...props} />
 		<svelte:component this={component} {...props}>
 			<svelte:fragment let:state let:widget><slot {state} {widget} /></svelte:fragment>
-			<slot name="content" slot="content" let:state let:widget {state} {widget} />
+			<slot name="structure" slot="structure" let:state let:widget {state} {widget} />
 		</svelte:component>
 	</Slot>
 </div>

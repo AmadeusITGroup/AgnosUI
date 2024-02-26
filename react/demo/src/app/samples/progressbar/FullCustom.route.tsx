@@ -1,26 +1,7 @@
-import type {ProgressbarContext} from '@agnos-ui/react/components/progressbar';
-import type {AdaptSlotContentProps} from '@agnos-ui/react/types';
 import {Progressbar} from '@agnos-ui/react/components/progressbar';
 import {useEffect, useState} from 'react';
 import '@agnos-ui/common/samples/progressbar/custom.scss';
-
-const CustomContent = ({state}: AdaptSlotContentProps<ProgressbarContext>) => (
-	<div className="position-relative" style={{height: '300px'}}>
-		<div className="cup">
-			<div className="cup-fill-parent">
-				<div className="cup-fill" style={{height: `${1.7 * state.percentage}px`}}>
-					{state.percentage >= 50 ? (
-						<>
-							<div className="bubble bubble-1"></div>
-							<div className="bubble bubble-2"></div>
-							<div className="bubble bubble-3"></div>
-						</>
-					) : null}
-				</div>
-			</div>
-		</div>
-	</div>
-);
+import {Coffee} from './Coffee';
 
 const FullCustomDemo = () => {
 	const [value, setValue] = useState(0);
@@ -47,7 +28,7 @@ const FullCustomDemo = () => {
 	return (
 		<div className="d-flex align-items-center flex-wrap">
 			<div style={{width: '350px'}}>
-				<Progressbar value={value} slotContent={CustomContent} />
+				<Progressbar value={value} slotStructure={Coffee} />
 			</div>
 			<div className="d-flex flex-column justify-content-evenly h-100 ms-5">
 				<div className="btn-group" role="group">
