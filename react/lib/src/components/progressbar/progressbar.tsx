@@ -28,7 +28,7 @@ function DefaultSlotContent(slotContext: ProgressbarContext) {
 }
 
 const defaultConfig: Partial<ProgressbarProps> = {
-	slotContent: DefaultSlotContent,
+	slotStructure: DefaultSlotContent,
 };
 
 export const Progressbar = (props: PropsWithChildren<Partial<ProgressbarProps>>) => {
@@ -43,7 +43,7 @@ export const Progressbar = (props: PropsWithChildren<Partial<ProgressbarProps>>)
 			aria-valuemax={state.max}
 			aria-valuetext={state.ariaValueText}
 		>
-			<Slot slotContent={state.slotContent} props={slotContext} />
+			<Slot slotContent={state.slotStructure} props={slotContext} />
 		</div>
 	);
 };

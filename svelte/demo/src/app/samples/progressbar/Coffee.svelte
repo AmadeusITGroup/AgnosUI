@@ -1,6 +1,6 @@
 <script lang="ts">
 	import {type ProgressbarSlots} from '@agnos-ui/svelte/components/progressbar';
-	type $$Props = ProgressbarSlots['content'];
+	type $$Props = ProgressbarSlots['structure'];
 	type $$Slots = ProgressbarSlots;
 
 	export let state: $$Props['state'];

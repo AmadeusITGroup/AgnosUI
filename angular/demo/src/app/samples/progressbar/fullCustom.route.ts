@@ -1,32 +1,18 @@
-import {ProgressbarComponent, ProgressbarContentDirective} from '@agnos-ui/angular';
+import {ProgressbarComponent, provideWidgetsConfig} from '@agnos-ui/angular';
 import type {OnDestroy} from '@angular/core';
 import {Component} from '@angular/core';
 import type {Subscription} from 'rxjs';
 import {interval, takeWhile} from 'rxjs';
+import CoffeeProgressbarComponent from './cofee-progressbar.component';
 
 @Component({
 	standalone: true,
-	imports: [ProgressbarComponent, ProgressbarContentDirective],
+	imports: [ProgressbarComponent],
+	providers: [provideWidgetsConfig(() => ({progressbar: {slotStructure: CoffeeProgressbarComponent}}))],
 	template: `
 		<div class="d-flex align-items-center flex-wrap">
 			<div style="width: 350px">
-				<div auProgressbar #progressbar [auValue]="value">
-					<ng-template auProgressbarContent let-state="state">
-						<div class="position-relative" style="height: 300px">
-							<div class="cup">
-								<div class="cup-fill-parent">
-									<div class="cup-fill" [style.height.px]="value * 1.7">
-										@if (value >= 50) {
-											<div class="bubble bubble-1"></div>
-											<div class="bubble bubble-2"></div>
-											<div class="bubble bubble-3"></div>
-										}
-									</div>
-								</div>
-							</div>
-						</div>
-					</ng-template>
-				</div>
+				<div auProgressbar #progressbar [auValue]="value"></div>
 			</div>
 			<div class="d-flex flex-column justify-content-evenly h-100 ms-5">
 				<div class="btn-group" role="group">

@@ -28,9 +28,9 @@ export interface ProgressbarCommonPropsAndState extends WidgetsCommonPropsAndSta
 	 */
 	ariaLabel: string;
 	/**
-	 * Global template for the Progressbar content.
+	 * Global template for the Progressbar.
 	 */
-	slotContent: SlotContent<ProgressbarContext>;
+	slotStructure: SlotContent<ProgressbarContext>;
 	/**
 	 * Label of the progress.
 	 */
@@ -90,7 +90,7 @@ const defaultConfig: ProgressbarProps = {
 	value: 0,
 	ariaLabel: 'Progressbar',
 	className: '',
-	slotContent: undefined,
+	slotStructure: undefined,
 	slotDefault: undefined,
 	height: '',
 	striped: false,

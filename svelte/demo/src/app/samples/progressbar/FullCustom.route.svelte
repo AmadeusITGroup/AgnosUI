@@ -27,7 +27,7 @@
 
 <div class="d-flex align-items-center flex-wrap">
 	<div style="width: 350px">
-		<Progressbar {value} slotContent={Coffee} />
+		<Progressbar {value} slotStructure={Coffee} />
 	</div>
 	<div class="d-flex flex-column justify-content-evenly h-100 ms-5">
 		<div class="btn-group" role="group">
