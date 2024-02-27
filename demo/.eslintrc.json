@@ -6,7 +6,7 @@
 		"extraFileExtensions": [".svelte"]
 	},
 	"rules": {
-		"@agnos-ui/check-replace-imports": ["error", "@agnos-ui/core"]
+		"@agnos-ui/check-replace-imports": ["error", "@agnos-ui/svelte"]
 	},
 	"overrides": [
 		{

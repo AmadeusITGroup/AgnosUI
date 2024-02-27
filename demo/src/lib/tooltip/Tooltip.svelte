@@ -1,7 +1,7 @@
 <svelte:options accessors />
 
 <script lang="ts">
-	import type {Directive} from '@agnos-ui/core/types';
+	import type {Directive} from '@agnos-ui/svelte/types';
 	import type {Readable} from '@amadeus-it-group/tansu';
 	import type {Placement} from '@floating-ui/dom';
 

@@ -6,8 +6,8 @@
 	import {writable} from '@amadeus-it-group/tansu';
 	import type {ReadableSignal} from '@amadeus-it-group/tansu';
 	import {onMount} from 'svelte';
-	import {createHasFocus} from '@agnos-ui/core/services/focustrack';
-	import type {Directive} from '@agnos-ui/core/types';
+	import {createHasFocus} from '@agnos-ui/svelte/services/focustrack';
+	import type {Directive} from '@agnos-ui/svelte/types';
 
 	interface Theme {
 		id: string;

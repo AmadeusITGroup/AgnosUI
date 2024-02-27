@@ -8,6 +8,7 @@ import {docExtractor} from './scripts/doc.plugin';
 import {includeSamples} from './scripts/includeSamples.plugin';
 import {emitFile} from './scripts/emitFile.plugin';
 import http from 'http';
+import {alias} from '../viteAlias';
 
 const proxy: Record<string, string | ProxyOptions> = {
 	'/angular/samples': {
@@ -30,7 +31,7 @@ const proxy: Record<string, string | ProxyOptions> = {
 const version = JSON.stringify((pkg as any).version ?? '0.0.0');
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig((config) => ({
 	envDir: path.join(__dirname, 'env'),
 	server: {
 		port: 4000,
@@ -47,6 +48,9 @@ export default defineConfig({
 		port: 4000,
 		proxy: {},
 	},
+	resolve: {
+		alias: config.mode === 'production' ? {} : alias,
+	},
 	plugins: [
 		copySamples(),
 		includeSamples(),
@@ -60,4 +64,4 @@ export default defineConfig({
 	optimizeDeps: {
 		include: ['@amadeus-it-group/tansu', '@floating-ui/dom', 'svelte-markdown', 'marked', 'mermaid', '@stackblitz/sdk', 'shiki'],
 	},
-});
+}));

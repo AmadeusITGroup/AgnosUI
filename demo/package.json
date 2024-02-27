@@ -59,7 +59,8 @@
 				"generate:doc",
 				"../angular/demo:build:coverage",
 				"../react/demo:build:coverage",
-				"../svelte/demo:build:coverage"
+				"../svelte/demo:build:coverage",
+				"../svelte/lib:build"
 			]
 		},
 		"check": {
@@ -75,7 +76,9 @@
 		}
 	},
 	"dependencies": {
-		"@floating-ui/dom": "^1.6.3"
+		"@amadeus-it-group/tansu": "1.0.0",
+		"@floating-ui/dom": "^1.6.3",
+		"@agnos-ui/svelte": "*"
 	},
 	"devDependencies": {
 		"@stackblitz/sdk": "^1.9.0",
