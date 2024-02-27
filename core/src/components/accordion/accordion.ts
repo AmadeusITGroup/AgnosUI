@@ -10,12 +10,7 @@ import {noop} from '../../utils/internal/func';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 import {typeBoolean, typeFunction, typeString} from '../../utils/writables';
 import {bindDirectiveNoArg, directiveSubscribe, registrationArray} from '../../utils/directive';
-
-let itemId = 0;
-
-function getItemId() {
-	return `accordion-item-${itemId++}`;
-}
+import {generateId} from '../../utils/internal/dom';
 
 function adjustItemsCloseOthers(items: AccordionItemWidget[], openItems: string[], oldOpen?: string): AccordionItemWidget[] {
 	let keepOpen: undefined | string;
@@ -483,7 +478,7 @@ function createAccordionItem(
 	] = writablesForProps(defaultItemConfig, config, configItemValidator);
 
 	const initDone$ = writable(false);
-	const _autoItemId$ = computed(() => getItemId());
+	const _autoItemId$ = computed(() => generateId());
 	const itemId$ = computed(() => _dirtyItemId$() || _autoItemId$());
 	const shouldBeInDOM$ = computed(() => itemDestroyOnHide$() === false || !itemTransition.state$().hidden);
 	const itemTransition = createTransition({
