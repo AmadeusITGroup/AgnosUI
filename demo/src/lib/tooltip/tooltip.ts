@@ -1,5 +1,5 @@
 import Tooltip from '$lib/tooltip/Tooltip.svelte';
-import {createFloatingUI} from '@agnos-ui/core/services/floatingUI';
+import {createFloatingUI} from '@agnos-ui/svelte/services/floatingUI';
 import {flip, offset} from '@floating-ui/dom';
 
 export function tooltip(button: HTMLElement, options: {content: string}) {
