@@ -1,9 +1,8 @@
-import type {WritableSignal} from '@amadeus-it-group/tansu';
+import type {ReadableSignal, WritableSignal} from '@amadeus-it-group/tansu';
 import {computed, writable} from '@amadeus-it-group/tansu';
 import {beforeEach, describe, expect, test, vi} from 'vitest';
-import type {HandleDisplayOptions, ProgressDisplayOptions, SliderProps, SliderWidget} from './slider';
+import type {HandleDisplayOptions, ProgressDisplayOptions, SliderProps, SliderState, SliderWidget} from './slider';
 import {createSlider} from './slider';
-import type {WidgetState} from '../../types';
 import {assign} from '../../../../common/utils';
 
 // TODO move to the utils?
@@ -11,7 +10,7 @@ function keyboardEvent(key: string): KeyboardEvent {
 	return new KeyboardEvent('keydown', {key});
 }
 
-const defaultStateValues = {
+const defaultState: () => SliderState = () => ({
 	min: 0,
 	max: 100,
 	stepSize: 1,
@@ -47,11 +46,23 @@ const defaultStateValues = {
 	showMinMaxLabels: true,
 	showValueLabels: true,
 	rtl: false,
+	slotStructure: undefined,
+	slotHandle: undefined,
+	slotLabel: '(function)',
+});
+
+const normalizeState = (state: SliderState): SliderState => {
+	const {slotLabel} = state;
+	const normalizedState = {
+		...state,
+		slotLabel: typeof slotLabel === 'function' ? '(function)' : '(not a function)',
+	};
+	return normalizedState;
 };
 
 describe(`Slider basic`, () => {
 	let slider: SliderWidget;
-	let state: WidgetState<SliderWidget>;
+	let normalizedState$: ReadableSignal<SliderState>;
 	let defConfig: WritableSignal<Partial<SliderProps>>;
 
 	beforeEach(() => {
@@ -67,38 +78,38 @@ describe(`Slider basic`, () => {
 		const sliderDirective = slider.directives.sliderDirective(sliderElement);
 		const minLabelDirective = slider.directives.minLabelDirective(minLabel);
 		const maxLabelDirective = slider.directives.maxLabelDirective(maxLabel);
-		const unsubscribe = slider.state$.subscribe((newState) => {
-			state = newState;
+
+		normalizedState$ = computed(() => {
+			return normalizeState(slider.state$());
 		});
 
 		return () => {
 			sliderDirective!.destroy?.();
 			minLabelDirective!.destroy?.();
 			maxLabelDirective!.destroy?.();
-			unsubscribe();
 		};
 	});
 
 	test(`should create the default configuration for the model`, () => {
-		expect(state).toStrictEqual(defaultStateValues);
+		expect(normalizedState$()).toStrictEqual(defaultState());
 	});
 
 	test(`should recompute clean value if min has changed`, () => {
-		const expectedStateValue = {...defaultStateValues};
-		expect(state).toStrictEqual(expectedStateValue);
+		const expectedState = defaultState();
+		expect(normalizedState$()).toStrictEqual(expectedState);
 
 		slider.patch({
 			min: 50,
 		});
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				min: 50,
 				values: [50],
 				sortedValues: [50],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 0,
 					},
 				],
@@ -124,7 +135,7 @@ describe(`Slider basic`, () => {
 			}),
 		);
 
-		expect(state).toStrictEqual(expectedStateValue);
+		expect(normalizedState$()).toStrictEqual(expectedState);
 	});
 
 	test(`should recompute clean value if max has changed`, () => {
@@ -132,15 +143,15 @@ describe(`Slider basic`, () => {
 			values: [60],
 		});
 
-		const expectedStateValue = {...defaultStateValues};
+		const expectedState = defaultState();
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				values: [60],
 				sortedValues: [60],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 60,
 					},
 				],
@@ -170,14 +181,14 @@ describe(`Slider basic`, () => {
 			max: 50,
 		});
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				max: 50,
 				values: [50],
 				sortedValues: [50],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 100,
 					},
 				],
@@ -209,15 +220,15 @@ describe(`Slider basic`, () => {
 			values: [60],
 		});
 
-		const expectedStateValue = {...defaultStateValues};
+		const expectedState = defaultState();
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				values: [60],
 				sortedValues: [60],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 60,
 					},
 				],
@@ -247,14 +258,14 @@ describe(`Slider basic`, () => {
 			stepSize: 25,
 		});
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				stepSize: 25,
 				values: [50],
 				sortedValues: [50],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 50,
 					},
 				],
@@ -288,9 +299,9 @@ describe(`Slider basic`, () => {
 			values: [150],
 		});
 
-		const expectedStateValue = {...defaultStateValues};
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		const expectedState = defaultState();
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				min: 100,
 				max: 200,
 				stepSize: 25,
@@ -298,7 +309,7 @@ describe(`Slider basic`, () => {
 				sortedValues: [150],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 50,
 					},
 				],
@@ -313,7 +324,7 @@ describe(`Slider basic`, () => {
 				minValueLabelDisplay: true,
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						width: 50,
 					},
 				],
@@ -327,7 +338,7 @@ describe(`Slider basic`, () => {
 			max: 0,
 		});
 
-		expect(state).toStrictEqual(defaultStateValues);
+		expect(normalizedState$()).toStrictEqual(defaultState());
 	});
 
 	test(`should set min as defaultMinValue and max as defaultMaxValue if provided values are the same`, () => {
@@ -336,7 +347,7 @@ describe(`Slider basic`, () => {
 			max: 100,
 		});
 
-		expect(state).toStrictEqual(defaultStateValues);
+		expect(normalizedState$()).toStrictEqual(defaultState());
 	});
 
 	test(`shouldn't accept 0 as a valid value`, () => {
@@ -344,7 +355,7 @@ describe(`Slider basic`, () => {
 			stepSize: 0,
 		});
 
-		expect(state).toStrictEqual(defaultStateValues);
+		expect(normalizedState$()).toStrictEqual(defaultState());
 	});
 
 	test(`should snap the value to the valid step`, () => {
@@ -352,16 +363,16 @@ describe(`Slider basic`, () => {
 			stepSize: 25,
 			values: [60],
 		});
-		const expectedStateValue = {...defaultStateValues};
+		const expectedState = defaultState();
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				stepSize: 25,
 				values: [50],
 				sortedValues: [50],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 50,
 					},
 				],
@@ -376,7 +387,7 @@ describe(`Slider basic`, () => {
 				minValueLabelDisplay: true,
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						width: 50,
 					},
 				],
@@ -389,15 +400,15 @@ describe(`Slider basic`, () => {
 			values: [50],
 		});
 
-		const expectedStateValue = {...defaultStateValues};
+		const expectedState = defaultState();
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				values: [50],
 				sortedValues: [50],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 50,
 					},
 				],
@@ -412,7 +423,7 @@ describe(`Slider basic`, () => {
 				minValueLabelDisplay: true,
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						width: 50,
 					},
 				],
@@ -421,13 +432,13 @@ describe(`Slider basic`, () => {
 
 		slider.actions.click(new MouseEvent('click', {clientX: 0}));
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				values: [0],
 				sortedValues: [0],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 0,
 					},
 				],
@@ -442,7 +453,7 @@ describe(`Slider basic`, () => {
 				minValueLabelDisplay: false,
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						width: 0,
 					},
 				],
@@ -456,15 +467,15 @@ describe(`Slider basic`, () => {
 			values: [50],
 		});
 
-		const expectedStateValue = {...defaultStateValues};
+		const expectedState = defaultState();
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				values: [50],
 				sortedValues: [50],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 50,
 					},
 				],
@@ -481,7 +492,7 @@ describe(`Slider basic`, () => {
 				showMinMaxLabels: false,
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						width: 50,
 					},
 				],
@@ -494,10 +505,10 @@ describe(`Slider basic`, () => {
 			showValueLabels: false,
 		});
 
-		const expectedStateValue = {...defaultStateValues};
+		const expectedState = defaultState();
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				showValueLabels: false,
 				minValueLabelDisplay: true,
 			}),
@@ -507,15 +518,15 @@ describe(`Slider basic`, () => {
 	test(`should set handle to 100 and hide the max label when clicked outside the slider on the right side`, () => {
 		slider.actions.click(new MouseEvent('click', {clientX: 120}));
 
-		const expectedStateValue = {...defaultStateValues};
+		const expectedState = defaultState();
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				values: [100],
 				sortedValues: [100],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 100,
 					},
 				],
@@ -531,7 +542,7 @@ describe(`Slider basic`, () => {
 				maxValueLabelDisplay: false,
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						width: 100,
 					},
 				],
@@ -542,15 +553,15 @@ describe(`Slider basic`, () => {
 	test(`should set handle to a proper percent when clicked inside the slider`, () => {
 		slider.actions.click(new MouseEvent('click', {clientX: 70}));
 
-		const expectedStateValue = {...defaultStateValues};
+		const expectedState = defaultState();
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				values: [70],
 				sortedValues: [70],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 70,
 					},
 				],
@@ -565,7 +576,7 @@ describe(`Slider basic`, () => {
 				minValueLabelDisplay: true,
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						width: 70,
 					},
 				],
@@ -576,15 +587,15 @@ describe(`Slider basic`, () => {
 	test(`should not go below minimum on arrow left and down arrow key stroke`, () => {
 		slider.actions.keydown(keyboardEvent('ArrowDown'), 0);
 
-		const expectedStateValue = {...defaultStateValues};
+		const expectedState = defaultState();
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				values: [0],
 				sortedValues: [0],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 0,
 					},
 				],
@@ -599,7 +610,7 @@ describe(`Slider basic`, () => {
 				minValueLabelDisplay: false,
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						width: 0,
 					},
 				],
@@ -608,7 +619,7 @@ describe(`Slider basic`, () => {
 
 		slider.actions.keydown(keyboardEvent('ArrowLeft'), 0);
 
-		expect(state).toStrictEqual(expectedStateValue);
+		expect(normalizedState$()).toStrictEqual(expectedState);
 	});
 
 	test(`should decrease the handle value on left and down arrow key stroke`, () => {
@@ -616,15 +627,15 @@ describe(`Slider basic`, () => {
 			values: [50],
 		});
 
-		const expectedStateValue = {...defaultStateValues};
+		const expectedState = defaultState();
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				values: [50],
 				sortedValues: [50],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 50,
 					},
 				],
@@ -639,7 +650,7 @@ describe(`Slider basic`, () => {
 				minValueLabelDisplay: true,
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						width: 50,
 					},
 				],
@@ -648,13 +659,13 @@ describe(`Slider basic`, () => {
 
 		slider.actions.keydown(keyboardEvent('ArrowDown'), 0);
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				values: [49],
 				sortedValues: [49],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 49,
 					},
 				],
@@ -668,7 +679,7 @@ describe(`Slider basic`, () => {
 				],
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						width: 49,
 					},
 				],
@@ -677,13 +688,13 @@ describe(`Slider basic`, () => {
 
 		slider.actions.keydown(keyboardEvent('ArrowLeft'), 0);
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				values: [48],
 				sortedValues: [48],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 48,
 					},
 				],
@@ -697,7 +708,7 @@ describe(`Slider basic`, () => {
 				],
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						width: 48,
 					},
 				],
@@ -712,15 +723,15 @@ describe(`Slider basic`, () => {
 
 		slider.actions.keydown(keyboardEvent('ArrowUp'), 0);
 
-		const expectedStateValue = {...defaultStateValues};
+		const expectedState = defaultState();
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				values: [100],
 				sortedValues: [100],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 100,
 					},
 				],
@@ -736,7 +747,7 @@ describe(`Slider basic`, () => {
 				maxValueLabelDisplay: false,
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						width: 100,
 					},
 				],
@@ -745,7 +756,7 @@ describe(`Slider basic`, () => {
 
 		slider.actions.keydown(keyboardEvent('ArrowRight'), 0);
 
-		expect(state).toStrictEqual(expectedStateValue);
+		expect(normalizedState$()).toStrictEqual(expectedState);
 	});
 
 	test(`should increase the handle value on right and up arrow key stroke`, () => {
@@ -753,15 +764,15 @@ describe(`Slider basic`, () => {
 			values: [50],
 		});
 
-		const expectedStateValue = {...defaultStateValues};
+		const expectedState = defaultState();
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				values: [50],
 				sortedValues: [50],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 50,
 					},
 				],
@@ -776,7 +787,7 @@ describe(`Slider basic`, () => {
 				minValueLabelDisplay: true,
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						width: 50,
 					},
 				],
@@ -785,13 +796,13 @@ describe(`Slider basic`, () => {
 
 		slider.actions.keydown(keyboardEvent('ArrowUp'), 0);
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				values: [51],
 				sortedValues: [51],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 51,
 					},
 				],
@@ -805,7 +816,7 @@ describe(`Slider basic`, () => {
 				],
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						width: 51,
 					},
 				],
@@ -814,13 +825,13 @@ describe(`Slider basic`, () => {
 
 		slider.actions.keydown(keyboardEvent('ArrowRight'), 0);
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				values: [52],
 				sortedValues: [52],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 52,
 					},
 				],
@@ -834,7 +845,7 @@ describe(`Slider basic`, () => {
 				],
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						width: 52,
 					},
 				],
@@ -847,15 +858,15 @@ describe(`Slider basic`, () => {
 			values: [50],
 		});
 
-		const expectedStateValue = {...defaultStateValues};
+		const expectedState = defaultState();
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				values: [50],
 				sortedValues: [50],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 50,
 					},
 				],
@@ -870,7 +881,7 @@ describe(`Slider basic`, () => {
 				minValueLabelDisplay: true,
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						width: 50,
 					},
 				],
@@ -879,13 +890,13 @@ describe(`Slider basic`, () => {
 
 		slider.actions.keydown(keyboardEvent('Home'), 0);
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				values: [0],
 				sortedValues: [0],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 0,
 					},
 				],
@@ -900,7 +911,7 @@ describe(`Slider basic`, () => {
 				minValueLabelDisplay: false,
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						width: 0,
 					},
 				],
@@ -913,15 +924,15 @@ describe(`Slider basic`, () => {
 			values: [50],
 		});
 
-		const expectedStateValue = {...defaultStateValues};
+		const expectedState = defaultState();
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				values: [50],
 				sortedValues: [50],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 50,
 					},
 				],
@@ -936,7 +947,7 @@ describe(`Slider basic`, () => {
 				minValueLabelDisplay: true,
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						width: 50,
 					},
 				],
@@ -945,13 +956,13 @@ describe(`Slider basic`, () => {
 
 		slider.actions.keydown(keyboardEvent('End'), 0);
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				values: [100],
 				sortedValues: [100],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 100,
 					},
 				],
@@ -966,7 +977,7 @@ describe(`Slider basic`, () => {
 				maxValueLabelDisplay: false,
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						width: 100,
 					},
 				],
@@ -979,24 +990,24 @@ describe(`Slider basic`, () => {
 			disabled: true,
 		});
 
-		const expectedStateValue = {...defaultStateValues};
+		const expectedState = defaultState();
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				isInteractable: false,
 				disabled: true,
 			}),
 		);
 
-		expect(state).toStrictEqual(expectedStateValue);
+		expect(normalizedState$()).toStrictEqual(expectedState);
 
 		slider.actions.click(new MouseEvent('click', {clientX: 50}));
 
-		expect(state).toStrictEqual(expectedStateValue);
+		expect(normalizedState$()).toStrictEqual(expectedState);
 
 		slider.actions.keydown(keyboardEvent('Home'), 0);
 
-		expect(state).toStrictEqual(expectedStateValue);
+		expect(normalizedState$()).toStrictEqual(expectedState);
 	});
 
 	test(`should not change handle with actions if the slider is readonly`, () => {
@@ -1004,24 +1015,24 @@ describe(`Slider basic`, () => {
 			readonly: true,
 		});
 
-		const expectedStateValue = {...defaultStateValues};
+		const expectedState = defaultState();
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				isInteractable: false,
 				readonly: true,
 			}),
 		);
 
-		expect(state).toStrictEqual(expectedStateValue);
+		expect(normalizedState$()).toStrictEqual(expectedState);
 
 		slider.actions.click(new MouseEvent('click', {clientX: 50}));
 
-		expect(state).toStrictEqual(expectedStateValue);
+		expect(normalizedState$()).toStrictEqual(expectedState);
 
 		slider.actions.keydown(keyboardEvent('Home'), 0);
 
-		expect(state).toStrictEqual(expectedStateValue);
+		expect(normalizedState$()).toStrictEqual(expectedState);
 	});
 
 	test(`should correctly increment the handle value when the min is decimal and step is integer`, () => {
@@ -1031,10 +1042,10 @@ describe(`Slider basic`, () => {
 			values: [0.5],
 		});
 
-		const expectedStateValue = {...defaultStateValues};
+		const expectedState = defaultState();
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				min: 0.5,
 				max: 3.5,
 				values: [0.5],
@@ -1052,12 +1063,12 @@ describe(`Slider basic`, () => {
 
 		slider.actions.keydown(keyboardEvent('ArrowUp'), 0);
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				minValueLabelDisplay: true,
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 33.333333333333336,
 					},
 				],
@@ -1093,10 +1104,10 @@ describe(`Slider basic`, () => {
 			values: [3],
 		});
 
-		const expectedStateValue = {...defaultStateValues};
+		const expectedState = defaultState();
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				min: 0.5,
 				max: 3,
 				stepSize: 1,
@@ -1124,7 +1135,7 @@ describe(`Slider basic`, () => {
 				],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 100,
 					},
 				],
@@ -1133,11 +1144,11 @@ describe(`Slider basic`, () => {
 
 		slider.actions.keydown(keyboardEvent('ArrowLeft'), 0);
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 80,
 					},
 				],
@@ -1174,9 +1185,9 @@ describe(`Slider basic`, () => {
 			values: [1],
 		});
 
-		const expectedStateValue = {...defaultStateValues};
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		const expectedState = defaultState();
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				min: 0.33,
 				max: 5.55,
 				stepSize: 0.2,
@@ -1203,7 +1214,7 @@ describe(`Slider basic`, () => {
 				],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 11.49425287356322,
 					},
 				],
@@ -1216,14 +1227,14 @@ describe(`Slider basic`, () => {
 			rtl: true,
 		});
 
-		const expectedStateValue = {...defaultStateValues};
+		const expectedState = defaultState();
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				rtl: true,
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						left: null,
 						right: 0,
 						bottom: null,
@@ -1232,7 +1243,7 @@ describe(`Slider basic`, () => {
 				],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 100,
 					},
 				],
@@ -1245,14 +1256,14 @@ describe(`Slider basic`, () => {
 			rtl: true,
 		});
 
-		const expectedStateValue = {...defaultStateValues};
+		const expectedState = defaultState();
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				rtl: true,
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						left: null,
 						right: 0,
 						bottom: null,
@@ -1261,7 +1272,7 @@ describe(`Slider basic`, () => {
 				],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 100,
 					},
 				],
@@ -1270,11 +1281,11 @@ describe(`Slider basic`, () => {
 
 		slider.actions.keydown(keyboardEvent('ArrowUp'), 0);
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						left: null,
 						right: 0,
 						bottom: null,
@@ -1284,7 +1295,7 @@ describe(`Slider basic`, () => {
 				],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 99,
 					},
 				],
@@ -1303,11 +1314,11 @@ describe(`Slider basic`, () => {
 
 		slider.actions.keydown(keyboardEvent('ArrowLeft'), 0);
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						left: null,
 						right: 0,
 						bottom: null,
@@ -1317,7 +1328,7 @@ describe(`Slider basic`, () => {
 				],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 98,
 					},
 				],
@@ -1336,11 +1347,11 @@ describe(`Slider basic`, () => {
 
 		slider.actions.keydown(keyboardEvent('ArrowDown'), 0);
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						left: null,
 						right: 0,
 						bottom: null,
@@ -1350,7 +1361,7 @@ describe(`Slider basic`, () => {
 				],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 99,
 					},
 				],
@@ -1369,11 +1380,11 @@ describe(`Slider basic`, () => {
 
 		slider.actions.keydown(keyboardEvent('ArrowRight'), 0);
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						left: null,
 						right: 0,
 						bottom: null,
@@ -1383,7 +1394,7 @@ describe(`Slider basic`, () => {
 				],
 				handleDisplayOptions: [
 					{
-						...expectedStateValue.handleDisplayOptions[0],
+						...expectedState.handleDisplayOptions[0],
 						left: 100,
 					},
 				],
@@ -1404,7 +1415,7 @@ describe(`Slider basic`, () => {
 
 describe(`Slider range`, () => {
 	let slider: SliderWidget;
-	let state: WidgetState<SliderWidget>;
+	let normalizedState$: ReadableSignal<SliderState>;
 	let defConfig: WritableSignal<Partial<SliderProps>>;
 
 	beforeEach(() => {
@@ -1419,15 +1430,14 @@ describe(`Slider range`, () => {
 		const sliderDirective = slider.directives.sliderDirective(sliderElement);
 		const minLabelDirective = slider.directives.minLabelDirective(minLabel);
 		const maxLabelDirective = slider.directives.maxLabelDirective(maxLabel);
-		const unsubscribe = slider.state$.subscribe((newState) => {
-			state = newState;
+		normalizedState$ = computed(() => {
+			return normalizeState(slider.state$());
 		});
 
 		return () => {
 			sliderDirective!.destroy?.();
 			minLabelDirective!.destroy?.();
 			maxLabelDirective!.destroy?.();
-			unsubscribe();
 		};
 	});
 
@@ -1438,9 +1448,9 @@ describe(`Slider range`, () => {
 			stepSize: 25,
 			values: [150, 175],
 		});
-		const expectedStateValue = {...defaultStateValues};
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		const expectedState = defaultState();
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				min: 100,
 				max: 200,
 				stepSize: 25,
@@ -1490,10 +1500,10 @@ describe(`Slider range`, () => {
 		slider.patch({
 			values: [10, 50],
 		});
-		const expectedStateValue = {...defaultStateValues};
+		const expectedState = defaultState();
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				values: [10, 50],
 				sortedValues: [10, 50],
 				handleDisplayOptions: [
@@ -1537,8 +1547,8 @@ describe(`Slider range`, () => {
 
 		slider.actions.click(new MouseEvent('click', {clientX: 60}));
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				values: [10, 60],
 				sortedValues: [10, 60],
 				handleDisplayOptions: [
@@ -1584,10 +1594,10 @@ describe(`Slider range`, () => {
 		slider.patch({
 			values: [10, 50],
 		});
-		const expectedStateValue = {...defaultStateValues};
+		const expectedState = defaultState();
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				values: [10, 50],
 				sortedValues: [10, 50],
 				handleDisplayOptions: [
@@ -1631,8 +1641,8 @@ describe(`Slider range`, () => {
 
 		slider.actions.keydown(keyboardEvent('End'), 0);
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				values: [100, 50],
 				sortedValues: [50, 100],
 				handleDisplayOptions: [
@@ -1676,8 +1686,8 @@ describe(`Slider range`, () => {
 
 		slider.actions.click(new MouseEvent('click', {clientX: 70}));
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				values: [100, 70],
 				sortedValues: [70, 100],
 				handleDisplayOptions: [
@@ -1723,10 +1733,10 @@ describe(`Slider range`, () => {
 		slider.patch({
 			values: [45, 50],
 		});
-		const expectedStateValue = {...defaultStateValues};
+		const expectedState = defaultState();
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				values: [45, 50],
 				sortedValues: [45, 50],
 				handleDisplayOptions: [
@@ -1771,8 +1781,8 @@ describe(`Slider range`, () => {
 
 		slider.actions.click(new MouseEvent('click', {clientX: 70}));
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				values: [45, 70],
 				sortedValues: [45, 70],
 				handleDisplayOptions: [
@@ -1821,10 +1831,10 @@ describe(`Slider range`, () => {
 			values: [10, 50],
 			rtl: true,
 		});
-		const expectedStateValue = {...defaultStateValues};
+		const expectedState = defaultState();
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				values: [10, 50],
 				sortedValues: [10, 50],
 				handleDisplayOptions: [
@@ -1871,7 +1881,7 @@ describe(`Slider range`, () => {
 
 describe(`Slider vertical`, () => {
 	let slider: SliderWidget;
-	let state: WidgetState<SliderWidget>;
+	let normalizedState$: ReadableSignal<SliderState>;
 	let defConfig: WritableSignal<Partial<SliderProps>>;
 
 	beforeEach(() => {
@@ -1890,23 +1900,22 @@ describe(`Slider vertical`, () => {
 			values: [30],
 			vertical: true,
 		});
-		const unsubscribe = slider.state$.subscribe((newState) => {
-			state = newState;
+		normalizedState$ = computed(() => {
+			return normalizeState(slider.state$());
 		});
 
 		return () => {
 			sliderDirective!.destroy?.();
 			minLabelDirective!.destroy?.();
 			maxLabelDirective!.destroy?.();
-			unsubscribe();
 		};
 	});
 
 	test(`should calculate the clicked percent from the bottom to the top of the slider`, () => {
-		const expectedStateValue = {...defaultStateValues};
+		const expectedState = defaultState();
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				handleDisplayOptions: [
 					{
 						left: null,
@@ -1915,7 +1924,7 @@ describe(`Slider vertical`, () => {
 				],
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						height: 30,
 						width: 100,
 						bottom: 0,
@@ -1942,10 +1951,10 @@ describe(`Slider vertical`, () => {
 		slider.patch({
 			rtl: true,
 		});
-		const expectedStateValue = {...defaultStateValues};
+		const expectedState = defaultState();
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				handleDisplayOptions: [
 					{
 						left: null,
@@ -1954,7 +1963,7 @@ describe(`Slider vertical`, () => {
 				],
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						height: 30,
 						width: 100,
 						top: 0,
@@ -1979,10 +1988,10 @@ describe(`Slider vertical`, () => {
 	});
 
 	test(`should properly handle keyboard in LTR case`, () => {
-		const expectedStateValue = {...defaultStateValues};
+		const expectedState = defaultState();
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				handleDisplayOptions: [
 					{
 						left: null,
@@ -1991,7 +2000,7 @@ describe(`Slider vertical`, () => {
 				],
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						height: 30,
 						width: 100,
 						bottom: 0,
@@ -2015,8 +2024,8 @@ describe(`Slider vertical`, () => {
 
 		slider.actions.keydown(keyboardEvent('ArrowDown'), 0);
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				handleDisplayOptions: [
 					{
 						left: null,
@@ -2025,7 +2034,7 @@ describe(`Slider vertical`, () => {
 				],
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						height: 29,
 						width: 100,
 						bottom: 0,
@@ -2047,8 +2056,8 @@ describe(`Slider vertical`, () => {
 
 		slider.actions.keydown(keyboardEvent('ArrowRight'), 0);
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				handleDisplayOptions: [
 					{
 						left: null,
@@ -2057,7 +2066,7 @@ describe(`Slider vertical`, () => {
 				],
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						height: 30,
 						width: 100,
 						bottom: 0,
@@ -2079,8 +2088,8 @@ describe(`Slider vertical`, () => {
 
 		slider.actions.keydown(keyboardEvent('ArrowUp'), 0);
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				handleDisplayOptions: [
 					{
 						left: null,
@@ -2089,7 +2098,7 @@ describe(`Slider vertical`, () => {
 				],
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						height: 31,
 						width: 100,
 						bottom: 0,
@@ -2111,8 +2120,8 @@ describe(`Slider vertical`, () => {
 
 		slider.actions.keydown(keyboardEvent('ArrowLeft'), 0);
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				handleDisplayOptions: [
 					{
 						left: null,
@@ -2121,7 +2130,7 @@ describe(`Slider vertical`, () => {
 				],
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						height: 30,
 						width: 100,
 						bottom: 0,
@@ -2146,10 +2155,10 @@ describe(`Slider vertical`, () => {
 		slider.patch({
 			rtl: true,
 		});
-		const expectedStateValue = {...defaultStateValues};
+		const expectedState = defaultState();
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				handleDisplayOptions: [
 					{
 						left: null,
@@ -2158,7 +2167,7 @@ describe(`Slider vertical`, () => {
 				],
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						height: 30,
 						width: 100,
 						top: 0,
@@ -2183,8 +2192,8 @@ describe(`Slider vertical`, () => {
 
 		slider.actions.keydown(keyboardEvent('ArrowDown'), 0);
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				handleDisplayOptions: [
 					{
 						left: null,
@@ -2193,7 +2202,7 @@ describe(`Slider vertical`, () => {
 				],
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						height: 31,
 						width: 100,
 						top: 0,
@@ -2215,8 +2224,8 @@ describe(`Slider vertical`, () => {
 
 		slider.actions.keydown(keyboardEvent('ArrowRight'), 0);
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				handleDisplayOptions: [
 					{
 						left: null,
@@ -2225,7 +2234,7 @@ describe(`Slider vertical`, () => {
 				],
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						height: 32,
 						width: 100,
 						top: 0,
@@ -2247,8 +2256,8 @@ describe(`Slider vertical`, () => {
 
 		slider.actions.keydown(keyboardEvent('ArrowUp'), 0);
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				handleDisplayOptions: [
 					{
 						left: null,
@@ -2257,7 +2266,7 @@ describe(`Slider vertical`, () => {
 				],
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						height: 31,
 						width: 100,
 						top: 0,
@@ -2279,8 +2288,8 @@ describe(`Slider vertical`, () => {
 
 		slider.actions.keydown(keyboardEvent('ArrowLeft'), 0);
 
-		expect(state).toStrictEqual(
-			assign(expectedStateValue, {
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
 				handleDisplayOptions: [
 					{
 						left: null,
@@ -2289,7 +2298,7 @@ describe(`Slider vertical`, () => {
 				],
 				progressDisplayOptions: [
 					{
-						...expectedStateValue.progressDisplayOptions[0],
+						...expectedState.progressDisplayOptions[0],
 						height: 30,
 						width: 100,
 						top: 0,
