@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Header from '$lib/layout/Header.svelte';
+	import StatusAlert from '$lib/layout/StatusAlert.svelte';
 
 	import {selectedFramework$, selectedTabName$} from '$lib/stores';
 
@@ -17,5 +18,8 @@
 
 <Header title={$page.data.title} status={$page.data.status} />
 <div class="main-content">
+	{#if $page.data.status !== 'stable'}
+		<StatusAlert status={$page.data.status} />
+	{/if}
 	<slot />
 </div>
