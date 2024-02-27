@@ -37,7 +37,7 @@
 		</div>
 	{/if}
 	{#each $page.data.menu ?? [] as { title, submenu }}
-		<CollapsibleSection headerText={title}>
+		<CollapsibleSection headerText={title} path={submenu}>
 			<div>
 				{#each submenu as { label, status, path, subpath }}
 					{@const isCurrent = $page.url.pathname?.includes(path)}

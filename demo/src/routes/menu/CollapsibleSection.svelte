@@ -8,13 +8,11 @@
 	import {get} from 'svelte/store';
 
 	export let headerText: string;
-
-	function toKebabCase(original: string): string {
-		return original
-			.match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)!
-			.join('-')
-			.toLowerCase();
-	}
+	export let path: {
+		path: string;
+		subpath: string;
+		label: string;
+	}[];
 
 	const paramTransition$ = writable(collapseVerticalTransition);
 	const paramAnimation$ = writable(false);
@@ -41,7 +39,7 @@
 	});
 
 	function isOnPage(page: Page<Record<string, string>, string | null>) {
-		return page.url.pathname?.includes(toKebabCase(headerText));
+		return path.some((p) => page.url.pathname?.includes(p.path));
 	}
 </script>
 
