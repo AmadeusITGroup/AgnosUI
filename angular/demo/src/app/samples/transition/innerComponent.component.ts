@@ -19,8 +19,8 @@ const paramRemoveFromDom$ = writable(true);
 	imports: [AgnosUIAngularModule, FormsModule, CommonModule],
 	template: `
 		<div class="transition-inner">
-			<p class="mt-2">
-				Transition:
+			<div class="h6 mt-2">Transition:</div>
+			<div>
 				<button
 					type="button"
 					class="ms-2 btn btn-sm btn-outline-secondary"
@@ -45,7 +45,8 @@ const paramRemoveFromDom$ = writable(true);
 				>
 					Fade
 				</button>
-			</p>
+			</div>
+			<div class="h6 mt-2">Other properties:</div>
 			<label class="form-check"
 				><input
 					type="checkbox"
@@ -79,9 +80,11 @@ const paramRemoveFromDom$ = writable(true);
 				/>Visible</label
 			>
 
-			<button type="button" class="btn btn-outline-primary" (click)="transition.api.toggle()">Toggle</button>
-			<button type="button" class="ms-2 btn btn-outline-primary" (click)="transition.api.toggle(undefined, true)">Toggle with animation</button>
-			<button type="button" class="ms-2 btn btn-outline-primary" (click)="transition.api.toggle(undefined, false)">Toggle without animation</button>
+			<div class="d-flex flex-wrap gap-2">
+				<button type="button" class="btn btn-outline-primary" (click)="transition.api.toggle()">Toggle</button>
+				<button type="button" class="btn btn-outline-primary" (click)="transition.api.toggle(undefined, true)">Toggle with animation</button>
+				<button type="button" class="btn btn-outline-primary" (click)="transition.api.toggle(undefined, false)">Toggle without animation</button>
+			</div>
 			<ul class="mt-2">
 				<li>visible = {{ state().visible }}</li>
 				<li>transitioning = {{ state().transitioning }}</li>

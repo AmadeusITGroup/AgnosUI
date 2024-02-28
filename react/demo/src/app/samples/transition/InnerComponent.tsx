@@ -42,8 +42,8 @@ const InnerComponent = () => {
 	return (
 		<>
 			<div className="transition-inner">
-				<p className="mt-2">
-					Transition:
+				<div className="h6 mt-2">Transition:</div>
+				<div>
 					<button
 						type="button"
 						className={`ms-2 btn btn-sm btn-outline-secondary ${paramTransition === collapseVerticalTransition ? 'active' : ''}`}
@@ -65,7 +65,8 @@ const InnerComponent = () => {
 					>
 						Fade
 					</button>
-				</p>
+				</div>
+				<div className="h6 mt-2">Other properties:</div>
 				<label className="form-check">
 					<input type="checkbox" className="form-check-input" checked={paramAnimation} onChange={() => paramAnimation$.set(!paramAnimation)} />
 					Animation
@@ -98,15 +99,17 @@ const InnerComponent = () => {
 					Visible
 				</label>
 
-				<button type="button" className="btn btn-outline-primary" onClick={() => transitionWidget.api.toggle()}>
-					Toggle
-				</button>
-				<button type="button" className="ms-2 btn btn-outline-primary" onClick={() => transitionWidget.api.toggle(undefined, true)}>
-					Toggle with animation
-				</button>
-				<button type="button" className="ms-2 btn btn-outline-primary" onClick={() => transitionWidget.api.toggle(undefined, false)}>
-					Toggle without animation
-				</button>
+				<div className="d-flex flex-wrap gap-2">
+					<button type="button" className="btn btn-outline-primary" onClick={() => transitionWidget.api.toggle()}>
+						Toggle
+					</button>
+					<button type="button" className="btn btn-outline-primary" onClick={() => transitionWidget.api.toggle(undefined, true)}>
+						Toggle with animation
+					</button>
+					<button type="button" className="btn btn-outline-primary" onClick={() => transitionWidget.api.toggle(undefined, false)}>
+						Toggle without animation
+					</button>
+				</div>
 				<ul className="mt-2">
 					<li>visible = {transitionState.visible + ''}</li>
 					<li>transitioning = {transitionState.transitioning + ''}</li>

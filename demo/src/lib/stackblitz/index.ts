@@ -22,7 +22,7 @@ const addAsyncFiles =
 
 const frameworkCreateStackblitz: Record<Frameworks, StackblitzProcessor[]> = {
 	angular: [
-		addAsyncFiles(import.meta.glob('./angular/**', {as: 'raw', import: 'default'}) as any, '', './angular/'),
+		addAsyncFiles(import.meta.glob('./angular/**', {query: '?raw', import: 'default'}) as any, '', './angular/'),
 		async (project, sample) => {
 			project.files['src/main.ts'] =
 				`import {bootstrapApplication} from '@angular/platform-browser';\nimport MainComponent from './${sample.files.angular.entryPoint.replace(
@@ -32,7 +32,7 @@ const frameworkCreateStackblitz: Record<Frameworks, StackblitzProcessor[]> = {
 		},
 	],
 	react: [
-		addAsyncFiles(import.meta.glob('./react/**', {as: 'raw', import: 'default'}) as any, '', './react/'),
+		addAsyncFiles(import.meta.glob('./react/**', {query: '?raw', import: 'default'}) as any, '', './react/'),
 		async (project, sample) => {
 			project.files['src/main.tsx'] = `import {createRoot} from "react-dom/client";\nimport "./main.css";\nimport App from ${JSON.stringify(
 				`./${sample.files.react.entryPoint.replace(/\.tsx?$/, '')}`,
@@ -40,9 +40,9 @@ const frameworkCreateStackblitz: Record<Frameworks, StackblitzProcessor[]> = {
 		},
 	],
 	svelte: [
-		addAsyncFiles(import.meta.glob('./svelte/**', {as: 'raw', import: 'default'}) as any, '', './svelte/', isBootstrapCondition),
+		addAsyncFiles(import.meta.glob('./svelte/**', {query: '?raw', import: 'default'}) as any, '', './svelte/', isBootstrapCondition),
 		addAsyncFiles(
-			import.meta.glob('./svelte-tailwind/**', {as: 'raw', import: 'default'}) as any,
+			import.meta.glob('./svelte-tailwind/**', {query: '?raw', import: 'default'}) as any,
 			'',
 			'./svelte-tailwind/',
 			(sample) => !isBootstrapCondition(sample),

@@ -40,8 +40,8 @@
 </script>
 
 <div class="transition-inner">
-	<p class="mt-2">
-		Transition:
+	<div class="h6 mt-2">Transition:</div>
+	<div>
 		<button
 			type="button"
 			class="ms-2 btn btn-sm btn-outline-secondary"
@@ -60,15 +60,18 @@
 			class:active={$paramTransition$ === fadeTransition}
 			on:click={() => changeTransition(fadeTransition)}>Fade</button
 		>
-	</p>
+	</div>
+	<div class="h6 mt-2">Other properties:</div>
 	<label class="form-check"><input type="checkbox" class="form-check-input" bind:checked={$paramAnimation$} />Animation</label>
 	<label class="form-check"><input type="checkbox" class="form-check-input" bind:checked={$paramAnimationOnInit$} />Animation on init</label>
 	<label class="form-check"><input type="checkbox" class="form-check-input" bind:checked={$paramRemoveFromDom$} />Remove from DOM</label>
 	<label class="form-check mb-2"><input type="checkbox" class="form-check-input" bind:checked={$checkBoxVisible$} />Visible</label>
 
-	<button type="button" class="btn btn-outline-primary" on:click={() => toggle()}>Toggle</button>
-	<button type="button" class="ms-2 btn btn-outline-primary" on:click={() => toggle(undefined, true)}>Toggle with animation</button>
-	<button type="button" class="ms-2 btn btn-outline-primary" on:click={() => toggle(undefined, false)}>Toggle without animation</button>
+	<div class="d-flex flex-wrap gap-2">
+		<button type="button" class="btn btn-outline-primary" on:click={() => toggle()}>Toggle</button>
+		<button type="button" class="btn btn-outline-primary" on:click={() => toggle(undefined, true)}>Toggle with animation</button>
+		<button type="button" class="btn btn-outline-primary" on:click={() => toggle(undefined, false)}>Toggle without animation</button>
+	</div>
 
 	<ul class="mt-2">
 		<li>visible = {$visible$}</li>

@@ -14,7 +14,6 @@
 		label: string;
 	}[];
 
-	const paramTransition$ = writable(collapseVerticalTransition);
 	const paramAnimation$ = writable(false);
 	const defaultVisible = isOnPage(get(page));
 	const paramVisible$ = writable(defaultVisible);
@@ -55,7 +54,7 @@
 		</svg>
 	</button>
 	{#if !$hidden$}
-		<div class="contents" use:directive={{transition: $paramTransition$, animation: $paramAnimation$}}>
+		<div class="contents" use:directive={{transition: collapseVerticalTransition, animation: $paramAnimation$}}>
 			<slot />
 		</div>
 	{/if}
