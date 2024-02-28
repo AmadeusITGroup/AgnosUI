@@ -16,6 +16,7 @@ import {
 	PaginationNextDirective,
 	PaginationNumberDirective,
 	PaginationPagesDirective,
+	PaginationStructureDirective,
 	PaginationPreviousDirective,
 } from './components/pagination/pagination.component';
 import {RatingComponent, RatingStarDirective} from './components/rating/rating.component';
@@ -48,6 +49,7 @@ const components = [
 	PaginationNumberDirective,
 	PaginationPreviousDirective,
 	PaginationPagesDirective,
+	PaginationStructureDirective,
 	ModalComponent,
 	ModalStructureDirective,
 	ModalHeaderDirective,

@@ -41,12 +41,11 @@ export function DefaultPages(slotContext: PaginationContext) {
 
 const defaultConfig: Partial<PaginationProps> = {
 	slotPages: DefaultPages,
+	slotStructure: DefaultStructure,
 };
 
-// TODO discuss the extension of the props to the HTML UL one for react ?
-export function Pagination(props: Partial<PaginationProps>) {
-	const [state, widget] = useWidgetWithConfig(createPagination, props, 'pagination', defaultConfig);
-	const slotContext: PaginationContext = {state, widget: toSlotContextWidget(widget)};
+export function DefaultStructure(slotContext: PaginationContext) {
+	const {widget, state} = slotContext;
 	const ItemsBefore = [];
 	const ItemsAfter = [];
 
@@ -106,8 +105,9 @@ export function Pagination(props: Partial<PaginationProps>) {
 			</NavButton>,
 		);
 	}
+
 	return (
-		<nav aria-label={state.ariaLabel}>
+		<>
 			<ul className={classNames('au-pagination', 'pagination', state.size ? `pagination-${state.size}` : '', state.className)}>
 				{ItemsBefore}
 				<Slot slotContent={state.slotPages} props={slotContext}></Slot>
@@ -116,6 +116,18 @@ export function Pagination(props: Partial<PaginationProps>) {
 			<div aria-live="polite" className="visually-hidden">
 				{state.page && `Current page is ${state.page}`}
 			</div>
+		</>
+	);
+}
+
+// TODO discuss the extension of the props to the HTML UL one for react ?
+export function Pagination(props: Partial<PaginationProps>) {
+	const [state, widget] = useWidgetWithConfig(createPagination, props, 'pagination', defaultConfig);
+	const slotContext: PaginationContext = {state, widget: toSlotContextWidget(widget)};
+
+	return (
+		<nav aria-label={state.ariaLabel}>
+			<Slot slotContent={state.slotStructure} props={slotContext} />
 		</nav>
 	);
 }
