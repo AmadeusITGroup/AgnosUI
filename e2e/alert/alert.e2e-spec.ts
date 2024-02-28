@@ -1,6 +1,10 @@
 import {AlertPO} from '@agnos-ui/page-objects';
 import {expect, test} from '../fixture';
 import {AlertDemoPO} from '../demo-po/alert.po';
+import {assign} from 'common/utils';
+import type {PromiseValue} from 'e2e/utils';
+
+type State = PromiseValue<ReturnType<AlertPO['state']>>;
 
 test.describe(`Alert tests`, () => {
 	test(`Config alert`, async ({page}) => {
@@ -10,20 +14,27 @@ test.describe(`Alert tests`, () => {
 		await page.goto('#/alert/config');
 		await alertDemoPO.locatorRoot.waitFor();
 
-		await expect(alertPO.locatorRoot).toHaveClass(/alert-success/);
-		await expect(alertPO.locatorRoot).toHaveClass(/alert-dismissible/);
+		const expectedState: State = {
+			rootClasses: ['alert', 'alert-dismissible', 'alert-success', 'au-alert', 'fade', 'show'],
+			body: `Well done!Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.Whenever you need to, be sure to use margin utilities to keep things nice and tidy.`,
+			closeButton: 'Close',
+		};
+		expect(await alertPO.state()).toStrictEqual(expectedState);
 
 		await alertPO.locatorCloseButton.click();
 
 		await alertPO.locatorRoot.waitFor({state: 'hidden'});
-
 		await alertDemoPO.locatorDismissibleInput.click();
+
 		await alertDemoPO.locatorTypeSelect.selectOption('danger');
 		await alertDemoPO.locatorShowAlertButton.click();
 
-		await expect(alertPO.locatorRoot).toHaveClass(/alert-danger/);
-		await expect(alertPO.locatorRoot).not.toHaveClass(/alert-dismissible/);
-		await expect(alertPO.locatorCloseButton).toHaveCount(0);
+		expect(await alertPO.state()).toStrictEqual(
+			assign(expectedState, {
+				rootClasses: ['alert', 'alert-danger', 'au-alert', 'fade', 'show'],
+				closeButton: undefined,
+			}),
+		);
 	});
 
 	test(`Dynamic alert with the service`, async ({page}) => {

@@ -1,8 +1,8 @@
 import {expect, test} from '../fixture';
 import {AccordionPO} from '@agnos-ui/page-objects';
 import {AccordionTogglePanels} from '../demo-po/accordion.po';
+import type {PromiseValue} from 'e2e/utils';
 
-type PromiseValue<T> = T extends Promise<infer U> ? U : never;
 type State = PromiseValue<ReturnType<AccordionPO['state']>>;
 
 function updateAccordionState(state: State, index: number, expanded: boolean) {
