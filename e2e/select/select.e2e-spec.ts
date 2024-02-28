@@ -2,8 +2,8 @@ import {SelectPO} from '@agnos-ui/page-objects';
 import {assign} from '../../common/utils';
 import {SelectDemoPO} from '../demo-po/select.po';
 import {expect, test} from '../fixture';
+import type {PromiseValue} from 'e2e/utils';
 
-type PromiseValue<T> = T extends Promise<infer U> ? U : never;
 type State = PromiseValue<ReturnType<SelectPO['state']>>;
 
 test.describe.parallel('Select tests', () => {

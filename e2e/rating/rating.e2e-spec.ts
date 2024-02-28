@@ -1,8 +1,8 @@
 import {expect, test} from '../fixture';
 import {RatingPO} from '@agnos-ui/page-objects';
 import {RatingDemoPO} from '../demo-po/rating.po';
+import type {PromiseValue} from 'e2e/utils';
 
-type PromiseValue<T> = T extends Promise<infer U> ? U : never;
 type State = PromiseValue<ReturnType<RatingPO['state']>>;
 
 function createArray<T>(length: number, value: T) {

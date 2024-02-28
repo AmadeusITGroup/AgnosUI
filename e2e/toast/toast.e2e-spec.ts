@@ -1,8 +1,8 @@
 import {ToastPO} from '@agnos-ui/page-objects';
 import {ToastDemoPO} from '../demo-po/toast.po';
 import {expect, test} from '../fixture';
+import type {PromiseValue} from 'e2e/utils';
 
-type PromiseValue<T> = T extends Promise<infer U> ? U : never;
 type State = PromiseValue<ReturnType<ToastPO['state']>>;
 
 test.describe(`Toast tests`, () => {

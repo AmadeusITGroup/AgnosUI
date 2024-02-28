@@ -7,6 +7,8 @@ export function normalizePath(str: string) {
 	return str.replace(pathRegExp, '/');
 }
 
+export type PromiseValue<T> = T extends Promise<infer U> ? U : never;
+
 /**
  * Accessibility check
  * @param page
