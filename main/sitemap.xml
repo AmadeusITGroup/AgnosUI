@@ -37,6 +37,9 @@
     <loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/services/introduction</loc>
   </url>
   <url>
+    <loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/services/transition</loc>
+  </url>
+  <url>
     <loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/getting-started/features</loc>
   </url>
   <url>
@@ -67,6 +70,9 @@
     <loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/services/introduction</loc>
   </url>
   <url>
+    <loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/services/transition</loc>
+  </url>
+  <url>
     <loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/getting-started/features</loc>
   </url>
   <url>
@@ -95,6 +101,9 @@
   </url>
   <url>
     <loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/services/introduction</loc>
+  </url>
+  <url>
+    <loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/services/transition</loc>
   </url>
   <url>
     <loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/components/accordion/api</loc>
