@@ -1,4 +1,3 @@
-import {readFile, readdir} from 'node:fs/promises';
 import {componentsMetadata} from '../components-metadata';
 
 const validMdRegex = /^\d{2}-[a-zA-Z-]*\.md$/g;
@@ -15,54 +14,62 @@ const componentsSubMenu = [
 	{...componentsMetadata.Toast, slug: `components/toast/`, subpath: 'examples'},
 ];
 
-export async function listPages() {
-	const docFolders = (await readdir(`../docs`)).filter((folder) => folder !== 'code');
-	const categories: {name: string; files: {slug: string; mdpath?: string; title: string; subpath: string; status: string}[]}[] = [];
-
-	for (const docFolder of docFolders) {
-		const name = docFolder.substring(3);
-		categories.push({
-			name,
-			files:
-				name === 'Components'
-					? componentsSubMenu
-					: (await readdir(`../docs/${docFolder}`))
-							.filter((file) => file.match(validMdRegex))
-							.map((file) => {
-								const normalizedFileName = file.slice(3, -3);
-								return {
-									slug: `${name.toLowerCase()}/${normalizedFileName.toLowerCase()}`,
-									mdpath: `../docs/${docFolder}/${file}`,
-									title: normalizedFileName.replace('-', ' '),
-									name: normalizedFileName,
-									subpath: '',
-									status: '',
-								};
-							}),
-		});
+const docFiles = import.meta.glob('../../../../docs/*/*.md', {query: '?raw', eager: true, import: 'default'});
+const docs: {name: string; files: {slug: string; content?: string; title: string; subpath: string; status: string}[]}[] = [];
+for (const [key, value] of Object.entries(docFiles)) {
+	const name = key.substring(20, key.indexOf('/', 20));
+	if (name === 'Components') {
+		if (!docs.some((doc) => doc.name === name)) {
+			docs.push({name, files: componentsSubMenu});
+		} else {
+			continue;
+		}
 	}
-	return categories;
+	if (!key.substring(key.indexOf('/', 20) + 1).match(validMdRegex)) continue;
+	let docToPush = docs.find((doc) => doc.name === name);
+	if (!docToPush) {
+		docToPush = {
+			name,
+			files: [],
+		};
+		docs.push(docToPush);
+	}
+	const normalizedFileName = key.substring(key.indexOf('/', 20) + 1).slice(3, -3);
+	docToPush.files.push({
+		slug: `${name.toLowerCase()}/${normalizedFileName.toLowerCase()}`,
+		content: value as string,
+		title: normalizedFileName.replace('-', ' '),
+		subpath: '',
+		status: '',
+	});
+}
+
+const fwkDocFiles = import.meta.glob('../../../../*/docs/*.md', {query: '?raw', eager: true, import: 'default'});
+const fwkDocs: Record<string, string> = {};
+for (const [key, value] of Object.entries(fwkDocFiles)) {
+	fwkDocs[key.substring(12)] = value as string;
+}
+
+export function listPages() {
+	return structuredClone(docs);
 }
 
 const regexFrameworkSpecific = /<!--\s+<framework-specific\s+src="([^"]*)">\s+-->[\s\S]*?<!--\s+<\/framework-specific>\s+-->/;
 
-async function preparseMarkdown(path: string, framework: string): Promise<string> {
-	let markdown = await readFile(path, {encoding: 'utf-8'});
+function preparseMarkdown(content: string, framework: string): string {
+	let markdown = content;
 	let match;
 	do {
 		match = markdown.match(regexFrameworkSpecific);
 		if (match) {
-			markdown =
-				markdown.slice(0, match.index) +
-				(await readFile(`../${framework}/docs/${match[1]}`, {encoding: 'utf-8'})) +
-				markdown.substring(match.index! + match[0].length);
+			markdown = markdown.slice(0, match.index) + fwkDocs[`${framework}/docs/${match[1]}`] + markdown.substring(match.index! + match[0].length);
 		}
 	} while (match);
 	return markdown;
 }
 
-export async function retrieveMarkdown(slug: string, framework: string) {
-	const categories = await listPages();
+export function retrieveMarkdown(slug: string, framework: string) {
+	const categories = listPages();
 	let prev;
 	let next;
 	let file;
@@ -86,5 +93,5 @@ export async function retrieveMarkdown(slug: string, framework: string) {
 			}
 		}
 	}
-	return file ? {prev, next, content: await preparseMarkdown(file.mdpath!, framework)} : undefined;
+	return file ? {prev, next, content: preparseMarkdown(file.content!, framework)} : undefined;
 }

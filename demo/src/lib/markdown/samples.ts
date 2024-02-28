@@ -9,6 +9,9 @@ import slotsHeadless from '@agnos-ui/samples/slots/headless';
 import directivesUsage from '@agnos-ui/samples/directives/usage';
 import configurationBasic from '@agnos-ui/samples/configuration/basic';
 import configurationDown from '@agnos-ui/samples/configuration/down';
+import transitionCollapse from '@agnos-ui/samples/transition/collapseDemo';
+import transitionFlip from '@agnos-ui/samples/transition/flipDemo';
+import transitionTransition from '@agnos-ui/samples/transition/transition';
 
 const samples: Map<string, SampleInfo> = new Map();
 samples.set('focustrack/focustrack', focustrack);
@@ -20,4 +23,7 @@ samples.set('slots/headless', slotsHeadless);
 samples.set('directives/usage', directivesUsage);
 samples.set('configuration/basic', configurationBasic);
 samples.set('configuration/down', configurationDown);
+samples.set('transition/collapse', transitionCollapse);
+samples.set('transition/flip', transitionFlip);
+samples.set('transition/transition', transitionTransition);
 export default samples;

@@ -6,6 +6,7 @@ import pkg from '../core/package.json';
 import {copySamples} from './scripts/copySamples.plugin';
 import {docExtractor} from './scripts/doc.plugin';
 import {includeSamples} from './scripts/includeSamples.plugin';
+import {watchMarkdown} from './scripts/watchMarkdown.plugin';
 import {emitFile} from './scripts/emitFile.plugin';
 import http from 'http';
 import {alias} from '../viteAlias';
@@ -54,6 +55,7 @@ export default defineConfig((config) => ({
 	plugins: [
 		copySamples(),
 		includeSamples(),
+		watchMarkdown(),
 		sveltekit(),
 		docExtractor(),
 		emitFile({type: 'asset', fileName: 'version.json', name: 'version.json', source: version}),

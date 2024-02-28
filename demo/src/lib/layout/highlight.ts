@@ -32,6 +32,8 @@ export const languageFromFileName = (fileName: string | undefined) => {
 				return 'svelte';
 			case '.sh':
 				return 'bash';
+			case '.svg':
+				return 'html';
 			default:
 				return undefined;
 		}

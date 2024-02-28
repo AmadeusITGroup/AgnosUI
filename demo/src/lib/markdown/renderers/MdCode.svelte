@@ -14,6 +14,9 @@
 	let sample: SampleInfo;
 	let height = 500;
 
+	let showCode = true;
+	let noresize = false;
+
 	const extensions: Map<string, string> = new Map();
 	extensions.set('typescript', 'ts');
 	extensions.set('bash', 'sh');
@@ -28,7 +31,7 @@
 	}
 	async function getSample(text: string, lang: string) {
 		if (lang === 'sample') {
-			const match = text.trim().match(/^\{([^:]+):([a-zA-Z-/]+):(\d+)\}$/);
+			const match = text.trim().match(/^\{([^:]+):([a-zA-Z-/]+):(\d+)(:noCode)?(:noResize)?\}$/);
 			if (match) {
 				title = match[1];
 				const sampleKey = match[2];
@@ -36,6 +39,8 @@
 				if (samples.has(sampleKey)) {
 					sample = samples.get(sampleKey)!;
 				}
+				showCode = !match[4];
+				noresize = !!match[5];
 			}
 		}
 	}
@@ -46,7 +51,7 @@
 
 {#if lang === 'sample'}
 	{#if sample}
-		<Sample {title} {sample} {height} showCode showButtons={false} isDoc={true} />
+		<Sample {title} {sample} {height} {showCode} {noresize} showButtons={false} isDoc={true} />
 	{:else}
 		Sample not found, make sure to fill the samples.ts file.
 	{/if}
