@@ -66,4 +66,7 @@ export default defineConfig((config) => ({
 	optimizeDeps: {
 		include: ['@amadeus-it-group/tansu', '@floating-ui/dom', 'svelte-markdown', 'marked', 'mermaid', '@stackblitz/sdk', 'shiki'],
 	},
+	ssr: {
+		noExternal: ['@agnos-ui/core'],
+	},
 }));
