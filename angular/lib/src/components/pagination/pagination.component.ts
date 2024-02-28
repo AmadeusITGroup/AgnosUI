@@ -8,7 +8,6 @@ import {
 	callWidgetFactory,
 	createPagination,
 } from '@agnos-ui/angular-headless';
-import {AsyncPipe} from '@angular/common';
 import type {AfterContentChecked} from '@angular/core';
 import {
 	ChangeDetectionStrategy,
@@ -101,64 +100,53 @@ export class PaginationPagesDirective {
 	}
 }
 
-@Component({
-	standalone: true,
-	imports: [SlotDirective, PaginationPagesDirective],
-	changeDetection: ChangeDetectionStrategy.OnPush,
-	template: `<ng-template auPaginationPages #pages let-state="state" let-widget="widget">
-		@for (page of state.pages; track page; let i = $index) {
-			<li
-				class="page-item"
-				[class.active]="page === state.page"
-				[class.disabled]="widget.api.isEllipsis(page) || state.disabled"
-				[attr.aria-current]="page === state.page ? 'page' : null"
-			>
-				@if (widget.api.isEllipsis(page)) {
-					<a class="page-link au-ellipsis" tabindex="-1" aria-disabled="true">
-						<ng-template [auSlot]="state.slotEllipsis" [auSlotProps]="{state, widget}"></ng-template>
-					</a>
-				} @else {
-					<a
-						[attr.aria-label]="state.pagesLabel[i]"
-						class="page-link au-page"
-						[attr.href]="state.pagesHrefs[i]"
-						(click)="widget.actions.select(page, $event)"
-						[attr.tabindex]="state.disabled ? '-1' : null"
-						[attr.aria-disabled]="state.disabled ? 'true' : null"
-					>
-						<ng-template [auSlot]="state.slotNumberLabel" [auSlotProps]="{state, widget, displayedPage: page}"></ng-template>
-						@if (state.page === page) {
-							<span class="visually-hidden">{{ state.activeLabel }}</span>
-						}
-					</a>
-				}
-			</li>
-		}
-	</ng-template>`,
-})
-export class PaginationDefaultSlotsComponent {
-	@ViewChild('pages', {static: true}) pages: TemplateRef<PaginationContext>;
-}
 /**
- * The default slot for the pages
+ * Directive to provide the slot structure for the pagination widget.
  */
-export const paginationDefaultSlotPages = new ComponentTemplate(PaginationDefaultSlotsComponent, 'pages');
-
-const defaultConfig: Partial<PaginationProps> = {
-	slotPages: paginationDefaultSlotPages,
-};
+@Directive({selector: 'ng-template[auPaginationStructure]', standalone: true})
+export class PaginationStructureDirective {
+	public templateRef = inject(TemplateRef<PaginationContext>);
+	static ngTemplateContextGuard(dir: PaginationStructureDirective, context: unknown): context is PaginationContext {
+		return true;
+	}
+}
 
 @Component({
-	selector: '[auPagination]',
 	standalone: true,
-	imports: [AsyncPipe, SlotDirective],
+	imports: [SlotDirective, PaginationPagesDirective, PaginationStructureDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	host: {
-		'[attr.aria-label]': 'state().ariaLabel',
-	},
-	encapsulation: ViewEncapsulation.None,
 	template: `
-		@if (state(); as state) {
+		<ng-template auPaginationPages #pages let-state="state" let-widget="widget">
+			@for (page of state.pages; track page; let i = $index) {
+				<li
+					class="page-item"
+					[class.active]="page === state.page"
+					[class.disabled]="widget.api.isEllipsis(page) || state.disabled"
+					[attr.aria-current]="page === state.page ? 'page' : null"
+				>
+					@if (widget.api.isEllipsis(page)) {
+						<a class="page-link au-ellipsis" tabindex="-1" aria-disabled="true">
+							<ng-template [auSlot]="state.slotEllipsis" [auSlotProps]="{state, widget}"></ng-template>
+						</a>
+					} @else {
+						<a
+							[attr.aria-label]="state.pagesLabel[i]"
+							class="page-link au-page"
+							[attr.href]="state.pagesHrefs[i]"
+							(click)="widget.actions.select(page, $event)"
+							[attr.tabindex]="state.disabled ? '-1' : null"
+							[attr.aria-disabled]="state.disabled ? 'true' : null"
+						>
+							<ng-template [auSlot]="state.slotNumberLabel" [auSlotProps]="{state, widget, displayedPage: page}"></ng-template>
+							@if (state.page === page) {
+								<span class="visually-hidden">{{ state.activeLabel }}</span>
+							}
+						</a>
+					}
+				</li>
+			}
+		</ng-template>
+		<ng-template auPaginationStructure #structure let-state="state" let-widget="widget">
 			<ul [class]="'au-pagination pagination' + (state.size ? ' pagination-' + state.size : '') + ' ' + state.className">
 				@if (state.boundaryLinks) {
 					<li class="page-item" [class.disabled]="state.previousDisabled">
@@ -227,8 +215,37 @@ const defaultConfig: Partial<PaginationProps> = {
 				}
 			</ul>
 			<div aria-live="polite" class="visually-hidden">Current page is {{ state.page }}</div>
-		}
+		</ng-template>
 	`,
+})
+export class PaginationDefaultSlotsComponent {
+	@ViewChild('pages', {static: true}) pages: TemplateRef<PaginationContext>;
+	@ViewChild('structure', {static: true}) structure: TemplateRef<PaginationContext>;
+}
+/**
+ * The default slot for the pages
+ */
+export const paginationDefaultSlotPages = new ComponentTemplate(PaginationDefaultSlotsComponent, 'pages');
+/**
+ * The default slot for the structure
+ */
+export const paginationDefaultSlotStructure = new ComponentTemplate(PaginationDefaultSlotsComponent, 'structure');
+
+const defaultConfig: Partial<PaginationProps> = {
+	slotStructure: paginationDefaultSlotStructure,
+	slotPages: paginationDefaultSlotPages,
+};
+
+@Component({
+	selector: '[auPagination]',
+	standalone: true,
+	imports: [SlotDirective],
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	host: {
+		'[attr.aria-label]': 'state().ariaLabel',
+	},
+	encapsulation: ViewEncapsulation.None,
+	template: `<ng-template [auSlotProps]="{state: state(), widget}" [auSlot]="state().slotStructure"></ng-template>`,
 })
 export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> implements AfterContentChecked {
 	/**
@@ -335,6 +352,10 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	@ContentChild(PaginationNumberDirective, {static: false})
 	slotNumberLabelFromContent: PaginationNumberDirective | undefined;
 
+	@Input('auSlotStructure') slotStructure: SlotContent<PaginationContext>;
+	@ContentChild(PaginationStructureDirective, {static: false})
+	slotStructureFromContent: PaginationStructureDirective | undefined;
+
 	/**
 	 * If `true`, pagination links will be disabled.
 	 */
@@ -413,6 +434,7 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 			slotNumberLabel: this.slotNumberLabelFromContent?.templateRef,
 			slotPages: this.slotPagesFromContent?.templateRef,
 			slotPrevious: this.slotPreviousFromContent?.templateRef,
+			slotStructure: this.slotStructureFromContent?.templateRef,
 		});
 	}
 }

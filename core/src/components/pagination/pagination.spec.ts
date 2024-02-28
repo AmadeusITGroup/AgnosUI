@@ -55,6 +55,7 @@ describe(`Pagination`, () => {
 			slotNumberLabel: state.slotNumberLabel,
 			slotPages: undefined,
 			slotPrevious: '‹',
+			slotStructure: undefined,
 			size: null,
 			activeLabel: '(current)',
 			ariaFirstLabel: 'Action link for first page',

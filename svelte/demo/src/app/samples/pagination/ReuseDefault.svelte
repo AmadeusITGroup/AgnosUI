@@ -34,6 +34,7 @@
 						<slot name="numberLabel" slot="numberLabel" let:displayedPage let:state let:widget {displayedPage} {state} {widget} />
 						<slot name="pages" slot="pages" let:state let:widget {state} {widget} />
 						<slot name="previous" slot="previous" let:state let:widget {state} {widget} />
+						<slot name="structure" slot="structure" let:state let:widget {state} {widget} />
 					</svelte:component>
 				</Slot>
 			</a>
@@ -57,6 +58,7 @@
 						<slot name="numberLabel" slot="numberLabel" let:displayedPage let:state let:widget {displayedPage} {state} {widget} />
 						<slot name="pages" slot="pages" let:state let:widget {state} {widget} />
 						<slot name="previous" slot="previous" let:state let:widget {state} {widget} />
+						<slot name="structure" slot="structure" let:state let:widget {state} {widget} />
 					</svelte:component>
 				</Slot>
 				{#if $page$ === page}

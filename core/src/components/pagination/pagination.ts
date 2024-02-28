@@ -107,6 +107,15 @@ export interface PaginationCommonPropsAndState extends WidgetsCommonPropsAndStat
 	boundaryLinks: boolean;
 
 	/**
+	 * The template to use for the structure of the pagination component
+	 * The default structure uses {@link PaginationCommonPropsAndState.slotEllipsis|slotEllipsis}, {@link PaginationCommonPropsAndState.slotFirst|slotFirst},
+	 * {@link PaginationCommonPropsAndState.slotPrevious|slotPrevious}, {@link PaginationCommonPropsAndState.slotNext|slotNext},
+	 * {@link PaginationCommonPropsAndState.slotLast|slotLast}, {@link PaginationCommonPropsAndState.slotPages|slotPages},
+	 * {@link PaginationCommonPropsAndState.slotNumberLabel|slotNumberLabel},
+	 */
+	slotStructure: SlotContent<PaginationContext>;
+
+	/**
 	 * The template to use for the ellipsis slot
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
@@ -353,6 +362,7 @@ const defaultConfig: PaginationProps = {
 	slotNext: '›',
 	slotLast: '»',
 	slotPages: undefined,
+	slotStructure: undefined,
 	slotNumberLabel: ({displayedPage}) => `${displayedPage}`,
 	pageLink: (_page: number) => PAGE_LINK_DEFAULT,
 };
