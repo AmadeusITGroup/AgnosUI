@@ -6,7 +6,7 @@ The Transition service allows to display or hide content smoothly through an ani
 
 ## In action
 
-Creating and attaching a transition is straighforward ! Simply create a transition widget using the factory `createTransition` and attach the provided directive to a dom element.  
+Creating and attaching a transition is straighforward! Simply create a transition service using the factory `createTransition` and attach the provided directive to a dom element.  
 Let's see this in action by implementing a **Collapse** component:
 
 ```sample

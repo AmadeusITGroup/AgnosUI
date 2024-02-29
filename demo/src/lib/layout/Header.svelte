@@ -5,12 +5,15 @@
 
 	export let title: string;
 	export let status: string = '';
+	export let noMeta = false;
 
 	$: tabs = $page.data.tabs ?? [];
 </script>
 
 <svelte:head>
-	<title>{getTitle(title, $selectedFramework$)}</title>
+	{#if !noMeta}
+		<title>{getTitle(title, $selectedFramework$)}</title>
+	{/if}
 </svelte:head>
 
 <header
