@@ -15,6 +15,15 @@
 	&:focus-within {
 		border-bottom: 0.15rem solid var(--bs-slider-handle-color);
 	}
+	&:after {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: inherit;
+		height: inherit;
+		background-color: transparent;
+	}
 }
 .au-custom-slider-handle-horizontal {
 	top: calc(50% - 2.8rem / 2);
