@@ -5,6 +5,11 @@
 	import source from './tansu-reactivity.md?raw';
 </script>
 
-<Header title="State management with Tansu" />
+<svelte:head>
+	<title>State management with Tansu</title>
+	<meta name="description" content="Blog article exploring State Management with Tansu." />
+</svelte:head>
+
+<Header title="State management with Tansu" noMeta />
 <Published date="02/01/2024" />
 <Markdown {source} />

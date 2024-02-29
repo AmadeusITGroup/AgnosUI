@@ -6,6 +6,38 @@
 		<link rel="icon" type="image/svg+xml" href="%sveltekit.assets%/agnosui-logo.svg" />
 		%sveltekit.head%
 		<title>AgnosUI</title>
+		<!-- Search Engine -->
+		<meta
+			name="description"
+			content="Perfected widget library for Svelte, React and Angular. Reactive and accessible, supports headless or Bootstrap. Providing: accordion, alert, modal, pagination, progressbar, rating, select, slider, toast, focus track, tooltip, pop-over, transition."
+		/>
+		<meta name="image" content="%sveltekit.assets%/agnosui-logo.svg" />
+		<!-- Schema.org for Google -->
+		<meta itemprop="name" content="AgnosUI - Where web widgets shine" />
+		<meta
+			itemprop="description"
+			content="Perfected widget library for Svelte, React and Angular. Reactive and accessible, supports headless or Bootstrap. Providing: accordion, alert, modal, pagination, progressbar, rating, select, slider, toast, focus track, tooltip, pop-over, transition."
+		/>
+		<meta itemprop="image" content="%sveltekit.assets%/agnosui-logo.svg" />
+		<!-- Twitter -->
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="AgnosUI - Where web widgets shine" />
+		<meta
+			name="twitter:description"
+			content="Perfected widget library for Svelte, React and Angular. Reactive and accessible, supports headless or Bootstrap. Providing: accordion, alert, modal, pagination, progressbar, rating, select, slider, toast, focus track, tooltip, pop-over, transition."
+		/>
+		<!-- Open Graph general (Facebook, Pinterest & Google+) -->
+		<meta name="og:title" content="AgnosUI - Where web widgets shine" />
+		<meta
+			name="og:description"
+			content="Perfected widget library for Svelte, React and Angular. Reactive and accessible, supports headless or Bootstrap. Providing: accordion, alert, modal, pagination, progressbar, rating, select, slider, toast, focus track, tooltip, pop-over, transition."
+		/>
+		<meta name="og:url" content="https://amadeusitgroup.github.io/AgnosUI/latest/" />
+		<meta name="og:site_name" content="AgnosUI" />
+		<meta name="og:locale" content="en" />
+		<meta name="og:type" content="website" />
+		<meta property="og:image" content="%sveltekit.assets%/agnosui-logo.svg" />
+		<meta property="og:image:type" content="image/svg+xml" />
 		<script>
 			const theme = localStorage.getItem('theme');
 			if (theme === 'dark' || ((theme === 'auto' || !theme) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -16,6 +48,7 @@
 			}
 		</script>
 	</head>
+
 	<body data-sveltekit-preload-data="hover">
 		<div id="root">%sveltekit.body%</div>
 	</body>
