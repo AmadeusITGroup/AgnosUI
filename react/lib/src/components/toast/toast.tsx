@@ -1,9 +1,9 @@
-import type {ToastContext, ToastProps} from '@agnos-ui/react-headless/components/toast';
+import type {ToastApi, ToastContext, ToastProps} from '@agnos-ui/react-headless/components/toast';
 import {createToast} from '@agnos-ui/react-headless/components/toast';
 import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
 import {Slot} from '@agnos-ui/react-headless/slot';
 import {useDirectives} from '@agnos-ui/react-headless/utils/directive';
-import type {PropsWithChildren} from 'react';
+import type {ForwardRefExoticComponent, PropsWithChildren, RefAttributes} from 'react';
 import {forwardRef, useImperativeHandle} from 'react';
 
 export * from '@agnos-ui/react-headless/components/toast';
@@ -42,7 +42,10 @@ const defaultConfig: Partial<ToastProps> = {
 	slotStructure: DefaultSlotStructure,
 };
 
-export const Toast = forwardRef(function Toast(props: PropsWithChildren<Partial<ToastProps>>, ref) {
+export const Toast: ForwardRefExoticComponent<PropsWithChildren<Partial<ToastProps>> & RefAttributes<ToastApi>> = forwardRef(function Toast(
+	props: PropsWithChildren<Partial<ToastProps>>,
+	ref,
+) {
 	const [state, widget] = useWidgetWithConfig(createToast, props, 'toast', {...defaultConfig, slotDefault: props.children});
 	const refToast = useDirectives([widget.directives.transitionDirective, widget.directives.autohideDirective]);
 	useImperativeHandle(ref, () => widget.api, []);
