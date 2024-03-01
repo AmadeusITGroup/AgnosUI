@@ -35,7 +35,7 @@ test.describe(`Toast tests`, () => {
 		const toastPO = new ToastPO(page);
 
 		const expectedState: State = {
-			rootClasses: ['au-toast', 'd-flex', 'show', 'text-bg-primary', 'toast', 'toast-dismissible'],
+			rootClasses: ['au-toast', 'd-flex', 'fade', 'show', 'text-bg-primary', 'toast', 'toast-dismissible'],
 			body: 'This is a toast',
 			header: undefined,
 			closeButton: 'Close',
@@ -55,7 +55,7 @@ test.describe(`Toast tests`, () => {
 		const toastPO = new ToastPO(page);
 
 		const expectedState: State = {
-			rootClasses: ['au-toast', 'show', 'text-bg-primary', 'toast'],
+			rootClasses: ['au-toast', 'fade', 'show', 'text-bg-primary', 'toast'],
 			body: 'This is a toast',
 			header: 'Header',
 			closeButton: undefined,
