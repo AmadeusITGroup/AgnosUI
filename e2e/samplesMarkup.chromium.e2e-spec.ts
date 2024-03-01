@@ -34,7 +34,6 @@ test.describe.parallel(`Samples markup consistency check`, () => {
 			await page.goto(`#/${route}${routesExtraHash[route] ?? ''}`, {waitUntil: 'networkidle'});
 			await expect.poll(async () => (await page.locator('#root').innerHTML()).trim().length).toBeGreaterThan(0);
 			await routesExtraAction[route]?.(page);
-			await page.waitForSelector('.fade', {state: 'detached'}); // wait for fade transitions to be finished
 			expect(await htmlSnapshot(page.locator('body'))).toMatchSnapshot(`${route}.html`);
 		});
 	}
