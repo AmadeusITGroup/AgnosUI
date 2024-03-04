@@ -28,6 +28,7 @@
 	"packageManager": "npm@10.5.0",
 	"devDependencies": {
 		"@axe-core/playwright": "^4.8.5",
+		"@commitlint/cli": "^19.0.3",
 		"@microsoft/api-extractor": "^7.42.3",
 		"@playwright/test": "^1.42.1",
 		"@types/node": "^20.11.28",
