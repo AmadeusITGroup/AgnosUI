@@ -17,10 +17,12 @@ import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 			}
 		</div>
 		<pre>Model: <span id="form-model"><b>{{ ctrl.value }}</b></span></pre>
-		<button id="form-btn-enable" class="btn btn-sm btn-outline-{{ ctrl.disabled ? 'danger' : 'success' }} me-2" (click)="toggle()">
-			{{ ctrl.disabled ? 'control disabled' : ' control enabled' }}
-		</button>
-		<button id="form-btn-clear" class="btn btn-sm btn-outline-primary me-2" (click)="ctrl.setValue(0)">Clear</button>
+		<div class="d-flex flex-wrap gap-2">
+			<button id="form-btn-enable" class="btn btn-sm btn-outline-{{ ctrl.disabled ? 'danger' : 'success' }}" (click)="toggle()">
+				{{ ctrl.disabled ? 'control disabled' : ' control enabled' }}
+			</button>
+			<button id="form-btn-clear" class="btn btn-sm btn-outline-primary" (click)="ctrl.setValue(0)">Clear</button>
+		</div>
 	`,
 })
 export default class FormRatingComponent {

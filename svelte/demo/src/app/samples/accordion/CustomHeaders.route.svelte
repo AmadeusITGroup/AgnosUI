@@ -55,10 +55,10 @@
 				aria-level={2}
 			>
 				<p class="m-0">Second panel</p>
-				<div>
+				<div class="d-flex flex-wrap gap-2">
 					<button
 						type="button"
-						class="btn btn-sm btn-outline-primary me-2 {state.itemButtonClass}"
+						class="btn btn-sm btn-outline-primary {state.itemButtonClass}"
 						class:collapsed={!state.itemVisible}
 						id={state.itemId + '-toggle'}
 						on:click={widget.actions.click}
@@ -67,10 +67,10 @@
 						aria-disabled={state.itemDisabled}
 						aria-expanded={state.itemVisible}>Toggle second</button
 					>
-					<button type="button" class="btn btn-sm btn-outline-secondary me-2" on:click={() => thirdItemDisabled$.update((disabled) => !disabled)}>
+					<button type="button" class="btn btn-sm btn-outline-secondary" on:click={() => thirdItemDisabled$.update((disabled) => !disabled)}>
 						{$thirdItemDisabled$ ? 'En' : 'Dis'}able third
 					</button>
-					<button type="button" class="btn btn-sm btn-outline-danger me-2" on:click={() => accordion.api.collapseAll()}> Collapse all </button>
+					<button type="button" class="btn btn-sm btn-outline-danger" on:click={() => accordion.api.collapseAll()}> Collapse all </button>
 				</div>
 			</div>
 			{#if state.shouldBeInDOM}

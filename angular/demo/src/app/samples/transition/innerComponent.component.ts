@@ -20,10 +20,10 @@ const paramRemoveFromDom$ = writable(true);
 	template: `
 		<div class="transition-inner">
 			<div class="h6 mt-2">Transition:</div>
-			<div>
+			<div class="d-flex flex-wrap gap-2">
 				<button
 					type="button"
-					class="ms-2 btn btn-sm btn-outline-secondary"
+					class="btn btn-sm btn-outline-secondary"
 					[class.active]="(paramTransition$ | async) === bootstrap.collapseVerticalTransition"
 					(click)="changeTransition(bootstrap.collapseVerticalTransition)"
 				>
@@ -31,7 +31,7 @@ const paramRemoveFromDom$ = writable(true);
 				</button>
 				<button
 					type="button"
-					class="ms-2 btn btn-sm btn-outline-secondary"
+					class="btn btn-sm btn-outline-secondary"
 					[class.active]="(paramTransition$ | async) === bootstrap.collapseHorizontalTransition"
 					(click)="changeTransition(bootstrap.collapseHorizontalTransition)"
 				>
@@ -39,7 +39,7 @@ const paramRemoveFromDom$ = writable(true);
 				</button>
 				<button
 					type="button"
-					class="ms-2 btn btn-sm btn-outline-secondary"
+					class="btn btn-sm btn-outline-secondary"
 					[class.active]="(paramTransition$ | async) === bootstrap.fadeTransition"
 					(click)="changeTransition(bootstrap.fadeTransition)"
 				>

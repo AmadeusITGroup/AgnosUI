@@ -13,18 +13,20 @@ const AccordionDemo = () => {
 				<AccordionItem slotItemHeader="Second panel" slotItemBody={BODY} itemId={'second'} ref={refSecondPanel} />
 			</Accordion>
 			<hr />
-			<button className="btn btn-sm btn-outline-primary me-2" onClick={() => refAccordion.current?.toggle('first')}>
-				Toggle first
-			</button>
-			<button className="btn btn-sm btn-outline-primary me-2" onClick={() => refSecondPanel.current?.toggle()}>
-				Toggle second
-			</button>
-			<button className="btn btn-sm btn-outline-primary me-2" onClick={() => refAccordion.current?.expandAll()}>
-				Expand all
-			</button>
-			<button className="btn btn-sm btn-outline-primary me-2" onClick={() => refAccordion.current?.collapseAll()}>
-				Collapse all
-			</button>
+			<div className="d-flex flex-wrap gap-2">
+				<button className="btn btn-sm btn-outline-primary" onClick={() => refAccordion.current?.toggle('first')}>
+					Toggle first
+				</button>
+				<button className="btn btn-sm btn-outline-primary" onClick={() => refSecondPanel.current?.toggle()}>
+					Toggle second
+				</button>
+				<button className="btn btn-sm btn-outline-primary" onClick={() => refAccordion.current?.expandAll()}>
+					Expand all
+				</button>
+				<button className="btn btn-sm btn-outline-primary" onClick={() => refAccordion.current?.collapseAll()}>
+					Collapse all
+				</button>
+			</div>
 		</>
 	);
 };

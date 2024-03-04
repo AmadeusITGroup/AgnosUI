@@ -46,7 +46,7 @@ The reactivity in AgnosUI is managed with [Tansu](https://github.com/AmadeusITGr
 Tansu has been initially developed by following the Svelte store specifications. It then extends its features to achieve full store management capabilities:
 
 - Supports all [Svelte stores specifications](https://svelte.dev/docs/svelte-store),
-- The `Signal` capabilities have been added. Notably, `computed` is available in addition to `derived`. The store itself is a function can be invoked to obtain the current value.
+- The `Signal` capabilities have been added. Notably, `computed` is available in addition to `derived`. The store itself is a function that can be invoked to obtain the current value.
 - A `batch` method is provided to mitigate glitch issues.
 - Synchronous subscriber calls are ensured to prevent unpredictable issues when integrating with other frameworks.
 

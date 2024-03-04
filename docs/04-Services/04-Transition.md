@@ -33,7 +33,7 @@ You can configure a transition using the following properties:
 - **animationOnInit** `boolean` : if the element is initially visible, whether the element should be animated when first displayed
 - **onShown** `() => void` : function to be called when the transition is completed and the element is visible
 - **onHidden** `() => void` : function to be called when the transition is completed and the element is not visible
-- **onHidden** `(visible: boolean) => void` : function to be called when the visible property changes
+- **onVisibleChange** `(visible: boolean) => void` : function to be called when the visible property changes
 
 The state of the transition will include the stores:
 
