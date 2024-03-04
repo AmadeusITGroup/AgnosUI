@@ -2,8 +2,8 @@
 	"name": "@agnos-ui/code-coverage",
 	"private": true,
 	"dependencies": {
-		"@babel/core": "^7.23.9",
-		"@babel/plugin-syntax-decorators": "^7.23.3",
+		"@babel/core": "^7.24.0",
+		"@babel/plugin-syntax-decorators": "^7.24.0",
 		"@babel/plugin-syntax-typescript": "^7.23.3",
 		"babel-plugin-istanbul": "^6.1.1",
 		"nyc": "^15.1.0",
@@ -14,7 +14,7 @@
 	},
 	"devDependencies": {
 		"@types/babel__core": "^7.20.5",
-		"vite": "^5.1.4"
+		"vite": "^5.1.5"
 	},
 	"scripts": {
 		"build": "wireit"

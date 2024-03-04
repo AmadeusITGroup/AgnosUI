@@ -64,14 +64,14 @@
 		}
 	},
 	"devDependencies": {
-		"@types/react": "^18.2.58",
+		"@types/react": "^18.2.62",
 		"@types/react-dom": "^18.2.19",
 		"@vitejs/plugin-react": "^4.2.1",
 		"classnames": "^2.5.1",
-		"eslint-plugin-react": "^7.33.2",
+		"eslint-plugin-react": "^7.34.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
-		"react-router-dom": "^6.22.1",
+		"react-router-dom": "^6.22.2",
 		"vite-plugin-svgr": "^4.2.0"
 	},
 	"dependencies": {
