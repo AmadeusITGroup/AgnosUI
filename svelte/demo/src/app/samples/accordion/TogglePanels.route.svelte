@@ -19,7 +19,9 @@
 	</AccordionItem>
 </Accordion>
 <hr />
-<button class="btn btn-sm btn-outline-primary me-2" on:click={() => accordion.api.toggle('first')}>Toggle first</button>
-<button class="btn btn-sm btn-outline-primary me-2" on:click={() => secondAccordionItem.api.toggle()}>Toggle second</button>
-<button class="btn btn-sm btn-outline-primary me-2" on:click={() => accordion.api.expandAll()}>Expand all</button>
-<button class="btn btn-sm btn-outline-primary me-2" on:click={() => accordion.api.collapseAll()}>Collapse all</button>
+<div class="d-flex flex-wrap gap-2">
+	<button class="btn btn-sm btn-outline-primary" on:click={() => accordion.api.toggle('first')}>Toggle first</button>
+	<button class="btn btn-sm btn-outline-primary" on:click={() => secondAccordionItem.api.toggle()}>Toggle second</button>
+	<button class="btn btn-sm btn-outline-primary" on:click={() => accordion.api.expandAll()}>Expand all</button>
+	<button class="btn btn-sm btn-outline-primary" on:click={() => accordion.api.collapseAll()}>Collapse all</button>
+</div>

@@ -67,12 +67,10 @@ const AccordionDemo = () => {
 					aria-level={2}
 				>
 					<p className="m-0">Second panel</p>
-					<div>
+					<div className="d-flex flex-wrap gap-2">
 						<button
 							type="button"
-							className={`btn btn-sm btn-outline-primary me-2 ${slotContext.state.itemButtonClass} ${
-								slotContext.state.itemVisible ? '' : 'collapsed'
-							}`}
+							className={`btn btn-sm btn-outline-primary ${slotContext.state.itemButtonClass} ${slotContext.state.itemVisible ? '' : 'collapsed'}`}
 							id={`${slotContext.state.itemId}-toggle`}
 							onClick={slotContext.widget.actions.click}
 							disabled={slotContext.state.itemDisabled}
@@ -82,10 +80,10 @@ const AccordionDemo = () => {
 						>
 							Toggle second
 						</button>
-						<button type="button" className="btn btn-sm btn-outline-secondary me-2" onClick={() => setThirdItemDisabled((disabled) => !disabled)}>
+						<button type="button" className="btn btn-sm btn-outline-secondary" onClick={() => setThirdItemDisabled((disabled) => !disabled)}>
 							{thirdItemDisabled ? 'En' : 'Dis'}able third
 						</button>
-						<button type="button" className="btn btn-sm btn-outline-danger me-2" onClick={() => refAccordion.current?.collapseAll?.()}>
+						<button type="button" className="btn btn-sm btn-outline-danger" onClick={() => refAccordion.current?.collapseAll?.()}>
 							Collapse all
 						</button>
 					</div>

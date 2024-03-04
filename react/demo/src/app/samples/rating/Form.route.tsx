@@ -35,17 +35,19 @@ const RatingDemo = () => {
 					<b>{ctrl.value}</b>
 				</span>
 			</pre>
-			<button
-				id="form-btn-enable"
-				className={`btn btn-sm btn-outline-${ctrl.disabled ? 'danger' : 'success'} me-2`}
-				onClick={() => updateCtrl({disabled: !ctrl.disabled})}
-			>
-				{ctrl.disabled ? 'control disabled' : ' control enabled'}
-			</button>
-			&nbsp;
-			<button id="form-btn-clear" className="btn btn-sm btn-outline-primary me-2" onClick={() => updateCtrl({value: 0})}>
-				Clear
-			</button>
+			<div className="d-flex flex-wrap gap-2">
+				<button
+					id="form-btn-enable"
+					className={`btn btn-sm btn-outline-${ctrl.disabled ? 'danger' : 'success'}`}
+					onClick={() => updateCtrl({disabled: !ctrl.disabled})}
+				>
+					{ctrl.disabled ? 'control disabled' : ' control enabled'}
+				</button>
+				&nbsp;
+				<button id="form-btn-clear" className="btn btn-sm btn-outline-primary" onClick={() => updateCtrl({value: 0})}>
+					Clear
+				</button>
+			</div>
 		</>
 	);
 };

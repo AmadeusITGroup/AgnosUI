@@ -24,7 +24,10 @@ $mobileMargin: 16px;
 	padding: 0.1rem 0.5rem;
 	border: 0px solid var(--bs-body-bg);
 	border-width: 2px 0;
-	border-radius: 5px;
+
+	@media (min-width: 768px) {
+		border-radius: 5px;
+	}
 
 	&.active {
 		color: var(--bs-dark);

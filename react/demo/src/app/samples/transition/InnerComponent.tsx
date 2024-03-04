@@ -43,24 +43,24 @@ const InnerComponent = () => {
 		<>
 			<div className="transition-inner">
 				<div className="h6 mt-2">Transition:</div>
-				<div>
+				<div className="d-flex flex-wrap gap-2">
 					<button
 						type="button"
-						className={`ms-2 btn btn-sm btn-outline-secondary ${paramTransition === collapseVerticalTransition ? 'active' : ''}`}
+						className={`btn btn-sm btn-outline-secondary ${paramTransition === collapseVerticalTransition ? 'active' : ''}`}
 						onClick={() => changeTransition(collapseVerticalTransition)}
 					>
 						Vertical collapse
 					</button>
 					<button
 						type="button"
-						className={`ms-2 btn btn-sm btn-outline-secondary ${paramTransition === collapseHorizontalTransition ? 'active' : ''}`}
+						className={`btn btn-sm btn-outline-secondary ${paramTransition === collapseHorizontalTransition ? 'active' : ''}`}
 						onClick={() => changeTransition(collapseHorizontalTransition)}
 					>
 						Horizontal collapse
 					</button>
 					<button
 						type="button"
-						className={`ms-2 btn btn-sm btn-outline-secondary ${paramTransition === fadeTransition ? 'active' : ''}`}
+						className={`btn btn-sm btn-outline-secondary ${paramTransition === fadeTransition ? 'active' : ''}`}
 						onClick={() => changeTransition(fadeTransition)}
 					>
 						Fade

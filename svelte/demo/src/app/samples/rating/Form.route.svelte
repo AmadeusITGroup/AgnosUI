@@ -21,11 +21,13 @@
 	{/if}
 </div>
 <pre>Model: <span id="form-model"><b>{ctrl.value}</b></span></pre>
-<button
-	id="form-btn-enable"
-	class="btn btn-sm btn-outline-{ctrl.disabled ? 'danger' : 'success'} me-2"
-	on:click={() => (ctrl.disabled = !ctrl.disabled)}
->
-	{ctrl.disabled ? 'control disabled' : ' control enabled'}
-</button>
-<button id="form-btn-clear" class="btn btn-sm btn-outline-primary me-2" on:click={() => (ctrl.value = 0)}>Clear</button>
+<div class="d-flex flex-wrap gap-2">
+	<button
+		id="form-btn-enable"
+		class="btn btn-sm btn-outline-{ctrl.disabled ? 'danger' : 'success'}"
+		on:click={() => (ctrl.disabled = !ctrl.disabled)}
+	>
+		{ctrl.disabled ? 'control disabled' : ' control enabled'}
+	</button>
+	<button id="form-btn-clear" class="btn btn-sm btn-outline-primary" on:click={() => (ctrl.value = 0)}>Clear</button>
+</div>

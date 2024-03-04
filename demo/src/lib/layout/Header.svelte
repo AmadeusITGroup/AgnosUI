@@ -18,7 +18,7 @@
 
 <header
 	class="au-header bg-light pt-3 px-4 px-lg-5 d-flex mb-4 align-items-center title"
-	class:rounded={!tabs.length}
+	class:au-rounded={!tabs.length}
 	class:au-rounded-header={tabs.length}
 	class:pb-5={tabs.length}
 	class:pb-3={!tabs.length}

@@ -84,6 +84,17 @@ h5,
 	}
 }
 
+.au-rounded {
+	@media (min-width: 768px) {
+		border-top-left-radius: 5px;
+		border-bottom-left-radius: 5px;
+	}
+	@media (min-width: 992px) {
+		border-top-right-radius: 5px;
+		border-bottom-right-radius: 5px;
+	}
+}
+
 header {
 	&.title {
 		margin-left: calc(var(--bs-gutter-x) * -0.5);

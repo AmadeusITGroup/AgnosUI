@@ -41,22 +41,22 @@
 
 <div class="transition-inner">
 	<div class="h6 mt-2">Transition:</div>
-	<div>
+	<div class="d-flex flex-wrap gap-2">
 		<button
 			type="button"
-			class="ms-2 btn btn-sm btn-outline-secondary"
+			class="btn btn-sm btn-outline-secondary"
 			class:active={$paramTransition$ === collapseVerticalTransition}
 			on:click={() => changeTransition(collapseVerticalTransition)}>Vertical collapse</button
 		>
 		<button
 			type="button"
-			class="ms-2 btn btn-sm btn-outline-secondary"
+			class="btn btn-sm btn-outline-secondary"
 			class:active={$paramTransition$ === collapseHorizontalTransition}
 			on:click={() => changeTransition(collapseHorizontalTransition)}>Horizontal collapse</button
 		>
 		<button
 			type="button"
-			class="ms-2 btn btn-sm btn-outline-secondary"
+			class="btn btn-sm btn-outline-secondary"
 			class:active={$paramTransition$ === fadeTransition}
 			on:click={() => changeTransition(fadeTransition)}>Fade</button
 		>
