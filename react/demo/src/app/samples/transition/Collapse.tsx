@@ -1,23 +1,28 @@
-import {type PropsWithChildren} from 'react';
-import {useWidget} from '@agnos-ui/react/utils/widget';
+import {useMemo, type PropsWithChildren} from 'react';
 import {createTransition} from '@agnos-ui/react/services/transitions/baseTransitions';
 import {collapseVerticalTransition} from '@agnos-ui/react/services/transitions/bootstrap';
 import {useDirective} from '@agnos-ui/react/utils/directive';
 import '@agnos-ui/common/samples/transition/collapse.scss';
 import CollapseIcon from '@agnos-ui/common/samples/transition/collapseButton.svg?react';
+import {useObservable} from '@agnos-ui/react/utils/stores';
 
 const Collapse = ({expanded, headerText, children}: PropsWithChildren<{expanded?: boolean; headerText: string}>) => {
-	const [state, widget] = useWidget(
-		createTransition,
-		{},
-		{
-			props: {
-				visible: expanded || false,
-				transition: collapseVerticalTransition,
-			},
-		},
+	const {
+		state$,
+		directives: {directive},
+		api: {toggle},
+	} = useMemo(
+		() =>
+			createTransition({
+				props: {
+					visible: expanded,
+					transition: collapseVerticalTransition,
+				},
+			}),
+		[],
 	);
-	const transitionRef = useDirective(widget.directives.directive);
+	const transitionRef = useDirective(directive);
+	const state = useObservable(state$);
 
 	return (
 		<div className="card">
@@ -25,7 +30,7 @@ const Collapse = ({expanded, headerText, children}: PropsWithChildren<{expanded?
 				<button
 					type="button"
 					id="collapse-toggle"
-					onClick={() => widget.api.toggle()}
+					onClick={() => toggle()}
 					className="btn toggle-button"
 					aria-controls="collapse-content"
 					aria-expanded={state.visible || undefined}
