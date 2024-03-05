@@ -117,7 +117,7 @@
 		}
 	},
 	"dependencies": {
-		"@agnos-ui/core": "",
+		"@agnos-ui/core": "0.2.0",
 		"esm-env": "^1.0.0"
 	},
 	"peerDependencies": {
@@ -127,5 +127,6 @@
 	"devDependencies": {
 		"@sveltejs/package": "^2.2.7"
 	},
-	"sideEffects": false
+	"sideEffects": false,
+	"version": "0.2.0"
 }

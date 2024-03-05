@@ -130,5 +130,6 @@
 		"@amadeus-it-group/tansu": "*",
 		"@floating-ui/dom": "*"
 	},
-	"sideEffects": false
+	"sideEffects": false,
+	"version": "0.2.0"
 }

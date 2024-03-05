@@ -94,8 +94,8 @@
 		}
 	},
 	"dependencies": {
-		"@agnos-ui/react-headless": "",
-		"@agnos-ui/style-bootstrap": "",
+		"@agnos-ui/react-headless": "0.2.0",
+		"@agnos-ui/style-bootstrap": "0.2.0",
 		"classnames": "^2.5.1"
 	},
 	"peerDependencies": {
@@ -103,5 +103,6 @@
 		"react": "*",
 		"react-dom": "*"
 	},
-	"sideEffects": false
+	"sideEffects": false,
+	"version": "0.2.0"
 }

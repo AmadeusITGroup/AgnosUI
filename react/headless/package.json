@@ -92,7 +92,7 @@
 		}
 	},
 	"dependencies": {
-		"@agnos-ui/core": "",
+		"@agnos-ui/core": "0.2.0",
 		"classnames": "^2.5.1"
 	},
 	"peerDependencies": {
@@ -104,5 +104,6 @@
 		"@types/react": "^18.2.62",
 		"@types/react-dom": "^18.2.19"
 	},
-	"sideEffects": false
+	"sideEffects": false,
+	"version": "0.2.0"
 }

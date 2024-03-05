@@ -92,7 +92,7 @@
 		"@angular/core": "*"
 	},
 	"dependencies": {
-		"@agnos-ui/core": "",
+		"@agnos-ui/core": "0.2.0",
 		"tslib": "^2.6.2"
 	},
 	"devDependencies": {
@@ -109,5 +109,6 @@
 		"rxjs": "^7.8.1",
 		"zone.js": "~0.14.4"
 	},
-	"sideEffects": false
+	"sideEffects": false,
+	"version": "0.2.0"
 }
