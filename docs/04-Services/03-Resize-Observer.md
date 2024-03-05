@@ -10,7 +10,7 @@ This service exports functionality related to observing resized elements within 
 
 - `dimensions$` Readable Signal providing the real time **dimensions** of the observed element. The type of the object is _ResizeObserverEntry_. See the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserverEntry)
 
-- `directive` - a directive to be applied on the html element to observe. The element to observe can be passed as argument to the directive function in case the it cannot be applied directly on html element.
+- `directive` - a directive to be applied on the html element to observe. The element to observe can be passed as argument to the directive function in case it cannot be applied directly on the html element.
 
 ## Usage
 
