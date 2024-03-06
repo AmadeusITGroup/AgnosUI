@@ -31,7 +31,7 @@ import {
 } from './components/accordion/accordion.component';
 import {SliderComponent, SliderHandleDirective, SliderLabelDirective, SliderStructureDirective} from './components/slider/slider.component';
 import {ProgressbarComponent, ProgressbarStructureDirective} from './components/progressbar/progressbar.component';
-import {ToastBodyDirective, ToastComponent, ToastStructureDirective} from './components/toast/toast.component';
+import {ToastBodyDirective, ToastComponent, ToastHeaderDirective, ToastStructureDirective} from './components/toast/toast.component';
 /* istanbul ignore next */
 const components = [
 	SlotDirective,
@@ -73,6 +73,7 @@ const components = [
 	ToastComponent,
 	ToastStructureDirective,
 	ToastBodyDirective,
+	ToastHeaderDirective,
 ];
 
 @NgModule({

@@ -12,7 +12,8 @@
 	},
 	"scripts": {
 		"ng": "ng",
-		"build": "wireit"
+		"build": "wireit",
+		"check": "wireit"
 	},
 	"wireit": {
 		"build:src": {
@@ -52,6 +53,9 @@
 			"dependencies": [
 				"build:pkg"
 			]
+		},
+		"check": {
+			"command": "node scripts/verify-module.mjs"
 		}
 	},
 	"peerDependencies": {
