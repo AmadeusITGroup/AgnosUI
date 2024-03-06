@@ -126,6 +126,7 @@
 				"./svelte/headless:check",
 				"./svelte/lib:check",
 				"./svelte/demo:check",
+				"./angular/lib:check",
 				"./demo:check"
 			]
 		},
