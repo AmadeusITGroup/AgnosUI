@@ -15,6 +15,7 @@
 	import TOC from './menu/TOC.svelte';
 	import agnosUILogo from '$resources/agnosui-logo.svg?raw';
 	import type {Snapshot} from '@sveltejs/kit';
+	import Versions from './menu/Versions.svelte';
 
 	const onServiceWorkerUpdate = () => {
 		void updated.check();
@@ -62,6 +63,8 @@
 		capture: () => container.scrollTop,
 		restore: (y) => container.scrollTo(0, y),
 	};
+
+	export let data;
 </script>
 
 <svelte:head>
@@ -92,7 +95,7 @@
 				<a class="nav-link ms-3" href="https://twitter.com/AgnosUI" aria-label="link to twitter / x account" target="_blank">
 					<Svg className="icon-24 align-middle" svg={twitter} />
 				</a>
-				<span class="ms-3">v{import.meta.env.AGNOSUI_VERSION}</span>
+				<Versions versions={data.versions} />
 			</div>
 			<div class="d-block d-md-none">
 				<MobileMenu />
