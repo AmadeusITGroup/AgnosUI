@@ -6,5 +6,6 @@ export const load = async () => {
 				submenu: [{label: 'State management with Tansu', path: 'blog/2024-02-01', subpath: ''}],
 			},
 		],
+		since: 'v0.1.1',
 	};
 };
