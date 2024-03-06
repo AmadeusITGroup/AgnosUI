@@ -18,8 +18,7 @@
 		aria-current={page === state.page ? 'page' : null}
 	>
 		{#if widget.api.isEllipsis(page)}
-			<!-- svelte-ignore a11y-invalid-attribute -->
-			<a class="page-link au-ellipsis" tabindex="-1" aria-disabled="true" on:click|preventDefault|stopPropagation href="#">
+			<div class="page-link au-ellipsis" aria-hidden="true">
 				<Slot slotContent={state.slotEllipsis} props={{state, widget}} let:component let:props>
 					<slot slot="slot" name="ellipsis" let:props {...props} />
 					<svelte:component this={component} {...props}>
@@ -33,7 +32,8 @@
 						<slot name="structure" slot="structure" let:state let:widget {state} {widget} />
 					</svelte:component>
 				</Slot>
-			</a>
+			</div>
+			<span class="visually-hidden">{state.ariaEllipsisLabel}</span>
 		{:else}
 			<a
 				class="page-link au-page"

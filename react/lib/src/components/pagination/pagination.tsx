@@ -15,9 +15,12 @@ export function DefaultPages(slotContext: PaginationContext) {
 	for (let i = 0; i < state.pages.length; i++) {
 		if (widget.api.isEllipsis(state.pages[i])) {
 			jsxPages.push(
-				<NavButton disabled={true} key={'Ellipsis' + i} tabIndex={-1} className={'au-ellipsis'}>
-					<Slot slotContent={state.slotEllipsis} props={slotContext}></Slot>
-				</NavButton>,
+				<li className="page-item disabled" key={'Ellipsis' + i}>
+					<div className="page-link au-ellipsis" aria-hidden="true">
+						<Slot slotContent={state.slotEllipsis} props={slotContext}></Slot>
+					</div>
+					<span className="visually-hidden">{state.ariaEllipsisLabel}</span>
+				</li>,
 			);
 		} else {
 			jsxPages.push(
