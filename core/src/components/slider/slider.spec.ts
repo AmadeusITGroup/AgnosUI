@@ -42,7 +42,7 @@ const defaultState: () => SliderState = () => ({
 	] as HandleDisplayOptions[],
 	sortedHandles: [{id: 0, value: 0, ariaLabel: '0', ariaValueText: '0'}],
 	className: '',
-	isInteractable: true,
+	interactive: true,
 	showMinMaxLabels: true,
 	showValueLabels: true,
 	rtl: false,
@@ -994,7 +994,7 @@ describe(`Slider basic`, () => {
 
 		expect(normalizedState$()).toStrictEqual(
 			assign(expectedState, {
-				isInteractable: false,
+				interactive: false,
 				disabled: true,
 			}),
 		);
@@ -1019,7 +1019,7 @@ describe(`Slider basic`, () => {
 
 		expect(normalizedState$()).toStrictEqual(
 			assign(expectedState, {
-				isInteractable: false,
+				interactive: false,
 				readonly: true,
 			}),
 		);

@@ -30,7 +30,7 @@
 
 	const {
 		stores: {slotStructure$, hidden$},
-		directives: {transitionDirective, autohideDirective},
+		directives: {transitionDirective, autoHideDirective},
 		state$,
 	} = widget;
 
@@ -47,7 +47,7 @@
 		role="alert"
 		aria-atomic="true"
 		use:transitionDirective
-		use:autohideDirective
+		use:autoHideDirective
 	>
 		<Slot slotContent={$slotStructure$} props={slotContext} let:component let:props>
 			<slot slot="slot" name="structure" let:props {...props} />

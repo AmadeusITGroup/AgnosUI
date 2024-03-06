@@ -212,7 +212,7 @@ export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWid
 	/**
 	 * If `true`, accordion-item will be animated.
 	 */
-	@Input({alias: 'auItemAnimation', transform: auBooleanAttribute}) itemAnimation: boolean | undefined;
+	@Input({alias: 'auItemAnimated', transform: auBooleanAttribute}) itemAnimated: boolean | undefined;
 	/**
 	 * CSS classes to add on the accordion-item header DOM element.
 	 */
@@ -339,7 +339,7 @@ export class AccordionDirective extends BaseWidgetDirective<AccordionWidget> {
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	@Input({alias: 'auItemAnimation', transform: auBooleanAttribute}) itemAnimation: boolean | undefined;
+	@Input({alias: 'auItemAnimated', transform: auBooleanAttribute}) itemAnimated: boolean | undefined;
 	/**
 	 * The transition to use for the accordion-item body-container when the accordion-item is toggled.
 	 *

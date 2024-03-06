@@ -51,8 +51,8 @@ export const createCollapseTransition = ({
 	hideClasses,
 	animationPendingClasses,
 }: CollapseConfig = {}): TransitionFn =>
-	createCSSTransition((element: HTMLElement, direction, animation, context: CollapseContext) => {
-		if (animation) {
+	createCSSTransition((element: HTMLElement, direction, animated, context: CollapseContext) => {
+		if (animated) {
 			let {maxSize, minSize} = context;
 
 			if (!maxSize) {

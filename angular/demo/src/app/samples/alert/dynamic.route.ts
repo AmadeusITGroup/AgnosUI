@@ -26,8 +26,8 @@ class AlertContainerService {
 		@for (alert of alertContainerService.alerts; track alert) {
 			<au-component
 				auAlert
-				[auAnimation]="alert.animation"
-				[auAnimationOnInit]="alert.animationOnInit"
+				[auAnimated]="alert.animated"
+				[auAnimatedOnInit]="alert.animatedOnInit"
 				[auDismissible]="alert.dismissible"
 				[auType]="alert.type"
 				[auSlotDefault]="alert.slotDefault"
@@ -60,14 +60,14 @@ export default class ParentComponent {
 	constructor(readonly alertContainerService: AlertContainerService) {}
 
 	addError() {
-		this.alertContainerService.add({type: 'danger', slotDefault: 'Error', dismissible: true, animation: true});
+		this.alertContainerService.add({type: 'danger', slotDefault: 'Error', dismissible: true, animated: true});
 	}
 
 	addWarning() {
-		this.alertContainerService.add({type: 'warning', slotDefault: 'Warning', dismissible: true, animation: true});
+		this.alertContainerService.add({type: 'warning', slotDefault: 'Warning', dismissible: true, animated: true});
 	}
 
 	addInfo() {
-		this.alertContainerService.add({type: 'info', slotDefault: 'Info', dismissible: true, animation: true});
+		this.alertContainerService.add({type: 'info', slotDefault: 'Info', dismissible: true, animated: true});
 	}
 }

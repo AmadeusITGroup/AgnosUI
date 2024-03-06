@@ -8,12 +8,12 @@ export * from '@agnos-ui/react-headless/components/rating';
 
 export function Rating(props: Partial<RatingProps>) {
 	const [
-		{tabindex, maxRating, visibleRating, ariaValueText, readonly, disabled, isInteractive, stars, className, slotStar, ariaLabel, ariaLabelledBy},
+		{tabindex, maxRating, visibleRating, ariaValueText, readonly, disabled, interactive, stars, className, slotStar, ariaLabel, ariaLabelledBy},
 		widget,
 	] = useWidgetWithConfig(createRating, props, 'rating');
 
 	const starStyle = {
-		cursor: isInteractive ? 'pointer' : 'default',
+		cursor: interactive ? 'pointer' : 'default',
 	};
 
 	return (

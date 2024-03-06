@@ -117,7 +117,7 @@ export interface ModalProps<Data> extends ModalCommonPropsAndState<Data> {
 	/**
 	 * Whether the modal and its backdrop (if present) should be animated when shown or hidden.
 	 */
-	animation: boolean;
+	animated: boolean;
 
 	/**
 	 * Whether a backdrop should be created behind the modal.
@@ -267,7 +267,7 @@ export interface ModalDirectives {
 export type ModalWidget<Data> = Widget<ModalProps<Data>, ModalState<Data>, ModalApi<Data>, ModalActions, ModalDirectives>;
 
 const defaultConfig: ModalProps<any> = {
-	animation: true,
+	animated: true,
 	ariaCloseButtonLabel: 'Close',
 	backdrop: true,
 	backdropClass: '',
@@ -291,7 +291,7 @@ const defaultConfig: ModalProps<any> = {
 };
 
 const configValidator: ConfigValidator<ModalProps<any>> = {
-	animation: typeBoolean,
+	animated: typeBoolean,
 	ariaCloseButtonLabel: typeString,
 	backdrop: typeBoolean,
 	backdropClass: typeString,
@@ -337,7 +337,7 @@ const modalsAction$ = computed(() => {
 export function createModal<Data>(config$?: PropsConfig<ModalProps<Data>>): ModalWidget<Data> {
 	const [
 		{
-			animation$,
+			animated$,
 			backdrop$,
 			backdropTransition$,
 			closeOnOutsideClick$,
@@ -356,8 +356,8 @@ export function createModal<Data>(config$?: PropsConfig<ModalProps<Data>>): Moda
 		props: {
 			transition: modalTransition$,
 			visible: requestedVisible$,
-			animation: animation$,
-			animationOnInit: animation$,
+			animated: animated$,
+			animatedOnInit: animated$,
 			onVisibleChange: onVisibleChange$,
 			// TODO: for onHidden and onShown, should we combine with information from the backdrop transition?
 			// (especially in case one of the two transitions takes more time than the other)
@@ -370,8 +370,8 @@ export function createModal<Data>(config$?: PropsConfig<ModalProps<Data>>): Moda
 		props: {
 			transition: backdropTransition$,
 			visible: requestedVisible$,
-			animation: animation$,
-			animationOnInit: animation$,
+			animated: animated$,
+			animatedOnInit: animated$,
 		},
 	});
 	const transitioning$ = computed(() => modalTransition.stores.transitioning$() || (backdrop$() && backdropTransition.stores.transitioning$()));

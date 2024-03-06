@@ -3,8 +3,8 @@ import type {State} from '../demo-po/transition.po';
 import {TransitionPO} from '../demo-po/transition.po';
 
 const defaultState = (): State => ({
-	animation: true,
-	animationOnInit: false,
+	animated: true,
+	animatedOnInit: false,
 	visible: true,
 	hidden: false,
 	shown: true,
@@ -14,9 +14,9 @@ const defaultState = (): State => ({
 	classes: ['collapse', 'show'],
 });
 
-const disableAnimationSetting = async (po: TransitionPO, expectedState: State) => {
-	await po.locatorAnimationCheckbox.click();
-	expectedState.animation = false;
+const disableAnimatedSetting = async (po: TransitionPO, expectedState: State) => {
+	await po.locatorAnimatedCheckbox.click();
+	expectedState.animated = false;
 	await expect.poll(() => po.getState()).toEqual(expectedState);
 };
 
@@ -29,9 +29,9 @@ test.describe.parallel('Transition tests', () => {
 	const testCases = [
 		{
 			name: 'with default toggle button, hiding DOM element',
-			setup: async (po: TransitionPO, expectedState: State, animation: boolean) => {
-				if (!animation) {
-					await disableAnimationSetting(po, expectedState);
+			setup: async (po: TransitionPO, expectedState: State, animated: boolean) => {
+				if (!animated) {
+					await disableAnimatedSetting(po, expectedState);
 				}
 				return po.locatorDefaultToggleButton;
 			},
@@ -39,19 +39,19 @@ test.describe.parallel('Transition tests', () => {
 		},
 		{
 			name: 'with default toggle button, removing DOM element',
-			setup: async (po: TransitionPO, expectedState: State, animation: boolean) => {
-				if (!animation) {
-					await disableAnimationSetting(po, expectedState);
+			setup: async (po: TransitionPO, expectedState: State, animated: boolean) => {
+				if (!animated) {
+					await disableAnimatedSetting(po, expectedState);
 				}
 				return po.locatorDefaultToggleButton;
 			},
 			removingDomElement: true,
 		},
 		{
-			name: 'with dedicated buttons (opposite of animation setting)',
-			setup: async (po: TransitionPO, expectedState: State, animation: boolean) => {
-				if (animation) {
-					await disableAnimationSetting(po, expectedState);
+			name: 'with dedicated buttons (opposite of animated setting)',
+			setup: async (po: TransitionPO, expectedState: State, animated: boolean) => {
+				if (animated) {
+					await disableAnimatedSetting(po, expectedState);
 					return po.locatorToggleWithAnimationButton;
 				} else {
 					return po.locatorToggleWithoutAnimationButton;
@@ -139,19 +139,19 @@ test.describe.parallel('Transition tests', () => {
 		});
 	}
 
-	for (const animationEnabled of [true, false]) {
-		test(`animation on init, with animation setting ${animationEnabled ? 'enabled' : 'disabled'}`, async ({page}) => {
+	for (const animatedEnabled of [true, false]) {
+		test(`animated on init, with animation setting ${animatedEnabled ? 'enabled' : 'disabled'}`, async ({page}) => {
 			const po = new TransitionPO(page);
 			await po.waitLoaded();
 			const expectedState = defaultState();
 			await expect.poll(() => po.getState()).toEqual(expectedState);
 
-			if (!animationEnabled) {
-				await disableAnimationSetting(po, expectedState);
+			if (!animatedEnabled) {
+				await disableAnimatedSetting(po, expectedState);
 			}
 
-			await po.locatorAnimationOnInitCheckbox.click();
-			expectedState.animationOnInit = true;
+			await po.locatorAnimatedOnInitCheckbox.click();
+			expectedState.animatedOnInit = true;
 			await expect.poll(() => po.getState()).toEqual(expectedState);
 
 			await po.locatorToggleComponent.click();

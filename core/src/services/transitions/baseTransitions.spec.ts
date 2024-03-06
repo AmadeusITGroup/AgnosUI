@@ -10,13 +10,13 @@ describe(`createTransition`, () => {
 	const onShown = () => events.push('onShown');
 	const onHidden = () => events.push('onHidden');
 	const onVisibleChange = (value: boolean) => events.push(`onVisibleChange:${value}`);
-	const transition: TransitionFn = async (element, direction, animation, signal, context: {callNumber?: number}) => {
+	const transition: TransitionFn = async (element, direction, animated, signal, context: {callNumber?: number}) => {
 		transitionCalls++;
 		const callNumber = transitionCalls;
 		if (!context.callNumber) {
 			context.callNumber = callNumber;
 		}
-		events.push(`transitionStart:${callNumber}:${element.id}:${direction}:anim=${animation}:ctxt=${context.callNumber}`);
+		events.push(`transitionStart:${callNumber}:${element.id}:${direction}:anim=${animated}:ctxt=${context.callNumber}`);
 		let aborted = false;
 		const abort = new Promise<void>((resolve) => {
 			signal.addEventListener('abort', () => {
@@ -38,7 +38,7 @@ describe(`createTransition`, () => {
 		const element = <HTMLElement>{id: 'domEl'};
 		const transitionInstance = createTransition({
 			props: {
-				animationOnInit: true,
+				animatedOnInit: true,
 				visible: true,
 				transition,
 				onShown,
@@ -69,7 +69,7 @@ describe(`createTransition`, () => {
 		const element = <HTMLElement>{id: 'domEl'};
 		const transitionInstance = createTransition({
 			props: {
-				animationOnInit: true,
+				animatedOnInit: true,
 				visible: true,
 				transition,
 				onShown,
@@ -109,7 +109,7 @@ describe(`createTransition`, () => {
 		const element = <HTMLElement>{id: 'domEl'};
 		const transitionInstance = createTransition({
 			props: {
-				animationOnInit: true,
+				animatedOnInit: true,
 				visible: true,
 				transition,
 				onShown,
@@ -165,7 +165,7 @@ describe(`createTransition`, () => {
 		const element = <HTMLElement>{id: 'domEl'};
 		const transitionInstance = createTransition({
 			props: {
-				animationOnInit: true,
+				animatedOnInit: true,
 				visible: true,
 				onShown,
 				onHidden,
@@ -462,14 +462,14 @@ describe(`createTransition`, () => {
 		unsubscribeState();
 	});
 
-	for (const animation of [true, false]) {
-		for (const animationOnInit of [true, false]) {
-			test(`check initial animation with animationOnInit = ${animationOnInit} and animation = ${animation} and visible = true`, async () => {
+	for (const animated of [true, false]) {
+		for (const animatedOnInit of [true, false]) {
+			test(`check initial animated with animatedOnInit = ${animatedOnInit} and animated = ${animated} and visible = true`, async () => {
 				let element = <HTMLElement>{id: 'domEl1'};
 				const transitionInstance = createTransition({
 					props: {
-						animationOnInit,
-						animation,
+						animatedOnInit,
+						animated,
 						onVisibleChange,
 						transition,
 					},
@@ -506,7 +506,7 @@ describe(`createTransition`, () => {
 					'afterCreateTransition',
 					`state = ${JSON.stringify({visible: true, element: null, elementPresent: false, transitioning: false, shown: false, hidden: false})}`,
 					'beforeCallingDirective1',
-					`transitionStart:1:domEl1:show:anim=${animationOnInit}:ctxt=1`,
+					`transitionStart:1:domEl1:show:anim=${animatedOnInit}:ctxt=1`,
 					`state = ${JSON.stringify({
 						visible: true,
 						element: {id: 'domEl1'},
@@ -529,7 +529,7 @@ describe(`createTransition`, () => {
 					`state = ${JSON.stringify({visible: true, element: null, elementPresent: false, transitioning: false, shown: false, hidden: false})}`,
 					'afterDestroyingDirective1',
 					'beforeCallingDirective2',
-					`transitionStart:2:domEl2:show:anim=${animation}:ctxt=2`,
+					`transitionStart:2:domEl2:show:anim=${animated}:ctxt=2`,
 					`state = ${JSON.stringify({
 						visible: true,
 						element: {id: 'domEl2'},
@@ -578,12 +578,12 @@ describe(`createTransition`, () => {
 				]);
 			});
 
-			test(`check initial animation with animationOnInit = ${animationOnInit} and animation = ${animation} and visible = false`, async () => {
+			test(`check initial animated with animatedOnInit = ${animatedOnInit} and animated = ${animated} and visible = false`, async () => {
 				let element = <HTMLElement>{id: 'domEl1'};
 				const transitionInstance = createTransition({
 					props: {
-						animationOnInit,
-						animation,
+						animatedOnInit,
+						animated,
 						visible: false,
 						onVisibleChange,
 						transition,
@@ -637,7 +637,7 @@ describe(`createTransition`, () => {
 					'afterDestroyingDirective1',
 					'beforeCallingDirective2',
 					'onVisibleChange:true',
-					`transitionStart:2:domEl2:show:anim=${animation}:ctxt=2`,
+					`transitionStart:2:domEl2:show:anim=${animated}:ctxt=2`,
 					`state = ${JSON.stringify({
 						visible: true,
 						element: {id: 'domEl2'},

@@ -39,7 +39,7 @@ class ToastService {
 		@for (position of toastContainerService.toastMap.keys(); track position) {
 			<div class="toast-container p-3 {{ position }}">
 				@for (toast of toastContainerService.toastMap.get(position); track toast) {
-					<au-component auToast (auHidden)="removeToast(toast)" auSlotHeader="I am header" [auAutohide]="toast.autohide" [auDelay]="toast.delay"
+					<au-component auToast (auHidden)="removeToast(toast)" auSlotHeader="I am header" [auAutoHide]="toast.autoHide" [auDelay]="toast.delay"
 						>Simple toast</au-component
 					>
 				}
@@ -91,6 +91,6 @@ export default class DynamicToastComponent {
 	position = this.positionList[0].value;
 
 	addToast() {
-		this.toastContainerService.add({autohide: true, delay: 3000, className: this.position});
+		this.toastContainerService.add({autoHide: true, delay: 3000, className: this.position});
 	}
 }

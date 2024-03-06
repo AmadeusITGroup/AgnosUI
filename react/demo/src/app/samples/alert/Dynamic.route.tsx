@@ -24,19 +24,19 @@ const DynamicDemo = () => {
 		<>
 			<button
 				className="btn btn-primary addError me-1"
-				onClick={() => dispatch({type: 'add', payload: {type: 'danger', slotDefault: 'Error', dismissible: true, animation: true}})}
+				onClick={() => dispatch({type: 'add', payload: {type: 'danger', slotDefault: 'Error', dismissible: true, animated: true}})}
 			>
 				Add error
 			</button>
 			<button
 				className="btn btn-primary addInfo me-1"
-				onClick={() => dispatch({type: 'add', payload: {type: 'info', slotDefault: 'Info', dismissible: true, animation: true}})}
+				onClick={() => dispatch({type: 'add', payload: {type: 'info', slotDefault: 'Info', dismissible: true, animated: true}})}
 			>
 				Add info
 			</button>
 			<button
 				className="btn btn-primary addWarning me-1"
-				onClick={() => dispatch({type: 'add', payload: {type: 'warning', slotDefault: 'Warning', dismissible: true, animation: true}})}
+				onClick={() => dispatch({type: 'add', payload: {type: 'warning', slotDefault: 'Warning', dismissible: true, animated: true}})}
 			>
 				Add warning
 			</button>
@@ -59,8 +59,8 @@ const ChildComponent = () => {
 		<>
 			{alertList?.map((alert) => (
 				<Alert
-					animationOnInit={alert.animationOnInit}
-					animation={alert.animation}
+					animatedOnInit={alert.animatedOnInit}
+					animated={alert.animated}
 					dismissible={alert.dismissible}
 					type={alert.type}
 					slotDefault={alert.slotDefault}

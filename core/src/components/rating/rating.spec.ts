@@ -68,7 +68,7 @@ describe(`Rating`, () => {
 				readonly: false,
 				resettable: true,
 				tabindex: 0,
-				isInteractive: true,
+				interactive: true,
 				stars: Array.from({length: 10}, (_, i) => ({fill: 0, index: i})),
 				className: '',
 				slotStar: expect.any(Function),
@@ -495,20 +495,20 @@ describe(`Rating`, () => {
 			expect(stateChangeCount).toBe(4);
 		});
 
-		test(`should generate correct 'isInteractive' values`, () => {
-			expect(state).toMatchObject({disabled: false, readonly: false, isInteractive: true});
+		test(`should generate correct 'interactive' values`, () => {
+			expect(state).toMatchObject({disabled: false, readonly: false, interactive: true});
 
 			rating.patch({disabled: true, readonly: false});
-			expect(state).toMatchObject({isInteractive: false});
+			expect(state).toMatchObject({interactive: false});
 
 			rating.patch({disabled: false, readonly: true});
-			expect(state).toMatchObject({isInteractive: false});
+			expect(state).toMatchObject({interactive: false});
 
 			rating.patch({disabled: true, readonly: true});
-			expect(state).toMatchObject({isInteractive: false});
+			expect(state).toMatchObject({interactive: false});
 
 			rating.patch({disabled: false, readonly: false});
-			expect(state).toMatchObject({isInteractive: true});
+			expect(state).toMatchObject({interactive: true});
 		});
 
 		test(`should ignore user rating changes when disabled`, () => {

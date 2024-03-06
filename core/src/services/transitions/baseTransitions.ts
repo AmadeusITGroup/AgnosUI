@@ -23,7 +23,7 @@ export type TransitionFn = (
 	/**
 	 * Whether the transition should be animated.
 	 */
-	animation: boolean,
+	animated: boolean,
 
 	/**
 	 * Signal allowing to stop the transition while running.
@@ -50,19 +50,19 @@ export interface TransitionProps {
 	/**
 	 * Whether the transition should be animated.
 	 */
-	animation: boolean;
+	animated: boolean;
 
 	/**
 	 * If the element is initially visible, whether the element should be animated when first displayed.
 	 */
-	animationOnInit: boolean;
+	animatedOnInit: boolean;
 
 	/**
-	 * Whether initialization is finished. It determines which setting between {@link TransitionProps.animation}
-	 * and {@link TransitionProps.animationOnInit} is used to enable or disable animations.
+	 * Whether initialization is finished. It determines which setting between {@link TransitionProps.animated}
+	 * and {@link TransitionProps.animatedOnInit} is used to enable or disable animations.
 	 * @remarks
-	 * If it is `true`, initialization is considered finished, and {@link TransitionProps.animationOnInit} is no longer used.
-	 * Otherwise, initialization is considered unfinished and {@link TransitionProps.animationOnInit} is used instead of {@link TransitionProps.animation}.
+	 * If it is `true`, initialization is considered finished, and {@link TransitionProps.animatedOnInit} is no longer used.
+	 * Otherwise, initialization is considered unfinished and {@link TransitionProps.animatedOnInit} is used instead of {@link TransitionProps.animated}.
 	 * If it is `null`, it will be set to `true` automatically when the directive is called with a DOM element.
 	 * If it is `false`, it will not be updated automatically.
 	 */
@@ -125,33 +125,33 @@ export interface TransitionApi {
 	/**
 	 * Runs the transition to show the element. It is equivalent to {@link TransitionApi.toggle | toggle} with true as the first parameter.
 	 *
-	 * @param animation - whether the transition should be animated. If the parameter is not defined, the {@link TransitionProps.animation | animation } property is used.
+	 * @param animated - whether the transition should be animated. If the parameter is not defined, the {@link TransitionProps.animated | animated } property is used.
 	 *
 	 * @returns A promise that is fulfilled when the transition is completed. If the transition is canceled, or if the same transition was
 	 * already running, the promise never completes.
 	 */
-	show: (animation?: boolean) => Promise<void>;
+	show: (animated?: boolean) => Promise<void>;
 
 	/**
 	 * Runs the transition to hide the element. It is equivalent to {@link TransitionApi.toggle | toggle} with false as the first parameter.
 	 *
-	 * @param animation - whether the transition should be animated. If the parameter is not defined, the {@link TransitionProps.animation | animation } property is used.
+	 * @param animated - whether the transition should be animated. If the parameter is not defined, the {@link TransitionProps.animated | animated } property is used.
 	 *
 	 * @returns A promise that is fulfilled when the transition is completed. If the transition is canceled, or if the same transition was
 	 * already running, the promise never completes.
 	 */
-	hide: (animation?: boolean) => Promise<void>;
+	hide: (animated?: boolean) => Promise<void>;
 
 	/**
 	 * Runs the transition to show or hide the element depending on the first parameter.
 	 *
 	 * @param visible - whether the element should be made visible or not. If the parameter is not defined, the opposite of the current {@link TransitionProps.visible | visible } property is used.
-	 * @param animation - whether the transition should be animated. If the parameter is not defined, the {@link TransitionProps.animation | animation } property is used.
+	 * @param animated - whether the transition should be animated. If the parameter is not defined, the {@link TransitionProps.animated | animated } property is used.
 	 *
 	 * @returns A promise that is fulfilled when the transition is completed. If the transition is canceled, or if the same transition was
 	 * already running, the promise never completes.
 	 */
-	toggle: (visible?: boolean, animation?: boolean) => Promise<void>;
+	toggle: (visible?: boolean, animated?: boolean) => Promise<void>;
 }
 
 export interface TransitionDirectives {
@@ -166,7 +166,7 @@ export type TransitionWidget = Widget<TransitionProps, TransitionState, Transiti
 const neverEndingPromise = new Promise<never>(noop);
 
 /**
- * A transition to show / hide an element without any animation. It uses the HTML `display` attribute.
+ * A transition to show / hide an element without any animated. It uses the HTML `display` attribute.
  *
  * @param element - the element to animate
  * @param direction - the direction
@@ -176,8 +176,8 @@ export const noAnimation: TransitionFn = async (element, direction) => {
 };
 
 const defaultValues: TransitionProps = {
-	animation: true,
-	animationOnInit: false,
+	animated: true,
+	animatedOnInit: false,
 	initDone: null,
 	visible: true,
 	transition: noAnimation,
@@ -187,8 +187,8 @@ const defaultValues: TransitionProps = {
 };
 
 const configValidator: ConfigValidator<TransitionProps> = {
-	animation: typeBoolean,
-	animationOnInit: typeBoolean,
+	animated: typeBoolean,
+	animatedOnInit: typeBoolean,
 	visible: typeBoolean,
 	transition: typeFunction,
 	onShown: typeFunction,
@@ -206,7 +206,7 @@ const configValidator: ConfigValidator<TransitionProps> = {
  * @returns the transition widget
  */
 export const createTransition = (config?: PropsConfig<TransitionProps>): TransitionWidget => {
-	const [{animation$, initDone$, visible$: requestedVisible$, transition$, onShown$, onHidden$, onVisibleChange$, animationOnInit$}, patch] =
+	const [{animated$, initDone$, visible$: requestedVisible$, transition$, onShown$, onHidden$, onVisibleChange$, animatedOnInit$}, patch] =
 		writablesForProps(defaultValues, config, configValidator);
 	const {element$, directive: storeDirective} = createStoreDirective();
 	const elementPresent$ = computed(() => !!element$());
@@ -215,7 +215,7 @@ export const createTransition = (config?: PropsConfig<TransitionProps>): Transit
 		null as null | {
 			abort: AbortController;
 			visible: boolean;
-			animation: boolean;
+			animated: boolean;
 			context: object;
 			element: HTMLElement;
 			transitionFn: TransitionFn;
@@ -233,7 +233,7 @@ export const createTransition = (config?: PropsConfig<TransitionProps>): Transit
 		return context;
 	};
 
-	const runTransition = (visible: boolean, animation: boolean, element: HTMLElement, transitionFn: TransitionFn) =>
+	const runTransition = (visible: boolean, animated: boolean, element: HTMLElement, transitionFn: TransitionFn) =>
 		batch(() => {
 			const abort = new AbortController();
 			const signal = abort.signal;
@@ -241,7 +241,7 @@ export const createTransition = (config?: PropsConfig<TransitionProps>): Transit
 			const {promise, resolve} = promiseWithResolve();
 			const currentTransition = {
 				abort,
-				animation,
+				animated,
 				visible,
 				context,
 				element,
@@ -252,7 +252,7 @@ export const createTransition = (config?: PropsConfig<TransitionProps>): Transit
 			resolve!(
 				(async () => {
 					try {
-						await transitionFn(element, visible ? 'show' : 'hide', animation, signal, context);
+						await transitionFn(element, visible ? 'show' : 'hide', animated, signal, context);
 					} finally {
 						if (signal.aborted) {
 							await neverEndingPromise;
@@ -268,15 +268,15 @@ export const createTransition = (config?: PropsConfig<TransitionProps>): Transit
 
 	const shown$ = computed(() => !transitioning$() && visible$() && elementPresent$());
 	const hidden$ = computed(() => !transitioning$() && !visible$());
-	const effectiveAnimation$ = computed(() => (initDone$() ? animation$() : animationOnInit$()));
+	const effectiveAnimation$ = computed(() => (initDone$() ? animated$() : animatedOnInit$()));
 
 	const animationFromToggle$ = writable(null as null | boolean);
 	let previousElement: HTMLElement | null;
 	let previousVisible = requestedVisible$();
-	let pendingTransition: null | ({animation: boolean} & ReturnType<typeof promiseWithResolve>) = null;
+	let pendingTransition: null | ({animated: boolean} & ReturnType<typeof promiseWithResolve>) = null;
 	const visibleAction$ = derived(
 		[visible$, element$, effectiveAnimation$, animationFromToggle$, transition$, currentTransition$],
-		([visible, element, animation, animationFromToggle, transition, currentTransition]) => {
+		([visible, element, animated, animationFromToggle, transition, currentTransition]) => {
 			const elementChanged = previousElement !== element;
 			previousElement = element;
 			const visibleChanged = previousVisible !== visible;
@@ -285,12 +285,12 @@ export const createTransition = (config?: PropsConfig<TransitionProps>): Transit
 				if (initDone$() == null) {
 					initDone$.set(true);
 				}
-				const interruptAnimation = animationFromToggle != null && currentTransition && currentTransition.animation != animationFromToggle;
+				const interruptAnimation = animationFromToggle != null && currentTransition && currentTransition.animated != animationFromToggle;
 				if (elementChanged || visibleChanged || interruptAnimation) {
 					if (visibleChanged || animationFromToggle != null) {
 						pendingTransition = null;
 					}
-					const animate = animationFromToggle ?? pendingTransition?.animation ?? (elementChanged && !visible ? false : animation);
+					const animate = animationFromToggle ?? pendingTransition?.animated ?? (elementChanged && !visible ? false : animated);
 					currentTransition = runTransition(visible, animate, element, transition);
 					pendingTransition?.resolve(currentTransition.promise);
 					pendingTransition = null;
@@ -301,13 +301,13 @@ export const createTransition = (config?: PropsConfig<TransitionProps>): Transit
 					stop();
 					currentTransition = null;
 				}
-				if (visibleChanged || (visible && pendingTransition?.animation !== animationFromToggle)) {
+				if (visibleChanged || (visible && pendingTransition?.animated !== animationFromToggle)) {
 					pendingTransition =
 						visible && animationFromToggle != null
 							? {
 									// toggle was called to display the element, but the element is not yet in the DOM
 									// let's keep the animation setting from toggle and provide the promise for the end of toggle
-									animation: animationFromToggle,
+									animated: animationFromToggle,
 									...promiseWithResolve(),
 								}
 							: null;
@@ -318,13 +318,13 @@ export const createTransition = (config?: PropsConfig<TransitionProps>): Transit
 	);
 
 	let lastToggle = {};
-	const toggle = async (visible = !requestedVisible$(), animation = effectiveAnimation$()): Promise<void> => {
+	const toggle = async (visible = !requestedVisible$(), animated = effectiveAnimation$()): Promise<void> => {
 		const currentToggle = {};
 		lastToggle = currentToggle;
 		try {
 			await batch(() => {
 				try {
-					animationFromToggle$.set(animation);
+					animationFromToggle$.set(animated);
 					requestedVisible$.set(visible);
 					return visibleAction$();
 				} finally {

@@ -7,8 +7,8 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 
 const paramTransition$ = writable(collapseVerticalTransition);
-const paramAnimation$ = writable(true);
-const paramAnimationOnInit$ = writable(false);
+const paramAnimated$ = writable(true);
+const paramAnimatedOnInit$ = writable(false);
 const paramVisible$ = writable(true);
 const paramRemoveFromDom$ = writable(true);
 
@@ -51,17 +51,17 @@ const paramRemoveFromDom$ = writable(true);
 				><input
 					type="checkbox"
 					class="form-check-input"
-					[ngModel]="paramAnimation$ | async"
-					(ngModelChange)="paramAnimation$.set($event)"
-				/>Animation</label
+					[ngModel]="paramAnimated$ | async"
+					(ngModelChange)="paramAnimated$.set($event)"
+				/>Animated</label
 			>
 			<label class="form-check"
 				><input
 					type="checkbox"
 					class="form-check-input"
-					[ngModel]="paramAnimationOnInit$ | async"
-					(ngModelChange)="paramAnimationOnInit$.set($event)"
-				/>Animation on init</label
+					[ngModel]="paramAnimatedOnInit$ | async"
+					(ngModelChange)="paramAnimatedOnInit$.set($event)"
+				/>Animated on init</label
 			>
 			<label class="form-check"
 				><input
@@ -95,7 +95,7 @@ const paramRemoveFromDom$ = writable(true);
 			@if ((paramRemoveFromDom$ | async) === false || state().hidden === false) {
 				<div
 					[auUse]="transition.directives.directive"
-					[auUseParams]="{transition: (paramTransition$ | async)!, animation: (paramAnimation$ | async)!}"
+					[auUseParams]="{transition: (paramTransition$ | async)!, animated: (paramAnimated$ | async)!}"
 					style="max-width: 300px;"
 				>
 					<div class="card" style="width: 300px;">
@@ -109,13 +109,13 @@ const paramRemoveFromDom$ = writable(true);
 export class InnerComponent {
 	bootstrap = {collapseHorizontalTransition, collapseVerticalTransition, fadeTransition};
 	paramTransition$ = paramTransition$;
-	paramAnimation$ = paramAnimation$;
-	paramAnimationOnInit$ = paramAnimationOnInit$;
+	paramAnimated$ = paramAnimated$;
+	paramAnimatedOnInit$ = paramAnimatedOnInit$;
 	paramRemoveFromDom$ = paramRemoveFromDom$;
 	transition = createTransition({
 		props: {
-			animationOnInit: paramAnimationOnInit$,
-			animation: paramAnimation$,
+			animatedOnInit: paramAnimatedOnInit$,
+			animated: paramAnimated$,
 			visible: paramVisible$,
 		},
 	});

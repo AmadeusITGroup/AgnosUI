@@ -64,7 +64,7 @@ export interface CommonAlertProps extends CommonAlertCommonPropsAndState {
 	/**
 	 * The transition function will be executed when the alert is displayed or hidden.
 	 *
-	 * Depending on the value of {@link CommonAlertProps.animationOnInit}, the animation can be optionally skipped during the showing process.
+	 * Depending on the value of {@link CommonAlertProps.animatedOnInit}, the animation can be optionally skipped during the showing process.
 	 */
 	transition: TransitionFn;
 
@@ -74,14 +74,14 @@ export interface CommonAlertProps extends CommonAlertCommonPropsAndState {
 	 * Animation is triggered  when the `.open()` function is called
 	 * or the visible prop is changed
 	 */
-	animationOnInit: boolean;
+	animatedOnInit: boolean;
 	/**
 	 * If `true`, alert closing will be animated.
 	 *
 	 * Animation is triggered  when clicked on the close button (×),
 	 * via the `.close()` function or the visible prop is changed
 	 */
-	animation: boolean;
+	animated: boolean;
 }
 
 export interface CommonAlertApi {
@@ -114,8 +114,8 @@ export const defaultCommonAlertConfig: CommonAlertProps = {
 	onHidden: noop,
 	slotStructure: undefined,
 	slotDefault: undefined,
-	animation: true,
-	animationOnInit: false,
+	animated: true,
+	animatedOnInit: false,
 	transition: fadeTransition,
 	className: '',
 };
@@ -141,8 +141,8 @@ export function createCommonAlert(config?: PropsConfig<CommonAlertProps>): Commo
 	const [
 		{
 			transition$,
-			animationOnInit$,
-			animation$,
+			animatedOnInit$,
+			animated$,
 			visible$: requestedVisible$,
 			onVisibleChange$,
 			onHidden$,
@@ -157,8 +157,8 @@ export function createCommonAlert(config?: PropsConfig<CommonAlertProps>): Commo
 		props: {
 			transition: transition$,
 			visible: requestedVisible$,
-			animation: animation$,
-			animationOnInit: animationOnInit$,
+			animated: animated$,
+			animatedOnInit: animatedOnInit$,
 			onVisibleChange: onVisibleChange$,
 			onHidden: onHidden$,
 			onShown: onShown$,

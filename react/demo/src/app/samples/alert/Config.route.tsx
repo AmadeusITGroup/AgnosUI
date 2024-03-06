@@ -16,8 +16,8 @@ export enum AlertStatus {
 const DefaultDemo = () => {
 	const alertRef = useRef<AlertApi>(null);
 
-	const [animationOnInit, setAnimationOnInit] = useState(true);
-	const [animation, setanimation] = useState(true);
+	const [animatedOnInit, setAnimatedOnInit] = useState(true);
+	const [animated, setanimated] = useState(true);
 	const [dismissible, setDismissible] = useState(true);
 	const [type, setType] = useState(String(AlertStatus.success));
 
@@ -52,14 +52,14 @@ const DefaultDemo = () => {
 					<input
 						className="form-check-input me-1"
 						type="checkbox"
-						defaultChecked={animationOnInit}
-						onChange={(e) => setAnimationOnInit(e.target.checked)}
+						defaultChecked={animatedOnInit}
+						onChange={(e) => setAnimatedOnInit(e.target.checked)}
 					/>
-					Animation on init
+					Animated on init
 				</label>
 				<label>
-					<input className="form-check-input me-1" type="checkbox" defaultChecked={animation} onChange={(e) => setanimation(e.target.checked)} />
-					Animation
+					<input className="form-check-input me-1" type="checkbox" defaultChecked={animated} onChange={(e) => setanimated(e.target.checked)} />
+					Animated
 				</label>
 				<label>
 					<input
@@ -75,7 +75,7 @@ const DefaultDemo = () => {
 			<br />
 			<br />
 
-			<Alert ref={alertRef} animationOnInit={animationOnInit} animation={animation} dismissible={dismissible} type={type}>
+			<Alert ref={alertRef} animatedOnInit={animatedOnInit} animated={animated} dismissible={dismissible} type={type}>
 				<h4 className="alert-heading">Well done!</h4>
 				<p>
 					Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing

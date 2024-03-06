@@ -2,7 +2,7 @@
 	import {Toast} from '@agnos-ui/svelte/components/toast';
 	import {createWidgetsDefaultConfig} from '@agnos-ui/svelte/config';
 
-	createWidgetsDefaultConfig().set({toast: {autohide: false, dismissible: false}});
+	createWidgetsDefaultConfig().set({toast: {autoHide: false, dismissible: false}});
 
 	export let visible = true;
 
@@ -15,7 +15,7 @@
 	Color schemes are based on the Bootstrap classes, in order to have out-of-the-box text accessibility use the helper classes <code>.text-bg-*</code>,
 	e.g. <code>.text.bg-primary</code>
 </p>
-<Toast className="text-bg-primary" slotHeader="I am header" autohide={false} dismissible bind:visible>Simple primary toast</Toast>
+<Toast className="text-bg-primary" slotHeader="I am header" autoHide={false} dismissible bind:visible>Simple primary toast</Toast>
 
 <button class="btn btn-primary my-2" on:click={() => reset()}>Reset</button>
 

@@ -326,14 +326,7 @@ export interface PaginationActions {
 	last(event?: MouseEvent): void;
 }
 
-export interface PaginationApi {
-	// FIXME: should this be in actions too (even though it is not an action, but it is mostly only useful from slots)??
-	/**
-	 * If the page number is -1 return true
-	 * @param page - The page number to check
-	 */
-	isEllipsis(page: number): boolean;
-}
+export interface PaginationApi {}
 
 export type PaginationWidget = Widget<PaginationProps, PaginationState, PaginationApi, PaginationActions>;
 
@@ -544,11 +537,7 @@ export function createPagination(config?: PropsConfig<PaginationProps>): Paginat
 				handleNavigation(pageCount$(), event);
 			},
 		},
-		api: {
-			isEllipsis(pageNumber: number): boolean {
-				return pageNumber === -1;
-			},
-		},
+		api: {},
 		directives: {},
 	};
 }

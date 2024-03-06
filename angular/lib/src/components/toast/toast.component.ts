@@ -118,8 +118,7 @@ export class ToastComponent extends BaseWidgetDirective<ToastWidget> implements 
 
 	/**
 	 * The transition function will be executed when the alert is displayed or hidden.
-	 *
-	 * Depending on the value of CommonAlertProps.animationOnInit, the animation can be optionally skipped during the showing process.
+	 * Depending on the value of CommonAlertProps.animatedOnInit, the animation can be optionally skipped during the showing process.
 	 */
 	@Input('auTransition')
 	transition: TransitionFn | undefined;
@@ -136,8 +135,8 @@ export class ToastComponent extends BaseWidgetDirective<ToastWidget> implements 
 	 * Animation is triggered  when the `.open()` function is called
 	 * or the visible prop is changed
 	 */
-	@Input({alias: 'auAnimationOnInit', transform: auBooleanAttribute})
-	animationOnInit: boolean | undefined;
+	@Input({alias: 'auAnimatedOnInit', transform: auBooleanAttribute})
+	animatedOnInit: boolean | undefined;
 
 	/**
 	 * If `true`, alert closing will be animated.
@@ -145,14 +144,14 @@ export class ToastComponent extends BaseWidgetDirective<ToastWidget> implements 
 	 * Animation is triggered  when clicked on the close button (×),
 	 * via the `.close()` function or the visible prop is changed
 	 */
-	@Input({alias: 'auAnimation', transform: auBooleanAttribute})
-	animation: boolean | undefined;
+	@Input({alias: 'auAnimated', transform: auBooleanAttribute})
+	animated: boolean | undefined;
 
 	/**
 	 * If `true` automatically hides the toast after the delay.
 	 */
-	@Input({alias: 'auAutohide', transform: auBooleanAttribute})
-	autohide: boolean | undefined;
+	@Input({alias: 'auAutoHide', transform: auBooleanAttribute})
+	autoHide: boolean | undefined;
 
 	/**
 	 * Delay in milliseconds before hiding the toast.
@@ -209,7 +208,7 @@ export class ToastComponent extends BaseWidgetDirective<ToastWidget> implements 
 
 	@CachedProperty
 	get toastDirective() {
-		return mergeDirectives(this._widget.directives.autohideDirective, this._widget.directives.transitionDirective);
+		return mergeDirectives(this._widget.directives.autoHideDirective, this._widget.directives.transitionDirective);
 	}
 
 	ngAfterContentChecked(): void {

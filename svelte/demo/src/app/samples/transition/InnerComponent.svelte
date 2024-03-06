@@ -5,8 +5,8 @@
 	import {collapseHorizontalTransition, collapseVerticalTransition, fadeTransition} from '@agnos-ui/svelte/services/transitions/bootstrap';
 
 	const paramTransition$ = writable(collapseVerticalTransition);
-	const paramAnimation$ = writable(true);
-	const paramAnimationOnInit$ = writable(false);
+	const paramAnimated$ = writable(true);
+	const paramAnimatedOnInit$ = writable(false);
 	const paramVisible$ = writable(true);
 	const paramRemoveFromDom$ = writable(true);
 </script>
@@ -19,8 +19,8 @@
 		patch,
 	} = createTransition({
 		props: {
-			animationOnInit: paramAnimationOnInit$,
-			animation: paramAnimation$,
+			animatedOnInit: paramAnimatedOnInit$,
+			animated: paramAnimated$,
 			visible: paramVisible$,
 		},
 	});
@@ -62,8 +62,8 @@
 		>
 	</div>
 	<div class="h6 mt-2">Other properties:</div>
-	<label class="form-check"><input type="checkbox" class="form-check-input" bind:checked={$paramAnimation$} />Animation</label>
-	<label class="form-check"><input type="checkbox" class="form-check-input" bind:checked={$paramAnimationOnInit$} />Animation on init</label>
+	<label class="form-check"><input type="checkbox" class="form-check-input" bind:checked={$paramAnimated$} />Animated</label>
+	<label class="form-check"><input type="checkbox" class="form-check-input" bind:checked={$paramAnimatedOnInit$} />Animated on init</label>
 	<label class="form-check"><input type="checkbox" class="form-check-input" bind:checked={$paramRemoveFromDom$} />Remove from DOM</label>
 	<label class="form-check mb-2"><input type="checkbox" class="form-check-input" bind:checked={$checkBoxVisible$} />Visible</label>
 
@@ -81,7 +81,7 @@
 	</ul>
 
 	{#if !$paramRemoveFromDom$ || !$hidden$}
-		<div use:directive={{transition: $paramTransition$, animation: $paramAnimation$}} style="max-width: 300px;">
+		<div use:directive={{transition: $paramTransition$, animated: $paramAnimated$}} style="max-width: 300px;">
 			<div class="card" style="width: 300px;">
 				<div class="card-body">You can collapse this card by clicking Toggle</div>
 			</div>

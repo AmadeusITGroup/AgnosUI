@@ -14,10 +14,10 @@
 	<li
 		class="page-item"
 		class:active={page === state.page}
-		class:disabled={widget.api.isEllipsis(page) || state.disabled}
+		class:disabled={page === -1 || state.disabled}
 		aria-current={page === state.page ? 'page' : null}
 	>
-		{#if widget.api.isEllipsis(page)}
+		{#if page === -1}
 			<div class="page-link au-ellipsis" aria-hidden="true">
 				<Slot slotContent={state.slotEllipsis} props={{state, widget}} let:component let:props>
 					<slot slot="slot" name="ellipsis" let:props {...props} />

@@ -24,7 +24,7 @@ export function getTransitionDurationMs(element: HTMLElement): number {
 	return (transitionDelaySec + transitionDurationSec) * 1000;
 }
 
-export type CSSTransitionFn = (element: HTMLElement, direction: 'show' | 'hide', animation: boolean, context: object) => void | (() => void);
+export type CSSTransitionFn = (element: HTMLElement, direction: 'show' | 'hide', animated: boolean, context: object) => void | (() => void);
 
 /**
  * Create a simple css transition.
@@ -34,10 +34,10 @@ export type CSSTransitionFn = (element: HTMLElement, direction: 'show' | 'hide',
  */
 export const createCSSTransition =
 	(start: CSSTransitionFn): TransitionFn =>
-	async (element, direction, animation, signal, context) => {
-		const endFn = start(element, direction, animation, context) ?? noop;
+	async (element, direction, animated, signal, context) => {
+		const endFn = start(element, direction, animated, context) ?? noop;
 
-		if (animation && hasTransition(element)) {
+		if (animated && hasTransition(element)) {
 			const abort = promiseFromEvent(signal, 'abort');
 			const transitionEnd = promiseFromEvent(element, 'transitionend');
 			const timer = promiseFromTimeout(getTransitionDurationMs(element));

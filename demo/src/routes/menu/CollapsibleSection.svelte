@@ -14,11 +14,11 @@
 		label: string;
 	}[];
 
-	const paramAnimation$ = writable(false);
+	const paramAnimated$ = writable(false);
 	const defaultVisible = isOnPage(get(page));
 	const paramVisible$ = writable(defaultVisible);
 	onMount(() => {
-		paramAnimation$.set(true);
+		paramAnimated$.set(true);
 		return page.subscribe((p) => {
 			if (paramVisible$() === false) {
 				paramVisible$.set(isOnPage(p));
@@ -31,8 +31,8 @@
 		directives: {directive},
 	} = createTransition({
 		props: {
-			animation: paramAnimation$,
-			animationOnInit: paramAnimation$,
+			animated: paramAnimated$,
+			animatedOnInit: paramAnimated$,
 			visible: paramVisible$,
 		},
 	});
@@ -54,7 +54,7 @@
 		</svg>
 	</button>
 	{#if !$hidden$}
-		<div class="contents" use:directive={{transition: collapseVerticalTransition, animation: $paramAnimation$}}>
+		<div class="contents" use:directive={{transition: collapseVerticalTransition, animated: $paramAnimated$}}>
 			<slot />
 		</div>
 	{/if}

@@ -121,10 +121,10 @@ export class PaginationStructureDirective {
 				<li
 					class="page-item"
 					[class.active]="page === state.page"
-					[class.disabled]="widget.api.isEllipsis(page) || state.disabled"
+					[class.disabled]="page === -1 || state.disabled"
 					[attr.aria-current]="page === state.page ? 'page' : null"
 				>
-					@if (widget.api.isEllipsis(page)) {
+					@if (page === -1) {
 						<div class="page-link au-ellipsis" aria-hidden="true">
 							<ng-template [auSlot]="state.slotEllipsis" [auSlotProps]="{state, widget}"></ng-template>
 						</div>

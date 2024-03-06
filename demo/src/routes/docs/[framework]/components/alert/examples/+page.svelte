@@ -15,7 +15,7 @@
 </Section>
 
 <Section label="Dynamic alert generation" level={2}>
-	<p>This example showcases how an application would typically generate and handle dismissable alerts.</p>
+	<p>This example showcases how an application would typically generate and handle dismissible alerts.</p>
 	<Sample title="Dynamic generation example" sample={sampleDynamic} height={113} />
 </Section>
 

@@ -83,7 +83,7 @@ export interface AccordionProps extends WidgetsCommonPropsAndState {
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	itemAnimation: boolean;
+	itemAnimated: boolean;
 	/**
 	 * The transition to use for the accordion-item body-container when the accordion-item is toggled.
 	 *
@@ -178,12 +178,6 @@ export interface AccordionState extends WidgetsCommonPropsAndState {
 }
 
 export interface AccordionApi {
-	/**
-	 * Given the itemId, it will return if such item is visible (expanded) or not.
-	 *
-	 * If the itemId is not a valid id it will return `false`.
-	 */
-	isExpanded(itemId: string): boolean;
 	/**
 	 * Given the itemId, will expand the corresponding accordion-item.
 	 *
@@ -327,7 +321,7 @@ export interface AccordionItemProps extends AccordionItemCommonPropsAndState {
 	/**
 	 * If `true`, accordion-item will be animated.
 	 */
-	itemAnimation: boolean;
+	itemAnimated: boolean;
 	/**
 	 * The transition to use for the accordion-item body-container when the accordion-item is toggled.
 	 */
@@ -371,7 +365,7 @@ const defaultAccordionConfig: AccordionProps = {
 	itemDestroyOnHide: true,
 	itemDisabled: false,
 	itemVisible: false,
-	itemAnimation: true,
+	itemAnimated: true,
 	itemTransition: collapseVerticalTransition,
 	itemHeadingTag: '',
 	onItemShown: noop,
@@ -392,7 +386,7 @@ const defaultItemConfig: AccordionItemProps = {
 	itemDestroyOnHide: defaultAccordionConfig.itemDestroyOnHide,
 	itemDisabled: defaultAccordionConfig.itemDisabled,
 	itemVisible: defaultAccordionConfig.itemVisible,
-	itemAnimation: defaultAccordionConfig.itemAnimation,
+	itemAnimated: defaultAccordionConfig.itemAnimated,
 	itemTransition: defaultAccordionConfig.itemTransition,
 	onItemShown: defaultAccordionConfig.onItemShown,
 	onItemHidden: defaultAccordionConfig.onItemHidden,
@@ -425,7 +419,7 @@ const configAccordionValidator: ConfigValidator<AccordionProps> = {
 	itemDestroyOnHide: typeBoolean,
 	itemDisabled: typeBoolean,
 	itemVisible: typeBoolean,
-	itemAnimation: typeBoolean,
+	itemAnimated: typeBoolean,
 	itemTransition: typeFunction,
 	onItemShown: typeFunction,
 	onItemHidden: typeFunction,
@@ -443,7 +437,7 @@ const configItemValidator: ConfigValidator<AccordionItemProps> = {
 	itemDestroyOnHide: typeBoolean,
 	itemDisabled: typeBoolean,
 	itemVisible: typeBoolean,
-	itemAnimation: typeBoolean,
+	itemAnimated: typeBoolean,
 	itemTransition: typeFunction,
 	onItemShown: typeFunction,
 	onItemHidden: typeFunction,
@@ -463,7 +457,7 @@ function createAccordionItem(
 ): AccordionItemWidget {
 	const [
 		{
-			itemAnimation$,
+			itemAnimated$,
 			itemTransition$,
 			itemDestroyOnHide$,
 			onItemShown$,
@@ -486,8 +480,8 @@ function createAccordionItem(
 			transition: itemTransition$,
 			visible: itemVisible$,
 			onVisibleChange: onItemVisibleChange$,
-			animation: itemAnimation$,
-			animationOnInit: false,
+			animated: itemAnimated$,
+			animatedOnInit: false,
 			initDone: initDone$,
 			onHidden: () => {
 				accordionOnHidden()(itemId$());
@@ -545,7 +539,7 @@ export function createAccordion(config?: PropsConfig<AccordionProps>): Accordion
 			onShown$,
 			onHidden$,
 			itemId$,
-			itemAnimation$,
+			itemAnimated$,
 			itemClass$,
 			itemDisabled$,
 			itemVisible$,
@@ -569,7 +563,7 @@ export function createAccordion(config?: PropsConfig<AccordionProps>): Accordion
 	const accordionItemConfig: ReadableSignals<AccordionItemProps> = {
 		itemId: itemId$,
 		itemClass: itemClass$,
-		itemAnimation: itemAnimation$,
+		itemAnimated: itemAnimated$,
 		itemDisabled: itemDisabled$,
 		itemVisible: itemVisible$,
 		itemTransition: itemTransition$,
@@ -613,14 +607,6 @@ export function createAccordion(config?: PropsConfig<AccordionProps>): Accordion
 		patch,
 		actions: {},
 		api: {
-			isExpanded: (id: string) => {
-				const item = getItem(itemsWidget$(), id);
-				if (item) {
-					return item.state$().itemVisible;
-				} else {
-					return false;
-				}
-			},
 			expand: (id: string) => {
 				getItem(itemsWidget$(), id)?.api.expand();
 			},

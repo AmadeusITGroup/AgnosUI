@@ -24,7 +24,7 @@ const ActionToastDemo = () => {
 					toast={{
 						dismissible: true,
 						className: 'text-bg-success',
-						autohide: false,
+						autoHide: false,
 						slotStructure: ToastAction,
 					}}
 				>

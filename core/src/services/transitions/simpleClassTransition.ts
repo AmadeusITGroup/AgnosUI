@@ -44,10 +44,10 @@ export interface SimpleClassTransitionContext {
  */
 export const createSimpleClassTransition = (config: SimpleClassTransitionConfig) => {
 	const {animationPendingClasses, animationPendingShowClasses, animationPendingHideClasses, showClasses, hideClasses} = config;
-	return createCSSTransition((element, direction, animation, context: SimpleClassTransitionContext) => {
+	return createCSSTransition((element, direction, animated, context: SimpleClassTransitionContext) => {
 		removeClasses(element, showClasses);
 		removeClasses(element, hideClasses);
-		if (animation) {
+		if (animated) {
 			removeClasses(element, direction === 'show' ? animationPendingHideClasses : animationPendingShowClasses);
 			if (!context.started) {
 				context.started = true;

@@ -6,7 +6,7 @@ import {Component} from '@angular/core';
 	imports: [ToastComponent],
 	providers: [
 		provideWidgetsConfig((config) => {
-			config.toast = {...config.toast, autohide: false, dismissible: false};
+			config.toast = {...config.toast, autoHide: false, dismissible: false};
 			return config;
 		}),
 	],

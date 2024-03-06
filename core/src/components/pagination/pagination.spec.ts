@@ -172,11 +172,6 @@ describe(`Pagination`, () => {
 		expect(state).toStrictEqual(assign(expectedState, {pagesHrefs, directionsHrefs: {previous: '1/1', next: '1/1'}}));
 	});
 
-	test('should return api isEllipisis', () => {
-		expect(pagination.api.isEllipsis(-1)).toBe(true);
-		expect(pagination.api.isEllipsis(2)).toBe(false);
-	});
-
 	test('should calculate and update no of pages (default page size)', () => {
 		expect(state).toMatchObject({page: 1, pageCount: 1});
 
