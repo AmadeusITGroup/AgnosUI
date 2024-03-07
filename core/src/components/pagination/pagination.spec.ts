@@ -62,6 +62,7 @@ describe(`Pagination`, () => {
 			ariaLastLabel: 'Action link for last page',
 			ariaNextLabel: 'Action link for next page',
 			ariaPreviousLabel: 'Action link for previous page',
+			ariaEllipsisLabel: 'Ellipsis page element',
 			directionsHrefs: {
 				next: '#',
 				previous: '#',

@@ -125,9 +125,10 @@ export class PaginationStructureDirective {
 					[attr.aria-current]="page === state.page ? 'page' : null"
 				>
 					@if (widget.api.isEllipsis(page)) {
-						<a class="page-link au-ellipsis" tabindex="-1" aria-disabled="true">
+						<div class="page-link au-ellipsis" aria-hidden="true">
 							<ng-template [auSlot]="state.slotEllipsis" [auSlotProps]="{state, widget}"></ng-template>
-						</a>
+						</div>
+						<span class="visually-hidden">{{ state.ariaEllipsisLabel }}</span>
 					} @else {
 						<a
 							[attr.aria-label]="state.pagesLabel[i]"
@@ -306,6 +307,14 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * @defaultValue 'Action link for last page'
 	 */
 	@Input('auAriaLastLabel') ariaLastLabel: string | undefined;
+
+	/**
+	 * The label for the "Ellipsis" page.
+	 * for I18n, we suggest to use the global configuration
+	 * override any configuration parameters provided for this
+	 * @defaultValue 'Ellipsis page element'
+	 */
+	@Input('auAriaEllipsisLabel') ariaEllipsisLabel: string | undefined;
 
 	/**
 	 * Factory function providing the href for a "Page" page anchor,

@@ -89,6 +89,14 @@ export interface PaginationCommonPropsAndState extends WidgetsCommonPropsAndStat
 	ariaLastLabel: string;
 
 	/**
+	 * The label for the "Ellipsis" page.
+	 * for I18n, we suggest to use the global configuration
+	 * override any configuration parameters provided for this
+	 * @defaultValue 'Ellipsis page element'
+	 */
+	ariaEllipsisLabel: string;
+
+	/**
 	 * If `true`, pagination links will be disabled.
 	 * @defaultValue false
 	 */
@@ -355,6 +363,7 @@ const defaultConfig: PaginationProps = {
 	ariaPreviousLabel: 'Action link for previous page',
 	ariaNextLabel: 'Action link for next page',
 	ariaLastLabel: 'Action link for last page',
+	ariaEllipsisLabel: 'Ellipsis page element',
 	className: '',
 	slotEllipsis: '…',
 	slotFirst: '«',
