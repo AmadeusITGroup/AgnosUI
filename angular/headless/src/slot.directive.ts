@@ -1,5 +1,5 @@
 import {DOCUMENT} from '@angular/common';
-import type {ComponentRef, EmbeddedViewRef, OnChanges, OnDestroy, SimpleChanges, Type} from '@angular/core';
+import type {ComponentRef, EmbeddedViewRef, OnChanges, OnDestroy, Signal, SimpleChanges, Type} from '@angular/core';
 import {Directive, EnvironmentInjector, Input, TemplateRef, ViewContainerRef, createComponent, inject, reflectComponentType} from '@angular/core';
 import type {SlotContent} from './types';
 import {ComponentTemplate} from './types';
@@ -128,7 +128,7 @@ class TemplateRefSlotHandler<Props extends Record<string, any>> extends SlotHand
 class ComponentTemplateSlotHandler<
 	Props extends Record<string, any>,
 	K extends string,
-	T extends {[key in K]: TemplateRef<Props>},
+	T extends {[key in K]: TemplateRef<Props> | Signal<TemplateRef<Props>>},
 > extends SlotHandler<Props, ComponentTemplate<Props, K, T>> {
 	#componentRef: ComponentRef<T> | undefined;
 	#templateSlotHandler = new TemplateRefSlotHandler(this.viewContainerRef, this.document);
@@ -142,8 +142,9 @@ class ComponentTemplateSlotHandler<
 			elementInjector: this.viewContainerRef.injector,
 			environmentInjector: this.viewContainerRef.injector.get(EnvironmentInjector),
 		});
-		this.#templateRef = this.#componentRef.instance[slot.templateProp];
-		this.#templateSlotHandler.slotChange(this.#templateRef, props);
+		const tRef = this.#componentRef.instance[slot.templateProp];
+		this.#templateRef = typeof tRef === 'function' ? tRef() : tRef;
+		this.#templateSlotHandler.slotChange(this.#templateRef!, props);
 	}
 
 	override propsChange(slot: ComponentTemplate<Props, K, T>, props: Props): void {
