@@ -1,0 +1,1 @@
+import{ab as i}from"./AppCommon-8WcyAiwy.js";import{e as c}from"./directive-CYDsg8WW.js";import{n as d}from"./func-fOTgS_tI.js";const f=()=>{const{element$:n,directive:t}=c();return{dimensions$:i(n,(r,o)=>{if(r===null)return d;const e=new ResizeObserver(s=>{o(s[0])});return e.observe(r),()=>e==null?void 0:e.disconnect()},void 0),directive:t}};export{f as c};
