@@ -24,3 +24,11 @@
 	</p>
 	<Sample title="Pagination example with hrefs" sample={sampleHref} height={256} />
 </Section>
+
+<Section label="Accessibility" level={2}>
+	Pagination is a navigation element. The navigation (nav) elements need to have the <strong>aria-label</strong> attribute to differentiate them.
+	Check the API section to learn about the default one set for our pagination. You need to customize the <strong>aria-label</strong> attribute if you
+	have more than one pagination on your page. The <strong>aria-current="page"</strong> attribute is set to the current element as needed. Each
+	pagination link item has its own <strong>aria-label</strong> that you can customize (for ScreenReader). Check the API section to know the default value
+	set for each item.
+</Section>
