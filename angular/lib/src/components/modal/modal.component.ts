@@ -167,7 +167,7 @@ export class ModalComponent<Data> extends BaseWidgetDirective<ModalWidget<Data>>
 	/**
 	 * Whether the modal and its backdrop (if present) should be animated when shown or hidden.
 	 */
-	@Input({alias: 'auAnimation', transform: auBooleanAttribute}) animation: boolean | undefined;
+	@Input({alias: 'auAnimated', transform: auBooleanAttribute}) animated: boolean | undefined;
 
 	/**
 	 * The transition to use for the backdrop behind the modal (if present).

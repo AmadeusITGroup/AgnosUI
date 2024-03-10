@@ -13,7 +13,7 @@ export function DefaultPages(slotContext: PaginationContext) {
 	const {widget, state} = slotContext;
 	const jsxPages = [];
 	for (let i = 0; i < state.pages.length; i++) {
-		if (widget.api.isEllipsis(state.pages[i])) {
+		if (state.pages[i] === -1) {
 			jsxPages.push(
 				<li className="page-item disabled" key={'Ellipsis' + i}>
 					<div className="page-link au-ellipsis" aria-hidden="true">

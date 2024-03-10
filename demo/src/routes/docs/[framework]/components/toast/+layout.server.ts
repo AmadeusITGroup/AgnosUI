@@ -9,7 +9,7 @@ export const load = async () => {
 			{
 				title: 'Playground',
 				key: 'playground',
-				path: '/components/toast/playground#{"props":{"slotDefault":"This is a toast","autohide":false,"className":"text-bg-primary"}}',
+				path: '/components/toast/playground#{"props":{"slotDefault":"This is a toast","autoHide":false,"className":"text-bg-primary"}}',
 			},
 		],
 		prev: {

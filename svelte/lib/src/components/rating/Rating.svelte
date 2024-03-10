@@ -33,7 +33,7 @@
 			ariaValueText$,
 			readonly$,
 			disabled$,
-			isInteractive$,
+			interactive$,
 			stars$,
 			className$,
 			slotStar$,
@@ -68,7 +68,7 @@
 		<!-- svelte-ignore a11y-no-static-element-interactions -->
 		<span
 			class="au-rating-star"
-			style:cursor={$isInteractive$ ? 'pointer' : 'default'}
+			style:cursor={$interactive$ ? 'pointer' : 'default'}
 			on:mouseenter={() => hover(index + 1)}
 			on:click={() => click(index + 1)}
 		>

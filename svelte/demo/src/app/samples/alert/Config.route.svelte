@@ -2,7 +2,7 @@
 	import {Alert} from '@agnos-ui/svelte/components/alert';
 
 	let alert: Alert;
-	let [animationOnInit, animation, dismissible] = [true, true, true];
+	let [animatedOnInit, animated, dismissible] = [true, true, true];
 	let type = 'success';
 
 	enum AlertStatus {
@@ -39,14 +39,14 @@
 		</select>
 	</div>
 
-	<label><input class="form-check-input me-1" type="checkbox" bind:checked={animationOnInit} />Animation on init</label>
-	<label><input class="form-check-input me-1" type="checkbox" bind:checked={animation} />Animation</label>
+	<label><input class="form-check-input me-1" type="checkbox" bind:checked={animatedOnInit} />Animated on init</label>
+	<label><input class="form-check-input me-1" type="checkbox" bind:checked={animated} />Animated</label>
 	<label><input class="dismissibleInput form-check-input me-1" type="checkbox" bind:checked={dismissible} />Dismissible</label>
 </div>
 
 <br />
 <br />
-<Alert bind:this={alert} {dismissible} {animationOnInit} {animation} {type}>
+<Alert bind:this={alert} {dismissible} {animatedOnInit} {animated} {type}>
 	<h4 class="alert-heading">Well done!</h4>
 	<p>
 		Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing

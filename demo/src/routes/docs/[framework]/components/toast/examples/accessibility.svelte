@@ -9,7 +9,7 @@
 	<strong>Note: </strong> the aria-live region won't be announced if you add it dynamically to the markup. Ensure that it is present before the toast generation.
 </p>
 <p>
-	When <code>autohide: false</code> the close button must be added, so that the toast can be dismissed.
+	When <code>autoHide: false</code> the close button must be added, so that the toast can be dismissed.
 	<br />
 	<strong>Note:</strong> set <code>dismissible: true</code> to have the close button automatically.
 </p>

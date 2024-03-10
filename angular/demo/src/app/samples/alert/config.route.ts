@@ -30,15 +30,15 @@ export enum AlertStatus {
 				</select>
 			</div>
 
-			<label><input class="form-check-input me-1" type="checkbox" [(ngModel)]="animationOnInit" />Animation on init</label>
-			<label><input class="form-check-input me-1" type="checkbox" [(ngModel)]="animation" />Animation</label>
+			<label><input class="form-check-input me-1" type="checkbox" [(ngModel)]="animatedOnInit" />Animated on init</label>
+			<label><input class="form-check-input me-1" type="checkbox" [(ngModel)]="animated" />Animated</label>
 			<label><input class="dismissibleInput form-check-input me-1" type="checkbox" [(ngModel)]="dismissible" />Dismissible</label>
 		</div>
 
 		<br />
 		<br />
 
-		<au-component auAlert #alert [auAnimation]="animation" [auAnimationOnInit]="animationOnInit" [auDismissible]="dismissible" [auType]="type">
+		<au-component auAlert #alert [auAnimated]="animated" [auAnimatedOnInit]="animatedOnInit" [auDismissible]="dismissible" [auType]="type">
 			<h4 class="alert-heading">Well done!</h4>
 			<p>
 				Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing
@@ -56,8 +56,8 @@ export default class ConfigAlertComponent {
 		};
 	});
 
-	animationOnInit = true;
-	animation = true;
+	animatedOnInit = true;
+	animated = true;
 	dismissible = true;
 	type = this.styleList[0].value;
 

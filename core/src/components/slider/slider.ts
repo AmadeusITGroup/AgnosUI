@@ -184,10 +184,10 @@ export interface SliderState extends SliderCommonPropsAndState {
 	handleDisplayOptions: HandleDisplayOptions[];
 
 	/**
-	 * Check if the slider is interactable, meaning it is not disabled or readonly
+	 * Check if the slider is interactive, meaning it is not disabled or readonly
 	 * TODO: rename to `interactive`, issue #510
 	 */
-	isInteractable: boolean;
+	interactive: boolean;
 }
 
 export interface SliderProps extends SliderCommonPropsAndState {
@@ -508,7 +508,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 		const values = values$();
 		return values.length == 2 && Math.abs(values[0] - values[1]) < 10;
 	});
-	const isInteractable$ = computed(() => !disabled$() && !readonly$());
+	const interactive$ = computed(() => !disabled$() && !readonly$());
 
 	const combinedLabelPositionLeft$ = computed(() => {
 		const sortedValuesPercent = sortedValuesPercent$();
@@ -582,7 +582,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 	};
 
 	const adjustCoordinate = (clickedCoordinate: number, handleNumber?: number) => {
-		if (isInteractable$()) {
+		if (interactive$()) {
 			const sliderDomRectSize = sliderDomRectSize$(),
 				sliderDomRectOffset = sliderDomRectOffset$();
 			let clickedPercent = vertical$()
@@ -610,7 +610,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			minValueLabelDisplay$,
 			maxValueLabelDisplay$,
 			combinedLabelDisplay$,
-			isInteractable$,
+			interactive$,
 			combinedLabelPositionLeft$,
 			combinedLabelPositionTop$,
 			progressDisplayOptions$,
@@ -638,7 +638,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 					min = min$(),
 					max = max$(),
 					vertical = vertical$();
-				if (isInteractable$()) {
+				if (interactive$()) {
 					switch (key) {
 						case 'ArrowDown':
 							updateValue(handleIndex, values$, stepSize, getUpdateDirection(vertical, rtl, true));
@@ -691,7 +691,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 						adjustCoordinate(newCoord, handleId);
 					}
 				};
-				if (isInteractable$()) {
+				if (interactive$()) {
 					updateSliderSize$.set({});
 					currentTarget.focus();
 					document.addEventListener('mousemove', handleDrag);
@@ -716,7 +716,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 						adjustCoordinate(newCoord, handleId);
 					}
 				};
-				if (isInteractable$()) {
+				if (interactive$()) {
 					updateSliderSize$.set({});
 					(event.target as HTMLElement).focus();
 					document.addEventListener('touchmove', handleDrag);

@@ -23,7 +23,7 @@ const DynamicToastDemo = () => {
 	const [toastMap, setToastMap] = useState(new Map(Object.values(ToastPositions).map((entry: string) => [entry, [] as ReactToastProps[]])));
 
 	function pushToast() {
-		toastMap.get(position)!.push({autohide: true, delay: 3000, className: position, id: counter++});
+		toastMap.get(position)!.push({autoHide: true, delay: 3000, className: position, id: counter++});
 		setToastMap(new Map(toastMap));
 	}
 

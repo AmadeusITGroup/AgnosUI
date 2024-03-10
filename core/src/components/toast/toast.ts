@@ -13,7 +13,7 @@ export interface ToastExtraProps {
 	/**
 	 * If `true` automatically hides the toast after the delay.
 	 */
-	autohide: boolean;
+	autoHide: boolean;
 
 	/**
 	 * Delay in milliseconds before hiding the toast.
@@ -30,7 +30,7 @@ export interface ExtraDirectives {
 	/**
 	 * Directive that handles the autohide of the toast component
 	 */
-	autohideDirective: Directive;
+	autoHideDirective: Directive;
 }
 
 export interface ToastState extends ExtendWidgetAdaptSlotWidgetProps<CommonAlertState, ToastExtraProps, ExtraDirectives> {}
@@ -44,13 +44,13 @@ export interface ToastDirectives extends ExtendWidgetInterfaces<CommonAlertDirec
 export type ToastWidget = Widget<ToastProps, ToastState, ToastApi, object, ToastDirectives>;
 
 const toastDefaultConfig: ToastExtraProps = {
-	autohide: true,
+	autoHide: true,
 	delay: 5000,
 	slotHeader: undefined,
 };
 
 const toastConfigValidator: ConfigValidator<ToastExtraProps> = {
-	autohide: typeBoolean,
+	autoHide: typeBoolean,
 	delay: typeNumberInRangeFactory(0, +Infinity, {strict: true}),
 };
 
@@ -78,7 +78,7 @@ export function createToast(config?: PropsConfig<ToastProps>): ToastWidget {
 
 	const time$ = computed(() => {
 		clearTimeout(_timeout);
-		if (extendedAlert.stores.autohide$()) {
+		if (extendedAlert.stores.autoHide$()) {
 			_timeout = setTimeout(() => extendedAlert.api.close(), extendedAlert.stores.delay$());
 		}
 	});
@@ -87,7 +87,7 @@ export function createToast(config?: PropsConfig<ToastProps>): ToastWidget {
 		...extendedAlert,
 		directives: {
 			...extendedAlert.directives,
-			autohideDirective: directiveSubscribe(time$),
+			autoHideDirective: directiveSubscribe(time$),
 		},
 	};
 }

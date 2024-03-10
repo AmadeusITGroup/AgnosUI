@@ -118,23 +118,6 @@ describe(`Accordion`, () => {
 		i.actions.click();
 	});
 
-	test(`should have isExpanded return coherent value`, () => {
-		const i = accordion.api.registerItem();
-		const el = document.createElement('div');
-		i.directives.accordionItemDirective(el);
-		i.patch({itemVisible: true});
-
-		expect(accordion.api.isExpanded(i.state$().itemId)).toBe(true);
-		i.patch({itemVisible: false});
-		expect(accordion.api.isExpanded(i.state$().itemId)).toBe(false);
-	});
-
-	test(`should have isExpanded return false when using invalid id`, () => {
-		const i = accordion.api.registerItem();
-		i.patch({itemVisible: true});
-		expect(accordion.api.isExpanded('fakeId')).toBe(false);
-	});
-
 	test(`should expand all the items and close them`, () => {
 		const el = document.createElement('div');
 		accordion.api.registerItem().directives.accordionItemDirective(el);

@@ -47,7 +47,7 @@ export const Toast: ForwardRefExoticComponent<PropsWithChildren<Partial<ToastPro
 	ref,
 ) {
 	const [state, widget] = useWidgetWithConfig(createToast, props, 'toast', {...defaultConfig, slotDefault: props.children});
-	const refToast = useDirectives([widget.directives.transitionDirective, widget.directives.autohideDirective]);
+	const refToast = useDirectives([widget.directives.transitionDirective, widget.directives.autoHideDirective]);
 	useImperativeHandle(ref, () => widget.api, []);
 	const slotContext = {
 		state,

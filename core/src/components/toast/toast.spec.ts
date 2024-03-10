@@ -27,7 +27,7 @@ describe(`Toast`, () => {
 			hidden: false,
 			ariaCloseButtonLabel: 'Close',
 			delay: 5000,
-			autohide: true,
+			autoHide: true,
 		});
 	});
 
@@ -116,7 +116,7 @@ describe(`Toast`, () => {
 			},
 		});
 		toastEvents.directives.transitionDirective(element);
-		toastEvents.directives.autohideDirective(element);
+		toastEvents.directives.autoHideDirective(element);
 
 		await promiseOnHidden.promise;
 		expect(onVisibleChangeCounter).toBe(1);

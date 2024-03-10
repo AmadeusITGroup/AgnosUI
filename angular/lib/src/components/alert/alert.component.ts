@@ -100,7 +100,7 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> implements 
 	/**
 	 * The transition function will be executed when the alert is displayed or hidden.
 	 *
-	 * Depending on the value of CommonAlertProps.animationOnInit, the animation can be optionally skipped during the showing process.
+	 * Depending on the value of CommonAlertProps.animatedOnInit, the animation can be optionally skipped during the showing process.
 	 */
 	@Input('auTransition')
 	transition: TransitionFn | undefined;
@@ -117,8 +117,8 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> implements 
 	 * Animation is triggered  when the `.open()` function is called
 	 * or the visible prop is changed
 	 */
-	@Input({alias: 'auAnimationOnInit', transform: auBooleanAttribute})
-	animationOnInit: boolean | undefined;
+	@Input({alias: 'auAnimatedOnInit', transform: auBooleanAttribute})
+	animatedOnInit: boolean | undefined;
 
 	/**
 	 * If `true`, alert closing will be animated.
@@ -126,8 +126,8 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> implements 
 	 * Animation is triggered  when clicked on the close button (×),
 	 * via the `.close()` function or the visible prop is changed
 	 */
-	@Input({alias: 'auAnimation', transform: auBooleanAttribute})
-	animation: boolean | undefined;
+	@Input({alias: 'auAnimated', transform: auBooleanAttribute})
+	animated: boolean | undefined;
 
 	/**
 	 * Accessibility close button label

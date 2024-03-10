@@ -7,15 +7,15 @@ import {useObservable} from '@agnos-ui/react/utils/stores';
 import {useWidget} from '@agnos-ui/react/utils/widget';
 
 const paramTransition$ = writable(collapseVerticalTransition);
-const paramAnimation$ = writable(true);
-const paramAnimationOnInit$ = writable(false);
+const paramAnimated$ = writable(true);
+const paramAnimatedOnInit$ = writable(false);
 const paramVisible$ = writable(true);
 const paramRemoveFromDom$ = writable(true);
 
 const InnerComponent = () => {
 	const paramTransition = useObservable(paramTransition$);
-	const paramAnimation = useObservable(paramAnimation$);
-	const paramAnimationOnInit = useObservable(paramAnimationOnInit$);
+	const paramAnimated = useObservable(paramAnimated$);
+	const paramAnimatedOnInit = useObservable(paramAnimatedOnInit$);
 	const paramRemoveFromDom = useObservable(paramRemoveFromDom$);
 	const [transitionState, transitionWidget] = useWidget(
 		createTransition,
@@ -23,8 +23,8 @@ const InnerComponent = () => {
 		{
 			props: {
 				transition: paramTransition$,
-				animation: paramAnimation$,
-				animationOnInit: paramAnimationOnInit$,
+				animated: paramAnimated$,
+				animatedOnInit: paramAnimatedOnInit$,
 				visible: paramVisible$,
 			},
 		},
@@ -68,17 +68,17 @@ const InnerComponent = () => {
 				</div>
 				<div className="h6 mt-2">Other properties:</div>
 				<label className="form-check">
-					<input type="checkbox" className="form-check-input" checked={paramAnimation} onChange={() => paramAnimation$.set(!paramAnimation)} />
-					Animation
+					<input type="checkbox" className="form-check-input" checked={paramAnimated} onChange={() => paramAnimated$.set(!paramAnimated)} />
+					Animated
 				</label>
 				<label className="form-check">
 					<input
 						type="checkbox"
 						className="form-check-input"
-						checked={paramAnimationOnInit}
-						onChange={() => paramAnimationOnInit$.set(!paramAnimationOnInit)}
+						checked={paramAnimatedOnInit}
+						onChange={() => paramAnimatedOnInit$.set(!paramAnimatedOnInit)}
 					/>
-					Animation on init
+					Animated on init
 				</label>
 				<label className="form-check">
 					<input

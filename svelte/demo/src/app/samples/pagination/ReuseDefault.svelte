@@ -10,7 +10,6 @@
 	const {
 		stores: {page$, pagesLabel$, slotEllipsis$, slotNumberLabel$},
 		actions: {select},
-		api: {isEllipsis},
 	} = widget;
 </script>
 
@@ -18,10 +17,10 @@
 	<li
 		class="page-item"
 		class:active={page === state.page}
-		class:disabled={isEllipsis(page) || state.disabled}
+		class:disabled={page === -1 || state.disabled}
 		aria-current={page === state.page ? 'page' : null}
 	>
-		{#if isEllipsis(page)}
+		{#if page === -1}
 			<!-- svelte-ignore a11y-invalid-attribute -->
 			<a class="page-link au-ellipsis" tabindex="-1" aria-disabled="true" on:click|preventDefault|stopPropagation href="#">
 				<Slot slotContent={$slotEllipsis$} props={{state, widget}} let:component let:props>

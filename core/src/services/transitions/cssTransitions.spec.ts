@@ -21,7 +21,7 @@ describe(`createCSSTransition`, () => {
 	};
 
 	const callTransitionShow = async (element: HTMLElement, props: Partial<TransitionProps>) => {
-		const transitionInstance = createTransition({props: {animationOnInit: true, ...props}});
+		const transitionInstance = createTransition({props: {animatedOnInit: true, ...props}});
 		const directiveInstance = transitionInstance.directives.directive(element);
 		await transitionInstance.api.show();
 		directiveInstance?.destroy?.();
@@ -128,7 +128,7 @@ describe(`createCSSTransition`, () => {
 		expect(duration).toBeLessThan(10);
 	});
 
-	test(`animation disabled`, async () => {
+	test(`animated disabled`, async () => {
 		const events: string[] = [];
 		const element = createElement();
 		const transition = createCSSTransition((e, d, a) => {
@@ -142,7 +142,7 @@ describe(`createCSSTransition`, () => {
 			};
 		});
 		events.push('before');
-		const promise = callTransitionShow(element, {transition, animationOnInit: false, animation: false});
+		const promise = callTransitionShow(element, {transition, animatedOnInit: false, animated: false});
 		events.push('after');
 		await promise;
 		events.push('afterAsync');
@@ -154,7 +154,7 @@ describe(`createCSSTransition`, () => {
 		const element = createElement();
 		const cssTransition = createTransition({
 			props: {
-				animationOnInit: true,
+				animatedOnInit: true,
 				transition: createCSSTransition((e, d, a, c: {used?: boolean}) => {
 					events.push(`startFn:${d}:${c.used ?? false}`);
 					c.used = true;

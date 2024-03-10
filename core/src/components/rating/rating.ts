@@ -110,7 +110,7 @@ export interface RatingState extends RatingCommonPropsAndState {
 	/**
 	 * is the rating interactive i.e. listening to hover, click and keyboard events
 	 */
-	isInteractive: boolean;
+	interactive: boolean;
 	/**
 	 * the list of stars
 	 */
@@ -227,7 +227,7 @@ export function createRating(config?: PropsConfig<RatingProps>): RatingWidget {
 	const _hoveredRating$ = writable(0);
 
 	// computed
-	const isInteractive$ = computed(() => !disabled$() && !readonly$());
+	const interactive$ = computed(() => !disabled$() && !readonly$());
 	const visibleRating$ = computed(() => {
 		const hoveredRating = _hoveredRating$();
 		return hoveredRating !== 0 ? hoveredRating : rating$();
@@ -244,7 +244,7 @@ export function createRating(config?: PropsConfig<RatingProps>): RatingWidget {
 	return {
 		...stateStores({
 			ariaValueText$,
-			isInteractive$,
+			interactive$,
 			rating$,
 			stars$,
 			tabindex$,
@@ -254,24 +254,24 @@ export function createRating(config?: PropsConfig<RatingProps>): RatingWidget {
 		patch,
 		actions: {
 			click: (index: number) => {
-				if (isInteractive$() && index > 0 && index <= maxRating$()) {
+				if (interactive$() && index > 0 && index <= maxRating$()) {
 					rating$.update((rating) => (rating === index && resettable$() ? 0 : index));
 				}
 			},
 			hover: (index: number) => {
-				if (isInteractive$() && index > 0 && index <= maxRating$()) {
+				if (interactive$() && index > 0 && index <= maxRating$()) {
 					_hoveredRating$.set(index);
 					onHover$()(index);
 				}
 			},
 			leave: () => {
-				if (isInteractive$()) {
+				if (interactive$()) {
 					onLeave$()(_hoveredRating$());
 					_hoveredRating$.set(0);
 				}
 			},
 			handleKey(event: KeyboardEvent) {
-				if (isInteractive$()) {
+				if (interactive$()) {
 					const {key} = event;
 					switch (key) {
 						case 'ArrowLeft':

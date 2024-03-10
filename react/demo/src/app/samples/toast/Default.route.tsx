@@ -15,7 +15,7 @@ const DefaultToastDemo = () => {
 				Color schemes are based on the Bootstrap classes, in order to have out-of-the-box text accessibility use the helper classes{' '}
 				<code>.text-bg-*</code>, e.g. <code>.text.bg-primary</code>
 			</p>
-			<Toast ref={refToast} className="text-bg-primary" slotHeader="I am header" autohide={false}>
+			<Toast ref={refToast} className="text-bg-primary" slotHeader="I am header" autoHide={false}>
 				Simple primary toast
 			</Toast>
 
@@ -25,7 +25,7 @@ const DefaultToastDemo = () => {
 
 			<h3>Variations</h3>
 			<div className="row gy-2 gx-3">
-				<WidgetsDefaultConfig toast={{autohide: false, dismissible: false}}>
+				<WidgetsDefaultConfig toast={{autoHide: false, dismissible: false}}>
 					<div className="col-auto">
 						<Toast className="text-bg-success">This is a success toast</Toast>
 					</div>

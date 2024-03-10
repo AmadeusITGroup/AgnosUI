@@ -78,9 +78,9 @@
 				class="join-item btn btn-outline"
 				class:btn-active={page === $state$.page}
 				aria-current={page === $state$.page ? 'page' : null}
-				tabindex={widget.api.isEllipsis(page) ? -1 : $state$.disabled ? -1 : undefined}
-				on:click={widget.api.isEllipsis(page) ? () => {} : () => widget.actions.select(page)}
-				disabled={widget.api.isEllipsis(page) || $state$.disabled}
+				tabindex={page === -1 ? -1 : $state$.disabled ? -1 : undefined}
+				on:click={page === -1 ? () => {} : () => widget.actions.select(page)}
+				disabled={page === -1 || $state$.disabled}
 				>{page}
 				{#if $state$.page === page}<span class="sr-only">{$state$.activeLabel}</span>{/if}
 			</button>

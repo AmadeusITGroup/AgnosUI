@@ -5,8 +5,8 @@ export interface State {
 	transitioning: boolean;
 	shown: boolean;
 	hidden: boolean;
-	animation: boolean;
-	animationOnInit: boolean;
+	animated: boolean;
+	animatedOnInit: boolean;
 	removeFromDOM: boolean;
 	transition: 'verticalCollapse' | 'horizontalCollapse' | 'fade';
 	classes: string[] | undefined;
@@ -45,12 +45,12 @@ export class TransitionPO extends BasePO {
 		return this.locatorRoot.locator('button >> text="Toggle without animation"');
 	}
 
-	get locatorAnimationCheckbox() {
-		return this.locatorRoot.locator('label >> text="Animation" >> input[type=checkbox]').first();
+	get locatorAnimatedCheckbox() {
+		return this.locatorRoot.locator('label >> text="Animated" >> input[type=checkbox]').first();
 	}
 
-	get locatorAnimationOnInitCheckbox() {
-		return this.locatorRoot.locator('label >> text="Animation on init" >> input[type=checkbox]');
+	get locatorAnimatedOnInitCheckbox() {
+		return this.locatorRoot.locator('label >> text="Animated on init" >> input[type=checkbox]');
 	}
 
 	get locatorRemoveFromDOMCheckbox() {

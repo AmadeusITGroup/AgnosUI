@@ -55,7 +55,7 @@ export class RatingStarDirective {
 				class="au-rating-star"
 				(mouseenter)="_widget.actions.hover(index + 1)"
 				(click)="_widget.actions.click(index + 1)"
-				[style.cursor]="state().isInteractive ? 'pointer' : 'default'"
+				[style.cursor]="state().interactive ? 'pointer' : 'default'"
 			>
 				<ng-template [auSlot]="state().slotStar" [auSlotProps]="state().stars[index]"></ng-template>
 			</span>
