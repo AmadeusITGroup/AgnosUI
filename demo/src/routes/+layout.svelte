@@ -97,7 +97,8 @@
 				</a>
 				<Versions versions={data.versions} />
 			</div>
-			<div class="d-block d-md-none">
+			<div class="align-items-center d-flex d-md-none">
+				<Versions versions={data.versions} />
 				<MobileMenu />
 			</div>
 		</div>
