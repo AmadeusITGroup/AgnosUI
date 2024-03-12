@@ -1,9 +1,13 @@
 name: pr
 on:
-  pull_request:
+  pull_request_target:
     branches: [main]
 jobs:
   build:
     uses: './.github/workflows/build.yml'
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
   e2e-tests:
     uses: './.github/workflows/e2e-tests.yml'
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
