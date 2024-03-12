@@ -40,6 +40,7 @@
 			"files": [
 				"src/**",
 				"tsconfig.json",
+				"../tsconfig.json",
 				"vite.config.ts",
 				"vitest.config.ts"
 			],

@@ -26,6 +26,7 @@
 				"lib/**",
 				"tsconfig.json",
 				"tsconfig.d.json",
+				"../tsconfig.json",
 				"vite.config.ts"
 			],
 			"output": [

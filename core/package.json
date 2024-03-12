@@ -65,6 +65,7 @@
 			"files": [
 				"src/**",
 				"tsconfig.json",
+				"../tsconfig.json",
 				"vite.config.ts"
 			],
 			"output": [
@@ -100,7 +101,8 @@
 				"api-extractor.json",
 				"../api-extractor.json",
 				"src/**",
-				"tsconfig.json"
+				"tsconfig.json",
+				"../tsconfig.json"
 			],
 			"output": []
 		},
