@@ -1,13 +1,11 @@
 <script lang="ts">
+	import Svg from '$lib/layout/Svg.svelte';
+	import {createHasFocus} from '@agnos-ui/svelte/services/focustrack';
+	import {writable} from '@amadeus-it-group/tansu';
+	import halfCircle from 'bootstrap-icons/icons/circle-half.svg?raw';
 	import moon from 'bootstrap-icons/icons/moon-stars-fill.svg?raw';
 	import sun from 'bootstrap-icons/icons/sun-fill.svg?raw';
-	import halfCircle from 'bootstrap-icons/icons/circle-half.svg?raw';
-	import Svg from '$lib/layout/Svg.svelte';
-	import {writable} from '@amadeus-it-group/tansu';
-	import type {ReadableSignal} from '@amadeus-it-group/tansu';
 	import {onMount} from 'svelte';
-	import {createHasFocus} from '@agnos-ui/svelte/services/focustrack';
-	import type {Directive} from '@agnos-ui/svelte/types';
 
 	interface Theme {
 		id: string;
@@ -44,8 +42,7 @@
 		document.documentElement.setAttribute('data-agnos-theme', theme.id);
 	}
 
-	let hasFocus$: ReadableSignal<boolean>;
-	let directive: Directive;
+	const {hasFocus$, directive} = createHasFocus();
 	$: $open$ = $hasFocus$;
 
 	onMount(() => {
@@ -60,7 +57,6 @@
 				setTheme(getPreferredTheme());
 			}
 		});
-		({hasFocus$, directive} = createHasFocus());
 	});
 
 	function giveFocus(el: HTMLButtonElement, index: number) {

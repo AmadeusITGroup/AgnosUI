@@ -2,11 +2,8 @@
 	import {page} from '$app/stores';
 	import {pathToRoot$, selectedFramework$} from '$lib/stores';
 	import {createHasFocus} from '@agnos-ui/svelte/services/focustrack';
-	import type {Directive} from '@agnos-ui/svelte/types';
-	import type {ReadableSignal} from '@amadeus-it-group/tansu';
 	import {writable} from '@amadeus-it-group/tansu';
 	import {lte, valid} from 'semver';
-	import {onMount} from 'svelte';
 
 	export interface Version {
 		folder: string;
@@ -17,15 +14,10 @@
 <script lang="ts">
 	export let versions: Version[];
 
-	onMount(() => {
-		({hasFocus$, directive} = createHasFocus());
-	});
-
 	const currentVersion$ = writable(versions.find((version) => version.version === `v${import.meta.env.AGNOSUI_VERSION}`) ?? versions[0]);
 	const open$ = writable(false);
 
-	let hasFocus$: ReadableSignal<boolean>;
-	let directive: Directive;
+	const {hasFocus$, directive} = createHasFocus();
 	$: $open$ = $hasFocus$;
 
 	function giveFocus(el: HTMLAnchorElement, index: number) {
