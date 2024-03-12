@@ -90,7 +90,7 @@ if (isReleased) {
 
 	const corePackage = addAsyncFiles(
 		import.meta.glob(['../../../../core/dist/**', '!**/*.map'], {
-			as: 'raw',
+			query: '?raw',
 			import: 'default',
 		}) as any,
 		'packages/@agnos-ui/core/',
@@ -98,7 +98,7 @@ if (isReleased) {
 	);
 	const stylePackage = addAsyncFiles(
 		import.meta.glob(['../../../../style-bootstrap/**', '!**/*.map', '!**/*.scss'], {
-			as: 'raw',
+			query: '?raw',
 			import: 'default',
 		}) as any,
 		'packages/@agnos-ui/style-bootstrap/',
@@ -110,7 +110,7 @@ if (isReleased) {
 		stylePackage,
 		addAsyncFiles(
 			import.meta.glob(['../../../../angular/headless/dist/**', '!**/*.map'], {
-				as: 'raw',
+				query: '?raw',
 				import: 'default',
 			}) as any,
 			'packages/@agnos-ui/angular-headless/',
@@ -118,7 +118,7 @@ if (isReleased) {
 		),
 		addAsyncFiles(
 			import.meta.glob(['../../../../angular/lib/dist/**', '!**/*.map'], {
-				as: 'raw',
+				query: '?raw',
 				import: 'default',
 			}) as any,
 			'packages/@agnos-ui/angular/',
@@ -132,7 +132,7 @@ if (isReleased) {
 		stylePackage,
 		addAsyncFiles(
 			import.meta.glob(['../../../../react/headless/dist/**', '!**/*.map'], {
-				as: 'raw',
+				query: '?raw',
 				import: 'default',
 			}) as any,
 			'packages/@agnos-ui/react-headless/',
@@ -140,7 +140,7 @@ if (isReleased) {
 		),
 		addAsyncFiles(
 			import.meta.glob(['../../../../react/lib/dist/**', '!**/*.map'], {
-				as: 'raw',
+				query: '?raw',
 				import: 'default',
 			}) as any,
 			'packages/@agnos-ui/react/',
@@ -154,7 +154,7 @@ if (isReleased) {
 		stylePackage,
 		addAsyncFiles(
 			import.meta.glob(['../../../../svelte/headless/dist/**', '!**/*.map'], {
-				as: 'raw',
+				query: '?raw',
 				import: 'default',
 			}) as any,
 			'packages/@agnos-ui/svelte-headless/',
@@ -162,7 +162,7 @@ if (isReleased) {
 		),
 		addAsyncFiles(
 			import.meta.glob(['../../../../svelte/lib/dist/**', '!**/*.map'], {
-				as: 'raw',
+				query: '?raw',
 				import: 'default',
 			}) as any,
 			'packages/@agnos-ui/svelte/',
