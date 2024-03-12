@@ -1,5 +1,14 @@
 import {computed, derived} from '@amadeus-it-group/tansu';
-import type {ArrowOptions, AutoUpdateOptions, ComputePositionConfig, ComputePositionReturn, Derivable} from '@floating-ui/dom';
+import type {
+	ArrowOptions,
+	AutoUpdateOptions,
+	ComputePositionConfig,
+	ComputePositionReturn,
+	Derivable,
+	MiddlewareData,
+	Placement,
+	Strategy,
+} from '@floating-ui/dom';
 import {arrow, autoUpdate, computePosition} from '@floating-ui/dom';
 import type {PropsConfig} from '../types';
 import {createStoreDirective, directiveSubscribe, mergeDirectives} from '../utils/directive';
@@ -21,6 +30,29 @@ export interface FloatingUIProps {
 	 * Options to use when calling the arrow middleware from Floating UI
 	 */
 	arrowOptions: Omit<ArrowOptions, 'element'> | Derivable<Omit<ArrowOptions, 'element'>>;
+}
+
+export interface FloatingUIState {
+	/**
+	 * The x coordinate of the floating ui
+	 */
+	x: number | undefined;
+	/**
+	 * The y coordinate of the floating ui
+	 */
+	y: number | undefined;
+	/**
+	 * The strategy used to position the floating element
+	 */
+	strategy: Strategy | undefined;
+	/**
+	 * The final chosen placement of the floating element
+	 */
+	placement: Placement | undefined;
+	/**
+	 * Object containing data returned from all middleware, keyed by their name
+	 */
+	middlewareData: MiddlewareData | undefined;
 }
 
 const defaultConfig: FloatingUIProps = {
@@ -123,7 +155,7 @@ export const createFloatingUI = (propsConfig?: PropsConfig<FloatingUIProps>) => 
 
 	return {
 		patch,
-		...stateStores({
+		...stateStores<FloatingUIState>({
 			x$,
 			y$,
 			strategy$,
