@@ -6,28 +6,31 @@ import {createStoreArrayDirective} from '../utils/directive';
 const evtFocusIn = 'focusin';
 const evtFocusOut = 'focusout';
 
-export const activeElement$ = readable(<Element | null>null, {
-	onUse({set}) {
-		function setActiveElement() {
-			set(document.activeElement);
-		}
-		setActiveElement();
+export const activeElement$ =
+	typeof document === 'undefined'
+		? readable(null)
+		: readable(<Element | null>null, {
+				onUse({set}) {
+					function setActiveElement() {
+						set(document.activeElement);
+					}
+					setActiveElement();
 
-		const container = document.documentElement;
-		function onFocusOut() {
-			setTimeout(setActiveElement);
-		}
+					const container = document.documentElement;
+					function onFocusOut() {
+						setTimeout(setActiveElement);
+					}
 
-		container.addEventListener(evtFocusIn, setActiveElement, {capture: true});
-		container.addEventListener(evtFocusOut, onFocusOut, {capture: true});
+					container.addEventListener(evtFocusIn, setActiveElement, {capture: true});
+					container.addEventListener(evtFocusOut, onFocusOut, {capture: true});
 
-		return () => {
-			container.removeEventListener(evtFocusIn, setActiveElement, {capture: true});
-			container.removeEventListener(evtFocusOut, onFocusOut, {capture: true});
-		};
-	},
-	equal: Object.is,
-});
+					return () => {
+						container.removeEventListener(evtFocusIn, setActiveElement, {capture: true});
+						container.removeEventListener(evtFocusOut, onFocusOut, {capture: true});
+					};
+				},
+				equal: Object.is,
+			});
 
 export interface HasFocus {
 	/**
