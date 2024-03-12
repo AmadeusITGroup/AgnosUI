@@ -4,17 +4,14 @@
 	import {createHasFocus} from '@agnos-ui/core/services/focustrack';
 	import {writable} from '@amadeus-it-group/tansu';
 	import {lte, valid} from 'semver';
-
-	export interface Version {
-		folder: string;
-		version: string;
-	}
+	import type {Version} from './version';
 </script>
 
 <script lang="ts">
 	export let versions: Version[];
 
-	const currentVersion$ = writable(versions.find((version) => version.version === `v${import.meta.env.AGNOSUI_VERSION}`) ?? versions[0]);
+	$: currentVersion = versions.find((version) => version.version === `v${import.meta.env.AGNOSUI_VERSION}`) ?? versions[0];
+
 	const open$ = writable(false);
 
 	const {hasFocus$, directive} = createHasFocus();
@@ -29,23 +26,26 @@
 	$: versionsWithUrl = versions.map((version) => ({
 		...version,
 		url:
-			version.version === 'PREVIEW' || ($page.data['since'] && valid($page.data['since']) && lte($page.data['since'], version.version))
-				? $page.url.pathname.replace(`/${$currentVersion$.folder}/`, `/${version.folder}/`)
-				: `${$pathToRoot$.replace($currentVersion$.folder, version.folder)}docs/${$selectedFramework$}/getting-started/introduction`,
+			version.version === 'PREVIEW' ||
+			$page.route.id === '/' ||
+			($page.data['since'] && valid($page.data['since']) && lte($page.data['since'], version.version))
+				? $page.url.pathname.replace(`/${currentVersion.folder}/`, `/${version.folder}/`)
+				: `${$pathToRoot$.replace(currentVersion.folder, version.folder)}docs/${$selectedFramework$}/getting-started/introduction`,
 	}));
 </script>
 
 <div class="nav-item ms-3">
 	<div class="dropdown">
 		<button
-			class="btn nav-link dropdown-toggle align-items-center d-flex {$currentVersion$.version === 'PREVIEW' ? 'badge text-bg-warning' : ''}"
+			class="btn nav-link dropdown-toggle align-items-center d-flex {currentVersion.version === 'PREVIEW' ? 'badge text-bg-warning' : ''}"
 			aria-label="demo version select"
+			on:mousedown={(e) => e.preventDefault()}
 			on:click={() => ($open$ = !$open$)}
 			type="button"
 			data-bs-toggle="dropdown"
 			aria-expanded={$open$}
 		>
-			{$currentVersion$.version}
+			{currentVersion.version}
 		</button>
 		{#if $open$}
 			<div
@@ -60,9 +60,8 @@
 						use:giveFocus={index}
 						class="dropdown-item d-flex align-items-center"
 						href={version.url}
-						class:active={version.folder === $currentVersion$.folder}
+						class:active={version.folder === currentVersion.folder}
 						on:click={() => {
-							currentVersion$.set(version);
 							$open$ = !$open$;
 						}}
 					>
