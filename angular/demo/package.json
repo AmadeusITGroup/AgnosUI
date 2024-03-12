@@ -49,7 +49,9 @@
 			"files": [
 				"src/**",
 				"angular.json",
-				"tsconfig.build.json"
+				"tsconfig.build.json",
+				"../tsconfig.json",
+				"../../tsconfig.json"
 			],
 			"output": [
 				"dist/**"

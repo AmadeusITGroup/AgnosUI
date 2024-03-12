@@ -39,7 +39,8 @@
 			"files": [
 				"lib/**",
 				"tsconfig.json",
-				"tsconfig.d.json"
+				"tsconfig.d.json",
+				"../tsconfig.json"
 			],
 			"output": [
 				"dist/dts/**"
@@ -55,7 +56,8 @@
 				"api-extractor.json",
 				"../api-extractor.json",
 				"tsconfig.json",
-				"tsconfig.d.json"
+				"tsconfig.d.json",
+				"../tsconfig.json"
 			],
 			"output": [
 				"dist/lib/index.d.ts"

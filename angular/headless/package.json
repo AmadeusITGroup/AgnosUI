@@ -41,6 +41,8 @@
 				"src/**",
 				"!src/generated/**",
 				"tsconfig.build.json",
+				"../tsconfig.json",
+				"../../tsconfig.json",
 				"angular.json",
 				"ng-package.json"
 			],

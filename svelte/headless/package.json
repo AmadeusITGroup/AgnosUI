@@ -74,7 +74,9 @@
 			"files": [
 				"src/**",
 				"!src/generated/**",
-				"tsconfig.json"
+				"tsconfig.json",
+				"../tsconfig.json",
+				"../../tsconfig.json"
 			],
 			"output": [
 				"dist/**",
@@ -111,7 +113,9 @@
 			],
 			"files": [
 				"src/**",
-				"tsconfig.json"
+				"tsconfig.json",
+				"../tsconfig.json",
+				"../../tsconfig.json"
 			],
 			"output": []
 		}
