@@ -71,6 +71,7 @@
 		<button
 			class="btn nav-link dropdown-toggle align-items-center d-flex btn-dark-mode"
 			aria-label="toggle the dark mode"
+			on:mousedown={(e) => e.preventDefault()}
 			on:click={() => ($open$ = !$open$)}
 			type="button"
 			data-bs-toggle="dropdown"
