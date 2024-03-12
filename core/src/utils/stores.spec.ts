@@ -361,7 +361,7 @@ describe(`Stores service`, () => {
 	describe('stateStores', () => {
 		test('Basic functionalities', () => {
 			const stores = {a$: writable(5), b$: writable(6)};
-			const res = stateStores(stores);
+			const res = stateStores<{a: number; b: number}>(stores);
 			const stateValues: {a: number; b: number}[] = [];
 			expect((res.stores.a$ as any).set).toBeUndefined();
 			expect((res.stores.a$ as any).update).toBeUndefined();
