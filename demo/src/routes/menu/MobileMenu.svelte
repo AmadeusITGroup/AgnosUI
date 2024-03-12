@@ -6,7 +6,6 @@
 	import Svg from '$lib/layout/Svg.svelte';
 	import {pathToRoot$} from '$lib/stores';
 	import {page} from '$app/stores';
-	import Theme from './Theme.svelte';
 
 	let open = false;
 
@@ -15,7 +14,6 @@
 	}
 </script>
 
-<Theme />
 <button
 	class="btn d-flex align-items-center pe-0"
 	aria-expanded={open}
@@ -56,9 +54,6 @@
 		<a class="nav-link ms-3" href="https://twitter.com/AgnosUI" aria-label="link to twitter / x account" target="_blank">
 			<Svg className="icon-24 align-middle" svg={twitter} />
 		</a>
-		<div class="ms-3 align-self-center">
-			<span class="mt-4">v{import.meta.env.AGNOSUI_VERSION}</span>
-		</div>
 	</div>
 </MobileDialog>
 
