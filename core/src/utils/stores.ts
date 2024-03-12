@@ -13,10 +13,6 @@ export type ReadableSignals<T extends object> = {
 };
 
 export type WithoutDollar<S extends `${string}$`> = S extends `${infer U}$` ? U : never;
-export type ValueOfStore<S extends ReadableSignal<any>> = S extends ReadableSignal<infer U> ? U : never;
-export type ToState<S extends {[K in keyof S & `${string}$`]: ReadableSignal<any>}> = {
-	[K in keyof S & `${string}$` as WithoutDollar<K>]: ValueOfStore<S[K]>;
-};
 
 /**
  *
@@ -270,15 +266,15 @@ export const writablesForProps = <T extends object>(
  * @param inputStores - the input stores
  * @returns the object containing the stores as readable and the global state
  */
-export const stateStores = <A extends {[key in `${string}$`]: ReadableSignal<any>}>(
-	inputStores: A,
-): {state$: ReadableSignal<ToState<A>>; stores: {[key in `${string}$` & keyof A]: ReadableSignal<ValueOfStore<A[key]>>}} => {
+export const stateStores = <A extends object>(inputStores: {[K in keyof A as `${K & string}$`]: ReadableSignal<any>}): {
+	state$: ReadableSignal<A>;
+	stores: {[K in keyof A as `${K & string}$`]: ReadableSignal<A[K]>};
+} => {
 	const storesNames: string[] = [];
 	const storesArray: any = [];
 	const stores: any = {};
-	for (const key of Object.keys(inputStores) as (`${string}$` & keyof A)[]) {
+	for (const [key, store] of Object.entries<ReadableSignal<any>>(inputStores)) {
 		if (key.endsWith('$')) {
-			const store = inputStores[key];
 			storesNames.push(key.substring(0, key.length - 1));
 			storesArray.push(store);
 			stores[key] = asReadable(store);
