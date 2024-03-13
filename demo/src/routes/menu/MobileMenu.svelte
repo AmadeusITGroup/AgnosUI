@@ -15,7 +15,7 @@
 </script>
 
 <button
-	class="btn d-flex align-items-center pe-0"
+	class="btn d-flex align-items-center px-0"
 	aria-expanded={open}
 	on:click={() => {
 		open = true;
