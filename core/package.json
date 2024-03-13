@@ -125,14 +125,6 @@
 			"command": "node --import @agnos-ui/code-coverage/interceptReadFile ../node_modules/vitest/vitest.mjs run --coverage",
 			"dependencies": [
 				"../code-coverage:build"
-			],
-			"files": [
-				"src/**",
-				"tsconfig.tests.json",
-				"vitest.config.ts"
-			],
-			"output": [
-				"coverage/**"
 			]
 		}
 	},
