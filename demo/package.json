@@ -8,7 +8,11 @@
 		"generate:doc": "wireit",
 		"build:coverage": "wireit",
 		"preview": "vite preview",
-		"check": "wireit"
+		"check": "wireit",
+		"test": "vitest run",
+		"test:coverage": "vitest run --coverage",
+		"tdd": "vitest",
+		"tdd:ui": "vitest --ui"
 	},
 	"wireit": {
 		"generate:doc": {
