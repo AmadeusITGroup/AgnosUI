@@ -34,7 +34,7 @@
 	}));
 </script>
 
-<div class="nav-item ms-3">
+<div class="nav-item">
 	<div class="dropdown">
 		<button
 			class="btn nav-link dropdown-toggle align-items-center d-flex {currentVersion.version === 'PREVIEW' ? 'badge text-bg-warning' : ''}"
