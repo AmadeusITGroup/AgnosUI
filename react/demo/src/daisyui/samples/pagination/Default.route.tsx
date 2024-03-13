@@ -1,11 +1,9 @@
 import {Pagination} from './Pagination';
 
-const TailwindDemo = () => (
+const DaisyUIDemo = () => (
 	<>
-		<h2 className="text-lg mb-2">DaisyUI Example</h2>
-
-		<Pagination collectionSize={40} boundaryLinks={true} />
+		<Pagination collectionSize={40} boundaryLinks />
 	</>
 );
 
-export default TailwindDemo;
+export default DaisyUIDemo;

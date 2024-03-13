@@ -43,7 +43,7 @@ const tabRegExp = /^\/docs\/\[framework\]\/components\/[^/]*\/([^/]*)/;
  */
 export const selectedTabName$ = computed(() => {
 	const match = tabRegExp.exec(get(page).route.id || '');
-	return match?.[1] || 'examples';
+	return match?.[1] || 'headless';
 });
 
 const frameworkKeyRegExp = /\/docs\/[a-z]*\/(.*)$/;

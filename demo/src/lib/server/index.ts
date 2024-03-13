@@ -1,4 +1,4 @@
-import {componentsMetadata} from '../components-metadata';
+import {componentsMetadata, daisyUIMetadata} from '../components-metadata';
 import frontMatter from 'front-matter';
 
 const validMdRegex = /^\d{2}-[a-zA-Z-]*\.md$/g;
@@ -13,6 +13,11 @@ const componentsSubMenu = [
 	{...componentsMetadata.Select, slug: `components/select/`, subpath: 'examples', attributes: {}},
 	{...componentsMetadata.Slider, slug: `components/slider/`, subpath: 'examples', attributes: {}},
 	{...componentsMetadata.Toast, slug: `components/toast/`, subpath: 'examples', attributes: {}},
+];
+
+const daisyUISubMenu = [
+	{...daisyUIMetadata.Pagination, slug: `daisyUI/pagination/`, subpath: 'headless', attributes: {}},
+	{...daisyUIMetadata.Rating, slug: `daisyUI/rating/`, subpath: 'headless', attributes: {}},
 ];
 
 interface Doc {
@@ -34,6 +39,13 @@ for (const [key, value] of Object.entries(docFiles)) {
 	if (name === 'Components') {
 		if (!docs.some((doc) => doc.name === name)) {
 			docs.push({name, files: componentsSubMenu});
+		} else {
+			continue;
+		}
+	}
+	if (name === 'DaisyUI') {
+		if (!docs.some((doc) => doc.name === name)) {
+			docs.push({name, files: daisyUISubMenu});
 		} else {
 			continue;
 		}

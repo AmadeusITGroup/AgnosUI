@@ -56,3 +56,19 @@ export const componentsMetadata: {[key: string]: ComponentMetadata} = {
 		since: 'v0.2.0',
 	},
 };
+
+/**
+ * Metadata for each component
+ */
+export const daisyUIMetadata: {[key: string]: ComponentMetadata} = {
+	Pagination: {
+		title: 'Pagination',
+		status: 'stable',
+		since: 'v0.3.0',
+	},
+	Rating: {
+		title: 'Rating',
+		status: 'stable',
+		since: 'v0.3.0',
+	},
+};
