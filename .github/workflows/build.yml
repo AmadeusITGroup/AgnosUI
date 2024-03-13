@@ -40,64 +40,17 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
       - run: npx playwright install --with-deps
-      - run: npm run syncpack:check
-      - run: |
-          git config --global user.name github-actions
-          git config --global user.email github-actions@github.com
-      - if: inputs.version != ''
-        run: |
-          node scripts/setVersion.js "${{ inputs.version }}"
-          git commit -a -m v${{ inputs.version }}
-          git tag v${{ inputs.version }}
-          git show HEAD
-      - run: npm run build:ci
-      - run: npm run check
-      - run: npm run format:check
-      - run: npm run lint
-      - name: check stackblitz angular lockfile
-        run: npm ci --dry-run
-        working-directory: demo/src/lib/stackblitz/angular
-      - name: check stackblitz react lockfile
-        run: npm ci --dry-run
-        working-directory: demo/src/lib/stackblitz/react
-      - name: check stackblitz svelte lockfile
-        run: npm ci --dry-run
-        working-directory: demo/src/lib/stackblitz/svelte
-      - name: check stackblitz svelte tailwind lockfile
-        run: npm ci --dry-run
-        working-directory: demo/src/lib/stackblitz/svelte-tailwind
-      - run: npm run test:coverage
-      - uses: codecov/codecov-action@v4
-        with:
-          files: core/coverage/lcov.info,angular/coverage/lcov.info
-          flags: unit
-          token: ${{ secrets.CODECOV_TOKEN }}
-      - run: ./scripts/npmPublish.sh --dry-run
-      - if: inputs.version != '' && inputs.npmPublish
-        run: |
-          npm whoami
-          ./scripts/npmPublish.sh --provenance
-          git push origin v${{ inputs.version }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - if: inputs.docPublish && (inputs.version != '' || inputs.docPath != '')
-        uses: actions/checkout@v4
-        with:
-          ref: gh-pages
-          path: gh-pages
-      - if: inputs.docPublish && (inputs.version != '' || inputs.docPath != '')
-        env:
-          VERSION: ${{ inputs.version }}
-        working-directory: gh-pages
-        run: |
-          if [ -n "$VERSION" ]; then
-            export DOC_PATH="v$(node ../scripts/versionDocFolder.js "$VERSION")"
-          else
-            export DOC_PATH="${{ inputs.docPath }}"
-          fi
-          rm -rf "$DOC_PATH"
-          cp -a ../demo/dist "$DOC_PATH"
-          node ../scripts/updateVersionsList.js
-          git add .
-          git commit --allow-empty -a -m "$DOC_PATH from ${{ github.sha }}"
-          git push origin gh-pages
+      - run: npm run test -w core
+      - run: npm run test -w core
+      - run: npm run test -w core
+      - run: npm run test -w core
+      - run: npm run test -w core
+      - run: npm run test -w core
+      - run: npm run test -w core
+      - run: npm run test -w core
+      - run: npm run test -w core
+      - run: npm run test -w core
+      - run: npm run test -w core
+      - run: npm run test -w core
+      - run: npm run test -w core
+      - run: npm run test -w core

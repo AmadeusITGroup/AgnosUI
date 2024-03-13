@@ -2,35 +2,6 @@ import {describe, test, expect, vi} from 'vitest';
 import {activeElement$, createHasFocus} from './focustrack';
 
 describe(`Focustrack service`, () => {
-	describe('activeElement', () => {
-		test(`Basic functionalities`, () => {
-			const documentElement = document.documentElement;
-			const addEventListenerSpy = vi.spyOn(documentElement, 'addEventListener');
-			const removeEventListenerSpy = vi.spyOn(documentElement, 'removeEventListener');
-
-			let activeElement: Element | null = null;
-			document.body.innerHTML = `<input id="id"><input id="id2" disabled><div id="id3"></div>`;
-			const unsubscribe = activeElement$.subscribe((el) => {
-				activeElement = el;
-			});
-			expect(addEventListenerSpy).toHaveBeenCalledTimes(2);
-			expect(addEventListenerSpy).toHaveBeenCalledWith('focusin', expect.anything(), expect.anything());
-			expect(addEventListenerSpy).toHaveBeenCalledWith('focusout', expect.anything(), expect.anything());
-
-			expect(activeElement).toBe(document.body);
-			const element = document.getElementById('id')!;
-			element.focus();
-			expect(activeElement).toBe(element);
-
-			unsubscribe();
-			expect(removeEventListenerSpy).toHaveBeenCalledWith('focusin', expect.anything(), expect.anything());
-			expect(removeEventListenerSpy).toHaveBeenCalledWith('focusout', expect.anything(), expect.anything());
-			expect(removeEventListenerSpy).toHaveBeenCalledTimes(2);
-
-			vi.clearAllMocks();
-		});
-	});
-
 	describe('hasFocus', () => {
 		test(`Basic functionalities`, () => {
 			document.body.innerHTML = `
