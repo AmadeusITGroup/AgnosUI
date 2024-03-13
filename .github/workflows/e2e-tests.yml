@@ -28,10 +28,23 @@ jobs:
           if test -f "e2e/coverage/lcov.info"; then
             echo "check_lcov=true" >> $GITHUB_OUTPUT
           fi
-      - uses: codecov/codecov-action@v4
+      - uses: actions/upload-artifact@v4
         if: steps.check_lcov.outputs.check_lcov == 'true'
         with:
-          file: e2e/coverage/lcov.info
-          disable_search: true
-          flags: e2e-${{ matrix.shard }}
+          name: lcov-${{ matrix.shard }}.info
+          path: e2e/coverage/lcov.info
+          retention-days: 1
+  merge-reports:
+    needs: [e2e-tests]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: all-lcov
+          pattern: lcov-*
+      - uses: codecov/codecov-action@v4
+        with:
+          directory: all-lcov
+          flags: e2e
           token: ${{ secrets.CODECOV_TOKEN }}
