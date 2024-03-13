@@ -71,6 +71,7 @@ jobs:
         with:
           files: core/coverage/lcov.info,angular/coverage/lcov.info
           flags: unit
+          disable_search: true
           token: ${{ secrets.CODECOV_TOKEN }}
       - run: ./scripts/npmPublish.sh --dry-run
       - if: inputs.version != '' && inputs.npmPublish
