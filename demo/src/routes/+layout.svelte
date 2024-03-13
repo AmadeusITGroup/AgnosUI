@@ -75,30 +75,33 @@
 	<nav class="navbar-nav demo-nav-top navbar z-1">
 		<div class="container-xxl">
 			<a class="navbar-brand d-flex align-items-center" href={$pathToRoot$}><Svg svg={agnosUILogo} className="agnosui-logo-brand me-2" /> AgnosUI </a>
-			<div class="align-items-center d-none d-md-flex">
+			<div class="align-items-center d-none d-md-flex gap-3">
 				<div class="d-flex align-items-center"></div>
 				<a
-					class="nav-link ms-3"
+					class="nav-link"
 					href="{$pathToRoot$}docs/angular/getting-started/introduction"
 					class:active={$page.route.id?.startsWith('/docs/')}
 					aria-current={$page.route.id?.startsWith('/docs/') ? 'page' : undefined}>Documentation</a
 				>
 				<a
-					class="nav-link ms-3"
+					class="nav-link"
 					href="{$pathToRoot$}blog/2024-02-01"
 					class:active={$page.route.id?.startsWith('/blog/')}
 					aria-current={$page.route.id?.startsWith('/blog/') ? 'page' : undefined}>Blog</a
 				>
+				<div class="vr my-1"></div>
 				<Theme />
-				<a class="nav-link ms-3" href="https://github.com/AmadeusITGroup/AgnosUI" aria-label="link to GitHub repository" target="_blank">
+				<div class="vr my-1"></div>
+				<Versions versions={data.versions} />
+				<div class="vr my-1"></div>
+				<a class="nav-link" href="https://github.com/AmadeusITGroup/AgnosUI" aria-label="link to GitHub repository" target="_blank">
 					<Svg className="icon-24 align-middle" svg={github} />
 				</a>
-				<a class="nav-link ms-3" href="https://twitter.com/AgnosUI" aria-label="link to twitter / x account" target="_blank">
+				<a class="nav-link" href="https://twitter.com/AgnosUI" aria-label="link to twitter / x account" target="_blank">
 					<Svg className="icon-24 align-middle" svg={twitter} />
 				</a>
-				<Versions versions={data.versions} />
 			</div>
-			<div class="align-items-center d-flex d-md-none">
+			<div class="align-items-center d-flex d-md-none gap-3">
 				<Theme />
 				<Versions versions={data.versions} />
 				<MobileMenu />
