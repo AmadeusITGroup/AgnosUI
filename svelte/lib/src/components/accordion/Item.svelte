@@ -49,11 +49,11 @@
 
 <div class="accordion-item {$itemClass$}" id={$itemId$} use:accordionItemDirective>
 	<Slot slotContent={$slotItemStructure$} props={slotContext} let:component let:props>
-		<slot slot="slot" name="itemStructure" let:props {...props} />
+		<svelte:fragment slot="slot" let:props><slot name="itemStructure" {...props} /></svelte:fragment>
 		<svelte:component this={component} {...props}>
-			<slot name="itemBody" slot="itemBody" let:state let:widget {state} {widget} />
-			<slot name="itemHeader" slot="itemHeader" let:state let:widget {state} {widget} />
-			<slot name="itemStructure" slot="itemStructure" let:state let:widget {state} {widget} />
+			<svelte:fragment slot="itemBody" let:state let:widget><slot name="itemBody" {state} {widget} /></svelte:fragment>
+			<svelte:fragment slot="itemHeader" let:state let:widget><slot name="itemHeader" {state} {widget} /></svelte:fragment>
+			<svelte:fragment slot="itemStructure" let:state let:widget><slot name="itemStructure" {state} {widget} /></svelte:fragment>
 		</svelte:component>
 	</Slot>
 </div>

@@ -49,11 +49,11 @@
 	aria-disabled={$disabled$ ? true : null}
 >
 	<Slot slotContent={$slotStructure$} props={slotContext} let:component let:props>
-		<slot slot="slot" name="structure" let:props {...props} />
+		<svelte:fragment slot="slot" let:props><slot name="structure" {...props} /></svelte:fragment>
 		<svelte:component this={component} {...props}>
-			<slot name="handle" slot="handle" let:item let:state let:widget {item} {state} {widget} />
-			<slot name="label" slot="label" let:state let:value let:widget {state} {value} {widget} />
-			<slot name="structure" slot="structure" let:state let:widget {state} {widget} />
+			<svelte:fragment slot="handle" let:item let:state let:widget><slot name="handle" {item} {state} {widget} /></svelte:fragment>
+			<svelte:fragment slot="label" let:state let:value let:widget><slot name="label" {state} {value} {widget} /></svelte:fragment>
+			<svelte:fragment slot="structure" let:state let:widget><slot name="structure" {state} {widget} /></svelte:fragment>
 		</svelte:component>
 	</Slot>
 </div>

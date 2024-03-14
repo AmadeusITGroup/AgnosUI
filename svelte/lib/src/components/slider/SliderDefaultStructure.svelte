@@ -33,11 +33,11 @@
 		use:widget.directives.minLabelDirective
 	>
 		<Slot slotContent={state.slotLabel} props={{value: state.min, ...slotContext}} let:component let:props>
-			<slot slot="slot" name="label" let:props {...props} />
+			<svelte:fragment slot="slot" let:props><slot name="label" {...props} /></svelte:fragment>
 			<svelte:component this={component} {...props}>
-				<slot name="handle" slot="handle" let:item let:state let:widget {item} {state} {widget} />
-				<slot name="label" slot="label" let:state let:value let:widget {state} {value} {widget} />
-				<slot name="structure" slot="structure" let:state let:widget {state} {widget} />
+				<svelte:fragment slot="handle" let:item let:state let:widget><slot name="handle" {item} {state} {widget} /></svelte:fragment>
+				<svelte:fragment slot="label" let:state let:value let:widget><slot name="label" {state} {value} {widget} /></svelte:fragment>
+				<svelte:fragment slot="structure" let:state let:widget><slot name="structure" {state} {widget} /></svelte:fragment>
 			</svelte:component>
 		</Slot>
 	</div>
@@ -48,11 +48,11 @@
 		use:widget.directives.maxLabelDirective
 	>
 		<Slot slotContent={state.slotLabel} props={{value: state.max, ...slotContext}} let:component let:props>
-			<slot slot="slot" name="label" let:props {...props} />
+			<svelte:fragment slot="slot" let:props><slot name="label" {...props} /></svelte:fragment>
 			<svelte:component this={component} {...props}>
-				<slot name="handle" slot="handle" let:item let:state let:widget {item} {state} {widget} />
-				<slot name="label" slot="label" let:state let:value let:widget {state} {value} {widget} />
-				<slot name="structure" slot="structure" let:state let:widget {state} {widget} />
+				<svelte:fragment slot="handle" let:item let:state let:widget><slot name="handle" {item} {state} {widget} /></svelte:fragment>
+				<svelte:fragment slot="label" let:state let:value let:widget><slot name="label" {state} {value} {widget} /></svelte:fragment>
+				<svelte:fragment slot="structure" let:state let:widget><slot name="structure" {state} {widget} /></svelte:fragment>
 			</svelte:component>
 		</Slot>
 	</div>
@@ -65,36 +65,36 @@
 	>
 		{#if state.rtl}
 			<Slot slotContent={state.slotLabel} props={{value: state.sortedValues[1], ...slotContext}} let:component let:props>
-				<slot slot="slot" name="label" let:props {...props} />
+				<svelte:fragment slot="slot" let:props><slot name="label" {...props} /></svelte:fragment>
 				<svelte:component this={component} {...props}>
-					<slot name="handle" slot="handle" let:item let:state let:widget {item} {state} {widget} />
-					<slot name="label" slot="label" let:state let:value let:widget {state} {value} {widget} />
-					<slot name="structure" slot="structure" let:state let:widget {state} {widget} />
+					<svelte:fragment slot="handle" let:item let:state let:widget><slot name="handle" {item} {state} {widget} /></svelte:fragment>
+					<svelte:fragment slot="label" let:state let:value let:widget><slot name="label" {state} {value} {widget} /></svelte:fragment>
+					<svelte:fragment slot="structure" let:state let:widget><slot name="structure" {state} {widget} /></svelte:fragment>
 				</svelte:component>
 			</Slot> -
 			<Slot slotContent={state.slotLabel} props={{value: state.sortedValues[0], ...slotContext}} let:component let:props>
-				<slot slot="slot" name="label" let:props {...props} />
+				<svelte:fragment slot="slot" let:props><slot name="label" {...props} /></svelte:fragment>
 				<svelte:component this={component} {...props}>
-					<slot name="handle" slot="handle" let:item let:state let:widget {item} {state} {widget} />
-					<slot name="label" slot="label" let:state let:value let:widget {state} {value} {widget} />
-					<slot name="structure" slot="structure" let:state let:widget {state} {widget} />
+					<svelte:fragment slot="handle" let:item let:state let:widget><slot name="handle" {item} {state} {widget} /></svelte:fragment>
+					<svelte:fragment slot="label" let:state let:value let:widget><slot name="label" {state} {value} {widget} /></svelte:fragment>
+					<svelte:fragment slot="structure" let:state let:widget><slot name="structure" {state} {widget} /></svelte:fragment>
 				</svelte:component>
 			</Slot>
 		{:else}
 			<Slot slotContent={state.slotLabel} props={{value: state.sortedValues[0], ...slotContext}} let:component let:props>
-				<slot slot="slot" name="label" let:props {...props} />
+				<svelte:fragment slot="slot" let:props><slot name="label" {...props} /></svelte:fragment>
 				<svelte:component this={component} {...props}>
-					<slot name="handle" slot="handle" let:item let:state let:widget {item} {state} {widget} />
-					<slot name="label" slot="label" let:state let:value let:widget {state} {value} {widget} />
-					<slot name="structure" slot="structure" let:state let:widget {state} {widget} />
+					<svelte:fragment slot="handle" let:item let:state let:widget><slot name="handle" {item} {state} {widget} /></svelte:fragment>
+					<svelte:fragment slot="label" let:state let:value let:widget><slot name="label" {state} {value} {widget} /></svelte:fragment>
+					<svelte:fragment slot="structure" let:state let:widget><slot name="structure" {state} {widget} /></svelte:fragment>
 				</svelte:component>
 			</Slot> -
 			<Slot slotContent={state.slotLabel} props={{value: state.sortedValues[1], ...slotContext}} let:component let:props>
-				<slot slot="slot" name="label" let:props {...props} />
+				<svelte:fragment slot="slot" let:props><slot name="label" {...props} /></svelte:fragment>
 				<svelte:component this={component} {...props}>
-					<slot name="handle" slot="handle" let:item let:state let:widget {item} {state} {widget} />
-					<slot name="label" slot="label" let:state let:value let:widget {state} {value} {widget} />
-					<slot name="structure" slot="structure" let:state let:widget {state} {widget} />
+					<svelte:fragment slot="handle" let:item let:state let:widget><slot name="handle" {item} {state} {widget} /></svelte:fragment>
+					<svelte:fragment slot="label" let:state let:value let:widget><slot name="label" {state} {value} {widget} /></svelte:fragment>
+					<svelte:fragment slot="structure" let:state let:widget><slot name="structure" {state} {widget} /></svelte:fragment>
 				</svelte:component>
 			</Slot>
 		{/if}
@@ -102,11 +102,11 @@
 {/if}
 {#each state.sortedHandles as item, i (item.id)}
 	<Slot slotContent={state.slotHandle} props={{item, ...slotContext}} let:component let:props>
-		<slot slot="slot" name="handle" let:props {...props} />
+		<svelte:fragment slot="slot" let:props><slot name="handle" {...props} /></svelte:fragment>
 		<svelte:component this={component} {...props}>
-			<slot name="handle" slot="handle" let:item let:state let:widget {item} {state} {widget} />
-			<slot name="label" slot="label" let:state let:value let:widget {state} {value} {widget} />
-			<slot name="structure" slot="structure" let:state let:widget {state} {widget} />
+			<svelte:fragment slot="handle" let:item let:state let:widget><slot name="handle" {item} {state} {widget} /></svelte:fragment>
+			<svelte:fragment slot="label" let:state let:value let:widget><slot name="label" {state} {value} {widget} /></svelte:fragment>
+			<svelte:fragment slot="structure" let:state let:widget><slot name="structure" {state} {widget} /></svelte:fragment>
 		</svelte:component>
 	</Slot>
 	{#if state.showValueLabels && !state.combinedLabelDisplay}
@@ -116,11 +116,11 @@
 			style:top={`${state.handleDisplayOptions[i].top}%`}
 		>
 			<Slot slotContent={state.slotLabel} props={{value: state.values[i], ...slotContext}} let:component let:props>
-				<slot slot="slot" name="label" let:props {...props} />
+				<svelte:fragment slot="slot" let:props><slot name="label" {...props} /></svelte:fragment>
 				<svelte:component this={component} {...props}>
-					<slot name="handle" slot="handle" let:item let:state let:widget {item} {state} {widget} />
-					<slot name="label" slot="label" let:state let:value let:widget {state} {value} {widget} />
-					<slot name="structure" slot="structure" let:state let:widget {state} {widget} />
+					<svelte:fragment slot="handle" let:item let:state let:widget><slot name="handle" {item} {state} {widget} /></svelte:fragment>
+					<svelte:fragment slot="label" let:state let:value let:widget><slot name="label" {state} {value} {widget} /></svelte:fragment>
+					<svelte:fragment slot="structure" let:state let:widget><slot name="structure" {state} {widget} /></svelte:fragment>
 				</svelte:component>
 			</Slot>
 		</div>

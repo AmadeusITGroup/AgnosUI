@@ -14,13 +14,13 @@
 
 <h5 class="modal-title">
 	<Slot slotContent={state.slotTitle} props={slotContext} let:component let:props>
-		<slot slot="slot" name="title" let:props {...props} />
+		<svelte:fragment slot="slot" let:props><slot name="title" {...props} /></svelte:fragment>
 		<svelte:component this={component} {...props}>
 			<svelte:fragment let:state let:widget><slot {state} {widget} /></svelte:fragment>
-			<slot name="footer" slot="footer" let:state let:widget {state} {widget} />
-			<slot name="header" slot="header" let:state let:widget {state} {widget} />
-			<slot name="structure" slot="structure" let:state let:widget {state} {widget} />
-			<slot name="title" slot="title" let:state let:widget {state} {widget} />
+			<svelte:fragment slot="footer" let:state let:widget><slot name="footer" {state} {widget} /></svelte:fragment>
+			<svelte:fragment slot="header" let:state let:widget><slot name="header" {state} {widget} /></svelte:fragment>
+			<svelte:fragment slot="structure" let:state let:widget><slot name="structure" {state} {widget} /></svelte:fragment>
+			<svelte:fragment slot="title" let:state let:widget><slot name="title" {state} {widget} /></svelte:fragment>
 		</svelte:component>
 	</Slot>
 </h5>

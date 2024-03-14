@@ -19,11 +19,11 @@
 	<div class="d-flex align-items-center flex-grow-1 toast-body">
 		<span class="d-flex me-2">{@html biCheckCircleFill}</span>
 		<Slot slotContent={state.slotDefault} props={{widget, state}} let:component let:props>
-			<slot slot="slot" let:props {...props} />
+			<svelte:fragment slot="slot" let:props><slot {...props} /></svelte:fragment>
 			<svelte:component this={component} {...props}>
 				<svelte:fragment let:state let:widget><slot {state} {widget} /></svelte:fragment>
-				<slot name="header" slot="header" let:state let:widget {state} {widget} />
-				<slot name="structure" slot="structure" let:state let:widget {state} {widget} />
+				<svelte:fragment slot="header" let:state let:widget><slot name="header" {state} {widget} /></svelte:fragment>
+				<svelte:fragment slot="structure" let:state let:widget><slot name="structure" {state} {widget} /></svelte:fragment>
 			</svelte:component>
 		</Slot>
 		<button type="button" class="btn btn-sm ms-auto text-bg-success" on:click={actionDemo}>

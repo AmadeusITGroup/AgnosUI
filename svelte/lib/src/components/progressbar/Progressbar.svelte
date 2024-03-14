@@ -33,10 +33,10 @@
 	aria-valuetext={$ariaValueText$}
 >
 	<Slot slotContent={$slotStructure$} props={slotContext} let:component let:props>
-		<slot slot="slot" name="structure" let:props {...props} />
+		<svelte:fragment slot="slot" let:props><slot name="structure" {...props} /></svelte:fragment>
 		<svelte:component this={component} {...props}>
 			<svelte:fragment let:state let:widget><slot {state} {widget} /></svelte:fragment>
-			<slot name="structure" slot="structure" let:state let:widget {state} {widget} />
+			<svelte:fragment slot="structure" let:state let:widget><slot name="structure" {state} {widget} /></svelte:fragment>
 		</svelte:component>
 	</Slot>
 </div>

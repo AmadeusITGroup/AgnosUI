@@ -73,10 +73,12 @@
 			<!-- svelte-ignore a11y-no-static-element-interactions -->
 			<div tabindex="-1" class={`au-select-badge me-1 ${$badgeClassName$}`} on:keydown={(e) => onBadgeKeydown(e, itemContext.item)}>
 				<Slot slotContent={$slotBadgeLabel$} props={{state: $state$, widget, itemContext}} let:component let:props>
-					<slot slot="slot" name="badgeLabel" let:props {...props} />
+					<svelte:fragment slot="slot" let:props><slot name="badgeLabel" {...props} /></svelte:fragment>
 					<svelte:component this={component} {...props}>
-						<slot name="badgeLabel" slot="badgeLabel" let:itemContext let:state let:widget {itemContext} {state} {widget} />
-						<slot name="item" slot="item" let:itemContext let:state let:widget {itemContext} {state} {widget} />
+						<svelte:fragment slot="badgeLabel" let:itemContext let:state let:widget
+							><slot name="badgeLabel" {itemContext} {state} {widget} /></svelte:fragment
+						>
+						<svelte:fragment slot="item" let:itemContext let:state let:widget><slot name="item" {itemContext} {state} {widget} /></svelte:fragment>
 					</svelte:component>
 				</Slot>
 			</div>
@@ -119,10 +121,12 @@
 					style:cursor="pointer"
 				>
 					<Slot slotContent={$slotItem$} props={{state: $state$, widget, itemContext}} let:component let:props>
-						<slot slot="slot" name="item" let:props {...props} />
+						<svelte:fragment slot="slot" let:props><slot name="item" {...props} /></svelte:fragment>
 						<svelte:component this={component} {...props}>
-							<slot name="badgeLabel" slot="badgeLabel" let:itemContext let:state let:widget {itemContext} {state} {widget} />
-							<slot name="item" slot="item" let:itemContext let:state let:widget {itemContext} {state} {widget} />
+							<svelte:fragment slot="badgeLabel" let:itemContext let:state let:widget
+								><slot name="badgeLabel" {itemContext} {state} {widget} /></svelte:fragment
+							>
+							<svelte:fragment slot="item" let:itemContext let:state let:widget><slot name="item" {itemContext} {state} {widget} /></svelte:fragment>
 						</svelte:component>
 					</Slot>
 				</li>
