@@ -3,7 +3,8 @@
 	import {pathToRoot$, selectedFramework$} from '$lib/stores';
 	import {createHasFocus} from '@agnos-ui/svelte/services/focustrack';
 	import {writable} from '@amadeus-it-group/tansu';
-	import {lte, valid} from 'semver';
+	import lte from 'semver/functions/lte';
+	import valid from 'semver/functions/valid';
 	import type {Version} from './version';
 </script>
 
@@ -39,7 +40,7 @@
 		<button
 			class="btn nav-link dropdown-toggle align-items-center d-flex {currentVersion.version === 'PREVIEW' ? 'badge text-bg-warning' : ''}"
 			aria-label="demo version select"
-			on:mousedown={(e) => e.preventDefault()}
+			on:mousedown|preventDefault
 			on:click={() => ($open$ = !$open$)}
 			type="button"
 			data-bs-toggle="dropdown"
