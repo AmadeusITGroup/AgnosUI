@@ -1,0 +1,69 @@
+{
+	"name": "@agnos-ui/svelte-ssr-app",
+	"private": true,
+	"scripts": {
+		"dev": "wireit",
+		"build": "wireit",
+		"preview": "wireit",
+		"check": "wireit"
+	},
+	"dependencies": {
+		"@agnos-ui/svelte": ""
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-auto": "^3.0.0",
+		"@sveltejs/kit": "^2.0.0",
+		"@sveltejs/vite-plugin-svelte": "^3.0.0",
+		"svelte": "^4.2.7",
+		"svelte-check": "^3.6.0"
+	},
+	"type": "module",
+	"wireit": {
+		"deps": {
+			"dependencies": [
+				"../lib:build",
+				"../../style-bootstrap:build"
+			]
+		},
+		"build": {
+			"command": "svelte-kit sync && vite build",
+			"dependencies": [
+				"deps"
+			],
+			"files": [
+				"src/**",
+				"tsconfig.json",
+				"svelte.config.js",
+				"vite.config.ts"
+			],
+			"output": [
+				".svelte-kit/**"
+			]
+		},
+		"check": {
+			"command": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+			"dependencies": [
+				"deps"
+			],
+			"files": [
+				"src/**",
+				"tsconfig.json"
+			],
+			"output": []
+		},
+		"dev": {
+			"command": "vite dev",
+			"dependencies": [
+				"deps"
+			],
+			"service": true
+		},
+		"preview": {
+			"command": "vite preview",
+			"dependencies": [
+				"build"
+			],
+			"service": true
+		}
+	}
+}
