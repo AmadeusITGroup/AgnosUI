@@ -1,6 +1,6 @@
 import {Progressbar} from '@agnos-ui/react/components/progressbar';
 import {WidgetsDefaultConfig} from '@agnos-ui/react/config';
-import {useHashChange} from '../../utils';
+import {useHashChange} from '../../../common/utils';
 
 const ProgressbarPlayground = () => {
 	const {config, props} = useHashChange();

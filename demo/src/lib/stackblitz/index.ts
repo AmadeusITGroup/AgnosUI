@@ -32,7 +32,13 @@ const frameworkCreateStackblitz: Record<Frameworks, StackblitzProcessor[]> = {
 		},
 	],
 	react: [
-		addAsyncFiles(import.meta.glob('./react/**', {query: '?raw', import: 'default'}) as any, '', './react/'),
+		addAsyncFiles(import.meta.glob('./react/**', {query: '?raw', import: 'default'}) as any, '', './react/', isBootstrapCondition),
+		addAsyncFiles(
+			import.meta.glob('./react-tailwind/**', {query: '?raw', import: 'default'}) as any,
+			'',
+			'./react-tailwind/',
+			(sample) => !isBootstrapCondition(sample),
+		),
 		async (project, sample) => {
 			project.files['src/main.tsx'] = `import {createRoot} from "react-dom/client";\nimport "./main.css";\nimport App from ${JSON.stringify(
 				`./${sample.files.react.entryPoint.replace(/\.tsx?$/, '')}`,

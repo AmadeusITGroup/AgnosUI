@@ -1,6 +1,6 @@
 import {Pagination} from '@agnos-ui/react/components/pagination';
 import {WidgetsDefaultConfig} from '@agnos-ui/react/config';
-import {useHashChange} from '../../utils';
+import {useHashChange} from '../../../common/utils';
 
 const PaginationDemo = () => {
 	const {config, props} = useHashChange();

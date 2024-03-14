@@ -7,7 +7,9 @@
 	import Lazy from './Lazy.svelte';
 
 	const componentRegExp = /samples\/([^/]*)\/([^/]*).route.svelte/;
-	export let componentsToBeProcessed: Record<string, any> = import.meta.glob('../app/samples/*/*.route.svelte');
+
+	export let componentsToBeProcessed: Record<string, any>;
+
 	function replacePattern(components: Record<string, any>) {
 		const directComponents: Record<string, any> = {};
 		for (const [key, component] of Object.entries(components)) {
