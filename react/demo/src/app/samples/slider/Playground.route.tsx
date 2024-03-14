@@ -1,6 +1,6 @@
 import {Slider} from '@agnos-ui/react/components/slider';
 import {WidgetsDefaultConfig} from '@agnos-ui/react/config';
-import {useHashChange} from '../../utils';
+import {useHashChange} from '../../../common/utils';
 
 const SliderDemo = () => {
 	const {config, props} = useHashChange();

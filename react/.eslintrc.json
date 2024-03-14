@@ -14,13 +14,13 @@
 			}
 		},
 		{
-			"files": ["lib/**"],
+			"files": ["lib/**", "demo/src/app-tailwind/**"],
 			"rules": {
 				"@agnos-ui/check-replace-imports": ["error", "@agnos-ui/react-headless"]
 			}
 		},
 		{
-			"files": ["demo/**"],
+			"files": ["demo/src/app/**"],
 			"rules": {
 				"@agnos-ui/check-replace-imports": ["error", "@agnos-ui/react"]
 			}

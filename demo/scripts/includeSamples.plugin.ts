@@ -132,7 +132,7 @@ export const includeSamples = (): Plugin => {
 					(Object.keys(files) as Frameworks[]).forEach((framework) => {
 						const frameworkFiles = files[framework];
 						output += `${JSON.stringify(framework)}:{complementaryUrl: '${
-							framework === 'svelte' ? complementaryUrl : ''
+							['svelte', 'react'].includes(framework) ? complementaryUrl : ''
 						}',   entryPoint:${JSON.stringify(frameworkFiles[0].fileName)},files:{`;
 						frameworkFiles.forEach(({fileName, filePath}) => {
 							output += `[${JSON.stringify(fileName)}]: () => import(${JSON.stringify(filePath + rawSampleSuffix)}).then(file=>file.default),`;

@@ -16,7 +16,7 @@ const frameworks = [
 	{
 		name: 'react',
 		command: isCI ? previewDemoCommand : includeCoverage ? `npm run dev:coverage -w react/demo` : `npm run dev -w react/demo`,
-		url: `${isCI ? demoUrl : 'http://localhost:3000'}/react/samples/`,
+		url: `${isCI ? demoUrl : 'http://localhost:3000'}/react/samples/app/`,
 	},
 	{
 		name: 'svelte',
