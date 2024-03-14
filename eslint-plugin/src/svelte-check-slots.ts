@@ -105,7 +105,7 @@ const extractSlotName = (node: SvelteAST.SvelteElement) => {
 
 const buildNodeText = (slotAttributes: string, slotName: string, slotsList: ReturnType<typeof extractExpectedSlotsList>) => {
 	const slotNameArg = slotName === 'default' ? '' : ` name=${JSON.stringify(slotName)}`;
-	let output = `<Slot${slotAttributes} let:component let:props>\n\t<slot slot="slot"${slotNameArg} let:props {...props} />\n`;
+	let output = `<Slot${slotAttributes} let:component let:props>\n\t<svelte:fragment slot="slot" let:props><slot${slotNameArg} {...props} /></svelte:fragment>\n`;
 	if (slotsList.length > 0) {
 		output += `\t<svelte:component this={component} {...props}>\n`;
 		for (const {slot, params} of slotsList) {
@@ -119,7 +119,7 @@ const buildNodeText = (slotAttributes: string, slotName: string, slotsList: Retu
 				output += `\t\t<svelte:fragment${defParam}><slot${useParam} /></svelte:fragment>\n`;
 			} else {
 				const strSlot = JSON.stringify(slot);
-				output += `\t\t<slot name=${strSlot} slot=${strSlot}${defParam}${useParam} />\n`;
+				output += `\t\t<svelte:fragment slot=${strSlot}${defParam}><slot name=${strSlot}${useParam} /></svelte:fragment>\n`;
 			}
 		}
 		output += `\t</svelte:component>\n`;
