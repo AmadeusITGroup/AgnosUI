@@ -15,10 +15,10 @@
 
 <div class="alert-body">
 	<Slot slotContent={state.slotDefault} props={slotContext} let:component let:props>
-		<slot slot="slot" let:props {...props} />
+		<svelte:fragment slot="slot" let:props><slot {...props} /></svelte:fragment>
 		<svelte:component this={component} {...props}>
 			<svelte:fragment let:state let:widget><slot {state} {widget} /></svelte:fragment>
-			<slot name="structure" slot="structure" let:state let:widget {state} {widget} />
+			<svelte:fragment slot="structure" let:state let:widget><slot name="structure" {state} {widget} /></svelte:fragment>
 		</svelte:component>
 	</Slot>
 </div>

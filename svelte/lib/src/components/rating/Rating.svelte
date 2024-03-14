@@ -73,7 +73,7 @@
 			on:click={() => click(index + 1)}
 		>
 			<Slot slotContent={$slotStar$} props={{fill, index}} let:component let:props>
-				<slot slot="slot" name="star" let:props {...props} />
+				<svelte:fragment slot="slot" let:props><slot name="star" {...props} /></svelte:fragment>
 				<svelte:component this={component} {...props} />
 			</Slot>
 		</span>
