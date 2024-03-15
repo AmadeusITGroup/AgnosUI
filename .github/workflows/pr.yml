@@ -5,5 +5,7 @@ on:
 jobs:
   build:
     uses: './.github/workflows/build.yml'
+  validate-os:
+    uses: './.github/workflows/validate-os.yml'
   e2e-tests:
     uses: './.github/workflows/e2e-tests.yml'
