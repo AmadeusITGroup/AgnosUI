@@ -1,1 +1,0 @@
-import{f as m}from"./stores-CeiBlAbJ.js";import{r as s}from"./index-qoEqhzEW.js";import{u as n}from"./stores-rnmv_L1X.js";function h(c,e={},t){const r=s.useMemo(()=>c({...t,props:{...t==null?void 0:t.props,...e}}),[]),a=s.useRef(e);return s.useEffect(()=>{const u=m(a.current,e);a.current=e,u&&r.patch(u)},[e]),[n(r.state$),r]}export{h as u};
