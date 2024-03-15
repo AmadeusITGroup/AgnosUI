@@ -2,40 +2,48 @@
 	"name": "@agnos-ui/react",
 	"private": true,
 	"type": "module",
-	"main": "./dist/index.js",
+	"main": "./dist/index.cjs",
 	"module": "./dist/index.js",
 	"types": "./dist/index.d.ts",
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
+			"require": "./dist/index.cjs",
 			"default": "./dist/index.js"
 		},
 		"./components/*": {
-			"types": "./dist/components/*/*.d.ts",
-			"default": "./dist/components/*/*.js"
+			"types": "./dist/components/*/index.d.ts",
+			"require": "./dist/components/*/index.cjs",
+			"default": "./dist/components/*/index.js"
 		},
 		"./config": {
 			"types": "./dist/generated/config.d.ts",
+			"require": "./dist/generated/config.cjs",
 			"default": "./dist/generated/config.js"
 		},
 		"./slot": {
 			"types": "./dist/generated/slot.d.ts",
+			"require": "./dist/generated/slot.cjs",
 			"default": "./dist/generated/slot.js"
 		},
 		"./types": {
 			"types": "./dist/generated/types.d.ts",
+			"require": "./dist/generated/types.cjs",
 			"default": "./dist/generated/types.js"
 		},
 		"./services/*": {
 			"types": "./dist/generated/services/*.d.ts",
+			"require": "./dist/generated/services/*.cjs",
 			"default": "./dist/generated/services/*.js"
 		},
 		"./services/transitions/*": {
 			"types": "./dist/generated/services/transitions/*.d.ts",
+			"require": "./dist/generated/services/transitions/*.cjs",
 			"default": "./dist/generated/services/transitions/*.js"
 		},
 		"./utils/*": {
 			"types": "./dist/generated/utils/*.d.ts",
+			"require": "./dist/generated/utils/*.cjs",
 			"default": "./dist/generated/utils/*.js"
 		}
 	},
@@ -58,7 +66,7 @@
 			]
 		},
 		"build:src": {
-			"command": "tsc -p tsconfig.build.json",
+			"command": "vite build && tsc -p tsconfig.build.json",
 			"dependencies": [
 				"generate:exports",
 				"../headless:build"
@@ -66,6 +74,7 @@
 			"files": [
 				"src/**",
 				"!src/generated/**",
+				"vite.config.ts",
 				"tsconfig.build.json",
 				"../tsconfig.json",
 				"../../tsconfig.json"
