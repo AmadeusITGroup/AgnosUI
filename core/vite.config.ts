@@ -1,5 +1,5 @@
 import {glob} from 'glob';
-import {dirname, posix} from 'path';
+import {dirname} from 'path';
 import {fileURLToPath} from 'url';
 import type {UserConfig} from 'vite';
 import {defineConfig} from 'vite';
@@ -7,6 +7,9 @@ import {peerDependencies, exports as pkgExports} from './package.json';
 import {exclude as ignore} from './tsconfig.json';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+const pathRegExp = /\\/g;
+const normalizePath = (str: string) => str.replace(pathRegExp, '/');
 
 // https://vitejs.dev/config/
 export default defineConfig(async (): Promise<UserConfig> => {
@@ -16,11 +19,10 @@ export default defineConfig(async (): Promise<UserConfig> => {
 		const pattern = exportInfo.default.replace(/^\.\/dist\//, './src/').replace(/\.js$/, '.ts');
 		const files = await glob(pattern, {cwd: __dirname, ignore});
 		for (const file of files) {
-			const baseFile = posix
-				.normalize(file)
+			const baseFile = normalizePath(file)
 				.replace(/\.ts$/, '')
 				.replace(/^src\//, '');
-			entry[baseFile] = posix.normalize(file);
+			entry[baseFile] = normalizePath(file);
 		}
 	}
 	return {
