@@ -12,7 +12,7 @@ import {Directive, Input} from '@angular/core';
 
 export * from '@agnos-ui/core/types';
 
-export class ComponentTemplate<Props, K extends string, T extends {[key in K]: TemplateRef<Props>}> {
+export class ComponentTemplate<Props, K extends string, T extends {[key in K]: TemplateRef<Props> | Signal<TemplateRef<Props>>}> {
 	constructor(
 		public readonly component: Type<T>,
 		public readonly templateProp: K,
