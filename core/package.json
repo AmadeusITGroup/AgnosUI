@@ -76,6 +76,9 @@
 		},
 		"build:pkg": {
 			"command": "node ../scripts/buildPackageJson.js . dist",
+			"dependencies": [
+				"build:src"
+			],
 			"files": [
 				"package.json",
 				"README.md",
