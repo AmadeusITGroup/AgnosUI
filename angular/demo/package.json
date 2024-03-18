@@ -94,6 +94,6 @@
 		"@angular/cli": "~17.3.0",
 		"@angular/compiler-cli": "~17.3.0",
 		"sirv-cli": "^2.0.2",
-		"typescript": "~5.3.3"
+		"typescript": "~5.4.2"
 	}
 }
