@@ -1,4 +1,4 @@
-const {spawnSync} = require('child_process');
+const {spawn} = require('child_process');
 const {join} = require('path');
 
 const directories = [
@@ -14,21 +14,37 @@ const directories = [
 	'page-objects',
 ];
 
-const extraArgs = process.argv.slice(2);
-const extraArgsStr = extraArgs.join(' ');
-let failures = 0;
-for (const directory of directories) {
-	console.log(`[${directory}] npm publish --access=public ${extraArgsStr}`);
-	const result = spawnSync('npm', ['publish', '--access=public', ...extraArgs], {
-		stdio: 'inherit',
-		cwd: join(__dirname, '..', directory),
-	});
-	if (result.error || result.status !== 0) {
-		failures++;
+const processEndPromise = (proc) =>
+	new Promise((resolve, reject) => proc.on('close', (code) => (code === 0 ? resolve() : reject(new Error(`process exited with code ${code}`)))));
+exports.processEndPromise = processEndPromise;
+
+const publish = async (extraArgs = []) => {
+	const extraArgsStr = extraArgs.join(' ');
+	let failures = 0;
+	for (const directory of directories) {
+		console.log(`[${directory}] npm publish --access=public ${extraArgsStr}`);
+		try {
+			const proc = spawn('npm', ['publish', '--access=public', ...extraArgs], {
+				stdio: 'inherit',
+				shell: process.platform == 'win32',
+				cwd: join(__dirname, '..', directory),
+			});
+			await processEndPromise(proc);
+		} catch (error) {
+			failures++;
+		}
 	}
-}
-if (failures > 0) {
-	throw new Error(`npm publish failed for ${failures} packages`);
-} else {
-	console.log('npm publish succeeded for all packages');
+	if (failures > 0) {
+		throw new Error(`npm publish failed for ${failures} packages`);
+	} else {
+		console.log('npm publish succeeded for all packages');
+	}
+};
+exports.publish = publish;
+
+if (require.main === module) {
+	publish(process.argv.slice(2)).catch((error) => {
+		console.error(error);
+		process.exit(1);
+	});
 }

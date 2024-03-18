@@ -79,7 +79,7 @@ jobs:
           flags: unit
           disable_search: true
           token: ${{ secrets.CODECOV_TOKEN }}
-      - run: node ./scripts/npmPublish.js --dry-run
+      - run: npm run -w verdaccio verdaccio-publish
       - if: inputs.version != '' && inputs.npmPublish
         run: |
           npm whoami
