@@ -11,17 +11,17 @@ const frameworks = [
 	{
 		name: 'angular',
 		command: isCI ? previewDemoCommand : includeCoverage ? `npm run dev:coverage -w angular/demo` : `npm run dev -w angular/demo`,
-		url: `${isCI ? demoUrl : 'http://localhost:4200'}/angular/samples/`,
+		url: `${isCI ? demoUrl : 'http://localhost:4200'}/angular/samples/bootstrap/`,
 	},
 	{
 		name: 'react',
 		command: isCI ? previewDemoCommand : includeCoverage ? `npm run dev:coverage -w react/demo` : `npm run dev -w react/demo`,
-		url: `${isCI ? demoUrl : 'http://localhost:3000'}/react/samples/app/`,
+		url: `${isCI ? demoUrl : 'http://localhost:3000'}/react/samples/bootstrap/`,
 	},
 	{
 		name: 'svelte',
 		command: isCI ? previewDemoCommand : includeCoverage ? `npm run dev:coverage -w svelte/demo` : `npm run dev -w svelte/demo`,
-		url: `${isCI ? demoUrl : 'http://localhost:3001'}/svelte/samples/app/`,
+		url: `${isCI ? demoUrl : 'http://localhost:3001'}/svelte/samples/bootstrap/`,
 	},
 ].filter(envFramework ? (framework) => framework.name === envFramework : () => true);
 

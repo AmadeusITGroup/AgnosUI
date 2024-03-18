@@ -12,8 +12,13 @@ import http from 'http';
 import {alias} from '../viteAlias';
 
 const proxy: Record<string, string | ProxyOptions> = {
-	'/angular/samples': {
+	'/angular/samples/bootstrap': {
 		target: 'http://localhost:4200',
+		ws: true,
+		agent: new http.Agent({keepAlive: true}),
+	},
+	'/angular/samples/daisyui': {
+		target: 'http://localhost:4201',
 		ws: true,
 		agent: new http.Agent({keepAlive: true}),
 	},

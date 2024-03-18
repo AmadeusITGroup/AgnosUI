@@ -5,13 +5,13 @@ import {readFile} from 'fs/promises';
 import {existsSync} from 'fs';
 
 const samplePrefix = '@agnos-ui/samples/';
-const sampleTailwindPrefix = '@agnos-ui/samples-tailwind/';
+const sampleDaisyui = '@agnos-ui/samples-daisyui/';
 const rawSampleSuffix = '?raw&sample';
 const commonImport = /^@agnos-ui\/common\/samples\/([^?]*)(\?raw)?$/;
 const frameworkDefaults = {
-	angular: path.join(__dirname, `../../angular/demo/src/app/samples/placeholder/placeholderSample.route.ts`),
-	react: path.join(__dirname, `../../react/demo/src/app/samples/placeholder/PlaceholderSample.route.tsx`),
-	svelte: path.join(__dirname, `../../svelte/demo/src/app/samples/placeholder/PlaceholderSample.route.svelte`),
+	angular: path.join(__dirname, `../../angular/demo/bootstrap/src/app/samples/placeholder/placeholderSample.route.ts`),
+	react: path.join(__dirname, `../../react/demo/src/bootstrap/samples/placeholder/PlaceholderSample.route.tsx`),
+	svelte: path.join(__dirname, `../../svelte/demo/src/bootstrap/samples/placeholder/PlaceholderSample.route.svelte`),
 };
 
 const importRegExp = /import([^;]+from)?\s*['"]([^'"]+)['"]\s*;/g;
@@ -21,6 +21,14 @@ const findDependencies = (fileContent: string) => {
 		dependencies.push(dependency[2]);
 	}
 	return dependencies;
+};
+const templateUrlRegExp = /@Component\({[^}]*templateUrl:\s'([^']+)'/g;
+const findTemplateUrls = (fileContent: string) => {
+	const templateUrls: string[] = [];
+	for (const templateUrl of fileContent.matchAll(templateUrlRegExp)) {
+		templateUrls.push(templateUrl[1]);
+	}
+	return templateUrls;
 };
 
 const addExtension = (directory: string, depPath: string) => {
@@ -38,22 +46,22 @@ const addExtension = (directory: string, depPath: string) => {
 export const includeSamples = (): Plugin => {
 	return {
 		name: 'include-samples',
-		async resolveId(source, importer, options) {
-			if (source.startsWith(samplePrefix) || source.startsWith(sampleTailwindPrefix)) {
+		async resolveId(source) {
+			if (source.startsWith(samplePrefix) || source.startsWith(sampleDaisyui)) {
 				return {id: source};
 			}
 		},
 		load: {
 			order: 'pre',
-			async handler(id, options) {
+			async handler(id) {
 				if (id.endsWith(rawSampleSuffix)) {
 					id = id.substring(0, id.length - rawSampleSuffix.length);
 					let fileContent = await readFile(id, 'utf8');
 					fileContent = fileContent.replace(/@agnos-ui\/common\/samples\/[^/]+/g, '.');
 					return `export default ${JSON.stringify(fileContent)};`;
-				} else if (id.startsWith(samplePrefix) || id.startsWith(sampleTailwindPrefix)) {
+				} else if (id.startsWith(samplePrefix) || id.startsWith(sampleDaisyui)) {
 					//check if samplePrefix or sampleTailwindPrefix
-					const matchedPrefix = id.startsWith(samplePrefix) ? samplePrefix : sampleTailwindPrefix;
+					const matchedPrefix = id.startsWith(samplePrefix) ? samplePrefix : sampleDaisyui;
 					const parts = id.substring(matchedPrefix.length).split('/');
 					if (parts.length !== 2) {
 						throw new Error('Invalid sample path: ' + id);
@@ -88,6 +96,13 @@ export const includeSamples = (): Plugin => {
 									// TODO: check that the dependency is valid and included in package.json
 								}
 							}
+							// include templateUrl
+							if (framework === 'angular') {
+								const templateUrls = findTemplateUrls(fileContent);
+								for (const template of templateUrls) {
+									await addFile(framework, path.basename(template), path.join(directory, template));
+								}
+							}
 						} else {
 							// If the 'files' object for the current 'framework' already contains a file with the same 'filePath', return without adding the new file.
 							if (files[framework].some((file) => file.filePath === frameworkDefaults[framework])) return;
@@ -100,9 +115,7 @@ export const includeSamples = (): Plugin => {
 						`${sampleName}.component.ts`,
 						path.join(
 							__dirname,
-							`../../angular/demo/src/app${
-								matchedPrefix === sampleTailwindPrefix ? '-tailwind' : ''
-							}/samples/${componentName}/${sampleName}.route.ts`,
+							`../../angular/demo/${matchedPrefix === sampleDaisyui ? 'daisyui' : 'bootstrap'}/src/app/samples/${componentName}/${sampleName}.route.ts`,
 						),
 					);
 					await addFile(
@@ -110,8 +123,8 @@ export const includeSamples = (): Plugin => {
 						`${sampleName}.tsx`,
 						path.join(
 							__dirname,
-							`../../react/demo/src/app${
-								matchedPrefix === sampleTailwindPrefix ? '-tailwind' : ''
+							`../../react/demo/src/${
+								matchedPrefix === sampleDaisyui ? 'daisyui' : 'bootstrap'
 							}/samples/${componentName}/${normalizedSampleName}.route.tsx`,
 						),
 					);
@@ -120,20 +133,18 @@ export const includeSamples = (): Plugin => {
 						`${sampleName}.svelte`,
 						path.join(
 							__dirname,
-							`../../svelte/demo/src/app${
-								matchedPrefix === sampleTailwindPrefix ? '-tailwind' : ''
+							`../../svelte/demo/src/${
+								matchedPrefix === sampleDaisyui ? 'daisyui' : 'bootstrap'
 							}/samples/${componentName}/${normalizedSampleName}.route.svelte`,
 						),
 					);
-					const complementaryUrl = matchedPrefix === sampleTailwindPrefix ? '/app-tailwind' : '/app';
+					const complementaryUrl = matchedPrefix === sampleDaisyui ? '/daisyui' : '/bootstrap';
 					let output = `export default {componentName:${JSON.stringify(componentName)}, style:'${
-						matchedPrefix === sampleTailwindPrefix ? 'tailwind' : 'bootstrap'
+						matchedPrefix === sampleDaisyui ? 'daisyui' : 'bootstrap'
 					}', sampleName:${JSON.stringify(sampleName)},files:{`;
 					(Object.keys(files) as Frameworks[]).forEach((framework) => {
 						const frameworkFiles = files[framework];
-						output += `${JSON.stringify(framework)}:{complementaryUrl: '${
-							['svelte', 'react'].includes(framework) ? complementaryUrl : ''
-						}',   entryPoint:${JSON.stringify(frameworkFiles[0].fileName)},files:{`;
+						output += `${JSON.stringify(framework)}:{complementaryUrl: '${complementaryUrl}',entryPoint:${JSON.stringify(frameworkFiles[0].fileName)},files:{`;
 						frameworkFiles.forEach(({fileName, filePath}) => {
 							output += `[${JSON.stringify(fileName)}]: () => import(${JSON.stringify(filePath + rawSampleSuffix)}).then(file=>file.default),`;
 						});

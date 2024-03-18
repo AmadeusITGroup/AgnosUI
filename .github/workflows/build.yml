@@ -54,18 +54,24 @@ jobs:
       - run: npm run check
       - run: npm run format:check
       - run: npm run lint
-      - name: check stackblitz angular lockfile
+      - name: check stackblitz angular bootstrap lockfile
         run: npm ci --dry-run
-        working-directory: demo/src/lib/stackblitz/angular
-      - name: check stackblitz react lockfile
+        working-directory: demo/src/lib/stackblitz/angular-bootstrap
+      - name: check stackblitz angular daisyui lockfile
         run: npm ci --dry-run
-        working-directory: demo/src/lib/stackblitz/react
-      - name: check stackblitz svelte lockfile
+        working-directory: demo/src/lib/stackblitz/angular-daisyui
+      - name: check stackblitz react bootstrap lockfile
         run: npm ci --dry-run
-        working-directory: demo/src/lib/stackblitz/svelte
-      - name: check stackblitz svelte tailwind lockfile
+        working-directory: demo/src/lib/stackblitz/react-bootstrap
+      - name: check stackblitz react daisyui lockfile
         run: npm ci --dry-run
-        working-directory: demo/src/lib/stackblitz/svelte-tailwind
+        working-directory: demo/src/lib/stackblitz/react-daisyui
+      - name: check stackblitz svelte bootstrap lockfile
+        run: npm ci --dry-run
+        working-directory: demo/src/lib/stackblitz/svelte-bootstrap
+      - name: check stackblitz svelte daisyui lockfile
+        run: npm ci --dry-run
+        working-directory: demo/src/lib/stackblitz/svelte-daisyui
       - run: npm run test:coverage
       - uses: codecov/codecov-action@v4
         with:

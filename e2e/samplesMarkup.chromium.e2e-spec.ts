@@ -7,7 +7,7 @@ import {typeAndSelect} from './demo-po/select.po';
 import {htmlSnapshot} from './htmlSnapshot';
 import {normalizePath} from './utils';
 
-const allRoutes = globSync('**/*.route.svelte', {cwd: path.join(__dirname, '../svelte/demo/src/app/samples')}).map(
+const allRoutes = globSync('**/*.route.svelte', {cwd: path.join(__dirname, '../svelte/demo/src/bootstrap/samples')}).map(
 	(route) =>
 		`${normalizePath(route)
 			.replace(/\.route\.svelte$/, '')

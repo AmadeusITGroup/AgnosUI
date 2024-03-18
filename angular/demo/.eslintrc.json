@@ -2,9 +2,34 @@
 	"extends": "../.eslintrc.json",
 	"overrides": [
 		{
-			"files": ["*.ts"],
+			"files": ["bootstrap/**/*.ts"],
 			"parserOptions": {
-				"project": ["angular/demo/tsconfig.json"],
+				"project": ["angular/demo/bootstrap/tsconfig.json"],
+				"createDefaultProgram": true
+			},
+			"rules": {
+				"@angular-eslint/directive-selector": [
+					"error",
+					{
+						"type": "attribute",
+						"prefix": "app",
+						"style": "camelCase"
+					}
+				],
+				"@angular-eslint/component-selector": [
+					"error",
+					{
+						"type": "element",
+						"prefix": "app",
+						"style": "kebab-case"
+					}
+				]
+			}
+		},
+		{
+			"files": ["daisyui/**/*.ts"],
+			"parserOptions": {
+				"project": ["angular/demo/daisyui/tsconfig.json"],
 				"createDefaultProgram": true
 			},
 			"rules": {

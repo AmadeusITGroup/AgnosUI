@@ -1,6 +1,5 @@
-/** @type {import('tailwindcss').Config} */
-export default {
-	content: ['./src/daisyui/**/*.{svelte,js,ts,jsx,tsx}', './src/daisyui/index.html'],
+module.exports = {
+	content: ['./src/**/*.{html,js,ts,tsx}', './index.html'],
 	theme: {
 		extend: {},
 	},

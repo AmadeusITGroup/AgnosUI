@@ -8,7 +8,6 @@
 		"dev:coverage": "wireit",
 		"build": "wireit",
 		"build:coverage": "wireit",
-		"watch": "ng build --watch --configuration development",
 		"preview": "node scripts/preview.cjs dist --port 4200 --single"
 	},
 	"wireit": {
@@ -16,22 +15,38 @@
 			"command": "node scripts/regen-links.mjs",
 			"files": [
 				"scripts/regen-links.mjs",
-				"src/app/samples/**"
+				"bootstrap/src/app/samples/**",
+				"daisyui/src/app/samples/**"
 			],
 			"output": [
-				"src/app/generated/samples.route.ts"
+				"bootstrap/src/app/generated/samples.route.ts",
+				"daisyui/src/app/generated/samples.route.ts"
 			]
 		},
-		"dev": {
-			"command": "ng serve",
+		"dev:bootstrap": {
+			"command": "ng serve bootstrap",
 			"dependencies": [
 				"../headless:generate:exports",
 				"generate:links"
 			],
 			"service": true
 		},
-		"dev:coverage": {
-			"command": "node --import @agnos-ui/code-coverage/interceptReadFile ../../node_modules/@angular/cli/bin/ng.js serve",
+		"dev:daisyui": {
+			"command": "ng serve daisyui",
+			"dependencies": [
+				"../headless:generate:exports",
+				"generate:links"
+			],
+			"service": true
+		},
+		"dev": {
+			"dependencies": [
+				"dev:bootstrap",
+				"dev:daisyui"
+			]
+		},
+		"dev:bootstrap:coverage": {
+			"command": "node --import @agnos-ui/code-coverage/interceptReadFile ../../node_modules/@angular/cli/bin/ng.js serve bootstrap",
 			"dependencies": [
 				"../../code-coverage:build",
 				"../headless:generate:exports",
@@ -39,31 +54,83 @@
 			],
 			"service": true
 		},
-		"build": {
-			"command": "ng build",
+		"dev:daisyui:coverage": {
+			"command": "node --import @agnos-ui/code-coverage/interceptReadFile ../../node_modules/@angular/cli/bin/ng.js serve daisyui",
+			"dependencies": [
+				"../../code-coverage:build",
+				"../headless:generate:exports",
+				"generate:links"
+			],
+			"service": true
+		},
+		"dev:coverage": {
+			"dependencies": [
+				"dev:bootstrap:coverage",
+				"dev:daisyui:coverage"
+			]
+		},
+		"build:bootstrap": {
+			"command": "ng build bootstrap",
 			"dependencies": [
 				"generate:links",
 				"../lib:build",
 				"../../style-bootstrap:build"
 			],
 			"files": [
-				"src/**",
+				"bootstrap/src/**",
 				"angular.json",
 				"tsconfig.build.json",
 				"../tsconfig.json",
 				"../../tsconfig.json"
 			],
 			"output": [
-				"dist/**"
+				"dist/bootstrap/**"
 			]
 		},
-		"build:coverage": {
-			"command": "node --import @agnos-ui/code-coverage/interceptReadFile ../../node_modules/@angular/cli/bin/ng.js build --configuration=coverage",
+		"build:daisyui": {
+			"command": "ng build daisyui",
+			"dependencies": [
+				"generate:links",
+				"../lib:build"
+			],
+			"files": [
+				"daisyui/src/**",
+				"angular.json",
+				"tsconfig.build.json",
+				"../tsconfig.json",
+				"../../tsconfig.json"
+			],
+			"output": [
+				"dist/daisyui/**"
+			]
+		},
+		"build": {
+			"dependencies": [
+				"build:bootstrap",
+				"build:daisyui"
+			]
+		},
+		"build:bootstrap:coverage": {
+			"command": "node --import @agnos-ui/code-coverage/interceptReadFile ../../node_modules/@angular/cli/bin/ng.js build bootstrap --configuration=coverage",
 			"dependencies": [
 				"generate:links",
 				"../lib:build",
 				"../../style-bootstrap:build",
 				"../../code-coverage:build"
+			]
+		},
+		"build:daisyui:coverage": {
+			"command": "node --import @agnos-ui/code-coverage/interceptReadFile ../../node_modules/@angular/cli/bin/ng.js build daisyui --configuration=coverage",
+			"dependencies": [
+				"generate:links",
+				"../lib:build",
+				"../../code-coverage:build"
+			]
+		},
+		"build:coverage": {
+			"dependencies": [
+				"build:bootstrap:coverage",
+				"build:daisyui:coverage"
 			]
 		}
 	},
@@ -93,7 +160,11 @@
 		"@angular-eslint/template-parser": "^17.3.0",
 		"@angular/cli": "~17.3.0",
 		"@angular/compiler-cli": "~17.3.0",
+		"autoprefixer": "^10.4.18",
 		"sirv-cli": "^2.0.2",
+		"daisyui": "^4.7.3",
+		"postcss": "^8.4.36",
+		"tailwindcss": "^3.4.1",
 		"typescript": "~5.4.2"
 	}
 }
