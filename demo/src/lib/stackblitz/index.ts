@@ -6,6 +6,7 @@ import type {AsyncFilesSet, SampleInfo} from '../layout/sample';
 type StackblitzProcessor = (project: Project, sample: SampleInfo, framework: Frameworks) => Promise<void>;
 
 const isBootstrapCondition = (sample: SampleInfo) => sample.style === 'bootstrap';
+const isDaisyuiCondition = (sample: SampleInfo) => sample.style === 'daisyui';
 
 const addAsyncFiles =
 	(files: AsyncFilesSet, prefix = '', removePrefix?: string, condition: (sample: SampleInfo) => boolean = () => true): StackblitzProcessor =>
@@ -22,7 +23,13 @@ const addAsyncFiles =
 
 const frameworkCreateStackblitz: Record<Frameworks, StackblitzProcessor[]> = {
 	angular: [
-		addAsyncFiles(import.meta.glob('./angular/**', {query: '?raw', import: 'default'}) as any, '', './angular/'),
+		addAsyncFiles(
+			import.meta.glob('./angular-bootstrap/**', {query: '?raw', import: 'default'}) as any,
+			'',
+			'./angular-bootstrap/',
+			isBootstrapCondition,
+		),
+		addAsyncFiles(import.meta.glob('./angular-daisyui/**', {query: '?raw', import: 'default'}) as any, '', './angular-daisyui/', isDaisyuiCondition),
 		async (project, sample) => {
 			project.files['src/main.ts'] =
 				`import {bootstrapApplication} from '@angular/platform-browser';\nimport MainComponent from './${sample.files.angular.entryPoint.replace(
@@ -32,13 +39,13 @@ const frameworkCreateStackblitz: Record<Frameworks, StackblitzProcessor[]> = {
 		},
 	],
 	react: [
-		addAsyncFiles(import.meta.glob('./react/**', {query: '?raw', import: 'default'}) as any, '', './react/', isBootstrapCondition),
 		addAsyncFiles(
-			import.meta.glob('./react-tailwind/**', {query: '?raw', import: 'default'}) as any,
+			import.meta.glob('./react-bootstrap/**', {query: '?raw', import: 'default'}) as any,
 			'',
-			'./react-tailwind/',
-			(sample) => !isBootstrapCondition(sample),
+			'./react-bootstrap/',
+			isBootstrapCondition,
 		),
+		addAsyncFiles(import.meta.glob('./react-daisyui/**', {query: '?raw', import: 'default'}) as any, '', './react-daisyui/', isDaisyuiCondition),
 		async (project, sample) => {
 			project.files['src/main.tsx'] = `import {createRoot} from "react-dom/client";\nimport "./main.css";\nimport App from ${JSON.stringify(
 				`./${sample.files.react.entryPoint.replace(/\.tsx?$/, '')}`,
@@ -46,13 +53,13 @@ const frameworkCreateStackblitz: Record<Frameworks, StackblitzProcessor[]> = {
 		},
 	],
 	svelte: [
-		addAsyncFiles(import.meta.glob('./svelte/**', {query: '?raw', import: 'default'}) as any, '', './svelte/', isBootstrapCondition),
 		addAsyncFiles(
-			import.meta.glob('./svelte-tailwind/**', {query: '?raw', import: 'default'}) as any,
+			import.meta.glob('./svelte-bootstrap/**', {query: '?raw', import: 'default'}) as any,
 			'',
-			'./svelte-tailwind/',
-			(sample) => !isBootstrapCondition(sample),
+			'./svelte-bootstrap/',
+			isBootstrapCondition,
 		),
+		addAsyncFiles(import.meta.glob('./svelte-daisyui/**', {query: '?raw', import: 'default'}) as any, '', './svelte-daisyui/', isDaisyuiCondition),
 		async (project, sample) => {
 			project.files['src/main.ts'] = `import "./main.css";\nimport App from ${JSON.stringify(
 				`./${sample.files.svelte.entryPoint}`,

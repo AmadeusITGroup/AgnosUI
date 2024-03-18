@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-	content: ['./src/app-tailwind/**/*.{svelte,js,ts,jsx,tsx}', './src/app-tailwind/index.html'],
+	content: ['./src/daisyui/**/*.{svelte,js,ts,jsx,tsx}', './src/daisyui/index.html'],
 	theme: {
 		extend: {},
 	},

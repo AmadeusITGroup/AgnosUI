@@ -1,5 +1,5 @@
 <script lang="ts">
-	import tailwind from '@agnos-ui/samples-tailwind/pagination/tailwind';
+	import tailwind from '@agnos-ui/samples-daisyui/pagination/default';
 	import Sample from '$lib/layout/Sample.svelte';
 	import Section from '$lib/layout/Section.svelte';
 </script>

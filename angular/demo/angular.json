@@ -3,7 +3,7 @@
 	"version": 1,
 	"newProjectRoot": "",
 	"projects": {
-		"demo": {
+		"bootstrap": {
 			"projectType": "application",
 			"schematics": {
 				"@schematics/angular:application": {
@@ -11,22 +11,21 @@
 				}
 			},
 			"root": ".",
-			"sourceRoot": "src",
+			"sourceRoot": "bootstrap/src",
 			"architect": {
 				"build": {
 					"builder": "@angular-devkit/build-angular:application",
 					"options": {
 						"outputPath": {
-							"base": "dist",
+							"base": "dist/bootstrap",
 							"browser": ""
 						},
-						"index": "src/index.html",
-						"browser": "src/main.ts",
-						"polyfills": ["src/polyfills.ts"],
+						"index": "bootstrap/src/index.html",
+						"browser": "bootstrap/src/main.ts",
+						"polyfills": ["bootstrap/src/polyfills.ts"],
 						"tsConfig": "tsconfig.build.json",
-						"assets": ["src/agnosui-logo.svg", "src/assets"],
-						"styles": ["src/styles.css", "../../common/demo.scss", "@agnos-ui/style-bootstrap/scss/agnosui.scss"],
-						"scripts": [],
+						"assets": ["bootstrap/src/agnosui-logo.svg"],
+						"styles": ["bootstrap/src/styles.css", "../../common/demo.scss", "@agnos-ui/style-bootstrap/scss/agnosui.scss"],
 						"inlineStyleLanguage": "scss",
 						"loader": {
 							".txt": "text",
@@ -37,12 +36,12 @@
 						"coverage": {
 							"fileReplacements": [
 								{
-									"replace": "src/environments/environment.ts",
-									"with": "src/environments/environment.prod.ts"
+									"replace": "bootstrap/src/environments/environment.ts",
+									"with": "bootstrap/src/environments/environment.prod.ts"
 								}
 							],
 							"outputHashing": "all",
-							"tsConfig": "tsconfig.json"
+							"tsConfig": "bootstrap/tsconfig.json"
 						},
 						"production": {
 							"budgets": [
@@ -59,8 +58,8 @@
 							],
 							"fileReplacements": [
 								{
-									"replace": "src/environments/environment.ts",
-									"with": "src/environments/environment.prod.ts"
+									"replace": "bootstrap/src/environments/environment.ts",
+									"with": "bootstrap/src/environments/environment.prod.ts"
 								}
 							],
 							"outputHashing": "all"
@@ -70,7 +69,7 @@
 							"extractLicenses": false,
 							"sourceMap": true,
 							"namedChunks": true,
-							"tsConfig": "tsconfig.json"
+							"tsConfig": "bootstrap/tsconfig.json"
 						}
 					},
 					"defaultConfiguration": "production"
@@ -79,15 +78,101 @@
 					"builder": "@angular-devkit/build-angular:dev-server",
 					"configurations": {
 						"production": {
-							"servePath": "/angular/samples",
-							"buildTarget": "demo:build:production"
+							"servePath": "/angular/samples/bootstrap",
+							"buildTarget": "bootstrap:build:production"
 						},
 						"development": {
-							"servePath": "/angular/samples",
-							"buildTarget": "demo:build:development"
+							"servePath": "/angular/samples/bootstrap",
+							"buildTarget": "bootstrap:build:development"
 						}
 					},
 					"defaultConfiguration": "development"
+				}
+			}
+		},
+		"daisyui": {
+			"projectType": "application",
+			"schematics": {
+				"@schematics/angular:application": {
+					"strict": true
+				}
+			},
+			"root": ".",
+			"sourceRoot": "daisyui/src",
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-angular:application",
+					"options": {
+						"outputPath": {
+							"base": "dist/daisyui",
+							"browser": ""
+						},
+						"index": "daisyui/src/index.html",
+						"browser": "daisyui/src/main.ts",
+						"polyfills": ["daisyui/src/polyfills.ts"],
+						"tsConfig": "tsconfig.build.json",
+						"assets": ["daisyui/src/agnosui-logo.svg"],
+						"styles": ["daisyui/src/styles.css", "../../common/demo.scss"],
+						"inlineStyleLanguage": "scss"
+					},
+					"configurations": {
+						"coverage": {
+							"fileReplacements": [
+								{
+									"replace": "daisyui/src/environments/environment.ts",
+									"with": "daisyui/src/environments/environment.prod.ts"
+								}
+							],
+							"outputHashing": "all",
+							"tsConfig": "daisyui/tsconfig.json"
+						},
+						"production": {
+							"budgets": [
+								{
+									"type": "initial",
+									"maximumWarning": "500kb",
+									"maximumError": "1mb"
+								},
+								{
+									"type": "anyComponentStyle",
+									"maximumWarning": "2kb",
+									"maximumError": "4kb"
+								}
+							],
+							"fileReplacements": [
+								{
+									"replace": "daisyui/src/environments/environment.ts",
+									"with": "daisyui/src/environments/environment.prod.ts"
+								}
+							],
+							"outputHashing": "all"
+						},
+						"development": {
+							"optimization": false,
+							"extractLicenses": false,
+							"sourceMap": true,
+							"namedChunks": true,
+							"tsConfig": "daisyui/tsconfig.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"serve": {
+					"builder": "@angular-devkit/build-angular:dev-server",
+					"configurations": {
+						"production": {
+							"servePath": "/angular/samples/daisyui",
+							"buildTarget": "daisyui:build:production"
+						},
+						"development": {
+							"servePath": "/angular/samples/daisyui",
+							"buildTarget": "daisyui:build:development"
+						}
+					},
+					"defaultConfiguration": "development",
+					"options": {
+						"port": 4201
+					}
 				}
 			}
 		}

@@ -17,8 +17,8 @@ export default defineConfig((config) => ({
 		outDir: path.join(__dirname, 'dist'),
 		rollupOptions: {
 			input: {
-				app: path.resolve(__dirname, 'src/app/index.html'),
-				'app-tailwind': path.resolve(__dirname, 'src/app-tailwind/index.html'),
+				bootstrap: path.resolve(__dirname, 'src/bootstrap/index.html'),
+				daisyui: path.resolve(__dirname, 'src/daisyui/index.html'),
 			},
 		},
 	},

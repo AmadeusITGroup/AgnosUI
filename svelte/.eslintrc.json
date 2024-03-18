@@ -28,18 +28,32 @@
 			}
 		},
 		{
-			"files": ["lib/**", "demo/src/app-tailwind/**"],
+			"files": ["lib/**", "demo/src/daisyui/**"],
 			"rules": {
-				"@agnos-ui/check-replace-imports": ["error", "@agnos-ui/svelte-headless"]
+				"@agnos-ui/check-replace-imports": ["error", "@agnos-ui/svelte-headless"],
+				"@typescript-eslint/no-unused-vars": [
+					"error",
+					{
+						"vars": "all",
+						"args": "none",
+						"ignoreRestSiblings": false,
+						"varsIgnorePattern": "^\\$\\$(Props|Slots)$"
+					}
+				]
 			}
 		},
 		{
-			"files": ["demo/src/app/**"],
+			"files": ["demo/src/bootstrap/**"],
 			"rules": {
 				"@agnos-ui/check-replace-imports": ["error", "@agnos-ui/svelte"],
 				"@typescript-eslint/no-unused-vars": [
 					"error",
-					{"vars": "all", "args": "none", "ignoreRestSiblings": false, "varsIgnorePattern": "^\\$\\$(Props|Slots)$"}
+					{
+						"vars": "all",
+						"args": "none",
+						"ignoreRestSiblings": false,
+						"varsIgnorePattern": "^\\$\\$(Props|Slots)$"
+					}
 				],
 				"svelte/no-at-html-tags": "off"
 			}
