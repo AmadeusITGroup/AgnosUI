@@ -17,6 +17,7 @@ const componentsSubMenu = [
 
 const daisyUISubMenu = [
 	{...daisyUIMetadata.Pagination, slug: `daisyUI/pagination/`, subpath: 'headless', attributes: {}},
+	{...daisyUIMetadata.Progressbar, slug: `daisyUI/progressbar/`, subpath: 'headless', attributes: {}},
 	{...daisyUIMetadata.Rating, slug: `daisyUI/rating/`, subpath: 'headless', attributes: {}},
 ];
 

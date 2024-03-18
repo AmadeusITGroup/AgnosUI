@@ -9,8 +9,8 @@ export const load = async () => {
 			subpath: '',
 		},
 		next: {
-			title: 'DaisyUI: Rating',
-			slug: 'daisyUI/rating/',
+			title: 'Progressbar',
+			slug: 'daisyUI/progressbar/',
 			subpath: 'headless',
 		},
 	};

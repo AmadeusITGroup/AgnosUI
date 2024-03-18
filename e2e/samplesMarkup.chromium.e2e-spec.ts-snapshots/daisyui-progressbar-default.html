@@ -1,0 +1,66 @@
+<body>
+	<div
+	 id="root"
+	>
+		<div
+		 class="container mx-auto p-3"
+		>
+			<h2
+			 class="mb-2 text-lg"
+			>
+				"Simple progressbars"
+			</h2>
+			<progress
+			 aria-label="Progressbar"
+			 aria-valuemax="100"
+			 aria-valuemin="0"
+			 aria-valuenow="20"
+			 class="progress progress-primary"
+			 max="100"
+			 role="progressbar"
+			 value="20"
+			/>
+			<progress
+			 aria-label="Progressbar"
+			 aria-valuemax="5"
+			 aria-valuemin="0"
+			 aria-valuenow="4"
+			 class="progress progress-info"
+			 max="5"
+			 role="progressbar"
+			 value="4"
+			/>
+			<h2
+			 class="mb-2 mt-4 text-lg"
+			>
+				"Radial progress"
+			</h2>
+			<div
+			 class="flex gap-6"
+			>
+				<div
+				 aria-label="Progressbar"
+				 aria-valuemax="20"
+				 aria-valuemin="10"
+				 aria-valuenow="13"
+				 class="radial-progress text-primary"
+				 role="progressbar"
+				 style="--thickness: 0.4rem; --value: 30;"
+				>
+					"30%"
+				</div>
+				<div
+				 aria-label="Progressbar"
+				 aria-valuemax="20"
+				 aria-valuemin="9"
+				 aria-valuenow="17"
+				 class="bg-info border-4 border-info radial-progress text-info-content"
+				 role="progressbar"
+				 style="--thickness: 0.4rem; --value: 72.72727272727273;"
+				>
+					"72.7%"
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
