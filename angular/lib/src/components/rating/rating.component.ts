@@ -7,7 +7,6 @@ import {
 	ContentChild,
 	Directive,
 	EventEmitter,
-	HostBinding,
 	Input,
 	Output,
 	TemplateRef,
@@ -43,6 +42,7 @@ export class RatingStarDirective {
 		'[attr.aria-disabled]': 'state().disabled ? true : null',
 		'[attr.aria-readonly]': 'state().readonly ? true : null',
 		'[attr.aria-label]': 'state().ariaLabel || null',
+		'[attr.aria-labelledby]': 'state().ariaLabelledBy || null',
 		'(blur)': 'onTouched()',
 		'(keydown)': '_widget.actions.handleKey($event)',
 		'(mouseleave)': '_widget.actions.leave()',
@@ -79,11 +79,6 @@ export class RatingComponent extends BaseWidgetDirective<RatingWidget> implement
 
 	onChange = (_: any) => {};
 	onTouched = () => {};
-
-	// TODO angular is failing when adding this host binding in decorator part
-	@HostBinding('[attr.aria-labelledby]') get hostAriaLabelledBy() {
-		return this.state().ariaLabelledBy || null;
-	}
 
 	/**
 	 * Return the value for the 'aria-valuetext' attribute.
