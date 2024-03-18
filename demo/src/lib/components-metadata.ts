@@ -66,6 +66,11 @@ export const daisyUIMetadata: {[key: string]: ComponentMetadata} = {
 		status: 'stable',
 		since: 'v0.3.0',
 	},
+	Progressbar: {
+		title: 'Progressbar',
+		status: 'stable',
+		since: 'v0.3.0',
+	},
 	Rating: {
 		title: 'Rating',
 		status: 'stable',
