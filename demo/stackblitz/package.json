@@ -1,0 +1,24 @@
+{
+	"type": "module",
+	"types": "index.d.ts",
+	"main": "dist/index.cjs",
+	"scripts": {
+		"build": "wireit"
+	},
+	"wireit": {
+		"build": {
+			"command": "vite build",
+			"files": [
+				"vite.config.ts",
+				"../src/lib/stackblitz/**",
+				"../scripts/*",
+				"../../angular/demo:build",
+				"../../react/demo:build",
+				"../../svelte/demo:build"
+			],
+			"output": [
+				"dist/**"
+			]
+		}
+	}
+}

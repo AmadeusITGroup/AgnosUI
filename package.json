@@ -93,7 +93,8 @@
 				"./code-coverage:build",
 				"./demo:build",
 				"./eslint-plugin:build",
-				"./page-objects:build"
+				"./page-objects:build",
+				"./demo/stackblitz:build"
 			]
 		},
 		"build:coverage": {

@@ -62,6 +62,7 @@ export const includeSamples = (): Plugin => {
 				} else if (id.startsWith(samplePrefix) || id.startsWith(sampleDaisyui)) {
 					//check if samplePrefix or sampleTailwindPrefix
 					const matchedPrefix = id.startsWith(samplePrefix) ? samplePrefix : sampleDaisyui;
+					const cssFramework = matchedPrefix === sampleDaisyui ? 'daisyui' : 'bootstrap';
 					const parts = id.substring(matchedPrefix.length).split('/');
 					if (parts.length !== 2) {
 						throw new Error('Invalid sample path: ' + id);
@@ -113,38 +114,23 @@ export const includeSamples = (): Plugin => {
 					await addFile(
 						'angular',
 						`${sampleName}.component.ts`,
-						path.join(
-							__dirname,
-							`../../angular/demo/${matchedPrefix === sampleDaisyui ? 'daisyui' : 'bootstrap'}/src/app/samples/${componentName}/${sampleName}.route.ts`,
-						),
+						path.join(__dirname, `../../angular/demo/${cssFramework}/src/app/samples/${componentName}/${sampleName}.route.ts`),
 					);
 					await addFile(
 						'react',
 						`${sampleName}.tsx`,
-						path.join(
-							__dirname,
-							`../../react/demo/src/${
-								matchedPrefix === sampleDaisyui ? 'daisyui' : 'bootstrap'
-							}/samples/${componentName}/${normalizedSampleName}.route.tsx`,
-						),
+						path.join(__dirname, `../../react/demo/src/${cssFramework}/samples/${componentName}/${normalizedSampleName}.route.tsx`),
 					);
 					await addFile(
 						'svelte',
 						`${sampleName}.svelte`,
-						path.join(
-							__dirname,
-							`../../svelte/demo/src/${
-								matchedPrefix === sampleDaisyui ? 'daisyui' : 'bootstrap'
-							}/samples/${componentName}/${normalizedSampleName}.route.svelte`,
-						),
+						path.join(__dirname, `../../svelte/demo/src/${cssFramework}/samples/${componentName}/${normalizedSampleName}.route.svelte`),
 					);
-					const complementaryUrl = matchedPrefix === sampleDaisyui ? '/daisyui' : '/bootstrap';
-					let output = `export default {componentName:${JSON.stringify(componentName)}, style:'${
-						matchedPrefix === sampleDaisyui ? 'daisyui' : 'bootstrap'
-					}', sampleName:${JSON.stringify(sampleName)},files:{`;
+					const complementaryUrl = `/${cssFramework}`;
+					let output = `export default {componentName:${JSON.stringify(componentName)}, style:'${cssFramework}', sampleName:${JSON.stringify(sampleName)},files:{`;
 					(Object.keys(files) as Frameworks[]).forEach((framework) => {
 						const frameworkFiles = files[framework];
-						output += `${JSON.stringify(framework)}:{complementaryUrl: '${complementaryUrl}',entryPoint:${JSON.stringify(frameworkFiles[0].fileName)},files:{`;
+						output += `${JSON.stringify(framework)}:{complementaryUrl:${JSON.stringify(complementaryUrl)},entryPoint:${JSON.stringify(frameworkFiles[0].fileName)},files:{`;
 						frameworkFiles.forEach(({fileName, filePath}) => {
 							output += `[${JSON.stringify(fileName)}]: () => import(${JSON.stringify(filePath + rawSampleSuffix)}).then(file=>file.default),`;
 						});
