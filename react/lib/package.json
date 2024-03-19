@@ -1,6 +1,7 @@
 {
 	"name": "@agnos-ui/react",
 	"private": true,
+	"description": "Bootstrap-based widget library for React.",
 	"type": "module",
 	"main": "./dist/index.cjs",
 	"module": "./dist/index.js",
