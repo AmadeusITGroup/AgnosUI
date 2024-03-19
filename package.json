@@ -131,7 +131,7 @@
 			]
 		},
 		"lint": {
-			"command": "eslint --ext ts,tsx,svelte .",
+			"command": "eslint --ext mjs,js,ts,tsx,svelte .",
 			"dependencies": [
 				"./eslint-plugin:build",
 				"./svelte/lib:build"

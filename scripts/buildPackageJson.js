@@ -1,4 +1,4 @@
-const {writeFileSync, cpSync, existsSync, mkdirSync} = require('fs');
+const {writeFileSync, cpSync, mkdirSync} = require('fs');
 const path = require('path');
 
 let [, , sourceFolder, outputFolder] = process.argv;
