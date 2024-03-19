@@ -3,7 +3,7 @@ const {join} = require('path');
 const {writeFileSync, readFileSync} = require('fs');
 
 const setVersion = (version) => {
-	if (version != undefined && !(valid(version) && !version.startsWith('v'))) {
+	if (!version || version.startsWith('v') || !valid(version)) {
 		throw new Error(`Invalid version number: ${version}`);
 	}
 	const directories = [
@@ -23,7 +23,7 @@ const setVersion = (version) => {
 		if (dependencies) {
 			for (const name of Object.keys(dependencies)) {
 				if (name.startsWith('@agnos-ui/')) {
-					dependencies[name] = version ?? '';
+					dependencies[name] = version;
 				}
 			}
 		}
