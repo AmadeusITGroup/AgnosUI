@@ -65,7 +65,7 @@
 		}
 	},
 	"dependencies": {
-		"@agnos-ui/base-po": ""
+		"@agnos-ui/base-po": "0.0.0"
 	},
 	"peerDependencies": {
 		"@playwright/test": "*"
@@ -79,5 +79,6 @@
 		"type": "git",
 		"url": "https://github.com/AmadeusITGroup/AgnosUI.git",
 		"directory": "page-objects"
-	}
+	},
+	"version": "0.0.0"
 }

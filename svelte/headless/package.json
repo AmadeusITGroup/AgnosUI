@@ -121,7 +121,7 @@
 		}
 	},
 	"dependencies": {
-		"@agnos-ui/core": ""
+		"@agnos-ui/core": "0.0.0"
 	},
 	"peerDependencies": {
 		"@amadeus-it-group/tansu": "*",
@@ -130,5 +130,6 @@
 	"devDependencies": {
 		"@sveltejs/package": "^2.3.0"
 	},
-	"sideEffects": false
+	"sideEffects": false,
+	"version": "0.0.0"
 }
