@@ -7,8 +7,7 @@
 		"dev": "wireit",
 		"dev:coverage": "wireit",
 		"build": "wireit",
-		"build:coverage": "wireit",
-		"preview": "node scripts/preview.cjs dist --port 4200 --single"
+		"build:coverage": "wireit"
 	},
 	"wireit": {
 		"generate:links": {

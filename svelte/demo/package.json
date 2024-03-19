@@ -7,7 +7,6 @@
 		"dev:coverage": "wireit",
 		"build": "wireit",
 		"build:coverage": "wireit",
-		"preview": "vite preview",
 		"check": "wireit"
 	},
 	"wireit": {
