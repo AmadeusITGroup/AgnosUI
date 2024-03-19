@@ -66,8 +66,8 @@
 		"@angular/core": "*"
 	},
 	"dependencies": {
-		"@agnos-ui/angular-headless": "",
-		"@agnos-ui/style-bootstrap": "",
+		"@agnos-ui/angular-headless": "0.0.0",
+		"@agnos-ui/style-bootstrap": "0.0.0",
 		"tslib": "^2.6.2"
 	},
 	"devDependencies": {
@@ -84,5 +84,6 @@
 		"rxjs": "^7.8.1",
 		"zone.js": "~0.14.4"
 	},
-	"sideEffects": false
+	"sideEffects": false,
+	"version": "0.0.0"
 }
