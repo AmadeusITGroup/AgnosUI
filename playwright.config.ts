@@ -6,7 +6,7 @@ const isCI = process.env.CI === 'true';
 const includeCoverage = process.env.COVERAGE === 'true';
 const envFramework = process.env.FRAMEWORK?.toLowerCase();
 const demoUrl = 'http://localhost:4000';
-const previewDemoCommand = 'npm run preview demo';
+const previewDemoCommand = 'npm run preview';
 const frameworks = [
 	{
 		name: 'angular',

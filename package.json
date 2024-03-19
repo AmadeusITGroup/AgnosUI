@@ -70,7 +70,7 @@
 		"lint": "wireit",
 		"dev": "wireit",
 		"dev:coverage": "node scripts/run.js dev:coverage",
-		"preview": "node scripts/run.js preview",
+		"preview": "npm run preview -w demo",
 		"e2e": "wireit",
 		"e2e:ui": "wireit",
 		"postinstall": "husky",
