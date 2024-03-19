@@ -11,6 +11,13 @@ module.exports = {
 			dependencyTypes: ['peer'],
 			pinVersion: '*',
 		},
+		{
+			label: 'Use 0.0.0 for local packages',
+			packages: ['**'],
+			dependencies: ['**'],
+			dependencyTypes: ['local'],
+			pinVersion: '0.0.0',
+		},
 	],
 	semverGroups: [
 		{
