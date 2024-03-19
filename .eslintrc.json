@@ -17,7 +17,7 @@
 			"env": {
 				"node": true
 			},
-			"files": ["scripts/**/*.js"],
+			"files": ["scripts/**/*.js", "**/tailwind.config.js", "**/*.mjs"],
 			"rules": {
 				"@typescript-eslint/no-var-requires": "off"
 			}

@@ -20,6 +20,15 @@
 			"parserOptions": {
 				"project": ["demo/tsconfig.sw.json"]
 			}
+		},
+		{
+			"files": ["svelte.config.js"],
+			"parserOptions": {
+				"project": ["tsconfig.json"]
+			},
+			"env": {
+				"node": true
+			}
 		}
 	]
 }
