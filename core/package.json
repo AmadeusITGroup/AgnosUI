@@ -76,13 +76,14 @@
 				"build:src"
 			],
 			"files": [
+				"../scripts/buildPackageJson.js",
+				"../package.json",
 				"package.json",
-				"README.md",
-				"../scripts/buildPackageJson.js"
+				"README.md"
 			],
 			"output": [
-				"dist/package.json",
-				"dist/README.md"
+				"dist/README.md",
+				"dist/package.json"
 			]
 		},
 		"build": {

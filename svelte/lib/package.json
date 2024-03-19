@@ -88,17 +88,18 @@
 		},
 		"build:pkg": {
 			"command": "node ../../scripts/buildPackageJson.js . dist",
+			"dependencies": [
+				"build:src"
+			],
 			"files": [
 				"../../scripts/buildPackageJson.js",
+				"../../package.json",
 				"package.json",
 				"README.md"
 			],
 			"output": [
 				"dist/README.md",
 				"dist/package.json"
-			],
-			"dependencies": [
-				"build:src"
 			]
 		},
 		"build": {

@@ -17,7 +17,7 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/AmadeusITGroup/AgnosUI.git"
+		"url": "git+https://github.com/AmadeusITGroup/AgnosUI.git"
 	},
 	"engines": {
 		"npm": "^10.5.0",

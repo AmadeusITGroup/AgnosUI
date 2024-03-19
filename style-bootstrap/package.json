@@ -29,7 +29,7 @@
 	"bugs": "https://github.com/AmadeusITGroup/AgnosUI/issues",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/AmadeusITGroup/AgnosUI.git",
+		"url": "git+https://github.com/AmadeusITGroup/AgnosUI.git",
 		"directory": "style-bootstrap"
 	},
 	"devDependencies": {
