@@ -22,7 +22,7 @@ const findDependencies = (fileContent: string) => {
 	}
 	return dependencies;
 };
-const templateUrlRegExp = /@Component\({[^}]*templateUrl:\s'([^']+)'/g;
+const templateUrlRegExp = /@Component\({[\s\S]*?\stemplateUrl:\s'([^']+)'/g;
 const findTemplateUrls = (fileContent: string) => {
 	const templateUrls: string[] = [];
 	for (const templateUrl of fileContent.matchAll(templateUrlRegExp)) {
