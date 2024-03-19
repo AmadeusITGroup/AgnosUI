@@ -90,6 +90,7 @@
 			],
 			"files": [
 				"../../scripts/buildPackageJson.js",
+				"../../package.json",
 				"package.json",
 				"README.md"
 			],
