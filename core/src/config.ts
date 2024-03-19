@@ -32,10 +32,13 @@ export type WidgetsConfigStore<T> = WritableSignal<Partial2Levels<T>> & {
 export const mergeInto = <T>(destination: T, source: T | undefined, levels = Infinity): T => {
 	if (source !== undefined) {
 		if (typeof source === 'object' && source && levels >= 1) {
+			if (!destination) {
+				destination = {} as T;
+			}
 			for (const key of Object.keys(source) as (keyof T)[]) {
 				if (!Object.prototype.hasOwnProperty.call(source, key)) continue;
 				if (key === '__proto__' || key === 'constructor') continue;
-				destination[key] = mergeInto(destination[key] ?? {}, source[key] as any, levels - 1);
+				destination[key] = mergeInto(destination[key], source[key] as any, levels - 1);
 			}
 		} else {
 			return source;
