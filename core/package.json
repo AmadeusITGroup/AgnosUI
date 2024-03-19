@@ -48,11 +48,7 @@
 	},
 	"scripts": {
 		"build": "wireit",
-		"build:src": "wireit",
-		"build:pkg": "wireit",
 		"check": "wireit",
-		"check:api-extractor": "wireit",
-		"check:tests": "wireit",
 		"test": "vitest run",
 		"tdd": "vitest",
 		"tdd:ui": "vitest --ui",
