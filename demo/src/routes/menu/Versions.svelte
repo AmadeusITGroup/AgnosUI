@@ -3,8 +3,7 @@
 	import {pathToRoot$, selectedFramework$} from '$lib/stores';
 	import {createHasFocus} from '@agnos-ui/svelte/services/focustrack';
 	import {writable} from '@amadeus-it-group/tansu';
-	import lte from 'semver/functions/lte';
-	import valid from 'semver/functions/valid';
+	import {validate, compare} from 'compare-versions';
 	import type {Version} from './version';
 </script>
 
@@ -29,7 +28,7 @@
 		url:
 			version.version === 'PREVIEW' ||
 			$page.route.id === '/' ||
-			($page.data['since'] && valid($page.data['since']) && lte($page.data['since'], version.version))
+			($page.data['since'] && validate($page.data['since']) && compare($page.data['since'], version.version, '<='))
 				? $page.url.pathname.replace(`/${currentVersion.folder}/`, `/${version.folder}/`)
 				: `${$pathToRoot$.replace(currentVersion.folder, version.folder)}docs/${$selectedFramework$}/getting-started/introduction`,
 	}));
