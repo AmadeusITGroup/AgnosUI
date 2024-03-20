@@ -1,0 +1,10 @@
+storage: ./storage/content
+auth:
+  htpasswd:
+    file: ./storage/htpasswd
+    algorithm: bcrypt
+packages:
+  '@agnos-ui/*':
+    access: $all
+    publish: $authenticated
+    proxy: no-proxy

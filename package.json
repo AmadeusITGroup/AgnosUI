@@ -154,6 +154,7 @@
 		"demo",
 		"eslint-plugin",
 		"base-po",
-		"page-objects"
+		"page-objects",
+		"verdaccio"
 	]
 }

@@ -16,3 +16,4 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
       - run: npm run build:ci
+      - run: npm run -w verdaccio verdaccio-publish

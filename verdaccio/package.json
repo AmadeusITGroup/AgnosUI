@@ -1,0 +1,41 @@
+{
+	"private": true,
+	"scripts": {
+		"verdaccio-publish": "wireit",
+		"verdaccio-server": "wireit"
+	},
+	"dependencies": {
+		"verdaccio": "^5.29.2"
+	},
+	"wireit": {
+		"verdaccio-publish": {
+			"command": "node publish.js",
+			"dependencies": [
+				"../core:build",
+				"../style-bootstrap:build",
+				"../angular/headless:build",
+				"../angular/lib:build",
+				"../react/headless:build",
+				"../react/lib:build",
+				"../svelte/headless:build",
+				"../svelte/lib:build",
+				"../base-po:build",
+				"../page-objects:build"
+			],
+			"files": [
+				"publish.js",
+				"../scripts/npmPublish.js"
+			],
+			"output": [
+				"storage/**"
+			]
+		},
+		"verdaccio-server": {
+			"command": "verdaccio -c config.yaml",
+			"dependencies": [
+				"verdaccio-publish"
+			],
+			"service": true
+		}
+	}
+}
