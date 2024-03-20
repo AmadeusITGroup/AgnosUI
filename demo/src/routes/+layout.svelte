@@ -72,7 +72,7 @@
 </svelte:head>
 
 <div class="agnos-ui">
-	<nav class="demo-nav-top navbar">
+	<nav class="navbar-nav demo-nav-top navbar z-1">
 		<div class="container-xxl">
 			<a class="navbar-brand d-flex align-items-center" href={$pathToRoot$}><Svg svg={agnosUILogo} className="agnosui-logo-brand me-2" /> AgnosUI </a>
 			<div class="align-items-center d-none d-md-flex gap-3">
@@ -105,7 +105,7 @@
 			</div>
 		</div>
 	</nav>
-	<div class="demo-main d-flex flex-column" bind:this={container}>
+	<div class="demo-main d-flex flex-column z-0" bind:this={container}>
 		{#if isMainPage}
 			<slot />
 		{:else}
@@ -166,7 +166,6 @@
 
 	.demo-nav-top {
 		grid-area: top;
-		overflow: auto;
 	}
 
 	.demo-main {

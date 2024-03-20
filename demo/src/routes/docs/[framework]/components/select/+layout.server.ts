@@ -16,5 +16,6 @@ export const load = async () => {
 			slug: 'components/slider/',
 			subpath: 'examples',
 		},
+		since: '0.1.1',
 	};
 };

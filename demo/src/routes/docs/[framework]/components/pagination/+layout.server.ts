@@ -17,5 +17,6 @@ export const load = async () => {
 			slug: 'components/progressbar/',
 			subpath: 'examples',
 		},
+		since: '0.1.1',
 	};
 };
