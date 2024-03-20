@@ -93,7 +93,7 @@ jobs:
           if [ -n "$VERSION" ]; then
             export DOC_PATH="v$(node ../scripts/versionDocFolder.js "$VERSION")"
           else
-            export DOC_PATH="${{ inputs.docPath }}"
+            export DOC_PATH="$(node ../scripts/versionReleaseDocFolder.js "${{ inputs.docPath }}")"
           fi
           rm -rf "$DOC_PATH"
           cp -a ../demo/dist "$DOC_PATH"
