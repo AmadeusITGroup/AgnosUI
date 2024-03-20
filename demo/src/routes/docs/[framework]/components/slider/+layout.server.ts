@@ -16,5 +16,6 @@ export const load = async () => {
 			slug: 'services/introduction',
 			subpath: '',
 		},
+		since: '0.1.1',
 	};
 };

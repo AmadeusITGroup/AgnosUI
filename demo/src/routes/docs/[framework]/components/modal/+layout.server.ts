@@ -20,5 +20,6 @@ export const load = async () => {
 			slug: 'components/pagination/',
 			subpath: 'examples',
 		},
+		since: '0.1.1',
 	};
 };
