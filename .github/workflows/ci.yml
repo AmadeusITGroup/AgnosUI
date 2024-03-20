@@ -1,13 +1,13 @@
 name: ci
 on:
   push:
-    branches: [main]
+    branches: [main, release/**]
 jobs:
   build:
     needs: e2e-tests
     uses: './.github/workflows/build.yml'
     with:
-      docPath: main
+      docPath: ${{ github.ref_name }}
       docPublish: true
   e2e-tests:
     uses: './.github/workflows/e2e-tests.yml'
