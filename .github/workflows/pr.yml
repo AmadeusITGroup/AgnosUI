@@ -1,7 +1,7 @@
 name: pr
 on:
   pull_request:
-    branches: [main]
+    branches: [main, release/**]
 jobs:
   build:
     uses: './.github/workflows/build.yml'
