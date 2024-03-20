@@ -9,8 +9,8 @@ export const load = async () => {
 			{title: 'Playground', key: 'playground', path: '/components/accordion/playground#'},
 		],
 		prev: {
-			title: 'DaisyUI: Rating',
-			slug: 'daisyUI/rating/',
+			title: 'DaisyUI: Slider',
+			slug: 'daisyUI/slider/',
 			subpath: 'headless',
 		},
 		next: {
