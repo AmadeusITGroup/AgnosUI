@@ -80,9 +80,9 @@
 		}
 	},
 	"dependencies": {
+		"@agnos-ui/svelte": "*",
 		"@amadeus-it-group/tansu": "1.0.0",
-		"@floating-ui/dom": "^1.6.3",
-		"@agnos-ui/svelte": "*"
+		"@floating-ui/dom": "^1.6.3"
 	},
 	"devDependencies": {
 		"@stackblitz/sdk": "^1.9.0",
@@ -91,8 +91,8 @@
 		"@sveltejs/vite-plugin-svelte": "^3.0.2",
 		"@types/dom-view-transitions": "^1.0.4",
 		"bootstrap-icons": "^1.11.3",
+		"compare-versions": "^6.1.0",
 		"eslint-plugin-svelte": "^2.35.1",
-		"mermaid": "^10.9.0",
 		"prettier-plugin-svelte": "^3.2.2",
 		"shiki": "^1.2.0",
 		"svelte": "^4.2.12",

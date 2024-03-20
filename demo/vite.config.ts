@@ -69,17 +69,7 @@ export default defineConfig((config) => ({
 		'import.meta.env.AGNOSUI_VERSION': version,
 	},
 	optimizeDeps: {
-		include: [
-			'@amadeus-it-group/tansu',
-			'@floating-ui/dom',
-			'svelte-markdown',
-			'marked',
-			'mermaid',
-			'@stackblitz/sdk',
-			'shiki',
-			'semver/functions/lte',
-			'semver/functions/valid',
-		],
+		include: ['@amadeus-it-group/tansu', '@floating-ui/dom', 'svelte-markdown', 'marked', '@stackblitz/sdk', 'shiki', 'compare-versions'],
 	},
 	ssr: {
 		noExternal: ['@agnos-ui/core'],
