@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const semver = require('semver');
+const {compareVersions} = require('compare-versions');
 
 const ghPagesFolder = process.cwd();
 const availableVersions = fs
@@ -14,7 +14,7 @@ const availableVersions = fs
 		};
 	});
 
-availableVersions.sort((a, b) => -semver.compareBuild(a.version, b.version));
+availableVersions.sort((a, b) => -compareVersions(a.version, b.version));
 fs.writeFileSync('versions.json', JSON.stringify(availableVersions));
 try {
 	fs.unlinkSync('latest');

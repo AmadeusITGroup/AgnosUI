@@ -43,7 +43,6 @@
 		"lint-staged": "^15.2.2",
 		"npm-run-all2": "^6.1.2",
 		"prettier": "^3.2.5",
-		"semver": "^7.6.0",
 		"syncpack": "^11.2.1",
 		"ts-node": "^10.9.2",
 		"typescript": "~5.4.2",

@@ -1,9 +1,9 @@
-const {valid} = require('semver');
+const {validate} = require('compare-versions');
 const {join} = require('path');
 const {writeFileSync, readFileSync} = require('fs');
 
 const setVersion = (version) => {
-	if (!version || version.startsWith('v') || !valid(version)) {
+	if (!version || version.startsWith('v') || !validate(version)) {
 		throw new Error(`Invalid version number: ${version}`);
 	}
 	const directories = [
