@@ -20,8 +20,6 @@ export class RatingPO extends BasePO {
 		return this.locatorRoot.locator(this.selectors.star).nth(index);
 	}
 
-	// TODO to be pushed to the test itself
-	// We already discuss with Guillaume Saas not to put this in the basic PO which should only return locator basically
 	async state() {
 		return await this.locatorRoot.evaluate((rootNode: HTMLElement, selectors) => {
 			const starsElements = [...rootNode.querySelectorAll(selectors.star)] as HTMLSpanElement[];
@@ -33,7 +31,7 @@ export class RatingPO extends BasePO {
 			}
 
 			return {
-				rootClasses: rootNode.className.trim().split(' '),
+				rootClasses: rootNode.className.trim().split(' ').sort(),
 				value: rootNode.getAttribute('aria-valuenow'),
 				min: rootNode.getAttribute('aria-valuemin'),
 				max: rootNode.getAttribute('aria-valuemax'),

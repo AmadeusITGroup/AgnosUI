@@ -1,8 +1,8 @@
 <script lang="ts" context="module">
 	import type {RatingProps as Props, RatingSlots as Slots} from '@agnos-ui/svelte-headless/components/rating';
 	import {createRating} from '@agnos-ui/svelte-headless/components/rating';
-	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
+	import {Slot} from '@agnos-ui/svelte-headless/slot';
 </script>
 
 <script lang="ts">
@@ -26,52 +26,18 @@
 	});
 
 	const {
-		stores: {
-			tabindex$,
-			maxRating$,
-			visibleRating$,
-			ariaValueText$,
-			readonly$,
-			disabled$,
-			interactive$,
-			stars$,
-			className$,
-			slotStar$,
-			ariaLabel$,
-			ariaLabelledBy$,
-		},
-		actions: {handleKey, leave, hover, click},
+		stores: {visibleRating$, stars$, slotStar$},
+		directives: {containerDirective, starDirective},
 		patchChangedProps,
 	} = widget;
 	$: patchChangedProps($$props);
 </script>
 
-<div
-	role="slider"
-	class="d-inline-flex au-rating {$className$}"
-	tabindex={$tabindex$}
-	aria-valuemin={0}
-	aria-valuemax={$maxRating$}
-	aria-valuenow={$visibleRating$}
-	aria-valuetext={$ariaValueText$}
-	aria-readonly={$readonly$ || undefined}
-	aria-disabled={$disabled$ || undefined}
-	aria-label={$ariaLabel$ || undefined}
-	aria-labelledby={$ariaLabelledBy$ || undefined}
-	on:keydown={handleKey}
-	on:mouseleave={leave}
->
+<div use:containerDirective class="d-inline-flex">
 	<!-- on:blur={onTouched} ?? -->
 	{#each $stars$ as { fill, index }}
 		<span class="visually-hidden">({index < $visibleRating$ ? '*' : ' '})</span>
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<!-- svelte-ignore a11y-no-static-element-interactions -->
-		<span
-			class="au-rating-star"
-			style:cursor={$interactive$ ? 'pointer' : 'default'}
-			on:mouseenter={() => hover(index + 1)}
-			on:click={() => click(index + 1)}
-		>
+		<span use:starDirective={{index}}>
 			<Slot slotContent={$slotStar$} props={{fill, index}} let:component let:props>
 				<svelte:fragment slot="slot" let:props><slot name="star" {...props} /></svelte:fragment>
 				<svelte:component this={component} {...props} />

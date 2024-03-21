@@ -22,7 +22,7 @@ test.describe.parallel(`Rating tests`, () => {
 
 		await test.step('click interactions', async () => {
 			let expectedState: State = {
-				rootClasses: ['d-inline-flex', 'au-rating'],
+				rootClasses: ['au-rating', 'd-inline-flex'],
 				min: '0',
 				max: '10',
 				value: '3',
@@ -74,7 +74,7 @@ test.describe.parallel(`Rating tests`, () => {
 				await expect
 					.poll(() => ratingPO.state())
 					.toEqual({
-						rootClasses: ['d-inline-flex', 'au-rating'],
+						rootClasses: ['au-rating', 'd-inline-flex'],
 						min: '0',
 						max: '10',
 						value: value.toString(),
@@ -116,7 +116,7 @@ test.describe.parallel(`Rating tests`, () => {
 		expectedClasses.length = 5;
 		expectedClasses.fill(['au-rating-star']);
 		const expectedState: State = {
-			rootClasses: ['d-inline-flex', 'au-rating', 'rating-readonly'],
+			rootClasses: ['au-rating', 'd-inline-flex', 'rating-readonly'],
 			min: '0',
 			max: '5',
 			value: '3.64',
@@ -175,7 +175,7 @@ test.describe.parallel(`Rating tests`, () => {
 		await ratingPO.locatorRoot.waitFor();
 
 		let expectedState: State = {
-			rootClasses: ['d-inline-flex', 'au-rating'],
+			rootClasses: ['au-rating', 'd-inline-flex'],
 			min: '0',
 			max: '10',
 			value: '3',
