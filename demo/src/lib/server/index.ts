@@ -1,16 +1,17 @@
 import {readFile, readdir} from 'node:fs/promises';
+import frontMatter from 'front-matter';
 
 const validMdRegex = /^\d{2}-[a-zA-Z-]*\.md$/g;
 
 const componentsSubMenu = [
-	{title: 'Accordion', slug: 'components/accordion/', subpath: 'examples'},
-	{title: 'Alert', slug: `components/alert/`, subpath: 'examples'},
-	{title: 'Modal', slug: `components/modal/`, subpath: 'examples'},
-	{title: 'Pagination', slug: `components/pagination/`, subpath: 'examples'},
-	{title: 'Progressbar', slug: `components/progressbar/`, subpath: 'examples'},
-	{title: 'Rating', slug: `components/rating/`, subpath: 'examples'},
-	{title: 'Select', slug: `components/select/`, subpath: 'examples'},
-	{title: 'Slider', slug: `components/slider/`, subpath: 'examples'},
+	{title: 'Accordion', slug: 'components/accordion/', subpath: 'examples', attributes: {}},
+	{title: 'Alert', slug: `components/alert/`, subpath: 'examples', attributes: {}},
+	{title: 'Modal', slug: `components/modal/`, subpath: 'examples', attributes: {}},
+	{title: 'Pagination', slug: `components/pagination/`, subpath: 'examples', attributes: {}},
+	{title: 'Progressbar', slug: `components/progressbar/`, subpath: 'examples', attributes: {}},
+	{title: 'Rating', slug: `components/rating/`, subpath: 'examples', attributes: {}},
+	{title: 'Select', slug: `components/select/`, subpath: 'examples', attributes: {}},
+	{title: 'Slider', slug: `components/slider/`, subpath: 'examples', attributes: {}},
 ];
 
 export async function listPages() {
@@ -43,8 +44,14 @@ export async function listPages() {
 
 const regexFrameworkSpecific = /<!--\s+<framework-specific\s+src="([^"]*)">\s+-->[\s\S]*?<!--\s+<\/framework-specific>\s+-->/;
 
-async function preparseMarkdown(path: string, framework: string): Promise<string> {
-	let markdown = await readFile(path, 'utf-8');
+async function preparseMarkdown(path: string, framework: string): Promise<{content: string; attributes: Record<string, string>}> {
+	const fmData = frontMatter<Record<string, string>>(await readFile(path, 'utf-8'));
+	for (const key of Object.keys(fmData.attributes)) {
+		if (typeof fmData.attributes[key] === 'string' && fmData.attributes[key]) {
+			fmData.attributes[key] = fmData.attributes[key].trim();
+		}
+	}
+	let markdown = fmData.body;
 	let match;
 	do {
 		match = markdown.match(regexFrameworkSpecific);
@@ -53,7 +60,7 @@ async function preparseMarkdown(path: string, framework: string): Promise<string
 				markdown.slice(0, match.index) + (await readFile(`../${framework}/docs/${match[1]}`)) + markdown.substring(match.index! + match[0].length);
 		}
 	} while (match);
-	return markdown;
+	return {content: markdown, attributes: fmData.attributes};
 }
 
 export async function retrieveMarkdown(slug: string, framework: string) {
@@ -81,5 +88,10 @@ export async function retrieveMarkdown(slug: string, framework: string) {
 			}
 		}
 	}
-	return file ? {prev, next, content: await preparseMarkdown(file.mdpath!, framework)} : undefined;
+	if (file) {
+		const {content, attributes} = await preparseMarkdown(file.mdpath!, framework);
+		return {prev, next, content, attributes};
+	} else {
+		return undefined;
+	}
 }

@@ -1,3 +1,7 @@
+---
+since: 0.1.1
+---
+
 # Introduction to Headless
 
 A headless component is a design pattern where the component applies a separation of concerns between the logic (or "head") and the user interface (or "body").

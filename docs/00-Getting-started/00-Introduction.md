@@ -1,3 +1,7 @@
+---
+since: 0.1.1
+---
+
 # Introduction
 
 AgnosUI is a versatile widget library designed for various frameworks, providing a consistent user interface across platforms. Its core (also referred to as headless), written in pure TypeScript, serves as a foundation that can be utilized by any framework to generate a user interface.
