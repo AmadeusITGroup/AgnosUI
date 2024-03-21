@@ -1,3 +1,7 @@
+---
+since: 0.1.1
+---
+
 # Floating UI
 
 ## Service Overview
