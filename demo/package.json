@@ -25,10 +25,7 @@
 		"dev": {
 			"command": "vite dev",
 			"dependencies": [
-				"generate:doc",
-				"../angular/demo:dev",
-				"../react/demo:dev",
-				"../svelte/demo:dev"
+				"generate:doc"
 			],
 			"service": true
 		},
@@ -88,6 +85,7 @@
 		"@types/dom-view-transitions": "^1.0.4",
 		"bootstrap-icons": "^1.11.3",
 		"eslint-plugin-svelte": "^2.35.1",
+		"front-matter": "^4.0.2",
 		"mermaid": "^10.8.0",
 		"prettier-plugin-svelte": "^3.2.2",
 		"shiki": "^1.1.7",
