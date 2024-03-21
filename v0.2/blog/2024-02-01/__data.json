@@ -1,1 +1,1 @@
-{"type":"data","nodes":[null,{"type":"data","data":[{"menu":1},[2],{"title":3,"submenu":4},"News 2024",[5],{"label":6,"path":7,"subpath":8},"State management with Tansu","blog/2024-02-01",""],"uses":{}},null]}
+{"type":"data","nodes":[null,{"type":"data","data":[{"menu":1,"since":9},[2],{"title":3,"submenu":4},"News 2024",[5],{"label":6,"path":7,"subpath":8},"State management with Tansu","blog/2024-02-01","","v0.1.1"],"uses":{}},null]}
