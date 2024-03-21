@@ -2,7 +2,7 @@ import {getHighlighter, type ThemeInput} from 'shiki';
 import lightPlus from './light-plus.json' with {type: 'json'};
 import darkPlus from './dark-plus.json' with {type: 'json'};
 
-export const langs = ['angular-ts', 'tsx', 'html', 'css', 'scss', 'svelte', 'bash', 'typescript'];
+export const langs = ['angular-ts', 'angular-html', 'tsx', 'html', 'css', 'scss', 'svelte', 'bash', 'typescript'];
 
 const highlighter = await getHighlighter({
 	langs,
@@ -23,6 +23,9 @@ export const languageFromFileName = (fileName: string | undefined) => {
 			case '.tsx':
 				return 'tsx';
 			case '.html':
+				if (fileName.endsWith('.component.html')) {
+					return 'angular-html';
+				}
 				return 'html';
 			case '.css':
 				return 'css';
