@@ -84,7 +84,7 @@ const config: PlaywrightTestConfig<FixtureOptions> = {
 	testDir: 'e2e',
 	testMatch: '*e2e-spec.ts',
 	retries: 1,
-	reporter: [[isCI ? 'github' : 'list'], ['html', {open: 'never'}]],
+	reporter: [[isCI ? 'github' : 'list'], isCI ? ['blob'] : ['html', {open: 'never'}]],
 	forbidOnly: isCI,
 	snapshotPathTemplate: '{testDir}/{testFilePath}-snapshots/{arg}{ext}',
 	use: {

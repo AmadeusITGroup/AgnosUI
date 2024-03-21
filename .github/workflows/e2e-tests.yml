@@ -26,13 +26,15 @@ jobs:
       - id: check_lcov
         run: |
           if test -f "e2e/coverage/lcov.info"; then
-            echo "check_lcov=true" >> $GITHUB_OUTPUT
+            mkdir -p coverage/e2e-${{ matrix.shard }}
+            mv e2e/coverage/lcov.info coverage/e2e-${{ matrix.shard }}/lcov.info
           fi
       - uses: actions/upload-artifact@v4
-        if: steps.check_lcov.outputs.check_lcov == 'true'
         with:
-          name: lcov-${{ matrix.shard }}.info
-          path: e2e/coverage/lcov.info
+          name: e2e-test-${{ matrix.shard }}
+          path: |
+            coverage/
+            blob-report/
           retention-days: 1
   merge-reports:
     needs: [e2e-tests]
@@ -41,10 +43,21 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
-          path: all-lcov
-          pattern: lcov-*
+          pattern: e2e-test-*
+          merge-multiple: true
       - uses: codecov/codecov-action@v4
         with:
-          directory: all-lcov
+          directory: coverage
           flags: e2e
           token: ${{ secrets.CODECOV_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
+      - run: npx playwright merge-reports --reporter html ./blob-report
+      - uses: actions/upload-artifact@v4
+        with:
+          name: e2e-playwright-report
+          path: playwright-report
+          retention-days: 7
