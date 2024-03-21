@@ -61,6 +61,11 @@ export const componentsMetadata: {[key: string]: ComponentMetadata} = {
  * Metadata for each component
  */
 export const daisyUIMetadata: {[key: string]: ComponentMetadata} = {
+	Alert: {
+		title: 'Alert',
+		status: 'stable',
+		since: 'v0.3.0',
+	},
 	Pagination: {
 		title: 'Pagination',
 		status: 'stable',
