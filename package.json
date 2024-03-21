@@ -80,6 +80,9 @@
 	"wireit": {
 		"dev": {
 			"dependencies": [
+				"./angular/demo:dev",
+				"./react/demo:dev",
+				"./svelte/demo:dev",
 				"./demo:dev"
 			]
 		},

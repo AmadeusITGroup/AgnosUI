@@ -6,10 +6,8 @@ export const load = async ({params}) => {
 	if (!file) error(404);
 	else {
 		return {
-			content: file.content,
-			prev: file.prev,
-			next: file.next,
 			slug: params.slug,
+			...file,
 		};
 	}
 };
