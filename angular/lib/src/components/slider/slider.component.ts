@@ -57,30 +57,10 @@ export class SliderHandleDirective {
 @Component({
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [SliderHandleDirective],
+	imports: [UseDirective, SliderHandleDirective],
 	template: `
 		<ng-template auSliderHandle #handle let-state="state" let-widget="widget" let-item="item">
-			<button
-				class="au-slider-handle"
-				role="slider"
-				[attr.aria-valuemin]="state.min"
-				[attr.aria-valuemax]="state.max"
-				[attr.aria-readonly]="state.readonly ? true : null"
-				[attr.aria-disabled]="state.disabled ? true : null"
-				[attr.aria-valuenow]="item.value"
-				[attr.aria-valuetext]="item.ariaValueText"
-				[attr.aria-label]="item.ariaLabel"
-				[attr.aria-orientation]="state.vertical ? 'vertical' : null"
-				[disabled]="state.disabled"
-				[class]="state.vertical ? 'au-slider-handle-vertical' : 'au-slider-handle-horizontal'"
-				[style.left.%]="state.handleDisplayOptions[item.id].left"
-				[style.top.%]="state.handleDisplayOptions[item.id].top"
-				(keydown)="onKeyDown($event, item.id, widget.actions.keydown)"
-				(mousedown)="widget.actions.mouseDown($event, item.id)"
-				(touchstart)="widget.actions.touchStart($event, item.id)"
-			>
-				&nbsp;
-			</button>
+			<button [auUse]="widget.directives.handleDirective" [auUseParams]="{item}">&nbsp;</button>
 		</ng-template>
 	`,
 })
@@ -114,41 +94,19 @@ export class SliderStructureDirective {
 	template: `
 		<ng-template auSliderStructure #structure let-state="state" let-widget="widget">
 			@for (option of state.progressDisplayOptions; track option) {
-				<div
-					class="au-slider-progress"
-					[style.left.%]="option.left"
-					[style.right.%]="option.right"
-					[style.bottom.%]="option.bottom"
-					[style.top.%]="option.top"
-					[style.width.%]="option.width"
-					[style.height.%]="option.height"
-				></div>
+				<div [auUse]="widget.directives.progressDisplayDirective" [auUseParams]="{option}"></div>
 			}
-			<div [class]="state.vertical ? 'au-slider-clickable-area-vertical' : 'au-slider-clickable-area'" (click)="widget.actions.click($event)"></div>
+			<div [auUse]="widget.directives.clickableAreaDirective"></div>
 			@if (state.showMinMaxLabels) {
-				<div
-					[class]="state.vertical ? 'au-slider-label-vertical au-slider-label-vertical-min' : 'au-slider-label au-slider-label-min'"
-					[class.au-slider-rtl]="state.rtl"
-					[class.invisible]="!state.minValueLabelDisplay"
-					[auUse]="widget.directives.minLabelDirective"
-				>
+				<div [auUse]="widget.directives.minLabelDirective">
 					<ng-template [auSlot]="state.slotLabel" [auSlotProps]="{state, widget, value: state.min}"></ng-template>
 				</div>
-				<div
-					[class]="state.vertical ? 'au-slider-label-vertical au-slider-label-vertical-max' : 'au-slider-label au-slider-label-max'"
-					[class.au-slider-rtl]="state.rtl"
-					[class.invisible]="!state.maxValueLabelDisplay"
-					[auUse]="widget.directives.maxLabelDirective"
-				>
+				<div [auUse]="widget.directives.maxLabelDirective">
 					<ng-template [auSlot]="state.slotLabel" [auSlotProps]="{state, widget, value: state.max}"></ng-template>
 				</div>
 			}
 			@if (state.showValueLabels && state.combinedLabelDisplay) {
-				<div
-					[class]="state.vertical ? 'au-slider-label-vertical au-slider-label-vertical-now' : 'au-slider-label au-slider-label-now'"
-					[style.left.%]="state.combinedLabelPositionLeft"
-					[style.top.%]="state.combinedLabelPositionTop"
-				>
+				<div [auUse]="widget.directives.combinedHandleLabelDisplayDirective">
 					@if (state.rtl) {
 						<ng-template [auSlot]="state.slotLabel" [auSlotProps]="{state, widget, value: state.sortedValues[1]}"></ng-template> -
 						<ng-template [auSlot]="state.slotLabel" [auSlotProps]="{state, widget, value: state.sortedValues[0]}"></ng-template>
@@ -161,11 +119,7 @@ export class SliderStructureDirective {
 			@for (item of state.sortedHandles; track item.id; let i = $index) {
 				<ng-template [auSlot]="state.slotHandle" [auSlotProps]="{state, widget, item}"></ng-template>
 				@if (state.showValueLabels && !state.combinedLabelDisplay) {
-					<div
-						[class]="state.vertical ? 'au-slider-label-vertical au-slider-label-vertical-now' : 'au-slider-label au-slider-label-now'"
-						[style.left.%]="state.handleDisplayOptions[i].left"
-						[style.top.%]="state.handleDisplayOptions[i].top"
-					>
+					<div [auUse]="widget.directives.handleLabelDisplayDirective" [auUseParams]="{index: i}">
 						<ng-template [auSlot]="state.slotLabel" [auSlotProps]="{state, widget, value: state.values[i]}"></ng-template>
 					</div>
 				}
@@ -193,10 +147,6 @@ const defaultConfig: PartialSliderProps = {
 	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SliderComponent), multi: true}],
 	imports: [SlotDirective, SlotDefaultDirective],
 	host: {
-		class: `au-slider`,
-		'[class]': '(state().vertical ? "au-slider-vertical" : "au-slider-horizontal") + " " + state().className',
-		'[class.disabled]': 'state().disabled',
-		'[attr.aria-disabled]': 'state().disabled ? true : null',
 		'(blur)': 'handleBlur()',
 	},
 	template: ` <ng-template [auSlot]="state().slotStructure" [auSlotProps]="{state: state(), widget}"></ng-template> `,

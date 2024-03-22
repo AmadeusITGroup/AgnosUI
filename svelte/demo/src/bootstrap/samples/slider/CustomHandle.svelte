@@ -5,28 +5,10 @@
 	type $$Slots = SliderSlots;
 
 	export let item: $$Props['item'];
-	export let state: $$Props['state'];
 	export let widget: $$Props['widget'];
 </script>
 
-<button
-	class={`au-custom-slider-handle ${state.vertical ? 'au-custom-slider-handle-vertical' : 'au-custom-slider-handle-horizontal'}`}
-	role="slider"
-	aria-valuemin={state.min}
-	aria-valuemax={state.max}
-	aria-readonly={state.readonly ? true : null}
-	aria-disabled={state.disabled ? true : null}
-	aria-valuenow={item.value}
-	aria-valuetext={item.ariaValueText}
-	aria-label={item.ariaLabel}
-	aria-orientation={state.vertical ? 'vertical' : null}
-	disabled={state.disabled ? true : null}
-	style:left={`${state.handleDisplayOptions[item.id].left}%`}
-	style:top={`${state.handleDisplayOptions[item.id].top}%`}
-	on:keydown={(e) => widget.actions.keydown(e, item.id)}
-	on:mousedown={(e) => widget.actions.mouseDown(e, item.id)}
-	on:touchstart={(e) => widget.actions.touchStart(e, item.id)}
->
+<button class="custom-handle" use:widget.directives.handleDirective={{item}}>
 	<svg xmlns="http://www.w3.org/2000/svg" fill="var(--bs-slider-handle-color)" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
 		<path
 			stroke-linecap="round"
