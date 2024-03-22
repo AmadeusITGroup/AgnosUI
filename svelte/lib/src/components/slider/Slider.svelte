@@ -1,19 +1,12 @@
-<script lang="ts" context="module">
-	import type {SliderProps as Props, SliderSlots as Slots} from '@agnos-ui/svelte-headless/components/slider';
-	import {createSlider} from '@agnos-ui/svelte-headless/components/slider';
+<script lang="ts">
+	import {createSlider, type SliderProps, type SliderSlots} from '@agnos-ui/svelte-headless/components/slider';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
 	import SliderDefaultStructure from './SliderDefaultStructure.svelte';
 	import SliderDefaultHandle from './SliderDefaultHandle.svelte';
-	const defaultConfig: Partial<Props> = {
-		slotStructure: SliderDefaultStructure,
-		slotHandle: SliderDefaultHandle,
-	};
-</script>
 
-<script lang="ts">
-	type $$Props = Partial<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
-	type $$Slots = Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Props = Partial<SliderProps>;
+	type $$Slots = SliderSlots;
 
 	export let values: number[] | undefined = undefined;
 
@@ -22,7 +15,10 @@
 		widgetName: 'slider',
 		$$slots,
 		$$props,
-		defaultConfig,
+		defaultConfig: {
+			slotStructure: SliderDefaultStructure,
+			slotHandle: SliderDefaultHandle,
+		},
 		events: {
 			onValuesChange: function (newValues: number[]): void {
 				values = newValues;

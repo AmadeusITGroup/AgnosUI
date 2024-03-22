@@ -1,24 +1,20 @@
-<script lang="ts" context="module">
-	import type {ToastProps as Props, ToastSlots as Slots} from '@agnos-ui/svelte-headless/components/toast';
+<script lang="ts">
+	import {createToast, type ToastProps, type ToastSlots} from '@agnos-ui/svelte-headless/components/toast';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
-	import {createToast} from '@agnos-ui/svelte-headless/components/toast';
 	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
 	import ToastDefaultStructure from './ToastDefaultStructure.svelte';
 
-	const defaultConfig: Partial<Props> = {
-		slotStructure: ToastDefaultStructure,
-	};
-</script>
+	type $$Props = Partial<ToastProps>;
+	type $$Slots = ToastSlots;
 
-<script lang="ts">
-	type $$Props = Partial<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
-	type $$Slots = Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
 	const widget = callWidgetFactory({
 		factory: createToast,
 		widgetName: 'toast',
 		$$slots,
 		$$props,
-		defaultConfig,
+		defaultConfig: {
+			slotStructure: ToastDefaultStructure,
+		},
 		events: {
 			onVisibleChange: (event) => {
 				visible = event;
@@ -35,7 +31,6 @@
 	} = widget;
 
 	$: widget.patchChangedProps($$props);
-
 	$: slotContext = {widget, state: $state$};
 </script>
 

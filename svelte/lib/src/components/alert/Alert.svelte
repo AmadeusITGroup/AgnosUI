@@ -1,24 +1,20 @@
-<script lang="ts" context="module">
-	import type {AlertProps as Props, AlertSlots as Slots} from '@agnos-ui/svelte-headless/components/alert';
+<script lang="ts">
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
-	import {createAlert} from '@agnos-ui/svelte-headless/components/alert';
+	import {createAlert, type AlertProps, type AlertSlots} from '@agnos-ui/svelte-headless/components/alert';
 	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
 	import AlertDefaultStructure from './AlertDefaultStructure.svelte';
 
-	const defaultConfig: Partial<Props> = {
-		slotStructure: AlertDefaultStructure,
-	};
-</script>
+	type $$Props = Partial<AlertProps>;
+	type $$Slots = AlertSlots;
 
-<script lang="ts">
-	type $$Props = Partial<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
-	type $$Slots = Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
 	const widget = callWidgetFactory({
 		factory: createAlert,
 		widgetName: 'alert',
 		$$slots,
 		$$props,
-		defaultConfig,
+		defaultConfig: {
+			slotStructure: AlertDefaultStructure,
+		},
 		events: {
 			onVisibleChange: (event) => {
 				visible = event;

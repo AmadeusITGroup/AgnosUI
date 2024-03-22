@@ -1,15 +1,10 @@
-<script lang="ts" context="module">
-	import type {RatingProps as Props, RatingSlots as Slots} from '@agnos-ui/svelte-headless/components/rating';
-	import {createRating} from '@agnos-ui/svelte-headless/components/rating';
+<script lang="ts">
+	import {createRating, type RatingProps, type RatingSlots} from '@agnos-ui/svelte-headless/components/rating';
 	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
-</script>
 
-<script lang="ts">
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Props = Partial<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Slots = Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Props = Partial<RatingProps>;
+	type $$Slots = RatingSlots;
 
 	export let rating: number | undefined = undefined;
 

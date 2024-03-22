@@ -1,14 +1,10 @@
-<script context="module" lang="ts">
-	import type {AccordionProps as Props, AccordionSlots as Slots} from '@agnos-ui/svelte-headless/components/accordion';
-	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
-	import {createAccordion} from '@agnos-ui/svelte-headless/components/accordion';
-	import {setAccordionApi} from './accordion';
-</script>
-
 <script lang="ts">
-	type $$Props = Partial<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Slots = {default: Record<string, never>} & Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
+	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
+	import {createAccordion, type AccordionProps, type AccordionSlots} from '@agnos-ui/svelte-headless/components/accordion';
+	import {setAccordionApi} from './accordion';
+
+	type $$Props = Partial<AccordionProps>;
+	type $$Slots = {default: Record<string, never>} & AccordionSlots;
 
 	export let itemVisible: boolean | undefined = undefined;
 	const widget = callWidgetFactory({

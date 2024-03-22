@@ -1,24 +1,14 @@
-<script lang="ts" context="module">
-	import type {ModalWidget, ModalProps as Props, ModalSlots as Slots} from '@agnos-ui/svelte-headless/components/modal';
+<script lang="ts">
 	import {toSlotContextWidget} from '@agnos-ui/svelte-headless/types';
-	import {createModal} from '@agnos-ui/svelte-headless/components/modal';
+	import {createModal, type ModalWidget, type ModalProps, type ModalSlots} from '@agnos-ui/svelte-headless/components/modal';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
 	import ModalDefaultHeader from './ModalDefaultHeader.svelte';
 	import ModalDefaultStructure from './ModalDefaultStructure.svelte';
 
-	const defaultConfig: Partial<Props<any>> = {
-		slotStructure: ModalDefaultStructure,
-		slotHeader: ModalDefaultHeader,
-	};
-</script>
-
-<script lang="ts">
 	type Data = $$Generic; // eslint-disable-line no-undef
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Props = Partial<Props<Data>>; // eslint-disable-line @typescript-eslint/no-unused-vars
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Slots = Slots<Data>; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Props = Partial<ModalProps<Data>>;
+	type $$Slots = ModalSlots<Data>;
 
 	export let visible: boolean | undefined = undefined;
 
@@ -27,7 +17,10 @@
 		widgetName: 'modal',
 		$$slots,
 		$$props,
-		defaultConfig,
+		defaultConfig: {
+			slotStructure: ModalDefaultStructure,
+			slotHeader: ModalDefaultHeader,
+		},
 		events: {
 			onVisibleChange: (event) => {
 				visible = event;

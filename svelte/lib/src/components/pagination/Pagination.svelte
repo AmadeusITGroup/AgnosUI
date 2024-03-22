@@ -1,37 +1,30 @@
-<script lang="ts" context="module">
-	import type {PaginationProps as Props, PaginationSlots as Slots} from '@agnos-ui/svelte-headless/components/pagination';
-	import {createPagination} from '@agnos-ui/svelte-headless/components/pagination';
+<script lang="ts">
+	import {createPagination, type PaginationProps, type PaginationSlots} from '@agnos-ui/svelte-headless/components/pagination';
 	import {toSlotContextWidget} from '@agnos-ui/svelte-headless/types';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
 	import PaginationDefaultPages from './PaginationDefaultPages.svelte';
 	import PaginationDefaultStructure from './PaginationDefaultStructure.svelte';
 
-	const defaultConfig: Partial<Props> = {
-		slotStructure: PaginationDefaultStructure,
-		slotPages: PaginationDefaultPages,
-	};
-</script>
-
-<script lang="ts">
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Props = Partial<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Slots = Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Props = Partial<PaginationProps>;
+	type $$Slots = PaginationSlots;
 
 	/**
 	 *  The current page.
 	 *
 	 *  Page numbers start with `1`.
 	 */
-	export let page: Props['page'] | undefined = undefined;
+	export let page: PaginationProps['page'] | undefined = undefined;
 
 	const widget = callWidgetFactory({
 		factory: createPagination,
 		widgetName: 'pagination',
 		$$slots,
 		$$props,
-		defaultConfig,
+		defaultConfig: {
+			slotStructure: PaginationDefaultStructure,
+			slotPages: PaginationDefaultPages,
+		},
 		events: {
 			onPageChange: (value: number) => {
 				page = value;

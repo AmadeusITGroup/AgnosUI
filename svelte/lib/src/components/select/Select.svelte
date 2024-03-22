@@ -1,16 +1,11 @@
-<script lang="ts" context="module">
-	import type {SelectProps as Props, SelectWidget, SelectSlots as Slots} from '@agnos-ui/svelte-headless/components/select';
-	import {Slot} from '@agnos-ui/svelte-headless/slot';
-	import {createSelect} from '@agnos-ui/svelte-headless/components/select';
-	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
-</script>
-
 <script lang="ts">
+	import {Slot} from '@agnos-ui/svelte-headless/slot';
+	import {createSelect, type SelectProps, type SelectWidget, type SelectSlots} from '@agnos-ui/svelte-headless/components/select';
+	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
+
 	type Item = $$Generic; // eslint-disable-line no-undef
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Props = Partial<Props<Item>>; // eslint-disable-line @typescript-eslint/no-unused-vars
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Slots = Slots<Item>; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Props = Partial<SelectProps<Item>>;
+	type $$Slots = SelectSlots<Item>;
 
 	export let open: boolean | undefined = false;
 	export let filterText: string | undefined = undefined;
