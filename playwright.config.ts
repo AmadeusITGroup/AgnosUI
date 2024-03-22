@@ -3,24 +3,25 @@ import {devices} from '@playwright/test';
 import type {FixtureOptions} from 'e2e/fixture';
 
 const isCI = process.env.CI === 'true';
-const includeCoverage = process.env.COVERAGE === 'true';
+const includeCoverage = isCI || process.env.COVERAGE === 'true';
+const coverageSuffix = includeCoverage ? ':coverage' : '';
 const envFramework = process.env.FRAMEWORK?.toLowerCase();
 const demoUrl = 'http://localhost:4000';
-const previewDemoCommand = 'npm run preview';
+const previewDemoCommand = `npm run preview${coverageSuffix}`;
 const frameworks = [
 	{
 		name: 'angular',
-		command: isCI ? previewDemoCommand : includeCoverage ? `npm run dev:coverage -w angular/demo` : `npm run dev -w angular/demo`,
+		command: isCI ? previewDemoCommand : `npm run dev${coverageSuffix} -w angular/demo`,
 		url: `${isCI ? demoUrl : 'http://localhost:4200'}/angular/samples/bootstrap/`,
 	},
 	{
 		name: 'react',
-		command: isCI ? previewDemoCommand : includeCoverage ? `npm run dev:coverage -w react/demo` : `npm run dev -w react/demo`,
+		command: isCI ? previewDemoCommand : `npm run dev${coverageSuffix} -w react/demo`,
 		url: `${isCI ? demoUrl : 'http://localhost:3000'}/react/samples/bootstrap/`,
 	},
 	{
 		name: 'svelte',
-		command: isCI ? previewDemoCommand : includeCoverage ? `npm run dev:coverage -w svelte/demo` : `npm run dev -w svelte/demo`,
+		command: isCI ? previewDemoCommand : `npm run dev${coverageSuffix} -w svelte/demo`,
 		url: `${isCI ? demoUrl : 'http://localhost:3001'}/svelte/samples/bootstrap/`,
 	},
 ].filter(envFramework ? (framework) => framework.name === envFramework : () => true);

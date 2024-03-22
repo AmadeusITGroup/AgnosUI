@@ -8,6 +8,7 @@
 		"generate:doc": "wireit",
 		"build:coverage": "wireit",
 		"preview": "wireit",
+		"preview:coverage": "wireit",
 		"check": "wireit",
 		"test": "vitest run",
 		"test:coverage": "vitest run --coverage",
@@ -62,13 +63,33 @@
 				"../react/demo:build:coverage",
 				"../svelte/demo:build:coverage",
 				"../svelte/lib:build"
+			],
+			"files": [
+				"src/**",
+				"static/**",
+				"svelte.config.js",
+				"vite.config.ts",
+				"vite-env.d.ts",
+				"scripts/*"
+			],
+			"output": [
+				"dist/**",
+				".svelte-kit/**"
 			]
 		},
 		"preview": {
 			"command": "vite preview",
 			"dependencies": [
 				"build"
-			]
+			],
+			"service": true
+		},
+		"preview:coverage": {
+			"command": "vite preview",
+			"dependencies": [
+				"build:coverage"
+			],
+			"service": true
 		},
 		"check": {
 			"command": "svelte-check",

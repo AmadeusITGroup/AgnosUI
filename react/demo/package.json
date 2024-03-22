@@ -48,6 +48,14 @@
 				"../../style-bootstrap:build",
 				"../lib:generate:exports",
 				"../headless:generate:exports"
+			],
+			"files": [
+				"src/**",
+				"vite.config.ts",
+				"vite.coverage.config.ts"
+			],
+			"output": [
+				"dist/**"
 			]
 		},
 		"check": {

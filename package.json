@@ -73,6 +73,7 @@
 		"dev": "wireit",
 		"dev:coverage": "node scripts/run.js dev:coverage",
 		"preview": "npm run preview -w demo",
+		"preview:coverage": "npm run preview:coverage -w demo",
 		"e2e": "wireit",
 		"e2e:ui": "wireit",
 		"postinstall": "husky",
