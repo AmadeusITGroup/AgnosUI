@@ -1,0 +1,7 @@
+function __vite__mapDeps(indexes) {
+  if (!__vite__mapDeps.viteFileDeps) {
+    __vite__mapDeps.viteFileDeps = []
+  }
+  return indexes.map((i) => __vite__mapDeps.viteFileDeps[i])
+}
+import{s,n as m}from"../chunks/scheduler.-4Rzn4Bj.js";import{S as l,i as p,c as i,b as u,m as c,t as _,a as f,e as d}from"../chunks/index.BbxhXv5b.js";import{P as g}from"../chunks/Playground.C1wKDpDV.js";import{_ as n}from"../chunks/preload-helper.BQ24v_F8.js";import{g as y,d as P}from"../chunks/api.fZ5WRA09.js";const v={componentName:"select",style:"bootstrap",sampleName:"playground",files:{angular:{complementaryUrl:"/bootstrap",entryPoint:"playground.component.ts",files:{"playground.component.ts":()=>n(()=>import("../chunks/playground.route.CbTibqn1.js"),__vite__mapDeps([]),import.meta.url).then(o=>o.default)}},react:{complementaryUrl:"/bootstrap",entryPoint:"playground.tsx",files:{"playground.tsx":()=>n(()=>import("../chunks/Playground.route.Rkw40jcf.js"),__vite__mapDeps([]),import.meta.url).then(o=>o.default)}},svelte:{complementaryUrl:"/bootstrap",entryPoint:"playground.svelte",files:{"playground.svelte":()=>n(()=>import("../chunks/Playground.route.mzp-BPp8.js"),__vite__mapDeps([]),import.meta.url).then(o=>o.default)}}}};function $(o){let t,r;return t=new g({props:{sample:v,config:y(),doc:P}}),{c(){i(t.$$.fragment)},l(e){u(t.$$.fragment,e)},m(e,a){c(t,e,a),r=!0},p:m,i(e){r||(_(t.$$.fragment,e),r=!0)},o(e){f(t.$$.fragment,e),r=!1},d(e){d(t,e)}}}class A extends l{constructor(t){super(),p(this,t,null,$,s,{})}}export{A as component};
