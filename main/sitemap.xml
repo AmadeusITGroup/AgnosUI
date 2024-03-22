@@ -9,6 +9,7 @@
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/headless/configuration</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/headless/slots</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/headless/directives</loc></url>
+<url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/headless/implementation</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/services/introduction</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/services/focustrack</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/services/floating-ui</loc></url>
@@ -21,6 +22,7 @@
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/headless/configuration</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/headless/slots</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/headless/directives</loc></url>
+<url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/headless/implementation</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/services/introduction</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/services/focustrack</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/services/floating-ui</loc></url>
@@ -33,6 +35,7 @@
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/headless/configuration</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/headless/slots</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/headless/directives</loc></url>
+<url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/headless/implementation</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/services/introduction</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/services/focustrack</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/services/floating-ui</loc></url>
@@ -71,9 +74,6 @@
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/components/pagination/examples</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/components/pagination/examples</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/components/pagination/examples</loc></url>
-<url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/components/pagination/headless</loc></url>
-<url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/components/pagination/headless</loc></url>
-<url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/components/pagination/headless</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/components/pagination/playground</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/components/pagination/playground</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/components/pagination/playground</loc></url>
@@ -122,4 +122,10 @@
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/components/toast/playground</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/components/toast/playground</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/components/toast/playground</loc></url>
+<url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/daisyUI/pagination/headless</loc></url>
+<url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/daisyUI/pagination/headless</loc></url>
+<url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/daisyUI/pagination/headless</loc></url>
+<url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/daisyUI/rating/headless</loc></url>
+<url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/daisyUI/rating/headless</loc></url>
+<url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/daisyUI/rating/headless</loc></url>
 		</urlset>
