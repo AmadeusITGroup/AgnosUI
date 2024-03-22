@@ -116,6 +116,17 @@
 				"../lib:build",
 				"../../style-bootstrap:build",
 				"../../code-coverage:build"
+			],
+			"files": [
+				"bootstrap/src/**",
+				"angular.json",
+				"bootstrap/tsconfig.json",
+				"tsconfig.build.json",
+				"../tsconfig.json",
+				"../../tsconfig.json"
+			],
+			"output": [
+				"dist/bootstrap/**"
 			]
 		},
 		"build:daisyui:coverage": {
@@ -124,6 +135,17 @@
 				"generate:links",
 				"../lib:build",
 				"../../code-coverage:build"
+			],
+			"files": [
+				"daisyui/src/**",
+				"daisyui/tsconfig.json",
+				"angular.json",
+				"tsconfig.build.json",
+				"../tsconfig.json",
+				"../../tsconfig.json"
+			],
+			"output": [
+				"dist/daisyui/**"
 			]
 		},
 		"build:coverage": {
