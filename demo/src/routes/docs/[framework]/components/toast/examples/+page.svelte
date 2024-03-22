@@ -1,7 +1,7 @@
 <script lang="ts">
-	import sampleDefault from '@agnos-ui/samples/toast/default';
-	import sampleDynamic from '@agnos-ui/samples/toast/dynamic';
-	import sampleAction from '@agnos-ui/samples/toast/action';
+	import sampleDefault from '@agnos-ui/samples/bootstrap/toast/default';
+	import sampleDynamic from '@agnos-ui/samples/bootstrap/toast/dynamic';
+	import sampleAction from '@agnos-ui/samples/bootstrap/toast/action';
 	import Sample from '$lib/layout/Sample.svelte';
 	import Section from '$lib/layout/Section.svelte';
 	import Accessibility from './accessibility.svelte';

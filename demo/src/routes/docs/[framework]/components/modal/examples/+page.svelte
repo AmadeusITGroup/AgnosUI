@@ -1,7 +1,7 @@
 <script lang="ts">
-	import sampleDefault from '@agnos-ui/samples/modal/default';
-	import sampleComponent from '@agnos-ui/samples/modal/component';
-	import sampleStack from '@agnos-ui/samples/modal/stack';
+	import sampleDefault from '@agnos-ui/samples/bootstrap/modal/default';
+	import sampleComponent from '@agnos-ui/samples/bootstrap/modal/component';
+	import sampleStack from '@agnos-ui/samples/bootstrap/modal/stack';
 	import Sample from '$lib/layout/Sample.svelte';
 	import Section from '$lib/layout/Section.svelte';
 </script>

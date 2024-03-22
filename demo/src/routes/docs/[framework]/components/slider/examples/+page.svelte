@@ -1,10 +1,10 @@
 <script lang="ts">
-	import basicSample from '@agnos-ui/samples/slider/default';
-	import rangeSample from '@agnos-ui/samples/slider/range';
-	import verticalSample from '@agnos-ui/samples/slider/vertical';
-	import rightToLeftSample from '@agnos-ui/samples/slider/right-to-left';
-	import customSample from '@agnos-ui/samples/slider/custom';
-	import fullcustomSample from '@agnos-ui/samples/slider/fullCustom';
+	import basicSample from '@agnos-ui/samples/bootstrap/slider/default';
+	import rangeSample from '@agnos-ui/samples/bootstrap/slider/range';
+	import verticalSample from '@agnos-ui/samples/bootstrap/slider/vertical';
+	import rightToLeftSample from '@agnos-ui/samples/bootstrap/slider/right-to-left';
+	import customSample from '@agnos-ui/samples/bootstrap/slider/custom';
+	import fullcustomSample from '@agnos-ui/samples/bootstrap/slider/fullCustom';
 	import Sample from '$lib/layout/Sample.svelte';
 	import Section from '$lib/layout/Section.svelte';
 </script>

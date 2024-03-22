@@ -1,10 +1,10 @@
 <script lang="ts">
 	import Sample from '$lib/layout/Sample.svelte';
 	import Section from '$lib/layout/Section.svelte';
-	import sampleCustomTemplate from '@agnos-ui/samples/rating/customTemplate';
-	import sampleDefault from '@agnos-ui/samples/rating/default';
-	import sampleForm from '@agnos-ui/samples/rating/form';
-	import sampleReadonly from '@agnos-ui/samples/rating/readonly';
+	import sampleCustomTemplate from '@agnos-ui/samples/bootstrap/rating/customTemplate';
+	import sampleDefault from '@agnos-ui/samples/bootstrap/rating/default';
+	import sampleForm from '@agnos-ui/samples/bootstrap/rating/form';
+	import sampleReadonly from '@agnos-ui/samples/bootstrap/rating/readonly';
 </script>
 
 <Section label="Default rating" level={2}>

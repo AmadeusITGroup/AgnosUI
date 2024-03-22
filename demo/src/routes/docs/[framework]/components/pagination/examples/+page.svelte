@@ -1,7 +1,7 @@
 <script lang="ts">
-	import sampleCustom from '@agnos-ui/samples/pagination/custom';
-	import sampleDefault from '@agnos-ui/samples/pagination/default';
-	import sampleHref from '@agnos-ui/samples/pagination/hash';
+	import sampleCustom from '@agnos-ui/samples/bootstrap/pagination/custom';
+	import sampleDefault from '@agnos-ui/samples/bootstrap/pagination/default';
+	import sampleHref from '@agnos-ui/samples/bootstrap/pagination/hash';
 	import Sample from '$lib/layout/Sample.svelte';
 	import Section from '$lib/layout/Section.svelte';
 </script>

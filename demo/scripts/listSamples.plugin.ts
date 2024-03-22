@@ -38,7 +38,7 @@ export const listSamples = (): Plugin => ({
 			const samples = getSamplesList();
 			let i = 0;
 			for (const sample of samples) {
-				output += `import sample${i} from ${JSON.stringify(`@agnos-ui/${sample.style === 'bootstrap' ? 'samples' : 'samples-daisyui'}/${sample.componentName}/${sample.sampleName}`)};\n`;
+				output += `import sample${i} from ${JSON.stringify(`@agnos-ui/samples/${sample.style}/${sample.componentName}/${sample.sampleName}`)};\n`;
 				i++;
 			}
 			output += `export default [${samples.map((sample, i) => `sample${i}`).join(',\n')}];`;

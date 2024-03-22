@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Playground from '$lib/layout/playground/Playground.svelte';
 	import {getRatingDefaultConfig} from '@agnos-ui/svelte/components/rating';
-	import sample from '@agnos-ui/samples/rating/playground';
+	import sample from '@agnos-ui/samples/bootstrap/rating/playground';
 	import doc from '@agnos-ui/generated/doc/api.json?rating&extractApi';
 	import type {PropsValues} from '@agnos-ui/common/propsValues';
 	const listPropsValues: {[key in keyof ReturnType<typeof getRatingDefaultConfig>]?: PropsValues[]} = {
