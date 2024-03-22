@@ -1,11 +1,13 @@
 import {computed} from '@amadeus-it-group/tansu';
+import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {INVALID_VALUE} from '../../types';
 import {bindableProp, stateStores, writablesForProps} from '../../utils/stores';
 import {clamp, isNumber} from '../../utils/internal/checks';
 import {typeBoolean, typeFunction, typeNumber, typeString} from '../../utils/writables';
-import type {ConfigValidator, PropsConfig, Widget, SlotContent, WidgetSlotContext} from '../../types';
+import type {ConfigValidator, PropsConfig, Widget, SlotContent, WidgetSlotContext, Directive} from '../../types';
 import {noop} from '../../utils/internal/func';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
+import {createAttributesDirective} from '../../utils/directive';
 
 /**
  * A type for the slot context of the pagination widget
@@ -326,9 +328,39 @@ export interface PaginationActions {
 	last(event?: MouseEvent): void;
 }
 
+export interface PaginationDirectives {
+	/**
+	 * A directive to be applied to each page link
+	 * This will handle the click, tabindex and aria attributes
+	 */
+	pageLink: Directive<{
+		page: number;
+	}>;
+
+	/**
+	 * A directive to be applied on the previous link
+	 */
+	pagePrev: Directive;
+
+	/**
+	 * A directive to be applied on the first link
+	 */
+	pageFirst: Directive;
+
+	/**
+	 * A directive to be applied on the next link
+	 */
+	pageNext: Directive;
+
+	/**
+	 * A directive to be applied on the Last link
+	 */
+	pageLast: Directive;
+}
+
 export interface PaginationApi {}
 
-export type PaginationWidget = Widget<PaginationProps, PaginationState, PaginationApi, PaginationActions>;
+export type PaginationWidget = Widget<PaginationProps, PaginationState, PaginationApi, PaginationActions, PaginationDirectives>;
 
 const PAGE_LINK_DEFAULT = '#';
 
@@ -414,6 +446,11 @@ export function createPagination(config?: PropsConfig<PaginationProps>): Paginat
 			pagesFactory$,
 			ariaPageLabel$,
 			pageLink$,
+			disabled$,
+			ariaFirstLabel$,
+			ariaLastLabel$,
+			ariaNextLabel$,
+			ariaPreviousLabel$,
 			...stateProps
 		},
 		patch,
@@ -434,8 +471,8 @@ export function createPagination(config?: PropsConfig<PaginationProps>): Paginat
 
 	const pages$ = computed(() => pagesFactory$()(page$(), pageCount$()));
 
-	const nextDisabled$ = computed(() => page$() === pageCount$() || stateProps.disabled$());
-	const previousDisabled$ = computed(() => page$() === 1 || stateProps.disabled$());
+	const nextDisabled$ = computed(() => page$() === pageCount$() || disabled$());
+	const previousDisabled$ = computed(() => page$() === 1 || disabled$());
 
 	const pagesLabel$ = computed(() => {
 		const ariaPageLabel = ariaPageLabel$();
@@ -461,7 +498,7 @@ export function createPagination(config?: PropsConfig<PaginationProps>): Paginat
 	/**
 	 * Stop event propagation when href is the default value;
 	 * Update page number when navigation is in the same tab and stop the event propagation;
-	 * For navigations outside current browser tab let the default behavior, without updating the page number;
+	 * For navigation outside current browser tab let the default behavior, without updating the page number;
 	 * @param pageNumber current page number
 	 * @param event UI event triggered when page changed
 	 * @param pageNavigationHandler change handler callback for navigation elements
@@ -480,7 +517,7 @@ export function createPagination(config?: PropsConfig<PaginationProps>): Paginat
 		}
 	}
 
-	return {
+	const widget: PaginationWidget = {
 		...stateStores({
 			pageCount$,
 			page$,
@@ -490,6 +527,11 @@ export function createPagination(config?: PropsConfig<PaginationProps>): Paginat
 			pagesLabel$,
 			pagesHrefs$,
 			directionsHrefs$,
+			disabled$,
+			ariaFirstLabel$,
+			ariaLastLabel$,
+			ariaNextLabel$,
+			ariaPreviousLabel$,
 			...stateProps,
 		}),
 		patch,
@@ -537,6 +579,80 @@ export function createPagination(config?: PropsConfig<PaginationProps>): Paginat
 			},
 		},
 		api: {},
-		directives: {},
+		directives: {
+			pageLink: createAttributesDirective((pageLinkContext$: ReadableSignal<{page: number}>) => ({
+				events: {
+					click: (e) => widget.actions.select(pageLinkContext$().page, e),
+				},
+				attributes: {
+					'aria-current': computed(() => (page$() === pageLinkContext$().page ? 'page' : undefined)),
+					'aria-label': computed(() => pagesLabel$()[pageLinkContext$().page - 1]),
+					href: computed(() => pagesHrefs$()[pageLinkContext$().page - 1]),
+					tabindex: computed(() => (disabled$() ? '-1' : undefined)),
+					'aria-disabled': computed(() => (disabled$() ? 'true' : undefined)),
+				},
+				classNames: {
+					'au-page': true,
+				},
+			})),
+			pageFirst: createAttributesDirective(() => ({
+				events: {
+					click: (e) => widget.actions.first(e),
+				},
+				attributes: {
+					'aria-label': ariaFirstLabel$,
+					href: computed(() => pagesHrefs$()[0]),
+					tabindex: computed(() => (previousDisabled$() ? '-1' : undefined)),
+					'aria-disabled': computed(() => (previousDisabled$() ? 'true' : undefined)),
+				},
+				classNames: {
+					'au-first': true,
+				},
+			})),
+			pagePrev: createAttributesDirective(() => ({
+				events: {
+					click: (e) => widget.actions.previous(e),
+				},
+				attributes: {
+					'aria-label': ariaPreviousLabel$,
+					href: computed(() => directionsHrefs$().previous),
+					tabindex: computed(() => (previousDisabled$() ? '-1' : undefined)),
+					'aria-disabled': computed(() => (previousDisabled$() ? 'true' : undefined)),
+				},
+				classNames: {
+					'au-previous': true,
+				},
+			})),
+			pageNext: createAttributesDirective(() => ({
+				events: {
+					click: (e) => widget.actions.next(e),
+				},
+				attributes: {
+					'aria-label': ariaNextLabel$,
+					href: computed(() => directionsHrefs$().next),
+					tabindex: computed(() => (nextDisabled$() ? '-1' : undefined)),
+					'aria-disabled': computed(() => (nextDisabled$() ? 'true' : undefined)),
+				},
+				classNames: {
+					'au-next': true,
+				},
+			})),
+			pageLast: createAttributesDirective(() => ({
+				events: {
+					click: (e) => widget.actions.last(e),
+				},
+				attributes: {
+					'aria-label': ariaLastLabel$,
+					href: computed(() => pagesHrefs$().at(-1)),
+					tabindex: computed(() => (nextDisabled$() ? '-1' : undefined)),
+					'aria-disabled': computed(() => (nextDisabled$() ? 'true' : undefined)),
+				},
+				classNames: {
+					'au-last': true,
+				},
+			})),
+		},
 	};
+
+	return widget;
 }

@@ -10,12 +10,7 @@
 </script>
 
 {#each state.pages as page, i}
-	<li
-		class="page-item"
-		class:active={page === state.page}
-		class:disabled={page === -1 || state.disabled}
-		aria-current={page === state.page ? 'page' : null}
-	>
+	<li class="page-item" class:active={page === state.page} class:disabled={page === -1 || state.disabled}>
 		{#if page === -1}
 			<div class="page-link au-ellipsis" aria-hidden="true">
 				<Slot slotContent={state.slotEllipsis} props={{state, widget}} let:component let:props>
@@ -36,13 +31,8 @@
 			</div>
 			<span class="visually-hidden">{state.ariaEllipsisLabel}</span>
 		{:else}
-			<a
-				class="page-link au-page"
-				aria-label={state.pagesLabel[i]}
-				href={state.pagesHrefs[i]}
-				on:click={(event) => widget.actions.select(page, event)}
-				tabindex={state.disabled ? -1 : undefined}
-				aria-disabled={state.disabled ? 'true' : null}
+			<!-- svelte-ignore a11y-missing-attribute -->
+			<a class="page-link" use:widget.directives.pageLink={{page}}
 				><!-- Remove the strange formatting with https://github.com/sveltejs/svelte/issues/3080
 				 --><Slot
 					slotContent={state.slotNumberLabel}

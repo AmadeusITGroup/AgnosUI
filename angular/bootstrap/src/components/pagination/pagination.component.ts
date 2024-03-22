@@ -1,5 +1,5 @@
 import type {SlotContent} from '@agnos-ui/angular-headless';
-import {BaseWidgetDirective, ComponentTemplate, SlotDirective, auBooleanAttribute, auNumberAttribute} from '@agnos-ui/angular-headless';
+import {BaseWidgetDirective, ComponentTemplate, SlotDirective, UseDirective, auBooleanAttribute, auNumberAttribute} from '@agnos-ui/angular-headless';
 import type {AfterContentChecked} from '@angular/core';
 import {
 	ChangeDetectionStrategy,
@@ -108,31 +108,19 @@ export class PaginationStructureDirective {
 
 @Component({
 	standalone: true,
-	imports: [SlotDirective, PaginationPagesDirective, PaginationStructureDirective],
+	imports: [SlotDirective, PaginationPagesDirective, PaginationStructureDirective, UseDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
 		<ng-template auPaginationPages #pages let-state="state" let-widget="widget">
 			@for (page of state.pages; track page; let i = $index) {
-				<li
-					class="page-item"
-					[class.active]="page === state.page"
-					[class.disabled]="page === -1 || state.disabled"
-					[attr.aria-current]="page === state.page ? 'page' : null"
-				>
+				<li class="page-item" [class.active]="page === state.page" [class.disabled]="page === -1 || state.disabled">
 					@if (page === -1) {
 						<div class="page-link au-ellipsis" aria-hidden="true">
 							<ng-template [auSlot]="state.slotEllipsis" [auSlotProps]="{state, widget}"></ng-template>
 						</div>
 						<span class="visually-hidden">{{ state.ariaEllipsisLabel }}</span>
 					} @else {
-						<a
-							[attr.aria-label]="state.pagesLabel[i]"
-							class="page-link au-page"
-							[attr.href]="state.pagesHrefs[i]"
-							(click)="widget.actions.select(page, $event)"
-							[attr.tabindex]="state.disabled ? '-1' : null"
-							[attr.aria-disabled]="state.disabled ? 'true' : null"
-						>
+						<a class="page-link" [auUse]="[widget.directives.pageLink, {page}]">
 							<ng-template [auSlot]="state.slotNumberLabel" [auSlotProps]="{state, widget, displayedPage: page}"></ng-template>
 							@if (state.page === page) {
 								<span class="visually-hidden">{{ state.activeLabel }}</span>
@@ -146,14 +134,7 @@ export class PaginationStructureDirective {
 			<ul [class]="'au-pagination pagination' + (state.size ? ' pagination-' + state.size : '') + ' ' + state.className">
 				@if (state.boundaryLinks) {
 					<li class="page-item" [class.disabled]="state.previousDisabled">
-						<a
-							[attr.aria-label]="state.ariaFirstLabel"
-							class="page-link au-first"
-							[attr.href]="state.pagesHrefs[0]"
-							(click)="widget.actions.first($event)"
-							[attr.tabindex]="state.previousDisabled ? '-1' : null"
-							[attr.aria-disabled]="state.previousDisabled ? 'true' : null"
-						>
+						<a class="page-link" [auUse]="widget.directives.pageFirst">
 							<span aria-hidden="true">
 								<ng-template [auSlot]="state.slotFirst" [auSlotProps]="{widget, state}"></ng-template>
 							</span>
@@ -162,14 +143,7 @@ export class PaginationStructureDirective {
 				}
 				@if (state.directionLinks) {
 					<li class="page-item" [class.disabled]="state.previousDisabled">
-						<a
-							[attr.aria-label]="state.ariaPreviousLabel"
-							class="page-link au-previous"
-							[attr.href]="state.directionsHrefs.previous"
-							(click)="widget.actions.previous($event)"
-							[attr.tabindex]="state.previousDisabled ? '-1' : null"
-							[attr.aria-disabled]="state.previousDisabled ? 'true' : null"
-						>
+						<a class="page-link" [auUse]="widget.directives.pagePrev">
 							<span aria-hidden="true">
 								<ng-template [auSlot]="state.slotPrevious" [auSlotProps]="{widget, state}"></ng-template>
 							</span>
@@ -179,14 +153,7 @@ export class PaginationStructureDirective {
 				<ng-template [auSlot]="state.slotPages" [auSlotProps]="{widget, state}"></ng-template>
 				@if (state.directionLinks) {
 					<li class="page-item" [class.disabled]="state.nextDisabled">
-						<a
-							[attr.aria-label]="state.ariaNextLabel"
-							class="page-link au-next"
-							[attr.href]="state.directionsHrefs.next"
-							(click)="widget.actions.next($event)"
-							[attr.tabindex]="state.nextDisabled ? '-1' : null"
-							[attr.aria-disabled]="state.nextDisabled ? 'true' : null"
-						>
+						<a class="page-link" [auUse]="widget.directives.pageNext">
 							<span aria-hidden="true">
 								<ng-template [auSlot]="state.slotNext" [auSlotProps]="{widget, state}"></ng-template>
 							</span>
@@ -195,14 +162,7 @@ export class PaginationStructureDirective {
 				}
 				@if (state.boundaryLinks) {
 					<li class="page-item" [class.disabled]="state.nextDisabled">
-						<a
-							[attr.aria-label]="state.ariaLastLabel"
-							class="page-link au-last"
-							[attr.href]="state.pagesHrefs.at(-1)"
-							(click)="widget.actions.last($event)"
-							[attr.tabindex]="state.nextDisabled ? '-1' : null"
-							[attr.aria-disabled]="state.nextDisabled ? 'true' : null"
-						>
+						<a class="page-link" [auUse]="widget.directives.pageLast">
 							<span aria-hidden="true">
 								<ng-template [auSlot]="state.slotLast" [auSlotProps]="{widget, state}"></ng-template>
 							</span>

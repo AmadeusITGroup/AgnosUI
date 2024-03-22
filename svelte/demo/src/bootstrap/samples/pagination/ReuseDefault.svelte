@@ -8,18 +8,12 @@
 	export let state: $$Props['state'];
 	export let widget: $$Props['widget'];
 	const {
-		stores: {page$, pagesLabel$, slotEllipsis$, slotNumberLabel$},
-		actions: {select},
+		stores: {page$, slotEllipsis$, slotNumberLabel$},
 	} = widget;
 </script>
 
 {#each state.pages as page, i}
-	<li
-		class="page-item"
-		class:active={page === state.page}
-		class:disabled={page === -1 || state.disabled}
-		aria-current={page === state.page ? 'page' : null}
-	>
+	<li class="page-item" class:active={page === state.page} class:disabled={page === -1 || state.disabled}>
 		{#if page === -1}
 			<!-- svelte-ignore a11y-invalid-attribute -->
 			<a class="page-link au-ellipsis" tabindex="-1" aria-disabled="true" on:click|preventDefault|stopPropagation href="#">
@@ -40,15 +34,8 @@
 				</Slot>
 			</a>
 		{:else}
-			<!-- svelte-ignore a11y-invalid-attribute -->
-			<a
-				class="page-link au-page"
-				aria-label={$pagesLabel$[i]}
-				href="#"
-				on:click|preventDefault={() => select(page)}
-				tabindex={state.disabled ? -1 : undefined}
-				aria-disabled={state.disabled ? 'true' : null}
-			>
+			<!-- svelte-ignore a11y-missing-attribute -->
+			<a class="page-link" use:widget.directives.pageLink={{page}}>
 				<Slot slotContent={$slotNumberLabel$} props={{state, widget, displayedPage: page}} let:component let:props>
 					<svelte:fragment slot="slot" let:props><slot name="numberLabel" {...props} /></svelte:fragment>
 					<svelte:component this={component} {...props}>

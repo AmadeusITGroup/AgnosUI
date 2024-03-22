@@ -1,27 +1,29 @@
 import classNames from 'classnames';
 import * as React from 'react';
+import {type Directive} from '@agnos-ui/react-headless/types';
+import {classDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
 
 export interface PageItemProps extends React.HTMLAttributes<HTMLAnchorElement> {
 	disabled?: boolean;
 	active?: boolean;
-	ariaLabel?: string;
 	activeLabel?: string;
-	href?: string;
+	directive: Directive<{page: number}>;
+	page: number;
+}
+
+export interface NavItemProps extends React.HTMLAttributes<HTMLAnchorElement> {
+	disabled?: boolean;
+	active?: boolean;
+	activeLabel?: string;
+	directive: Directive;
 }
 
 // className and children are issue of React.HTMLAttributes
 export const PageItem = React.forwardRef<HTMLLIElement, PageItemProps>(
-	({disabled, active, ariaLabel, activeLabel, className, children, href, ...props}: PageItemProps, ref) => {
+	({disabled, active, activeLabel, className, children, directive, page}: PageItemProps, ref) => {
 		return (
-			<li ref={ref} aria-current={active ? 'page' : undefined} className={classNames('page-item', {active, disabled})}>
-				<a
-					className={classNames('page-link', className)}
-					aria-label={ariaLabel || undefined}
-					{...props}
-					href={href}
-					tabIndex={disabled ? -1 : undefined}
-					aria-disabled={disabled || undefined}
-				>
+			<li ref={ref} className={classNames('page-item', {active, disabled})}>
+				<a {...useDirectives([directive, {page}], [classDirective, classNames('page-link', className)])}>
 					{children}
 					{active && activeLabel && <span className="visually-hidden">{activeLabel}</span>}
 				</a>
@@ -34,10 +36,14 @@ PageItem.displayName = 'PageItem';
 
 export default PageItem;
 
-export const NavButton = React.forwardRef<HTMLLIElement, PageItemProps>(({children, ...props}: PageItemProps, ref) => (
-	<PageItem {...props} ref={ref}>
-		<span aria-hidden="true">{children}</span>
-	</PageItem>
-));
+export const NavButton = React.forwardRef<HTMLLIElement, NavItemProps>(({disabled, className, children, directive}: NavItemProps, ref) => {
+	return (
+		<li ref={ref} className={classNames('page-item', {disabled})}>
+			<a {...useDirectives(directive, [classDirective, classNames('page-link', className)])}>
+				<span aria-hidden="true">{children}</span>
+			</a>
+		</li>
+	);
+});
 
 NavButton.displayName = 'NavButton';
