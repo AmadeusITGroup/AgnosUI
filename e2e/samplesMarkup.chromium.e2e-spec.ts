@@ -1,41 +1,41 @@
 import type {Page} from '@playwright/test';
-import {getSamplesList} from '../demo/scripts/listSamples.plugin';
 import {openDemoModal} from './demo-po/modal.po';
 import {typeAndSelect} from './demo-po/select.po';
-import {expect, test} from './fixture';
+import {expect, test, samplesList} from './fixture';
 import {htmlSnapshot} from './htmlSnapshot';
 
 test.describe.configure({mode: 'parallel'});
 
-const samples = getSamplesList();
+const samples = Object.keys(samplesList());
 
 test(`Routes check`, async () => {
 	expect(samples.length, `markup routes musn't be empty`).toBeGreaterThan(0);
 });
 
 test.describe(`Samples markup consistency check`, async () => {
-	const routesExtraHash: Record<string, string> = {
-		'modal/playground': '#{"props":{"visible":true,"slotDefault":"Dialog content","slotTitle":"Dialog"}}',
+	const samplesExtraHash: Record<string, string> = {
+		'bootstrap/modal/playground': '#{"props":{"visible":true,"slotDefault":"Dialog content","slotTitle":"Dialog"}}',
 	};
 
-	const routesExtraAction: Record<string, (page: Page) => Promise<void>> = {
-		'modal/default': openDemoModal,
-		'modal/stack': openDemoModal,
-		'select/default': (page: Page) => typeAndSelect(page, 'a'),
+	const samplesExtraAction: Record<string, (page: Page) => Promise<void>> = {
+		'bootstrap/modal/default': openDemoModal,
+		'bootstrap/modal/stack': openDemoModal,
+		'bootstrap/select/default': (page: Page) => typeAndSelect(page, 'a'),
 	};
 
-	for (const sample of samples) {
-		if (sample.style != 'bootstrap') {
-			// FIXME: add support for daisyui samples
-			test.fixme(`${sample.style}/${sample.componentName}/${sample.sampleName} should have a consistent markup`, () => {});
-			continue;
-		}
-		const route = `${sample.componentName}/${sample.sampleName}`;
-		test(`${route} should have a consistent markup`, async ({page}) => {
-			await page.goto(`#/${route}${routesExtraHash[route] ?? ''}`, {waitUntil: 'networkidle'});
-			await expect.poll(async () => (await page.locator('#root').innerHTML()).trim().length).toBeGreaterThan(0);
-			await routesExtraAction[route]?.(page);
-			expect(await htmlSnapshot(page.locator('body'))).toMatchSnapshot(`${route}.html`);
+	for (const sampleKey of samples) {
+		test.describe(`Sample ${sampleKey}`, () => {
+			test.use({sampleKey});
+			test.skip(({sampleInfo}) => !sampleInfo, `The sample cannot be tested in this configuration`);
+
+			test.fixme(sampleKey === 'daisyui/rating/default', 'This sample does not currently have a consistent markup!');
+
+			test(`should have a consistent markup`, async ({page, sampleInfo}) => {
+				await page.goto(`${sampleInfo?.sampleURL}${samplesExtraHash[sampleKey] ?? ''}`, {waitUntil: 'networkidle'});
+				await expect.poll(async () => (await page.locator('#root').innerHTML()).trim().length).toBeGreaterThan(0);
+				await samplesExtraAction[sampleKey]?.(page);
+				expect(await htmlSnapshot(page.locator('body'))).toMatchSnapshot(`${sampleKey}.html`);
+			});
 		});
 	}
 });
