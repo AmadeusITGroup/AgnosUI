@@ -1,8 +1,8 @@
 <script lang="ts">
 	import Sample from '$lib/layout/Sample.svelte';
 	import Section from '$lib/layout/Section.svelte';
-	import defaultSample from '@agnos-ui/samples/select/default';
-	import customSample from '@agnos-ui/samples/select/custom';
+	import defaultSample from '@agnos-ui/samples/bootstrap/select/default';
+	import customSample from '@agnos-ui/samples/bootstrap/select/custom';
 </script>
 
 <Section label="Basic examples" level={2}>

@@ -5,7 +5,6 @@ import {readFile} from 'fs/promises';
 import {existsSync} from 'fs';
 
 const samplePrefix = '@agnos-ui/samples/';
-const sampleDaisyui = '@agnos-ui/samples-daisyui/';
 const rawSampleSuffix = '?raw&sample';
 const commonImport = /^@agnos-ui\/common\/samples\/([^?]*)(\?raw)?$/;
 const frameworkDefaults = {
@@ -47,7 +46,7 @@ export const includeSamples = (): Plugin => {
 	return {
 		name: 'include-samples',
 		async resolveId(source) {
-			if (source.startsWith(samplePrefix) || source.startsWith(sampleDaisyui)) {
+			if (source.startsWith(samplePrefix)) {
 				return {id: source};
 			}
 		},
@@ -59,15 +58,12 @@ export const includeSamples = (): Plugin => {
 					let fileContent = await readFile(id, 'utf8');
 					fileContent = fileContent.replace(/@agnos-ui\/common\/samples\/[^/]+/g, '.');
 					return `export default ${JSON.stringify(fileContent)};`;
-				} else if (id.startsWith(samplePrefix) || id.startsWith(sampleDaisyui)) {
-					//check if samplePrefix or sampleTailwindPrefix
-					const matchedPrefix = id.startsWith(samplePrefix) ? samplePrefix : sampleDaisyui;
-					const cssFramework = matchedPrefix === sampleDaisyui ? 'daisyui' : 'bootstrap';
-					const parts = id.substring(matchedPrefix.length).split('/');
-					if (parts.length !== 2) {
+				} else if (id.startsWith(samplePrefix)) {
+					const parts = id.substring(samplePrefix.length).split('/');
+					if (parts.length !== 3) {
 						throw new Error('Invalid sample path: ' + id);
 					}
-					const [componentName, sampleName] = parts;
+					const [cssFramework, componentName, sampleName] = parts;
 					const normalizedSampleName = `${sampleName[0].toUpperCase()}${sampleName.substring(1)}`;
 
 					const files: Record<Frameworks, {fileName: string; filePath: string}[]> = {} as any;

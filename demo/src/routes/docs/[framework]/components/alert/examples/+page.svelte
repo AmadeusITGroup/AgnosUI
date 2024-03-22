@@ -1,7 +1,7 @@
 <script lang="ts">
-	import sampleDynamic from '@agnos-ui/samples/alert/dynamic';
-	import sampleGeneric from '@agnos-ui/samples/alert/generic';
-	import sampleIcon from '@agnos-ui/samples/alert/icon';
+	import sampleDynamic from '@agnos-ui/samples/bootstrap/alert/dynamic';
+	import sampleGeneric from '@agnos-ui/samples/bootstrap/alert/generic';
+	import sampleIcon from '@agnos-ui/samples/bootstrap/alert/icon';
 	import Sample from '$lib/layout/Sample.svelte';
 	import Section from '$lib/layout/Section.svelte';
 </script>

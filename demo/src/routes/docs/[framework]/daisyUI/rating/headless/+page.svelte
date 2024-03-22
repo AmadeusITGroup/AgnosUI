@@ -1,5 +1,5 @@
 <script lang="ts">
-	import tailwind from '@agnos-ui/samples-daisyui/rating/default';
+	import tailwind from '@agnos-ui/samples/daisyui/rating/default';
 	import Sample from '$lib/layout/Sample.svelte';
 	import Section from '$lib/layout/Section.svelte';
 </script>

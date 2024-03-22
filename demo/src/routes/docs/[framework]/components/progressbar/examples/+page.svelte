@@ -1,9 +1,9 @@
 <script lang="ts">
 	import Section from '$lib/layout/Section.svelte';
 	import Sample from '$lib/layout/Sample.svelte';
-	import sampleDefault from '@agnos-ui/samples/progressbar/default';
-	import sampleSimpleCustom from '@agnos-ui/samples/progressbar/simpleCustom';
-	import sampleFullCustom from '@agnos-ui/samples/progressbar/fullCustom';
+	import sampleDefault from '@agnos-ui/samples/bootstrap/progressbar/default';
+	import sampleSimpleCustom from '@agnos-ui/samples/bootstrap/progressbar/simpleCustom';
+	import sampleFullCustom from '@agnos-ui/samples/bootstrap/progressbar/fullCustom';
 </script>
 
 <Section label="Default progressbar" level={2}>

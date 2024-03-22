@@ -1,18 +1,18 @@
 import type {SampleInfo} from '$lib/layout/sample';
 
-import focustrack from '@agnos-ui/samples/focustrack/focustrack';
-import floatingUI from '@agnos-ui/samples/floatingUI/floatingUI';
-import resizeObserver from '@agnos-ui/samples/resizeObserver/resizeObserver';
-import slotsUsage from '@agnos-ui/samples/slots/usage';
-import slotsContext from '@agnos-ui/samples/slots/context';
-import alertsIcon from '@agnos-ui/samples/alert/icon';
-import slotsHeadless from '@agnos-ui/samples/slots/headless';
-import directivesUsage from '@agnos-ui/samples/directives/usage';
-import configurationBasic from '@agnos-ui/samples/configuration/basic';
-import configurationDown from '@agnos-ui/samples/configuration/down';
-import transitionCollapse from '@agnos-ui/samples/transition/collapseDemo';
-import transitionFlip from '@agnos-ui/samples/transition/flipDemo';
-import transitionTransition from '@agnos-ui/samples/transition/transition';
+import focustrack from '@agnos-ui/samples/bootstrap/focustrack/focustrack';
+import floatingUI from '@agnos-ui/samples/bootstrap/floatingUI/floatingUI';
+import resizeObserver from '@agnos-ui/samples/bootstrap/resizeObserver/resizeObserver';
+import slotsUsage from '@agnos-ui/samples/bootstrap/slots/usage';
+import slotsContext from '@agnos-ui/samples/bootstrap/slots/context';
+import alertsIcon from '@agnos-ui/samples/bootstrap/alert/icon';
+import slotsHeadless from '@agnos-ui/samples/bootstrap/slots/headless';
+import directivesUsage from '@agnos-ui/samples/bootstrap/directives/usage';
+import configurationBasic from '@agnos-ui/samples/bootstrap/configuration/basic';
+import configurationDown from '@agnos-ui/samples/bootstrap/configuration/down';
+import transitionCollapse from '@agnos-ui/samples/bootstrap/transition/collapseDemo';
+import transitionFlip from '@agnos-ui/samples/bootstrap/transition/flipDemo';
+import transitionTransition from '@agnos-ui/samples/bootstrap/transition/transition';
 
 const samples: Map<string, SampleInfo> = new Map();
 samples.set('focustrack/focustrack', focustrack);

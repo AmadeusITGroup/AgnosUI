@@ -1,7 +1,7 @@
 <script lang="ts">
-	import sampleDefault from '@agnos-ui/samples/accordion/default';
-	import togglePanels from '@agnos-ui/samples/accordion/togglePanels';
-	import customHeaders from '@agnos-ui/samples/accordion/customHeaders';
+	import sampleDefault from '@agnos-ui/samples/bootstrap/accordion/default';
+	import togglePanels from '@agnos-ui/samples/bootstrap/accordion/togglePanels';
+	import customHeaders from '@agnos-ui/samples/bootstrap/accordion/customHeaders';
 	import Sample from '$lib/layout/Sample.svelte';
 	import Section from '$lib/layout/Section.svelte';
 </script>
