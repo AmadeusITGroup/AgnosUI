@@ -121,7 +121,7 @@
 		"prettier-plugin-svelte": "^3.2.2",
 		"shiki": "^1.2.0",
 		"svelte": "^4.2.12",
-		"svelte-check": "^3.6.7",
+		"svelte-check": "^3.6.8",
 		"svelte-markdown": "^0.4.1",
 		"ts-node": "^10.9.2"
 	}
