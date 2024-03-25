@@ -4,6 +4,7 @@ export const load = async () => {
 	return {
 		...componentsMetadata.Toast,
 		tabs: [
+			{title: 'Headless', key: 'headless', path: '/components/toast/headless'},
 			{title: 'Examples', key: 'examples', path: '/components/toast/examples'},
 			{title: 'Api', key: 'api', path: '/components/toast/api'},
 			{
