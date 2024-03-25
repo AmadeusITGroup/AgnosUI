@@ -1,11 +1,8 @@
-<script lang="ts" context="module">
-	import type {RatingProps as Props, RatingSlots as Slots} from '@agnos-ui/svelte/components/rating';
-	import {createRating} from '@agnos-ui/svelte/components/rating';
+<script lang="ts">
+	import {createRating, type RatingProps as Props, type RatingSlots as Slots} from '@agnos-ui/svelte/components/rating';
 	import {Slot} from '@agnos-ui/svelte/slot';
 	import {callWidgetFactory} from '@agnos-ui/svelte/config';
-</script>
 
-<script lang="ts">
 	type $$Props = Pick<Partial<Props>, 'rating' | 'maxRating' | 'className' | 'slotStar'>;
 	type $$Slots = Slots;
 
@@ -21,12 +18,12 @@
 			onRatingChange: () => {},
 		},
 	});
+	export const api = widget.api;
 
 	const {
 		stores: {stars$, className$, slotStar$},
-		patchChangedProps,
 	} = widget;
-	$: patchChangedProps($$props);
+	$: widget.patchChangedProps($$props);
 </script>
 
 <div class="d-inline-flex au-rating {$className$}">

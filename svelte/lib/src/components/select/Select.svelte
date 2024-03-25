@@ -7,10 +7,8 @@
 
 <script lang="ts">
 	type Item = $$Generic; // eslint-disable-line no-undef
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Props = Partial<Props<Item>>; // eslint-disable-line @typescript-eslint/no-unused-vars
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Slots = Slots<Item>; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Props = Partial<Props<Item>>;
+	type $$Slots = Slots<Item>;
 
 	export let open: boolean | undefined = false;
 	export let filterText: string | undefined = undefined;
@@ -33,6 +31,7 @@
 			},
 		},
 	});
+	export const api = widget.api;
 	const {
 		stores: {
 			id$,
@@ -54,8 +53,8 @@
 		actions: {onInput, onInputKeydown, onBadgeKeydown},
 		directives: {floatingDirective, hasFocusDirective, referenceDirective, inputContainerDirective},
 	} = widget;
-	$: widget.patchChangedProps($$props);
 
+	$: widget.patchChangedProps($$props);
 	$: menuId = `${$id$}-menu`;
 </script>
 

@@ -14,10 +14,8 @@
 </script>
 
 <script lang="ts">
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Props = Partial<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Slots = Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Props = Partial<Props>;
+	type $$Slots = Slots;
 
 	/**
 	 *  The current page.
@@ -38,14 +36,14 @@
 			},
 		},
 	});
+	export const api = widget.api;
 
 	const {
 		stores: {slotStructure$, ariaLabel$},
 		state$,
-		patchChangedProps,
 	} = widget;
-	$: patchChangedProps($$props);
 
+	$: widget.patchChangedProps($$props);
 	$: slotContext = {widget: toSlotContextWidget(widget), state: $state$};
 </script>
 

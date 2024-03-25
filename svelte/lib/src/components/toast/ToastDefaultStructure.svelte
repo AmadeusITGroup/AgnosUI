@@ -2,10 +2,8 @@
 	import type {ToastSlots} from '@agnos-ui/svelte-headless/components/toast';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Props = ToastSlots['structure']; // eslint-disable-line @typescript-eslint/no-unused-vars
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Slots = ToastSlots; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Props = ToastSlots['structure'];
+	type $$Slots = ToastSlots;
 
 	export let state: $$Props['state'];
 	export let widget: $$Props['widget'];

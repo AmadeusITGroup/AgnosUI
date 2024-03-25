@@ -5,6 +5,7 @@
 	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
 	import SliderDefaultStructure from './SliderDefaultStructure.svelte';
 	import SliderDefaultHandle from './SliderDefaultHandle.svelte';
+
 	const defaultConfig: Partial<Props> = {
 		slotStructure: SliderDefaultStructure,
 		slotHandle: SliderDefaultHandle,
@@ -12,8 +13,8 @@
 </script>
 
 <script lang="ts">
-	type $$Props = Partial<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
-	type $$Slots = Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Props = Partial<Props>;
+	type $$Slots = Slots;
 
 	export let values: number[] | undefined = undefined;
 
@@ -29,15 +30,15 @@
 			},
 		},
 	});
+	export const api = widget.api;
 
 	const {
 		stores: {className$, disabled$, vertical$, slotStructure$},
 		directives: {sliderDirective},
 		state$,
-		patchChangedProps,
 	} = widget;
 
-	$: patchChangedProps($$props);
+	$: widget.patchChangedProps($$props);
 	$: slotContext = {widget, state: $state$};
 </script>
 

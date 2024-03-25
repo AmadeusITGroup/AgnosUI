@@ -6,10 +6,8 @@
 </script>
 
 <script lang="ts">
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Props = Partial<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Slots = Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Props = Partial<Props>;
+	type $$Slots = Slots;
 
 	export let rating: number | undefined = undefined;
 
@@ -24,13 +22,14 @@
 			},
 		},
 	});
+	export const api = widget.api;
 
 	const {
 		stores: {visibleRating$, stars$, slotStar$},
 		directives: {containerDirective, starDirective},
-		patchChangedProps,
 	} = widget;
-	$: patchChangedProps($$props);
+
+	$: widget.patchChangedProps($$props);
 </script>
 
 <div use:containerDirective class="d-inline-flex">

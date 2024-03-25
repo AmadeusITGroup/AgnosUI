@@ -3,7 +3,7 @@
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 
 	type $$Props = SliderSlots['structure'];
-	type $$Slots = SliderSlots; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Slots = SliderSlots;
 
 	export let state: $$Props['state'];
 	export let widget: $$Props['widget'];

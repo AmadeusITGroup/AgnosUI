@@ -2,10 +2,8 @@
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import type {ProgressbarSlots} from '@agnos-ui/svelte-headless/components/progressbar';
 
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Props = ProgressbarSlots['structure']; // eslint-disable-line @typescript-eslint/no-unused-vars
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Slots = ProgressbarSlots; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Props = ProgressbarSlots['structure'];
+	type $$Slots = ProgressbarSlots;
 
 	export let state: $$Props['state'];
 	export let widget: $$Props['widget'];

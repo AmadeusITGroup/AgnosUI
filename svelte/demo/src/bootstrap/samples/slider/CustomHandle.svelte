@@ -2,7 +2,7 @@
 	import '@agnos-ui/common/samples/slider/custom.scss';
 	import type {SliderSlots} from '@agnos-ui/svelte/components/slider';
 	type $$Props = SliderSlots['handle'];
-	type $$Slots = SliderSlots; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Slots = SliderSlots;
 
 	export let item: $$Props['item'];
 	export let state: $$Props['state'];

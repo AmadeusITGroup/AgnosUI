@@ -16,13 +16,13 @@
 			},
 		},
 	});
+	export const api = widget.api;
 
 	const {
 		stores: {visibleRating$, interactive$, stars$, className$, ariaLabel$},
 		actions: {hover, click, leave},
-		patchChangedProps,
 	} = widget;
-	$: patchChangedProps($$props);
+	$: widget.patchChangedProps($$props);
 </script>
 
 <div class="rating {$className$}">

@@ -1,10 +1,8 @@
-<script lang="ts" context="module">
+<script lang="ts">
 	import type {PaginationProps as Props} from '@agnos-ui/svelte-headless/components/pagination';
 	import {createPagination} from '@agnos-ui/svelte-headless/components/pagination';
 	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
-</script>
 
-<script lang="ts">
 	type $$Props = Partial<Props>;
 
 	/**
@@ -25,6 +23,8 @@
 			},
 		},
 	});
+	export const api = widget.api;
+
 	const {
 		stores: {
 			page$,
@@ -41,9 +41,8 @@
 		},
 		state$,
 		actions: {first, previous, next, last},
-		patchChangedProps,
 	} = widget;
-	$: patchChangedProps($$props);
+	$: widget.patchChangedProps($$props);
 </script>
 
 <nav aria-label={$ariaLabel$}>

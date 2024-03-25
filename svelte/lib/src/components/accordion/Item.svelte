@@ -13,10 +13,8 @@
 </script>
 
 <script lang="ts">
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Props = Partial<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Slots = Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Props = Partial<Props>;
+	type $$Slots = Slots;
 
 	const accordionApi = getAccordionApi();
 	const {registerItem} = accordionApi;
