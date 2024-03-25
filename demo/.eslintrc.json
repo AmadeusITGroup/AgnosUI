@@ -22,7 +22,7 @@
 			}
 		},
 		{
-			"files": ["svelte.config.js", "vite.config.ts", "stackblitz/*.d.ts", "scripts/*"],
+			"files": ["svelte.config.js", "vite.config.ts", "stackblitz/*", "scripts/*"],
 			"parserOptions": {
 				"project": ["tsconfig.json"]
 			},

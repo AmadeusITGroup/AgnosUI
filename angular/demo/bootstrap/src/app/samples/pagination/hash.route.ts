@@ -1,5 +1,5 @@
 import {AgnosUIAngularModule, toAngularSignal} from '@agnos-ui/angular-bootstrap';
-import {hash$} from '@agnos-ui/common/utils';
+import {hash$} from '@agnos-ui/common/samples/utils/hashUtil';
 import {Component, computed} from '@angular/core';
 @Component({
 	standalone: true,

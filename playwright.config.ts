@@ -78,6 +78,21 @@ const allProjects: Record<Project, () => void> = {
 			});
 		});
 	},
+	stackblitz: () => {
+		(selectedFrameworks.filteredList ?? selectedFrameworks.fullList).forEach((framework) => {
+			(selectedBrowsers.filteredList ?? ['chromium']).forEach((browser) => {
+				playwrightProjects.push({
+					name: `stackblitz:${framework}:${browser}`,
+					testMatch: 'samplesMarkup.singlebrowser-e2e-spec.ts',
+					use: {
+						...allBrowsers[browser],
+						framework,
+						project: 'stackblitz',
+					},
+				});
+			});
+		});
+	},
 	ssr: () => {
 		(selectedFrameworks.filteredList ?? selectedFrameworks.fullList).forEach((framework) => {
 			(selectedBrowsers.filteredList ?? ['chromium']).forEach((browser) => {

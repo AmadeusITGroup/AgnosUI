@@ -29,11 +29,7 @@ test.describe(`Samples markup consistency check`, async () => {
 			test.use({sampleKey});
 			test.skip(({sampleInfo}) => !sampleInfo, `The sample cannot be tested in this configuration`);
 
-			test(`should have a consistent markup`, async ({page, baseURL}, {project: {name: projectName}}) => {
-				test.fixme(
-					sampleKey === 'daisyui/modal/default' && projectName === 'singleBrowser:svelte:chromium',
-					`The modal headless samples is not using a service yet, as snippets makes this so much easier.`,
-				);
+			test(`should have a consistent markup`, async ({page, baseURL}) => {
 				await page.goto(`${baseURL}${samplesExtraHash[sampleKey] ?? ''}`, {waitUntil: 'networkidle'});
 				await expect.poll(async () => (await page.locator('#root').innerHTML()).trim().length).toBeGreaterThan(0);
 				await samplesExtraAction[sampleKey]?.(page);

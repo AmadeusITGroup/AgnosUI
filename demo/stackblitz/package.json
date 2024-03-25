@@ -1,7 +1,5 @@
 {
 	"type": "module",
-	"types": "index.d.ts",
-	"main": "dist/index.cjs",
 	"scripts": {
 		"build": "wireit"
 	},

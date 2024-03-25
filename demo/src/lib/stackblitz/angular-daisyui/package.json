@@ -7,7 +7,8 @@
 		"ng": "ng",
 		"start": "ng serve",
 		"build": "ng build",
-		"watch": "ng build --watch --configuration development"
+		"watch": "ng build --watch --configuration development",
+		"preview": "vite preview --outDir dist/demo/browser"
 	},
 	"devDependencies": {
 		"@amadeus-it-group/tansu": "1.0.0",

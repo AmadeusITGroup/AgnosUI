@@ -4,7 +4,9 @@
 		"paths": {
 			"@agnos-ui/core/*": ["./core/src/*"],
 			"@agnos-ui/react-headless/*": ["./react/headless/src/*", "./react/headless/src/generated/*"],
-			"@agnos-ui/react-bootstrap/*": ["./react/bootstrap/src/*", "./react/bootstrap/src/generated/*"]
+			"@agnos-ui/react-bootstrap/*": ["./react/bootstrap/src/*", "./react/bootstrap/src/generated/*"],
+			"@agnos-ui/common": ["./common"],
+			"@agnos-ui/common/*": ["./common/*"]
 		}
 	}
 }
