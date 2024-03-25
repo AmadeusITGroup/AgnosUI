@@ -100,6 +100,7 @@
 				"./eslint-plugin:build",
 				"./page-objects:build",
 				"./demo/stackblitz:build",
+				"./angular/ssr-app:build",
 				"./svelte/ssr-app:build"
 			]
 		},
@@ -156,6 +157,7 @@
 		"angular/headless",
 		"angular/lib",
 		"angular/demo",
+		"angular/ssr-app",
 		"react/headless",
 		"react/lib",
 		"react/demo",

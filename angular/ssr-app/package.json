@@ -1,0 +1,77 @@
+{
+	"name": "@agnos-ui/angular-ssr-app",
+	"version": "0.0.0",
+	"scripts": {
+		"ng": "ng",
+		"dev": "ng serve",
+		"build": "wireit",
+		"preview": "wireit"
+	},
+	"private": true,
+	"dependencies": {
+		"@agnos-ui/angular": "0.0.0",
+		"@angular/animations": "~17.3.1",
+		"@angular/common": "~17.3.1",
+		"@angular/compiler": "~17.3.1",
+		"@angular/core": "~17.3.1",
+		"@angular/forms": "~17.3.1",
+		"@angular/platform-browser": "~17.3.1",
+		"@angular/platform-browser-dynamic": "~17.3.1",
+		"@angular/platform-server": "~17.3.0",
+		"@angular/router": "~17.3.1",
+		"@angular/ssr": "~17.3.2",
+		"express": "^4.18.2",
+		"rxjs": "^7.8.1",
+		"tslib": "^2.6.2",
+		"zone.js": "~0.14.4"
+	},
+	"devDependencies": {
+		"@angular-devkit/build-angular": "~17.3.1",
+		"@angular/cli": "~17.3.1",
+		"@angular/compiler-cli": "~17.3.1",
+		"@types/express": "^4.17.17",
+		"@types/jasmine": "~5.1.0",
+		"@types/node": "^20.11.30",
+		"jasmine-core": "~5.1.0",
+		"karma": "~6.4.0",
+		"karma-chrome-launcher": "~3.2.0",
+		"karma-coverage": "~2.2.0",
+		"karma-jasmine": "~5.1.0",
+		"karma-jasmine-html-reporter": "~2.1.0",
+		"typescript": "~5.4.3"
+	},
+	"wireit": {
+		"build": {
+			"command": "ng build",
+			"dependencies": [
+				"../lib:build",
+				"../../style-bootstrap:build"
+			],
+			"files": [
+				"src/**",
+				"angular.json",
+				"server.ts",
+				"tsconfig.app.json",
+				"../tsconfig.json",
+				"../../tsconfig.json"
+			],
+			"output": [
+				"dist/**"
+			]
+		},
+		"preview": {
+			"command": "node dist/ssr-app/server/server.mjs",
+			"dependencies": [
+				"build"
+			],
+			"service": true
+		},
+		"dev": {
+			"command": "ng serve",
+			"dependencies": [
+				"../headless:generate:exports"
+			],
+			"service": true
+		}
+	}
+}
