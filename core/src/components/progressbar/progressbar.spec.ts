@@ -2,6 +2,7 @@ import {beforeEach, describe, expect, test} from 'vitest';
 import {createProgressbar, getProgressbarDefaultConfig} from './progressbar';
 import type {ProgressbarWidget} from './progressbar';
 import type {WidgetState} from '../../types';
+import {getAttributes} from '../components.spec-utils';
 
 describe(`Progressbar`, () => {
 	let progressbar: ProgressbarWidget;
@@ -107,5 +108,18 @@ describe(`Progressbar`, () => {
 
 	test(`default config returns an aria label`, () => {
 		expect(getProgressbarDefaultConfig().ariaLabel).toBe('Progressbar');
+	});
+
+	test(`ariaDirective`, () => {
+		const node = document.createElement('div');
+		const directiveInstance = progressbar.directives.ariaDirective(node);
+		expect(getAttributes(node)).toStrictEqual({
+			role: 'progressbar',
+			'aria-label': 'Progressbar',
+			'aria-valuenow': '0',
+			'aria-valuemin': '0',
+			'aria-valuemax': '100',
+		});
+		directiveInstance?.destroy?.();
 	});
 });

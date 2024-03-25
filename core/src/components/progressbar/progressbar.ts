@@ -1,9 +1,10 @@
 import {clamp} from '../../utils/internal/checks';
 import {typeBoolean, typeFunction, typeNumber, typeString} from '../../utils/writables';
 import {stateStores, writablesForProps} from '../../utils/stores';
-import type {ConfigValidator, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../../types';
+import type {ConfigValidator, Directive, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../../types';
 import {computed} from '@amadeus-it-group/tansu';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
+import {createAttributesDirective} from '../../utils/directive';
 
 export type ProgressbarContext = WidgetSlotContext<ProgressbarWidget>;
 
@@ -50,6 +51,13 @@ export interface ProgressbarCommonPropsAndState extends WidgetsCommonPropsAndSta
 	animated: boolean;
 }
 
+export interface ProgressbarDirectives {
+	/**
+	 * A directive to be applied to the main container that handles aria attributes.
+	 */
+	ariaDirective: Directive;
+}
+
 export interface ProgressbarState extends ProgressbarCommonPropsAndState {
 	/**
 	 * Percentage of completion.
@@ -82,7 +90,7 @@ export interface ProgressbarProps extends ProgressbarCommonPropsAndState {
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface ProgressbarApi {}
 
-export type ProgressbarWidget = Widget<ProgressbarProps, ProgressbarState, ProgressbarApi, object, object>;
+export type ProgressbarWidget = Widget<ProgressbarProps, ProgressbarState, ProgressbarApi, object, ProgressbarDirectives>;
 
 const defaultConfig: ProgressbarProps = {
 	min: 0,
@@ -132,6 +140,7 @@ export function createProgressbar(config?: PropsConfig<ProgressbarProps>): Progr
 			// clean inputs
 			min$,
 			ariaValueTextFn$,
+			ariaLabel$,
 			...stateProps
 		},
 		patch,
@@ -161,11 +170,23 @@ export function createProgressbar(config?: PropsConfig<ProgressbarProps>): Progr
 			started$,
 			finished$,
 			ariaValueText$,
+			ariaLabel$,
 			...stateProps,
 		}),
 		patch,
 		api: {},
-		directives: {},
+		directives: {
+			ariaDirective: createAttributesDirective(() => ({
+				attributes: {
+					role: 'progressbar',
+					'aria-label': ariaLabel$,
+					'aria-valuenow': value$,
+					'aria-valuemin': min$,
+					'aria-valuemax': max$,
+					'aria-valuetext': ariaValueText$,
+				},
+			})),
+		},
 		actions: {},
 	};
 }

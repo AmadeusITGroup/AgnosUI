@@ -5,6 +5,7 @@ import {afterEach, beforeEach, describe, expect, test, vi} from 'vitest';
 import type {WidgetState} from '../../types';
 import type {RatingProps, RatingWidget} from './rating';
 import {createRating, getRatingDefaultConfig} from './rating';
+import {getAttributes} from '../components.spec-utils';
 
 function keyboardEvent(key: string): KeyboardEvent {
 	return {
@@ -12,14 +13,6 @@ function keyboardEvent(key: string): KeyboardEvent {
 		preventDefault() {},
 		stopPropagation() {},
 	} as KeyboardEvent;
-}
-
-function getAttributes(node: HTMLElement) {
-	const attributes: Record<string, string> = {};
-	for (const {name, value} of [...node.attributes]) {
-		attributes[name] = value;
-	}
-	return attributes;
 }
 
 describe(`Rating`, () => {
