@@ -8,6 +8,7 @@ import {
 	auNumberAttribute,
 	callWidgetFactory,
 	createProgressbar,
+	useDirectiveForHost,
 } from '@agnos-ui/angular-headless';
 import {type WritableSignal, writable} from '@amadeus-it-group/tansu';
 import {NgClass} from '@angular/common';
@@ -58,14 +59,6 @@ const defaultConfig: PartialProgressbarProps = {
 	standalone: true,
 	imports: [SlotDirective, SlotDefaultDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	host: {
-		role: 'progressbar',
-		'[attr.aria-label]': 'state().ariaLabel || undefined',
-		'[attr.aria-valuenow]': 'state().value',
-		'[attr.aria-valuemin]': 'state().min',
-		'[attr.aria-valuemax]': 'state().max',
-		'[attr.aria-valuetext]': 'state().ariaValueText',
-	},
 	template: `
 		<ng-template [auSlotDefault]="defaultSlots"><ng-content></ng-content></ng-template>
 		<ng-template [auSlot]="state().slotStructure" [auSlotProps]="{state: state(), widget}"></ng-template>
@@ -125,7 +118,15 @@ export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget>
 	 */
 	@Input('auAriaValueTextFn') ariaValueTextFn: ((value: number, minimum: number, maximum: number) => string | undefined) | undefined;
 
-	readonly _widget = callWidgetFactory({factory: createProgressbar, widgetName: 'progressbar', defaultConfig: this.defaultSlots, events: {}});
+	readonly _widget = callWidgetFactory({
+		factory: createProgressbar,
+		widgetName: 'progressbar',
+		defaultConfig: this.defaultSlots,
+		events: {},
+		afterInit: () => {
+			useDirectiveForHost(this._widget.directives.ariaDirective);
+		},
+	});
 
 	ngAfterContentChecked(): void {
 		this._widget.patchSlots({
