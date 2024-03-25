@@ -1,10 +1,9 @@
 <script lang="ts">
 	import type {AccordionSlots} from '@agnos-ui/svelte-headless/components/accordion';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Props = AccordionSlots['itemStructure']; // eslint-disable-line @typescript-eslint/no-unused-vars
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Slots = AccordionSlots; // eslint-disable-line @typescript-eslint/no-unused-vars
+
+	type $$Props = AccordionSlots['itemStructure'];
+	type $$Slots = AccordionSlots;
 
 	export let state: $$Props['state'];
 	export let widget: $$Props['widget'];

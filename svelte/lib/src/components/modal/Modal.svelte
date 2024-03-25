@@ -15,10 +15,8 @@
 
 <script lang="ts">
 	type Data = $$Generic; // eslint-disable-line no-undef
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Props = Partial<Props<Data>>; // eslint-disable-line @typescript-eslint/no-unused-vars
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Slots = Slots<Data>; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Props = Partial<Props<Data>>;
+	type $$Slots = Slots<Data>;
 
 	export let visible: boolean | undefined = undefined;
 
@@ -43,7 +41,6 @@
 	} = widget;
 
 	$: widget.patchChangedProps($$props);
-
 	$: slotContext = {widget: toSlotContextWidget(widget), state: $state$};
 </script>
 

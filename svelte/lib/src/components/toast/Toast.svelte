@@ -11,8 +11,9 @@
 </script>
 
 <script lang="ts">
-	type $$Props = Partial<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
-	type $$Slots = Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Props = Partial<Props>;
+	type $$Slots = Slots;
+
 	const widget = callWidgetFactory({
 		factory: createToast,
 		widgetName: 'toast',
@@ -35,7 +36,6 @@
 	} = widget;
 
 	$: widget.patchChangedProps($$props);
-
 	$: slotContext = {widget, state: $state$};
 </script>
 

@@ -6,9 +6,8 @@
 </script>
 
 <script lang="ts">
-	type $$Props = Partial<Props>; // eslint-disable-line @typescript-eslint/no-unused-vars
-	// cf https://github.com/ota-meshi/eslint-plugin-svelte/issues/348
-	type $$Slots = {default: Record<string, never>} & Slots; // eslint-disable-line @typescript-eslint/no-unused-vars
+	type $$Props = Partial<Props>;
+	type $$Slots = {default: Record<string, never>} & Slots;
 
 	export let itemVisible: boolean | undefined = undefined;
 	const widget = callWidgetFactory({
@@ -23,6 +22,7 @@
 		},
 	});
 	export const api = widget.api;
+
 	const {
 		directives: {accordionDirective},
 		stores: {className$},
