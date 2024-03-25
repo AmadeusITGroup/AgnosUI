@@ -55,7 +55,9 @@
 	},
 	"optionalDependencies": {
 		"@esbuild/darwin-arm64": "0.20.2",
-		"@rollup/rollup-darwin-arm64": "4.13.0"
+		"@rollup/rollup-darwin-arm64": "4.13.0",
+		"@rollup/rollup-darwin-x64": "4.13.0",
+		"@rollup/rollup-win32-x64-msvc": "4.13.0"
 	},
 	"scripts": {
 		"build:coverage": "wireit",
