@@ -1,0 +1,7 @@
+function __vite__mapDeps(indexes) {
+  if (!__vite__mapDeps.viteFileDeps) {
+    __vite__mapDeps.viteFileDeps = ["./Default.route-DrYa_tHb.js","./AppCommon-CiGFoVQr.js","./AppCommon-B0dGSB8E.css","./config-CDcI-LlD.js","./stores-BQ6pU-PF.js","./pagination-CHtuERd1.js","./pagination-C_gYTMDt-Dv2JcX3f.js","./writables-DoU_XYTX-Bx6peAMn.js","./Default.route-nHjzbZ5J.js","./rating-DQbY8Y6C.js","./rating-BfsrniLy-3SaW86pZ.js","./directive-DB3RyC8O.js"]
+  }
+  return indexes.map((i) => __vite__mapDeps.viteFileDeps[i])
+}
+import{S as i,i as m,s as u,A as c,e as p,c as l,a as _,b as d,m as f,n as g,t as $,d as v,f as E,g as w,o as A,_ as s}from"./AppCommon-CiGFoVQr.js";function P(a){let t,e,o;return e=new c({props:{componentsToBeProcessed:a[0]}}),{c(){t=p("div"),l(e.$$.fragment),_(t,"class","container mx-auto p-3")},m(n,r){d(n,t,r),f(e,t,null),o=!0},p:g,i(n){o||($(e.$$.fragment,n),o=!0)},o(n){v(e.$$.fragment,n),o=!1},d(n){n&&E(t),w(e)}}}function h(a){const t=Object.assign({"./samples/pagination/Default.route.svelte":()=>s(()=>import("./Default.route-DrYa_tHb.js"),__vite__mapDeps([0,1,2,3,4,5,6,7]),import.meta.url),"./samples/rating/Default.route.svelte":()=>s(()=>import("./Default.route-nHjzbZ5J.js"),__vite__mapDeps([8,1,2,9,10,4,11,7,3]),import.meta.url)});return A(()=>{window.addEventListener("storage",e=>{e.key==="theme"&&e.newValue&&document.documentElement.setAttribute("data-theme",e.newValue)})}),[t]}class D extends i{constructor(t){super(),m(this,t,h,P,u,{})}}new D({target:document.getElementById("root")});
