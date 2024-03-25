@@ -48,7 +48,7 @@
 		"prettier": "^3.2.5",
 		"syncpack": "^11.2.1",
 		"ts-node": "^10.9.2",
-		"typescript": "~5.4.2",
+		"typescript": "~5.4.3",
 		"vite": "^5.1.6",
 		"vitest": "^1.4.0",
 		"wireit": "^0.14.4"

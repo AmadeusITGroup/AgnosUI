@@ -24,7 +24,7 @@
 		"bootstrap-icons": "^1.11.3",
 		"rxjs": "^7.8.1",
 		"tslib": "^2.6.2",
-		"typescript": "~5.4.2",
+		"typescript": "~5.4.3",
 		"zone.js": "~0.14.4"
 	}
 }
