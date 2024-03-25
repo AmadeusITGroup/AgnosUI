@@ -1,0 +1,14 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+	"extends": "./tsconfig.build.json",
+	"compilerOptions": {
+		"paths": {
+			"@agnos-ui/core": ["./core/src"],
+			"@agnos-ui/core/*": ["./core/src/*"],
+			"@agnos-ui/angular-headless": ["./angular/headless/src"],
+			"@agnos-ui/angular": ["./angular/lib/src"],
+			"@agnos-ui/common/*": ["./common/*"],
+			"bootstrap-icons/icons/*": ["./node_modules/bootstrap-icons/icons/*"]
+		}
+	}
+}
