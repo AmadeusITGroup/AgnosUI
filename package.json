@@ -98,7 +98,8 @@
 				"./demo:build",
 				"./eslint-plugin:build",
 				"./page-objects:build",
-				"./demo/stackblitz:build"
+				"./demo/stackblitz:build",
+				"./svelte/ssr-app:build"
 			]
 		},
 		"build:coverage": {
@@ -160,6 +161,7 @@
 		"svelte/headless",
 		"svelte/lib",
 		"svelte/demo",
+		"svelte/ssr-app",
 		"demo",
 		"eslint-plugin",
 		"base-po",
