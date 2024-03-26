@@ -1,6 +1,6 @@
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {computed, writable} from '@amadeus-it-group/tansu';
-import type {ConfigValidator, Directive, PropsConfig, SlotContent, Widget} from '../../types';
+import type {AttributeDirective, ConfigValidator, PropsConfig, SlotContent, Widget} from '../../types';
 import {INVALID_VALUE} from '../../types';
 import {createAttributesDirective} from '../../utils/directive';
 import {clamp, isNumber} from '../../utils/internal/checks';
@@ -105,12 +105,12 @@ export interface RatingDirectives {
 	 * A directive to be applied to the main container
 	 * This will handle the keydown, mouseleave, tabindex and aria attributes
 	 */
-	containerDirective: Directive;
+	containerDirective: AttributeDirective;
 
 	/**
 	 * A directive to be applied on each star element
 	 */
-	starDirective: Directive<{index: number}>;
+	starDirective: AttributeDirective<{index: number}>;
 }
 
 export interface RatingState extends RatingCommonPropsAndState {

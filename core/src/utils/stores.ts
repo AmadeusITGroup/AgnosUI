@@ -142,6 +142,13 @@ export const toReadableStore = <T>(x: ReadableSignal<T> | T) => (isStore(x) ? x 
 export const toWritableStore = <T>(x: WritableSignal<T> | T) => (isStore(x) ? x : writable(x));
 
 /**
+ * If the provided argument is a store, its value is returned, otherwise, the value is returned
+ * @param value - value to convert
+ * @returns the raw value
+ */
+export const toValue = <T>(value: ReadableSignal<T> | T) => (isStore(value) ? value() : value);
+
+/**
  * Extract and normalize config stores.
  *
  * @param keys - the keys of the stores to extract / normalize

@@ -88,7 +88,57 @@ export type WidgetState<T extends {state$: SubscribableStore<any>}> = T extends 
 export type WidgetProps<T extends {patch: (arg: any) => void}> = T extends {patch: (arg: Partial<infer U extends object>) => void} ? U : never;
 export type WidgetFactory<W extends Widget> = (props?: PropsConfig<WidgetProps<W>>) => W;
 
-export type Directive<T = void> = (node: HTMLElement, args: T) => void | {update?: (args: T) => void; destroy?: () => void};
+export interface Directive<T = void> {
+	(node: HTMLElement, args: T): void | {update?: (args: T) => void; destroy?: () => void};
+
+	/**
+	 * Function that returns the {@link AttributesDirectiveProps}
+	 */
+	propsFn?: (arg: ReadableSignal<T>) => AttributesDirectiveProps;
+}
+
+export type AttributeEvent<K extends keyof HTMLElementEventMap> =
+	| {
+			handler: (this: HTMLElement, event: HTMLElementEventMap[K]) => void;
+			options?: boolean | AddEventListenerOptions;
+	  }
+	| ((this: HTMLElement, event: HTMLElementEventMap[K]) => void);
+
+/**
+ * Properties for configuring server-side rendering directives.
+ */
+export interface AttributesDirectiveProps {
+	/**
+	 * Events to be attached to an HTML element.
+	 * @remarks
+	 * Key-value pairs where keys are event types and values are event handlers.
+	 * value can be an array in case of multiple events callback need to be attached.
+	 */
+	events?: Partial<{
+		[K in keyof HTMLElementEventMap]: AttributeEvent<K> | AttributeEvent<K>[];
+	}>;
+
+	/**
+	 * Attributes to be added to the provided node.
+	 * @remarks
+	 * The `style` attribute must be added separately.
+	 */
+	attributes?: Record<string, AttributeValue | ReadableSignal<AttributeValue>>;
+
+	/**
+	 * Styles to be added to an HTML element.
+	 * @remarks
+	 * Key-value pairs where keys are CSS style properties and values are style values.
+	 */
+	styles?: Partial<Record<keyof CSSStyleDeclaration, StyleValue | ReadableSignal<StyleValue>>>;
+
+	/**
+	 * Class names to be added to an HTML element.
+	 * @remarks
+	 * Key-value pairs where keys are class names and values indicate whether the class should be added (true) or removed (false).
+	 */
+	classNames?: Record<string, boolean | ReadableSignal<boolean>>;
+}
 
 export type SlotContent<Props extends object = object> = undefined | null | string | ((props: Props) => string);
 
