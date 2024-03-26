@@ -1,0 +1,77 @@
+const t=`{
+	"name": "@agnos-ui/svelte",
+	"description": "Bootstrap-based widget library for Svelte.",
+	"version": "0.0.0",
+	"type": "module",
+	"main": "./index.js",
+	"module": "./index.js",
+	"types": "./index.d.ts",
+	"exports": {
+		".": {
+			"types": "./index.d.ts",
+			"svelte": "./index.js",
+			"default": "./index.js"
+		},
+		"./components/*": {
+			"types": "./components/*/index.d.ts",
+			"svelte": "./components/*/index.js",
+			"default": "./components/*/index.js"
+		},
+		"./config": {
+			"types": "./generated/config.d.ts",
+			"svelte": "./generated/config.js",
+			"default": "./generated/config.js"
+		},
+		"./slot": {
+			"types": "./generated/slot.d.ts",
+			"svelte": "./generated/slot.js",
+			"default": "./generated/slot.js"
+		},
+		"./types": {
+			"types": "./generated/types.d.ts",
+			"svelte": "./generated/types.js",
+			"default": "./generated/types.js"
+		},
+		"./services/*": {
+			"types": "./generated/services/*.d.ts",
+			"svelte": "./generated/services/*.js",
+			"default": "./generated/services/*.js"
+		},
+		"./services/transitions/*": {
+			"types": "./generated/services/transitions/*.d.ts",
+			"svelte": "./generated/services/transitions/*.js",
+			"default": "./generated/services/transitions/*.js"
+		},
+		"./utils/*": {
+			"types": "./generated/utils/*.d.ts",
+			"svelte": "./generated/utils/*.js",
+			"default": "./generated/utils/*.js"
+		}
+	},
+	"dependencies": {
+		"@agnos-ui/style-bootstrap": "0.0.0",
+		"@agnos-ui/svelte-headless": "0.0.0"
+	},
+	"peerDependencies": {
+		"@amadeus-it-group/tansu": "*",
+		"svelte": "*"
+	},
+	"sideEffects": false,
+	"homepage": "https://amadeusitgroup.github.io/AgnosUI/latest/",
+	"bugs": "https://github.com/AmadeusITGroup/AgnosUI/issues",
+	"license": "MIT",
+	"repository": "AmadeusITGroup/AgnosUI.git",
+	"keywords": [
+		"svelte",
+		"accordion",
+		"alert",
+		"bootstrap",
+		"components",
+		"daisyUI",
+		"modal",
+		"pagination",
+		"rating",
+		"slider",
+		"widgets"
+	]
+}`;export{t as default};
