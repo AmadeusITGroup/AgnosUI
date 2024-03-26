@@ -3,6 +3,7 @@ import {computed, writable} from '@amadeus-it-group/tansu';
 import type {MockInstance} from 'vitest';
 import {afterEach, beforeEach, describe, expect, test, vi} from 'vitest';
 import type {WidgetState} from '../../types';
+import {directiveAttributes} from '../../utils/directive';
 import type {RatingProps, RatingWidget} from './rating';
 import {createRating, getRatingDefaultConfig} from './rating';
 import {getAttributes} from '../components.spec-utils';
@@ -627,9 +628,7 @@ describe(`Rating`, () => {
 		});
 
 		test('containerDirective', () => {
-			const node = document.createElement('div');
-			const directiveInstance = rating.directives.containerDirective(node);
-			expect(getAttributes(node)).toStrictEqual({
+			const expectedState = {
 				'aria-valuemin': '0',
 				role: 'slider',
 				class: 'au-rating',
@@ -638,17 +637,28 @@ describe(`Rating`, () => {
 				'aria-valuenow': '0',
 				'aria-valuetext': '0 out of 10',
 				'aria-label': 'Rating',
-			});
+			};
+
+			expect(directiveAttributes(rating.directives.containerDirective)).toStrictEqual(expectedState);
+
+			const node = document.createElement('div');
+			const directiveInstance = rating.directives.containerDirective(node);
+			expect(getAttributes(node)).toStrictEqual(expectedState);
 			directiveInstance?.destroy?.();
 		});
 
 		test('starDirective', () => {
-			const node = document.createElement('div');
-			const directiveInstance = rating.directives.starDirective(node, {index: 1});
-			expect(getAttributes(node)).toStrictEqual({
+			const expectedState = {
 				class: 'au-rating-star',
 				style: 'cursor: pointer;',
-			});
+			};
+			const arg = {index: 1};
+
+			expect(directiveAttributes([rating.directives.starDirective, arg])).toStrictEqual(expectedState);
+
+			const node = document.createElement('div');
+			const directiveInstance = rating.directives.starDirective(node, arg);
+			expect(getAttributes(node)).toStrictEqual(expectedState);
 			directiveInstance?.destroy?.();
 		});
 	});

@@ -1,9 +1,10 @@
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {asReadable, batch, readable, writable} from '@amadeus-it-group/tansu';
-import type {AttributeValue, Directive, StyleValue} from '../types';
+import {BROWSER} from 'esm-env';
+import type {AttributeDirective, AttributesDirectiveProps, Directive} from '../types';
 import {addEvent, bindAttribute, bindClassName, bindStyle} from './internal/dom';
 import {noop} from './internal/func';
-import {toReadableStore} from './stores';
+import {toReadableStore, toValue} from './stores';
 
 /**
  * Binds the given directive to a store that provides its argument.
@@ -227,39 +228,6 @@ export const mergeDirectives =
 	};
 
 /**
- * Properties for configuring server-side rendering directives.
- */
-export interface AttributesDirectiveProps {
-	/**
-	 * Events to be attached to an HTML element.
-	 * @remarks
-	 * Key-value pairs where keys are event types and values are event handlers.
-	 */
-	events?: Partial<{[K in keyof HTMLElementEventMap]: (this: HTMLElement, event: HTMLElementEventMap[K]) => void}>;
-
-	/**
-	 * Attributes to be added to the provided node.
-	 * @remarks
-	 * The `style` attribute must be added separately.
-	 */
-	attributes?: Record<string, AttributeValue | ReadableSignal<AttributeValue>>;
-
-	/**
-	 * Styles to be added to an HTML element.
-	 * @remarks
-	 * Key-value pairs where keys are CSS style properties and values are style values.
-	 */
-	styles?: Partial<Record<keyof CSSStyleDeclaration, StyleValue | ReadableSignal<StyleValue>>>;
-
-	/**
-	 * Class names to be added to an HTML element.
-	 * @remarks
-	 * Key-value pairs where keys are class names and values indicate whether the class should be added (true) or removed (false).
-	 */
-	classNames?: Record<string, boolean | ReadableSignal<boolean>>;
-}
-
-/**
  * Creates a directive for server-side rendering with bindable elements.
  * This directive binds events, attributes, styles, and classNames to an HTML element.
  *
@@ -267,36 +235,143 @@ export interface AttributesDirectiveProps {
  * This function can take an optional parameter that corrspond to the second parameter of the created directive.
  * @returns A directive object with bound events, attributes, styles, and classNames.
  */
-export const createAttributesDirective =
-	<T = void>(propsFn: (arg: ReadableSignal<T>) => AttributesDirectiveProps) =>
-	(node: HTMLElement, args: T) => {
-		const unsubscribers: (() => void)[] = [];
-		const args$ = writable(args);
+export const createAttributesDirective = <T = void>(propsFn: (arg: ReadableSignal<T>) => AttributesDirectiveProps) => {
+	const directive: AttributeDirective<T> = Object.assign(
+		(node: HTMLElement, args: T) => {
+			const unsubscribers: (() => void)[] = [];
+			const args$ = writable(args);
 
-		const {events, attributes, styles, classNames} = propsFn(args$);
+			const {events, attributes, styles, classNames} = propsFn(args$);
 
-		for (const [type, eventFn] of Object.entries(events ?? {})) {
-			unsubscribers.push(addEvent(node, type as keyof HTMLElementEventMap, eventFn as any));
-		}
-
-		for (const [attributeName, value] of Object.entries(attributes ?? {})) {
-			if (value != null) {
-				unsubscribers.push(bindAttribute(node, attributeName, toReadableStore(value)));
+			for (const [type, eventFn] of Object.entries(events ?? {})) {
+				unsubscribers.push(addEvent(node, type as keyof HTMLElementEventMap, eventFn as any));
 			}
-		}
 
-		for (const [styleName, value] of Object.entries(styles ?? {})) {
-			if (value) {
-				unsubscribers.push(bindStyle(node, styleName, toReadableStore(value)));
+			for (const [attributeName, value] of Object.entries(attributes ?? {})) {
+				if (value != null) {
+					unsubscribers.push(bindAttribute(node, attributeName, toReadableStore(value)));
+				}
 			}
-		}
 
-		for (const [className, value] of Object.entries(classNames ?? {})) {
-			unsubscribers.push(bindClassName(node, className, toReadableStore(value)));
-		}
+			for (const [styleName, value] of Object.entries(styles ?? {})) {
+				if (value) {
+					unsubscribers.push(bindStyle(node, styleName, toReadableStore(value)));
+				}
+			}
 
-		return {
-			update: (args: T) => args$.set(args),
-			destroy: () => unsubscribers.forEach((fn) => fn()),
-		};
+			for (const [className, value] of Object.entries(classNames ?? {})) {
+				unsubscribers.push(bindClassName(node, className, toReadableStore(value)));
+			}
+
+			return {
+				update: (args: T) => args$.set(args),
+				destroy: () => unsubscribers.forEach((fn) => fn()),
+			};
+		},
+		{propsFn},
+	);
+
+	return directive;
+};
+
+/**
+ * Creates a directive for adding specified CSS class names to an HTML element.
+ *
+ * @param classNames - An array of CSS class names to be added.
+ * @returns A directive object with bound class names.
+ */
+export function createClassDirective(...classNames: string[]) {
+	const classNamesObj: AttributesDirectiveProps['classNames'] = {};
+	for (const className of classNames) {
+		classNamesObj[className] = true;
+	}
+	return createAttributesDirective(() => ({classNames: classNamesObj}));
+}
+
+export type AttributeDirectiveAndParam<T> = [AttributeDirective<T>, T];
+
+/**
+ * Returns an object with the attributes, style and class keys containing information derived from a list of directives.
+ *
+ *   - The `attributes` value is a JSON representation of key/value attributes, excepted for the `class` and `style` attributes
+ *   - The `classNames` value is an array of string representing the classes to be applied
+ *   - The `style` value is a JSON representation of the styles to be applied
+ *
+ * @param directives - List of directives to generate attributes from. Each parameter can be the directive or an array with the directive and its parameter
+ * @returns JSON object with the `attributes`, `class` and `style` keys.
+ */
+export function ssrAttributesData<T extends any[]>(...directives: {[K in keyof T]: AttributeDirectiveAndParam<T[K]> | AttributeDirective<void>}) {
+	const result = {
+		attributes: <Record<string, string>>{},
+		classNames: <string[]>[],
+		style: <Record<string, string>>{},
 	};
+
+	const classNames = new Set<string>();
+	for (const directiveDef of directives) {
+		let attributesDirectiveProps: AttributesDirectiveProps;
+		if (Array.isArray(directiveDef)) {
+			const [directive, args] = directiveDef;
+			attributesDirectiveProps = directive.propsFn(readable(args));
+		} else {
+			const directive = directiveDef;
+			attributesDirectiveProps = directive.propsFn(readable(undefined));
+		}
+
+		const {class: classNamesFromAttr, ...attributesFromAttr} = attributesDirectiveProps.attributes ?? {};
+		const attributes = result.attributes;
+		for (const [name, value] of Object.entries(attributesFromAttr)) {
+			const rawValue = toValue(value);
+			if (rawValue != null && rawValue !== false) {
+				attributes[name] = '' + (rawValue === true ? '' : rawValue);
+			}
+		}
+		const style = result.style;
+		for (const [name, value] of Object.entries(attributesDirectiveProps.styles ?? {})) {
+			const rawValue = toValue(value);
+			if (rawValue != null) {
+				style[name] = rawValue;
+			}
+		}
+
+		`${toValue(classNamesFromAttr) || ''}`.split(' ').forEach((className) => classNames.add(className));
+		for (const [name, value] of Object.entries(attributesDirectiveProps.classNames ?? {})) {
+			if (toValue(value)) {
+				classNames.add(name);
+			}
+		}
+		result.classNames = [...classNames].filter((className) => className !== '');
+	}
+
+	return result;
+}
+
+/**
+ * Returns JSON representation of the attributes to be applied derived from a list of directives.
+ *
+ * @param directives - List of directives to generate attributes from. Each parameter can be the directive or an array with the directive and its parameter
+ * @returns JSON object with name/value for the attributes
+ */
+export function directiveAttributes<T extends any[]>(...directives: {[K in keyof T]: AttributeDirectiveAndParam<T[K]> | AttributeDirective<void>}) {
+	const {attributes, classNames, style} = ssrAttributesData(...directives);
+	if (classNames.length) {
+		attributes['class'] = classNames.join(' ');
+	}
+	const stringStyle = Object.entries(style)
+		.map(([name, value]) => `${name}: ${value};`)
+		.join('');
+	if (stringStyle.length) {
+		attributes['style'] = stringStyle;
+	}
+	return attributes;
+}
+
+/**
+ * Same as {@link directiveAttributes}, but returns an empty object when run in a browser environement.
+ *
+ * @param directives - List of directives to generate attributes from. Each parameter can be the directive or an array with the directive and its parameter
+ * @returns JSON object with name/value for the attributes
+ */
+export function ssrAttributes<T extends any[]>(...directives: {[K in keyof T]: AttributeDirectiveAndParam<T[K]> | AttributeDirective<void>}) {
+	return !BROWSER ? directiveAttributes(...directives) : {};
+}
