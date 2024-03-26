@@ -1,7 +1,8 @@
 {
 	"name": "@agnos-ui/svelte",
-	"private": true,
 	"description": "Bootstrap-based widget library for Svelte.",
+	"version": "0.0.0",
+	"private": true,
 	"type": "module",
 	"main": "./dist/index.js",
 	"module": "./dist/index.js",
@@ -133,6 +134,5 @@
 	"devDependencies": {
 		"@sveltejs/package": "^2.3.0"
 	},
-	"sideEffects": false,
-	"version": "0.0.0"
+	"sideEffects": false
 }

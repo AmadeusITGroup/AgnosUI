@@ -1,6 +1,6 @@
 /** @type import("syncpack").RcFile */
 module.exports = {
-	source: ['package.json', '*/package.json', '*/{lib,headless}/package.json', 'demo/src/lib/stackblitz/*/package.json'],
+	source: ['package.json', '*/package.json', '*/{demo,lib,headless,ssr-app}/package.json', 'demo/src/lib/stackblitz/*/package.json'],
 	indent: '\t',
 	semverRange: '^',
 	versionGroups: [
@@ -30,11 +30,8 @@ module.exports = {
 			dependencies: ['@amadeus-it-group/tansu', '@agnos-ui/*'],
 			packages: ['**'],
 		},
-		{
-			label: 'Use glob 10.3.6 until https://github.com/isaacs/node-glob/issues/557 is solved',
-			range: '',
-			packages: ['**'],
-			dependencies: ['glob'],
-		},
 	],
+	sortPackages: false,
+	sortAz: ['bin', 'contributors', 'dependencies', 'devDependencies', 'keywords', 'peerDependencies', 'resolutions'],
+	sortExports: [],
 };

@@ -1,26 +1,24 @@
 {
 	"name": "@agnos-ui/agnos-ui",
 	"description": "Framework-agnostic widget library.",
+	"version": "0.0.0",
 	"homepage": "https://amadeusitgroup.github.io/AgnosUI/latest/",
 	"bugs": "https://github.com/AmadeusITGroup/AgnosUI/issues",
 	"license": "MIT",
 	"private": true,
 	"keywords": [
-		"components",
-		"daisyUI",
-		"bootstrap",
-		"widgets",
 		"accordion",
 		"alert",
+		"bootstrap",
+		"components",
+		"daisyUI",
 		"modal",
 		"pagination",
 		"rating",
-		"slider"
+		"slider",
+		"widgets"
 	],
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/AmadeusITGroup/AgnosUI.git"
-	},
+	"repository": "AmadeusITGroup/AgnosUI.git",
 	"engines": {
 		"npm": "^10.5.0",
 		"node": "^20.11.1"
@@ -80,7 +78,7 @@
 		"e2e:ui": "wireit",
 		"postinstall": "husky",
 		"syncpack:check": "syncpack lint",
-		"syncpack:fix": "syncpack fix-mismatches",
+		"syncpack:fix": "syncpack fix-mismatches && syncpack format",
 		"prepare": "wireit"
 	},
 	"wireit": {
