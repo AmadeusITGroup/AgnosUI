@@ -1,46 +1,54 @@
-import {DOCUMENT} from '@angular/common';
 import type {ComponentRef, EmbeddedViewRef, OnChanges, OnDestroy, SimpleChanges, Type} from '@angular/core';
-import {Directive, EnvironmentInjector, Input, TemplateRef, ViewContainerRef, createComponent, inject, reflectComponentType} from '@angular/core';
+import {
+	Component,
+	Directive,
+	EnvironmentInjector,
+	Input,
+	TemplateRef,
+	ViewChild,
+	ViewContainerRef,
+	createComponent,
+	inject,
+	reflectComponentType,
+} from '@angular/core';
 import type {SlotContent} from './types';
 import {ComponentTemplate} from './types';
 
 abstract class SlotHandler<Props extends Record<string, any>, Slot extends SlotContent<Props> = SlotContent<Props>> {
-	constructor(
-		public viewContainerRef: ViewContainerRef,
-		public document: Document,
-	) {}
+	constructor(public viewContainerRef: ViewContainerRef) {}
 	slotChange(slot: Slot, props: Props) {}
 	propsChange(slot: Slot, props: Props) {}
 	destroy() {}
 }
 
-class StringSlotHandler<Props extends Record<string, any>> extends SlotHandler<Props, string> {
-	#nodeRef: Text | undefined;
-	#previousText = '';
+@Component({
+	template: `<ng-template #text let-content="content">{{ content }}</ng-template>`,
+})
+class StringSlotComponent {
+	@ViewChild('text', {static: true}) text: TemplateRef<{content: string}>;
+}
+const stringSlotComponentTemplate = new ComponentTemplate<{content: string}, 'text', StringSlotComponent>(StringSlotComponent, 'text');
 
-	override slotChange(slot: string): void {
-		if (slot === this.#previousText) {
-			return;
-		}
-		this.#previousText = slot;
-		if (this.#nodeRef) {
-			this.#nodeRef.textContent = slot;
+class StringSlotHandler<Props extends Record<string, any>> extends SlotHandler<Props, string> {
+	#templateRefSlotHandler = new ComponentTemplateSlotHandler<{content: string}, 'text', StringSlotComponent>(this.viewContainerRef);
+	#initialized = false;
+
+	override slotChange(content: string): void {
+		if (!this.#initialized) {
+			this.#initialized = true;
+			this.#templateRefSlotHandler.slotChange(stringSlotComponentTemplate, {content});
 		} else {
-			const viewContainerElement: Comment | undefined = this.viewContainerRef.element.nativeElement;
-			if (this.document && viewContainerElement?.parentNode) {
-				this.#nodeRef = viewContainerElement.parentNode.insertBefore(this.document.createTextNode(slot), viewContainerElement);
-			}
+			this.#templateRefSlotHandler.propsChange(stringSlotComponentTemplate, {content});
 		}
 	}
 
 	override destroy(): void {
-		this.#nodeRef?.parentNode?.removeChild(this.#nodeRef);
-		this.#nodeRef = undefined;
+		this.#templateRefSlotHandler.destroy();
 	}
 }
 
 class FunctionSlotHandler<Props extends Record<string, any>> extends SlotHandler<Props, (props: Props) => string> {
-	#stringSlotHandler = new StringSlotHandler(this.viewContainerRef, this.document);
+	#stringSlotHandler = new StringSlotHandler(this.viewContainerRef);
 
 	override slotChange(slot: (props: Props) => string, props: Props): void {
 		this.#stringSlotHandler.slotChange(slot(props));
@@ -131,7 +139,7 @@ class ComponentTemplateSlotHandler<
 	T extends {[key in K]: TemplateRef<Props>},
 > extends SlotHandler<Props, ComponentTemplate<Props, K, T>> {
 	#componentRef: ComponentRef<T> | undefined;
-	#templateSlotHandler = new TemplateRefSlotHandler(this.viewContainerRef, this.document);
+	#templateSlotHandler = new TemplateRefSlotHandler(this.viewContainerRef);
 	#templateRef: TemplateRef<Props> | undefined;
 
 	override slotChange(slot: ComponentTemplate<Props, K, T>, props: Props): void {
@@ -157,7 +165,7 @@ class ComponentTemplateSlotHandler<
 	}
 }
 
-const getSlotType = (value: any): undefined | {new (viewContainerRef: ViewContainerRef, document: Document): SlotHandler<any>} => {
+const getSlotType = (value: any): undefined | {new (viewContainerRef: ViewContainerRef): SlotHandler<any>} => {
 	if (!value) return undefined;
 	const type = typeof value;
 	switch (type) {
@@ -189,7 +197,6 @@ export class SlotDirective<Props extends Record<string, any>> implements OnChang
 	@Input('auSlotProps') props: Props;
 
 	private _viewContainerRef = inject(ViewContainerRef);
-	private _document = inject(DOCUMENT);
 	private _slotType: ReturnType<typeof getSlotType>;
 	private _slotHandler: SlotHandler<Props> | undefined;
 
@@ -202,7 +209,7 @@ export class SlotDirective<Props extends Record<string, any>> implements OnChang
 			const newSlotType = getSlotType(slot);
 			if (newSlotType !== this._slotType) {
 				this._slotHandler?.destroy();
-				this._slotHandler = newSlotType ? new newSlotType(this._viewContainerRef, this._document) : undefined;
+				this._slotHandler = newSlotType ? new newSlotType(this._viewContainerRef) : undefined;
 				this._slotType = newSlotType;
 			}
 			this._slotHandler?.slotChange(slot, this.props);
