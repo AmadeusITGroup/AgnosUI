@@ -47,6 +47,7 @@ jobs:
       - if: inputs.version != ''
         run: |
           node scripts/setVersion.js "${{ inputs.version }}"
+          npm run syncpack:check
           git commit -a -m v${{ inputs.version }}
           git tag v${{ inputs.version }}
           git show HEAD

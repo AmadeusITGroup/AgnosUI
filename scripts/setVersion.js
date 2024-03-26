@@ -1,23 +1,13 @@
 const {validate} = require('compare-versions');
 const {join} = require('path');
 const {writeFileSync, readFileSync} = require('fs');
+const {globSync} = require('glob');
+const source = require('../.syncpackrc.js').source;
 
 const setVersion = (version) => {
 	if (!version || version.startsWith('v') || !validate(version)) {
 		throw new Error(`Invalid version number: ${version}`);
 	}
-	const directories = [
-		'core',
-		'style-bootstrap',
-		'svelte/headless',
-		'svelte/lib',
-		'react/headless',
-		'react/lib',
-		'angular/headless',
-		'angular/lib',
-		'base-po',
-		'page-objects',
-	];
 
 	const processDependencies = (dependencies) => {
 		if (dependencies) {
@@ -29,8 +19,9 @@ const setVersion = (version) => {
 		}
 	};
 
-	for (const curDirectory of directories) {
-		const packageFile = join(__dirname, '..', curDirectory, 'package.json');
+	const packageFiles = globSync(source, {cwd: join(__dirname, '..')});
+	for (const packageFile of packageFiles) {
+		console.log(`Setting version in ${packageFile}`);
 		const content = JSON.parse(readFileSync(packageFile, 'utf8'));
 		content.version = version;
 		processDependencies(content.dependencies);

@@ -16,7 +16,7 @@ module.exports = {
 			packages: ['**'],
 			dependencies: ['**'],
 			dependencyTypes: ['local'],
-			pinVersion: '0.0.0',
+			pinVersion: require('./package.json').version,
 		},
 	],
 	semverGroups: [
