@@ -1,5 +1,6 @@
 {
 	"name": "@agnos-ui/svelte-demo",
+	"version": "0.0.0",
 	"type": "module",
 	"private": true,
 	"scripts": {
@@ -73,6 +74,8 @@
 		}
 	},
 	"dependencies": {
+		"@agnos-ui/style-bootstrap": "0.0.0",
+		"@agnos-ui/svelte": "0.0.0",
 		"@amadeus-it-group/tansu": "1.0.0",
 		"@floating-ui/dom": "^1.6.3"
 	},

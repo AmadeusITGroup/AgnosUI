@@ -1,10 +1,11 @@
 {
 	"name": "@agnos-ui/base-po",
 	"description": "Base class to build page objects for end-to-end tests with Playwright.",
+	"version": "0.0.0",
 	"keywords": [
-		"playwright",
-		"page-object",
 		"e2e",
+		"page-object",
+		"playwright",
 		"testing"
 	],
 	"main": "dist/lib/index.js",
@@ -67,6 +68,5 @@
 		"type": "git",
 		"url": "git+https://github.com/AmadeusITGroup/AgnosUI.git",
 		"directory": "base-po"
-	},
-	"version": "0.0.0"
+	}
 }

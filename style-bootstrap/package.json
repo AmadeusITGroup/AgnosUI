@@ -1,11 +1,12 @@
 {
 	"name": "@agnos-ui/style-bootstrap",
 	"description": "Scss and css files needed to style AgnosUI components not styled by Bootstrap",
+	"version": "0.0.0",
 	"keywords": [
-		"style",
 		"bootstrap",
+		"css",
 		"scss",
-		"css"
+		"style"
 	],
 	"scripts": {
 		"build": "wireit"
@@ -34,6 +35,5 @@
 	},
 	"devDependencies": {
 		"sass": "^1.72.0"
-	},
-	"version": "0.0.0"
+	}
 }

@@ -1,5 +1,6 @@
 {
 	"name": "@agnos-ui/demo",
+	"version": "0.0.0",
 	"private": true,
 	"type": "module",
 	"scripts": {
@@ -104,7 +105,7 @@
 		}
 	},
 	"dependencies": {
-		"@agnos-ui/svelte": "*",
+		"@agnos-ui/svelte": "0.0.0",
 		"@amadeus-it-group/tansu": "1.0.0",
 		"@floating-ui/dom": "^1.6.3"
 	},
