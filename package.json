@@ -18,7 +18,10 @@
 		"slider",
 		"widgets"
 	],
-	"repository": "AmadeusITGroup/AgnosUI.git",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/AmadeusITGroup/AgnosUI.git"
+	},
 	"engines": {
 		"npm": "^10.5.0",
 		"node": "^20.11.1"

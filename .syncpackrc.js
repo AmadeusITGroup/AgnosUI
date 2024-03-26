@@ -34,4 +34,5 @@ module.exports = {
 	sortPackages: false,
 	sortAz: ['bin', 'contributors', 'dependencies', 'devDependencies', 'keywords', 'peerDependencies', 'resolutions'],
 	sortExports: [],
+	formatRepository: false,
 };
