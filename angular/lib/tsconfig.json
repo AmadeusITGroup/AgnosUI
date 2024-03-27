@@ -4,6 +4,7 @@
 	"compilerOptions": {
 		"paths": {
 			"@agnos-ui/core/*": ["./core/src/*"],
+			"@agnos-ui/style-bootstrap/*": ["./style-bootstrap/src/*"],
 			"@agnos-ui/angular-headless": ["./angular/headless/src"]
 		}
 	}

@@ -9,6 +9,7 @@
 			"@agnos-ui/angular-headless": ["./angular/headless/src"],
 			"@agnos-ui/angular": ["./angular/lib/src"],
 			"@agnos-ui/common/*": ["./common/*"],
+			"@agnos-ui/style-bootstrap/*": ["./style-bootstrap/src/*"],
 			"bootstrap-icons/icons/*": ["./node_modules/bootstrap-icons/icons/*"]
 		}
 	},

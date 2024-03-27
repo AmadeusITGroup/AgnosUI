@@ -15,3 +15,6 @@ export * from './components/select/select.component';
 export * from './components/progressbar/progressbar.component';
 export * from './components/slider/slider.component';
 export * from './components/toast/toast.component';
+
+export type {WidgetsConfig} from './config';
+export {widgetsConfigInjectionToken, provideWidgetsConfig, injectWidgetConfig, injectWidgetsConfig, callWidgetFactory} from './config';

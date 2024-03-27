@@ -2,15 +2,14 @@
 	import {createProgressbar, type ProgressbarProps as Props} from '@agnos-ui/svelte-headless/components/progressbar';
 	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
 
-	type $$Props = Partial<Pick<Props, 'max' | 'ariaLabel' | 'value' | 'className' | 'ariaValueTextFn'>>;
+	type $$Props = Partial<Omit<Props, 'min'>>;
 
-	const widget = callWidgetFactory({factory: createProgressbar, widgetName: 'progressbar', $$props});
-	export const api = widget.api;
 	const {
 		stores: {value$, max$, className$},
 		directives: {ariaDirective},
-	} = widget;
-	$: widget.patchChangedProps($$props);
+		patchChangedProps,
+	} = callWidgetFactory({factory: createProgressbar, widgetName: 'progressbar', $$props});
+	$: patchChangedProps($$props);
 </script>
 
 <progress use:ariaDirective class="progress {$className$}" value={$value$} max={$max$} />

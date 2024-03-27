@@ -5,5 +5,5 @@
 	export let doc: WidgetDoc;
 </script>
 
-<DocSection title="Props" properties={doc.props} />
+<DocSection title="Props" properties={doc.props} noLastHr={!doc.api.length} />
 <DocSection title="Api" properties={doc.api} noLastHr />

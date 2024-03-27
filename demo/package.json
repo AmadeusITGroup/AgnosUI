@@ -22,6 +22,7 @@
 			"command": "tsx --tsconfig ../scripts/doc/tsconfig.json ../scripts/doc/generate-docs.ts",
 			"files": [
 				"../core/src/**",
+				"../style-bootstrap/src/**",
 				"../scripts/doc/tsconfig.json",
 				"../scripts/doc/generate-docs.ts",
 				"../scripts/doc/api-doc.ts"

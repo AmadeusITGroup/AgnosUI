@@ -1,6 +1,6 @@
 <script lang="ts">
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
-	import type {ProgressbarSlots} from '@agnos-ui/svelte-headless/components/progressbar';
+	import type {ProgressbarSlots} from './progressbar';
 
 	type $$Props = ProgressbarSlots['structure'];
 	type $$Slots = ProgressbarSlots;
@@ -9,11 +9,12 @@
 	export let widget: $$Props['widget'];
 
 	$: slotContext = {widget, state};
+	$: console.log(state);
 </script>
 
 <div class="progress" style:height={state.height}>
 	<div
-		class={`progress-bar ${state.className}`}
+		class={`progress-bar ${state.type ? `text-bg-${state.type}` : ''}`}
 		class:progress-bar-striped={state.striped}
 		class:progress-bar-animated={state.animated}
 		style:width={`${state.percentage}%`}

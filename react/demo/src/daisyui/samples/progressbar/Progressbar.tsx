@@ -3,7 +3,7 @@ import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
 import {useDirective} from '@agnos-ui/react-headless/utils/directive';
 import classNames from 'classnames';
 
-export function Progressbar(props: Partial<Pick<ProgressbarProps, 'max' | 'ariaLabel' | 'value' | 'className' | 'ariaValueTextFn'>>) {
+export function Progressbar(props: Partial<Omit<ProgressbarProps, 'min'>>) {
 	const [state, widget] = useWidgetWithConfig(createProgressbar, props, 'progressbar');
 	return (
 		<progress

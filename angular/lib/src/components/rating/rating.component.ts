@@ -5,7 +5,6 @@ import {
 	UseDirective,
 	auBooleanAttribute,
 	auNumberAttribute,
-	callWidgetFactory,
 	createRating,
 	useDirectiveForHost,
 } from '@agnos-ui/angular-headless';
@@ -25,6 +24,7 @@ import {
 } from '@angular/core';
 import type {ControlValueAccessor} from '@angular/forms';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
+import {callWidgetFactory} from '../../config';
 
 @Directive({selector: 'ng-template[auRatingStar]', standalone: true})
 export class RatingStarDirective {

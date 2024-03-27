@@ -2,7 +2,7 @@
 	import {createProgressbar, type ProgressbarProps as Props} from '@agnos-ui/svelte-headless/components/progressbar';
 	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
 
-	type $$Props = Partial<Pick<Props, 'min' | 'max' | 'ariaLabel' | 'value' | 'className' | 'ariaValueTextFn'>>;
+	type $$Props = Partial<Props>;
 
 	const widget = callWidgetFactory({factory: createProgressbar, widgetName: 'progressbar', $$props});
 	export const api = widget.api;

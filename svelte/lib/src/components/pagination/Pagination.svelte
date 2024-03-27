@@ -3,7 +3,7 @@
 	import {createPagination} from '@agnos-ui/svelte-headless/components/pagination';
 	import {toSlotContextWidget} from '@agnos-ui/svelte-headless/types';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
-	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
+	import {callWidgetFactory} from '../../config';
 	import PaginationDefaultPages from './PaginationDefaultPages.svelte';
 	import PaginationDefaultStructure from './PaginationDefaultStructure.svelte';
 

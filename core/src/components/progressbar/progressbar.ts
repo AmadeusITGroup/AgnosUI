@@ -1,7 +1,7 @@
 import {clamp} from '../../utils/internal/checks';
-import {typeBoolean, typeFunction, typeNumber, typeString} from '../../utils/writables';
+import {typeFunction, typeNumber, typeString} from '../../utils/writables';
 import {stateStores, writablesForProps} from '../../utils/stores';
-import type {ConfigValidator, Directive, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../../types';
+import type {ConfigValidator, Directive, PropsConfig, Widget, WidgetSlotContext} from '../../types';
 import {computed} from '@amadeus-it-group/tansu';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 import {createAttributesDirective} from '../../utils/directive';
@@ -28,27 +28,6 @@ export interface ProgressbarCommonPropsAndState extends WidgetsCommonPropsAndSta
 	 * The aria label.
 	 */
 	ariaLabel: string;
-	/**
-	 * Global template for the Progressbar.
-	 */
-	slotStructure: SlotContent<ProgressbarContext>;
-	/**
-	 * Label of the progress.
-	 */
-	slotDefault: SlotContent<ProgressbarContext>;
-	/**
-	 * Height of the progressbar, can be any valid css height value.
-	 */
-	height: string;
-	/**
-	 * If `true`, shows a striped progressbar.
-	 */
-	striped: boolean;
-	/**
-	 * If `true`, animates a striped progressbar.
-	 * Takes effect only for browsers supporting CSS3 animations, and if `striped` is `true`.
-	 */
-	animated: boolean;
 }
 
 export interface ProgressbarDirectives {
@@ -98,11 +77,6 @@ const defaultConfig: ProgressbarProps = {
 	value: 0,
 	ariaLabel: 'Progressbar',
 	className: '',
-	slotStructure: undefined,
-	slotDefault: undefined,
-	height: '',
-	striped: false,
-	animated: false,
 	ariaValueTextFn: () => undefined,
 };
 
@@ -120,9 +94,6 @@ const configValidator: ConfigValidator<ProgressbarProps> = {
 	value: typeNumber,
 	ariaLabel: typeString,
 	className: typeString,
-	height: typeString,
-	striped: typeBoolean,
-	animated: typeBoolean,
 	ariaValueTextFn: typeFunction,
 };
 

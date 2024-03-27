@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
 	import type {RatingProps as Props, RatingSlots as Slots} from '@agnos-ui/svelte-headless/components/rating';
 	import {createRating} from '@agnos-ui/svelte-headless/components/rating';
-	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
+	import {callWidgetFactory} from '../../config';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import {createClassDirective, ssrAttributes} from '@agnos-ui/svelte-headless/utils/directive';
 </script>

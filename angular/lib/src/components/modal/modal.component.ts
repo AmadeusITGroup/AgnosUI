@@ -7,7 +7,6 @@ import {
 	SlotDirective,
 	UseDirective,
 	auBooleanAttribute,
-	callWidgetFactory,
 	createModal,
 	mergeDirectives,
 } from '@agnos-ui/angular-headless';
@@ -25,6 +24,7 @@ import {
 	ViewChild,
 	inject,
 } from '@angular/core';
+import {callWidgetFactory} from '../../config';
 
 /**
  * Directive to provide the slot structure for the modal widget.

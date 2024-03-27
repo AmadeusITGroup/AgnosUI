@@ -4,7 +4,7 @@ import {fileURLToPath} from 'url';
 
 const directories = [
 	'core/dist',
-	'style-bootstrap',
+	'style-bootstrap/dist',
 	'svelte/headless/dist',
 	'svelte/lib/dist',
 	'react/headless/dist',

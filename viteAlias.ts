@@ -14,5 +14,6 @@ export const alias: Record<string, string> = {
 	'@agnos-ui/svelte': path.join(__dirname, './svelte/lib/src/generated'),
 	'@agnos-ui/angular-headless': path.join(__dirname, './angular/headless/src/public-api'),
 	'@agnos-ui/angular': path.join(__dirname, './angular/lib/src/public-api'),
+	'@agnos-ui/style-bootstrap': path.join(__dirname, './style-bootstrap/src'),
 	'@agnos-ui/common': path.join(__dirname, './common'),
 };
