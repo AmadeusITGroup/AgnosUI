@@ -78,6 +78,21 @@ const allProjects: Record<Project, () => void> = {
 			});
 		});
 	},
+	ssr: () => {
+		(selectedFrameworks.filteredList ?? selectedFrameworks.fullList).forEach((framework) => {
+			(selectedBrowsers.filteredList ?? ['chromium']).forEach((browser) => {
+				playwrightProjects.push({
+					name: `ssr:${framework}:${browser}`,
+					testMatch: '**/*.ssr-e2e-spec.ts',
+					use: {
+						...allBrowsers[browser],
+						framework,
+						project: 'ssr',
+					},
+				});
+			});
+		});
+	},
 };
 
 const selectedProjects = processEnvList('PROJECT', allProjects);

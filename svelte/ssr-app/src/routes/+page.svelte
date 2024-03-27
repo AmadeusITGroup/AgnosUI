@@ -8,6 +8,11 @@
 	import {Select} from '@agnos-ui/svelte/components/select';
 	import {Slider} from '@agnos-ui/svelte/components/slider';
 	import {Toast} from '@agnos-ui/svelte/components/toast';
+	import {onMount} from 'svelte';
+
+	onMount(() => {
+		console.log('AGNOSUI-SSR-HYDRATION-COMPLETE');
+	});
 </script>
 
 <div class="container">
@@ -55,7 +60,7 @@
 	</div>
 	<h2>Slider</h2>
 	<div class="my-3">
-		<Slider />
+		<Slider values={[50]} />
 	</div>
 	<h2>Toast</h2>
 	<div class="my-3">

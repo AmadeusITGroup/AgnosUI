@@ -45,7 +45,7 @@ export const App = () => (
 		</div>
 		<h2>Slider</h2>
 		<div className="my-3">
-			<Slider />
+			<Slider values={[50]} />
 		</div>
 		<h2>Toast</h2>
 		<div className="my-3">
