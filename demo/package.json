@@ -5,6 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "wireit",
+		"dev:coverage": "wireit dev",
 		"build": "wireit",
 		"generate:doc": "wireit",
 		"build:coverage": "wireit",
