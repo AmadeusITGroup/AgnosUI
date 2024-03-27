@@ -1,0 +1,79 @@
+{
+	"name": "@agnos-ui/react-ssr-app",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "wireit",
+		"build": "wireit",
+		"preview": "wireit",
+		"check": "wireit"
+	},
+	"dependencies": {
+		"@agnos-ui/react": "0.0.0",
+		"express": "^4.18.2",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"sirv": "^2.0.4"
+	},
+	"devDependencies": {
+		"@types/react": "^18.2.70",
+		"@types/react-dom": "^18.2.22",
+		"@vitejs/plugin-react": "^4.2.1",
+		"vite": "^5.2.6"
+	},
+	"wireit": {
+		"check": {
+			"command": "tsc -p tsconfig.check.json",
+			"files": [
+				"src/**",
+				"tsconfig.check.json",
+				"../tsconfig.json",
+				"../../tsconfig.json"
+			],
+			"output": [],
+			"dependencies": [
+				"../lib:build"
+			]
+		},
+		"dev": {
+			"command": "node server.js",
+			"env": {
+				"NODE_ENV": "development"
+			},
+			"dependencies": [
+				"../lib:generate:exports",
+				"../headless:generate:exports"
+			],
+			"service": true
+		},
+		"build": {
+			"command": "vite build --ssrManifest --outDir dist/client && vite build --ssr src/entry-server.tsx --outDir dist/server",
+			"dependencies": [
+				"../lib:build",
+				"../../style-bootstrap:build"
+			],
+			"files": [
+				"src/**",
+				"index.html",
+				"vite.config.ts",
+				"tsconfig.check.json",
+				"../tsconfig.json",
+				"../../tsconfig.json"
+			],
+			"output": [
+				"dist/**"
+			]
+		},
+		"preview": {
+			"command": "node server.js",
+			"env": {
+				"NODE_ENV": "production"
+			},
+			"dependencies": [
+				"build"
+			],
+			"service": true
+		}
+	}
+}

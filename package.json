@@ -101,6 +101,7 @@
 				"./page-objects:build",
 				"./demo/stackblitz:build",
 				"./angular/ssr-app:build",
+				"./react/ssr-app:build",
 				"./svelte/ssr-app:build"
 			]
 		},
@@ -135,9 +136,11 @@
 				"./core:check",
 				"./eslint-plugin:check",
 				"./react/demo:check",
+				"./react/ssr-app:check",
 				"./svelte/headless:check",
 				"./svelte/lib:check",
 				"./svelte/demo:check",
+				"./svelte/ssr-app:check",
 				"./angular/lib:check",
 				"./demo:check"
 			]
@@ -161,6 +164,7 @@
 		"react/headless",
 		"react/lib",
 		"react/demo",
+		"react/ssr-app",
 		"svelte/headless",
 		"svelte/lib",
 		"svelte/demo",
