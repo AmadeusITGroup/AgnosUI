@@ -1,0 +1,38 @@
+{
+	"extends": ["../.eslintrc.json", "plugin:jsdoc/recommended-typescript-error"],
+	"rules": {
+		"jsdoc/tag-lines": "off",
+		"jsdoc/check-tag-names": [
+			"error",
+			{
+				"definedTags": ["remarks", "defaultValue"]
+			}
+		],
+		"jsdoc/require-jsdoc": [
+			"error",
+			{
+				"publicOnly": true,
+				"contexts": [
+					"TSInterfaceDeclaration > TSInterfaceBody > TSPropertySignature",
+					"TSInterfaceDeclaration > TSInterfaceBody > TSMethodSignature",
+					"TSTypeAliasDeclaration > TSTypeLiteral > TSPropertySignature",
+					"TSTypeAliasDeclaration > TSTypeLiteral > TSMethodSignature"
+				],
+				"require": {
+					"FunctionExpression": true,
+					"ArrowFunctionExpression": true,
+					"FunctionDeclaration": true,
+					"MethodDefinition": true
+				}
+			}
+		]
+	},
+	"overrides": [
+		{
+			"files": ["src/**"],
+			"rules": {
+				"@agnos-ui/check-replace-imports": ["error", "@agnos-ui/core"]
+			}
+		}
+	]
+}

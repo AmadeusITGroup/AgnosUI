@@ -89,7 +89,13 @@ function isPrivate(member: Declaration) {
 
 const defaultConfigFnregExp = /^get([a-zA-Z]*)DefaultConfig$/;
 export function parseDocs(indexFile: string) {
-	const program = ts.createProgram([indexFile], {});
+	const program = ts.createProgram([indexFile], {
+		baseUrl: path.join(import.meta.dirname, '../..'),
+		paths: {
+			'@agnos-ui/core': ['./core/src'],
+			'@agnos-ui/core/*': ['./core/src/*'],
+		},
+	});
 	const typeChecker = program.getTypeChecker();
 	const sourceFile = program.getSourceFile(indexFile)!;
 	const sourceFileSymbol = typeChecker.getSymbolAtLocation(sourceFile)!;
@@ -140,11 +146,16 @@ export function parseDocs(indexFile: string) {
 
 	function visitExportedItem(exportedItem: TSSymbol): DeclarationDoc {
 		const node = exportedItem.getDeclarations()![0];
-
 		if (ts.isInterfaceDeclaration(node)) {
 			return visitInterfaceDeclaration(node, exportedItem);
 		} else if (ts.isTypeAliasDeclaration(node)) {
 			return visitTypeAliasDeclaration(node, exportedItem);
+		} else if (ts.isExportSpecifier(node) && node.parent.parent.moduleSpecifier) {
+			const exportedNode = typeChecker.getExportSpecifierLocalTargetSymbol(node)!.getDeclarations()![0];
+			if (ts.isInterfaceDeclaration(exportedNode)) {
+				return visitInterfaceDeclaration(exportedNode, exportedItem);
+			}
+			return visitObjectDeclaration(node, exportedItem);
 		} else {
 			// TODO: class declaration ...
 			return visitObjectDeclaration(node, exportedItem);
@@ -202,12 +213,14 @@ export function parseDocs(indexFile: string) {
 					if (ts.isSpreadAssignment(spreadAssignment)) {
 						const spreadExpression = spreadAssignment.expression;
 						if (ts.isCallExpression(spreadExpression)) {
-							const symbol = typeChecker.getSymbolAtLocation(spreadExpression.expression);
+							let symbol = typeChecker.getSymbolAtLocation(spreadExpression.expression);
+							if (symbol && symbol.flags & ts.SymbolFlags.Alias) {
+								symbol = typeChecker.getAliasedSymbol(symbol);
+							}
 							const declaration = symbol!.getDeclarations()![0];
 							if (ts.isImportSpecifier(declaration)) {
-								const functionName = declaration.name.getText();
-								const functionSymbol = exportsList.find((exportItem) => exportItem.name === functionName);
-								const functionDeclaration = functionSymbol!.getDeclarations()![0];
+								const exportedNode = typeChecker.getExportSpecifierLocalTargetSymbol(declaration.propertyName ?? declaration.name);
+								const functionDeclaration = exportedNode!.getDeclarations()![0];
 								if (ts.isFunctionDeclaration(functionDeclaration)) {
 									for (const [key, val] of Object.entries(visitConfigFunctionDeclaration(functionDeclaration)!)) {
 										docProperties[key] = val;

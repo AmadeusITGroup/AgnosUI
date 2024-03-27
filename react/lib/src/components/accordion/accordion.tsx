@@ -10,7 +10,7 @@ import type {
 import {Slot} from '@agnos-ui/react-headless/slot';
 import type {ForwardRefExoticComponent, ForwardedRef, PropsWithChildren, RefAttributes} from 'react';
 import {createContext, forwardRef, useContext, useEffect, useImperativeHandle} from 'react';
-import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
+import {useWidgetWithConfig} from '../../config';
 import {useDirective} from '@agnos-ui/react-headless/utils/directive';
 import type {Directive, WidgetFactory} from '@agnos-ui/react-headless/types';
 

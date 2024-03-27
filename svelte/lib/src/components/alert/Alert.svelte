@@ -2,7 +2,7 @@
 	import type {AlertProps as Props, AlertSlots as Slots} from '@agnos-ui/svelte-headless/components/alert';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import {createAlert} from '@agnos-ui/svelte-headless/components/alert';
-	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
+	import {callWidgetFactory} from '../../config';
 	import AlertDefaultStructure from './AlertDefaultStructure.svelte';
 
 	const defaultConfig: Partial<Props> = {

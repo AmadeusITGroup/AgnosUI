@@ -2,7 +2,7 @@
 	import type {SliderProps as Props, SliderSlots as Slots} from '@agnos-ui/svelte-headless/components/slider';
 	import {createSlider} from '@agnos-ui/svelte-headless/components/slider';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
-	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
+	import {callWidgetFactory} from '../../config';
 	import SliderDefaultStructure from './SliderDefaultStructure.svelte';
 	import SliderDefaultHandle from './SliderDefaultHandle.svelte';
 

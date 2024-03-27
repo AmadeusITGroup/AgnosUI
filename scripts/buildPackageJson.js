@@ -46,6 +46,9 @@ const cleanObjDistPrefix = (obj, ...keys) => {
 		if (obj[key]?.startsWith('./dist/')) {
 			obj[key] = '.' + obj[key].substring(6);
 		}
+		if (obj[key]?.startsWith('./src/')) {
+			obj[key] = '.' + obj[key].substring(5);
+		}
 	}
 };
 cleanObjDistPrefix(pkg, 'main');

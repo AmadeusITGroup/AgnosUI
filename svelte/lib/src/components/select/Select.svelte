@@ -2,7 +2,7 @@
 	import type {SelectProps as Props, SelectWidget, SelectSlots as Slots} from '@agnos-ui/svelte-headless/components/select';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import {createSelect} from '@agnos-ui/svelte-headless/components/select';
-	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
+	import {callWidgetFactory} from '../../config';
 </script>
 
 <script lang="ts">

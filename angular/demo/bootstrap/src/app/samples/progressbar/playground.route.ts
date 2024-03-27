@@ -1,5 +1,5 @@
 import {ProgressbarComponent} from '@agnos-ui/angular';
-import {getProgressbarDefaultConfig} from '@agnos-ui/core';
+import {getProgressbarDefaultConfig} from '@agnos-ui/style-bootstrap/components/progressbar';
 import {Component, ViewChild} from '@angular/core';
 import {getUndefinedValues, hashChangeHook, provideHashConfig} from '../../utils';
 

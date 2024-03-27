@@ -1,6 +1,6 @@
 import type {ToastApi, ToastContext, ToastProps} from '@agnos-ui/react-headless/components/toast';
 import {createToast} from '@agnos-ui/react-headless/components/toast';
-import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
+import {useWidgetWithConfig} from '../../config';
 import {Slot} from '@agnos-ui/react-headless/slot';
 import {useDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
 import type {ForwardRefExoticComponent, PropsWithChildren, RefAttributes} from 'react';

@@ -3,7 +3,7 @@ import {createModal} from '@agnos-ui/react-headless/components/modal';
 import {Portal} from '@agnos-ui/react-headless/utils/portal';
 import {toSlotContextWidget} from '@agnos-ui/react-headless/types';
 import {Slot} from '@agnos-ui/react-headless/slot';
-import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
+import {useWidgetWithConfig} from '../../config';
 import {useDirective} from '@agnos-ui/react-headless/utils/directive';
 import type {PropsWithChildren, Ref, RefAttributes} from 'react';
 import ReactDOM from 'react-dom/client';

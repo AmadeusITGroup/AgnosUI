@@ -10,7 +10,7 @@ const SimpleCustomDemo = () => (
 		</div>
 		<div>
 			A striped animated progress bar:
-			<Progressbar value={63} className="text-bg-info" striped animated />
+			<Progressbar value={63} type="info" striped animated />
 		</div>
 		<div>
 			Changing the height:

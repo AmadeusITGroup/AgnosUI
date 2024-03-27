@@ -11,4 +11,4 @@ export type AccordionItemWidget = AdaptWidgetSlots<import('@agnos-ui/core/compon
 export type AccordionItemProps = WidgetProps<AccordionItemWidget>;
 export type AccordionItemState = WidgetState<AccordionItemWidget>;
 export type AccordionItemContext = AdaptSlotContentProps<import('@agnos-ui/core/components/accordion').AccordionItemContext>;
-export const createAccordion: WidgetFactory<AccordionWidget> = coreCreateAccordion as any;
+export const createAccordion: WidgetFactory<AccordionWidget> = coreCreateAccordion as WidgetFactory<AccordionWidget>;

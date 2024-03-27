@@ -1,4 +1,3 @@
-import type {ProgressbarContext, ProgressbarProps, ProgressbarWidget, SlotContent} from '@agnos-ui/angular-headless';
 import {
 	BaseWidgetDirective,
 	ComponentTemplate,
@@ -6,14 +5,21 @@ import {
 	SlotDirective,
 	auBooleanAttribute,
 	auNumberAttribute,
-	callWidgetFactory,
-	createProgressbar,
 	useDirectiveForHost,
 } from '@agnos-ui/angular-headless';
+import type {AdaptWidgetSlots, WidgetProps, AdaptSlotContentProps, WidgetFactory, SlotContent} from '@agnos-ui/angular-headless';
 import {type WritableSignal, writable} from '@amadeus-it-group/tansu';
 import {NgClass} from '@angular/common';
 import type {AfterContentChecked} from '@angular/core';
 import {ChangeDetectionStrategy, Component, ContentChild, Directive, Input, TemplateRef, ViewChild, inject} from '@angular/core';
+
+import {createProgressbar as coreCreateProgressbar} from '@agnos-ui/style-bootstrap/components/progressbar';
+import {callWidgetFactory} from '../../config';
+
+type ProgressbarWidget = AdaptWidgetSlots<import('@agnos-ui/style-bootstrap/components/progressbar').ProgressbarWidget>;
+type ProgressbarProps = WidgetProps<ProgressbarWidget>;
+type ProgressbarContext = AdaptSlotContentProps<import('@agnos-ui/style-bootstrap/components/progressbar').ProgressbarContext>;
+const createProgressbar: WidgetFactory<ProgressbarWidget> = coreCreateProgressbar as WidgetFactory<ProgressbarWidget>;
 
 @Directive({selector: 'ng-template[auProgressbarStructure]', standalone: true})
 export class ProgressbarStructureDirective {
@@ -34,7 +40,7 @@ export class ProgressbarStructureDirective {
 					class="progress-bar"
 					[class.progress-bar-striped]="state.striped"
 					[class.progress-bar-animated]="state.animated"
-					[ngClass]="state.className"
+					[ngClass]="state.type ? 'text-bg-' + state.type : undefined"
 					[style.width.%]="state.percentage"
 				>
 					<ng-template [auSlot]="state.slotDefault" [auSlotProps]="{state, widget}"></ng-template>
@@ -59,6 +65,9 @@ const defaultConfig: PartialProgressbarProps = {
 	standalone: true,
 	imports: [SlotDirective, SlotDefaultDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	host: {
+		'[class]': 'state().className',
+	},
 	template: `
 		<ng-template [auSlotDefault]="defaultSlots"><ng-content></ng-content></ng-template>
 		<ng-template [auSlot]="state().slotStructure" [auSlotProps]="{state: state(), widget}"></ng-template>
@@ -117,6 +126,11 @@ export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget>
 	 * Return the value for the 'aria-valuetext' attribute.
 	 */
 	@Input('auAriaValueTextFn') ariaValueTextFn: ((value: number, minimum: number, maximum: number) => string | undefined) | undefined;
+
+	/**
+	 * Type of the progressbar, following bootstrap types.
+	 */
+	@Input('auType') type: 'success' | 'info' | 'warning' | 'danger' | 'primary' | 'secondary' | 'light' | 'dark' | undefined;
 
 	readonly _widget = callWidgetFactory({
 		factory: createProgressbar,

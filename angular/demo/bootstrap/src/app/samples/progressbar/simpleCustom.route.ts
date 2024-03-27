@@ -12,7 +12,7 @@ import {Component} from '@angular/core';
 			</div>
 			<div>
 				A striped animated progress bar:
-				<div auProgressbar auClassName="text-bg-info" auValue="63" auStriped auAnimated></div>
+				<div auProgressbar auType="info" auValue="63" auStriped auAnimated></div>
 			</div>
 			<div>
 				Changing the height:

@@ -37,13 +37,13 @@ export const selectedFramework$ = computed(() => {
 	return <Frameworks>(get(page).params.framework ?? 'angular');
 });
 
-const tabRegExp = /^\/docs\/\[framework\]\/components\/[^/]*\/([^/]*)/;
+const tabRegExp = /^\/docs\/\[framework\]\/(components|daisyUI)\/[^/]*\/([^/]*)/;
 /**
  * Current selected tab
  */
 export const selectedTabName$ = computed(() => {
 	const match = tabRegExp.exec(get(page).route.id || '');
-	return match?.[1] || 'headless';
+	return match?.[2];
 });
 
 const frameworkKeyRegExp = /\/docs\/[a-z]*\/(.*)$/;

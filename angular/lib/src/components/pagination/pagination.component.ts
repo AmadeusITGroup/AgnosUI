@@ -5,7 +5,6 @@ import {
 	SlotDirective,
 	auBooleanAttribute,
 	auNumberAttribute,
-	callWidgetFactory,
 	createPagination,
 } from '@agnos-ui/angular-headless';
 import type {AfterContentChecked} from '@angular/core';
@@ -22,6 +21,7 @@ import {
 	ViewEncapsulation,
 	inject,
 } from '@angular/core';
+import {callWidgetFactory} from '../../config';
 
 /**
  * A directive to use to give the 'ellipsis' link template to the pagination component
