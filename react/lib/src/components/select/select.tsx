@@ -1,6 +1,6 @@
 import type {ItemContext, SelectContext, SelectItemContext, SelectProps, SelectWidget} from '@agnos-ui/react-headless/components/select';
 import {createSelect} from '@agnos-ui/react-headless/components/select';
-import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
+import {useWidgetWithConfig} from '../../config';
 import {Slot} from '@agnos-ui/react-headless/slot';
 import {toSlotContextWidget} from '@agnos-ui/react-headless/types';
 import {useDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';

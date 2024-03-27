@@ -3,7 +3,7 @@
 	import {toSlotContextWidget} from '@agnos-ui/svelte-headless/types';
 	import {createModal} from '@agnos-ui/svelte-headless/components/modal';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
-	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
+	import {callWidgetFactory} from '../../config';
 	import ModalDefaultHeader from './ModalDefaultHeader.svelte';
 	import ModalDefaultStructure from './ModalDefaultStructure.svelte';
 

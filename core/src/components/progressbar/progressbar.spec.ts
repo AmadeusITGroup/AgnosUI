@@ -17,18 +17,14 @@ describe(`Progressbar`, () => {
 
 	test(`should create progressbar with a default state`, () => {
 		expect(state).toEqual({
-			animated: false,
 			ariaLabel: 'Progressbar',
 			className: '',
 			finished: false,
-			height: '',
 			max: 100,
 			min: 0,
 			percentage: 0,
-			slotContent: undefined,
-			slotDefault: undefined,
+			slotStructure: undefined,
 			started: false,
-			striped: false,
 			value: 0,
 			ariaValueText: undefined,
 		});

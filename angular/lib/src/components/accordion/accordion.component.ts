@@ -13,7 +13,6 @@ import {
 	SlotDirective,
 	UseDirective,
 	auBooleanAttribute,
-	callWidgetFactory,
 	createAccordion,
 	useDirectiveForHost,
 } from '@agnos-ui/angular-headless';
@@ -31,6 +30,7 @@ import {
 	ViewChild,
 	inject,
 } from '@angular/core';
+import {callWidgetFactory} from '../../config';
 
 @Directive({selector: 'ng-template[auAccordionItemBody]', standalone: true})
 export class AccordionBodyDirective {

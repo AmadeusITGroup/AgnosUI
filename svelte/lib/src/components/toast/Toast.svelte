@@ -2,7 +2,7 @@
 	import type {ToastProps as Props, ToastSlots as Slots} from '@agnos-ui/svelte-headless/components/toast';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import {createToast} from '@agnos-ui/svelte-headless/components/toast';
-	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
+	import {callWidgetFactory} from '../../config';
 	import ToastDefaultStructure from './ToastDefaultStructure.svelte';
 
 	const defaultConfig: Partial<Props> = {
