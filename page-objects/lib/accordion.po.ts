@@ -3,18 +3,18 @@ import {BasePO} from '@agnos-ui/base-po';
 
 export class AccordionPO extends BasePO {
 	private readonly selectors = {
-		item: '.accordion-item',
-		collapse: '.accordion-collapse',
-		body: '.accordion-body',
-		header: '.accordion-header',
-		buttons: '.accordion-button',
+		item: '.au-accordion-item',
+		bodyContainer: '.au-accordion-item-body-container',
+		body: '.au-accordion-item-body',
+		header: '.au-accordion-item-header',
+		buttons: '.au-accordion-item-button',
 	};
 	override getComponentSelector(): string {
-		return '.accordion';
+		return '.au-accordion';
 	}
 
 	/**
-	 * Gets the locators of the items containing the header and the collapse inside
+	 * Gets the locators of the items containing the header and the body-container inside
 	 * the accordion
 	 */
 	get locatorAccordionItems(): Locator {
@@ -22,30 +22,30 @@ export class AccordionPO extends BasePO {
 	}
 
 	/**
-	 * Gets the locators of the item specified by the itemIndex containing the header and the collapse inside
+	 * Gets the locators of the item specified by the itemIndex containing the header and the body-container inside
 	 * the accordion
 	 */
 	locatorAccordionItem(itemIndex: number): Locator {
 		return this.locatorRoot.locator(this.selectors.item).nth(itemIndex);
 	}
 
-	get locatorAccordionCollapses(): Locator {
-		return this.locatorAccordionItems.locator(this.selectors.collapse);
+	get locatorAccordionCBodyContainers(): Locator {
+		return this.locatorAccordionItems.locator(this.selectors.bodyContainer);
 	}
 
-	locatorAccordionCollapse(collapseIndex: number): Locator {
-		return this.locatorAccordionItem(collapseIndex).locator(this.selectors.collapse);
+	locatorAccordionBodyContainer(bodyContainerIndex: number): Locator {
+		return this.locatorAccordionItem(bodyContainerIndex).locator(this.selectors.bodyContainer);
 	}
 
 	/**
 	 * Gets the locator of the bodies of the accordion.
 	 */
 	get locatorAccordionBodies(): Locator {
-		return this.locatorAccordionCollapses.locator(this.selectors.body);
+		return this.locatorAccordionCBodyContainers.locator(this.selectors.body);
 	}
 
 	locatorAccordionBody(bodyIndex: number): Locator {
-		return this.locatorAccordionCollapse(bodyIndex).locator(this.selectors.body);
+		return this.locatorAccordionBodyContainer(bodyIndex).locator(this.selectors.body);
 	}
 
 	get locatorAccordionHeaders(): Locator {
@@ -70,20 +70,20 @@ export class AccordionPO extends BasePO {
 
 	async state() {
 		return await this.locatorRoot.evaluate((rootNode: HTMLElement) => {
-			const itemsElements = [...rootNode.querySelectorAll('.accordion-item')] as HTMLDivElement[];
+			const itemsElements = [...rootNode.querySelectorAll('.au-accordion-item')] as HTMLDivElement[];
 			const items = [];
 			for (const item of itemsElements) {
-				const collapse = item.querySelector('.accordion-collapse');
-				const button = item.querySelector('.accordion-button');
+				const bodyContainer = item.querySelector('.au-accordion-item-body-container');
+				const button = item.querySelector('.au-accordion-item-button');
 				items.push({
 					classes: item.className.trim().split(' '),
 					id: item.id,
-					isInDOM: collapse !== null ? true : false,
-					collapseId: collapse?.id,
+					isInDOM: bodyContainer !== null ? true : false,
+					bodyContainerId: bodyContainer?.id,
 					buttonId: button?.id,
 					expanded: button?.getAttribute('aria-expanded'),
 					disabled: button?.getAttribute('aria-disabled'),
-					labeledBy: collapse?.getAttribute('aria-labelledby'),
+					labeledBy: bodyContainer?.getAttribute('aria-labelledby'),
 					buttonControls: button?.getAttribute('aria-controls'),
 				});
 			}
