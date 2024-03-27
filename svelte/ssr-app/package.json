@@ -55,7 +55,8 @@
 		"dev": {
 			"command": "vite dev",
 			"dependencies": [
-				"deps"
+				"../lib:generate:exports",
+				"../headless:generate:exports"
 			],
 			"service": true
 		},
