@@ -1,16 +1,17 @@
-import {AgnosUIAngularModule} from '@agnos-ui/angular';
+import {AgnosUIAngularModule, UseDirective} from '@agnos-ui/angular';
 import {Component} from '@angular/core';
 import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 
 @Component({
 	standalone: true,
-	imports: [AgnosUIAngularModule],
+	imports: [AgnosUIAngularModule, UseDirective],
 	template: `
 		<div auAccordion #accordion="auAccordion">
 			<div auAccordionItem>
 				<ng-template auAccordionItemStructure let-state="state" let-widget="widget">
 					<div
-						class="{{ state.itemHeaderClass }} accordion-button accordion-header custom-header justify-content-between"
+						[auUse]="widget.directives.headerDirective"
+						class="accordion-button accordion-header custom-header justify-content-between"
 						[class.collapsed]="!state.itemVisible"
 						role="heading"
 						aria-level="2"
@@ -18,26 +19,15 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 						<p class="m-0">First panel - {{ state.itemVisible ? 'opened' : 'collapsed' }}</p>
 						<button
 							type="button"
-							id="{{ state.itemId }}-toggle"
-							(click)="widget.actions.click()"
-							class="btn btn-link p-0 {{ state.itemButtonClass }}"
-							[class.collapsed]="!state.itemVisible"
-							[disabled]="state.itemDisabled"
-							attr.aria-controls="{{ state.itemId }}-collapse"
-							[attr.aria-disabled]="state.itemDisabled"
-							[attr.aria-expanded]="state.itemVisible"
+							class="btn btn-link p-0 {{ state.itemButtonClass }} au-accordion-item-button"
+							[auUse]="widget.directives.toggleDirective"
 						>
 							Toggle first
 						</button>
 					</div>
 					@if (state!.shouldBeInDOM) {
-						<div
-							[auUse]="widget!.directives.collapseDirective"
-							attr.aria-labelledby="{{ state!.itemId }}-toggle"
-							id="{{ state!.itemId }}-collapse"
-							class="accordion-collapse {{ state!.itemBodyContainerClass }}"
-						>
-							<div class="accordion-body {{ state!.itemBodyClass }}">
+						<div [auUse]="widget.directives.bodyContainerDirective" class="accordion-collapse">
+							<div class="accordion-body" [auUse]="widget.directives.bodyDirective">
 								{{ BODY }}
 							</div>
 						</div>
@@ -47,23 +37,18 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 			<div auAccordionItem>
 				<ng-template auAccordionItemStructure let-state="state" let-widget="widget">
 					<div
-						class="{{ state.itemHeaderClass }} accordion-button accordion-header custom-header justify-content-between"
+						class="accordion-button accordion-header custom-header justify-content-between"
 						[class.collapsed]="!state.itemVisible"
+						[auUse]="widget.directives.headerDirective"
 						role="heading"
 						aria-level="2"
 					>
 						<p class="m-0">Second panel</p>
 						<div class="d-flex flex-wrap gap-2">
 							<button
+								[auUse]="widget.directives.toggleDirective"
 								type="button"
-								class="btn btn-sm btn-outline-primary {{ state.itemButtonClass }}"
-								[class.collapsed]="!state.itemVisible"
-								id="{{ state.itemId }}-toggle"
-								(click)="widget.actions.click()"
-								[disabled]="state.itemDisabled"
-								[attr.aria-disabled]="state.itemDisabled"
-								[attr.aria-expanded]="state.itemVisible"
-								attr.aria-controls="{{ state.itemId }}-collapse"
+								class="btn btn-sm btn-outline-primary {{ state.itemButtonClass }} au-accordion-item-button"
 							>
 								Toggle second
 							</button>
@@ -74,13 +59,8 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 						</div>
 					</div>
 					@if (state!.shouldBeInDOM) {
-						<div
-							[auUse]="widget!.directives.collapseDirective"
-							attr.aria-labelledby="{{ state!.itemId }}-toggle"
-							id="{{ state!.itemId }}-collapse"
-							class="accordion-collapse {{ state!.itemBodyContainerClass }}"
-						>
-							<div class="accordion-body {{ state!.itemBodyClass }}">
+						<div [auUse]="widget.directives.bodyContainerDirective" class="accordion-collapse">
+							<div [auUse]="widget.directives.bodyDirective" class="accordion-body">
 								{{ BODY }}
 							</div>
 						</div>
@@ -90,21 +70,16 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 			<div auAccordionItem [auItemDisabled]="thirdDisabled">
 				<ng-template auAccordionItemStructure let-state="state" let-widget="widget">
 					<div
-						class="{{ state.itemHeaderClass }} accordion-button accordion-header custom-header justify-content-between"
+						[auUse]="widget.directives.headerDirective"
+						class="accordion-button accordion-header custom-header justify-content-between"
 						[class.collapsed]="!state.itemVisible"
 						role="heading"
 						aria-level="2"
 					>
 						<button
 							type="button"
-							class="p-0 btn btn-link container-fluid text-start {{ state.itemButtonClass }}"
-							[class.collapsed]="!state.itemVisible"
-							id="{{ state.itemId }}-toggle"
-							(click)="widget.actions.click()"
-							[disabled]="state.itemDisabled"
-							[attr.aria-disabled]="state.itemDisabled"
-							attr.aria-controls="{{ state.itemId }}-collapse"
-							[attr.aria-expanded]="state.itemVisible"
+							class="p-0 btn btn-link container-fluid text-start au-accordion-item-button {{ state.itemButtonClass }}"
+							[auUse]="widget.directives.toggleDirective"
 						>
 							Third panel
 						</button>
@@ -113,13 +88,8 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 						}
 					</div>
 					@if (state!.shouldBeInDOM) {
-						<div
-							[auUse]="widget!.directives.collapseDirective"
-							attr.aria-labelledby="{{ state!.itemId }}-toggle"
-							id="{{ state!.itemId }}-collapse"
-							class="accordion-collapse {{ state!.itemBodyContainerClass }}"
-						>
-							<div class="accordion-body {{ state!.itemBodyClass }}">
+						<div [auUse]="widget.directives.bodyContainerDirective" class="accordion-collapse">
+							<div class="accordion-body" [auUse]="widget.directives.bodyDirective">
 								{{ BODY }}
 							</div>
 						</div>
