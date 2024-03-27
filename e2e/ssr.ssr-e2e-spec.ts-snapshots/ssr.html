@@ -1,0 +1,490 @@
+<div
+ id="root"
+>
+	<div
+	 class="container"
+	>
+		<h1>
+			"SSR Test"
+		</h1>
+		<h2>
+			"Accordion"
+		</h2>
+		<div
+		 class="my-3"
+		>
+			<div
+			 class="accordion au-accordion"
+			>
+				<div
+				 class="accordion-item"
+				 id="rewritten-id-1"
+				>
+					<h2
+					 class="accordion-header"
+					>
+						<button
+						 aria-controls="rewritten-id-2"
+						 aria-disabled="false"
+						 aria-expanded="true"
+						 class="accordion-button"
+						 id="rewritten-id-3"
+						 type="button"
+						>
+							"First"
+						</button>
+					</h2>
+					<div
+					 aria-labelledby="rewritten-id-3"
+					 class="accordion-collapse collapse show"
+					 id="rewritten-id-2"
+					>
+						<div
+						 class="accordion-body"
+						>
+							"Content 1"
+						</div>
+					</div>
+				</div>
+				<div
+				 class="accordion-item"
+				 id="rewritten-id-4"
+				>
+					<h2
+					 class="accordion-header"
+					>
+						<button
+						 aria-controls="rewritten-id-5"
+						 aria-disabled="false"
+						 aria-expanded="false"
+						 class="accordion-button collapsed"
+						 id="rewritten-id-6"
+						 type="button"
+						>
+							"Second"
+						</button>
+					</h2>
+				</div>
+				<div
+				 class="accordion-item"
+				 id="rewritten-id-7"
+				>
+					<h2
+					 class="accordion-header"
+					>
+						<button
+						 aria-controls="rewritten-id-8"
+						 aria-disabled="true"
+						 aria-expanded="false"
+						 class="accordion-button collapsed"
+						 disabled=""
+						 id="rewritten-id-9"
+						 type="button"
+						>
+							"Disabled"
+						</button>
+					</h2>
+				</div>
+			</div>
+		</div>
+		<h2>
+			"Alert"
+		</h2>
+		<div
+		 class="my-3"
+		>
+			<div
+			 class="alert alert-dismissible alert-primary au-alert fade show"
+			 role="alert"
+			>
+				<div
+				 class="alert-body"
+				>
+					"This is an alert!"
+				</div>
+				<button
+				 aria-label="Close"
+				 class="btn-close"
+				 type="button"
+				/>
+			</div>
+		</div>
+		<h2>
+			"Modal"
+		</h2>
+		<div />
+		<h2>
+			"Pagination"
+		</h2>
+		<div
+		 class="my-3"
+		>
+			<nav
+			 aria-label="Page navigation"
+			>
+				<ul
+				 class="au-pagination pagination"
+				>
+					<li
+					 class="disabled page-item"
+					>
+						<a
+						 aria-disabled="true"
+						 aria-label="Action link for previous page"
+						 class="au-previous page-link"
+						 href="#"
+						 tabindex="-1"
+						>
+							<span
+							 aria-hidden="true"
+							>
+								"‹"
+							</span>
+						</a>
+					</li>
+					<li
+					 aria-current="page"
+					 class="active page-item"
+					>
+						<a
+						 aria-label="Page 1 of 6"
+						 class="au-page page-link"
+						 href="#"
+						>
+							"1"
+							<span
+							 class="visually-hidden"
+							>
+								"(current)"
+							</span>
+						</a>
+					</li>
+					<li
+					 class="page-item"
+					>
+						<a
+						 aria-label="Page 2 of 6"
+						 class="au-page page-link"
+						 href="#"
+						>
+							"2"
+						</a>
+					</li>
+					<li
+					 class="page-item"
+					>
+						<a
+						 aria-label="Page 3 of 6"
+						 class="au-page page-link"
+						 href="#"
+						>
+							"3"
+						</a>
+					</li>
+					<li
+					 class="page-item"
+					>
+						<a
+						 aria-label="Page 4 of 6"
+						 class="au-page page-link"
+						 href="#"
+						>
+							"4"
+						</a>
+					</li>
+					<li
+					 class="page-item"
+					>
+						<a
+						 aria-label="Page 5 of 6"
+						 class="au-page page-link"
+						 href="#"
+						>
+							"5"
+						</a>
+					</li>
+					<li
+					 class="page-item"
+					>
+						<a
+						 aria-label="Page 6 of 6"
+						 class="au-page page-link"
+						 href="#"
+						>
+							"6"
+						</a>
+					</li>
+					<li
+					 class="page-item"
+					>
+						<a
+						 aria-label="Action link for next page"
+						 class="au-next page-link"
+						 href="#"
+						>
+							<span
+							 aria-hidden="true"
+							>
+								"›"
+							</span>
+						</a>
+					</li>
+				</ul>
+				<div
+				 aria-live="polite"
+				 class="visually-hidden"
+				>
+					"Current page is 1"
+				</div>
+			</nav>
+		</div>
+		<h2>
+			"Progressbar"
+		</h2>
+		<div
+		 class="my-3"
+		>
+			<div
+			 aria-label="Progressbar"
+			 aria-valuemax="100"
+			 aria-valuemin="0"
+			 aria-valuenow="20"
+			 role="progressbar"
+			>
+				<div
+				 class="progress"
+				>
+					<div
+					 class="progress-bar"
+					 style="width: 20%;"
+					/>
+				</div>
+			</div>
+		</div>
+		<h2>
+			"Rating"
+		</h2>
+		<div
+		 class="my-3"
+		>
+			<div
+			 aria-label="Rating"
+			 aria-valuemax="10"
+			 aria-valuemin="0"
+			 aria-valuenow="0"
+			 aria-valuetext="0 out of 10"
+			 class="au-rating d-inline-flex"
+			 role="slider"
+			 tabindex="0"
+			>
+				<span
+				 class="visually-hidden"
+				>
+					"( )"
+				</span>
+				<span
+				 class="au-rating-star"
+				 style="cursor: pointer;"
+				>
+					"☆"
+				</span>
+				<span
+				 class="visually-hidden"
+				>
+					"( )"
+				</span>
+				<span
+				 class="au-rating-star"
+				 style="cursor: pointer;"
+				>
+					"☆"
+				</span>
+				<span
+				 class="visually-hidden"
+				>
+					"( )"
+				</span>
+				<span
+				 class="au-rating-star"
+				 style="cursor: pointer;"
+				>
+					"☆"
+				</span>
+				<span
+				 class="visually-hidden"
+				>
+					"( )"
+				</span>
+				<span
+				 class="au-rating-star"
+				 style="cursor: pointer;"
+				>
+					"☆"
+				</span>
+				<span
+				 class="visually-hidden"
+				>
+					"( )"
+				</span>
+				<span
+				 class="au-rating-star"
+				 style="cursor: pointer;"
+				>
+					"☆"
+				</span>
+				<span
+				 class="visually-hidden"
+				>
+					"( )"
+				</span>
+				<span
+				 class="au-rating-star"
+				 style="cursor: pointer;"
+				>
+					"☆"
+				</span>
+				<span
+				 class="visually-hidden"
+				>
+					"( )"
+				</span>
+				<span
+				 class="au-rating-star"
+				 style="cursor: pointer;"
+				>
+					"☆"
+				</span>
+				<span
+				 class="visually-hidden"
+				>
+					"( )"
+				</span>
+				<span
+				 class="au-rating-star"
+				 style="cursor: pointer;"
+				>
+					"☆"
+				</span>
+				<span
+				 class="visually-hidden"
+				>
+					"( )"
+				</span>
+				<span
+				 class="au-rating-star"
+				 style="cursor: pointer;"
+				>
+					"☆"
+				</span>
+				<span
+				 class="visually-hidden"
+				>
+					"( )"
+				</span>
+				<span
+				 class="au-rating-star"
+				 style="cursor: pointer;"
+				>
+					"☆"
+				</span>
+			</div>
+		</div>
+		<h2>
+			"Select"
+		</h2>
+		<div
+		 class="my-3"
+		>
+			<div
+			 class="au-select border border-1 d-block dropdown mb-3 p-1"
+			>
+				<div
+				 aria-controls="rewritten-id-10"
+				 aria-expanded="false"
+				 aria-haspopup="listbox"
+				 class="align-items-center d-flex flex-wrap"
+				 role="combobox"
+				>
+					<input
+					 aria-autocomplete="list"
+					 aria-label="Select"
+					 autocapitalize="none"
+					 autocomplete="off"
+					 autocorrect="off"
+					 class="au-select-input border-0 flex-grow-1"
+					 id="rewritten-id-11"
+					 type="text"
+					 value=""
+					/>
+				</div>
+			</div>
+		</div>
+		<h2>
+			"Slider"
+		</h2>
+		<div
+		 class="my-3"
+		>
+			<div
+			 class="au-slider au-slider-horizontal"
+			>
+				<div
+				 class="au-slider-progress"
+				 style="left: 0%; width: 50%; height: 100%;"
+				/>
+				<div
+				 class="au-slider-clickable-area"
+				/>
+				<div
+				 class="au-slider-label au-slider-label-min"
+				>
+					"0"
+				</div>
+				<div
+				 class="au-slider-label au-slider-label-max"
+				>
+					"100"
+				</div>
+				<button
+				 aria-label="50"
+				 aria-valuemax="100"
+				 aria-valuemin="0"
+				 aria-valuenow="50"
+				 aria-valuetext="50"
+				 class="au-slider-handle au-slider-handle-horizontal"
+				 role="slider"
+				 style="left: 50%;"
+				/>
+				<div
+				 class="au-slider-label au-slider-label-now"
+				 style="left: 50%;"
+				>
+					"50"
+				</div>
+			</div>
+		</div>
+		<h2>
+			"Toast"
+		</h2>
+		<div
+		 class="my-3"
+		>
+			<div
+			 aria-atomic="true"
+			 class="au-toast d-flex fade show toast toast-dismissible"
+			 role="alert"
+			>
+				<div
+				 class="toast-body"
+				>
+					"This is a toast!"
+				</div>
+				<button
+				 aria-label="Close"
+				 class="btn-close btn-close-white m-auto me-2"
+				 type="button"
+				/>
+			</div>
+		</div>
+	</div>
+</div>
