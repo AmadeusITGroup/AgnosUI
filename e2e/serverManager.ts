@@ -41,6 +41,21 @@ const allServers = {
 		url: 'http://localhost:4000',
 		urlReadyPath: '/',
 	},
+	angularSSR: {
+		command: ['npm', 'run', '-w', 'angular/ssr-app', previewOrDev],
+		url: 'http://localhost:5000',
+		urlReadyPath: '/',
+	},
+	reactSSR: {
+		command: ['npm', 'run', '-w', 'react/ssr-app', previewOrDev],
+		url: 'http://localhost:5001',
+		urlReadyPath: '/',
+	},
+	svelteSSR: {
+		command: ['npm', 'run', '-w', 'svelte/ssr-app', previewOrDev],
+		url: 'http://localhost:5002',
+		urlReadyPath: '/',
+	},
 };
 type ServerKey = keyof typeof allServers;
 
@@ -86,6 +101,13 @@ const getNeededServersAndURL = ({project, framework, sampleInfo}: RequestBody) =
 				servers.push('angularDemoDevBootstrap', 'angularDemoDevDaisyui', 'reactDemoDev', 'svelteDemoDev');
 			}
 			url = allServers.demoSite.url;
+			break;
+		case 'ssr':
+			if (framework) {
+				const server: ServerKey = `${framework}SSR`;
+				servers.push(server);
+				url = allServers[server].url;
+			}
 			break;
 	}
 	return {servers, url};
