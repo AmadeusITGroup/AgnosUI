@@ -14,7 +14,7 @@ import path from 'path';
 
 const [, , ...args] = process.argv;
 
-const projects = ['main', 'singlebrowser', 'demo'];
+const projects = ['main', 'singlebrowser', 'demo', 'ssr'];
 const frameworks = ['angular', 'react', 'svelte'];
 const browsers = ['chromium', 'firefox', 'webkit'];
 const selectedProjects = new Set();

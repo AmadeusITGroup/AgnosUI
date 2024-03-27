@@ -53,6 +53,9 @@
 				},
 				"serve": {
 					"builder": "@angular-devkit/build-angular:dev-server",
+					"options": {
+						"port": 5000
+					},
 					"configurations": {
 						"production": {
 							"buildTarget": "ssr-app:build:production"

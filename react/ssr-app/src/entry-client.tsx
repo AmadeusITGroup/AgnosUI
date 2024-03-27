@@ -10,3 +10,6 @@ ReactDOM.hydrateRoot(
 		<App />
 	</React.StrictMode>,
 );
+setTimeout(() => {
+	console.log('AGNOSUI-SSR-HYDRATION-COMPLETE');
+});
