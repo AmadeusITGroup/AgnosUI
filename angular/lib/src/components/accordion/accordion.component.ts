@@ -87,63 +87,48 @@ export class AccordionItemStructureDirective {
 			}
 
 			<ng-template #h1>
-				<h1 class="accordion-header {{ state.itemHeaderClass }}">
+				<h1 class="accordion-header" [auUse]="widget.directives.headerDirective">
 					<ng-template [ngTemplateOutlet]="button"></ng-template>
 				</h1>
 			</ng-template>
 
 			<ng-template #h2>
-				<h2 class="accordion-header {{ state.itemHeaderClass }}">
+				<h2 class="accordion-header" [auUse]="widget.directives.headerDirective">
 					<ng-template [ngTemplateOutlet]="button"></ng-template>
 				</h2>
 			</ng-template>
 
 			<ng-template #h3>
-				<h3 class="accordion-header {{ state.itemHeaderClass }}">
+				<h3 class="accordion-header" [auUse]="widget.directives.headerDirective">
 					<ng-template [ngTemplateOutlet]="button"></ng-template>
 				</h3>
 			</ng-template>
 
 			<ng-template #h4>
-				<h4 class="accordion-header {{ state.itemHeaderClass }}">
+				<h4 class="accordion-header" [auUse]="widget.directives.headerDirective">
 					<ng-template [ngTemplateOutlet]="button"></ng-template>
 				</h4>
 			</ng-template>
 
 			<ng-template #h5>
-				<h5 class="accordion-header {{ state.itemHeaderClass }}">
+				<h5 class="accordion-header" [auUse]="widget.directives.headerDirective">
 					<ng-template [ngTemplateOutlet]="button"></ng-template>
 				</h5>
 			</ng-template>
 			<ng-template #h6>
-				<h6 class="accordion-header {{ state.itemHeaderClass }}">
+				<h6 class="accordion-header" [auUse]="widget.directives.headerDirective">
 					<ng-template [ngTemplateOutlet]="button"></ng-template>
 				</h6>
 			</ng-template>
 
 			<ng-template #button>
-				<button
-					type="button"
-					id="{{ state.itemId }}-toggle"
-					(click)="widget.actions.click()"
-					[class.collapsed]="!state.itemVisible"
-					class="accordion-button {{ state.itemButtonClass }}"
-					[disabled]="state.itemDisabled"
-					attr.aria-controls="{{ state.itemId }}-collapse"
-					[attr.aria-disabled]="state.itemDisabled"
-					[attr.aria-expanded]="state.itemVisible"
-				>
+				<button class="accordion-button " [auUse]="widget.directives.buttonDirective">
 					<ng-template [auSlotProps]="{state, widget}" [auSlot]="state.slotItemHeader"></ng-template>
 				</button>
 			</ng-template>
 			@if (state.shouldBeInDOM) {
-				<div
-					[auUse]="widget.directives.collapseDirective"
-					attr.aria-labelledby="{{ state.itemId }}-toggle"
-					id="{{ state.itemId }}-collapse"
-					class="accordion-collapse {{ state.itemBodyContainerClass }}"
-				>
-					<div class="accordion-body {{ state.itemBodyClass }}">
+				<div [auUse]="widget.directives.bodyContainerDirective" class="accordion-collapse">
+					<div class="accordion-body" [auUse]="widget.directives.bodyDirective">
 						<ng-template [auSlotProps]="{state, widget}" [auSlot]="state.slotItemBody"></ng-template>
 					</div>
 				</div>
@@ -166,8 +151,7 @@ const defaultConfig: Partial<AccordionItemProps> = {
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	host: {
-		'[class]': '"accordion-item " + state().itemClass',
-		'[id]': 'state().itemId',
+		class: 'accordion-item',
 	},
 	imports: [SlotDirective, UseDirective],
 	template: ` <ng-template [auSlotProps]="{state: state(), widget}" [auSlot]="state().slotItemStructure"></ng-template> `,
@@ -281,7 +265,7 @@ export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWid
 	exportAs: 'auAccordion',
 	standalone: true,
 	host: {
-		'[class]': '"accordion " + state().className',
+		class: 'accordion',
 	},
 })
 export class AccordionDirective extends BaseWidgetDirective<AccordionWidget> {

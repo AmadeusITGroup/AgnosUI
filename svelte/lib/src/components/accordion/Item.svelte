@@ -31,7 +31,7 @@
 		},
 	});
 	const {
-		stores: {itemId$, itemClass$, slotItemStructure$},
+		stores: {slotItemStructure$},
 		directives: {accordionItemDirective},
 		state$,
 	} = widget;
@@ -45,7 +45,7 @@
 	});
 </script>
 
-<div class="accordion-item {$itemClass$}" id={$itemId$} use:accordionItemDirective>
+<div class="accordion-item" use:accordionItemDirective>
 	<Slot slotContent={$slotItemStructure$} props={slotContext} let:component let:props>
 		<svelte:fragment slot="slot" let:props><slot name="itemStructure" {...props} /></svelte:fragment>
 		<svelte:component this={component} {...props}>

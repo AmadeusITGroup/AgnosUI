@@ -25,12 +25,11 @@
 
 	const {
 		directives: {accordionDirective},
-		stores: {className$},
 	} = widget;
 	setAccordionApi(widget.api);
 	$: widget.patchChangedProps($$props);
 </script>
 
-<div class="accordion {$className$}" use:accordionDirective>
+<div class="accordion" use:accordionDirective>
 	<slot />
 </div>
