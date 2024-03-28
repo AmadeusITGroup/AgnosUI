@@ -74,7 +74,7 @@
 		"format:check": "prettier . \"**/*.svelte\" --check --cache .",
 		"lint": "wireit",
 		"dev": "wireit",
-		"dev:coverage": "node scripts/run.js dev:coverage",
+		"dev:coverage": "wireit",
 		"preview": "npm run preview -w demo",
 		"preview:coverage": "npm run preview:coverage -w demo",
 		"e2e": "wireit",
@@ -90,6 +90,14 @@
 				"./angular/demo:dev",
 				"./react/demo:dev",
 				"./svelte/demo:dev",
+				"./demo:dev"
+			]
+		},
+		"dev:coverage": {
+			"dependencies": [
+				"./angular/demo:dev:coverage",
+				"./react/demo:dev:coverage",
+				"./svelte/demo:dev:coverage",
 				"./demo:dev"
 			]
 		},
@@ -117,7 +125,7 @@
 			]
 		},
 		"e2e:ui": {
-			"command": "playwright test --ui",
+			"command": "node scripts/e2e.js --ui",
 			"dependencies": [
 				"./code-coverage:build"
 			]

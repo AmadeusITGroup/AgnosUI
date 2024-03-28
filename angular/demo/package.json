@@ -6,7 +6,11 @@
 	"scripts": {
 		"ng": "ng",
 		"dev": "wireit",
+		"dev:bootstrap": "wireit",
+		"dev:daisyui": "wireit",
 		"dev:coverage": "wireit",
+		"dev:bootstrap:coverage": "wireit",
+		"dev:daisyui:coverage": "wireit",
 		"build": "wireit",
 		"build:coverage": "wireit"
 	},

@@ -14,21 +14,28 @@ import path from 'path';
 
 const [, , ...args] = process.argv;
 
-const frameworks = ['angular', 'react', 'svelte', 'demo'];
+const projects = ['main', 'singlebrowser', 'demo'];
+const frameworks = ['angular', 'react', 'svelte'];
 const browsers = ['chromium', 'firefox', 'webkit'];
-let framework = '';
-let browser = '';
+const selectedProjects = new Set();
+const selectedFrameworks = new Set();
+const selectedBrowsers = new Set();
 
 let includeCoverage = false;
+let usePreview = false;
 const restArgs = [];
 for (let i = 0; i < args.length; i++) {
 	const arg = args[i];
-	if (frameworks.indexOf(arg) > -1) {
-		framework = arg;
+	if (projects.indexOf(arg) > -1) {
+		selectedProjects.add(arg);
+	} else if (frameworks.indexOf(arg) > -1) {
+		selectedFrameworks.add(arg);
 	} else if (browsers.indexOf(arg) > -1) {
-		browser = arg;
+		selectedBrowsers.add(arg);
 	} else if (arg === '--coverage') {
 		includeCoverage = true;
+	} else if (arg === '--preview') {
+		usePreview = true;
 	} else {
 		restArgs.push(arg);
 	}
@@ -36,15 +43,22 @@ for (let i = 0; i < args.length; i++) {
 if (includeCoverage) {
 	process.env.COVERAGE = 'true';
 }
+if (usePreview) {
+	process.env.PREVIEW = 'true';
+}
 
 const cmd = [];
-if (framework) {
-	console.log(`${framework} framework selected`);
-	process.env.FRAMEWORK = framework;
+if (selectedProjects.size > 0) {
+	process.env.PROJECT = [...selectedProjects].join(',');
+	console.log(`Selected project(s): ${process.env.PROJECT}`);
 }
-if (browser) {
-	console.log(`${browser} selected`);
-	process.env.BROWSER = browser;
+if (selectedFrameworks.size > 0) {
+	process.env.FRAMEWORK = [...selectedFrameworks].join(',');
+	console.log(`Selected framework(s): ${process.env.FRAMEWORK}`);
+}
+if (selectedBrowsers.size > 0) {
+	process.env.BROWSER = [...selectedBrowsers].join(',');
+	console.log(`Selected browser(s): ${process.env.BROWSER}`);
 }
 
 cmd.push(`npx playwright test ${restArgs.join(' ')}`);
