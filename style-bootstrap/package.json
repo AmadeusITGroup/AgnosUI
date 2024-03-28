@@ -8,17 +8,51 @@
 		"scss",
 		"style"
 	],
+	"type": "module",
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"require": "./dist/index.cjs",
+			"default": "./dist/index.js"
+		},
+		"./components/*": {
+			"types": "./dist/components/*/index.d.ts",
+			"require": "./dist/components/*/index.cjs",
+			"default": "./dist/components/*/index.js"
+		},
+		"./config": {
+			"types": "./dist/config.d.ts",
+			"require": "./dist/config.cjs",
+			"default": "./dist/config.js"
+		},
+		"./scss/agnosui.scss": {
+			"require": "./scss/agnosui.scss",
+			"default": "./scss/agnosui.scss"
+		},
+		"./css/agnosui.css": {
+			"require": "./css/agnosui.css",
+			"default": "./css/agnosui.css"
+		}
+	},
 	"scripts": {
 		"build": "wireit"
 	},
 	"wireit": {
 		"build": {
-			"command": "sass scss/agnosui.scss css/agnosui.css",
+			"command": "sass scss/agnosui.scss css/agnosui.css && vite build && tsc -p tsconfig.build.json",
 			"files": [
-				"scss"
+				"scss/**",
+				"src/**"
 			],
 			"output": [
-				"css"
+				"css/**",
+				"dist/**"
+			],
+			"dependencies": [
+				"../core:build"
 			]
 		}
 	},
@@ -35,5 +69,9 @@
 	},
 	"devDependencies": {
 		"sass": "^1.72.0"
-	}
+	},
+	"dependencies": {
+		"@agnos-ui/core": "0.0.0"
+	},
+	"peerDependencies": {}
 }

@@ -8,7 +8,7 @@ import type {
 } from '@agnos-ui/react-headless/components/slider';
 import {createSlider} from '@agnos-ui/react-headless/components/slider';
 import {useDirective} from '@agnos-ui/react-headless/utils/directive';
-import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
+import {useWidgetWithConfig} from '../../config';
 import {toSlotContextWidget} from '@agnos-ui/react-headless/types';
 import type {PropsWithChildren} from 'react';
 import React from 'react';

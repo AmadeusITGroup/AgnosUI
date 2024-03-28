@@ -6,7 +6,6 @@ import {
 	SlotDirective,
 	UseDirective,
 	auBooleanAttribute,
-	callWidgetFactory,
 	createAlert,
 } from '@agnos-ui/angular-headless';
 import {type WritableSignal, writable} from '@amadeus-it-group/tansu';
@@ -23,6 +22,7 @@ import {
 	ViewChild,
 	inject,
 } from '@angular/core';
+import {callWidgetFactory} from '../../config';
 
 @Directive({selector: 'ng-template[auAlertBody]', standalone: true})
 export class AlertBodyDirective {

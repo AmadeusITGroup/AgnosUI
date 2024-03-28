@@ -5,7 +5,6 @@ import {
 	SlotDirective,
 	UseDirective,
 	auBooleanAttribute,
-	callWidgetFactory,
 	createSelect,
 	mergeDirectives,
 	useDirectiveForHost,
@@ -13,6 +12,7 @@ import {
 import type {AfterContentChecked} from '@angular/core';
 import {ChangeDetectionStrategy, Component, ContentChild, Directive, EventEmitter, Input, Output, TemplateRef, inject} from '@angular/core';
 import type {Placement} from '@floating-ui/dom';
+import {callWidgetFactory} from '../../config';
 
 @Directive({selector: 'ng-template[auSelectBadgeLabel]', standalone: true})
 export class SelectBadgeLabelDirective<Item> {

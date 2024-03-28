@@ -8,7 +8,6 @@ import {
 	UseDirective,
 	auBooleanAttribute,
 	auNumberAttribute,
-	callWidgetFactory,
 	createToast,
 	mergeDirectives,
 } from '@agnos-ui/angular-headless';
@@ -27,6 +26,7 @@ import {
 	ViewChild,
 	inject,
 } from '@angular/core';
+import {callWidgetFactory} from '../../config';
 
 @Directive({selector: 'ng-template[auToastBody]', standalone: true})
 export class ToastBodyDirective {

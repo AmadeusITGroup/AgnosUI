@@ -14,7 +14,6 @@ import {
 	UseDirective,
 	auBooleanAttribute,
 	auNumberAttribute,
-	callWidgetFactory,
 	createSlider,
 	useDirectiveForHost,
 } from '@agnos-ui/angular-headless';
@@ -37,6 +36,7 @@ import {
 } from '@angular/core';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {take} from 'rxjs';
+import {callWidgetFactory} from '../../config';
 
 @Directive({selector: 'ng-template[auSliderLabel]', standalone: true})
 export class SliderLabelDirective {
