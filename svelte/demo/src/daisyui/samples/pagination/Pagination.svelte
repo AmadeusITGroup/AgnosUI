@@ -15,7 +15,6 @@
 	const widget = callWidgetFactory({
 		factory: createPagination,
 		widgetName: 'pagination',
-		$$slots,
 		$$props,
 		events: {
 			onPageChange: (value: number) => {

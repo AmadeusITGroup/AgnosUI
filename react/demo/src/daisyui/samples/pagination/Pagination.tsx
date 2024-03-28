@@ -8,7 +8,7 @@ export function Pagination(props: Partial<PaginationProps>) {
 		{
 			actions: {first, last, next, previous, select},
 		},
-	] = useWidgetWithConfig(createPagination, props, 'pagination', {});
+	] = useWidgetWithConfig(createPagination, props, 'pagination');
 
 	return (
 		<nav aria-label={state.ariaLabel}>
