@@ -10,7 +10,6 @@
 	const widget = callWidgetFactory({
 		factory: createSlider,
 		widgetName: 'slider',
-		$$slots,
 		$$props,
 		events: {
 			onValuesChange: (value: number[]) => {
