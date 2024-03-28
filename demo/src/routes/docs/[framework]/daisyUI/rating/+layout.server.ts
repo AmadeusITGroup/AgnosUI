@@ -9,9 +9,9 @@ export const load = async () => {
 			subpath: 'headless',
 		},
 		next: {
-			title: 'Components: Accordion',
-			slug: 'components/accordion/',
-			subpath: 'examples',
+			title: 'Slider',
+			slug: 'daisyUI/slider/',
+			subpath: 'headless',
 		},
 	};
 };
