@@ -1,6 +1,7 @@
 {
 	"version": "0.0.0",
 	"private": true,
+	"type": "module",
 	"scripts": {
 		"verdaccio-publish": "wireit",
 		"verdaccio-server": "wireit"

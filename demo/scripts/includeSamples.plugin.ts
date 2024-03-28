@@ -4,6 +4,8 @@ import type {Frameworks} from '$lib/stores';
 import {readFile} from 'fs/promises';
 import {existsSync} from 'fs';
 
+const __dirname = import.meta.dirname;
+
 const samplePrefix = '@agnos-ui/samples/';
 const rawSampleSuffix = '?raw&sample';
 const commonImport = /^@agnos-ui\/common\/samples\/([^?]*)(\?raw)?$/;

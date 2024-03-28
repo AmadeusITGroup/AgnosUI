@@ -1,11 +1,10 @@
 import adapter from '@sveltejs/adapter-static';
 import {vitePreprocess} from '@sveltejs/vite-plugin-svelte';
 import path from 'path';
-import {fileURLToPath} from 'url';
 import child_process from 'child_process';
 import {globSync} from 'glob';
 
-const __dirname = fileURLToPath(new URL('./', import.meta.url));
+const __dirname = import.meta.dirname;
 
 export const alias = {
 	'@agnos-ui/common': path.join(__dirname, '../common'),

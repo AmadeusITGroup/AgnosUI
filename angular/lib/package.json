@@ -59,7 +59,7 @@
 			]
 		},
 		"check": {
-			"command": "node scripts/verify-module.mjs"
+			"command": "node scripts/verify-module.js"
 		}
 	},
 	"peerDependencies": {

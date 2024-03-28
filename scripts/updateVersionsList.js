@@ -1,6 +1,6 @@
-const fs = require('fs');
-const path = require('path');
-const {compareVersions} = require('compare-versions');
+import fs from 'fs';
+import path from 'path';
+import {compareVersions} from 'compare-versions';
 
 const ghPagesFolder = process.cwd();
 const availableVersions = fs

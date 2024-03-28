@@ -49,7 +49,7 @@ export const test = base.extend<FixtureOptions>({
 				return JSON.stringify((window as any).__coverage__);
 			});
 			if (coverage && browserName === 'chromium') {
-				await reportCoverage(__dirname, coverage);
+				await reportCoverage(import.meta.dirname, coverage);
 			}
 		},
 		{auto: true},

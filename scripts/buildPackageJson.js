@@ -1,15 +1,15 @@
-const {writeFileSync, cpSync, mkdirSync} = require('fs');
-const path = require('path');
+import {writeFileSync, cpSync, mkdirSync, readFileSync} from 'fs';
+import path from 'path';
 
 let [, , sourceFolder, outputFolder] = process.argv;
 
 sourceFolder = path.resolve(sourceFolder);
 outputFolder = path.resolve(outputFolder);
 
-const rootPath = path.join(__dirname, '..');
-const rootPackage = require('../package.json');
+const rootPath = path.join(import.meta.dirname, '..');
+const rootPackage = JSON.parse(readFileSync(path.join(rootPath, 'package.json'), {encoding: 'utf-8'}));
 
-const sourcePackage = require(path.join(sourceFolder, 'package.json'));
+const sourcePackage = JSON.parse(readFileSync(path.join(sourceFolder, 'package.json'), {encoding: 'utf-8'}));
 
 const pkg = {
 	...sourcePackage,

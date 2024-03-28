@@ -1,4 +1,4 @@
-const {rm} = require('fs/promises');
+import {rm} from 'fs/promises';
 
 for (const file of process.argv.slice(2)) {
 	rm(file, {

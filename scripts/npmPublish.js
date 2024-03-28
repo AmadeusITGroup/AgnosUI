@@ -1,5 +1,6 @@
-const {spawn} = require('child_process');
-const {join} = require('path');
+import {spawn} from 'child_process';
+import {join} from 'path';
+import {fileURLToPath} from 'url';
 
 const directories = [
 	'core/dist',
@@ -14,11 +15,10 @@ const directories = [
 	'page-objects',
 ];
 
-const processEndPromise = (proc) =>
+export const processEndPromise = (proc) =>
 	new Promise((resolve, reject) => proc.on('close', (code) => (code === 0 ? resolve() : reject(new Error(`process exited with code ${code}`)))));
-exports.processEndPromise = processEndPromise;
 
-const publish = async (extraArgs = []) => {
+export const publish = async (extraArgs = []) => {
 	const extraArgsStr = extraArgs.join(' ');
 	let failures = 0;
 	for (const directory of directories) {
@@ -27,7 +27,7 @@ const publish = async (extraArgs = []) => {
 			const proc = spawn('npm', ['publish', '--access=public', ...extraArgs], {
 				stdio: 'inherit',
 				shell: process.platform == 'win32',
-				cwd: join(__dirname, '..', directory),
+				cwd: join(import.meta.dirname, '..', directory),
 			});
 			await processEndPromise(proc);
 		} catch (error) {
@@ -40,9 +40,8 @@ const publish = async (extraArgs = []) => {
 		console.log('npm publish succeeded for all packages');
 	}
 };
-exports.publish = publish;
 
-if (require.main === module) {
+if (fileURLToPath(import.meta.url) === process.argv[1]) {
 	publish(process.argv.slice(2)).catch((error) => {
 		console.error(error);
 		process.exit(1);

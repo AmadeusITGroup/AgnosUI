@@ -1,8 +1,10 @@
-const {spawn} = require('child_process');
-const {rm} = require('fs/promises');
-const {join} = require('path');
-const {runServer} = require('verdaccio');
-const {publish, processEndPromise} = require('../scripts/npmPublish');
+import {spawn} from 'child_process';
+import {rm} from 'fs/promises';
+import {join} from 'path';
+import {runServer} from 'verdaccio';
+import {publish, processEndPromise} from '../scripts/npmPublish.js';
+
+const __dirname = import.meta.dirname;
 
 const main = async () => {
 	const storageFolder = join(__dirname, 'storage');

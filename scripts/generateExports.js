@@ -1,7 +1,9 @@
-const {dirname, join, relative} = require('path');
-const {existsSync, promises} = require('fs');
-const {glob} = require('glob');
-const os = require('os');
+import {dirname, join, relative} from 'path';
+import {existsSync, promises} from 'fs';
+import {glob} from 'glob';
+import os from 'os';
+
+const __dirname = import.meta.dirname;
 
 const pathRegExp = /\\/g;
 const normalizePath = (str) => str.replace(pathRegExp, '/');

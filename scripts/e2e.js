@@ -9,8 +9,8 @@
  * - `npm run e2e angular firefox select` : run the tests for angular, on firefox, filtered on spec files containing `select`
  */
 
-const exec = require('child_process').execSync;
-const path = require('path');
+import {execSync as exec} from 'child_process';
+import path from 'path';
 
 const [, , ...args] = process.argv;
 
@@ -53,7 +53,7 @@ const strCommand = cmd.join(' ');
 console.log(strCommand);
 try {
 	exec(strCommand, {
-		cwd: path.join(__dirname, '..'),
+		cwd: path.join(import.meta.dirname, '..'),
 		stdio: [0, 1, 2],
 	});
 } catch (e) {

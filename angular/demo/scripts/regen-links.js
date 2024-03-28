@@ -1,9 +1,8 @@
 import {glob} from 'glob';
 import path from 'path';
-import {fileURLToPath} from 'url';
 import {writeFile, mkdir, rm} from 'fs/promises';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __dirname = import.meta.dirname;
 
 const pathRegExp = /\\/g;
 export function normalizePath(str) {

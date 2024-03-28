@@ -3,8 +3,8 @@ import path from 'path';
 import {expect, test} from './fixture';
 import {analyze, normalizePath} from './utils';
 
-const pathToFrameworkDir = normalizePath(path.join(__dirname, '../demo/src/routes'));
-const pathToDocsDir = normalizePath(path.join(__dirname, '../docs'));
+const pathToFrameworkDir = normalizePath(path.join(import.meta.dirname, '../demo/src/routes'));
+const pathToDocsDir = normalizePath(path.join(import.meta.dirname, '../docs'));
 
 const allRoutes = globSync(`**/+page.svelte`, {cwd: pathToFrameworkDir}).flatMap((route) => {
 	const normalizedRoute = normalizePath(route)

@@ -18,8 +18,8 @@ export const getSamplesList = () => {
 		const info = {style, componentName: parts[0], sampleName: parts[1]};
 		map[`${style}/${info.componentName}/${info.sampleName}`] = info;
 	};
-	globSync('**/*.route.svelte', {cwd: path.join(__dirname, '../../svelte/demo/src/bootstrap/samples')}).forEach(add('bootstrap'));
-	globSync('**/*.route.svelte', {cwd: path.join(__dirname, '../../svelte/demo/src/daisyui/samples')}).forEach(add('daisyui'));
+	globSync('**/*.route.svelte', {cwd: path.join(import.meta.dirname, '../../svelte/demo/src/bootstrap/samples')}).forEach(add('bootstrap'));
+	globSync('**/*.route.svelte', {cwd: path.join(import.meta.dirname, '../../svelte/demo/src/daisyui/samples')}).forEach(add('daisyui'));
 	return map;
 };
 

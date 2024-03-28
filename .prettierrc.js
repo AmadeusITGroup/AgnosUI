@@ -1,7 +1,7 @@
-const os = require('os');
+import os from 'os';
 
 /** @type import("prettier").Options */
-module.exports = {
+export default {
 	bracketSpacing: false,
 	endOfLine: os.EOL === '\r\n' ? 'crlf' : 'lf',
 	plugins: ['prettier-plugin-svelte'],
