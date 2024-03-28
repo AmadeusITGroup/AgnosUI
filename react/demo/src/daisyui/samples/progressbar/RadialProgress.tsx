@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import {useMemo, type CSSProperties} from 'react';
 
 export function RadialProgress(props: Partial<Pick<ProgressbarProps, 'min' | 'max' | 'ariaLabel' | 'value' | 'className' | 'ariaValueTextFn'>>) {
-	const [state, widget] = useWidgetWithConfig(createProgressbar, props, 'progressbar', {});
+	const [state, widget] = useWidgetWithConfig(createProgressbar, props, 'progressbar');
 	const ariaRef = useDirective(widget.directives.ariaDirective);
 
 	const percentFormat = useMemo(

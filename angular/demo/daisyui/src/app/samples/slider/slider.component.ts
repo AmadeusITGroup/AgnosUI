@@ -32,7 +32,6 @@ export class SliderComponent extends BaseWidgetDirective<SliderWidget> {
 	readonly _widget = callWidgetFactory({
 		factory: createSlider,
 		widgetName: 'slider',
-		defaultConfig: {},
 		events: {
 			onValuesChange: (event) => {
 				this.valuesChange.emit(event);

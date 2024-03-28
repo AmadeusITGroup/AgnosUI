@@ -35,8 +35,6 @@ export class RadialProgressComponent extends BaseWidgetDirective<ProgressbarWidg
 	readonly _widget = callWidgetFactory({
 		factory: createProgressbar,
 		widgetName: 'progressbar',
-		defaultConfig: {},
-		events: {},
 	});
 	readonly percentFormat = new Intl.NumberFormat('default', {
 		style: 'percent',

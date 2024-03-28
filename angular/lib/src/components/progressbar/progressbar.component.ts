@@ -122,7 +122,6 @@ export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget>
 		factory: createProgressbar,
 		widgetName: 'progressbar',
 		defaultConfig: this.defaultSlots,
-		events: {},
 		afterInit: () => {
 			useDirectiveForHost(this._widget.directives.ariaDirective);
 		},

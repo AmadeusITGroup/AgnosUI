@@ -9,7 +9,7 @@ export function Slider(props: Partial<Pick<SliderProps, 'min' | 'max' | 'values'
 			actions: {click, keydown, mouseDown, touchStart},
 			directives: {sliderDirective},
 		},
-	] = useWidgetWithConfig(createSlider, props, 'slider', {});
+	] = useWidgetWithConfig(createSlider, props, 'slider');
 
 	const sliderSetRef = useDirective(sliderDirective);
 	return (
