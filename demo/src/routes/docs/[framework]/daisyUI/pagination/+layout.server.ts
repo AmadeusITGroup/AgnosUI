@@ -4,9 +4,9 @@ export const load = async () => {
 	return {
 		...daisyUIMetadata.Pagination,
 		prev: {
-			title: 'Headless: Implementation',
-			slug: 'headless/implementation',
-			subpath: '',
+			title: 'DaisyUI: Alert',
+			slug: 'daisyUI/alert/',
+			subpath: 'headless',
 		},
 		next: {
 			title: 'Progressbar',
