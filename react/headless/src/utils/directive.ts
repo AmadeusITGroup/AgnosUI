@@ -1,5 +1,7 @@
-import type {Directive} from '@agnos-ui/core/types';
-import {mergeDirectives} from '@agnos-ui/core/utils/directive';
+import type {AttributeDirective, Directive} from '@agnos-ui/core/types';
+import type {AttributeDirectiveAndParam} from '@agnos-ui/core/utils/directive';
+import {mergeDirectives, ssrAttributesData} from '@agnos-ui/core/utils/directive';
+import {BROWSER} from 'esm-env';
 import type {RefCallback} from 'react';
 import {useCallback, useMemo, useRef} from 'react';
 
@@ -48,4 +50,36 @@ export function useDirectives<T>(directives: Directive<T>[], args: T): RefCallba
 export function useDirectives<T>(directives: Directive<T>[], args?: T): RefCallback<HTMLElement> {
 	const mergedDirectives = useMemo(() => mergeDirectives(...directives), directives);
 	return useDirective(mergedDirectives, args as any);
+}
+
+const attributesMap = new Map([
+	['tabindex', 'tabIndex'],
+	['for', 'htmlFor'],
+]);
+
+/**
+ * Returns an object with the key/value attributes for JSX, derived from a list of directives.
+ *
+ * @param directives - List of directives to generate attributes from. Each parameter can be the directive or an array with the directive and its parameter
+ * @returns JSON object with key/value pairs to be applied on a JSX node.
+ */
+export function ssrAttributes<T extends any[]>(...directives: {[K in keyof T]: AttributeDirectiveAndParam<T[K]> | AttributeDirective<void>}) {
+	const reactAttributes: Record<string, any> = {};
+	if (!BROWSER) {
+		const {attributes, style, classNames} = ssrAttributesData(...directives);
+
+		for (const [name, value] of Object.entries(attributes)) {
+			reactAttributes[attributesMap.get(name) ?? name] = value;
+		}
+
+		if (classNames?.length) {
+			reactAttributes.className = classNames.join(' ');
+		}
+
+		if (Object.keys(style).length) {
+			reactAttributes.style = style;
+		}
+	}
+
+	return reactAttributes;
 }

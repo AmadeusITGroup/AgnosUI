@@ -90,6 +90,54 @@ export type WidgetFactory<W extends Widget> = (props?: PropsConfig<WidgetProps<W
 
 export type Directive<T = void> = (node: HTMLElement, args: T) => void | {update?: (args: T) => void; destroy?: () => void};
 
+/**
+ * Properties for configuring server-side rendering directives.
+ */
+export interface AttributesDirectiveProps {
+	/**
+	 * Events to be attached to an HTML element.
+	 * @remarks
+	 * Key-value pairs where keys are event types and values are event handlers.
+	 */
+	events?: Partial<{[K in keyof HTMLElementEventMap]: (this: HTMLElement, event: HTMLElementEventMap[K]) => void}>;
+
+	/**
+	 * Attributes to be added to the provided node.
+	 * @remarks
+	 * The `style` attribute must be added separately.
+	 */
+	attributes?: Record<string, AttributeValue | ReadableSignal<AttributeValue>>;
+
+	/**
+	 * Styles to be added to an HTML element.
+	 * @remarks
+	 * Key-value pairs where keys are CSS style properties and values are style values.
+	 */
+	styles?: Partial<Record<keyof CSSStyleDeclaration, StyleValue | ReadableSignal<StyleValue>>>;
+
+	/**
+	 * Class names to be added to an HTML element.
+	 * @remarks
+	 * Key-value pairs where keys are class names and values indicate whether the class should be added (true) or removed (false).
+	 */
+	classNames?: Record<string, boolean | ReadableSignal<boolean>>;
+}
+
+/**
+ * {@link Directive} with specific capabilities to manage events and attributes on a node from values or stores given by the {@link AttributesDirectiveProps}
+ *
+ *  - Normalized events listeners
+ *  - Normalized attributes, styles and classnames from values or stores
+ *
+ * In addition to manage attributes and events in a normalized way, this can be usefull to handle SSR cases.
+ */
+export interface AttributeDirective<T = void> extends Directive<T> {
+	/**
+	 * Function that returns the {@link AttributesDirectiveProps}
+	 */
+	propsFn: (arg: ReadableSignal<T>) => AttributesDirectiveProps;
+}
+
 export type SlotContent<Props extends object = object> = undefined | null | string | ((props: Props) => string);
 
 export const INVALID_VALUE = Symbol();
