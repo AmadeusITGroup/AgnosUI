@@ -7,4 +7,10 @@ export default defineConfig((config) => ({
 	resolve: {
 		alias: config.mode === 'production' ? {} : alias,
 	},
+	server: {
+		port: 5002,
+	},
+	preview: {
+		port: 5002,
+	},
 }));
