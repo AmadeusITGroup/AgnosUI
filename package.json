@@ -6,6 +6,7 @@
 	"bugs": "https://github.com/AmadeusITGroup/AgnosUI/issues",
 	"license": "MIT",
 	"private": true,
+	"type": "module",
 	"keywords": [
 		"accordion",
 		"alert",
@@ -48,7 +49,6 @@
 		"npm-run-all2": "^6.1.2",
 		"prettier": "^3.2.5",
 		"syncpack": "^12.3.0",
-		"ts-node": "^10.9.2",
 		"typescript": "~5.4.3",
 		"vite": "^5.2.6",
 		"vitest": "^1.4.0",
@@ -131,8 +131,17 @@
 				"./svelte/lib:generate:exports"
 			]
 		},
+		"check:ts-gen-doc": {
+			"command": "tsc --project scripts/doc/tsconfig.json",
+			"files": [
+				"scripts/doc/**",
+				"tsconfig.json"
+			],
+			"output": []
+		},
 		"check": {
 			"dependencies": [
+				"check:ts-gen-doc",
 				"./core:check",
 				"./eslint-plugin:check",
 				"./react/demo:check",

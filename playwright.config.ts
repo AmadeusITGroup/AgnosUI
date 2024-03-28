@@ -1,6 +1,7 @@
 import type {PlaywrightTestConfig} from '@playwright/test';
 import {devices} from '@playwright/test';
 import type {FixtureOptions} from 'e2e/fixture';
+import path from 'path';
 
 const isCI = process.env.CI === 'true';
 const includeCoverage = isCI || process.env.COVERAGE === 'true';
@@ -81,7 +82,7 @@ const webServer = includesDemo
 		}));
 
 const config: PlaywrightTestConfig<FixtureOptions> = {
-	globalSetup: require.resolve('./e2e/global-setup'),
+	globalSetup: path.join(import.meta.dirname, './e2e/global-setup'),
 	testDir: 'e2e',
 	testMatch: '*e2e-spec.ts',
 	retries: 1,

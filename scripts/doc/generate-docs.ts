@@ -10,7 +10,7 @@ console.log('Doc extraction started');
  * used by the demo application
  */
 
-const root = path.resolve(__dirname, '../..');
+const root = path.resolve(import.meta.dirname, '../..');
 const allDoc = parseDocs(path.join(root, 'core/src/index.ts'));
 
 const doc = {

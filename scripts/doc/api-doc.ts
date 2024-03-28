@@ -1,20 +1,5 @@
 import path from 'path';
-import {
-	ModifierFlags,
-	createProgram,
-	getCombinedModifierFlags,
-	isFunctionDeclaration,
-	isFunctionLike,
-	isIdentifier,
-	isInterfaceDeclaration,
-	isObjectLiteralExpression,
-	isPropertyAssignment,
-	isPropertyDeclaration,
-	isReturnStatement,
-	isSpreadAssignment,
-	isTypeAliasDeclaration,
-	isVariableDeclaration,
-} from 'typescript';
+import ts from 'typescript';
 
 import type {
 	Declaration,
@@ -70,7 +55,7 @@ function displayPartsToHtml(displayParts: SymbolDisplayPart[]): string {
 const compare = (a: string | number, b: string | number) => (a < b ? -1 : a > b ? 1 : 0);
 export const compareName = (a: any, b: any) => compare(a.name, b.name);
 
-const root = path.join(__dirname, '../..');
+const root = path.join(import.meta.dirname, '../..');
 function removeRoot(str: string) {
 	return path.relative(root, str);
 }
@@ -99,12 +84,12 @@ function isInternalMember(symbol: TSSymbol) {
 }
 
 function isPrivate(member: Declaration) {
-	return (getCombinedModifierFlags(member) & ModifierFlags.Private) !== 0;
+	return (ts.getCombinedModifierFlags(member) & ts.ModifierFlags.Private) !== 0;
 }
 
 const defaultConfigFnregExp = /^get([a-zA-Z]*)DefaultConfig$/;
 export function parseDocs(indexFile: string) {
-	const program = createProgram([indexFile], {});
+	const program = ts.createProgram([indexFile], {});
 	const typeChecker = program.getTypeChecker();
 
 	function visitPosition(node: Node): NodePosition {
@@ -157,9 +142,9 @@ export function parseDocs(indexFile: string) {
 	function visitExportedItem(exportedItem: TSSymbol): DeclarationDoc {
 		const node = exportedItem.getDeclarations()![0];
 
-		if (isInterfaceDeclaration(node)) {
+		if (ts.isInterfaceDeclaration(node)) {
 			return visitInterfaceDeclaration(node, exportedItem);
-		} else if (isTypeAliasDeclaration(node)) {
+		} else if (ts.isTypeAliasDeclaration(node)) {
 			return visitTypeAliasDeclaration(node, exportedItem);
 		} else {
 			// TODO: class declaration ...
@@ -197,7 +182,7 @@ export function parseDocs(indexFile: string) {
 			type: visitType(node),
 		};
 
-		if (isFunctionDeclaration(node) && defaultConfigFnregExp.test(res.name)) {
+		if (ts.isFunctionDeclaration(node) && defaultConfigFnregExp.test(res.name)) {
 			res.defaultConfigProperties = visitConfigFunctionDeclaration(node);
 		}
 
@@ -208,21 +193,21 @@ export function parseDocs(indexFile: string) {
 		const lastStatement = functionDeclaration.body!.statements.at(-1);
 		typeChecker.getSymbolAtLocation(functionDeclaration);
 		const docProperties: Record<string, {text: string; type: string}> = {};
-		if (isReturnStatement(lastStatement!)) {
+		if (ts.isReturnStatement(lastStatement!)) {
 			const expression = lastStatement.expression;
-			if (isObjectLiteralExpression(expression!)) {
+			if (ts.isObjectLiteralExpression(expression!)) {
 				const spreadAssignment = expression.properties[0];
-				if (isSpreadAssignment(spreadAssignment)) {
+				if (ts.isSpreadAssignment(spreadAssignment)) {
 					const symbol = typeChecker.getSymbolAtLocation(spreadAssignment.expression);
 					const declaration = symbol!.getDeclarations()![0];
-					if (isVariableDeclaration(declaration)) {
+					if (ts.isVariableDeclaration(declaration)) {
 						const initializer = declaration.initializer;
-						if (isObjectLiteralExpression(initializer!)) {
+						if (ts.isObjectLiteralExpression(initializer!)) {
 							const properties = initializer.properties;
 							for (const property of properties) {
-								if (isPropertyAssignment(property)) {
+								if (ts.isPropertyAssignment(property)) {
 									const {name, initializer} = property;
-									if (isIdentifier(name)) {
+									if (ts.isIdentifier(name)) {
 										docProperties[name.text] = {
 											text: initializer.getText(),
 											type: visitType(initializer),
@@ -273,12 +258,12 @@ export function parseDocs(indexFile: string) {
 		return {
 			...visitBaseDeclaration(declaration, typeChecker.getSymbolAtLocation(declaration.name!)!),
 			type: visitType(declaration),
-			defaultValue: isPropertyDeclaration(declaration) ? declaration.initializer?.getText() : undefined,
+			defaultValue: ts.isPropertyDeclaration(declaration) ? declaration.initializer?.getText() : undefined,
 		};
 	}
 
 	function visitType(node: Node) {
-		if (isFunctionLike(node) && node.name) {
+		if (ts.isFunctionLike(node) && node.name) {
 			const symbol = typeChecker.getSymbolAtLocation(node.name)!;
 			const res = typeChecker.typeToString(typeChecker.getTypeOfSymbolAtLocation(symbol, node));
 			return res;

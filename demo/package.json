@@ -18,7 +18,7 @@
 	},
 	"wireit": {
 		"generate:doc": {
-			"command": "ts-node --project ../scripts/doc/tsconfig.json ../scripts/doc/generate-docs.ts",
+			"command": "tsx --tsconfig ../scripts/doc/tsconfig.json ../scripts/doc/generate-docs.ts",
 			"files": [
 				"../core/src/**",
 				"../scripts/doc/tsconfig.json",
@@ -124,6 +124,6 @@
 		"svelte": "^4.2.12",
 		"svelte-check": "^3.6.8",
 		"svelte-markdown": "^0.4.1",
-		"ts-node": "^10.9.2"
+		"tsx": "^4.7.1"
 	}
 }

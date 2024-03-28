@@ -14,6 +14,6 @@ export default defineConfig({
 			external: [...Object.keys(peerDependencies)],
 		},
 		emptyOutDir: true,
-		outDir: path.join(__dirname, 'dist/lib'),
+		outDir: path.join(import.meta.dirname, 'dist/lib'),
 	},
 });

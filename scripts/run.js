@@ -1,21 +1,24 @@
-const path = require('path');
+import path from 'path';
+import runAll from 'npm-run-all2';
+import rootPkg from '../package.json' with {type: 'json'};
 
-function run() {
-	const runAll = require('npm-run-all2');
-
+async function run() {
 	const [, , ...args] = process.argv;
 
-	const root = path.resolve(__dirname, '..');
-	const allWorkspaces = require('../package.json').workspaces;
+	const allWorkspaces = rootPkg.workspaces;
+
+	const root = path.resolve(import.meta.dirname, '..');
 	const scriptname = args[0];
 	if (!scriptname || allWorkspaces.includes(scriptname)) {
 		throw new Error('The first arg must be the script name');
 	}
 
-	const workspaces = allWorkspaces.filter((workspace) => {
-		// Filter out all workspaces that not contain the specified script
-		return !!require(path.resolve(root, workspace, 'package.json')).scripts?.[scriptname];
-	});
+	const workspaces = [];
+	for (const workspace of allWorkspaces) {
+		if ((await import(path.resolve(root, workspace, 'package.json'), {with: {type: 'json'}})).default.scripts?.[scriptname]) {
+			workspaces.push(workspace);
+		}
+	}
 
 	const commands = [];
 

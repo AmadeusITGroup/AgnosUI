@@ -12,9 +12,9 @@
 	},
 	"wireit": {
 		"generate:links": {
-			"command": "node scripts/regen-links.mjs",
+			"command": "node scripts/regen-links.js",
 			"files": [
-				"scripts/regen-links.mjs",
+				"scripts/regen-links.js",
 				"bootstrap/src/app/samples/**",
 				"daisyui/src/app/samples/**"
 			],

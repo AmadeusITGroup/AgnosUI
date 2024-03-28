@@ -1,11 +1,7 @@
 import {glob} from 'glob';
-import {dirname} from 'path';
-import {fileURLToPath} from 'url';
 import type {UserConfig} from 'vite';
 import {defineConfig} from 'vite';
 import {dependencies, peerDependencies, exports as pkgExports} from './package.json';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const pathRegExp = /\\/g;
 const normalizePath = (str: string) => str.replace(pathRegExp, '/');
@@ -17,7 +13,7 @@ export default defineConfig(async (): Promise<UserConfig> => {
 
 	for (const [, exportInfo] of Object.entries(pkgExports)) {
 		const pattern = exportInfo.default.replace(/^\.\/dist\//, './src/').replace(/\.js$/, '.{ts,tsx}');
-		const files = await glob(pattern, {cwd: __dirname});
+		const files = await glob(pattern, {cwd: import.meta.dirname});
 		for (const file of files) {
 			const baseFile = normalizePath(file)
 				.replace(/\.tsx?$/, '')

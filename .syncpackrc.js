@@ -1,5 +1,7 @@
+import rootPkg from './package.json' with {type: 'json'};
+
 /** @type import("syncpack").RcFile */
-module.exports = {
+export default {
 	source: ['package.json', '*/package.json', '*/{demo,lib,headless,ssr-app}/package.json', 'demo/src/lib/stackblitz/*/package.json'],
 	indent: '\t',
 	semverRange: '^',
@@ -16,7 +18,7 @@ module.exports = {
 			packages: ['**'],
 			dependencies: ['**'],
 			dependencyTypes: ['local'],
-			pinVersion: require('./package.json').version,
+			pinVersion: rootPkg.version,
 		},
 	],
 	semverGroups: [
