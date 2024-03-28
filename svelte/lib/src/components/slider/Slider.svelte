@@ -33,7 +33,7 @@
 	export const api = widget.api;
 
 	const {
-		stores: {className$, disabled$, vertical$, slotStructure$},
+		stores: {slotStructure$},
 		directives: {sliderDirective},
 		state$,
 	} = widget;
@@ -43,12 +43,7 @@
 </script>
 
 <!-- on:blur={onTouched} ?? -->
-<div
-	use:sliderDirective
-	class={`au-slider ${$vertical$ ? 'au-slider-vertical' : 'au-slider-horizontal'} ${$className$}`}
-	class:disabled={$disabled$}
-	aria-disabled={$disabled$ ? true : null}
->
+<div use:sliderDirective>
 	<Slot slotContent={$slotStructure$} props={slotContext} let:component let:props>
 		<svelte:fragment slot="slot" let:props><slot name="structure" {...props} /></svelte:fragment>
 		<svelte:component this={component} {...props}>

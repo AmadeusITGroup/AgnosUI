@@ -21,23 +21,6 @@
 		</div>
 	</div>
 </div>
-<button
-	class={`coffee-indicator ${state.vertical ? 'au-slider-handle-vertical' : 'au-slider-handle-horizontal'}`}
-	role="slider"
-	aria-valuemin={state.min}
-	aria-valuemax={state.max}
-	aria-valuenow={state.sortedHandles[0].value}
-	aria-valuetext={state.sortedHandles[0].ariaValueText}
-	aria-label={state.sortedHandles[0].ariaLabel}
-	aria-readonly={state.readonly ? 'true' : undefined}
-	aria-disabled={state.disabled ? 'true' : undefined}
-	aria-orientation={state.vertical ? 'vertical' : undefined}
-	disabled={state.disabled}
-	style:top={`${state.handleDisplayOptions[state.sortedHandles[0].id].top}%`}
-	style:left={`${state.handleDisplayOptions[state.sortedHandles[0].id].left}%`}
-	on:keydown={(e) => widget.actions.keydown(e, state.sortedHandles[0].id)}
-	on:mousedown={(e) => widget.actions.mouseDown(e, state.sortedHandles[0].id)}
-	on:touchstart={(e) => widget.actions.touchStart(e, state.sortedHandles[0].id)}
->
+<button class="coffee-indicator" use:widget.directives.handleDirective={{item: state.sortedHandles[0]}}>
 	{'' + state.sortedHandles[0].value}
 </button>

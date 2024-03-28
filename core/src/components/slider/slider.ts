@@ -1,7 +1,7 @@
-import type {WritableSignal} from '@amadeus-it-group/tansu';
+import type {ReadableSignal, WritableSignal} from '@amadeus-it-group/tansu';
 import {computed, writable} from '@amadeus-it-group/tansu';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
-import {createStoreDirective, mergeDirectives} from '../../utils/directive';
+import {createAttributesDirective, createStoreDirective, mergeDirectives} from '../../utils/directive';
 import type {ConfigValidator, Directive, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../../types';
 import {noop} from '../../utils/internal/func';
 import {getDecimalPrecision} from '../../utils/internal/math';
@@ -224,6 +224,21 @@ export interface SliderDirectives {
 	sliderDirective: Directive;
 
 	/**
+	 * Directive used to style the progress display for each handle
+	 */
+	progressDisplayDirective: Directive<{option: ProgressDisplayOptions}>;
+
+	/**
+	 * Directive to apply to the slider clickable area, to directly move the handle to a given specific position
+	 */
+	clickableAreaDirective: Directive;
+
+	/**
+	 * Directive to apply to the slider handle if any
+	 */
+	handleDirective: Directive<{item: SliderHandle}>;
+
+	/**
 	 * Directive to get the minLabel elementRef
 	 */
 	minLabelDirective: Directive;
@@ -232,6 +247,16 @@ export interface SliderDirectives {
 	 * Directive to get the maxLabel elementRef
 	 */
 	maxLabelDirective: Directive;
+
+	/**
+	 * Directive to apply to the handle when combined label display is active
+	 */
+	combinedHandleLabelDisplayDirective: Directive;
+
+	/**
+	 * Directive to apply to the handle when combined label display is not active
+	 */
+	handleLabelDisplayDirective: Directive<{index: number}>;
 }
 
 export interface SliderActions {
@@ -420,8 +445,8 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 
 	// computed
 	const {directive: sliderDirective, element$: sliderDom$} = createStoreDirective();
-	const {directive: minLabelDirective, element$: minLabelDom$} = createStoreDirective();
-	const {directive: maxLabelDirective, element$: maxLabelDom$} = createStoreDirective();
+	const {directive: minLabelDomDirective, element$: minLabelDom$} = createStoreDirective();
+	const {directive: maxLabelDomDirective, element$: maxLabelDom$} = createStoreDirective();
 	const {directive: resizeDirective, dimensions$} = createResizeObserver();
 
 	const updateSliderSize$ = writable({});
@@ -599,7 +624,44 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 		}
 	};
 
-	return {
+	const horizontal$ = computed(() => !vertical$());
+
+	const containerDirective = createAttributesDirective(() => ({
+		attributes: {
+			'aria-disabled': computed(() => (disabled$() ? 'true' : undefined)),
+			class: stateProps.className$,
+		},
+		classNames: {
+			'au-slider': true,
+			'au-slider-vertical': vertical$,
+			'au-slider-horizontal': horizontal$,
+			disabled: disabled$,
+		},
+	}));
+
+	const minLabelDirective = createAttributesDirective(() => ({
+		classNames: {
+			'au-slider-label-vertical': vertical$,
+			'au-slider-label-vertical-min': vertical$,
+			'au-slider-label': horizontal$,
+			'au-slider-label-min': horizontal$,
+			'au-slider-rtl': rtl$,
+			invisible: computed(() => !minValueLabelDisplay$()),
+		},
+	}));
+
+	const maxLabelDirective = createAttributesDirective(() => ({
+		classNames: {
+			'au-slider-label-vertical': vertical$,
+			'au-slider-label-vertical-max': vertical$,
+			'au-slider-label': horizontal$,
+			'au-slider-label-max': horizontal$,
+			'au-slider-rtl': rtl$,
+			invisible: computed(() => !maxValueLabelDisplay$()),
+		},
+	}));
+
+	const widget: SliderWidget = {
 		...stateStores({
 			min$,
 			max$,
@@ -623,9 +685,83 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 		patch,
 		api: {},
 		directives: {
-			sliderDirective: mergeDirectives(sliderDirective, resizeDirective),
-			minLabelDirective,
-			maxLabelDirective,
+			sliderDirective: mergeDirectives(sliderDirective, resizeDirective, containerDirective),
+			progressDisplayDirective: createAttributesDirective((progressContext$: ReadableSignal<{option: ProgressDisplayOptions}>) => ({
+				styles: {
+					left: computed(() => progressContext$().option.left + '%'),
+					right: computed(() => progressContext$().option.right + '%'),
+					top: computed(() => progressContext$().option.top + '%'),
+					bottom: computed(() => progressContext$().option.bottom + '%'),
+					width: computed(() => progressContext$().option.width + '%'),
+					height: computed(() => progressContext$().option.height + '%'),
+				},
+				classNames: {
+					'au-slider-progress': true,
+				},
+			})),
+			clickableAreaDirective: createAttributesDirective(() => ({
+				events: {
+					click: (event: MouseEvent) => widget.actions.click(event),
+				},
+				classNames: {
+					'au-slider-clickable-area': horizontal$,
+					'au-slider-clickable-area-vertical': vertical$,
+				},
+			})),
+			handleDirective: createAttributesDirective((handleContext$: ReadableSignal<{item: SliderHandle}>) => ({
+				events: {
+					keydown: (event: KeyboardEvent) => widget.actions.keydown(event, handleContext$().item.id),
+					mousedown: (event: MouseEvent) => widget.actions.mouseDown(event, handleContext$().item.id),
+					touchstart: (event: TouchEvent) => widget.actions.touchStart(event, handleContext$().item.id),
+				},
+				attributes: {
+					role: 'slider',
+					'aria-valuemin': min$,
+					'aria-valuemax': max$,
+					'aria-valuenow': computed(() => handleContext$().item.value),
+					'aria-valuetext': computed(() => handleContext$().item.ariaValueText),
+					'aria-label': computed(() => handleContext$().item.ariaLabel),
+					'aria-orientation': computed(() => (vertical$() ? 'vertical' : undefined)),
+					'aria-disabled': computed(() => (disabled$() ? 'true' : undefined)),
+					disabled: disabled$,
+					'aria-readonly': computed(() => (readonly$() ? 'true' : undefined)),
+				},
+				styles: {
+					left: computed(() => handleDisplayOptions$()[handleContext$().item.id].left + '%'),
+					top: computed(() => handleDisplayOptions$()[handleContext$().item.id].top + '%'),
+				},
+				classNames: {
+					'au-slider-handle': true,
+					'au-slider-handle-vertical': vertical$,
+					'au-slider-handle-horizontal': horizontal$,
+				},
+			})),
+			minLabelDirective: mergeDirectives(minLabelDomDirective, minLabelDirective),
+			maxLabelDirective: mergeDirectives(maxLabelDomDirective, maxLabelDirective),
+			combinedHandleLabelDisplayDirective: createAttributesDirective(() => ({
+				classNames: {
+					'au-slider-label-vertical': vertical$,
+					'au-slider-label-vertical-now': vertical$,
+					'au-slider-label': horizontal$,
+					'au-slider-label-now': horizontal$,
+				},
+				styles: {
+					left: computed(() => combinedLabelPositionLeft$() + '%'),
+					top: computed(() => combinedLabelPositionTop$() + '%'),
+				},
+			})),
+			handleLabelDisplayDirective: createAttributesDirective((labelDisplayContext$: ReadableSignal<{index: number}>) => ({
+				classNames: {
+					'au-slider-label-vertical': vertical$,
+					'au-slider-label-vertical-now': vertical$,
+					'au-slider-label': horizontal$,
+					'au-slider-label-now': horizontal$,
+				},
+				styles: {
+					left: computed(() => handleDisplayOptions$()[labelDisplayContext$().index].left + '%'),
+					top: computed(() => handleDisplayOptions$()[labelDisplayContext$().index].top + '%'),
+				},
+			})),
 		},
 		actions: {
 			click(event: MouseEvent) {
@@ -740,4 +876,6 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			},
 		},
 	};
+
+	return widget;
 }

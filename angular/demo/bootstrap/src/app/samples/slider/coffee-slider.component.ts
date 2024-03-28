@@ -1,5 +1,5 @@
 import type {SliderWidget} from '@agnos-ui/angular';
-import {SlotComponent} from '@agnos-ui/angular';
+import {SlotComponent, UseDirective} from '@agnos-ui/angular';
 import {ChangeDetectionStrategy, Component, NgZone, ViewEncapsulation, inject} from '@angular/core';
 import {take} from 'rxjs';
 
@@ -9,6 +9,7 @@ import {take} from 'rxjs';
 	host: {
 		style: 'display: contents;',
 	},
+	imports: [UseDirective],
 	template: `
 		<div class="cup-container position-relative">
 			<div class="cup">
@@ -23,25 +24,7 @@ import {take} from 'rxjs';
 				</div>
 			</div>
 		</div>
-		<button
-			class="coffee-indicator au-slider-handle-vertical"
-			role="slider"
-			[attr.aria-valuemin]="state.min"
-			[attr.aria-valuemax]="state.max"
-			[attr.aria-readonly]="state.readonly ? true : null"
-			[attr.aria-disabled]="state.disabled ? true : null"
-			[attr.aria-valuenow]="state.sortedHandles[0].value"
-			[attr.aria-valuetext]="state.sortedHandles[0].ariaValueText"
-			[attr.aria-label]="state.sortedHandles[0].ariaLabel"
-			[attr.aria-orientation]="state.vertical ? 'vertical' : null"
-			[disabled]="state.disabled"
-			[class]="state.vertical ? 'au-slider-handle-vertical' : 'au-slider-handle-horizontal'"
-			[style.left.%]="state.handleDisplayOptions[state.sortedHandles[0].id].left"
-			[style.top.%]="state.handleDisplayOptions[state.sortedHandles[0].id].top"
-			(keydown)="onKeyDown($event, state.sortedHandles[0].id, widget.actions.keydown)"
-			(mousedown)="widget.actions.mouseDown($event, state.sortedHandles[0].id)"
-			(touchstart)="widget.actions.touchStart($event, state.sortedHandles[0].id)"
-		>
+		<button class="coffee-indicator" [auUse]="widget.directives.handleDirective" [auUseParams]="{item: state.sortedHandles[0]}">
 			{{ '' + state.sortedHandles[0].value }}
 		</button>
 	`,
