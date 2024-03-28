@@ -4,7 +4,7 @@
 
 	type $$Props = Partial<Pick<Props, 'max' | 'ariaLabel' | 'value' | 'className' | 'ariaValueTextFn'>>;
 
-	const widget = callWidgetFactory({factory: createProgressbar, widgetName: 'progressbar', $$slots: {}, $$props, events: {}});
+	const widget = callWidgetFactory({factory: createProgressbar, widgetName: 'progressbar', $$props});
 	export const api = widget.api;
 	const {
 		stores: {value$, max$, className$},

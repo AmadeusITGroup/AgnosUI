@@ -32,7 +32,5 @@ export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget>
 	readonly _widget = callWidgetFactory({
 		factory: createProgressbar,
 		widgetName: 'progressbar',
-		defaultConfig: {},
-		events: {},
 	});
 }

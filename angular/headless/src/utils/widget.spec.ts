@@ -239,7 +239,6 @@ describe('callWidgetFactoryWithConfig', () => {
 
 			_widget = callWidgetFactoryWithConfig({
 				factory,
-				events: {},
 			});
 		}
 		@Component({
