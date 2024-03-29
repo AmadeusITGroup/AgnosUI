@@ -854,7 +854,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 				if (interactive$()) {
 					updateSliderSize$.set({});
 					(event.target as HTMLElement).focus();
-					document.addEventListener('touchmove', handleDrag);
+					document.addEventListener('touchmove', handleDrag, {passive: false});
 					document.addEventListener(
 						'touchend',
 						() => {
