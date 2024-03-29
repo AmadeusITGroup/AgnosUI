@@ -22,7 +22,7 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps
       - run: npm run build:coverage
-      - run: npm run e2e -- --shard=${{ matrix.shard }}/${{ strategy.job-total}}
+      - run: npm run e2e:coverage -- --preview --shard=${{ matrix.shard }}/${{ strategy.job-total}}
       - id: check_lcov
         run: |
           if test -f "e2e/coverage/lcov.info"; then
