@@ -185,7 +185,6 @@ export interface SliderState extends SliderCommonPropsAndState {
 
 	/**
 	 * Check if the slider is interactive, meaning it is not disabled or readonly
-	 * TODO: rename to `interactive`, issue #510
 	 */
 	interactive: boolean;
 }

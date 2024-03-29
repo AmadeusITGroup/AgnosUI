@@ -76,4 +76,9 @@ export const daisyUIMetadata: {[key: string]: ComponentMetadata} = {
 		status: 'stable',
 		since: 'v0.3.0',
 	},
+	Slider: {
+		title: 'Slider',
+		status: 'stable',
+		since: 'v0.3.0',
+	},
 };
