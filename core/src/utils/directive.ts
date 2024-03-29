@@ -235,7 +235,14 @@ export interface AttributesDirectiveProps {
 	 * @remarks
 	 * Key-value pairs where keys are event types and values are event handlers.
 	 */
-	events?: Partial<{[K in keyof HTMLElementEventMap]: (this: HTMLElement, event: HTMLElementEventMap[K]) => void}>;
+	events?: Partial<{
+		[K in keyof HTMLElementEventMap]:
+			| {
+					handler: (this: HTMLElement, event: HTMLElementEventMap[K]) => void;
+					options?: boolean | AddEventListenerOptions;
+			  }
+			| ((this: HTMLElement, event: HTMLElementEventMap[K]) => void);
+	}>;
 
 	/**
 	 * Attributes to be added to the provided node.
@@ -275,8 +282,12 @@ export const createAttributesDirective =
 
 		const {events, attributes, styles, classNames} = propsFn(args$);
 
-		for (const [type, eventFn] of Object.entries(events ?? {})) {
-			unsubscribers.push(addEvent(node, type as keyof HTMLElementEventMap, eventFn as any));
+		for (const [type, event] of Object.entries(events ?? {})) {
+			if (typeof event === 'function') {
+				unsubscribers.push(addEvent(node, type as keyof HTMLElementEventMap, event as any));
+			} else {
+				unsubscribers.push(addEvent(node, type as keyof HTMLElementEventMap, event.handler as any, event.options));
+			}
 		}
 
 		for (const [attributeName, value] of Object.entries(attributes ?? {})) {
