@@ -1,5 +1,5 @@
-import {beforeEach, describe, expect, test} from 'vitest';
-import {bindAttribute, bindClassName, bindStyle, computeCommonAncestor} from './dom';
+import {beforeEach, describe, expect, test, vi} from 'vitest';
+import {addEvent, bindAttribute, bindClassName, bindStyle, computeCommonAncestor} from './dom';
 import {assign} from '../../../../common/utils';
 import {writable} from '@amadeus-it-group/tansu';
 
@@ -149,5 +149,21 @@ describe('computeCommonAncestor', () => {
 		unbindB();
 
 		expect(getAttributes(node)).toStrictEqual(assign(expectedState, {class: ''}));
+	});
+
+	test('addEvent', () => {
+		const node = document.createElement('div');
+		const fn = vi.fn().mockImplementation((event) => {
+			event.preventDefault();
+		});
+		const unbind = addEvent(node, 'click', fn);
+
+		node.click();
+		expect(fn).toHaveBeenCalledTimes(1);
+
+		unbind();
+
+		node.click();
+		expect(fn).toHaveBeenCalledTimes(1);
 	});
 });

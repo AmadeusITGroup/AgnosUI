@@ -68,12 +68,14 @@ export const removeClasses = (element: HTMLElement, classes?: string[]) => {
  * @param element - The HTML element to which the event listener will be added.
  * @param type - A string representing the event type to listen for.
  * @param fn - The event listener function or object.
+ * @param options - An options object that specifies characteristics about the event listener.
  * @returns A function that removes the event listener from the element.
  */
 export function addEvent<K extends keyof HTMLElementEventMap>(
 	element: HTMLElement,
 	type: K,
 	fn: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any,
+	options?: boolean | AddEventListenerOptions,
 ): () => void;
 
 /**
@@ -82,12 +84,18 @@ export function addEvent<K extends keyof HTMLElementEventMap>(
  * @param element - The HTML element to which the event listener will be added.
  * @param type - A string representing the event type to listen for.
  * @param fn - The event listener function or object.
+ * @param options - An options object that specifies characteristics about the event listener.
  * @returns A function that removes the event listener from the element.
  */
-export function addEvent(element: Element, type: string, fn: EventListenerOrEventListenerObject) {
-	element.addEventListener(type, fn);
+export function addEvent(
+	element: Element,
+	type: string,
+	fn: EventListenerOrEventListenerObject,
+	options?: boolean | AddEventListenerOptions,
+): () => void {
+	element.addEventListener(type, fn, options);
 	return function () {
-		element.removeEventListener(type, fn);
+		element.removeEventListener(type, fn, options);
 	};
 }
 

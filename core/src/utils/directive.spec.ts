@@ -286,7 +286,7 @@ describe('directive', () => {
 			const clickFn = vi.fn();
 			const directive = createAttributesDirective(() => ({
 				events: {
-					click: clickFn,
+					click: {handler: clickFn},
 				},
 				attributes: {
 					'aria-label': 'a',
