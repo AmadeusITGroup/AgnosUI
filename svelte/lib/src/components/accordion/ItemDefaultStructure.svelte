@@ -10,23 +10,11 @@
 	const re = new RegExp('^h[1-6]$');
 
 	$: slotContext = {widget, state};
-	$: collapseId = state.itemId + '-collapse';
-	$: toggleId = state.itemId + '-toggle';
 	$: headingTag = re.test(state.itemHeadingTag) ? state.itemHeadingTag : 'h2';
 </script>
 
-<svelte:element this={headingTag} class="accordion-header {state.itemHeaderClass}">
-	<button
-		type="button"
-		id={toggleId}
-		on:click={widget.actions.click}
-		class="accordion-button {state.itemButtonClass}"
-		class:collapsed={!state.itemVisible}
-		disabled={state.itemDisabled}
-		aria-controls={collapseId}
-		aria-disabled={state.itemDisabled}
-		aria-expanded={state.itemVisible}
-	>
+<svelte:element this={headingTag} class="accordion-header" use:slotContext.widget.directives.headerDirective>
+	<button use:slotContext.widget.directives.buttonDirective class="accordion-button">
 		<Slot slotContent={state.slotItemHeader} props={slotContext} let:component let:props>
 			<svelte:fragment slot="slot" let:props><slot name="itemHeader" {...props} /></svelte:fragment>
 			<svelte:component this={component} {...props}>
@@ -38,8 +26,8 @@
 	</button>
 </svelte:element>
 {#if state.shouldBeInDOM}
-	<div class="accordion-collapse {state.itemBodyContainerClass}" use:widget.directives.collapseDirective id={collapseId} aria-labelledby={toggleId}>
-		<div class="accordion-body {state.itemBodyClass}">
+	<div class="accordion-collapse" use:widget.directives.bodyContainerDirective>
+		<div class="accordion-body" use:widget.directives.bodyDirective>
 			<Slot slotContent={state.slotItemBody} props={slotContext} let:component let:props>
 				<svelte:fragment slot="slot" let:props><slot name="itemBody" {...props} /></svelte:fragment>
 				<svelte:component this={component} {...props}>

@@ -11,17 +11,13 @@ const AccordionDemo = () => {
 
 	const Collapse = (props: {slotContext: AccordionItemContext}) => {
 		const {state, widget} = props.slotContext;
-		const collapseSetRef = useDirective(widget.directives.collapseDirective);
 		return (
 			<>
 				{state.shouldBeInDOM ? (
-					<div
-						className={`accordion-collapse ${state.itemBodyContainerClass}`}
-						id={`${state.itemId}-collapse`}
-						aria-labelledby={`${state.itemId}-toggle`}
-						ref={collapseSetRef}
-					>
-						<div className={`accordion-body ${state.itemBodyClass}`}>{BODY}</div>
+					<div className="accordion-collapse" ref={useDirective(widget.directives.bodyContainerDirective)}>
+						<div className="accordion-body" ref={useDirective(widget.directives.bodyDirective)}>
+							{BODY}
+						</div>
 					</div>
 				) : null}
 			</>
@@ -32,22 +28,16 @@ const AccordionDemo = () => {
 		return (
 			<>
 				<div
-					className={`${slotContext.state.itemHeaderClass} accordion-button accordion-header custom-header justify-content-between ${
-						slotContext.state.itemVisible ? '' : 'collapsed'
-					}`}
+					className={`accordion-button accordion-header custom-header justify-content-between ${slotContext.state.itemVisible ? '' : 'collapsed'}`}
 					role="heading"
 					aria-level={2}
+					ref={useDirective(slotContext.widget.directives.headerDirective)}
 				>
 					<p className="m-0">First panel - {slotContext.state.itemVisible ? 'opened' : 'collapsed'}</p>
 					<button
 						type="button"
-						id={`${slotContext.state.itemId}-toggle`}
-						onClick={slotContext.widget.actions.click}
-						className={`btn btn-link p-0 ${slotContext.state.itemButtonClass} ${slotContext.state.itemVisible ? '' : 'collapsed'}`}
-						disabled={slotContext.state.itemDisabled}
-						aria-controls={`${slotContext.state.itemId}-collapse`}
-						aria-disabled={slotContext.state.itemDisabled}
-						aria-expanded={slotContext.state.itemVisible}
+						ref={useDirective(slotContext.widget.directives.toggleDirective)}
+						className={`btn btn-link p-0 ${slotContext.state.itemButtonClass} au-accordion-item-button`}
 					>
 						Toggle first
 					</button>
@@ -60,23 +50,17 @@ const AccordionDemo = () => {
 		return (
 			<>
 				<div
-					className={`${slotContext.state.itemHeaderClass} accordion-button accordion-header custom-header justify-content-between ${
-						slotContext.state.itemVisible ? '' : 'collapsed'
-					}`}
+					className={`accordion-button accordion-header custom-header justify-content-between ${slotContext.state.itemVisible ? '' : 'collapsed'}`}
 					role="heading"
 					aria-level={2}
+					ref={useDirective(slotContext.widget.directives.headerDirective)}
 				>
 					<p className="m-0">Second panel</p>
 					<div className="d-flex flex-wrap gap-2">
 						<button
 							type="button"
-							className={`btn btn-sm btn-outline-primary ${slotContext.state.itemButtonClass} ${slotContext.state.itemVisible ? '' : 'collapsed'}`}
-							id={`${slotContext.state.itemId}-toggle`}
-							onClick={slotContext.widget.actions.click}
-							disabled={slotContext.state.itemDisabled}
-							aria-controls={`${slotContext.state.itemId}-collapse`}
-							aria-disabled={slotContext.state.itemDisabled}
-							aria-expanded={slotContext.state.itemVisible}
+							className={`btn btn-sm btn-outline-primary ${slotContext.state.itemButtonClass} au-accordion-item-button`}
+							ref={useDirective(slotContext.widget.directives.toggleDirective)}
 						>
 							Toggle second
 						</button>
@@ -96,23 +80,15 @@ const AccordionDemo = () => {
 		return (
 			<>
 				<div
-					className={`${slotContext.state.itemHeaderClass} accordion-button accordion-header custom-header justify-content-between ${
-						slotContext.state.itemVisible ? '' : 'collapsed'
-					}`}
+					className={`accordion-button accordion-header custom-header justify-content-between ${slotContext.state.itemVisible ? '' : 'collapsed'}`}
 					role="heading"
 					aria-level={2}
+					ref={useDirective(slotContext.widget.directives.headerDirective)}
 				>
 					<button
 						type="button"
-						className={`p-0 btn btn-link container-fluid text-start ${slotContext.state.itemButtonClass} ${
-							slotContext.state.itemVisible ? '' : 'collapsed'
-						} `}
-						id={`${slotContext.state.itemId}-toggle`}
-						onClick={slotContext.widget.actions.click}
-						disabled={slotContext.state.itemDisabled}
-						aria-disabled={slotContext.state.itemDisabled}
-						aria-controls={`${slotContext.state.itemId}-collapse`}
-						aria-expanded={slotContext.state.itemVisible}
+						className={`p-0 btn btn-link container-fluid text-start ${slotContext.state.itemButtonClass} au-accordion-item-button`}
+						ref={useDirective(slotContext.widget.directives.toggleDirective)}
 					>
 						Third panel
 					</button>

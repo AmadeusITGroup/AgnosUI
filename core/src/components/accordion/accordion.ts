@@ -9,7 +9,7 @@ import {computed, writable} from '@amadeus-it-group/tansu';
 import {noop} from '../../utils/internal/func';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 import {typeBoolean, typeFunction, typeString} from '../../utils/writables';
-import {bindDirectiveNoArg, directiveSubscribe, registrationArray} from '../../utils/directive';
+import {bindDirectiveNoArg, createAttributesDirective, directiveSubscribe, mergeDirectives, registrationArray} from '../../utils/directive';
 import {generateId} from '../../utils/internal/dom';
 
 function adjustItemsCloseOthers(items: AccordionItemWidget[], openItems: string[], oldOpen?: string): AccordionItemWidget[] {
@@ -252,9 +252,28 @@ export interface AccordionItemApi {
 
 export interface AccordionItemDirectives {
 	/**
-	 * Directive to be put on the accordion-item collapse. It will handle the animation.
+	 * Directive to use in special cases, if the accordion header does not use a button element to control the collapsing.
 	 */
-	collapseDirective: Directive;
+	toggleDirective: Directive;
+
+	/**
+	 * Directive to put on the button element that will control the collapsing of the accordion-item.
+	 */
+	buttonDirective: Directive;
+
+	/**
+	 * Directive to put on the accordion-item header that will contain the button element.
+	 */
+	headerDirective: Directive;
+
+	/**
+	 * Directive to put on the accordion-item body.
+	 */
+	bodyDirective: Directive;
+	/**
+	 * Directive to be put on the accordion-item body container. It will handle the animation.
+	 */
+	bodyContainerDirective: Directive;
 	/**
 	 * Directive to be put on the accordion-item. It will handle adding the accordion-item to the accordion.
 	 */
@@ -457,6 +476,10 @@ function createAccordionItem(
 ): AccordionItemWidget {
 	const [
 		{
+			itemBodyClass$,
+			itemButtonClass$,
+			itemBodyContainerClass$,
+			itemHeaderClass$,
 			itemAnimated$,
 			itemTransition$,
 			itemDestroyOnHide$,
@@ -493,6 +516,22 @@ function createAccordionItem(
 			},
 		},
 	});
+	const clickAction = () => {
+		if (!itemDisabled$()) {
+			itemVisible$.update((c: boolean) => !c);
+		}
+	};
+	const toggleDirective = createAttributesDirective(() => ({
+		attributes: {
+			id: computed(() => `${itemId$()}-toggle`),
+			'aria-expanded': computed(() => `${itemVisible$()}`),
+			'aria-disabled': computed(() => `${itemDisabled$()}`),
+			'aria-controls': computed(() => `${itemId$()}-body-container`),
+			disabled: itemDisabled$(),
+		},
+		classNames: {collapsed: computed(() => !itemVisible$())},
+		events: {click: clickAction},
+	}));
 
 	return {
 		...stateStores({
@@ -500,15 +539,15 @@ function createAccordionItem(
 			itemId$,
 			shouldBeInDOM$,
 			itemDisabled$,
+			itemBodyClass$,
+			itemButtonClass$,
+			itemBodyContainerClass$,
+			itemHeaderClass$,
 			...stateProps,
 		}),
 		patch,
 		actions: {
-			click: () => {
-				if (!itemDisabled$()) {
-					itemVisible$.update((c: boolean) => !c);
-				}
-			},
+			click: clickAction,
 		},
 		api: {
 			initDone: () => {
@@ -524,7 +563,33 @@ function createAccordionItem(
 				itemVisible$.update((c: boolean) => !c);
 			},
 		},
-		directives: {collapseDirective: bindDirectiveNoArg(itemTransition.directives.directive), accordionItemDirective: noop},
+		directives: {
+			toggleDirective: toggleDirective,
+			buttonDirective: mergeDirectives(
+				toggleDirective,
+				createAttributesDirective(() => ({
+					attributes: {
+						type: 'button',
+						class: itemButtonClass$(),
+					},
+					classNames: {'au-accordion-item-button': true},
+				})),
+			),
+			headerDirective: createAttributesDirective(() => ({attributes: {class: itemHeaderClass$()}, classNames: {'au-accordion-item-header': true}})),
+			bodyDirective: createAttributesDirective(() => ({attributes: {class: itemBodyClass$()}, classNames: {'au-accordion-item-body': true}})),
+			bodyContainerDirective: mergeDirectives(
+				bindDirectiveNoArg(itemTransition.directives.directive),
+				createAttributesDirective(() => ({
+					attributes: {
+						id: computed(() => `${itemId$()}-body-container`),
+						class: itemBodyContainerClass$(),
+						'aria-labelledby': computed(() => `${itemId$()}-toggle`),
+					},
+					classNames: {'au-accordion-item-body-container': true},
+				})),
+			),
+			accordionItemDirective: noop,
+		},
 	};
 }
 /**
@@ -538,6 +603,7 @@ export function createAccordion(config?: PropsConfig<AccordionProps>): Accordion
 			closeOthers$,
 			onShown$,
 			onHidden$,
+			className$,
 			itemId$,
 			itemAnimated$,
 			itemClass$,
@@ -603,7 +669,7 @@ export function createAccordion(config?: PropsConfig<AccordionProps>): Accordion
 		checkCloseOthersAction$();
 	});
 	return {
-		...stateStores({itemsWidget$, ...stateProps}),
+		...stateStores({itemsWidget$, className$, ...stateProps}),
 		patch,
 		actions: {},
 		api: {
@@ -627,10 +693,22 @@ export function createAccordion(config?: PropsConfig<AccordionProps>): Accordion
 					config: mergeConfigStores(accordionItemProps, normalizeConfigStores(accordionItemProps, propsConfig?.config), accordionItemConfig),
 					props: propsConfig?.props,
 				});
-				item.directives.accordionItemDirective = () => ({destroy: itemsWidget$.register(item)});
+
+				item.directives.accordionItemDirective = mergeDirectives(
+					() => ({destroy: itemsWidget$.register(item)}),
+					createAttributesDirective(() => ({
+						attributes: {class: item.stores.itemClass$, id: item.stores.itemId$},
+						classNames: {'au-accordion-item': true},
+					})),
+				);
 				return item;
 			},
 		},
-		directives: {accordionDirective: directiveSubscribe(action$)},
+		directives: {
+			accordionDirective: mergeDirectives(
+				directiveSubscribe(action$),
+				createAttributesDirective(() => ({attributes: {class: className$()}, classNames: {'au-accordion': true}})),
+			),
+		},
 	};
 }

@@ -6,6 +6,7 @@ import type {MockInstance} from 'vitest';
 import {afterEach, beforeEach, describe, expect, test, vi} from 'vitest';
 import type {WidgetProps, WidgetState} from '../../types';
 import {promiseWithResolve} from '../../utils/internal/promise';
+import {getAttributes} from '../components.spec-utils';
 
 function expectOpenItems(state: WidgetState<AccordionWidget>, expected: boolean[]) {
 	const openItems: boolean[] = state.itemsWidget.map((itemWidget) => itemWidget.state$().itemVisible);
@@ -157,7 +158,7 @@ describe(`Accordion`, () => {
 		const i = accordion.api.registerItem();
 		const element = document.createElement('div');
 		i.directives.accordionItemDirective(element);
-		i.directives.collapseDirective(element);
+		i.directives.bodyContainerDirective(element);
 		expectOpenItems(state, [false]);
 		//calling it twice to ensure only one event is fired
 		i.api.toggle();
@@ -175,10 +176,10 @@ describe(`Accordion`, () => {
 	test(`should fire accordion events`, async () => {
 		const {
 			stores: {itemId$},
-			directives: {collapseDirective, accordionItemDirective},
+			directives: {bodyContainerDirective, accordionItemDirective},
 		} = accordion.api.registerItem();
 		const element = document.createElement('div');
-		collapseDirective(element);
+		bodyContainerDirective(element);
 		accordionItemDirective(element);
 		expectOpenItems(state, [false]);
 		accordion.api.toggle(itemId$());
@@ -202,7 +203,7 @@ describe(`Accordion`, () => {
 	});
 
 	test(`should close the old item if closeOthers`, () => {
-		const element = <HTMLElement>{id: 'domEl'};
+		const element = document.createElement('div');
 		accordion.directives.accordionDirective(element);
 		const items = createItems(accordion, 2);
 		expectOpenItems(state, [false, false]);
@@ -222,7 +223,7 @@ describe(`Accordion`, () => {
 	});
 
 	test(`should close the items open but the first one if closeOthers is true`, () => {
-		const element = <HTMLElement>{id: 'domEl'};
+		const element = document.createElement('div');
 		accordion.directives.accordionDirective(element);
 		const items = createItems(accordion, 4);
 		expectOpenItems(state, [false, false, false, false]);
@@ -244,7 +245,7 @@ describe(`Accordion`, () => {
 	});
 
 	test(`should closeOthers work when oldOpen is undefined`, () => {
-		const element = <HTMLElement>{id: 'domEl'};
+		const element = document.createElement('div');
 		accordion.directives.accordionDirective(element);
 		const items = createItems(accordion, 4);
 		items[0].api.expand();
@@ -261,7 +262,7 @@ describe(`Accordion`, () => {
 		const itemTransition = vi.fn();
 		const itemWidget = accordion.api.registerItem({props: {itemTransition}});
 		itemWidget.directives.accordionItemDirective(el);
-		itemWidget.directives.collapseDirective(el);
+		itemWidget.directives.bodyContainerDirective(el);
 		expectOpenItems(state, [false]);
 		itemWidget.api.expand();
 		expectOpenItems(state, [true]);
@@ -273,7 +274,7 @@ describe(`Accordion`, () => {
 	});
 
 	test(`should not work click when item is disabled`, () => {
-		const element = <HTMLElement>{id: 'domEl'};
+		const element = document.createElement('div');
 		const i = accordion.api.registerItem({props: {itemDisabled: true}});
 		i.directives.accordionItemDirective(element);
 		expectOpenItems(state, [false]);
@@ -312,6 +313,71 @@ describe(`Accordion`, () => {
 			itemButtonClass: '',
 			itemBodyContainerClass: '',
 			itemBodyClass: '',
+		});
+	});
+
+	test(`directives`, () => {
+		defConfigAccordion.set({
+			className: 'my-accordion',
+			itemClass: 'my-item',
+			itemHeaderClass: 'my-header',
+			itemButtonClass: 'my-button',
+			itemBodyContainerClass: 'my-body-container',
+			itemBodyClass: 'my-body',
+			itemId: 'my-id',
+		});
+
+		const item = accordion.api.registerItem();
+
+		const accordionNode = document.createElement('div');
+		const itemNode = document.createElement('div');
+		const bodyContainerNode = document.createElement('div');
+		const bodyNode = document.createElement('div');
+		const headerNode = document.createElement('div');
+		const buttonNode = document.createElement('div');
+
+		accordion.directives.accordionDirective(accordionNode);
+		item.directives.accordionItemDirective(itemNode);
+		item.directives.bodyContainerDirective(bodyContainerNode);
+		item.directives.bodyDirective(bodyNode);
+		item.directives.headerDirective(headerNode);
+		item.directives.buttonDirective(buttonNode);
+
+		expect(getAttributes(accordionNode)).toStrictEqual({
+			class: 'my-accordion au-accordion',
+		});
+		expect(getAttributes(itemNode)).toStrictEqual({class: 'my-item au-accordion-item', id: 'my-id'});
+		expect(getAttributes(bodyContainerNode)).toStrictEqual({
+			class: 'collapse my-body-container au-accordion-item-body-container',
+			id: 'my-id-body-container',
+			'aria-labelledby': 'my-id-toggle',
+		});
+		expect(getAttributes(bodyNode)).toStrictEqual({class: 'my-body au-accordion-item-body'});
+		expect(getAttributes(headerNode)).toStrictEqual({class: 'my-header au-accordion-item-header'});
+		expect(getAttributes(buttonNode)).toStrictEqual({
+			class: 'collapsed my-button au-accordion-item-button',
+			type: 'button',
+			id: 'my-id-toggle',
+			'aria-controls': 'my-id-body-container',
+			'aria-expanded': 'false',
+			'aria-disabled': 'false',
+		});
+
+		// it tests the click event on the button node
+		buttonNode.click();
+
+		expect(getAttributes(bodyContainerNode)).toStrictEqual({
+			class: 'my-body-container au-accordion-item-body-container collapse show',
+			id: 'my-id-body-container',
+			'aria-labelledby': 'my-id-toggle',
+		});
+		expect(getAttributes(buttonNode)).toStrictEqual({
+			class: 'my-button au-accordion-item-button',
+			type: 'button',
+			id: 'my-id-toggle',
+			'aria-controls': 'my-id-body-container',
+			'aria-expanded': 'true',
+			'aria-disabled': 'false',
 		});
 	});
 });
