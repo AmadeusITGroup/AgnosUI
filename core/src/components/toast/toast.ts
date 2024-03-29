@@ -2,7 +2,7 @@ import {computed} from '@amadeus-it-group/tansu';
 import type {ExtendWidgetAdaptSlotWidgetProps, ExtendWidgetInterfaces} from '../../services/extendWidget';
 import {extendWidgetProps} from '../../services/extendWidget';
 import type {ConfigValidator, Directive, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../../types';
-import {directiveSubscribe} from '../../utils/directive';
+import {createAttributesDirective, directiveSubscribe} from '../../utils/directive';
 import {typeBoolean, typeNumberInRangeFactory} from '../../utils/writables';
 import type {CommonAlertApi, CommonAlertDirectives, CommonAlertProps, CommonAlertState, CommonAlertWidget} from '../alert/common';
 import {createCommonAlert, getCommonAlertDefaultConfig} from '../alert/common';
@@ -31,6 +31,14 @@ export interface ExtraDirectives {
 	 * Directive that handles the autohide of the toast component
 	 */
 	autoHideDirective: Directive;
+	/**
+	 * Directive that adds all the necessary attributes to the body
+	 */
+	bodyDirective: Directive;
+	/**
+	 * Directive that adds all the necessary attributes to the close button depending on the presence of the header
+	 */
+	closeButtonDirective: Directive;
 }
 
 export interface ToastState extends ExtendWidgetAdaptSlotWidgetProps<CommonAlertState, ToastExtraProps, ExtraDirectives> {}
@@ -83,11 +91,35 @@ export function createToast(config?: PropsConfig<ToastProps>): ToastWidget {
 		}
 	});
 
+	const bodyDirective = createAttributesDirective(() => ({
+		attributes: {
+			role: 'alert',
+			'aria-atomic': 'true',
+			class: computed(() => extendedAlert.stores.className$()),
+		},
+		classNames: {
+			'au-toast': true,
+			toast: true,
+		},
+	}));
+
+	const closeButtonDirective = createAttributesDirective(() => ({
+		attributes: {
+			type: 'button',
+			'aria-label': computed(() => extendedAlert.stores.ariaCloseButtonLabel$()),
+		},
+		events: {
+			click: extendedAlert.api.close,
+		},
+	}));
+
 	return {
 		...extendedAlert,
 		directives: {
 			...extendedAlert.directives,
 			autoHideDirective: directiveSubscribe(time$),
+			bodyDirective,
+			closeButtonDirective,
 		},
 	};
 }

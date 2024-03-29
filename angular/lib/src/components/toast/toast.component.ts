@@ -54,13 +54,13 @@ export class ToastHeaderDirective {
 @Component({
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [SlotDirective, ToastStructureDirective],
+	imports: [SlotDirective, ToastStructureDirective, UseDirective],
 	template: ` <ng-template auToastStructure #structure let-state="state" let-widget="widget">
 		@if (state.slotHeader) {
 			<div class="toast-header">
 				<ng-template [auSlot]="state.slotHeader" [auSlotProps]="{state, widget}"></ng-template>
 				@if (state.dismissible) {
-					<button type="button" class="btn-close me-0 ms-auto" (click)="widget.api.close()" [attr.aria-label]="state.ariaCloseButtonLabel"></button>
+					<button class="btn-close me-0 ms-auto" [auUse]="widget.directives.closeButtonDirective"></button>
 				}
 			</div>
 		}
@@ -68,12 +68,7 @@ export class ToastHeaderDirective {
 			<ng-template [auSlot]="state.slotDefault" [auSlotProps]="{state, widget}"></ng-template>
 		</div>
 		@if (state.dismissible && !state.slotHeader) {
-			<button
-				type="button"
-				class="btn-close btn-close-white me-2 m-auto"
-				(click)="widget.api.close()"
-				[attr.aria-label]="state.ariaCloseButtonLabel"
-			></button>
+			<button class="btn-close btn-close-white me-2 m-auto" [auUse]="widget.directives.closeButtonDirective"></button>
 		}
 	</ng-template>`,
 })
@@ -96,14 +91,7 @@ const defaultConfig: Partial<ToastProps> = {
 			<ng-content></ng-content>
 		</ng-template>
 		@if (!state().hidden) {
-			<div
-				[auUse]="toastDirective"
-				class="au-toast toast {{ state().className }}"
-				[class.d-flex]="!state().slotHeader"
-				[class.toast-dismissible]="state().dismissible"
-				role="alert"
-				aria-atomic="true"
-			>
+			<div class="toast" [class.d-flex]="!state().slotHeader" [class.toast-dismissible]="state().dismissible" [auUse]="toastDirective">
 				<ng-template [auSlot]="state().slotStructure" [auSlotProps]="{state: state(), widget}"></ng-template>
 			</div>
 		}`,
@@ -208,7 +196,11 @@ export class ToastComponent extends BaseWidgetDirective<ToastWidget> implements 
 
 	@CachedProperty
 	get toastDirective() {
-		return mergeDirectives(this._widget.directives.autoHideDirective, this._widget.directives.transitionDirective);
+		return mergeDirectives(
+			this._widget.directives.autoHideDirective,
+			this._widget.directives.transitionDirective,
+			this._widget.directives.bodyDirective,
+		);
 	}
 
 	ngAfterContentChecked(): void {

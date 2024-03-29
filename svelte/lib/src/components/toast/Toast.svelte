@@ -31,7 +31,7 @@
 
 	const {
 		stores: {slotStructure$, hidden$},
-		directives: {transitionDirective, autoHideDirective},
+		directives: {transitionDirective, autoHideDirective, bodyDirective},
 		state$,
 	} = widget;
 
@@ -41,13 +41,12 @@
 
 {#if !$hidden$}
 	<div
-		class="au-toast toast {$state$.className}"
+		class="toast"
 		class:toast-dismissible={$state$.dismissible}
 		class:d-flex={!$state$.slotHeader}
-		role="alert"
-		aria-atomic="true"
 		use:transitionDirective
 		use:autoHideDirective
+		use:bodyDirective
 	>
 		<Slot slotContent={$slotStructure$} props={slotContext} let:component let:props>
 			<svelte:fragment slot="slot" let:props><slot name="structure" {...props} /></svelte:fragment>
