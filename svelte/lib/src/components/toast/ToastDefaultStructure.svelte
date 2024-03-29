@@ -22,7 +22,7 @@
 			</svelte:component>
 		</Slot>
 		{#if state.dismissible}
-			<button type="button" class="btn-close me-0 ms-auto" on:click={() => widget.api.close()} aria-label={state.ariaCloseButtonLabel} />
+			<button class="btn-close me-0 ms-auto" use:widget.directives.closeButtonDirective />
 		{/if}
 	</div>
 {/if}
@@ -38,5 +38,5 @@
 	</Slot>
 </div>
 {#if state.dismissible && !state.slotHeader}
-	<button type="button" class="btn-close btn-close-white me-2 m-auto" on:click={() => widget.api.close()} aria-label={state.ariaCloseButtonLabel} />
+	<button class="btn-close btn-close-white me-2 m-auto" use:widget.directives.closeButtonDirective />
 {/if}
