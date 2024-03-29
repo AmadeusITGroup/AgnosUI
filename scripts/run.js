@@ -1,13 +1,13 @@
 import path from 'path';
 import runAll from 'npm-run-all2';
-import rootPkg from '../package.json' with {type: 'json'};
+import {readFile} from 'fs/promises';
 
 async function run() {
 	const [, , ...args] = process.argv;
 
-	const allWorkspaces = rootPkg.workspaces;
+	const root = path.join(import.meta.dirname, '..');
+	const allWorkspaces = JSON.parse(await readFile(path.join(root, 'package.json'), {encoding: 'utf-8'})).workspaces;
 
-	const root = path.resolve(import.meta.dirname, '..');
 	const scriptname = args[0];
 	if (!scriptname || allWorkspaces.includes(scriptname)) {
 		throw new Error('The first arg must be the script name');
@@ -15,7 +15,8 @@ async function run() {
 
 	const workspaces = [];
 	for (const workspace of allWorkspaces) {
-		if ((await import(path.resolve(root, workspace, 'package.json'), {with: {type: 'json'}})).default.scripts?.[scriptname]) {
+		const pkg = JSON.parse(await readFile(path.join(root, workspace, 'package.json'), {encoding: 'utf-8'}));
+		if (pkg.scripts?.[scriptname]) {
 			workspaces.push(workspace);
 		}
 	}
