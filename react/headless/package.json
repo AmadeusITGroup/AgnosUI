@@ -118,8 +118,8 @@
 		"react-dom": "*"
 	},
 	"devDependencies": {
-		"@types/react": "^18.2.70",
-		"@types/react-dom": "^18.2.22"
+		"@types/react": "^18.2.73",
+		"@types/react-dom": "^18.2.23"
 	},
 	"sideEffects": false
 }

@@ -113,7 +113,7 @@
 	"devDependencies": {
 		"@stackblitz/sdk": "^1.9.0",
 		"@sveltejs/adapter-static": "^3.0.1",
-		"@sveltejs/kit": "^2.5.4",
+		"@sveltejs/kit": "^2.5.5",
 		"@sveltejs/vite-plugin-svelte": "^3.0.2",
 		"@types/dom-view-transitions": "^1.0.4",
 		"bootstrap-icons": "^1.11.3",
@@ -121,7 +121,7 @@
 		"eslint-plugin-svelte": "^2.35.1",
 		"front-matter": "^4.0.2",
 		"prettier-plugin-svelte": "^3.2.2",
-		"shiki": "^1.2.0",
+		"shiki": "^1.2.3",
 		"svelte": "^4.2.12",
 		"svelte-check": "^3.6.8",
 		"svelte-markdown": "^0.4.1",
