@@ -346,16 +346,16 @@ describe(`Accordion`, () => {
 		expect(getAttributes(accordionNode)).toStrictEqual({
 			class: 'my-accordion au-accordion',
 		});
-		expect(getAttributes(itemNode)).toStrictEqual({class: 'my-item au-accordion-item', id: 'my-id'});
+		expect(getAttributes(itemNode)).toStrictEqual({class: 'my-item', id: 'my-id'});
 		expect(getAttributes(bodyContainerNode)).toStrictEqual({
-			class: 'collapse my-body-container au-accordion-item-body-container',
+			class: 'collapse my-body-container',
 			id: 'my-id-body-container',
 			'aria-labelledby': 'my-id-toggle',
 		});
-		expect(getAttributes(bodyNode)).toStrictEqual({class: 'my-body au-accordion-item-body'});
-		expect(getAttributes(headerNode)).toStrictEqual({class: 'my-header au-accordion-item-header'});
+		expect(getAttributes(bodyNode)).toStrictEqual({class: 'my-body'});
+		expect(getAttributes(headerNode)).toStrictEqual({class: 'my-header'});
 		expect(getAttributes(buttonNode)).toStrictEqual({
-			class: 'collapsed my-button au-accordion-item-button',
+			class: 'collapsed my-button',
 			type: 'button',
 			id: 'my-id-toggle',
 			'aria-controls': 'my-id-body-container',
@@ -367,12 +367,12 @@ describe(`Accordion`, () => {
 		buttonNode.click();
 
 		expect(getAttributes(bodyContainerNode)).toStrictEqual({
-			class: 'my-body-container au-accordion-item-body-container collapse show',
+			class: 'my-body-container collapse show',
 			id: 'my-id-body-container',
 			'aria-labelledby': 'my-id-toggle',
 		});
 		expect(getAttributes(buttonNode)).toStrictEqual({
-			class: 'my-button au-accordion-item-button',
+			class: 'my-button',
 			type: 'button',
 			id: 'my-id-toggle',
 			'aria-controls': 'my-id-body-container',

@@ -3,11 +3,11 @@ import {BasePO} from '@agnos-ui/base-po';
 
 export class AccordionPO extends BasePO {
 	private readonly selectors = {
-		item: '.au-accordion-item',
-		bodyContainer: '.au-accordion-item-body-container',
-		body: '.au-accordion-item-body',
-		header: '.au-accordion-item-header',
-		buttons: '.au-accordion-item-button',
+		item: '.accordion-item',
+		bodyContainer: '.accordion-collapse',
+		body: '.accordion-body',
+		header: '.accordion-header',
+		buttons: '.accordion-button',
 	};
 	override getComponentSelector(): string {
 		return '.au-accordion';
@@ -70,11 +70,11 @@ export class AccordionPO extends BasePO {
 
 	async state() {
 		return await this.locatorRoot.evaluate((rootNode: HTMLElement) => {
-			const itemsElements = [...rootNode.querySelectorAll('.au-accordion-item')] as HTMLDivElement[];
+			const itemsElements = [...rootNode.querySelectorAll('.accordion-item')] as HTMLDivElement[];
 			const items = [];
 			for (const item of itemsElements) {
-				const bodyContainer = item.querySelector('.au-accordion-item-body-container');
-				const button = item.querySelector('.au-accordion-item-button');
+				const bodyContainer = item.querySelector('.accordion-collapse');
+				const button = item.querySelector('.accordion-button');
 				items.push({
 					classes: item.className.trim().split(' '),
 					id: item.id,
