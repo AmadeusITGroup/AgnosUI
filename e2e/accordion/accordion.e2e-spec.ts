@@ -22,7 +22,7 @@ test.describe.parallel(`Accordion tests`, () => {
 		const expectedState: State = {
 			items: [
 				{
-					classes: ['accordion-item', 'au-accordion-item'],
+					classes: ['accordion-item'],
 					id: itemsIds[0]!,
 					isInDOM: true,
 					bodyContainerId: `${itemsIds[0]!}-body-container`,
@@ -33,7 +33,7 @@ test.describe.parallel(`Accordion tests`, () => {
 					buttonControls: `${itemsIds[0]!}-body-container`,
 				},
 				{
-					classes: ['accordion-item', 'au-accordion-item'],
+					classes: ['accordion-item'],
 					id: itemsIds[1]!,
 					isInDOM: false,
 					bodyContainerId: undefined,
@@ -44,7 +44,7 @@ test.describe.parallel(`Accordion tests`, () => {
 					buttonControls: `${itemsIds[1]!}-body-container`,
 				},
 				{
-					classes: ['accordion-item', 'au-accordion-item'],
+					classes: ['accordion-item'],
 					id: itemsIds[2]!,
 					isInDOM: false,
 					bodyContainerId: undefined,
@@ -77,7 +77,7 @@ test.describe.parallel(`Accordion tests`, () => {
 		const expectedState: State = {
 			items: [
 				{
-					classes: ['accordion-item', 'au-accordion-item'],
+					classes: ['accordion-item'],
 					id: itemsIds[0]!,
 					isInDOM: false,
 					bodyContainerId: undefined,
@@ -88,7 +88,7 @@ test.describe.parallel(`Accordion tests`, () => {
 					buttonControls: `${itemsIds[0]!}-body-container`,
 				},
 				{
-					classes: ['accordion-item', 'au-accordion-item'],
+					classes: ['accordion-item'],
 					id: itemsIds[1]!,
 					isInDOM: false,
 					bodyContainerId: undefined,
@@ -128,7 +128,7 @@ test.describe.parallel(`Accordion tests`, () => {
 		const expectedState: State = {
 			items: [
 				{
-					classes: ['accordion-item', 'au-accordion-item'],
+					classes: ['accordion-item'],
 					id: itemsIds[0]!,
 					isInDOM: true,
 					bodyContainerId: `${itemsIds[0]!}-body-container`,
@@ -139,7 +139,7 @@ test.describe.parallel(`Accordion tests`, () => {
 					buttonControls: `${itemsIds[0]!}-body-container`,
 				},
 				{
-					classes: ['accordion-item', 'au-accordion-item'],
+					classes: ['accordion-item'],
 					id: itemsIds[1]!,
 					isInDOM: true,
 					bodyContainerId: `${itemsIds[1]!}-body-container`,

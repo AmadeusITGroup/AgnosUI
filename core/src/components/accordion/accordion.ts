@@ -572,11 +572,10 @@ function createAccordionItem(
 						type: 'button',
 						class: itemButtonClass$(),
 					},
-					classNames: {'au-accordion-item-button': true},
 				})),
 			),
-			headerDirective: createAttributesDirective(() => ({attributes: {class: itemHeaderClass$()}, classNames: {'au-accordion-item-header': true}})),
-			bodyDirective: createAttributesDirective(() => ({attributes: {class: itemBodyClass$()}, classNames: {'au-accordion-item-body': true}})),
+			headerDirective: createAttributesDirective(() => ({attributes: {class: itemHeaderClass$()}})),
+			bodyDirective: createAttributesDirective(() => ({attributes: {class: itemBodyClass$()}})),
 			bodyContainerDirective: mergeDirectives(
 				bindDirectiveNoArg(itemTransition.directives.directive),
 				createAttributesDirective(() => ({
@@ -585,7 +584,6 @@ function createAccordionItem(
 						class: itemBodyContainerClass$(),
 						'aria-labelledby': computed(() => `${itemId$()}-toggle`),
 					},
-					classNames: {'au-accordion-item-body-container': true},
 				})),
 			),
 			accordionItemDirective: noop,
@@ -698,7 +696,6 @@ export function createAccordion(config?: PropsConfig<AccordionProps>): Accordion
 					() => ({destroy: itemsWidget$.register(item)}),
 					createAttributesDirective(() => ({
 						attributes: {class: item.stores.itemClass$, id: item.stores.itemId$},
-						classNames: {'au-accordion-item': true},
 					})),
 				);
 				return item;
