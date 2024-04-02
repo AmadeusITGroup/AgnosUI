@@ -1,13 +1,10 @@
 import type {PlaywrightTestConfig} from '@playwright/test';
 import {devices} from '@playwright/test';
-import type {FixtureOptions} from 'e2e/fixture';
 import path from 'path';
+import type {FixtureOptions} from './e2e/fixture';
+import type {Frameworks, Project} from './e2e/types';
 
 const isCI = process.env.CI === 'true';
-const isPreview = isCI || process.env.PREVIEW === 'true';
-const includeCoverage = isCI || process.env.COVERAGE === 'true';
-const coverageSuffix = includeCoverage ? ':coverage' : '';
-const previewOrDev = isPreview ? 'preview' : 'dev';
 
 const allBrowsers = {
 	chromium: devices['Desktop Chrome'],
@@ -32,63 +29,15 @@ const processEnvList = <T extends string>(name: string, valuesMap: Record<T, any
 
 const playwrightProjects: PlaywrightTestConfig<FixtureOptions>['projects'] = [];
 
-const allServers = {
-	angularDemoDevBootstrap: {
-		command: `npm run -w angular/demo dev:bootstrap${coverageSuffix}`,
-		url: 'http://localhost:4200',
-		urlReadyPath: '/angular/samples/bootstrap/',
-	},
-	angularDemoDevDaisyui: {
-		command: `npm run -w angular/demo dev:daisyui${coverageSuffix}`,
-		url: 'http://localhost:4201',
-		urlReadyPath: '/angular/samples/daisyui/',
-	},
-	reactDemoDev: {
-		command: `npm run -w react/demo dev${coverageSuffix}`,
-		url: 'http://localhost:3000',
-		urlReadyPath: '/react/samples/bootstrap/',
-	},
-	svelteDemoDev: {
-		command: `npm run -w svelte/demo dev${coverageSuffix}`,
-		url: 'http://localhost:3001',
-		urlReadyPath: '/svelte/samples/bootstrap/',
-	},
-	demoSite: {
-		command: `npm run -w demo ${previewOrDev}${coverageSuffix}`,
-		url: 'http://localhost:4000',
-		urlReadyPath: '/',
-	},
+const allFrameworks: Record<Frameworks, any> = {
+	angular: {},
+	react: {},
+	svelte: {},
 };
 
-const selectedServers = new Set<keyof typeof allServers>();
-const addServer = (server: keyof typeof allServers) => {
-	selectedServers.add(server);
-	return allServers[server].url;
-};
-
-const allFrameworks = {
-	angular: {
-		samplesDevServer: () => {
-			addServer('angularDemoDevBootstrap');
-			addServer('angularDemoDevDaisyui');
-			return addServer('demoSite');
-		},
-	},
-	react: {
-		samplesDevServer: () => addServer('reactDemoDev'),
-	},
-	svelte: {
-		samplesDevServer: () => addServer('svelteDemoDev'),
-	},
-};
-
-const addSamplesServer = (framework: keyof typeof allFrameworks) =>
-	`${isPreview ? addServer('demoSite') : allFrameworks[framework].samplesDevServer()}/${framework}/samples/bootstrap/`;
-
-const allProjects = {
+const allProjects: Record<Project, () => void> = {
 	main: () => {
 		(selectedFrameworks.filteredList ?? selectedFrameworks.fullList).forEach((framework) => {
-			const baseURL = addSamplesServer(framework);
 			(selectedBrowsers.filteredList ?? selectedBrowsers.fullList).forEach((browser) => {
 				playwrightProjects.push({
 					name: `main:${framework}:${browser}`,
@@ -96,7 +45,7 @@ const allProjects = {
 					use: {
 						...allBrowsers[browser],
 						framework,
-						baseURL,
+						project: 'main',
 					},
 				});
 			});
@@ -104,28 +53,27 @@ const allProjects = {
 	},
 	singlebrowser: () => {
 		(selectedFrameworks.filteredList ?? selectedFrameworks.fullList).forEach((framework) => {
-			const baseURL = addSamplesServer(framework);
 			(selectedBrowsers.filteredList ?? ['chromium']).forEach((browser) => {
 				playwrightProjects.push({
 					name: `singleBrowser:${framework}:${browser}`,
 					testMatch: '**/*.singlebrowser-e2e-spec.ts',
 					use: {
 						...allBrowsers[browser],
-						baseURL,
+						framework,
+						project: 'singlebrowser',
 					},
 				});
 			});
 		});
 	},
 	demo: () => {
-		const baseURL = addServer('demoSite');
 		(selectedBrowsers.filteredList ?? ['chromium']).forEach((browser) => {
 			playwrightProjects.push({
 				name: `demo:${browser}`,
 				testMatch: '**/*.demo-e2e-spec.ts',
 				use: {
 					...allBrowsers[browser],
-					baseURL,
+					project: 'demo',
 				},
 			});
 		});
@@ -150,9 +98,5 @@ const config: PlaywrightTestConfig<FixtureOptions> = {
 		video: 'on-first-retry',
 	},
 	projects: playwrightProjects,
-	webServer: [...selectedServers].map((server) => {
-		const {command, url, urlReadyPath} = allServers[server];
-		return {command, url: `${url}${urlReadyPath}`, reuseExistingServer: !isCI};
-	}),
 };
 export default config;

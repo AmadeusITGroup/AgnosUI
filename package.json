@@ -43,6 +43,7 @@
 		"eslint": "^8.57.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-jsdoc": "^48.2.2",
+		"express": "^4.19.2",
 		"glob": "10.3.12",
 		"husky": "^9.0.11",
 		"lint-staged": "^15.2.2",
@@ -78,6 +79,7 @@
 		"preview": "npm run preview -w demo",
 		"preview:coverage": "npm run preview:coverage -w demo",
 		"e2e": "wireit",
+		"e2e:coverage": "wireit",
 		"e2e:ui": "wireit",
 		"postinstall": "husky",
 		"syncpack:check": "syncpack lint",
@@ -119,16 +121,17 @@
 			]
 		},
 		"e2e": {
-			"command": "node scripts/e2e.js",
+			"command": "node scripts/e2e.js"
+		},
+		"e2e:coverage": {
+			"command": "node scripts/e2e.js --coverage",
 			"dependencies": [
 				"./code-coverage:build"
 			]
 		},
 		"e2e:ui": {
 			"command": "node scripts/e2e.js --ui",
-			"dependencies": [
-				"./code-coverage:build"
-			]
+			"service": true
 		},
 		"prepare": {
 			"dependencies": [
