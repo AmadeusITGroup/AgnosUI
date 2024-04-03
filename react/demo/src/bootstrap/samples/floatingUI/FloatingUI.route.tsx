@@ -1,13 +1,13 @@
 import '@agnos-ui/common/samples/floatingui/floatingui.scss';
-import {useDirective} from '@agnos-ui/react/utils/directive';
+import {browserDirective, useDirective} from '@agnos-ui/react/utils/directive';
 import {useObservable} from '@agnos-ui/react/utils/stores';
 import {createFloatingUI} from '@agnos-ui/react/services/floatingUI';
 import {autoPlacement, hide, offset, shift} from '@floating-ui/dom';
 import {useMemo, useState} from 'react';
 
-const scrollToMiddle = (element: HTMLElement) => {
+const scrollToMiddle = browserDirective((element: HTMLElement) => {
 	element.scrollTo({left: 326, top: 420});
-};
+});
 
 const FloatingUI = () => {
 	const [displayPopover, setDisplayPopover] = useState(true);

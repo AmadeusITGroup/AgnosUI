@@ -1,6 +1,6 @@
 import {computed} from '@amadeus-it-group/tansu';
 import {noop} from '../utils/internal/func';
-import {createStoreArrayDirective, directiveSubscribe, mergeDirectives} from '../utils/directive';
+import {createBrowserStoreArrayDirective, directiveSubscribe, mergeDirectives} from '../utils/directive';
 import type {Directive} from '../types';
 
 const internalSetSiblingsInert = (element: Element) => {
@@ -35,7 +35,7 @@ const setSiblingsInert = (element: HTMLElement | null | undefined) => {
 	internalRevert = element ? internalSetSiblingsInert(element) : noop;
 };
 
-const {directive: storeArrayDirective, elements$} = createStoreArrayDirective();
+const {directive: storeArrayDirective, elements$} = createBrowserStoreArrayDirective();
 
 const lastElement$ = computed(
 	() => {

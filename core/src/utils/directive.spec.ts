@@ -2,22 +2,23 @@ import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {asReadable, batch, computed, readable, writable} from '@amadeus-it-group/tansu';
 import type {MockInstance} from 'vitest';
 import {beforeEach, describe, expect, test, vi, vitest} from 'vitest';
+import type {Directive, SSRHTMLElement} from '../types';
 import {
 	bindDirective,
 	bindDirectiveNoArg,
 	createAttributesDirective,
 	createStoreArrayDirective,
 	createStoreDirective,
+	directiveAttributes,
 	directiveSubscribe,
 	directiveUpdate,
 	mergeDirectives,
 	registrationArray,
 } from './directive';
-import type {Directive} from '../types';
 
-function directiveAttributes<T = void>(directive: Directive<T>, args?: T) {
+function getDirectiveAttributes<T = void>(directive: Directive<T>, args?: T) {
 	const node = document.createElement('div');
-	const directiveInstance = directive(node as unknown as HTMLElement, args!);
+	const directiveInstance = directive(node, args!);
 	const attributes: Record<string, string> = {};
 	for (const {name, value} of [...node.attributes]) {
 		attributes[name] = value;
@@ -153,7 +154,7 @@ describe('directive', () => {
 	describe('createStoreArrayDirective', () => {
 		test('Basic functionalities', () => {
 			const {directive, elements$} = createStoreArrayDirective();
-			const values: HTMLElement[][] = [];
+			const values: SSRHTMLElement[][] = [];
 			const unsubscribe = elements$.subscribe((value) => values.push(value));
 			expect(values).toEqual([[]]);
 			const instance1 = directive(element);
@@ -170,7 +171,7 @@ describe('directive', () => {
 
 		test('should behave correctly with the same directive twice on the same item and destroying twice the same directive', () => {
 			const {directive, elements$} = createStoreArrayDirective();
-			const values: HTMLElement[][] = [];
+			const values: SSRHTMLElement[][] = [];
 			const unsubscribe = elements$.subscribe((value) => values.push(value));
 			expect(values).toEqual([[]]);
 			const instance1 = directive(element);
@@ -190,7 +191,7 @@ describe('directive', () => {
 	describe('createStoreDirective', () => {
 		test('Basic functionalities', () => {
 			const {directive, element$} = createStoreDirective();
-			const values: (HTMLElement | null)[] = [];
+			const values: (SSRHTMLElement | null)[] = [];
 			const unsubscribe = element$.subscribe((value) => values.push(value));
 			expect(values).toEqual([null]);
 			const instance = directive(element);
@@ -202,7 +203,7 @@ describe('directive', () => {
 
 		test('should log an error when using the directive on more than one element', () => {
 			const {directive, element$} = createStoreDirective();
-			const values: (HTMLElement | null)[] = [];
+			const values: (SSRHTMLElement | null)[] = [];
 			const unsubscribe = element$.subscribe((value) => values.push(value));
 			expect(values).toEqual([null]);
 			const instance1 = directive(element);
@@ -304,7 +305,7 @@ describe('directive', () => {
 				},
 			}));
 
-			expect(directiveAttributes(directive)).toStrictEqual({
+			expect(getDirectiveAttributes(directive)).toStrictEqual({
 				'aria-label': 'a',
 				readonly: '',
 				class: 'c1',
@@ -345,7 +346,7 @@ describe('directive', () => {
 				},
 			}));
 
-			expect(directiveAttributes(directive)).toStrictEqual({'aria-label': 'a', readonly: '', class: 'c1', style: 'cursor: pointer;'});
+			expect(getDirectiveAttributes(directive)).toStrictEqual({'aria-label': 'a', readonly: '', class: 'c1', style: 'cursor: pointer;'});
 			expect(clickFn).not.toHaveBeenCalled();
 		});
 
@@ -362,7 +363,7 @@ describe('directive', () => {
 
 			const directive = createAttributesDirective(() => props);
 
-			expect(directiveAttributes(directive)).toStrictEqual({
+			expect(getDirectiveAttributes(directive)).toStrictEqual({
 				class: 'aa bb cc',
 			});
 		});
@@ -384,7 +385,7 @@ describe('directive', () => {
 			};
 
 			const directive = createAttributesDirective(() => props);
-			const {destroy} = directive(node);
+			const {destroy} = directive(node)!;
 
 			expect(node.getAttribute('class')).toBe('a b c');
 
@@ -405,7 +406,7 @@ describe('directive', () => {
 			const directive = () => ({
 				destroy,
 			});
-			directiveAttributes(directive);
+			getDirectiveAttributes(directive);
 			expect(destroy).toHaveBeenCalled();
 		});
 
@@ -426,17 +427,101 @@ describe('directive', () => {
 			}
 
 			const directive = createAttributesDirective(getProps);
-			const {update, destroy} = directive(node, {classnames: 'aa bb', classC: true, classD: false});
+			const {update, destroy} = directive(node, {classnames: 'aa bb', classC: true, classD: false})!;
 
 			expect(node.getAttribute('class')).toBe('extra aa bb cc');
 
-			update({classnames: 'aa', classC: true, classD: false});
+			update!({classnames: 'aa', classC: true, classD: false});
 			expect(node.getAttribute('class')).toBe('extra aa cc');
 
-			update({classnames: 'aa', classC: false, classD: true});
+			update!({classnames: 'aa', classC: false, classD: true});
 			expect(node.getAttribute('class')).toBe('extra aa dd');
 
 			destroy!();
+		});
+	});
+
+	describe('directiveAttributes', () => {
+		test('should retrieve attributes with stores', () => {
+			const ariaLabel$ = writable('a');
+			const readonly$ = writable(true);
+			const disabled$ = writable(false);
+			const ariaDisabled$ = writable(undefined);
+			const cursor$ = writable('pointer');
+			const width$ = writable(undefined);
+			const c1$ = writable(true);
+			const c2$ = writable(false);
+
+			const directive = createAttributesDirective(() => ({
+				attributes: {
+					'aria-label': ariaLabel$,
+					readonly: readonly$,
+					disabled: disabled$,
+					'aria-disabled': ariaDisabled$,
+				},
+				styles: {
+					cursor: cursor$,
+					width: width$,
+				},
+				classNames: {
+					c1: c1$,
+					c2: c2$,
+				},
+			}));
+
+			expect(directiveAttributes(directive)).toStrictEqual({
+				'aria-label': 'a',
+				readonly: '',
+				class: 'c1',
+				style: 'cursor: pointer;',
+			});
+		});
+
+		test('should work with multiple directives', () => {
+			const readonly$ = writable(true);
+			const disabled$ = writable(true);
+			const cursor$ = writable('pointer');
+			const width$ = writable('10px');
+			const c1$ = writable(true);
+			const c2$ = writable(true);
+
+			const directive1 = createAttributesDirective(() => ({
+				attributes: {
+					readonly: readonly$,
+					class: 'a',
+				},
+				styles: {
+					cursor: cursor$,
+				},
+				classNames: {
+					c1: c1$,
+				},
+			}));
+
+			const directive2 = createAttributesDirective(() => ({
+				attributes: {
+					disabled: disabled$,
+					class: 'b',
+				},
+				styles: {
+					width: width$,
+				},
+				classNames: {
+					c2: c2$,
+				},
+			}));
+
+			const expectedState = {
+				readonly: '',
+				disabled: '',
+				class: 'a c1 b c2',
+				style: 'cursor: pointer;width: 10px;',
+			};
+
+			expect(directiveAttributes(directive1, directive2)).toStrictEqual(expectedState);
+
+			const mergedDirective = mergeDirectives(directive1, directive2);
+			expect(directiveAttributes(mergedDirective), 'should work the same with mergeDirectives').toStrictEqual(expectedState);
 		});
 	});
 });

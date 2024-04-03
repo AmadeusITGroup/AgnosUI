@@ -11,7 +11,7 @@ import type {
 } from '@floating-ui/dom';
 import {arrow, autoUpdate, computePosition} from '@floating-ui/dom';
 import type {PropsConfig} from '../types';
-import {createStoreDirective, directiveSubscribe, mergeDirectives} from '../utils/directive';
+import {createBrowserStoreDirective, directiveSubscribe, mergeDirectives} from '../utils/directive';
 import {promiseStoreToValueStore} from '../utils/internal/promise';
 import {stateStores, writablesForProps} from '../utils/stores';
 
@@ -77,9 +77,9 @@ export const createFloatingUI = (propsConfig?: PropsConfig<FloatingUIProps>) => 
 		propsConfig,
 	);
 
-	const {directive: floatingDirective, element$: floatingElement$} = createStoreDirective();
-	const {directive: referenceDirective, element$: referenceElement$} = createStoreDirective();
-	const {directive: arrowDirective, element$: arrowElement$} = createStoreDirective();
+	const {directive: floatingDirective, element$: floatingElement$} = createBrowserStoreDirective();
+	const {directive: referenceDirective, element$: referenceElement$} = createBrowserStoreDirective();
+	const {directive: arrowDirective, element$: arrowElement$} = createBrowserStoreDirective();
 
 	const arrowOptions$ = computed((): null | ArrowOptions | Derivable<ArrowOptions> => {
 		const arrowElement = arrowElement$();

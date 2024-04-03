@@ -1,5 +1,5 @@
 import {computed, writable} from '@amadeus-it-group/tansu';
-import {registrationArray} from '../utils/directive';
+import {browserDirective, registrationArray} from '../utils/directive';
 import {computeCommonAncestor} from '../utils/internal/dom';
 import {isFocusable} from '../utils/internal/isFocusable';
 import {compareDomOrder} from '../utils/internal/sort';
@@ -179,7 +179,7 @@ export const createNavManager = () => {
 			return null;
 		};
 
-	const directive = <T = any>(directiveElement: HTMLElement, config: NavManagerItemConfig<T>) => {
+	const directive = browserDirective(<T = any>(directiveElement: HTMLElement, config: NavManagerItemConfig<T>) => {
 		const onKeyDown = (event: KeyboardEvent) => {
 			if (isInternalInputNavigation(event)) {
 				return;
@@ -202,7 +202,7 @@ export const createNavManager = () => {
 				unregister();
 			},
 		};
-	};
+	});
 
 	const focusPrevious = createFocusNeighbour(-1);
 	const focusNext = createFocusNeighbour(1);
