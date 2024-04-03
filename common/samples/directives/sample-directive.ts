@@ -1,6 +1,7 @@
-import type {Directive} from '@agnos-ui/core';
+import type {Directive} from '@agnos-ui/core/types';
+import {browserDirective} from '@agnos-ui/core/utils/directive';
 
-export const createSampleDirective: Directive<string> = (element: HTMLElement, text: string) => {
+export const createSampleDirective: Directive<string> = browserDirective((element: HTMLElement, text: string) => {
 	console.log('Directive has been executed on node ', element.id);
 	const clickListener = (event: Event) => {
 		console.log(text, event.target);
@@ -13,4 +14,4 @@ export const createSampleDirective: Directive<string> = (element: HTMLElement, t
 			console.log('Destroy function executed ', element.id);
 		},
 	};
-};
+});

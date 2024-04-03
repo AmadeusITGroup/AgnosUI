@@ -1,7 +1,7 @@
 import type {ReadableSignal, WritableSignal} from '@amadeus-it-group/tansu';
 import {computed, writable} from '@amadeus-it-group/tansu';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
-import {createAttributesDirective, createStoreDirective, mergeDirectives} from '../../utils/directive';
+import {createAttributesDirective, createBrowserStoreDirective, mergeDirectives} from '../../utils/directive';
 import type {ConfigValidator, Directive, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../../types';
 import {noop} from '../../utils/internal/func';
 import {getDecimalPrecision} from '../../utils/internal/math';
@@ -382,6 +382,8 @@ const getUpdateDirection = (vertical: boolean, rtl: boolean, keysVertical: boole
 	return 1;
 };
 
+const percent = (value: number | null) => (value != null ? `${value}%` : '');
+
 /**
  * Create a slider widget with given config props
  * @param config - an optional slider config
@@ -443,9 +445,9 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 	);
 
 	// computed
-	const {directive: sliderDirective, element$: sliderDom$} = createStoreDirective();
-	const {directive: minLabelDomDirective, element$: minLabelDom$} = createStoreDirective();
-	const {directive: maxLabelDomDirective, element$: maxLabelDom$} = createStoreDirective();
+	const {directive: sliderDirective, element$: sliderDom$} = createBrowserStoreDirective();
+	const {directive: minLabelDomDirective, element$: minLabelDom$} = createBrowserStoreDirective();
+	const {directive: maxLabelDomDirective, element$: maxLabelDom$} = createBrowserStoreDirective();
 	const {directive: resizeDirective, dimensions$} = createResizeObserver();
 
 	const updateSliderSize$ = writable({});
@@ -687,12 +689,12 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			sliderDirective: mergeDirectives(sliderDirective, resizeDirective, containerDirective),
 			progressDisplayDirective: createAttributesDirective((progressContext$: ReadableSignal<{option: ProgressDisplayOptions}>) => ({
 				styles: {
-					left: computed(() => progressContext$().option.left + '%'),
-					right: computed(() => progressContext$().option.right + '%'),
-					top: computed(() => progressContext$().option.top + '%'),
-					bottom: computed(() => progressContext$().option.bottom + '%'),
-					width: computed(() => progressContext$().option.width + '%'),
-					height: computed(() => progressContext$().option.height + '%'),
+					left: computed(() => percent(progressContext$().option.left)),
+					right: computed(() => percent(progressContext$().option.right)),
+					top: computed(() => percent(progressContext$().option.top)),
+					bottom: computed(() => percent(progressContext$().option.bottom)),
+					width: computed(() => percent(progressContext$().option.width)),
+					height: computed(() => percent(progressContext$().option.height)),
 				},
 				classNames: {
 					'au-slider-progress': true,
@@ -726,8 +728,8 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 					'aria-readonly': computed(() => (readonly$() ? 'true' : undefined)),
 				},
 				styles: {
-					left: computed(() => handleDisplayOptions$()[handleContext$().item.id].left + '%'),
-					top: computed(() => handleDisplayOptions$()[handleContext$().item.id].top + '%'),
+					left: computed(() => percent(handleDisplayOptions$()[handleContext$().item.id].left)),
+					top: computed(() => percent(handleDisplayOptions$()[handleContext$().item.id].top)),
 				},
 				classNames: {
 					'au-slider-handle': true,
@@ -745,8 +747,8 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 					'au-slider-label-now': horizontal$,
 				},
 				styles: {
-					left: computed(() => combinedLabelPositionLeft$() + '%'),
-					top: computed(() => combinedLabelPositionTop$() + '%'),
+					left: computed(() => percent(combinedLabelPositionLeft$())),
+					top: computed(() => percent(combinedLabelPositionTop$())),
 				},
 			})),
 			handleLabelDisplayDirective: createAttributesDirective((labelDisplayContext$: ReadableSignal<{index: number}>) => ({
@@ -757,8 +759,8 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 					'au-slider-label-now': horizontal$,
 				},
 				styles: {
-					left: computed(() => handleDisplayOptions$()[labelDisplayContext$().index].left + '%'),
-					top: computed(() => handleDisplayOptions$()[labelDisplayContext$().index].top + '%'),
+					left: computed(() => percent(handleDisplayOptions$()[labelDisplayContext$().index].left)),
+					top: computed(() => percent(handleDisplayOptions$()[labelDisplayContext$().index].top)),
 				},
 			})),
 		},

@@ -1,6 +1,6 @@
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {derived} from '@amadeus-it-group/tansu';
-import {createStoreDirective} from '../utils/directive';
+import {createBrowserStoreDirective} from '../utils/directive';
 import {noop} from '../utils/internal/func';
 
 /**
@@ -8,7 +8,7 @@ import {noop} from '../utils/internal/func';
  * @returns An object containing the store with the dimentions of observed element (ResizeObserverEntry), the directive to be applied to the html element to be observed
  */
 export const createResizeObserver = () => {
-	const {element$, directive} = createStoreDirective();
+	const {element$, directive} = createBrowserStoreDirective();
 
 	const observedElement$ = derived<ResizeObserverEntry | undefined, ReadableSignal<HTMLElement | null>>(
 		element$,

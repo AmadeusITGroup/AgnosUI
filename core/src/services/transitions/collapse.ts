@@ -1,6 +1,7 @@
-import {createCSSTransition} from './cssTransitions';
+import {isBrowserHTMLElement} from '../../utils/directive';
 import {addClasses, reflow, removeClasses} from '../../utils/internal/dom';
 import type {TransitionFn} from './baseTransitions';
+import {createCSSTransition} from './cssTransitions';
 
 export interface CollapseContext {
 	/**
@@ -51,8 +52,8 @@ export const createCollapseTransition = ({
 	hideClasses,
 	animationPendingClasses,
 }: CollapseConfig = {}): TransitionFn =>
-	createCSSTransition((element: HTMLElement, direction, animated, context: CollapseContext) => {
-		if (animated) {
+	createCSSTransition((element, direction, animated, context: CollapseContext) => {
+		if (animated && isBrowserHTMLElement(element)) {
 			let {maxSize, minSize} = context;
 
 			if (!maxSize) {

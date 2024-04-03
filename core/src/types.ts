@@ -88,7 +88,25 @@ export type WidgetState<T extends {state$: SubscribableStore<any>}> = T extends 
 export type WidgetProps<T extends {patch: (arg: any) => void}> = T extends {patch: (arg: Partial<infer U extends object>) => void} ? U : never;
 export type WidgetFactory<W extends Widget> = (props?: PropsConfig<WidgetProps<W>>) => W;
 
-export type Directive<T = void> = (node: HTMLElement, args: T) => void | {update?: (args: T) => void; destroy?: () => void};
+/**
+ * Subset of HTMLElement that is available in a server side rendering context.
+ */
+export interface SSRHTMLElement extends Pick<HTMLElement, 'setAttribute' | 'removeAttribute'> {
+	/**
+	 * Object allowing to manipulate the classes of the element.
+	 */
+	classList: Pick<HTMLElement['classList'], 'add' | 'remove' | 'toggle'>;
+	/**
+	 * Object allowing to manipulate the style of the element.
+	 */
+	style: Partial<Record<StyleKey, StyleValue>>;
+}
+
+export type Directive<T = void, U extends SSRHTMLElement = SSRHTMLElement> = (
+	node: U,
+	args: T,
+) => void | {update?: (args: T) => void; destroy?: () => void};
+export type DirectiveAndParam<T, U extends SSRHTMLElement = SSRHTMLElement> = [Directive<T, U>, T];
 
 export type SlotContent<Props extends object = object> = undefined | null | string | ((props: Props) => string);
 
@@ -109,4 +127,17 @@ export interface WritableWithDefaultOptions<T> {
 export type ConfigValidator<T extends object> = {[K in keyof T]?: WritableWithDefaultOptions<T[K]>};
 
 export type AttributeValue = string | number | boolean | undefined;
+export type StyleKey = Exclude<
+	keyof CSSStyleDeclaration,
+	| 'length'
+	| 'item'
+	| 'parentRule'
+	| 'getPropertyValue'
+	| 'getPropertyPriority'
+	| 'setProperty'
+	| 'removeProperty'
+	| typeof Symbol.iterator
+	| number
+	| 'cssText'
+>;
 export type StyleValue = string | undefined | null;

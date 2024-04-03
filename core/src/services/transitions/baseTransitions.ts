@@ -1,6 +1,6 @@
 import {batch, computed, derived, writable} from '@amadeus-it-group/tansu';
 import {typeBoolean, typeBooleanOrNull, typeFunction} from '../../utils/writables';
-import type {ConfigValidator, Directive, PropsConfig, Widget} from '../../types';
+import type {ConfigValidator, Directive, PropsConfig, SSRHTMLElement, Widget} from '../../types';
 import {promiseWithResolve} from '../../utils/internal/promise';
 import {noop} from '../../utils/internal/func';
 import {bindableDerived, stateStores, writablesForProps} from '../../utils/stores';
@@ -13,7 +13,7 @@ export type TransitionFn = (
 	/**
 	 * Element on which the transition should be applied.
 	 */
-	element: HTMLElement,
+	element: SSRHTMLElement,
 
 	/**
 	 * Whether the element should be shown or hidden.
@@ -217,7 +217,7 @@ export const createTransition = (config?: PropsConfig<TransitionProps>): Transit
 			visible: boolean;
 			animated: boolean;
 			context: object;
-			element: HTMLElement;
+			element: SSRHTMLElement;
 			transitionFn: TransitionFn;
 			promise: Promise<void>;
 		},
@@ -233,7 +233,7 @@ export const createTransition = (config?: PropsConfig<TransitionProps>): Transit
 		return context;
 	};
 
-	const runTransition = (visible: boolean, animated: boolean, element: HTMLElement, transitionFn: TransitionFn) =>
+	const runTransition = (visible: boolean, animated: boolean, element: SSRHTMLElement, transitionFn: TransitionFn) =>
 		batch(() => {
 			const abort = new AbortController();
 			const signal = abort.signal;
@@ -271,7 +271,7 @@ export const createTransition = (config?: PropsConfig<TransitionProps>): Transit
 	const effectiveAnimation$ = computed(() => (initDone$() ? animated$() : animatedOnInit$()));
 
 	const animationFromToggle$ = writable(null as null | boolean);
-	let previousElement: HTMLElement | null;
+	let previousElement: SSRHTMLElement | null;
 	let previousVisible = requestedVisible$();
 	let pendingTransition: null | ({animated: boolean} & ReturnType<typeof promiseWithResolve>) = null;
 	const visibleAction$ = derived(

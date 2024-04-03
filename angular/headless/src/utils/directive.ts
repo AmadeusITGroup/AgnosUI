@@ -1,6 +1,7 @@
 import type {Directive as AgnosUIDirective} from '@agnos-ui/core/types';
+import {isPlatformServer} from '@angular/common';
 import type {OnChanges} from '@angular/core';
-import {DestroyRef, Directive, ElementRef, Injector, Input, afterNextRender, inject, runInInjectionContext} from '@angular/core';
+import {DestroyRef, Directive, ElementRef, Injector, Input, PLATFORM_ID, afterNextRender, inject, runInInjectionContext} from '@angular/core';
 
 export * from '@agnos-ui/core/utils/directive';
 
@@ -14,22 +15,27 @@ export * from '@agnos-ui/core/utils/directive';
 export const useDirectiveForHost = <T>(directive?: AgnosUIDirective<T>, params?: T) => {
 	const injector = inject(Injector);
 	const ref = inject(ElementRef);
+	const platform = inject(PLATFORM_ID);
 
 	let instance: undefined | ReturnType<AgnosUIDirective<T>>;
 	let plannedCallDirective = false;
 
-	const callDirective = () => {
-		if (plannedCallDirective || !directive) {
-			return;
-		}
-		plannedCallDirective = true;
-		runInInjectionContext(injector, () => {
-			afterNextRender(() => {
-				plannedCallDirective = false;
+	const callDirective = isPlatformServer(platform)
+		? () => {
 				instance = directive?.(ref.nativeElement, params as T);
-			});
-		});
-	};
+			}
+		: () => {
+				if (plannedCallDirective || !directive) {
+					return;
+				}
+				plannedCallDirective = true;
+				runInInjectionContext(injector, () => {
+					afterNextRender(() => {
+						plannedCallDirective = false;
+						instance = directive?.(ref.nativeElement, params as T);
+					});
+				});
+			};
 
 	function destroyDirectiveInstance() {
 		const oldInstance = instance;

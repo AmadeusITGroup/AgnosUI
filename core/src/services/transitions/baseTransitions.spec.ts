@@ -16,7 +16,7 @@ describe(`createTransition`, () => {
 		if (!context.callNumber) {
 			context.callNumber = callNumber;
 		}
-		events.push(`transitionStart:${callNumber}:${element.id}:${direction}:anim=${animated}:ctxt=${context.callNumber}`);
+		events.push(`transitionStart:${callNumber}:${(element as any).id}:${direction}:anim=${animated}:ctxt=${context.callNumber}`);
 		let aborted = false;
 		const abort = new Promise<void>((resolve) => {
 			signal.addEventListener('abort', () => {

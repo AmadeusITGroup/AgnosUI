@@ -1,10 +1,10 @@
-import {AgnosUIAngularModule, createFloatingUI, toAngularSignal} from '@agnos-ui/angular';
+import {AgnosUIAngularModule, browserDirective, createFloatingUI, toAngularSignal} from '@agnos-ui/angular';
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {autoPlacement, hide, offset, shift} from '@floating-ui/dom';
 
-const scrollToMiddle = (element: HTMLElement) => {
+const scrollToMiddle = browserDirective((element) => {
 	element.scrollTo({left: 326, top: 420});
-};
+});
 
 @Component({
 	standalone: true,

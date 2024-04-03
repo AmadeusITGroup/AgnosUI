@@ -1,4 +1,5 @@
 import type {Directive} from '../types';
+import {browserDirective} from '../utils/directive';
 
 export type PortalDirectiveArg =
 	| {
@@ -15,7 +16,7 @@ export type PortalDirectiveArg =
  * @param newArg - {@link PortalDirectiveArg} args
  * @returns the portal directive
  */
-export const portal: Directive<PortalDirectiveArg> = (content: HTMLElement, newArg: PortalDirectiveArg) => {
+export const portal: Directive<PortalDirectiveArg> = browserDirective((content: HTMLElement, newArg: PortalDirectiveArg) => {
 	let arg: PortalDirectiveArg;
 	let replaceComment: Comment | null | undefined;
 
@@ -54,4 +55,4 @@ export const portal: Directive<PortalDirectiveArg> = (content: HTMLElement, newA
 			content.parentNode?.removeChild(content);
 		},
 	};
-};
+});

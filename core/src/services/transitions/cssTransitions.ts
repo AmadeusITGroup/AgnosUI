@@ -1,6 +1,8 @@
+import type {SSRHTMLElement} from '../../types';
+import {isBrowserHTMLElement} from '../../utils/directive';
 import {noop} from '../../utils/internal/func';
-import type {TransitionFn} from './baseTransitions';
 import {promiseFromEvent, promiseFromTimeout} from '../../utils/internal/promise';
+import type {TransitionFn} from './baseTransitions';
 
 /**
  * Check if the provided html element has a transition
@@ -24,7 +26,7 @@ export function getTransitionDurationMs(element: HTMLElement): number {
 	return (transitionDelaySec + transitionDurationSec) * 1000;
 }
 
-export type CSSTransitionFn = (element: HTMLElement, direction: 'show' | 'hide', animated: boolean, context: object) => void | (() => void);
+export type CSSTransitionFn = (element: SSRHTMLElement, direction: 'show' | 'hide', animated: boolean, context: object) => void | (() => void);
 
 /**
  * Create a simple css transition.
@@ -37,7 +39,7 @@ export const createCSSTransition =
 	async (element, direction, animated, signal, context) => {
 		const endFn = start(element, direction, animated, context) ?? noop;
 
-		if (animated && hasTransition(element)) {
+		if (isBrowserHTMLElement(element) && animated && hasTransition(element)) {
 			const abort = promiseFromEvent(signal, 'abort');
 			const transitionEnd = promiseFromEvent(element, 'transitionend');
 			const timer = promiseFromTimeout(getTransitionDurationMs(element));
