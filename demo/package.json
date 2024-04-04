@@ -23,7 +23,8 @@
 			"files": [
 				"../core/src/**",
 				"../scripts/doc/tsconfig.json",
-				"../scripts/doc/generate-docs.ts"
+				"../scripts/doc/generate-docs.ts",
+				"../scripts/doc/api-doc.ts"
 			],
 			"output": [
 				"generated/**"
