@@ -91,6 +91,9 @@ const defaultConfigFnregExp = /^get([a-zA-Z]*)DefaultConfig$/;
 export function parseDocs(indexFile: string) {
 	const program = ts.createProgram([indexFile], {});
 	const typeChecker = program.getTypeChecker();
+	const sourceFile = program.getSourceFile(indexFile)!;
+	const sourceFileSymbol = typeChecker.getSymbolAtLocation(sourceFile)!;
+	const exportsList = typeChecker.getExportsOfModule(sourceFileSymbol);
 
 	function visitPosition(node: Node): NodePosition {
 		const sourceFile = node.getSourceFile();
@@ -119,12 +122,8 @@ export function parseDocs(indexFile: string) {
 		};
 	}
 
-	function visitExports(fileName: string): Record<string, DeclarationDoc> {
-		const sourceFile = program.getSourceFile(fileName)!;
-		const sourceFileSymbol = typeChecker.getSymbolAtLocation(sourceFile)!;
-		const exportsList = typeChecker.getExportsOfModule(sourceFileSymbol);
+	function visitExports(): Record<string, DeclarationDoc> {
 		const json: Record<string, DeclarationDoc> = {};
-
 		exportsList.forEach((exportedItem) => {
 			if (isInternalMember(exportedItem)) {
 				return;
@@ -194,33 +193,56 @@ export function parseDocs(indexFile: string) {
 		typeChecker.getSymbolAtLocation(functionDeclaration);
 		const docProperties: Record<string, {text: string; type: string}> = {};
 		if (ts.isReturnStatement(lastStatement!)) {
-			const expression = lastStatement.expression;
+			let expression = lastStatement.expression;
+			if (ts.isAsExpression(expression!)) {
+				expression = expression.expression;
+			}
 			if (ts.isObjectLiteralExpression(expression!)) {
-				const spreadAssignment = expression.properties[0];
-				if (ts.isSpreadAssignment(spreadAssignment)) {
-					const symbol = typeChecker.getSymbolAtLocation(spreadAssignment.expression);
-					const declaration = symbol!.getDeclarations()![0];
-					if (ts.isVariableDeclaration(declaration)) {
-						const initializer = declaration.initializer;
-						if (ts.isObjectLiteralExpression(initializer!)) {
-							const properties = initializer.properties;
-							for (const property of properties) {
-								if (ts.isPropertyAssignment(property)) {
-									const {name, initializer} = property;
-									if (ts.isIdentifier(name)) {
-										docProperties[name.text] = {
-											text: initializer.getText(),
-											type: visitType(initializer),
-										};
+				for (const spreadAssignment of expression.properties) {
+					if (ts.isSpreadAssignment(spreadAssignment)) {
+						const spreadExpression = spreadAssignment.expression;
+						if (ts.isCallExpression(spreadExpression)) {
+							const symbol = typeChecker.getSymbolAtLocation(spreadExpression.expression);
+							const declaration = symbol!.getDeclarations()![0];
+							if (ts.isImportSpecifier(declaration)) {
+								const functionName = declaration.name.getText();
+								const functionSymbol = exportsList.find((exportItem) => exportItem.name === functionName);
+								const functionDeclaration = functionSymbol!.getDeclarations()![0];
+								if (ts.isFunctionDeclaration(functionDeclaration)) {
+									for (const [key, val] of Object.entries(visitConfigFunctionDeclaration(functionDeclaration)!)) {
+										docProperties[key] = val;
 									}
-								} else {
-									throw new Error('Unknow assignement in config');
+								}
+							}
+						} else {
+							const symbol = typeChecker.getSymbolAtLocation(spreadExpression);
+							const declaration = symbol!.getDeclarations()![0];
+							if (ts.isVariableDeclaration(declaration)) {
+								const initializer = declaration.initializer;
+								if (ts.isObjectLiteralExpression(initializer!)) {
+									const properties = initializer.properties;
+									for (const property of properties) {
+										if (ts.isPropertyAssignment(property)) {
+											const {name, initializer} = property;
+											if (ts.isIdentifier(name)) {
+												docProperties[name.text] = {
+													text: initializer.getText(),
+													type: visitType(initializer),
+												};
+											}
+										} else {
+											throw new Error('Unknow assignement in config');
+										}
+									}
 								}
 							}
 						}
 					}
 				}
 			}
+		}
+		if (Object.keys(docProperties).length === 0) {
+			throw new Error(`Could not properly compute widget default config from function ${functionDeclaration.name!.getText()}`);
 		}
 		return docProperties;
 	}
@@ -274,5 +296,5 @@ export function parseDocs(indexFile: string) {
 		return node ? typeChecker.typeToString(typeChecker.getTypeAtLocation(node)) : 'void';
 	}
 
-	return visitExports(indexFile);
+	return visitExports();
 }

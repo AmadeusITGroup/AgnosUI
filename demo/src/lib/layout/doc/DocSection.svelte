@@ -4,14 +4,9 @@
 	import Code from '../Code.svelte';
 	import Section from '$lib/layout/Section.svelte';
 
-	const noDefault = {};
-
 	export let title: string;
 	export let properties: PropertyDoc[];
-	export let defaultValues: Record<string, any> = noDefault;
 	$: titleLowercase = title.toLowerCase();
-
-	$: hasDefaults = defaultValues !== noDefault;
 </script>
 
 {#if properties.length}
@@ -25,7 +20,7 @@
 						{line}<br />
 					{/each}
 				</div>
-				{#if hasDefaults && defaultValue}
+				{#if defaultValue}
 					{@const nType = normalizedType(type)}
 					<div class="mb-3">
 						<span class="fw-bold">Default value:</span>
