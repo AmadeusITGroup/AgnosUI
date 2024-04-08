@@ -31,27 +31,26 @@ const Header = (props: PropsWithChildren<{headerTag: string; directive: Directiv
 	);
 };
 
+const ItemContent = (slotContext: AccordionItemContext) => (
+	<div className="accordion-collapse" {...useDirective(slotContext.widget.directives.bodyContainerDirective)}>
+		<div className="accordion-body" {...useDirective(slotContext.widget.directives.bodyDirective)}>
+			<Slot slotContent={slotContext.state.slotItemBody} props={slotContext}></Slot>
+		</div>
+	</div>
+);
+
 const AccordionDIContext: React.Context<Partial<AccordionApi>> = createContext({});
-const DefaultSlotStructure = (slotContext: AccordionItemContext) => {
-	const bodyContainerSetRef = useDirective(slotContext.widget.directives.bodyContainerDirective);
-	const bodySetRef = useDirective(slotContext.widget.directives.bodyDirective);
-	return (
-		<>
-			<Header directive={slotContext.widget.directives.headerDirective} headerTag={slotContext.state.itemHeadingTag}>
-				<button className="accordion-button" {...useDirective(slotContext.widget.directives.buttonDirective)}>
-					<Slot slotContent={slotContext.state.slotItemHeader} props={slotContext}></Slot>
-				</button>
-			</Header>
-			{slotContext.state.shouldBeInDOM ? (
-				<div className="accordion-collapse" {...bodyContainerSetRef}>
-					<div className="accordion-body" {...bodySetRef}>
-						<Slot slotContent={slotContext.state.slotItemBody} props={slotContext}></Slot>
-					</div>
-				</div>
-			) : null}
-		</>
-	);
-};
+const DefaultSlotStructure = (slotContext: AccordionItemContext) => (
+	<>
+		<Header directive={slotContext.widget.directives.headerDirective} headerTag={slotContext.state.itemHeadingTag}>
+			<button className="accordion-button" {...useDirective(slotContext.widget.directives.buttonDirective)}>
+				<Slot slotContent={slotContext.state.slotItemHeader} props={slotContext}></Slot>
+			</button>
+		</Header>
+		{slotContext.state.shouldBeInDOM && <ItemContent {...slotContext} />}
+	</>
+);
+
 const defaultConfig: Partial<AccordionItemProps> = {
 	slotItemStructure: DefaultSlotStructure,
 };

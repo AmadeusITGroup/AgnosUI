@@ -36,64 +36,57 @@ const HandleLabelDisplay = ({
 }) => {
 	return <div {...useDirective(directive, {index})}>{children}</div>;
 };
-export const DefaultSlotStructure = (slotContext: SliderContext) => {
-	const minSetRef = useDirective(slotContext.widget.directives.minLabelDirective);
-	const maxSetRef = useDirective(slotContext.widget.directives.maxLabelDirective);
-	const combinedHandleLabelDisplaySetRef = useDirective(slotContext.widget.directives.combinedHandleLabelDisplayDirective);
 
-	return (
-		<>
-			{slotContext.state.progressDisplayOptions.map((option, index) => (
-				<ProgressDisplay key={index} directive={slotContext.widget.directives.progressDisplayDirective} option={option} />
-			))}
-			<div {...useDirective(slotContext.widget.directives.clickableAreaDirective)} />
-			{slotContext.state.showMinMaxLabels ? (
-				<>
-					<div {...minSetRef}>
-						<Slot slotContent={slotContext.state.slotLabel} props={{value: slotContext.state.min, ...slotContext}} />
-					</div>
-					<div {...maxSetRef}>
-						<Slot slotContent={slotContext.state.slotLabel} props={{value: slotContext.state.max, ...slotContext}} />
-					</div>
-				</>
-			) : (
-				<></>
-			)}
-			{slotContext.state.showValueLabels && slotContext.state.combinedLabelDisplay ? (
-				<div {...combinedHandleLabelDisplaySetRef}>
-					{slotContext.state.rtl ? (
-						<>
-							<Slot slotContent={slotContext.state.slotLabel} props={{value: slotContext.state.sortedValues[1], ...slotContext}} />
-							{' - '}
-							<Slot slotContent={slotContext.state.slotLabel} props={{value: slotContext.state.sortedValues[0], ...slotContext}} />
-						</>
-					) : (
-						<>
-							<Slot slotContent={slotContext.state.slotLabel} props={{value: slotContext.state.sortedValues[0], ...slotContext}} />
-							{' - '}
-							<Slot slotContent={slotContext.state.slotLabel} props={{value: slotContext.state.sortedValues[1], ...slotContext}} />
-						</>
-					)}
-				</div>
-			) : (
-				<></>
-			)}
+const MinMaxLabels = (slotContext: SliderContext) => (
+	<>
+		<div {...useDirective(slotContext.widget.directives.minLabelDirective)}>
+			<Slot slotContent={slotContext.state.slotLabel} props={{value: slotContext.state.min, ...slotContext}} />
+		</div>
+		<div {...useDirective(slotContext.widget.directives.maxLabelDirective)}>
+			<Slot slotContent={slotContext.state.slotLabel} props={{value: slotContext.state.max, ...slotContext}} />
+		</div>
+	</>
+);
 
-			{slotContext.state.sortedHandles.map((item, i) => (
-				<React.Fragment key={item.id}>
-					<Slot slotContent={slotContext.state.slotHandle} props={{item, ...slotContext}} />
-					{slotContext.state.showValueLabels && !slotContext.state.combinedLabelDisplay ? (
-						<HandleLabelDisplay directive={slotContext.widget.directives.handleLabelDisplayDirective} index={i}>
-							<Slot slotContent={slotContext.state.slotLabel} props={{value: slotContext.state.values[i], ...slotContext}} />
-						</HandleLabelDisplay>
-					) : (
-						<></>
-					)}
-				</React.Fragment>
-			))}
-		</>
-	);
-};
+const CombinedLabel = (slotContext: SliderContext) => (
+	<div {...useDirective(slotContext.widget.directives.combinedHandleLabelDisplayDirective)}>
+		{slotContext.state.rtl ? (
+			<>
+				<Slot slotContent={slotContext.state.slotLabel} props={{value: slotContext.state.sortedValues[1], ...slotContext}} />
+				{' - '}
+				<Slot slotContent={slotContext.state.slotLabel} props={{value: slotContext.state.sortedValues[0], ...slotContext}} />
+			</>
+		) : (
+			<>
+				<Slot slotContent={slotContext.state.slotLabel} props={{value: slotContext.state.sortedValues[0], ...slotContext}} />
+				{' - '}
+				<Slot slotContent={slotContext.state.slotLabel} props={{value: slotContext.state.sortedValues[1], ...slotContext}} />
+			</>
+		)}
+	</div>
+);
+
+export const DefaultSlotStructure = (slotContext: SliderContext) => (
+	<>
+		{slotContext.state.progressDisplayOptions.map((option, index) => (
+			<ProgressDisplay key={index} directive={slotContext.widget.directives.progressDisplayDirective} option={option} />
+		))}
+		<div {...useDirective(slotContext.widget.directives.clickableAreaDirective)} />
+		{slotContext.state.showMinMaxLabels && <MinMaxLabels {...slotContext} />}
+		{slotContext.state.showValueLabels && slotContext.state.combinedLabelDisplay && <CombinedLabel {...slotContext} />}
+
+		{slotContext.state.sortedHandles.map((item, i) => (
+			<React.Fragment key={item.id}>
+				<Slot slotContent={slotContext.state.slotHandle} props={{item, ...slotContext}} />
+				{slotContext.state.showValueLabels && !slotContext.state.combinedLabelDisplay && (
+					<HandleLabelDisplay directive={slotContext.widget.directives.handleLabelDisplayDirective} index={i}>
+						<Slot slotContent={slotContext.state.slotLabel} props={{value: slotContext.state.values[i], ...slotContext}} />
+					</HandleLabelDisplay>
+				)}
+			</React.Fragment>
+		))}
+	</>
+);
 
 const defaultConfig: Partial<SliderProps> = {
 	slotStructure: DefaultSlotStructure,

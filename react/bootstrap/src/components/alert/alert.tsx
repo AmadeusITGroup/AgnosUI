@@ -30,29 +30,26 @@ const defaultConfig: Partial<AlertProps> = {
 	slotStructure: DefaultSlotStructure,
 };
 
+const AlertElement = (slotContext: AlertContext) => (
+	<div
+		className={`au-alert alert alert-${slotContext.state.type} ${slotContext.state.className} ${slotContext.state.dismissible ? 'alert-dismissible' : ''}`}
+		role="alert"
+		{...useDirective(slotContext.widget.directives.transitionDirective)}
+	>
+		<Slot slotContent={slotContext.state.slotStructure} props={slotContext}></Slot>
+	</div>
+);
+
 export const Alert: ForwardRefExoticComponent<PropsWithChildren<Partial<AlertProps>> & RefAttributes<AlertApi>> = forwardRef(function Alert(
 	props: PropsWithChildren<Partial<AlertProps>>,
 	ref: ForwardedRef<AlertApi>,
 ) {
 	const [state, widget] = useWidgetWithConfig(createAlert, props, 'alert', {...defaultConfig, slotDefault: props.children});
-	const refTransition = useDirective(widget.directives.transitionDirective);
 	useImperativeHandle(ref, () => widget.api, []);
 	const slotContext = {
 		state,
 		widget,
 	};
 
-	return (
-		<>
-			{state.hidden ? null : (
-				<div
-					className={`au-alert alert alert-${state.type} ${state.className} ${state.dismissible ? 'alert-dismissible' : ''}`}
-					role="alert"
-					{...refTransition}
-				>
-					<Slot slotContent={state.slotStructure} props={slotContext}></Slot>
-				</div>
-			)}
-		</>
-	);
+	return <>{!state.hidden && <AlertElement {...slotContext} />}</>;
 });
