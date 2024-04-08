@@ -51,7 +51,7 @@
 		"prettier": "^3.2.5",
 		"syncpack": "^12.3.0",
 		"typescript": "~5.4.4",
-		"vite": "^5.2.7",
+		"vite": "^5.2.8",
 		"vitest": "^1.4.0",
 		"wireit": "^0.14.4"
 	},

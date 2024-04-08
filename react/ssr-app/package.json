@@ -20,7 +20,7 @@
 		"@types/react": "^18.2.73",
 		"@types/react-dom": "^18.2.23",
 		"@vitejs/plugin-react": "^4.2.1",
-		"vite": "^5.2.7"
+		"vite": "^5.2.8"
 	},
 	"wireit": {
 		"check": {
