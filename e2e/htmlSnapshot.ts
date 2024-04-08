@@ -48,8 +48,21 @@ export const htmlStructure = (locator: Locator): Promise<HTMLNode> =>
 			} else if (isNodeInput) {
 				attributes.push({name: 'value', value: node.value});
 			}
+			const style = 'style' in node ? node.style : undefined;
+			const styleAttributes = [];
+			if (style instanceof CSSStyleDeclaration && style.length > 0) {
+				// normalize style attribute:
+				for (const name of style) {
+					styleAttributes.push(`${name}: ${style.getPropertyValue(name)};`);
+				}
+				attributes.push({name: 'style', value: styleAttributes.join(' ')});
+			}
 			for (const {name, value} of node.attributes) {
-				if ((isNodeCheckbox && name === 'checked') || (isNodeInputNotCheckbox && name === 'value')) {
+				if (
+					(isNodeCheckbox && name === 'checked') ||
+					(isNodeInputNotCheckbox && name === 'value') ||
+					(styleAttributes.length > 0 && name === 'style')
+				) {
 					continue;
 				}
 				attributes.push({name, value});
