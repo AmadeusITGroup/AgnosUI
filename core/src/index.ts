@@ -20,6 +20,7 @@ export * from './services/extendWidget';
 export * from './services/floatingUI';
 export * from './services/focustrack';
 export * from './services/intersection';
+export * from './services/matchMedia';
 export * from './services/navManager';
 export * from './services/portal';
 export * from './services/resizeObserver';

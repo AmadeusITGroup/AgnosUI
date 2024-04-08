@@ -42,19 +42,12 @@
 			on:mousedown|preventDefault
 			on:click={() => ($open$ = !$open$)}
 			type="button"
-			data-bs-toggle="dropdown"
 			aria-expanded={$open$}
 		>
 			{currentVersion.version}
 		</button>
 		{#if $open$}
-			<div
-				use:directive
-				class="dropdown-menu dropdown-menu-end bs-popover-auto position-absolute"
-				class:show={$open$}
-				data-popper-placement="bottom-end"
-				data-bs-popper="absolute"
-			>
+			<div use:directive class="dropdown-menu dropdown-menu-end bs-popover-auto position-absolute" class:show={$open$}>
 				{#each versionsWithUrl as version, index}
 					<a
 						use:giveFocus={index}

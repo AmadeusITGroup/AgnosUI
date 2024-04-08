@@ -16,8 +16,9 @@
 
 	function onDialogClick(e: any) {
 		const tagName = (e.target as HTMLElement).tagName.toLowerCase();
-		const isHeader = (e.target as HTMLElement).className.includes('btn-header');
-		if ((tagName === 'button' && !isHeader) || tagName === 'a') {
+		const btnNoClick =
+			(e.target as HTMLElement).className.includes?.('btn-header') || (e.target as HTMLElement).className.includes?.('dropdown-toggle');
+		if ((tagName === 'button' && !btnNoClick) || (tagName === 'a' && !(e.target as HTMLElement).className.includes?.('dropdown-item'))) {
 			dialog.close();
 		}
 	}
@@ -72,6 +73,7 @@
 		:global(.demo-links-link) {
 			display: block !important;
 		}
+		view-transition-name: dialog;
 	}
 
 	.btn-close {

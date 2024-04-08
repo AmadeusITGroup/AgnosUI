@@ -2,6 +2,13 @@
 
 $mobileMargin: 16px;
 
+dialog .contents {
+	@include media-breakpoint-down(md) {
+		margin-left: -$mobileMargin;
+		margin-right: -$mobileMargin;
+	}
+}
+
 .menu-item {
 	display: block;
 	color: var(--bs-dark-text-emphasis);
@@ -12,11 +19,6 @@ $mobileMargin: 16px;
 	&:hover,
 	&:focus-visible {
 		background-color: var(--bs-secondary-bg-subtle);
-	}
-
-	@include media-breakpoint-down(md) {
-		margin-left: -$mobileMargin;
-		margin-right: -$mobileMargin;
 	}
 }
 
