@@ -178,7 +178,7 @@ const defaultConfig: RatingProps = {
 	onLeave: noop,
 	onRatingChange: noop,
 	className: '',
-	slotStar: ({fill}) => String.fromCharCode(fill === 100 ? 9733 : 9734),
+	slotStar: ({fill}: StarContext) => String.fromCharCode(fill === 100 ? 9733 : 9734),
 	ariaLabel: 'Rating',
 	ariaLabelledBy: '',
 };

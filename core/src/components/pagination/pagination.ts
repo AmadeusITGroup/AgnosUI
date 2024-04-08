@@ -341,8 +341,7 @@ const defaultConfig: PaginationProps = {
 	boundaryLinks: false,
 	size: null,
 	onPageChange: noop,
-	pagesFactory: (page: number, pageCount: number) => {
-		// TODO extract this for testing
+	pagesFactory: (_page: number, pageCount: number) => {
 		const pages: number[] = [];
 		for (let i = 1; i <= pageCount; i++) {
 			pages.push(i);
@@ -365,7 +364,7 @@ const defaultConfig: PaginationProps = {
 	slotLast: '»',
 	slotPages: undefined,
 	slotStructure: undefined,
-	slotNumberLabel: ({displayedPage}) => `${displayedPage}`,
+	slotNumberLabel: ({displayedPage}: PaginationNumberContext) => `${displayedPage}`,
 	pageLink: (_page: number) => PAGE_LINK_DEFAULT,
 };
 

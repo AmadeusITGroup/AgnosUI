@@ -10,6 +10,7 @@
 	export let fileName: string | undefined = undefined;
 	export let language: string | undefined = undefined;
 	export let className: string = '';
+	export let noCopy = false;
 
 	const copied = writable(false);
 	async function copyCode() {
@@ -30,7 +31,12 @@
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div class={`bg-light-subtle doc p-0 d-flex ${className}`} on:mouseenter={() => (showButton = true)} on:mouseleave={() => (showButton = false)}>
+<div
+	class={`bg-light-subtle doc p-0 d-flex ${className}`}
+	on:mouseenter={() => (showButton = !noCopy)}
+	on:mouseleave={() => (showButton = false)}
+	style:min-height={noCopy ? 'unset' : '60px'}
+>
 	{#if formattedCode != null}
 		<!-- eslint-disable-line svelte/no-at-html-tags -->{@html formattedCode}
 	{/if}
@@ -48,7 +54,6 @@
 	.doc {
 		border: 1px solid #d7d9ea;
 		position: relative;
-		min-height: 60px;
 	}
 	.copy {
 		position: absolute;

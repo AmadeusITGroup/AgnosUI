@@ -6,4 +6,4 @@
 </script>
 
 <DocSection title="Props" properties={doc.props} />
-<DocSection title="Api" properties={doc.api} />
+<DocSection title="Api" properties={doc.api} noLastHr />

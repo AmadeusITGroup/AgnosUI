@@ -226,7 +226,7 @@ export function parseDocs(indexFile: string) {
 											const {name, initializer} = property;
 											if (ts.isIdentifier(name)) {
 												docProperties[name.text] = {
-													text: initializer.getText(),
+													text: initializer.getText() === 'noop' ? '() => {}' : initializer.getText(),
 													type: visitType(initializer),
 												};
 											}
@@ -285,15 +285,16 @@ export function parseDocs(indexFile: string) {
 	}
 
 	function visitType(node: Node) {
+		const flags = ts.TypeFormatFlags.InTypeAlias | ts.TypeFormatFlags.NoTruncation;
 		if (ts.isFunctionLike(node) && node.name) {
 			const symbol = typeChecker.getSymbolAtLocation(node.name)!;
 			const res = typeChecker.typeToString(typeChecker.getTypeOfSymbolAtLocation(symbol, node));
 			return res;
 		}
-		if ((node as HasType)?.type) {
+		if ((node as HasType)?.type && (node as HasType).type!.getText().startsWith('SlotContent<')) {
 			return (node as HasType).type!.getText();
 		}
-		return node ? typeChecker.typeToString(typeChecker.getTypeAtLocation(node)) : 'void';
+		return node ? typeChecker.typeToString(typeChecker.getTypeAtLocation(node), undefined, flags) : 'void';
 	}
 
 	return visitExports();
