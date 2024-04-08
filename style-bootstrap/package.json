@@ -34,6 +34,6 @@
 		"directory": "style-bootstrap"
 	},
 	"devDependencies": {
-		"sass": "^1.72.0"
+		"sass": "^1.74.1"
 	}
 }

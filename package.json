@@ -24,25 +24,25 @@
 		"url": "git+https://github.com/AmadeusITGroup/AgnosUI.git"
 	},
 	"engines": {
-		"npm": "^10.5.0",
-		"node": "^20.12.0"
+		"npm": "^10.5.1",
+		"node": "^20.12.1"
 	},
-	"packageManager": "npm@10.5.0",
+	"packageManager": "npm@10.5.1",
 	"devDependencies": {
-		"@axe-core/playwright": "^4.8.5",
+		"@axe-core/playwright": "^4.9.0",
 		"@commitlint/cli": "^19.2.1",
 		"@microsoft/api-extractor": "^7.43.0",
-		"@playwright/test": "^1.42.1",
-		"@types/node": "^20.12.2",
+		"@playwright/test": "^1.43.0",
+		"@types/node": "^20.12.5",
 		"@types/uuid": "^9.0.8",
-		"@typescript-eslint/eslint-plugin": "^7.4.0",
-		"@typescript-eslint/parser": "^7.4.0",
+		"@typescript-eslint/eslint-plugin": "^7.5.0",
+		"@typescript-eslint/parser": "^7.5.0",
 		"@vitest/browser": "^1.4.0",
 		"@vitest/ui": "^1.4.0",
 		"bootstrap": "^5.3.3",
 		"eslint": "^8.57.0",
 		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-jsdoc": "^48.2.2",
+		"eslint-plugin-jsdoc": "^48.2.3",
 		"express": "^4.19.2",
 		"glob": "10.3.12",
 		"husky": "^9.0.11",
@@ -51,15 +51,15 @@
 		"prettier": "^3.2.5",
 		"syncpack": "^12.3.0",
 		"typescript": "~5.4.4",
-		"vite": "^5.2.7",
+		"vite": "^5.2.8",
 		"vitest": "^1.4.0",
 		"wireit": "^0.14.4"
 	},
 	"optionalDependencies": {
 		"@esbuild/darwin-arm64": "0.20.2",
-		"@rollup/rollup-darwin-arm64": "4.13.2",
-		"@rollup/rollup-darwin-x64": "4.13.2",
-		"@rollup/rollup-win32-x64-msvc": "4.13.2"
+		"@rollup/rollup-darwin-arm64": "4.14.1",
+		"@rollup/rollup-darwin-x64": "4.14.1",
+		"@rollup/rollup-win32-x64-msvc": "4.14.1"
 	},
 	"scripts": {
 		"build:coverage": "wireit",
