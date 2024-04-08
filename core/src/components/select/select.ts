@@ -302,8 +302,6 @@ export interface SelectActions<Item> {
 
 export type SelectWidget<Item> = Widget<SelectProps<Item>, SelectState<Item>, SelectApi<Item>, SelectActions<Item>, SelectDirectives>;
 
-const defaultItemId = (item: any) => '' + item;
-
 export const defaultConfig: SelectProps<any> = {
 	id: undefined,
 	ariaLabel: 'Select',
@@ -314,7 +312,7 @@ export const defaultConfig: SelectProps<any> = {
 	loading: false,
 	selected: [],
 	navSelector: (node: HTMLElement) => node.querySelectorAll('.au-select-badge,input'),
-	itemIdFn: defaultItemId,
+	itemIdFn: (item: any) => '' + item,
 	onOpenChange: noop,
 	onFilterTextChange: noop,
 	onSelectedChange: noop,
@@ -323,8 +321,8 @@ export const defaultConfig: SelectProps<any> = {
 	menuClassName: '',
 	menuItemClassName: '',
 	badgeClassName: '',
-	slotBadgeLabel: ({itemContext}) => itemContext.item,
-	slotItem: ({itemContext}) => itemContext.item,
+	slotBadgeLabel: ({itemContext}: SelectItemContext<any>) => itemContext.item,
+	slotItem: ({itemContext}: SelectItemContext<any>) => itemContext.item,
 };
 
 /**

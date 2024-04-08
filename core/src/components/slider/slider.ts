@@ -296,15 +296,15 @@ const defaultSliderConfig: SliderProps = {
 	disabled: false,
 	vertical: false,
 	className: '',
-	ariaLabelHandle: (value) => '' + value,
-	ariaValueText: (value) => '' + value,
+	ariaLabelHandle: (value: number) => '' + value,
+	ariaValueText: (value: number) => '' + value,
 	onValuesChange: noop,
 	values: [0],
 	showValueLabels: true,
 	showMinMaxLabels: true,
 	rtl: false,
 	slotStructure: undefined,
-	slotLabel: ({value}) => '' + value,
+	slotLabel: ({value}: SliderSlotLabelContext) => '' + value,
 	slotHandle: undefined,
 };
 
