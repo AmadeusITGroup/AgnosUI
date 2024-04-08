@@ -122,6 +122,9 @@
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/components/toast/playground</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/components/toast/playground</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/components/toast/playground</loc></url>
+<url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/daisyUI/alert/headless</loc></url>
+<url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/daisyUI/alert/headless</loc></url>
+<url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/daisyUI/alert/headless</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/daisyUI/pagination/headless</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/daisyUI/pagination/headless</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/daisyUI/pagination/headless</loc></url>
