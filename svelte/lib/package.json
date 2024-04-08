@@ -132,7 +132,7 @@
 		"svelte": "*"
 	},
 	"devDependencies": {
-		"@sveltejs/package": "^2.3.0"
+		"@sveltejs/package": "^2.3.1"
 	},
 	"sideEffects": false
 }

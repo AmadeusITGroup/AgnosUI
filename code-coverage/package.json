@@ -3,7 +3,7 @@
 	"version": "0.0.0",
 	"private": true,
 	"dependencies": {
-		"@babel/core": "^7.24.3",
+		"@babel/core": "^7.24.4",
 		"@babel/plugin-syntax-decorators": "^7.24.1",
 		"@babel/plugin-syntax-typescript": "^7.24.1",
 		"babel-plugin-istanbul": "^6.1.1",
@@ -15,7 +15,7 @@
 	},
 	"devDependencies": {
 		"@types/babel__core": "^7.20.5",
-		"vite": "^5.2.7"
+		"vite": "^5.2.8"
 	},
 	"scripts": {
 		"build": "wireit"

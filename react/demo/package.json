@@ -72,12 +72,12 @@
 		}
 	},
 	"devDependencies": {
-		"@types/react": "^18.2.73",
-		"@types/react-dom": "^18.2.23",
+		"@types/react": "^18.2.74",
+		"@types/react-dom": "^18.2.24",
 		"@vitejs/plugin-react": "^4.2.1",
 		"autoprefixer": "^10.4.19",
 		"classnames": "^2.5.1",
-		"daisyui": "^4.9.0",
+		"daisyui": "^4.10.1",
 		"eslint-plugin-react": "^7.34.1",
 		"postcss": "^8.4.38",
 		"react": "^18.2.0",
