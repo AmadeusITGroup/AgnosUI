@@ -2,7 +2,7 @@ import {validate} from 'compare-versions';
 import {join} from 'path';
 import {writeFileSync, readFileSync} from 'fs';
 import {globSync} from 'glob';
-import {source} from '../.syncpackrc.js';
+import syncpackRc from '../.syncpackrc.js';
 
 const setVersion = (version) => {
 	if (!version || version.startsWith('v') || !validate(version)) {
@@ -19,7 +19,7 @@ const setVersion = (version) => {
 		}
 	};
 
-	const packageFiles = globSync(source, {cwd: join(import.meta.dirname, '..')});
+	const packageFiles = globSync(syncpackRc.source, {cwd: join(import.meta.dirname, '..')});
 	for (const packageFile of packageFiles) {
 		console.log(`Setting version in ${packageFile}`);
 		const content = JSON.parse(readFileSync(packageFile, 'utf8'));

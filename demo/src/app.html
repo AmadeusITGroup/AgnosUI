@@ -48,6 +48,16 @@
 			}
 			if (theme === 'dark' || theme === 'light' || theme === 'auto') {
 				document.documentElement.setAttribute('data-agnos-theme', theme);
+			} else {
+				document.documentElement.setAttribute('data-agnos-theme', 'auto');
+			}
+		</script>
+		<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@type": "WebSite",
+				"name": "AgnosUI",
+				"url": "https://amadeusitgroup.github.io/AgnosUI/latest/"
 			}
 		</script>
 		<link rel="preload" href="https://amadeusitgroup.github.io/AgnosUI/versions.json" as="fetch" crossorigin="anonymous" />
