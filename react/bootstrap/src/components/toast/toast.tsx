@@ -1,6 +1,6 @@
 import {useWidgetWithConfig} from '../../config';
 import {Slot} from '@agnos-ui/react-headless/slot';
-import {useDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
+import {useDirectives, useClassDirective} from '@agnos-ui/react-headless/utils/directive';
 import type {ForwardRefExoticComponent, PropsWithChildren, RefAttributes} from 'react';
 import {forwardRef, useImperativeHandle} from 'react';
 import type {AdaptSlotContentProps, AdaptWidgetSlots, WidgetFactory, WidgetProps, WidgetState} from '@agnos-ui/react-headless/types';
@@ -19,13 +19,13 @@ const ToastHeader = (slotContext: ToastContext) => (
 	<div className="toast-header">
 		<Slot slotContent={slotContext.state.slotHeader} props={slotContext} />
 		{slotContext.state.dismissible && (
-			<button className="btn-close me-0 ms-auto" {...useDirective(slotContext.widget.directives.closeButtonDirective)} />
+			<button {...useDirectives([useClassDirective('btn-close me-0 ms-auto'), slotContext.widget.directives.closeButtonDirective])} />
 		)}
 	</div>
 );
 
 const ToastCloseButtonNoHeader = (slotContext: ToastContext) => (
-	<button className="btn-close btn-close-white me-2 m-auto" {...useDirective(slotContext.widget.directives.closeButtonDirective)} />
+	<button {...useDirectives([useClassDirective('btn-close btn-close-white me-2 m-auto'), slotContext.widget.directives.closeButtonDirective])} />
 );
 
 const DefaultSlotStructure = (slotContext: ToastContext) => (
@@ -45,8 +45,8 @@ const defaultConfig: Partial<ToastProps> = {
 
 const ToastElement = (slotContext: ToastContext) => (
 	<div
-		className={`toast ${slotContext.state.dismissible ? 'toast-dismissible' : ''} ${!slotContext.state.slotHeader ? 'd-flex' : ''}`}
 		{...useDirectives([
+			useClassDirective(`toast ${slotContext.state.dismissible ? 'toast-dismissible' : ''} ${!slotContext.state.slotHeader ? 'd-flex' : ''}`),
 			slotContext.widget.directives.transitionDirective,
 			slotContext.widget.directives.autoHideDirective,
 			slotContext.widget.directives.bodyDirective,

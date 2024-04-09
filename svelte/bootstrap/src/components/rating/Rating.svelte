@@ -3,7 +3,7 @@
 	import {createRating} from './rating';
 	import {callWidgetFactory} from '../../config';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
-	import {createClassDirective, ssrAttributes} from '@agnos-ui/svelte-headless/utils/directive';
+	import {classDirective, ssrAttributes} from '@agnos-ui/svelte-headless/utils/directive';
 </script>
 
 <script lang="ts">
@@ -33,7 +33,7 @@
 	$: widget.patchChangedProps($$props);
 </script>
 
-<div use:containerDirective class="d-inline-flex" {...ssrAttributes(createClassDirective('d-inline-flex'), containerDirective)}>
+<div use:containerDirective class="d-inline-flex" {...ssrAttributes([classDirective, 'd-inline-flex'], containerDirective)}>
 	<!-- on:blur={onTouched} ?? -->
 	{#each $stars$ as { fill, index }}
 		<span class="visually-hidden">({index < $visibleRating$ ? '*' : ' '})</span>

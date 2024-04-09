@@ -1,10 +1,25 @@
 import type {Directive, DirectiveAndParam} from '@agnos-ui/core/types';
-import {attributesData, mergeDirectives} from '@agnos-ui/core/utils/directive';
+import {attributesData, bindDirective, classDirective, mergeDirectives} from '@agnos-ui/core/utils/directive';
+import {writable} from '@amadeus-it-group/tansu';
 import {BROWSER} from 'esm-env';
 import type {RefCallback} from 'react';
 import {useCallback, useMemo, useRef} from 'react';
 
 export * from '@agnos-ui/core/utils/directive';
+
+/**
+ * Returns a class directive.
+ * @param className - class name to use
+ * @returns a class directive, to be used with {@link useDirectives}.
+ */
+export const useClassDirective = (className: string) => {
+	const {directive, className$} = useMemo(() => {
+		const className$ = writable('');
+		return {directive: bindDirective(classDirective, className$), className$};
+	}, []);
+	className$.set(className);
+	return directive;
+};
 
 export function useDirective(directive: Directive<void>): {ref: RefCallback<HTMLElement>};
 export function useDirective<T>(directive: Directive<T>, args: T): {ref: RefCallback<HTMLElement>};

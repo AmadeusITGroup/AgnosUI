@@ -1,6 +1,6 @@
 import {Slot} from '@agnos-ui/react-headless/slot';
 import {useWidgetWithConfig} from '../../config';
-import {useDirective} from '@agnos-ui/react-headless/utils/directive';
+import {useDirectives, useClassDirective} from '@agnos-ui/react-headless/utils/directive';
 import type {PropsWithChildren, ForwardedRef, ForwardRefExoticComponent, RefAttributes} from 'react';
 import {forwardRef, useImperativeHandle} from 'react';
 import {createAlert as coreCreateAlert} from '@agnos-ui/core-bootstrap/components/alert';
@@ -32,9 +32,13 @@ const defaultConfig: Partial<AlertProps> = {
 
 const AlertElement = (slotContext: AlertContext) => (
 	<div
-		className={`au-alert alert alert-${slotContext.state.type} ${slotContext.state.className} ${slotContext.state.dismissible ? 'alert-dismissible' : ''}`}
 		role="alert"
-		{...useDirective(slotContext.widget.directives.transitionDirective)}
+		{...useDirectives([
+			useClassDirective(
+				`au-alert alert alert-${slotContext.state.type} ${slotContext.state.className} ${slotContext.state.dismissible ? 'alert-dismissible' : ''}`,
+			),
+			slotContext.widget.directives.transitionDirective,
+		])}
 	>
 		<Slot slotContent={slotContext.state.slotStructure} props={slotContext}></Slot>
 	</div>

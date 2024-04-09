@@ -419,14 +419,9 @@ export const attributesData = <T extends any[]>(
 };
 
 /**
- * Creates a directive for adding specified CSS class names to an HTML element.
- *
- * @param className - A CSS class name to be added.
- * @returns A directive object with bound class names.
+ * Directive that takes as an argument a string containing CSS classes to be put on the HTML element.
  */
-export function createClassDirective(className: string) {
-	return createAttributesDirective(() => ({attributes: {class: className}}));
-}
+export const classDirective: Directive<string> = createAttributesDirective<string>((className) => ({attributes: {class: className}}));
 
 /**
  * Returns JSON representation of the attributes to be applied derived from a list of directives.
