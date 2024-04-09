@@ -6,8 +6,8 @@ import {useCallback, useMemo, useRef} from 'react';
 
 export * from '@agnos-ui/core/utils/directive';
 
-export function useDirective(directive: Directive<void>): RefCallback<HTMLElement>;
-export function useDirective<T>(directive: Directive<T>, args: T): RefCallback<HTMLElement>;
+export function useDirective(directive: Directive<void>): {ref: RefCallback<HTMLElement>};
+export function useDirective<T>(directive: Directive<T>, args: T): {ref: RefCallback<HTMLElement>};
 /**
  * The useDirective function.
  *
@@ -17,7 +17,7 @@ export function useDirective<T>(directive: Directive<T>, args: T): RefCallback<H
  * @param args - the args to pass to the directive
  * @returns the ref callback
  */
-export function useDirective<T>(directive: Directive<T>, args?: T): RefCallback<HTMLElement> {
+export function useDirective<T>(directive: Directive<T>, args?: T): {ref: RefCallback<HTMLElement>} {
 	const instance = useRef<ReturnType<typeof directive>>();
 	const propsRef = useRef<T>();
 	const ref = useCallback(
@@ -32,11 +32,11 @@ export function useDirective<T>(directive: Directive<T>, args?: T): RefCallback<
 	);
 	propsRef.current = args;
 	instance.current?.update?.(args as T);
-	return ref;
+	return {ref};
 }
 
-export function useDirectives(directives: Directive<void>[]): RefCallback<HTMLElement>;
-export function useDirectives<T>(directives: Directive<T>[], args: T): RefCallback<HTMLElement>;
+export function useDirectives(directives: Directive<void>[]): {ref: RefCallback<HTMLElement>};
+export function useDirectives<T>(directives: Directive<T>[], args: T): {ref: RefCallback<HTMLElement>};
 /**
  * The useDirectives function.
  *
@@ -46,7 +46,7 @@ export function useDirectives<T>(directives: Directive<T>[], args: T): RefCallba
  * @param args - the args to pass to the directives
  * @returns the ref callback
  */
-export function useDirectives<T>(directives: Directive<T>[], args?: T): RefCallback<HTMLElement> {
+export function useDirectives<T>(directives: Directive<T>[], args?: T): {ref: RefCallback<HTMLElement>} {
 	const mergedDirectives = useMemo(() => mergeDirectives(...directives), directives);
 	return useDirective(mergedDirectives, args as any);
 }

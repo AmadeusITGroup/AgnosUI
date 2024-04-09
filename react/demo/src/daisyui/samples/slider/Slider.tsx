@@ -11,11 +11,9 @@ export function Slider(props: Partial<Pick<SliderProps, 'min' | 'max' | 'values'
 		},
 	] = useWidgetWithConfig(createSlider, props, 'slider');
 
-	const sliderSetRef = useDirective(sliderDirective);
 	return (
 		<input
 			type="range"
-			ref={sliderSetRef}
 			min={state.min}
 			max={state.max}
 			value={state.sortedHandles[0].value}
@@ -27,6 +25,7 @@ export function Slider(props: Partial<Pick<SliderProps, 'min' | 'max' | 'values'
 			onKeyDown={(e) => keydown(e.nativeEvent, 0)}
 			onMouseDown={(e) => mouseDown(e.nativeEvent, 0)}
 			onTouchStart={(e) => touchStart(e.nativeEvent, 0)}
+			{...useDirective(sliderDirective)}
 		/>
 	);
 }

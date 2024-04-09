@@ -7,7 +7,6 @@ import {useState, useEffect} from 'react';
 const Focustrack = () => {
 	const [hasFocus] = useState(createHasFocus);
 	const hasFocusState = useObservable(hasFocus.hasFocus$);
-	const refSet = useDirective(hasFocus.directive);
 
 	const activeElement = useObservable(activeElement$);
 	const [activeElements, setActiveElements] = useState<any[]>([]);
@@ -18,7 +17,7 @@ const Focustrack = () => {
 
 	return (
 		<div className="demo-focustrack">
-			<div ref={refSet} className="my-2 p-2 border">
+			<div className="my-2 p-2 border" {...useDirective(hasFocus.directive)}>
 				<h5>Container</h5>
 				<input className="form-control" type="text" placeholder="Focusable input" id="focusableInput" />
 				<br />

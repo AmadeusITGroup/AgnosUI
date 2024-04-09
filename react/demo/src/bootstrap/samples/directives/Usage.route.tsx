@@ -6,10 +6,9 @@ import {createSampleDirective} from '@agnos-ui/common/samples/directives/sample-
 
 const Usage = () => {
 	const [text, setText] = useState('focus element clicked');
-	const myDirectiveRef = useDirective(createSampleDirective, text);
 	return (
 		<>
-			<div ref={myDirectiveRef}>
+			<div {...useDirective(createSampleDirective, text)}>
 				<button className="btn btn-primary" id="test">
 					button 1
 				</button>

@@ -33,24 +33,27 @@ const FloatingUI = () => {
 		[],
 	);
 	const floatingUIState = useObservable(floatingUIInstance.state$);
-	const refContainer = useDirective(scrollToMiddle);
-	const refReference = useDirective(floatingUIInstance.directives.referenceDirective);
 	const refFloating = useDirective(floatingUIInstance.directives.floatingDirective);
 	const refArrow = useDirective(floatingUIInstance.directives.arrowDirective);
 
 	return (
-		<div ref={refContainer} className="position-relative overflow-auto border border-primary-subtle demo-floatingui">
-			<button ref={refReference} type="button" className="btn btn-primary" onClick={() => setDisplayPopover(!displayPopover)}>
+		<div className="position-relative overflow-auto border border-primary-subtle demo-floatingui" {...useDirective(scrollToMiddle)}>
+			<button
+				type="button"
+				className="btn btn-primary"
+				onClick={() => setDisplayPopover(!displayPopover)}
+				{...useDirective(floatingUIInstance.directives.referenceDirective)}
+			>
 				Toggle popover
 			</button>
 			{displayPopover ? (
 				<div
-					ref={refFloating}
+					{...refFloating}
 					data-popper-placement={floatingUIState.placement}
 					className={`popover bs-popover-auto position-absolute ${floatingUIState.middlewareData?.hide?.referenceHidden ? 'invisible' : ''}`}
 					role="tooltip"
 				>
-					<div className="popover-arrow position-absolute" ref={refArrow}></div>
+					<div className="popover-arrow position-absolute" {...refArrow}></div>
 					<div className="popover-body text-center">This is a sample popover</div>
 				</div>
 			) : null}

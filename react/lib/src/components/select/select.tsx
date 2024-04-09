@@ -88,13 +88,11 @@ export function Select<Item>(props: Partial<SelectProps<Item>>) {
 	const {
 		directives: {floatingDirective, hasFocusDirective, referenceDirective, inputContainerDirective},
 	} = widget;
-	const refSetContainer = useDirective(referenceDirective);
-	const refSetInputContainer = useDirectives([hasFocusDirective, inputContainerDirective]);
 	const refSetMenu = useDirectives([hasFocusDirective, floatingDirective]);
 	return (
-		<div ref={refSetContainer} className={`au-select dropdown border border-1 p-1 mb-3 d-block ${className}`}>
+		<div className={`au-select dropdown border border-1 p-1 mb-3 d-block ${className}`} {...useDirective(referenceDirective)}>
 			<div
-				ref={refSetInputContainer}
+				{...useDirectives([hasFocusDirective, inputContainerDirective])}
 				role="combobox"
 				className="d-flex align-items-center flex-wrap"
 				aria-controls={menuId}
@@ -118,7 +116,7 @@ export function Select<Item>(props: Partial<SelectProps<Item>>) {
 			</div>
 			{open && visibleItems.length > 0 && (
 				<ul
-					ref={refSetMenu}
+					{...refSetMenu}
 					role="listbox"
 					id={menuId}
 					className={`dropdown-menu show ${menuClassName}`}

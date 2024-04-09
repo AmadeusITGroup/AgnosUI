@@ -41,7 +41,7 @@ export const Alert: ForwardRefExoticComponent<PropsWithChildren<Partial<AlertPro
 				<div
 					className={`au-alert alert alert-${state.type} ${state.className} ${state.dismissible ? 'alert-dismissible' : ''}`}
 					role="alert"
-					ref={refTransition}
+					{...refTransition}
 				>
 					<Slot slotContent={state.slotStructure} props={slotContext}></Slot>
 				</div>

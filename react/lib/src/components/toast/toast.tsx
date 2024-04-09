@@ -15,7 +15,7 @@ const DefaultSlotStructure = (slotContext: ToastContext) => {
 			{slotContext.state.slotHeader && (
 				<div className="toast-header">
 					<Slot slotContent={slotContext.state.slotHeader} props={slotContext} />
-					{slotContext.state.dismissible && <button className="btn-close me-0 ms-auto" ref={refCloseButton} />}
+					{slotContext.state.dismissible && <button className="btn-close me-0 ms-auto" {...refCloseButton} />}
 				</div>
 			)}
 
@@ -23,7 +23,7 @@ const DefaultSlotStructure = (slotContext: ToastContext) => {
 				<Slot slotContent={slotContext.state.slotDefault} props={slotContext} />
 			</div>
 			{slotContext.state.dismissible && !slotContext.state.slotHeader && (
-				<button className="btn-close btn-close-white me-2 m-auto" ref={refCloseButton} />
+				<button className="btn-close btn-close-white me-2 m-auto" {...refCloseButton} />
 			)}
 		</>
 	);
@@ -48,7 +48,7 @@ export const Toast: ForwardRefExoticComponent<PropsWithChildren<Partial<ToastPro
 	return (
 		<>
 			{!state.hidden && (
-				<div className={`toast ${state.dismissible ? 'toast-dismissible' : ''} ${!state.slotHeader ? 'd-flex' : ''}`} ref={refToast}>
+				<div className={`toast ${state.dismissible ? 'toast-dismissible' : ''} ${!state.slotHeader ? 'd-flex' : ''}`} {...refToast}>
 					<Slot slotContent={state.slotStructure} props={slotContext} />
 				</div>
 			)}

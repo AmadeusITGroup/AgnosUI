@@ -42,7 +42,7 @@ const Collapse = ({expanded, headerText, children}: PropsWithChildren<{expanded?
 				</button>
 			</div>
 			{state.hidden ? null : (
-				<div id="collapse-content" ref={transitionRef}>
+				<div id="collapse-content" {...transitionRef}>
 					<div className="card-body">{children}</div>
 				</div>
 			)}

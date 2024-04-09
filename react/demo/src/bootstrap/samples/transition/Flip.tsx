@@ -18,11 +18,10 @@ const Flip = ({hiddenText, children}: PropsWithChildren<{hiddenText: string}>) =
 			}),
 		[],
 	);
-	const transitionRef = useDirective(directive);
 
 	return (
 		<div className="flip-card">
-			<div className="flip-card-inner" ref={transitionRef}>
+			<div className="flip-card-inner" {...useDirective(directive)}>
 				<div className="flip-card-front">
 					{children}
 					<button className="btn btn-outline-secondary" onClick={() => hide()}>

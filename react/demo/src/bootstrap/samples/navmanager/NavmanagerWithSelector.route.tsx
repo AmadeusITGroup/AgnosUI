@@ -19,10 +19,9 @@ const NavmanagerSampleLine = ({text}: {text: string}) => {
 		}),
 		[navManager],
 	);
-	const ref = useDirective(navManager.directive, navManagerConfig);
 
 	return (
-		<div className="d-flex demo-navmanager-line" ref={ref}>
+		<div className="d-flex demo-navmanager-line" {...useDirective(navManager.directive, navManagerConfig)}>
 			<input type="text" defaultValue={text} className="form-control me-1" />
 			<span tabIndex={-1} className="form-control w-auto me-1">
 				{text}
