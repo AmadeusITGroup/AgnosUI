@@ -21,54 +21,37 @@ export const useClassDirective = (className: string) => {
 	return directive;
 };
 
-export function useDirective(directive: Directive<void>): {ref: RefCallback<HTMLElement>};
-export function useDirective<T>(directive: Directive<T>, args: T): {ref: RefCallback<HTMLElement>};
-/**
- * The useDirective function.
- *
- * Allows to attach a provided directive to the current react component.
- *
- * @param directive - the directive
- * @param args - the args to pass to the directive
- * @returns the ref callback
- */
-export function useDirective<T>(directive: Directive<T>, args?: T): {ref: RefCallback<HTMLElement>} {
-	const instance = useRef<ReturnType<typeof directive>>();
-	const propsRef = useRef<T>();
-	const ref = useCallback(
-		(element: HTMLElement | null) => {
-			instance.current?.destroy?.();
-			instance.current = undefined;
-			if (element) {
-				instance.current = directive(element, propsRef.current as T);
-			}
-		},
-		[directive],
-	);
-	propsRef.current = args;
-	instance.current?.update?.(args as T);
-	return {ref};
-}
-
-export function useDirectives(directives: Directive<void>[]): {ref: RefCallback<HTMLElement>};
-export function useDirectives<T>(directives: Directive<T>[], args: T): {ref: RefCallback<HTMLElement>};
-/**
- * The useDirectives function.
- *
- * Allows to attach multiple directives to the current react component.
- *
- * @param directives - directives
- * @param args - the args to pass to the directives
- * @returns the ref callback
- */
-export function useDirectives<T>(directives: Directive<T>[], args?: T): {ref: RefCallback<HTMLElement>} {
-	const mergedDirectives = useMemo(() => mergeDirectives(...directives), directives);
-	return useDirective(mergedDirectives, args as any);
-}
-
 const attributesMap = new Map([
 	['tabindex', 'tabIndex'],
 	['for', 'htmlFor'],
+]);
+
+// For boolean attributes, the presence of the attribute means true, but react wants a boolean value
+// cf the list in https://github.com/facebook/react/blob/bf40b024421a0e1f2f882fd7171ea39cd74c88df/packages/react-dom-bindings/src/client/ReactDOMComponent.js#L665
+const booleanAttributes = new Set([
+	'inert',
+	'allowFullScreen',
+	'async',
+	'autoPlay',
+	'controls',
+	'default',
+	'defer',
+	'disabled',
+	'disablePictureInPicture',
+	'disableRemotePlayback',
+	'formNoValidate',
+	'hidden',
+	'loop',
+	'noModule',
+	'noValidate',
+	'open',
+	'playsInline',
+	'readOnly',
+	'required',
+	'reversed',
+	'scoped',
+	'seamless',
+	'itemScope',
 ]);
 
 /**
@@ -82,7 +65,7 @@ export function directiveAttributes<T extends any[]>(...directives: {[K in keyof
 	const {attributes, style, classNames} = attributesData(...directives);
 
 	for (const [name, value] of Object.entries(attributes)) {
-		reactAttributes[attributesMap.get(name) ?? name] = value;
+		reactAttributes[attributesMap.get(name) ?? name] = booleanAttributes.has(name) ? true : value;
 	}
 
 	if (classNames?.length) {
@@ -102,3 +85,52 @@ export function directiveAttributes<T extends any[]>(...directives: {[K in keyof
  * @returns JSON object with name/value for the attributes
  */
 export const ssrAttributes: typeof directiveAttributes = BROWSER ? () => ({}) : directiveAttributes;
+
+/**
+ * The useDirective function.
+ *
+ * Allows to attach a provided directive to the current react component.
+ *
+ * @param directive - the directive
+ * @param args - the args to pass to the directive
+ * @returns the ref callback
+ */
+export const useDirective: {
+	(directive: Directive): {ref: RefCallback<HTMLElement>};
+	<T>(directive: Directive<T>, args: T): {ref: RefCallback<HTMLElement>};
+} = BROWSER
+	? <T>(directive: Directive<T>, args?: T): {ref: RefCallback<HTMLElement>} => {
+			const instance = useRef<ReturnType<typeof directive>>();
+			const propsRef = useRef<T>();
+			const ref = useCallback(
+				(element: HTMLElement | null) => {
+					instance.current?.destroy?.();
+					instance.current = undefined;
+					if (element) {
+						instance.current = directive(element, propsRef.current as T);
+					}
+				},
+				[directive],
+			);
+			propsRef.current = args;
+			instance.current?.update?.(args as T);
+			return {ref};
+		}
+	: <T>(directive: Directive<T>, args?: T): {ref: RefCallback<HTMLElement>} => ssrAttributes([directive, args as T]) as any;
+
+/**
+ * The useDirectives function.
+ *
+ * Allows to attach multiple directives to the current react component.
+ *
+ * @param directives - directives
+ * @param args - the args to pass to the directives
+ * @returns the ref callback
+ */
+export const useDirectives: {
+	(directives: Directive[]): {ref: RefCallback<HTMLElement>};
+	<T>(directives: Directive<T>[], args: T): {ref: RefCallback<HTMLElement>};
+} = <T>(directives: Directive<T>[], args?: T): {ref: RefCallback<HTMLElement>} => {
+	const mergedDirectives = useMemo(() => mergeDirectives(...directives), directives);
+	return useDirective(mergedDirectives, args as any);
+};

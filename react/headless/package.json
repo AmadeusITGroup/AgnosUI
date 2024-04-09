@@ -114,6 +114,7 @@
 	},
 	"peerDependencies": {
 		"@amadeus-it-group/tansu": "*",
+		"esm-env": "*",
 		"react": "*",
 		"react-dom": "*"
 	},
