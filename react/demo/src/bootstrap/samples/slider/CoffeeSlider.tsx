@@ -2,7 +2,6 @@ import {useDirective} from '@agnos-ui/react/utils/directive';
 import type {SliderContext} from '@agnos-ui/react/components/slider';
 
 const CustomSliderComponent = (slotContext: SliderContext) => {
-	const handleSetRef = useDirective(slotContext.widget.directives.handleDirective, {item: slotContext.state.sortedHandles[0]});
 	return (
 		<>
 			<div className="position-relative cup-container">
@@ -20,7 +19,10 @@ const CustomSliderComponent = (slotContext: SliderContext) => {
 					</div>
 				</div>
 			</div>
-			<button className="coffee-indicator" ref={handleSetRef}>
+			<button
+				className="coffee-indicator"
+				{...useDirective(slotContext.widget.directives.handleDirective, {item: slotContext.state.sortedHandles[0]})}
+			>
 				{'' + slotContext.state.sortedHandles[0].value}
 			</button>
 		</>

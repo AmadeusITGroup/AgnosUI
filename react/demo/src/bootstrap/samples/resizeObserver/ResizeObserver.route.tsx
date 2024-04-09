@@ -7,7 +7,6 @@ import {useDirective} from '@agnos-ui/react/utils/directive';
 const ResizeObserver = () => {
 	const resizeObserver = useMemo(createResizeObserver, []);
 	const [heightValue, setHeightValue] = useState(180);
-	const resizeDirective = useDirective(resizeObserver.directive);
 	const dimensions = useObservable(resizeObserver.dimensions$);
 
 	const observedHeight = dimensions?.contentRect?.height;
@@ -24,7 +23,6 @@ const ResizeObserver = () => {
 		<div className="demo-resize-observer">
 			<label htmlFor="resizable">Resizable textarea:</label>
 			<textarea
-				ref={resizeDirective}
 				name="resizable"
 				id="resizable"
 				rows={6}
@@ -33,6 +31,7 @@ const ResizeObserver = () => {
 				className={`form-control ${observedHeight && observedHeight > 200 ? 'fontsize' : ''}`}
 				defaultValue="This simple example is using the resizeObserver feature from @agnos-ui/core and displays the height of the textarea below it.
 Modify the height to more than 200 px and see the font size changing."
+				{...useDirective(resizeObserver.directive)}
 			></textarea>
 			<div>
 				Textarea content height: <span id="dynamic-height">{observedHeight}</span>px

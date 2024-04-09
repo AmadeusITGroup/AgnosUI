@@ -5,6 +5,12 @@ import classNames from 'classnames';
 
 export function Progressbar(props: Partial<Pick<ProgressbarProps, 'max' | 'ariaLabel' | 'value' | 'className' | 'ariaValueTextFn'>>) {
 	const [state, widget] = useWidgetWithConfig(createProgressbar, props, 'progressbar');
-	const ariaRef = useDirective(widget.directives.ariaDirective);
-	return <progress ref={ariaRef} className={classNames('progress', state.className)} value={state.value} max={state.max} />;
+	return (
+		<progress
+			className={classNames('progress', state.className)}
+			value={state.value}
+			max={state.max}
+			{...useDirective(widget.directives.ariaDirective)}
+		/>
+	);
 }

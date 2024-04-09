@@ -118,7 +118,7 @@ const InnerComponent = () => {
 				</ul>
 
 				{paramRemoveFromDom && transitionState.hidden ? null : (
-					<div ref={transitionRef} style={{maxWidth: '300px'}}>
+					<div style={{maxWidth: '300px'}} {...transitionRef}>
 						<div className="card" style={{width: '300px'}}>
 							<div className="card-body">You can collapse this card by clicking Toggle</div>
 						</div>

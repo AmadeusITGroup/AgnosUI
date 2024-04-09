@@ -19,11 +19,10 @@ export * from '@agnos-ui/react-headless/components/accordion';
 type AccordionTag = `h${1 | 2 | 3 | 4 | 5 | 6}`;
 
 const Header = (props: PropsWithChildren<{headerTag: string; directive: Directive}>) => {
-	const headerSetRef = useDirective(props.directive);
 	const re = new RegExp('^h[1-6]$');
 	const Heading = (re.test(props.headerTag) ? props.headerTag : 'h2') as AccordionTag;
 	return (
-		<Heading className="accordion-header" ref={headerSetRef}>
+		<Heading className="accordion-header" {...useDirective(props.directive)}>
 			{props.children}
 		</Heading>
 	);
@@ -33,17 +32,16 @@ const AccordionDIContext: React.Context<Partial<AccordionApi>> = createContext({
 const DefaultSlotStructure = (slotContext: AccordionItemContext) => {
 	const bodyContainerSetRef = useDirective(slotContext.widget.directives.bodyContainerDirective);
 	const bodySetRef = useDirective(slotContext.widget.directives.bodyDirective);
-	const buttonSetRef = useDirective(slotContext.widget.directives.buttonDirective);
 	return (
 		<>
 			<Header directive={slotContext.widget.directives.headerDirective} headerTag={slotContext.state.itemHeadingTag}>
-				<button className="accordion-button" ref={buttonSetRef}>
+				<button className="accordion-button" {...useDirective(slotContext.widget.directives.buttonDirective)}>
 					<Slot slotContent={slotContext.state.slotItemHeader} props={slotContext}></Slot>
 				</button>
 			</Header>
 			{slotContext.state.shouldBeInDOM ? (
-				<div className="accordion-collapse" ref={bodyContainerSetRef}>
-					<div className="accordion-body" ref={bodySetRef}>
+				<div className="accordion-collapse" {...bodyContainerSetRef}>
+					<div className="accordion-body" {...bodySetRef}>
 						<Slot slotContent={slotContext.state.slotItemBody} props={slotContext}></Slot>
 					</div>
 				</div>
@@ -64,13 +62,12 @@ export const AccordionItem: ForwardRefExoticComponent<PropsWithChildren<Partial<
 			state,
 			widget: widget,
 		};
-		const refSetAccordionItem = useDirective(widget.directives.accordionItemDirective);
 		useImperativeHandle(ref, () => widget.api, []);
 		useEffect(() => {
 			widget.api.initDone();
 		}, []);
 		return (
-			<div className={`accordion-item ${state.itemClass}`} id={state.itemId} ref={refSetAccordionItem}>
+			<div className={`accordion-item ${state.itemClass}`} {...useDirective(widget.directives.accordionItemDirective)}>
 				<Slot slotContent={state.slotItemStructure} props={slotContext} />
 			</div>
 		);
@@ -81,10 +78,9 @@ export const Accordion: ForwardRefExoticComponent<PropsWithChildren<Partial<Acco
 	function Accordion(props: PropsWithChildren<Partial<AccordionProps>>, ref: ForwardedRef<AccordionApi>) {
 		const widget = useWidgetWithConfig(createAccordion, props, 'accordion')[1];
 		useImperativeHandle(ref, () => widget.api, []);
-		const refSetAccordion = useDirective(widget.directives.accordionDirective);
 		return (
 			<AccordionDIContext.Provider value={widget.api}>
-				<div className="accordion" ref={refSetAccordion}>
+				<div className="accordion" {...useDirective(widget.directives.accordionDirective)}>
 					{props.children}
 				</div>
 			</AccordionDIContext.Provider>
