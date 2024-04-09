@@ -526,7 +526,7 @@ function createAccordionItem(
 			'aria-expanded': computed(() => `${itemVisible$()}`),
 			'aria-disabled': computed(() => `${itemDisabled$()}`),
 			'aria-controls': computed(() => `${itemId$()}-body-container`),
-			disabled: itemDisabled$(),
+			disabled: itemDisabled$,
 		},
 		classNames: {collapsed: computed(() => !itemVisible$())},
 		events: {click: clickAction},

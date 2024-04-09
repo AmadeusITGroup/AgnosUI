@@ -20,7 +20,7 @@ function DefaultSlotContent(slotContext: ProgressbarContext) {
 	const {striped, animated, type} = slotContext.state;
 	const classes = classNames('progress-bar', {'progress-bar-striped': striped}, {'progress-bar-animated': animated}, {[`text-bg-${type}`]: !!type});
 	return (
-		<div className="progress" style={{height: slotContext.state.height}}>
+		<div className="progress" style={{height: slotContext.state.height || undefined}}>
 			<div className={classes} style={{width: `${slotContext.state.percentage}%`}}>
 				<Slot slotContent={slotContext.state.slotDefault} props={slotContext} />
 			</div>
