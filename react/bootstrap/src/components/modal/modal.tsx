@@ -3,7 +3,7 @@ import type {AdaptSlotContentProps, AdaptWidgetSlots, PropsConfig, WidgetProps, 
 import {toSlotContextWidget} from '@agnos-ui/react-headless/types';
 import {Slot} from '@agnos-ui/react-headless/slot';
 import {useWidgetWithConfig} from '../../config';
-import {useDirective} from '@agnos-ui/react-headless/utils/directive';
+import {useDirective, useClassDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
 import type {PropsWithChildren, Ref, RefAttributes} from 'react';
 import ReactDOM from 'react-dom/client';
 import {forwardRef, useImperativeHandle} from 'react';
@@ -54,11 +54,11 @@ const defaultConfig: Partial<ModalProps<any>> = {
 };
 
 const BackdropElement = <Data,>({widget}: ModalContext<Data>) => (
-	<div className="modal-backdrop" {...useDirective(widget.directives.backdropDirective)} />
+	<div {...useDirectives([useClassDirective('modal-backdrop'), widget.directives.backdropDirective])} />
 );
 
 const ModalElement = <Data,>(slotContext: ModalContext<Data>) => (
-	<div className="modal d-block" {...useDirective(slotContext.widget.directives.modalDirective)}>
+	<div {...useDirectives([useClassDirective('modal d-block'), slotContext.widget.directives.modalDirective])}>
 		<div className="modal-dialog">
 			<div className="modal-content">
 				<Slot slotContent={slotContext.state.slotStructure} props={slotContext} />

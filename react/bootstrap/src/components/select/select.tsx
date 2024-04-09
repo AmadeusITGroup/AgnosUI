@@ -2,7 +2,7 @@ import {useWidgetWithConfig} from '../../config';
 import {Slot} from '@agnos-ui/react-headless/slot';
 import type {AdaptSlotContentProps, AdaptWidgetSlots, PropsConfig, WidgetProps, WidgetState} from '@agnos-ui/react-headless/types';
 import {toSlotContextWidget} from '@agnos-ui/react-headless/types';
-import {useDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
+import {useClassDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
 import type {SyntheticEvent} from 'react';
 import type {ItemContext} from '@agnos-ui/core-bootstrap/components/select';
 import {createSelect as coreCreateSelect} from '@agnos-ui/core-bootstrap/components/select';
@@ -59,10 +59,9 @@ function Rows<Item>({slotContext, menuId}: {slotContext: SelectContext<Item>; me
 		<ul
 			role="listbox"
 			id={menuId}
-			className={`dropdown-menu show ${menuClassName}`}
 			data-popper-placement={placement}
 			onMouseDown={preventDefault}
-			{...useDirectives([hasFocusDirective, floatingDirective])}
+			{...useDirectives([useClassDirective(`dropdown-menu show ${menuClassName}`), hasFocusDirective, floatingDirective])}
 		>
 			{state.visibleItems.map((itemContext) => {
 				const {id} = itemContext;
@@ -105,14 +104,13 @@ export function Select<Item>(props: Partial<SelectProps<Item>>) {
 		directives: {hasFocusDirective, referenceDirective, inputContainerDirective},
 	} = widget;
 	return (
-		<div className={`au-select dropdown border border-1 p-1 mb-3 d-block ${className}`} {...useDirective(referenceDirective)}>
+		<div {...useDirectives([useClassDirective(`au-select dropdown border border-1 p-1 mb-3 d-block ${className}`), referenceDirective])}>
 			<div
-				{...useDirectives([hasFocusDirective, inputContainerDirective])}
 				role="combobox"
-				className="d-flex align-items-center flex-wrap"
 				aria-controls={menuId}
 				aria-haspopup="listbox"
 				aria-expanded={open}
+				{...useDirectives([useClassDirective('d-flex align-items-center flex-wrap'), hasFocusDirective, inputContainerDirective])}
 			>
 				<Badges slotContext={slotContext}></Badges>
 				<input
