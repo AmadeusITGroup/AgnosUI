@@ -1,0 +1,1 @@
+import{p as l,s as b,e as d}from"./stores-bzJrTsnV.js";const x=(c,n,p)=>s=>{const r=l(n,s,p),e=c(s);return{...e,...b({...e.stores,...r}),patch:f=>d(()=>{let t;for(const[a,o]of Object.entries(f??{})){const i=r[`${a}$`];i?i.set(o):(t||(t={}),t[a]=o)}t&&e.patch(t)})}};export{x as e};
