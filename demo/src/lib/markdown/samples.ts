@@ -13,6 +13,7 @@ import configurationDown from '@agnos-ui/samples/bootstrap/configuration/down';
 import transitionCollapse from '@agnos-ui/samples/bootstrap/transition/collapseDemo';
 import transitionFlip from '@agnos-ui/samples/bootstrap/transition/flipDemo';
 import transitionTransition from '@agnos-ui/samples/bootstrap/transition/transition';
+import matchMedia from '@agnos-ui/samples/bootstrap/matchMedia/matchMedia';
 
 const samples: Map<string, SampleInfo> = new Map();
 samples.set('focustrack/focustrack', focustrack);
@@ -28,4 +29,5 @@ samples.set('configuration/down', configurationDown);
 samples.set('transition/collapse', transitionCollapse);
 samples.set('transition/flip', transitionFlip);
 samples.set('transition/transition', transitionTransition);
+samples.set('matchMedia/matchMedia', matchMedia);
 export default samples;
