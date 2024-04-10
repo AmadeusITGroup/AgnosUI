@@ -15,6 +15,7 @@
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/services/floating-ui</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/services/resize-observer</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/services/transition</loc></url>
+<url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/services/match-media</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/getting-started/introduction</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/getting-started/features</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/getting-started/installation</loc></url>
@@ -28,6 +29,7 @@
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/services/floating-ui</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/services/resize-observer</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/services/transition</loc></url>
+<url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/services/match-media</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/getting-started/introduction</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/getting-started/features</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/getting-started/installation</loc></url>
@@ -41,6 +43,7 @@
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/services/floating-ui</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/services/resize-observer</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/services/transition</loc></url>
+<url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/services/match-media</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/components/accordion/api</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/components/accordion/api</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/components/accordion/api</loc></url>

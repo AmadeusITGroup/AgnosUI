@@ -1,1 +1,0 @@
-import{c as t}from"./common-C2NQz6Nv-M6tfjdnr.js";import{e}from"./extendWidget-BqB6mxFJ.js";import{b as r}from"./writables-DoU_XYTX-5o4iMN-9.js";const o={type:"primary"},a={type:r},c=e(t,o,a),p=c;export{p as c};

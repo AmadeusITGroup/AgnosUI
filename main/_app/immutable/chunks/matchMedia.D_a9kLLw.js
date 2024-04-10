@@ -1,0 +1,2 @@
+const c=`export * from '@agnos-ui/core/services/matchMedia';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibWF0Y2hNZWRpYS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3NyYy9nZW5lcmF0ZWQvc2VydmljZXMvbWF0Y2hNZWRpYS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxjQUFjLG9DQUFvQyxDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0ICogZnJvbSAnQGFnbm9zLXVpL2NvcmUvc2VydmljZXMvbWF0Y2hNZWRpYSc7Il19`;export{c as default};

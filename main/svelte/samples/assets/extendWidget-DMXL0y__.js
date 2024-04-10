@@ -1,0 +1,1 @@
+import{a8 as l}from"./AppCommon-TiDPFPMK.js";import{e as m,s as b}from"./stores-CzF8MSUm.js";const x=(c,n,f)=>s=>{const r=m(n,s,f),e=c(s);return{...e,...b({...e.stores,...r}),patch:p=>l(()=>{let t;for(const[o,a]of Object.entries(p??{})){const i=r[`${o}$`];i?i.set(a):(t||(t={}),t[o]=a)}t&&e.patch(t)})}};export{x as e};
