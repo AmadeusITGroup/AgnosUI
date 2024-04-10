@@ -1,0 +1,140 @@
+{
+	"name": "@agnos-ui/svelte-bootstrap",
+	"description": "Bootstrap-based widget library for Svelte.",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"svelte": "./dist/index.js",
+			"default": "./dist/index.js"
+		},
+		"./components/*": {
+			"types": "./dist/components/*/index.d.ts",
+			"svelte": "./dist/components/*/index.js",
+			"default": "./dist/components/*/index.js"
+		},
+		"./config": {
+			"types": "./dist/generated/config.d.ts",
+			"svelte": "./dist/generated/config.js",
+			"default": "./dist/generated/config.js"
+		},
+		"./slot": {
+			"types": "./dist/generated/slot.d.ts",
+			"svelte": "./dist/generated/slot.js",
+			"default": "./dist/generated/slot.js"
+		},
+		"./types": {
+			"types": "./dist/generated/types.d.ts",
+			"svelte": "./dist/generated/types.js",
+			"default": "./dist/generated/types.js"
+		},
+		"./services/*": {
+			"types": "./dist/generated/services/*.d.ts",
+			"svelte": "./dist/generated/services/*.js",
+			"default": "./dist/generated/services/*.js"
+		},
+		"./services/transitions/*": {
+			"types": "./dist/generated/services/transitions/*.d.ts",
+			"svelte": "./dist/generated/services/transitions/*.js",
+			"default": "./dist/generated/services/transitions/*.js"
+		},
+		"./utils/*": {
+			"types": "./dist/generated/utils/*.d.ts",
+			"svelte": "./dist/generated/utils/*.js",
+			"default": "./dist/generated/utils/*.js"
+		}
+	},
+	"scripts": {
+		"build": "wireit",
+		"check": "wireit"
+	},
+	"wireit": {
+		"generate:exports": {
+			"command": "node ../../scripts/generateExports.js svelte/bootstrap svelte/headless @agnos-ui/svelte-headless",
+			"dependencies": [
+				"../headless:generate:exports"
+			],
+			"files": [
+				"src/**",
+				"!src/generated/**",
+				"../../scripts/generateExports.js"
+			],
+			"output": [
+				"src/generated/**"
+			]
+		},
+		"build:src": {
+			"command": "svelte-package -i src",
+			"dependencies": [
+				"generate:exports",
+				"../headless:build",
+				"../../core-bootstrap:build"
+			],
+			"files": [
+				"src/**",
+				"!src/generated/**",
+				"tsconfig.json",
+				"../tsconfig.json",
+				"../../tsconfig.json"
+			],
+			"output": [
+				"dist/**",
+				"!dist/README.md",
+				"!dist/package.json"
+			]
+		},
+		"build:pkg": {
+			"command": "node ../../scripts/buildPackageJson.js . dist",
+			"dependencies": [
+				"build:src"
+			],
+			"files": [
+				"../../scripts/buildPackageJson.js",
+				"../../package.json",
+				"package.json",
+				"README.md"
+			],
+			"output": [
+				"dist/README.md",
+				"dist/package.json"
+			]
+		},
+		"build": {
+			"dependencies": [
+				"build:pkg"
+			]
+		},
+		"check": {
+			"command": "svelte-check --fail-on-warnings --output human-verbose",
+			"dependencies": [
+				"generate:exports",
+				"../headless:build",
+				"../../core-bootstrap:build"
+			],
+			"files": [
+				"src/**",
+				"tsconfig.json",
+				"../tsconfig.json",
+				"../../tsconfig.json"
+			],
+			"output": []
+		}
+	},
+	"dependencies": {
+		"@agnos-ui/core-bootstrap": "0.0.0",
+		"@agnos-ui/svelte-headless": "0.0.0"
+	},
+	"peerDependencies": {
+		"@amadeus-it-group/tansu": "*",
+		"svelte": "*"
+	},
+	"devDependencies": {
+		"@sveltejs/package": "^2.3.1"
+	},
+	"sideEffects": false
+}

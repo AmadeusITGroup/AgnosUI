@@ -6,7 +6,7 @@
 			"@agnos-ui/core": ["./core/src"],
 			"@agnos-ui/core/*": ["./core/src/*"],
 			"@agnos-ui/angular-headless": ["./angular/headless/src"],
-			"@agnos-ui/angular": ["./angular/lib/src"],
+			"@agnos-ui/angular-bootstrap": ["./angular/bootstrap/src"],
 			"@agnos-ui/common/*": ["./common/*"],
 			"bootstrap-icons/icons/*": ["./node_modules/bootstrap-icons/icons/*"]
 		}

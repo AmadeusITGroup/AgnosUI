@@ -1,4 +1,4 @@
-import {ProgressbarComponent} from '@agnos-ui/angular';
+import {ProgressbarComponent} from '@agnos-ui/angular-bootstrap';
 import {Component} from '@angular/core';
 
 @Component({

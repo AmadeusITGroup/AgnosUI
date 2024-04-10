@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Playground from '$lib/layout/playground/Playground.svelte';
-	import {getPaginationDefaultConfig} from '@agnos-ui/svelte/components/pagination';
+	import {getPaginationDefaultConfig} from '@agnos-ui/svelte-bootstrap/components/pagination';
 	import sample from '@agnos-ui/samples/bootstrap/pagination/playground';
 	import doc from '@agnos-ui/generated/doc/api.json?pagination&extractApi';
 	import type {PropsValues} from '@agnos-ui/common/propsValues';

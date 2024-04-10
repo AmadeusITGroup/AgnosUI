@@ -1,6 +1,6 @@
 <script lang="ts">
-	import {Progressbar} from '@agnos-ui/svelte/components/progressbar';
-	import {createWidgetsDefaultConfig} from '@agnos-ui/svelte/config';
+	import {Progressbar} from '@agnos-ui/svelte-bootstrap/components/progressbar';
+	import {createWidgetsDefaultConfig} from '@agnos-ui/svelte-bootstrap/config';
 
 	createWidgetsDefaultConfig().set({progressbar: {slotDefault: (widget) => `${widget.state.percentage}%`}});
 </script>

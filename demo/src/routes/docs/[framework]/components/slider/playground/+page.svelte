@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Playground from '$lib/layout/playground/Playground.svelte';
-	import {getSliderDefaultConfig} from '@agnos-ui/svelte/components/slider';
+	import {getSliderDefaultConfig} from '@agnos-ui/svelte-bootstrap/components/slider';
 	import sample from '@agnos-ui/samples/bootstrap/slider/playground';
 	import doc from '@agnos-ui/generated/doc/api.json?slider&extractApi';
 	import type {PropsValues} from '@agnos-ui/common/propsValues';

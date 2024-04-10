@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {Select} from '@agnos-ui/svelte/components/select';
+	import {Select} from '@agnos-ui/svelte-bootstrap/components/select';
 
 	const wordsA = ['apple', 'apricot', 'asparagus', 'astronaut', 'athletic', 'autumn', 'avocado'];
 	const wordsB = ['banana', 'baseball', 'basketball', 'beautiful', 'bedroom', 'bee', 'bicycle'];

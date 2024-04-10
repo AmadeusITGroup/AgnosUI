@@ -1,6 +1,6 @@
-import type {PaginationNumberContext} from '@agnos-ui/react/components/pagination';
-import {Pagination} from '@agnos-ui/react/components/pagination';
-import type {AdaptSlotContentProps} from '@agnos-ui/react/types';
+import type {PaginationNumberContext} from '@agnos-ui/react-bootstrap/components/pagination';
+import {Pagination} from '@agnos-ui/react-bootstrap/components/pagination';
+import type {AdaptSlotContentProps} from '@agnos-ui/react-bootstrap/types';
 
 const Usage = () => {
 	const numberLabel = ({displayedPage}: AdaptSlotContentProps<PaginationNumberContext>) => ['A', 'B', 'C', 'D', 'E', 'F'][displayedPage - 1];

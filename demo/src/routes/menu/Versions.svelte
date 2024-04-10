@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
 	import {page} from '$app/stores';
 	import {pathToRoot$, selectedFramework$} from '$lib/stores';
-	import {createHasFocus} from '@agnos-ui/svelte/services/focustrack';
+	import {createHasFocus} from '@agnos-ui/svelte-bootstrap/services/focustrack';
 	import {writable} from '@amadeus-it-group/tansu';
 	import {validate, compare} from 'compare-versions';
 	import type {Version} from './version';

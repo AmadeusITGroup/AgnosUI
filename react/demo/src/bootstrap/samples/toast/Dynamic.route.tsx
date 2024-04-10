@@ -1,5 +1,5 @@
-import type {ToastProps} from '@agnos-ui/react/components/toast';
-import {Toast} from '@agnos-ui/react/components/toast';
+import type {ToastProps} from '@agnos-ui/react-bootstrap/components/toast';
+import {Toast} from '@agnos-ui/react-bootstrap/components/toast';
 import {useState} from 'react';
 
 export enum ToastPositions {

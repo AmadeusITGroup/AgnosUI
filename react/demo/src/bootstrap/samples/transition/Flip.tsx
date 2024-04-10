@@ -1,7 +1,7 @@
 import {useMemo, type PropsWithChildren} from 'react';
-import {createTransition} from '@agnos-ui/react/services/transitions/baseTransitions';
-import {createSimpleClassTransition} from '@agnos-ui/react/services/transitions/simpleClassTransition';
-import {useDirective} from '@agnos-ui/react/utils/directive';
+import {createTransition} from '@agnos-ui/react-bootstrap/services/transitions/baseTransitions';
+import {createSimpleClassTransition} from '@agnos-ui/react-bootstrap/services/transitions/simpleClassTransition';
+import {useDirective} from '@agnos-ui/react-bootstrap/utils/directive';
 import '@agnos-ui/common/samples/transition/flip.scss';
 
 const Flip = ({hiddenText, children}: PropsWithChildren<{hiddenText: string}>) => {

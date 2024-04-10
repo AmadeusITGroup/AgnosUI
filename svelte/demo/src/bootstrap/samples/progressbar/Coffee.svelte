@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {type ProgressbarSlots} from '@agnos-ui/svelte/components/progressbar';
+	import {type ProgressbarSlots} from '@agnos-ui/svelte-bootstrap/components/progressbar';
 	type $$Props = ProgressbarSlots['structure'];
 	type $$Slots = ProgressbarSlots;
 

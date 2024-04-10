@@ -1,4 +1,4 @@
-import {AgnosUIAngularModule, UseDirective} from '@agnos-ui/angular';
+import {AgnosUIAngularModule, UseDirective} from '@agnos-ui/angular-bootstrap';
 import {Component} from '@angular/core';
 import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 

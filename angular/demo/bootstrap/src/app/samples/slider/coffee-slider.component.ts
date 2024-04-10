@@ -1,5 +1,5 @@
-import type {SliderWidget} from '@agnos-ui/angular';
-import {SlotComponent, UseDirective} from '@agnos-ui/angular';
+import type {SliderWidget} from '@agnos-ui/angular-bootstrap';
+import {SlotComponent, UseDirective} from '@agnos-ui/angular-bootstrap';
 import {ChangeDetectionStrategy, Component, NgZone, ViewEncapsulation, inject} from '@angular/core';
 import {take} from 'rxjs';
 

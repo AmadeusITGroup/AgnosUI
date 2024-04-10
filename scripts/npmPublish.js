@@ -4,13 +4,13 @@ import {fileURLToPath} from 'url';
 
 const directories = [
 	'core/dist',
-	'style-bootstrap/dist',
+	'core-bootstrap/dist',
 	'svelte/headless/dist',
-	'svelte/lib/dist',
+	'svelte/bootstrap/dist',
 	'react/headless/dist',
-	'react/lib/dist',
+	'react/bootstrap/dist',
 	'angular/headless/dist',
-	'angular/lib/dist',
+	'angular/bootstrap/dist',
 	'base-po',
 	'page-objects',
 ];

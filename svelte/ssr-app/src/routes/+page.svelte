@@ -1,13 +1,13 @@
 <script lang="ts">
-	import {Accordion, AccordionItem} from '@agnos-ui/svelte/components/accordion';
-	import {Alert} from '@agnos-ui/svelte/components/alert';
-	import {Modal} from '@agnos-ui/svelte/components/modal';
-	import {Pagination} from '@agnos-ui/svelte/components/pagination';
-	import {Progressbar} from '@agnos-ui/svelte/components/progressbar';
-	import {Rating} from '@agnos-ui/svelte/components/rating';
-	import {Select} from '@agnos-ui/svelte/components/select';
-	import {Slider} from '@agnos-ui/svelte/components/slider';
-	import {Toast} from '@agnos-ui/svelte/components/toast';
+	import {Accordion, AccordionItem} from '@agnos-ui/svelte-bootstrap/components/accordion';
+	import {Alert} from '@agnos-ui/svelte-bootstrap/components/alert';
+	import {Modal} from '@agnos-ui/svelte-bootstrap/components/modal';
+	import {Pagination} from '@agnos-ui/svelte-bootstrap/components/pagination';
+	import {Progressbar} from '@agnos-ui/svelte-bootstrap/components/progressbar';
+	import {Rating} from '@agnos-ui/svelte-bootstrap/components/rating';
+	import {Select} from '@agnos-ui/svelte-bootstrap/components/select';
+	import {Slider} from '@agnos-ui/svelte-bootstrap/components/slider';
+	import {Toast} from '@agnos-ui/svelte-bootstrap/components/toast';
 	import {onMount} from 'svelte';
 
 	onMount(() => {

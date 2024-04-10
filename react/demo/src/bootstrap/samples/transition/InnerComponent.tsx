@@ -1,10 +1,10 @@
 import {writable} from '@amadeus-it-group/tansu';
-import type {TransitionFn} from '@agnos-ui/react/services/transitions/baseTransitions';
-import {collapseHorizontalTransition, collapseVerticalTransition, fadeTransition} from '@agnos-ui/react/services/transitions/bootstrap';
-import {createTransition} from '@agnos-ui/react/services/transitions/baseTransitions';
-import {useDirective} from '@agnos-ui/react/utils/directive';
-import {useObservable} from '@agnos-ui/react/utils/stores';
-import {useWidget} from '@agnos-ui/react/utils/widget';
+import type {TransitionFn} from '@agnos-ui/react-bootstrap/services/transitions/baseTransitions';
+import {collapseHorizontalTransition, collapseVerticalTransition, fadeTransition} from '@agnos-ui/react-bootstrap/services/transitions/bootstrap';
+import {createTransition} from '@agnos-ui/react-bootstrap/services/transitions/baseTransitions';
+import {useDirective} from '@agnos-ui/react-bootstrap/utils/directive';
+import {useObservable} from '@agnos-ui/react-bootstrap/utils/stores';
+import {useWidget} from '@agnos-ui/react-bootstrap/utils/widget';
 
 const paramTransition$ = writable(collapseVerticalTransition);
 const paramAnimated$ = writable(true);

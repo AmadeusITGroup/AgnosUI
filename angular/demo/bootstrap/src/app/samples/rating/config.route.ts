@@ -1,5 +1,5 @@
-import type {RatingProps} from '@agnos-ui/angular';
-import {AgnosUIAngularModule, injectWidgetsConfig, provideWidgetsConfig} from '@agnos-ui/angular';
+import type {RatingProps} from '@agnos-ui/angular-bootstrap';
+import {AgnosUIAngularModule, injectWidgetsConfig, provideWidgetsConfig} from '@agnos-ui/angular-bootstrap';
 import {AsyncPipe} from '@angular/common';
 import {Component} from '@angular/core';
 

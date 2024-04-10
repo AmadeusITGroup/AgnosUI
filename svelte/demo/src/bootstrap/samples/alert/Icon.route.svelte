@@ -1,6 +1,6 @@
 <script lang="ts">
-	import {Alert} from '@agnos-ui/svelte/components/alert';
-	import {createWidgetsDefaultConfig} from '@agnos-ui/svelte/config';
+	import {Alert} from '@agnos-ui/svelte-bootstrap/components/alert';
+	import {createWidgetsDefaultConfig} from '@agnos-ui/svelte-bootstrap/config';
 	import Icon from './Icon.svelte';
 
 	createWidgetsDefaultConfig().set({alert: {dismissible: false, className: 'd-flex align-items-center', slotStructure: Icon}});

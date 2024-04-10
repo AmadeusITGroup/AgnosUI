@@ -1,4 +1,4 @@
-import {SliderComponent, SliderLabelDirective} from '@agnos-ui/angular';
+import {SliderComponent, SliderLabelDirective} from '@agnos-ui/angular-bootstrap';
 import {Component} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import CustomHandleSliderComponent from './custom-handle.component';

@@ -1,4 +1,4 @@
-import {AlertComponent, provideWidgetsConfig, injectWidgetsConfig} from '@agnos-ui/angular';
+import {AlertComponent, provideWidgetsConfig, injectWidgetsConfig} from '@agnos-ui/angular-bootstrap';
 import {Component} from '@angular/core';
 import SuccessComponent from './success.component';
 import SecondaryComponent from './secondary.component';

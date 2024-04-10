@@ -1,4 +1,4 @@
-import {AgnosUIAngularModule} from '@agnos-ui/angular';
+import {AgnosUIAngularModule} from '@agnos-ui/angular-bootstrap';
 import {activeElement$, createHasFocus} from '@agnos-ui/core';
 import {CommonModule} from '@angular/common';
 import type {OnDestroy} from '@angular/core';

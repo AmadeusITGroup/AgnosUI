@@ -1,5 +1,5 @@
-import type {WidgetsConfig} from '@agnos-ui/angular';
-import {provideWidgetsConfig, toAngularSignal} from '@agnos-ui/angular';
+import type {WidgetsConfig} from '@agnos-ui/angular-bootstrap';
+import {provideWidgetsConfig, toAngularSignal} from '@agnos-ui/angular-bootstrap';
 import {getPropValues} from '@agnos-ui/common/propsValues';
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {computed, get} from '@amadeus-it-group/tansu';

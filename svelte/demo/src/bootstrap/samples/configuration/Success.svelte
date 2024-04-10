@@ -1,6 +1,6 @@
 <script lang="ts">
-	import {Alert} from '@agnos-ui/svelte/components/alert';
-	import {createWidgetsDefaultConfig} from '@agnos-ui/svelte/config';
+	import {Alert} from '@agnos-ui/svelte-bootstrap/components/alert';
+	import {createWidgetsDefaultConfig} from '@agnos-ui/svelte-bootstrap/config';
 
 	createWidgetsDefaultConfig().set({alert: {type: 'success'}});
 </script>

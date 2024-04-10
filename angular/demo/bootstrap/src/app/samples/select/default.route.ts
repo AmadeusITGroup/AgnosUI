@@ -1,4 +1,4 @@
-import {SelectComponent} from '@agnos-ui/angular';
+import {SelectComponent} from '@agnos-ui/angular-bootstrap';
 import {Component} from '@angular/core';
 
 @Component({

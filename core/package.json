@@ -3,9 +3,6 @@
 	"description": "Framework-agnostic headless widget library.",
 	"version": "0.0.0",
 	"private": true,
-	"keywords": [
-		"agnostic"
-	],
 	"type": "module",
 	"main": "./dist/index.cjs",
 	"module": "./dist/index.js",

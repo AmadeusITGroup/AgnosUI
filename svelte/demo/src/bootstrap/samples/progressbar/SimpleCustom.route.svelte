@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {Progressbar} from '@agnos-ui/svelte/components/progressbar';
+	import {Progressbar} from '@agnos-ui/svelte-bootstrap/components/progressbar';
 </script>
 
 <div class="d-flex flex-column gap-2">

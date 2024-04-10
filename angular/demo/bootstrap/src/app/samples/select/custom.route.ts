@@ -1,4 +1,4 @@
-import {AgnosUIAngularModule} from '@agnos-ui/angular';
+import {AgnosUIAngularModule} from '@agnos-ui/angular-bootstrap';
 import {abortPrevious, debounce} from '@agnos-ui/common/samples/utils/debounce';
 import {Component} from '@angular/core';
 

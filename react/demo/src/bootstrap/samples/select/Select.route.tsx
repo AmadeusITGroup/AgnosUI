@@ -1,7 +1,7 @@
 import type {ChangeEvent} from 'react';
 import {useState, useCallback} from 'react';
-import {Select} from '@agnos-ui/react/components/select';
-import {WidgetsDefaultConfig} from '@agnos-ui/react/config';
+import {Select} from '@agnos-ui/react-bootstrap/components/select';
+import {WidgetsDefaultConfig} from '@agnos-ui/react-bootstrap/config';
 
 function getFilterTextParam() {
 	const params = location.hash.split('?')[1];

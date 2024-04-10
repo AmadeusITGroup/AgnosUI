@@ -1,5 +1,5 @@
-import type {AlertApi} from '@agnos-ui/react/components/alert';
-import {Alert} from '@agnos-ui/react/components/alert';
+import type {AlertApi} from '@agnos-ui/react-bootstrap/components/alert';
+import {Alert} from '@agnos-ui/react-bootstrap/components/alert';
 import {useRef, useState} from 'react';
 
 export enum AlertStatus {

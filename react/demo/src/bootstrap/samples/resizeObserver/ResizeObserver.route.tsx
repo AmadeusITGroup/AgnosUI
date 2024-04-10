@@ -1,8 +1,8 @@
 import '@agnos-ui/common/samples/resizeobserver/resizeobserver.scss';
-import {useObservable} from '@agnos-ui/react/utils/stores';
-import {createResizeObserver} from '@agnos-ui/react/services/resizeObserver';
+import {useObservable} from '@agnos-ui/react-bootstrap/utils/stores';
+import {createResizeObserver} from '@agnos-ui/react-bootstrap/services/resizeObserver';
 import {useMemo, useState} from 'react';
-import {useDirective} from '@agnos-ui/react/utils/directive';
+import {useDirective} from '@agnos-ui/react-bootstrap/utils/directive';
 
 const ResizeObserver = () => {
 	const resizeObserver = useMemo(createResizeObserver, []);

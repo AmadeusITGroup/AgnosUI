@@ -1,6 +1,6 @@
 import '@agnos-ui/common/samples/rating/custom.scss';
 import {RatingReadonly} from './RatingReadonly';
-import type {StarContext} from '@agnos-ui/react/components/rating';
+import type {StarContext} from '@agnos-ui/react-bootstrap/components/rating';
 
 const CustomStar = ({fill, index}: StarContext) => {
 	const starClassname = ['star'];

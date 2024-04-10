@@ -1,5 +1,5 @@
-import type {ToastComponent} from '@agnos-ui/angular';
-import {AgnosUIAngularModule} from '@agnos-ui/angular';
+import type {ToastComponent} from '@agnos-ui/angular-bootstrap';
+import {AgnosUIAngularModule} from '@agnos-ui/angular-bootstrap';
 import {getToastDefaultConfig} from '@agnos-ui/core';
 import {Component, ViewChild} from '@angular/core';
 import {getUndefinedValues, hashChangeHook, provideHashConfig} from '../../utils';

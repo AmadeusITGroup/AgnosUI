@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {openModal} from '@agnos-ui/svelte/components/modal';
+	import {openModal} from '@agnos-ui/svelte-bootstrap/components/modal';
 	import ComponentModal from './ComponentModal.svelte';
 	const launch = () => openModal({slotTitle: 'Hi there!', slotDefault: ComponentModal, contentData: {name: 'World'}});
 </script>

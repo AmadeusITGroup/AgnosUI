@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
-import {AlertComponent, toAngularSignal} from '@agnos-ui/angular';
+import {AlertComponent, toAngularSignal} from '@agnos-ui/angular-bootstrap';
 import {MatchMediaService} from './matchMedia.service';
 
 @Component({

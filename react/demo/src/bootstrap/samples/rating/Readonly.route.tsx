@@ -1,6 +1,6 @@
 import '@agnos-ui/common/samples/rating/readonly.scss';
-import type {StarContext} from '@agnos-ui/react/components/rating';
-import {Rating} from '@agnos-ui/react/components/rating';
+import type {StarContext} from '@agnos-ui/react-bootstrap/components/rating';
+import {Rating} from '@agnos-ui/react-bootstrap/components/rating';
 import HeartFill from 'bootstrap-icons/icons/heart-fill.svg?react';
 
 const RatingDemo = () => (

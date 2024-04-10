@@ -1,6 +1,6 @@
 <script lang="ts">
 	import {aboveMd$} from './stores';
-	import {Alert} from '@agnos-ui/svelte/components/alert';
+	import {Alert} from '@agnos-ui/svelte-bootstrap/components/alert';
 </script>
 
 <div class="mb-2">Resize the window to see the message below updated.</div>

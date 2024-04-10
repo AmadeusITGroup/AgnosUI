@@ -8,7 +8,7 @@ test-results/
 dist.tar.gz
 .nyc_output/
 .idea
-style-bootstrap/css/
+core-bootstrap/css/
 generated
 .wireit
 vite.config.ts.timestamp-*

@@ -8,15 +8,16 @@
 	"private": true,
 	"type": "module",
 	"keywords": [
+		"AgnosUI",
 		"accordion",
 		"alert",
-		"bootstrap",
 		"components",
-		"daisyUI",
 		"modal",
 		"pagination",
+		"progressbar",
 		"rating",
 		"slider",
+		"toast",
 		"widgets"
 	],
 	"repository": {
@@ -137,9 +138,9 @@
 			"dependencies": [
 				"./angular/headless:generate:exports",
 				"./react/headless:generate:exports",
-				"./react/lib:generate:exports",
+				"./react/bootstrap:generate:exports",
 				"./svelte/headless:generate:exports",
-				"./svelte/lib:generate:exports"
+				"./svelte/bootstrap:generate:exports"
 			]
 		},
 		"check:ts-gen-doc": {
@@ -158,10 +159,10 @@
 				"./react/demo:check",
 				"./react/ssr-app:check",
 				"./svelte/headless:check",
-				"./svelte/lib:check",
+				"./svelte/bootstrap:check",
 				"./svelte/demo:check",
 				"./svelte/ssr-app:check",
-				"./angular/lib:check",
+				"./angular/bootstrap:check",
 				"./demo:check"
 			]
 		},
@@ -169,24 +170,24 @@
 			"command": "eslint --ext mjs,js,ts,tsx,svelte .",
 			"dependencies": [
 				"./eslint-plugin:build",
-				"./svelte/lib:build"
+				"./svelte/bootstrap:build"
 			]
 		}
 	},
 	"workspaces": [
 		"code-coverage",
 		"core",
-		"style-bootstrap",
+		"core-bootstrap",
 		"angular/headless",
-		"angular/lib",
+		"angular/bootstrap",
 		"angular/demo",
 		"angular/ssr-app",
 		"react/headless",
-		"react/lib",
+		"react/bootstrap",
 		"react/demo",
 		"react/ssr-app",
 		"svelte/headless",
-		"svelte/lib",
+		"svelte/bootstrap",
 		"svelte/demo",
 		"svelte/ssr-app",
 		"demo",

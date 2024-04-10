@@ -1,1 +1,1 @@
-npm install @agnos-ui/react
+npm install @agnos-ui/react-bootstrap

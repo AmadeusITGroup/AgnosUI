@@ -1,5 +1,5 @@
-import {AgnosUIAngularModule} from '@agnos-ui/angular';
-import type {AlertComponent} from '@agnos-ui/angular';
+import {AgnosUIAngularModule} from '@agnos-ui/angular-bootstrap';
+import type {AlertComponent} from '@agnos-ui/angular-bootstrap';
 import {Component} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 

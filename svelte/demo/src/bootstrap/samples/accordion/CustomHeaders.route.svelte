@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-	import {Accordion, AccordionItem} from '@agnos-ui/svelte/components/accordion';
+	import {Accordion, AccordionItem} from '@agnos-ui/svelte-bootstrap/components/accordion';
 	import '@agnos-ui/common/samples/accordion/custom.scss';
 	import {writable} from 'svelte/store';
 	import BODY from '@agnos-ui/common/samples/accordion/body.txt?raw';

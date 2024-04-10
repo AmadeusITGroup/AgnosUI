@@ -1,0 +1,91 @@
+{
+	"name": "@agnos-ui/angular-bootstrap",
+	"description": "Bootstrap-based widget library for Angular.",
+	"version": "0.0.0",
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"esm2022": "./dist/esm2022/agnos-ui-angular-bootstrap.mjs",
+			"esm": "./dist/esm2022/agnos-ui-angular-bootstrap.mjs",
+			"default": "./dist/fesm2022/agnos-ui-angular-bootstrap.mjs"
+		}
+	},
+	"scripts": {
+		"ng": "ng",
+		"build": "wireit",
+		"check": "wireit"
+	},
+	"wireit": {
+		"build:src": {
+			"command": "ng build",
+			"dependencies": [
+				"../headless:build",
+				"../../core-bootstrap:build"
+			],
+			"files": [
+				"src/**",
+				"!src/generated/**",
+				"tsconfig.build.json",
+				"../tsconfig.json",
+				"../../tsconfig.json",
+				"angular.json",
+				"ng-package.json"
+			],
+			"output": [
+				"dist/**",
+				"!dist/README.md",
+				"!dist/package.json"
+			]
+		},
+		"build:pkg": {
+			"command": "node ../../scripts/buildPackageJson.js . dist",
+			"dependencies": [
+				"build:src"
+			],
+			"files": [
+				"../../scripts/buildPackageJson.js",
+				"../../package.json",
+				"package.json",
+				"README.md"
+			],
+			"output": [
+				"dist/README.md",
+				"dist/package.json"
+			]
+		},
+		"build": {
+			"dependencies": [
+				"build:pkg"
+			]
+		},
+		"check": {
+			"command": "node scripts/verify-module.js"
+		}
+	},
+	"peerDependencies": {
+		"@amadeus-it-group/tansu": "*",
+		"@angular/common": "*",
+		"@angular/core": "*"
+	},
+	"dependencies": {
+		"@agnos-ui/angular-headless": "0.0.0",
+		"@agnos-ui/core-bootstrap": "0.0.0",
+		"tslib": "^2.6.2"
+	},
+	"devDependencies": {
+		"@angular-devkit/build-angular": "~17.3.3",
+		"@angular/animations": "~17.3.3",
+		"@angular/cli": "~17.3.3",
+		"@angular/common": "~17.3.3",
+		"@angular/compiler": "~17.3.3",
+		"@angular/core": "~17.3.3",
+		"@angular/forms": "~17.3.3",
+		"@angular/platform-browser": "~17.3.3",
+		"@angular/platform-browser-dynamic": "~17.3.3",
+		"ng-packagr": "~17.3.0",
+		"rxjs": "^7.8.1",
+		"zone.js": "~0.14.4"
+	},
+	"sideEffects": false
+}

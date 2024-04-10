@@ -22,7 +22,7 @@
 			"command": "tsx --tsconfig ../scripts/doc/tsconfig.json ../scripts/doc/generate-docs.ts",
 			"files": [
 				"../core/src/**",
-				"../style-bootstrap/src/**",
+				"../core-bootstrap/src/**",
 				"../scripts/doc/tsconfig.json",
 				"../scripts/doc/generate-docs.ts",
 				"../scripts/doc/api-doc.ts"
@@ -66,7 +66,7 @@
 				"../angular/demo:build:coverage",
 				"../react/demo:build:coverage",
 				"../svelte/demo:build:coverage",
-				"../svelte/lib:build"
+				"../svelte/bootstrap:build"
 			],
 			"files": [
 				"src/**",
@@ -108,7 +108,7 @@
 		}
 	},
 	"dependencies": {
-		"@agnos-ui/svelte": "0.0.0",
+		"@agnos-ui/svelte-bootstrap": "0.0.0",
 		"@amadeus-it-group/tansu": "1.0.0",
 		"@floating-ui/dom": "^1.6.3"
 	},

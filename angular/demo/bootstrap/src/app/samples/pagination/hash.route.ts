@@ -1,4 +1,4 @@
-import {AgnosUIAngularModule, toAngularSignal} from '@agnos-ui/angular';
+import {AgnosUIAngularModule, toAngularSignal} from '@agnos-ui/angular-bootstrap';
 import {hash$} from '@agnos-ui/common/utils';
 import {Component, computed} from '@angular/core';
 @Component({

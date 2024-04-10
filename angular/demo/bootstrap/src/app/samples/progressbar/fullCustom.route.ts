@@ -1,4 +1,4 @@
-import {ProgressbarComponent, provideWidgetsConfig} from '@agnos-ui/angular';
+import {ProgressbarComponent, provideWidgetsConfig} from '@agnos-ui/angular-bootstrap';
 import type {OnDestroy} from '@angular/core';
 import {Component} from '@angular/core';
 import type {Subscription} from 'rxjs';

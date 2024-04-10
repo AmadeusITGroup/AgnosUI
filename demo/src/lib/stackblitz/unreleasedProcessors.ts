@@ -33,12 +33,12 @@ export const createFrameworkProcessors =
 					'../../../../core/dist/',
 				);
 				const stylePackage = addAsyncFiles(
-					import.meta.glob(['../../../../style-bootstrap/**', '!**/*.map', '!**/*.scss'], {
+					import.meta.glob(['../../../../core-bootstrap/**', '!**/*.map', '!**/*.scss'], {
 						query: '?raw',
 						import: 'default',
 					}) as any,
-					'packages/@agnos-ui/style-bootstrap/',
-					'../../../../style-bootstrap/',
+					'packages/@agnos-ui/core-bootstrap/',
+					'../../../../core-bootstrap/',
 					isBootstrapCondition,
 				);
 				res.angular.push(
@@ -53,12 +53,12 @@ export const createFrameworkProcessors =
 						'../../../../angular/headless/dist/',
 					),
 					addAsyncFiles(
-						import.meta.glob(['../../../../angular/lib/dist/**', '!**/*.map'], {
+						import.meta.glob(['../../../../angular/bootstrap/dist/**', '!**/*.map'], {
 							query: '?raw',
 							import: 'default',
 						}) as any,
-						'packages/@agnos-ui/angular/',
-						'../../../../angular/lib/dist/',
+						'packages/@agnos-ui/angular-bootstrap/',
+						'../../../../angular/bootstrap/dist/',
 						isBootstrapCondition,
 					),
 					mergePackageJson,
@@ -75,12 +75,12 @@ export const createFrameworkProcessors =
 						'../../../../react/headless/dist/',
 					),
 					addAsyncFiles(
-						import.meta.glob(['../../../../react/lib/dist/**', '!**/*.map'], {
+						import.meta.glob(['../../../../react/bootstrap/dist/**', '!**/*.map'], {
 							query: '?raw',
 							import: 'default',
 						}) as any,
-						'packages/@agnos-ui/react/',
-						'../../../../react/lib/dist/',
+						'packages/@agnos-ui/react-bootstrap/',
+						'../../../../react/bootstrap/dist/',
 						isBootstrapCondition,
 					),
 					mergePackageJson,
@@ -97,12 +97,12 @@ export const createFrameworkProcessors =
 						'../../../../svelte/headless/dist/',
 					),
 					addAsyncFiles(
-						import.meta.glob(['../../../../svelte/lib/dist/**', '!**/*.map'], {
+						import.meta.glob(['../../../../svelte/bootstrap/dist/**', '!**/*.map'], {
 							query: '?raw',
 							import: 'default',
 						}) as any,
-						'packages/@agnos-ui/svelte/',
-						'../../../../svelte/lib/dist/',
+						'packages/@agnos-ui/svelte-bootstrap/',
+						'../../../../svelte/bootstrap/dist/',
 						isBootstrapCondition,
 					),
 					mergePackageJson,

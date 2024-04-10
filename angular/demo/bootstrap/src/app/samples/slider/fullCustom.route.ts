@@ -1,4 +1,4 @@
-import {SliderComponent, SliderStructureDirective} from '@agnos-ui/angular';
+import {SliderComponent, SliderStructureDirective} from '@agnos-ui/angular-bootstrap';
 import {Component, ViewEncapsulation} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import CoffeeSliderComponent from './coffee-slider.component';

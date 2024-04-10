@@ -1,5 +1,5 @@
-import {Accordion, AccordionItem} from '@agnos-ui/react/components/accordion';
-import {WidgetsDefaultConfig} from '@agnos-ui/react/config';
+import {Accordion, AccordionItem} from '@agnos-ui/react-bootstrap/components/accordion';
+import {WidgetsDefaultConfig} from '@agnos-ui/react-bootstrap/config';
 import {useHashChange} from '../../../common/utils';
 
 const AccordionDemo = () => {

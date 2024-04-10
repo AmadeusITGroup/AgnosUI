@@ -1,4 +1,4 @@
-import {AlertComponent} from '@agnos-ui/angular';
+import {AlertComponent} from '@agnos-ui/angular-bootstrap';
 import {Component} from '@angular/core';
 
 @Component({

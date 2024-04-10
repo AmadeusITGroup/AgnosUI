@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type {ModalSlots} from '@agnos-ui/svelte/components/modal';
-	import {openModal} from '@agnos-ui/svelte/components/modal';
+	import type {ModalSlots} from '@agnos-ui/svelte-bootstrap/components/modal';
+	import {openModal} from '@agnos-ui/svelte-bootstrap/components/modal';
 	import Self from './StackModal.svelte';
 
 	type $$Props = ModalSlots<void>['default'];

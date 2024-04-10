@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Playground from '$lib/layout/playground/Playground.svelte';
-	import {getAlertDefaultConfig} from '@agnos-ui/svelte/components/alert';
+	import {getAlertDefaultConfig} from '@agnos-ui/svelte-bootstrap/components/alert';
 	import sample from '@agnos-ui/samples/bootstrap/alert/playground';
 	import doc from '@agnos-ui/generated/doc/api.json?alert&extractApi';
 	import type {PropsValues} from '@agnos-ui/common/propsValues';

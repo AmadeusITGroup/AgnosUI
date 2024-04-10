@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Svg from '$lib/layout/Svg.svelte';
-	import {createHasFocus} from '@agnos-ui/svelte/services/focustrack';
+	import {createHasFocus} from '@agnos-ui/svelte-bootstrap/services/focustrack';
 	import {writable} from '@amadeus-it-group/tansu';
 	import halfCircle from 'bootstrap-icons/icons/circle-half.svg?raw';
 	import moon from 'bootstrap-icons/icons/moon-stars-fill.svg?raw';

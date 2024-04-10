@@ -1,4 +1,4 @@
-import {Alert} from '@agnos-ui/react/components/alert';
+import {Alert} from '@agnos-ui/react-bootstrap/components/alert';
 
 const Usage = () => (
 	<>

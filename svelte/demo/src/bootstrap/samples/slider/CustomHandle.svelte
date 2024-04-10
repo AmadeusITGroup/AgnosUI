@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '@agnos-ui/common/samples/slider/custom.scss';
-	import type {SliderSlots} from '@agnos-ui/svelte/components/slider';
+	import type {SliderSlots} from '@agnos-ui/svelte-bootstrap/components/slider';
 	type $$Props = SliderSlots['handle'];
 	type $$Slots = SliderSlots;
 

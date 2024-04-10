@@ -23,9 +23,9 @@
 						"index": "bootstrap/src/index.html",
 						"browser": "bootstrap/src/main.ts",
 						"polyfills": ["bootstrap/src/polyfills.ts"],
-						"tsConfig": "tsconfig.build.json",
+						"tsConfig": "bootstrap/tsconfig.build.json",
 						"assets": ["bootstrap/src/agnosui-logo.svg"],
-						"styles": ["bootstrap/src/styles.css", "../../common/demo.scss", "@agnos-ui/style-bootstrap/scss/agnosui.scss"],
+						"styles": ["bootstrap/src/styles.css", "../../common/demo.scss", "@agnos-ui/core-bootstrap/scss/agnosui.scss"],
 						"inlineStyleLanguage": "scss",
 						"loader": {
 							".txt": "text",
@@ -111,7 +111,7 @@
 						"index": "daisyui/src/index.html",
 						"browser": "daisyui/src/main.ts",
 						"polyfills": ["daisyui/src/polyfills.ts"],
-						"tsConfig": "tsconfig.build.json",
+						"tsConfig": "daisyui/tsconfig.build.json",
 						"assets": ["daisyui/src/agnosui-logo.svg"],
 						"styles": ["daisyui/src/styles.css", "../../common/demo.scss"],
 						"inlineStyleLanguage": "scss"

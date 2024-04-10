@@ -1,5 +1,5 @@
-import type {NavManagerItemConfig} from '@agnos-ui/angular';
-import {AgnosUIAngularModule, createNavManager} from '@agnos-ui/angular';
+import type {NavManagerItemConfig} from '@agnos-ui/angular-bootstrap';
+import {AgnosUIAngularModule, createNavManager} from '@agnos-ui/angular-bootstrap';
 import {Component, Input} from '@angular/core';
 
 @Component({

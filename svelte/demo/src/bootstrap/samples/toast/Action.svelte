@@ -1,6 +1,6 @@
 <script lang="ts">
-	import {Slot} from '@agnos-ui/svelte/slot';
-	import type {ToastSlots} from '@agnos-ui/svelte/components/toast';
+	import {Slot} from '@agnos-ui/svelte-bootstrap/slot';
+	import type {ToastSlots} from '@agnos-ui/svelte-bootstrap/components/toast';
 	import biCheckCircleFill from 'bootstrap-icons/icons/check-circle-fill.svg?raw';
 	import biArrowCounterClockwise from 'bootstrap-icons/icons/arrow-counterclockwise.svg?raw';
 

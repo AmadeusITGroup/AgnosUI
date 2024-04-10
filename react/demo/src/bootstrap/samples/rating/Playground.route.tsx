@@ -1,5 +1,5 @@
-import {Rating} from '@agnos-ui/react/components/rating';
-import {WidgetsDefaultConfig} from '@agnos-ui/react/config';
+import {Rating} from '@agnos-ui/react-bootstrap/components/rating';
+import {WidgetsDefaultConfig} from '@agnos-ui/react-bootstrap/config';
 import {useHashChange} from '../../../common/utils';
 
 const RatingDemo = () => {

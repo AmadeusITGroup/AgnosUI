@@ -1,7 +1,7 @@
-import type {ToastApi, ToastContext} from '@agnos-ui/react/components/toast';
-import {Toast} from '@agnos-ui/react/components/toast';
-import {WidgetsDefaultConfig} from '@agnos-ui/react/config';
-import {Slot} from '@agnos-ui/react/slot';
+import type {ToastApi, ToastContext} from '@agnos-ui/react-bootstrap/components/toast';
+import {Toast} from '@agnos-ui/react-bootstrap/components/toast';
+import {WidgetsDefaultConfig} from '@agnos-ui/react-bootstrap/config';
+import {Slot} from '@agnos-ui/react-bootstrap/slot';
 import BiArrowCounterClockwise from 'bootstrap-icons/icons/arrow-counterclockwise.svg?react';
 import BiCheckCircleFill from 'bootstrap-icons/icons/check-circle-fill.svg?react';
 import {useRef} from 'react';

@@ -1,4 +1,4 @@
-import {Progressbar} from '@agnos-ui/react/components/progressbar';
+import {Progressbar} from '@agnos-ui/react-bootstrap/components/progressbar';
 import {useEffect, useState} from 'react';
 import '@agnos-ui/common/samples/progressbar/custom.scss';
 import {Coffee} from './Coffee';
