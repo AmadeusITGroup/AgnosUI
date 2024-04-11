@@ -87,19 +87,14 @@ export class ModalFooterDirective<Data> {
 @Component({
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [SlotDirective, ModalHeaderDirective, ModalStructureDirective],
+	imports: [SlotDirective, ModalHeaderDirective, ModalStructureDirective, UseDirective],
 	template: `
 		<ng-template auModalHeader #header let-state="state" let-widget="widget">
 			<h5 class="modal-title">
 				<ng-template [auSlot]="state.slotTitle" [auSlotProps]="{state, widget}"></ng-template>
 			</h5>
 			@if (state.closeButton) {
-				<button
-					type="button"
-					class="btn-close"
-					[attr.aria-label]="state.ariaCloseButtonLabel"
-					(click)="widget.actions.closeButtonClick($event)"
-				></button>
+				<button class="btn-close" [auUse]="widget.directives.closeButtonDirective"></button>
 			}
 		</ng-template>
 		<ng-template auModalStructure #structure let-state="state" let-widget="widget">
@@ -150,10 +145,10 @@ const defaultConfig: Partial<ModalProps<any>> = {
 	template: `
 		<ng-template [auSlotDefault]="defaultSlots"><ng-content></ng-content></ng-template>
 		@if (!state().backdropHidden) {
-			<div class="modal-backdrop {{ state().backdropClass }}" [auUse]="backdropDirective"></div>
+			<div class="modal-backdrop" [auUse]="backdropDirective"></div>
 		}
 		@if (!state().hidden) {
-			<div class="modal d-block {{ state().className }}" [auUse]="modalDirective" (click)="widget.actions.modalClick($event)">
+			<div class="modal d-block" [auUse]="modalDirective">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<ng-template [auSlot]="state().slotStructure" [auSlotProps]="{state: state(), widget}"></ng-template>

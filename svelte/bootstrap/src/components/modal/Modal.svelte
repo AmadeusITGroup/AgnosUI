@@ -35,7 +35,7 @@
 	export const api = widget.api;
 
 	const {
-		stores: {backdropClass$, backdropHidden$, hidden$, className$, slotStructure$},
+		stores: {backdropHidden$, hidden$, slotStructure$},
 		directives: {backdropDirective, backdropPortalDirective, modalDirective, modalPortalDirective},
 		state$,
 	} = widget;
@@ -45,13 +45,11 @@
 </script>
 
 {#if !$backdropHidden$}
-	<div class="modal-backdrop {$backdropClass$}" use:backdropPortalDirective use:backdropDirective />
+	<div class="modal-backdrop" use:backdropPortalDirective use:backdropDirective />
 {/if}
 
 {#if !$hidden$}
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<div class="modal d-block {$className$}" use:modalPortalDirective use:modalDirective on:click={widget.actions.modalClick}>
+	<div class="modal d-block" use:modalPortalDirective use:modalDirective>
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<Slot slotContent={$slotStructure$} props={slotContext} let:component let:props>
