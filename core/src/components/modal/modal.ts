@@ -9,7 +9,14 @@ import {promiseFromStore} from '../../utils/internal/promise';
 import type {ConfigValidator, Directive, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../../types';
 import {noop} from '../../utils/internal/func';
 import {removeScrollbars, revertScrollbars} from '../../utils/internal/scrollbars';
-import {bindDirective, bindDirectiveNoArg, directiveSubscribe, mergeDirectives, registrationArray} from '../../utils/directive';
+import {
+	bindDirective,
+	bindDirectiveNoArg,
+	createAttributesDirective,
+	directiveSubscribe,
+	mergeDirectives,
+	registrationArray,
+} from '../../utils/directive';
 import {portal} from '../../services/portal';
 import {sliblingsInert} from '../../services/siblingsInert';
 
@@ -259,6 +266,11 @@ export interface ModalDirectives {
 	 * Portal directive to put on the backdrop DOM element.
 	 */
 	backdropPortalDirective: Directive;
+
+	/**
+	 * Directive that adds all the necessary attributes to the close button
+	 */
+	closeButtonDirective: Directive;
 }
 
 /**
@@ -347,6 +359,9 @@ export function createModal<Data>(config$?: PropsConfig<ModalProps<Data>>): Moda
 			onVisibleChange$,
 			onHidden$,
 			onShown$,
+			ariaCloseButtonLabel$,
+			className$,
+			backdropClass$,
 			visible$: requestedVisible$,
 			...stateProps
 		},
@@ -420,6 +435,31 @@ export function createModal<Data>(config$?: PropsConfig<ModalProps<Data>>): Moda
 		modalsAction$();
 	});
 
+	const closeButtonDirective = createAttributesDirective(() => ({
+		attributes: {
+			type: 'button',
+			'aria-label': ariaCloseButtonLabel$,
+		},
+		events: {
+			click: res.actions.closeButtonClick,
+		},
+	}));
+
+	const backdropAttributeDirective = createAttributesDirective(() => ({
+		attributes: {
+			class: backdropClass$,
+		},
+	}));
+
+	const modalAttributeDirective = createAttributesDirective(() => ({
+		attributes: {
+			class: className$,
+		},
+		events: {
+			click: res.actions.modalClick,
+		},
+	}));
+
 	const res: ModalWidget<Data> = {
 		...stateStores({
 			backdropHidden$,
@@ -428,13 +468,22 @@ export function createModal<Data>(config$?: PropsConfig<ModalProps<Data>>): Moda
 			transitioning$,
 			visible$,
 			modalElement$: modalTransition.stores.element$,
+			ariaCloseButtonLabel$,
+			className$,
+			backdropClass$,
 			...stateProps,
 		}),
 		directives: {
 			modalPortalDirective,
 			backdropPortalDirective,
-			backdropDirective: bindDirectiveNoArg(backdropTransition.directives.directive),
-			modalDirective: mergeDirectives(bindDirectiveNoArg(modalTransition.directives.directive), sliblingsInert, directiveSubscribe(action$)),
+			backdropDirective: mergeDirectives(bindDirectiveNoArg(backdropTransition.directives.directive), backdropAttributeDirective),
+			modalDirective: mergeDirectives(
+				bindDirectiveNoArg(modalTransition.directives.directive),
+				sliblingsInert,
+				directiveSubscribe(action$),
+				modalAttributeDirective,
+			),
+			closeButtonDirective,
 		},
 		patch,
 		api: {

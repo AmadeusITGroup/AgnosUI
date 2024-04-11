@@ -11,33 +11,29 @@ import {forwardRef, useImperativeHandle} from 'react';
 
 export * from '@agnos-ui/react-headless/components/modal';
 
-const DefaultSlotHeader = <Data,>(slotContext: ModalContext<Data>) => (
-	<>
-		<h5 className="modal-title">
-			<Slot slotContent={slotContext.state.slotTitle} props={slotContext} />
-		</h5>
-		{!slotContext.state.closeButton ? null : (
-			<button
-				type="button"
-				className="btn-close"
-				aria-label={slotContext.state.ariaCloseButtonLabel}
-				onClick={slotContext.widget.actions.closeButtonClick}
-			/>
-		)}
-	</>
-);
+const DefaultSlotHeader = <Data,>(slotContext: ModalContext<Data>) => {
+	const refCloseButton = useDirective(slotContext.widget.directives.closeButtonDirective);
+	return (
+		<>
+			<h5 className="modal-title">
+				<Slot slotContent={slotContext.state.slotTitle} props={slotContext} />
+			</h5>
+			{slotContext.state.closeButton && <button className="btn-close" {...refCloseButton} />}
+		</>
+	);
+};
 
 const DefaultSlotStructure = <Data,>(slotContext: ModalContext<Data>) => (
 	<>
-		{!slotContext.state.slotTitle ? null : (
+		{slotContext.state.slotTitle && (
 			<div className="modal-header">
-				<Slot slotContent={slotContext.state.slotHeader} props={slotContext}></Slot>
+				<Slot slotContent={slotContext.state.slotHeader} props={slotContext} />
 			</div>
 		)}
 		<div className="modal-body">
 			<Slot slotContent={slotContext.state.slotDefault} props={slotContext} />
 		</div>
-		{!slotContext.state.slotFooter ? null : (
+		{slotContext.state.slotFooter && (
 			<div className="modal-footer">
 				<Slot slotContent={slotContext.state.slotFooter} props={slotContext} />
 			</div>
@@ -61,9 +57,9 @@ export const Modal = forwardRef(function Modal<Data>(props: PropsWithChildren<Pa
 	};
 	return (
 		<Portal container={state.container}>
-			{state.backdropHidden ? null : <div className={`modal-backdrop ${state.backdropClass}`} {...refSetBackdrop} />}
-			{state.hidden ? null : (
-				<div className={`modal d-block ${state.className}`} onClick={widget.actions.modalClick} {...refSetModal}>
+			{!state.backdropHidden && <div className={`modal-backdrop`} {...refSetBackdrop} />}
+			{!state.hidden && (
+				<div className={`modal d-block`} {...refSetModal}>
 					<div className="modal-dialog">
 						<div className="modal-content">
 							<Slot slotContent={state.slotStructure} props={slotContext} />

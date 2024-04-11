@@ -24,5 +24,5 @@
 	</Slot>
 </h5>
 {#if state.closeButton}
-	<button type="button" class="btn-close" aria-label={state.ariaCloseButtonLabel} on:click={widget.actions.closeButtonClick} />
+	<button class="btn-close" use:widget.directives.closeButtonDirective />
 {/if}

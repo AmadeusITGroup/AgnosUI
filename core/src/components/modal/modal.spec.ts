@@ -44,7 +44,7 @@ describe('modal', () => {
 	});
 
 	test('close on close method call', async () => {
-		const element = {} as HTMLElement;
+		const element = document.createElement('div');
 		const modal = createModal({
 			props: {
 				modalTransition: noopTransition,
@@ -60,7 +60,7 @@ describe('modal', () => {
 	});
 
 	test('close on close button click', async () => {
-		const element = {} as HTMLElement;
+		const element = document.createElement('div');
 		const modal = createModal({
 			props: {
 				modalTransition: noopTransition,
@@ -75,7 +75,7 @@ describe('modal', () => {
 	});
 
 	test('close on outside click', async () => {
-		const element = {} as HTMLElement;
+		const element = document.createElement('div');
 		const modal = createModal({
 			props: {
 				modalTransition: noopTransition,
@@ -91,7 +91,7 @@ describe('modal', () => {
 	});
 
 	test('do not close on outside click', async () => {
-		const element = {} as HTMLElement;
+		const element = document.createElement('div');
 		const modal = createModal({
 			props: {modalTransition: noopTransition, closeOnOutsideClick: false},
 		});
@@ -108,7 +108,7 @@ describe('modal', () => {
 
 	test('do not close when close is canceled from onBeforeClose', async () => {
 		let onBeforeCloseCalled = 0;
-		const element = {} as HTMLElement;
+		const element = document.createElement('div');
 		const modal = createModal({
 			props: {
 				modalTransition: noopTransition,
@@ -136,7 +136,7 @@ describe('modal', () => {
 		let onBeforeCloseCalled = 0;
 		let resultInOnBeforeClose = null;
 		const secondResult = {info: 'secondResult'};
-		const element = {} as HTMLElement;
+		const element = document.createElement('div');
 		const modal = createModal({
 			props: {
 				modalTransition: noopTransition,
