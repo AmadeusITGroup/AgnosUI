@@ -1,9 +1,9 @@
 <script lang="ts">
-	import {Alert} from '@agnos-ui/svelte-bootstrap/components/alert';
+	import {Alert, type AlertProps} from '@agnos-ui/svelte-bootstrap/components/alert';
 
 	let alert: Alert;
 	let [animatedOnInit, animated, dismissible] = [true, true, true];
-	let type = 'success';
+	let type: AlertProps['type'] = 'success';
 
 	enum AlertStatus {
 		success = 'success',

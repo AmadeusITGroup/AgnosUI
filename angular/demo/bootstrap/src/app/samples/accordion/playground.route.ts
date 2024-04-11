@@ -3,7 +3,7 @@ import type {QueryList} from '@angular/core';
 import {AccordionItemComponent, AgnosUIAngularModule} from '@agnos-ui/angular-bootstrap';
 import {AccordionDirective} from '@agnos-ui/angular-bootstrap';
 import {getUndefinedValues, hashChangeHook, provideHashConfig} from '../../utils';
-import {getAccordionDefaultConfig} from '@agnos-ui/core';
+import {getAccordionDefaultConfig} from '@agnos-ui/core-bootstrap';
 
 const undefinedAccordionConfig = getUndefinedValues(getAccordionDefaultConfig());
 @Component({

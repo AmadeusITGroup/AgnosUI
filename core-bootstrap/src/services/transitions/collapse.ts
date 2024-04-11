@@ -1,5 +1,4 @@
-import type {CollapseConfig} from '../collapse';
-import {createCollapseTransition} from '../collapse';
+import {createCollapseTransition, type CollapseConfig} from '@agnos-ui/core/services/transitions/collapse';
 
 const verticalConfig: CollapseConfig = {
 	dimension: 'height',

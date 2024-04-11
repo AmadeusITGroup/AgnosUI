@@ -1,4 +1,4 @@
-import {createSimpleClassTransition} from '../simpleClassTransition';
+import {createSimpleClassTransition} from '@agnos-ui/core/services/transitions/simpleClassTransition';
 
 export const fadeTransition = createSimpleClassTransition({
 	animationPendingClasses: ['fade'],

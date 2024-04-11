@@ -1,8 +1,9 @@
 import {describe, expect, test, vi} from 'vitest';
 import {extendWidgetProps} from './extendWidget';
-import {createRating} from '../components/rating/rating';
+import {type RatingProps, createRating} from '../components/rating/rating';
 import {typeNumber, typeString} from '../utils/writables';
 import {writable} from '@amadeus-it-group/tansu';
+import type {PropsConfig} from '../types';
 
 describe(`extendWidgetProps`, () => {
 	test('Basic functionalities', () => {
@@ -85,6 +86,42 @@ describe(`extendWidgetProps`, () => {
 			...originalState,
 			myNewProp: 6,
 			myOtherNewProp: 'other',
+		});
+	});
+
+	describe('Overriding default values', () => {
+		const createCustomizedRating = extendWidgetProps(
+			createRating,
+			{},
+			{},
+			{
+				maxRating: 10,
+			},
+		);
+		const maxRatingOfNewCustomizedRating = (config?: PropsConfig<RatingProps>) => createCustomizedRating(config).state$().maxRating;
+
+		test('default value is well overriden', () => {
+			expect(maxRatingOfNewCustomizedRating()).toBe(10);
+			expect(maxRatingOfNewCustomizedRating({props: {maxRating: 15}})).toBe(15);
+			expect(maxRatingOfNewCustomizedRating({config: {maxRating: 15}})).toBe(15);
+			expect(maxRatingOfNewCustomizedRating({config: {maxRating: writable(15)}})).toBe(15);
+			expect(maxRatingOfNewCustomizedRating({config: writable({maxRating: 15})})).toBe(15);
+		});
+
+		test('patching to undefined will go back to the default value', () => {
+			const checkPatchToUndefined = (defaultValue: number, config?: PropsConfig<RatingProps>) => {
+				const customizedRating = createCustomizedRating(config);
+				customizedRating.patch({maxRating: 20});
+				expect(customizedRating.state$().maxRating).toBe(20);
+				customizedRating.patch({maxRating: undefined});
+				expect(customizedRating.state$().maxRating).toBe(defaultValue);
+			};
+
+			checkPatchToUndefined(10);
+			checkPatchToUndefined(10, {props: {maxRating: 15}});
+			checkPatchToUndefined(15, {config: {maxRating: 15}});
+			checkPatchToUndefined(15, {config: {maxRating: writable(15)}});
+			checkPatchToUndefined(15, {config: writable({maxRating: 15})});
 		});
 	});
 });

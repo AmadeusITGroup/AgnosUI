@@ -1,4 +1,4 @@
-import type {AlertApi} from '@agnos-ui/react-bootstrap/components/alert';
+import type {AlertApi, AlertProps} from '@agnos-ui/react-bootstrap/components/alert';
 import {Alert} from '@agnos-ui/react-bootstrap/components/alert';
 import {useRef, useState} from 'react';
 
@@ -75,7 +75,7 @@ const DefaultDemo = () => {
 			<br />
 			<br />
 
-			<Alert ref={alertRef} animatedOnInit={animatedOnInit} animated={animated} dismissible={dismissible} type={type}>
+			<Alert ref={alertRef} animatedOnInit={animatedOnInit} animated={animated} dismissible={dismissible} type={type as AlertProps['type']}>
 				<h4 className="alert-heading">Well done!</h4>
 				<p>
 					Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type {ModalSlots} from '@agnos-ui/svelte-headless/components/modal';
+	import type {ModalSlots} from './modal';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 
 	type Data = $$Generic; // eslint-disable-line no-undef

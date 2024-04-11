@@ -1,12 +1,5 @@
-import type {PaginationContext, PaginationNumberContext, PaginationProps, PaginationWidget, SlotContent} from '@agnos-ui/angular-headless';
-import {
-	BaseWidgetDirective,
-	ComponentTemplate,
-	SlotDirective,
-	auBooleanAttribute,
-	auNumberAttribute,
-	createPagination,
-} from '@agnos-ui/angular-headless';
+import type {SlotContent} from '@agnos-ui/angular-headless';
+import {BaseWidgetDirective, ComponentTemplate, SlotDirective, auBooleanAttribute, auNumberAttribute} from '@agnos-ui/angular-headless';
 import type {AfterContentChecked} from '@angular/core';
 import {
 	ChangeDetectionStrategy,
@@ -22,6 +15,8 @@ import {
 	inject,
 } from '@angular/core';
 import {callWidgetFactory} from '../../config';
+import type {PaginationContext, PaginationNumberContext, PaginationProps, PaginationWidget} from './pagination';
+import {createPagination} from './pagination';
 
 /**
  * A directive to use to give the 'ellipsis' link template to the pagination component

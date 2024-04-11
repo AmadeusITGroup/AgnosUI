@@ -1,4 +1,4 @@
 import Alert from './Alert.svelte';
 
-export * from '@agnos-ui/svelte-headless/components/alert';
+export * from './alert';
 export {Alert};

@@ -7,19 +7,16 @@ import {
 	auNumberAttribute,
 	useDirectiveForHost,
 } from '@agnos-ui/angular-headless';
-import type {AdaptWidgetSlots, WidgetProps, AdaptSlotContentProps, WidgetFactory, SlotContent} from '@agnos-ui/angular-headless';
+import type {SlotContent} from '@agnos-ui/angular-headless';
 import {type WritableSignal, writable} from '@amadeus-it-group/tansu';
 import {NgClass} from '@angular/common';
 import type {AfterContentChecked} from '@angular/core';
 import {ChangeDetectionStrategy, Component, ContentChild, Directive, Input, TemplateRef, ViewChild, inject} from '@angular/core';
+import type {ProgressbarContext, ProgressbarProps, ProgressbarWidget} from './progressbar';
+import {createProgressbar} from './progressbar';
 
-import {createProgressbar as coreCreateProgressbar} from '@agnos-ui/core-bootstrap/components/progressbar';
 import {callWidgetFactory} from '../../config';
-
-type ProgressbarWidget = AdaptWidgetSlots<import('@agnos-ui/core-bootstrap/components/progressbar').ProgressbarWidget>;
-type ProgressbarProps = WidgetProps<ProgressbarWidget>;
-type ProgressbarContext = AdaptSlotContentProps<import('@agnos-ui/core-bootstrap/components/progressbar').ProgressbarContext>;
-const createProgressbar: WidgetFactory<ProgressbarWidget> = coreCreateProgressbar as WidgetFactory<ProgressbarWidget>;
+import type {BSContextualClass} from '@agnos-ui/core-bootstrap/types';
 
 @Directive({selector: 'ng-template[auProgressbarStructure]', standalone: true})
 export class ProgressbarStructureDirective {
@@ -130,7 +127,7 @@ export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget>
 	/**
 	 * Type of the progressbar, following bootstrap types.
 	 */
-	@Input('auType') type: 'success' | 'info' | 'warning' | 'danger' | 'primary' | 'secondary' | 'light' | 'dark' | undefined;
+	@Input('auType') type: BSContextualClass | undefined;
 
 	readonly _widget = callWidgetFactory({
 		factory: createProgressbar,

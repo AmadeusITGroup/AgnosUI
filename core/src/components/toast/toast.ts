@@ -1,7 +1,7 @@
 import {computed} from '@amadeus-it-group/tansu';
 import type {ExtendWidgetAdaptSlotWidgetProps, ExtendWidgetInterfaces} from '../../services/extendWidget';
 import {extendWidgetProps} from '../../services/extendWidget';
-import type {ConfigValidator, Directive, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../../types';
+import type {ConfigValidator, Directive, PropsConfig, Widget, WidgetSlotContext} from '../../types';
 import {createAttributesDirective, directiveSubscribe} from '../../utils/directive';
 import {typeBoolean, typeNumberInRangeFactory} from '../../utils/writables';
 import type {CommonAlertApi, CommonAlertDirectives, CommonAlertProps, CommonAlertState, CommonAlertWidget} from '../alert/common';
@@ -14,16 +14,10 @@ export interface ToastExtraProps {
 	 * If `true` automatically hides the toast after the delay.
 	 */
 	autoHide: boolean;
-
 	/**
 	 * Delay in milliseconds before hiding the toast.
 	 */
 	delay: number;
-
-	/**
-	 * Header template for the toast component
-	 */
-	slotHeader: SlotContent<ToastContext>;
 }
 
 export interface ExtraDirectives {
@@ -54,7 +48,6 @@ export type ToastWidget = Widget<ToastProps, ToastState, ToastApi, object, Toast
 const toastDefaultConfig: ToastExtraProps = {
 	autoHide: true,
 	delay: 5000,
-	slotHeader: undefined,
 };
 
 const toastConfigValidator: ConfigValidator<ToastExtraProps> = {

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type {ToastSlots} from '@agnos-ui/svelte-headless/components/toast';
+	import type {ToastSlots} from './toast';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 
 	type $$Props = ToastSlots['structure'];

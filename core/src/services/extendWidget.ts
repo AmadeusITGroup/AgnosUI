@@ -1,5 +1,5 @@
-import {batch} from '@amadeus-it-group/tansu';
-import {stateStores, writablesWithDefault} from '../utils/stores';
+import {batch, computed} from '@amadeus-it-group/tansu';
+import {isStore, stateStores, writablesWithDefault} from '../utils/stores';
 import type {ConfigValidator, PropsConfig, SlotContent, Widget, WidgetFactory, WidgetProps, WidgetSlotContext, WidgetState} from '../types';
 
 /**
@@ -41,6 +41,7 @@ export type ExtendWidgetAdaptSlotWidgetProps<Props, ExtraProps extends object, E
  * @param factory - original widget factory
  * @param extraPropsDefaults - object containing default value for each extra prop
  * @param extraPropsConfig - object verifying the type of each extra prop
+ * @param overrideDefaults - object overriding some default props of the widget to extend
  * @returns widget factory with the extra props
  */
 export const extendWidgetProps =
@@ -48,10 +49,15 @@ export const extendWidgetProps =
 		factory: WidgetFactory<W>,
 		extraPropsDefaults: ExtraProps,
 		extraPropsConfig?: ConfigValidator<ExtraProps>,
+		overrideDefaults?: Partial<WidgetState<W>>,
 	): WidgetFactory<ExtendWidgetProps<W, ExtraProps, ExtraDirectives>> =>
 	(propsConfig) => {
 		const extraPropsWritables = writablesWithDefault(extraPropsDefaults, propsConfig as PropsConfig<ExtraProps>, extraPropsConfig);
-		const widget = factory(propsConfig as any);
+		const propsConfigConfig = propsConfig?.config;
+		const config = isStore(propsConfigConfig)
+			? computed(() => ({...overrideDefaults, ...propsConfigConfig()}))
+			: {...overrideDefaults, ...(propsConfigConfig ?? {})};
+		const widget = factory({props: propsConfig?.props as any, config});
 		return {
 			...widget,
 			...(stateStores({...widget.stores, ...extraPropsWritables}) as any),

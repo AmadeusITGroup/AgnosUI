@@ -348,7 +348,7 @@ describe(`Accordion`, () => {
 		});
 		expect(getAttributes(itemNode)).toStrictEqual({class: 'my-item', id: 'my-id'});
 		expect(getAttributes(bodyContainerNode)).toStrictEqual({
-			class: 'collapse my-body-container',
+			class: 'my-body-container',
 			id: 'my-id-body-container',
 			'aria-labelledby': 'my-id-toggle',
 		});
@@ -367,7 +367,7 @@ describe(`Accordion`, () => {
 		buttonNode.click();
 
 		expect(getAttributes(bodyContainerNode)).toStrictEqual({
-			class: 'my-body-container collapse show',
+			class: 'my-body-container',
 			id: 'my-id-body-container',
 			'aria-labelledby': 'my-id-toggle',
 		});

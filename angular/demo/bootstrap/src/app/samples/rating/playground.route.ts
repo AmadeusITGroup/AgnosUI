@@ -1,6 +1,6 @@
 import type {RatingComponent} from '@agnos-ui/angular-bootstrap';
 import {AgnosUIAngularModule} from '@agnos-ui/angular-bootstrap';
-import {getRatingDefaultConfig} from '@agnos-ui/core';
+import {getRatingDefaultConfig} from '@agnos-ui/core-bootstrap';
 import {Component, ViewChild} from '@angular/core';
 import {getUndefinedValues, hashChangeHook, provideHashConfig} from '../../utils';
 

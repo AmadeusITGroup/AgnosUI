@@ -1,19 +1,10 @@
-import type {
-	AccordionItemContext,
-	AccordionItemProps,
-	AccordionItemWidget,
-	AccordionWidget,
-	AdaptSlotContentProps,
-	SlotContent,
-	TransitionFn,
-} from '@agnos-ui/angular-headless';
+import type {AdaptSlotContentProps, SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
 import {
 	BaseWidgetDirective,
 	ComponentTemplate,
 	SlotDirective,
 	UseDirective,
 	auBooleanAttribute,
-	createAccordion,
 	useDirectiveForHost,
 } from '@agnos-ui/angular-headless';
 import {NgTemplateOutlet} from '@angular/common';
@@ -31,6 +22,8 @@ import {
 	inject,
 } from '@angular/core';
 import {callWidgetFactory} from '../../config';
+import type {AccordionItemContext, AccordionItemProps, AccordionItemWidget, AccordionWidget} from './accordion';
+import {createAccordion} from './accordion';
 
 @Directive({selector: 'ng-template[auAccordionItemBody]', standalone: true})
 export class AccordionBodyDirective {

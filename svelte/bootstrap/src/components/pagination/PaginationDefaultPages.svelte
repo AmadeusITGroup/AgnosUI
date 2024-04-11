@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type {PaginationSlots} from '@agnos-ui/svelte-headless/components/pagination';
+	import type {PaginationSlots} from './pagination';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 
 	type $$Props = PaginationSlots['pages'];

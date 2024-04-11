@@ -1,4 +1,4 @@
-import type {AlertContext, AlertProps, AlertWidget, SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
+import type {SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
 import {
 	BaseWidgetDirective,
 	ComponentTemplate,
@@ -6,8 +6,9 @@ import {
 	SlotDirective,
 	UseDirective,
 	auBooleanAttribute,
-	createAlert,
 } from '@agnos-ui/angular-headless';
+import type {AlertContext, AlertProps, AlertWidget} from './alert';
+import {createAlert} from './alert';
 import {type WritableSignal, writable} from '@amadeus-it-group/tansu';
 import type {AfterContentChecked} from '@angular/core';
 import {
@@ -23,6 +24,7 @@ import {
 	inject,
 } from '@angular/core';
 import {callWidgetFactory} from '../../config';
+import type {BSContextualClass} from '@agnos-ui/core-bootstrap/types';
 
 @Directive({selector: 'ng-template[auAlertBody]', standalone: true})
 export class AlertBodyDirective {
@@ -84,11 +86,10 @@ const defaultConfig: PartialAlertProps = {
 })
 export class AlertComponent extends BaseWidgetDirective<AlertWidget> implements AfterContentChecked {
 	/**
-	 * Type of the alert.
-	 * There are the following types: 'success', 'info', 'warning', 'danger', 'primary', 'secondary', 'light' and 'dark'.
+	 * Type of the alert, following bootstrap types.
 	 */
 	@Input('auType')
-	type: string | undefined;
+	type: BSContextualClass | undefined;
 
 	/**
 	 * If `true`, alert can be dismissed by the user.

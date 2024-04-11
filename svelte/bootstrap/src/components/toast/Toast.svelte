@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
-	import type {ToastProps as Props, ToastSlots as Slots} from '@agnos-ui/svelte-headless/components/toast';
+	import type {ToastProps as Props, ToastSlots as Slots} from './toast';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
-	import {createToast} from '@agnos-ui/svelte-headless/components/toast';
+	import {createToast} from './toast';
 	import {callWidgetFactory} from '../../config';
 	import ToastDefaultStructure from './ToastDefaultStructure.svelte';
 

@@ -30,7 +30,6 @@ export * from './services/siblingsInert';
 export * from './services/transitions/baseTransitions';
 export * from './services/transitions/cssTransitions';
 export * from './services/transitions/simpleClassTransition';
-export * from './services/transitions/bootstrap';
 
 // public utils
 export * from './utils/directive';

@@ -2,7 +2,6 @@ import type {ReadableSignals} from '../../utils/stores';
 import {stateStores, writablesForProps, normalizeConfigStores, mergeConfigStores} from '../../utils/stores';
 import type {TransitionFn} from '../../services/transitions/baseTransitions';
 import {createTransition} from '../../services/transitions/baseTransitions';
-import {collapseVerticalTransition} from '../../services/transitions/bootstrap/collapse';
 import type {ConfigValidator, Directive, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../../types';
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {computed, writable} from '@amadeus-it-group/tansu';
@@ -385,7 +384,7 @@ const defaultAccordionConfig: AccordionProps = {
 	itemDisabled: false,
 	itemVisible: false,
 	itemAnimated: true,
-	itemTransition: collapseVerticalTransition,
+	itemTransition: async () => {},
 	itemHeadingTag: '',
 	onItemShown: noop,
 	onItemHidden: noop,
