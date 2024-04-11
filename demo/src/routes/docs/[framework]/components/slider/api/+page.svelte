@@ -1,5 +1,5 @@
 <script lang="ts">
-	import widgetDoc from '@agnos-ui/generated/doc/api.json?slider&extractApi';
+	import widgetDoc from '@agnos-ui/generated/doc/bootstrap-api.json?slider&extractApi';
 	import ApiDoc from '$lib/layout/doc/ApiDoc.svelte';
 </script>
 

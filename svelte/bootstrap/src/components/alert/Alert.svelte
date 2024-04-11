@@ -1,7 +1,6 @@
 <script lang="ts" context="module">
-	import type {AlertProps as Props, AlertSlots as Slots} from '@agnos-ui/svelte-headless/components/alert';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
-	import {createAlert} from '@agnos-ui/svelte-headless/components/alert';
+	import {createAlert, type AlertProps as Props, type AlertSlots as Slots} from './alert';
 	import {callWidgetFactory} from '../../config';
 	import AlertDefaultStructure from './AlertDefaultStructure.svelte';
 

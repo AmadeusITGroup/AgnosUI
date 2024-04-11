@@ -226,6 +226,10 @@ export function parseDocs(indexFile: string) {
 										docProperties[key] = val;
 									}
 								}
+							} else if (ts.isFunctionDeclaration(declaration)) {
+								for (const [key, val] of Object.entries(visitConfigFunctionDeclaration(declaration)!)) {
+									docProperties[key] = val;
+								}
 							}
 						} else {
 							const symbol = typeChecker.getSymbolAtLocation(spreadExpression);

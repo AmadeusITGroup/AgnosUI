@@ -1,4 +1,4 @@
-import type {ModalProps} from '@agnos-ui/angular-headless';
+import type {ModalProps} from './modal';
 import {ApplicationRef, createComponent, EnvironmentInjector, EventEmitter, inject, Injectable, Injector} from '@angular/core';
 import type {Subscription} from 'rxjs';
 import {ModalComponent} from './modal.component';

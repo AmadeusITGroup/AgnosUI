@@ -1,12 +1,20 @@
-import type {ItemContext, SelectContext, SelectItemContext, SelectProps, SelectWidget} from '@agnos-ui/react-headless/components/select';
-import {createSelect} from '@agnos-ui/react-headless/components/select';
 import {useWidgetWithConfig} from '../../config';
 import {Slot} from '@agnos-ui/react-headless/slot';
+import type {AdaptSlotContentProps, AdaptWidgetSlots, PropsConfig, WidgetProps, WidgetState} from '@agnos-ui/react-headless/types';
 import {toSlotContextWidget} from '@agnos-ui/react-headless/types';
 import {useDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
 import type {SyntheticEvent} from 'react';
+import type {ItemContext} from '@agnos-ui/core-bootstrap/components/select';
+import {createSelect as coreCreateSelect} from '@agnos-ui/core-bootstrap/components/select';
 
-export * from '@agnos-ui/react-headless/components/select';
+export * from '@agnos-ui/core-bootstrap/components/select';
+
+export type SelectWidget<Item> = AdaptWidgetSlots<import('@agnos-ui/core-bootstrap/components/select').SelectWidget<Item>>;
+export type SelectProps<Item> = WidgetProps<SelectWidget<Item>>;
+export type SelectState<Item> = WidgetState<SelectWidget<Item>>;
+export type SelectContext<Item> = AdaptSlotContentProps<import('@agnos-ui/core-bootstrap/components/select').SelectContext<Item>>;
+export type SelectItemContext<Item> = AdaptSlotContentProps<import('@agnos-ui/core-bootstrap/components/select').SelectItemContext<Item>>;
+export const createSelect: <Item>(propsConfig?: PropsConfig<SelectProps<Item>>) => SelectWidget<Item> = coreCreateSelect as any;
 
 function preventDefault(e: SyntheticEvent) {
 	e.preventDefault();

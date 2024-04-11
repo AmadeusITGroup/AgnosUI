@@ -4,7 +4,6 @@ import {typeBoolean, typeFunction, typeHTMLElementOrNull, typeString} from '../.
 import {stateStores, writablesForProps} from '../../utils/stores';
 import type {TransitionFn} from '../../services/transitions/baseTransitions';
 import {createTransition} from '../../services/transitions/baseTransitions';
-import {fadeTransition} from '../../services/transitions/bootstrap/fade';
 import {promiseFromStore} from '../../utils/internal/promise';
 import type {ConfigValidator, Directive, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../../types';
 import {noop} from '../../utils/internal/func';
@@ -283,12 +282,12 @@ const defaultConfig: ModalProps<any> = {
 	ariaCloseButtonLabel: 'Close',
 	backdrop: true,
 	backdropClass: '',
-	backdropTransition: fadeTransition, // TODO: is it ok to depend on bootstrap transition?
+	backdropTransition: async () => {},
 	closeButton: true,
 	closeOnOutsideClick: true,
 	container: typeof window !== 'undefined' ? document.body : null,
 	className: '',
-	modalTransition: fadeTransition, // TODO: is it ok to depend on bootstrap transition?
+	modalTransition: async () => {},
 	onBeforeClose: noop,
 	onVisibleChange: noop,
 	onHidden: noop,

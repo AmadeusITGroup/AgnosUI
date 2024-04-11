@@ -17,10 +17,20 @@
 			"require": "./dist/index.cjs",
 			"default": "./dist/index.js"
 		},
+		"./types": {
+			"types": "./dist/types.d.ts",
+			"require": "./dist/types.cjs",
+			"default": "./dist/types.js"
+		},
 		"./components/*": {
 			"types": "./dist/components/*/index.d.ts",
 			"require": "./dist/components/*/index.cjs",
 			"default": "./dist/components/*/index.js"
+		},
+		"./services/transitions": {
+			"types": "./dist/services/transitions/index.d.ts",
+			"require": "./dist/services/transitions/index.cjs",
+			"default": "./dist/services/transitions/index.js"
 		},
 		"./config": {
 			"types": "./dist/config.d.ts",
@@ -41,7 +51,7 @@
 	},
 	"wireit": {
 		"build": {
-			"command": "vite build && tsc -p tsconfig.build.json && node ../scripts/buildPackageJson.js . dist && sass src/scss/agnosui.scss dist/css/agnosui.css && copyfiles -u 1 src/scss/** dist",
+			"command": "vite build && tsc -p tsconfig.build.json && node ../scripts/buildPackageJson.js . dist && sass src/scss/agnosui.scss dist/css/agnosui.css && copyfiles -u 1 src/**/scss/** dist",
 			"files": [
 				"src/**",
 				"tsconfig.build.json",

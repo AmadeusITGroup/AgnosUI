@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type {AccordionSlots} from '@agnos-ui/svelte-headless/components/accordion';
+	import type {AccordionSlots} from './accordion';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 
 	type $$Props = AccordionSlots['itemStructure'];

@@ -1,4 +1,4 @@
-import type {ModalBeforeCloseEvent, ModalContext, ModalProps, ModalWidget, SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
+import type {SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
 import {
 	BaseWidgetDirective,
 	CachedProperty,
@@ -7,9 +7,10 @@ import {
 	SlotDirective,
 	UseDirective,
 	auBooleanAttribute,
-	createModal,
 	mergeDirectives,
 } from '@agnos-ui/angular-headless';
+import type {ModalContext, ModalProps, ModalWidget, ModalBeforeCloseEvent} from './modal';
+import {createModal} from './modal';
 import {writable} from '@amadeus-it-group/tansu';
 import type {AfterContentChecked} from '@angular/core';
 import {

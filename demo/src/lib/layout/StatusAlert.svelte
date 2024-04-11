@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {Alert} from '@agnos-ui/svelte-bootstrap/components/alert';
+	import {Alert, type AlertProps} from '@agnos-ui/svelte-bootstrap/components/alert';
 	import biInfoCircleFill from 'bootstrap-icons/icons/info-circle-fill.svg?raw';
 	import biExclamationTriangleFill from 'bootstrap-icons/icons/exclamation-triangle-fill.svg?raw';
 	import {page} from '$app/stores';
@@ -14,7 +14,7 @@
 	export let status: string;
 	let alert: Alert;
 
-	$: type = status === 'inprogress' ? 'warning' : 'info';
+	$: type = (status === 'inprogress' ? 'warning' : 'info') as AlertProps['type'];
 	$: statusText = status === 'inprogress' ? 'In progress' : 'Beta';
 	$: statusTextBody =
 		status === 'inprogress'

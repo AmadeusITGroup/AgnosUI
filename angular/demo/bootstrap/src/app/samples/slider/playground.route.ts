@@ -1,6 +1,6 @@
 import type {SliderComponent} from '@agnos-ui/angular-bootstrap';
 import {AgnosUIAngularModule} from '@agnos-ui/angular-bootstrap';
-import {getSliderDefaultConfig} from '@agnos-ui/core';
+import {getSliderDefaultConfig} from '@agnos-ui/core-bootstrap';
 import {Component, ViewChild} from '@angular/core';
 import {getUndefinedValues, hashChangeHook, provideHashConfig} from '../../utils';
 

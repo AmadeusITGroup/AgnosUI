@@ -21,7 +21,6 @@ describe(`Alert`, () => {
 			dismissible: true,
 			slotDefault: undefined,
 			slotStructure: undefined,
-			type: 'primary',
 			visible: true,
 			hidden: false,
 			ariaCloseButtonLabel: 'Close',
@@ -57,7 +56,6 @@ describe(`Alert`, () => {
 		element.innerHTML = '<div>body</div>';
 		const alertEvents = createAlert({
 			props: {
-				type: 'danger',
 				onShown() {
 					promiseOnShown.resolve();
 					onShownCounter++;

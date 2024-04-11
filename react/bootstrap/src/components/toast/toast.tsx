@@ -1,12 +1,19 @@
-import type {ToastApi, ToastContext, ToastProps} from '@agnos-ui/react-headless/components/toast';
-import {createToast} from '@agnos-ui/react-headless/components/toast';
 import {useWidgetWithConfig} from '../../config';
 import {Slot} from '@agnos-ui/react-headless/slot';
 import {useDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
 import type {ForwardRefExoticComponent, PropsWithChildren, RefAttributes} from 'react';
 import {forwardRef, useImperativeHandle} from 'react';
+import type {AdaptSlotContentProps, AdaptWidgetSlots, WidgetFactory, WidgetProps, WidgetState} from '@agnos-ui/react-headless/types';
+import type {ToastApi} from '@agnos-ui/core-bootstrap/components/toast';
+import {createToast as coreCreateToast} from '@agnos-ui/core-bootstrap/components/toast';
 
-export * from '@agnos-ui/react-headless/components/toast';
+export * from '@agnos-ui/core-bootstrap/components/toast';
+
+export type ToastWidget = AdaptWidgetSlots<import('@agnos-ui/core-bootstrap/components/toast').ToastWidget>;
+export type ToastProps = WidgetProps<ToastWidget>;
+export type ToastState = WidgetState<ToastWidget>;
+export type ToastContext = AdaptSlotContentProps<import('@agnos-ui/core-bootstrap/components/toast').ToastContext>;
+export const createToast: WidgetFactory<ToastWidget> = coreCreateToast as any;
 
 const DefaultSlotStructure = (slotContext: ToastContext) => {
 	const refCloseButton = useDirective(slotContext.widget.directives.closeButtonDirective);

@@ -9,10 +9,13 @@ import type {ConfigValidator, SlotContent, Widget, WidgetFactory, WidgetSlotCont
 import {typeBoolean, typeString} from '@agnos-ui/core/utils/writables';
 import type {ExtendWidgetAdaptSlotWidgetProps} from '@agnos-ui/core/services/extendWidget';
 import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
+import type {BSContextualClass} from '../../types';
+
+export * from '@agnos-ui/core/components/progressbar';
 
 export type ProgressbarContext = WidgetSlotContext<ProgressbarWidget>;
 
-export interface ProgressbarExtraProps {
+interface ProgressbarExtraProps {
 	/**
 	 * Global template for the Progressbar.
 	 */
@@ -37,16 +40,15 @@ export interface ProgressbarExtraProps {
 	/**
 	 * Type of the progressbar, following bootstrap types.
 	 */
-	type: 'success' | 'info' | 'warning' | 'danger' | 'primary' | 'secondary' | 'light' | 'dark' | undefined;
+	type: BSContextualClass | undefined;
 }
 
-export type {ProgressbarApi, ProgressbarDirectives} from '@agnos-ui/core/components/progressbar';
 export interface ProgressbarState extends ExtendWidgetAdaptSlotWidgetProps<CoreState, ProgressbarExtraProps, object> {}
 export interface ProgressbarProps extends ExtendWidgetAdaptSlotWidgetProps<CoreProps, ProgressbarExtraProps, object> {}
 
 export type ProgressbarWidget = Widget<ProgressbarProps, ProgressbarState, ProgressbarApi, object, ProgressbarDirectives>;
 
-const defaultConfig: ProgressbarExtraProps = {
+const defaultConfigExtraProps: ProgressbarExtraProps = {
 	slotStructure: undefined,
 	slotDefault: undefined,
 	height: '',
@@ -67,7 +69,7 @@ const configValidator: ConfigValidator<ProgressbarExtraProps> = {
  * @returns the default Progressbar config
  */
 export function getProgressbarDefaultConfig(): ProgressbarProps {
-	return {...getCoreDefaultConfig(), ...defaultConfig} as any;
+	return {...getCoreDefaultConfig(), ...defaultConfigExtraProps} as any;
 }
 
 /**
@@ -76,4 +78,4 @@ export function getProgressbarDefaultConfig(): ProgressbarProps {
  * @returns a ProgressbarWidget
  */
 
-export const createProgressbar: WidgetFactory<ProgressbarWidget> = extendWidgetProps(createCoreProgressbar, defaultConfig, configValidator);
+export const createProgressbar: WidgetFactory<ProgressbarWidget> = extendWidgetProps(createCoreProgressbar, defaultConfigExtraProps, configValidator);

@@ -1,6 +1,6 @@
 import type {ModalComponent} from '@agnos-ui/angular-bootstrap';
 import {AgnosUIAngularModule} from '@agnos-ui/angular-bootstrap';
-import {getModalDefaultConfig} from '@agnos-ui/core';
+import {getModalDefaultConfig} from '@agnos-ui/core-bootstrap';
 import {Component, ViewChild} from '@angular/core';
 import {getUndefinedValues, hashChangeHook, provideHashConfig} from '../../utils';
 

@@ -1,11 +1,10 @@
-import type {AdaptSlotContentProps, ItemContext, SelectItemContext, SelectWidget, SlotContent} from '@agnos-ui/angular-headless';
+import type {AdaptSlotContentProps, SlotContent} from '@agnos-ui/angular-headless';
 import {
 	BaseWidgetDirective,
 	CachedProperty,
 	SlotDirective,
 	UseDirective,
 	auBooleanAttribute,
-	createSelect,
 	mergeDirectives,
 	useDirectiveForHost,
 } from '@agnos-ui/angular-headless';
@@ -13,6 +12,8 @@ import type {AfterContentChecked} from '@angular/core';
 import {ChangeDetectionStrategy, Component, ContentChild, Directive, EventEmitter, Input, Output, TemplateRef, inject} from '@angular/core';
 import type {Placement} from '@floating-ui/dom';
 import {callWidgetFactory} from '../../config';
+import type {SelectItemContext, SelectWidget, ItemContext} from './select';
+import {createSelect} from './select';
 
 @Directive({selector: 'ng-template[auSelectBadgeLabel]', standalone: true})
 export class SelectBadgeLabelDirective<Item> {

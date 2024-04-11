@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type {AlertSlots} from '@agnos-ui/svelte-headless/components/alert';
+	import type {AlertSlots} from './alert';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 
 	type $$Props = AlertSlots['structure'];

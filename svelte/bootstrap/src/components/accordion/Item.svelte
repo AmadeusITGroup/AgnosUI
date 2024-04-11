@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-	import type {AccordionItemProps as Props, AccordionSlots as Slots} from '@agnos-ui/svelte-headless/components/accordion';
+	import type {AccordionItemProps as Props, AccordionSlots as Slots} from './accordion';
 	import {toSlotContextWidget} from '@agnos-ui/svelte-headless/types';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import {callWidgetFactory} from '../../config';

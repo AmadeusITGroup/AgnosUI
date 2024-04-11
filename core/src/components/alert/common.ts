@@ -1,9 +1,8 @@
 import type {TransitionFn} from '../../services/transitions/baseTransitions';
 import {createTransition} from '../../services/transitions/baseTransitions';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
-import type {ConfigValidator, Directive, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../../types';
+import type {ConfigValidator, Directive, PropsConfig, Widget, WidgetSlotContext} from '../../types';
 import {noop} from '../../utils/internal/func';
-import {fadeTransition} from '../../services/transitions/bootstrap/fade';
 import {stateStores, writablesForProps} from '../../utils/stores';
 import {bindDirectiveNoArg} from '../../utils/directive';
 import {typeBoolean} from '../../utils/writables';
@@ -16,17 +15,6 @@ export interface CommonAlertCommonPropsAndState extends WidgetsCommonPropsAndSta
 	 * The close button (×) will be displayed and you can be notified of the event with the (close) output.
 	 */
 	dismissible: boolean;
-
-	/**
-	 * Template for the alert content
-	 */
-	slotDefault: SlotContent<CommonAlertContext>;
-
-	/**
-	 * Global template for the alert component
-	 */
-	slotStructure: SlotContent<CommonAlertContext>;
-
 	/**
 	 * If `true` the alert is visible to the user
 	 */
@@ -112,11 +100,9 @@ export const defaultCommonAlertConfig: CommonAlertProps = {
 	onVisibleChange: noop,
 	onShown: noop,
 	onHidden: noop,
-	slotStructure: undefined,
-	slotDefault: undefined,
 	animated: true,
 	animatedOnInit: false,
-	transition: fadeTransition,
+	transition: async () => {},
 	className: '',
 };
 

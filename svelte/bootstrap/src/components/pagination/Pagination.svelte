@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
-	import type {PaginationProps as Props, PaginationSlots as Slots} from '@agnos-ui/svelte-headless/components/pagination';
-	import {createPagination} from '@agnos-ui/svelte-headless/components/pagination';
+	import type {PaginationProps as Props, PaginationSlots as Slots} from './pagination';
+	import {createPagination} from './pagination';
 	import {toSlotContextWidget} from '@agnos-ui/svelte-headless/types';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import {callWidgetFactory} from '../../config';

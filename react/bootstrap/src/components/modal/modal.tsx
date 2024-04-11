@@ -1,6 +1,5 @@
-import type {ModalApi, ModalContext, ModalProps} from '@agnos-ui/react-headless/components/modal';
-import {createModal} from '@agnos-ui/react-headless/components/modal';
 import {Portal} from '@agnos-ui/react-headless/utils/portal';
+import type {AdaptSlotContentProps, AdaptWidgetSlots, PropsConfig, WidgetProps, WidgetState} from '@agnos-ui/react-headless/types';
 import {toSlotContextWidget} from '@agnos-ui/react-headless/types';
 import {Slot} from '@agnos-ui/react-headless/slot';
 import {useWidgetWithConfig} from '../../config';
@@ -8,8 +7,16 @@ import {useDirective} from '@agnos-ui/react-headless/utils/directive';
 import type {PropsWithChildren, Ref, RefAttributes} from 'react';
 import ReactDOM from 'react-dom/client';
 import {forwardRef, useImperativeHandle} from 'react';
+import {createModal as coreCreateModal} from '@agnos-ui/core-bootstrap/components/modal';
+import type {ModalApi} from '@agnos-ui/core-bootstrap/components/modal';
 
-export * from '@agnos-ui/react-headless/components/modal';
+export * from '@agnos-ui/core-bootstrap/components/modal';
+
+export type ModalWidget<Data> = AdaptWidgetSlots<import('@agnos-ui/core-bootstrap/components/modal').ModalWidget<Data>>;
+export type ModalProps<Data> = WidgetProps<ModalWidget<Data>>;
+export type ModalState<Data> = WidgetState<ModalWidget<Data>>;
+export type ModalContext<Data> = AdaptSlotContentProps<import('@agnos-ui/core-bootstrap/components/modal').ModalContext<Data>>;
+export const createModal: <Data>(propsConfig?: PropsConfig<ModalProps<Data>>) => ModalWidget<Data> = coreCreateModal as any;
 
 const DefaultSlotHeader = <Data,>(slotContext: ModalContext<Data>) => {
 	const refCloseButton = useDirective(slotContext.widget.directives.closeButtonDirective);

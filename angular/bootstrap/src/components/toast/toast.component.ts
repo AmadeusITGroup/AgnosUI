@@ -1,4 +1,4 @@
-import type {SlotContent, ToastContext, ToastProps, ToastWidget, TransitionFn} from '@agnos-ui/angular-headless';
+import type {SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
 import {
 	BaseWidgetDirective,
 	CachedProperty,
@@ -8,7 +8,6 @@ import {
 	UseDirective,
 	auBooleanAttribute,
 	auNumberAttribute,
-	createToast,
 	mergeDirectives,
 } from '@agnos-ui/angular-headless';
 import type {WritableSignal} from '@amadeus-it-group/tansu';
@@ -27,6 +26,9 @@ import {
 	inject,
 } from '@angular/core';
 import {callWidgetFactory} from '../../config';
+
+import type {ToastContext, ToastProps, ToastWidget} from './toast';
+import {createToast} from './toast';
 
 @Directive({selector: 'ng-template[auToastBody]', standalone: true})
 export class ToastBodyDirective {

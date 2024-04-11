@@ -1,11 +1,4 @@
-import type {
-	SliderContext,
-	SliderProps,
-	SliderSlotHandleContext,
-	SliderSlotLabelContext,
-	SliderWidget,
-	SlotContent,
-} from '@agnos-ui/angular-headless';
+import type {SlotContent} from '@agnos-ui/angular-headless';
 import {
 	BaseWidgetDirective,
 	ComponentTemplate,
@@ -14,7 +7,6 @@ import {
 	UseDirective,
 	auBooleanAttribute,
 	auNumberAttribute,
-	createSlider,
 	useDirectiveForHost,
 } from '@agnos-ui/angular-headless';
 import {type WritableSignal, writable} from '@amadeus-it-group/tansu';
@@ -37,6 +29,8 @@ import {
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {take} from 'rxjs';
 import {callWidgetFactory} from '../../config';
+import type {SliderContext, SliderProps, SliderSlotHandleContext, SliderSlotLabelContext, SliderWidget} from './slider';
+import {createSlider} from './slider';
 
 @Directive({selector: 'ng-template[auSliderLabel]', standalone: true})
 export class SliderLabelDirective {

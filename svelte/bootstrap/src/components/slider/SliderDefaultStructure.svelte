@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type {SliderSlots} from '@agnos-ui/svelte-headless/components/slider';
+	import type {SliderSlots} from './slider';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 
 	type $$Props = SliderSlots['structure'];
