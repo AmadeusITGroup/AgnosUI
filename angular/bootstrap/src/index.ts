@@ -1,5 +1,5 @@
 /*
- * Public API Surface of @agnos-ui/angular
+ * Public API Surface of @agnos-ui/angular-bootstrap
  */
 export * from '@agnos-ui/angular-headless';
 
