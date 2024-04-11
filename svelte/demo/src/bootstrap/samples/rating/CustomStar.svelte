@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type {StarContext} from '@agnos-ui/svelte/components/rating';
+	import type {StarContext} from '@agnos-ui/svelte-bootstrap/components/rating';
 	type $$Props = StarContext;
 
 	export let fill: number;

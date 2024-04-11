@@ -1,5 +1,5 @@
-import {AlertComponent} from '@agnos-ui/angular';
-import type {AlertProps} from '@agnos-ui/angular';
+import {AlertComponent} from '@agnos-ui/angular-bootstrap';
+import type {AlertProps} from '@agnos-ui/angular-bootstrap';
 import {Component, Injectable} from '@angular/core';
 
 @Injectable({providedIn: 'root'})

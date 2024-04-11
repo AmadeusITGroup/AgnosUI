@@ -1,5 +1,5 @@
-import type {ModalContext} from '@agnos-ui/react/components/modal';
-import {openModal} from '@agnos-ui/react/components/modal';
+import type {ModalContext} from '@agnos-ui/react-bootstrap/components/modal';
+import {openModal} from '@agnos-ui/react-bootstrap/components/modal';
 
 const ModalBody = ({widget, state}: ModalContext<void>) => (
 	<>

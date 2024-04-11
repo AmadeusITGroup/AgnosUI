@@ -1,10 +1,10 @@
 import {useMemo, type PropsWithChildren} from 'react';
-import {createTransition} from '@agnos-ui/react/services/transitions/baseTransitions';
-import {collapseVerticalTransition} from '@agnos-ui/react/services/transitions/bootstrap';
-import {useDirective} from '@agnos-ui/react/utils/directive';
+import {createTransition} from '@agnos-ui/react-bootstrap/services/transitions/baseTransitions';
+import {collapseVerticalTransition} from '@agnos-ui/react-bootstrap/services/transitions/bootstrap';
+import {useDirective} from '@agnos-ui/react-bootstrap/utils/directive';
 import '@agnos-ui/common/samples/transition/collapse.scss';
 import CollapseIcon from '@agnos-ui/common/samples/transition/collapseButton.svg?react';
-import {useObservable} from '@agnos-ui/react/utils/stores';
+import {useObservable} from '@agnos-ui/react-bootstrap/utils/stores';
 
 const Collapse = ({expanded, headerText, children}: PropsWithChildren<{expanded?: boolean; headerText: string}>) => {
 	const {

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import {Slot} from '@agnos-ui/svelte/slot';
-	import type {AlertSlots} from '@agnos-ui/svelte/components/alert';
+	import {Slot} from '@agnos-ui/svelte-bootstrap/slot';
+	import type {AlertSlots} from '@agnos-ui/svelte-bootstrap/components/alert';
 	import biCheckCircleFill from 'bootstrap-icons/icons/check-circle-fill.svg?raw';
 	import biInfoCircleFill from 'bootstrap-icons/icons/info-circle-fill.svg?raw';
 	import biExclamationTriangleFill from 'bootstrap-icons/icons/exclamation-triangle-fill.svg?raw';

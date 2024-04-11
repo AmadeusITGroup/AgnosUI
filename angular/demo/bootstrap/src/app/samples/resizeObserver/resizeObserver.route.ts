@@ -1,4 +1,4 @@
-import {AgnosUIAngularModule, createResizeObserver, toAngularSignal} from '@agnos-ui/angular';
+import {AgnosUIAngularModule, createResizeObserver, toAngularSignal} from '@agnos-ui/angular-bootstrap';
 import {UseDirective} from '@agnos-ui/angular-headless';
 import {ChangeDetectionStrategy, Component, computed} from '@angular/core';
 

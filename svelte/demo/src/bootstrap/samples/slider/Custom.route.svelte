@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {Slider} from '@agnos-ui/svelte/components/slider';
+	import {Slider} from '@agnos-ui/svelte-bootstrap/components/slider';
 	import CustomHandle from './CustomHandle.svelte';
 
 	let sliderCustomLabelControl = [70];

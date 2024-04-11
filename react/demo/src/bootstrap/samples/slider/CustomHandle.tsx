@@ -1,5 +1,5 @@
-import {useDirective} from '@agnos-ui/react/utils/directive';
-import type {SliderSlotHandleContext} from '@agnos-ui/react/components/slider';
+import {useDirective} from '@agnos-ui/react-bootstrap/utils/directive';
+import type {SliderSlotHandleContext} from '@agnos-ui/react-bootstrap/components/slider';
 
 const CustomSlotHandle = (slotContext: SliderSlotHandleContext) => (
 	<button className="custom-handle" {...useDirective(slotContext.widget.directives.handleDirective, {item: slotContext.item})}>

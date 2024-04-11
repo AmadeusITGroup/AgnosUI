@@ -1,4 +1,4 @@
-import {AgnosUIAngularModule} from '@agnos-ui/angular';
+import {AgnosUIAngularModule} from '@agnos-ui/angular-bootstrap';
 import {Component} from '@angular/core';
 import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 

@@ -1,4 +1,4 @@
-import {AgnosUIAngularModule} from '@agnos-ui/angular';
+import {AgnosUIAngularModule} from '@agnos-ui/angular-bootstrap';
 import {Component, ViewEncapsulation, inject} from '@angular/core';
 import heartFill from 'bootstrap-icons/icons/heart-fill.svg';
 import {DomSanitizer} from '@angular/platform-browser';

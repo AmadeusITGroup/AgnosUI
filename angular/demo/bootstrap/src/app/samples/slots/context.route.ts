@@ -1,4 +1,4 @@
-import {PaginationComponent, PaginationNumberDirective} from '@agnos-ui/angular';
+import {PaginationComponent, PaginationNumberDirective} from '@agnos-ui/angular-bootstrap';
 import {Component} from '@angular/core';
 
 @Component({

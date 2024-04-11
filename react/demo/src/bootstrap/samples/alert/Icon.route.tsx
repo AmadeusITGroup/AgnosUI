@@ -1,7 +1,7 @@
-import type {AlertContext} from '@agnos-ui/react/components/alert';
-import {Alert} from '@agnos-ui/react/components/alert';
-import {Slot} from '@agnos-ui/react/slot';
-import {WidgetsDefaultConfig} from '@agnos-ui/react/config';
+import type {AlertContext} from '@agnos-ui/react-bootstrap/components/alert';
+import {Alert} from '@agnos-ui/react-bootstrap/components/alert';
+import {Slot} from '@agnos-ui/react-bootstrap/slot';
+import {WidgetsDefaultConfig} from '@agnos-ui/react-bootstrap/config';
 import CheckCircle from 'bootstrap-icons/icons/check-circle-fill.svg?react';
 import DashCircle from 'bootstrap-icons/icons/dash-circle-fill.svg?react';
 import ExclamationTriangle from 'bootstrap-icons/icons/exclamation-triangle-fill.svg?react';

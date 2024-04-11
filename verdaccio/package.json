@@ -14,14 +14,9 @@
 		"verdaccio-publish": {
 			"command": "node publish.js",
 			"dependencies": [
-				"../core:build",
-				"../style-bootstrap:build",
-				"../angular/headless:build",
-				"../angular/lib:build",
-				"../react/headless:build",
-				"../react/lib:build",
-				"../svelte/headless:build",
-				"../svelte/lib:build",
+				"../angular/bootstrap:build",
+				"../react/bootstrap:build",
+				"../svelte/bootstrap:build",
 				"../base-po:build",
 				"../page-objects:build"
 			],

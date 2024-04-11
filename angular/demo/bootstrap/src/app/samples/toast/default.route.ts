@@ -1,4 +1,4 @@
-import {ToastComponent, provideWidgetsConfig} from '@agnos-ui/angular';
+import {ToastComponent, provideWidgetsConfig} from '@agnos-ui/angular-bootstrap';
 import {Component} from '@angular/core';
 
 @Component({

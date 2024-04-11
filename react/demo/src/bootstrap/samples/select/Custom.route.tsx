@@ -1,6 +1,6 @@
 import {abortPrevious, debounce} from '@agnos-ui/common/samples/utils/debounce';
-import type {SelectItemContext} from '@agnos-ui/react/components/select';
-import {Select} from '@agnos-ui/react/components/select';
+import type {SelectItemContext} from '@agnos-ui/react-bootstrap/components/select';
+import {Select} from '@agnos-ui/react-bootstrap/components/select';
 import React, {useCallback, useState} from 'react';
 
 import '@agnos-ui/common/samples/select/custom.scss';

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {activeElement$, createHasFocus} from '@agnos-ui/svelte/services/focustrack';
+	import {activeElement$, createHasFocus} from '@agnos-ui/svelte-bootstrap/services/focustrack';
 
 	const {hasFocus$, directive} = createHasFocus();
 

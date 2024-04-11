@@ -6,7 +6,7 @@
 	import {page} from '$app/stores';
 	import {pathToRoot$, frameworkLessUrl$, selectedFramework$} from '$lib/stores';
 	import CollapsibleSection from './CollapsibleSection.svelte';
-	import {createHasFocus} from '@agnos-ui/svelte/services/focustrack';
+	import {createHasFocus} from '@agnos-ui/svelte-bootstrap/services/focustrack';
 	import {writable} from '@amadeus-it-group/tansu';
 	import angularLogo from '$resources/logo-angular.svg?raw';
 	import reactLogo from '$resources/logo-react.svg?raw';

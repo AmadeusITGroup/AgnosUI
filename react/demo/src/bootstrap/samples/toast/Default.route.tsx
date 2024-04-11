@@ -1,6 +1,6 @@
-import type {ToastApi} from '@agnos-ui/react/components/toast';
-import {Toast} from '@agnos-ui/react/components/toast';
-import {WidgetsDefaultConfig} from '@agnos-ui/react/config';
+import type {ToastApi} from '@agnos-ui/react-bootstrap/components/toast';
+import {Toast} from '@agnos-ui/react-bootstrap/components/toast';
+import {WidgetsDefaultConfig} from '@agnos-ui/react-bootstrap/config';
 import {useRef} from 'react';
 
 const DefaultToastDemo = () => {

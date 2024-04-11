@@ -1,12 +1,12 @@
-import {Accordion, AccordionItem} from '@agnos-ui/react/components/accordion';
-import {Alert} from '@agnos-ui/react/components/alert';
-import {Modal} from '@agnos-ui/react/components/modal';
-import {Pagination} from '@agnos-ui/react/components/pagination';
-import {Progressbar} from '@agnos-ui/react/components/progressbar';
-import {Rating} from '@agnos-ui/react/components/rating';
-import {Select} from '@agnos-ui/react/components/select';
-import {Slider} from '@agnos-ui/react/components/slider';
-import {Toast} from '@agnos-ui/react/components/toast';
+import {Accordion, AccordionItem} from '@agnos-ui/react-bootstrap/components/accordion';
+import {Alert} from '@agnos-ui/react-bootstrap/components/alert';
+import {Modal} from '@agnos-ui/react-bootstrap/components/modal';
+import {Pagination} from '@agnos-ui/react-bootstrap/components/pagination';
+import {Progressbar} from '@agnos-ui/react-bootstrap/components/progressbar';
+import {Rating} from '@agnos-ui/react-bootstrap/components/rating';
+import {Select} from '@agnos-ui/react-bootstrap/components/select';
+import {Slider} from '@agnos-ui/react-bootstrap/components/slider';
+import {Toast} from '@agnos-ui/react-bootstrap/components/toast';
 
 export const App = () => (
 	<div className="container">

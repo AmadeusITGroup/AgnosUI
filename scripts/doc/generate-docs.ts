@@ -62,5 +62,5 @@ function printDoc(indexFile: string, apiFileName: string) {
 }
 
 printDoc('core/src/index.ts', 'api.json');
-printDoc('style-bootstrap/src/index.ts', 'bootstrap-api.json');
+printDoc('core-bootstrap/src/index.ts', 'bootstrap-api.json');
 console.log('Doc extraction finished');

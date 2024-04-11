@@ -1,5 +1,5 @@
-import type {ModalWidget} from '@agnos-ui/angular';
-import {SlotComponent} from '@agnos-ui/angular';
+import type {ModalWidget} from '@agnos-ui/angular-bootstrap';
+import {SlotComponent} from '@agnos-ui/angular-bootstrap';
 import {Component} from '@angular/core';
 
 export type ModalData = {name: string};

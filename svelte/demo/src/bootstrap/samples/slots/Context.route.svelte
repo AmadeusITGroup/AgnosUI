@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {Pagination} from '@agnos-ui/svelte/components/pagination';
+	import {Pagination} from '@agnos-ui/svelte-bootstrap/components/pagination';
 </script>
 
 <p>The default look of the pagination:</p>

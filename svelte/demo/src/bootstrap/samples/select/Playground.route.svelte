@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {Select} from '@agnos-ui/svelte/components/select';
+	import {Select} from '@agnos-ui/svelte-bootstrap/components/select';
 	import {hashChangeHook} from '../../utils';
 
 	const props$ = hashChangeHook('select');

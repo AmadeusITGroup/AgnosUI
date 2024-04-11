@@ -1,5 +1,5 @@
-import type {ToastWidget} from '@agnos-ui/angular';
-import {AgnosUIAngularModule, SlotComponent, SlotDirective, provideWidgetsConfig} from '@agnos-ui/angular';
+import type {ToastWidget} from '@agnos-ui/angular-bootstrap';
+import {AgnosUIAngularModule, SlotComponent, SlotDirective, provideWidgetsConfig} from '@agnos-ui/angular-bootstrap';
 import {Component, inject} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import biArrowCounterClockwise from 'bootstrap-icons/icons/arrow-counterclockwise.svg';

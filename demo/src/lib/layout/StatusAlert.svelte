@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {Alert} from '@agnos-ui/svelte/components/alert';
+	import {Alert} from '@agnos-ui/svelte-bootstrap/components/alert';
 	import biInfoCircleFill from 'bootstrap-icons/icons/info-circle-fill.svg?raw';
 	import biExclamationTriangleFill from 'bootstrap-icons/icons/exclamation-triangle-fill.svg?raw';
 	import {page} from '$app/stores';

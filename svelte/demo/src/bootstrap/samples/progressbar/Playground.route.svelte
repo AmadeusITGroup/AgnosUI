@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {Progressbar} from '@agnos-ui/svelte/components/progressbar';
+	import {Progressbar} from '@agnos-ui/svelte-bootstrap/components/progressbar';
 	import {hashChangeHook} from '../../utils';
 
 	const props$ = hashChangeHook('progressbar');

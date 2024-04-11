@@ -10,7 +10,7 @@
 		"check": "wireit"
 	},
 	"dependencies": {
-		"@agnos-ui/react": "0.0.0",
+		"@agnos-ui/react-bootstrap": "0.0.0",
 		"express": "^4.19.2",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
@@ -33,7 +33,7 @@
 			],
 			"output": [],
 			"dependencies": [
-				"../lib:build"
+				"../bootstrap:build"
 			]
 		},
 		"dev": {
@@ -42,7 +42,7 @@
 				"NODE_ENV": "development"
 			},
 			"dependencies": [
-				"../lib:generate:exports",
+				"../bootstrap:generate:exports",
 				"../headless:generate:exports"
 			],
 			"service": true
@@ -50,8 +50,7 @@
 		"build": {
 			"command": "vite build --ssrManifest --outDir dist/client && vite build --ssr src/entry-server.tsx --outDir dist/server",
 			"dependencies": [
-				"../lib:build",
-				"../../style-bootstrap:build"
+				"../bootstrap:build"
 			],
 			"files": [
 				"src/**",

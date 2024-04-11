@@ -1,5 +1,5 @@
-import {AgnosUIAngularModule} from '@agnos-ui/angular';
-import type {PaginationContext} from '@agnos-ui/angular';
+import {AgnosUIAngularModule} from '@agnos-ui/angular-bootstrap';
+import type {PaginationContext} from '@agnos-ui/angular-bootstrap';
 import {Component} from '@angular/core';
 
 const FILTER_PAG_REGEX = /[^0-9]/g;

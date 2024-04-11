@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {AgnosUIAngularModule, toAngularSignal} from '@agnos-ui/angular';
+import {AgnosUIAngularModule, toAngularSignal} from '@agnos-ui/angular-bootstrap';
 import type {TransitionFn} from '@agnos-ui/core';
 import {collapseHorizontalTransition, collapseVerticalTransition, createTransition, fadeTransition} from '@agnos-ui/core';
 import {writable} from '@amadeus-it-group/tansu';

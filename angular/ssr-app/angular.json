@@ -18,7 +18,7 @@
 						"browser": "src/main.ts",
 						"polyfills": ["zone.js"],
 						"tsConfig": "tsconfig.build.json",
-						"styles": ["src/styles.css", "@agnos-ui/style-bootstrap/scss/agnosui.scss"],
+						"styles": ["src/styles.css", "@agnos-ui/core-bootstrap/scss/agnosui.scss"],
 						"scripts": [],
 						"server": "src/main.server.ts",
 						"prerender": true,

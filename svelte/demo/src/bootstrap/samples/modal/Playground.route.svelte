@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {Modal} from '@agnos-ui/svelte/components/modal';
+	import {Modal} from '@agnos-ui/svelte-bootstrap/components/modal';
 	import {hashChangeHook} from '../../utils';
 
 	const props$ = hashChangeHook('modal');

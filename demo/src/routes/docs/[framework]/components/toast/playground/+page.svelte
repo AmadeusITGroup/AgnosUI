@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Playground from '$lib/layout/playground/Playground.svelte';
-	import {getToastDefaultConfig} from '@agnos-ui/svelte/components/toast';
+	import {getToastDefaultConfig} from '@agnos-ui/svelte-bootstrap/components/toast';
 	import sample from '@agnos-ui/samples/bootstrap/toast/playground';
 	import doc from '@agnos-ui/generated/doc/api.json?toast&extractApi';
 	import type {PropsValues} from '@agnos-ui/common/propsValues';

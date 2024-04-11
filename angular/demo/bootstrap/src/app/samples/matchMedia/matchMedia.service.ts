@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {createMatchMedia} from '@agnos-ui/angular';
+import {createMatchMedia} from '@agnos-ui/angular-bootstrap';
 
 @Injectable({providedIn: 'root'})
 export class MatchMediaService {

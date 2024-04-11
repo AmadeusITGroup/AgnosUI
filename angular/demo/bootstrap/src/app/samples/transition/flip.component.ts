@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
-import {UseDirective, createSimpleClassTransition, createTransition} from '@agnos-ui/angular';
+import {UseDirective, createSimpleClassTransition, createTransition} from '@agnos-ui/angular-bootstrap';
 
 @Component({
 	standalone: true,

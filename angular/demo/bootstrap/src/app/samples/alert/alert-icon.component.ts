@@ -3,8 +3,8 @@ import biDashCircleFill from 'bootstrap-icons/icons/dash-circle-fill.svg';
 import biExclamationTriangleFill from 'bootstrap-icons/icons/exclamation-triangle-fill.svg';
 import biInfoCircleFill from 'bootstrap-icons/icons/info-circle-fill.svg';
 import biLightbulb from 'bootstrap-icons/icons/lightbulb.svg';
-import type {AlertWidget} from '@agnos-ui/angular';
-import {SlotComponent, SlotDirective} from '@agnos-ui/angular';
+import type {AlertWidget} from '@agnos-ui/angular-bootstrap';
+import {SlotComponent, SlotDirective} from '@agnos-ui/angular-bootstrap';
 import {Component, inject} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 

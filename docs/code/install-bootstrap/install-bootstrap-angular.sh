@@ -1,1 +1,1 @@
-npm install @agnos-ui/angular
+npm install @agnos-ui/angular-bootstrap

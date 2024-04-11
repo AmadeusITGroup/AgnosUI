@@ -1,4 +1,4 @@
-import {AgnosUIAngularModule, ModalService} from '@agnos-ui/angular';
+import {AgnosUIAngularModule, ModalService} from '@agnos-ui/angular-bootstrap';
 import {Component, inject} from '@angular/core';
 import type {ModalData} from './custom-content.component';
 import CustomContentComponent from './custom-content.component';

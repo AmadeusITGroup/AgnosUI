@@ -1,4 +1,4 @@
-import {createResizeObserver} from '@agnos-ui/svelte/services/resizeObserver';
+import {createResizeObserver} from '@agnos-ui/svelte-bootstrap/services/resizeObserver';
 import {asReadable, writable, type UnsubscribeFunction} from '@amadeus-it-group/tansu';
 import {derived} from 'svelte/store';
 

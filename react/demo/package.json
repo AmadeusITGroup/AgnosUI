@@ -14,7 +14,7 @@
 		"dev": {
 			"command": "vite",
 			"dependencies": [
-				"../lib:generate:exports",
+				"../bootstrap:generate:exports",
 				"../headless:generate:exports"
 			],
 			"service": true
@@ -23,7 +23,7 @@
 			"command": "vite -c vite.coverage.config.ts",
 			"dependencies": [
 				"../../code-coverage:build",
-				"../lib:generate:exports",
+				"../bootstrap:generate:exports",
 				"../headless:generate:exports"
 			],
 			"service": true
@@ -31,8 +31,7 @@
 		"build": {
 			"command": "vite build",
 			"dependencies": [
-				"../lib:build",
-				"../../style-bootstrap:build"
+				"../bootstrap:build"
 			],
 			"files": [
 				"src/**",
@@ -46,8 +45,7 @@
 			"command": "vite build -c vite.coverage.config.ts",
 			"dependencies": [
 				"../../code-coverage:build",
-				"../../style-bootstrap:build",
-				"../lib:generate:exports",
+				"../bootstrap:generate:exports",
 				"../headless:generate:exports"
 			],
 			"files": [
@@ -67,7 +65,7 @@
 			],
 			"output": [],
 			"dependencies": [
-				"../lib:build"
+				"../bootstrap:build"
 			]
 		}
 	},
@@ -87,8 +85,8 @@
 		"vite-plugin-svgr": "^4.2.0"
 	},
 	"dependencies": {
-		"@agnos-ui/react": "0.0.0",
-		"@agnos-ui/style-bootstrap": "0.0.0",
+		"@agnos-ui/core-bootstrap": "0.0.0",
+		"@agnos-ui/react-bootstrap": "0.0.0",
 		"@amadeus-it-group/tansu": "1.0.0",
 		"@floating-ui/dom": "^1.6.3",
 		"classnames": "^2.5.1"

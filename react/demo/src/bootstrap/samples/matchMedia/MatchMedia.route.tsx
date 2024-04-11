@@ -1,5 +1,5 @@
-import {useObservable} from '@agnos-ui/react/utils/stores';
-import {Alert} from '@agnos-ui/react/components/alert';
+import {useObservable} from '@agnos-ui/react-bootstrap/utils/stores';
+import {Alert} from '@agnos-ui/react-bootstrap/components/alert';
 import {aboveMd$} from './stores';
 
 const MatchMediaDemo = () => {

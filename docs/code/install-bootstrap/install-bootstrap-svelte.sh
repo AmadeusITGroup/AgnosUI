@@ -1,1 +1,1 @@
-npm install @agnos-ui/svelte
+npm install @agnos-ui/svelte-bootstrap

@@ -1,6 +1,6 @@
-import type {RatingProps, StarContext} from '@agnos-ui/react/components/rating';
-import {Rating} from '@agnos-ui/react/components/rating';
-import {WidgetsDefaultConfig} from '@agnos-ui/react/config';
+import type {RatingProps, StarContext} from '@agnos-ui/react-bootstrap/components/rating';
+import {Rating} from '@agnos-ui/react-bootstrap/components/rating';
+import {WidgetsDefaultConfig} from '@agnos-ui/react-bootstrap/config';
 import {useState} from 'react';
 
 const CustomStar = function ({fill}: StarContext) {

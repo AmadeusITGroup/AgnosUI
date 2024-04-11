@@ -1,16 +1,13 @@
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
-	"extends": "../tsconfig.build.json",
+	"extends": "./tsconfig.build.json",
 	"compilerOptions": {
 		"outDir": "./dist/out-tsc",
 		"paths": {
 			"@agnos-ui/core": ["./core/src"],
 			"@agnos-ui/core/*": ["./core/src/*"],
 			"@agnos-ui/angular-headless": ["./angular/headless/src"],
-			"@agnos-ui/angular": ["./angular/lib/src"],
 			"@agnos-ui/common/*": ["./common/*"]
 		}
-	},
-	"files": ["src/main.ts", "src/polyfills.ts", "src/environments/environment.prod.ts"],
-	"include": ["src/**/*.d.ts", "src/app/samples/**/*.route.ts", "src/app/samples/**/*.component.ts"]
+	}
 }

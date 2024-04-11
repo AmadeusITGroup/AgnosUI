@@ -1,5 +1,5 @@
-import {Alert} from '@agnos-ui/react/components/alert';
-import {WidgetsDefaultConfig} from '@agnos-ui/react/config';
+import {Alert} from '@agnos-ui/react-bootstrap/components/alert';
+import {WidgetsDefaultConfig} from '@agnos-ui/react-bootstrap/config';
 
 const BasicDemo = () => (
 	<WidgetsDefaultConfig alert={{dismissible: false}}>

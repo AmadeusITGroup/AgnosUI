@@ -1,4 +1,4 @@
-import {Slider} from '@agnos-ui/react/components/slider';
+import {Slider} from '@agnos-ui/react-bootstrap/components/slider';
 import {useState} from 'react';
 import '@agnos-ui/common/samples/slider/custom.scss';
 import CustomSliderComponent from './CoffeeSlider';

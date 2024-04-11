@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, Input, booleanAttribute} from '@angular/core';
-import {UseDirective, collapseVerticalTransition, createTransition, toAngularSignal} from '@agnos-ui/angular';
+import {UseDirective, collapseVerticalTransition, createTransition, toAngularSignal} from '@agnos-ui/angular-bootstrap';
 
 @Component({
 	standalone: true,

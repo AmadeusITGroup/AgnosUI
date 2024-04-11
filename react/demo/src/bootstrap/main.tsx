@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from '../common/App';
 
 import 'bootstrap/dist/css/bootstrap.css';
-import '@agnos-ui/style-bootstrap/scss/agnosui.scss';
+import '@agnos-ui/core-bootstrap/scss/agnosui.scss';
 
 const components = import.meta.glob('./samples/*/*.route.tsx', {import: 'default'});
 

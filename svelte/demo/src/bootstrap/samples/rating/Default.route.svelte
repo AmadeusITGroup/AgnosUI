@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {Rating} from '@agnos-ui/svelte/components/rating';
+	import {Rating} from '@agnos-ui/svelte-bootstrap/components/rating';
 
 	let rating = 3;
 	let hovered = 0;

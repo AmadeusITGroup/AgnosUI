@@ -1,6 +1,6 @@
 <script lang="ts">
-	import {Toast} from '@agnos-ui/svelte/components/toast';
-	import type {ToastProps} from '@agnos-ui/svelte/components/toast';
+	import {Toast} from '@agnos-ui/svelte-bootstrap/components/toast';
+	import type {ToastProps} from '@agnos-ui/svelte-bootstrap/components/toast';
 	import {writable} from 'svelte/store';
 
 	enum ToastPositions {

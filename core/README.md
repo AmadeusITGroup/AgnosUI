@@ -4,9 +4,9 @@
 
 [AgnosUI](https://amadeusitgroup.github.io/AgnosUI/latest/) is a framework-agnostic widget library with adapters for multiple frameworks, either [Bootstrap](https://getbootstrap.com/)-based or headless:
 
-- [Angular](https://www.npmjs.com/package/@agnos-ui/angular), [Angular headless](https://www.npmjs.com/package/@agnos-ui/angular-headless)
-- [React](https://www.npmjs.com/package/@agnos-ui/react), [React headless](https://www.npmjs.com/package/@agnos-ui/react-headless)
-- [Svelte](https://www.npmjs.com/package/@agnos-ui/svelte), [Svelte headless](https://www.npmjs.com/package/@agnos-ui/svelte-headless)
+- [Angular bootstrap](https://www.npmjs.com/package/@agnos-ui/angular-bootstrap), [Angular headless](https://www.npmjs.com/package/@agnos-ui/angular-headless)
+- [React bootstrap](https://www.npmjs.com/package/@agnos-ui/react-bootstrap), [React headless](https://www.npmjs.com/package/@agnos-ui/react-headless)
+- [Svelte bootstrap](https://www.npmjs.com/package/@agnos-ui/svelte-bootstrap), [Svelte headless](https://www.npmjs.com/package/@agnos-ui/svelte-headless)
 
 This `@agnos-ui/core` package contains the framework-agnostic common code used by the above framework adapters.
 

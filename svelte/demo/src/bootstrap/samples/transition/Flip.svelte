@@ -1,6 +1,6 @@
 <script lang="ts">
-	import {createTransition} from '@agnos-ui/svelte/services/transitions/baseTransitions';
-	import {createSimpleClassTransition} from '@agnos-ui/svelte/services/transitions/simpleClassTransition';
+	import {createTransition} from '@agnos-ui/svelte-bootstrap/services/transitions/baseTransitions';
+	import {createSimpleClassTransition} from '@agnos-ui/svelte-bootstrap/services/transitions/simpleClassTransition';
 	import '@agnos-ui/common/samples/transition/flip.scss';
 
 	export let hiddenText: string;

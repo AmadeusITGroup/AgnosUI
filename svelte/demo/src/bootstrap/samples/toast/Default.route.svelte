@@ -1,6 +1,6 @@
 <script lang="ts">
-	import {Toast} from '@agnos-ui/svelte/components/toast';
-	import {createWidgetsDefaultConfig} from '@agnos-ui/svelte/config';
+	import {Toast} from '@agnos-ui/svelte-bootstrap/components/toast';
+	import {createWidgetsDefaultConfig} from '@agnos-ui/svelte-bootstrap/config';
 
 	createWidgetsDefaultConfig().set({toast: {autoHide: false, dismissible: false}});
 

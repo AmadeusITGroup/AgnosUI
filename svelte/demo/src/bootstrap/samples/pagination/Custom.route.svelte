@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {Pagination} from '@agnos-ui/svelte/components/pagination';
+	import {Pagination} from '@agnos-ui/svelte-bootstrap/components/pagination';
 	import CustomPages from './CustomPages.svelte';
 
 	function getPageSymbol(displayedPage: number) {

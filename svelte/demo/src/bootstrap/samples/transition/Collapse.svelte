@@ -1,6 +1,6 @@
 <script lang="ts">
-	import {createTransition} from '@agnos-ui/svelte/services/transitions/baseTransitions';
-	import {collapseVerticalTransition} from '@agnos-ui/svelte/services/transitions/bootstrap';
+	import {createTransition} from '@agnos-ui/svelte-bootstrap/services/transitions/baseTransitions';
+	import {collapseVerticalTransition} from '@agnos-ui/svelte-bootstrap/services/transitions/bootstrap';
 	import '@agnos-ui/common/samples/transition/collapse.scss';
 	import collapseIcon from '@agnos-ui/common/samples/transition/collapseButton.svg?raw';
 

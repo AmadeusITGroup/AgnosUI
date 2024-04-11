@@ -17,9 +17,9 @@ const pkg = {
 
 const packageName = sourcePackage.name;
 const directory = path.posix.relative(rootPath, sourceFolder);
-const frameworkName = directory.split('/')[0];
-const isCore = frameworkName === 'core';
-const isHeadless = isCore || packageName.endsWith('-headless');
+const frameworkName = packageName.split('/')?.[1].split('-')?.[0];
+const isFramework = !!frameworkName && frameworkName !== 'core';
+const isBootstrap = packageName.endsWith('-bootstrap');
 
 for (const field of ['homepage', 'bugs', 'license', 'repository']) {
 	pkg[field] = rootPackage[field];
@@ -28,10 +28,13 @@ for (const field of ['homepage', 'bugs', 'license', 'repository']) {
 if (!pkg.keywords) {
 	pkg.keywords = [];
 }
-if (isHeadless) {
+if (!isFramework) {
 	pkg.keywords.unshift('headless');
 }
-if (!isCore) {
+if (isBootstrap) {
+	pkg.keywords.unshift('bootstrap');
+}
+if (isFramework) {
 	pkg.keywords.unshift(frameworkName);
 }
 pkg.keywords.push(...rootPackage.keywords);

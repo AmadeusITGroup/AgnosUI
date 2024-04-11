@@ -1,5 +1,5 @@
-import {Toast} from '@agnos-ui/react/components/toast';
-import {WidgetsDefaultConfig} from '@agnos-ui/react/config';
+import {Toast} from '@agnos-ui/react-bootstrap/components/toast';
+import {WidgetsDefaultConfig} from '@agnos-ui/react-bootstrap/config';
 import {useHashChange} from '../../../common/utils';
 
 const PlaygroundToastDemo = () => {

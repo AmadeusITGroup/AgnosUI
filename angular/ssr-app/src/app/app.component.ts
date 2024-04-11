@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AgnosUIAngularModule} from '@agnos-ui/angular';
+import {AgnosUIAngularModule} from '@agnos-ui/angular-bootstrap';
 
 @Component({
 	selector: 'app-root',

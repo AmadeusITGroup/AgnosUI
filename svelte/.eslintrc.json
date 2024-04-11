@@ -16,7 +16,7 @@
 			}
 		},
 		{
-			"files": ["lib/**/*.svelte"],
+			"files": ["bootstrap/**/*.svelte"],
 			"rules": {
 				"@agnos-ui/svelte-check-props": "error"
 			}
@@ -28,7 +28,7 @@
 			}
 		},
 		{
-			"files": ["lib/**", "demo/src/daisyui/**"],
+			"files": ["bootstrap/**", "demo/src/daisyui/**"],
 			"rules": {
 				"@agnos-ui/check-replace-imports": ["error", "@agnos-ui/svelte-headless"],
 				"@typescript-eslint/no-unused-vars": [
@@ -45,7 +45,7 @@
 		{
 			"files": ["demo/src/bootstrap/**"],
 			"rules": {
-				"@agnos-ui/check-replace-imports": ["error", "@agnos-ui/svelte"],
+				"@agnos-ui/check-replace-imports": ["error", "@agnos-ui/svelte-bootstrap"],
 				"@typescript-eslint/no-unused-vars": [
 					"error",
 					{

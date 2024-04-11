@@ -1,6 +1,6 @@
 <script lang="ts">
-	import {Alert} from '@agnos-ui/svelte/components/alert';
-	import type {AlertProps} from '@agnos-ui/svelte/components/alert';
+	import {Alert} from '@agnos-ui/svelte-bootstrap/components/alert';
+	import type {AlertProps} from '@agnos-ui/svelte-bootstrap/components/alert';
 	import {writable} from 'svelte/store';
 
 	function createAlerts() {

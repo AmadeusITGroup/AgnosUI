@@ -1,4 +1,4 @@
-import {SelectComponent, injectWidgetsConfig, provideWidgetsConfig} from '@agnos-ui/angular';
+import {SelectComponent, injectWidgetsConfig, provideWidgetsConfig} from '@agnos-ui/angular-bootstrap';
 import {AsyncPipe} from '@angular/common';
 import {Component} from '@angular/core';
 import {FormsModule} from '@angular/forms';

@@ -5,11 +5,11 @@ import {SymbolFlags} from 'typescript';
 const checkPackages = new Set<string>([
 	'@agnos-ui/core',
 	'@agnos-ui/angular-headless',
-	'@agnos-ui/angular',
+	'@agnos-ui/angular-bootstrap',
 	'@agnos-ui/react-headless',
-	'@agnos-ui/react',
+	'@agnos-ui/react-bootstrap',
 	'@agnos-ui/svelte-headless',
-	'@agnos-ui/svelte',
+	'@agnos-ui/svelte-bootstrap',
 ]);
 
 const beforeRelevantPathRegExp = /^.*\/dist\//;

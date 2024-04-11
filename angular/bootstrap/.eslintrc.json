@@ -1,0 +1,39 @@
+{
+	"extends": "../.eslintrc.json",
+	"overrides": [
+		{
+			"files": ["*.ts"],
+			"parserOptions": {
+				"project": ["angular/bootstrap/tsconfig.json"],
+				"createDefaultProgram": true
+			},
+			"rules": {
+				"@angular-eslint/directive-selector": [
+					"error",
+					{
+						"type": "attribute",
+						"prefix": "au",
+						"style": "camelCase"
+					}
+				],
+				"@angular-eslint/component-selector": [
+					"error",
+					{
+						"type": "attribute",
+						"prefix": "au",
+						"style": "camelCase"
+					}
+				],
+				"@angular-eslint/no-output-rename": "off",
+				"@angular-eslint/no-input-rename": "off"
+			}
+		},
+		{
+			"files": ["*.html"],
+			"rules": {}
+		}
+	],
+	"rules": {
+		"@agnos-ui/angular-check-props": "error"
+	}
+}

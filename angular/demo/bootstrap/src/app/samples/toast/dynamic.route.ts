@@ -1,5 +1,5 @@
-import type {ToastProps} from '@agnos-ui/angular';
-import {AgnosUIAngularModule, ToastComponent} from '@agnos-ui/angular';
+import type {ToastProps} from '@agnos-ui/angular-bootstrap';
+import {AgnosUIAngularModule, ToastComponent} from '@agnos-ui/angular-bootstrap';
 import {Component, Injectable, inject} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 

@@ -1,7 +1,7 @@
 import {Component, ViewChild, ViewChildren} from '@angular/core';
 import type {QueryList} from '@angular/core';
-import {AccordionItemComponent, AgnosUIAngularModule} from '@agnos-ui/angular';
-import {AccordionDirective} from '@agnos-ui/angular';
+import {AccordionItemComponent, AgnosUIAngularModule} from '@agnos-ui/angular-bootstrap';
+import {AccordionDirective} from '@agnos-ui/angular-bootstrap';
 import {getUndefinedValues, hashChangeHook, provideHashConfig} from '../../utils';
 import {getAccordionDefaultConfig} from '@agnos-ui/core';
 

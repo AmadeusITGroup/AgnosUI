@@ -9,7 +9,7 @@
 		"check": "wireit"
 	},
 	"dependencies": {
-		"@agnos-ui/svelte": "0.0.0"
+		"@agnos-ui/svelte-bootstrap": "0.0.0"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.2.0",
@@ -22,8 +22,7 @@
 	"wireit": {
 		"deps": {
 			"dependencies": [
-				"../lib:build",
-				"../../style-bootstrap:build"
+				"../bootstrap:build"
 			]
 		},
 		"build": {
@@ -55,7 +54,7 @@
 		"dev": {
 			"command": "vite dev",
 			"dependencies": [
-				"../lib:generate:exports",
+				"../bootstrap:generate:exports",
 				"../headless:generate:exports"
 			],
 			"service": true
