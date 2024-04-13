@@ -11,7 +11,7 @@
 		"typescript": "*"
 	},
 	"devDependencies": {
-		"@angular/core": "~17.3.3",
+		"@angular/core": "~17.3.4",
 		"@typescript-eslint/rule-tester": "^7.5.0",
 		"@vitest/coverage-v8": "^1.4.0",
 		"svelte": "^4.2.12",
