@@ -4,7 +4,7 @@
 	"platform": "github",
 	"extends": ["config:recommended", ":dependencyDashboard", "group:allNonMajor"],
 	"ignorePresets": [":prHourlyLimit2", ":prConcurrentLimit10"],
-	"schedule": "every weekend",
+	"schedule": ["every weekend"],
 	"rangeStrategy": "bump",
 	"packageRules": [
 		{
