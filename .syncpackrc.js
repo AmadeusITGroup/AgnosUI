@@ -7,6 +7,11 @@ export default {
 	semverRange: '^',
 	versionGroups: [
 		{
+			packages: ['**'],
+			dependencies: ['@sveltejs/package'],
+			isIgnored: true,
+		},
+		{
 			label: "Use '*' under 'peerDependencies' everywhere",
 			packages: ['**'],
 			dependencies: ['**'],
