@@ -70,8 +70,8 @@
 		}
 	},
 	"devDependencies": {
-		"@types/react": "^18.2.74",
-		"@types/react-dom": "^18.2.24",
+		"@types/react": "^18.2.78",
+		"@types/react-dom": "^18.2.25",
 		"@vitejs/plugin-react": "^4.2.1",
 		"autoprefixer": "^10.4.19",
 		"classnames": "^2.5.1",

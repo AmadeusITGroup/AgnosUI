@@ -11,8 +11,8 @@
 	"devDependencies": {
 		"@amadeus-it-group/tansu": "1.0.0",
 		"@floating-ui/dom": "^1.6.3",
-		"@types/react": "^18.2.74",
-		"@types/react-dom": "^18.2.24",
+		"@types/react": "^18.2.78",
+		"@types/react-dom": "^18.2.25",
 		"@vitejs/plugin-react": "^4.2.1",
 		"autoprefixer": "^10.4.19",
 		"daisyui": "^4.10.1",
