@@ -1,11 +1,10 @@
-import {SelectComponent, injectWidgetsConfig, provideWidgetsConfig} from '@agnos-ui/angular-bootstrap';
-import {AsyncPipe} from '@angular/common';
+import {SelectComponent, injectWidgetsConfig, provideWidgetsConfig, toAngularSignal} from '@agnos-ui/angular-bootstrap';
 import {Component} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
 @Component({
 	standalone: true,
-	imports: [AsyncPipe, FormsModule, SelectComponent],
+	imports: [FormsModule, SelectComponent],
 	providers: [provideWidgetsConfig()],
 	template: `
 		<h2>Multiselect example</h2>
@@ -20,7 +19,7 @@ import {FormsModule} from '@angular/forms';
 				<input
 					type="text"
 					class="form-control"
-					[ngModel]="(widgetsConfig$ | async)?.select?.filterText ?? ''"
+					[ngModel]="widgetsConfig().select?.filterText ?? ''"
 					(ngModelChange)="widgetsConfig$.set({select: {filterText: $event}})"
 				/>
 			</label>
@@ -35,7 +34,8 @@ export default class SelectSelectComponent {
 
 	filterText: string | undefined;
 
-	widgetsConfig$ = injectWidgetsConfig();
+	readonly widgetsConfig$ = injectWidgetsConfig();
+	readonly widgetsConfig = toAngularSignal(this.widgetsConfig$);
 
 	constructor() {
 		const params = location.hash.split('?')[1];

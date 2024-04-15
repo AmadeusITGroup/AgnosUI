@@ -24,7 +24,7 @@ import {take} from 'rxjs';
 	styles: "@import '@agnos-ui/common/samples/slider/custom.scss';",
 })
 export default class CustomHandleSliderComponent extends SlotComponent<SliderWidget> {
-	private _zone = inject(NgZone);
+	private readonly _zone = inject(NgZone);
 
 	@Input() item!: SliderHandle;
 

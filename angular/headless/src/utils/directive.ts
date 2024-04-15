@@ -73,7 +73,7 @@ export class UseDirective<T> implements OnChanges {
 	@Input('auUseParams')
 	params: T | undefined;
 
-	#useDirective = useDirectiveForHost<T>();
+	readonly #useDirective = useDirectiveForHost<T>();
 
 	/** @inheritdoc */
 	ngOnChanges() {

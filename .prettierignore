@@ -9,3 +9,4 @@ test-results/
 *-snapshots/
 core-bootstrap/css/
 verdaccio/storage
+.wireit

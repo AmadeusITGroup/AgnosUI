@@ -1,11 +1,10 @@
 import type {RatingProps} from '@agnos-ui/angular-bootstrap';
-import {AgnosUIAngularModule, injectWidgetsConfig, provideWidgetsConfig} from '@agnos-ui/angular-bootstrap';
-import {AsyncPipe} from '@angular/common';
+import {RatingComponent, injectWidgetsConfig, provideWidgetsConfig, toAngularSignal} from '@agnos-ui/angular-bootstrap';
 import {Component} from '@angular/core';
 
 @Component({
 	standalone: true,
-	imports: [AgnosUIAngularModule, AsyncPipe],
+	imports: [RatingComponent],
 	providers: [provideWidgetsConfig()],
 	template: `
 		<ng-template #custom let-fill="fill">
@@ -17,14 +16,14 @@ import {Component} from '@angular/core';
 			<div id="btn-config-disabled" class="btn-group mb-2">
 				<button
 					class="btn btn-sm btn-outline-secondary"
-					[class.active]="(widgetsConfig$ | async)?.rating?.disabled === true"
+					[class.active]="widgetsConfig().rating?.disabled === true"
 					(click)="updateRatingConfig({disabled: true})"
 				>
 					true
 				</button>
 				<button
 					class="btn btn-sm btn-outline-secondary"
-					[class.active]="(widgetsConfig$ | async)?.rating?.disabled !== true"
+					[class.active]="widgetsConfig().rating?.disabled !== true"
 					(click)="updateRatingConfig({disabled: false})"
 				>
 					false
@@ -35,28 +34,28 @@ import {Component} from '@angular/core';
 			<div id="btn-config-maxRating" class="btn-group mb-2">
 				<button
 					class="btn btn-sm btn-outline-secondary"
-					[class.active]="(widgetsConfig$ | async)?.rating?.maxRating === 40"
+					[class.active]="widgetsConfig().rating?.maxRating === 40"
 					(click)="updateRatingConfig({maxRating: 40})"
 				>
 					40
 				</button>
 				<button
 					class="btn btn-sm btn-outline-secondary"
-					[class.active]="(widgetsConfig$ | async)?.rating?.maxRating === 30"
+					[class.active]="widgetsConfig().rating?.maxRating === 30"
 					(click)="updateRatingConfig({maxRating: 30})"
 				>
 					30
 				</button>
 				<button
 					class="btn btn-sm btn-outline-secondary"
-					[class.active]="(widgetsConfig$ | async)?.rating?.maxRating === 20"
+					[class.active]="widgetsConfig().rating?.maxRating === 20"
 					(click)="updateRatingConfig({maxRating: 20})"
 				>
 					20
 				</button>
 				<button
 					class="btn btn-sm btn-outline-secondary"
-					[class.active]="!(widgetsConfig$ | async)?.rating?.maxRating"
+					[class.active]="!widgetsConfig().rating?.maxRating"
 					(click)="updateRatingConfig({maxRating: undefined})"
 				>
 					undefined
@@ -67,21 +66,21 @@ import {Component} from '@angular/core';
 			<div id="btn-config-className" class="btn-group mb-2">
 				<button
 					class="btn btn-sm btn-outline-secondary"
-					[class.active]="(widgetsConfig$ | async)?.rating?.className === 'fs-1'"
+					[class.active]="widgetsConfig().rating?.className === 'fs-1'"
 					(click)="updateRatingConfig({className: 'fs-1'})"
 				>
 					fs-1
 				</button>
 				<button
 					class="btn btn-sm btn-outline-secondary"
-					[class.active]="(widgetsConfig$ | async)?.rating?.className === 'fs-2'"
+					[class.active]="widgetsConfig().rating?.className === 'fs-2'"
 					(click)="updateRatingConfig({className: 'fs-2'})"
 				>
 					fs-2
 				</button>
 				<button
 					class="btn btn-sm btn-outline-secondary"
-					[class.active]="!(widgetsConfig$ | async)?.rating?.className"
+					[class.active]="!widgetsConfig().rating?.className"
 					(click)="updateRatingConfig({className: undefined})"
 				>
 					undefined
@@ -92,21 +91,21 @@ import {Component} from '@angular/core';
 			<div id="btn-config-slotStar" class="btn-group mb-2">
 				<button
 					class="btn btn-sm btn-outline-secondary"
-					[class.active]="(widgetsConfig$ | async)?.rating?.slotStar === custom"
+					[class.active]="widgetsConfig().rating?.slotStar === custom"
 					(click)="updateRatingConfig({slotStar: custom})"
 				>
 					custom
 				</button>
 				<button
 					class="btn btn-sm btn-outline-secondary"
-					[class.active]="(widgetsConfig$ | async)?.rating?.slotStar === '*'"
+					[class.active]="widgetsConfig().rating?.slotStar === '*'"
 					(click)="updateRatingConfig({slotStar: '*'})"
 				>
 					'*'
 				</button>
 				<button
 					class="btn btn-sm btn-outline-secondary"
-					[class.active]="!(widgetsConfig$ | async)?.rating?.slotStar"
+					[class.active]="!widgetsConfig().rating?.slotStar"
 					(click)="updateRatingConfig({slotStar: undefined})"
 				>
 					undefined
@@ -117,7 +116,8 @@ import {Component} from '@angular/core';
 })
 export default class RatingConfigComponent {
 	rating = 3;
-	widgetsConfig$ = injectWidgetsConfig();
+	private readonly widgetsConfig$ = injectWidgetsConfig();
+	public readonly widgetsConfig = toAngularSignal(this.widgetsConfig$);
 
 	updateRatingConfig(change: Partial<RatingProps>) {
 		this.widgetsConfig$.update((value) => ({...value, rating: {...value.rating, ...change}}));
