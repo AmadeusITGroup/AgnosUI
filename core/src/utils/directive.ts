@@ -14,7 +14,10 @@ import {toReadableStore} from './stores';
  * @returns true in a browser environment if the given element is an HTMLElement, otherwise false.
  */
 export const isBrowserHTMLElement: (element: SSRHTMLElement) => element is HTMLElement = BROWSER
-	? (((element: SSRHTMLElement) => element instanceof HTMLElement) as any)
+	? (((element: SSRHTMLElement) => {
+			const contentWindow = (element as any as Element)?.ownerDocument?.defaultView ?? window;
+			return element instanceof contentWindow.HTMLElement;
+		}) as any)
 	: (element) => false;
 
 /**
