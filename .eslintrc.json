@@ -32,6 +32,7 @@
 	],
 	"rules": {
 		"prefer-const": ["error", {"destructuring": "all"}],
+		"@typescript-eslint/prefer-readonly": "error",
 		"@typescript-eslint/no-unused-vars": ["error", {"vars": "all", "args": "none", "ignoreRestSiblings": false}],
 		"@typescript-eslint/no-non-null-assertion": "off",
 		"@typescript-eslint/no-explicit-any": "off",

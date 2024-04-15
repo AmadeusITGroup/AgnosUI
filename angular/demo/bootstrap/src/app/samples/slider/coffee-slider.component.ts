@@ -31,7 +31,7 @@ import {take} from 'rxjs';
 	encapsulation: ViewEncapsulation.None,
 })
 export default class CoffeeSliderComponent extends SlotComponent<SliderWidget> {
-	private _zone = inject(NgZone);
+	private readonly _zone = inject(NgZone);
 
 	onKeyDown(event: KeyboardEvent, handleId: number, widgetOnKeyDownFn: (event: KeyboardEvent, handleId: number) => void) {
 		widgetOnKeyDownFn(event, handleId);

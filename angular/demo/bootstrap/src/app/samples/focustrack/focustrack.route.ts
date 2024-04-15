@@ -1,12 +1,11 @@
-import {AgnosUIAngularModule} from '@agnos-ui/angular-bootstrap';
+import {UseDirective, toAngularSignal} from '@agnos-ui/angular-bootstrap';
 import {activeElement$, createHasFocus} from '@agnos-ui/core';
-import {CommonModule} from '@angular/common';
-import type {OnDestroy} from '@angular/core';
-import {Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, effect, signal} from '@angular/core';
 
 @Component({
 	standalone: true,
-	imports: [AgnosUIAngularModule, CommonModule],
+	imports: [UseDirective],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
 		<div class="demo-focustrack">
 			<div [auUse]="hasFocusApi.directive" class="my-2 p-2 border">
@@ -16,37 +15,34 @@ import {Component} from '@angular/core';
 			</div>
 			<input class="form-control" type="text" placeholder="Disabled input" id="disabledInput" disabled /><br />
 			<div class="form-check mb-2">
-				<input class="form-check-input" type="checkbox" id="containerHasFocus" [checked]="hasFocusApi.hasFocus$ | async" disabled />
+				<input class="form-check-input" type="checkbox" id="containerHasFocus" [checked]="hasFocus()" disabled />
 				<label class="form-check-label" for="containerHasFocus">Focus in container</label>
 			</div>
 			<label for="activeElementHistory" class="form-label">Active element history:</label>
-			<textarea class="form-control mb-2" id="activeElementHistory" readonly>{{ activeElementsJson }}</textarea>
+			<textarea class="form-control mb-2" id="activeElementHistory" readonly>{{ activeElementsJson() }}</textarea>
 			<button class="btn btn-primary" (click)="clear()">Clear</button>
 		</div>
 	`,
 })
-export default class FocustrackComponent implements OnDestroy {
-	protected hasFocusApi;
-	protected activeElements: any[] = [];
-	protected activeElementsJson = '';
-	private unsubscribe = () => {
-		// empty
-	};
+export default class FocustrackComponent {
+	public readonly hasFocusApi = createHasFocus();
+	public readonly hasFocus = toAngularSignal(this.hasFocusApi.hasFocus$);
+	public readonly activeElements = signal<{tagName?: string; id?: string}[]>([]);
+	public readonly activeElementsJson = computed(() => JSON.stringify(this.activeElements()));
+	private readonly activeElement = toAngularSignal(activeElement$);
 
 	constructor() {
-		this.hasFocusApi = createHasFocus();
-		this.unsubscribe = activeElement$.subscribe((activeElement) => {
-			this.activeElements.push({tagName: activeElement?.tagName.toLowerCase(), id: activeElement?.id || undefined});
-			this.activeElementsJson = JSON.stringify(this.activeElements);
-		});
-	}
-
-	ngOnDestroy(): void {
-		this.unsubscribe();
+		effect(
+			() => {
+				this.activeElements.update((elements) =>
+					elements.concat([{tagName: this.activeElement()?.tagName?.toLowerCase(), id: this.activeElement()?.id || undefined}]),
+				);
+			},
+			{allowSignalWrites: true},
+		);
 	}
 
 	clear() {
-		this.activeElements = [];
-		this.activeElementsJson = JSON.stringify([]);
+		this.activeElements.set([]);
 	}
 }

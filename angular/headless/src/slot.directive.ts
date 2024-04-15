@@ -30,7 +30,7 @@ class StringSlotComponent {
 const stringSlotComponentTemplate = new ComponentTemplate<{content: string}, 'text', StringSlotComponent>(StringSlotComponent, 'text');
 
 class StringSlotHandler<Props extends Record<string, any>> extends SlotHandler<Props, string> {
-	#templateRefSlotHandler = new ComponentTemplateSlotHandler<{content: string}, 'text', StringSlotComponent>(this.viewContainerRef);
+	readonly #templateRefSlotHandler = new ComponentTemplateSlotHandler<{content: string}, 'text', StringSlotComponent>(this.viewContainerRef);
 	#initialized = false;
 
 	override slotChange(content: string): void {
@@ -48,7 +48,7 @@ class StringSlotHandler<Props extends Record<string, any>> extends SlotHandler<P
 }
 
 class FunctionSlotHandler<Props extends Record<string, any>> extends SlotHandler<Props, (props: Props) => string> {
-	#stringSlotHandler = new StringSlotHandler(this.viewContainerRef);
+	readonly #stringSlotHandler = new StringSlotHandler(this.viewContainerRef);
 
 	override slotChange(slot: (props: Props) => string, props: Props): void {
 		this.#stringSlotHandler.slotChange(slot(props));
@@ -139,7 +139,7 @@ class ComponentTemplateSlotHandler<
 	T extends {[key in K]: TemplateRef<Props>},
 > extends SlotHandler<Props, ComponentTemplate<Props, K, T>> {
 	#componentRef: ComponentRef<T> | undefined;
-	#templateSlotHandler = new TemplateRefSlotHandler(this.viewContainerRef);
+	readonly #templateSlotHandler = new TemplateRefSlotHandler(this.viewContainerRef);
 	#templateRef: TemplateRef<Props> | undefined;
 
 	override slotChange(slot: ComponentTemplate<Props, K, T>, props: Props): void {
@@ -196,7 +196,7 @@ export class SlotDirective<Props extends Record<string, any>> implements OnChang
 	@Input('auSlot') slot: SlotContent<Props>;
 	@Input('auSlotProps') props: Props;
 
-	private _viewContainerRef = inject(ViewContainerRef);
+	private readonly _viewContainerRef = inject(ViewContainerRef);
 	private _slotType: ReturnType<typeof getSlotType>;
 	private _slotHandler: SlotHandler<Props> | undefined;
 

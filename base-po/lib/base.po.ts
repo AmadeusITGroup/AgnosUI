@@ -69,8 +69,8 @@ function isLocator(locator: Page | Locator): locator is Locator {
  *
  */
 export class BasePO {
-	#container: Page | Locator;
-	#index: number | null;
+	readonly #container: Page | Locator;
+	readonly #index: number | null;
 	#locatorRoot: Locator | undefined;
 
 	/**
