@@ -1,0 +1,13 @@
+const t=`import type { AdaptSlotContentProps, AdaptWidgetSlots, WidgetFactory, WidgetProps, WidgetState } from '@agnos-ui/react-headless/types';
+export * from '@agnos-ui/core-bootstrap/components/pagination';
+export type PaginationWidget = AdaptWidgetSlots<import('@agnos-ui/core-bootstrap/components/pagination').PaginationWidget>;
+export type PaginationProps = WidgetProps<PaginationWidget>;
+export type PaginationState = WidgetState<PaginationWidget>;
+export type PaginationContext = AdaptSlotContentProps<import('@agnos-ui/core-bootstrap/components/pagination').PaginationContext>;
+export type PaginationNumberContext = AdaptSlotContentProps<import('@agnos-ui/core-bootstrap/components/pagination').PaginationNumberContext>;
+export declare const createPagination: WidgetFactory<PaginationWidget>;
+export * from './pageItem';
+export declare function DefaultPages(slotContext: PaginationContext): import("react/jsx-runtime").JSX.Element | null;
+export declare function DefaultStructure(slotContext: PaginationContext): import("react/jsx-runtime").JSX.Element;
+export declare function Pagination(props: Partial<PaginationProps>): import("react/jsx-runtime").JSX.Element;
+`;export{t as default};

@@ -1,0 +1,14 @@
+const t=`import type { AdaptSlotContentProps, AdaptWidgetSlots, WidgetFactory, WidgetProps, WidgetState } from '@agnos-ui/react-headless/types';
+import type { PropsWithChildren } from 'react';
+export * from '@agnos-ui/core-bootstrap/components/slider';
+export type SliderWidget = AdaptWidgetSlots<import('@agnos-ui/core-bootstrap/components/slider').SliderWidget>;
+export type SliderProps = WidgetProps<SliderWidget>;
+export type SliderState = WidgetState<SliderWidget>;
+export type SliderContext = AdaptSlotContentProps<import('@agnos-ui/core-bootstrap/components/slider').SliderContext>;
+export type SliderSlotLabelContext = AdaptSlotContentProps<import('@agnos-ui/core-bootstrap/components/slider').SliderSlotLabelContext>;
+export type SliderSlotHandleContext = AdaptSlotContentProps<import('@agnos-ui/core-bootstrap/components/slider').SliderSlotHandleContext>;
+export declare const createSlider: WidgetFactory<SliderWidget>;
+export declare const DefaultSlotHandle: (slotContext: SliderSlotHandleContext) => import("react/jsx-runtime").JSX.Element;
+export declare const DefaultSlotStructure: (slotContext: SliderContext) => import("react/jsx-runtime").JSX.Element;
+export declare function Slider(props: PropsWithChildren<Partial<SliderProps>>): import("react/jsx-runtime").JSX.Element;
+`;export{t as default};

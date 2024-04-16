@@ -1,0 +1,16 @@
+const o=`import type { ForwardRefExoticComponent, PropsWithChildren, RefAttributes } from 'react';
+import type { AdaptSlotContentProps, AdaptWidgetSlots, WidgetFactory, WidgetProps, WidgetState } from '@agnos-ui/react-headless/types';
+import type { AccordionItemApi } from '@agnos-ui/core-bootstrap/components/accordion';
+export * from '@agnos-ui/core-bootstrap/components/accordion';
+export type AccordionWidget = AdaptWidgetSlots<import('@agnos-ui/core-bootstrap/components/accordion').AccordionWidget>;
+export type AccordionProps = WidgetProps<AccordionWidget>;
+export type AccordionState = WidgetState<AccordionWidget>;
+export type AccordionApi = AccordionWidget['api'];
+export type AccordionItemWidget = AdaptWidgetSlots<import('@agnos-ui/core-bootstrap/components/accordion').AccordionItemWidget>;
+export type AccordionItemProps = WidgetProps<AccordionItemWidget>;
+export type AccordionItemState = WidgetState<AccordionItemWidget>;
+export type AccordionItemContext = AdaptSlotContentProps<import('@agnos-ui/core-bootstrap/components/accordion').AccordionItemContext>;
+export declare const createAccordion: WidgetFactory<AccordionWidget>;
+export declare const AccordionItem: ForwardRefExoticComponent<PropsWithChildren<Partial<AccordionItemProps>> & RefAttributes<AccordionItemApi>>;
+export declare const Accordion: ForwardRefExoticComponent<PropsWithChildren<Partial<AccordionProps>> & RefAttributes<AccordionApi>>;
+`;export{o as default};

@@ -1,0 +1,10 @@
+const t=`import type { AdaptSlotContentProps, AdaptWidgetSlots, PropsConfig, WidgetProps, WidgetState } from '@agnos-ui/react-headless/types';
+export * from '@agnos-ui/core-bootstrap/components/select';
+export type SelectWidget<Item> = AdaptWidgetSlots<import('@agnos-ui/core-bootstrap/components/select').SelectWidget<Item>>;
+export type SelectProps<Item> = WidgetProps<SelectWidget<Item>>;
+export type SelectState<Item> = WidgetState<SelectWidget<Item>>;
+export type SelectContext<Item> = AdaptSlotContentProps<import('@agnos-ui/core-bootstrap/components/select').SelectContext<Item>>;
+export type SelectItemContext<Item> = AdaptSlotContentProps<import('@agnos-ui/core-bootstrap/components/select').SelectItemContext<Item>>;
+export declare const createSelect: <Item>(propsConfig?: PropsConfig<SelectProps<Item>>) => SelectWidget<Item>;
+export declare function Select<Item>(props: Partial<SelectProps<Item>>): import("react/jsx-runtime").JSX.Element;
+`;export{t as default};

@@ -1,0 +1,10 @@
+const t=`import type { AdaptSlotContentProps, AdaptWidgetSlots, WidgetPropsSlots, WidgetFactory, WidgetProps, WidgetState } from '@agnos-ui/svelte-headless/types';
+export * from '@agnos-ui/core-bootstrap/components/pagination';
+export type PaginationWidget = AdaptWidgetSlots<import('@agnos-ui/core-bootstrap/components/pagination').PaginationWidget>;
+export type PaginationProps = WidgetProps<PaginationWidget>;
+export type PaginationState = WidgetState<PaginationWidget>;
+export type PaginationContext = AdaptSlotContentProps<import('@agnos-ui/core-bootstrap/components/pagination').PaginationContext>;
+export type PaginationNumberContext = AdaptSlotContentProps<import('@agnos-ui/core-bootstrap/components/pagination').PaginationNumberContext>;
+export type PaginationSlots = WidgetPropsSlots<PaginationProps>;
+export declare const createPagination: WidgetFactory<PaginationWidget>;
+`;export{t as default};
