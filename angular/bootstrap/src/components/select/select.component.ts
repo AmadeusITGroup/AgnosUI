@@ -1,10 +1,17 @@
 import type {AdaptSlotContentProps, SlotContent} from '@agnos-ui/angular-headless';
-import {BaseWidgetDirective, SlotDirective, UseMultiDirective, auBooleanAttribute, useDirectiveForHost} from '@agnos-ui/angular-headless';
+import {
+	BaseWidgetDirective,
+	SlotDirective,
+	UseDirective,
+	UseMultiDirective,
+	auBooleanAttribute,
+	useDirectiveForHost,
+} from '@agnos-ui/angular-headless';
 import type {AfterContentChecked} from '@angular/core';
 import {ChangeDetectionStrategy, Component, ContentChild, Directive, EventEmitter, Input, Output, TemplateRef, inject} from '@angular/core';
 import type {Placement} from '@floating-ui/dom';
 import {callWidgetFactory} from '../../config';
-import type {SelectItemContext, SelectWidget, ItemContext} from './select';
+import type {ItemContext, SelectItemContext, SelectWidget} from './select';
 import {createSelect} from './select';
 
 @Directive({selector: 'ng-template[auSelectBadgeLabel]', standalone: true})
@@ -25,7 +32,7 @@ export class SelectItemDirective<Item> {
 
 @Component({
 	standalone: true,
-	imports: [UseMultiDirective, SlotDirective],
+	imports: [UseMultiDirective, SlotDirective, UseDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: '[auSelect]',
 	host: {
@@ -35,20 +42,11 @@ export class SelectItemDirective<Item> {
 		@if (state(); as state) {
 			<div
 				[auUseMulti]="[widget.directives.hasFocusDirective, widget.directives.inputContainerDirective]"
-				role="combobox"
-				class="d-flex align-items-center flex-wrap"
-				[attr.aria-controls]="state.id + '-menu'"
-				aria-haspopup="listbox"
-				[attr.aria-expanded]="state.open"
+				class="d-flex align-items-center flex-wrap gap-1"
 			>
 				@if (state.selectedContexts; as selectedContexts) {
 					@for (itemContext of selectedContexts; track itemCtxTrackBy($index, itemContext)) {
-						<div
-							tabindex="-1"
-							class="au-select-badge me-1"
-							[class]="state.badgeClassName"
-							(keydown)="_widget.actions.onBadgeKeydown($event, itemContext.item)"
-						>
+						<div [auUse]="[_widget.directives.badgeAttributesDirective, itemContext]">
 							<ng-template [auSlot]="state.slotBadgeLabel" [auSlotProps]="{state, widget, itemContext}"></ng-template>
 						</div>
 					}
@@ -69,22 +67,14 @@ export class SelectItemDirective<Item> {
 			</div>
 			@if (state.open && state.visibleItems.length) {
 				<ul
-					role="listbox"
-					[id]="state.id + '-menu'"
-					[auUseMulti]="[widget.directives.hasFocusDirective, widget.directives.floatingDirective]"
-					[class]="'dropdown-menu show ' + (menuClassName || '')"
-					[attr.data-popper-placement]="state.placement"
-					(mousedown)="$event.preventDefault()"
+					[auUseMulti]="[widget.directives.hasFocusDirective, widget.directives.floatingDirective, widget.directives.menuAttributesDirective]"
+					class="dropdown-menu show"
 				>
 					@for (itemContext of state.visibleItems; track itemCtxTrackBy($index, itemContext)) {
 						<li
-							role="option"
-							[attr.aria-selected]="itemContext.selected"
-							class="au-select-item dropdown-item position-relative "
+							class="dropdown-item position-relative"
+							[auUse]="[_widget.directives.itemAttributesDirective, itemContext]"
 							[class.text-bg-primary]="itemContext === state.highlighted"
-							[class.selected]="itemContext.selected"
-							(click)="widget.api.toggleItem(itemContext.item)"
-							[style.cursor]="'pointer'"
 						>
 							<ng-template [auSlot]="state.slotItem" [auSlotProps]="{state, widget, itemContext}"></ng-template>
 						</li>

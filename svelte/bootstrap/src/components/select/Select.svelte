@@ -1,8 +1,8 @@
 <script lang="ts" context="module">
-	import type {SelectProps, SelectWidget, SelectSlots, SelectApi} from './select';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
-	import {createSelect} from './select';
 	import {callWidgetFactory} from '../../config';
+	import type {SelectApi, SelectProps, SelectSlots, SelectWidget} from './select';
+	import {createSelect} from './select';
 </script>
 
 <script lang="ts">
@@ -33,44 +33,27 @@
 	});
 	export const api: SelectApi<Item> = widget.api;
 	const {
-		stores: {
-			id$,
-			ariaLabel$,
-			badgeClassName$,
-			className$,
-			filterText$,
-			highlighted$,
-			menuClassName$,
-			menuItemClassName$,
-			open$,
-			placement$,
-			selectedContexts$,
-			slotBadgeLabel$,
-			slotItem$,
-			visibleItems$,
-		},
+		stores: {id$, ariaLabel$, highlighted$, open$, selectedContexts$, slotBadgeLabel$, slotItem$, visibleItems$, className$, filterText$},
 		state$,
-		actions: {onInput, onInputKeydown, onBadgeKeydown},
-		directives: {floatingDirective, hasFocusDirective, referenceDirective, inputContainerDirective},
+		actions: {onInput, onInputKeydown},
+		directives: {
+			floatingDirective,
+			hasFocusDirective,
+			referenceDirective,
+			inputContainerDirective,
+			badgeAttributesDirective,
+			menuAttributesDirective,
+			itemAttributesDirective,
+		},
 	} = widget;
 
 	$: widget.patchChangedProps($$props);
-	$: menuId = `${$id$}-menu`;
 </script>
 
 <div use:referenceDirective class="au-select dropdown border border-1 p-1 mb-3 d-block {$className$}">
-	<div
-		use:hasFocusDirective
-		use:inputContainerDirective
-		role="combobox"
-		class="d-flex align-items-center flex-wrap"
-		aria-controls={menuId}
-		aria-haspopup="listbox"
-		aria-expanded={$open$}
-	>
+	<div use:hasFocusDirective use:inputContainerDirective class="d-flex align-items-center flex-wrap gap-1">
 		{#each $selectedContexts$ as itemContext (itemContext.id)}
-			<!-- svelte-ignore a11y-no-static-element-interactions -->
-			<div tabindex="-1" class={`au-select-badge me-1 ${$badgeClassName$}`} on:keydown={(e) => onBadgeKeydown(e, itemContext.item)}>
+			<div use:badgeAttributesDirective={itemContext}>
 				<Slot slotContent={$slotBadgeLabel$} props={{state: $state$, widget, itemContext}} let:component let:props>
 					<svelte:fragment slot="slot" let:props><slot name="badgeLabel" {...props} /></svelte:fragment>
 					<svelte:component this={component} {...props}>
@@ -97,28 +80,10 @@
 		/>
 	</div>
 	{#if $open$ && $visibleItems$.length > 0}
-		<ul
-			role="listbox"
-			id={menuId}
-			use:hasFocusDirective
-			use:floatingDirective
-			class="dropdown-menu show {$menuClassName$}"
-			data-popper-placement={$placement$}
-			on:mousedown|preventDefault
-		>
+		<ul use:hasFocusDirective use:floatingDirective use:menuAttributesDirective class="dropdown-menu show">
 			{#each $visibleItems$ as itemContext (itemContext.id)}
 				{@const isHighlighted = itemContext === $highlighted$}
-				{@const isSelected = itemContext.selected}
-				<!-- svelte-ignore a11y-click-events-have-key-events -->
-				<li
-					role="option"
-					aria-selected={isSelected}
-					class={`au-select-item dropdown-item position-relative ${$menuItemClassName$}`}
-					class:text-bg-primary={isHighlighted}
-					class:selected={isSelected}
-					on:click={() => widget.api.toggleItem(itemContext.item)}
-					style:cursor="pointer"
-				>
+				<li class="dropdown-item position-relative" class:text-bg-primary={isHighlighted} use:itemAttributesDirective={itemContext}>
 					<Slot slotContent={$slotItem$} props={{state: $state$, widget, itemContext}} let:component let:props>
 						<svelte:fragment slot="slot" let:props><slot name="item" {...props} /></svelte:fragment>
 						<svelte:component this={component} {...props}>
