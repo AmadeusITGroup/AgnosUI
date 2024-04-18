@@ -27,7 +27,7 @@ export const componentsMetadata: {[key: string]: ComponentMetadata} = {
 	},
 	Pagination: {
 		title: 'Pagination',
-		status: 'beta',
+		status: 'stable',
 		since: 'v0.1.1',
 	},
 	Progressbar: {
@@ -52,7 +52,7 @@ export const componentsMetadata: {[key: string]: ComponentMetadata} = {
 	},
 	Toast: {
 		title: 'Toast',
-		status: 'beta',
+		status: 'stable',
 		since: 'v0.2.0',
 	},
 };
