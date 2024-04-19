@@ -9,7 +9,6 @@
 	export let widget: $$Props['widget'];
 
 	$: slotContext = {widget, state};
-	$: console.log(state);
 </script>
 
 <div class="progress" style:height={state.height}>
