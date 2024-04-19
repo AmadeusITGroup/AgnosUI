@@ -3,6 +3,7 @@
 	import type {AlertProps} from '@agnos-ui/svelte-headless/components/alert';
 	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
 	import {createSimpleClassTransition} from '@agnos-ui/svelte-headless/services/transitions/simpleClassTransition';
+	import closeIconSvg from '@agnos-ui/common/samples/common/close_icon.svg?raw';
 	type $$Props = Partial<Pick<AlertProps, 'className' | 'visible' | 'dismissible' | 'ariaCloseButtonLabel'>>;
 
 	const transition = createSimpleClassTransition({
@@ -34,13 +35,11 @@
 </script>
 
 {#if !$hidden$}
-	<div role="alert" class="alert {$className$}" use:transitionDirective>
+	<div role="alert" class="flex alert {$className$}" use:transitionDirective>
 		<slot />
 		{#if $dismissible$}
-			<button class="btn btn-sm btn-circle btn-ghost justify-self-end" on:click={api.close} aria-label={$ariaCloseButtonLabel$}>
-				<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-					><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg
-				>
+			<button class="btn btn-sm btn-circle btn-ghost ms-auto" on:click={api.close} aria-label={$ariaCloseButtonLabel$}>
+				{@html closeIconSvg}
 			</button>
 		{/if}
 	</div>

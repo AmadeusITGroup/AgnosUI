@@ -3,6 +3,7 @@ import {createAlert} from '@agnos-ui/react-headless/components/alert';
 import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
 import {createSimpleClassTransition} from '@agnos-ui/react-headless/services/transitions/simpleClassTransition';
 import {useDirective} from '@agnos-ui/react-headless/utils/directive';
+import CloseIcon from '@agnos-ui/common/samples/common/close_icon.svg?react';
 import type {PropsWithChildren} from 'react';
 
 export const Alert = (
@@ -19,17 +20,11 @@ export const Alert = (
 	return (
 		<>
 			{!state.hidden && (
-				<div role="alert" className={`alert ${state.className}`} {...transitionDirective}>
+				<div role="alert" className={`flex alert ${state.className}`} {...transitionDirective}>
 					{props.children}
 					{state.dismissible && (
-						<button
-							className="btn btn-sm btn-circle btn-ghost justify-self-end"
-							onClick={widget.api.close}
-							aria-label={`${state.ariaCloseButtonLabel}`}
-						>
-							<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-							</svg>
+						<button className="btn btn-sm btn-circle btn-ghost ms-auto" onClick={widget.api.close} aria-label={`${state.ariaCloseButtonLabel}`}>
+							<CloseIcon />
 						</button>
 					)}
 				</div>
