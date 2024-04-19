@@ -43,6 +43,12 @@
 			}
 		},
 		{
+			"files": ["demo/src/bootstrap/**", "demo/src/daisyui/**"],
+			"rules": {
+				"svelte/no-at-html-tags": "off"
+			}
+		},
+		{
 			"files": ["demo/src/bootstrap/**"],
 			"rules": {
 				"@agnos-ui/check-replace-imports": ["error", "@agnos-ui/svelte-bootstrap"],
@@ -54,8 +60,7 @@
 						"ignoreRestSiblings": false,
 						"varsIgnorePattern": "^\\$\\$(Props|Slots)$"
 					}
-				],
-				"svelte/no-at-html-tags": "off"
+				]
 			}
 		}
 	]

@@ -114,7 +114,11 @@
 						"tsConfig": "daisyui/tsconfig.build.json",
 						"assets": ["daisyui/src/agnosui-logo.svg"],
 						"styles": ["daisyui/src/styles.css", "../../common/demo.scss"],
-						"inlineStyleLanguage": "scss"
+						"inlineStyleLanguage": "scss",
+						"loader": {
+							".txt": "text",
+							".svg": "text"
+						}
 					},
 					"configurations": {
 						"coverage": {

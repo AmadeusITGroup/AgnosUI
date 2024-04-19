@@ -13,9 +13,9 @@ export const load = async () => {
 			subpath: 'headless',
 		},
 		next: {
-			title: 'Component: Accordion',
-			slug: 'components/accordion/',
-			subpath: 'examples',
+			title: 'Toast',
+			slug: 'daisyUI/toast/',
+			subpath: 'headless',
 		},
 	};
 };

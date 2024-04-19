@@ -7,21 +7,25 @@ import {
 	createAlert,
 	createSimpleClassTransition,
 } from '@agnos-ui/angular-headless';
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output, inject} from '@angular/core';
+import closeIcon from '@agnos-ui/common/samples/common/close_icon.svg';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
 	selector: 'app-alert',
 	imports: [UseDirective],
 	template: `
 		@if (!state().hidden) {
-			<div role="alert" class="alert {{ state().className }}" [auUse]="widget.directives.transitionDirective">
+			<div role="alert" class="flex alert {{ state().className }}" [auUse]="widget.directives.transitionDirective">
 				<ng-content />
 				@if (state().dismissible) {
-					<button class="btn btn-sm btn-circle btn-ghost justify-self-end" (click)="api.close()" [attr.aria-label]="state().ariaCloseButtonLabel">
-						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-						</svg>
-					</button>
+					<button
+						class="btn btn-sm btn-circle btn-ghost ms-auto"
+						(click)="api.close()"
+						[attr.aria-label]="state().ariaCloseButtonLabel"
+						[innerHTML]="closeIcon"
+					></button>
 				}
 			</div>
 		}
@@ -30,6 +34,8 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AlertComponent extends BaseWidgetDirective<AlertWidget> {
+	readonly closeIcon = inject(DomSanitizer).bypassSecurityTrustHtml(closeIcon);
+
 	@Input({transform: auBooleanAttribute})
 	dismissible?: AlertProps['dismissible'];
 	@Input({transform: auBooleanAttribute})

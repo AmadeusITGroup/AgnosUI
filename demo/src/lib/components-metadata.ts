@@ -86,4 +86,9 @@ export const daisyUIMetadata: {[key: string]: ComponentMetadata} = {
 		status: 'stable',
 		since: 'v0.3.0',
 	},
+	Toast: {
+		title: 'Toast',
+		status: 'stable',
+		since: 'v0.3.0',
+	},
 };
