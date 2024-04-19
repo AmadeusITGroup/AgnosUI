@@ -13,6 +13,7 @@ import {
 	directiveSubscribe,
 	directiveUpdate,
 	mergeDirectives,
+	multiDirective,
 	registrationArray,
 } from './directive';
 
@@ -26,6 +27,8 @@ function getDirectiveAttributes<T = void>(directive: Directive<T>, args?: T) {
 	directiveInstance?.destroy?.();
 	return attributes;
 }
+
+const directiveSpy = <T>() => vitest.fn((element, value: T) => ({destroy: vitest.fn(), update: vitest.fn()}));
 
 describe('directive', () => {
 	let element: HTMLElement;
@@ -224,8 +227,8 @@ describe('directive', () => {
 
 	describe('mergeDirectives', () => {
 		test('Basic functionalities', () => {
-			const directive1 = vitest.fn((element, value: number) => ({destroy: vitest.fn(), update: vitest.fn()}));
-			const directive2 = vitest.fn((element, value: number) => ({destroy: vitest.fn(), update: vitest.fn()}));
+			const directive1 = directiveSpy<number>();
+			const directive2 = directiveSpy<number>();
 			const mergedDirective = mergeDirectives(directive1, directive2);
 			expect(directive1).not.toHaveBeenCalled();
 			expect(directive2).not.toHaveBeenCalled();
@@ -279,6 +282,37 @@ describe('directive', () => {
 			directiveInstance?.destroy?.();
 			expect(values).toEqual(['0,0,0', '2,2,2', '1,1,1', '-1,-1,-1']);
 			unsubscribe();
+		});
+	});
+
+	describe('multiDirective', () => {
+		test('Basic functionalities', () => {
+			const directive1 = directiveSpy<number>();
+			const directive2 = directiveSpy<number>();
+			const multi = multiDirective(element, [
+				[directive1, 4],
+				[directive2, 0],
+			]);
+			expect(directive1).toHaveBeenCalledOnce();
+			expect(directive1.mock.calls[0][0]).toBe(element);
+			expect(directive1.mock.calls[0][1]).toBe(4);
+			expect(directive2).toHaveBeenCalledOnce();
+			const directive1Instance = directive1.mock.results[0].value;
+			const directive2Instance = directive2.mock.results[0].value;
+			directive1.mockClear();
+			directive2.mockClear();
+			multi?.update?.([
+				[directive1, 8],
+				[directive2, 0],
+			]);
+			expect(directive1).not.toHaveBeenCalled();
+			expect(directive2).not.toHaveBeenCalled();
+			expect(directive1Instance.update).toHaveBeenCalledOnce();
+			expect(directive1Instance.update).toHaveBeenCalledWith(8);
+			expect(directive2Instance.update).not.toHaveBeenCalled();
+			multi?.destroy?.();
+			expect(directive1Instance.destroy).toHaveBeenCalledOnce();
+			expect(directive2Instance.destroy).toHaveBeenCalledOnce();
 		});
 	});
 

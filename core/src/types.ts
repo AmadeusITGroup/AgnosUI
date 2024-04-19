@@ -107,6 +107,9 @@ export type Directive<T = void, U extends SSRHTMLElement = SSRHTMLElement> = (
 	args: T,
 ) => void | {update?: (args: T) => void; destroy?: () => void};
 export type DirectiveAndParam<T, U extends SSRHTMLElement = SSRHTMLElement> = [Directive<T, U>, T];
+export type DirectivesAndOptParam<T extends any[], U extends SSRHTMLElement = SSRHTMLElement> = {
+	[K in keyof T]: Directive<void, U> | DirectiveAndParam<T[K], U>;
+};
 
 export type SlotContent<Props extends object = object> = undefined | null | string | ((props: Props) => string);
 
