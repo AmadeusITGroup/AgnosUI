@@ -1,25 +1,10 @@
-import type {Directive, DirectiveAndParam} from '@agnos-ui/core/types';
-import {attributesData, bindDirective, classDirective, mergeDirectives} from '@agnos-ui/core/utils/directive';
-import {writable} from '@amadeus-it-group/tansu';
+import type {Directive, DirectivesAndOptParam} from '@agnos-ui/core/types';
+import {attributesData, multiDirective} from '@agnos-ui/core/utils/directive';
 import {BROWSER} from 'esm-env';
 import type {RefCallback} from 'react';
-import {useCallback, useMemo, useRef} from 'react';
+import {useCallback, useRef} from 'react';
 
 export * from '@agnos-ui/core/utils/directive';
-
-/**
- * Returns a class directive.
- * @param className - class name to use
- * @returns a class directive, to be used with {@link useDirectives}.
- */
-export const useClassDirective = (className: string) => {
-	const {directive, className$} = useMemo(() => {
-		const className$ = writable('');
-		return {directive: bindDirective(classDirective, className$), className$};
-	}, []);
-	className$.set(className);
-	return directive;
-};
 
 const attributesMap = new Map([
 	['tabindex', 'tabIndex'],
@@ -60,7 +45,7 @@ const booleanAttributes = new Set([
  * @param directives - List of directives to generate attributes from. Each parameter can be the directive or an array with the directive and its parameter
  * @returns JSON object with key/value pairs to be applied on a JSX node.
  */
-export function directiveAttributes<T extends any[]>(...directives: {[K in keyof T]: DirectiveAndParam<T[K]> | Directive<void>}) {
+export function directiveAttributes<T extends any[]>(...directives: DirectivesAndOptParam<T>) {
 	const reactAttributes: Record<string, any> = {};
 	const {attributes, style, classNames} = attributesData(...directives);
 
@@ -124,13 +109,8 @@ export const useDirective: {
  * Allows to attach multiple directives to the current react component.
  *
  * @param directives - directives
- * @param args - the args to pass to the directives
  * @returns the ref callback
  */
-export const useDirectives: {
-	(directives: Directive[]): {ref: RefCallback<HTMLElement>};
-	<T>(directives: Directive<T>[], args: T): {ref: RefCallback<HTMLElement>};
-} = <T>(directives: Directive<T>[], args?: T): {ref: RefCallback<HTMLElement>} => {
-	const mergedDirectives = useMemo(() => mergeDirectives(...directives), directives);
-	return useDirective(mergedDirectives, args as any);
-};
+export const useDirectives: <T extends any[]>(...directives: DirectivesAndOptParam<T>) => {ref: RefCallback<HTMLElement>} = BROWSER
+	? (...directives) => useDirective(multiDirective, directives)
+	: (directiveAttributes as any);

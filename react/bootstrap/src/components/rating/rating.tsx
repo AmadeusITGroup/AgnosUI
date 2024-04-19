@@ -1,6 +1,6 @@
 import {Slot} from '@agnos-ui/react-headless/slot';
 import {useWidgetWithConfig} from '../../config';
-import {useDirective, useDirectives, useClassDirective} from '@agnos-ui/react-headless/utils/directive';
+import {useDirective, useDirectives, classDirective} from '@agnos-ui/react-headless/utils/directive';
 import React from 'react';
 import {type RatingDirectives, type StarContext, createRating as coreCreateRating} from '@agnos-ui/core-bootstrap/components/rating';
 import type {AdaptWidgetSlots, WidgetFactory, WidgetProps, WidgetState} from '@agnos-ui/react-headless/types';
@@ -32,7 +32,7 @@ export function Rating(props: Partial<RatingProps>) {
 	} = widget;
 
 	return (
-		<div {...useDirectives([useClassDirective('d-inline-flex'), containerDirective])}>
+		<div {...useDirectives([classDirective, 'd-inline-flex'], containerDirective)}>
 			{state.stars.map((star) => (
 				<Star key={star.index} star={star} state={state} directive={starDirective} />
 			))}
