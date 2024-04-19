@@ -51,11 +51,19 @@ function Badges<Item>({slotContext}: {slotContext: SelectContext<Item>}) {
 	return badges.length ? <>{badges}</> : null;
 }
 
-function Rows<Item>({slotContext}: {slotContext: SelectContext<Item>}) {
+function Rows<Item>({slotContext, menuId}: {slotContext: SelectContext<Item>; menuId: string}) {
 	const {widget, state} = slotContext;
-	const highlighted = state.highlighted;
+	const {placement, menuClassName, highlighted} = state;
+	const {hasFocusDirective, floatingDirective} = widget.directives;
 	return (
-		<>
+		<ul
+			role="listbox"
+			id={menuId}
+			className={`dropdown-menu show ${menuClassName}`}
+			data-popper-placement={placement}
+			onMouseDown={preventDefault}
+			{...useDirectives([hasFocusDirective, floatingDirective])}
+		>
 			{state.visibleItems.map((itemContext) => {
 				const {id} = itemContext;
 				const classname = ['au-select-item dropdown-item position-relative'];
@@ -78,7 +86,7 @@ function Rows<Item>({slotContext}: {slotContext: SelectContext<Item>}) {
 					</li>
 				);
 			})}
-		</>
+		</ul>
 	);
 }
 
@@ -90,13 +98,12 @@ const defaultConfig: Partial<SelectProps<any>> = {
 export function Select<Item>(props: Partial<SelectProps<Item>>) {
 	const [state, widget] = useWidgetWithConfig<SelectWidget<Item>>(createSelect, props, 'select', defaultConfig);
 	const slotContext: SelectContext<Item> = {state, widget: toSlotContextWidget(widget)};
-	const {id, ariaLabel, visibleItems, filterText, open, className, menuClassName, placement} = state;
+	const {id, ariaLabel, visibleItems, filterText, open, className} = state;
 	const menuId = `${id}-menu`;
 
 	const {
-		directives: {floatingDirective, hasFocusDirective, referenceDirective, inputContainerDirective},
+		directives: {hasFocusDirective, referenceDirective, inputContainerDirective},
 	} = widget;
-	const refSetMenu = useDirectives([hasFocusDirective, floatingDirective]);
 	return (
 		<div className={`au-select dropdown border border-1 p-1 mb-3 d-block ${className}`} {...useDirective(referenceDirective)}>
 			<div
@@ -122,18 +129,7 @@ export function Select<Item>(props: Partial<SelectProps<Item>>) {
 					onKeyDown={(e) => widget.actions.onInputKeydown(e.nativeEvent)}
 				/>
 			</div>
-			{open && visibleItems.length > 0 && (
-				<ul
-					{...refSetMenu}
-					role="listbox"
-					id={menuId}
-					className={`dropdown-menu show ${menuClassName}`}
-					data-popper-placement={placement}
-					onMouseDown={preventDefault}
-				>
-					<Rows slotContext={slotContext}></Rows>
-				</ul>
-			)}
+			{open && visibleItems.length > 0 && <Rows slotContext={slotContext} menuId={menuId} />}
 		</div>
 	);
 }

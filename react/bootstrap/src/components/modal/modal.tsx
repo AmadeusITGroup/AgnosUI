@@ -53,27 +53,31 @@ const defaultConfig: Partial<ModalProps<any>> = {
 	slotStructure: DefaultSlotStructure,
 };
 
+const BackdropElement = <Data,>({widget}: ModalContext<Data>) => (
+	<div className="modal-backdrop" {...useDirective(widget.directives.backdropDirective)} />
+);
+
+const ModalElement = <Data,>(slotContext: ModalContext<Data>) => (
+	<div className="modal d-block" {...useDirective(slotContext.widget.directives.modalDirective)}>
+		<div className="modal-dialog">
+			<div className="modal-content">
+				<Slot slotContent={slotContext.state.slotStructure} props={slotContext} />
+			</div>
+		</div>
+	</div>
+);
+
 export const Modal = forwardRef(function Modal<Data>(props: PropsWithChildren<Partial<ModalProps<Data>>>, ref: Ref<ModalApi<Data>>) {
 	const [state, widget] = useWidgetWithConfig(createModal<Data>, props, 'modal', {...defaultConfig, slotDefault: props.children});
 	useImperativeHandle(ref, () => widget.api, []);
-	const refSetBackdrop = useDirective(widget.directives.backdropDirective);
-	const refSetModal = useDirective(widget.directives.modalDirective);
 	const slotContext: ModalContext<Data> = {
 		state,
 		widget: toSlotContextWidget(widget),
 	};
 	return (
 		<Portal container={state.container}>
-			{!state.backdropHidden && <div className={`modal-backdrop`} {...refSetBackdrop} />}
-			{!state.hidden && (
-				<div className={`modal d-block`} {...refSetModal}>
-					<div className="modal-dialog">
-						<div className="modal-content">
-							<Slot slotContent={state.slotStructure} props={slotContext} />
-						</div>
-					</div>
-				</div>
-			)}
+			{!state.backdropHidden && <BackdropElement {...slotContext} />}
+			{!state.hidden && <ModalElement {...slotContext} />}
 		</Portal>
 	);
 }) as <Data>(props: PropsWithChildren<Partial<ModalProps<Data>>> & RefAttributes<ModalApi<Data>>) => JSX.Element;
