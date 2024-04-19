@@ -1,13 +1,12 @@
 import type {SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
 import {
 	BaseWidgetDirective,
-	CachedProperty,
 	ComponentTemplate,
 	SlotDefaultDirective,
 	SlotDirective,
 	UseDirective,
+	UseMultiDirective,
 	auBooleanAttribute,
-	mergeDirectives,
 } from '@agnos-ui/angular-headless';
 import type {ModalContext, ModalProps, ModalWidget, ModalBeforeCloseEvent} from './modal';
 import {createModal} from './modal';
@@ -142,14 +141,14 @@ const defaultConfig: Partial<ModalProps<any>> = {
 	selector: '[auModal]',
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [UseDirective, SlotDirective, SlotDefaultDirective],
+	imports: [UseMultiDirective, SlotDirective, SlotDefaultDirective],
 	template: `
 		<ng-template [auSlotDefault]="defaultSlots"><ng-content></ng-content></ng-template>
 		@if (!state().backdropHidden) {
-			<div class="modal-backdrop" [auUse]="backdropDirective"></div>
+			<div class="modal-backdrop" [auUseMulti]="[widget.directives.backdropPortalDirective, widget.directives.backdropDirective]"></div>
 		}
 		@if (!state().hidden) {
-			<div class="modal d-block" [auUse]="modalDirective">
+			<div class="modal d-block" [auUseMulti]="[widget.directives.modalPortalDirective, widget.directives.modalDirective]">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<ng-template [auSlot]="state().slotStructure" [auSlotProps]="{state: state(), widget}"></ng-template>
@@ -275,16 +274,6 @@ export class ModalComponent<Data> extends BaseWidgetDirective<ModalWidget<Data>>
 			onVisibleChange: (event) => this.visibleChange.emit(event),
 		},
 	});
-
-	@CachedProperty
-	get modalDirective() {
-		return mergeDirectives(this._widget.directives.modalPortalDirective, this._widget.directives.modalDirective);
-	}
-
-	@CachedProperty
-	get backdropDirective() {
-		return mergeDirectives(this._widget.directives.backdropPortalDirective, this._widget.directives.backdropDirective);
-	}
 
 	ngAfterContentChecked(): void {
 		this._widget.patchSlots({
