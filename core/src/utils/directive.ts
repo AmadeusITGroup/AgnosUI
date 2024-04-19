@@ -1,7 +1,7 @@
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {asReadable, batch, readable, writable} from '@amadeus-it-group/tansu';
 import {BROWSER} from 'esm-env';
-import type {AttributeValue, Directive, DirectiveAndParam, SSRHTMLElement, StyleKey, StyleValue} from '../types';
+import type {AttributeValue, Directive, DirectivesAndOptParam, SSRHTMLElement, StyleKey, StyleValue} from '../types';
 import {addEvent, bindAttribute, bindClassName, bindStyle} from './internal/dom';
 import {noop} from './internal/func';
 import {ssrHTMLElement, ssrHTMLElementAttributesAndStyle} from './internal/ssrHTMLElement';
@@ -302,6 +302,43 @@ export const mergeDirectives =
 	};
 
 /**
+ * Directive that applies all the directives passed as arguments.
+ *
+ * @param element - the element to apply the directives to
+ * @param directives - the directives to apply
+ * @returns The directive instance.
+ */
+export const multiDirective = <T extends any[], U extends SSRHTMLElement = SSRHTMLElement>(element: U, directives: DirectivesAndOptParam<T, U>) => {
+	const instances: {[K in keyof T]: {directive: Directive<T[K], U>; instance: ReturnType<Directive<T[K], U>>; arg: T[K]}} = [] as any;
+	const update = (directives: DirectivesAndOptParam<any[], U>) =>
+		batch(() => {
+			directives.forEach((directiveWithArg, index) => {
+				const [directive, arg] = Array.isArray(directiveWithArg) ? directiveWithArg : [directiveWithArg, undefined];
+				const oldInstance = instances[index];
+				if (oldInstance) {
+					if (oldInstance.directive === directive) {
+						if (oldInstance.arg !== arg) {
+							oldInstance.instance?.update?.(arg);
+							oldInstance.arg = arg;
+						}
+						return;
+					}
+					oldInstance.instance?.destroy?.();
+				}
+				const instance = directive(element, arg);
+				instances[index] = {directive, instance, arg};
+			});
+			const extraInstances = instances.splice(directives.length);
+			extraInstances.reverse().forEach(({instance}) => instance?.destroy?.());
+		});
+	update(directives);
+	return {
+		update,
+		destroy: () => update([]),
+	};
+};
+
+/**
  * Properties for configuring server-side rendering directives.
  */
 export interface AttributesDirectiveProps {
@@ -400,7 +437,7 @@ export const createAttributesDirective =
  * @returns JSON object with the `attributes`, `class` and `style` keys.
  */
 export const attributesData = <T extends any[]>(
-	...directives: {[K in keyof T]: DirectiveAndParam<T[K]> | Directive<void>}
+	...directives: DirectivesAndOptParam<T>
 ): {
 	attributes: Record<string, string>;
 	classNames: string[];
@@ -429,7 +466,7 @@ export const classDirective: Directive<string> = createAttributesDirective<strin
  * @param directives - List of directives to generate attributes from. Each parameter can be the directive or an array with the directive and its parameter
  * @returns JSON object with name/value for the attributes
  */
-export function directiveAttributes<T extends any[]>(...directives: {[K in keyof T]: DirectiveAndParam<T[K]> | Directive<void>}) {
+export function directiveAttributes<T extends any[]>(...directives: DirectivesAndOptParam<T>) {
 	const {attributes, classNames, style} = attributesData(...directives);
 	if (classNames.length) {
 		attributes['class'] = classNames.join(' ');
