@@ -40,8 +40,8 @@
 
 {#if !$hidden$}
 	<div
-		class="au-alert alert alert-{$state$.type} {$state$.className} {$state$.dismissible ? 'alert-dismissible' : ''}"
 		role="alert"
+		class="au-alert alert alert-{$state$.type} {$state$.className} {$state$.dismissible ? 'alert-dismissible' : ''}"
 		use:transitionDirective
 	>
 		<Slot slotContent={$slotStructure$} props={slotContext} let:component let:props>

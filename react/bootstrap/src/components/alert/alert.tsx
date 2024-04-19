@@ -15,16 +15,23 @@ export type AlertState = WidgetState<AlertWidget>;
 export type AlertContext = AdaptSlotContentProps<import('@agnos-ui/core-bootstrap/components/alert').AlertContext>;
 export const createAlert: WidgetFactory<AlertWidget> = coreCreateAlert as any;
 
-const DefaultSlotStructure = (slotContext: AlertContext) => (
-	<>
-		<div className="alert-body">
-			<Slot slotContent={slotContext.state.slotDefault} props={slotContext}></Slot>
-		</div>
-		{slotContext.state.dismissible ? (
-			<button type="button" className="btn-close" onClick={slotContext.widget.api.close} aria-label={slotContext.state.ariaCloseButtonLabel}></button>
-		) : null}
-	</>
-);
+const DefaultSlotStructure = (slotContext: AlertContext) => {
+	return (
+		<>
+			<div className="alert-body">
+				<Slot slotContent={slotContext.state.slotDefault} props={slotContext}></Slot>
+			</div>
+			{slotContext.state.dismissible && (
+				<button
+					type="button"
+					className="btn-close"
+					onClick={slotContext.widget.api.close}
+					aria-label={slotContext.state.ariaCloseButtonLabel}
+				></button>
+			)}
+		</>
+	);
+};
 
 const defaultConfig: Partial<AlertProps> = {
 	slotStructure: DefaultSlotStructure,

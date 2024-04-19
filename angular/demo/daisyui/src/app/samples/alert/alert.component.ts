@@ -1,12 +1,20 @@
 import type {AlertProps, AlertWidget} from '@agnos-ui/angular-headless';
-import {BaseWidgetDirective, auBooleanAttribute, callWidgetFactory, createAlert} from '@agnos-ui/angular-headless';
+import {
+	BaseWidgetDirective,
+	UseDirective,
+	auBooleanAttribute,
+	callWidgetFactory,
+	createAlert,
+	createSimpleClassTransition,
+} from '@agnos-ui/angular-headless';
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
 	selector: 'app-alert',
+	imports: [UseDirective],
 	template: `
 		@if (!state().hidden) {
-			<div role="alert" class="alert {{ state().className }}">
+			<div role="alert" class="alert {{ state().className }}" [auUse]="widget.directives.transitionDirective">
 				<ng-content />
 				@if (state().dismissible) {
 					<button class="btn btn-sm btn-circle btn-ghost justify-self-end" (click)="api.close()" [attr.aria-label]="state().ariaCloseButtonLabel">
@@ -32,6 +40,12 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> {
 	@Output() hidden = new EventEmitter<void>();
 	@Output() shown = new EventEmitter<void>();
 
+	readonly transition = createSimpleClassTransition({
+		showClasses: ['transition-opacity'],
+		hideClasses: ['opacity-0'],
+		animationPendingHideClasses: ['opacity-0', 'transition-opacity'],
+	});
+
 	readonly _widget = callWidgetFactory({
 		factory: createAlert,
 		widgetName: 'alert',
@@ -40,5 +54,6 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> {
 			onShown: () => this.shown.emit(),
 			onHidden: () => this.hidden.emit(),
 		},
+		defaultConfig: {transition: this.transition},
 	});
 }
