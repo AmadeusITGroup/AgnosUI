@@ -20,13 +20,12 @@
 	$: if (!showButton) copied.set(false);
 
 	$: appliedLanguage = language ?? languageFromFileName(fileName);
-	$: formattedCode =
-		appliedLanguage && code
-			? highlighter.codeToHtml(code, {
-					lang: langs.includes(appliedLanguage) ? appliedLanguage : 'text',
-					themes: {light: 'light-plus', dark: 'dark-plus'},
-				})
-			: null;
+	$: formattedCode = code
+		? highlighter.codeToHtml(code, {
+				lang: appliedLanguage && langs.includes(appliedLanguage) ? appliedLanguage : 'text',
+				themes: {light: 'light-plus', dark: 'dark-plus'},
+			})
+		: null;
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
