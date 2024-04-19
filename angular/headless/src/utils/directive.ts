@@ -1,4 +1,5 @@
-import type {Directive as AgnosUIDirective} from '@agnos-ui/core/types';
+import type {Directive as AgnosUIDirective, DirectivesAndOptParam} from '@agnos-ui/core/types';
+import {multiDirective} from '@agnos-ui/core/utils/directive';
 import {isPlatformServer} from '@angular/common';
 import type {OnChanges} from '@angular/core';
 import {DestroyRef, Directive, ElementRef, Injector, Input, PLATFORM_ID, afterNextRender, inject, runInInjectionContext} from '@angular/core';
@@ -78,5 +79,21 @@ export class UseDirective<T> implements OnChanges {
 	/** @inheritdoc */
 	ngOnChanges() {
 		this.#useDirective.update(this.use, this.params);
+	}
+}
+
+@Directive({
+	standalone: true,
+	selector: '[auUseMulti]',
+})
+export class UseMultiDirective<T extends any[]> implements OnChanges {
+	@Input('auUseMulti')
+	useMulti: DirectivesAndOptParam<T>;
+
+	readonly #useDirective = useDirectiveForHost<DirectivesAndOptParam<T>>();
+
+	/** @inheritdoc */
+	ngOnChanges() {
+		this.#useDirective.update(multiDirective, this.useMulti);
 	}
 }

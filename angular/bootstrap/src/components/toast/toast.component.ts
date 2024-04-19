@@ -1,14 +1,13 @@
 import type {SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
 import {
 	BaseWidgetDirective,
-	CachedProperty,
 	ComponentTemplate,
 	SlotDefaultDirective,
 	SlotDirective,
 	UseDirective,
+	UseMultiDirective,
 	auBooleanAttribute,
 	auNumberAttribute,
-	mergeDirectives,
 } from '@agnos-ui/angular-headless';
 import type {WritableSignal} from '@amadeus-it-group/tansu';
 import {writable} from '@amadeus-it-group/tansu';
@@ -88,12 +87,17 @@ const defaultConfig: Partial<ToastProps> = {
 	selector: '[auToast]',
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [SlotDirective, UseDirective, SlotDefaultDirective],
+	imports: [SlotDirective, UseMultiDirective, SlotDefaultDirective],
 	template: ` <ng-template [auSlotDefault]="defaultSlots">
 			<ng-content></ng-content>
 		</ng-template>
 		@if (!state().hidden) {
-			<div class="toast" [class.d-flex]="!state().slotHeader" [class.toast-dismissible]="state().dismissible" [auUse]="toastDirective">
+			<div
+				class="toast"
+				[class.d-flex]="!state().slotHeader"
+				[class.toast-dismissible]="state().dismissible"
+				[auUseMulti]="[widget.directives.autoHideDirective, widget.directives.transitionDirective, widget.directives.bodyDirective]"
+			>
 				<ng-template [auSlot]="state().slotStructure" [auSlotProps]="{state: state(), widget}"></ng-template>
 			</div>
 		}`,
@@ -195,15 +199,6 @@ export class ToastComponent extends BaseWidgetDirective<ToastWidget> implements 
 			onHidden: () => this.hidden.emit(),
 		},
 	});
-
-	@CachedProperty
-	get toastDirective() {
-		return mergeDirectives(
-			this._widget.directives.autoHideDirective,
-			this._widget.directives.transitionDirective,
-			this._widget.directives.bodyDirective,
-		);
-	}
 
 	ngAfterContentChecked(): void {
 		this._widget.patchSlots({

@@ -1,13 +1,5 @@
 import type {AdaptSlotContentProps, SlotContent} from '@agnos-ui/angular-headless';
-import {
-	BaseWidgetDirective,
-	CachedProperty,
-	SlotDirective,
-	UseDirective,
-	auBooleanAttribute,
-	mergeDirectives,
-	useDirectiveForHost,
-} from '@agnos-ui/angular-headless';
+import {BaseWidgetDirective, SlotDirective, UseMultiDirective, auBooleanAttribute, useDirectiveForHost} from '@agnos-ui/angular-headless';
 import type {AfterContentChecked} from '@angular/core';
 import {ChangeDetectionStrategy, Component, ContentChild, Directive, EventEmitter, Input, Output, TemplateRef, inject} from '@angular/core';
 import type {Placement} from '@floating-ui/dom';
@@ -33,7 +25,7 @@ export class SelectItemDirective<Item> {
 
 @Component({
 	standalone: true,
-	imports: [UseDirective, SlotDirective],
+	imports: [UseMultiDirective, SlotDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: '[auSelect]',
 	host: {
@@ -42,7 +34,7 @@ export class SelectItemDirective<Item> {
 	template: `
 		@if (state(); as state) {
 			<div
-				[auUse]="controlContainerDirective"
+				[auUseMulti]="[widget.directives.hasFocusDirective, widget.directives.inputContainerDirective]"
 				role="combobox"
 				class="d-flex align-items-center flex-wrap"
 				[attr.aria-controls]="state.id + '-menu'"
@@ -79,7 +71,7 @@ export class SelectItemDirective<Item> {
 				<ul
 					role="listbox"
 					[id]="state.id + '-menu'"
-					[auUse]="menuDirective"
+					[auUseMulti]="[widget.directives.hasFocusDirective, widget.directives.floatingDirective]"
 					[class]="'dropdown-menu show ' + (menuClassName || '')"
 					[attr.data-popper-placement]="state.placement"
 					(mousedown)="$event.preventDefault()"
@@ -213,16 +205,6 @@ export class SelectComponent<Item> extends BaseWidgetDirective<SelectWidget<Item
 			useDirectiveForHost(this._widget.directives.referenceDirective);
 		},
 	});
-
-	@CachedProperty
-	get menuDirective() {
-		return mergeDirectives(this._widget.directives.hasFocusDirective, this._widget.directives.floatingDirective);
-	}
-
-	@CachedProperty
-	get controlContainerDirective() {
-		return mergeDirectives(this._widget.directives.hasFocusDirective, this._widget.directives.inputContainerDirective);
-	}
 
 	itemCtxTrackBy(_: number, itemContext: ItemContext<Item>) {
 		return itemContext.id;

@@ -1,4 +1,4 @@
-import {SlotDirective, UseDirective} from '@agnos-ui/angular-headless';
+import {SlotDirective, UseDirective, UseMultiDirective} from '@agnos-ui/angular-headless';
 import {NgModule} from '@angular/core';
 import {
 	ModalBodyDirective,
@@ -39,6 +39,7 @@ const components = [
 	SelectBadgeLabelDirective,
 	SelectItemDirective,
 	UseDirective,
+	UseMultiDirective,
 	RatingComponent,
 	RatingStarDirective,
 	PaginationComponent,

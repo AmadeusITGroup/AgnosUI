@@ -150,11 +150,10 @@ The headless libraries of AgnosUI contain adapters to bind directives in the cor
 
 ### Merge directives
 
-If you are using Svelte, you can have multiple directives by using multiple time the `use` directive. On other frameworks, this is not the case.
 Agnos has a utility `mergeDirectives` to merge directives into one, with a limitation on the argument:
 all directives receive the same argument upon initialization and update.
 Directives are created and updated in the same order as they appear in the arguments list,
 they are destroyed in the reverse order.
 All calls to the directives (to create, update and destroy them) are wrapped in a call to the batch function of tansu
 
-Use directly the `mergeDirectives` function in an Angular component to merge directives are pass them as input to the Angular directive `auUse`. For React, there is a version `useDirectives` instead of the singular one to manage this use case.
+Note that it is not mandatory to use `mergeDirectives` to use multiple directives on the same element as frameworks support using multiple directives on the same element.
