@@ -7,6 +7,7 @@ const directories = [
 	'core-bootstrap/dist',
 	'svelte/headless/dist',
 	'svelte/bootstrap/dist',
+	'svelte/preprocess/dist',
 	'react/headless/dist',
 	'react/bootstrap/dist',
 	'angular/headless/dist',

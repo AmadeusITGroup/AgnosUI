@@ -1,0 +1,71 @@
+{
+	"name": "@agnos-ui/svelte-preprocess",
+	"description": "Preprocessor to run Svelte directives server-side.",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"svelte": "./dist/index.js",
+			"default": "./dist/index.js"
+		}
+	},
+	"scripts": {
+		"build": "wireit",
+		"check": "wireit",
+		"tdd": "vitest",
+		"tdd:ui": "vitest --ui",
+		"test": "tsc -p test/tsconfig.json && vitest run"
+	},
+	"wireit": {
+		"build:src": {
+			"command": "vite build && tsc -p tsconfig.json",
+			"files": [
+				"src/**",
+				"vite.config.ts",
+				"tsconfig.json"
+			],
+			"output": [
+				"dist/**",
+				"!dist/README.md",
+				"!dist/package.json"
+			]
+		},
+		"build:pkg": {
+			"command": "node ../../scripts/buildPackageJson.js . dist",
+			"dependencies": [
+				"build:src"
+			],
+			"files": [
+				"../../scripts/buildPackageJson.js",
+				"../../package.json",
+				"package.json",
+				"README.md"
+			],
+			"output": [
+				"dist/README.md",
+				"dist/package.json"
+			]
+		},
+		"build": {
+			"dependencies": [
+				"build:src",
+				"build:pkg"
+			]
+		}
+	},
+	"devDependencies": {
+		"svelte": "^4.2.15"
+	},
+	"dependencies": {
+		"magic-string": "^0.30.10"
+	},
+	"peerDependencies": {
+		"svelte": "*"
+	},
+	"sideEffects": false
+}

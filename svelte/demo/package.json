@@ -15,6 +15,7 @@
 			"command": "vite",
 			"service": true,
 			"dependencies": [
+				"../preprocess:build",
 				"../bootstrap:generate:exports",
 				"../headless:generate:exports"
 			]
@@ -24,6 +25,7 @@
 			"service": true,
 			"dependencies": [
 				"../../code-coverage:build",
+				"../preprocess:build",
 				"../bootstrap:generate:exports",
 				"../headless:generate:exports"
 			]
@@ -31,6 +33,7 @@
 		"build": {
 			"command": "vite build",
 			"dependencies": [
+				"../preprocess:build",
 				"../bootstrap:build"
 			],
 			"files": [
@@ -45,6 +48,7 @@
 			"command": "vite build -c vite.coverage.config.ts",
 			"dependencies": [
 				"../../code-coverage:build",
+				"../preprocess:build",
 				"../bootstrap:generate:exports",
 				"../headless:generate:exports"
 			],

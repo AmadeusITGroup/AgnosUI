@@ -2,8 +2,6 @@ import {expect, test} from './fixture';
 import {htmlSnapshot} from './htmlSnapshot';
 
 test.describe('SSR without rehydration', () => {
-	test.fixme(({framework}) => framework === 'svelte', 'SSR test is not yet fully working for Svelte');
-
 	test.use({javaScriptEnabled: false});
 	test('Markup', async ({page}) => {
 		await page.goto('.', {waitUntil: 'networkidle'});
