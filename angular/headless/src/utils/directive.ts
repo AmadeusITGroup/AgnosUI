@@ -1,4 +1,4 @@
-import type {Directive as AgnosUIDirective, DirectivesAndOptParam} from '@agnos-ui/core/types';
+import type {Directive as AgnosUIDirective, DirectiveAndParam, DirectivesAndOptParam} from '@agnos-ui/core/types';
 import {multiDirective} from '@agnos-ui/core/utils/directive';
 import {isPlatformServer} from '@angular/common';
 import type {OnChanges} from '@angular/core';
@@ -69,16 +69,15 @@ export const useDirectiveForHost = <T>(directive?: AgnosUIDirective<T>, params?:
 })
 export class UseDirective<T> implements OnChanges {
 	@Input('auUse')
-	use: AgnosUIDirective<T> | undefined;
-
-	@Input('auUseParams')
-	params: T | undefined;
+	use: AgnosUIDirective | DirectiveAndParam<T> | undefined;
 
 	readonly #useDirective = useDirectiveForHost<T>();
 
 	/** @inheritdoc */
 	ngOnChanges() {
-		this.#useDirective.update(this.use, this.params);
+		const use = this.use;
+		const [directive, param] = Array.isArray(use) ? use : [use as any];
+		this.#useDirective.update(directive, param);
 	}
 }
 

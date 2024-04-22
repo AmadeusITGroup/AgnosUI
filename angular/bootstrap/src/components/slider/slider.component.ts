@@ -54,7 +54,7 @@ export class SliderHandleDirective {
 	imports: [UseDirective, SliderHandleDirective],
 	template: `
 		<ng-template auSliderHandle #handle let-state="state" let-widget="widget" let-item="item">
-			<button [auUse]="widget.directives.handleDirective" [auUseParams]="{item}">&nbsp;</button>
+			<button [auUse]="[widget.directives.handleDirective, {item}]">&nbsp;</button>
 		</ng-template>
 	`,
 })
@@ -88,7 +88,7 @@ export class SliderStructureDirective {
 	template: `
 		<ng-template auSliderStructure #structure let-state="state" let-widget="widget">
 			@for (option of state.progressDisplayOptions; track option) {
-				<div [auUse]="widget.directives.progressDisplayDirective" [auUseParams]="{option}"></div>
+				<div [auUse]="[widget.directives.progressDisplayDirective, {option}]"></div>
 			}
 			<div [auUse]="widget.directives.clickableAreaDirective"></div>
 			@if (state.showMinMaxLabels) {
@@ -113,7 +113,7 @@ export class SliderStructureDirective {
 			@for (item of state.sortedHandles; track item.id; let i = $index) {
 				<ng-template [auSlot]="state.slotHandle" [auSlotProps]="{state, widget, item}"></ng-template>
 				@if (state.showValueLabels && !state.combinedLabelDisplay) {
-					<div [auUse]="widget.directives.handleLabelDisplayDirective" [auUseParams]="{index: i}">
+					<div [auUse]="[widget.directives.handleLabelDisplayDirective, {index: i}]">
 						<ng-template [auSlot]="state.slotLabel" [auSlotProps]="{state, widget, value: state.values[i]}"></ng-template>
 					</div>
 				}

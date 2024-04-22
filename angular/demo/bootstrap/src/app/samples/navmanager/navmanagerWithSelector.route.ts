@@ -7,7 +7,7 @@ import {Component, Input} from '@angular/core';
 	selector: 'app-navmanager-line',
 	imports: [AgnosUIAngularModule],
 	template: `
-		<div class="d-flex demo-navmanager-line" [auUse]="navManager.directive" [auUseParams]="navManagerConfig">
+		<div class="d-flex demo-navmanager-line" [auUse]="[navManager.directive, navManagerConfig]">
 			<input type="text" [value]="text" class="form-control me-1" />
 			<span tabindex="-1" class="form-control w-auto me-1">{{ text }}</span>
 			<input tabindex="-1" type="checkbox" class="form-check-input align-self-center me-1" />

@@ -11,7 +11,7 @@ import {take} from 'rxjs';
 	},
 	imports: [UseDirective],
 	template: `
-		<button class="custom-handle" [auUse]="widget.directives.handleDirective" [auUseParams]="{item}">
+		<button class="custom-handle" [auUse]="[widget.directives.handleDirective, {item}]">
 			<svg xmlns="http://www.w3.org/2000/svg" fill="var(--bs-slider-handle-color)" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
 				<path
 					stroke-linecap="round"

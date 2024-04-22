@@ -8,7 +8,7 @@ import {createSampleDirective} from '@agnos-ui/common/samples/directives/sample-
 	standalone: true,
 	imports: [UseDirective, FormsModule],
 	template: `
-		<div [auUse]="createSampleDirective" [auUseParams]="config">
+		<div [auUse]="[createSampleDirective, config]">
 			<button class="btn btn-primary" id="test">button 1</button>
 			<button class="btn btn-primary" id="test2">button 2</button>
 		</div>
