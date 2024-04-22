@@ -20,33 +20,43 @@
 	},
 	"type": "module",
 	"wireit": {
+		"sveltekit": {
+			"command": "svelte-kit sync",
+			"files": [
+				"src/**",
+				"svelte.config.js"
+			],
+			"output": [
+				".svelte-kit/**",
+				"!.svelte-kit/{generated,output}/**"
+			]
+		},
 		"deps": {
 			"dependencies": [
 				"../bootstrap:build"
 			]
 		},
 		"build": {
-			"command": "svelte-kit sync && vite build",
+			"command": "vite build",
 			"dependencies": [
+				"sveltekit",
 				"deps"
 			],
 			"files": [
-				"src/**",
 				"tsconfig.json",
-				"svelte.config.js",
 				"vite.config.ts"
 			],
 			"output": [
-				".svelte-kit/**"
+				".svelte-kit/{generated,output}/**"
 			]
 		},
 		"check": {
-			"command": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+			"command": "svelte-check --tsconfig ./tsconfig.json",
 			"dependencies": [
+				"sveltekit",
 				"deps"
 			],
 			"files": [
-				"src/**",
 				"tsconfig.json"
 			],
 			"output": []
