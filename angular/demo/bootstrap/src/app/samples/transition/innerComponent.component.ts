@@ -95,8 +95,7 @@ const paramRemoveFromDom$ = writable(true);
 
 			@if ((paramRemoveFromDom$ | async) === false || state().hidden === false) {
 				<div
-					[auUse]="transition.directives.directive"
-					[auUseParams]="{transition: (paramTransition$ | async)!, animated: (paramAnimated$ | async)!}"
+					[auUse]="[transition.directives.directive, {transition: (paramTransition$ | async)!, animated: (paramAnimated$ | async)!}]"
 					style="max-width: 300px;"
 				>
 					<div class="card" style="width: 300px;">

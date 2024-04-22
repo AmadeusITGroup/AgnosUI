@@ -27,7 +27,7 @@ import {UseDirective, collapseVerticalTransition, createTransition, toAngularSig
 				</button>
 			</div>
 			@if (!state().hidden) {
-				<div [auUse]="transition.directives.directive" [auUseParams]="{visible: expanded}" id="collapse-content">
+				<div [auUse]="[transition.directives.directive, {visible: expanded}]" id="collapse-content">
 					<div class="card-body">
 						<ng-content />
 					</div>
