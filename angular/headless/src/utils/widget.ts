@@ -112,24 +112,6 @@ function patchSimpleChanges(patchFn: (obj: any) => void, changes: SimpleChanges)
 	patchFn(obj);
 }
 
-/**
- * Stores the result of the first call to the getter and returns that result directly for subsequent calls
- *
- * Applies to: class getters
- *
- * @param target - the target
- * @param property - the property
- * @param descriptor - the property descriptor
- */
-export const CachedProperty = (target: any, property: PropertyKey, descriptor: PropertyDescriptor) => {
-	const originalGet = descriptor.get;
-	descriptor.get = function (this: any) {
-		const value = originalGet?.call(this);
-		Object.defineProperty(this, property, {value, writable: false});
-		return value;
-	};
-};
-
 @Directive()
 export abstract class BaseWidgetDirective<W extends Widget> implements OnChanges, OnInit {
 	protected abstract readonly _widget: AngularWidget<W>;

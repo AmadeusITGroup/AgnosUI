@@ -7,7 +7,7 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, NgZone, Output}
 import {TestBed} from '@angular/core/testing';
 import {beforeEach, describe, expect, it} from 'vitest';
 import {UseDirective} from './directive';
-import {BaseWidgetDirective, CachedProperty, callWidgetFactoryWithConfig} from './widget';
+import {BaseWidgetDirective, callWidgetFactoryWithConfig} from './widget';
 
 describe('callWidgetFactoryWithConfig', () => {
 	let log: string[] = [];
@@ -104,10 +104,7 @@ describe('callWidgetFactoryWithConfig', () => {
 				},
 			});
 
-			@CachedProperty
-			get onClick() {
-				return createZoneCheckFn('onClick', this._widget.actions.myAction);
-			}
+			onClick = createZoneCheckFn('onClick', () => this._widget.actions.myAction());
 		}
 
 		const ngZone = TestBed.inject(NgZone);
@@ -258,62 +255,5 @@ describe('callWidgetFactoryWithConfig', () => {
 		expect((fixture.nativeElement as HTMLElement).firstElementChild?.innerHTML).toBe('myInitValue');
 		fixture.destroy();
 		expect(log).toStrictEqual(['before autoDetectChanges', 'in factory: myValue = myInitValue', 'after autoDetectChanges']);
-	});
-});
-
-describe('CachedProperty', () => {
-	it('should work', () => {
-		const logs: string[] = [];
-		class Person {
-			constructor(
-				private readonly firstName: string,
-				private readonly lastName: string,
-			) {}
-
-			@CachedProperty
-			get fullName() {
-				const res = `${this.firstName} ${this.lastName}`;
-				logs.push(`computing fullName: ${res}`);
-				return res;
-			}
-
-			@CachedProperty
-			get lastNameUpperCase() {
-				const res = `${this.lastName.toUpperCase()}`;
-				logs.push(`computing lastNameUpperCase: ${res}`);
-				return res;
-			}
-		}
-		logs.push('before creating person 1');
-		const person1 = new Person('Arsène', 'Lupin');
-		logs.push('before creating person 2');
-		const person2 = new Person('Sherlock', 'Holmes');
-		logs.push('before person1.fullName');
-		expect(person1.fullName).toBe('Arsène Lupin');
-		logs.push('before person1.fullName again');
-		expect(person1.fullName).toBe('Arsène Lupin');
-		logs.push('before person2.fullName');
-		expect(person2.fullName).toBe('Sherlock Holmes');
-		logs.push('before person2.fullName again');
-		expect(person2.fullName).toBe('Sherlock Holmes');
-		logs.push('before person1.fullName again');
-		expect(person1.fullName).toBe('Arsène Lupin');
-		logs.push('before person1.lastNameUpperCase');
-		expect(person1.lastNameUpperCase).toBe('LUPIN');
-		logs.push('end');
-		expect(logs).toEqual([
-			'before creating person 1',
-			'before creating person 2',
-			'before person1.fullName',
-			'computing fullName: Arsène Lupin',
-			'before person1.fullName again',
-			'before person2.fullName',
-			'computing fullName: Sherlock Holmes',
-			'before person2.fullName again',
-			'before person1.fullName again',
-			'before person1.lastNameUpperCase',
-			'computing lastNameUpperCase: LUPIN',
-			'end',
-		]);
 	});
 });
