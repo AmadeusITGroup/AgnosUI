@@ -15,14 +15,8 @@
 <ul class="au-pagination pagination {sizeClass} {state.className}">
 	{#if state.boundaryLinks}
 		<li class="page-item" class:disabled={state.previousDisabled}>
-			<a
-				aria-label={state.ariaFirstLabel}
-				class="page-link au-first"
-				href={state.pagesHrefs[0]}
-				on:click={(event) => widget.actions.first(event)}
-				tabindex={state.previousDisabled ? -1 : undefined}
-				aria-disabled={state.previousDisabled ? 'true' : null}
-			>
+			<!-- svelte-ignore a11y-missing-attribute -->
+			<a class="page-link" use:widget.directives.pageFirst>
 				<span aria-hidden="true">
 					<Slot slotContent={state.slotFirst} props={slotContext} let:component let:props>
 						<svelte:fragment slot="slot" let:props><slot name="first" {...props} /></svelte:fragment>
@@ -45,14 +39,8 @@
 	{/if}
 	{#if state.directionLinks}
 		<li class="page-item" class:disabled={state.previousDisabled}>
-			<a
-				aria-label={state.ariaPreviousLabel}
-				class="page-link au-previous"
-				href={state.directionsHrefs.previous}
-				on:click={(event) => widget.actions.previous(event)}
-				tabindex={state.previousDisabled ? -1 : undefined}
-				aria-disabled={state.previousDisabled ? 'true' : null}
-			>
+			<!-- svelte-ignore a11y-missing-attribute -->
+			<a class="page-link" use:widget.directives.pagePrev>
 				<span aria-hidden="true">
 					<Slot slotContent={state.slotPrevious} props={slotContext} let:component let:props>
 						<svelte:fragment slot="slot" let:props><slot name="previous" {...props} /></svelte:fragment>
@@ -90,14 +78,8 @@
 	</Slot>
 	{#if state.directionLinks}
 		<li class="page-item" class:disabled={state.nextDisabled}>
-			<a
-				aria-label={state.ariaNextLabel}
-				class="page-link au-next"
-				href={state.directionsHrefs.next}
-				on:click={(event) => widget.actions.next(event)}
-				tabindex={state.nextDisabled ? -1 : undefined}
-				aria-disabled={state.nextDisabled ? 'true' : null}
-			>
+			<!-- svelte-ignore a11y-missing-attribute -->
+			<a class="page-link" use:widget.directives.pageNext>
 				<span aria-hidden="true">
 					<Slot slotContent={state.slotNext} props={slotContext} let:component let:props>
 						<svelte:fragment slot="slot" let:props><slot name="next" {...props} /></svelte:fragment>
@@ -120,14 +102,8 @@
 	{/if}
 	{#if state.boundaryLinks}
 		<li class="page-item" class:disabled={state.nextDisabled}>
-			<a
-				aria-label={state.ariaLastLabel}
-				class="page-link au-last"
-				href={state.pagesHrefs.at(-1)}
-				on:click={(event) => widget.actions.last(event)}
-				tabindex={state.nextDisabled ? -1 : undefined}
-				aria-disabled={state.nextDisabled ? 'true' : null}
-			>
+			<!-- svelte-ignore a11y-missing-attribute -->
+			<a class="page-link" use:widget.directives.pageLast>
 				<span aria-hidden="true">
 					<Slot slotContent={state.slotLast} props={slotContext} let:component let:props>
 						<svelte:fragment slot="slot" let:props><slot name="last" {...props} /></svelte:fragment>
