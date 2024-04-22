@@ -15,7 +15,7 @@
 	},
 	"devDependencies": {
 		"@types/babel__core": "^7.20.5",
-		"vite": "^5.2.8"
+		"vite": "^5.2.10"
 	},
 	"scripts": {
 		"build": "wireit"
