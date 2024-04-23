@@ -9,6 +9,7 @@ import ReactDOM from 'react-dom/client';
 import {forwardRef, useImperativeHandle} from 'react';
 import {createModal as coreCreateModal} from '@agnos-ui/core-bootstrap/components/modal';
 import type {ModalApi} from '@agnos-ui/core-bootstrap/components/modal';
+import classNames from 'classnames';
 
 export * from '@agnos-ui/core-bootstrap/components/modal';
 
@@ -57,15 +58,18 @@ const BackdropElement = <Data,>({widget}: ModalContext<Data>) => (
 	<div {...useDirectives([classDirective, 'modal-backdrop'], widget.directives.backdropDirective)} />
 );
 
-const ModalElement = <Data,>(slotContext: ModalContext<Data>) => (
-	<div {...useDirectives([classDirective, 'modal d-block'], slotContext.widget.directives.modalDirective)}>
-		<div className="modal-dialog">
-			<div className="modal-content">
-				<Slot slotContent={slotContext.state.slotStructure} props={slotContext} />
+const ModalElement = <Data,>(slotContext: ModalContext<Data>) => {
+	const {fullscreen} = slotContext.state;
+	return (
+		<div {...useDirectives([classDirective, 'modal d-block'], slotContext.widget.directives.modalDirective)}>
+			<div className={classNames('modal-dialog', {'modal-fullscreen': fullscreen})}>
+				<div className="modal-content">
+					<Slot slotContent={slotContext.state.slotStructure} props={slotContext} />
+				</div>
 			</div>
 		</div>
-	</div>
-);
+	);
+};
 
 export const Modal = forwardRef(function Modal<Data>(props: PropsWithChildren<Partial<ModalProps<Data>>>, ref: Ref<ModalApi<Data>>) {
 	const [state, widget] = useWidgetWithConfig(createModal<Data>, props, 'modal', {...defaultConfig, slotDefault: props.children});

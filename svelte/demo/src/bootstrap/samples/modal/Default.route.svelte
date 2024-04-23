@@ -3,9 +3,10 @@
 
 	let modal: Modal<unknown>;
 	let message = '';
+	let fullscreen = false;
 </script>
 
-<Modal bind:this={modal} slotTitle="Save changes">
+<Modal bind:this={modal} slotTitle="Save changes" {fullscreen}>
 	Do you want to save your changes?
 	<svelte:fragment slot="footer">
 		<button type="button" class="btn btn-outline-primary" on:click={() => modal.api.close(true)}>Yes</button>
@@ -28,3 +29,8 @@
 	}}>Launch demo modal</button
 >
 <div class="mt-3" data-testid="message">{message}</div>
+<hr />
+<div class="form-check form-switch">
+	<input class="form-check-input" type="checkbox" role="switch" id="fullscreen" bind:checked={fullscreen} />
+	<label class="form-check-label" for="fullscreen">Fullscreen</label>
+</div>
