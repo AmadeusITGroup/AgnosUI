@@ -9,9 +9,9 @@ export const load = async () => {
 			{title: 'Playground', key: 'playground', path: '/components/accordion/playground#'},
 		],
 		prev: {
-			title: 'DaisyUI: Toast',
-			slug: 'daisyUI/toast/',
-			subpath: 'headless',
+			title: 'Bootstrap Components: Introduction',
+			slug: 'bootstrap-components/introduction',
+			subpath: '',
 		},
 		next: {
 			title: 'Alert',

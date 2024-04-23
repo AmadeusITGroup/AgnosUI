@@ -89,7 +89,7 @@ h5,
 		border-top-left-radius: 5px;
 		border-bottom-left-radius: 5px;
 	}
-	@media (min-width: 992px) {
+	@media (min-width: 1292px) {
 		border-top-right-radius: 5px;
 		border-bottom-right-radius: 5px;
 	}
@@ -291,4 +291,18 @@ iframe {
 	.svg.auto {
 		display: none;
 	}
+}
+
+// SVG size
+.overview-workflow {
+	@extend .w-100;
+}
+
+.logo-bootstrap {
+	color: #712cf9;
+}
+
+.pres-card-logo {
+	width: 50px;
+	height: 30px;
 }

@@ -16,7 +16,7 @@
 	<meta name="description" content={getTitle(title, $selectedFramework$)} />
 </svelte:head>
 
-<Header title={$page.data.title} status={$page.data.status} />
+<Header title={$page.data.title} status={$page.data.status} cssFramework="Bootstrap" selectedFramework={$selectedFramework$} />
 <div class="main-content">
 	{#if $page.data.status !== 'stable'}
 		<StatusAlert status={$page.data.status} />

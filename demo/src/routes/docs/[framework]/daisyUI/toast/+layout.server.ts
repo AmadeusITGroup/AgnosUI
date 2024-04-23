@@ -13,9 +13,9 @@ export const load = async () => {
 			subpath: 'headless',
 		},
 		next: {
-			title: 'Components: Accordion',
-			slug: 'components/accordion/',
-			subpath: 'examples',
+			title: 'Bootstrap Components: Introduction',
+			slug: 'bootstrap-components/introduction',
+			subpath: '',
 		},
 	};
 };

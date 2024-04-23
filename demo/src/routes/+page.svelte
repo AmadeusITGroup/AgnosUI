@@ -111,11 +111,6 @@
 </footer>
 
 <style lang="scss">
-	:global(.pres-card-logo) {
-		width: 50px;
-		height: 30px;
-	}
-
 	:global(.agnosui-logo) {
 		width: 50px;
 	}

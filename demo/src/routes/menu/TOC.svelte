@@ -31,7 +31,7 @@
 
 {#if $elements$.length}
 	<div class="ms-2 mt-1 border-start-1">
-		<div class="d-none d-md-block fw-bold pb-2 mb-1">On this page</div>
+		<div class="d-none d-lg-block fw-bold pb-2 mb-1">On this page</div>
 		<div>
 			{#each $elements$ as element}
 				{@const isVisible = $visibleElements$.has(element)}

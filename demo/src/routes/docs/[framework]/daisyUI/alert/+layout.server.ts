@@ -8,8 +8,8 @@ export const load = async () => {
 			{title: 'Api', key: 'api', path: '/daisyUI/alert/api'},
 		],
 		prev: {
-			title: 'Headless: Implementation',
-			slug: 'headless/implementation',
+			title: 'Headless Components: Introduction',
+			slug: 'headless-components/introduction',
 			subpath: '',
 		},
 		next: {
