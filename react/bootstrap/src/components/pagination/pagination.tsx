@@ -95,7 +95,7 @@ export function DefaultStructure(slotContext: PaginationContext) {
 				{ItemsAfter}
 			</ul>
 			<div aria-live="polite" className="visually-hidden">
-				{state.page && `Current page is ${state.page}`}
+				{`${state.ariaLiveLabelText}`}
 			</div>
 		</>
 	);

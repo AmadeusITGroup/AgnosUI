@@ -170,7 +170,7 @@ export class PaginationStructureDirective {
 					</li>
 				}
 			</ul>
-			<div aria-live="polite" class="visually-hidden">Current page is {{ state.page }}</div>
+			<div aria-live="polite" class="visually-hidden">{{ state.ariaLiveLabelText }}</div>
 		</ng-template>
 	`,
 })
@@ -213,6 +213,14 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * @param pageCount - The total number of pages
 	 */
 	@Input('auAriaPageLabel') ariaPageLabel: ((processPage: number, pageCount: number) => string) | undefined;
+
+	/**
+	 * Provide the label for the aria-live element
+	 * This is used for accessibility purposes.
+	 * for I18n, we suggest to use the global configuration
+	 * override any configuration parameters provided for this
+	 */
+	@Input('auAriaLiveLabel') ariaLiveLabel: ((currentPage: number, pageCount: number) => string) | undefined;
 
 	/**
 	 * The label for the nav element.
