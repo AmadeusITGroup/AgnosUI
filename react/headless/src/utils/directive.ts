@@ -11,34 +11,6 @@ const attributesMap = new Map([
 	['for', 'htmlFor'],
 ]);
 
-// For boolean attributes, the presence of the attribute means true, but react wants a boolean value
-// cf the list in https://github.com/facebook/react/blob/bf40b024421a0e1f2f882fd7171ea39cd74c88df/packages/react-dom-bindings/src/client/ReactDOMComponent.js#L665
-const booleanAttributes = new Set([
-	'inert',
-	'allowFullScreen',
-	'async',
-	'autoPlay',
-	'controls',
-	'default',
-	'defer',
-	'disabled',
-	'disablePictureInPicture',
-	'disableRemotePlayback',
-	'formNoValidate',
-	'hidden',
-	'loop',
-	'noModule',
-	'noValidate',
-	'open',
-	'playsInline',
-	'readOnly',
-	'required',
-	'reversed',
-	'scoped',
-	'seamless',
-	'itemScope',
-]);
-
 /**
  * Returns an object with the key/value attributes for JSX, derived from a list of directives.
  *
@@ -50,7 +22,7 @@ export function directiveAttributes<T extends any[]>(...directives: DirectivesAn
 	const {attributes, style, classNames} = attributesData(...directives);
 
 	for (const [name, value] of Object.entries(attributes)) {
-		reactAttributes[attributesMap.get(name) ?? name] = booleanAttributes.has(name) ? true : value;
+		reactAttributes[attributesMap.get(name) ?? name] = value;
 	}
 
 	if (classNames?.length) {

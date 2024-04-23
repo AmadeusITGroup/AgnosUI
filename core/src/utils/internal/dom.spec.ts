@@ -67,7 +67,7 @@ describe('computeCommonAncestor', () => {
 		expect(getAttributes(node)).toStrictEqual(assign(expectedState, {a: ''}));
 
 		a$.set(true);
-		expect(getAttributes(node)).toStrictEqual(assign(expectedState, {a: ''}));
+		expect(getAttributes(node)).toStrictEqual(assign(expectedState, {a: 'a'}));
 
 		a$.set(false);
 		delete expectedState.a;
