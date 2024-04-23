@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type {SliderSlots} from './slider';
+	import type {SliderContext, SliderSlots} from './slider';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 
-	type $$Props = SliderSlots['structure'];
+	type $$Props = SliderContext;
 	type $$Slots = SliderSlots;
 
 	export let state: $$Props['state'];

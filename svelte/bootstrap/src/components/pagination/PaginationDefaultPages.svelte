@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type {PaginationSlots} from './pagination';
+	import type {PaginationContext, PaginationSlots} from './pagination';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 
-	type $$Props = PaginationSlots['pages'];
+	type $$Props = PaginationContext;
 	type $$Slots = PaginationSlots;
 
 	export let state: $$Props['state'];

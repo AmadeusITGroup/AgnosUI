@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-	import type {PaginationProps as Props, PaginationSlots as Slots} from './pagination';
+	import type {PaginationApi, PaginationProps, PaginationSlots} from './pagination';
 	import {createPagination} from './pagination';
 	import {toSlotContextWidget} from '@agnos-ui/svelte-headless/types';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
@@ -7,22 +7,22 @@
 	import PaginationDefaultPages from './PaginationDefaultPages.svelte';
 	import PaginationDefaultStructure from './PaginationDefaultStructure.svelte';
 
-	const defaultConfig: Partial<Props> = {
+	const defaultConfig: Partial<PaginationProps> = {
 		slotStructure: PaginationDefaultStructure,
 		slotPages: PaginationDefaultPages,
 	};
 </script>
 
 <script lang="ts">
-	type $$Props = Partial<Props>;
-	type $$Slots = Slots;
+	type $$Props = Partial<PaginationProps>;
+	type $$Slots = PaginationSlots;
 
 	/**
 	 *  The current page.
 	 *
 	 *  Page numbers start with `1`.
 	 */
-	export let page: Props['page'] | undefined = undefined;
+	export let page: $$Props['page'] = undefined;
 
 	const widget = callWidgetFactory({
 		factory: createPagination,
@@ -36,7 +36,7 @@
 			},
 		},
 	});
-	export const api = widget.api;
+	export const api: PaginationApi = widget.api;
 
 	const {
 		stores: {slotStructure$, ariaLabel$},

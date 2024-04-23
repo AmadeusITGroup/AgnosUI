@@ -1,14 +1,12 @@
-<script lang="ts" context="module">
-	import type {RatingProps as Props, RatingSlots as Slots} from './rating';
+<script lang="ts">
+	import type {RatingApi, RatingProps, RatingSlots} from './rating';
 	import {createRating} from './rating';
 	import {callWidgetFactory} from '../../config';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import {classDirective, ssrAttributes} from '@agnos-ui/svelte-headless/utils/directive';
-</script>
 
-<script lang="ts">
-	type $$Props = Partial<Props>;
-	type $$Slots = Slots;
+	type $$Props = Partial<RatingProps>;
+	type $$Slots = RatingSlots;
 
 	export let rating: number | undefined = undefined;
 
@@ -23,7 +21,7 @@
 			},
 		},
 	});
-	export const api = widget.api;
+	export const api: RatingApi = widget.api;
 
 	const {
 		stores: {visibleRating$, stars$, slotStar$},

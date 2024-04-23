@@ -1,3 +1,5 @@
+export * from '@agnos-ui/core-bootstrap/components/accordion';
+
 import type {
 	AdaptSlotContentProps,
 	AdaptWidgetSlots,
@@ -5,24 +7,33 @@ import type {
 	WidgetProps,
 	WidgetState,
 	WidgetPropsSlots,
+	PropType,
 } from '@agnos-ui/svelte-headless/types';
-export * from '@agnos-ui/core-bootstrap/components/accordion';
-
-export type AccordionWidget = AdaptWidgetSlots<import('@agnos-ui/core-bootstrap/components/accordion').AccordionWidget>;
-export type AccordionProps = WidgetProps<AccordionWidget>;
-export type AccordionState = WidgetState<AccordionWidget>;
-export type AccordionApi = AccordionWidget['api'];
-export type AccordionSlots = WidgetPropsSlots<AccordionProps>;
-export type AccordionItemWidget = AdaptWidgetSlots<import('@agnos-ui/core-bootstrap/components/accordion').AccordionItemWidget>;
-export type AccordionItemProps = WidgetProps<AccordionItemWidget>;
-export type AccordionItemState = WidgetState<AccordionItemWidget>;
-export type AccordionItemContext = AdaptSlotContentProps<import('@agnos-ui/core-bootstrap/components/accordion').AccordionItemContext>;
 import {createAccordion as coreCreateAccordion} from '@agnos-ui/core-bootstrap/components/accordion';
+import type {
+	AccordionWidget as CoreWidget,
+	AccordionItemWidget as CoreItemWidget,
+	AccordionItemContext as CoreItemContext,
+} from '@agnos-ui/core-bootstrap/components/accordion';
+
+// widget
+export interface AccordionWidget extends AdaptWidgetSlots<CoreWidget> {}
+export interface AccordionProps extends WidgetProps<AccordionWidget> {}
+export interface AccordionState extends WidgetState<AccordionWidget> {}
+export interface AccordionApi extends PropType<AccordionWidget, 'api'> {}
+export interface AccordionItemWidget extends AdaptWidgetSlots<CoreItemWidget> {}
+export interface AccordionItemProps extends WidgetProps<AccordionItemWidget> {}
+export interface AccordionItemState extends WidgetState<AccordionItemWidget> {}
+export interface AccordionItemApi extends PropType<AccordionItemWidget, 'api'> {}
+// slots
+export interface AccordionSlots extends WidgetPropsSlots<AccordionProps> {}
+export interface AccordionItemContext extends AdaptSlotContentProps<CoreItemContext> {}
+// factory
 export const createAccordion: WidgetFactory<AccordionWidget> = coreCreateAccordion as any;
 
+// context
 import {getContext, setContext} from 'svelte';
 
-// Context specific part
 const contextInjectionKey = Symbol('accordion-api');
 export function setAccordionApi(accordionApi: AccordionApi) {
 	setContext(contextInjectionKey, accordionApi);

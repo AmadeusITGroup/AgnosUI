@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-	import type {SelectProps as Props, SelectWidget, SelectSlots as Slots} from './select';
+	import type {SelectProps, SelectWidget, SelectSlots, SelectApi} from './select';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import {createSelect} from './select';
 	import {callWidgetFactory} from '../../config';
@@ -7,8 +7,8 @@
 
 <script lang="ts">
 	type Item = $$Generic; // eslint-disable-line no-undef
-	type $$Props = Partial<Props<Item>>;
-	type $$Slots = Slots<Item>;
+	type $$Props = Partial<SelectProps<Item>>;
+	type $$Slots = SelectSlots<Item>;
 
 	export let open: boolean | undefined = false;
 	export let filterText: string | undefined = undefined;
@@ -31,7 +31,7 @@
 			},
 		},
 	});
-	export const api = widget.api;
+	export const api: SelectApi<Item> = widget.api;
 	const {
 		stores: {
 			id$,

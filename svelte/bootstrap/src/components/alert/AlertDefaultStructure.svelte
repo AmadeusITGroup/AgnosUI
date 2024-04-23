@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type {AlertSlots} from './alert';
+	import type {AlertContext, AlertSlots} from './alert';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 
-	type $$Props = AlertSlots['structure'];
+	type $$Props = AlertContext;
 	type $$Slots = AlertSlots;
 
 	export let state: $$Props['state'];

@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-	import type {ModalWidget, ModalProps as Props, ModalSlots as Slots} from './modal';
+	import type {ModalWidget, ModalProps, ModalSlots, ModalApi} from './modal';
 	import {toSlotContextWidget} from '@agnos-ui/svelte-headless/types';
 	import {createModal} from './modal';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
@@ -7,7 +7,7 @@
 	import ModalDefaultHeader from './ModalDefaultHeader.svelte';
 	import ModalDefaultStructure from './ModalDefaultStructure.svelte';
 
-	const defaultConfig: Partial<Props<any>> = {
+	const defaultConfig: Partial<ModalProps<any>> = {
 		slotStructure: ModalDefaultStructure,
 		slotHeader: ModalDefaultHeader,
 	};
@@ -15,8 +15,8 @@
 
 <script lang="ts">
 	type Data = $$Generic; // eslint-disable-line no-undef
-	type $$Props = Partial<Props<Data>>;
-	type $$Slots = Slots<Data>;
+	type $$Props = Partial<ModalProps<Data>>;
+	type $$Slots = ModalSlots<Data>;
 
 	export let visible: boolean | undefined = undefined;
 
@@ -32,7 +32,7 @@
 			},
 		},
 	});
-	export const api = widget.api;
+	export const api: ModalApi<Data> = widget.api;
 
 	const {
 		stores: {backdropHidden$, hidden$, slotStructure$},

@@ -39,3 +39,5 @@ export type AdaptWidgetSlots<W extends Widget> = Widget<
 	W['actions'],
 	W['directives']
 >;
+
+export type PropType<Props, K extends keyof Props> = Props[K];

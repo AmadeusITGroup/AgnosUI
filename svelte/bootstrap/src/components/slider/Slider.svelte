@@ -1,20 +1,20 @@
 <script lang="ts" context="module">
-	import type {SliderProps as Props, SliderSlots as Slots} from './slider';
+	import type {SliderApi, SliderProps, SliderSlots} from './slider';
 	import {createSlider} from './slider';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import {callWidgetFactory} from '../../config';
 	import SliderDefaultStructure from './SliderDefaultStructure.svelte';
 	import SliderDefaultHandle from './SliderDefaultHandle.svelte';
 
-	const defaultConfig: Partial<Props> = {
+	const defaultConfig: Partial<SliderProps> = {
 		slotStructure: SliderDefaultStructure,
 		slotHandle: SliderDefaultHandle,
 	};
 </script>
 
 <script lang="ts">
-	type $$Props = Partial<Props>;
-	type $$Slots = Slots;
+	type $$Props = Partial<SliderProps>;
+	type $$Slots = SliderSlots;
 
 	export let values: number[] | undefined = undefined;
 
@@ -30,7 +30,7 @@
 			},
 		},
 	});
-	export const api = widget.api;
+	export const api: SliderApi = widget.api;
 
 	const {
 		stores: {slotStructure$},

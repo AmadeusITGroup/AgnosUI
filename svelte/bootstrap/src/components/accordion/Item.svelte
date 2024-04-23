@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-	import type {AccordionItemProps as Props, AccordionSlots as Slots} from './accordion';
+	import type {AccordionItemApi, AccordionItemProps, AccordionSlots} from './accordion';
 	import {toSlotContextWidget} from '@agnos-ui/svelte-headless/types';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import {callWidgetFactory} from '../../config';
@@ -7,14 +7,14 @@
 	import ItemDefaultStructure from './ItemDefaultStructure.svelte';
 	import {getAccordionApi} from './accordion';
 
-	const defaultConfig: Partial<Props> = {
+	const defaultConfig: Partial<AccordionItemProps> = {
 		slotItemStructure: ItemDefaultStructure,
 	};
 </script>
 
 <script lang="ts">
-	type $$Props = Partial<Props>;
-	type $$Slots = Slots;
+	type $$Props = Partial<AccordionItemProps>;
+	type $$Slots = AccordionSlots;
 
 	const accordionApi = getAccordionApi();
 	const {registerItem} = accordionApi;
@@ -35,7 +35,7 @@
 		directives: {accordionItemDirective},
 		state$,
 	} = widget;
-	export const api = widget.api;
+	export const api: AccordionItemApi = widget.api;
 
 	$: widget.patchChangedProps($$props);
 	$: slotContext = {widget: toSlotContextWidget(widget), state: $state$};
