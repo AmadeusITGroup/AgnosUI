@@ -126,5 +126,5 @@
 	{/if}
 </ul>
 <div aria-live="polite" class="visually-hidden">
-	{`Current page is ${state.page}`}
+	{`${state.ariaLiveLabelText}`}
 </div>

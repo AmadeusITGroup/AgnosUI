@@ -26,7 +26,6 @@
 
 	const {
 		stores: {
-			page$,
 			boundaryLinks$,
 			directionLinks$,
 			nextDisabled$,
@@ -36,6 +35,7 @@
 			ariaPreviousLabel$,
 			ariaNextLabel$,
 			ariaLastLabel$,
+			ariaLiveLabelText$,
 			className$,
 		},
 		state$,
@@ -108,6 +108,6 @@
 		{/if}
 	</div>
 	<div aria-live="polite" class="sr-only">
-		{`Current page is ${$page$}`}
+		{`${$ariaLiveLabelText$}`}
 	</div>
 </nav>

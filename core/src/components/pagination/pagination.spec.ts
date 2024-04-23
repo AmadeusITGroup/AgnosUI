@@ -63,6 +63,7 @@ describe(`Pagination`, () => {
 			ariaNextLabel: 'Action link for next page',
 			ariaPreviousLabel: 'Action link for previous page',
 			ariaEllipsisLabel: 'Ellipsis page element',
+			ariaLiveLabelText: 'Current page is 1',
 			directionsHrefs: {
 				next: '#',
 				previous: '#',
@@ -99,16 +100,16 @@ describe(`Pagination`, () => {
 		expect(state).toStrictEqual(assign(expectedState, {page: 1, pageCount: 20, pagesLabel, nextDisabled: false, pages, pagesHrefs}));
 
 		pagination.actions.next();
-		expect(state).toStrictEqual(assign(expectedState, {page: 2, previousDisabled: false}));
+		expect(state).toStrictEqual(assign(expectedState, {page: 2, previousDisabled: false, ariaLiveLabelText: 'Current page is 2'}));
 
 		pagination.actions.select(5);
-		expect(state).toStrictEqual(assign(expectedState, {page: 5}));
+		expect(state).toStrictEqual(assign(expectedState, {page: 5, ariaLiveLabelText: 'Current page is 5'}));
 
 		pagination.actions.last();
-		expect(state).toStrictEqual(assign(expectedState, {page: 20, nextDisabled: true}));
+		expect(state).toStrictEqual(assign(expectedState, {page: 20, nextDisabled: true, ariaLiveLabelText: 'Current page is 20'}));
 
 		pagination.actions.previous();
-		expect(state).toStrictEqual(assign(expectedState, {page: 19, nextDisabled: false}));
+		expect(state).toStrictEqual(assign(expectedState, {page: 19, nextDisabled: false, ariaLiveLabelText: 'Current page is 19'}));
 	});
 
 	test('should prepare pages hrefs', () => {
@@ -129,6 +130,7 @@ describe(`Pagination`, () => {
 				next: '4/5',
 				previous: '2/5',
 			},
+			ariaLiveLabelText: 'Current page is 3',
 		};
 		expect(state).toStrictEqual(expectedState);
 
@@ -139,6 +141,7 @@ describe(`Pagination`, () => {
 				next: '5/5',
 				previous: '3/5',
 			},
+			ariaLiveLabelText: 'Current page is 4',
 		});
 		expect(state).toStrictEqual(expectedState);
 
@@ -150,6 +153,7 @@ describe(`Pagination`, () => {
 				next: '5/5',
 				previous: '4/5',
 			},
+			ariaLiveLabelText: 'Current page is 5',
 		});
 		expect(state).toStrictEqual(expectedState);
 
@@ -162,6 +166,7 @@ describe(`Pagination`, () => {
 				next: '2/5',
 				previous: '1/5',
 			},
+			ariaLiveLabelText: 'Current page is 1',
 		});
 		expect(state).toStrictEqual(expectedState);
 	});
@@ -197,7 +202,7 @@ describe(`Pagination`, () => {
 
 	test('should allow setting a page within a valid range (default page size)', () => {
 		pagination.patch({collectionSize: 100, page: 2});
-		expect(state).toMatchObject({page: 2, pageCount: 10});
+		expect(state).toMatchObject({page: 2, pageCount: 10, ariaLiveLabelText: 'Current page is 2'});
 	});
 
 	test(`should set page within [1, pageCount]`, () => {

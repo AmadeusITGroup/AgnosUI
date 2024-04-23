@@ -253,6 +253,20 @@ export interface PaginationProps extends PaginationCommonPropsAndState {
 	ariaPageLabel: (processPage: number, pageCount: number) => string;
 
 	/**
+	 * Provide the label for the aria-live element
+	 * This is used for accessibility purposes.
+	 * for I18n, we suggest to use the global configuration
+	 * override any configuration parameters provided for this
+	 * @param currentPage - The current page number
+	 * @param pageCount - The total number of pages
+	 * @defaultValue
+	 * ```ts
+	 * ({currentPage, pageCount}) => `Current page is ${currentPage}`
+	 * ```
+	 */
+	ariaLiveLabel: (currentPage: number, pageCount: number) => string;
+
+	/**
 	 * Factory function providing the href for a "Page" page anchor,
 	 * based on the current page number
 	 * @param pageNumber - The index to use in the link
@@ -302,6 +316,9 @@ export interface PaginationState extends PaginationCommonPropsAndState {
 
 	/** The hrefs for the direction links  */
 	directionsHrefs: DirectionsHrefs;
+
+	/** The aria-live text */
+	ariaLiveLabelText: string;
 }
 
 export interface PaginationActions {
@@ -388,6 +405,7 @@ const defaultConfig: PaginationProps = {
 	ariaNextLabel: 'Action link for next page',
 	ariaLastLabel: 'Action link for last page',
 	ariaEllipsisLabel: 'Ellipsis page element',
+	ariaLiveLabel: (currentPage: number, pageCount: number) => `Current page is ${currentPage}`,
 	className: '',
 	slotEllipsis: '…',
 	slotFirst: '«',
@@ -425,6 +443,7 @@ const configValidator: ConfigValidator<PaginationProps> = {
 	ariaPreviousLabel: typeString,
 	ariaNextLabel: typeString,
 	ariaLastLabel: typeString,
+	ariaLiveLabel: typeFunction,
 	className: typeString,
 	pageLink: typeFunction,
 };
@@ -445,6 +464,7 @@ export function createPagination(config?: PropsConfig<PaginationProps>): Paginat
 			onPageChange$,
 			pagesFactory$,
 			ariaPageLabel$,
+			ariaLiveLabel$,
 			pageLink$,
 			disabled$,
 			ariaFirstLabel$,
@@ -495,6 +515,8 @@ export function createPagination(config?: PropsConfig<PaginationProps>): Paginat
 		};
 	});
 
+	const ariaLiveLabelText$ = computed(() => ariaLiveLabel$()(page$(), pageCount$()));
+
 	/**
 	 * Stop event propagation when href is the default value;
 	 * Update page number when navigation is in the same tab and stop the event propagation;
@@ -532,6 +554,7 @@ export function createPagination(config?: PropsConfig<PaginationProps>): Paginat
 			ariaLastLabel$,
 			ariaNextLabel$,
 			ariaPreviousLabel$,
+			ariaLiveLabelText$,
 			...stateProps,
 		}),
 		patch,

@@ -76,7 +76,7 @@ export function Pagination(props: Partial<PaginationProps>) {
 				)}
 			</div>
 			<div aria-live="polite" className="sr-only">
-				{`Current page is ${state.page}`}
+				{`${state.ariaLiveLabelText}`}
 			</div>
 		</nav>
 	);
