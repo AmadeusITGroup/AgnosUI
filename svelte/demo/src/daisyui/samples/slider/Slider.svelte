@@ -1,9 +1,8 @@
 <script lang="ts">
-	import type {SliderProps as Props} from '@agnos-ui/svelte-headless/components/slider';
-	import {createSlider} from '@agnos-ui/svelte-headless/components/slider';
+	import {createSlider, type SliderProps} from '@agnos-ui/svelte-headless/components/slider';
 	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
 
-	type $$Props = Partial<Pick<Props, 'min' | 'max' | 'values' | 'stepSize' | 'className'>>;
+	type $$Props = Partial<Pick<SliderProps, 'min' | 'max' | 'values' | 'stepSize' | 'className'>>;
 
 	export let values: number[] | undefined = undefined;
 

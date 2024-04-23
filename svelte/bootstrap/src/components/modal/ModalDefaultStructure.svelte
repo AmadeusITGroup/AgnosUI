@@ -1,9 +1,9 @@
 <script lang="ts">
-	import type {ModalSlots} from './modal';
+	import type {ModalContext, ModalSlots} from './modal';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 
 	type Data = $$Generic; // eslint-disable-line no-undef
-	type $$Props = ModalSlots<Data>['structure'];
+	type $$Props = ModalContext<Data>;
 	type $$Slots = ModalSlots<Data>;
 
 	export let state: $$Props['state'];

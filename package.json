@@ -50,7 +50,6 @@
 		"lint-staged": "^15.2.2",
 		"npm-run-all2": "^6.1.2",
 		"prettier": "^3.2.5",
-		"svelte2tsx": "0.7.0",
 		"syncpack": "^12.3.1",
 		"typescript": "~5.4.5",
 		"vite": "^5.2.10",
@@ -62,11 +61,6 @@
 		"@rollup/rollup-darwin-arm64": "4.16.1",
 		"@rollup/rollup-darwin-x64": "4.16.1",
 		"@rollup/rollup-win32-x64-msvc": "4.16.1"
-	},
-	"overrides": {
-		"@sveltejs/package": {
-			"svelte2tsx": "0.7.0"
-		}
 	},
 	"scripts": {
 		"build:coverage": "wireit",

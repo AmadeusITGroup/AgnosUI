@@ -1,3 +1,5 @@
+export * from '@agnos-ui/core-bootstrap/components/pagination';
+
 import type {
 	AdaptSlotContentProps,
 	AdaptWidgetSlots,
@@ -5,15 +7,23 @@ import type {
 	WidgetFactory,
 	WidgetProps,
 	WidgetState,
+	PropType,
 } from '@agnos-ui/svelte-headless/types';
 import {createPagination as coreCreatePagination} from '@agnos-ui/core-bootstrap/components/pagination';
+import type {
+	PaginationWidget as CoreWidget,
+	PaginationContext as CoreContext,
+	PaginationNumberContext as CoreNumberContext,
+} from '@agnos-ui/core-bootstrap/components/pagination';
 
-export * from '@agnos-ui/core-bootstrap/components/pagination';
-
-export type PaginationWidget = AdaptWidgetSlots<import('@agnos-ui/core-bootstrap/components/pagination').PaginationWidget>;
-export type PaginationProps = WidgetProps<PaginationWidget>;
-export type PaginationState = WidgetState<PaginationWidget>;
-export type PaginationContext = AdaptSlotContentProps<import('@agnos-ui/core-bootstrap/components/pagination').PaginationContext>;
-export type PaginationNumberContext = AdaptSlotContentProps<import('@agnos-ui/core-bootstrap/components/pagination').PaginationNumberContext>;
-export type PaginationSlots = WidgetPropsSlots<PaginationProps>;
+// widget
+export interface PaginationWidget extends AdaptWidgetSlots<CoreWidget> {}
+export interface PaginationProps extends WidgetProps<PaginationWidget> {}
+export interface PaginationState extends WidgetState<PaginationWidget> {}
+export interface PaginationApi extends PropType<PaginationWidget, 'api'> {}
+// slots
+export interface PaginationSlots extends WidgetPropsSlots<PaginationProps> {}
+export interface PaginationContext extends AdaptSlotContentProps<CoreContext> {}
+export interface PaginationNumberContext extends AdaptSlotContentProps<CoreNumberContext> {}
+// factory
 export const createPagination: WidgetFactory<PaginationWidget> = coreCreatePagination as any;

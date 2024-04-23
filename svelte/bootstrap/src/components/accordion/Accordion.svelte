@@ -1,12 +1,10 @@
-<script context="module" lang="ts">
-	import type {AccordionProps as Props, AccordionSlots as Slots} from './accordion';
+<script lang="ts">
+	import type {AccordionApi, AccordionProps, AccordionSlots} from './accordion';
 	import {callWidgetFactory} from '../../config';
 	import {createAccordion, setAccordionApi} from './accordion';
-</script>
 
-<script lang="ts">
-	type $$Props = Partial<Props>;
-	type $$Slots = {default: Record<string, never>} & Slots;
+	type $$Props = Partial<AccordionProps>;
+	type $$Slots = {default: Record<string, never>} & AccordionSlots;
 
 	export let itemVisible: boolean | undefined = undefined;
 	const widget = callWidgetFactory({
@@ -20,7 +18,7 @@
 			},
 		},
 	});
-	export const api = widget.api;
+	export const api: AccordionApi = widget.api;
 
 	const {
 		directives: {accordionDirective},

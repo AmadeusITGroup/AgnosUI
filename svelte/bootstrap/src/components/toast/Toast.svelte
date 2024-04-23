@@ -1,18 +1,18 @@
 <script lang="ts" context="module">
-	import type {ToastProps as Props, ToastSlots as Slots} from './toast';
+	import type {ToastApi, ToastProps, ToastSlots} from './toast';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import {createToast} from './toast';
 	import {callWidgetFactory} from '../../config';
 	import ToastDefaultStructure from './ToastDefaultStructure.svelte';
 
-	const defaultConfig: Partial<Props> = {
+	const defaultConfig: Partial<ToastProps> = {
 		slotStructure: ToastDefaultStructure,
 	};
 </script>
 
 <script lang="ts">
-	type $$Props = Partial<Props>;
-	type $$Slots = Slots;
+	type $$Props = Partial<ToastProps>;
+	type $$Slots = ToastSlots;
 
 	const widget = callWidgetFactory({
 		factory: createToast,
@@ -27,7 +27,7 @@
 		},
 	});
 	export let visible: boolean | undefined = undefined;
-	export const api = widget.api;
+	export const api: ToastApi = widget.api;
 
 	const {
 		stores: {slotStructure$, hidden$},

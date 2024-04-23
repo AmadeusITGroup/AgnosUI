@@ -1,14 +1,14 @@
 <script lang="ts">
-	import type {PaginationSlots} from './pagination';
+	import type {PaginationContext, PaginationSlots} from './pagination';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 
-	type $$Props = PaginationSlots['structure'];
+	type $$Props = PaginationContext;
 	type $$Slots = PaginationSlots;
 
 	export let state: $$Props['state'];
 	export let widget: $$Props['widget'];
-	$: slotContext = {widget, state};
 
+	$: slotContext = {widget, state};
 	$: sizeClass = state.size ? `pagination-${state.size}` : ''; // $size$ === 'sm' ? 'pagination-sm' : $size$ === 'lg' ? 'pagination-lg' : '';
 </script>
 

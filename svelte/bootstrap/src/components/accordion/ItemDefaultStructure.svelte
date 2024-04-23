@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type {AccordionSlots} from './accordion';
+	import type {AccordionItemContext, AccordionSlots} from './accordion';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 
-	type $$Props = AccordionSlots['itemStructure'];
+	type $$Props = AccordionItemContext;
 	type $$Slots = AccordionSlots;
 
 	export let state: $$Props['state'];

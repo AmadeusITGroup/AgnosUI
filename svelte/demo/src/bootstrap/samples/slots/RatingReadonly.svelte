@@ -1,10 +1,10 @@
 <script lang="ts">
-	import {createRating, type RatingProps as Props, type RatingSlots as Slots} from '@agnos-ui/svelte-bootstrap/components/rating';
+	import {createRating, type RatingProps, type RatingSlots} from '@agnos-ui/svelte-bootstrap/components/rating';
 	import {Slot} from '@agnos-ui/svelte-bootstrap/slot';
 	import {callWidgetFactory} from '@agnos-ui/svelte-bootstrap/config';
 
-	type $$Props = Pick<Partial<Props>, 'rating' | 'maxRating' | 'className' | 'slotStar'>;
-	type $$Slots = Slots;
+	type $$Props = Pick<Partial<RatingProps>, 'rating' | 'maxRating' | 'className' | 'slotStar'>;
+	type $$Slots = RatingSlots;
 
 	const widget = callWidgetFactory({
 		factory: createRating,

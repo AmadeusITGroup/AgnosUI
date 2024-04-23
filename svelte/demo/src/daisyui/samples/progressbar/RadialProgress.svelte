@@ -1,8 +1,8 @@
 <script lang="ts">
-	import {createProgressbar, type ProgressbarProps as Props} from '@agnos-ui/svelte-headless/components/progressbar';
+	import {createProgressbar, type ProgressbarProps} from '@agnos-ui/svelte-headless/components/progressbar';
 	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
 
-	type $$Props = Partial<Props>;
+	type $$Props = Partial<ProgressbarProps>;
 
 	const widget = callWidgetFactory({factory: createProgressbar, widgetName: 'progressbar', $$props});
 	export const api = widget.api;

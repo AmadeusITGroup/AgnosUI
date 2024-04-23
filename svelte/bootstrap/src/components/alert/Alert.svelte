@@ -1,17 +1,17 @@
 <script lang="ts" context="module">
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
-	import {createAlert, type AlertProps as Props, type AlertSlots as Slots} from './alert';
+	import {createAlert, type AlertApi, type AlertProps, type AlertSlots} from './alert';
 	import {callWidgetFactory} from '../../config';
 	import AlertDefaultStructure from './AlertDefaultStructure.svelte';
 
-	const defaultConfig: Partial<Props> = {
+	const defaultConfig: Partial<AlertProps> = {
 		slotStructure: AlertDefaultStructure,
 	};
 </script>
 
 <script lang="ts">
-	type $$Props = Partial<Props>;
-	type $$Slots = Slots;
+	type $$Props = Partial<AlertProps>;
+	type $$Slots = AlertSlots;
 
 	const widget = callWidgetFactory({
 		factory: createAlert,
@@ -26,7 +26,7 @@
 		},
 	});
 	export let visible: boolean | undefined = undefined;
-	export const api = widget.api;
+	export const api: AlertApi = widget.api;
 
 	const {
 		stores: {slotStructure$, hidden$},

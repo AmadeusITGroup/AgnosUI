@@ -41,7 +41,7 @@
 		selected = (<WikiResult[]>(items || [])).sort((a, b) => compareFn(a.title, b.title));
 	}
 
-	const navSelector = (node: HTMLElement) => node.querySelectorAll('a,button,input');
+	const navSelector = (node: HTMLElement) => node.querySelectorAll<HTMLSpanElement | HTMLInputElement>('a,button,input');
 </script>
 
 <div class="custom-select my-auto mb-3">

@@ -1,16 +1,16 @@
 <script lang="ts">
-	import type {PaginationProps as Props} from '@agnos-ui/svelte-headless/components/pagination';
+	import type {PaginationProps} from '@agnos-ui/svelte-headless/components/pagination';
 	import {createPagination} from '@agnos-ui/svelte-headless/components/pagination';
 	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
 
-	type $$Props = Partial<Props>;
+	type $$Props = Partial<PaginationProps>;
 
 	/**
 	 *  The current page.
 	 *
 	 *  Page numbers start with `1`.
 	 */
-	export let page: Props['page'] | undefined = undefined;
+	export let page: $$Props['page'] = undefined;
 
 	const widget = callWidgetFactory({
 		factory: createPagination,

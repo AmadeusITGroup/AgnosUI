@@ -1,11 +1,11 @@
 <script lang="ts">
-	import {createProgressbar, type ProgressbarProps as Props, type ProgressbarSlots as Slots} from './progressbar';
+	import {createProgressbar, type ProgressbarProps, type ProgressbarSlots, type ProgressbarApi} from './progressbar';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import {callWidgetFactory} from '../../config';
 	import ProgressbarDefaultStructure from './ProgressbarDefaultStructure.svelte';
 
-	type $$Props = Partial<Props>;
-	type $$Slots = Slots;
+	type $$Props = Partial<ProgressbarProps>;
+	type $$Slots = ProgressbarSlots;
 
 	const widget = callWidgetFactory({
 		factory: createProgressbar,
@@ -22,7 +22,7 @@
 		state$,
 		directives: {ariaDirective},
 	} = widget;
-	export const api = widget.api;
+	export const api: ProgressbarApi = widget.api;
 
 	$: widget.patchChangedProps($$props);
 	$: slotContext = {widget, state: $state$};

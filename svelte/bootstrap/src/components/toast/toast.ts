@@ -1,10 +1,24 @@
-import type {AdaptWidgetSlots, WidgetPropsSlots, WidgetFactory, WidgetProps, WidgetState} from '@agnos-ui/svelte-headless/types';
-
 export * from '@agnos-ui/core-bootstrap/components/toast';
 
-export type ToastWidget = AdaptWidgetSlots<import('@agnos-ui/core-bootstrap/components/toast').ToastWidget>;
-export type ToastProps = WidgetProps<ToastWidget>;
-export type ToastState = WidgetState<ToastWidget>;
-export type ToastSlots = WidgetPropsSlots<ToastProps>;
+import type {
+	AdaptWidgetSlots,
+	WidgetPropsSlots,
+	WidgetFactory,
+	WidgetProps,
+	WidgetState,
+	PropType,
+	AdaptSlotContentProps,
+} from '@agnos-ui/svelte-headless/types';
 import {createToast as coreCreateToast} from '@agnos-ui/core-bootstrap/components/toast';
+import type {ToastWidget as CoreWidget, ToastContext as CoreContext} from '@agnos-ui/core-bootstrap/components/toast';
+
+// widget
+export interface ToastWidget extends AdaptWidgetSlots<CoreWidget> {}
+export interface ToastProps extends WidgetProps<ToastWidget> {}
+export interface ToastState extends WidgetState<ToastWidget> {}
+export interface ToastApi extends PropType<ToastWidget, 'api'> {}
+// slots
+export interface ToastSlots extends WidgetPropsSlots<ToastProps> {}
+export interface ToastContext extends AdaptSlotContentProps<CoreContext> {}
+// factory
 export const createToast: WidgetFactory<ToastWidget> = coreCreateToast as any;

@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type {SliderSlots} from './slider';
+	import type {SliderSlotHandleContext, SliderSlots} from './slider';
 
-	type $$Props = SliderSlots['handle'];
+	type $$Props = SliderSlotHandleContext;
 	type $$Slots = SliderSlots;
 
 	export let item: $$Props['item'];

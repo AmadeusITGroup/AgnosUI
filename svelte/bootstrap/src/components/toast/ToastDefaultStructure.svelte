@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type {ToastSlots} from './toast';
+	import type {ToastContext, ToastSlots} from './toast';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 
-	type $$Props = ToastSlots['structure'];
+	type $$Props = ToastContext;
 	type $$Slots = ToastSlots;
 
 	export let state: $$Props['state'];
