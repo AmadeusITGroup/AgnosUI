@@ -341,7 +341,7 @@ describe('directive', () => {
 
 			expect(getDirectiveAttributes(directive)).toStrictEqual({
 				'aria-label': 'a',
-				readonly: '',
+				readonly: 'readonly',
 				class: 'c1',
 				style: 'cursor: pointer;',
 			});
@@ -380,7 +380,7 @@ describe('directive', () => {
 				},
 			}));
 
-			expect(getDirectiveAttributes(directive)).toStrictEqual({'aria-label': 'a', readonly: '', class: 'c1', style: 'cursor: pointer;'});
+			expect(getDirectiveAttributes(directive)).toStrictEqual({'aria-label': 'a', readonly: 'readonly', class: 'c1', style: 'cursor: pointer;'});
 			expect(clickFn).not.toHaveBeenCalled();
 		});
 
@@ -505,7 +505,7 @@ describe('directive', () => {
 
 			expect(directiveAttributes(directive)).toStrictEqual({
 				'aria-label': 'a',
-				readonly: '',
+				readonly: 'readonly',
 				class: 'c1',
 				style: 'cursor: pointer;',
 			});
@@ -546,8 +546,8 @@ describe('directive', () => {
 			}));
 
 			const expectedState = {
-				readonly: '',
-				disabled: '',
+				readonly: 'readonly',
+				disabled: 'disabled',
 				class: 'a c1 b c2',
 				style: 'cursor: pointer;width: 10px;',
 			};

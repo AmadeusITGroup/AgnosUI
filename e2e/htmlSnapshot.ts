@@ -44,7 +44,9 @@ export const htmlStructure = (locator: Locator): Promise<HTMLNode> =>
 			// only keep the actual current value of the input in attributes instead of the real attribute
 			// that only contains the initial value and may be present or not depending on the framework
 			if (isNodeCheckbox) {
-				attributes.push({name: 'checked', value: `${node.checked}`});
+				if (node.checked) {
+					attributes.push({name: 'checked', value: 'checked'});
+				}
 			} else if (isNodeInput) {
 				attributes.push({name: 'value', value: node.value});
 			}
@@ -104,6 +106,7 @@ const spaceRegExp = /\s+/;
 const excludeClassRegExp = /^(s|svelte|ng)-/;
 const excludeAttrRegExp = /^(ng-|_ng|ngh$|slot$|au|data-svelte(kit)?-)/;
 const attrExceptions = ['autocapitalize', 'autocomplete', 'autocorrect'];
+const booleanAttributes = new Set(['checked', 'disabled', 'inert', 'readonly']);
 
 const excludeAttrSet = new Set([
 	'slot', // slot shouldn't be kept in the DOM by svelte, cf https://github.com/sveltejs/svelte/issues/8621
@@ -149,6 +152,8 @@ export const filterHtmlStructure = (node: HTMLNode): HTMLNode => {
 					.filter((className) => !excludeClassRegExp.test(className))
 					.sort()
 					.join(' ');
+			} else if (booleanAttributes.has(name)) {
+				value = name;
 			}
 			return {name, value};
 		})

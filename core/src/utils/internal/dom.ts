@@ -135,7 +135,7 @@ function classNamesSubscribe(node: SSRHTMLElement, classNames$: ReadableSignal<s
 function attributeSubscribe(node: SSRHTMLElement, attributeName: string, value$: ReadableSignal<AttributeValue>) {
 	return value$.subscribe((value) => {
 		if (notEmpty(value)) {
-			node.setAttribute(attributeName, '' + (value === true ? '' : value));
+			node.setAttribute(attributeName, '' + (value === true ? attributeName : value));
 		} else {
 			node.removeAttribute(attributeName);
 		}
