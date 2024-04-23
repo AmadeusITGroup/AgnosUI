@@ -1,1 +1,0 @@
-import{E as c}from"./directive-ClyvktyQ-DyzILLR9.js";import{r as s}from"./App-XNADZBio.js";import{u as n}from"./stores-B8YEDwZq-qVpBBQfr.js";function h(u,e={},t){const r=s.useMemo(()=>u({...t,props:{...t==null?void 0:t.props,...e}}),[]),a=s.useRef(e);return s.useEffect(()=>{const o=c(a.current,e);a.current=e,o&&r.patch(o)},[e]),[n(r.state$),r]}export{h as u};
