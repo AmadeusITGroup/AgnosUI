@@ -37,12 +37,10 @@ describe(`Select model`, () => {
 
 		const normalizedState$ = computed(() => {
 			const state = selectWidget.state$();
-			const {id, slotBadgeLabel, slotItem} = state;
+			const {id} = state;
 			const normalizedState = {
 				...state,
 				id: generatedIdRegExp.test(state.id!) ? '(generated)' : id,
-				slotBadgeLabel: typeof slotBadgeLabel === 'function' ? '(function)' : '(not a function)',
-				slotItem: typeof slotItem === 'function' ? '(function)' : '(not a function)',
 			};
 
 			return normalizedState;
@@ -111,8 +109,6 @@ describe(`Select model`, () => {
 					placement: undefined,
 					selected: [],
 					selectedContexts: [],
-					slotBadgeLabel: '(function)',
-					slotItem: '(function)',
 					visibleItems: [],
 				});
 				expect(getStates().length, 'total number of calls').toBe(1);
@@ -136,8 +132,6 @@ describe(`Select model`, () => {
 					placement: undefined,
 					selected: [],
 					selectedContexts: [],
-					slotBadgeLabel: '(function)',
-					slotItem: '(function)',
 					visibleItems: [
 						{item: 'aa', id: 'aa', selected: false},
 						{item: 'aabb', id: 'aabb', selected: false},
@@ -735,8 +729,6 @@ describe(`Select model`, () => {
 				menuItemClassName: '',
 				badgeClassName: '',
 				placement: undefined,
-				slotBadgeLabel: '(function)',
-				slotItem: '(function)',
 			};
 			expect(getState()).toStrictEqual(expectedState);
 

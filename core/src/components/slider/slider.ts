@@ -2,16 +2,12 @@ import type {ReadableSignal, WritableSignal} from '@amadeus-it-group/tansu';
 import {computed, writable} from '@amadeus-it-group/tansu';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 import {createAttributesDirective, createBrowserStoreDirective, mergeDirectives} from '../../utils/directive';
-import type {ConfigValidator, Directive, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../../types';
+import type {ConfigValidator, Directive, PropsConfig, Widget} from '../../types';
 import {noop} from '../../utils/internal/func';
 import {getDecimalPrecision} from '../../utils/internal/math';
 import {bindableProp, stateStores, writablesForProps} from '../../utils/stores';
 import {typeArray, typeBoolean, typeFunction, typeNumber, typeNumberInRangeFactory} from '../../utils/writables';
 import {createResizeObserver} from '../../services/resizeObserver';
-
-export type SliderContext = WidgetSlotContext<SliderWidget>;
-export type SliderSlotLabelContext = SliderContext & {value: number};
-export type SliderSlotHandleContext = SliderContext & {item: SliderHandle};
 
 export interface ProgressDisplayOptions {
 	/**
@@ -120,21 +116,6 @@ export interface SliderCommonPropsAndState extends WidgetsCommonPropsAndState {
 	 * It `true` slider display is inversed
 	 */
 	rtl: boolean;
-
-	/**
-	 * Slot to change the default display of the slider
-	 */
-	slotStructure: SlotContent<SliderContext>;
-
-	/**
-	 * Slot to change the default labels of the slider
-	 */
-	slotLabel: SlotContent<SliderSlotLabelContext>;
-
-	/**
-	 *  Slot to change the handlers
-	 */
-	slotHandle: SlotContent<SliderSlotHandleContext>;
 }
 
 export interface SliderState extends SliderCommonPropsAndState {
@@ -303,9 +284,6 @@ const defaultSliderConfig: SliderProps = {
 	showValueLabels: true,
 	showMinMaxLabels: true,
 	rtl: false,
-	slotStructure: undefined,
-	slotLabel: ({value}: SliderSlotLabelContext) => '' + value,
-	slotHandle: undefined,
 };
 
 /**

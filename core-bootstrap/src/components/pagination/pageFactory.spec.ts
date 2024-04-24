@@ -1,6 +1,6 @@
 import type {MockInstance} from 'vitest';
 import {beforeEach, describe, expect, test, vi} from 'vitest';
-import {ngBootstrapPagination} from './bootstrap';
+import {ngBootstrapPagination} from './pageFactory';
 
 describe(`Pagination bootstrap factory`, () => {
 	let pageFactory: (page: number, pageCount: number) => number[];

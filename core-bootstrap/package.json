@@ -47,7 +47,13 @@
 		}
 	},
 	"scripts": {
-		"build": "wireit"
+		"build": "wireit",
+		"check": "wireit",
+		"test": "vitest run",
+		"tdd": "vitest",
+		"tdd:ui": "vitest --ui",
+		"tdd:debug": "vitest --no-browser.headless",
+		"test:coverage": "wireit"
 	},
 	"wireit": {
 		"build": {
@@ -64,6 +70,29 @@
 			],
 			"dependencies": [
 				"../core:build"
+			]
+		},
+		"check": {
+			"command": "tsc -p tsconfig.tests.json",
+			"files": [
+				"src/**",
+				"tsconfig.tests.json",
+				"vitest.config.ts"
+			],
+			"output": []
+		},
+		"test:coverage": {
+			"command": "node --import @agnos-ui/code-coverage/interceptReadFile ../node_modules/vitest/vitest.mjs run --coverage",
+			"dependencies": [
+				"../code-coverage:build"
+			],
+			"files": [
+				"src/**",
+				"tsconfig.tests.json",
+				"vitest.config.ts"
+			],
+			"output": [
+				"coverage/**"
 			]
 		}
 	},

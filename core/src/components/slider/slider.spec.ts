@@ -46,16 +46,11 @@ const defaultState: () => SliderState = () => ({
 	showMinMaxLabels: true,
 	showValueLabels: true,
 	rtl: false,
-	slotStructure: undefined,
-	slotHandle: undefined,
-	slotLabel: '(function)',
 });
 
 const normalizeState = (state: SliderState): SliderState => {
-	const {slotLabel} = state;
 	const normalizedState = {
 		...state,
-		slotLabel: typeof slotLabel === 'function' ? '(function)' : '(not a function)',
 	};
 	return normalizedState;
 };

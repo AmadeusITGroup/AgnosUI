@@ -19,8 +19,6 @@ describe(`Common Alert`, () => {
 		expect(state).toEqual({
 			className: '',
 			dismissible: true,
-			slotDefault: undefined,
-			slotStructure: undefined,
 			visible: true,
 			hidden: false,
 			ariaCloseButtonLabel: 'Close',

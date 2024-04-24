@@ -1,13 +1,11 @@
 import {computed} from '@amadeus-it-group/tansu';
 import type {ExtendWidgetAdaptSlotWidgetProps, ExtendWidgetInterfaces} from '../../services/extendWidget';
 import {extendWidgetProps} from '../../services/extendWidget';
-import type {ConfigValidator, Directive, PropsConfig, Widget, WidgetSlotContext} from '../../types';
+import type {ConfigValidator, Directive, PropsConfig, Widget} from '../../types';
 import {createAttributesDirective, directiveSubscribe} from '../../utils/directive';
 import {typeBoolean, typeNumberInRangeFactory} from '../../utils/writables';
 import type {CommonAlertApi, CommonAlertDirectives, CommonAlertProps, CommonAlertState, CommonAlertWidget} from '../alert/common';
 import {createCommonAlert, getCommonAlertDefaultConfig} from '../alert/common';
-
-export type ToastContext = WidgetSlotContext<ToastWidget>;
 
 export interface ToastExtraProps {
 	/**

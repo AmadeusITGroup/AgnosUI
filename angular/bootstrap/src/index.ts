@@ -15,7 +15,7 @@ export type {
 	AccordionState,
 	AccordionWidget,
 } from './components/accordion';
-export {createAccordion, getAccordionDefaultConfig} from './components/accordion';
+export {createAccordion, getAccordionDefaultConfig, createAccordionItem} from './components/accordion';
 export * from './components/accordion';
 
 export type {AlertContext, AlertProps, AlertState, AlertWidget} from './components/alert';
