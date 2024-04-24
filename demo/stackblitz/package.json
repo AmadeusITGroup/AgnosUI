@@ -8,6 +8,9 @@
 	"wireit": {
 		"build": {
 			"command": "vite build",
+			"dependencies": [
+				"..:sveltekit"
+			],
 			"files": [
 				"vite.config.ts",
 				"../src/lib/stackblitz/**",

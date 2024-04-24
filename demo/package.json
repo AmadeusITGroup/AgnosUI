@@ -31,6 +31,17 @@
 				"generated/**"
 			]
 		},
+		"sveltekit": {
+			"command": "svelte-kit sync",
+			"files": [
+				"svelte.config.js",
+				"src/**"
+			],
+			"output": [
+				".svelte-kit/**",
+				"!.svelte-kit/{generated,output}/**"
+			]
+		},
 		"dev": {
 			"command": "vite dev",
 			"dependencies": [
@@ -44,19 +55,18 @@
 				"generate:doc",
 				"../angular/demo:build",
 				"../react/demo:build",
-				"../svelte/demo:build"
+				"../svelte/demo:build",
+				"sveltekit"
 			],
 			"files": [
-				"src/**",
 				"static/**",
-				"svelte.config.js",
 				"vite.config.ts",
 				"vite-env.d.ts",
 				"scripts/*"
 			],
 			"output": [
 				"dist/**",
-				".svelte-kit/**"
+				".svelte-kit/{generated,output}/**"
 			]
 		},
 		"build:coverage": {
@@ -66,19 +76,18 @@
 				"../angular/demo:build:coverage",
 				"../react/demo:build:coverage",
 				"../svelte/demo:build:coverage",
-				"../svelte/bootstrap:build"
+				"../svelte/bootstrap:build",
+				"sveltekit"
 			],
 			"files": [
-				"src/**",
 				"static/**",
-				"svelte.config.js",
 				"vite.config.ts",
 				"vite-env.d.ts",
 				"scripts/*"
 			],
 			"output": [
 				"dist/**",
-				".svelte-kit/**"
+				".svelte-kit/{generated,output}/**"
 			]
 		},
 		"preview": {
