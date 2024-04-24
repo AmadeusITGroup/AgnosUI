@@ -15,6 +15,23 @@ $info-dark: #3a8bff;
 $body-bg-dark: #160033;
 $secondary-bg-subtle-dark: #564a00;
 
+$grid-breakpoints: (
+	xs: 0,
+	sm: 576px,
+	md: 768px,
+	lg: 1292px,
+	xl: 1500px,
+	xxl: 1800px,
+);
+
+$container-max-widths: (
+	sm: 540px,
+	md: 720px,
+	lg: 1250px,
+	xl: 1430px,
+	xxl: 1720px,
+);
+
 @import '../node_modules/bootstrap/scss/functions';
 @import '../node_modules/bootstrap/scss/variables';
 @import '../node_modules/bootstrap/scss/mixins/breakpoints';

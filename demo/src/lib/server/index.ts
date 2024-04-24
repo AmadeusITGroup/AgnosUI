@@ -40,45 +40,48 @@ const docFiles = import.meta.glob<string>('../../../../docs/*/*.md', {query: '?r
 const docs: Doc[] = [];
 for (const [key, value] of Object.entries(docFiles)) {
 	const name = key.substring(20, key.indexOf('/', 20));
-	if (name === 'Components') {
-		if (!docs.some((doc) => doc.name === name)) {
-			docs.push({name, files: componentsSubMenu});
-		} else {
-			continue;
+	if (key.substring(key.indexOf('/', 20) + 1).match(validMdRegex)) {
+		let docToPush = docs.find((doc) => doc.name === name);
+		if (!docToPush) {
+			docToPush = {
+				name,
+				files: [],
+			};
+			docs.push(docToPush);
 		}
+		const normalizedFileName = key.substring(key.indexOf('/', 20) + 1).slice(3, -3);
+
+		const fmData = frontMatter<Record<string, string>>(value);
+		for (const key of Object.keys(fmData.attributes)) {
+			if (typeof fmData.attributes[key] === 'string' && fmData.attributes[key]) {
+				fmData.attributes[key] = fmData.attributes[key].trim();
+			}
+		}
+		docToPush.files.push({
+			slug: `${name.toLowerCase()}/${normalizedFileName.toLowerCase()}`,
+			content: fmData.body,
+			title: normalizedFileName.replace('-', ' '),
+			subpath: '',
+			status: '',
+			attributes: fmData.attributes,
+		});
 	}
-	if (name === 'DaisyUI') {
-		if (!docs.some((doc) => doc.name === name)) {
+	if (name === 'Headless-Components') {
+		const docToPush = docs.find((doc) => doc.name === name);
+		if (!docToPush) {
 			docs.push({name, files: daisyUISubMenu});
 		} else {
-			continue;
+			docToPush.files = docToPush.files.concat(daisyUISubMenu);
 		}
 	}
-	if (!key.substring(key.indexOf('/', 20) + 1).match(validMdRegex)) continue;
-	let docToPush = docs.find((doc) => doc.name === name);
-	if (!docToPush) {
-		docToPush = {
-			name,
-			files: [],
-		};
-		docs.push(docToPush);
-	}
-	const normalizedFileName = key.substring(key.indexOf('/', 20) + 1).slice(3, -3);
-
-	const fmData = frontMatter<Record<string, string>>(value);
-	for (const key of Object.keys(fmData.attributes)) {
-		if (typeof fmData.attributes[key] === 'string' && fmData.attributes[key]) {
-			fmData.attributes[key] = fmData.attributes[key].trim();
+	if (name === 'Bootstrap-Components') {
+		const docToPush = docs.find((doc) => doc.name === name);
+		if (!docToPush) {
+			docs.push({name, files: componentsSubMenu});
+		} else {
+			docToPush.files = docToPush.files.concat(componentsSubMenu);
 		}
 	}
-	docToPush.files.push({
-		slug: `${name.toLowerCase()}/${normalizedFileName.toLowerCase()}`,
-		content: fmData.body,
-		title: normalizedFileName.replace('-', ' '),
-		subpath: '',
-		status: '',
-		attributes: fmData.attributes,
-	});
 }
 
 const fwkDocFiles = import.meta.glob('../../../../*/docs/*.md', {query: '?raw', eager: true, import: 'default'});

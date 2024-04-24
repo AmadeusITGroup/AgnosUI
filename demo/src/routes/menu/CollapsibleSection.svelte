@@ -66,6 +66,10 @@
 	.btn-header:focus-visible:active {
 		background-color: var(--bs-secondary-bg-subtle);
 		border-color: var(--bs-secondary-bg-subtle);
+		color: var(--bs-secondary-color);
+	}
+	.btn-header {
+		color: var(--bs-primary-text-emphasis);
 	}
 
 	svg {

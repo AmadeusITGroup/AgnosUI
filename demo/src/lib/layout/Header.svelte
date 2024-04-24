@@ -2,10 +2,18 @@
 	import {pathToRoot$, selectedFramework$, selectedTabName$} from '../stores';
 	import {page} from '$app/stores';
 	import {getTitle} from '../../app';
+	import Svg from '$lib/layout/Svg.svelte';
+	import angularLogo from '$resources/logo-angular.svg?raw';
+	import reactLogo from '$resources/logo-react.svg?raw';
+	import svelteLogo from '$resources/logo-svelte.svg?raw';
+	import daisyUILogo from '$resources/logo-daisyUI.svg?raw';
+	import bootstrapLogo from 'bootstrap-icons/icons/bootstrap-fill.svg?raw';
 
 	export let title: string;
 	export let status: string = '';
 	export let noMeta = false;
+	export let cssFramework = '';
+	export let selectedFramework = '';
 
 	$: tabs = $page.data.tabs ?? [];
 </script>
@@ -24,11 +32,26 @@
 	class:pb-3={!tabs.length}
 >
 	<div class="row align-items-center w-100" class:pb-3={tabs.length}>
-		<h1 class="text-primary col-auto me-2 me-md-none mb-0 p-0 p-md-3 text-center text-md-start">
+		<h1 class="text-primary col-auto me-3 me-md-none mb-0 p-0 p-md-3 text-center text-md-start">
 			{title}
 		</h1>
 		{#if status === 'inprogress'}<span class="col-auto badge text-bg-warning">In progress</span>{/if}
 		{#if status === 'beta'}<span class="col-auto badge text-bg-info">Beta</span>{/if}
+		{#if selectedFramework === 'react'}<span class="col-auto d-block d-md-none p-0"
+				><Svg svg={reactLogo} className="pres-card-logo d-flex position-relative" /></span
+			>{/if}
+		{#if selectedFramework === 'angular'}<span class="col-auto d-block d-md-none p-0"
+				><Svg svg={angularLogo} className="pres-card-logo d-flex position-relative" /></span
+			>{/if}
+		{#if selectedFramework === 'svelte'}<span class="col-auto d-block d-md-none p-0"
+				><Svg svg={svelteLogo} className="pres-card-logo d-flex position-relative" /></span
+			>{/if}
+		{#if cssFramework === 'Bootstrap'}<span class="col-auto d-block d-md-none p-0"
+				><Svg svg={bootstrapLogo} className="pres-card-logo d-flex logo-bootstrap position-relative" /></span
+			>{/if}
+		{#if cssFramework === 'daisyUI'}<span class="col-auto d-block d-md-none p-0"
+				><Svg svg={daisyUILogo} className="pres-card-logo d-flex position-relative" /></span
+			>{/if}
 	</div>
 	{#if tabs.length}
 		<ul class="nav-tabs px-4 px-lg-5 d-flex flex-nowrap content-tabset justify-content-start nav" role="tablist">

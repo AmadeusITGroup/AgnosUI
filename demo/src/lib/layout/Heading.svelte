@@ -2,6 +2,7 @@
 	import Header from '$lib/layout/Header.svelte';
 	import Svg from './Svg.svelte';
 	import link from 'bootstrap-icons/icons/link-45deg.svg?raw';
+	import {selectedFramework$} from '$lib/stores';
 
 	export let depth: 1 | 2 | 3 | 4 | 5 | 6;
 	export let text: string;
@@ -15,7 +16,7 @@
 		<a class="anchor-link" href="#{id}" aria-label="link to {text}"><Svg className="icon-24 align-middle" svg={link} /></a>
 	</svelte:element>
 {:else}
-	<Header title={text} />
+	<Header title={text} selectedFramework={$selectedFramework$} />
 {/if}
 
 <style lang="scss">

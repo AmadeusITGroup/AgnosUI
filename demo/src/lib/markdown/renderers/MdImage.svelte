@@ -2,6 +2,7 @@
 	export let href = '';
 	export let title: string;
 	export let text = '';
+	let className = 'w-100';
 
 	const imgRegExp = /resources\/images\/(.*)\.(svg|webp|png|jpg)/i;
 	let srcPromise: Promise<any>;
@@ -9,6 +10,7 @@
 		try {
 			const matches = href.match(imgRegExp);
 			if (matches) {
+				className = matches[1];
 				srcPromise = import(`../../../resources/images/${matches[1]}.${matches[2]}`);
 			}
 		} catch (error) {
@@ -25,5 +27,5 @@
 		</div>
 	</div>
 {:then srcModule}
-	<img class="w-100" src={srcModule.default} {title} alt={text} />
+	<img class={className} src={srcModule.default} {title} alt={text} />
 {/await}

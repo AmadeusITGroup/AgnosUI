@@ -74,7 +74,9 @@
 <div class="agnos-ui">
 	<nav class="navbar-nav demo-nav-top navbar z-1">
 		<div class="container-xxl">
-			<a class="navbar-brand d-flex align-items-center" href={$pathToRoot$}><Svg svg={agnosUILogo} className="agnosui-logo-brand me-2" /> AgnosUI </a>
+			<a class="navbar-brand mx-lg-4 mx-xl-5 d-flex align-items-center" href={$pathToRoot$}
+				><Svg svg={agnosUILogo} className="agnosui-logo-brand me-2" /> AgnosUI
+			</a>
 			<div class="align-items-center d-none d-md-flex gap-3">
 				<div class="d-flex align-items-center"></div>
 				<a
@@ -114,7 +116,7 @@
 		{:else}
 			<div class="container-xxl">
 				<div class="row flex-wrap flex-sm-nowrap align-content-between">
-					<aside class="demo-sidebar d-none d-md-flex align-items-center align-items-sm-start col-auto side-menu me-3">
+					<aside class="demo-sidebar mx-lg-4 mx-xl-5 d-none d-md-flex align-items-center align-items-sm-start col-auto side-menu me-3">
 						<SideMenu />
 					</aside>
 					<div class="pb-4 col">
@@ -125,7 +127,7 @@
 							<slot />
 						</MainSection>
 					</div>
-					<div class="demo-toc d-none d-lg-flex col-auto side-menu me-auto">
+					<div class="ms-lg-4 ms-xl-5 demo-toc d-none d-lg-flex col-auto side-menu me-auto">
 						<TOC />
 					</div>
 				</div>
@@ -179,13 +181,14 @@
 		top: 0;
 		height: calc(100vh - 60px);
 		overflow-y: auto;
-		min-width: 220px;
+		min-width: 250px;
+		scrollbar-gutter: stable;
 	}
 
 	.demo-toc {
 		position: sticky;
 		top: 0;
-		min-width: 220px;
+		min-width: 250px;
 		height: calc(100vh - 60px);
 		overflow-y: auto;
 	}
