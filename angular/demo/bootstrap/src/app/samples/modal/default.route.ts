@@ -1,14 +1,20 @@
 import type {ModalComponent} from '@agnos-ui/angular-bootstrap';
 import {AgnosUIAngularModule, modalCloseButtonClick, modalOutsideClick} from '@agnos-ui/angular-bootstrap';
 import {Component} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @Component({
 	standalone: true,
-	imports: [AgnosUIAngularModule],
+	imports: [AgnosUIAngularModule, ReactiveFormsModule, FormsModule],
 	template: `
 		<button class="btn btn-primary" type="button" (click)="show(modal)">Launch demo modal</button>
 		<div class="mt-3" data-testid="message">{{ message }}</div>
-		<au-component auModal #modal auSlotTitle="Save changes">
+		<hr />
+		<div class="form-check form-switch">
+			<input class="form-check-input" type="checkbox" role="switch" id="fullscreen" [(ngModel)]="fullscreenToggle" />
+			<label class="form-check-label" for="fullscreen">Fullscreen</label>
+		</div>
+		<au-component auModal #modal auSlotTitle="Save changes" [auFullscreen]="fullscreenToggle">
 			Do you want to save your changes?
 			<ng-template auModalFooter>
 				<button type="button" class="btn btn-outline-primary" (click)="modal.api.close(true)">Yes</button>
@@ -19,6 +25,7 @@ import {Component} from '@angular/core';
 })
 export default class DefaultModalComponent {
 	message = '';
+	fullscreenToggle = false;
 
 	async show(modal: ModalComponent<void>) {
 		this.message = '';

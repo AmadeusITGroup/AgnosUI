@@ -50,7 +50,7 @@
 
 {#if !$hidden$}
 	<div class="modal d-block" use:modalPortalDirective use:modalDirective>
-		<div class="modal-dialog">
+		<div class="modal-dialog {$state$.fullscreen ? 'modal-fullscreen' : ''}">
 			<div class="modal-content">
 				<Slot slotContent={$slotStructure$} props={slotContext} let:component let:props>
 					<svelte:fragment slot="slot" let:props><slot name="structure" {...props} /></svelte:fragment>

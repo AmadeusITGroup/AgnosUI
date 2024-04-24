@@ -5,6 +5,7 @@ import {useRef, useState} from 'react';
 const DefaultDemo = () => {
 	const modal = useRef<ModalApi<void>>(null);
 	const [message, setMessage] = useState('');
+	const [fullscreen, setFullscreen] = useState(false);
 	return (
 		<>
 			<Modal
@@ -20,6 +21,7 @@ const DefaultDemo = () => {
 						</button>
 					</>
 				}
+				fullscreen={fullscreen}
 			>
 				Do you want to save your changes?
 			</Modal>
@@ -42,6 +44,20 @@ const DefaultDemo = () => {
 			</button>
 			<div className="mt-3" data-testid="message">
 				{message}
+			</div>
+			<hr />
+			<div className="form-check form-switch">
+				<input
+					className="form-check-input"
+					type="checkbox"
+					role="switch"
+					id="fullscreen"
+					checked={fullscreen}
+					onChange={() => setFullscreen(!fullscreen)}
+				/>
+				<label className="form-check-label" htmlFor="fullscreen">
+					Fullscreen
+				</label>
 			</div>
 		</>
 	);

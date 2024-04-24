@@ -149,7 +149,7 @@ const defaultConfig: Partial<ModalProps<any>> = {
 		}
 		@if (!state().hidden) {
 			<div class="modal d-block" [auUseMulti]="[widget.directives.modalPortalDirective, widget.directives.modalDirective]">
-				<div class="modal-dialog">
+				<div class="modal-dialog {{ state().fullscreen ? 'modal-fullscreen' : '' }}">
 					<div class="modal-content">
 						<ng-template [auSlot]="state().slotStructure" [auSlotProps]="{state: state(), widget}"></ng-template>
 					</div>
@@ -215,6 +215,11 @@ export class ModalComponent<Data> extends BaseWidgetDirective<ModalWidget<Data>>
 	 * CSS classes to be applied on the widget main container
 	 */
 	@Input('auClassName') className: string | undefined;
+
+	/**
+	 * Option to create a fullscreen modal, according to the bootstrap documentation.
+	 */
+	@Input({alias: 'auFullscreen', transform: auBooleanAttribute}) fullscreen: boolean | undefined;
 
 	@Input('auSlotStructure') slotStructure: SlotContent<ModalContext<Data>>;
 	@ContentChild(ModalStructureDirective, {static: false})
