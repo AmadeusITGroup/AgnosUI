@@ -67,10 +67,6 @@
 			]
 		}
 	},
-	"files": [
-		"scss",
-		"css"
-	],
 	"devDependencies": {
 		"copyfiles": "^2.4.1",
 		"sass": "^1.75.0"
