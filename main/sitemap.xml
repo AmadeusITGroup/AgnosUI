@@ -10,6 +10,8 @@
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/headless/slots</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/headless/directives</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/headless/implementation</loc></url>
+<url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/headless-components/introduction</loc></url>
+<url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/bootstrap-components/introduction</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/services/introduction</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/services/focustrack</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/services/floating-ui</loc></url>
@@ -24,6 +26,8 @@
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/headless/slots</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/headless/directives</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/headless/implementation</loc></url>
+<url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/headless-components/introduction</loc></url>
+<url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/bootstrap-components/introduction</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/services/introduction</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/services/focustrack</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/react/services/floating-ui</loc></url>
@@ -38,6 +42,8 @@
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/headless/slots</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/headless/directives</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/headless/implementation</loc></url>
+<url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/headless-components/introduction</loc></url>
+<url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/bootstrap-components/introduction</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/services/introduction</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/services/focustrack</loc></url>
 <url><loc>https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/services/floating-ui</loc></url>
