@@ -1,5 +1,7 @@
 import {defineConfig} from 'vite';
-import {peerDependencies, dependencies} from './package.json';
+import {dependencies, peerDependencies} from './package.json';
+
+const externalDependencies = [...Object.keys(peerDependencies), ...Object.keys(dependencies)];
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -13,7 +15,8 @@ export default defineConfig({
 			formats: ['es', 'cjs'],
 		},
 		rollupOptions: {
-			external: [...Object.keys(peerDependencies), ...Object.keys(dependencies)],
+			external: (dependency) =>
+				externalDependencies.some((externalDependency) => dependency === externalDependency || dependency.startsWith(`${externalDependency}/`)),
 		},
 	},
 });
