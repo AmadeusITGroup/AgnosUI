@@ -8,6 +8,11 @@ export const directivesPreprocess = (): PreprocessorGroup => {
 		name: 'AgnosUI',
 		markup: async ({content, filename}) => {
 			const varPrefix = '__AgnosUISveltePreprocess__';
+			if (
+				content.includes(varPrefix) // avoids double processing
+			) {
+				return;
+			}
 			const str = new MagicString(content, {filename});
 			const parsedCode = parse(content, {filename});
 			const requiredImports = new Set<string>();

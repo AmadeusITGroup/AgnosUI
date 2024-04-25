@@ -73,9 +73,11 @@
 			"dependencies": [
 				"generate:exports",
 				"../headless:build",
-				"../../core-bootstrap:build"
+				"../../core-bootstrap:build",
+				"../preprocess:build"
 			],
 			"files": [
+				"svelte.config.js",
 				"src/**",
 				"!src/generated/**",
 				"tsconfig.json",
@@ -131,6 +133,7 @@
 	},
 	"peerDependencies": {
 		"@amadeus-it-group/tansu": "*",
+		"esm-env": "*",
 		"svelte": "*"
 	},
 	"devDependencies": {
