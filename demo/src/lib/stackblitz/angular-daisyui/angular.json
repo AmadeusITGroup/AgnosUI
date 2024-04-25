@@ -23,7 +23,11 @@
 						"scripts": [],
 						"inlineStyleLanguage": "scss",
 						"styles": ["src/main.css"],
-						"tsConfig": "tsconfig.json"
+						"tsConfig": "tsconfig.json",
+						"loader": {
+							".txt": "text",
+							".svg": "text"
+						}
 					}
 				},
 				"serve": {

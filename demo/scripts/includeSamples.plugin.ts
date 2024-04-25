@@ -8,7 +8,7 @@ const __dirname = import.meta.dirname;
 
 const samplePrefix = '@agnos-ui/samples/';
 const rawSampleSuffix = '?raw&sample';
-const commonImport = /^@agnos-ui\/common\/samples\/([^?]*)(\?raw)?$/;
+const commonImport = /^@agnos-ui\/common\/samples\/([^?]*)(\?raw|\?react)?$/;
 const frameworkDefaults = {
 	angular: path.join(__dirname, `../../angular/demo/bootstrap/src/app/samples/placeholder/placeholderSample.route.ts`),
 	react: path.join(__dirname, `../../react/demo/src/bootstrap/samples/placeholder/PlaceholderSample.route.tsx`),
