@@ -1,3 +1,4 @@
+import type {TransitionFn} from '@agnos-ui/core/services/transitions/baseTransitions';
 import {createCollapseTransition, type CollapseConfig} from '@agnos-ui/core/services/transitions/collapse';
 
 const verticalConfig: CollapseConfig = {
@@ -13,5 +14,5 @@ const horizontalConfig: CollapseConfig = {
 	animationPendingClasses: ['collapsing', 'collapse-horizontal'],
 };
 
-export const collapseVerticalTransition = createCollapseTransition(verticalConfig);
-export const collapseHorizontalTransition = createCollapseTransition(horizontalConfig);
+export const collapseVerticalTransition: TransitionFn = createCollapseTransition(verticalConfig);
+export const collapseHorizontalTransition: TransitionFn = createCollapseTransition(horizontalConfig);
