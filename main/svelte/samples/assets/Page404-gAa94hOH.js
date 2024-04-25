@@ -1,0 +1,1 @@
+import{S as o,i as r,s as i,p as c,b as f,n as a,f as l}from"./AppCommon-C2Pl698k.js";function p(s){let t;return{c(){t=c("Sample not found")},m(e,n){f(e,t,n)},p:a,i:a,o:a,d(e){e&&l(t)}}}class m extends o{constructor(t){super(),r(this,t,null,p,i,{})}}export{m as default};
