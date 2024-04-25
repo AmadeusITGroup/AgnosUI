@@ -97,6 +97,14 @@ export const createFrameworkProcessors =
 						'../../../../svelte/headless/dist/',
 					),
 					addAsyncFiles(
+						import.meta.glob(['../../../../svelte/preprocess/dist/**', '!**/*.map'], {
+							query: '?raw',
+							import: 'default',
+						}) as any,
+						'packages/@agnos-ui/svelte-preprocess/',
+						'../../../../svelte/preprocess/dist/',
+					),
+					addAsyncFiles(
 						import.meta.glob(['../../../../svelte/bootstrap/dist/**', '!**/*.map'], {
 							query: '?raw',
 							import: 'default',

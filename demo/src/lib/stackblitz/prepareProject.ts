@@ -61,6 +61,9 @@ export const createFrameworkProcessorsReleased = (version: string) => {
 		} else {
 			packageJson.devDependencies[`@agnos-ui/${framework}-headless`] = version;
 		}
+		if (framework === 'svelte') {
+			packageJson.devDependencies[`@agnos-ui/svelte-preprocess`] = version;
+		}
 		files['package.json'] = JSON.stringify(packageJson, null, '\t');
 	};
 	res.angular.push(setPackageJsonVersion);
