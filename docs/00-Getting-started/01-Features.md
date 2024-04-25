@@ -26,6 +26,6 @@ Widgets offer a multitude of properties and access points that allow for customi
 
 Core is fully tested to ensure consistent functionality across different framework implementations of the widgets. Additionally, we maintain uniformity in the markup used by each framework’s widget implementation
 
-## Bootstrap CSS widgets
+## Extented Bootstrap CSS widgets
 
-Bootstrap CSS widgets are available for Angular, React and Svelte in separated packages.
+Bootstrap CSS widgets are available for Angular, React and Svelte in separated packages with additional standalone widgets like slider...Read more about this [here](../03-Bootstrap-Components/00-Introduction.md).

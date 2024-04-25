@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Header from '$lib/layout/Header.svelte';
 	import StatusAlert from '$lib/layout/StatusAlert.svelte';
+	import ComponentTypeAlert from '$lib/layout/ComponentTypeAlert.svelte';
 
 	import {selectedFramework$, selectedTabName$} from '$lib/stores';
 
@@ -20,6 +21,9 @@
 <div class="main-content">
 	{#if $page.data.status !== 'stable'}
 		<StatusAlert status={$page.data.status} />
+	{/if}
+	{#if $page.data.type === 'standalone'}
+		<ComponentTypeAlert componentType={$page.data.type} />
 	{/if}
 	<slot />
 </div>
