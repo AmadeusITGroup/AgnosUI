@@ -60,7 +60,7 @@ cleanObjDistPrefix(pkg, 'types');
 if (pkg.exports) {
 	for (const key of Object.keys(pkg.exports)) {
 		const pkgExport = pkg.exports[key];
-		cleanObjDistPrefix(pkgExport, 'types', 'default', 'svelte', 'esm', 'esm2022', 'require');
+		cleanObjDistPrefix(pkgExport, 'types', 'default', 'svelte', 'esm', 'esm2022', 'require', 'sass');
 	}
 }
 

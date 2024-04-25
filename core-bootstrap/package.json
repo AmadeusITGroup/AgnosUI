@@ -14,6 +14,7 @@
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
+			"sass": "./src/scss/agnosui.scss",
 			"require": "./dist/index.cjs",
 			"default": "./dist/index.js"
 		},
