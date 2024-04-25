@@ -10,3 +10,4 @@ test-results/
 core-bootstrap/css/
 verdaccio/storage
 .wireit
+svelte/preprocess/test/files/transformed

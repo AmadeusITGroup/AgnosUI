@@ -127,7 +127,9 @@ function classNamesSubscribe(node: SSRHTMLElement, classNames$: ReadableSignal<s
 				classList.remove(className);
 			}
 		}
-		classList.add(...classNames);
+		if (classNames.size > 0) {
+			classList.add(...classNames);
+		}
 		currentClassNames = classNames;
 	});
 }

@@ -10,3 +10,4 @@ demo/src/app.d.ts
 eslint-plugin/test/file.svelte
 verdaccio/storage
 .wireit
+svelte/preprocess/test/files/transformed

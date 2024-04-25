@@ -1,5 +1,6 @@
 import {defineConfig} from 'vite';
 import {svelte, vitePreprocess} from '@sveltejs/vite-plugin-svelte';
+import {directivesPreprocess} from '@agnos-ui/svelte-preprocess';
 import path from 'path';
 import {alias} from '../../viteAlias';
 
@@ -35,7 +36,7 @@ export default defineConfig((config) => ({
 	},
 	plugins: [
 		svelte({
-			preprocess: vitePreprocess(),
+			preprocess: [vitePreprocess(), directivesPreprocess()],
 		}),
 	],
 }));

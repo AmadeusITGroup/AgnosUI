@@ -1,3 +1,4 @@
+import {browserDirective} from '@agnos-ui/svelte-bootstrap/utils/directive';
 import {createResizeObserver} from '@agnos-ui/svelte-bootstrap/services/resizeObserver';
 import {asReadable, writable, type UnsubscribeFunction} from '@amadeus-it-group/tansu';
 import {derived} from 'svelte/store';
@@ -49,7 +50,7 @@ export function createIframeHandler(defaultHeight: number, resize = true, messag
 
 	return {
 		showSpinner$: asReadable(_showSpinner$),
-		handlerDirective: (iframe: HTMLIFrameElement, baseSrc: string) => {
+		handlerDirective: browserDirective((iframe: HTMLIFrameElement, baseSrc: string) => {
 			let heightUnsubscribe: UnsubscribeFunction | undefined;
 
 			iframe.onload = onLoad;
@@ -103,6 +104,6 @@ export function createIframeHandler(defaultHeight: number, resize = true, messag
 					resizeDirectiveApplied?.destroy?.();
 				},
 			};
-		},
+		}),
 	};
 }

@@ -1,8 +1,9 @@
 import Tooltip from '$lib/tooltip/Tooltip.svelte';
+import {browserDirective} from '@agnos-ui/svelte-bootstrap/utils/directive';
 import {createFloatingUI} from '@agnos-ui/svelte-bootstrap/services/floatingUI';
 import {flip, offset} from '@floating-ui/dom';
 
-export function tooltip(button: HTMLElement, options: {content: string}) {
+export const tooltip = browserDirective((button: HTMLElement, options: {content: string}) => {
 	const content = options.content;
 
 	let componentInstance: Tooltip | undefined;
@@ -54,4 +55,4 @@ export function tooltip(button: HTMLElement, options: {content: string}) {
 			button.removeEventListener('mouseleave', hide);
 		},
 	};
-}
+});

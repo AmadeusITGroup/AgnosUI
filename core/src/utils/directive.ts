@@ -25,10 +25,10 @@ export const isBrowserHTMLElement: (element: SSRHTMLElement) => element is HTMLE
  * @param directive - The directive to run only in a browser.
  * @returns The wrapped directive.
  */
-export const browserDirective: <T>(directive: Directive<T, HTMLElement>) => Directive<T, SSRHTMLElement> = BROWSER
+export const browserDirective: <T, U extends HTMLElement>(directive: Directive<T, U>) => Directive<T, SSRHTMLElement> = BROWSER
 	? (directive) => (node, args) => {
 			if (isBrowserHTMLElement(node)) {
-				return directive(node, args);
+				return directive(node as any, args);
 			}
 		}
 	: (directive) => () => {};

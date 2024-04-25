@@ -190,6 +190,7 @@
 		"svelte/bootstrap",
 		"svelte/demo",
 		"svelte/ssr-app",
+		"svelte/preprocess",
 		"demo",
 		"eslint-plugin",
 		"base-po",

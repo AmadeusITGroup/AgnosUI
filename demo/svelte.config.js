@@ -3,6 +3,7 @@ import {vitePreprocess} from '@sveltejs/vite-plugin-svelte';
 import path from 'path';
 import child_process from 'child_process';
 import {globSync} from 'glob';
+import {directivesPreprocess} from '@agnos-ui/svelte-preprocess';
 
 const __dirname = import.meta.dirname;
 
@@ -25,7 +26,7 @@ if (process.env.NODE_ENV === 'development') {
 const config = {
 	// Consult https://kit.svelte.dev/docs/integrations#preprocessors
 	// for more information about preprocessors
-	preprocess: vitePreprocess(),
+	preprocess: [vitePreprocess(), directivesPreprocess()],
 
 	kit: {
 		// adapter-auto only supports some environments, see https://kit.svelte.dev/docs/adapter-auto for a list.
