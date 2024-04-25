@@ -17,7 +17,7 @@ import {
 import {collapseVerticalTransition} from '../../services/transitions';
 import type {ExtendWidgetAdaptSlotWidgetProps} from '@agnos-ui/core/services/extendWidget';
 import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
-import type {SlotContent, Widget, WidgetSlotContext} from '@agnos-ui/core/types';
+import type {SlotContent, Widget, WidgetFactory, WidgetSlotContext} from '@agnos-ui/core/types';
 
 export * from '@agnos-ui/core/components/accordion';
 
@@ -88,14 +88,8 @@ export function getAccordionDefaultConfig(): AccordionProps {
 	return {...defaultPropsWithoutOverride, ...coreOverride};
 }
 
-/**
- * Create an AccordionWidget with given config props
- * @param config - an optional alert config
- * @returns an AccordionWidget
- */
-export const createAccordion = extendWidgetProps(
-	factoryCreateAccordion(createAccordionItem, accordionItemProps),
-	defaultConfigExtraProps,
-	{},
-	coreOverride,
-);
+export const createAccordion: WidgetFactory<AccordionWidget> = factoryCreateAccordion(
+	createAccordionItem,
+	accordionItemProps,
+	getAccordionDefaultConfig(),
+) as any;

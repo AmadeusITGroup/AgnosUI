@@ -1,4 +1,3 @@
-import type {ReadableSignals} from '../../utils/stores';
 import {stateStores, writablesForProps, normalizeConfigStores, mergeConfigStores} from '../../utils/stores';
 import type {TransitionFn} from '../../services/transitions/baseTransitions';
 import {createTransition} from '../../services/transitions/baseTransitions';
@@ -549,55 +548,20 @@ export function createAccordionItem(config?: PropsConfig<AccordionItemProps>): A
  *
  * @param itemFactory - the item factory
  * @param accordionItemProps - the list of item props
+ * @param accordionConfig - the default accordion config
+ * @param accordionValidator - the validator of props
  * @returns the accordion widget factory
  */
 export function factoryCreateAccordion(
 	itemFactory: WidgetFactory<AccordionItemWidget> = createAccordionItem,
 	accordionItemProps: string[] = coreAccordionItemProps,
+	accordionConfig: AccordionProps = defaultAccordionConfig,
+	accordionValidator: ConfigValidator<AccordionProps> = configAccordionValidator,
 ): WidgetFactory<AccordionWidget> {
 	return (config?: PropsConfig<AccordionProps>) => {
-		const [
-			{
-				closeOthers$,
-				onShown$,
-				onHidden$,
-				className$,
-				itemId$,
-				itemAnimated$,
-				itemClass$,
-				itemDisabled$,
-				itemVisible$,
-				itemTransition$,
-				itemDestroyOnHide$,
-				itemBodyClass$,
-				itemButtonClass$,
-				itemBodyContainerClass$,
-				itemHeaderClass$,
-				itemHeadingTag$,
-				onItemVisibleChange$,
-				onItemHidden$,
-				onItemShown$,
-				...stateProps
-			},
-			patch,
-		] = writablesForProps(defaultAccordionConfig, config, configAccordionValidator);
-		const accordionItemConfig: ReadableSignals<AccordionItemProps> = {
-			itemId: itemId$,
-			itemClass: itemClass$,
-			itemAnimated: itemAnimated$,
-			itemDisabled: itemDisabled$,
-			itemVisible: itemVisible$,
-			itemTransition: itemTransition$,
-			itemDestroyOnHide: itemDestroyOnHide$,
-			itemBodyClass: itemBodyClass$,
-			itemButtonClass: itemButtonClass$,
-			itemBodyContainerClass: itemBodyContainerClass$,
-			itemHeaderClass: itemHeaderClass$,
-			itemHeadingTag: itemHeadingTag$,
-			onItemVisibleChange: onItemVisibleChange$,
-			onItemHidden: onItemHidden$,
-			onItemShown: onItemShown$,
-		};
+		const [writables, patch] = writablesForProps(accordionConfig, config, accordionValidator);
+		const {closeOthers$, onShown$, onHidden$, className$} = writables;
+		const accordionItemConfig = Object.fromEntries(Object.entries(writables).map((entry) => [entry[0].slice(0, -1), entry[1]]));
 		const itemsWidget$ = registrationArray<AccordionItemWidget>();
 		const openItems$ = computed(() => {
 			const openItems: string[] = [];
@@ -621,7 +585,7 @@ export function factoryCreateAccordion(
 			checkCloseOthersAction$();
 		});
 		return {
-			...stateStores({itemsWidget$, className$, ...stateProps}),
+			...stateStores({itemsWidget$, className$}),
 			patch,
 			actions: {},
 			api: {
