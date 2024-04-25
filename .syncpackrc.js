@@ -2,7 +2,13 @@ import rootPkg from './package.json' with {type: 'json'};
 
 /** @type import("syncpack").RcFile */
 export default {
-	source: ['package.json', '*/package.json', '*/{demo,bootstrap,headless,ssr-app}/package.json', 'demo/src/lib/stackblitz/*/package.json'],
+	source: [
+		'package.json',
+		'*/package.json',
+		'*/{demo,bootstrap,headless,ssr-app}/package.json',
+		'demo/src/lib/stackblitz/*/package.json',
+		'svelte/preprocess/package.json',
+	],
 	indent: '\t',
 	semverRange: '^',
 	versionGroups: [
