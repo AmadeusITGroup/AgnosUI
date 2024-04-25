@@ -1,3 +1,4 @@
+import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {asWritable, batch, computed, writable} from '@amadeus-it-group/tansu';
 import type {Placement} from '@floating-ui/dom';
 import {autoPlacement, offset, size} from '@floating-ui/dom';
@@ -8,7 +9,7 @@ import {createHasFocus} from '../../services/focustrack';
 import type {NavManagerItemConfig} from '../../services/navManager';
 import {createNavManager} from '../../services/navManager';
 import type {Directive, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../../types';
-import {bindDirective} from '../../utils/directive';
+import {bindDirective, createAttributesDirective, mergeDirectives} from '../../utils/directive';
 import {generateId} from '../../utils/internal/dom';
 import {noop} from '../../utils/internal/func';
 import {bindableDerived, bindableProp, stateStores, writablesForProps} from '../../utils/stores';
@@ -250,7 +251,7 @@ export interface SelectApi<Item> {
 	toggle(isOpen?: boolean): void;
 }
 
-export interface SelectDirectives {
+export interface SelectDirectives<Item> {
 	/**
 	 * Directive to be used in the input group and the menu containers
 	 */
@@ -270,6 +271,21 @@ export interface SelectDirectives {
 	 * A directive to be applied to the element that contains the badges and the input
 	 */
 	inputContainerDirective: Directive;
+
+	/**
+	 * A directive that applies all the necessary attributes to the container badges
+	 */
+	badgeAttributesDirective: Directive<ItemContext<Item>>;
+
+	/**
+	 * A directive that applies all the necessary attributes to the dropdown menu
+	 */
+	menuAttributesDirective: Directive;
+
+	/**
+	 * A directive that applies all the necessary attributes to the dropdown item
+	 */
+	itemAttributesDirective: Directive<ItemContext<Item>>;
 }
 
 export interface SelectActions<Item> {
@@ -300,7 +316,7 @@ export interface SelectActions<Item> {
 	onBadgeKeydown: (event: KeyboardEvent, item: Item) => void;
 }
 
-export type SelectWidget<Item> = Widget<SelectProps<Item>, SelectState<Item>, SelectApi<Item>, SelectActions<Item>, SelectDirectives>;
+export type SelectWidget<Item> = Widget<SelectProps<Item>, SelectState<Item>, SelectApi<Item>, SelectActions<Item>, SelectDirectives<Item>>;
 
 export const defaultConfig: SelectProps<any> = {
 	id: undefined,
@@ -352,6 +368,10 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 			onSelectedChange$,
 			allowedPlacements$,
 			navSelector$,
+			className$,
+			badgeClassName$,
+			ariaLabel$,
+			menuClassName$,
 			...stateProps
 		},
 		patch,
@@ -470,6 +490,55 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 		event.preventDefault();
 	};
 
+	const inputContainerAttributesDirective = createAttributesDirective(() => ({
+		attributes: {
+			role: 'combobox',
+			'aria-haspopup': 'listbox',
+			'aria-expanded': computed(() => `${open$()}`),
+			'aria-controls': computed(() => `${id$()}-menu`),
+		},
+	}));
+
+	const badgeAttributesDirective = createAttributesDirective((itemContext$: ReadableSignal<ItemContext<Item>>) => ({
+		attributes: {
+			tabindex: -1,
+			class: badgeClassName$,
+		},
+		classNames: {
+			'au-select-badge': true,
+		},
+		events: {
+			keydown: (e: KeyboardEvent) => widget.actions.onBadgeKeydown(e, itemContext$().item),
+		},
+	}));
+
+	const menuAttributesDirective = createAttributesDirective(() => ({
+		attributes: {
+			role: 'listbox',
+			id: computed(() => `${id$()}-menu`),
+			'data-popper-placement': placement$,
+			class: menuClassName$,
+		},
+		events: {
+			mousedown: (e: MouseEvent) => e.preventDefault(),
+		},
+	}));
+
+	const itemAttributesDirective = createAttributesDirective((itemContext$: ReadableSignal<ItemContext<Item>>) => ({
+		attributes: {
+			role: 'option',
+			'aria-selected': computed(() => `${itemContext$().selected}`),
+			style: 'cursor: pointer',
+		},
+		classNames: {
+			'au-select-item': true,
+			selected: computed(() => itemContext$().selected),
+		},
+		events: {
+			click: () => widget.api.toggleItem(itemContext$().item),
+		},
+	}));
+
 	const widget: SelectWidget<Item> = {
 		...stateStores({
 			id$,
@@ -479,6 +548,10 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 			selectedContexts$,
 			filterText$,
 			placement$,
+			className$,
+			badgeClassName$,
+			ariaLabel$,
+			menuClassName$,
 
 			...stateProps,
 		}),
@@ -560,7 +633,10 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 			hasFocusDirective,
 			floatingDirective,
 			referenceDirective,
-			inputContainerDirective: bindDirective(navDirective, navManagerConfig$),
+			inputContainerDirective: mergeDirectives(bindDirective(navDirective, navManagerConfig$), inputContainerAttributesDirective),
+			badgeAttributesDirective,
+			menuAttributesDirective,
+			itemAttributesDirective,
 		},
 		actions: {
 			onInput({target}: {target: HTMLInputElement}) {
