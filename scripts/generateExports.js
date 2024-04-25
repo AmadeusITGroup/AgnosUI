@@ -50,7 +50,10 @@ const generateExports = async (destination, source, dependencyPkg) => {
 
 	// first we go through all files in the source source folder
 	const srcFiles = (
-		await glob(`{generated/**,services,services/transitions,utils,.}/*.{ts,tsx}`, {cwd: sourceFolder, ignore: ['**/*.spec.ts', 'index.ts']})
+		await glob(`{generated/**,services,services/transitions,utils,.}/*.{ts,tsx}`, {
+			cwd: sourceFolder,
+			ignore: ['**/*.d.ts', '**/*.spec.ts', 'index.ts'],
+		})
 	).map(normalizePath);
 	for (const srcFile of srcFiles) {
 		// removing a potential generated/ prefix, as the lib will go through the generated folder of the headless

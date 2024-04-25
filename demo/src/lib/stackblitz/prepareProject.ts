@@ -57,7 +57,7 @@ export const createFrameworkProcessorsReleased = (version: string) => {
 	const setPackageJsonVersion: StackblitzProcessor = async ({files}, sample, framework) => {
 		const packageJson = JSON.parse(files['package.json']);
 		if (isBootstrapCondition(sample)) {
-			packageJson.devDependencies[`@agnos-ui/${framework}`] = version;
+			packageJson.devDependencies[`@agnos-ui/${framework}-bootstrap`] = version;
 		} else {
 			packageJson.devDependencies[`@agnos-ui/${framework}-headless`] = version;
 		}
