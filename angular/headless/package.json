@@ -1,7 +1,7 @@
 {
 	"name": "@agnos-ui/angular-headless",
 	"description": "Headless widget library for Angular.",
-	"version": "0.0.0",
+	"version": "0.3.1",
 	"type": "module",
 	"exports": {
 		".": {
@@ -96,7 +96,7 @@
 		"@angular/core": "*"
 	},
 	"dependencies": {
-		"@agnos-ui/core": "0.0.0",
+		"@agnos-ui/core": "0.3.1",
 		"tslib": "^2.6.2"
 	},
 	"devDependencies": {

@@ -1,7 +1,7 @@
 {
 	"name": "@agnos-ui/core-bootstrap",
 	"description": "Styles and widget interface extensions necessary to use AgnosUI with Bootstrap.",
-	"version": "0.0.0",
+	"version": "0.3.1",
 	"private": true,
 	"keywords": [
 		"css",
@@ -102,7 +102,7 @@
 		"sass": "^1.75.0"
 	},
 	"dependencies": {
-		"@agnos-ui/core": "0.0.0"
+		"@agnos-ui/core": "0.3.1"
 	},
 	"peerDependencies": {},
 	"sideEffects": false
