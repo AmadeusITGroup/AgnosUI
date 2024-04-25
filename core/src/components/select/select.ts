@@ -8,24 +8,12 @@ import type {HasFocus} from '../../services/focustrack';
 import {createHasFocus} from '../../services/focustrack';
 import type {NavManagerItemConfig} from '../../services/navManager';
 import {createNavManager} from '../../services/navManager';
-import type {Directive, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../../types';
+import type {Directive, PropsConfig, Widget} from '../../types';
 import {bindDirective, createAttributesDirective, mergeDirectives} from '../../utils/directive';
 import {generateId} from '../../utils/internal/dom';
 import {noop} from '../../utils/internal/func';
 import {bindableDerived, bindableProp, stateStores, writablesForProps} from '../../utils/stores';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
-
-/**
- * A type for the slot context of the pagination widget
- */
-export type SelectContext<Item> = WidgetSlotContext<SelectWidget<Item>>;
-
-export interface SelectItemContext<Item> extends SelectContext<Item> {
-	/**
-	 * Contextual data related to an item
-	 */
-	itemContext: ItemContext<Item>;
-}
 
 export interface SelectCommonPropsAndState<Item> extends WidgetsCommonPropsAndState {
 	/**
@@ -77,18 +65,6 @@ export interface SelectCommonPropsAndState<Item> extends WidgetsCommonPropsAndSt
 	 * true if a loading process is being done
 	 */
 	loading: boolean;
-
-	/**
-	 * The template to override the way each badge on the left of the input is displayed.
-	 * This define the content of the badge inside the badge container.
-	 */
-	slotBadgeLabel: SlotContent<SelectItemContext<Item>>;
-
-	/**
-	 * The template to override the way each item is displayed in the list.
-	 * This define the content of the badge inside the badge container.
-	 */
-	slotItem: SlotContent<SelectItemContext<Item>>;
 }
 
 export interface SelectProps<T> extends SelectCommonPropsAndState<T> {
@@ -337,8 +313,6 @@ export const defaultConfig: SelectProps<any> = {
 	menuClassName: '',
 	menuItemClassName: '',
 	badgeClassName: '',
-	slotBadgeLabel: ({itemContext}: SelectItemContext<any>) => itemContext.item,
-	slotItem: ({itemContext}: SelectItemContext<any>) => itemContext.item,
 };
 
 /**

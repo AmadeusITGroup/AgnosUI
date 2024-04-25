@@ -1,13 +1,11 @@
 import type {TransitionFn} from '../../services/transitions/baseTransitions';
 import {createTransition} from '../../services/transitions/baseTransitions';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
-import type {ConfigValidator, Directive, PropsConfig, Widget, WidgetSlotContext} from '../../types';
+import type {ConfigValidator, Directive, PropsConfig, Widget} from '../../types';
 import {noop} from '../../utils/internal/func';
 import {stateStores, writablesForProps} from '../../utils/stores';
 import {bindDirectiveNoArg} from '../../utils/directive';
 import {typeBoolean} from '../../utils/writables';
-
-export type CommonAlertContext = WidgetSlotContext<CommonAlertWidget>;
 
 export interface CommonAlertCommonPropsAndState extends WidgetsCommonPropsAndState {
 	/**

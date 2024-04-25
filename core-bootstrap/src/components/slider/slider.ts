@@ -1,1 +1,61 @@
+import type {
+	SliderActions,
+	SliderApi,
+	SliderDirectives,
+	SliderHandle,
+	SliderProps as CoreProps,
+	SliderState as CoreState,
+} from '@agnos-ui/core/components/slider';
+import {createSlider as createCoreSlider, getSliderDefaultConfig as getCoreDefaultConfig} from '@agnos-ui/core/components/slider';
+import {extendWidgetProps, type ExtendWidgetAdaptSlotWidgetProps} from '@agnos-ui/core/services/extendWidget';
+import type {SlotContent, Widget, WidgetFactory, WidgetSlotContext} from '@agnos-ui/core/types';
+
 export * from '@agnos-ui/core/components/slider';
+
+export type SliderContext = WidgetSlotContext<SliderWidget>;
+export type SliderSlotLabelContext = SliderContext & {value: number};
+export type SliderSlotHandleContext = SliderContext & {item: SliderHandle};
+
+interface SliderExtraProps {
+	/**
+	 * Slot to change the default display of the slider
+	 */
+	slotStructure: SlotContent<SliderContext>;
+
+	/**
+	 * Slot to change the default labels of the slider
+	 */
+	slotLabel: SlotContent<SliderSlotLabelContext>;
+
+	/**
+	 *  Slot to change the handlers
+	 */
+	slotHandle: SlotContent<SliderSlotHandleContext>;
+}
+
+export interface SliderState extends ExtendWidgetAdaptSlotWidgetProps<CoreState, SliderExtraProps, object> {}
+export interface SliderProps extends ExtendWidgetAdaptSlotWidgetProps<CoreProps, SliderExtraProps, object> {}
+
+export type SliderWidget = Widget<SliderProps, SliderState, SliderApi, SliderActions, SliderDirectives>;
+
+const defaultConfigExtraProps: SliderExtraProps = {
+	slotStructure: undefined,
+	slotLabel: ({value}: SliderSlotLabelContext) => '' + value,
+	slotHandle: undefined,
+};
+
+/**
+ * Retrieve a shallow copy of the default Slider config
+ * @returns the default Slider config
+ */
+export function getSliderDefaultConfig(): SliderProps {
+	return {...getCoreDefaultConfig(), ...defaultConfigExtraProps} as any;
+}
+
+/**
+ * Create a Slider with given config props
+ * @param config - an optional progressbar config
+ * @returns a SliderWidget
+ */
+
+export const createSlider: WidgetFactory<SliderWidget> = extendWidgetProps(createCoreSlider, defaultConfigExtraProps, {});

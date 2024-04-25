@@ -5,7 +5,7 @@ import {stateStores, writablesForProps} from '../../utils/stores';
 import type {TransitionFn} from '../../services/transitions/baseTransitions';
 import {createTransition} from '../../services/transitions/baseTransitions';
 import {promiseFromStore} from '../../utils/internal/promise';
-import type {ConfigValidator, Directive, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../../types';
+import type {ConfigValidator, Directive, PropsConfig, Widget} from '../../types';
 import {noop} from '../../utils/internal/func';
 import {removeScrollbars, revertScrollbars} from '../../utils/internal/scrollbars';
 import {
@@ -32,11 +32,6 @@ export const modalOutsideClick = Symbol();
 export const modalCloseButtonClick = Symbol();
 
 /**
- * Context of the modal slots.
- */
-export type ModalContext<Data> = WidgetSlotContext<ModalWidget<Data>>;
-
-/**
  * Properties of the modal widget that are also in the state of the modal.
  */
 export interface ModalCommonPropsAndState<Data> extends WidgetsCommonPropsAndState {
@@ -61,32 +56,6 @@ export interface ModalCommonPropsAndState<Data> extends WidgetsCommonPropsAndSta
 	 * Otherwise, they stay where the widget is located.
 	 */
 	container: HTMLElement | null;
-
-	/**
-	 * Body of the modal.
-	 */
-	slotDefault: SlotContent<ModalContext<Data>>;
-
-	/**
-	 * Footer of the modal.
-	 */
-	slotFooter: SlotContent<ModalContext<Data>>;
-
-	/**
-	 * Header of the modal. The default header includes {@link ModalCommonPropsAndState.slotTitle|slotTitle}.
-	 */
-	slotHeader: SlotContent<ModalContext<Data>>;
-
-	/**
-	 * Structure of the modal.
-	 * The default structure uses {@link ModalCommonPropsAndState.slotHeader|slotHeader}, {@link ModalCommonPropsAndState.slotDefault|slotDefault} and {@link ModalCommonPropsAndState.slotFooter|slotFooter}.
-	 */
-	slotStructure: SlotContent<ModalContext<Data>>;
-
-	/**
-	 * Title of the modal.
-	 */
-	slotTitle: SlotContent<ModalContext<Data>>;
 
 	/**
 	 * Whether the modal should be visible when the transition is completed.
@@ -292,11 +261,6 @@ const defaultConfig: ModalProps<any> = {
 	onVisibleChange: noop,
 	onHidden: noop,
 	onShown: noop,
-	slotDefault: undefined,
-	slotFooter: undefined,
-	slotHeader: undefined,
-	slotStructure: undefined,
-	slotTitle: undefined,
 	visible: false,
 	contentData: undefined,
 };

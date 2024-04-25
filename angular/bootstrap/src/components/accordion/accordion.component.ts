@@ -1,4 +1,4 @@
-import type {AdaptSlotContentProps, SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
+import type {AdaptSlotContentProps, SlotContent, TransitionFn, WidgetFactory} from '@agnos-ui/angular-headless';
 import {
 	BaseWidgetDirective,
 	ComponentTemplate,
@@ -228,7 +228,7 @@ export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWid
 
 	readonly ad = inject(AccordionDirective);
 	readonly _widget = callWidgetFactory<AccordionItemWidget>({
-		factory: ((arg) => this.ad.api.registerItem(arg)) as typeof this.ad.api.registerItem,
+		factory: ((arg) => this.ad.api.registerItem(arg)) as WidgetFactory<AccordionItemWidget>,
 		defaultConfig,
 		events: {
 			onItemVisibleChange: (visible) => this.itemVisibleChange.emit(visible),

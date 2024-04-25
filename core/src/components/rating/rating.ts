@@ -1,6 +1,6 @@
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {computed, writable} from '@amadeus-it-group/tansu';
-import type {ConfigValidator, Directive, PropsConfig, SlotContent, Widget} from '../../types';
+import type {ConfigValidator, Directive, PropsConfig, Widget} from '../../types';
 import {INVALID_VALUE} from '../../types';
 import {createAttributesDirective} from '../../utils/directive';
 import {clamp, isNumber} from '../../utils/internal/checks';
@@ -53,11 +53,6 @@ export interface RatingCommonPropsAndState extends WidgetsCommonPropsAndState {
 	 * If the component is disabled, `tabindex` will still be set to `-1`.
 	 */
 	tabindex: number;
-
-	/**
-	 * The template to override the way each star is displayed.
-	 */
-	slotStar: SlotContent<StarContext>;
 
 	/**
 	 * The aria label
@@ -178,7 +173,6 @@ const defaultConfig: RatingProps = {
 	onLeave: noop,
 	onRatingChange: noop,
 	className: '',
-	slotStar: ({fill}: StarContext) => String.fromCharCode(fill === 100 ? 9733 : 9734),
 	ariaLabel: 'Rating',
 	ariaLabelledBy: '',
 };

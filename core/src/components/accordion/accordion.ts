@@ -1,10 +1,8 @@
-import type {ReadableSignals} from '../../utils/stores';
 import {stateStores, writablesForProps, normalizeConfigStores, mergeConfigStores} from '../../utils/stores';
 import type {TransitionFn} from '../../services/transitions/baseTransitions';
 import {createTransition} from '../../services/transitions/baseTransitions';
-import type {ConfigValidator, Directive, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '../../types';
-import type {ReadableSignal} from '@amadeus-it-group/tansu';
-import {computed, writable} from '@amadeus-it-group/tansu';
+import type {ConfigValidator, Directive, PropsConfig, Widget, WidgetFactory} from '../../types';
+import {asWritable, computed, readable, writable} from '@amadeus-it-group/tansu';
 import {noop} from '../../utils/internal/func';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 import {typeBoolean, typeFunction, typeString} from '../../utils/writables';
@@ -110,27 +108,6 @@ export interface AccordionProps extends WidgetsCommonPropsAndState {
 	 */
 	onItemVisibleChange: (visible: boolean) => void;
 	/**
-	 * Structure of the accordion-item. The default item structure is: accordion-item
-	 * contains accordion header and accordion-item body container; the accordion header contains the accordion button
-	 * (that contains `slotItemHeader`), while the accordion-item body container contains the accordion body (that contains `slotItemBody`).
-	 * The itemTransition it applied on this element.
-	 *
-	 * It is a prop of the accordion-item.
-	 */
-	slotItemStructure: SlotContent<AccordionItemContext>;
-	/**
-	 * Content present in the accordion body.
-	 *
-	 * It is a prop of the accordion-item.
-	 */
-	slotItemBody: SlotContent<AccordionItemContext>;
-	/**
-	 * Content present in the accordion button inside the accordion header.
-	 *
-	 * It is a prop of the accordion-item.
-	 */
-	slotItemHeader: SlotContent<AccordionItemContext>;
-	/**
 	 * CSS classes to add on the accordion-item DOM element.
 	 *
 	 * It is a prop of the accordion-item.
@@ -220,8 +197,6 @@ export interface AccordionDirectives {
 
 export type AccordionWidget = Widget<AccordionProps, AccordionState, AccordionApi, object, AccordionDirectives>;
 
-export type AccordionItemContext = WidgetSlotContext<AccordionItemWidget>;
-
 export interface AccordionItemActions {
 	/**
 	 * Action to be called when the user clicks on the accordion-item button. If the accordion-item is disabled nothing will happen.
@@ -293,21 +268,6 @@ export interface AccordionItemCommonPropsAndState {
 	 * The id of the accordion-item. It can be used for controlling the accordion-item via the accordion api.
 	 */
 	itemId: string;
-	/**
-	 * Content present in the accordion button inside the accordion header.
-	 */
-	slotItemHeader: SlotContent<AccordionItemContext>;
-	/**
-	 * Content present in the accordion body.
-	 */
-	slotItemBody: SlotContent<AccordionItemContext>;
-	/**
-	 * Structure of the accordion-item. The default item structure is: accordion-item
-	 * contains accordion header and accordion-item body container; the accordion header contains the accordion button
-	 * (that contains `slotItemHeader`), while the accordion-item body container contains the accordion body (that contains `slotItemBody`).
-	 * The itemTransition it applied on this element.
-	 */
-	slotItemStructure: SlotContent<AccordionItemContext>;
 	/**
 	 * CSS classes to add on the accordion-item DOM element.
 	 */
@@ -389,9 +349,6 @@ const defaultAccordionConfig: AccordionProps = {
 	onItemShown: noop,
 	onItemHidden: noop,
 	onItemVisibleChange: noop,
-	slotItemStructure: undefined,
-	slotItemBody: undefined,
-	slotItemHeader: undefined,
 	itemClass: '',
 	itemHeaderClass: '',
 	itemButtonClass: '',
@@ -409,9 +366,6 @@ const defaultItemConfig: AccordionItemProps = {
 	onItemShown: defaultAccordionConfig.onItemShown,
 	onItemHidden: defaultAccordionConfig.onItemHidden,
 	onItemVisibleChange: defaultAccordionConfig.onItemVisibleChange,
-	slotItemStructure: defaultAccordionConfig.slotItemStructure,
-	slotItemBody: defaultAccordionConfig.slotItemBody,
-	slotItemHeader: defaultAccordionConfig.slotItemHeader,
 	itemClass: defaultAccordionConfig.itemClass,
 	itemHeaderClass: defaultAccordionConfig.itemHeaderClass,
 	itemButtonClass: defaultAccordionConfig.itemButtonClass,
@@ -419,7 +373,7 @@ const defaultItemConfig: AccordionItemProps = {
 	itemBodyClass: defaultAccordionConfig.itemBodyClass,
 	itemHeadingTag: defaultAccordionConfig.itemHeadingTag,
 };
-const accordionItemProps = Object.keys(defaultItemConfig) as (keyof AccordionItemProps)[];
+const coreAccordionItemProps = Object.keys(defaultItemConfig);
 
 /**
  * Retrieve a shallow copy of the default accordion config
@@ -468,11 +422,12 @@ const configItemValidator: ConfigValidator<AccordionItemProps> = {
 	itemHeadingTag: typeString,
 };
 
-function createAccordionItem(
-	accordionOnShown: ReadableSignal<(itemId: string) => void>,
-	accordionOnHidden: ReadableSignal<(itemId: string) => void>,
-	config?: PropsConfig<AccordionItemProps>,
-): AccordionItemWidget {
+/**
+ * Creates a new AccordionItem widget instance.
+ * @param config - config of the accordion item, either as a store or as an object containing values or stores.
+ * @returns a new accordion item widget instance
+ */
+export function createAccordionItem(config?: PropsConfig<AccordionItemProps>): AccordionItemWidget {
 	const [
 		{
 			itemBodyClass$,
@@ -506,11 +461,9 @@ function createAccordionItem(
 			animatedOnInit: false,
 			initDone: initDone$,
 			onHidden: () => {
-				accordionOnHidden()(itemId$());
 				onItemHidden$()();
 			},
 			onShown: () => {
-				accordionOnShown()(itemId$());
 				onItemShown$()();
 			},
 		},
@@ -589,122 +542,127 @@ function createAccordionItem(
 		},
 	};
 }
+
+/**
+ * Create an accordion WidgetFactory based on a item factory and the list of item props that should inherit from the parent accordion
+ *
+ * @param itemFactory - the item factory
+ * @param accordionItemProps - the list of item props
+ * @param accordionConfig - the default accordion config
+ * @param accordionValidator - the validator of props
+ * @returns the accordion widget factory
+ */
+export function factoryCreateAccordion(
+	itemFactory: WidgetFactory<AccordionItemWidget> = createAccordionItem,
+	accordionItemProps: string[] = coreAccordionItemProps,
+	accordionConfig: AccordionProps = defaultAccordionConfig,
+	accordionValidator: ConfigValidator<AccordionProps> = configAccordionValidator,
+): WidgetFactory<AccordionWidget> {
+	return (config?: PropsConfig<AccordionProps>) => {
+		const [writables, patch] = writablesForProps(accordionConfig, config, accordionValidator);
+		const {closeOthers$, onShown$, onHidden$, className$} = writables;
+		const accordionItemConfig = Object.fromEntries(Object.entries(writables).map((entry) => [entry[0].slice(0, -1), entry[1]]));
+		const itemsWidget$ = registrationArray<AccordionItemWidget>();
+		const openItems$ = computed(() => {
+			const openItems: string[] = [];
+			itemsWidget$().forEach((item) => {
+				if (item.state$().itemVisible) {
+					openItems.push(item.state$().itemId);
+				}
+			});
+			return openItems;
+		});
+
+		const oldOpenItem$ = writable(openItems$()[0]);
+		const checkCloseOthersAction$ = computed(() => {
+			if (closeOthers$()) {
+				adjustItemsCloseOthers(itemsWidget$(), openItems$(), oldOpenItem$());
+				oldOpenItem$.set(openItems$()[0]);
+			}
+		});
+
+		const action$ = computed(() => {
+			checkCloseOthersAction$();
+		});
+		return {
+			...stateStores({itemsWidget$, className$}),
+			patch,
+			actions: {},
+			api: {
+				expand: (id: string) => {
+					getItem(itemsWidget$(), id)?.api.expand();
+				},
+				collapse: (id: string) => {
+					getItem(itemsWidget$(), id)?.api.collapse();
+				},
+				toggle: (id: string) => {
+					getItem(itemsWidget$(), id)?.api.toggle();
+				},
+				expandAll: () => {
+					itemsWidget$().forEach((i) => i.api.expand());
+				},
+				collapseAll: () => {
+					itemsWidget$().forEach((i) => i.api.collapse());
+				},
+				registerItem: (propsConfig?: PropsConfig<AccordionItemProps>) => {
+					const itemProps = accordionItemProps as (keyof AccordionItemProps)[];
+					const config = mergeConfigStores(itemProps, normalizeConfigStores(itemProps, propsConfig?.config), accordionItemConfig);
+					const [{onItemHidden$, onItemShown$}] = writablesForProps(
+						{
+							onItemHidden: defaultItemConfig.onItemHidden,
+							onItemShown: defaultItemConfig.onItemShown,
+						},
+						{config, props: propsConfig?.props} as PropsConfig<Pick<AccordionItemProps, 'onItemHidden' | 'onItemShown'>>,
+					);
+					const item = itemFactory({
+						config,
+						props: {
+							...propsConfig?.props,
+							onItemHidden: asWritable(
+								readable(() => {
+									onHidden$()(item.stores.itemId$());
+									onItemHidden$()?.();
+								}),
+								(val) => {
+									onItemHidden$.set(val);
+								},
+							),
+							onItemShown: asWritable(
+								readable(() => {
+									onShown$()(item.stores.itemId$());
+									onItemShown$()?.();
+								}),
+								(val) => {
+									onItemShown$.set(val);
+								},
+							),
+						},
+					});
+
+					item.directives.accordionItemDirective = mergeDirectives(
+						() => ({
+							destroy: itemsWidget$.register(item),
+						}),
+						createAttributesDirective(() => ({
+							attributes: {class: item.stores.itemClass$, id: item.stores.itemId$},
+						})),
+					);
+					return item;
+				},
+			},
+			directives: {
+				accordionDirective: mergeDirectives(
+					directiveSubscribe(action$),
+					createAttributesDirective(() => ({attributes: {class: className$()}, classNames: {'au-accordion': true}})),
+				),
+			},
+		};
+	};
+}
+
 /**
  * Creates a new Accordion widget instance.
  * @param config - config of the accordion, either as a store or as an object containing values or stores.
  * @returns a new accordion widget instance
  */
-export function createAccordion(config?: PropsConfig<AccordionProps>): AccordionWidget {
-	const [
-		{
-			closeOthers$,
-			onShown$,
-			onHidden$,
-			className$,
-			itemId$,
-			itemAnimated$,
-			itemClass$,
-			itemDisabled$,
-			itemVisible$,
-			itemTransition$,
-			itemDestroyOnHide$,
-			itemBodyClass$,
-			itemButtonClass$,
-			itemBodyContainerClass$,
-			itemHeaderClass$,
-			itemHeadingTag$,
-			onItemVisibleChange$,
-			onItemHidden$,
-			onItemShown$,
-			slotItemStructure$,
-			slotItemBody$,
-			slotItemHeader$,
-			...stateProps
-		},
-		patch,
-	] = writablesForProps(defaultAccordionConfig, config, configAccordionValidator);
-	const accordionItemConfig: ReadableSignals<AccordionItemProps> = {
-		itemId: itemId$,
-		itemClass: itemClass$,
-		itemAnimated: itemAnimated$,
-		itemDisabled: itemDisabled$,
-		itemVisible: itemVisible$,
-		itemTransition: itemTransition$,
-		itemDestroyOnHide: itemDestroyOnHide$,
-		itemBodyClass: itemBodyClass$,
-		itemButtonClass: itemButtonClass$,
-		itemBodyContainerClass: itemBodyContainerClass$,
-		itemHeaderClass: itemHeaderClass$,
-		itemHeadingTag: itemHeadingTag$,
-		onItemVisibleChange: onItemVisibleChange$,
-		onItemHidden: onItemHidden$,
-		onItemShown: onItemShown$,
-		slotItemStructure: slotItemStructure$,
-		slotItemBody: slotItemBody$,
-		slotItemHeader: slotItemHeader$,
-	};
-	const itemsWidget$ = registrationArray<AccordionItemWidget>();
-	const openItems$ = computed(() => {
-		const openItems: string[] = [];
-		itemsWidget$().forEach((item) => {
-			if (item.state$().itemVisible) {
-				openItems.push(item.state$().itemId);
-			}
-		});
-		return openItems;
-	});
-
-	const oldOpenItem$ = writable(openItems$()[0]);
-	const checkCloseOthersAction$ = computed(() => {
-		if (closeOthers$()) {
-			adjustItemsCloseOthers(itemsWidget$(), openItems$(), oldOpenItem$());
-			oldOpenItem$.set(openItems$()[0]);
-		}
-	});
-
-	const action$ = computed(() => {
-		checkCloseOthersAction$();
-	});
-	return {
-		...stateStores({itemsWidget$, className$, ...stateProps}),
-		patch,
-		actions: {},
-		api: {
-			expand: (id: string) => {
-				getItem(itemsWidget$(), id)?.api.expand();
-			},
-			collapse: (id: string) => {
-				getItem(itemsWidget$(), id)?.api.collapse();
-			},
-			toggle: (id: string) => {
-				getItem(itemsWidget$(), id)?.api.toggle();
-			},
-			expandAll: () => {
-				itemsWidget$().forEach((i) => i.api.expand());
-			},
-			collapseAll: () => {
-				itemsWidget$().forEach((i) => i.api.collapse());
-			},
-			registerItem: (propsConfig?: PropsConfig<AccordionItemProps>) => {
-				const item = createAccordionItem(onShown$, onHidden$, {
-					config: mergeConfigStores(accordionItemProps, normalizeConfigStores(accordionItemProps, propsConfig?.config), accordionItemConfig),
-					props: propsConfig?.props,
-				});
-
-				item.directives.accordionItemDirective = mergeDirectives(
-					() => ({destroy: itemsWidget$.register(item)}),
-					createAttributesDirective(() => ({
-						attributes: {class: item.stores.itemClass$, id: item.stores.itemId$},
-					})),
-				);
-				return item;
-			},
-		},
-		directives: {
-			accordionDirective: mergeDirectives(
-				directiveSubscribe(action$),
-				createAttributesDirective(() => ({attributes: {class: className$()}, classNames: {'au-accordion': true}})),
-			),
-		},
-	};
-}
+export const createAccordion = factoryCreateAccordion();

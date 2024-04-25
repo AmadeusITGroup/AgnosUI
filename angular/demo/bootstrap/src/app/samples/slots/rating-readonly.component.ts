@@ -1,5 +1,5 @@
-import type {AdaptSlotContentProps, RatingWidget, SlotContent, StarContext} from '@agnos-ui/angular-headless';
-import {BaseWidgetDirective, SlotDirective, auNumberAttribute, callWidgetFactory, createRating} from '@agnos-ui/angular-headless';
+import type {AdaptSlotContentProps, RatingWidget, SlotContent, StarContext} from '@agnos-ui/angular-bootstrap';
+import {BaseWidgetDirective, SlotDirective, auNumberAttribute, callWidgetFactory, createRating} from '@agnos-ui/angular-bootstrap';
 import type {AfterContentChecked} from '@angular/core';
 import {ChangeDetectionStrategy, Component, ContentChild, Directive, Input, TemplateRef, inject} from '@angular/core';
 

@@ -1,5 +1,6 @@
 <script context="module" lang="ts">
-	import type {AccordionItemApi, AccordionItemProps, AccordionSlots} from './accordion';
+	import type {AccordionItemApi, AccordionItemProps, AccordionItemWidget, AccordionSlots} from './accordion';
+	import type {WidgetFactory} from '@agnos-ui/svelte-headless/types';
 	import {toSlotContextWidget} from '@agnos-ui/svelte-headless/types';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import {callWidgetFactory} from '../../config';
@@ -20,7 +21,7 @@
 	const {registerItem} = accordionApi;
 	export let itemVisible: boolean | undefined = undefined;
 	const widget = callWidgetFactory({
-		factory: registerItem,
+		factory: registerItem as WidgetFactory<AccordionItemWidget>,
 		$$slots,
 		$$props,
 		defaultConfig,

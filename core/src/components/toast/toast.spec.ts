@@ -20,9 +20,6 @@ describe(`Toast`, () => {
 		expect(state).toEqual({
 			className: '',
 			dismissible: true,
-			slotDefault: undefined,
-			slotStructure: undefined,
-			slotHeader: undefined,
 			visible: true,
 			hidden: false,
 			ariaCloseButtonLabel: 'Close',

@@ -33,12 +33,12 @@ export const createFrameworkProcessors =
 					'../../../../core/dist/',
 				);
 				const stylePackage = addAsyncFiles(
-					import.meta.glob(['../../../../core-bootstrap/**', '!**/*.map', '!**/*.scss'], {
+					import.meta.glob(['../../../../core-bootstrap/dist/**', '!**/*.map', '!**/*.scss'], {
 						query: '?raw',
 						import: 'default',
 					}) as any,
 					'packages/@agnos-ui/core-bootstrap/',
-					'../../../../core-bootstrap/',
+					'../../../../core-bootstrap/dist/',
 					isBootstrapCondition,
 				);
 				res.angular.push(

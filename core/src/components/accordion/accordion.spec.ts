@@ -293,9 +293,6 @@ describe(`Accordion`, () => {
 		const itemStoreValues = {
 			itemDisabled: itemStores.itemDisabled$(),
 			itemVisible: itemStores.itemVisible$(),
-			slotItemStructure: itemStores.slotItemStructure$(),
-			slotItemBody: itemStores.slotItemBody$(),
-			slotItemHeader: itemStores.slotItemHeader$(),
 			itemClass: itemStores.itemClass$(),
 			itemHeaderClass: itemStores.itemHeaderClass$(),
 			itemButtonClass: itemStores.itemButtonClass$(),
@@ -305,9 +302,6 @@ describe(`Accordion`, () => {
 		expect(itemStoreValues).toMatchObject({
 			itemDisabled: false,
 			itemVisible: false,
-			slotItemStructure: undefined,
-			slotItemBody: undefined,
-			slotItemHeader: undefined,
 			itemClass: '',
 			itemHeaderClass: '',
 			itemButtonClass: '',

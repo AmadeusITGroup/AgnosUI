@@ -1,9 +1,80 @@
-import type {AccordionProps} from '@agnos-ui/core/components/accordion';
-import {createAccordion as createCoreAccordion, getAccordionDefaultConfig as getCoreDefaultConfig} from '@agnos-ui/core/components/accordion';
+import type {
+	AccordionApi,
+	AccordionDirectives,
+	AccordionItemActions,
+	AccordionItemApi,
+	AccordionProps as CoreProps,
+	AccordionState as CoreState,
+	AccordionItemState as CoreItemState,
+	AccordionItemProps as CoreItemProps,
+	AccordionItemDirectives,
+} from '@agnos-ui/core/components/accordion';
+import {
+	factoryCreateAccordion,
+	createAccordionItem as createCoreAccordionItem,
+	getAccordionDefaultConfig as getCoreDefaultConfig,
+} from '@agnos-ui/core/components/accordion';
 import {collapseVerticalTransition} from '../../services/transitions';
+import type {ExtendWidgetAdaptSlotWidgetProps} from '@agnos-ui/core/services/extendWidget';
 import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
+import type {SlotContent, Widget, WidgetFactory, WidgetSlotContext} from '@agnos-ui/core/types';
 
 export * from '@agnos-ui/core/components/accordion';
+
+export type AccordionItemContext = WidgetSlotContext<AccordionItemWidget>;
+
+interface AccordionExtraProps {
+	/**
+	 * Structure of the accordion-item. The default item structure is: accordion-item
+	 * contains accordion header and accordion-item body container; the accordion header contains the accordion button
+	 * (that contains `slotItemHeader`), while the accordion-item body container contains the accordion body (that contains `slotItemBody`).
+	 * The itemTransition it applied on this element.
+	 *
+	 * It is a prop of the accordion-item.
+	 */
+	slotItemStructure: SlotContent<AccordionItemContext>;
+	/**
+	 * Content present in the accordion body.
+	 *
+	 * It is a prop of the accordion-item.
+	 */
+	slotItemBody: SlotContent<AccordionItemContext>;
+	/**
+	 * Content present in the accordion button inside the accordion header.
+	 *
+	 * It is a prop of the accordion-item.
+	 */
+	slotItemHeader: SlotContent<AccordionItemContext>;
+}
+
+export interface AccordionState extends ExtendWidgetAdaptSlotWidgetProps<CoreState, AccordionExtraProps, object> {}
+export interface AccordionProps extends ExtendWidgetAdaptSlotWidgetProps<CoreProps, AccordionExtraProps, object> {}
+
+export type AccordionWidget = Widget<AccordionProps, AccordionState, AccordionApi, object, AccordionDirectives>;
+
+export interface AccordionItemState extends ExtendWidgetAdaptSlotWidgetProps<CoreItemState, AccordionExtraProps, object> {}
+export interface AccordionItemProps extends ExtendWidgetAdaptSlotWidgetProps<CoreItemProps, AccordionExtraProps, object> {}
+
+export type AccordionItemWidget = Widget<AccordionItemProps, AccordionItemState, AccordionItemApi, AccordionItemActions, AccordionItemDirectives>;
+
+const defaultConfigExtraProps: AccordionExtraProps = {
+	slotItemStructure: undefined,
+	slotItemBody: undefined,
+	slotItemHeader: undefined,
+};
+
+const defaultPropsWithoutOverride: AccordionProps = {
+	...getCoreDefaultConfig(),
+	...defaultConfigExtraProps,
+} as any;
+const accordionItemProps = Object.keys(defaultPropsWithoutOverride);
+
+/**
+ * Create an AccordioItemnWidget with given config props
+ * @param config - an optional alert config
+ * @returns an AccordionWidget
+ */
+export const createAccordionItem = extendWidgetProps(createCoreAccordionItem, defaultConfigExtraProps);
 
 const coreOverride: Partial<AccordionProps> = {
 	itemTransition: collapseVerticalTransition,
@@ -14,12 +85,11 @@ const coreOverride: Partial<AccordionProps> = {
  * @returns the default accordion config
  */
 export function getAccordionDefaultConfig(): AccordionProps {
-	return {...getCoreDefaultConfig(), ...coreOverride} as any;
+	return {...defaultPropsWithoutOverride, ...coreOverride};
 }
 
-/**
- * Create an AccordionWidget with given config props
- * @param config - an optional alert config
- * @returns an AccordionWidget
- */
-export const createAccordion = extendWidgetProps(createCoreAccordion, {}, {}, coreOverride);
+export const createAccordion: WidgetFactory<AccordionWidget> = factoryCreateAccordion(
+	createAccordionItem,
+	accordionItemProps,
+	getAccordionDefaultConfig(),
+) as any;

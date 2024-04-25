@@ -1,8 +1,7 @@
 import type {CommonAlertApi, CommonAlertDirectives, CommonAlertProps, CommonAlertState} from './common';
 import {createCommonAlert, getCommonAlertDefaultConfig} from './common';
-import type {Widget, WidgetFactory, WidgetSlotContext} from '../../types';
+import type {Widget, WidgetFactory} from '../../types';
 
-export type AlertContext = WidgetSlotContext<AlertWidget>;
 export interface AlertState extends CommonAlertState {}
 export interface AlertProps extends CommonAlertProps {}
 export interface AlertApi extends CommonAlertApi {}

@@ -5,7 +5,7 @@ import {afterEach, beforeEach, describe, expect, test, vi} from 'vitest';
 import type {WidgetState} from '../../types';
 import {directiveAttributes} from '../../utils/directive';
 import type {RatingProps, RatingWidget} from './rating';
-import {createRating, getRatingDefaultConfig} from './rating';
+import {createRating} from './rating';
 import {getAttributes} from '../components.spec-utils';
 
 function keyboardEvent(key: string): KeyboardEvent {
@@ -73,14 +73,7 @@ describe(`Rating`, () => {
 				interactive: true,
 				stars: Array.from({length: 10}, (_, i) => ({fill: 0, index: i})),
 				className: '',
-				slotStar: expect.any(Function),
 			});
-		});
-
-		test('should include a simple slot factory in the default config', () => {
-			const slotStar = getRatingDefaultConfig().slotStar as (props: {fill: number}) => string;
-			expect(slotStar({fill: 100})).toBe('★');
-			expect(slotStar({fill: 20})).toBe('☆');
 		});
 
 		test(`should ignore invalid 'rating' values`, () => {

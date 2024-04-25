@@ -4,25 +4,10 @@ import {INVALID_VALUE} from '../../types';
 import {bindableProp, stateStores, writablesForProps} from '../../utils/stores';
 import {clamp, isNumber} from '../../utils/internal/checks';
 import {typeBoolean, typeFunction, typeNumber, typeString} from '../../utils/writables';
-import type {ConfigValidator, PropsConfig, Widget, SlotContent, WidgetSlotContext, Directive} from '../../types';
+import type {ConfigValidator, PropsConfig, Widget, Directive} from '../../types';
 import {noop} from '../../utils/internal/func';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 import {createAttributesDirective} from '../../utils/directive';
-
-/**
- * A type for the slot context of the pagination widget
- */
-export type PaginationContext = WidgetSlotContext<PaginationWidget>;
-
-/**
- * A type for the slot context of the pagination widget when the slot is the number label
- */
-export interface PaginationNumberContext extends PaginationContext {
-	/**
-	 * Displayed page
-	 */
-	displayedPage: number;
-}
 
 export interface PaginationCommonPropsAndState extends WidgetsCommonPropsAndState {
 	/**
@@ -115,74 +100,6 @@ export interface PaginationCommonPropsAndState extends WidgetsCommonPropsAndStat
 	 * @defaultValue false
 	 */
 	boundaryLinks: boolean;
-
-	/**
-	 * The template to use for the structure of the pagination component
-	 * The default structure uses {@link PaginationCommonPropsAndState.slotEllipsis|slotEllipsis}, {@link PaginationCommonPropsAndState.slotFirst|slotFirst},
-	 * {@link PaginationCommonPropsAndState.slotPrevious|slotPrevious}, {@link PaginationCommonPropsAndState.slotNext|slotNext},
-	 * {@link PaginationCommonPropsAndState.slotLast|slotLast}, {@link PaginationCommonPropsAndState.slotPages|slotPages},
-	 * {@link PaginationCommonPropsAndState.slotNumberLabel|slotNumberLabel},
-	 */
-	slotStructure: SlotContent<PaginationContext>;
-
-	/**
-	 * The template to use for the ellipsis slot
-	 * for I18n, we suggest to use the global configuration
-	 * override any configuration parameters provided for this
-	 * @defaultValue '…'
-	 */
-	slotEllipsis: SlotContent<PaginationContext>;
-
-	/**
-	 * The template to use for the first slot
-	 * for I18n, we suggest to use the global configuration
-	 * override any configuration parameters provided for this
-	 * @defaultValue '«'
-	 */
-	slotFirst: SlotContent<PaginationContext>;
-
-	/**
-	 * The template to use for the previous slot
-	 * for I18n, we suggest to use the global configuration
-	 * override any configuration parameters provided for this
-	 * @defaultValue '‹'
-	 */
-	slotPrevious: SlotContent<PaginationContext>;
-
-	/**
-	 * The template to use for the next slot
-	 * for I18n, we suggest to use the global configuration
-	 * override any configuration parameters provided for this
-	 * @defaultValue '›'
-	 */
-	slotNext: SlotContent<PaginationContext>;
-
-	/**
-	 * The template to use for the last slot
-	 * for I18n, we suggest to use the global configuration
-	 * override any configuration parameters provided for this
-	 * @defaultValue '»'
-	 */
-	slotLast: SlotContent<PaginationContext>;
-
-	/**
-	 * The template to use for the pages slot
-	 * To use to customize the pages view
-	 * override any configuration parameters provided for this
-	 */
-	slotPages: SlotContent<PaginationContext>;
-
-	/**
-	 * The template to use for the number slot
-	 * override any configuration parameters provided for this
-	 * for I18n, we suggest to use the global configuration
-	 * @defaultValue
-	 * ```ts
-	 * ({displayedPage}) => `${displayedPage}`
-	 * ```
-	 * @param displayedPage - The current page number
-	 */
-	slotNumberLabel: SlotContent<PaginationNumberContext>;
 }
 
 export interface PaginationProps extends PaginationCommonPropsAndState {
@@ -407,14 +324,6 @@ const defaultConfig: PaginationProps = {
 	ariaEllipsisLabel: 'Ellipsis page element',
 	ariaLiveLabel: (currentPage: number, pageCount: number) => `Current page is ${currentPage}`,
 	className: '',
-	slotEllipsis: '…',
-	slotFirst: '«',
-	slotPrevious: '‹',
-	slotNext: '›',
-	slotLast: '»',
-	slotPages: undefined,
-	slotStructure: undefined,
-	slotNumberLabel: ({displayedPage}: PaginationNumberContext) => `${displayedPage}`,
 	pageLink: (_page: number) => PAGE_LINK_DEFAULT,
 };
 

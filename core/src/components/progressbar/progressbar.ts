@@ -1,12 +1,10 @@
 import {clamp} from '../../utils/internal/checks';
 import {typeFunction, typeNumber, typeString} from '../../utils/writables';
 import {stateStores, writablesForProps} from '../../utils/stores';
-import type {ConfigValidator, Directive, PropsConfig, Widget, WidgetSlotContext} from '../../types';
+import type {ConfigValidator, Directive, PropsConfig, Widget} from '../../types';
 import {computed} from '@amadeus-it-group/tansu';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 import {createAttributesDirective} from '../../utils/directive';
-
-export type ProgressbarContext = WidgetSlotContext<ProgressbarWidget>;
 
 export interface ProgressbarCommonPropsAndState extends WidgetsCommonPropsAndState {
 	/**
