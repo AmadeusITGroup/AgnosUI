@@ -22,7 +22,7 @@ This function will execute a first time when the directive is applied to an elem
 - `destroy` function, used to remove eventual listeners, subscriptions or any reactive objects created by the directive. This function is usually called when the DOM element on which you applied the directive gets removed from the DOM.
 
 ```typescript
-const createSampleDirective: Directive<string> = (element: HTMLElement, text: string) => {
+const createSampleDirective: Directive<string, HTMLElement> = (element: HTMLElement, text: string) => {
 	console.log('Directive has been executed on node ', element.id);
 	const clickListener = (event: Event) => {
 		console.log(text, event.target);
@@ -131,6 +131,15 @@ Changing the input does not change anything, because the `update` function has n
     ```
     Destroy function executed  focus-element
     ```
+
+### Browser-only vs SSR-compatible
+
+Directives are traditionnally run only on the browser. However, you may want to create a directive that updates attributes / class / style of an element. In those cases, being compatible with the framework server-side rendering capabilities is important to avoid any flickering.
+
+In that context, AgnosUI provides the following utilities:
+
+- `browserDirective` wraps a browser-only directive to make sure it is not run on the server.
+- `createAttributesDirective` is a simple directive factory that allows users to update attributes / class / style and bind events. The resulting directive can be run on the server.
 
 ### Frameworks usage
 
