@@ -1,0 +1,5 @@
+const a=`/*
+ * Public API Surface of @agnos-ui/angular-headless
+ */
+export * from './generated';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi9zcmMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7O0dBRUc7QUFDSCxjQUFjLGFBQWEsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbIi8qXG4gKiBQdWJsaWMgQVBJIFN1cmZhY2Ugb2YgQGFnbm9zLXVpL2FuZ3VsYXItaGVhZGxlc3NcbiAqL1xuZXhwb3J0ICogZnJvbSAnLi9nZW5lcmF0ZWQnO1xuIl19`;export{a as default};

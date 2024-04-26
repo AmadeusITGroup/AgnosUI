@@ -1,2 +1,0 @@
-const i=`export * from '@agnos-ui/core/components/pagination';
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicGFnaW5hdGlvbi5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3NyYy9jb21wb25lbnRzL3BhZ2luYXRpb24vcGFnaW5hdGlvbi50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxjQUFjLHNDQUFzQyxDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0ICogZnJvbSAnQGFnbm9zLXVpL2NvcmUvY29tcG9uZW50cy9wYWdpbmF0aW9uJztcbiJdfQ==`;export{i as default};
