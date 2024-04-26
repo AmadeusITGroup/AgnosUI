@@ -25,7 +25,7 @@ const mkdirIfNotExists = async (generationFolder, file) => {
 	}
 };
 
-const generateExports = async (destination, source, dependencyPkg) => {
+const generateExports = async (destination, source, dependencyPkg, includeComponents) => {
 	if (!destination) {
 		throw new Error('No destination folder provided');
 	}
@@ -72,11 +72,21 @@ const generateExports = async (destination, source, dependencyPkg) => {
 		await addGenerationFile(destFile, true);
 	}
 
+	if (includeComponents) {
+		const componentIndexes = (await glob(`components/**/index.ts`, {cwd: sourceFolder})).map(normalizePath);
+		for (const srcFile of componentIndexes) {
+			await addGenerationFile(srcFile);
+		}
+	}
+
 	const generationInfos = [...generationMap.values()];
 	const tasks = generationInfos.map((generationInfo) => () => {
 		const path = join(generationFolder, generationInfo.import) + '.ts';
 		const importPrefix = generationInfo.isDest ? './' + normalizePath(relative(dirname(path), destFolder)) : dependencyPkg;
-		return promises.writeFile(path, `export * from '${importPrefix}/${generationInfo.import}';`);
+		return promises.writeFile(
+			path,
+			`export * from '${importPrefix}/${generationInfo.import.endsWith('/index') ? generationInfo.import.slice(0, -6) : generationInfo.import}';`,
+		);
 	});
 	// final task, the index in the generation folder that will reference all the generated files
 	tasks.push(() =>
@@ -95,4 +105,4 @@ const generateExports = async (destination, source, dependencyPkg) => {
 	);
 };
 
-generateExports(process.argv[2], process.argv[3], process.argv[4]);
+generateExports(process.argv[2], process.argv[3], process.argv[4], process.argv[5] === 'true');
