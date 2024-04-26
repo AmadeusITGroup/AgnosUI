@@ -14,9 +14,9 @@
 			"default": "./dist/index.js"
 		},
 		"./components/*": {
-			"types": "./dist/components/*/*.d.ts",
-			"svelte": "./dist/components/*/*.js",
-			"default": "./dist/components/*/*.js"
+			"types": "./dist/generated/components/*/index.d.ts",
+			"svelte": "./dist/generated/components/*/index.js",
+			"default": "./dist/generated/components/*/index.js"
 		},
 		"./config": {
 			"types": "./dist/config.d.ts",
@@ -55,7 +55,7 @@
 	},
 	"wireit": {
 		"generate:exports": {
-			"command": "node ../../scripts/generateExports.js svelte/headless core @agnos-ui/core",
+			"command": "node ../../scripts/generateExports.js svelte/headless core @agnos-ui/core true",
 			"files": [
 				"src/**",
 				"../../core/src/**",

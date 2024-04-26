@@ -14,9 +14,9 @@
 			"default": "./dist/index.js"
 		},
 		"./components/*": {
-			"types": "./dist/components/*/index.d.ts",
-			"require": "./dist/components/*/index.cjs",
-			"default": "./dist/components/*/index.js"
+			"types": "./dist/generated/components/*/index.d.ts",
+			"require": "./dist/generated/components/*/index.cjs",
+			"default": "./dist/generated/components/*/index.js"
 		},
 		"./config": {
 			"types": "./dist/config.d.ts",
@@ -54,7 +54,7 @@
 	},
 	"wireit": {
 		"generate:exports": {
-			"command": "node ../../scripts/generateExports.js react/headless core @agnos-ui/core",
+			"command": "node ../../scripts/generateExports.js react/headless core @agnos-ui/core true",
 			"files": [
 				"src/**",
 				"../../core/src/**",
