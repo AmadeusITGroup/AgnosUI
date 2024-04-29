@@ -25,21 +25,21 @@
 		"url": "git+https://github.com/AmadeusITGroup/AgnosUI.git"
 	},
 	"engines": {
-		"npm": "^10.5.2",
+		"npm": "^10.6.0",
 		"node": "^20.12.2"
 	},
-	"packageManager": "npm@10.5.2",
+	"packageManager": "npm@10.6.0",
 	"devDependencies": {
 		"@axe-core/playwright": "^4.9.0",
-		"@commitlint/cli": "^19.2.2",
+		"@commitlint/cli": "^19.3.0",
 		"@microsoft/api-extractor": "^7.43.1",
 		"@playwright/test": "^1.43.1",
 		"@types/node": "^20.12.7",
 		"@types/uuid": "^9.0.8",
-		"@typescript-eslint/eslint-plugin": "^7.7.0",
-		"@typescript-eslint/parser": "^7.7.0",
-		"@vitest/browser": "^1.5.0",
-		"@vitest/ui": "^1.5.0",
+		"@typescript-eslint/eslint-plugin": "^7.7.1",
+		"@typescript-eslint/parser": "^7.7.1",
+		"@vitest/browser": "^1.5.2",
+		"@vitest/ui": "^1.5.2",
 		"bootstrap": "^5.3.3",
 		"eslint": "^8.57.0",
 		"eslint-config-prettier": "^9.1.0",
@@ -50,17 +50,17 @@
 		"lint-staged": "^15.2.2",
 		"npm-run-all2": "^6.1.2",
 		"prettier": "^3.2.5",
-		"syncpack": "^12.3.1",
+		"syncpack": "^12.3.2",
 		"typescript": "~5.4.5",
 		"vite": "^5.2.10",
-		"vitest": "^1.5.0",
+		"vitest": "^1.5.2",
 		"wireit": "^0.14.4"
 	},
 	"optionalDependencies": {
 		"@esbuild/darwin-arm64": "0.20.2",
-		"@rollup/rollup-darwin-arm64": "4.16.1",
-		"@rollup/rollup-darwin-x64": "4.16.1",
-		"@rollup/rollup-win32-x64-msvc": "4.16.1"
+		"@rollup/rollup-darwin-arm64": "4.17.1",
+		"@rollup/rollup-darwin-x64": "4.17.1",
+		"@rollup/rollup-win32-x64-msvc": "4.17.1"
 	},
 	"scripts": {
 		"build:coverage": "wireit",
