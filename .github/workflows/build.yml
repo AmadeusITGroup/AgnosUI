@@ -48,9 +48,6 @@ jobs:
         run: |
           node scripts/setVersion.js "${{ inputs.version }}"
           npm run syncpack:check
-          git commit -a -m v${{ inputs.version }}
-          git tag v${{ inputs.version }}
-          git show HEAD
       - run: npm run build:ci
       - run: npm run check
       - run: npm run format:check
@@ -85,6 +82,11 @@ jobs:
         run: |
           npm whoami
           node ./scripts/npmPublish.js --provenance
+          npm run -w demo update:stackblitzPkgs ${{ inputs.version }}
+          npm run build -w demo
+          git commit -a -m v${{ inputs.version }}
+          git tag v${{ inputs.version }}
+          git show HEAD
           git push origin v${{ inputs.version }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

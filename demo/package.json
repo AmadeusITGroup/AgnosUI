@@ -15,7 +15,8 @@
 		"test": "vitest run",
 		"test:coverage": "vitest run --coverage",
 		"tdd": "vitest",
-		"tdd:ui": "vitest --ui"
+		"tdd:ui": "vitest --ui",
+		"update:stackblitzPkgs": "node scripts/updateStackblitzPkgs.js"
 	},
 	"wireit": {
 		"generate:doc": {
