@@ -52,30 +52,10 @@ export const createBaseFrameworkProcessors = (): Record<Frameworks, StackblitzPr
 	],
 });
 
-export const createFrameworkProcessorsReleased = (version: string) => {
-	const res = createBaseFrameworkProcessors();
-	const setPackageJsonVersion: StackblitzProcessor = async ({files}, sample, framework) => {
-		const packageJson = JSON.parse(files['package.json']);
-		if (isBootstrapCondition(sample)) {
-			packageJson.devDependencies[`@agnos-ui/${framework}-bootstrap`] = version;
-		} else {
-			packageJson.devDependencies[`@agnos-ui/${framework}-headless`] = version;
-		}
-		if (framework === 'svelte') {
-			packageJson.devDependencies[`@agnos-ui/svelte-preprocess`] = version;
-		}
-		files['package.json'] = JSON.stringify(packageJson, null, '\t');
-	};
-	res.angular.push(setPackageJsonVersion);
-	res.svelte.push(setPackageJsonVersion);
-	res.react.push(setPackageJsonVersion);
-	return res;
-};
-
 export const prepareStackblitzProject = async (
 	sample: SampleInfo,
 	framework: Frameworks,
-	frameworkProcessorsToUse: ReturnType<typeof createFrameworkProcessorsReleased>,
+	frameworkProcessorsToUse: ReturnType<typeof createBaseFrameworkProcessors>,
 ) => {
 	const project: Project = {
 		title: `AgnosUI ${framework} demo - ${sample.componentName} - ${sample.sampleName} (${sample.style})`,

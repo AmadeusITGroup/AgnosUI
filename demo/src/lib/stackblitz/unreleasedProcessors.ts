@@ -1,10 +1,10 @@
-import {createBaseFrameworkProcessors, createFrameworkProcessorsReleased} from './prepareProject';
+import {createBaseFrameworkProcessors} from './prepareProject';
 import type {StackblitzProcessor} from './utils';
 import {addAsyncFiles, isBootstrapCondition} from './utils';
 
 export const createFrameworkProcessors =
 	import.meta.env.AGNOSUI_VERSION !== '0.0.0'
-		? () => createFrameworkProcessorsReleased(import.meta.env.AGNOSUI_VERSION)
+		? () => createBaseFrameworkProcessors()
 		: () => {
 				const res = createBaseFrameworkProcessors();
 
