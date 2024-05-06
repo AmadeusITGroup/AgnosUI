@@ -98,6 +98,9 @@
 			],
 			"files": [
 				"daisyui/src/**",
+				"postcss.config.js",
+				"tailwind.config.js",
+				"daisyui/tsconfig.json",
 				"angular.json",
 				"tsconfig.build.json",
 				"../tsconfig.json",
@@ -141,6 +144,8 @@
 			],
 			"files": [
 				"daisyui/src/**",
+				"postcss.config.js",
+				"tailwind.config.js",
 				"daisyui/tsconfig.json",
 				"angular.json",
 				"tsconfig.build.json",
