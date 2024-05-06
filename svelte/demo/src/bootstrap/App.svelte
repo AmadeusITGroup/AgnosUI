@@ -14,6 +14,4 @@
 	});
 </script>
 
-<div class="container p-3">
-	<AppCommon {componentsToBeProcessed} />
-</div>
+<AppCommon {componentsToBeProcessed} />

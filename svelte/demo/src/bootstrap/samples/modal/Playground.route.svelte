@@ -6,5 +6,7 @@
 </script>
 
 {#key $props$}
-	<Modal {...$props$} />
+	<div>
+		<Modal {...$props$} />
+	</div>
 {/key}

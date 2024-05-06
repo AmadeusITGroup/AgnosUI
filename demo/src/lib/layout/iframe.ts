@@ -26,7 +26,7 @@ export function createIframeHandler(defaultHeight: number, resize = true, messag
 	const height$ = derived(
 		[iframeDimensions$, _iframeLoaded$],
 		([iframeDimensions, iframeLoaded], set) => {
-			const height = iframeDimensions?.contentRect.height;
+			const height = iframeDimensions?.borderBoxSize?.[0]?.blockSize;
 			if (iframeLoaded && height) {
 				set(Math.ceil(height));
 			}
@@ -54,9 +54,7 @@ export function createIframeHandler(defaultHeight: number, resize = true, messag
 			let heightUnsubscribe: UnsubscribeFunction | undefined;
 
 			iframe.onload = onLoad;
-			if (iframe.contentDocument?.getElementById('root')) {
-				setupObserver(iframe);
-			}
+			setupObserver(iframe);
 			if (resize) {
 				heightUnsubscribe?.();
 				heightUnsubscribe = height$.subscribe((height) => (iframe.height = height + 'px'));

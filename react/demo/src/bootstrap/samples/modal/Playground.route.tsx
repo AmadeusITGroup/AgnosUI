@@ -7,7 +7,9 @@ const ModalDemo = () => {
 
 	return (
 		<WidgetsDefaultConfig modal={config}>
-			<Modal {...props} />
+			<div>
+				<Modal {...props} />
+			</div>
 		</WidgetsDefaultConfig>
 	);
 };

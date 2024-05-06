@@ -6,11 +6,7 @@ import {RouterModule} from '@angular/router';
 	selector: 'app-root',
 	standalone: true,
 	imports: [RouterModule],
-	template: `
-		<div class="container p-3">
-			<router-outlet></router-outlet>
-		</div>
-	`,
+	template: `<router-outlet></router-outlet>`,
 })
 export class AppComponent implements OnInit {
 	ngOnInit() {

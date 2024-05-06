@@ -16,8 +16,6 @@ window.addEventListener('storage', (event) => {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
 	<React.StrictMode>
-		<div className="container mx-auto p-3">
-			<App components={components} />
-		</div>
+		<App components={components} />
 	</React.StrictMode>,
 );
