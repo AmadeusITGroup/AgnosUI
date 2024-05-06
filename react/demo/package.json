@@ -75,7 +75,7 @@
 		"@vitejs/plugin-react": "^4.2.1",
 		"autoprefixer": "^10.4.19",
 		"classnames": "^2.5.1",
-		"daisyui": "^4.10.2",
+		"daisyui": "^4.10.5",
 		"eslint-plugin-react": "^7.34.1",
 		"postcss": "^8.4.38",
 		"react": "^18.3.1",
@@ -88,7 +88,7 @@
 		"@agnos-ui/core-bootstrap": "0.0.0",
 		"@agnos-ui/react-bootstrap": "0.0.0",
 		"@amadeus-it-group/tansu": "1.0.0",
-		"@floating-ui/dom": "^1.6.4",
+		"@floating-ui/dom": "^1.6.5",
 		"classnames": "^2.5.1"
 	},
 	"peerDependencies": {
