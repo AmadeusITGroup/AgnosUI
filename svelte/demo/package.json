@@ -85,11 +85,11 @@
 		"@sveltejs/package": "^2.3.1",
 		"@sveltejs/vite-plugin-svelte": "^3.1.0",
 		"autoprefixer": "^10.4.19",
-		"daisyui": "^4.10.5",
-		"eslint-plugin-svelte": "^2.38.0",
+		"daisyui": "^4.11.1",
+		"eslint-plugin-svelte": "^2.39.0",
 		"postcss": "^8.4.38",
 		"prettier-plugin-svelte": "^3.2.3",
-		"svelte": "^4.2.15",
+		"svelte": "^4.2.16",
 		"svelte-check": "^3.7.1",
 		"tailwindcss": "^3.4.3"
 	}

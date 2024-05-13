@@ -99,7 +99,7 @@
 	},
 	"devDependencies": {
 		"copyfiles": "^2.4.1",
-		"sass": "^1.76.0"
+		"sass": "^1.77.1"
 	},
 	"dependencies": {
 		"@agnos-ui/core": "0.0.0"

@@ -26,15 +26,15 @@
 	},
 	"engines": {
 		"npm": "^10.7.0",
-		"node": "^20.12.2"
+		"node": "^20.13.1"
 	},
 	"packageManager": "npm@10.7.0",
 	"devDependencies": {
 		"@axe-core/playwright": "^4.9.0",
 		"@commitlint/cli": "^19.3.0",
-		"@microsoft/api-extractor": "^7.43.2",
-		"@playwright/test": "^1.43.1",
-		"@types/node": "^20.12.10",
+		"@microsoft/api-extractor": "^7.43.4",
+		"@playwright/test": "^1.44.0",
+		"@types/node": "^20.12.11",
 		"@types/uuid": "^9.0.8",
 		"@typescript-eslint/eslint-plugin": "^7.8.0",
 		"@typescript-eslint/parser": "^7.8.0",
@@ -43,9 +43,9 @@
 		"bootstrap": "^5.3.3",
 		"eslint": "^8.57.0",
 		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-jsdoc": "^48.2.3",
+		"eslint-plugin-jsdoc": "^48.2.4",
 		"express": "^4.19.2",
-		"glob": "10.3.12",
+		"glob": "10.3.15",
 		"husky": "^9.0.11",
 		"lint-staged": "^15.2.2",
 		"npm-run-all2": "^6.1.2",
@@ -57,7 +57,7 @@
 		"wireit": "^0.14.4"
 	},
 	"optionalDependencies": {
-		"@esbuild/darwin-arm64": "0.20.2",
+		"@esbuild/darwin-arm64": "0.21.2",
 		"@rollup/rollup-darwin-arm64": "4.17.2",
 		"@rollup/rollup-darwin-x64": "4.17.2",
 		"@rollup/rollup-win32-x64-msvc": "4.17.2"
