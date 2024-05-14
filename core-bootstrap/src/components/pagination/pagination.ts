@@ -1,4 +1,4 @@
-import {extendWidgetProps, type ExtendWidgetAdaptSlotWidgetProps} from '@agnos-ui/core/services/extendWidget';
+import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
 import type {SlotContent, Widget, WidgetFactory, WidgetSlotContext} from '@agnos-ui/core/types';
 import type {
 	PaginationActions,
@@ -96,8 +96,8 @@ interface PaginationExtraProps {
 	slotNumberLabel: SlotContent<PaginationNumberContext>;
 }
 
-export interface PaginationState extends ExtendWidgetAdaptSlotWidgetProps<CoreState, PaginationExtraProps, object> {}
-export interface PaginationProps extends ExtendWidgetAdaptSlotWidgetProps<CoreProps, PaginationExtraProps, object> {}
+export interface PaginationState extends CoreState, PaginationExtraProps {}
+export interface PaginationProps extends CoreProps, PaginationExtraProps {}
 
 export type PaginationWidget = Widget<PaginationProps, PaginationState, PaginationApi, PaginationActions, PaginationDirectives>;
 

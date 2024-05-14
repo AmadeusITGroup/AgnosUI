@@ -1,5 +1,4 @@
 import {computed} from '@amadeus-it-group/tansu';
-import type {ExtendWidgetAdaptSlotWidgetProps, ExtendWidgetInterfaces} from '../../services/extendWidget';
 import {extendWidgetProps} from '../../services/extendWidget';
 import type {ConfigValidator, Directive, PropsConfig, Widget} from '../../types';
 import {createAttributesDirective, directiveSubscribe} from '../../utils/directive';
@@ -33,13 +32,13 @@ export interface ExtraDirectives {
 	closeButtonDirective: Directive;
 }
 
-export interface ToastState extends ExtendWidgetAdaptSlotWidgetProps<CommonAlertState, ToastExtraProps, ExtraDirectives> {}
+export interface ToastState extends CommonAlertState, ToastExtraProps {}
 
-export interface ToastProps extends ExtendWidgetAdaptSlotWidgetProps<CommonAlertProps, ToastExtraProps, ExtraDirectives> {}
+export interface ToastProps extends CommonAlertProps, ToastExtraProps {}
 
 export interface ToastApi extends CommonAlertApi {}
 
-export interface ToastDirectives extends ExtendWidgetInterfaces<CommonAlertDirectives, ExtraDirectives> {}
+export interface ToastDirectives extends CommonAlertDirectives, ExtraDirectives {}
 
 export type ToastWidget = Widget<ToastProps, ToastState, ToastApi, object, ToastDirectives>;
 

@@ -6,7 +6,7 @@ import type {
 	RatingProps as CoreProps,
 } from '@agnos-ui/core/components/rating';
 import {getRatingDefaultConfig as getCoreDefaultConfig, createRating as createCoreRating} from '@agnos-ui/core/components/rating';
-import {extendWidgetProps, type ExtendWidgetAdaptSlotWidgetProps} from '@agnos-ui/core/services/extendWidget';
+import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
 import type {SlotContent, Widget, WidgetFactory} from '@agnos-ui/core/types';
 
 export * from '@agnos-ui/core/components/rating';
@@ -18,8 +18,8 @@ interface RatingExtraProps {
 	slotStar: SlotContent<StarContext>;
 }
 
-export interface RatingState extends ExtendWidgetAdaptSlotWidgetProps<CoreState, RatingExtraProps, object> {}
-export interface RatingProps extends ExtendWidgetAdaptSlotWidgetProps<CoreProps, RatingExtraProps, object> {}
+export interface RatingState extends CoreState, RatingExtraProps {}
+export interface RatingProps extends CoreProps, RatingExtraProps {}
 
 export type RatingWidget = Widget<RatingProps, RatingState, object, RatingActions, RatingDirectives>;
 

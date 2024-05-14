@@ -2,7 +2,6 @@ import type {ModalProps as CoreProps, ModalState as CoreState, ModalActions, Mod
 import {createModal as createCoreModal, getModalDefaultConfig as getCoreDefaultConfig} from '@agnos-ui/core/components/modal';
 import type {ConfigValidator, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '@agnos-ui/core/types';
 import {fadeTransition} from '../../services/transitions';
-import type {ExtendWidgetAdaptSlotWidgetProps} from '@agnos-ui/core/services/extendWidget';
 import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
 import {typeBoolean} from '@agnos-ui/core/utils/writables';
 
@@ -42,8 +41,8 @@ interface ModalExtraProps<Data> {
 	fullscreen: boolean;
 }
 
-export interface ModalState<Data> extends ExtendWidgetAdaptSlotWidgetProps<CoreState<Data>, ModalExtraProps<Data>, object> {}
-export interface ModalProps<Data> extends ExtendWidgetAdaptSlotWidgetProps<CoreProps<Data>, ModalExtraProps<Data>, object> {}
+export interface ModalState<Data> extends CoreState<Data>, ModalExtraProps<Data> {}
+export interface ModalProps<Data> extends CoreProps<Data>, ModalExtraProps<Data> {}
 
 export type ModalWidget<Data> = Widget<ModalProps<Data>, ModalState<Data>, ModalApi<Data>, ModalActions, ModalDirectives>;
 

@@ -15,7 +15,6 @@ import {
 	getAccordionDefaultConfig as getCoreDefaultConfig,
 } from '@agnos-ui/core/components/accordion';
 import {collapseVerticalTransition} from '../../services/transitions';
-import type {ExtendWidgetAdaptSlotWidgetProps} from '@agnos-ui/core/services/extendWidget';
 import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
 import type {SlotContent, Widget, WidgetFactory, WidgetSlotContext} from '@agnos-ui/core/types';
 
@@ -47,13 +46,13 @@ interface AccordionExtraProps {
 	slotItemHeader: SlotContent<AccordionItemContext>;
 }
 
-export interface AccordionState extends ExtendWidgetAdaptSlotWidgetProps<CoreState, AccordionExtraProps, object> {}
-export interface AccordionProps extends ExtendWidgetAdaptSlotWidgetProps<CoreProps, AccordionExtraProps, object> {}
+export interface AccordionState extends CoreState, AccordionExtraProps {}
+export interface AccordionProps extends CoreProps, AccordionExtraProps {}
 
 export type AccordionWidget = Widget<AccordionProps, AccordionState, AccordionApi, object, AccordionDirectives>;
 
-export interface AccordionItemState extends ExtendWidgetAdaptSlotWidgetProps<CoreItemState, AccordionExtraProps, object> {}
-export interface AccordionItemProps extends ExtendWidgetAdaptSlotWidgetProps<CoreItemProps, AccordionExtraProps, object> {}
+export interface AccordionItemState extends CoreItemState, AccordionExtraProps {}
+export interface AccordionItemProps extends CoreItemProps, AccordionExtraProps {}
 
 export type AccordionItemWidget = Widget<AccordionItemProps, AccordionItemState, AccordionItemApi, AccordionItemActions, AccordionItemDirectives>;
 
