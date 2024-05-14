@@ -39,11 +39,11 @@ export const htmlStructure = (locator: Locator): Promise<HTMLNode> =>
 			}
 			const attributes: HTMLAttribute[] = [];
 			const isNodeInput = isInput(node);
-			const isNodeCheckbox = isNodeInput && node.getAttribute('type')?.toLowerCase() === 'checkbox';
-			const isNodeInputNotCheckbox = isNodeInput && !isNodeCheckbox;
+			const isNodeCheckboxOrRadio = isNodeInput && ['checkbox', 'radio'].includes(node.getAttribute('type')?.toLowerCase() ?? '');
+			const isNodeInputNotCheckboxNorRadio = isNodeInput && !isNodeCheckboxOrRadio;
 			// only keep the actual current value of the input in attributes instead of the real attribute
 			// that only contains the initial value and may be present or not depending on the framework
-			if (isNodeCheckbox) {
+			if (isNodeCheckboxOrRadio) {
 				if (node.checked) {
 					attributes.push({name: 'checked', value: 'checked'});
 				}
@@ -61,8 +61,8 @@ export const htmlStructure = (locator: Locator): Promise<HTMLNode> =>
 			}
 			for (const {name, value} of node.attributes) {
 				if (
-					(isNodeCheckbox && name === 'checked') ||
-					(isNodeInputNotCheckbox && name === 'value') ||
+					(isNodeCheckboxOrRadio && name === 'checked') ||
+					(isNodeInputNotCheckboxNorRadio && name === 'value') ||
 					(styleAttributes.length > 0 && name === 'style')
 				) {
 					continue;

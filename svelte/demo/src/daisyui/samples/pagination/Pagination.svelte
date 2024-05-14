@@ -22,7 +22,6 @@
 			},
 		},
 	});
-	export const api = widget.api;
 
 	const {
 		stores: {
