@@ -5,7 +5,6 @@
 	type $$Props = Partial<ProgressbarProps>;
 
 	const widget = callWidgetFactory({factory: createProgressbar, widgetName: 'progressbar', $$props});
-	export const api = widget.api;
 
 	const {
 		stores: {className$, percentage$},

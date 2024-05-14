@@ -28,8 +28,6 @@ test.describe(`Samples markup consistency check`, async () => {
 			test.use({sampleKey});
 			test.skip(({sampleInfo}) => !sampleInfo, `The sample cannot be tested in this configuration`);
 
-			test.fixme(sampleKey === 'daisyui/rating/default', 'This sample does not currently have a consistent markup!');
-
 			test(`should have a consistent markup`, async ({page, baseURL}) => {
 				await page.goto(`${baseURL}${samplesExtraHash[sampleKey] ?? ''}`, {waitUntil: 'networkidle'});
 				await expect.poll(async () => (await page.locator('#root').innerHTML()).trim().length).toBeGreaterThan(0);

@@ -7,26 +7,23 @@ import React from 'react';
 export function Rating(
 	props: Pick<Partial<RatingProps>, 'rating' | 'maxRating' | 'className' | 'onHover' | 'onRatingChange' | 'onLeave' | 'ariaLabel'>,
 ) {
-	const [{visibleRating, interactive, stars, className, ariaLabel}, widget] = useWidgetWithConfig(createRating, props, 'rating');
-
-	const starStyle = {
-		cursor: interactive ? 'pointer' : 'default',
-	};
+	const [{visibleRating, stars, className, ariaLabel}, widget] = useWidgetWithConfig(createRating, props, 'rating');
 
 	return (
-		<div className={classNames('join', 'rating', className)}>
-			{stars.map((star) => (
-				<React.Fragment key={star.index}>
+		<div className={classNames('rating', className)}>
+			{stars.map(({index}) => (
+				<React.Fragment key={index}>
 					<input
 						onMouseLeave={widget.actions.leave}
-						onMouseEnter={() => widget.actions.hover(star.index + 1)}
-						onClick={() => widget.actions.click(star.index + 1)}
-						style={starStyle}
+						onMouseEnter={() => widget.actions.hover(index + 1)}
+						onClick={() => widget.actions.click(index + 1)}
+						// React throws a warning if an onChange is not provided.
+						onChange={() => {}}
 						type="radio"
 						name="rating-1"
 						className="mask mask-star"
-						aria-label={`${ariaLabel} star ${star.index + 1}`}
-						checked={star.index + 1 === visibleRating}
+						aria-label={`${ariaLabel} star ${index + 1}`}
+						checked={index + 1 === visibleRating}
 					/>
 				</React.Fragment>
 			))}

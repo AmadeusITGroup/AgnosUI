@@ -15,10 +15,9 @@
 			},
 		},
 	});
-	export const api = widget.api;
 
 	const {
-		stores: {visibleRating$, interactive$, stars$, className$, ariaLabel$},
+		stores: {visibleRating$, stars$, className$, ariaLabel$},
 		actions: {hover, click, leave},
 	} = widget;
 	$: widget.patchChangedProps($$props);
@@ -30,7 +29,6 @@
 			on:mouseleave={leave}
 			on:mouseenter={() => hover(index + 1)}
 			on:click={() => click(index + 1)}
-			style:cursor={$interactive$ ? 'pointer' : 'default'}
 			type="radio"
 			name="rating-1"
 			class="mask mask-star"
