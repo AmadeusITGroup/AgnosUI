@@ -46,10 +46,4 @@ export const selectedTabName$ = computed(() => {
 	return match?.[1] || 'examples';
 });
 
-const frameworkKeyRegExp = /\/docs\/[a-z]*\/(.*)$/;
-export const frameworkLessUrl$ = computed(() => {
-	const $page = get(page);
-	return $page.url.pathname.match(frameworkKeyRegExp)?.[1] ?? '/';
-});
-
 export const intersectionApi = createIntersection();

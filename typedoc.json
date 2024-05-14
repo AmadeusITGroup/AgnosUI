@@ -1,0 +1,9 @@
+{
+	"$schema": "https://typedoc.org/schema.json",
+	"entryPoints": ["core", "angular/lib", "angular/headless", "react/lib", "react/headless", "svelte/lib", "svelte/headless"],
+	"entryPointStrategy": "packages",
+	"out": "./demo/generated/typedoc",
+	"githubPages": false,
+	"theme": "sveltekit",
+	"plugin": ["@agnos-ui/typedoc-plugin"]
+}

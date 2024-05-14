@@ -46,6 +46,7 @@
 		"semver": "^7.6.0",
 		"syncpack": "^11.2.1",
 		"ts-node": "^10.9.2",
+		"typedoc": "^0.25.7",
 		"typescript": "~5.3.3",
 		"vite": "^5.1.1",
 		"vitest": "^1.2.2",
@@ -68,7 +69,9 @@
 		"format:check": "prettier . \"**/*.svelte\" --check --cache .",
 		"lint": "wireit",
 		"dev": "wireit",
+		"dev:api": "wireit",
 		"dev:coverage": "node scripts/run.js dev:coverage",
+		"typedoc": "wireit",
 		"preview": "node scripts/run.js preview",
 		"e2e": "wireit",
 		"e2e:ui": "wireit",
@@ -83,17 +86,44 @@
 				"./demo:dev"
 			]
 		},
+		"dev:api": {
+			"dependencies": [
+				"./demo:dev:api"
+			]
+		},
 		"build:ci": {
 			"dependencies": [
 				"./code-coverage:build",
 				"./demo:build",
 				"./eslint-plugin:build",
+				"./typedoc-plugin:build",
 				"./page-objects:build"
 			]
 		},
 		"build:coverage": {
 			"dependencies": [
 				"./demo:build:coverage"
+			]
+		},
+		"typedoc": {
+			"dependencies": [
+				"./typedoc-plugin:build",
+				"./svelte/headless:build"
+			],
+			"command": "typedoc",
+			"files": [
+				"core/src/**",
+				"angular/lib/src/**",
+				"angular/headless/src/**",
+				"react/lib/src/**",
+				"react/headless/src/**",
+				"svelte/lib/src/**",
+				"svelte/headless/src/**",
+				"typedoc.base.json",
+				"{.,core,angular/lib,angular/headless,react/lib,react/headless,svelte/lib,svelte/headless}/{typedoc.json,tsconfig.json,package.json,README.md}"
+			],
+			"output": [
+				"./demo/generated/typedoc/**"
 			]
 		},
 		"e2e": {
@@ -121,6 +151,7 @@
 			"dependencies": [
 				"./core:check",
 				"./eslint-plugin:check",
+				"./typedoc-plugin:check",
 				"./react/demo:check",
 				"./svelte/headless:check",
 				"./svelte/lib:check",
@@ -151,6 +182,7 @@
 		"svelte/demo",
 		"demo",
 		"eslint-plugin",
+		"typedoc-plugin",
 		"base-po",
 		"page-objects"
 	]

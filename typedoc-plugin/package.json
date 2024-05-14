@@ -1,0 +1,34 @@
+{
+	"name": "@agnos-ui/typedoc-plugin",
+	"private": true,
+	"main": "dist/index.cjs",
+	"type": "module",
+	"peerDependencies": {
+		"typedoc": "*"
+	},
+	"scripts": {
+		"build": "wireit",
+		"check": "wireit"
+	},
+	"wireit": {
+		"build": {
+			"command": "vite build",
+			"files": [
+				"src/**",
+				"vite.config.ts"
+			],
+			"output": [
+				"dist/**"
+			]
+		},
+		"check": {
+			"command": "tsc",
+			"files": [
+				"src/**",
+				"tsconfig.json",
+				"vite.config.ts"
+			],
+			"output": []
+		}
+	}
+}

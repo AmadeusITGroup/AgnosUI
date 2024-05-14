@@ -4,8 +4,8 @@ import {createAccordion as coreCreateAccordion} from '@agnos-ui/core/components/
 import type {AdaptSlotContentProps, AdaptWidgetSlots, WidgetFactory, WidgetProps, WidgetState} from '../../types';
 
 export type AccordionWidget = AdaptWidgetSlots<import('@agnos-ui/core/components/accordion').AccordionWidget>;
-export type AccordionProps = WidgetProps<AccordionWidget>;
-export type AccordionState = WidgetState<AccordionWidget>;
+export interface AccordionProps extends WidgetProps<AccordionWidget> {}
+export interface AccordionState extends WidgetState<AccordionWidget> {}
 export type AccordionApi = AccordionWidget['api'];
 export type AccordionItemWidget = AdaptWidgetSlots<import('@agnos-ui/core/components/accordion').AccordionItemWidget>;
 export type AccordionItemProps = WidgetProps<AccordionItemWidget>;

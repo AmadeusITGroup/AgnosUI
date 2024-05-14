@@ -21,6 +21,7 @@
 	};
 
 	$: isMainPage = $routeLevel$ === 0;
+	$: isApi = $page.route.id?.startsWith('/api/');
 
 	onMount(() => {
 		navigator.serviceWorker?.addEventListener('controllerchange', onServiceWorkerUpdate);
@@ -76,9 +77,15 @@
 				<div class="d-flex align-items-center"></div>
 				<a
 					class="nav-link ms-3"
-					href="{$pathToRoot$}docs/angular/getting-started/introduction"
+					href="{$pathToRoot$}docs/{$page.params.framework ?? 'angular'}/getting-started/introduction"
 					class:active={$page.route.id?.startsWith('/docs/')}
 					aria-current={$page.route.id?.startsWith('/docs/') ? 'page' : undefined}>Documentation</a
+				>
+				<a
+					class="nav-link ms-3"
+					href="{$pathToRoot$}api/{$page.params.framework ?? 'angular'}/bootstrap"
+					class:active={isApi}
+					aria-current={isApi ? 'page' : undefined}>API</a
 				>
 				<a
 					class="nav-link ms-3"

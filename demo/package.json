@@ -19,7 +19,7 @@
 				"../scripts/doc/generate-docs.ts"
 			],
 			"output": [
-				"generated/**"
+				"generated/doc/**"
 			]
 		},
 		"dev": {
@@ -32,10 +32,22 @@
 			],
 			"service": true
 		},
+		"dev:api": {
+			"command": "vite dev",
+			"dependencies": [
+				"generate:doc",
+				"..:typedoc",
+				"../angular/demo:dev",
+				"../react/demo:dev",
+				"../svelte/demo:dev"
+			],
+			"service": true
+		},
 		"build": {
 			"command": "vite build && npx svelte-sitemap -o dist -d https://amadeusitgroup.github.io/AgnosUI/latest --no-attribution -i */samples",
 			"dependencies": [
 				"generate:doc",
+				"..:typedoc",
 				"../angular/demo:build",
 				"../react/demo:build",
 				"../svelte/demo:build"

@@ -12,7 +12,7 @@ const CACHE = `${CACHE_PREFIX}${version}`;
 const ASSETS = [...build.map((file) => file.replace(/\/index\.html$/, '/')), ...prerendered, ...files];
 
 const hashRegExp = /[.-]\w{8,}\.\w{2,4}$/;
-const hasHash = (asset: string) => hashRegExp.test(asset);
+const hasHash = (asset: string) => !asset.startsWith('/api/') && hashRegExp.test(asset);
 
 self.addEventListener('install', (event) => {
 	event.waitUntil(

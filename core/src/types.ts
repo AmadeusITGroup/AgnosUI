@@ -8,6 +8,9 @@ export type ValuesOrWritableSignals<T extends object> = {
 	[K in keyof T]?: WritableSignal<T[K] | undefined> | T[K];
 };
 
+export type Expand<T> = T extends infer O ? {[K in keyof O]: O[K]} : never;
+export type Merge<A, B> = Expand<A & B>;
+
 export interface PropsConfig<U extends object> {
 	/**
 	 * Object containing, for each property, either its initial value, or a store that will contain the value at any time.

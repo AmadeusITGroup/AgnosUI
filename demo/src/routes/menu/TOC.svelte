@@ -5,7 +5,7 @@
 
 	const {elements$, visibleElements$} = intersectionApi;
 	function getElementProperties(element: HTMLElement, isVisible: boolean) {
-		const header = element.querySelector('h1,h2,h3') as HTMLElement;
+		const header = element.querySelector('h2,h3') as HTMLElement;
 		if (header) {
 			const classnames = [`menu-item menu-item-toc rounded-end toc-${header.tagName.toLowerCase()}`];
 

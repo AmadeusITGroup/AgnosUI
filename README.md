@@ -1,7 +1,7 @@
 <h1 align="center">AgnosUI - Where web widgets shine</h1>
 
 <p align="center">
-  <img src="demo/static/agnosui-logo.svg" alt="angular-logo" width="120px" height="120px"/>
+  <img src="https://raw.githubusercontent.com/AmadeusITGroup/AgnosUI/main/demo/static/agnosui-logo.svg" alt="angular-logo" width="120px" height="120px"/>
 </p>
 
 [![Build Status](https://github.com/AmadeusITGroup/AgnosUI/workflows/ci/badge.svg?branch=main)](https://github.com/AmadeusITGroup/AgnosUI/actions)
@@ -37,14 +37,14 @@ Feel free to explore the [demo site](https://amadeusitgroup.github.io/AgnosUI/la
 
 ## Getting Started
 
-To start using AgnosUI in your project, follow the instructions in the [Installation Guide](INSTALLATION.md). For detailed documentation on each widget and its usage, refer to the [Documentation](https://amadeusitgroup.github.io/AgnosUI/latest/).
+To start using AgnosUI in your project, follow the instructions in the [Installation Guide](https://github.com/AmadeusITGroup/AgnosUI/blob/main/INSTALLATION.md). For detailed documentation on each widget and its usage, refer to the [Documentation](https://amadeusitgroup.github.io/AgnosUI/latest/).
 
 ## Contributing
 
-We welcome contributions from the community to make AgnosUI even better. Please read our [Contribution Guidelines](DEVELOPER.md) to get started.
+We welcome contributions from the community to make AgnosUI even better. Please read our [Contribution Guidelines](https://github.com/AmadeusITGroup/AgnosUI/blob/main/DEVELOPER.md) to get started.
 
 ## License
 
-AgnosUI is released under the [MIT License](LICENSE).
+AgnosUI is released under the [MIT License](https://github.com/AmadeusITGroup/AgnosUI/blob/main/LICENSE).
 
 ---
