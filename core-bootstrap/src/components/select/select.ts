@@ -7,7 +7,7 @@ import type {
 	SelectState as CoreState,
 } from '@agnos-ui/core/components/select';
 import {createSelect as createCoreSelect, getSelectDefaultConfig as getCoreDefaultConfig} from '@agnos-ui/core/components/select';
-import {type ExtendWidgetAdaptSlotWidgetProps, extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
+import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
 import type {PropsConfig, SlotContent, Widget, WidgetSlotContext} from '@agnos-ui/core/types';
 
 export * from '@agnos-ui/core/components/select';
@@ -38,8 +38,8 @@ interface SelectExtraProps<Item> {
 	slotItem: SlotContent<SelectItemContext<Item>>;
 }
 
-export interface SelectState<Item> extends ExtendWidgetAdaptSlotWidgetProps<CoreState<Item>, SelectExtraProps<Item>, object> {}
-export interface SelectProps<Item> extends ExtendWidgetAdaptSlotWidgetProps<CoreProps<Item>, SelectExtraProps<Item>, object> {}
+export interface SelectState<Item> extends CoreState<Item>, SelectExtraProps<Item> {}
+export interface SelectProps<Item> extends CoreProps<Item>, SelectExtraProps<Item> {}
 
 export type SelectWidget<Item> = Widget<SelectProps<Item>, SelectState<Item>, SelectApi<Item>, SelectActions<Item>, SelectDirectives<Item>>;
 

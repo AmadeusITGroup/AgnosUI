@@ -7,7 +7,7 @@ import type {
 	SliderState as CoreState,
 } from '@agnos-ui/core/components/slider';
 import {createSlider as createCoreSlider, getSliderDefaultConfig as getCoreDefaultConfig} from '@agnos-ui/core/components/slider';
-import {extendWidgetProps, type ExtendWidgetAdaptSlotWidgetProps} from '@agnos-ui/core/services/extendWidget';
+import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
 import type {SlotContent, Widget, WidgetFactory, WidgetSlotContext} from '@agnos-ui/core/types';
 
 export * from '@agnos-ui/core/components/slider';
@@ -33,8 +33,8 @@ interface SliderExtraProps {
 	slotHandle: SlotContent<SliderSlotHandleContext>;
 }
 
-export interface SliderState extends ExtendWidgetAdaptSlotWidgetProps<CoreState, SliderExtraProps, object> {}
-export interface SliderProps extends ExtendWidgetAdaptSlotWidgetProps<CoreProps, SliderExtraProps, object> {}
+export interface SliderState extends CoreState, SliderExtraProps {}
+export interface SliderProps extends CoreProps, SliderExtraProps {}
 
 export type SliderWidget = Widget<SliderProps, SliderState, SliderApi, SliderActions, SliderDirectives>;
 

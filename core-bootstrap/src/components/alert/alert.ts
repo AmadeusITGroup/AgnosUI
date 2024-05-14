@@ -2,7 +2,6 @@ import type {AlertDirectives, AlertState as CoreState, AlertProps as CoreProps, 
 import {createAlert as createCoreAlert, getAlertDefaultConfig as getCoreDefaultConfig} from '@agnos-ui/core/components/alert';
 import type {ConfigValidator, SlotContent, Widget, WidgetFactory, WidgetSlotContext} from '@agnos-ui/core/types';
 import {typeString} from '@agnos-ui/core/utils/writables';
-import type {ExtendWidgetAdaptSlotWidgetProps} from '@agnos-ui/core/services/extendWidget';
 import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
 import {fadeTransition} from '../../services/transitions';
 import type {BSContextualClass} from '../../types';
@@ -26,8 +25,8 @@ interface AlertExtraProps {
 	type: BSContextualClass;
 }
 
-export interface AlertState extends ExtendWidgetAdaptSlotWidgetProps<CoreState, AlertExtraProps, object> {}
-export interface AlertProps extends ExtendWidgetAdaptSlotWidgetProps<CoreProps, AlertExtraProps, object> {}
+export interface AlertState extends CoreState, AlertExtraProps {}
+export interface AlertProps extends CoreProps, AlertExtraProps {}
 
 export type AlertWidget = Widget<AlertProps, AlertState, AlertApi, object, AlertDirectives>;
 

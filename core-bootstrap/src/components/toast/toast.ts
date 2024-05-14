@@ -1,7 +1,6 @@
 import type {ToastDirectives, ToastState as CoreState, ToastProps as CoreProps, ToastApi} from '@agnos-ui/core/components/toast';
 import {createToast as createCoreToast, getToastDefaultConfig as getCoreDefaultConfig} from '@agnos-ui/core/components/toast';
 import type {SlotContent, Widget, WidgetFactory, WidgetSlotContext} from '@agnos-ui/core/types';
-import type {ExtendWidgetAdaptSlotWidgetProps} from '@agnos-ui/core/services/extendWidget';
 import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
 import {fadeTransition} from '../../services/transitions';
 
@@ -24,8 +23,8 @@ export interface ToastExtraProps {
 	slotHeader: SlotContent<ToastContext>;
 }
 
-export interface ToastState extends ExtendWidgetAdaptSlotWidgetProps<CoreState, ToastExtraProps, object> {}
-export interface ToastProps extends ExtendWidgetAdaptSlotWidgetProps<CoreProps, ToastExtraProps, object> {}
+export interface ToastState extends CoreState, ToastExtraProps {}
+export interface ToastProps extends CoreProps, ToastExtraProps {}
 
 export type ToastWidget = Widget<ToastProps, ToastState, ToastApi, object, ToastDirectives>;
 

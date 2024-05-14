@@ -7,7 +7,6 @@ import type {
 import {createProgressbar as createCoreProgressbar, getProgressbarDefaultConfig as getCoreDefaultConfig} from '@agnos-ui/core/components/progressbar';
 import type {ConfigValidator, SlotContent, Widget, WidgetFactory, WidgetSlotContext} from '@agnos-ui/core/types';
 import {typeBoolean, typeString} from '@agnos-ui/core/utils/writables';
-import type {ExtendWidgetAdaptSlotWidgetProps} from '@agnos-ui/core/services/extendWidget';
 import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
 import type {BSContextualClass} from '../../types';
 
@@ -43,8 +42,8 @@ interface ProgressbarExtraProps {
 	type: BSContextualClass | undefined;
 }
 
-export interface ProgressbarState extends ExtendWidgetAdaptSlotWidgetProps<CoreState, ProgressbarExtraProps, object> {}
-export interface ProgressbarProps extends ExtendWidgetAdaptSlotWidgetProps<CoreProps, ProgressbarExtraProps, object> {}
+export interface ProgressbarState extends CoreState, ProgressbarExtraProps {}
+export interface ProgressbarProps extends CoreProps, ProgressbarExtraProps {}
 
 export type ProgressbarWidget = Widget<ProgressbarProps, ProgressbarState, ProgressbarApi, object, ProgressbarDirectives>;
 
