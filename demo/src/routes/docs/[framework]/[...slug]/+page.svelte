@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Markdown from '$lib/markdown/Markdown.svelte';
-	export let data;
-	// TODO replace the description using front-matter
+	import type {PageData} from './$types';
+	export let data: PageData;
 </script>
 
 <svelte:head>

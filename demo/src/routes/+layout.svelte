@@ -16,6 +16,7 @@
 	import type {Snapshot} from '@sveltejs/kit';
 	import Theme from './menu/Theme.svelte';
 	import Versions from './menu/Versions.svelte';
+	import type {LayoutData} from './$types';
 
 	const onServiceWorkerUpdate = () => {
 		void updated.check();
@@ -64,7 +65,7 @@
 		restore: (y) => container.scrollTo(0, y),
 	};
 
-	export let data;
+	export let data: LayoutData;
 </script>
 
 <svelte:head>

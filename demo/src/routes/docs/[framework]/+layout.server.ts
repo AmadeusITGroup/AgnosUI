@@ -1,6 +1,7 @@
 import {listPages} from '$lib/server';
+import type {LayoutServerLoad} from './$types';
 
-export const load = async ({params}) => {
+export const load: LayoutServerLoad = async ({params}) => {
 	return {
 		includesFwk: true,
 		menu: (await listPages()).map((category) => ({

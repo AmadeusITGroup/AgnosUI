@@ -1,22 +1,21 @@
 import {componentsMetadata} from '$lib/components-metadata';
+import type {LayoutServerLoad} from './$types';
 
-export const load = async () => {
-	return {
-		...componentsMetadata.Pagination,
-		tabs: [
-			{title: 'Examples', key: 'examples', path: '/components/pagination/examples'},
-			{title: 'Api', key: 'api', path: '/components/pagination/api'},
-			{title: 'Playground', key: 'playground', path: '/components/pagination/playground'},
-		],
-		prev: {
-			title: 'Modal',
-			slug: 'components/modal/',
-			subpath: 'examples',
-		},
-		next: {
-			title: 'Progressbar',
-			slug: 'components/progressbar/',
-			subpath: 'examples',
-		},
-	};
-};
+export const load: LayoutServerLoad = () => ({
+	...componentsMetadata.Pagination,
+	tabs: [
+		{title: 'Examples', key: 'examples', path: '/components/pagination/examples'},
+		{title: 'Api', key: 'api', path: '/components/pagination/api'},
+		{title: 'Playground', key: 'playground', path: '/components/pagination/playground'},
+	],
+	prev: {
+		title: 'Modal',
+		slug: 'components/modal/',
+		subpath: 'examples',
+	},
+	next: {
+		title: 'Progressbar',
+		slug: 'components/progressbar/',
+		subpath: 'examples',
+	},
+});

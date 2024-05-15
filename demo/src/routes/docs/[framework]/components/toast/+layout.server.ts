@@ -1,26 +1,25 @@
 import {componentsMetadata} from '$lib/components-metadata';
+import type {LayoutServerLoad} from './$types';
 
-export const load = async () => {
-	return {
-		...componentsMetadata.Toast,
-		tabs: [
-			{title: 'Examples', key: 'examples', path: '/components/toast/examples'},
-			{title: 'Api', key: 'api', path: '/components/toast/api'},
-			{
-				title: 'Playground',
-				key: 'playground',
-				path: '/components/toast/playground#{"props":{"slotDefault":"This is a toast","autoHide":false,"className":"text-bg-primary"}}',
-			},
-		],
-		prev: {
-			title: 'Slider',
-			slug: 'components/slider/',
-			subpath: 'examples',
+export const load: LayoutServerLoad = () => ({
+	...componentsMetadata.Toast,
+	tabs: [
+		{title: 'Examples', key: 'examples', path: '/components/toast/examples'},
+		{title: 'Api', key: 'api', path: '/components/toast/api'},
+		{
+			title: 'Playground',
+			key: 'playground',
+			path: '/components/toast/playground#{"props":{"slotDefault":"This is a toast","autoHide":false,"className":"text-bg-primary"}}',
 		},
-		next: {
-			title: 'Services: Introduction',
-			slug: 'services/introduction',
-			subpath: '',
-		},
-	};
-};
+	],
+	prev: {
+		title: 'Slider',
+		slug: 'components/slider/',
+		subpath: 'examples',
+	},
+	next: {
+		title: 'Services: Introduction',
+		slug: 'services/introduction',
+		subpath: '',
+	},
+});

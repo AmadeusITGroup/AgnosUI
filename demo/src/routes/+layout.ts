@@ -1,9 +1,10 @@
 import {building, dev} from '$app/environment';
+import type {LayoutLoad} from './$types';
 import type {Version} from './menu/version';
 
 export const prerender = true;
 
-export const load = async () => {
+export const load: LayoutLoad = async () => {
 	let versions: Version[];
 	if (dev || building) {
 		versions = [{folder: 'main', version: 'PREVIEW'}];
