@@ -71,7 +71,7 @@ const ModalElement = <Data,>(slotContext: ModalContext<Data>) => {
 	);
 };
 
-export const Modal = forwardRef(function Modal<Data>(props: PropsWithChildren<Partial<ModalProps<Data>>>, ref: Ref<ModalApi<Data>>) {
+export const Modal = forwardRef(function Modal<Data>(props: PropsWithChildren<Partial<ModalProps<Data>>>, ref: Ref<ModalApi>) {
 	const [state, widget] = useWidgetWithConfig(createModal<Data>, props, 'modal', {...defaultConfig, slotDefault: props.children});
 	useImperativeHandle(ref, () => widget.api, []);
 	const slotContext: ModalContext<Data> = {
@@ -84,12 +84,12 @@ export const Modal = forwardRef(function Modal<Data>(props: PropsWithChildren<Pa
 			{!state.hidden && <ModalElement {...slotContext} />}
 		</Portal>
 	);
-}) as <Data>(props: PropsWithChildren<Partial<ModalProps<Data>>> & RefAttributes<ModalApi<Data>>) => JSX.Element;
+}) as <Data>(props: PropsWithChildren<Partial<ModalProps<Data>>> & RefAttributes<ModalApi>) => JSX.Element;
 
 export async function openModal<Data>(options: Partial<ModalProps<Data>>) {
 	const root = ReactDOM.createRoot(document.createElement('div'));
 	try {
-		const api = await new Promise<ModalApi<Data> | null>((resolve) => {
+		const api = await new Promise<ModalApi | null>((resolve) => {
 			root.render(<Modal {...options} ref={resolve} />);
 		});
 		return await api!.open();

@@ -3,7 +3,7 @@ import {Modal, modalCloseButtonClick, modalOutsideClick} from '@agnos-ui/react-b
 import {useRef, useState} from 'react';
 
 const DefaultDemo = () => {
-	const modal = useRef<ModalApi<void>>(null);
+	const modal = useRef<ModalApi>(null);
 	const [message, setMessage] = useState('');
 	const [fullscreen, setFullscreen] = useState(false);
 	return (
@@ -42,11 +42,7 @@ const DefaultDemo = () => {
 			>
 				Launch demo modal
 			</button>
-			<div className="mt-3" data-testid="message">
-				{message}
-			</div>
-			<hr />
-			<div className="form-check form-switch">
+			<div className="form-check form-switch mt-3">
 				<input
 					className="form-check-input"
 					type="checkbox"
@@ -59,6 +55,8 @@ const DefaultDemo = () => {
 					Fullscreen
 				</label>
 			</div>
+			<hr />
+			<div data-testid="message">{message}</div>
 		</>
 	);
 };

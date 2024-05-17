@@ -28,9 +28,9 @@
 		}
 	}}>Launch demo modal</button
 >
-<div class="mt-3" data-testid="message">{message}</div>
-<hr />
-<div class="form-check form-switch">
+<div class="form-check form-switch mt-3">
 	<input class="form-check-input" type="checkbox" role="switch" id="fullscreen" bind:checked={fullscreen} />
 	<label class="form-check-label" for="fullscreen">Fullscreen</label>
 </div>
+<hr />
+<div data-testid="message">{message}</div>

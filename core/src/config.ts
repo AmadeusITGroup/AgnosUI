@@ -100,7 +100,7 @@ export interface WidgetsConfig {
 	/**
 	 * the modal widget config
 	 */
-	modal: ModalProps<any>;
+	modal: ModalProps;
 	/**
 	 * the alert widget config
 	 */

@@ -11,6 +11,7 @@ import {removeScrollbars, revertScrollbars} from '../../utils/internal/scrollbar
 import {
 	bindDirective,
 	bindDirectiveNoArg,
+	browserDirective,
 	createAttributesDirective,
 	directiveSubscribe,
 	mergeDirectives,
@@ -34,7 +35,7 @@ export const modalCloseButtonClick = Symbol();
 /**
  * Properties of the modal widget that are also in the state of the modal.
  */
-export interface ModalCommonPropsAndState<Data> extends WidgetsCommonPropsAndState {
+export interface ModalCommonPropsAndState extends WidgetsCommonPropsAndState {
 	/**
 	 * Value of the aria-label attribute to put on the close button.
 	 */
@@ -61,10 +62,6 @@ export interface ModalCommonPropsAndState<Data> extends WidgetsCommonPropsAndSta
 	 * Whether the modal should be visible when the transition is completed.
 	 */
 	visible: boolean;
-	/**
-	 * Data to use in content slots
-	 */
-	contentData: Data;
 }
 
 /**
@@ -88,7 +85,7 @@ export interface ModalBeforeCloseEvent {
 /**
  * Properties of the modal widget.
  */
-export interface ModalProps<Data> extends ModalCommonPropsAndState<Data> {
+export interface ModalProps extends ModalCommonPropsAndState {
 	/**
 	 * Whether the modal and its backdrop (if present) should be animated when shown or hidden.
 	 */
@@ -143,7 +140,7 @@ export interface ModalProps<Data> extends ModalCommonPropsAndState<Data> {
 /**
  * State of the modal widget.
  */
-export interface ModalState<Data> extends ModalCommonPropsAndState<Data> {
+export interface ModalState extends ModalCommonPropsAndState {
 	/**
 	 * Whether the backdrop is fully hidden. This can be true either because {@link ModalProps.backdrop|backdrop} is false or
 	 * because {@link ModalCommonPropsAndState.visible|visible} is false and there is no current transition.
@@ -169,7 +166,7 @@ export interface ModalState<Data> extends ModalCommonPropsAndState<Data> {
 /**
  * API of the modal widget.
  */
-export interface ModalApi<Data> {
+export interface ModalApi {
 	/**
 	 * Closes the modal with the given result.
 	 *
@@ -188,7 +185,7 @@ export interface ModalApi<Data> {
 	/**
 	 * Method to change some modal properties.
 	 */
-	patch: ModalWidget<Data>['patch'];
+	patch: ModalWidget['patch'];
 }
 
 /**
@@ -239,14 +236,18 @@ export interface ModalDirectives {
 	 * Directive that adds all the necessary attributes to the close button
 	 */
 	closeButtonDirective: Directive;
+	/**
+	 * Directive to apply to the dialog element when using the native [HTMLDialogElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement)
+	 */
+	dialogDirective: Directive;
 }
 
 /**
  * Modal widget.
  */
-export type ModalWidget<Data> = Widget<ModalProps<Data>, ModalState<Data>, ModalApi<Data>, ModalActions, ModalDirectives>;
+export type ModalWidget = Widget<ModalProps, ModalState, ModalApi, ModalActions, ModalDirectives>;
 
-const defaultConfig: ModalProps<any> = {
+const defaultConfig: ModalProps = {
 	animated: true,
 	ariaCloseButtonLabel: 'Close',
 	backdrop: true,
@@ -262,10 +263,9 @@ const defaultConfig: ModalProps<any> = {
 	onHidden: noop,
 	onShown: noop,
 	visible: false,
-	contentData: undefined,
 };
 
-const configValidator: ConfigValidator<ModalProps<any>> = {
+const configValidator: ConfigValidator<ModalProps> = {
 	animated: typeBoolean,
 	ariaCloseButtonLabel: typeString,
 	backdrop: typeBoolean,
@@ -291,7 +291,7 @@ export function getModalDefaultConfig() {
 	return {...defaultConfig};
 }
 
-const modals$ = registrationArray<ModalWidget<any>>();
+const modals$ = registrationArray<ModalWidget>();
 const hasModals$ = computed(() => modals$().length > 0);
 const scrollbarsAction$ = computed(() => {
 	if (hasModals$()) {
@@ -309,7 +309,7 @@ const modalsAction$ = computed(() => {
  * @param config$ - config of the modal, either as a store or as an object containing values or stores.
  * @returns a new modal widget instance
  */
-export function createModal<Data>(config$?: PropsConfig<ModalProps<Data>>): ModalWidget<Data> {
+export function createModal(config$?: PropsConfig<ModalProps>): ModalWidget {
 	const [
 		{
 			animated$,
@@ -423,7 +423,7 @@ export function createModal<Data>(config$?: PropsConfig<ModalProps<Data>>): Moda
 		},
 	}));
 
-	const res: ModalWidget<Data> = {
+	const res: ModalWidget = {
 		...stateStores({
 			backdropHidden$,
 			container$,
@@ -447,6 +447,22 @@ export function createModal<Data>(config$?: PropsConfig<ModalProps<Data>>): Moda
 				modalAttributeDirective,
 			),
 			closeButtonDirective,
+			dialogDirective: bindDirective(
+				browserDirective((dialog: HTMLDialogElement, visible: boolean) => {
+					const update = (visible: boolean) => {
+						if (visible) {
+							dialog.showModal();
+						} else {
+							dialog.close();
+						}
+					};
+					update(visible);
+					return {
+						update,
+					};
+				}),
+				visible$,
+			),
 		},
 		patch,
 		api: {

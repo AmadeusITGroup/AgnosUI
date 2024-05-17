@@ -78,6 +78,12 @@ export const daisyUIMetadata: {[key: string]: ComponentMetadata} = {
 		since: 'v0.3.0',
 		type: 'daisyUI',
 	},
+	Modal: {
+		title: 'Modal',
+		status: 'stable',
+		since: 'v0.4.0',
+		type: 'daisyUI',
+	},
 	Pagination: {
 		title: 'Pagination',
 		status: 'stable',

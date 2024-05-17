@@ -44,3 +44,7 @@ export const openDemoModal = async (page: Page) => {
 	const modalDemoPO = new ModalDemoPO(page);
 	await modalDemoPO.locatorLaunchDemoModalButton.click();
 };
+
+export const openDaisyUIDemoModal = async (page: Page) => {
+	await page.getByText('Open modal').click();
+};
