@@ -1,6 +1,6 @@
-import type {AccordionProps, AccordionWidget} from '@agnos-ui/angular-headless';
+import type {AccordionWidget} from '@agnos-ui/angular-headless';
 import {BaseWidgetDirective, UseDirective, auBooleanAttribute, callWidgetFactory, createAccordion} from '@agnos-ui/angular-headless';
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, input, output} from '@angular/core';
 
 @Component({
 	selector: 'app-accordion',
@@ -12,23 +12,18 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccordionComponent extends BaseWidgetDirective<AccordionWidget> {
-	@Input({transform: auBooleanAttribute})
-	closeOthers?: AccordionProps['closeOthers'];
-	@Input({transform: auBooleanAttribute})
-	itemDestroyOnHide?: AccordionProps['itemDestroyOnHide'];
-	@Input()
-	className?: AccordionProps['className'];
-	@Output()
-	itemShown = new EventEmitter<string>();
-	@Output()
-	itemHidden = new EventEmitter<string>();
+	readonly closeOthers = input(undefined, {transform: auBooleanAttribute});
+	readonly itemDestroyOnHide = input(undefined, {transform: auBooleanAttribute});
+	readonly className = input<string>();
+	readonly itemShown = output<string>();
+	readonly itemHidden = output<string>();
 
 	readonly _widget = callWidgetFactory({
 		factory: createAccordion,
 		widgetName: 'accordion',
 		events: {
-			onItemShown: (id) => this.itemShown.emit(id),
-			onItemHidden: (id) => this.itemHidden.emit(id),
+			onItemShown: this.itemShown.emit,
+			onItemHidden: this.itemHidden.emit,
 		},
 	});
 }

@@ -4,10 +4,9 @@ import {
 	callWidgetFactory,
 	type ProgressbarWidget,
 	createProgressbar,
-	type ProgressbarProps,
 	UseDirective,
 } from '@agnos-ui/angular-headless';
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 
 @Component({
 	selector: 'app-progressbar',
@@ -23,11 +22,11 @@ import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 	></progress>`,
 })
 export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget> {
-	@Input({transform: auNumberAttribute}) max?: ProgressbarProps['max'];
-	@Input({transform: auNumberAttribute}) value?: ProgressbarProps['value'];
-	@Input() ariaLabel?: ProgressbarProps['ariaLabel'];
-	@Input() className?: ProgressbarProps['className'];
-	@Input() ariaValueTextFn?: ProgressbarProps['ariaValueTextFn'];
+	readonly max = input(undefined, {transform: auNumberAttribute});
+	readonly value = input(undefined, {transform: auNumberAttribute});
+	readonly ariaLabel = input<string>();
+	readonly className = input<string>();
+	readonly ariaValueTextFn = input<(value: number, minimum: number, maximum: number) => string | undefined>();
 
 	readonly _widget = callWidgetFactory({
 		factory: createProgressbar,

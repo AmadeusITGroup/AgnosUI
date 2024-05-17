@@ -1,4 +1,4 @@
-import type {AlertProps, AlertWidget} from '@agnos-ui/angular-headless';
+import type {AlertWidget} from '@agnos-ui/angular-headless';
 import {
 	BaseWidgetDirective,
 	UseDirective,
@@ -8,7 +8,7 @@ import {
 	createSimpleClassTransition,
 } from '@agnos-ui/angular-headless';
 
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, input, model, output} from '@angular/core';
 import closeIcon from '@agnos-ui/common/samples/common/close_icon.svg';
 import {DomSanitizer} from '@angular/platform-browser';
 
@@ -36,30 +36,27 @@ import {DomSanitizer} from '@angular/platform-browser';
 export class AlertComponent extends BaseWidgetDirective<AlertWidget> {
 	readonly closeIcon = inject(DomSanitizer).bypassSecurityTrustHtml(closeIcon);
 
-	@Input({transform: auBooleanAttribute})
-	dismissible?: AlertProps['dismissible'];
-	@Input({transform: auBooleanAttribute})
-	visible?: AlertProps['visible'];
-	@Input() ariaCloseButtonLabel?: AlertProps['ariaCloseButtonLabel'];
-	@Input() className?: AlertProps['className'];
-	@Output() visibleChange = new EventEmitter<boolean>();
-	@Output() hidden = new EventEmitter<void>();
-	@Output() shown = new EventEmitter<void>();
-
-	readonly transition = createSimpleClassTransition({
-		showClasses: ['transition-opacity'],
-		hideClasses: ['opacity-0'],
-		animationPendingHideClasses: ['opacity-0', 'transition-opacity'],
-	});
+	readonly dismissible = input(undefined, {transform: auBooleanAttribute});
+	readonly visible = model(false);
+	readonly ariaCloseButtonLable = input<string>();
+	readonly className = input<string>();
+	readonly hidden = output();
+	readonly shown = output();
 
 	readonly _widget = callWidgetFactory({
 		factory: createAlert,
 		widgetName: 'alert',
 		events: {
-			onVisibleChange: (event) => this.visibleChange.emit(event),
+			onVisibleChange: (event) => this.visible.set(event),
 			onShown: () => this.shown.emit(),
 			onHidden: () => this.hidden.emit(),
 		},
-		defaultConfig: {transition: this.transition},
+		defaultConfig: {
+			transition: createSimpleClassTransition({
+				showClasses: ['transition-opacity'],
+				hideClasses: ['opacity-0'],
+				animationPendingHideClasses: ['opacity-0', 'transition-opacity'],
+			}),
+		},
 	});
 }

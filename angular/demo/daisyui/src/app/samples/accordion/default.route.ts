@@ -7,7 +7,7 @@ import {AccordionItemComponent} from './accordion-item.component';
 	imports: [AccordionComponent, AccordionItemComponent],
 	template: `
 		<app-accordion closeOthers itemDestroyOnHide>
-			<app-accordion-item visible>
+			<app-accordion-item [visible]="true">
 				<ng-container header> First header </ng-container>
 				First content
 			</app-accordion-item>
