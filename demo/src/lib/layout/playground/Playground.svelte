@@ -1,4 +1,5 @@
 <script lang="ts">
+	import {Alert} from '@agnos-ui/svelte-bootstrap/components/alert';
 	import type {WidgetDoc} from '@agnos-ui/doc/types';
 	import Code from '../Code.svelte';
 	import Sample from '../Sample.svelte';
@@ -6,6 +7,8 @@
 	import {createPlayground} from './playground';
 	import type {SampleInfo} from '../sample';
 	import type {PropsValues} from '@agnos-ui/common/propsValues';
+	import conStriped from 'bootstrap-icons/icons/cone-striped.svg?raw';
+	import Svg from '../Svg.svelte';
 
 	export let sample: SampleInfo;
 	export let config: Record<string, any>;
@@ -16,6 +19,19 @@
 	export let listPropsValues: Record<string, PropsValues[]> = {};
 	const {values$, sampleParameters$, help$} = createPlayground({config, types, doc, listPropsValues});
 </script>
+
+<Alert type="warning" className="p-0 border-0 border-start border-5 border-warning" visible>
+	<div class="alert-container p-3 border border-warning rounded-end">
+		<div class="d-flex align-items-center">
+			<span class="d-flex me-2">
+				<Svg svg={conStriped} />
+			</span>
+			Warning: Playground in construction<br />
+		</div>
+		<hr />
+		Please note that the Playground tab is still in construction.
+	</div>
+</Alert>
 
 <div class="row">
 	<div class="col">
