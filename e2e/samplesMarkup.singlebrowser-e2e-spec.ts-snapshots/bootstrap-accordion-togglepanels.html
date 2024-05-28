@@ -1,77 +1,74 @@
 <body>
 	<div
+	 class="container p-3"
 	 id="root"
 	>
 		<div
-		 class="container p-3"
+		 class="accordion au-accordion"
 		>
 			<div
-			 class="accordion au-accordion"
+			 class="accordion-item"
+			 id="first"
 			>
-				<div
-				 class="accordion-item"
-				 id="first"
+				<h2
+				 class="accordion-header"
 				>
-					<h2
-					 class="accordion-header"
+					<button
+					 aria-controls="first-body-container"
+					 aria-disabled="false"
+					 aria-expanded="false"
+					 class="accordion-button collapsed"
+					 id="first-toggle"
+					 type="button"
 					>
-						<button
-						 aria-controls="first-body-container"
-						 aria-disabled="false"
-						 aria-expanded="false"
-						 class="accordion-button collapsed"
-						 id="first-toggle"
-						 type="button"
-						>
-							"First panel"
-						</button>
-					</h2>
-				</div>
-				<div
-				 class="accordion-item"
-				 id="second"
-				>
-					<h2
-					 class="accordion-header"
-					>
-						<button
-						 aria-controls="second-body-container"
-						 aria-disabled="false"
-						 aria-expanded="false"
-						 class="accordion-button collapsed"
-						 id="second-toggle"
-						 type="button"
-						>
-							"Second panel"
-						</button>
-					</h2>
-				</div>
+						"First panel"
+					</button>
+				</h2>
 			</div>
-			<hr />
 			<div
-			 class="d-flex flex-wrap gap-2"
+			 class="accordion-item"
+			 id="second"
 			>
-				<button
-				 class="btn btn-outline-primary btn-sm"
+				<h2
+				 class="accordion-header"
 				>
-					"Toggle first"
-				</button>
-				<button
-				 class="btn btn-outline-primary btn-sm"
-				>
-					"Toggle second"
-				</button>
-				<button
-				 class="btn btn-outline-primary btn-sm"
-				>
-					"Expand all"
-				</button>
-				<button
-				 class="btn btn-outline-primary btn-sm"
-				>
-					"Collapse all"
-				</button>
+					<button
+					 aria-controls="second-body-container"
+					 aria-disabled="false"
+					 aria-expanded="false"
+					 class="accordion-button collapsed"
+					 id="second-toggle"
+					 type="button"
+					>
+						"Second panel"
+					</button>
+				</h2>
 			</div>
+		</div>
+		<hr />
+		<div
+		 class="d-flex flex-wrap gap-2"
+		>
+			<button
+			 class="btn btn-outline-primary btn-sm"
+			>
+				"Toggle first"
+			</button>
+			<button
+			 class="btn btn-outline-primary btn-sm"
+			>
+				"Toggle second"
+			</button>
+			<button
+			 class="btn btn-outline-primary btn-sm"
+			>
+				"Expand all"
+			</button>
+			<button
+			 class="btn btn-outline-primary btn-sm"
+			>
+				"Collapse all"
+			</button>
 		</div>
 	</div>
 </body>

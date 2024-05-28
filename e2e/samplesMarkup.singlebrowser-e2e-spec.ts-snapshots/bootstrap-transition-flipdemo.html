@@ -1,35 +1,32 @@
 <body>
 	<div
+	 class="container p-3"
 	 id="root"
 	>
 		<div
-		 class="container p-3"
+		 class="flip-card"
 		>
 			<div
-			 class="flip-card"
+			 class="flip-card-inner hide"
 			>
 				<div
-				 class="flip-card-inner hide"
+				 class="flip-card-front"
 				>
-					<div
-					 class="flip-card-front"
+					"Some new content !"
+					<button
+					 class="btn btn-outline-secondary"
 					>
-						"Some new content !"
-						<button
-						 class="btn btn-outline-secondary"
-						>
-							"Hide again."
-						</button>
-					</div>
-					<div
-					 class="flip-card-back"
+						"Hide again."
+					</button>
+				</div>
+				<div
+				 class="flip-card-back"
+				>
+					<button
+					 class="btn btn-outline-primary"
 					>
-						<button
-						 class="btn btn-outline-primary"
-						>
-							"What is hiding behing this ?"
-						</button>
-					</div>
+						"What is hiding behing this ?"
+					</button>
 				</div>
 			</div>
 		</div>

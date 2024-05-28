@@ -1,79 +1,76 @@
 <body>
 	<div
+	 class="container p-3"
 	 id="root"
 	>
 		<div
-		 class="container p-3"
+		 class="demo-focustrack"
 		>
 			<div
-			 class="demo-focustrack"
+			 class="border my-2 p-2"
 			>
-				<div
-				 class="border my-2 p-2"
-				>
-					<h5>
-						"Container"
-					</h5>
-					<input
-					 class="form-control"
-					 id="focusableInput"
-					 placeholder="Focusable input"
-					 type="text"
-					 value=""
-					/>
-					<br />
-					<input
-					 class="form-control"
-					 id="otherFocusableInput"
-					 placeholder="Other focusable input"
-					 type="text"
-					 value=""
-					/>
-				</div>
+				<h5>
+					"Container"
+				</h5>
 				<input
 				 class="form-control"
-				 disabled="disabled"
-				 id="disabledInput"
-				 placeholder="Disabled input"
+				 id="focusableInput"
+				 placeholder="Focusable input"
 				 type="text"
 				 value=""
 				/>
 				<br />
-				<div
-				 class="form-check mb-2"
-				>
-					<input
-					 class="form-check-input"
-					 disabled="disabled"
-					 id="containerHasFocus"
-					 type="checkbox"
-					/>
-					<label
-					 class="form-check-label"
-					 for="containerHasFocus"
-					>
-						"Focus in container"
-					</label>
-				</div>
-				<label
-				 class="form-label"
-				 for="activeElementHistory"
-				>
-					"Active element history:"
-				</label>
-				<textarea
-				 class="form-control mb-2"
-				 id="activeElementHistory"
-				 readonly="readonly"
-				>
-					"[{\"tagName\":\"body\"}]"
-				</textarea>
-				<button
-				 class="btn btn-primary"
-				>
-					"Clear"
-				</button>
+				<input
+				 class="form-control"
+				 id="otherFocusableInput"
+				 placeholder="Other focusable input"
+				 type="text"
+				 value=""
+				/>
 			</div>
+			<input
+			 class="form-control"
+			 disabled="disabled"
+			 id="disabledInput"
+			 placeholder="Disabled input"
+			 type="text"
+			 value=""
+			/>
+			<br />
+			<div
+			 class="form-check mb-2"
+			>
+				<input
+				 class="form-check-input"
+				 disabled="disabled"
+				 id="containerHasFocus"
+				 type="checkbox"
+				/>
+				<label
+				 class="form-check-label"
+				 for="containerHasFocus"
+				>
+					"Focus in container"
+				</label>
+			</div>
+			<label
+			 class="form-label"
+			 for="activeElementHistory"
+			>
+				"Active element history:"
+			</label>
+			<textarea
+			 class="form-control mb-2"
+			 id="activeElementHistory"
+			 readonly="readonly"
+			>
+				"[{\"tagName\":\"body\"}]"
+			</textarea>
+			<button
+			 class="btn btn-primary"
+			>
+				"Clear"
+			</button>
 		</div>
 	</div>
 </body>

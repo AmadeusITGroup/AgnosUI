@@ -1,62 +1,59 @@
 <body>
 	<div
+	 class="container p-3"
 	 id="root"
 	>
 		<div
-		 class="container p-3"
+		 class="card"
 		>
 			<div
-			 class="card"
+			 class="card-header p-0"
+			>
+				<button
+				 aria-controls="collapse-content"
+				 aria-expanded="true"
+				 class="btn toggle-button"
+				 id="collapse-toggle"
+				 type="button"
+				>
+					"Toggle content"
+					<span
+					 class="collapse-icon expanded ms-1"
+					>
+						<svg
+						 height="20"
+						 viewBox="0 0 100 100"
+						 width="20"
+						 xmlns="http://www.w3.org/2000/svg"
+						>
+							<rect
+							 class="horizontal"
+							 fill="currentColor"
+							 height="10"
+							 width="60"
+							 x="20"
+							 y="45"
+							/>
+							<rect
+							 class="vertical"
+							 fill="currentColor"
+							 height="60"
+							 width="10"
+							 x="45"
+							 y="20"
+							/>
+						</svg>
+					</span>
+				</button>
+			</div>
+			<div
+			 class="collapse show"
+			 id="collapse-content"
 			>
 				<div
-				 class="card-header p-0"
+				 class="card-body"
 				>
-					<button
-					 aria-controls="collapse-content"
-					 aria-expanded="true"
-					 class="btn toggle-button"
-					 id="collapse-toggle"
-					 type="button"
-					>
-						"Toggle content"
-						<span
-						 class="collapse-icon expanded ms-1"
-						>
-							<svg
-							 height="20"
-							 viewBox="0 0 100 100"
-							 width="20"
-							 xmlns="http://www.w3.org/2000/svg"
-							>
-								<rect
-								 class="horizontal"
-								 fill="currentColor"
-								 height="10"
-								 width="60"
-								 x="20"
-								 y="45"
-								/>
-								<rect
-								 class="vertical"
-								 fill="currentColor"
-								 height="60"
-								 width="10"
-								 x="45"
-								 y="20"
-								/>
-							</svg>
-						</span>
-					</button>
-				</div>
-				<div
-				 class="collapse show"
-				 id="collapse-content"
-				>
-					<div
-					 class="card-body"
-					>
-						"Content to display / hide."
-					</div>
+					"Content to display / hide."
 				</div>
 			</div>
 		</div>

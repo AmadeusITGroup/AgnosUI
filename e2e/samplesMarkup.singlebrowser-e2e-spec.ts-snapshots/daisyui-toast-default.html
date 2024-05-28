@@ -1,50 +1,47 @@
 <body>
 	<div
+	 class="container mx-auto p-3"
 	 id="root"
 	>
 		<div
-		 class="container mx-auto p-3"
+		 class="h-[215px]"
 		>
-			<div
-			 class="h-[215px]"
+			<button
+			 class="btn btn-primary"
 			>
-				<button
-				 class="btn btn-primary"
-				>
-					"Reset Toast"
-				</button>
+				"Reset Toast"
+			</button>
+			<div
+			 class="toast"
+			>
 				<div
-				 class="toast"
+				 class="alert alert-success flex"
 				>
-					<div
-					 class="alert alert-success flex"
+					"This is a success toast"
+					<button
+					 aria-label="Close"
+					 class="btn btn-circle btn-ghost btn-sm"
 					>
-						"This is a success toast"
-						<button
-						 aria-label="Close"
-						 class="btn btn-circle btn-ghost btn-sm"
+						<svg
+						 class="h-6 w-6"
+						 fill="none"
+						 stroke="currentColor"
+						 viewBox="0 0 24 24"
+						 xmlns="http://www.w3.org/2000/svg"
 						>
-							<svg
-							 class="h-6 w-6"
-							 fill="none"
-							 stroke="currentColor"
-							 viewBox="0 0 24 24"
-							 xmlns="http://www.w3.org/2000/svg"
-							>
-								<path
-								 d="M6 18L18 6M6 6l12 12"
-								 stroke-linecap="round"
-								 stroke-linejoin="round"
-								 stroke-width="2"
-								/>
-							</svg>
-						</button>
-					</div>
-					<div
-					 class="alert alert-error flex"
-					>
-						"This is an error toast"
-					</div>
+							<path
+							 d="M6 18L18 6M6 6l12 12"
+							 stroke-linecap="round"
+							 stroke-linejoin="round"
+							 stroke-width="2"
+							/>
+						</svg>
+					</button>
+				</div>
+				<div
+				 class="alert alert-error flex"
+				>
+					"This is an error toast"
 				</div>
 			</div>
 		</div>

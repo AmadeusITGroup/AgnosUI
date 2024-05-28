@@ -1,112 +1,109 @@
 <body>
 	<div
+	 class="container p-3"
 	 id="root"
 	>
-		<div
-		 class="container p-3"
+		<p
+		 class="mb-2"
 		>
-			<p
-			 class="mb-2"
-			>
-				"Color schemes are based on the Bootstrap classes, in order to have out-of-the-box text accessibility use the helper classes"
-				<code>
-					".text-bg-*"
-				</code>
-				", e.g."
-				<code>
-					".text.bg-primary"
-				</code>
-			</p>
+			"Color schemes are based on the Bootstrap classes, in order to have out-of-the-box text accessibility use the helper classes"
+			<code>
+				".text-bg-*"
+			</code>
+			", e.g."
+			<code>
+				".text.bg-primary"
+			</code>
+		</p>
+		<div
+		 aria-atomic="true"
+		 class="au-toast fade show text-bg-primary toast toast-dismissible"
+		 role="alert"
+		>
 			<div
-			 aria-atomic="true"
-			 class="au-toast fade show text-bg-primary toast toast-dismissible"
-			 role="alert"
+			 class="toast-header"
+			>
+				"I am header"
+				<button
+				 aria-label="Close"
+				 class="btn-close me-0 ms-auto"
+				 type="button"
+				/>
+			</div>
+			<div
+			 class="toast-body"
+			>
+				"Simple primary toast"
+			</div>
+		</div>
+		<button
+		 class="btn btn-primary my-2"
+		>
+			"Reset"
+		</button>
+		<h3>
+			"Variations"
+		</h3>
+		<div
+		 class="gx-3 gy-2 row"
+		>
+			<div
+			 class="col-auto"
 			>
 				<div
-				 class="toast-header"
+				 aria-atomic="true"
+				 class="au-toast d-flex fade show text-bg-success toast"
+				 role="alert"
 				>
-					"I am header"
-					<button
-					 aria-label="Close"
-					 class="btn-close me-0 ms-auto"
-					 type="button"
-					/>
-				</div>
-				<div
-				 class="toast-body"
-				>
-					"Simple primary toast"
+					<div
+					 class="toast-body"
+					>
+						"This is a success toast"
+					</div>
 				</div>
 			</div>
-			<button
-			 class="btn btn-primary my-2"
-			>
-				"Reset"
-			</button>
-			<h3>
-				"Variations"
-			</h3>
 			<div
-			 class="gx-3 gy-2 row"
+			 class="col-auto"
 			>
 				<div
-				 class="col-auto"
+				 aria-atomic="true"
+				 class="au-toast d-flex fade show text-bg-danger toast"
+				 role="alert"
 				>
 					<div
-					 aria-atomic="true"
-					 class="au-toast d-flex fade show text-bg-success toast"
-					 role="alert"
+					 class="toast-body"
 					>
-						<div
-						 class="toast-body"
-						>
-							"This is a success toast"
-						</div>
+						"This is an error toast"
 					</div>
 				</div>
+			</div>
+			<div
+			 class="col-auto"
+			>
 				<div
-				 class="col-auto"
+				 aria-atomic="true"
+				 class="au-toast d-flex fade show text-bg-info toast"
+				 role="alert"
 				>
 					<div
-					 aria-atomic="true"
-					 class="au-toast d-flex fade show text-bg-danger toast"
-					 role="alert"
+					 class="toast-body"
 					>
-						<div
-						 class="toast-body"
-						>
-							"This is an error toast"
-						</div>
+						"This is an info toast"
 					</div>
 				</div>
+			</div>
+			<div
+			 class="col-auto"
+			>
 				<div
-				 class="col-auto"
+				 aria-atomic="true"
+				 class="au-toast d-flex fade show text-bg-warning toast"
+				 role="alert"
 				>
 					<div
-					 aria-atomic="true"
-					 class="au-toast d-flex fade show text-bg-info toast"
-					 role="alert"
+					 class="toast-body"
 					>
-						<div
-						 class="toast-body"
-						>
-							"This is an info toast"
-						</div>
-					</div>
-				</div>
-				<div
-				 class="col-auto"
-				>
-					<div
-					 aria-atomic="true"
-					 class="au-toast d-flex fade show text-bg-warning toast"
-					 role="alert"
-					>
-						<div
-						 class="toast-body"
-						>
-							"This is a warning toast"
-						</div>
+						"This is a warning toast"
 					</div>
 				</div>
 			</div>

@@ -2,39 +2,36 @@
  style="overflow-x: hidden; overflow-y: hidden;"
 >
 	<div
+	 class="container p-3"
 	 id="root"
 	 inert="inert"
 	>
-		<div
-		 class="container p-3"
+		<button
+		 class="btn btn-primary"
+		 type="button"
 		>
-			<button
-			 class="btn btn-primary"
-			 type="button"
-			>
-				"Launch demo modal"
-			</button>
-			<div
-			 class="mt-3"
-			 data-testid="message"
+			"Launch demo modal"
+		</button>
+		<div
+		 class="mt-3"
+		 data-testid="message"
+		/>
+		<hr />
+		<div
+		 class="form-check form-switch"
+		>
+			<input
+			 class="form-check-input"
+			 id="fullscreen"
+			 role="switch"
+			 type="checkbox"
 			/>
-			<hr />
-			<div
-			 class="form-check form-switch"
+			<label
+			 class="form-check-label"
+			 for="fullscreen"
 			>
-				<input
-				 class="form-check-input"
-				 id="fullscreen"
-				 role="switch"
-				 type="checkbox"
-				/>
-				<label
-				 class="form-check-label"
-				 for="fullscreen"
-				>
-					"Fullscreen"
-				</label>
-			</div>
+				"Fullscreen"
+			</label>
 		</div>
 	</div>
 	<div
