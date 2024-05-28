@@ -1,131 +1,128 @@
 <body>
 	<div
+	 class="container p-3"
 	 id="root"
 	>
-		<div
-		 class="container p-3"
+		<button
+		 class="btn btn-primary showAlert"
+		 type="button"
 		>
-			<button
-			 class="btn btn-primary showAlert"
-			 type="button"
-			>
-				"Show alert"
-			</button>
-			<br />
-			<br />
+			"Show alert"
+		</button>
+		<br />
+		<br />
+		<div
+		 class="d-flex flex-column"
+		>
 			<div
-			 class="d-flex flex-column"
+			 class="d-flex form-group"
 			>
-				<div
-				 class="d-flex form-group"
+				<label
+				 class="align-self-center me-3"
+				 for="typeSelect"
 				>
-					<label
-					 class="align-self-center me-3"
-					 for="typeSelect"
+					"Alert type:"
+				</label>
+				<select
+				 class="form-select w-auto"
+				 id="typeSelect"
+				>
+					<option
+					 value="success"
 					>
-						"Alert type:"
-					</label>
-					<select
-					 class="form-select w-auto"
-					 id="typeSelect"
+						"success"
+					</option>
+					<option
+					 value="info"
 					>
-						<option
-						 value="success"
-						>
-							"success"
-						</option>
-						<option
-						 value="info"
-						>
-							"info"
-						</option>
-						<option
-						 value="warning"
-						>
-							"warning"
-						</option>
-						<option
-						 value="danger"
-						>
-							"danger"
-						</option>
-						<option
-						 value="primary"
-						>
-							"primary"
-						</option>
-						<option
-						 value="secondary"
-						>
-							"secondary"
-						</option>
-						<option
-						 value="light"
-						>
-							"light"
-						</option>
-						<option
-						 value="dark"
-						>
-							"dark"
-						</option>
-					</select>
-				</div>
-				<label>
-					<input
-					 checked="checked"
-					 class="form-check-input me-1"
-					 type="checkbox"
-					/>
-					"Animated on init"
-				</label>
-				<label>
-					<input
-					 checked="checked"
-					 class="form-check-input me-1"
-					 type="checkbox"
-					/>
-					"Animated"
-				</label>
-				<label>
-					<input
-					 checked="checked"
-					 class="dismissibleInput form-check-input me-1"
-					 type="checkbox"
-					/>
-					"Dismissible"
-				</label>
+						"info"
+					</option>
+					<option
+					 value="warning"
+					>
+						"warning"
+					</option>
+					<option
+					 value="danger"
+					>
+						"danger"
+					</option>
+					<option
+					 value="primary"
+					>
+						"primary"
+					</option>
+					<option
+					 value="secondary"
+					>
+						"secondary"
+					</option>
+					<option
+					 value="light"
+					>
+						"light"
+					</option>
+					<option
+					 value="dark"
+					>
+						"dark"
+					</option>
+				</select>
 			</div>
-			<br />
-			<br />
-			<div
-			 class="alert alert-dismissible alert-success au-alert fade show"
-			 role="alert"
-			>
-				<div
-				 class="alert-body"
-				>
-					<h4
-					 class="alert-heading"
-					>
-						"Well done!"
-					</h4>
-					<p>
-						"Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content."
-					</p>
-					<hr />
-					<p
-					 class="mb-0"
-					>
-						"Whenever you need to, be sure to use margin utilities to keep things nice and tidy."
-					</p>
-				</div>
-				<button
-				 aria-label="Close"
-				 class="btn-close"
-				 type="button"
+			<label>
+				<input
+				 checked="checked"
+				 class="form-check-input me-1"
+				 type="checkbox"
 				/>
+				"Animated on init"
+			</label>
+			<label>
+				<input
+				 checked="checked"
+				 class="form-check-input me-1"
+				 type="checkbox"
+				/>
+				"Animated"
+			</label>
+			<label>
+				<input
+				 checked="checked"
+				 class="dismissibleInput form-check-input me-1"
+				 type="checkbox"
+				/>
+				"Dismissible"
+			</label>
+		</div>
+		<br />
+		<br />
+		<div
+		 class="alert alert-dismissible alert-success au-alert fade show"
+		 role="alert"
+		>
+			<div
+			 class="alert-body"
+			>
+				<h4
+				 class="alert-heading"
+				>
+					"Well done!"
+				</h4>
+				<p>
+					"Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content."
+				</p>
+				<hr />
+				<p
+				 class="mb-0"
+				>
+					"Whenever you need to, be sure to use margin utilities to keep things nice and tidy."
+				</p>
 			</div>
+			<button
+			 aria-label="Close"
+			 class="btn-close"
+			 type="button"
+			/>
 		</div>
 	</div>
 </body>

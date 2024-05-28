@@ -1,52 +1,49 @@
 <body>
 	<div
+	 class="container p-3"
 	 id="root"
 	>
 		<div
-		 class="container p-3"
+		 class="demo-resize-observer"
 		>
-			<div
-			 class="demo-resize-observer"
+			<label
+			 for="resizable"
 			>
-				<label
-				 for="resizable"
+				"Resizable textarea:"
+			</label>
+			<textarea
+			 class="form-control"
+			 cols="50"
+			 id="resizable"
+			 name="resizable"
+			 rows="6"
+			 style="height: 180px;"
+			>
+				"This simple example is using the resizeObserver feature from @agnos-ui/core and displays the height of the textarea below it. Modify the height to more than 200 px and see the font size changing."
+			</textarea>
+			<div>
+				"Textarea content height:"
+				<span
+				 id="dynamic-height"
 				>
-					"Resizable textarea:"
-				</label>
-				<textarea
-				 class="form-control"
-				 cols="50"
-				 id="resizable"
-				 name="resizable"
-				 rows="6"
-				 style="height: 180px;"
-				>
-					"This simple example is using the resizeObserver feature from @agnos-ui/core and displays the height of the textarea below it. Modify the height to more than 200 px and see the font size changing."
-				</textarea>
-				<div>
-					"Textarea content height:"
-					<span
-					 id="dynamic-height"
-					>
-						"166"
-					</span>
-					"px"
-				</div>
-				<button
-				 class="btn btn-primary m-2"
-				 id="decreaseHeight"
-				 type="button"
-				>
-					"Height --"
-				</button>
-				<button
-				 class="btn btn-primary m-2"
-				 id="increaseHeight"
-				 type="button"
-				>
-					"Height ++"
-				</button>
+					"166"
+				</span>
+				"px"
 			</div>
+			<button
+			 class="btn btn-primary m-2"
+			 id="decreaseHeight"
+			 type="button"
+			>
+				"Height --"
+			</button>
+			<button
+			 class="btn btn-primary m-2"
+			 id="increaseHeight"
+			 type="button"
+			>
+				"Height ++"
+			</button>
 		</div>
 	</div>
 </body>

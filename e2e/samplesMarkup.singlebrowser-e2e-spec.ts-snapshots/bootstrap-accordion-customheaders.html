@@ -1,101 +1,98 @@
 <body>
 	<div
+	 class="container p-3"
 	 id="root"
 	>
 		<div
-		 class="container p-3"
+		 class="accordion au-accordion"
 		>
 			<div
-			 class="accordion au-accordion"
+			 class="accordion-item"
+			 id="rewritten-id-1"
 			>
 				<div
-				 class="accordion-item"
-				 id="rewritten-id-1"
+				 aria-level="2"
+				 class="accordion-button accordion-header collapsed custom-header justify-content-between"
+				 role="heading"
 				>
-					<div
-					 aria-level="2"
-					 class="accordion-button accordion-header collapsed custom-header justify-content-between"
-					 role="heading"
+					<p
+					 class="m-0"
 					>
-						<p
-						 class="m-0"
-						>
-							"First panel - collapsed"
-						</p>
+						"First panel - collapsed"
+					</p>
+					<button
+					 aria-controls="rewritten-id-2"
+					 aria-disabled="false"
+					 aria-expanded="false"
+					 class="au-accordion-item-button btn btn-link collapsed p-0"
+					 id="rewritten-id-3"
+					 type="button"
+					>
+						"Toggle first"
+					</button>
+				</div>
+			</div>
+			<div
+			 class="accordion-item"
+			 id="rewritten-id-4"
+			>
+				<div
+				 aria-level="2"
+				 class="accordion-button accordion-header collapsed custom-header justify-content-between"
+				 role="heading"
+				>
+					<p
+					 class="m-0"
+					>
+						"Second panel"
+					</p>
+					<div
+					 class="d-flex flex-wrap gap-2"
+					>
 						<button
-						 aria-controls="rewritten-id-2"
+						 aria-controls="rewritten-id-5"
 						 aria-disabled="false"
 						 aria-expanded="false"
-						 class="au-accordion-item-button btn btn-link collapsed p-0"
-						 id="rewritten-id-3"
+						 class="au-accordion-item-button btn btn-outline-primary btn-sm collapsed"
+						 id="rewritten-id-6"
 						 type="button"
 						>
-							"Toggle first"
+							"Toggle second"
+						</button>
+						<button
+						 class="btn btn-outline-secondary btn-sm"
+						 type="button"
+						>
+							"Disable third"
+						</button>
+						<button
+						 class="btn btn-outline-danger btn-sm"
+						 type="button"
+						>
+							"Collapse all"
 						</button>
 					</div>
 				</div>
+			</div>
+			<div
+			 class="accordion-item"
+			 id="rewritten-id-7"
+			>
 				<div
-				 class="accordion-item"
-				 id="rewritten-id-4"
+				 aria-level="2"
+				 class="accordion-button accordion-header collapsed custom-header justify-content-between"
+				 role="heading"
 				>
-					<div
-					 aria-level="2"
-					 class="accordion-button accordion-header collapsed custom-header justify-content-between"
-					 role="heading"
+					<button
+					 aria-controls="rewritten-id-8"
+					 aria-disabled="false"
+					 aria-expanded="false"
+					 class="au-accordion-item-button btn btn-link collapsed container-fluid p-0 text-start"
+					 id="rewritten-id-9"
+					 type="button"
 					>
-						<p
-						 class="m-0"
-						>
-							"Second panel"
-						</p>
-						<div
-						 class="d-flex flex-wrap gap-2"
-						>
-							<button
-							 aria-controls="rewritten-id-5"
-							 aria-disabled="false"
-							 aria-expanded="false"
-							 class="au-accordion-item-button btn btn-outline-primary btn-sm collapsed"
-							 id="rewritten-id-6"
-							 type="button"
-							>
-								"Toggle second"
-							</button>
-							<button
-							 class="btn btn-outline-secondary btn-sm"
-							 type="button"
-							>
-								"Disable third"
-							</button>
-							<button
-							 class="btn btn-outline-danger btn-sm"
-							 type="button"
-							>
-								"Collapse all"
-							</button>
-						</div>
-					</div>
-				</div>
-				<div
-				 class="accordion-item"
-				 id="rewritten-id-7"
-				>
-					<div
-					 aria-level="2"
-					 class="accordion-button accordion-header collapsed custom-header justify-content-between"
-					 role="heading"
-					>
-						<button
-						 aria-controls="rewritten-id-8"
-						 aria-disabled="false"
-						 aria-expanded="false"
-						 class="au-accordion-item-button btn btn-link collapsed container-fluid p-0 text-start"
-						 id="rewritten-id-9"
-						 type="button"
-						>
-							"Third panel"
-						</button>
-					</div>
+						"Third panel"
+					</button>
 				</div>
 			</div>
 		</div>

@@ -1,144 +1,141 @@
 <body>
 	<div
+	 class="container p-3"
 	 id="root"
 	>
 		<div
-		 class="container p-3"
+		 class="demo-transition mb-3"
 		>
-			<div
-			 class="demo-transition mb-3"
+			<button
+			 class="btn btn-outline-secondary"
+			 id="toggle-component"
 			>
-				<button
-				 class="btn btn-outline-secondary"
-				 id="toggle-component"
-				>
-					"Toggle component"
-				</button>
+				"Toggle component"
+			</button>
+			<div
+			 class="transition-inner"
+			>
 				<div
-				 class="transition-inner"
+				 class="h6 mt-2"
+				>
+					"Transition:"
+				</div>
+				<div
+				 class="d-flex flex-wrap gap-2"
+				>
+					<button
+					 class="active btn btn-outline-secondary btn-sm"
+					 type="button"
+					>
+						"Vertical collapse"
+					</button>
+					<button
+					 class="btn btn-outline-secondary btn-sm"
+					 type="button"
+					>
+						"Horizontal collapse"
+					</button>
+					<button
+					 class="btn btn-outline-secondary btn-sm"
+					 type="button"
+					>
+						"Fade"
+					</button>
+				</div>
+				<div
+				 class="h6 mt-2"
+				>
+					"Other properties:"
+				</div>
+				<label
+				 class="form-check"
+				>
+					<input
+					 checked="checked"
+					 class="form-check-input"
+					 type="checkbox"
+					/>
+					"Animated"
+				</label>
+				<label
+				 class="form-check"
+				>
+					<input
+					 class="form-check-input"
+					 type="checkbox"
+					/>
+					"Animated on init"
+				</label>
+				<label
+				 class="form-check"
+				>
+					<input
+					 checked="checked"
+					 class="form-check-input"
+					 type="checkbox"
+					/>
+					"Remove from DOM"
+				</label>
+				<label
+				 class="form-check mb-2"
+				>
+					<input
+					 checked="checked"
+					 class="form-check-input"
+					 type="checkbox"
+					/>
+					"Visible"
+				</label>
+				<div
+				 class="d-flex flex-wrap gap-2"
+				>
+					<button
+					 class="btn btn-outline-primary"
+					 type="button"
+					>
+						"Toggle"
+					</button>
+					<button
+					 class="btn btn-outline-primary"
+					 type="button"
+					>
+						"Toggle with animation"
+					</button>
+					<button
+					 class="btn btn-outline-primary"
+					 type="button"
+					>
+						"Toggle without animation"
+					</button>
+				</div>
+				<ul
+				 class="mt-2"
+				>
+					<li>
+						"visible = true"
+					</li>
+					<li>
+						"transitioning = false"
+					</li>
+					<li>
+						"shown = true"
+					</li>
+					<li>
+						"hidden = false"
+					</li>
+				</ul>
+				<div
+				 class="collapse show"
+				 style="max-width: 300px;"
 				>
 					<div
-					 class="h6 mt-2"
-					>
-						"Transition:"
-					</div>
-					<div
-					 class="d-flex flex-wrap gap-2"
-					>
-						<button
-						 class="active btn btn-outline-secondary btn-sm"
-						 type="button"
-						>
-							"Vertical collapse"
-						</button>
-						<button
-						 class="btn btn-outline-secondary btn-sm"
-						 type="button"
-						>
-							"Horizontal collapse"
-						</button>
-						<button
-						 class="btn btn-outline-secondary btn-sm"
-						 type="button"
-						>
-							"Fade"
-						</button>
-					</div>
-					<div
-					 class="h6 mt-2"
-					>
-						"Other properties:"
-					</div>
-					<label
-					 class="form-check"
-					>
-						<input
-						 checked="checked"
-						 class="form-check-input"
-						 type="checkbox"
-						/>
-						"Animated"
-					</label>
-					<label
-					 class="form-check"
-					>
-						<input
-						 class="form-check-input"
-						 type="checkbox"
-						/>
-						"Animated on init"
-					</label>
-					<label
-					 class="form-check"
-					>
-						<input
-						 checked="checked"
-						 class="form-check-input"
-						 type="checkbox"
-						/>
-						"Remove from DOM"
-					</label>
-					<label
-					 class="form-check mb-2"
-					>
-						<input
-						 checked="checked"
-						 class="form-check-input"
-						 type="checkbox"
-						/>
-						"Visible"
-					</label>
-					<div
-					 class="d-flex flex-wrap gap-2"
-					>
-						<button
-						 class="btn btn-outline-primary"
-						 type="button"
-						>
-							"Toggle"
-						</button>
-						<button
-						 class="btn btn-outline-primary"
-						 type="button"
-						>
-							"Toggle with animation"
-						</button>
-						<button
-						 class="btn btn-outline-primary"
-						 type="button"
-						>
-							"Toggle without animation"
-						</button>
-					</div>
-					<ul
-					 class="mt-2"
-					>
-						<li>
-							"visible = true"
-						</li>
-						<li>
-							"transitioning = false"
-						</li>
-						<li>
-							"shown = true"
-						</li>
-						<li>
-							"hidden = false"
-						</li>
-					</ul>
-					<div
-					 class="collapse show"
-					 style="max-width: 300px;"
+					 class="card"
+					 style="width: 300px;"
 					>
 						<div
-						 class="card"
-						 style="width: 300px;"
+						 class="card-body"
 						>
-							<div
-							 class="card-body"
-							>
-								"You can collapse this card by clicking Toggle"
-							</div>
+							"You can collapse this card by clicking Toggle"
 						</div>
 					</div>
 				</div>

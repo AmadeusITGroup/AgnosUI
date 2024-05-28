@@ -1,68 +1,65 @@
 <body>
 	<div
+	 class="container p-3"
 	 id="root"
 	>
+		<h2>
+			"Multiselect example"
+		</h2>
 		<div
-		 class="container p-3"
+		 class="mb-3"
 		>
-			<h2>
-				"Multiselect example"
-			</h2>
-			<div
-			 class="mb-3"
+			<label
+			 class="form-label"
 			>
-				<label
-				 class="form-label"
-				>
-					"Multiselect"
-				</label>
+				"Multiselect"
+			</label>
+			<div
+			 class="au-select border border-1 d-block dropdown mb-3 p-1"
+			>
 				<div
-				 class="au-select border border-1 d-block dropdown mb-3 p-1"
+				 aria-controls="rewritten-id-1"
+				 aria-expanded="false"
+				 aria-haspopup="listbox"
+				 class="align-items-center d-flex flex-wrap gap-1"
+				 role="combobox"
 				>
-					<div
-					 aria-controls="rewritten-id-1"
-					 aria-expanded="false"
-					 aria-haspopup="listbox"
-					 class="align-items-center d-flex flex-wrap gap-1"
-					 role="combobox"
-					>
-						<input
-						 aria-autocomplete="list"
-						 aria-label="Select"
-						 autocapitalize="none"
-						 autocomplete="off"
-						 autocorrect="off"
-						 class="au-select-input border-0 flex-grow-1"
-						 id="rewritten-id-2"
-						 type="text"
-						 value=""
-						/>
-					</div>
-				</div>
-			</div>
-			<div
-			 class="demo-select-config"
-			>
-				<strong>
-					"Default config"
-				</strong>
-				<br />
-				<label>
-					"Default filterText:"
 					<input
-					 class="form-control"
+					 aria-autocomplete="list"
+					 aria-label="Select"
+					 autocapitalize="none"
+					 autocomplete="off"
+					 autocorrect="off"
+					 class="au-select-input border-0 flex-grow-1"
+					 id="rewritten-id-2"
 					 type="text"
 					 value=""
 					/>
-				</label>
-				<br />
-				<button
-				 class="btn btn-outline-secondary mt-3"
-				 type="button"
-				>
-					"Reset widget filterText"
-				</button>
+				</div>
 			</div>
+		</div>
+		<div
+		 class="demo-select-config"
+		>
+			<strong>
+				"Default config"
+			</strong>
+			<br />
+			<label>
+				"Default filterText:"
+				<input
+				 class="form-control"
+				 type="text"
+				 value=""
+				/>
+			</label>
+			<br />
+			<button
+			 class="btn btn-outline-secondary mt-3"
+			 type="button"
+			>
+				"Reset widget filterText"
+			</button>
 		</div>
 	</div>
 </body>

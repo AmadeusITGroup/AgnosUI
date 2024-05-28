@@ -1,41 +1,60 @@
 <body>
 	<div
+	 class="container p-3"
 	 id="root"
 	>
+		<p>
+			"To put the action in the toast simply create custom contents."
+		</p>
+		<p>
+			<strong>
+				"Note:"
+			</strong>
+			"When header is not present default display is"
+			<code>
+				"flex"
+			</code>
+		</p>
 		<div
-		 class="container p-3"
+		 class="col-auto col-md-6"
 		>
-			<p>
-				"To put the action in the toast simply create custom contents."
-			</p>
-			<p>
-				<strong>
-					"Note:"
-				</strong>
-				"When header is not present default display is"
-				<code>
-					"flex"
-				</code>
-			</p>
 			<div
-			 class="col-auto col-md-6"
+			 aria-atomic="true"
+			 class="au-toast d-flex fade show text-bg-success toast toast-dismissible"
+			 role="alert"
 			>
 				<div
-				 aria-atomic="true"
-				 class="au-toast d-flex fade show text-bg-success toast toast-dismissible"
-				 role="alert"
+				 class="d-flex w-100"
 				>
 					<div
-					 class="d-flex w-100"
+					 class="align-items-center d-flex flex-grow-1 toast-body"
 					>
-						<div
-						 class="align-items-center d-flex flex-grow-1 toast-body"
+						<span
+						 class="d-flex me-2"
+						>
+							<svg
+							 class="bi bi-check-circle-fill"
+							 fill="currentColor"
+							 height="16"
+							 viewBox="0 0 16 16"
+							 width="16"
+							 xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+								 d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+								/>
+							</svg>
+						</span>
+						"This is a toast with action"
+						<button
+						 class="btn btn-sm ms-auto text-bg-success"
+						 type="button"
 						>
 							<span
-							 class="d-flex me-2"
+							 class="me-2"
 							>
 								<svg
-								 class="bi bi-check-circle-fill"
+								 class="bi bi-arrow-counterclockwise"
 								 fill="currentColor"
 								 height="16"
 								 viewBox="0 0 16 16"
@@ -43,51 +62,29 @@
 								 xmlns="http://www.w3.org/2000/svg"
 								>
 									<path
-									 d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+									 d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2z"
+									 fill-rule="evenodd"
+									/>
+									<path
+									 d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466"
 									/>
 								</svg>
 							</span>
-							"This is a toast with action"
-							<button
-							 class="btn btn-sm ms-auto text-bg-success"
-							 type="button"
-							>
-								<span
-								 class="me-2"
-								>
-									<svg
-									 class="bi bi-arrow-counterclockwise"
-									 fill="currentColor"
-									 height="16"
-									 viewBox="0 0 16 16"
-									 width="16"
-									 xmlns="http://www.w3.org/2000/svg"
-									>
-										<path
-										 d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2z"
-										 fill-rule="evenodd"
-										/>
-										<path
-										 d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466"
-										/>
-									</svg>
-								</span>
-								"Undo"
-							</button>
-						</div>
-						<button
-						 aria-label="Close"
-						 class="btn-close btn-close-white m-auto me-2"
-						 type="button"
-						/>
+							"Undo"
+						</button>
 					</div>
+					<button
+					 aria-label="Close"
+					 class="btn-close btn-close-white m-auto me-2"
+					 type="button"
+					/>
 				</div>
 			</div>
-			<button
-			 class="btn btn-primary mt-2"
-			>
-				"Reset"
-			</button>
 		</div>
+		<button
+		 class="btn btn-primary mt-2"
+		>
+			"Reset"
+		</button>
 	</div>
 </body>

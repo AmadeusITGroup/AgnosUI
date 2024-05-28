@@ -1,96 +1,93 @@
 <body>
 	<div
+	 class="container mx-auto p-3"
 	 id="root"
 	>
-		<div
-		 class="container mx-auto p-3"
+		<nav
+		 aria-label="Page navigation"
 		>
-			<nav
-			 aria-label="Page navigation"
+			<div
+			 class="join"
 			>
-				<div
-				 class="join"
+				<button
+				 aria-disabled="true"
+				 aria-label="Action link for first page"
+				 class="btn btn-outline join-item"
+				 disabled="disabled"
+				 tabindex="-1"
 				>
-					<button
-					 aria-disabled="true"
-					 aria-label="Action link for first page"
-					 class="btn btn-outline join-item"
-					 disabled="disabled"
-					 tabindex="-1"
+					<span
+					 aria-hidden="true"
 					>
-						<span
-						 aria-hidden="true"
-						>
-							"«"
-						</span>
-					</button>
-					<button
-					 aria-disabled="true"
-					 aria-label="Action link for previous page"
-					 class="btn btn-outline join-item"
-					 disabled="disabled"
-					 tabindex="-1"
-					>
-						<span
-						 aria-hidden="true"
-						>
-							"‹"
-						</span>
-					</button>
-					<button
-					 aria-current="page"
-					 class="btn btn-active btn-outline join-item"
-					>
-						"1"
-						<span
-						 class="sr-only"
-						>
-							"(current)"
-						</span>
-					</button>
-					<button
-					 class="btn btn-outline join-item"
-					>
-						"2"
-					</button>
-					<button
-					 class="btn btn-outline join-item"
-					>
-						"3"
-					</button>
-					<button
-					 class="btn btn-outline join-item"
-					>
-						"4"
-					</button>
-					<button
-					 aria-label="Action link for next page"
-					 class="btn btn-outline join-item"
-					>
-						<span
-						 aria-hidden="true"
-						>
-							"›"
-						</span>
-					</button>
-					<button
-					 aria-label="Action link for last page"
-					 class="btn btn-outline join-item"
-					>
-						<span
-						 aria-hidden="true"
-						>
-							"»"
-						</span>
-					</button>
-				</div>
-				<div
-				 aria-live="polite"
-				 class="sr-only"
+						"«"
+					</span>
+				</button>
+				<button
+				 aria-disabled="true"
+				 aria-label="Action link for previous page"
+				 class="btn btn-outline join-item"
+				 disabled="disabled"
+				 tabindex="-1"
 				>
-					"Current page is 1"
-				</div>
-			</nav>
-		</div>
+					<span
+					 aria-hidden="true"
+					>
+						"‹"
+					</span>
+				</button>
+				<button
+				 aria-current="page"
+				 class="btn btn-active btn-outline join-item"
+				>
+					"1"
+					<span
+					 class="sr-only"
+					>
+						"(current)"
+					</span>
+				</button>
+				<button
+				 class="btn btn-outline join-item"
+				>
+					"2"
+				</button>
+				<button
+				 class="btn btn-outline join-item"
+				>
+					"3"
+				</button>
+				<button
+				 class="btn btn-outline join-item"
+				>
+					"4"
+				</button>
+				<button
+				 aria-label="Action link for next page"
+				 class="btn btn-outline join-item"
+				>
+					<span
+					 aria-hidden="true"
+					>
+						"›"
+					</span>
+				</button>
+				<button
+				 aria-label="Action link for last page"
+				 class="btn btn-outline join-item"
+				>
+					<span
+					 aria-hidden="true"
+					>
+						"»"
+					</span>
+				</button>
+			</div>
+			<div
+			 aria-live="polite"
+			 class="sr-only"
+			>
+				"Current page is 1"
+			</div>
+		</nav>
 	</div>
 </body>
