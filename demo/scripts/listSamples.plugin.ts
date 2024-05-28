@@ -8,14 +8,11 @@ const samplesListId = '@agnos-ui/samples';
 export const getSamplesList = () => {
 	const map: Record<string, Pick<SampleInfo, 'componentName' | 'sampleName' | 'style'>> = {};
 	const add = (style: SampleInfo['style']) => (file: string) => {
-		const parts = file
-			.replace(/\.route\.svelte$/, '')
-			.toLowerCase()
-			.split(path.sep);
+		const parts = file.replace(/\.route\.svelte$/, '').split(path.sep);
 		if (parts.length !== 2) {
 			throw new Error(`Expected exactly two components in sample path: ${file} (in ${style})`);
 		}
-		const info = {style, componentName: parts[0], sampleName: parts[1]};
+		const info = {style, componentName: parts[0], sampleName: `${parts[1][0].toLowerCase()}${parts[1].substring(1)}`};
 		map[`${style}/${info.componentName}/${info.sampleName}`] = info;
 	};
 	globSync('**/*.route.svelte', {cwd: path.join(import.meta.dirname, '../../svelte/demo/src/bootstrap/samples')}).forEach(add('bootstrap'));
