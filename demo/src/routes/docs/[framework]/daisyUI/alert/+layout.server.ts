@@ -8,9 +8,9 @@ export const load = async () => {
 			{title: 'Api', key: 'api', path: '/daisyUI/alert/api'},
 		],
 		prev: {
-			title: 'Headless Components: Introduction',
-			slug: 'headless-components/introduction',
-			subpath: '',
+			title: 'Accordion',
+			slug: 'daisyUI/accordion/',
+			subpath: 'headless',
 		},
 		next: {
 			title: 'Pagination',

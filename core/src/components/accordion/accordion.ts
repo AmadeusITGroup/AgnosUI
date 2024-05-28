@@ -245,6 +245,14 @@ export interface AccordionItemDirectives {
 	 */
 	bodyDirective: Directive;
 	/**
+	 * Directive to apply the itemTransition
+	 */
+	transitionDirective: Directive;
+	/**
+	 * Directive to apply aria attributes to the expanded body panel
+	 */
+	bodyContainerAttrsDirective: Directive;
+	/**
 	 * Directive to be put on the accordion-item body container. It will handle the animation.
 	 */
 	bodyContainerDirective: Directive;
@@ -484,6 +492,14 @@ export function createAccordionItem(config?: PropsConfig<AccordionItemProps>): A
 		classNames: {collapsed: computed(() => !itemVisible$())},
 		events: {click: clickAction},
 	}));
+	const transitionDirective = bindDirectiveNoArg(itemTransition.directives.directive);
+	const bodyContainerAttrsDirective = createAttributesDirective(() => ({
+		attributes: {
+			id: computed(() => `${itemId$()}-body-container`),
+			class: itemBodyContainerClass$(),
+			'aria-labelledby': computed(() => `${itemId$()}-toggle`),
+		},
+	}));
 
 	return {
 		...stateStores({
@@ -516,7 +532,7 @@ export function createAccordionItem(config?: PropsConfig<AccordionItemProps>): A
 			},
 		},
 		directives: {
-			toggleDirective: toggleDirective,
+			toggleDirective,
 			buttonDirective: mergeDirectives(
 				toggleDirective,
 				createAttributesDirective(() => ({
@@ -528,16 +544,9 @@ export function createAccordionItem(config?: PropsConfig<AccordionItemProps>): A
 			),
 			headerDirective: createAttributesDirective(() => ({attributes: {class: itemHeaderClass$()}})),
 			bodyDirective: createAttributesDirective(() => ({attributes: {class: itemBodyClass$()}})),
-			bodyContainerDirective: mergeDirectives(
-				bindDirectiveNoArg(itemTransition.directives.directive),
-				createAttributesDirective(() => ({
-					attributes: {
-						id: computed(() => `${itemId$()}-body-container`),
-						class: itemBodyContainerClass$(),
-						'aria-labelledby': computed(() => `${itemId$()}-toggle`),
-					},
-				})),
-			),
+			transitionDirective,
+			bodyContainerAttrsDirective,
+			bodyContainerDirective: mergeDirectives(transitionDirective, bodyContainerAttrsDirective),
 			accordionItemDirective: noop,
 		},
 	};

@@ -72,6 +72,12 @@ export const componentsMetadata: {[key: string]: ComponentMetadata} = {
  * Metadata for each component
  */
 export const daisyUIMetadata: {[key: string]: ComponentMetadata} = {
+	Accordion: {
+		title: 'Accordion',
+		status: 'stable',
+		since: 'v0.4.0',
+		type: 'daisyUI',
+	},
 	Alert: {
 		title: 'Alert',
 		status: 'stable',
