@@ -68,7 +68,7 @@ const getNeededServersAndURL = ({project, framework, sampleInfo}: RequestBody) =
 			let urlPath = '/';
 			if (framework) {
 				if (sampleInfo) {
-					urlPath = `/${framework}/samples/${sampleInfo.style}/#/${sampleInfo.componentName}/${sampleInfo.sampleName}`;
+					urlPath = `/${framework}/samples/${sampleInfo.style}/#/${sampleInfo.componentName.toLowerCase()}/${sampleInfo.sampleName.toLowerCase()}`;
 				} else {
 					urlPath = `/${framework}/samples/bootstrap/`;
 				}
