@@ -13,11 +13,11 @@ const undefinedConfig = getUndefinedValues(getPaginationDefaultConfig());
 	template: `<nav auPagination #widget></nav>`,
 })
 export default class PlaygroundComponent {
-	@ViewChild('widget') widget: PaginationComponent;
+	@ViewChild('widget') widget!: PaginationComponent;
 
 	constructor() {
 		hashChangeHook((props) => {
-			this.widget?._widget.patch({...undefinedConfig, ...props});
+			this.widget._widget.patch({...undefinedConfig, ...props});
 		});
 	}
 }

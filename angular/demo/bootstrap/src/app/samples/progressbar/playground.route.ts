@@ -12,11 +12,11 @@ const undefinedConfig = getUndefinedValues(getProgressbarDefaultConfig());
 	template: `<div auProgressbar #widget></div>`,
 })
 export default class PlaygroundComponent {
-	@ViewChild('widget') widget: ProgressbarComponent;
+	@ViewChild('widget') widget!: ProgressbarComponent;
 
 	constructor() {
 		hashChangeHook((props) => {
-			this.widget?._widget.patch({...undefinedConfig, ...props});
+			this.widget._widget.patch({...undefinedConfig, ...props});
 		});
 	}
 }

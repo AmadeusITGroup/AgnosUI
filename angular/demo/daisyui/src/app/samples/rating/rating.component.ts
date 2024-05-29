@@ -29,10 +29,10 @@ export class RatingComponent extends BaseWidgetDirective<RatingWidget> implement
 	onTouched = () => {};
 
 	// You can choose here the props from the core you want as inputs
-	@Input({transform: auNumberAttribute}) maxRating: RatingProps['maxRating'];
-	@Input({transform: auNumberAttribute}) rating: RatingProps['rating'];
-	@Input() ariaLabel: RatingProps['ariaLabel'];
-	@Input() className: RatingProps['className'];
+	@Input({transform: auNumberAttribute}) maxRating?: RatingProps['maxRating'];
+	@Input({transform: auNumberAttribute}) rating?: RatingProps['rating'];
+	@Input() ariaLabel?: RatingProps['ariaLabel'];
+	@Input() className?: RatingProps['className'];
 	@Output() hover = new EventEmitter<number>();
 	@Output() leave = new EventEmitter<number>();
 	@Output() ratingChange = new EventEmitter<number>();

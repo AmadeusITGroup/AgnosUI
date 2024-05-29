@@ -46,7 +46,7 @@ export default class CollapseComponent {
 	readonly state = toAngularSignal(this.transition.state$);
 
 	@Input()
-	headerText: string;
+	headerText?: string;
 
 	@Input({transform: booleanAttribute})
 	expanded = false;

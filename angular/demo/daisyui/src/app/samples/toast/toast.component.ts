@@ -27,11 +27,11 @@ export class ToastComponent extends BaseWidgetDirective<ToastWidget> {
 	readonly closeIcon = inject(DomSanitizer).bypassSecurityTrustHtml(closeIcon);
 
 	@Input({transform: auBooleanAttribute})
-	visible: ToastProps['visible'];
+	visible?: ToastProps['visible'];
 	@Input({transform: auBooleanAttribute})
-	dismissible: ToastProps['dismissible'];
-	@Input() ariaCloseButtonLabel: ToastProps['ariaCloseButtonLabel'];
-	@Input() className: ToastProps['className'];
+	dismissible?: ToastProps['dismissible'];
+	@Input() ariaCloseButtonLabel?: ToastProps['ariaCloseButtonLabel'];
+	@Input() className?: ToastProps['className'];
 	@Output() visibleChange = new EventEmitter<boolean>();
 	@Output() hidden = new EventEmitter<void>();
 	@Output() shown = new EventEmitter<void>();

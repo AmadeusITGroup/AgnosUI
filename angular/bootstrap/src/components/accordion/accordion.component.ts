@@ -130,7 +130,7 @@ export class AccordionItemStructureDirective {
 	`,
 })
 export class AccordionItemDefaultSlotsComponent {
-	@ViewChild('structure', {static: true}) structure: TemplateRef<AccordionItemContext>;
+	@ViewChild('structure', {static: true}) structure!: TemplateRef<AccordionItemContext>;
 }
 export const accordionItemDefaultSlotItemStructure = new ComponentTemplate(AccordionItemDefaultSlotsComponent, 'structure');
 
@@ -152,13 +152,13 @@ const defaultConfig: Partial<AccordionItemProps> = {
 export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWidget> implements AfterContentChecked, AfterViewInit {
 	@Input('auSlotItemHeader') slotItemHeader: SlotContent<AccordionItemContext>;
 	@ContentChild(AccordionHeaderDirective, {static: false})
-	slotItemHeaderFromContent: AccordionHeaderDirective | null;
+	slotItemHeaderFromContent: AccordionHeaderDirective | undefined;
 	@Input('auSlotItemBody') slotItemBody: SlotContent<AccordionItemContext>;
 	@ContentChild(AccordionBodyDirective, {static: false})
-	slotItemBodyFromContent: AccordionBodyDirective | null;
+	slotItemBodyFromContent: AccordionBodyDirective | undefined;
 	@Input('auSlotItemStructure') slotItemStructure: SlotContent<AccordionItemContext>;
 	@ContentChild(AccordionItemStructureDirective, {static: false})
-	slotItemStructureFromContent: AccordionItemStructureDirective | null;
+	slotItemStructureFromContent: AccordionItemStructureDirective | undefined;
 
 	/**
 	 * The id of the accordion-item. It can be used for controlling the accordion-item via the accordion api.

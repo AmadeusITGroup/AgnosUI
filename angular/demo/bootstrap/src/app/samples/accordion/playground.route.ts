@@ -22,12 +22,12 @@ const undefinedAccordionConfig = getUndefinedValues(getAccordionDefaultConfig())
 	</div>`,
 })
 export default class PlaygroundComponent {
-	@ViewChild(AccordionDirective) widget: AccordionDirective;
-	@ViewChildren(AccordionItemComponent) itemWidgets: QueryList<AccordionItemComponent>;
+	@ViewChild(AccordionDirective) widget!: AccordionDirective;
+	@ViewChildren(AccordionItemComponent) itemWidgets!: QueryList<AccordionItemComponent>;
 
 	constructor() {
 		hashChangeHook((props) => {
-			this.widget?._widget.patch({...undefinedAccordionConfig, ...props});
+			this.widget._widget.patch({...undefinedAccordionConfig, ...props});
 			this.itemWidgets?.forEach((widget) => {
 				widget._widget.patch({...undefinedAccordionConfig, ...props});
 			});

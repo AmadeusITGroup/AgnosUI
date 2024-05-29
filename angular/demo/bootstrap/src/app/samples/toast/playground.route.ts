@@ -13,11 +13,11 @@ const undefinedConfig = getUndefinedValues(getToastDefaultConfig());
 	template: `<au-component auToast #widget></au-component>`,
 })
 export default class PlaygroundComponent {
-	@ViewChild('widget') widget: ToastComponent;
+	@ViewChild('widget') widget!: ToastComponent;
 
 	constructor() {
 		hashChangeHook((props) => {
-			this.widget?._widget.patch({...undefinedConfig, ...props});
+			this.widget._widget.patch({...undefinedConfig, ...props});
 		});
 	}
 }

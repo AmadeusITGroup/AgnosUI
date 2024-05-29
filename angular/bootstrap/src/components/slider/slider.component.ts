@@ -61,7 +61,7 @@ export class SliderHandleDirective {
 export class SliderDefaultHandleSlotComponent {
 	private readonly _zone = inject(NgZone);
 
-	@ViewChild('handle', {static: true}) readonly handle: TemplateRef<SliderSlotHandleContext>;
+	@ViewChild('handle', {static: true}) readonly handle!: TemplateRef<SliderSlotHandleContext>;
 
 	onKeyDown(event: KeyboardEvent, handleId: number, widgetOnKeyDownFn: (event: KeyboardEvent, handleId: number) => void) {
 		widgetOnKeyDownFn(event, handleId);
@@ -122,7 +122,7 @@ export class SliderStructureDirective {
 	`,
 })
 export class SliderDefaultStructureSlotComponent {
-	@ViewChild('structure', {static: true}) structure: TemplateRef<SliderContext>;
+	@ViewChild('structure', {static: true}) structure!: TemplateRef<SliderContext>;
 }
 
 export const sliderDefaultSlotStructure = new ComponentTemplate(SliderDefaultStructureSlotComponent, 'structure');

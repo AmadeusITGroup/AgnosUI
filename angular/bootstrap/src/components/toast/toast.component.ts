@@ -74,7 +74,7 @@ export class ToastHeaderDirective {
 	</ng-template>`,
 })
 export class ToastDefaultSlotsComponent {
-	@ViewChild('structure', {static: true}) structure: TemplateRef<ToastContext>;
+	@ViewChild('structure', {static: true}) structure!: TemplateRef<ToastContext>;
 }
 
 export const toastDefaultSlotStructure = new ComponentTemplate(ToastDefaultSlotsComponent, 'structure');
@@ -160,7 +160,7 @@ export class ToastComponent extends BaseWidgetDirective<ToastWidget> implements 
 
 	@Input('auSlotDefault') slotDefault: SlotContent<ToastContext>;
 	@ContentChild(ToastBodyDirective, {static: false})
-	slotDefaultFromContent: ToastBodyDirective | null;
+	slotDefaultFromContent: ToastBodyDirective | undefined;
 
 	@Input('auSlotStructure') slotStructure: SlotContent<ToastContext>;
 	@ContentChild(ToastStructureDirective, {static: false}) slotStructureFromContent: ToastStructureDirective | undefined;

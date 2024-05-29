@@ -55,7 +55,7 @@ export class RatingReadonlyComponent extends BaseWidgetDirective<RatingWidget> i
 
 	@Input({transform: auNumberAttribute}) maxRating: number | undefined;
 
-	@Input() className: string;
+	@Input() className: string | undefined;
 
 	ngAfterContentChecked(): void {
 		this._widget.patchSlots({

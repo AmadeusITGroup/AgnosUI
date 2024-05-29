@@ -47,7 +47,7 @@ export class ProgressbarStructureDirective {
 	`,
 })
 export class ProgressbarDefaultSlotsComponent {
-	@ViewChild('structure', {static: true}) structure: TemplateRef<ProgressbarContext>;
+	@ViewChild('structure', {static: true}) structure!: TemplateRef<ProgressbarContext>;
 }
 
 export const progressbarDefaultSlotStructure = new ComponentTemplate(ProgressbarDefaultSlotsComponent, 'structure');

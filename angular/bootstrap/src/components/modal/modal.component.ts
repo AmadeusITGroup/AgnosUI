@@ -115,8 +115,8 @@ export class ModalFooterDirective<Data> {
 	`,
 })
 export class ModalDefaultSlotsComponent<Data> {
-	@ViewChild('header', {static: true}) header: TemplateRef<ModalContext<Data>>;
-	@ViewChild('structure', {static: true}) structure: TemplateRef<ModalContext<Data>>;
+	@ViewChild('header', {static: true}) header!: TemplateRef<ModalContext<Data>>;
+	@ViewChild('structure', {static: true}) structure!: TemplateRef<ModalContext<Data>>;
 }
 
 /**
@@ -223,23 +223,23 @@ export class ModalComponent<Data> extends BaseWidgetDirective<ModalWidget<Data>>
 
 	@Input('auSlotStructure') slotStructure: SlotContent<ModalContext<Data>>;
 	@ContentChild(ModalStructureDirective, {static: false})
-	slotStructureFromContent: ModalStructureDirective<Data> | null;
+	slotStructureFromContent: ModalStructureDirective<Data> | undefined;
 
 	@Input('auSlotHeader') slotHeader: SlotContent<ModalContext<Data>>;
 	@ContentChild(ModalHeaderDirective, {static: false})
-	slotHeaderFromContent: ModalHeaderDirective<Data> | null;
+	slotHeaderFromContent: ModalHeaderDirective<Data> | undefined;
 
 	@Input('auSlotTitle') slotTitle: SlotContent<ModalContext<Data>>;
 	@ContentChild(ModalTitleDirective, {static: false})
-	slotTitleFromContent: ModalTitleDirective<Data> | null;
+	slotTitleFromContent: ModalTitleDirective<Data> | undefined;
 
 	@Input('auSlotDefault') slotDefault: SlotContent<ModalContext<Data>>;
 	@ContentChild(ModalBodyDirective, {static: false})
-	slotDefaultFromContent: ModalBodyDirective<Data> | null;
+	slotDefaultFromContent: ModalBodyDirective<Data> | undefined;
 
 	@Input('auSlotFooter') slotFooter: SlotContent<ModalContext<Data>>;
 	@ContentChild(ModalFooterDirective, {static: false})
-	slotFooterFromContent: ModalFooterDirective<Data> | null;
+	slotFooterFromContent: ModalFooterDirective<Data> | undefined;
 
 	/**
 	 * Data to use in content slots
