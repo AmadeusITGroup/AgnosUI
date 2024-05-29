@@ -1,5 +1,5 @@
 import {Portal} from '@agnos-ui/react-headless/utils/portal';
-import type {AdaptSlotContentProps, AdaptWidgetSlots, PropsConfig, WidgetProps, WidgetState} from '@agnos-ui/react-headless/types';
+import type {AdaptSlotContentProps, AdaptWidgetSlots, Directive, PropsConfig, WidgetProps, WidgetState} from '@agnos-ui/react-headless/types';
 import {toSlotContextWidget} from '@agnos-ui/react-headless/types';
 import {Slot} from '@agnos-ui/react-headless/slot';
 import {useWidgetWithConfig} from '../../config';
@@ -19,14 +19,15 @@ export type ModalState<Data> = WidgetState<ModalWidget<Data>>;
 export type ModalContext<Data> = AdaptSlotContentProps<import('@agnos-ui/core-bootstrap/components/modal').ModalContext<Data>>;
 export const createModal: <Data>(propsConfig?: PropsConfig<ModalProps<Data>>) => ModalWidget<Data> = coreCreateModal as any;
 
+const CloseButton = ({directive}: {directive: Directive}) => <button className="btn-close" {...useDirective(directive)} />;
+
 const DefaultSlotHeader = <Data,>(slotContext: ModalContext<Data>) => {
-	const refCloseButton = useDirective(slotContext.widget.directives.closeButtonDirective);
 	return (
 		<>
 			<h5 className="modal-title">
 				<Slot slotContent={slotContext.state.slotTitle} props={slotContext} />
 			</h5>
-			{slotContext.state.closeButton && <button className="btn-close" {...refCloseButton} />}
+			{slotContext.state.closeButton && <CloseButton directive={slotContext.widget.directives.closeButtonDirective} />}
 		</>
 	);
 };
