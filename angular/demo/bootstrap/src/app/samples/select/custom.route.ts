@@ -1,6 +1,6 @@
 import {AgnosUIAngularModule} from '@agnos-ui/angular-bootstrap';
 import {abortPrevious, debounce} from '@agnos-ui/common/samples/utils/debounce';
-import {Component} from '@angular/core';
+import {Component, signal} from '@angular/core';
 
 interface WikiResult {
 	pageid: number;
@@ -23,7 +23,7 @@ function getHtmlText(html: string) {
 		<div class="custom-select my-auto mb-3">
 			<div
 				auSelect
-				[auItems]="items"
+				[auItems]="items()"
 				[auItemIdFn]="itemIdFn"
 				[auNavSelector]="navSelector"
 				(auFilterTextChange)="onFilterTextChange($event)"
@@ -46,7 +46,7 @@ function getHtmlText(html: string) {
 			</div>
 			<span class="fw-bold">Selection: </span>
 			@if (selected.length) {
-				@for (item of selected; track item) {
+				@for (item of selected(); track item) {
 					<a attr.href="{{ basePageUrl + item.pageid }}" class="pe-2">{{ item.title }}</a>
 				}
 			} @else {
@@ -57,10 +57,10 @@ function getHtmlText(html: string) {
 	styles: ["@import '@agnos-ui/common/samples/select/custom.scss';"],
 })
 export default class CustomSelectComponent {
-	basePageUrl = 'https://en.wikipedia.org/?curid=';
+	readonly basePageUrl = 'https://en.wikipedia.org/?curid=';
 
-	items: WikiResult[] = [];
-	selected: WikiResult[] = [];
+	readonly items = signal<WikiResult[]>([]);
+	readonly selected = signal<WikiResult[]>([]);
 
 	itemIdFn(item: WikiResult) {
 		return 'page-' + item.pageid;
@@ -77,12 +77,12 @@ export default class CustomSelectComponent {
 				{signal},
 			);
 			const result = await response.json();
-			this.items = result.query?.search.map((item: WikiResult) => ({...item, snippet: getHtmlText(item.snippet)})) ?? [];
+			this.items.set(result.query?.search.map((item: WikiResult) => ({...item, snippet: getHtmlText(item.snippet)})) ?? []);
 		}),
 		200,
 	);
 
 	onSelectedChange(selected: WikiResult[]) {
-		this.selected = (<WikiResult[]>(selected || [])).sort((a, b) => compareFn(a.title, b.title));
+		this.selected.set((<WikiResult[]>(selected || [])).sort((a, b) => compareFn(a.title, b.title)));
 	}
 }

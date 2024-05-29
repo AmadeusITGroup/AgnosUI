@@ -1,6 +1,6 @@
 import type {ToastProps} from '@agnos-ui/angular-bootstrap';
 import {AgnosUIAngularModule, ToastComponent} from '@agnos-ui/angular-bootstrap';
-import {Component, Injectable, inject} from '@angular/core';
+import {Component, Injectable, inject, signal} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
 export enum ToastPositions {
@@ -80,17 +80,15 @@ class ToastContainerComponent {
 })
 export default class DynamicToastComponent {
 	readonly toastContainerService = inject(ToastService);
-
-	positionList = Object.entries(ToastPositions).map((entry) => {
+	readonly positionList = Object.entries(ToastPositions).map((entry) => {
 		return {
 			value: entry[1],
 			label: entry[0],
 		};
 	});
-
-	position = this.positionList[0].value;
+	readonly position = signal(this.positionList[0].value);
 
 	addToast() {
-		this.toastContainerService.add({autoHide: true, delay: 3000, className: this.position});
+		this.toastContainerService.add({autoHide: true, delay: 3000, className: this.position()});
 	}
 }

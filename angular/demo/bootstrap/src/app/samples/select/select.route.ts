@@ -1,5 +1,5 @@
 import {SelectComponent, injectWidgetsConfig, provideWidgetsConfig, toAngularSignal} from '@agnos-ui/angular-bootstrap';
-import {Component} from '@angular/core';
+import {Component, computed, signal} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
 @Component({
@@ -10,7 +10,7 @@ import {FormsModule} from '@angular/forms';
 		<h2>Multiselect example</h2>
 		<div class="mb-3">
 			<label class="form-label">Multiselect</label>
-			<div auSelect [auItems]="items" [auFilterText]="filterText" (auFilterTextChange)="onFilterTextChange($event)"></div>
+			<div auSelect [auItems]="items()" [(auFilterText)]="filterText"></div>
 		</div>
 		<div class="demo-select-config">
 			<strong>Default config</strong><br />
@@ -24,15 +24,16 @@ import {FormsModule} from '@angular/forms';
 				/>
 			</label>
 			<br />
-			<button type="button" class="mt-3 btn btn-outline-secondary" (click)="filterText = undefined">Reset widget filterText</button>
+			<button type="button" class="mt-3 btn btn-outline-secondary" (click)="filterText.set(undefined)">Reset widget filterText</button>
 		</div>
 	`,
 })
 export default class SelectSelectComponent {
-	mainList = ['Action 1', 'Action 2', 'Action 3', 'Other 1', 'Other 2', 'Other 3'];
-	items: string[] = [];
-
-	filterText: string | undefined;
+	readonly mainList = ['Action 1', 'Action 2', 'Action 3', 'Other 1', 'Other 2', 'Other 3'];
+	readonly filterText = signal<string | undefined>(undefined);
+	readonly items = computed(() =>
+		this.filterText() ? this.mainList.filter((item) => item.toLowerCase().startsWith(this.filterText()!)) : this.mainList.slice(0, 10),
+	);
 
 	readonly widgetsConfig$ = injectWidgetsConfig();
 	readonly widgetsConfig = toAngularSignal(this.widgetsConfig$);
@@ -45,13 +46,5 @@ export default class SelectSelectComponent {
 				filterText: url.searchParams.get('filterText') ?? '',
 			},
 		});
-	}
-
-	onFilterTextChange(filterText: string) {
-		if (this.filterText !== filterText) {
-			this.filterText = filterText;
-			const mainList = this.mainList;
-			this.items = filterText ? mainList.filter((item) => item.toLowerCase().startsWith(filterText ?? '')) : mainList.slice(0, 10);
-		}
 	}
 }

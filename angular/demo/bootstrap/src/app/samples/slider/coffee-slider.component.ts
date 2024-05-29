@@ -1,7 +1,6 @@
 import type {SliderWidget} from '@agnos-ui/angular-bootstrap';
 import {SlotComponent, UseDirective} from '@agnos-ui/angular-bootstrap';
-import {ChangeDetectionStrategy, Component, NgZone, ViewEncapsulation, inject} from '@angular/core';
-import {take} from 'rxjs';
+import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
 
 @Component({
 	standalone: true,
@@ -30,13 +29,4 @@ import {take} from 'rxjs';
 	`,
 	encapsulation: ViewEncapsulation.None,
 })
-export default class CoffeeSliderComponent extends SlotComponent<SliderWidget> {
-	private readonly _zone = inject(NgZone);
-
-	onKeyDown(event: KeyboardEvent, handleId: number, widgetOnKeyDownFn: (event: KeyboardEvent, handleId: number) => void) {
-		widgetOnKeyDownFn(event, handleId);
-		this._zone.onStable.pipe(take(1)).subscribe(() => {
-			(event.target as HTMLElement).focus();
-		});
-	}
-}
+export default class CoffeeSliderComponent extends SlotComponent<SliderWidget> {}
