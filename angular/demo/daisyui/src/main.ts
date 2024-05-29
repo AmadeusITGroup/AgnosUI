@@ -1,4 +1,4 @@
-import {enableProdMode} from '@angular/core';
+import {enableProdMode, provideExperimentalZonelessChangeDetection} from '@angular/core';
 
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {bootstrapApplication} from '@angular/platform-browser';
@@ -12,5 +12,5 @@ if (environment.production) {
 }
 
 bootstrapApplication(AppComponent, {
-	providers: [provideRouter(ROUTES), {provide: LocationStrategy, useClass: HashLocationStrategy}],
+	providers: [provideRouter(ROUTES), {provide: LocationStrategy, useClass: HashLocationStrategy}, provideExperimentalZonelessChangeDetection()],
 }).catch((err) => console.error(err));
