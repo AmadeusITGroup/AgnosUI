@@ -58,7 +58,7 @@
 	},
 	"wireit": {
 		"build": {
-			"command": "vite build && tsc -p tsconfig.build.json && node ../scripts/buildPackageJson.js . dist && sass src/scss/agnosui.scss dist/css/agnosui.css && copyfiles -u 1 src/**/scss/** dist",
+			"command": "vite build && tsc -p tsconfig.build.json && node ../scripts/buildPackageJson.js . dist && sass src/scss/agnosui.scss dist/css/agnosui.css && node scripts/copyScss.js",
 			"files": [
 				"src/**",
 				"tsconfig.build.json",
@@ -98,12 +98,10 @@
 		}
 	},
 	"devDependencies": {
-		"copyfiles": "^2.4.1",
 		"sass": "^1.77.2"
 	},
 	"dependencies": {
 		"@agnos-ui/core": "0.0.0"
 	},
-	"peerDependencies": {},
 	"sideEffects": false
 }

@@ -20,7 +20,7 @@ function adjustItemsCloseOthers(items: AccordionItemWidget[], openItems: string[
 	}
 	if (keepOpen) {
 		items.forEach((item) => {
-			if (item.state$().itemId !== keepOpen && item.state$().itemVisible) {
+			if (item.stores.itemId$() !== keepOpen && item.stores.itemVisible$()) {
 				item.patch({itemVisible: false});
 			}
 		});
@@ -29,7 +29,7 @@ function adjustItemsCloseOthers(items: AccordionItemWidget[], openItems: string[
 }
 
 function getItem(items: AccordionItemWidget[], itemId: string): AccordionItemWidget | undefined {
-	return items.find((item) => item.state$().itemId === itemId);
+	return items.find((item) => item.stores.itemId$() === itemId);
 }
 
 export interface AccordionProps extends WidgetsCommonPropsAndState {
@@ -245,6 +245,14 @@ export interface AccordionItemDirectives {
 	 */
 	bodyDirective: Directive;
 	/**
+	 * Directive to apply the itemTransition
+	 */
+	transitionDirective: Directive;
+	/**
+	 * Directive to apply aria attributes to the expanded body panel
+	 */
+	bodyContainerAttrsDirective: Directive;
+	/**
 	 * Directive to be put on the accordion-item body container. It will handle the animation.
 	 */
 	bodyContainerDirective: Directive;
@@ -451,7 +459,6 @@ export function createAccordionItem(config?: PropsConfig<AccordionItemProps>): A
 	const initDone$ = writable(false);
 	const _autoItemId$ = computed(() => generateId());
 	const itemId$ = computed(() => _dirtyItemId$() || _autoItemId$());
-	const shouldBeInDOM$ = computed(() => itemDestroyOnHide$() === false || !itemTransition.state$().hidden);
 	const itemTransition = createTransition({
 		props: {
 			transition: itemTransition$,
@@ -468,6 +475,7 @@ export function createAccordionItem(config?: PropsConfig<AccordionItemProps>): A
 			},
 		},
 	});
+	const shouldBeInDOM$ = computed(() => itemDestroyOnHide$() === false || !itemTransition.stores.hidden$());
 	const clickAction = () => {
 		if (!itemDisabled$()) {
 			itemVisible$.update((c: boolean) => !c);
@@ -483,6 +491,14 @@ export function createAccordionItem(config?: PropsConfig<AccordionItemProps>): A
 		},
 		classNames: {collapsed: computed(() => !itemVisible$())},
 		events: {click: clickAction},
+	}));
+	const transitionDirective = bindDirectiveNoArg(itemTransition.directives.directive);
+	const bodyContainerAttrsDirective = createAttributesDirective(() => ({
+		attributes: {
+			id: computed(() => `${itemId$()}-body-container`),
+			class: itemBodyContainerClass$(),
+			'aria-labelledby': computed(() => `${itemId$()}-toggle`),
+		},
 	}));
 
 	return {
@@ -516,7 +532,7 @@ export function createAccordionItem(config?: PropsConfig<AccordionItemProps>): A
 			},
 		},
 		directives: {
-			toggleDirective: toggleDirective,
+			toggleDirective,
 			buttonDirective: mergeDirectives(
 				toggleDirective,
 				createAttributesDirective(() => ({
@@ -528,16 +544,9 @@ export function createAccordionItem(config?: PropsConfig<AccordionItemProps>): A
 			),
 			headerDirective: createAttributesDirective(() => ({attributes: {class: itemHeaderClass$()}})),
 			bodyDirective: createAttributesDirective(() => ({attributes: {class: itemBodyClass$()}})),
-			bodyContainerDirective: mergeDirectives(
-				bindDirectiveNoArg(itemTransition.directives.directive),
-				createAttributesDirective(() => ({
-					attributes: {
-						id: computed(() => `${itemId$()}-body-container`),
-						class: itemBodyContainerClass$(),
-						'aria-labelledby': computed(() => `${itemId$()}-toggle`),
-					},
-				})),
-			),
+			transitionDirective,
+			bodyContainerAttrsDirective,
+			bodyContainerDirective: mergeDirectives(transitionDirective, bodyContainerAttrsDirective),
 			accordionItemDirective: noop,
 		},
 	};
@@ -566,8 +575,8 @@ export function factoryCreateAccordion(
 		const openItems$ = computed(() => {
 			const openItems: string[] = [];
 			itemsWidget$().forEach((item) => {
-				if (item.state$().itemVisible) {
-					openItems.push(item.state$().itemId);
+				if (item.stores.itemVisible$()) {
+					openItems.push(item.stores.itemId$());
 				}
 			});
 			return openItems;
