@@ -1,0 +1,1 @@
+import{g as e,c as o}from"./rating-BR5wD7y2-D2hi33mf.js";import{e as r}from"./extendWidget-BmexbiiK.js";const t={slotStar:({fill:a})=>String.fromCharCode(a===100?9733:9734)};function i(){return{...e(),...t}}const f=r(o,t,{});export{f as c,i as g};

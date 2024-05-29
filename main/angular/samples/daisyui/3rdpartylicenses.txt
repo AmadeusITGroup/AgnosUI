@@ -5,12 +5,12 @@ License: "MIT"
 
 
 --------------------------------------------------------------------------------
-Package: @angular/forms
+Package: @angular/platform-browser
 License: "MIT"
 
 
 --------------------------------------------------------------------------------
-Package: @angular/platform-browser
+Package: @angular/forms
 License: "MIT"
 
 
