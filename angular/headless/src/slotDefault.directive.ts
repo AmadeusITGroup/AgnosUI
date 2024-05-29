@@ -5,7 +5,7 @@ import type {SlotContent} from './types';
 
 @Directive({selector: '[auSlotDefault]', standalone: true})
 export class SlotDefaultDirective<T extends object> implements OnInit {
-	@Input('auSlotDefault') auSlotDefault: WritableSignal<{slotDefault?: SlotContent<T>}>;
+	@Input({alias: 'auSlotDefault', required: true}) auSlotDefault!: WritableSignal<{slotDefault?: SlotContent<T>}>;
 
 	templateRef = inject(TemplateRef<T>);
 

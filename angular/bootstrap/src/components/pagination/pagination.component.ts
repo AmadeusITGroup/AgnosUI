@@ -175,8 +175,8 @@ export class PaginationStructureDirective {
 	`,
 })
 export class PaginationDefaultSlotsComponent {
-	@ViewChild('pages', {static: true}) pages: TemplateRef<PaginationContext>;
-	@ViewChild('structure', {static: true}) structure: TemplateRef<PaginationContext>;
+	@ViewChild('pages', {static: true}) pages!: TemplateRef<PaginationContext>;
+	@ViewChild('structure', {static: true}) structure!: TemplateRef<PaginationContext>;
 }
 /**
  * The default slot for the pages

@@ -13,11 +13,11 @@ const undefinedConfig = getUndefinedValues(getSliderDefaultConfig());
 	template: `<div auSlider #widget></div>`,
 })
 export default class PlaygroundComponent {
-	@ViewChild('widget') widget: SliderComponent;
+	@ViewChild('widget') widget!: SliderComponent;
 
 	constructor() {
 		hashChangeHook((props) => {
-			this.widget?._widget.patch({...undefinedConfig, ...props});
+			this.widget._widget.patch({...undefinedConfig, ...props});
 		});
 	}
 }

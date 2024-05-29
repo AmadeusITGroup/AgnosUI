@@ -55,7 +55,7 @@ export class AlertStructureDirective {
 	</ng-template>`,
 })
 export class AlertDefaultSlotsComponent {
-	@ViewChild('structure', {static: true}) structure: TemplateRef<AlertContext>;
+	@ViewChild('structure', {static: true}) structure!: TemplateRef<AlertContext>;
 }
 
 export const alertDefaultSlotStructure = new ComponentTemplate(AlertDefaultSlotsComponent, 'structure');
@@ -137,7 +137,7 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> implements 
 
 	@Input('auSlotDefault') slotDefault: SlotContent<AlertContext>;
 	@ContentChild(AlertBodyDirective, {static: false})
-	slotDefaultFromContent: AlertBodyDirective | null;
+	slotDefaultFromContent: AlertBodyDirective | undefined;
 
 	@Input('auSlotStructure') slotStructure: SlotContent<AlertContext>;
 	@ContentChild(AlertStructureDirective, {static: false}) slotStructureFromContent: AlertStructureDirective | undefined;

@@ -86,8 +86,8 @@ export class UseDirective<T> implements OnChanges {
 	selector: '[auUseMulti]',
 })
 export class UseMultiDirective<T extends any[]> implements OnChanges {
-	@Input('auUseMulti')
-	useMulti: DirectivesAndOptParam<T>;
+	@Input({alias: 'auUseMulti', required: true})
+	useMulti!: DirectivesAndOptParam<T>;
 
 	readonly #useDirective = useDirectiveForHost<DirectivesAndOptParam<T>>();
 

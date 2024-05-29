@@ -25,7 +25,7 @@ abstract class SlotHandler<Props extends Record<string, any>, Slot extends SlotC
 	template: `<ng-template #text let-content="content">{{ content }}</ng-template>`,
 })
 class StringSlotComponent {
-	@ViewChild('text', {static: true}) text: TemplateRef<{content: string}>;
+	@ViewChild('text', {static: true}) text!: TemplateRef<{content: string}>;
 }
 const stringSlotComponentTemplate = new ComponentTemplate<{content: string}, 'text', StringSlotComponent>(StringSlotComponent, 'text');
 
@@ -65,7 +65,7 @@ class FunctionSlotHandler<Props extends Record<string, any>> extends SlotHandler
 
 class ComponentSlotHandler<Props extends Record<string, any>> extends SlotHandler<Props, Type<unknown>> {
 	#componentRef: ComponentRef<any> | undefined;
-	#properties: string[];
+	#properties?: string[];
 
 	override slotChange(slot: Type<unknown>, props: Props): void {
 		if (this.#componentRef) {
@@ -102,7 +102,7 @@ class ComponentSlotHandler<Props extends Record<string, any>> extends SlotHandle
 
 class TemplateRefSlotHandler<Props extends Record<string, any>> extends SlotHandler<Props, TemplateRef<Props>> {
 	#viewRef: EmbeddedViewRef<Props> | undefined;
-	#props: Props;
+	#props?: Props;
 
 	override slotChange(slot: TemplateRef<Props>, props: Props): void {
 		if (this.#viewRef) {
@@ -115,7 +115,7 @@ class TemplateRefSlotHandler<Props extends Record<string, any>> extends SlotHand
 
 	override propsChange(slot: TemplateRef<Props>, props: Props): void {
 		if (this.#viewRef) {
-			const templateProps = this.#props;
+			const templateProps = this.#props!;
 			const oldProperties = new Set<keyof Props>(Object.keys(templateProps));
 			for (const property of Object.keys(props) as (keyof Props)[]) {
 				templateProps[property] = props[property];
@@ -194,7 +194,7 @@ const getSlotType = (value: any): undefined | {new (viewContainerRef: ViewContai
 })
 export class SlotDirective<Props extends Record<string, any>> implements OnChanges, OnDestroy {
 	@Input('auSlot') slot: SlotContent<Props>;
-	@Input('auSlotProps') props: Props;
+	@Input({alias: 'auSlotProps', required: true}) props!: Props;
 
 	private readonly _viewContainerRef = inject(ViewContainerRef);
 	private _slotType: ReturnType<typeof getSlotType>;

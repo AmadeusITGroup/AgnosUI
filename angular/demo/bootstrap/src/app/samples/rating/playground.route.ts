@@ -13,11 +13,11 @@ const undefinedConfig = getUndefinedValues(getRatingDefaultConfig());
 	template: `<div [auRating] #widget></div>`,
 })
 export default class PlaygroundComponent {
-	@ViewChild('widget') widget: RatingComponent;
+	@ViewChild('widget') widget!: RatingComponent;
 
 	constructor() {
 		hashChangeHook((props) => {
-			this.widget?._widget.patch({...undefinedConfig, ...props});
+			this.widget._widget.patch({...undefinedConfig, ...props});
 		});
 	}
 }

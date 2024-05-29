@@ -13,11 +13,11 @@ const undefinedConfig = getUndefinedValues(getSelectDefaultConfig());
 	template: `<div auSelect #widget></div>`,
 })
 export default class PlaygroundComponent {
-	@ViewChild('widget') widget: SelectComponent<string>;
+	@ViewChild('widget') widget!: SelectComponent<string>;
 
 	constructor() {
 		hashChangeHook((props) => {
-			this.widget?._widget.patch({...undefinedConfig, ...props});
+			this.widget._widget.patch({...undefinedConfig, ...props});
 		});
 	}
 }

@@ -13,11 +13,11 @@ const undefinedConfig = getUndefinedValues(getAlertDefaultConfig());
 	template: `<au-component auAlert #widget></au-component>`,
 })
 export default class PlaygroundComponent {
-	@ViewChild('widget') widget: AlertComponent;
+	@ViewChild('widget') widget!: AlertComponent;
 
 	constructor() {
 		hashChangeHook((props) => {
-			this.widget?._widget.patch({...undefinedConfig, ...props});
+			this.widget._widget.patch({...undefinedConfig, ...props});
 		});
 	}
 }

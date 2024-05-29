@@ -30,5 +30,5 @@ export default class FlipComponent {
 	});
 
 	@Input()
-	hiddenText: string;
+	hiddenText?: string;
 }
