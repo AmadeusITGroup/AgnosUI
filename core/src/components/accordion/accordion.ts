@@ -20,7 +20,7 @@ function adjustItemsCloseOthers(items: AccordionItemWidget[], openItems: string[
 	}
 	if (keepOpen) {
 		items.forEach((item) => {
-			if (item.state$().itemId !== keepOpen && item.state$().itemVisible) {
+			if (item.stores.itemId$() !== keepOpen && item.stores.itemVisible$()) {
 				item.patch({itemVisible: false});
 			}
 		});
@@ -29,7 +29,7 @@ function adjustItemsCloseOthers(items: AccordionItemWidget[], openItems: string[
 }
 
 function getItem(items: AccordionItemWidget[], itemId: string): AccordionItemWidget | undefined {
-	return items.find((item) => item.state$().itemId === itemId);
+	return items.find((item) => item.stores.itemId$() === itemId);
 }
 
 export interface AccordionProps extends WidgetsCommonPropsAndState {
@@ -459,7 +459,6 @@ export function createAccordionItem(config?: PropsConfig<AccordionItemProps>): A
 	const initDone$ = writable(false);
 	const _autoItemId$ = computed(() => generateId());
 	const itemId$ = computed(() => _dirtyItemId$() || _autoItemId$());
-	const shouldBeInDOM$ = computed(() => itemDestroyOnHide$() === false || !itemTransition.state$().hidden);
 	const itemTransition = createTransition({
 		props: {
 			transition: itemTransition$,
@@ -476,6 +475,7 @@ export function createAccordionItem(config?: PropsConfig<AccordionItemProps>): A
 			},
 		},
 	});
+	const shouldBeInDOM$ = computed(() => itemDestroyOnHide$() === false || !itemTransition.stores.hidden$());
 	const clickAction = () => {
 		if (!itemDisabled$()) {
 			itemVisible$.update((c: boolean) => !c);
@@ -575,8 +575,8 @@ export function factoryCreateAccordion(
 		const openItems$ = computed(() => {
 			const openItems: string[] = [];
 			itemsWidget$().forEach((item) => {
-				if (item.state$().itemVisible) {
-					openItems.push(item.state$().itemId);
+				if (item.stores.itemVisible$()) {
+					openItems.push(item.stores.itemId$());
 				}
 			});
 			return openItems;
