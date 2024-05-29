@@ -1,11 +1,19 @@
 {
 	"eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "svelte"],
 	"svelte.enable-ts-plugin": true,
-	"vitest.include": ["**/*.spec.ts"],
 	"typescript.tsdk": "node_modules\\typescript\\lib",
 	"typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
 	"typescript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces": false,
 	"javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
 	"javascript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces": false,
-	"vitest.disableWorkspaceWarning": true
+	"vitest.disableWorkspaceWarning": true,
+	"files.exclude": {
+		"**/.wireit": true,
+		"**/.angular": true,
+		"**/.svelte-kit": true
+	},
+	"search.exclude": {
+		"**/dist": true,
+		"**/generated": true
+	}
 }
