@@ -1,1 +1,0 @@
-import{e as s}from"./extendWidget-BVNG4-cR.js";import{g as a,c as e}from"./pagination--GkwduJn-Um4N7Mwb.js";const t={slotEllipsis:"…",slotFirst:"«",slotPrevious:"‹",slotNext:"›",slotLast:"»",slotPages:void 0,slotStructure:void 0,slotNumberLabel:({displayedPage:o})=>`${o}`};function r(){return{...a(),...t}}const l=s(e,t,{});export{l as c,r as g};

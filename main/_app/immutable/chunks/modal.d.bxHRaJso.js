@@ -1,0 +1,12 @@
+const t=`import type { AdaptSlotContentProps, AdaptWidgetSlots, PropsConfig, WidgetProps, WidgetState } from '@agnos-ui/react-headless/types';
+import type { PropsWithChildren, RefAttributes } from 'react';
+import type { ModalApi } from '@agnos-ui/core-bootstrap/components/modal';
+export * from '@agnos-ui/core-bootstrap/components/modal';
+export type ModalWidget<Data> = AdaptWidgetSlots<import('@agnos-ui/core-bootstrap/components/modal').ModalWidget<Data>>;
+export type ModalProps<Data> = WidgetProps<ModalWidget<Data>>;
+export type ModalState<Data> = WidgetState<ModalWidget<Data>>;
+export type ModalContext<Data> = AdaptSlotContentProps<import('@agnos-ui/core-bootstrap/components/modal').ModalContext<Data>>;
+export declare const createModal: <Data>(propsConfig?: PropsConfig<ModalProps<Data>>) => ModalWidget<Data>;
+export declare const Modal: <Data>(props: PropsWithChildren<Partial<ModalProps<Data>>> & RefAttributes<ModalApi>) => JSX.Element;
+export declare function openModal<Data>(options: Partial<ModalProps<Data>>): Promise<any>;
+`;export{t as default};
