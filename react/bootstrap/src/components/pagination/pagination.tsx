@@ -89,7 +89,7 @@ export function DefaultStructure(slotContext: PaginationContext) {
 
 	return (
 		<>
-			<ul className={classNames('au-pagination', 'pagination', state.size ? `pagination-${state.size}` : '', state.className)}>
+			<ul className={classNames('au-pagination', 'pagination', {[`pagination-${state.size}`]: !!state.size}, state.className)}>
 				{ItemsBefore}
 				<Slot slotContent={state.slotPages} props={slotContext}></Slot>
 				{ItemsAfter}

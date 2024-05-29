@@ -13,8 +13,8 @@ export const load = async () => {
 			subpath: '',
 		},
 		next: {
-			title: 'Pagination',
-			slug: 'daisyUI/pagination/',
+			title: 'Modal',
+			slug: 'daisyUI/modal/',
 			subpath: 'headless',
 		},
 	};

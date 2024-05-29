@@ -11,6 +11,10 @@ export type ModalContext<Data> = WidgetSlotContext<ModalWidget<Data>>;
 
 interface ModalExtraProps<Data> {
 	/**
+	 * Data to use in content slots
+	 */
+	contentData: Data;
+	/**
 	 * Body of the modal.
 	 */
 	slotDefault: SlotContent<ModalContext<Data>>;
@@ -41,12 +45,13 @@ interface ModalExtraProps<Data> {
 	fullscreen: boolean;
 }
 
-export interface ModalState<Data> extends CoreState<Data>, ModalExtraProps<Data> {}
-export interface ModalProps<Data> extends CoreProps<Data>, ModalExtraProps<Data> {}
+export interface ModalState<Data> extends CoreState, ModalExtraProps<Data> {}
+export interface ModalProps<Data> extends CoreProps, ModalExtraProps<Data> {}
 
-export type ModalWidget<Data> = Widget<ModalProps<Data>, ModalState<Data>, ModalApi<Data>, ModalActions, ModalDirectives>;
+export type ModalWidget<Data> = Widget<ModalProps<Data>, ModalState<Data>, ModalApi, ModalActions, ModalDirectives>;
 
 const defaultConfigExtraProps: ModalExtraProps<any> = {
+	contentData: undefined,
 	slotDefault: undefined,
 	slotFooter: undefined,
 	slotHeader: undefined,
@@ -54,7 +59,7 @@ const defaultConfigExtraProps: ModalExtraProps<any> = {
 	slotTitle: undefined,
 	fullscreen: false,
 };
-const coreOverride: Partial<CoreProps<any>> = {
+const coreOverride: Partial<CoreProps> = {
 	backdropTransition: fadeTransition,
 	modalTransition: fadeTransition,
 };
