@@ -1,6 +1,6 @@
 <script>
 	import Slider from './Slider.svelte';
-	let sliderValues = [20];
+	let sliderValues = $state([20]);
 </script>
 
 <h2 class="text-lg mb-2">DaisyUI Example</h2>

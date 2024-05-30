@@ -20,10 +20,10 @@
 	<div class="flip-card-inner" use:directive>
 		<div class="flip-card-front">
 			<slot />
-			<button class="btn btn-outline-secondary" on:click={() => hide()}>Hide again.</button>
+			<button class="btn btn-outline-secondary" onclick={() => hide()}>Hide again.</button>
 		</div>
 		<div class="flip-card-back">
-			<button class="btn btn-outline-primary" on:click={() => show()}>{hiddenText}</button>
+			<button class="btn btn-outline-primary" onclick={() => show()}>{hiddenText}</button>
 		</div>
 	</div>
 </div>

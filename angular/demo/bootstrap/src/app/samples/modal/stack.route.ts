@@ -5,14 +5,14 @@ import {Component, inject} from '@angular/core';
 	standalone: true,
 	imports: [AgnosUIAngularModule],
 	template: `
-		<button class="btn btn-primary" (click)="modalService.open({slotTitle: 'First modal', className: 'modal-sm', slotDefault: recursiveModal})">
+		<button class="btn btn-primary" (click)="modalService.open({slotTitle: 'First modal', className: 'modal-sm', children: recursiveModal})">
 			Launch demo modal
 		</button>
 		<ng-template #recursiveModal let-widget="widget" let-state="state">
 			This is a modal<br /><br />
 			<button
 				class="btn btn-outline-primary m-1"
-				(click)="modalService.open({slotTitle: 'Other modal', slotDefault: recursiveModal, container: state.modalElement})"
+				(click)="modalService.open({slotTitle: 'Other modal', children: recursiveModal, container: state.modalElement})"
 			>
 				Launch other modal</button
 			><br />

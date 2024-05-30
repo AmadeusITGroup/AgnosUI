@@ -5,7 +5,7 @@
 </script>
 
 <div class="demo-transition mb-3">
-	<button id="toggle-component" class="btn btn-outline-secondary" on:click={() => (showComponent = !showComponent)}>Toggle component</button>
+	<button id="toggle-component" class="btn btn-outline-secondary" onclick={() => (showComponent = !showComponent)}>Toggle component</button>
 	{#if showComponent}
 		<InnerComponent />
 	{/if}

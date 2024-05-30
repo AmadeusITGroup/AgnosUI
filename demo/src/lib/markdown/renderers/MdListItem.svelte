@@ -1,4 +1,8 @@
-<li class="mb-2"><slot /></li>
+<script>
+	let {children} = $props();
+</script>
+
+<li class="mb-2">{@render children()}</li>
 
 <style>
 	li::marker {

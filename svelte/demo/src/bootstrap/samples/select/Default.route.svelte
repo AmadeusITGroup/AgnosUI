@@ -6,8 +6,8 @@
 	const wordsC = ['cat', 'caterpillar', 'cave', 'chair', 'cheese', 'cherry', 'chicken'];
 	const mainList = [...wordsA, ...wordsB, ...wordsC];
 
-	let filterText = '';
-	$: items = filterText ? mainList.filter((item) => item.toLowerCase().startsWith(filterText)) : mainList.slice(0, 10);
+	let filterText = $state('');
+	let items = $derived(filterText ? mainList.filter((item) => item.toLowerCase().startsWith(filterText)) : mainList.slice(0, 10));
 </script>
 
 <div style="height: 400px">

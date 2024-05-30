@@ -2,6 +2,7 @@ import type {AdaptSlotContentProps, SlotContent, TransitionFn, WidgetFactory} fr
 import {
 	BaseWidgetDirective,
 	ComponentTemplate,
+	ChildrenDirective,
 	SlotDirective,
 	UseDirective,
 	auBooleanAttribute,
@@ -24,6 +25,7 @@ import {
 import {callWidgetFactory} from '../../config';
 import type {AccordionItemContext, AccordionItemProps, AccordionItemWidget, AccordionWidget} from './accordion';
 import {createAccordion} from './accordion';
+import {type WritableSignal, writable} from '@amadeus-it-group/tansu';
 
 @Directive({selector: 'ng-template[auAccordionItemBody]', standalone: true})
 export class AccordionBodyDirective {
@@ -122,7 +124,7 @@ export class AccordionItemStructureDirective {
 			@if (state.shouldBeInDOM) {
 				<div [auUse]="widget.directives.bodyContainerDirective" class="accordion-collapse">
 					<div class="accordion-body" [auUse]="widget.directives.bodyDirective">
-						<ng-template [auSlotProps]="{state, widget}" [auSlot]="state.slotItemBody"></ng-template>
+						<ng-template [auSlotProps]="{state, widget}" [auSlot]="state.children"></ng-template>
 					</div>
 				</div>
 			}
@@ -146,19 +148,28 @@ const defaultConfig: Partial<AccordionItemProps> = {
 	host: {
 		class: 'accordion-item',
 	},
-	imports: [SlotDirective, UseDirective],
-	template: ` <ng-template [auSlotProps]="{state: state(), widget}" [auSlot]="state().slotItemStructure"></ng-template> `,
+	imports: [SlotDirective, UseDirective, ChildrenDirective],
+	template: `
+		<ng-template [auChildren]="defaultSlots">
+			<ng-content></ng-content>
+		</ng-template>
+		<ng-template [auSlotProps]="{state: state(), widget}" [auSlot]="state().slotItemStructure"></ng-template>
+	`,
 })
 export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWidget> implements AfterContentChecked, AfterViewInit {
 	@Input('auSlotItemHeader') slotItemHeader: SlotContent<AccordionItemContext>;
 	@ContentChild(AccordionHeaderDirective, {static: false})
 	slotItemHeaderFromContent: AccordionHeaderDirective | undefined;
-	@Input('auSlotItemBody') slotItemBody: SlotContent<AccordionItemContext>;
+
+	@Input('auChildren') children: SlotContent<AccordionItemContext>;
 	@ContentChild(AccordionBodyDirective, {static: false})
-	slotItemBodyFromContent: AccordionBodyDirective | undefined;
+	slotChildrenFromContent: AccordionBodyDirective | undefined;
+
 	@Input('auSlotItemStructure') slotItemStructure: SlotContent<AccordionItemContext>;
 	@ContentChild(AccordionItemStructureDirective, {static: false})
 	slotItemStructureFromContent: AccordionItemStructureDirective | undefined;
+
+	readonly defaultSlots: WritableSignal<Partial<AccordionItemProps>> = writable(defaultConfig);
 
 	/**
 	 * The id of the accordion-item. It can be used for controlling the accordion-item via the accordion api.
@@ -229,7 +240,7 @@ export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWid
 	readonly ad = inject(AccordionDirective);
 	readonly _widget = callWidgetFactory<AccordionItemWidget>({
 		factory: ((arg) => this.ad.api.registerItem(arg)) as WidgetFactory<AccordionItemWidget>,
-		defaultConfig,
+		defaultConfig: this.defaultSlots,
 		events: {
 			onItemVisibleChange: (visible) => this.itemVisibleChange.emit(visible),
 			onItemHidden: () => this.itemHidden.emit(),
@@ -244,7 +255,7 @@ export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWid
 		this._widget.patchSlots({
 			slotItemStructure: this.slotItemStructureFromContent?.templateRef,
 			slotItemHeader: this.slotItemHeaderFromContent?.templateRef,
-			slotItemBody: this.slotItemBodyFromContent?.templateRef,
+			children: this.slotChildrenFromContent?.templateRef,
 		});
 	}
 
@@ -323,9 +334,6 @@ export class AccordionDirective extends BaseWidgetDirective<AccordionWidget> {
 	 * It is a prop of the accordion-item.
 	 */
 	@Input('auItemTransition') itemTransition: TransitionFn | undefined;
-	@Input('auSlotItemStructure') slotItemStructure: SlotContent<AccordionItemContext>;
-	@Input('auSlotItemBody') slotItemBody: SlotContent<AccordionItemContext>;
-	@Input('auSlotItemHeader') slotItemHeader: SlotContent<AccordionItemContext>;
 	/**
 	 * CSS classes to add on the accordion-item DOM element.
 	 *

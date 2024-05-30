@@ -1,9 +1,9 @@
 <script lang="ts">
 	import {Rating} from '@agnos-ui/svelte-bootstrap/components/rating';
 
-	let rating = 3;
-	let hovered = 0;
-	let left = 0;
+	let rating = $state(3);
+	let hovered = $state(0);
+	let left = $state(0);
 </script>
 
 <Rating bind:rating onHover={(e) => (hovered = e)} onLeave={(e) => (left = e)} ariaLabel="rating" />

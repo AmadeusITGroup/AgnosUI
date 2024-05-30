@@ -1,11 +1,8 @@
 <script lang="ts">
 	import '@agnos-ui/common/samples/slider/custom.scss';
-	import type {SliderSlots} from '@agnos-ui/svelte-bootstrap/components/slider';
-	type $$Props = SliderSlots['structure'];
-	type $$Slots = SliderSlots;
+	import type {SliderContext} from '@agnos-ui/svelte-bootstrap/components/slider';
 
-	export let state: $$Props['state'];
-	export let widget: $$Props['widget'];
+	let {state, widget}: SliderContext = $props();
 </script>
 
 <div class="position-relative cup-container">

@@ -18,7 +18,7 @@ interface AlertExtraProps {
 	/**
 	 * Template for the alert content
 	 */
-	slotDefault: SlotContent<AlertContext>;
+	children: SlotContent<AlertContext>;
 	/**
 	 * Type of the alert, following bootstrap types.
 	 */
@@ -32,7 +32,7 @@ export type AlertWidget = Widget<AlertProps, AlertState, AlertApi, object, Alert
 
 const defaultConfigExtraProps: AlertExtraProps = {
 	slotStructure: undefined,
-	slotDefault: undefined,
+	children: undefined,
 	type: 'primary',
 };
 const coreOverride: Partial<CoreProps> = {

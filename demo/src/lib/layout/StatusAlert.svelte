@@ -20,6 +20,7 @@
 		status === 'inprogress'
 			? 'This component is still under active development. More features will be added in the near future.'
 			: 'This component has all the basic functionalities implemented. More polishing features might be added in the near future.';
+	// eslint-disable-next-line svelte/valid-compile
 	$: componentName = $page.url.pathname.match(regex)?.[2];
 	$: issueUrl = `https://github.com/AmadeusITGroup/AgnosUI/issues?q=is%3Aopen+is%3Aissue+label%3A%22widget%3A+${componentName}%22`;
 	$: {

@@ -1,9 +1,9 @@
 <script lang="ts">
 	import {page} from '$app/stores';
 	import type {Page} from '@sveltejs/kit';
+	import type {Snippet} from 'svelte';
 
-	export let href = '';
-	export let title: string;
+	let {href = '', title, children}: {href: string; title: string; children: Snippet} = $props();
 
 	const validMdRegex = /^\d{2}-([a-zA-Z-]*)\.md$/;
 	const categoryRegex = /\/\d{2}-([a-zA-Z-]*\/)/g;
@@ -23,7 +23,8 @@
 			return inputHref.match(validMdRegex)?.[1]?.toLowerCase() ?? href;
 		}
 	}
-	$: appliedHref = computedAppliedHref(href, $page);
+	// eslint-disable-next-line svelte/valid-compile
+	let appliedHref = $derived(computedAppliedHref(href, $page));
 </script>
 
-<a href={appliedHref} {title}><slot /></a>
+<a href={appliedHref} {title}>{@render children()}</a>

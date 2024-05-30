@@ -30,7 +30,7 @@ class AlertContainerService {
 				[auAnimatedOnInit]="alert.animatedOnInit"
 				[auDismissible]="alert.dismissible"
 				[auType]="alert.type"
-				[auSlotDefault]="alert.slotDefault"
+				[auChildren]="alert.children"
 				(auHidden)="removeAlert(alert)"
 			></au-component>
 		}
@@ -60,14 +60,14 @@ export default class ParentComponent {
 	constructor(readonly alertContainerService: AlertContainerService) {}
 
 	addError() {
-		this.alertContainerService.add({type: 'danger', slotDefault: 'Error', dismissible: true, animated: true});
+		this.alertContainerService.add({type: 'danger', children: 'Error', dismissible: true, animated: true});
 	}
 
 	addWarning() {
-		this.alertContainerService.add({type: 'warning', slotDefault: 'Warning', dismissible: true, animated: true});
+		this.alertContainerService.add({type: 'warning', children: 'Warning', dismissible: true, animated: true});
 	}
 
 	addInfo() {
-		this.alertContainerService.add({type: 'info', slotDefault: 'Info', dismissible: true, animated: true});
+		this.alertContainerService.add({type: 'info', children: 'Info', dismissible: true, animated: true});
 	}
 }

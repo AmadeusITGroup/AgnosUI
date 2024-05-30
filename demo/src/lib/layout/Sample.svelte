@@ -9,7 +9,7 @@
 </script>
 
 <script lang="ts">
-	import {tooltip} from '$lib/tooltip/tooltip';
+	import {tooltip} from '$lib/tooltip/tooltip-directive.svelte';
 	import openLink from 'bootstrap-icons/icons/box-arrow-up-right.svg?raw';
 	import codeSvg from 'bootstrap-icons/icons/code.svg?raw';
 	import stackblitz from '$resources/icons/stackblitz.svg?raw';
@@ -67,6 +67,8 @@
 
 	export let showCode = false;
 	let code = '';
+
+	// eslint-disable-next-line svelte/valid-compile
 	$: isPlaceholder = sample.files[$selectedFramework$].entryPoint === 'placeholder';
 	$: path = isPlaceholder ? `placeholder/placeholdersample` : `${sample.componentName}/${sample.sampleName}`.toLowerCase();
 	$: files = Object.keys(sample.files[$selectedFramework$].files);
@@ -91,7 +93,7 @@
 				</div>
 			</div>
 		{/if}
-		<iframe class="demo-sample d-block" use:iframeSrc={sampleUrl} {title} use:handlerDirective={sampleBaseUrl} />
+		<iframe class="demo-sample d-block" use:iframeSrc={sampleUrl} {title} use:handlerDirective={sampleBaseUrl}></iframe>
 	</div>
 	{#if showButtons}
 		<div class="btn-toolbar border border-top-0 d-flex align-items-center p-1" role="toolbar" aria-label="Toolbar with button groups">

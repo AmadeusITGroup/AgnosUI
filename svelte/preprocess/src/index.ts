@@ -1,8 +1,6 @@
 import MagicString from 'magic-string';
-import type {PreprocessorGroup} from 'svelte/compiler';
+import type {LegacyAttribute, PreprocessorGroup} from 'svelte/compiler';
 import {parse} from 'svelte/compiler';
-import type {TemplateNode, Attribute} from 'svelte/types/compiler/interfaces';
-
 export const directivesPreprocess = (): PreprocessorGroup => {
 	return {
 		name: 'AgnosUI',
@@ -17,22 +15,25 @@ export const directivesPreprocess = (): PreprocessorGroup => {
 			const parsedCode = parse(content, {filename});
 			const requiredImports = new Set<string>();
 
-			const extractValue = (attribute: Attribute) => {
+			const extractValue = (attribute: LegacyAttribute) => {
 				const res: string[] = [];
 				const value = attribute.value;
-				for (const part of value) {
-					if (part.type === 'Text') {
-						res.push(JSON.stringify(part.data));
-					} else if (part.type === 'MustacheTag') {
-						res.push(`(${content.substring(part.expression.start, part.expression.end)})`);
-					} else {
-						throw new Error(`Unexpected part type: ${part.type}`);
+				if (Array.isArray(value)) {
+					for (const part of value) {
+						if (part.type === 'Text') {
+							res.push(JSON.stringify(part.data));
+						} else if (part.type === 'MustacheTag') {
+							res.push(`(${content.substring((part.expression as any).start, (part.expression as any).end)})`);
+						} else {
+							throw new Error(`Unexpected part type: ${part.type}`);
+						}
 					}
 				}
 				return res.join('+');
 			};
 
-			const processItem = (item: TemplateNode) => {
+			// should be LegacySvelteNode ?
+			const processItem = (item: any) => {
 				const actionAttributes = [];
 				const classAttributes = [];
 				if (item.attributes) {

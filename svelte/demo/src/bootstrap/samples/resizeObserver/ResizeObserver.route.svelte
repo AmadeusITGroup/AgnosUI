@@ -29,8 +29,8 @@
 		style:height={heightValue + 'px'}
 		value="This simple example is using the resizeObserver feature from @agnos-ui/core and displays the height of the textarea below it.
 Modify the height to more than 200 px and see the font size changing."
-	/>
+	></textarea>
 	<div>Textarea content height: <span id="dynamic-height">{observedHeight$}</span>px</div>
-	<button type="button" class="btn btn-primary m-2" id="decreaseHeight" on:click={decreaseHeight}>Height --</button>
-	<button type="button" class="btn btn-primary m-2" id="increaseHeight" on:click={increaseHeight}>Height ++</button>
+	<button type="button" class="btn btn-primary m-2" id="decreaseHeight" onclick={decreaseHeight}>Height --</button>
+	<button type="button" class="btn btn-primary m-2" id="increaseHeight" onclick={increaseHeight}>Height ++</button>
 </div>

@@ -3,8 +3,8 @@ import type {
 	AccordionDirectives,
 	AccordionItemActions,
 	AccordionItemApi,
-	AccordionProps as CoreProps,
-	AccordionState as CoreState,
+	AccordionProps,
+	AccordionState,
 	AccordionItemState as CoreItemState,
 	AccordionItemProps as CoreItemProps,
 	AccordionItemDirectives,
@@ -26,7 +26,7 @@ interface AccordionExtraProps {
 	/**
 	 * Structure of the accordion-item. The default item structure is: accordion-item
 	 * contains accordion header and accordion-item body container; the accordion header contains the accordion button
-	 * (that contains `slotItemHeader`), while the accordion-item body container contains the accordion body (that contains `slotItemBody`).
+	 * (that contains `slotItemHeader`), while the accordion-item body container contains the accordion body (that contains `children`).
 	 * The itemTransition it applied on this element.
 	 *
 	 * It is a prop of the accordion-item.
@@ -37,7 +37,7 @@ interface AccordionExtraProps {
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	slotItemBody: SlotContent<AccordionItemContext>;
+	children: SlotContent<AccordionItemContext>;
 	/**
 	 * Content present in the accordion button inside the accordion header.
 	 *
@@ -45,9 +45,6 @@ interface AccordionExtraProps {
 	 */
 	slotItemHeader: SlotContent<AccordionItemContext>;
 }
-
-export interface AccordionState extends CoreState, AccordionExtraProps {}
-export interface AccordionProps extends CoreProps, AccordionExtraProps {}
 
 export type AccordionWidget = Widget<AccordionProps, AccordionState, AccordionApi, object, AccordionDirectives>;
 
@@ -58,7 +55,7 @@ export type AccordionItemWidget = Widget<AccordionItemProps, AccordionItemState,
 
 const defaultConfigExtraProps: AccordionExtraProps = {
 	slotItemStructure: undefined,
-	slotItemBody: undefined,
+	children: undefined,
 	slotItemHeader: undefined,
 };
 

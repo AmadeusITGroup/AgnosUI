@@ -15,6 +15,7 @@
 	export let cssFramework = '';
 	export let selectedFramework = '';
 
+	// eslint-disable-next-line svelte/valid-compile
 	$: tabs = $page.data.tabs ?? [];
 </script>
 

@@ -16,7 +16,7 @@
 
 <h2>Multiselect example</h2>
 <div class="mb-3">
-	<!-- svelte-ignore a11y-label-has-associated-control -->
+	<!-- svelte-ignore a11y_label_has_associated_control -->
 	<label class="form-label">Multiselect</label>
 	<Select {items} bind:filterText />
 </div>
@@ -27,5 +27,5 @@
 		<input type="text" class="form-control" bind:value={defaultFilterText} />
 	</label>
 	<br />
-	<button type="button" class="mt-3 btn btn-outline-secondary" on:click={() => (filterText = undefined)}> Reset widget filterText </button>
+	<button type="button" class="mt-3 btn btn-outline-secondary" onclick={() => (filterText = undefined)}> Reset widget filterText </button>
 </div>

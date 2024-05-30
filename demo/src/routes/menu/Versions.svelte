@@ -27,6 +27,7 @@
 		...version,
 		url:
 			version.version === 'PREVIEW' ||
+			// eslint-disable-next-line svelte/valid-compile
 			$page.route.id === '/' ||
 			($page.data['since'] && validate($page.data['since']) && compare($page.data['since'], version.version, '<='))
 				? $page.url.pathname.replace(`/${currentVersion.folder}/`, `/${version.folder}/`)

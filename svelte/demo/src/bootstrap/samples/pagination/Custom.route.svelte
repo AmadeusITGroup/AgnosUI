@@ -11,11 +11,15 @@
 
 <p>A pagination with customized links:</p>
 <Pagination bind:page collectionSize={60} slotPrevious="Prev" slotNext="Next" ariaLabel="Page navigation with customized links">
-	<svelte:fragment slot="numberLabel" let:displayedPage>
+	{#snippet slotNumberLabel({displayedPage})}
 		{getPageSymbol(displayedPage)}
-	</svelte:fragment>
+	{/snippet}
 </Pagination>
 <hr />
 
 <p>A pagination with customized pages:</p>
-<Pagination bind:page collectionSize={60} slotPages={CustomPages} ariaLabel="Page navigation with customized pages" />
+<Pagination bind:page collectionSize={60} ariaLabel="Page navigation with customized pages">
+	{#snippet slotPages(props)}
+		<CustomPages {...props} />
+	{/snippet}
+</Pagination>

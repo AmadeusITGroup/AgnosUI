@@ -1,7 +1,7 @@
 import {
 	BaseWidgetDirective,
+	ChildrenDirective,
 	ComponentTemplate,
-	SlotDefaultDirective,
 	SlotDirective,
 	auBooleanAttribute,
 	auNumberAttribute,
@@ -40,7 +40,7 @@ export class ProgressbarStructureDirective {
 					[ngClass]="state.type ? 'text-bg-' + state.type : undefined"
 					[style.width.%]="state.percentage"
 				>
-					<ng-template [auSlot]="state.slotDefault" [auSlotProps]="{state, widget}"></ng-template>
+					<ng-template [auSlot]="state.children" [auSlotProps]="{state, widget}"></ng-template>
 				</div>
 			</div>
 		</ng-template>
@@ -60,13 +60,13 @@ const defaultConfig: PartialProgressbarProps = {
 @Component({
 	selector: '[auProgressbar]',
 	standalone: true,
-	imports: [SlotDirective, SlotDefaultDirective],
+	imports: [SlotDirective, ChildrenDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	host: {
 		'[class]': 'state().className',
 	},
 	template: `
-		<ng-template [auSlotDefault]="defaultSlots"><ng-content></ng-content></ng-template>
+		<ng-template [auChildren]="defaultSlots"><ng-content></ng-content></ng-template>
 		<ng-template [auSlot]="state().slotStructure" [auSlotProps]="{state: state(), widget}"></ng-template>
 	`,
 })
@@ -98,7 +98,7 @@ export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget>
 	 */
 	@Input('auClassName') className: string | undefined;
 
-	@Input('auSlotDefault') slotDefault: SlotContent<ProgressbarContext>;
+	@Input('auChildren') children: SlotContent<ProgressbarContext>;
 
 	@Input('auSlotStructure') slotStructure: SlotContent<ProgressbarContext>;
 	@ContentChild(ProgressbarStructureDirective, {static: false}) slotStructureFromContent: ProgressbarStructureDirective | undefined;
@@ -140,7 +140,7 @@ export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget>
 
 	ngAfterContentChecked(): void {
 		this._widget.patchSlots({
-			slotDefault: undefined,
+			children: undefined,
 			slotStructure: this.slotStructureFromContent?.templateRef,
 		});
 	}

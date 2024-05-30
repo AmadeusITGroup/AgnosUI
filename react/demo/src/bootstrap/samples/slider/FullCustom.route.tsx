@@ -7,19 +7,16 @@ const FullCustomSliderDemo = () => {
 	const [sliderControl, setSliderControl] = useState([50]);
 
 	return (
-		<>
-			<h2>Fully custom slider</h2>
-			<Slider
-				min={0}
-				max={100}
-				stepSize={1}
-				values={sliderControl}
-				onValuesChange={setSliderControl}
-				slotStructure={CustomSliderComponent}
-				vertical
-				className="custom-slider"
-			/>
-		</>
+		<Slider
+			min={0}
+			max={100}
+			stepSize={1}
+			values={sliderControl}
+			onValuesChange={setSliderControl}
+			slotStructure={CustomSliderComponent}
+			vertical
+			className="custom-slider"
+		/>
 	);
 };
 export default FullCustomSliderDemo;

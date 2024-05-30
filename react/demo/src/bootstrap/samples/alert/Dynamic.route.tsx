@@ -24,19 +24,19 @@ const DynamicDemo = () => {
 		<>
 			<button
 				className="btn btn-primary addError me-1"
-				onClick={() => dispatch({type: 'add', payload: {type: 'danger', slotDefault: 'Error', dismissible: true, animated: true}})}
+				onClick={() => dispatch({type: 'add', payload: {type: 'danger', children: 'Error', dismissible: true, animated: true}})}
 			>
 				Add error
 			</button>
 			<button
 				className="btn btn-primary addInfo me-1"
-				onClick={() => dispatch({type: 'add', payload: {type: 'info', slotDefault: 'Info', dismissible: true, animated: true}})}
+				onClick={() => dispatch({type: 'add', payload: {type: 'info', children: 'Info', dismissible: true, animated: true}})}
 			>
 				Add info
 			</button>
 			<button
 				className="btn btn-primary addWarning me-1"
-				onClick={() => dispatch({type: 'add', payload: {type: 'warning', slotDefault: 'Warning', dismissible: true, animated: true}})}
+				onClick={() => dispatch({type: 'add', payload: {type: 'warning', children: 'Warning', dismissible: true, animated: true}})}
 			>
 				Add warning
 			</button>
@@ -63,10 +63,11 @@ const ChildComponent = () => {
 					animated={alert.animated}
 					dismissible={alert.dismissible}
 					type={alert.type}
-					slotDefault={alert.slotDefault}
 					key={`${alert.id}`}
 					onHidden={() => dispatch!({type: 'remove', alert})}
-				></Alert>
+				>
+					{alert.children}
+				</Alert>
 			))}
 		</>
 	);

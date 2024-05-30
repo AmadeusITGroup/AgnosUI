@@ -1,10 +1,16 @@
 <script lang="ts">
 	import {activeElement$, createHasFocus} from '@agnos-ui/svelte-bootstrap/services/focustrack';
+	import {onMount} from 'svelte';
 
 	const {hasFocus$, directive} = createHasFocus();
 
-	let activeElements: {tagName: string | undefined; id: string | undefined}[] = [];
-	$: activeElements = [...activeElements, {tagName: $activeElement$?.tagName.toLowerCase(), id: $activeElement$?.id || undefined}];
+	let activeElements: {tagName: string | undefined; id: string | undefined}[] = $state([]);
+
+	onMount(() =>
+		activeElement$.subscribe((activeElement) => {
+			activeElements.push({tagName: activeElement?.tagName.toLowerCase(), id: activeElement?.id || undefined});
+		}),
+	);
 </script>
 
 <div class="demo-focustrack">
@@ -20,5 +26,5 @@
 	</div>
 	<label for="activeElementHistory" class="form-label">Active element history:</label>
 	<textarea class="form-control mb-2" id="activeElementHistory" readonly>{JSON.stringify(activeElements)}</textarea>
-	<button class="btn btn-primary" on:click={() => (activeElements = [])}>Clear</button>
+	<button class="btn btn-primary" onclick={() => (activeElements = [])}>Clear</button>
 </div>

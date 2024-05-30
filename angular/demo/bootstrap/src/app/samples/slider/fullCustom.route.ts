@@ -7,7 +7,6 @@ import CoffeeSliderComponent from './coffee-slider.component';
 	standalone: true,
 	imports: [SliderComponent, SliderStructureDirective, ReactiveFormsModule, FormsModule],
 	template: `
-		<h2>Fully custom slider</h2>
 		<div
 			auSlider
 			auMin="0"

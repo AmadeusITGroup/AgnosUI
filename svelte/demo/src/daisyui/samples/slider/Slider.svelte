@@ -2,14 +2,12 @@
 	import {createSlider, type SliderProps} from '@agnos-ui/svelte-headless/components/slider';
 	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
 
-	type $$Props = Partial<Pick<SliderProps, 'min' | 'max' | 'values' | 'stepSize' | 'className'>>;
-
-	export let values: number[] | undefined = undefined;
+	let {values = $bindable(), ...props}: Partial<Pick<SliderProps, 'min' | 'max' | 'values' | 'stepSize' | 'className'>> = $props();
 
 	const widget = callWidgetFactory({
 		factory: createSlider,
 		widgetName: 'slider',
-		$$props,
+		props: {...props, values},
 		events: {
 			onValuesChange: (value: number[]) => {
 				values = value;
@@ -21,7 +19,7 @@
 		directives: {sliderDirective},
 		patchChangedProps,
 	} = widget;
-	$: patchChangedProps($$props);
+	$effect(() => patchChangedProps({...props, values}));
 </script>
 
 <input
@@ -33,8 +31,8 @@
 	step={$stepSize$}
 	class="range"
 	aria-label={$sortedHandles$[0].ariaLabel}
-	on:click={widget.actions.click}
-	on:keydown={(e) => widget.actions.keydown(e, 0)}
-	on:mousedown={(e) => widget.actions.mouseDown(e, 0)}
-	on:touchstart={(e) => widget.actions.touchStart(e, 0)}
+	onclick={widget.actions.click}
+	onkeydown={(e) => widget.actions.keydown(e, 0)}
+	onmousedown={(e) => widget.actions.mouseDown(e, 0)}
+	ontouchstart={(e) => widget.actions.touchStart(e, 0)}
 />

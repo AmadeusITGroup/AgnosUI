@@ -9,7 +9,7 @@ export const load = async () => {
 			{
 				title: 'Playground',
 				key: 'playground',
-				path: '/components/modal/playground#{"props":{"visible":true,"slotDefault":"Dialog content","slotTitle":"Dialog"}}',
+				path: '/components/modal/playground#{"props":{"visible":true,"children":"Dialog content","slotTitle":"Dialog"}}',
 			},
 		],
 		prev: {

@@ -31,8 +31,8 @@ describe('getTokens', () => {
 ## My beautiful writing
 
 Hello sirs !`,
-			`<h1 id="introduction">Introduction</h1>
-<section><h2 id="my-beautiful-writing">My beautiful writing</h2>
+			`<h1>Introduction</h1>
+<section><h2>My beautiful writing</h2>
 <p>Hello sirs !</p>
 </section>`,
 		);
@@ -50,10 +50,10 @@ Hello sirs !
 ## Second writing
 
 Hello ladies !`,
-			`<h1 id="introduction">Introduction</h1>
-<section><h2 id="my-beautiful-writing">My beautiful writing</h2>
+			`<h1>Introduction</h1>
+<section><h2>My beautiful writing</h2>
 <p>Hello sirs !</p>
-</section><section><h2 id="second-writing">Second writing</h2>
+</section><section><h2>Second writing</h2>
 <p>Hello ladies !</p>
 </section>`,
 		);
@@ -82,15 +82,15 @@ Content
 
 Content
 `,
-			`<h1 id="introduction">Introduction</h1>
-<section><h2 id="my-beautiful-writing">My beautiful writing</h2>
+			`<h1>Introduction</h1>
+<section><h2>My beautiful writing</h2>
 <p>Hello sirs !</p>
-<section><h3 id="first-level-3">First level 3</h3>
+<section><h3>First level 3</h3>
 <p>Content</p>
-</section><section><h3 id="second-level-3">Second level 3</h3>
+</section><section><h3>Second level 3</h3>
 <p>Content</p>
-</section></section><section><h2 id="another-writing">Another writing</h2>
-<section><h3 id="final-level-3">Final level 3</h3>
+</section></section><section><h2>Another writing</h2>
+<section><h3>Final level 3</h3>
 <p>Content</p>
 </section></section>`,
 		);

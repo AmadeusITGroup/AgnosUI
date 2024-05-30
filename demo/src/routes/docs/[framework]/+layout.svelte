@@ -9,6 +9,7 @@
 
 <div class="w-100 d-flex justify-content-between">
 	<div>
+		<!-- eslint-disable-next-line svelte/valid-compile -->
 		{#if $page.data.prev}
 			<div class="fw-bolder text-start">PREVIOUS</div>
 			<a class="text-start" href="{$pathToRoot$}docs/{$selectedFramework$}/{$page.data.prev.slug}{$page.data.prev.subpath}">{$page.data.prev.title}</a

@@ -12,13 +12,7 @@
 				"parser": "@typescript-eslint/parser"
 			},
 			"rules": {
-				"@agnos-ui/svelte-check-slots": "error"
-			}
-		},
-		{
-			"files": ["bootstrap/**/*.svelte"],
-			"rules": {
-				"@agnos-ui/svelte-check-props": "error"
+				"prefer-const": ["off"]
 			}
 		},
 		{
@@ -30,16 +24,7 @@
 		{
 			"files": ["bootstrap/**", "demo/src/daisyui/**"],
 			"rules": {
-				"@agnos-ui/check-replace-imports": ["error", "@agnos-ui/svelte-headless"],
-				"@typescript-eslint/no-unused-vars": [
-					"error",
-					{
-						"vars": "all",
-						"args": "none",
-						"ignoreRestSiblings": false,
-						"varsIgnorePattern": "^\\$\\$(Props|Slots)$"
-					}
-				]
+				"@agnos-ui/check-replace-imports": ["error", "@agnos-ui/svelte-headless"]
 			}
 		},
 		{
@@ -51,16 +36,7 @@
 		{
 			"files": ["demo/src/bootstrap/**"],
 			"rules": {
-				"@agnos-ui/check-replace-imports": ["error", "@agnos-ui/svelte-bootstrap"],
-				"@typescript-eslint/no-unused-vars": [
-					"error",
-					{
-						"vars": "all",
-						"args": "none",
-						"ignoreRestSiblings": false,
-						"varsIgnorePattern": "^\\$\\$(Props|Slots)$"
-					}
-				]
+				"@agnos-ui/check-replace-imports": ["error", "@agnos-ui/svelte-bootstrap"]
 			}
 		}
 	]

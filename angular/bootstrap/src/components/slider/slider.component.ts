@@ -2,7 +2,6 @@ import type {SlotContent} from '@agnos-ui/angular-headless';
 import {
 	BaseWidgetDirective,
 	ComponentTemplate,
-	SlotDefaultDirective,
 	SlotDirective,
 	UseDirective,
 	auBooleanAttribute,
@@ -139,7 +138,7 @@ const defaultConfig: PartialSliderProps = {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	encapsulation: ViewEncapsulation.None,
 	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SliderComponent), multi: true}],
-	imports: [SlotDirective, SlotDefaultDirective],
+	imports: [SlotDirective],
 	host: {
 		'(blur)': 'handleBlur()',
 	},

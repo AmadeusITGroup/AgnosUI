@@ -22,7 +22,7 @@ interface ProgressbarExtraProps {
 	/**
 	 * Label of the progress.
 	 */
-	slotDefault: SlotContent<ProgressbarContext>;
+	children: SlotContent<ProgressbarContext>;
 	/**
 	 * Height of the progressbar, can be any valid css height value.
 	 */
@@ -49,7 +49,7 @@ export type ProgressbarWidget = Widget<ProgressbarProps, ProgressbarState, Progr
 
 const defaultConfigExtraProps: ProgressbarExtraProps = {
 	slotStructure: undefined,
-	slotDefault: undefined,
+	children: undefined,
 	height: '',
 	striped: false,
 	animated: false,

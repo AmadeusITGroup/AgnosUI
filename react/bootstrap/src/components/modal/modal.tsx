@@ -4,7 +4,7 @@ import {toSlotContextWidget} from '@agnos-ui/react-headless/types';
 import {Slot} from '@agnos-ui/react-headless/slot';
 import {useWidgetWithConfig} from '../../config';
 import {useDirective, classDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
-import type {PropsWithChildren, Ref, RefAttributes} from 'react';
+import type {Ref, RefAttributes} from 'react';
 import ReactDOM from 'react-dom/client';
 import {forwardRef, useImperativeHandle} from 'react';
 import {createModal as coreCreateModal} from '@agnos-ui/core-bootstrap/components/modal';
@@ -40,7 +40,7 @@ const DefaultSlotStructure = <Data,>(slotContext: ModalContext<Data>) => (
 			</div>
 		)}
 		<div className="modal-body">
-			<Slot slotContent={slotContext.state.slotDefault} props={slotContext} />
+			<Slot slotContent={slotContext.state.children} props={slotContext} />
 		</div>
 		{slotContext.state.slotFooter && (
 			<div className="modal-footer">
@@ -72,8 +72,8 @@ const ModalElement = <Data,>(slotContext: ModalContext<Data>) => {
 	);
 };
 
-export const Modal = forwardRef(function Modal<Data>(props: PropsWithChildren<Partial<ModalProps<Data>>>, ref: Ref<ModalApi>) {
-	const [state, widget] = useWidgetWithConfig(createModal<Data>, props, 'modal', {...defaultConfig, slotDefault: props.children});
+export const Modal = forwardRef(function Modal<Data>(props: Partial<ModalProps<Data>>, ref: Ref<ModalApi>) {
+	const [state, widget] = useWidgetWithConfig(createModal<Data>, props, 'modal', {...defaultConfig});
 	useImperativeHandle(ref, () => widget.api, []);
 	const slotContext: ModalContext<Data> = {
 		state,
@@ -85,7 +85,7 @@ export const Modal = forwardRef(function Modal<Data>(props: PropsWithChildren<Pa
 			{!state.hidden && <ModalElement {...slotContext} />}
 		</Portal>
 	);
-}) as <Data>(props: PropsWithChildren<Partial<ModalProps<Data>>> & RefAttributes<ModalApi>) => JSX.Element;
+}) as <Data>(props: Partial<ModalProps<Data>> & RefAttributes<ModalApi>) => JSX.Element;
 
 export async function openModal<Data>(options: Partial<ModalProps<Data>>) {
 	const root = ReactDOM.createRoot(document.createElement('div'));

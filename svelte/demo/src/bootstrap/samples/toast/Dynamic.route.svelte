@@ -2,18 +2,7 @@
 	import {Toast} from '@agnos-ui/svelte-bootstrap/components/toast';
 	import type {ToastProps} from '@agnos-ui/svelte-bootstrap/components/toast';
 	import {writable} from 'svelte/store';
-
-	enum ToastPositions {
-		topLeft = 'top-0 start-0',
-		topCenter = 'top-0 start-50 translate-middle-x',
-		topRight = 'top-0 end-0',
-		middleLeft = 'top-50 start-0 translate-middle-y',
-		middleCenter = 'top-50 start-50 translate-middle',
-		middleRight = 'top-50 end-0 translate-middle-y',
-		bottomLeft = 'bottom-0 start-0',
-		bottomCenter = 'bottom-0 start-50 translate-middle-x',
-		bottomRight = 'bottom-0 end-0',
-	}
+	import {ToastPositions} from '@agnos-ui/common/samples/toast/toast-positions.enum';
 
 	const positions = Object.entries(ToastPositions).map((entry) => {
 		return {
@@ -21,7 +10,7 @@
 			label: entry[0],
 		};
 	});
-	let position = ToastPositions.topLeft;
+	let position = $state(ToastPositions.topLeft);
 
 	function createToasts() {
 		const {subscribe, update} = writable(new Map(Object.values(ToastPositions).map((entry) => [entry as string, [] as Partial<ToastProps>[]])));
@@ -58,7 +47,7 @@
 		</select>
 		<button
 			class="btn btn-primary addToast ms-2"
-			on:click={() => toasts$.add({autoHide: true, delay: 3000, className: position, slotDefault: 'Simple toast', slotHeader: 'I am header'})}
+			onclick={() => toasts$.add({autoHide: true, delay: 3000, className: position, children: 'Simple toast', slotHeader: 'I am header'})}
 			>Show toast</button
 		>
 	</div>
@@ -68,8 +57,8 @@
 	{#each $toasts$.entries() as [position, toasts]}
 		<div class={`toast-container p-3 ${position}`}>
 			{#each toasts as toast}
-				{@const {dismissible, animatedOnInit, animated, slotDefault, slotHeader} = toast}
-				<Toast {dismissible} {animatedOnInit} {animated} {slotDefault} {slotHeader} onHidden={() => toasts$.remove(toast)} />
+				{@const {dismissible, animatedOnInit, animated, children, slotHeader} = toast}
+				<Toast {dismissible} {animatedOnInit} {animated} {children} {slotHeader} onHidden={() => toasts$.remove(toast)} />
 			{/each}
 		</div>
 	{/each}

@@ -13,6 +13,9 @@
 			"files": ["*.svelte"],
 			"parserOptions": {
 				"parser": "@typescript-eslint/parser"
+			},
+			"rules": {
+				"prefer-const": ["off"]
 			}
 		},
 		{

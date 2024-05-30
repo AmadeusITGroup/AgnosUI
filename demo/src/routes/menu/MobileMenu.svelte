@@ -27,6 +27,7 @@
 
 <MobileDialog title="AgnosUI" {open} on:close={onClose}>
 	<nav class="navbar navbar-light flex-column align-items-stretch">
+		<!-- eslint-disable svelte/valid-compile -->
 		<a
 			class="nav-item nav-link"
 			href="{$pathToRoot$}docs/angular/getting-started/introduction"
@@ -35,6 +36,8 @@
 		>
 			Documentation
 		</a>
+		<!-- eslint-enable svelte/valid-compile  -->
+
 		<hr />
 		<a
 			class="nav-item nav-link"

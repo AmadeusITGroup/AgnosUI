@@ -16,6 +16,7 @@
 		<a class="anchor-link" href="#{id}" aria-label="link to {text}"><Svg className="icon-24 align-middle" svg={link} /></a>
 	</svelte:element>
 {:else}
+	<!-- eslint-disable-next-line svelte/valid-compile -->
 	<Header title={text} selectedFramework={$selectedFramework$} />
 {/if}
 

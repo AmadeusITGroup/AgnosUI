@@ -1,8 +1,8 @@
 import type {SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
 import {
 	BaseWidgetDirective,
+	ChildrenDirective,
 	ComponentTemplate,
-	SlotDefaultDirective,
 	SlotDirective,
 	UseDirective,
 	UseMultiDirective,
@@ -104,7 +104,7 @@ export class ModalFooterDirective<Data> {
 				</div>
 			}
 			<div class="modal-body">
-				<ng-template [auSlot]="state.slotDefault" [auSlotProps]="{state, widget}"></ng-template>
+				<ng-template [auSlot]="state.children" [auSlotProps]="{state, widget}"></ng-template>
 			</div>
 			@if (state.slotFooter) {
 				<div class="modal-footer">
@@ -141,9 +141,9 @@ const defaultConfig: Partial<ModalProps<any>> = {
 	selector: '[auModal]',
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [UseMultiDirective, SlotDirective, SlotDefaultDirective],
+	imports: [UseMultiDirective, SlotDirective, ChildrenDirective],
 	template: `
-		<ng-template [auSlotDefault]="defaultSlots"><ng-content></ng-content></ng-template>
+		<ng-template [auChildren]="defaultSlots"><ng-content></ng-content></ng-template>
 		@if (!state().backdropHidden) {
 			<div class="modal-backdrop" [auUseMulti]="[widget.directives.backdropPortalDirective, widget.directives.backdropDirective]"></div>
 		}
@@ -233,9 +233,9 @@ export class ModalComponent<Data> extends BaseWidgetDirective<ModalWidget<Data>>
 	@ContentChild(ModalTitleDirective, {static: false})
 	slotTitleFromContent: ModalTitleDirective<Data> | undefined;
 
-	@Input('auSlotDefault') slotDefault: SlotContent<ModalContext<Data>>;
+	@Input('auChildren') children: SlotContent<ModalContext<Data>>;
 	@ContentChild(ModalBodyDirective, {static: false})
-	slotDefaultFromContent: ModalBodyDirective<Data> | undefined;
+	slotChildrenFromContent: ModalBodyDirective<Data> | undefined;
 
 	@Input('auSlotFooter') slotFooter: SlotContent<ModalContext<Data>>;
 	@ContentChild(ModalFooterDirective, {static: false})
@@ -282,7 +282,7 @@ export class ModalComponent<Data> extends BaseWidgetDirective<ModalWidget<Data>>
 
 	ngAfterContentChecked(): void {
 		this._widget.patchSlots({
-			slotDefault: this.slotDefaultFromContent?.templateRef,
+			children: this.slotChildrenFromContent?.templateRef,
 			slotFooter: this.slotFooterFromContent?.templateRef,
 			slotHeader: this.slotHeaderFromContent?.templateRef,
 			slotStructure: this.slotStructureFromContent?.templateRef,

@@ -21,6 +21,7 @@
 		void updated.check();
 	};
 
+	// eslint-disable-next-line svelte/valid-compile
 	$: isMainPage = $routeLevel$ === 0;
 
 	onMount(() => {
