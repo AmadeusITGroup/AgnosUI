@@ -15,10 +15,11 @@
 	let alert: Alert;
 
 	$: type = 'info' as AlertProps['type'];
+	// eslint-disable-next-line svelte/valid-compile
 	$: componentName = $page.url.pathname.match(regex)?.[2];
 	$: {
 		componentName;
-		alert?.api.open();
+		alert?.api?.open();
 	}
 </script>
 

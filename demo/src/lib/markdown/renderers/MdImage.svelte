@@ -1,23 +1,11 @@
 <script lang="ts">
-	export let href = '';
-	export let title: string;
-	export let text = '';
-	let className = 'w-100';
+	let {href = '', title, text = ''}: {href: string; title: string; text: string} = $props();
 
 	const imgRegExp = /resources\/images\/(.*)\.(svg|webp|png|jpg)/i;
-	let srcPromise: Promise<any>;
-	async function getSrc(href: string) {
-		try {
-			const matches = href.match(imgRegExp);
-			if (matches) {
-				className = matches[1];
-				srcPromise = import(`../../../resources/images/${matches[1]}.${matches[2]}`);
-			}
-		} catch (error) {
-			// Avoid server crash
-		}
-	}
-	$: void getSrc(href);
+
+	let matchesRegex = $derived(href.match(imgRegExp));
+	let className = $derived(matchesRegex ? matchesRegex[1] : 'w-100');
+	let srcPromise = $derived(matchesRegex ? import(`../../../resources/images/${matchesRegex[1]}.${matchesRegex[2]}`) : undefined);
 </script>
 
 {#await srcPromise}

@@ -5,10 +5,9 @@ const Usage = () => (
 		<Alert type="primary" dismissible={false}>
 			Label provided by slot
 		</Alert>
-		<Alert type="secondary" dismissible={false} slotDefault="Label provided by property" />
-		<Alert type="info" dismissible={false} slotDefault="When both prop and slot are provided, the prop's content will take precedence.">
-			This content is ignored.
-		</Alert>
+		<p>
+			In React, passing the slot by using the attribute <code>children</code> will return an error.
+		</p>
 	</>
 );
 export default Usage;

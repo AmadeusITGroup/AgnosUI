@@ -1,5 +1,5 @@
-<script lang="ts" context="module">
-	import type {ModalWidget, ModalProps, ModalSlots, ModalApi} from './modal';
+<script lang="ts">
+	import type {ModalWidget, ModalProps, ModalApi} from './modal';
 	import {toSlotContextWidget} from '@agnos-ui/svelte-headless/types';
 	import {createModal} from './modal';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
@@ -7,25 +7,18 @@
 	import ModalDefaultHeader from './ModalDefaultHeader.svelte';
 	import ModalDefaultStructure from './ModalDefaultStructure.svelte';
 
-	const defaultConfig: Partial<ModalProps<any>> = {
-		slotStructure: ModalDefaultStructure,
-		slotHeader: ModalDefaultHeader,
-	};
-</script>
-
-<script lang="ts">
 	type Data = $$Generic; // eslint-disable-line no-undef
-	type $$Props = Partial<ModalProps<Data>>;
-	type $$Slots = ModalSlots<Data>;
 
-	export let visible: boolean | undefined = undefined;
+	let {visible = $bindable(), ...props}: Partial<ModalProps<Data>> = $props();
 
 	const widget = callWidgetFactory<ModalWidget<Data>>({
 		factory: createModal,
 		widgetName: 'modal',
-		$$slots,
-		$$props,
-		defaultConfig,
+		props: {...props, visible},
+		defaultConfig: {
+			slotHeader,
+			slotStructure,
+		},
 		events: {
 			onVisibleChange: (event) => {
 				visible = event;
@@ -40,28 +33,26 @@
 		state$,
 	} = widget;
 
-	$: widget.patchChangedProps($$props);
-	$: slotContext = {widget: toSlotContextWidget(widget), state: $state$};
+	$effect(() => widget.patchChangedProps({...props, visible}));
+	let slotContext = $derived({widget: toSlotContextWidget(widget), state: $state$});
 </script>
 
+{#snippet slotStructure(props)}
+	<ModalDefaultStructure {...props} />
+{/snippet}
+{#snippet slotHeader(props)}
+	<ModalDefaultHeader {...props} />
+{/snippet}
+
 {#if !$backdropHidden$}
-	<div class="modal-backdrop" use:backdropPortalDirective use:backdropDirective />
+	<div class="modal-backdrop" use:backdropPortalDirective use:backdropDirective></div>
 {/if}
 
 {#if !$hidden$}
 	<div class="modal d-block" use:modalPortalDirective use:modalDirective>
 		<div class="modal-dialog {$state$.fullscreen ? 'modal-fullscreen' : ''}">
 			<div class="modal-content">
-				<Slot slotContent={$slotStructure$} props={slotContext} let:component let:props>
-					<svelte:fragment slot="slot" let:props><slot name="structure" {...props} /></svelte:fragment>
-					<svelte:component this={component} {...props}>
-						<svelte:fragment let:state let:widget><slot {state} {widget} /></svelte:fragment>
-						<svelte:fragment slot="footer" let:state let:widget><slot name="footer" {state} {widget} /></svelte:fragment>
-						<svelte:fragment slot="header" let:state let:widget><slot name="header" {state} {widget} /></svelte:fragment>
-						<svelte:fragment slot="structure" let:state let:widget><slot name="structure" {state} {widget} /></svelte:fragment>
-						<svelte:fragment slot="title" let:state let:widget><slot name="title" {state} {widget} /></svelte:fragment>
-					</svelte:component>
-				</Slot>
+				<Slot content={$slotStructure$} props={slotContext} />
 			</div>
 		</div>
 	</div>

@@ -30,7 +30,7 @@ const Header = (props: PropsWithChildren<{headerTag: string; directive: Directiv
 const ItemContent = (slotContext: AccordionItemContext) => (
 	<div {...useDirectives([classDirective, 'accordion-collapse'], slotContext.widget.directives.bodyContainerDirective)}>
 		<div {...useDirectives([classDirective, 'accordion-body'], slotContext.widget.directives.bodyDirective)}>
-			<Slot slotContent={slotContext.state.slotItemBody} props={slotContext}></Slot>
+			<Slot slotContent={slotContext.state.children} props={slotContext}></Slot>
 		</div>
 	</div>
 );
@@ -50,8 +50,8 @@ const DefaultSlotStructure = (slotContext: AccordionItemContext) => (
 const defaultConfig: Partial<AccordionItemProps> = {
 	slotItemStructure: DefaultSlotStructure,
 };
-export const AccordionItem: ForwardRefExoticComponent<PropsWithChildren<Partial<AccordionItemProps>> & RefAttributes<AccordionItemApi>> = forwardRef(
-	function AccordionItem(props: PropsWithChildren<Partial<AccordionItemProps>>, ref: ForwardedRef<AccordionItemApi>) {
+export const AccordionItem: ForwardRefExoticComponent<Partial<AccordionItemProps> & RefAttributes<AccordionItemApi>> = forwardRef(
+	function AccordionItem(props: Partial<AccordionItemProps>, ref: ForwardedRef<AccordionItemApi>) {
 		const {registerItem} = useContext(AccordionDIContext);
 		const [state, widget] = useWidgetWithConfig(registerItem as WidgetFactory<AccordionItemWidget>, props, null, {
 			...defaultConfig,

@@ -1,17 +1,7 @@
 import type {AlertApi, AlertProps} from '@agnos-ui/react-bootstrap/components/alert';
 import {Alert} from '@agnos-ui/react-bootstrap/components/alert';
 import {useRef, useState} from 'react';
-
-export enum AlertStatus {
-	success = 'success',
-	info = 'info',
-	warning = 'warning',
-	danger = 'danger',
-	primary = 'primary',
-	secondary = 'secondary',
-	light = 'light',
-	dark = 'dark',
-}
+import {AlertStatus} from '@agnos-ui/common/samples/alert/alert-status.enum';
 
 const DefaultDemo = () => {
 	const alertRef = useRef<AlertApi>(null);

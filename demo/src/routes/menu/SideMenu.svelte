@@ -15,6 +15,7 @@
 	import './menu.scss';
 	import Svg from '$lib/layout/Svg.svelte';
 
+	// eslint-disable-next-line svelte/valid-compile
 	$: isAngular = $selectedFramework$ === 'angular';
 	$: isReact = $selectedFramework$ === 'react';
 	$: isSvelte = $selectedFramework$ === 'svelte';

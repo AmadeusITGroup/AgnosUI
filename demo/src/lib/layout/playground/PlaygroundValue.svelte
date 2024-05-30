@@ -31,7 +31,7 @@
 		<input class="number form-control" class:empty={api.isEmpty} {placeholder} value={api.value} on:input={api.onChange} aria-label={ariaLabel} />
 	{:else if type === 'function' && api.selectValues}
 		<select class="form-select function" class:empty={api.isEmpty} bind:value on:change={api.onChange} aria-label={ariaLabel}>
-			<option hidden disabled value={undefined} selected />
+			<option hidden disabled value={undefined} selected></option>
 			{#each api.selectValues as option}
 				<option value={option}>{getPropValueLabel(option)}</option>
 			{/each}

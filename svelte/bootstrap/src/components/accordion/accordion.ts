@@ -1,14 +1,6 @@
 export * from '@agnos-ui/core-bootstrap/components/accordion';
 
-import type {
-	AdaptSlotContentProps,
-	AdaptWidgetSlots,
-	WidgetFactory,
-	WidgetProps,
-	WidgetState,
-	WidgetPropsSlots,
-	PropType,
-} from '@agnos-ui/svelte-headless/types';
+import type {AdaptSlotContentProps, AdaptWidgetSlots, WidgetFactory, WidgetProps, WidgetState, PropType} from '@agnos-ui/svelte-headless/types';
 import {createAccordion as coreCreateAccordion} from '@agnos-ui/core-bootstrap/components/accordion';
 import type {
 	AccordionWidget as CoreWidget,
@@ -26,7 +18,6 @@ export interface AccordionItemProps extends WidgetProps<AccordionItemWidget> {}
 export interface AccordionItemState extends WidgetState<AccordionItemWidget> {}
 export interface AccordionItemApi extends PropType<AccordionItemWidget, 'api'> {}
 // slots
-export interface AccordionSlots extends WidgetPropsSlots<AccordionProps> {}
 export interface AccordionItemContext extends AdaptSlotContentProps<CoreItemContext> {}
 // factory
 export const createAccordion: WidgetFactory<AccordionWidget> = coreCreateAccordion as any;

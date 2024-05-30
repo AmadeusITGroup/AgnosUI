@@ -2,11 +2,12 @@ import Tooltip from '$lib/tooltip/Tooltip.svelte';
 import {browserDirective} from '@agnos-ui/svelte-bootstrap/utils/directive';
 import {createFloatingUI} from '@agnos-ui/svelte-bootstrap/services/floatingUI';
 import {flip, offset} from '@floating-ui/dom';
+import {mount, unmount} from 'svelte';
 
 export const tooltip = browserDirective((button: HTMLElement, options: {content: string}) => {
-	const content = options.content;
+	let content = $state(options.content);
 
-	let componentInstance: Tooltip | undefined;
+	let componentExports: Record<string, any> | undefined;
 
 	const {
 		directives: {floatingDirective, referenceDirective, arrowDirective},
@@ -29,8 +30,8 @@ export const tooltip = browserDirective((button: HTMLElement, options: {content:
 	button.addEventListener('mouseleave', hide);
 
 	function show() {
-		if (!componentInstance) {
-			componentInstance = new Tooltip({
+		if (!componentExports) {
+			componentExports = mount(Tooltip, {
 				target: document.body,
 				props: {content, placement$, directive: floatingDirective, arrowDirective},
 			});
@@ -38,15 +39,15 @@ export const tooltip = browserDirective((button: HTMLElement, options: {content:
 	}
 
 	function hide() {
-		componentInstance?.$destroy();
-		componentInstance = undefined;
+		if (componentExports) {
+			unmount(componentExports);
+			componentExports = undefined;
+		}
 	}
 
 	return {
-		update(options: {content: string}) {
-			if (componentInstance) {
-				componentInstance.content = options.content;
-			}
+		update(options) {
+			content = options.content;
 		},
 		destroy() {
 			hide();

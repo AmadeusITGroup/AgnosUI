@@ -133,13 +133,13 @@
 		"@types/dom-view-transitions": "^1.0.4",
 		"bootstrap-icons": "^1.11.3",
 		"compare-versions": "^6.1.0",
-		"eslint-plugin-svelte": "^2.39.0",
+		"eslint-plugin-svelte": "^2.36.0-next.13",
 		"front-matter": "^4.0.2",
+		"marked": "^12.0.2",
 		"prettier-plugin-svelte": "^3.2.3",
 		"shiki": "^1.6.0",
-		"svelte": "^4.2.17",
+		"svelte": "^5.0.0-next.144",
 		"svelte-check": "^3.7.1",
-		"svelte-markdown": "^0.4.1",
 		"tsx": "^4.11.0"
 	}
 }

@@ -11,6 +11,7 @@
 		"moduleResolution": "bundler",
 		"isolatedModules": true,
 		"forceConsistentCasingInFileNames": true,
+		"verbatimModuleSyntax": true,
 		"noEmit": true,
 		"paths": {
 			"@agnos-ui/common": ["./common"],

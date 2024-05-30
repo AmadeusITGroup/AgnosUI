@@ -35,7 +35,7 @@
 </script>
 
 <div class="position-relative overflow-auto border border-primary-subtle demo-floatingui" use:scrollToMiddle>
-	<button use:referenceDirective type="button" class="btn btn-primary" on:click={toggleButton}>Toggle popover</button>
+	<button use:referenceDirective type="button" class="btn btn-primary" onclick={toggleButton}>Toggle popover</button>
 	{#if displayPopover}
 		<div
 			use:floatingDirective

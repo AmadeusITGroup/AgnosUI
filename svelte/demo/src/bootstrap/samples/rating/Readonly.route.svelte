@@ -4,9 +4,11 @@
 	import '@agnos-ui/common/samples/rating/readonly.scss';
 </script>
 
-<Rating className="rating-readonly" rating={3.64} readonly={true} maxRating={5} ariaLabel="readonly rating">
-	<span slot="star" let:fill let:index class="star" class:full={fill === 100}>
-		<span class="half" style:width={fill + '%'}>{@html heartFill}</span>
-		<span>{@html heartFill}</span>
-	</span>
+<Rating className="rating-readonly" rating={3.64} readonly maxRating={5} ariaLabel="readonly rating">
+	{#snippet slotStar({fill})}
+		<span class="star" class:full={fill === 100}>
+			<span class="half" style:width={fill + '%'}>{@html heartFill}</span>
+			<span>{@html heartFill}</span>
+		</span>
+	{/snippet}
 </Rating>

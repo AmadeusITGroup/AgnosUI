@@ -14,9 +14,13 @@ export const App = () => (
 		<h2>Accordion</h2>
 		<div className="my-3">
 			<Accordion>
-				<AccordionItem itemVisible={true} slotItemHeader="First" slotItemBody="Content 1"></AccordionItem>
-				<AccordionItem slotItemHeader="Second" slotItemBody="Content 2"></AccordionItem>
-				<AccordionItem itemDisabled={true} slotItemHeader="Disabled" slotItemBody="Content 3"></AccordionItem>
+				<AccordionItem itemVisible={true} slotItemHeader="First">
+					Content 1
+				</AccordionItem>
+				<AccordionItem slotItemHeader="Second">Content 2</AccordionItem>
+				<AccordionItem itemDisabled={true} slotItemHeader="Disabled">
+					Content 3
+				</AccordionItem>
 			</Accordion>
 		</div>
 		<h2>Alert</h2>

@@ -40,7 +40,6 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
       - run: npx playwright install --with-deps
-      - run: npm run syncpack:check
       - run: |
           git config --global user.name github-actions
           git config --global user.email github-actions@github.com

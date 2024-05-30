@@ -1,13 +1,13 @@
 <script lang="ts">
 	import {Slider} from '@agnos-ui/svelte-bootstrap/components/slider';
 
-	let sliderControl = [70];
-	let disabledControl = [60];
-	let sliderValues = [20];
-	let disabledToggle = true;
-	let readonlyToggle = true;
-	let minMaxLabelToggle = true;
-	let valueLabelToggle = true;
+	let sliderControl = $state([70]);
+	let disabledControl = $state([60]);
+	let sliderValues = $state([20]);
+	let disabledToggle = $state(true);
+	let readonlyToggle = $state(true);
+	let minMaxLabelToggle = $state(true);
+	let valueLabelToggle = $state(true);
 </script>
 
 <h2>Slider with form control</h2>

@@ -1,11 +1,8 @@
 <script lang="ts">
 	import '@agnos-ui/common/samples/slider/custom.scss';
-	import type {SliderSlots} from '@agnos-ui/svelte-bootstrap/components/slider';
-	type $$Props = SliderSlots['handle'];
-	type $$Slots = SliderSlots;
+	import type {SliderSlotHandleContext} from '@agnos-ui/svelte-bootstrap/components/slider';
 
-	export let item: $$Props['item'];
-	export let widget: $$Props['widget'];
+	let {item, widget}: SliderSlotHandleContext = $props();
 </script>
 
 <button class="custom-handle" use:widget.directives.handleDirective={{item}}>

@@ -45,9 +45,9 @@
 				<tr class="border-0 bg-transparent">
 					<th class="border-0">Prop</th>
 					<th class="border-0">Config</th>
-					<th class="border-0" />
+					<th class="border-0"></th>
 					<th class="border-0">Value</th>
-					<th class="border-0" />
+					<th class="border-0"></th>
 				</tr>
 			</thead>
 			<tbody>

@@ -1,20 +1,18 @@
 <script lang="ts">
 	import Code from '$lib/layout/Code.svelte';
 	import Sample from '$lib/layout/Sample.svelte';
-	import type {SampleInfo} from '$lib/layout/sample';
 	import {selectedFramework$} from '$lib/stores';
 	import samples from '../samples';
 
-	export let lang: string;
-	export let text: string;
+	let {lang, text}: {lang: string; text: string} = $props();
 
-	let code = '';
-	let title: string;
-	let sample: SampleInfo;
-	let height = 500;
-
-	let showCode = true;
-	let noresize = false;
+	let match = $derived(lang === 'sample' ? text.trim().match(/^\{([^:]+):([a-zA-Z-/]+):(\d+)(:noCode)?(:noResize)?\}$/) : undefined);
+	let title = $derived(match?.[1] ?? '');
+	let height = $derived(match ? Number.parseInt(match[3], 10) : 500);
+	let sample = $derived(match && samples.has(match[2]) ? samples.get(match[2]) : undefined);
+	let showCode = $derived(match ? !match[4] : true);
+	let noresize = $derived(match ? !!match[5] : false);
+	let code = $state('');
 
 	const extensions: Map<string, string> = new Map();
 	extensions.set('typescript', 'ts');
@@ -28,24 +26,10 @@
 			code = text.trim();
 		}
 	}
-	async function getSample(text: string, lang: string) {
-		if (lang === 'sample') {
-			const match = text.trim().match(/^\{([^:]+):([a-zA-Z-/]+):(\d+)(:noCode)?(:noResize)?\}$/);
-			if (match) {
-				title = match[1];
-				const sampleKey = match[2];
-				height = Number.parseInt(match[3], 10);
-				if (samples.has(sampleKey)) {
-					sample = samples.get(sampleKey)!;
-				}
-				showCode = !match[4];
-				noresize = !!match[5];
-			}
-		}
-	}
-
-	$: void getCode(text, $selectedFramework$, lang);
-	$: void getSample(text, lang);
+	$effect(() => {
+		// eslint-disable-next-line svelte/valid-compile
+		getCode(text, $selectedFramework$, lang);
+	});
 </script>
 
 {#if lang === 'sample'}

@@ -1,19 +1,18 @@
 <script lang="ts">
-	import {createProgressbar, type ProgressbarProps, type ProgressbarSlots, type ProgressbarApi} from './progressbar';
+	import {createProgressbar, type ProgressbarProps, type ProgressbarApi} from './progressbar';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import {callWidgetFactory} from '../../config';
+	import {toSlotContextWidget} from '@agnos-ui/svelte-headless/types';
 	import ProgressbarDefaultStructure from './ProgressbarDefaultStructure.svelte';
 
-	type $$Props = Partial<ProgressbarProps>;
-	type $$Slots = ProgressbarSlots;
+	let {...props}: Partial<ProgressbarProps> = $props();
 
 	const widget = callWidgetFactory({
 		factory: createProgressbar,
 		widgetName: 'progressbar',
-		$$slots,
-		$$props,
+		props,
 		defaultConfig: {
-			slotStructure: ProgressbarDefaultStructure,
+			slotStructure,
 		},
 		events: {},
 	});
@@ -24,16 +23,14 @@
 	} = widget;
 	export const api: ProgressbarApi = widget.api;
 
-	$: widget.patchChangedProps($$props);
-	$: slotContext = {widget, state: $state$};
+	$effect(() => widget.patchChangedProps({...props}));
+	let slotContext = $derived({widget: toSlotContextWidget(widget), state: $state$});
 </script>
 
+{#snippet slotStructure(props)}
+	<ProgressbarDefaultStructure {...props} />
+{/snippet}
+
 <div use:ariaDirective class={$className$ || undefined}>
-	<Slot slotContent={$slotStructure$} props={slotContext} let:component let:props>
-		<svelte:fragment slot="slot" let:props><slot name="structure" {...props} /></svelte:fragment>
-		<svelte:component this={component} {...props}>
-			<svelte:fragment let:state let:widget><slot {state} {widget} /></svelte:fragment>
-			<svelte:fragment slot="structure" let:state let:widget><slot name="structure" {state} {widget} /></svelte:fragment>
-		</svelte:component>
-	</Slot>
+	<Slot content={$slotStructure$} props={slotContext} />
 </div>

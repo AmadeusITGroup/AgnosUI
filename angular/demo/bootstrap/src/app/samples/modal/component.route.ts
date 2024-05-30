@@ -12,6 +12,6 @@ export default class DemoContentModalComponent {
 	readonly modalService = inject(ModalService);
 
 	openModal() {
-		void this.modalService.open<ModalData>({slotTitle: 'Hi there!', slotDefault: CustomContentComponent, contentData: {name: 'World'}});
+		void this.modalService.open<ModalData>({slotTitle: 'Hi there!', children: CustomContentComponent, contentData: {name: 'World'}});
 	}
 }

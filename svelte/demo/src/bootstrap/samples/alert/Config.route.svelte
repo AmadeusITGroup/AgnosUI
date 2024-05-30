@@ -1,20 +1,10 @@
 <script lang="ts">
 	import {Alert, type AlertProps} from '@agnos-ui/svelte-bootstrap/components/alert';
+	import {AlertStatus} from '@agnos-ui/common/samples/alert/alert-status.enum';
 
 	let alert: Alert;
 	let [animatedOnInit, animated, dismissible] = [true, true, true];
 	let type: AlertProps['type'] = 'success';
-
-	enum AlertStatus {
-		success = 'success',
-		info = 'info',
-		warning = 'warning',
-		danger = 'danger',
-		primary = 'primary',
-		secondary = 'secondary',
-		light = 'light',
-		dark = 'dark',
-	}
 
 	const styles = Object.entries(AlertStatus).map((entry) => {
 		return {
@@ -24,7 +14,7 @@
 	});
 </script>
 
-<button class="btn btn-primary showAlert" on:click={() => alert.api.open()} type="button">Show alert</button>
+<button class="btn btn-primary showAlert" onclick={() => alert.api.open()} type="button">Show alert</button>
 
 <br />
 <br />

@@ -17,7 +17,7 @@ interface ModalExtraProps<Data> {
 	/**
 	 * Body of the modal.
 	 */
-	slotDefault: SlotContent<ModalContext<Data>>;
+	children: SlotContent<ModalContext<Data>>;
 
 	/**
 	 * Footer of the modal.
@@ -31,7 +31,7 @@ interface ModalExtraProps<Data> {
 
 	/**
 	 * Structure of the modal.
-	 * The default structure uses {@link ModalCommonPropsAndState.slotHeader|slotHeader}, {@link ModalCommonPropsAndState.slotDefault|slotDefault} and {@link ModalCommonPropsAndState.slotFooter|slotFooter}.
+	 * The default structure uses {@link ModalCommonPropsAndState.slotHeader|slotHeader}, {@link ModalCommonPropsAndState.children|children} and {@link ModalCommonPropsAndState.slotFooter|slotFooter}.
 	 */
 	slotStructure: SlotContent<ModalContext<Data>>;
 
@@ -52,7 +52,7 @@ export type ModalWidget<Data> = Widget<ModalProps<Data>, ModalState<Data>, Modal
 
 const defaultConfigExtraProps: ModalExtraProps<any> = {
 	contentData: undefined,
-	slotDefault: undefined,
+	children: undefined,
 	slotFooter: undefined,
 	slotHeader: undefined,
 	slotStructure: undefined,

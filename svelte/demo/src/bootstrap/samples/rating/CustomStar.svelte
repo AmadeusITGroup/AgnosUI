@@ -1,8 +1,7 @@
 <script lang="ts">
 	import type {StarContext} from '@agnos-ui/svelte-bootstrap/components/rating';
-	type $$Props = StarContext;
 
-	export let fill: number;
+	let {fill}: StarContext = $props();
 </script>
 
 <span class="star" class:full={fill === 100}>

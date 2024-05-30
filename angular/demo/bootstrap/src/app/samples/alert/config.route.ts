@@ -2,17 +2,7 @@ import {AgnosUIAngularModule} from '@agnos-ui/angular-bootstrap';
 import type {AlertComponent} from '@agnos-ui/angular-bootstrap';
 import {Component} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-
-export enum AlertStatus {
-	success = 'success',
-	info = 'info',
-	warning = 'warning',
-	danger = 'danger',
-	primary = 'primary',
-	secondary = 'secondary',
-	light = 'light',
-	dark = 'dark',
-}
+import {AlertStatus} from '@agnos-ui/common/samples/alert/alert-status.enum';
 
 @Component({
 	standalone: true,

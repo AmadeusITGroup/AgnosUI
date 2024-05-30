@@ -4,7 +4,7 @@
 
 	createWidgetsDefaultConfig().set({toast: {autoHide: false, dismissible: false}});
 
-	export let visible = true;
+	let visible = $state(true);
 
 	function reset() {
 		visible = true;
@@ -17,7 +17,7 @@
 </p>
 <Toast className="text-bg-primary" slotHeader="I am header" autoHide={false} dismissible bind:visible>Simple primary toast</Toast>
 
-<button class="btn btn-primary my-2" on:click={() => reset()}>Reset</button>
+<button class="btn btn-primary my-2" onclick={() => reset()}>Reset</button>
 
 <h3>Variations</h3>
 <div class="row gy-2 gx-3">

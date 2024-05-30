@@ -38,7 +38,7 @@
 
 	const compareFn = new Intl.Collator('en').compare;
 	function onSelectedChange(items: WikiResult[]) {
-		selected = (<WikiResult[]>(items || [])).sort((a, b) => compareFn(a.title, b.title));
+		selected = ((items || []) as WikiResult[]).sort((a, b) => compareFn(a.title, b.title));
 	}
 
 	const navSelector = (node: HTMLElement) => node.querySelectorAll<HTMLSpanElement | HTMLInputElement>('a,button,input');
@@ -46,7 +46,7 @@
 
 <div class="custom-select my-auto mb-3">
 	<Select {items} {itemIdFn} {onFilterTextChange} {onSelectedChange} {navSelector} badgeClassName="badge text-bg-light d-flex align-items-center">
-		<svelte:fragment slot="badgeLabel" let:itemContext let:widget>
+		{#snippet slotBadgeLabel({itemContext, widget})}
 			<a href={`${basePageUrl}${itemContext.item.pageid}`} target="_blank" rel="noreferrer">{itemContext.item.title}</a>
 			<button
 				type="button"
@@ -54,12 +54,13 @@
 				aria-label="Close"
 				on:click={(e) => widget.actions.onRemoveBadgeClick(e, itemContext.item)}
 			></button>
-		</svelte:fragment>
-		<label for={'' + itemContext.id} slot="item" let:itemContext>
-			{@const item = itemContext.item}
-			<div class="fw-bold">{item.title}</div>
-			<div class="text-wrap wiki-desc">{item.snippet}</div>
-		</label>
+		{/snippet}
+		{#snippet slotItem({itemContext})}
+			<label for={'' + itemContext.id}>
+				<div class="fw-bold">{itemContext.item.title}</div>
+				<div class="text-wrap wiki-desc">{itemContext.item.snippet}</div>
+			</label>
+		{/snippet}
 	</Select>
 
 	<span class="fw-bold">Selection: </span>

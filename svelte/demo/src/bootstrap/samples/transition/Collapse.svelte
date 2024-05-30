@@ -24,7 +24,7 @@
 		<button
 			type="button"
 			id="collapse-toggle"
-			on:click={() => toggle()}
+			onclick={() => toggle()}
 			class="btn toggle-button"
 			aria-controls="collapse-content"
 			aria-expanded={$visible$ || undefined}

@@ -14,7 +14,7 @@ for (const [filename, readFile] of Object.entries(testSourceFiles)) {
 		const fileContent: string = (await readFile()) as any;
 		const transformedFile = await preprocess(fileContent, [directivesPreprocess()], {filename});
 		// check that compiler doesn't throw:
-		compile(transformedFile.code);
+		compile(transformedFile.code, {});
 		await expect(transformedFile.code).toMatchFileSnapshot(join(transformedFilesFolder, basename(filename)));
 	});
 }

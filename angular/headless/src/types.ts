@@ -30,8 +30,8 @@ export type AdaptSlotContentProps<Props extends Record<string, any>> =
 		? WidgetSlotContext<AdaptWidgetSlots<U>> & AdaptPropsSlots<Omit<Props, keyof WidgetSlotContext<any>>>
 		: AdaptPropsSlots<Props>;
 
-export type AdaptPropsSlots<Props> = Omit<Props, `slot${string}`> & {
-	[K in keyof Props & `slot${string}`]: Props[K] extends CoreSlotContent<infer U> ? SlotContent<AdaptSlotContentProps<U>> : Props[K];
+export type AdaptPropsSlots<Props> = Omit<Props, `slot${string}` | 'children'> & {
+	[K in keyof Props & (`slot${string}` | 'children')]: Props[K] extends CoreSlotContent<infer U> ? SlotContent<AdaptSlotContentProps<U>> : Props[K];
 };
 
 export type AdaptWidgetFactories<T> = {
@@ -60,6 +60,6 @@ export type AngularWidget<W extends Widget> = W & {
 	ngState: Signal<WidgetState<W>>;
 	ngInit: () => void;
 	patchSlots(slots: {
-		[K in keyof WidgetProps<W> & `slot${string}`]: WidgetProps<W>[K] extends SlotContent<infer U> ? TemplateRef<U> | undefined : never;
+		[K in keyof WidgetProps<W> & (`slot${string}` | 'children')]: WidgetProps<W>[K] extends SlotContent<infer U> ? TemplateRef<U> | undefined : never;
 	}): void;
 };

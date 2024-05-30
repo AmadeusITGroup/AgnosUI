@@ -27,12 +27,12 @@
 	}
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <dialog bind:this={dialog} on:close={onDialogClose} on:click={onDialogClick}>
 	<div class="menu-title text-center border-bottom pb-2">
 		<span class="menu-title-text">{title}</span>
-		<button type="button" class="btn-close pb-3 pe-3" aria-label="Close menu" />
+		<button type="button" class="btn-close pb-3 pe-3" aria-label="Close menu"></button>
 	</div>
 	<slot />
 </dialog>

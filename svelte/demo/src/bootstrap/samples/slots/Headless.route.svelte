@@ -8,5 +8,7 @@
 
 <div class="mt-2">Using a slot to customize the display:</div>
 <RatingReadonly rating={7} maxRating={10} className="rating-custom">
-	<span slot="star" let:index let:fill class="star" class:filled={fill === 100} class:bad={index < 3}>&#9733;</span>
+	{#snippet slotStar({index, fill})}
+		<span class="star" class:filled={fill === 100} class:bad={index < 3}>&#9733;</span>
+	{/snippet}
 </RatingReadonly>

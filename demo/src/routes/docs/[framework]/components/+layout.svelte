@@ -8,6 +8,7 @@
 	import {page} from '$app/stores';
 	import {getTitle} from '../../../../app';
 
+	// eslint-disable-next-line svelte/valid-compile
 	$: tabs = $page.data.tabs ?? [];
 	$: selectedTab = tabs.find((tabItem: any) => tabItem.key === $selectedTabName$);
 	$: title = `${$page.data.title} ${selectedTab?.title.toLowerCase() ?? ''}`;

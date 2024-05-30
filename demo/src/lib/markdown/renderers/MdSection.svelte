@@ -1,1 +1,5 @@
-<section class="mb-5"><slot /></section>
+<script>
+	let {children} = $props();
+</script>
+
+<section class="mb-5">{@render children()}</section>
