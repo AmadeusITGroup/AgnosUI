@@ -15,7 +15,7 @@ export class AccordionComponent extends BaseWidgetDirective<AccordionWidget> {
 	@Input({transform: auBooleanAttribute})
 	closeOthers?: AccordionProps['closeOthers'];
 	@Input({transform: auBooleanAttribute})
-	itemDestroyOnHide?: AccordionProps['itemDestroyOnHide'];
+	destroyOnHide?: AccordionProps['destroyOnHide'];
 	@Input()
 	className?: AccordionProps['className'];
 	@Output()
@@ -27,9 +27,6 @@ export class AccordionComponent extends BaseWidgetDirective<AccordionWidget> {
 		factory: createAccordion,
 		widgetName: 'accordion',
 		events: {
-			onItemVisibleChange: () => {},
-			onItemHidden: () => {},
-			onItemShown: () => {},
 			onShown: (id) => this.shown.emit(id),
 			onHidden: (id) => this.hidden.emit(id),
 		},

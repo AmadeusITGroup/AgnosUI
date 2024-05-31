@@ -10,7 +10,7 @@
 	const re = new RegExp('^h[1-6]$');
 
 	$: slotContext = {widget, state};
-	$: headingTag = re.test(state.itemHeadingTag) ? state.itemHeadingTag : 'h2';
+	$: headingTag = re.test(state.headingTag) ? state.headingTag : 'h2';
 </script>
 
 <svelte:element this={headingTag} class="accordion-header" use:slotContext.widget.directives.headerDirective>

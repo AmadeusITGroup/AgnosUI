@@ -6,17 +6,12 @@
 	type $$Props = Partial<AccordionProps>;
 	type $$Slots = {default: Record<string, never>} & AccordionSlots;
 
-	export let itemVisible: boolean | undefined = undefined;
 	const widget = callWidgetFactory({
 		factory: createAccordion,
 		widgetName: 'accordion',
 		$$slots: $$slots as any,
 		$$props,
-		events: {
-			onItemVisibleChange: (event) => {
-				itemVisible = event;
-			},
-		},
+		events: {},
 	});
 	export const api: AccordionApi = widget.api;
 

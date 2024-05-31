@@ -66,7 +66,27 @@ const defaultPropsWithoutOverride: AccordionProps = {
 	...getCoreDefaultConfig(),
 	...defaultConfigExtraProps,
 } as any;
-const accordionItemProps = Object.keys(defaultPropsWithoutOverride);
+const accordionItemDefaultConfig: AccordionItemProps = {
+	animated: false,
+	transition: collapseVerticalTransition,
+	destroyOnHide: false,
+	onShown: () => {},
+	onHidden: () => {},
+	onVisibleChange: () => {},
+	visible: false,
+	disabled: false,
+	id: '',
+	headerClassName: '',
+	buttonClassName: '',
+	bodyContainerClassName: '',
+	bodyClassName: '',
+	headingTag: '',
+	className: '',
+	slotItemStructure: undefined,
+	slotItemBody: undefined,
+	slotItemHeader: undefined,
+};
+const accordionItemProps = Object.keys(accordionItemDefaultConfig);
 
 /**
  * Create an AccordioItemnWidget with given config props
@@ -76,7 +96,7 @@ const accordionItemProps = Object.keys(defaultPropsWithoutOverride);
 export const createAccordionItem = extendWidgetProps(createCoreAccordionItem, defaultConfigExtraProps);
 
 const coreOverride: Partial<AccordionProps> = {
-	itemTransition: collapseVerticalTransition,
+	transition: collapseVerticalTransition,
 };
 
 /**

@@ -9,8 +9,8 @@ const AccordionDemo = () => {
 	return (
 		<>
 			<Accordion ref={refAccordion}>
-				<AccordionItem slotItemHeader="First panel" slotItemBody={BODY} itemId={'first'} />
-				<AccordionItem slotItemHeader="Second panel" slotItemBody={BODY} itemId={'second'} ref={refSecondPanel} />
+				<AccordionItem slotItemHeader="First panel" slotItemBody={BODY} id={'first'} />
+				<AccordionItem slotItemHeader="Second panel" slotItemBody={BODY} id={'second'} ref={refSecondPanel} />
 			</Accordion>
 			<hr />
 			<div className="d-flex flex-wrap gap-2">

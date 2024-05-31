@@ -14,7 +14,7 @@ import {AccordionComponent} from './accordion.component';
 	selector: 'app-accordion-item',
 	imports: [UseDirective, UseMultiDirective],
 	template: `
-		<div class="collapse collapse-arrow bg-base-200" [auUseMulti]="[widget.directives.accordionItemDirective, widget.directives.transitionDirective]">
+		<div class="collapse collapse-arrow bg-base-200" [auUseMulti]="[widget.directives.itemDirective, widget.directives.transitionDirective]">
 			<div
 				role="button"
 				tabindex="0"
@@ -36,33 +36,33 @@ import {AccordionComponent} from './accordion.component';
 })
 export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWidget> implements AfterViewInit {
 	@Input()
-	itemClass?: AccordionItemProps['itemClass'];
+	className?: AccordionItemProps['className'];
 	@Input({transform: auBooleanAttribute})
-	itemDestroyOnHide?: AccordionItemProps['itemDestroyOnHide'];
+	destroyOnHide?: AccordionItemProps['destroyOnHide'];
 	@Input({transform: auBooleanAttribute})
-	itemVisible?: AccordionItemProps['itemVisible'];
+	visible?: AccordionItemProps['visible'];
 	@Input()
-	itemId?: AccordionItemProps['itemId'];
+	id?: AccordionItemProps['id'];
 	@Output()
-	itemVisibleChange = new EventEmitter<boolean>();
+	visibleChange = new EventEmitter<boolean>();
 	@Output()
-	itemShown = new EventEmitter<void>();
+	shown = new EventEmitter<void>();
 	@Output()
-	itemHidden = new EventEmitter<void>();
+	hidden = new EventEmitter<void>();
 
 	readonly accordionComponent = inject(AccordionComponent);
 	readonly _widget = callWidgetFactory({
 		factory: ((arg) => this.accordionComponent.api.registerItem(arg)) as WidgetFactory<AccordionItemWidget>,
 		defaultConfig: {
-			itemTransition: createSimpleClassTransition({
+			transition: createSimpleClassTransition({
 				showClasses: ['collapse-open'],
 				animationPendingShowClasses: ['collapse-open'],
 			}),
 		},
 		events: {
-			onItemVisibleChange: (visible) => this.itemVisibleChange.emit(visible),
-			onItemHidden: () => this.itemHidden.emit(),
-			onItemShown: () => this.itemShown.emit(),
+			onVisibleChange: (visible) => this.visibleChange.emit(visible),
+			onHidden: () => this.hidden.emit(),
+			onShown: () => this.shown.emit(),
 		},
 	});
 	ngAfterViewInit() {

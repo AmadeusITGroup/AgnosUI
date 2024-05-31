@@ -3,8 +3,8 @@
 	import AccordionItem from './AccordionItem.svelte';
 </script>
 
-<Accordion closeOthers itemDestroyOnHide>
-	<AccordionItem itemVisible>
+<Accordion closeOthers destroyOnHide>
+	<AccordionItem visible>
 		<svelte:fragment slot="header">First header</svelte:fragment>
 		<svelte:fragment slot="body">First content</svelte:fragment>
 	</AccordionItem>

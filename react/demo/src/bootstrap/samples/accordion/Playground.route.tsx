@@ -8,8 +8,8 @@ const AccordionDemo = () => {
 	return (
 		<WidgetsDefaultConfig accordion={config}>
 			<Accordion {...props}>
-				<AccordionItem {...props} slotItemHeader="Header 1" slotItemBody="Body 1"></AccordionItem>
-				<AccordionItem {...props} slotItemHeader="Header 2" slotItemBody="Body 2"></AccordionItem>
+				<AccordionItem {...props} slotItemHeader="Header 1" slotItemBody="Body 1" />
+				<AccordionItem {...props} slotItemHeader="Header 2" slotItemBody="Body 2" />
 			</Accordion>
 		</WidgetsDefaultConfig>
 	);

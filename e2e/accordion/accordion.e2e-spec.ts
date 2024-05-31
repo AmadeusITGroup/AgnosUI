@@ -120,7 +120,7 @@ test.describe.parallel(`Accordion tests`, () => {
 	});
 
 	test(`Playground accordion behavior no destroy on hide`, async ({page}) => {
-		await page.goto('#/accordion/playground#{"config":{"itemDestroyOnHide":false}}');
+		await page.goto('#/accordion/playground#{"config":{"destroyOnHide":false}}');
 		const accordionPO = new AccordionPO(page, 0);
 		await accordionPO.locatorRoot.waitFor();
 
