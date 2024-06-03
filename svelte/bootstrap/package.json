@@ -132,9 +132,9 @@
 		"@agnos-ui/svelte-headless": "0.0.0"
 	},
 	"peerDependencies": {
-		"@amadeus-it-group/tansu": "*",
-		"esm-env": "*",
-		"svelte": "*"
+		"@amadeus-it-group/tansu": "^1.0.0",
+		"esm-env": "^1.0.0",
+		"svelte": "^4.2.17"
 	},
 	"devDependencies": {
 		"@sveltejs/package": "^2.3.1"

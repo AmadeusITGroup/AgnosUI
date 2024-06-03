@@ -8,10 +8,10 @@
 		"@typescript-eslint/utils": "^7.11.0"
 	},
 	"peerDependencies": {
-		"typescript": "*"
+		"typescript": "~5.4.5"
 	},
 	"devDependencies": {
-		"@angular/core": "~18.0.1",
+		"@angular/core": "^18.0.1",
 		"@typescript-eslint/rule-tester": "^7.11.0",
 		"@vitest/coverage-v8": "^1.6.0",
 		"svelte": "^4.2.17",
