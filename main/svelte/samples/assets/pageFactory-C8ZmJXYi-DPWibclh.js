@@ -1,0 +1,1 @@
+import{e as s}from"./extendWidget-B7KULKuL.js";import{g as a,c as e}from"./pagination--GkwduJn-BdIFL6kT.js";const t={slotEllipsis:"…",slotFirst:"«",slotPrevious:"‹",slotNext:"›",slotLast:"»",slotPages:void 0,slotStructure:void 0,slotNumberLabel:({displayedPage:o})=>`${o}`};function r(){return{...a(),...t}}const l=s(e,t,{});export{l as c,r as g};

@@ -1,0 +1,1 @@
+import{S as o,i as r,s as i,l,g as c,n as a,h as u}from"./AppCommon-D_XpGT3A.js";function f(s){let t;return{c(){t=l("Sample not found")},m(e,n){c(e,t,n)},p:a,i:a,o:a,d(e){e&&u(t)}}}class m extends o{constructor(t){super(),r(this,t,null,f,i,{})}}export{m as default};
