@@ -13,13 +13,6 @@ export default {
 	semverRange: '^',
 	versionGroups: [
 		{
-			label: "Use '*' under 'peerDependencies' everywhere",
-			packages: ['**'],
-			dependencies: ['**'],
-			dependencyTypes: ['peer'],
-			pinVersion: '*',
-		},
-		{
 			label: 'Use 0.0.0 for local packages',
 			packages: ['**'],
 			dependencies: ['**'],
@@ -30,12 +23,12 @@ export default {
 	semverGroups: [
 		{
 			range: '~',
-			dependencies: ['typescript', 'zone.js', '@angular/*', '@angular-eslint/*', '@angular-devkit/build-angular', 'ng-packagr'],
+			dependencies: ['typescript', 'zone.js'],
 			packages: ['**'],
 		},
 		{
 			range: '',
-			dependencies: ['@amadeus-it-group/tansu', '@agnos-ui/*'],
+			dependencies: ['@agnos-ui/*'],
 			packages: ['**'],
 		},
 	],

@@ -9,7 +9,7 @@
 		"preview": "vite preview"
 	},
 	"devDependencies": {
-		"@amadeus-it-group/tansu": "1.0.0",
+		"@amadeus-it-group/tansu": "^1.0.0",
 		"@floating-ui/dom": "^1.6.5",
 		"@types/react": "^18.3.3",
 		"@types/react-dom": "^18.3.0",
