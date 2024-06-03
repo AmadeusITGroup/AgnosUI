@@ -1,7 +1,7 @@
 <script lang="ts">
 	import {Pagination} from '@agnos-ui/svelte-bootstrap/components/pagination';
 
-	import {hash$} from '@agnos-ui/common/utils';
+	import {hash$} from '@agnos-ui/common/samples/utils/hashUtil';
 
 	$: page = +($hash$.split('#')[1] ?? 4);
 

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import {derived} from '@amadeus-it-group/tansu';
-	import {hash$} from '@agnos-ui/common/utils';
+	import {hash$} from '@agnos-ui/common/samples/utils/hashUtil';
 
 	import '@agnos-ui/common/demo.scss';
 	import '@agnos-ui/common/samples/links.scss';

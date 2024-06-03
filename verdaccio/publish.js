@@ -11,10 +11,10 @@ const main = async () => {
 	await rm(storageFolder, {recursive: true, force: true});
 	const verdaccio = await runServer(join(__dirname, 'config.yaml'));
 	try {
-		await new Promise((resolve) => verdaccio.listen(4873, resolve));
+		await new Promise((resolve) => verdaccio.listen(4874, resolve));
 
 		process.env.NPM_CONFIG_USERCONFIG = join(storageFolder, '.npmrc');
-		process.env.NPM_CONFIG_REGISTRY = 'http://localhost:4873';
+		process.env.NPM_CONFIG_REGISTRY = 'http://localhost:4874';
 
 		const npmLoginProcess = spawn('npm', ['login', '--auth-type', 'legacy'], {
 			shell: process.platform == 'win32',

@@ -1,9 +1,9 @@
 <script lang="ts">
 	import {Toast} from '@agnos-ui/svelte-bootstrap/components/toast';
 	import {createWidgetsDefaultConfig} from '@agnos-ui/svelte-bootstrap/config';
-	import Action from './Action.svelte';
+	import ActionStructure from './ActionStructure.svelte';
 
-	createWidgetsDefaultConfig().set({toast: {autoHide: false, dismissible: true, className: 'text-bg-success', slotStructure: Action}});
+	createWidgetsDefaultConfig().set({toast: {autoHide: false, dismissible: true, className: 'text-bg-success', slotStructure: ActionStructure}});
 	export let visible = true;
 
 	function reset() {

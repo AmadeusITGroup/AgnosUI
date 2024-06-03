@@ -1,4 +1,4 @@
-import {hash$} from '@agnos-ui/common/utils';
+import {hash$} from '@agnos-ui/common/samples/utils/hashUtil';
 import {useObservable} from '@agnos-ui/react-bootstrap/utils/stores';
 import {Pagination} from '@agnos-ui/react-bootstrap/components/pagination';
 import {WidgetsDefaultConfig} from '@agnos-ui/react-bootstrap/config';

@@ -25,6 +25,15 @@ export const samplesList = () => {
 
 const serverManagerURL = process.env.SERVER_MANAGER_URL!;
 
+const request = async (url: string, options: RequestInit) => {
+	const req = await fetch(url, options);
+	const answer = await req.json();
+	if (!req.ok) {
+		throw new Error(answer.error + '\n\n' + (answer.logs?.join('\n\n') ?? ''));
+	}
+	return answer;
+};
+
 export const test = base.extend<FixtureOptions>({
 	project: [undefined, {option: true}],
 	framework: [undefined, {option: true}],
@@ -34,16 +43,23 @@ export const test = base.extend<FixtureOptions>({
 	},
 	baseURL: [
 		async ({project, framework, sampleKey, sampleInfo}, use) => {
-			const req = await fetch(serverManagerURL, {
+			test.skip(project === 'stackblitz' && sampleInfo?.sampleName === 'playground', 'Playground samples are not supported in stackblitz');
+			test.skip(
+				sampleKey === 'daisyui/modal/default' && framework === 'svelte',
+				`The modal headless samples is not using a service yet, as snippets makes this so much easier.`,
+			);
+			const answer = await request(serverManagerURL, {
 				method: 'POST',
 				headers: {'Content-Type': 'application/json'},
 				body: JSON.stringify({project, framework, sampleKey, sampleInfo}),
 			});
-			const answer = await req.json();
-			if (!req.ok) {
-				throw new Error(answer.error);
+			try {
+				await use(answer.url);
+			} finally {
+				if (answer.deleteURL) {
+					await request(new URL(answer.deleteURL, serverManagerURL).href, {method: 'DELETE'});
+				}
 			}
-			await use(answer.url);
 		},
 		{timeout: 300000, scope: 'test'},
 	],

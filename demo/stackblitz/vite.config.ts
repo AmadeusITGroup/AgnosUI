@@ -9,7 +9,7 @@ export default defineConfig({
 			entry: {
 				index: '../src/lib/stackblitz/testapi.ts',
 			},
-			formats: ['cjs'],
+			formats: ['es'],
 		},
 	},
 });

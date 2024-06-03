@@ -32,7 +32,7 @@ export const createBaseFrameworkProcessors = (): Record<Frameworks, StackblitzPr
 		async (project, sample) => {
 			project.files['src/main.tsx'] = `import {createRoot} from "react-dom/client";\nimport "./main.css";\nimport App from ${JSON.stringify(
 				`./${sample.files.react.entryPoint.replace(/\.tsx?$/, '')}`,
-			)};\nconst rootElement = document.getElementById('root');\nconst root = createRoot(rootElement);\nroot.render(<App />)`;
+			)};\nconst rootElement = document.getElementById('root')!;\nconst root = createRoot(rootElement);\nroot.render(<App />)`;
 		},
 	],
 	svelte: [
@@ -46,7 +46,7 @@ export const createBaseFrameworkProcessors = (): Record<Frameworks, StackblitzPr
 		async (project, sample) => {
 			project.files['src/main.ts'] = `import "./main.css";\nimport App from ${JSON.stringify(
 				`./${sample.files.svelte.entryPoint}`,
-			)};\nconst app = new App({target: document.getElementById('root')});\nexport default app;`;
+			)};\nconst app = new App({target: document.getElementById('root')!});\nexport default app;`;
 			project.template = 'node';
 		},
 	],
