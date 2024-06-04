@@ -39,12 +39,12 @@ describe(`Accordion`, () => {
 	let promiseOnHidden = promiseWithResolve();
 
 	const callbacksAccordion = {
-		onShown: (id: string) => {
+		onItemShown: (id: string) => {
 			promiseOnShown.resolve();
 			showns.push(id);
 			promiseOnShown = promiseWithResolve();
 		},
-		onHidden: (id: string) => {
+		onItemHidden: (id: string) => {
 			promiseOnHidden.resolve();
 			hiddens.push(id);
 			promiseOnHidden = promiseWithResolve();
@@ -316,10 +316,10 @@ describe(`Accordion`, () => {
 		defConfigAccordion.set({
 			className: 'my-accordion',
 			itemClassName: 'my-item',
-			headerClassName: 'my-header',
-			buttonClassName: 'my-button',
-			bodyContainerClassName: 'my-body-container',
-			bodyClassName: 'my-body',
+			itemHeaderClassName: 'my-header',
+			itemButtonClassName: 'my-button',
+			itemBodyContainerClassName: 'my-body-container',
+			itemBodyClassName: 'my-body',
 		});
 
 		const item = accordion.api.registerItem({props: {id: 'my-id'}});

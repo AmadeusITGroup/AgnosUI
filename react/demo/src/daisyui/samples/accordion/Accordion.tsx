@@ -10,7 +10,7 @@ import {createContext, useContext, useEffect} from 'react';
 const AccordionDIContext: Context<Partial<AccordionApi>> = createContext({});
 
 export const Accordion = (
-	props: PropsWithChildren<Partial<Pick<AccordionProps, 'closeOthers' | 'onShown' | 'onHidden' | 'destroyOnHide' | 'className'>>>,
+	props: PropsWithChildren<Partial<Pick<AccordionProps, 'closeOthers' | 'onItemShown' | 'onItemHidden' | 'itemDestroyOnHide' | 'className'>>>,
 ) => {
 	const [
 		,

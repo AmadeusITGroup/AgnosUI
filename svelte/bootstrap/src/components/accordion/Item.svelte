@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-	import type {AccordionItemApi, AccordionItemProps, AccordionItemWidget, AccordionSlots} from './accordion';
+	import type {AccordionItemApi, AccordionItemProps, AccordionItemWidget, AccordionItemSlots} from './accordion';
 	import type {WidgetFactory} from '@agnos-ui/svelte-headless/types';
 	import {toSlotContextWidget} from '@agnos-ui/svelte-headless/types';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
@@ -15,7 +15,7 @@
 
 <script lang="ts">
 	type $$Props = Partial<AccordionItemProps>;
-	type $$Slots = AccordionSlots;
+	type $$Slots = AccordionItemSlots;
 
 	const accordionApi = getAccordionApi();
 	const {registerItem} = accordionApi;

@@ -3,7 +3,7 @@
 	import AccordionItem from './AccordionItem.svelte';
 </script>
 
-<Accordion closeOthers destroyOnHide>
+<Accordion closeOthers itemDestroyOnHide>
 	<AccordionItem visible>
 		<svelte:fragment slot="header">First header</svelte:fragment>
 		<svelte:fragment slot="body">First content</svelte:fragment>
