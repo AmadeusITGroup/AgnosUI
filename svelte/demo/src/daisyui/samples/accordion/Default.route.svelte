@@ -4,7 +4,7 @@
 </script>
 
 <Accordion closeOthers itemDestroyOnHide>
-	<AccordionItem itemVisible>
+	<AccordionItem visible>
 		<svelte:fragment slot="header">First header</svelte:fragment>
 		<svelte:fragment slot="body">First content</svelte:fragment>
 	</AccordionItem>

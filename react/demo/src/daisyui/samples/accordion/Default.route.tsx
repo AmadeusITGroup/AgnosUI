@@ -2,7 +2,7 @@ import {Accordion, AccordionItem} from './Accordion';
 
 const AccordionDaisyUIDemo = () => (
 	<Accordion closeOthers itemDestroyOnHide>
-		<AccordionItem header="First header" itemVisible>
+		<AccordionItem header="First header" visible>
 			First content
 		</AccordionItem>
 		<AccordionItem header="Second header">Second content</AccordionItem>

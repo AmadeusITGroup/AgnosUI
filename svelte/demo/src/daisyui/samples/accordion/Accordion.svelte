@@ -3,7 +3,7 @@
 	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
 	import {setAccordionApi} from './accordion';
 
-	type $$Props = Partial<Pick<AccordionProps, 'closeOthers' | 'onShown' | 'onHidden' | 'itemDestroyOnHide' | 'className'>>;
+	type $$Props = Partial<Pick<AccordionProps, 'closeOthers' | 'onItemShown' | 'onItemHidden' | 'itemDestroyOnHide' | 'className'>>;
 
 	const widget = callWidgetFactory({
 		factory: createAccordion,

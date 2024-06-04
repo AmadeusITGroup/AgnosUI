@@ -20,16 +20,16 @@ function adjustItemsCloseOthers(items: AccordionItemWidget[], openItems: string[
 	}
 	if (keepOpen) {
 		items.forEach((item) => {
-			if (item.stores.itemId$() !== keepOpen && item.stores.itemVisible$()) {
-				item.patch({itemVisible: false});
+			if (item.stores.id$() !== keepOpen && item.stores.visible$()) {
+				item.patch({visible: false});
 			}
 		});
 	}
 	return items;
 }
 
-function getItem(items: AccordionItemWidget[], itemId: string): AccordionItemWidget | undefined {
-	return items.find((item) => item.stores.itemId$() === itemId);
+function getItem(items: AccordionItemWidget[], id: string): AccordionItemWidget | undefined {
+	return items.find((item) => item.stores.id$() === id);
 }
 
 export interface AccordionProps extends WidgetsCommonPropsAndState {
@@ -42,106 +42,48 @@ export interface AccordionProps extends WidgetsCommonPropsAndState {
 	 *
 	 * Event payload is the id of the item.
 	 */
-	onShown: (itemId: string) => void;
+	onItemShown: (itemId: string) => void;
 	/**
 	 * An event fired when an item is hidden.
 	 *
 	 * Event payload is the id of the item.
 	 */
-	onHidden: (itemId: string) => void;
-	//item configuration
-	/**
-	 * The id of the accordion-item. It can be used for controlling the accordion-item via the accordion api.
-	 *
-	 * It is a prop of the accordion-item.
-	 */
-	itemId: string;
+	onItemHidden: (itemId: string) => void;
 	/**
 	 * If `true`, the accordion-item body container will be removed from the DOM when the accordion-item is collapsed. It will be just hidden otherwise.
-	 *
-	 * It is a prop of the accordion-item.
 	 */
 	itemDestroyOnHide: boolean;
 	/**
-	 * If `true`, the accordion-item will be disabled.
-	 * It will not react to user's clicks, but still will be possible to toggle programmatically.
-	 *
-	 * It is a prop of the accordion-item.
-	 */
-	itemDisabled: boolean;
-	/**
-	 * If `true`, the accordion-item will be visible (expanded). Otherwise, it will be hidden (collapsed).
-	 *
-	 * It is a prop of the accordion-item.
-	 */
-	itemVisible: boolean;
-	/**
 	 * If `true`, accordion-item will be animated.
-	 *
-	 * It is a prop of the accordion-item.
 	 */
 	itemAnimated: boolean;
 	/**
 	 * The transition to use for the accordion-item body-container when the accordion-item is toggled.
-	 *
-	 * It is a prop of the accordion-item.
 	 */
 	itemTransition: TransitionFn;
 	/**
-	 * An event fired when an item is shown.
-	 *
-	 * It is a prop of the accordion-item.
-	 */
-	onItemShown: () => void;
-	/**
-	 * An event fired when an item is hidden.
-	 *
-	 * It is a prop of the accordion-item.
-	 */
-	onItemHidden: () => void;
-	/**
-	 * An event fired when the `visible` value changes.
-	 *
-	 * Event payload is the new value of visible.
-	 *
-	 * It is a prop of the accordion-item.
-	 */
-	onItemVisibleChange: (visible: boolean) => void;
-	/**
 	 * CSS classes to add on the accordion-item DOM element.
-	 *
-	 * It is a prop of the accordion-item.
 	 */
-	itemClass: string;
+	itemClassName: string;
 	/**
 	 * CSS classes to add on the accordion-item header DOM element.
-	 *
-	 * It is a prop of the accordion-item.
 	 */
-	itemHeaderClass: string;
+	itemHeaderClassName: string;
 	/**
 	 * CSS classes to add on the accordion-item toggle button DOM element.
-	 *
-	 * It is a prop of the accordion-item.
 	 */
-	itemButtonClass: string;
+	itemButtonClassName: string;
 	/**
 	 * CSS classes to add on the accordion-item body container DOM element.
 	 * The accordion-item body container is the DOM element on what the itemTransition is applied.
-	 *
-	 * It is a prop of the accordion-item.
 	 */
-	itemBodyContainerClass: string;
+	itemBodyContainerClassName: string;
 	/**
 	 * CSS classes to add on the accordion-item body DOM element.
-	 *
-	 * It is a prop of the accordion-item.
 	 */
-	itemBodyClass: string;
+	itemBodyClassName: string;
 	/**
 	 * The html tag to use for the accordion-item-header.
-	 *
-	 * It is a prop of the accordion-item.
 	 */
 	itemHeadingTag: string;
 }
@@ -150,7 +92,7 @@ export interface AccordionState extends WidgetsCommonPropsAndState {
 	/**
 	 * Array containing all the accordion-items contained in the accordion.
 	 */
-	itemsWidget: AccordionItemWidget[];
+	itemWidgets: AccordionItemWidget[];
 }
 
 export interface AccordionApi {
@@ -259,83 +201,79 @@ export interface AccordionItemDirectives {
 	/**
 	 * Directive to be put on the accordion-item. It will handle adding the accordion-item to the accordion.
 	 */
-	accordionItemDirective: Directive;
+	itemDirective: Directive;
 }
 
-export interface AccordionItemCommonPropsAndState {
+export interface AccordionItemCommonPropsAndState extends WidgetsCommonPropsAndState {
 	/**
 	 * If `true`, the accordion-item will be visible (expanded). Otherwise, it will be hidden (collapsed).
 	 */
-	itemVisible: boolean;
+	visible: boolean;
 	/**
 	 * If `true`, the accordion-item will be disabled.
 	 * It will not react to user's clicks, but still will be possible to toggle programmatically.
 	 */
-	itemDisabled: boolean;
+	disabled: boolean;
 	/**
 	 * The id of the accordion-item. It can be used for controlling the accordion-item via the accordion api.
 	 */
-	itemId: string;
-	/**
-	 * CSS classes to add on the accordion-item DOM element.
-	 */
-	itemClass: string;
+	id: string;
 	/**
 	 * CSS classes to add on the accordion-item header DOM element.
 	 */
-	itemHeaderClass: string;
+	headerClassName: string;
 	/**
 	 * CSS classes to add on the accordion-item collapse DOM element.
 	 */
-	itemButtonClass: string;
+	buttonClassName: string;
 	/**
 	 * CSS classes to add on the accordion-item body container DOM element.
 	 * The accordion-item body container is the DOM element on what the itemTransition is applied.
 	 */
-	itemBodyContainerClass: string;
+	bodyContainerClassName: string;
 	/**
 	 * CSS classes to add on the accordion-item body DOM element.
 	 */
-	itemBodyClass: string;
+	bodyClassName: string;
 	/**
 	 * The html tag to use for the accordion-item-header.
 	 */
-	itemHeadingTag: string;
+	headingTag: string;
 }
 
 export interface AccordionItemProps extends AccordionItemCommonPropsAndState {
 	/**
 	 * If `true`, accordion-item will be animated.
 	 */
-	itemAnimated: boolean;
+	animated: boolean;
 	/**
 	 * The transition to use for the accordion-item body-container when the accordion-item is toggled.
 	 */
-	itemTransition: TransitionFn;
+	transition: TransitionFn;
 	/**
 	 * If `true`, the accordion-item body container will be removed from the DOM when the accordion-item is collapsed. It will be just hidden otherwise.
 	 */
-	itemDestroyOnHide: boolean;
+	destroyOnHide: boolean;
 	/**
 	 * An event fired when an item is shown.
 	 */
-	onItemShown: () => void;
+	onShown: () => void;
 	/**
 	 * An event fired when an item is hidden.
 	 */
-	onItemHidden: () => void;
+	onHidden: () => void;
 	/**
 	 * An event fired when the `visible` value changes.
 	 *
 	 * Event payload is the new value of visible.
 	 */
-	onItemVisibleChange: (visible: boolean) => void;
+	onVisibleChange: (visible: boolean) => void;
 }
 
 export interface AccordionItemState extends AccordionItemCommonPropsAndState {
 	/**
 	 * If `true` the content of the accordion-item collapse should be in DOM. Its value depends on the
-	 * value of the `itemVisible` and `itemDestroyOnHide`.
+	 * value of the `visible` and `destroyOnHide`.
 	 */
 	shouldBeInDOM: boolean;
 }
@@ -344,42 +282,36 @@ export type AccordionItemWidget = Widget<AccordionItemProps, AccordionItemState,
 
 const defaultAccordionConfig: AccordionProps = {
 	closeOthers: false,
-	onShown: noop,
-	onHidden: noop,
+	onItemShown: noop,
+	onItemHidden: noop,
 	className: '',
-	itemId: '',
 	itemDestroyOnHide: true,
-	itemDisabled: false,
-	itemVisible: false,
 	itemAnimated: true,
 	itemTransition: async () => {},
 	itemHeadingTag: '',
-	onItemShown: noop,
-	onItemHidden: noop,
-	onItemVisibleChange: noop,
-	itemClass: '',
-	itemHeaderClass: '',
-	itemButtonClass: '',
-	itemBodyContainerClass: '',
-	itemBodyClass: '',
+	itemClassName: '',
+	itemHeaderClassName: '',
+	itemButtonClassName: '',
+	itemBodyContainerClassName: '',
+	itemBodyClassName: '',
 };
 
 const defaultItemConfig: AccordionItemProps = {
-	itemId: defaultAccordionConfig.itemId,
-	itemDestroyOnHide: defaultAccordionConfig.itemDestroyOnHide,
-	itemDisabled: defaultAccordionConfig.itemDisabled,
-	itemVisible: defaultAccordionConfig.itemVisible,
-	itemAnimated: defaultAccordionConfig.itemAnimated,
-	itemTransition: defaultAccordionConfig.itemTransition,
-	onItemShown: defaultAccordionConfig.onItemShown,
-	onItemHidden: defaultAccordionConfig.onItemHidden,
-	onItemVisibleChange: defaultAccordionConfig.onItemVisibleChange,
-	itemClass: defaultAccordionConfig.itemClass,
-	itemHeaderClass: defaultAccordionConfig.itemHeaderClass,
-	itemButtonClass: defaultAccordionConfig.itemButtonClass,
-	itemBodyContainerClass: defaultAccordionConfig.itemBodyContainerClass,
-	itemBodyClass: defaultAccordionConfig.itemBodyClass,
-	itemHeadingTag: defaultAccordionConfig.itemHeadingTag,
+	id: '',
+	destroyOnHide: defaultAccordionConfig.itemDestroyOnHide,
+	disabled: false,
+	visible: false,
+	animated: defaultAccordionConfig.itemAnimated,
+	transition: defaultAccordionConfig.itemTransition,
+	onShown: noop,
+	onHidden: noop,
+	onVisibleChange: noop,
+	className: defaultAccordionConfig.itemClassName,
+	headerClassName: defaultAccordionConfig.itemHeaderClassName,
+	buttonClassName: defaultAccordionConfig.itemButtonClassName,
+	bodyContainerClassName: defaultAccordionConfig.itemBodyContainerClassName,
+	bodyClassName: defaultAccordionConfig.itemBodyClassName,
+	headingTag: defaultAccordionConfig.itemHeadingTag,
 };
 const coreAccordionItemProps = Object.keys(defaultItemConfig);
 
@@ -393,41 +325,36 @@ export function getAccordionDefaultConfig(): AccordionProps {
 
 const configAccordionValidator: ConfigValidator<AccordionProps> = {
 	closeOthers: typeBoolean,
-	onShown: typeFunction,
-	onHidden: typeFunction,
-	itemId: typeString,
-	itemDestroyOnHide: typeBoolean,
-	itemDisabled: typeBoolean,
-	itemVisible: typeBoolean,
-	itemAnimated: typeBoolean,
-	itemTransition: typeFunction,
 	onItemShown: typeFunction,
 	onItemHidden: typeFunction,
-	onItemVisibleChange: typeFunction,
-	itemClass: typeString,
-	itemHeaderClass: typeString,
-	itemButtonClass: typeString,
-	itemBodyContainerClass: typeString,
-	itemBodyClass: typeString,
+	className: typeString,
+	itemDestroyOnHide: typeBoolean,
+	itemAnimated: typeBoolean,
+	itemTransition: typeFunction,
+	itemClassName: typeString,
+	itemHeaderClassName: typeString,
+	itemButtonClassName: typeString,
+	itemBodyContainerClassName: typeString,
+	itemBodyClassName: typeString,
 	itemHeadingTag: typeString,
 };
 
 const configItemValidator: ConfigValidator<AccordionItemProps> = {
-	itemId: typeString,
-	itemDestroyOnHide: typeBoolean,
-	itemDisabled: typeBoolean,
-	itemVisible: typeBoolean,
-	itemAnimated: typeBoolean,
-	itemTransition: typeFunction,
-	onItemShown: typeFunction,
-	onItemHidden: typeFunction,
-	onItemVisibleChange: typeFunction,
-	itemClass: typeString,
-	itemHeaderClass: typeString,
-	itemButtonClass: typeString,
-	itemBodyContainerClass: typeString,
-	itemBodyClass: typeString,
-	itemHeadingTag: typeString,
+	id: typeString,
+	destroyOnHide: typeBoolean,
+	disabled: typeBoolean,
+	visible: typeBoolean,
+	animated: typeBoolean,
+	transition: typeFunction,
+	onShown: typeFunction,
+	onHidden: typeFunction,
+	onVisibleChange: typeFunction,
+	className: typeString,
+	headerClassName: typeString,
+	buttonClassName: typeString,
+	bodyContainerClassName: typeString,
+	bodyClassName: typeString,
+	headingTag: typeString,
 };
 
 /**
@@ -438,79 +365,79 @@ const configItemValidator: ConfigValidator<AccordionItemProps> = {
 export function createAccordionItem(config?: PropsConfig<AccordionItemProps>): AccordionItemWidget {
 	const [
 		{
-			itemBodyClass$,
-			itemButtonClass$,
-			itemBodyContainerClass$,
-			itemHeaderClass$,
-			itemAnimated$,
-			itemTransition$,
-			itemDestroyOnHide$,
-			onItemShown$,
-			onItemHidden$,
-			onItemVisibleChange$,
-			itemVisible$,
-			itemId$: _dirtyItemId$,
-			itemDisabled$,
+			bodyClassName$,
+			buttonClassName$,
+			bodyContainerClassName$,
+			headerClassName$,
+			animated$,
+			transition$,
+			destroyOnHide$,
+			onShown$,
+			onHidden$,
+			onVisibleChange$,
+			visible$,
+			id$: _dirtyId$,
+			disabled$,
 			...stateProps
 		},
 		patch,
 	] = writablesForProps(defaultItemConfig, config, configItemValidator);
 
 	const initDone$ = writable(false);
-	const _autoItemId$ = computed(() => generateId());
-	const itemId$ = computed(() => _dirtyItemId$() || _autoItemId$());
-	const itemTransition = createTransition({
+	const _autoId$ = computed(() => generateId());
+	const id$ = computed(() => _dirtyId$() || _autoId$());
+	const transition = createTransition({
 		props: {
-			transition: itemTransition$,
-			visible: itemVisible$,
-			onVisibleChange: onItemVisibleChange$,
-			animated: itemAnimated$,
+			transition: transition$,
+			visible: visible$,
+			onVisibleChange: onVisibleChange$,
+			animated: animated$,
 			animatedOnInit: false,
 			initDone: initDone$,
 			onHidden: () => {
-				onItemHidden$()();
+				onHidden$()();
 			},
 			onShown: () => {
-				onItemShown$()();
+				onShown$()();
 			},
 		},
 	});
-	const shouldBeInDOM$ = computed(() => itemDestroyOnHide$() === false || !itemTransition.stores.hidden$());
+	const shouldBeInDOM$ = computed(() => destroyOnHide$() === false || !transition.stores.hidden$());
 	const clickAction = () => {
-		if (!itemDisabled$()) {
-			itemVisible$.update((c: boolean) => !c);
+		if (!disabled$()) {
+			visible$.update((c: boolean) => !c);
 		}
 	};
 	const toggleDirective = createAttributesDirective(() => ({
 		attributes: {
-			id: computed(() => `${itemId$()}-toggle`),
-			'aria-expanded': computed(() => `${itemVisible$()}`),
-			'aria-disabled': computed(() => `${itemDisabled$()}`),
-			'aria-controls': computed(() => `${itemId$()}-body-container`),
-			disabled: itemDisabled$,
+			id: computed(() => `${id$()}-toggle`),
+			'aria-expanded': computed(() => `${visible$()}`),
+			'aria-disabled': computed(() => `${disabled$()}`),
+			'aria-controls': computed(() => `${id$()}-body-container`),
+			disabled: disabled$,
 		},
-		classNames: {collapsed: computed(() => !itemVisible$())},
+		classNames: {collapsed: computed(() => !visible$())},
 		events: {click: clickAction},
 	}));
-	const transitionDirective = bindDirectiveNoArg(itemTransition.directives.directive);
+	const transitionDirective = bindDirectiveNoArg(transition.directives.directive);
 	const bodyContainerAttrsDirective = createAttributesDirective(() => ({
 		attributes: {
-			id: computed(() => `${itemId$()}-body-container`),
-			class: itemBodyContainerClass$(),
-			'aria-labelledby': computed(() => `${itemId$()}-toggle`),
+			id: computed(() => `${id$()}-body-container`),
+			class: bodyContainerClassName$(),
+			'aria-labelledby': computed(() => `${id$()}-toggle`),
 		},
 	}));
 
 	return {
 		...stateStores({
-			itemVisible$,
-			itemId$,
+			visible$,
+			id$,
 			shouldBeInDOM$,
-			itemDisabled$,
-			itemBodyClass$,
-			itemButtonClass$,
-			itemBodyContainerClass$,
-			itemHeaderClass$,
+			disabled$,
+			bodyClassName$,
+			buttonClassName$,
+			bodyContainerClassName$,
+			headerClassName$,
 			...stateProps,
 		}),
 		patch,
@@ -522,13 +449,13 @@ export function createAccordionItem(config?: PropsConfig<AccordionItemProps>): A
 				initDone$.set(true);
 			},
 			collapse: () => {
-				itemVisible$.set(false);
+				visible$.set(false);
 			},
 			expand: () => {
-				itemVisible$.set(true);
+				visible$.set(true);
 			},
 			toggle: () => {
-				itemVisible$.update((c: boolean) => !c);
+				visible$.update((c: boolean) => !c);
 			},
 		},
 		directives: {
@@ -538,16 +465,16 @@ export function createAccordionItem(config?: PropsConfig<AccordionItemProps>): A
 				createAttributesDirective(() => ({
 					attributes: {
 						type: 'button',
-						class: itemButtonClass$(),
+						class: buttonClassName$(),
 					},
 				})),
 			),
-			headerDirective: createAttributesDirective(() => ({attributes: {class: itemHeaderClass$()}})),
-			bodyDirective: createAttributesDirective(() => ({attributes: {class: itemBodyClass$()}})),
+			headerDirective: createAttributesDirective(() => ({attributes: {class: headerClassName$()}})),
+			bodyDirective: createAttributesDirective(() => ({attributes: {class: bodyClassName$()}})),
 			transitionDirective,
 			bodyContainerAttrsDirective,
 			bodyContainerDirective: mergeDirectives(transitionDirective, bodyContainerAttrsDirective),
-			accordionItemDirective: noop,
+			itemDirective: noop,
 		},
 	};
 }
@@ -569,14 +496,18 @@ export function factoryCreateAccordion(
 ): WidgetFactory<AccordionWidget> {
 	return (config?: PropsConfig<AccordionProps>) => {
 		const [writables, patch] = writablesForProps(accordionConfig, config, accordionValidator);
-		const {closeOthers$, onShown$, onHidden$, className$} = writables;
-		const accordionItemConfig = Object.fromEntries(Object.entries(writables).map((entry) => [entry[0].slice(0, -1), entry[1]]));
-		const itemsWidget$ = registrationArray<AccordionItemWidget>();
+		const {closeOthers$, onItemShown$, onItemHidden$, className$} = writables;
+		const accordionItemConfig = Object.fromEntries(
+			Object.entries(writables)
+				.filter((entry) => entry[0].startsWith('item'))
+				.map((entry) => [entry[0].charAt(4).toLowerCase() + entry[0].slice(5, -1), entry[1]]),
+		);
+		const itemWidgets$ = registrationArray<AccordionItemWidget>();
 		const openItems$ = computed(() => {
 			const openItems: string[] = [];
-			itemsWidget$().forEach((item) => {
-				if (item.stores.itemVisible$()) {
-					openItems.push(item.stores.itemId$());
+			itemWidgets$().forEach((item) => {
+				if (item.stores.visible$()) {
+					openItems.push(item.stores.id$());
 				}
 			});
 			return openItems;
@@ -585,7 +516,7 @@ export function factoryCreateAccordion(
 		const oldOpenItem$ = writable(openItems$()[0]);
 		const checkCloseOthersAction$ = computed(() => {
 			if (closeOthers$()) {
-				adjustItemsCloseOthers(itemsWidget$(), openItems$(), oldOpenItem$());
+				adjustItemsCloseOthers(itemWidgets$(), openItems$(), oldOpenItem$());
 				oldOpenItem$.set(openItems$()[0]);
 			}
 		});
@@ -594,52 +525,52 @@ export function factoryCreateAccordion(
 			checkCloseOthersAction$();
 		});
 		return {
-			...stateStores({itemsWidget$, className$}),
+			...stateStores({itemWidgets$, className$}),
 			patch,
 			actions: {},
 			api: {
 				expand: (id: string) => {
-					getItem(itemsWidget$(), id)?.api.expand();
+					getItem(itemWidgets$(), id)?.api.expand();
 				},
 				collapse: (id: string) => {
-					getItem(itemsWidget$(), id)?.api.collapse();
+					getItem(itemWidgets$(), id)?.api.collapse();
 				},
 				toggle: (id: string) => {
-					getItem(itemsWidget$(), id)?.api.toggle();
+					getItem(itemWidgets$(), id)?.api.toggle();
 				},
 				expandAll: () => {
-					itemsWidget$().forEach((i) => i.api.expand());
+					itemWidgets$().forEach((i) => i.api.expand());
 				},
 				collapseAll: () => {
-					itemsWidget$().forEach((i) => i.api.collapse());
+					itemWidgets$().forEach((i) => i.api.collapse());
 				},
 				registerItem: (propsConfig?: PropsConfig<AccordionItemProps>) => {
 					const itemProps = accordionItemProps as (keyof AccordionItemProps)[];
 					const config = mergeConfigStores(itemProps, normalizeConfigStores(itemProps, propsConfig?.config), accordionItemConfig);
-					const [{onItemHidden$, onItemShown$}] = writablesForProps(
+					const [{onHidden$, onShown$}] = writablesForProps(
 						{
-							onItemHidden: defaultItemConfig.onItemHidden,
-							onItemShown: defaultItemConfig.onItemShown,
+							onHidden: defaultItemConfig.onHidden,
+							onShown: defaultItemConfig.onShown,
 						},
-						{config, props: propsConfig?.props} as PropsConfig<Pick<AccordionItemProps, 'onItemHidden' | 'onItemShown'>>,
+						{config, props: propsConfig?.props} as PropsConfig<Pick<AccordionItemProps, 'onHidden' | 'onShown'>>,
 					);
 					const item = itemFactory({
 						config,
 						props: {
 							...propsConfig?.props,
-							onItemHidden: asWritable(
+							onHidden: asWritable(
 								readable(() => {
-									onHidden$()(item.stores.itemId$());
-									onItemHidden$()?.();
+									onItemHidden$()(item.stores.id$());
+									onHidden$()?.();
 								}),
 								(val) => {
 									onItemHidden$.set(val);
 								},
 							),
-							onItemShown: asWritable(
+							onShown: asWritable(
 								readable(() => {
-									onShown$()(item.stores.itemId$());
-									onItemShown$()?.();
+									onItemShown$()(item.stores.id$());
+									onShown$()?.();
 								}),
 								(val) => {
 									onItemShown$.set(val);
@@ -648,12 +579,12 @@ export function factoryCreateAccordion(
 						},
 					});
 
-					item.directives.accordionItemDirective = mergeDirectives(
+					item.directives.itemDirective = mergeDirectives(
 						() => ({
-							destroy: itemsWidget$.register(item),
+							destroy: itemWidgets$.register(item),
 						}),
 						createAttributesDirective(() => ({
-							attributes: {class: item.stores.itemClass$, id: item.stores.itemId$},
+							attributes: {class: item.stores.className$, id: item.stores.id$},
 						})),
 					);
 					return item;

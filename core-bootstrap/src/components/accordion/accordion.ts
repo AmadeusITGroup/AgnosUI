@@ -32,6 +32,8 @@ interface AccordionExtraProps {
 	 * It is a prop of the accordion-item.
 	 */
 	slotItemStructure: SlotContent<AccordionItemContext>;
+}
+interface AccordionItemExtraProps extends AccordionExtraProps {
 	/**
 	 * Content present in the accordion body.
 	 *
@@ -51,12 +53,15 @@ export interface AccordionProps extends CoreProps, AccordionExtraProps {}
 
 export type AccordionWidget = Widget<AccordionProps, AccordionState, AccordionApi, object, AccordionDirectives>;
 
-export interface AccordionItemState extends CoreItemState, AccordionExtraProps {}
-export interface AccordionItemProps extends CoreItemProps, AccordionExtraProps {}
+export interface AccordionItemState extends CoreItemState, AccordionItemExtraProps {}
+export interface AccordionItemProps extends CoreItemProps, AccordionItemExtraProps {}
 
 export type AccordionItemWidget = Widget<AccordionItemProps, AccordionItemState, AccordionItemApi, AccordionItemActions, AccordionItemDirectives>;
 
 const defaultConfigExtraProps: AccordionExtraProps = {
+	slotItemStructure: undefined,
+};
+const defaultConfigItemExtraProps: AccordionItemExtraProps = {
 	slotItemStructure: undefined,
 	slotItemBody: undefined,
 	slotItemHeader: undefined,
@@ -66,14 +71,34 @@ const defaultPropsWithoutOverride: AccordionProps = {
 	...getCoreDefaultConfig(),
 	...defaultConfigExtraProps,
 } as any;
-const accordionItemProps = Object.keys(defaultPropsWithoutOverride);
+const accordionItemDefaultConfig: AccordionItemProps = {
+	animated: false,
+	transition: collapseVerticalTransition,
+	destroyOnHide: false,
+	onShown: () => {},
+	onHidden: () => {},
+	onVisibleChange: () => {},
+	visible: false,
+	disabled: false,
+	id: '',
+	headerClassName: '',
+	buttonClassName: '',
+	bodyContainerClassName: '',
+	bodyClassName: '',
+	headingTag: '',
+	className: '',
+	slotItemStructure: undefined,
+	slotItemBody: undefined,
+	slotItemHeader: undefined,
+};
+const accordionItemProps = Object.keys(accordionItemDefaultConfig);
 
 /**
  * Create an AccordioItemnWidget with given config props
  * @param config - an optional alert config
  * @returns an AccordionWidget
  */
-export const createAccordionItem = extendWidgetProps(createCoreAccordionItem, defaultConfigExtraProps);
+export const createAccordionItem = extendWidgetProps(createCoreAccordionItem, defaultConfigItemExtraProps);
 
 const coreOverride: Partial<AccordionProps> = {
 	itemTransition: collapseVerticalTransition,

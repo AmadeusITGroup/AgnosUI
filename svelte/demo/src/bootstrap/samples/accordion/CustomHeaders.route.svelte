@@ -16,12 +16,12 @@
 			<div
 				use:widget.directives.headerDirective
 				class="accordion-button accordion-header custom-header justify-content-between"
-				class:collapsed={!state.itemVisible}
+				class:collapsed={!state.visible}
 				role="heading"
 				aria-level={2}
 			>
-				<p class="m-0">First panel - {state.itemVisible ? 'opened' : 'collapsed'}</p>
-				<button use:widget.directives.toggleDirective type="button" class="btn btn-link p-0 {state.itemButtonClass} au-accordion-item-button"
+				<p class="m-0">First panel - {state.visible ? 'opened' : 'collapsed'}</p>
+				<button use:widget.directives.toggleDirective type="button" class="btn btn-link p-0 {state.buttonClassName} au-accordion-item-button"
 					>Toggle first</button
 				>
 			</div>
@@ -39,7 +39,7 @@
 			<div
 				use:widget.directives.headerDirective
 				class="accordion-button accordion-header custom-header justify-content-between"
-				class:collapsed={!state.itemVisible}
+				class:collapsed={!state.visible}
 				role="heading"
 				aria-level={2}
 			>
@@ -48,7 +48,7 @@
 					<button
 						use:widget.directives.toggleDirective
 						type="button"
-						class="btn btn-sm btn-outline-primary {state.itemButtonClass} au-accordion-item-button">Toggle second</button
+						class="btn btn-sm btn-outline-primary {state.buttonClassName} au-accordion-item-button">Toggle second</button
 					>
 					<button type="button" class="btn btn-sm btn-outline-secondary" on:click={() => thirdItemDisabled$.update((disabled) => !disabled)}>
 						{$thirdItemDisabled$ ? 'En' : 'Dis'}able third
@@ -65,21 +65,21 @@
 			{/if}
 		</svelte:fragment>
 	</AccordionItem>
-	<AccordionItem itemDisabled={$thirdItemDisabled$}>
+	<AccordionItem disabled={$thirdItemDisabled$}>
 		<svelte:fragment slot="itemStructure" let:state let:widget>
 			<div
 				use:widget.directives.headerDirective
 				class="accordion-header accordion-button custom-header justify-content-between"
-				class:collapsed={!state.itemVisible}
+				class:collapsed={!state.visible}
 				role="heading"
 				aria-level={2}
 			>
 				<button
 					use:widget.directives.toggleDirective
 					type="button"
-					class="p-0 btn btn-link container-fluid text-start {state.itemButtonClass} au-accordion-item-button">Third panel</button
+					class="p-0 btn btn-link container-fluid text-start {state.buttonClassName} au-accordion-item-button">Third panel</button
 				>
-				{#if state.itemDisabled}<p class="text-muted m-0 small">[I'm&nbsp;disabled]</p>{/if}
+				{#if state.disabled}<p class="text-muted m-0 small">[I'm&nbsp;disabled]</p>{/if}
 			</div>
 			{#if state.shouldBeInDOM}
 				<div class="accordion-collapse" use:widget.directives.bodyContainerDirective>

@@ -27,6 +27,7 @@ export interface AccordionItemState extends WidgetState<AccordionItemWidget> {}
 export interface AccordionItemApi extends PropType<AccordionItemWidget, 'api'> {}
 // slots
 export interface AccordionSlots extends WidgetPropsSlots<AccordionProps> {}
+export interface AccordionItemSlots extends WidgetPropsSlots<AccordionItemProps> {}
 export interface AccordionItemContext extends AdaptSlotContentProps<CoreItemContext> {}
 // factory
 export const createAccordion: WidgetFactory<AccordionWidget> = coreCreateAccordion as any;

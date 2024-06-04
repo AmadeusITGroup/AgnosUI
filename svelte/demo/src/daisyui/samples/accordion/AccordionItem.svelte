@@ -6,33 +6,31 @@
 	import {createSimpleClassTransition} from '@agnos-ui/svelte-headless/services/transitions/simpleClassTransition';
 	import {getAccordionApi} from './accordion';
 
-	type $$Props = Partial<
-		Pick<AccordionItemProps, 'itemClass' | 'itemDestroyOnHide' | 'onItemVisibleChange' | 'itemVisible' | 'onItemHidden' | 'onItemShown' | 'itemId'>
-	>;
+	type $$Props = Partial<Pick<AccordionItemProps, 'className' | 'destroyOnHide' | 'onVisibleChange' | 'visible' | 'onHidden' | 'onShown' | 'id'>>;
 
-	const itemTransition = createSimpleClassTransition({
+	const transition = createSimpleClassTransition({
 		showClasses: ['collapse-open'],
 		animationPendingShowClasses: ['collapse-open'],
 	});
 
 	const {registerItem} = getAccordionApi();
-	export let itemVisible: boolean | undefined = undefined;
+	export let visible: boolean | undefined = undefined;
 	const widget = callWidgetFactory({
 		factory: registerItem as WidgetFactory<AccordionItemWidget>,
 		$$slots: {},
 		$$props,
 		events: {
-			onItemVisibleChange: (event) => {
-				itemVisible = event;
+			onVisibleChange: (event) => {
+				visible = event;
 			},
 		},
 		defaultConfig: {
-			itemTransition,
+			transition,
 		},
 	});
 	const {
 		stores: {shouldBeInDOM$},
-		directives: {accordionItemDirective, toggleDirective, transitionDirective, bodyContainerAttrsDirective},
+		directives: {itemDirective, toggleDirective, transitionDirective, bodyContainerAttrsDirective},
 		api: {toggle},
 	} = widget;
 	$: widget.patchChangedProps($$props);
@@ -45,7 +43,7 @@
 	onMount(widget.api.initDone);
 </script>
 
-<div class="collapse collapse-arrow bg-base-200" use:accordionItemDirective use:transitionDirective>
+<div class="collapse collapse-arrow bg-base-200" use:itemDirective use:transitionDirective>
 	<div role="button" tabindex="0" class="collapse-title text-xl font-medium focus-visible:outline-none" use:toggleDirective on:keydown={onEnter}>
 		<slot name="header"></slot>
 	</div>

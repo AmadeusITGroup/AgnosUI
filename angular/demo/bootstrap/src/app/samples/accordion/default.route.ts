@@ -7,7 +7,7 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 	imports: [AgnosUIAngularModule],
 	template: `
 		<div auAccordion>
-			<div auAccordionItem auItemVisible>
+			<div auAccordionItem auVisible>
 				<ng-template auAccordionItemHeader>Simple</ng-template>
 				<ng-template auAccordionItemBody>{{ BODY }} </ng-template>
 			</div>
@@ -17,7 +17,7 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 				>
 				<ng-template auAccordionItemBody>{{ BODY }} </ng-template>
 			</div>
-			<div auAccordionItem auItemDisabled>
+			<div auAccordionItem auDisabled>
 				<ng-template auAccordionItemHeader>Disabled</ng-template>
 				<ng-template auAccordionItemBody>{{ BODY }} </ng-template>
 			</div>

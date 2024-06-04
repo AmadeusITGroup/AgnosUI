@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-	import type {AccordionItemApi, AccordionItemProps, AccordionItemWidget, AccordionSlots} from './accordion';
+	import type {AccordionItemApi, AccordionItemProps, AccordionItemWidget, AccordionItemSlots} from './accordion';
 	import type {WidgetFactory} from '@agnos-ui/svelte-headless/types';
 	import {toSlotContextWidget} from '@agnos-ui/svelte-headless/types';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
@@ -15,25 +15,25 @@
 
 <script lang="ts">
 	type $$Props = Partial<AccordionItemProps>;
-	type $$Slots = AccordionSlots;
+	type $$Slots = AccordionItemSlots;
 
 	const accordionApi = getAccordionApi();
 	const {registerItem} = accordionApi;
-	export let itemVisible: boolean | undefined = undefined;
+	export let visible: boolean | undefined = undefined;
 	const widget = callWidgetFactory({
 		factory: registerItem as WidgetFactory<AccordionItemWidget>,
 		$$slots,
 		$$props,
 		defaultConfig,
 		events: {
-			onItemVisibleChange: (event) => {
-				itemVisible = event;
+			onVisibleChange: (event) => {
+				visible = event;
 			},
 		},
 	});
 	const {
 		stores: {slotItemStructure$},
-		directives: {accordionItemDirective},
+		directives: {itemDirective},
 		state$,
 	} = widget;
 	export const api: AccordionItemApi = widget.api;
@@ -46,7 +46,7 @@
 	});
 </script>
 
-<div class="accordion-item" use:accordionItemDirective>
+<div class="accordion-item" use:itemDirective>
 	<Slot slotContent={$slotItemStructure$} props={slotContext} let:component let:props>
 		<svelte:fragment slot="slot" let:props><slot name="itemStructure" {...props} /></svelte:fragment>
 		<svelte:component this={component} {...props}>

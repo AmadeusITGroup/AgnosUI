@@ -38,7 +38,7 @@ const ItemContent = (slotContext: AccordionItemContext) => (
 const AccordionDIContext: React.Context<Partial<AccordionApi>> = createContext({});
 const DefaultSlotStructure = (slotContext: AccordionItemContext) => (
 	<>
-		<Header directive={slotContext.widget.directives.headerDirective} headerTag={slotContext.state.itemHeadingTag}>
+		<Header directive={slotContext.widget.directives.headerDirective} headerTag={slotContext.state.headingTag}>
 			<button {...useDirectives([classDirective, 'accordion-button'], slotContext.widget.directives.buttonDirective)}>
 				<Slot slotContent={slotContext.state.slotItemHeader} props={slotContext}></Slot>
 			</button>
@@ -65,7 +65,7 @@ export const AccordionItem: ForwardRefExoticComponent<PropsWithChildren<Partial<
 			widget.api.initDone();
 		}, []);
 		return (
-			<div {...useDirectives([classDirective, `accordion-item ${state.itemClass}`], widget.directives.accordionItemDirective)}>
+			<div {...useDirectives([classDirective, `accordion-item ${state.className}`], widget.directives.itemDirective)}>
 				<Slot slotContent={state.slotItemStructure} props={slotContext} />
 			</div>
 		);

@@ -12,14 +12,14 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 					<div
 						[auUse]="widget.directives.headerDirective"
 						class="accordion-button accordion-header custom-header justify-content-between"
-						[class.collapsed]="!state.itemVisible"
+						[class.collapsed]="!state.visible"
 						role="heading"
 						aria-level="2"
 					>
-						<p class="m-0">First panel - {{ state.itemVisible ? 'opened' : 'collapsed' }}</p>
+						<p class="m-0">First panel - {{ state.visible ? 'opened' : 'collapsed' }}</p>
 						<button
 							type="button"
-							class="btn btn-link p-0 {{ state.itemButtonClass }} au-accordion-item-button"
+							class="btn btn-link p-0 {{ state.buttonClassName }} au-accordion-item-button"
 							[auUse]="widget.directives.toggleDirective"
 						>
 							Toggle first
@@ -38,7 +38,7 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 				<ng-template auAccordionItemStructure let-state="state" let-widget="widget">
 					<div
 						class="accordion-button accordion-header custom-header justify-content-between"
-						[class.collapsed]="!state.itemVisible"
+						[class.collapsed]="!state.visible"
 						[auUse]="widget.directives.headerDirective"
 						role="heading"
 						aria-level="2"
@@ -48,7 +48,7 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 							<button
 								[auUse]="widget.directives.toggleDirective"
 								type="button"
-								class="btn btn-sm btn-outline-primary {{ state.itemButtonClass }} au-accordion-item-button"
+								class="btn btn-sm btn-outline-primary {{ state.buttonClassName }} au-accordion-item-button"
 							>
 								Toggle second
 							</button>
@@ -67,18 +67,18 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 					}
 				</ng-template>
 			</div>
-			<div auAccordionItem [auItemDisabled]="thirdDisabled">
+			<div auAccordionItem [auDisabled]="thirdDisabled">
 				<ng-template auAccordionItemStructure let-state="state" let-widget="widget">
 					<div
 						[auUse]="widget.directives.headerDirective"
 						class="accordion-button accordion-header custom-header justify-content-between"
-						[class.collapsed]="!state.itemVisible"
+						[class.collapsed]="!state.visible"
 						role="heading"
 						aria-level="2"
 					>
 						<button
 							type="button"
-							class="p-0 btn btn-link container-fluid text-start au-accordion-item-button {{ state.itemButtonClass }}"
+							class="p-0 btn btn-link container-fluid text-start au-accordion-item-button {{ state.buttonClassName }}"
 							[auUse]="widget.directives.toggleDirective"
 						>
 							Third panel

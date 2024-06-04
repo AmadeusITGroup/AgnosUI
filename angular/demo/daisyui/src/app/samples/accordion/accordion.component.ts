@@ -19,19 +19,16 @@ export class AccordionComponent extends BaseWidgetDirective<AccordionWidget> {
 	@Input()
 	className?: AccordionProps['className'];
 	@Output()
-	shown = new EventEmitter<string>();
+	itemShown = new EventEmitter<string>();
 	@Output()
-	hidden = new EventEmitter<string>();
+	itemHidden = new EventEmitter<string>();
 
 	readonly _widget = callWidgetFactory({
 		factory: createAccordion,
 		widgetName: 'accordion',
 		events: {
-			onItemVisibleChange: () => {},
-			onItemHidden: () => {},
-			onItemShown: () => {},
-			onShown: (id) => this.shown.emit(id),
-			onHidden: (id) => this.hidden.emit(id),
+			onItemShown: (id) => this.itemShown.emit(id),
+			onItemHidden: (id) => this.itemHidden.emit(id),
 		},
 	});
 }

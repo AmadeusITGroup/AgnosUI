@@ -5,12 +5,9 @@
 	import doc from '@agnos-ui/generated/doc/api.json?accordion&extractApi';
 	import type {PropsValues} from '@agnos-ui/common/propsValues';
 	export let listPropsValues: {[key in keyof ReturnType<typeof getAccordionDefaultConfig>]?: PropsValues[]} = {
-		onShown: ['noop', 'log'],
-		onHidden: ['noop', 'log'],
-		itemTransition: ['collapse', 'fade'],
 		onItemShown: ['noop', 'log'],
 		onItemHidden: ['noop', 'log'],
-		onItemVisibleChange: ['noop', 'log'],
+		itemTransition: ['collapse', 'fade'],
 	};
 </script>
 

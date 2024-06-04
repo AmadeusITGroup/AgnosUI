@@ -9,7 +9,7 @@ import {promiseWithResolve} from '../../utils/internal/promise';
 import {getAttributes} from '../components.spec-utils';
 
 function expectOpenItems(state: WidgetState<AccordionWidget>, expected: boolean[]) {
-	const openItems: boolean[] = state.itemsWidget.map((itemWidget) => itemWidget.state$().itemVisible);
+	const openItems: boolean[] = state.itemWidgets.map((itemWidget) => itemWidget.state$().visible);
 	expect(openItems).toMatchObject(expected);
 }
 function createItems(accordion: AccordionWidget, n = 3): AccordionItemWidget[] {
@@ -18,7 +18,7 @@ function createItems(accordion: AccordionWidget, n = 3): AccordionItemWidget[] {
 	for (let i = 0; i < n; i++) {
 		items.push(accordion.api.registerItem());
 	}
-	items.forEach((i) => i.directives.accordionItemDirective(el));
+	items.forEach((i) => i.directives.itemDirective(el));
 	return items;
 }
 
@@ -39,22 +39,24 @@ describe(`Accordion`, () => {
 	let promiseOnHidden = promiseWithResolve();
 
 	const callbacksAccordion = {
-		onShown: (id: string) => {
+		onItemShown: (id: string) => {
 			promiseOnShown.resolve();
 			showns.push(id);
 			promiseOnShown = promiseWithResolve();
 		},
-		onHidden: (id: string) => {
+		onItemHidden: (id: string) => {
 			promiseOnHidden.resolve();
 			hiddens.push(id);
 			promiseOnHidden = promiseWithResolve();
 		},
-		onItemShown: () => {
+	};
+	const callbacksAccordionItem = {
+		onShown: () => {
 			promiseOnShownItem.resolve();
 			itemShown++;
 			promiseOnShownItem = promiseWithResolve();
 		},
-		onItemHidden: () => {
+		onHidden: () => {
 			promiseOnHiddenItem.resolve();
 			itemHidden++;
 			promiseOnHiddenItem = promiseWithResolve();
@@ -86,14 +88,14 @@ describe(`Accordion`, () => {
 
 	test(`should have empty accordion`, () => {
 		expect(state).toMatchObject({
-			itemsWidget: [],
+			itemWidgets: [],
 		});
 	});
 
 	test(`should have 2 items`, () => {
 		const items = createItems(accordion, 2);
 		expect(state).toMatchObject({
-			itemsWidget: items,
+			itemWidgets: items,
 		});
 	});
 
@@ -103,27 +105,27 @@ describe(`Accordion`, () => {
 		const el2: HTMLElement | null = document.createElement('div');
 		items.push(accordion.api.registerItem());
 		items.push(accordion.api.registerItem());
-		items[0].directives.accordionItemDirective(el1);
-		const directive = items[1].directives.accordionItemDirective(el2);
+		items[0].directives.itemDirective(el1);
+		const directive = items[1].directives.itemDirective(el2);
 		directive!.destroy?.();
 		expect(state).toMatchObject({
-			itemsWidget: [items[0]],
+			itemWidgets: [items[0]],
 		});
 	});
 
 	test(`itemVisibleState update properly`, () => {
 		const i = accordion.api.registerItem();
-		expect(i.state$().itemVisible).toBe(false);
+		expect(i.state$().visible).toBe(false);
 		i.actions.click();
-		expect(i.state$().itemVisible).toBe(true);
+		expect(i.state$().visible).toBe(true);
 		i.actions.click();
 	});
 
 	test(`should expand all the items and close them`, () => {
 		const el = document.createElement('div');
-		accordion.api.registerItem().directives.accordionItemDirective(el);
-		accordion.api.registerItem().directives.accordionItemDirective(el);
-		accordion.api.registerItem().directives.accordionItemDirective(el);
+		accordion.api.registerItem().directives.itemDirective(el);
+		accordion.api.registerItem().directives.itemDirective(el);
+		accordion.api.registerItem().directives.itemDirective(el);
 		expectOpenItems(state, [false, false, false]);
 		accordion.api.expandAll();
 		expectOpenItems(state, [true, true, true]);
@@ -133,7 +135,7 @@ describe(`Accordion`, () => {
 
 	test(`should toggle items from accordion api`, () => {
 		const items = createItems(accordion);
-		const itemIds = items.map((i) => i.state$().itemId);
+		const itemIds = items.map((i) => i.state$().id);
 		expectOpenItems(state, [false, false, false]);
 		accordion.api.expand(itemIds[0]);
 		accordion.api.expand(itemIds[2]);
@@ -155,9 +157,9 @@ describe(`Accordion`, () => {
 	});
 
 	test(`should fire item events`, async () => {
-		const i = accordion.api.registerItem();
+		const i = accordion.api.registerItem({config: computed(() => ({...callbacksAccordionItem}))});
 		const element = document.createElement('div');
-		i.directives.accordionItemDirective(element);
+		i.directives.itemDirective(element);
 		i.directives.bodyContainerDirective(element);
 		expectOpenItems(state, [false]);
 		//calling it twice to ensure only one event is fired
@@ -175,30 +177,30 @@ describe(`Accordion`, () => {
 
 	test(`should fire accordion events`, async () => {
 		const {
-			stores: {itemId$},
-			directives: {bodyContainerDirective, accordionItemDirective},
+			stores: {id$},
+			directives: {bodyContainerDirective, itemDirective},
 		} = accordion.api.registerItem();
 		const element = document.createElement('div');
 		bodyContainerDirective(element);
-		accordionItemDirective(element);
+		itemDirective(element);
 		expectOpenItems(state, [false]);
-		accordion.api.toggle(itemId$());
-		accordion.api.expand(itemId$());
+		accordion.api.toggle(id$());
+		accordion.api.expand(id$());
 		await promiseOnShown.promise;
-		accordion.api.collapse(itemId$());
+		accordion.api.collapse(id$());
 		await promiseOnHidden.promise;
-		expect(showns).toMatchObject([itemId$()]);
-		expect(hiddens).toMatchObject([itemId$()]);
+		expect(showns).toMatchObject([id$()]);
+		expect(hiddens).toMatchObject([id$()]);
 	});
 
 	test(`should toggle items patching items individually`, () => {
 		const items = createItems(accordion);
 		expectOpenItems(state, [false, false, false]);
-		items[0].patch({itemVisible: true});
-		items[2].patch({itemVisible: true});
+		items[0].patch({visible: true});
+		items[2].patch({visible: true});
 		expectOpenItems(state, [true, false, true]);
-		items[1].patch({itemVisible: !items[1].state$().itemVisible});
-		items[2].patch({itemVisible: false});
+		items[1].patch({visible: !items[1].state$().visible});
+		items[2].patch({visible: false});
 		expectOpenItems(state, [true, true, false]);
 	});
 
@@ -209,8 +211,8 @@ describe(`Accordion`, () => {
 		expectOpenItems(state, [false, false]);
 		// declarative
 		accordion.patch({closeOthers: true});
-		items[1].patch({itemVisible: true});
-		items[0].patch({itemVisible: true});
+		items[1].patch({visible: true});
+		items[0].patch({visible: true});
 		expectOpenItems(state, [true, false]);
 
 		// item api
@@ -218,7 +220,7 @@ describe(`Accordion`, () => {
 		expectOpenItems(state, [false, true]);
 
 		// accordion api
-		accordion.api.expand(items[0].state$().itemId);
+		accordion.api.expand(items[0].state$().id);
 		expectOpenItems(state, [true, false]);
 	});
 
@@ -227,20 +229,20 @@ describe(`Accordion`, () => {
 		accordion.directives.accordionDirective(element);
 		const items = createItems(accordion, 4);
 		expectOpenItems(state, [false, false, false, false]);
-		items[1].patch({itemVisible: true});
-		items[2].patch({itemVisible: true});
-		items[3].patch({itemVisible: true});
+		items[1].patch({visible: true});
+		items[2].patch({visible: true});
+		items[3].patch({visible: true});
 		expectOpenItems(state, [false, true, true, true]);
 		accordion.patch({closeOthers: true});
 		expectOpenItems(state, [false, true, false, false]);
 	});
 
 	test(`should have correct value for shouldBeInDOM`, () => {
-		const i = accordion.api.registerItem({props: {itemVisible: true}});
+		const i = accordion.api.registerItem({props: {visible: true}});
 		expect(i.state$().shouldBeInDOM).toBe(true);
 		i.api.collapse();
 		expect(i.state$().shouldBeInDOM).toBe(false);
-		i.patch({itemDestroyOnHide: false});
+		i.patch({destroyOnHide: false});
 		expect(i.state$().shouldBeInDOM).toBe(true);
 	});
 
@@ -259,26 +261,26 @@ describe(`Accordion`, () => {
 
 	test(`should call initDone to enable the transition on item`, async () => {
 		const el = document.createElement('div');
-		const itemTransition = vi.fn();
-		const itemWidget = accordion.api.registerItem({props: {itemTransition}});
-		itemWidget.directives.accordionItemDirective(el);
+		const transition = vi.fn();
+		const itemWidget = accordion.api.registerItem({props: {transition}});
+		itemWidget.directives.itemDirective(el);
 		itemWidget.directives.bodyContainerDirective(el);
 		expectOpenItems(state, [false]);
 		itemWidget.api.expand();
 		expectOpenItems(state, [true]);
-		expect(itemTransition.mock.calls[itemTransition.mock.calls.length - 1].slice(1, 3)).toEqual(['show', false]);
+		expect(transition.mock.calls[transition.mock.calls.length - 1].slice(1, 3)).toEqual(['show', false]);
 		itemWidget.api.initDone();
 		itemWidget.api.collapse();
 		expectOpenItems(state, [false]);
-		expect(itemTransition.mock.calls[itemTransition.mock.calls.length - 1].slice(1, 3)).toEqual(['hide', true]);
+		expect(transition.mock.calls[transition.mock.calls.length - 1].slice(1, 3)).toEqual(['hide', true]);
 	});
 
 	test(`should not work click when item is disabled`, () => {
 		const element = document.createElement('div');
-		const i = accordion.api.registerItem({props: {itemDisabled: true}});
-		i.directives.accordionItemDirective(element);
+		const i = accordion.api.registerItem({props: {disabled: true}});
+		i.directives.itemDirective(element);
 		expectOpenItems(state, [false]);
-		i.patch({itemVisible: true});
+		i.patch({visible: true});
 		expectOpenItems(state, [true]);
 		i.actions.click();
 		expectOpenItems(state, [true]);
@@ -291,13 +293,13 @@ describe(`Accordion`, () => {
 		const i = accordion.api.registerItem();
 		const {stores: itemStores} = i;
 		const itemStoreValues = {
-			itemDisabled: itemStores.itemDisabled$(),
-			itemVisible: itemStores.itemVisible$(),
-			itemClass: itemStores.itemClass$(),
-			itemHeaderClass: itemStores.itemHeaderClass$(),
-			itemButtonClass: itemStores.itemButtonClass$(),
-			itemBodyContainerClass: itemStores.itemBodyContainerClass$(),
-			itemBodyClass: itemStores.itemBodyClass$(),
+			itemDisabled: itemStores.disabled$(),
+			itemVisible: itemStores.visible$(),
+			itemClass: itemStores.className$(),
+			itemHeaderClass: itemStores.headerClassName$(),
+			itemButtonClass: itemStores.buttonClassName$(),
+			itemBodyContainerClass: itemStores.bodyContainerClassName$(),
+			itemBodyClass: itemStores.bodyClassName$(),
 		};
 		expect(itemStoreValues).toMatchObject({
 			itemDisabled: false,
@@ -313,15 +315,14 @@ describe(`Accordion`, () => {
 	test(`directives`, () => {
 		defConfigAccordion.set({
 			className: 'my-accordion',
-			itemClass: 'my-item',
-			itemHeaderClass: 'my-header',
-			itemButtonClass: 'my-button',
-			itemBodyContainerClass: 'my-body-container',
-			itemBodyClass: 'my-body',
-			itemId: 'my-id',
+			itemClassName: 'my-item',
+			itemHeaderClassName: 'my-header',
+			itemButtonClassName: 'my-button',
+			itemBodyContainerClassName: 'my-body-container',
+			itemBodyClassName: 'my-body',
 		});
 
-		const item = accordion.api.registerItem();
+		const item = accordion.api.registerItem({props: {id: 'my-id'}});
 
 		const accordionNode = document.createElement('div');
 		const itemNode = document.createElement('div');
@@ -331,7 +332,7 @@ describe(`Accordion`, () => {
 		const buttonNode = document.createElement('div');
 
 		accordion.directives.accordionDirective(accordionNode);
-		item.directives.accordionItemDirective(itemNode);
+		item.directives.itemDirective(itemNode);
 		item.directives.bodyContainerDirective(bodyContainerNode);
 		item.directives.bodyDirective(bodyNode);
 		item.directives.headerDirective(headerNode);

@@ -10,7 +10,7 @@ import {createContext, useContext, useEffect} from 'react';
 const AccordionDIContext: Context<Partial<AccordionApi>> = createContext({});
 
 export const Accordion = (
-	props: PropsWithChildren<Partial<Pick<AccordionProps, 'closeOthers' | 'onShown' | 'onHidden' | 'itemDestroyOnHide' | 'className'>>>,
+	props: PropsWithChildren<Partial<Pick<AccordionProps, 'closeOthers' | 'onItemShown' | 'onItemHidden' | 'itemDestroyOnHide' | 'className'>>>,
 ) => {
 	const [
 		,
@@ -28,13 +28,11 @@ export const Accordion = (
 
 export const AccordionItem = (
 	props: PropsWithChildren<
-		Partial<
-			Pick<AccordionItemProps, 'itemClass' | 'itemDestroyOnHide' | 'onItemVisibleChange' | 'itemVisible' | 'onItemHidden' | 'onItemShown' | 'itemId'>
-		>
+		Partial<Pick<AccordionItemProps, 'className' | 'destroyOnHide' | 'onVisibleChange' | 'visible' | 'onHidden' | 'onShown' | 'id'>>
 	> & {header: ReactNode},
 ) => {
 	const {registerItem} = useContext(AccordionDIContext);
-	const itemTransition = createSimpleClassTransition({
+	const transition = createSimpleClassTransition({
 		showClasses: ['collapse-open'],
 		animationPendingShowClasses: ['collapse-open'],
 	});
@@ -42,9 +40,9 @@ export const AccordionItem = (
 		{shouldBeInDOM},
 		{
 			api,
-			directives: {accordionItemDirective, transitionDirective, toggleDirective, bodyContainerAttrsDirective},
+			directives: {itemDirective, transitionDirective, toggleDirective, bodyContainerAttrsDirective},
 		},
-	] = useWidgetWithConfig(registerItem as WidgetFactory<AccordionItemWidget>, props, null, {itemTransition});
+	] = useWidgetWithConfig(registerItem as WidgetFactory<AccordionItemWidget>, props, null, {transition});
 	useEffect(api.initDone, []);
 	const onEnter = (e: KeyboardEvent<HTMLDivElement>) => {
 		if (e.key === 'Enter') {
@@ -53,7 +51,7 @@ export const AccordionItem = (
 	};
 
 	return (
-		<div {...useDirectives([classDirective, 'collapse collapse-arrow bg-base-200'], accordionItemDirective, transitionDirective)}>
+		<div {...useDirectives([classDirective, 'collapse collapse-arrow bg-base-200'], itemDirective, transitionDirective)}>
 			<div
 				role="button"
 				tabIndex={0}
