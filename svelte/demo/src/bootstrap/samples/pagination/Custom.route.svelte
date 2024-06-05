@@ -10,7 +10,7 @@
 </script>
 
 <p>A pagination with customized links:</p>
-<Pagination bind:page collectionSize={60} slotPrevious="Prev" slotNext="Next" ariaLabel="Page navigation with customized links">
+<Pagination bind:page collectionSize={60} previousPageLabel="Prev" nextPageLabel="Next" ariaLabel="Page navigation with customized links">
 	<svelte:fragment slot="numberLabel" let:displayedPage>
 		{getPageSymbol(displayedPage)}
 	</svelte:fragment>

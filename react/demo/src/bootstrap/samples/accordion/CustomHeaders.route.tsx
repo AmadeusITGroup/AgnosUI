@@ -5,7 +5,7 @@ import {useRef, useState} from 'react';
 import '@agnos-ui/common/samples/accordion/custom.scss';
 import BODY from '@agnos-ui/common/samples/accordion/body.txt?raw';
 
-const AccordionDemo = () => {
+export default () => {
 	const refAccordion = useRef<AccordionApi>(null);
 	const [thirdItemDisabled, setThirdItemDisabled] = useState<boolean>(false);
 
@@ -101,10 +101,9 @@ const AccordionDemo = () => {
 
 	return (
 		<Accordion ref={refAccordion}>
-			<AccordionItem slotItemStructure={StructureOne} />
-			<AccordionItem slotItemStructure={StructureTwo} />
-			<AccordionItem slotItemStructure={StructureThree} disabled={thirdItemDisabled} />
+			<AccordionItem structure={StructureOne} />
+			<AccordionItem structure={StructureTwo} />
+			<AccordionItem structure={StructureThree} disabled={thirdItemDisabled} />
 		</Accordion>
 	);
 };
-export default AccordionDemo;

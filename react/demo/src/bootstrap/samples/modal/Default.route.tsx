@@ -2,7 +2,7 @@ import type {ModalApi} from '@agnos-ui/react-bootstrap/components/modal';
 import {Modal, modalCloseButtonClick, modalOutsideClick} from '@agnos-ui/react-bootstrap/components/modal';
 import {useRef, useState} from 'react';
 
-const DefaultDemo = () => {
+export default () => {
 	const modal = useRef<ModalApi>(null);
 	const [message, setMessage] = useState('');
 	const [fullscreen, setFullscreen] = useState(false);
@@ -10,8 +10,8 @@ const DefaultDemo = () => {
 		<>
 			<Modal
 				ref={modal}
-				slotTitle="Save changes"
-				slotFooter={
+				title="Save changes"
+				footer={
 					<>
 						<button type="button" className="btn btn-outline-primary" onClick={() => modal.current!.close(true)}>
 							Yes
@@ -60,4 +60,3 @@ const DefaultDemo = () => {
 		</>
 	);
 };
-export default DefaultDemo;

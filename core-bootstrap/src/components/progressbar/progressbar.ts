@@ -18,11 +18,11 @@ interface ProgressbarExtraProps {
 	/**
 	 * Global template for the Progressbar.
 	 */
-	slotStructure: SlotContent<ProgressbarContext>;
+	structure: SlotContent<ProgressbarContext>;
 	/**
 	 * Label of the progress.
 	 */
-	slotDefault: SlotContent<ProgressbarContext>;
+	children: SlotContent<ProgressbarContext>;
 	/**
 	 * Height of the progressbar, can be any valid css height value.
 	 */
@@ -48,8 +48,8 @@ export interface ProgressbarProps extends CoreProps, ProgressbarExtraProps {}
 export type ProgressbarWidget = Widget<ProgressbarProps, ProgressbarState, ProgressbarApi, object, ProgressbarDirectives>;
 
 const defaultConfigExtraProps: ProgressbarExtraProps = {
-	slotStructure: undefined,
-	slotDefault: undefined,
+	structure: undefined,
+	children: undefined,
 	height: '',
 	striped: false,
 	animated: false,

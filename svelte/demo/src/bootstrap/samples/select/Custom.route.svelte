@@ -55,7 +55,7 @@
 				on:click={(e) => widget.actions.onRemoveBadgeClick(e, itemContext.item)}
 			></button>
 		</svelte:fragment>
-		<label for={'' + itemContext.id} slot="item" let:itemContext>
+		<label for={'' + itemContext.id} slot="slotItem" let:itemContext>
 			{@const item = itemContext.item}
 			<div class="fw-bold">{item.title}</div>
 			<div class="text-wrap wiki-desc">{item.snippet}</div>

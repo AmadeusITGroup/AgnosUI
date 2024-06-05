@@ -4,7 +4,7 @@
 
 	type Data = $$Generic; // eslint-disable-line no-undef
 	type $$Props = ModalContext<Data>;
-	type $$Slots = ModalSlots<Data>;
+	type $$Slots = ModalSlots<any>;
 
 	export let state: $$Props['state'];
 	export let widget: $$Props['widget'];
@@ -12,7 +12,7 @@
 </script>
 
 <h5 class="modal-title">
-	<Slot slotContent={state.slotTitle} props={slotContext} let:component let:props>
+	<Slot slotContent={state.title} props={slotContext} let:component let:props>
 		<svelte:fragment slot="slot" let:props><slot name="title" {...props} /></svelte:fragment>
 		<svelte:component this={component} {...props}>
 			<svelte:fragment let:state let:widget><slot {state} {widget} /></svelte:fragment>

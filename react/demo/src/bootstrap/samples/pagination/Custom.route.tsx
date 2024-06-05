@@ -60,7 +60,7 @@ const getPageSymbol = ({displayedPage}: AdaptSlotContentProps<PaginationNumberCo
 	return ['A', 'B', 'C', 'D', 'E', 'F'][displayedPage - 1];
 };
 
-const PaginationCustom = () => {
+export default () => {
 	const [customPage, setPage] = useState(4);
 	return (
 		<>
@@ -68,9 +68,9 @@ const PaginationCustom = () => {
 				<p>A pagination with customized links:</p>
 				<Pagination
 					ariaLabel={'Page navigation with customized links'}
-					slotPrevious={'Prev'}
-					slotNext={'Next'}
-					slotNumberLabel={getPageSymbol}
+					previousPageLabel={'Prev'}
+					nextPageLabel={'Next'}
+					numberLabel={getPageSymbol}
 					page={customPage}
 					onPageChange={setPage}
 				/>
@@ -81,4 +81,3 @@ const PaginationCustom = () => {
 		</>
 	);
 };
-export default PaginationCustom;

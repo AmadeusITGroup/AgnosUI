@@ -8,16 +8,15 @@
 	import '@agnos-ui/common/samples/slider/custom.scss';
 </script>
 
-<h2>Slider with custom labels</h2>
+<h3>Slider with custom labels</h3>
 <Slider
 	min={0}
 	max={100}
 	stepSize={1}
 	bind:values={sliderCustomLabelControl}
-	slotLabel={({value}) => '' + value + '%'}
+	label={({value}) => '' + value + '%'}
 	className="au-custom-slider-container"
-></Slider>
+/>
 <hr />
-<h2>Slider with custom handle</h2>
-<Slider min={0} max={100} stepSize={1} bind:values={sliderCustomHandleControl} slotHandle={CustomHandle} className="au-custom-slider-container"
-></Slider>
+<h3>Slider with custom handle</h3>
+<Slider min={0} max={100} stepSize={1} bind:values={sliderCustomHandleControl} handle={CustomHandle} className="au-custom-slider-container" />

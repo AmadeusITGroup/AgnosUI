@@ -6,7 +6,7 @@
 	let fullscreen = false;
 </script>
 
-<Modal bind:this={modal} slotTitle="Save changes" {fullscreen}>
+<Modal bind:this={modal} title="Save changes" {fullscreen}>
 	Do you want to save your changes?
 	<svelte:fragment slot="footer">
 		<button type="button" class="btn btn-outline-primary" on:click={() => modal.api.close(true)}>Yes</button>

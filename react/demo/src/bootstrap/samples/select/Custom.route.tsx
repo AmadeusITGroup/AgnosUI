@@ -23,34 +23,34 @@ function getHtmlText(html: string) {
 
 const itemIdFn = (item: WikiResult) => 'page-' + item.pageid;
 
-const SlotBadgeLabel = ({itemContext, widget}: SelectItemContext<WikiResult>) => {
-	return (
-		<>
-			<a href={basePageUrl + itemContext.item.pageid} target="_blank" rel="noreferrer">
-				{itemContext.item.title}
-			</a>
-			<button
-				type="button"
-				className="btn-close ms-1 wiki-btn-close"
-				aria-label="Close"
-				onClick={(e) => widget.actions.onRemoveBadgeClick(e.nativeEvent, itemContext.item)}
-			></button>
-		</>
-	);
-};
+const BadgeLabel = ({itemContext, widget}: SelectItemContext<WikiResult>) => (
+	<>
+		<a href={basePageUrl + itemContext.item.pageid} target="_blank" rel="noreferrer">
+			{itemContext.item.title}
+		</a>
+		<button
+			type="button"
+			className="btn-close ms-1 wiki-btn-close"
+			aria-label="Close"
+			onClick={(e) => widget.actions.onRemoveBadgeClick(e.nativeEvent, itemContext.item)}
+		></button>
+	</>
+);
 
-const SlotItem = ({itemContext}: SelectItemContext<WikiResult>) => {
-	const item = itemContext.item;
-	return (
-		<>
-			<div className="fw-bold">{item.title}</div>
-			<div className="text-wrap wiki-desc">{item.snippet}</div>
-		</>
-	);
-};
+const SlotItem = ({
+	itemContext: {
+		item: {title, snippet},
+	},
+}: SelectItemContext<WikiResult>) => (
+	<>
+		<div className="fw-bold">{title}</div>
+		<div className="text-wrap wiki-desc">{snippet}</div>
+	</>
+);
 
 const navSelector = (node: HTMLElement) => node.querySelectorAll('a,button,input') as NodeListOf<HTMLSpanElement | HTMLInputElement>;
-const Custom = () => {
+
+export default () => {
 	const [items, setItems] = useState([] as WikiResult[]);
 	const [selected, setSelected] = useState([] as WikiResult[]);
 
@@ -83,7 +83,7 @@ const Custom = () => {
 				navSelector={navSelector}
 				onFilterTextChange={onFilterTextChange}
 				onSelectedChange={onSelectedChange}
-				slotBadgeLabel={SlotBadgeLabel}
+				badgeLabel={BadgeLabel}
 				slotItem={SlotItem}
 				badgeClassName="badge text-bg-light d-flex align-items-center"
 			/>
@@ -99,4 +99,3 @@ const Custom = () => {
 		</div>
 	);
 };
-export default Custom;

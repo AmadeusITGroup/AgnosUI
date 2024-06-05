@@ -30,7 +30,7 @@ test.describe(`Toast tests`, () => {
 
 	test(`Toast without header`, async ({page}) => {
 		const toastDemoPO = new ToastDemoPO(page);
-		await page.goto('#/toast/playground#{"props":{"slotDefault":"This is a toast","autoHide":false,"className":"text-bg-primary"}}');
+		await page.goto('#/toast/playground#{"props":{"children":"This is a toast","autoHide":false,"className":"text-bg-primary"}}');
 		await toastDemoPO.locatorRoot.waitFor();
 		const toastPO = new ToastPO(page);
 
@@ -49,7 +49,7 @@ test.describe(`Toast tests`, () => {
 	test(`Toast with header and without close button`, async ({page}) => {
 		const toastDemoPO = new ToastDemoPO(page);
 		await page.goto(
-			'#/toast/playground#{"props":{"slotDefault":"This is a toast","autoHide":false,"className":"text-bg-primary", "slotHeader": "Header", "dismissible": false}}',
+			'#/toast/playground#{"props":{"children":"This is a toast","autoHide":false,"className":"text-bg-primary", "header": "Header", "dismissible": false}}',
 		);
 		await toastDemoPO.locatorRoot.waitFor();
 		const toastPO = new ToastPO(page);

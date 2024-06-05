@@ -1,6 +1,16 @@
 import {batch, computed} from '@amadeus-it-group/tansu';
 import {isStore, stateStores, writablesWithDefault} from '../utils/stores';
-import type {ConfigValidator, PropsConfig, SlotContent, Widget, WidgetFactory, WidgetProps, WidgetSlotContext, WidgetState} from '../types';
+import type {
+	ConfigValidator,
+	IsSlotContent,
+	PropsConfig,
+	SlotContent,
+	Widget,
+	WidgetFactory,
+	WidgetProps,
+	WidgetSlotContext,
+	WidgetState,
+} from '../types';
 
 /**
  * Type extending the original Widget props and state with ExtraProps
@@ -29,12 +39,11 @@ export type ExtendWidgetAdaptSlotContentProps<Props extends Record<string, any>,
 /**
  * Type enriching the original widget slot Props with ExtraProps slots
  */
-export type ExtendWidgetAdaptSlotWidgetProps<Props, ExtraProps extends object, ExtraDirectives extends object> = Omit<Props, `slot${string}`> &
-	ExtraProps & {
-		[K in keyof Props & `slot${string}`]: Props[K] extends SlotContent<infer U>
-			? SlotContent<ExtendWidgetAdaptSlotContentProps<U, ExtraProps, ExtraDirectives>>
-			: Props[K];
-	};
+export type ExtendWidgetAdaptSlotWidgetProps<Props, ExtraProps extends object, ExtraDirectives extends object> = ExtraProps & {
+	[K in keyof Props]: IsSlotContent<Props[K]> extends SlotContent<infer U>
+		? SlotContent<ExtendWidgetAdaptSlotContentProps<U, ExtraProps, ExtraDirectives>>
+		: Props[K];
+};
 
 /**
  * Method to extend the original widget with extra props with validator

@@ -1,7 +1,7 @@
 import {Pagination} from '@agnos-ui/react-bootstrap/components/pagination';
 import {useState} from 'react';
 
-const PaginationDemo = () => {
+export default () => {
 	const [page, setPage] = useState(4);
 	const [pageAlone, setPageAlone] = useState(1);
 
@@ -24,4 +24,3 @@ const PaginationDemo = () => {
 		</>
 	);
 };
-export default PaginationDemo;

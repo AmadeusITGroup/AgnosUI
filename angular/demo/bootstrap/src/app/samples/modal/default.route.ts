@@ -14,7 +14,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 		</div>
 		<hr />
 		<div data-testid="message">{{ message }}</div>
-		<au-component auModal #modal auSlotTitle="Save changes" [auFullscreen]="fullscreenToggle">
+		<au-component auModal #modal auTitle="Save changes" [auFullscreen]="fullscreenToggle">
 			Do you want to save your changes?
 			<ng-template auModalFooter>
 				<button type="button" class="btn btn-outline-primary" (click)="modal.api.close(true)">Yes</button>

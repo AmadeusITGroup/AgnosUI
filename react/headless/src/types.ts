@@ -1,6 +1,14 @@
 export * from '@agnos-ui/core/types';
 
-import type {SlotContent as CoreSlotContent, Widget, WidgetFactory, WidgetProps, WidgetSlotContext, WidgetState} from '@agnos-ui/core/types';
+import type {
+	SlotContent as CoreSlotContent,
+	Widget,
+	WidgetFactory,
+	WidgetProps,
+	WidgetSlotContext,
+	WidgetState,
+	IsSlotContent,
+} from '@agnos-ui/core/types';
 
 export type SlotContent<Props extends object = object> =
 	| CoreSlotContent<Props>
@@ -13,8 +21,8 @@ export type AdaptSlotContentProps<Props extends Record<string, any>> =
 		? WidgetSlotContext<AdaptWidgetSlots<U>> & AdaptPropsSlots<Omit<Props, keyof WidgetSlotContext<any>>>
 		: AdaptPropsSlots<Props>;
 
-export type AdaptPropsSlots<Props> = Omit<Props, `slot${string}`> & {
-	[K in keyof Props & `slot${string}`]: Props[K] extends CoreSlotContent<infer U> ? SlotContent<AdaptSlotContentProps<U>> : Props[K];
+export type AdaptPropsSlots<Props> = {
+	[K in keyof Props]: IsSlotContent<Props[K]> extends CoreSlotContent<infer U> ? SlotContent<AdaptSlotContentProps<U>> : Props[K];
 };
 
 export type AdaptWidgetFactories<T> = {

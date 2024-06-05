@@ -39,14 +39,14 @@ describe(`Pagination`, () => {
 			disabled: false,
 			directionLinks: true,
 			boundaryLinks: false,
-			slotEllipsis: '…',
-			slotFirst: '«',
-			slotLast: '»',
-			slotNext: '›',
-			slotNumberLabel: state.slotNumberLabel,
+			ellipsisLabel: '…',
+			firstPageLabel: '«',
+			lastPageLabel: '»',
+			nextPageLabel: '›',
+			numberLabel: state.numberLabel,
 			slotPages: undefined,
-			slotPrevious: '‹',
-			slotStructure: undefined,
+			previousPageLabel: '‹',
+			structure: undefined,
 			size: null,
 			activeLabel: '(current)',
 			ariaFirstLabel: 'Action link for first page',
@@ -69,7 +69,7 @@ describe(`Pagination`, () => {
 	});
 
 	test('should include a simple slot number label factory in default config', () => {
-		const slotNumberLabel = getPaginationDefaultConfig().slotNumberLabel as (props: {displayedPage: number}) => string;
+		const slotNumberLabel = getPaginationDefaultConfig().numberLabel as (props: {displayedPage: number}) => string;
 		expect(slotNumberLabel({displayedPage: 3})).toEqual(`3`);
 	});
 

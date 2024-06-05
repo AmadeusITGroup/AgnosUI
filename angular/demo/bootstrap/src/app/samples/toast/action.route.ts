@@ -10,7 +10,7 @@ import biCheckCircleFill from 'bootstrap-icons/icons/check-circle-fill.svg';
 	imports: [AgnosUIAngularModule],
 	providers: [
 		provideWidgetsConfig((config) => {
-			config.toast = {...config.toast, className: 'text-bg-success', autoHide: false, dismissible: true, slotStructure: ToastIconComponent};
+			config.toast = {...config.toast, className: 'text-bg-success', autoHide: false, dismissible: true, structure: ToastIconComponent};
 			return config;
 		}),
 	],
@@ -37,7 +37,7 @@ export default class ActionToastComponent {}
 		<div class="d-flex w-100">
 			<div class="d-flex align-items-center flex-grow-1 toast-body">
 				<span class="d-flex me-2" [innerHTML]="sanitizer.bypassSecurityTrustHtml(biCheckCircleFill)"></span>
-				<ng-template [auSlot]="state.slotDefault" [auSlotProps]="{widget, state}"></ng-template>
+				<ng-template [auSlot]="state.children" [auSlotProps]="{widget, state}"></ng-template>
 				<button type="button" class="btn btn-sm ms-auto text-bg-success" (click)="actionDemo()">
 					<span class="me-2" [innerHTML]="sanitizer.bypassSecurityTrustHtml(biArrowCounterClockwise)"></span>Undo
 				</button>

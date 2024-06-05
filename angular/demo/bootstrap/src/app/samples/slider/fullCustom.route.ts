@@ -7,7 +7,6 @@ import CoffeeSliderComponent from './coffee-slider.component';
 	standalone: true,
 	imports: [SliderComponent, SliderStructureDirective, ReactiveFormsModule, FormsModule],
 	template: `
-		<h2>Fully custom slider</h2>
 		<div
 			auSlider
 			auMin="0"
@@ -16,7 +15,7 @@ import CoffeeSliderComponent from './coffee-slider.component';
 			[formControl]="sliderControl"
 			auVertical
 			auClassName="custom-slider"
-			[auSlotStructure]="sliderCoffeeSlotStructure"
+			[auStructure]="sliderCoffeeSlotStructure"
 		></div>
 	`,
 	styles: "@import '@agnos-ui/common/samples/slider/custom.scss';",

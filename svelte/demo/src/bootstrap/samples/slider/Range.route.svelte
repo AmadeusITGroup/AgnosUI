@@ -5,11 +5,11 @@
 	let sliderValues = [10, 40];
 </script>
 
-<h2>Slider with form control</h2>
+<h3>Slider with form control</h3>
 <Slider min={0} max={100} stepSize={1} bind:values={sliderControl} />
 Form control values: {sliderControl?.join(', ')}
 <hr />
 
-<h2>Slider with values</h2>
+<h3>Slider with values</h3>
 <Slider min={0} max={100} stepSize={1} bind:values={sliderValues} />
 Values: {sliderValues.join(', ')}

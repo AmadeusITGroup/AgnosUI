@@ -7,11 +7,14 @@ const fancyHeader = () => (
 	</span>
 );
 
-const AccordionDemo = () => (
+export default () => (
 	<Accordion>
-		<AccordionItem slotItemHeader="Simple" slotItemBody={BODY} visible />
-		<AccordionItem slotItemHeader={fancyHeader} slotItemBody={BODY} />
-		<AccordionItem slotItemHeader="Disabled" slotItemBody={BODY} disabled />
+		<AccordionItem header="Simple" visible>
+			{BODY}
+		</AccordionItem>
+		<AccordionItem header={fancyHeader}>{BODY}</AccordionItem>
+		<AccordionItem header="Disabled" disabled>
+			{BODY}
+		</AccordionItem>
 	</Accordion>
 );
-export default AccordionDemo;

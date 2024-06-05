@@ -7,8 +7,8 @@
 	import SliderDefaultHandle from './SliderDefaultHandle.svelte';
 
 	const defaultConfig: Partial<SliderProps> = {
-		slotStructure: SliderDefaultStructure,
-		slotHandle: SliderDefaultHandle,
+		structure: SliderDefaultStructure,
+		handle: SliderDefaultHandle,
 	};
 </script>
 
@@ -33,7 +33,7 @@
 	export const api: SliderApi = widget.api;
 
 	const {
-		stores: {slotStructure$},
+		stores: {structure$},
 		directives: {sliderDirective},
 		state$,
 	} = widget;
@@ -44,7 +44,7 @@
 
 <!-- on:blur={onTouched} ?? -->
 <div use:sliderDirective>
-	<Slot slotContent={$slotStructure$} props={slotContext} let:component let:props>
+	<Slot slotContent={$structure$} props={slotContext} let:component let:props>
 		<svelte:fragment slot="slot" let:props><slot name="structure" {...props} /></svelte:fragment>
 		<svelte:component this={component} {...props}>
 			<svelte:fragment slot="handle" let:item let:state let:widget><slot name="handle" {item} {state} {widget} /></svelte:fragment>

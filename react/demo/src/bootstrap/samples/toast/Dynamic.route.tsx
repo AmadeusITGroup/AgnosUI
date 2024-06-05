@@ -18,7 +18,7 @@ type ReactToastProps = Partial<ToastProps> & {id: number};
 
 let counter = 0;
 
-const DynamicToastDemo = () => {
+export default () => {
 	const [position, setPosition] = useState(String(ToastPositions.topLeft));
 	const [toastMap, setToastMap] = useState(new Map(Object.values(ToastPositions).map((entry: string) => [entry, [] as ReactToastProps[]])));
 
@@ -68,7 +68,7 @@ const DynamicToastDemo = () => {
 				{[...toastMap].map(([position, toastArray]) => (
 					<div className={`toast-container p-3 ${position}`} key={position}>
 						{toastArray.map((toast) => (
-							<Toast key={`${toast.id}`} onHidden={() => removeToast(toast)} slotHeader={`I am header`}>
+							<Toast key={`${toast.id}`} onHidden={() => removeToast(toast)} header={`I am header`}>
 								Simple toast
 							</Toast>
 						))}
@@ -78,4 +78,3 @@ const DynamicToastDemo = () => {
 		</>
 	);
 };
-export default DynamicToastDemo;

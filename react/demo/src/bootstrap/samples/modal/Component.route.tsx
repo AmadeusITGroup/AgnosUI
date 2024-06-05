@@ -12,13 +12,12 @@ const ModalBody = ({widget, state}: ModalContext<ModalContent>) => (
 	</>
 );
 
-const ComponentDemo = () => (
+export default () => (
 	<button
 		type="button"
 		className="btn btn-primary"
-		onClick={() => openModal({slotTitle: 'Hi there!', slotDefault: ModalBody, contentData: {name: 'World'}})}
+		onClick={() => openModal({title: 'Hi there!', children: ModalBody, contentData: {name: 'World'}})}
 	>
 		Launch demo modal
 	</button>
 );
-export default ComponentDemo;

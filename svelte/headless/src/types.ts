@@ -1,16 +1,31 @@
 export * from '@agnos-ui/core/types';
 
-import type {SlotContent as CoreSlotContent, Widget, WidgetFactory, WidgetProps, WidgetSlotContext, WidgetState} from '@agnos-ui/core/types';
+import type {
+	SlotContent as CoreSlotContent,
+	Widget,
+	WidgetFactory,
+	WidgetProps,
+	WidgetSlotContext,
+	WidgetState,
+	IsSlotContent as IsCoreSlotContent,
+	Extends,
+} from '@agnos-ui/core/types';
 import type {ComponentType, SvelteComponent} from 'svelte';
 
 export const useSvelteSlot = Symbol('useSvelteSlot');
 
+export type IsSlotContent<T> = Extends<T, SlotContent<any>> | Extends<SlotContent<any>, T> extends 1 ? T : 0;
+
 export type WidgetPropsSlots<Props extends object> = {
-	[K in keyof Props & `slot${string}` as K extends `slot${infer U}` ? Uncapitalize<U> : never]: Props[K] extends SlotContent<infer U> ? U : never;
+	[K in keyof Props as IsSlotContent<Props[K]> extends SlotContent<any>
+		? K extends 'children'
+			? 'default'
+			: K
+		: never]: Props[K] extends SlotContent<infer U> ? U : never;
 };
 
 export type SlotsPresent<Props extends object> = {
-	[K in keyof Props & `slot${string}` as K extends `slot${infer U}` ? Uncapitalize<U> : never]?: boolean;
+	[K in keyof Props as IsSlotContent<Props[K]> extends SlotContent<any> ? (K extends 'children' ? 'default' : K) : never]?: boolean;
 };
 
 export type SlotSvelteComponent<Props extends object = object> = ComponentType<
@@ -24,8 +39,8 @@ export type AdaptSlotContentProps<Props extends Record<string, any>> =
 		? WidgetSlotContext<AdaptWidgetSlots<U>> & AdaptPropsSlots<Omit<Props, keyof WidgetSlotContext<any>>>
 		: AdaptPropsSlots<Props>;
 
-export type AdaptPropsSlots<Props> = Omit<Props, `slot${string}`> & {
-	[K in keyof Props & `slot${string}`]: Props[K] extends CoreSlotContent<infer U> ? SlotContent<AdaptSlotContentProps<U>> : Props[K];
+export type AdaptPropsSlots<Props> = {
+	[K in keyof Props]: IsCoreSlotContent<Props[K]> extends CoreSlotContent<infer U> ? SlotContent<AdaptSlotContentProps<U>> : Props[K];
 };
 
 export type AdaptWidgetFactories<T> = {

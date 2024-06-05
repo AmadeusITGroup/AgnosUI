@@ -7,7 +7,7 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 	standalone: true,
 	imports: [AgnosUIAngularModule, ReactiveFormsModule, FormsModule],
 	template: `
-		<h2>Slider with form control</h2>
+		<h3>Slider with form control</h3>
 		<div
 			auSlider
 			auMin="0"
@@ -21,13 +21,13 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 		{{ sliderControl.value }}
 		<hr />
 
-		<h2>Slider with value</h2>
+		<h3>Slider with value</h3>
 		<div auSlider auMin="0" auMax="100" auStepSize="1" [(auValues)]="sliderValues"></div>
 		Value:
 		{{ sliderValues }}
 		<hr />
 
-		<h2>Disabled slider</h2>
+		<h3>Disabled slider</h3>
 		<div auSlider auMin="0" auMax="100" auStepSize="1" [formControl]="disabledControl" [auReadonly]="readonlyToggle"></div>
 
 		<div class="form-check form-switch">

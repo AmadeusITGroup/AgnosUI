@@ -6,11 +6,11 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 	standalone: true,
 	imports: [AgnosUIAngularModule, ReactiveFormsModule, FormsModule],
 	template: `
-		<h2>Horizontal slider</h2>
+		<h3>Horizontal slider</h3>
 		<div auSlider auMin="0" auMax="100" auStepSize="1" [formControl]="sliderControl" [auRtl]="true"></div>
 		<br />
 		<div auSlider auMin="0" auMax="100" auStepSize="1" [formControl]="sliderRangeControl" [auRtl]="true"></div>
-		<h2>Vertical slider</h2>
+		<h3>Vertical slider</h3>
 		<div class="d-flex" style="height: 350px">
 			<div class="col-6" style="height: 300px">
 				<div auSlider auMin="0" auMax="100" [auRtl]="true" auStepSize="1" auVertical [formControl]="sliderControl" auClassName="my-0"></div>

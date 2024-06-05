@@ -17,28 +17,28 @@ interface ModalExtraProps<Data> {
 	/**
 	 * Body of the modal.
 	 */
-	slotDefault: SlotContent<ModalContext<Data>>;
+	children: SlotContent<ModalContext<Data>>;
 
 	/**
 	 * Footer of the modal.
 	 */
-	slotFooter: SlotContent<ModalContext<Data>>;
+	footer: SlotContent<ModalContext<Data>>;
 
 	/**
-	 * Header of the modal. The default header includes {@link ModalCommonPropsAndState.slotTitle|slotTitle}.
+	 * Header of the modal. The default header includes {@link ModalCommonPropsAndState.title|title}.
 	 */
-	slotHeader: SlotContent<ModalContext<Data>>;
+	header: SlotContent<ModalContext<Data>>;
 
 	/**
 	 * Structure of the modal.
-	 * The default structure uses {@link ModalCommonPropsAndState.slotHeader|slotHeader}, {@link ModalCommonPropsAndState.slotDefault|slotDefault} and {@link ModalCommonPropsAndState.slotFooter|slotFooter}.
+	 * The default structure uses {@link ModalCommonPropsAndState.header|header}, {@link ModalCommonPropsAndState.children|children} and {@link ModalCommonPropsAndState.footer|footer}.
 	 */
-	slotStructure: SlotContent<ModalContext<Data>>;
+	structure: SlotContent<ModalContext<Data>>;
 
 	/**
 	 * Title of the modal.
 	 */
-	slotTitle: SlotContent<ModalContext<Data>>;
+	title: SlotContent<ModalContext<Data>>;
 	/**
 	 * Option to create a fullscreen modal, according to the bootstrap documentation.
 	 */
@@ -52,11 +52,11 @@ export type ModalWidget<Data> = Widget<ModalProps<Data>, ModalState<Data>, Modal
 
 const defaultConfigExtraProps: ModalExtraProps<any> = {
 	contentData: undefined,
-	slotDefault: undefined,
-	slotFooter: undefined,
-	slotHeader: undefined,
-	slotStructure: undefined,
-	slotTitle: undefined,
+	children: undefined,
+	footer: undefined,
+	header: undefined,
+	structure: undefined,
+	title: undefined,
 	fullscreen: false,
 };
 const coreOverride: Partial<CoreProps> = {

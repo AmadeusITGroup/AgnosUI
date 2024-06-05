@@ -9,7 +9,7 @@ function getFilterTextParam() {
 	return url.searchParams.get('filterText') ?? '';
 }
 
-const MultiSelect = () => {
+export default () => {
 	const [mainList] = useState(['Action 1', 'Action 2', 'Action 3', 'Other 1', 'Other 2', 'Other 3']);
 
 	const [configFilterText, setConfigFilterText] = useState(getFilterTextParam);
@@ -43,4 +43,3 @@ const MultiSelect = () => {
 		</WidgetsDefaultConfig>
 	);
 };
-export default MultiSelect;

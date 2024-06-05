@@ -3,14 +3,18 @@ import {Accordion, AccordionItem} from '@agnos-ui/react-bootstrap/components/acc
 import {useRef} from 'react';
 import BODY from '@agnos-ui/common/samples/accordion/body.txt?raw';
 
-const AccordionDemo = () => {
+export default () => {
 	const refAccordion = useRef<AccordionApi>(null);
 	const refSecondPanel = useRef<AccordionItemApi>(null);
 	return (
 		<>
 			<Accordion ref={refAccordion}>
-				<AccordionItem slotItemHeader="First panel" slotItemBody={BODY} id={'first'} />
-				<AccordionItem slotItemHeader="Second panel" slotItemBody={BODY} id={'second'} ref={refSecondPanel} />
+				<AccordionItem header="First panel" id={'first'}>
+					{BODY}
+				</AccordionItem>
+				<AccordionItem header="Second panel" id={'second'} ref={refSecondPanel}>
+					{BODY}
+				</AccordionItem>
 			</Accordion>
 			<hr />
 			<div className="d-flex flex-wrap gap-2">
@@ -30,4 +34,3 @@ const AccordionDemo = () => {
 		</>
 	);
 };
-export default AccordionDemo;

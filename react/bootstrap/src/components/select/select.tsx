@@ -27,7 +27,7 @@ function DefaultItem<Item>(slotContext: SelectItemContext<Item>) {
 function BadgeContainer<Item>({itemContext, slotContext}: {itemContext: ItemContext<Item>; slotContext: SelectContext<Item>}) {
 	return (
 		<div {...useDirective(slotContext.widget.directives.badgeAttributesDirective, itemContext)}>
-			<Slot slotContent={slotContext.state.slotBadgeLabel} props={{...slotContext, itemContext}} />
+			<Slot slotContent={slotContext.state.badgeLabel} props={{...slotContext, itemContext}} />
 		</div>
 	);
 }
@@ -64,7 +64,7 @@ function Rows<Item>({slotContext}: {slotContext: SelectContext<Item>; menuId: st
 }
 
 const defaultConfig: Partial<SelectProps<any>> = {
-	slotBadgeLabel: DefaultBadge,
+	badgeLabel: DefaultBadge,
 	slotItem: DefaultItem,
 };
 

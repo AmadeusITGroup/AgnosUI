@@ -7,13 +7,13 @@ import CustomHandleSliderComponent from './custom-handle.component';
 	standalone: true,
 	imports: [SliderComponent, SliderLabelDirective, ReactiveFormsModule, FormsModule],
 	template: `
-		<h2>Slider with custom labels</h2>
+		<h3>Slider with custom labels</h3>
 		<div auSlider auMin="0" auMax="100" auStepSize="1" [formControl]="sliderCustomLabelControl" auClassName="au-custom-slider-container">
 			<ng-template auSliderLabel let-value="value">{{ value }}%</ng-template>
 		</div>
 		<hr />
 
-		<h2>Slider with custom handle</h2>
+		<h3>Slider with custom handle</h3>
 		<div
 			auSlider
 			auMin="0"
@@ -21,7 +21,7 @@ import CustomHandleSliderComponent from './custom-handle.component';
 			auStepSize="1"
 			[formControl]="sliderCustomHandleControl"
 			auClassName="au-custom-slider-container"
-			[auSlotHandle]="sliderCustomSlotHandle"
+			[auHandle]="sliderCustomSlotHandle"
 		></div>
 	`,
 	styles: "@import '@agnos-ui/common/samples/slider/custom.scss';",

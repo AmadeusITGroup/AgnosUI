@@ -1,7 +1,7 @@
 import {Slider} from '@agnos-ui/react-bootstrap/components/slider';
 import {useState} from 'react';
 import '@agnos-ui/common/samples/slider/custom.scss';
-import CustomSlotHandle from './CustomHandle';
+import {CustomHandle} from './CustomHandle';
 
 const CustomSliderDemo = () => {
 	const [sliderCustomLabelControl, setSliderCustomLabelControl] = useState([70]);
@@ -9,25 +9,25 @@ const CustomSliderDemo = () => {
 
 	return (
 		<>
-			<h2>Slider with custom labels</h2>
+			<h3>Slider with custom labels</h3>
 			<Slider
 				min={0}
 				max={100}
 				stepSize={1}
 				values={sliderCustomLabelControl}
 				onValuesChange={setSliderCustomLabelControl}
-				slotLabel={({value}: {value: number}) => '' + value + '%'}
+				label={({value}: {value: number}) => '' + value + '%'}
 				className="au-custom-slider-container"
 			/>
 			<hr />
-			<h2>Slider with custom handle</h2>
+			<h3>Slider with custom handle</h3>
 			<Slider
 				min={0}
 				max={100}
 				stepSize={1}
 				values={sliderCustomHandleControl}
 				onValuesChange={setSliderCustomHandleControl}
-				slotHandle={CustomSlotHandle}
+				handle={CustomHandle}
 				className="au-custom-slider-container"
 			/>
 		</>

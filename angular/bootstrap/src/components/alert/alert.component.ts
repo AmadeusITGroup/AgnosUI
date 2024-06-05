@@ -2,7 +2,7 @@ import type {SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
 import {
 	BaseWidgetDirective,
 	ComponentTemplate,
-	SlotDefaultDirective,
+	SlotChildrenDirective,
 	SlotDirective,
 	UseDirective,
 	auBooleanAttribute,
@@ -47,7 +47,7 @@ export class AlertStructureDirective {
 	imports: [SlotDirective, AlertStructureDirective],
 	template: ` <ng-template auAlertStructure #structure let-state="state" let-widget="widget">
 		<div class="alert-body">
-			<ng-template [auSlot]="state.slotDefault" [auSlotProps]="{state, widget}"></ng-template>
+			<ng-template [auSlot]="state.children" [auSlotProps]="{state, widget}"></ng-template>
 		</div>
 		@if (state.dismissible) {
 			<button type="button" class="btn-close" (click)="widget.api.close()" [attr.aria-label]="state.ariaCloseButtonLabel"></button>
@@ -62,15 +62,15 @@ export const alertDefaultSlotStructure = new ComponentTemplate(AlertDefaultSlots
 
 export type PartialAlertProps = Partial<AlertProps>;
 const defaultConfig: PartialAlertProps = {
-	slotStructure: alertDefaultSlotStructure,
+	structure: alertDefaultSlotStructure,
 };
 
 @Component({
 	selector: '[auAlert]',
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [SlotDirective, UseDirective, SlotDefaultDirective],
-	template: ` <ng-template [auSlotDefault]="defaultSlots">
+	imports: [SlotDirective, UseDirective, SlotChildrenDirective],
+	template: ` <ng-template [auSlotChildren]="defaultSlots">
 			<ng-content></ng-content>
 		</ng-template>
 
@@ -80,7 +80,7 @@ const defaultConfig: PartialAlertProps = {
 				class="au-alert alert alert-{{ state().type }} {{ state().className }} {{ state().dismissible ? 'alert-dismissible' : '' }}"
 				role="alert"
 			>
-				<ng-template [auSlot]="state().slotStructure" [auSlotProps]="{state: state(), widget}"></ng-template>
+				<ng-template [auSlot]="state().structure" [auSlotProps]="{state: state(), widget}"></ng-template>
 			</div>
 		}`,
 })
@@ -135,11 +135,17 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> implements 
 	 */
 	@Input('auAriaCloseButtonLabel') ariaCloseButtonLabel: string | undefined;
 
-	@Input('auSlotDefault') slotDefault: SlotContent<AlertContext>;
+	/**
+	 * Template for the alert content
+	 */
+	@Input('auChildren') children: SlotContent<AlertContext>;
 	@ContentChild(AlertBodyDirective, {static: false})
-	slotDefaultFromContent: AlertBodyDirective | undefined;
+	slotChildrenFromContent: AlertBodyDirective | undefined;
 
-	@Input('auSlotStructure') slotStructure: SlotContent<AlertContext>;
+	/**
+	 * Global template for the alert component
+	 */
+	@Input('auStructure') structure: SlotContent<AlertContext>;
 	@ContentChild(AlertStructureDirective, {static: false}) slotStructureFromContent: AlertStructureDirective | undefined;
 
 	/**
@@ -176,8 +182,8 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> implements 
 
 	ngAfterContentChecked(): void {
 		this._widget.patchSlots({
-			slotDefault: this.slotDefaultFromContent?.templateRef,
-			slotStructure: this.slotStructureFromContent?.templateRef,
+			children: this.slotChildrenFromContent?.templateRef,
+			structure: this.slotStructureFromContent?.templateRef,
 		});
 	}
 }

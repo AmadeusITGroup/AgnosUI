@@ -7,13 +7,11 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 	imports: [AgnosUIAngularModule],
 	template: `
 		<div auAccordion #accordion="auAccordion">
-			<div auAccordionItem auId="first">
-				<ng-template auAccordionItemHeader>First panel</ng-template>
-				<ng-template auAccordionItemBody>{{ BODY }} </ng-template>
+			<div auAccordionItem auHeader="First panel" auId="first">
+				{{ BODY }}
 			</div>
-			<div auAccordionItem auId="second" #itemTwo>
-				<ng-template auAccordionItemHeader>Second panel</ng-template>
-				<ng-template auAccordionItemBody>{{ BODY }} </ng-template>
+			<div auAccordionItem auHeader="Second panel" auId="second" #itemTwo>
+				{{ BODY }}
 			</div>
 		</div>
 		<hr />

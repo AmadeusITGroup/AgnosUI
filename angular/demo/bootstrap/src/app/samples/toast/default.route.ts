@@ -15,7 +15,7 @@ import {Component} from '@angular/core';
 			Color schemes are based on the Bootstrap classes, in order to have out-of-the-box text accessibility use the helper classes
 			<code>.text-bg-*</code>, e.g. <code>.text.bg-primary</code>
 		</p>
-		<au-component #toast auToast auClassName="text-bg-primary" auSlotHeader="I am header" auDismissible>Simple primary toast</au-component>
+		<au-component #toast auToast auClassName="text-bg-primary" auHeader="I am header" auDismissible>Simple primary toast</au-component>
 
 		<button class="btn btn-primary my-2" (click)="toast.api.open()">Reset</button>
 

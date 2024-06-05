@@ -1,7 +1,7 @@
 import {Slider} from '@agnos-ui/react-bootstrap/components/slider';
 import {useState} from 'react';
 
-const RightToLeftDemo = () => {
+export default () => {
 	const [sliderControl, setSliderControl] = useState([30]);
 	const [sliderRangeControl, setSliderRangeControl] = useState([30, 70]);
 	const [sliderVerticalControl, setSliderVerticalControl] = useState([30]);
@@ -9,11 +9,11 @@ const RightToLeftDemo = () => {
 
 	return (
 		<>
-			<h2>Horizontal slider</h2>
+			<h3>Horizontal slider</h3>
 			<Slider min={0} max={100} stepSize={1} values={sliderControl} onValuesChange={setSliderControl} rtl={true} />
 			<br />
 			<Slider min={0} max={100} stepSize={1} values={sliderRangeControl} onValuesChange={setSliderRangeControl} rtl={true} />
-			<h2>Vertical slider</h2>
+			<h3>Vertical slider</h3>
 			<div className="d-flex" style={{height: '350px'}}>
 				<div className="col-6" style={{height: '300px'}}>
 					<Slider
@@ -43,4 +43,3 @@ const RightToLeftDemo = () => {
 		</>
 	);
 };
-export default RightToLeftDemo;

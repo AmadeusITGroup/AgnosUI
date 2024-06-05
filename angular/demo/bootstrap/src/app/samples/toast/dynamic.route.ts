@@ -39,7 +39,7 @@ class ToastService {
 		@for (position of toastContainerService.toastMap.keys(); track position) {
 			<div class="toast-container p-3 {{ position }}">
 				@for (toast of toastContainerService.toastMap.get(position); track toast) {
-					<au-component auToast (auHidden)="removeToast(toast)" auSlotHeader="I am header" [auAutoHide]="toast.autoHide" [auDelay]="toast.delay"
+					<au-component auToast (auHidden)="removeToast(toast)" auHeader="I am header" [auAutoHide]="toast.autoHide" [auDelay]="toast.delay"
 						>Simple toast</au-component
 					>
 				}

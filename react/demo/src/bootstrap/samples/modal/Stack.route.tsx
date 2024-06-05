@@ -8,7 +8,7 @@ const ModalBody = ({widget, state}: ModalContext<void>) => (
 		<br />
 		<button
 			className="btn btn-outline-primary m-1"
-			onClick={() => openModal({slotTitle: 'Other modal', slotDefault: ModalBody, container: state.modalElement})}
+			onClick={() => openModal({title: 'Other modal', children: ModalBody, container: state.modalElement})}
 		>
 			Launch other modal
 		</button>
@@ -26,9 +26,8 @@ const ModalBody = ({widget, state}: ModalContext<void>) => (
 	</>
 );
 
-const StackDemo = () => (
-	<button className="btn btn-primary" onClick={() => openModal({slotTitle: 'First modal', className: 'modal-sm', slotDefault: ModalBody})}>
+export default () => (
+	<button className="btn btn-primary" onClick={() => openModal({title: 'First modal', className: 'modal-sm', children: ModalBody})}>
 		Launch demo modal
 	</button>
 );
-export default StackDemo;

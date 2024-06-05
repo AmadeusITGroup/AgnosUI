@@ -1,6 +1,6 @@
 import {Progressbar} from '@agnos-ui/react-bootstrap/components/progressbar';
 
-const SimpleCustomDemo = () => (
+export default () => (
 	<div className="d-flex flex-column gap-2">
 		<div>
 			A progressbar using custom values for minimum and maximum:
@@ -18,4 +18,3 @@ const SimpleCustomDemo = () => (
 		</div>
 	</div>
 );
-export default SimpleCustomDemo;

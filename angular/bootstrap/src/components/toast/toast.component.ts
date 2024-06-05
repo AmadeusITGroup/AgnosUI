@@ -2,7 +2,7 @@ import type {SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
 import {
 	BaseWidgetDirective,
 	ComponentTemplate,
-	SlotDefaultDirective,
+	SlotChildrenDirective,
 	SlotDirective,
 	UseDirective,
 	UseMultiDirective,
@@ -57,18 +57,18 @@ export class ToastHeaderDirective {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [SlotDirective, ToastStructureDirective, UseDirective],
 	template: ` <ng-template auToastStructure #structure let-state="state" let-widget="widget">
-		@if (state.slotHeader) {
+		@if (state.header) {
 			<div class="toast-header">
-				<ng-template [auSlot]="state.slotHeader" [auSlotProps]="{state, widget}"></ng-template>
+				<ng-template [auSlot]="state.header" [auSlotProps]="{state, widget}"></ng-template>
 				@if (state.dismissible) {
 					<button class="btn-close me-0 ms-auto" [auUse]="widget.directives.closeButtonDirective"></button>
 				}
 			</div>
 		}
 		<div class="toast-body">
-			<ng-template [auSlot]="state.slotDefault" [auSlotProps]="{state, widget}"></ng-template>
+			<ng-template [auSlot]="state.children" [auSlotProps]="{state, widget}"></ng-template>
 		</div>
-		@if (state.dismissible && !state.slotHeader) {
+		@if (state.dismissible && !state.header) {
 			<button class="btn-close btn-close-white me-2 m-auto" [auUse]="widget.directives.closeButtonDirective"></button>
 		}
 	</ng-template>`,
@@ -80,25 +80,25 @@ export class ToastDefaultSlotsComponent {
 export const toastDefaultSlotStructure = new ComponentTemplate(ToastDefaultSlotsComponent, 'structure');
 
 const defaultConfig: Partial<ToastProps> = {
-	slotStructure: toastDefaultSlotStructure,
+	structure: toastDefaultSlotStructure,
 };
 
 @Component({
 	selector: '[auToast]',
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [SlotDirective, UseMultiDirective, SlotDefaultDirective],
-	template: ` <ng-template [auSlotDefault]="defaultSlots">
+	imports: [SlotDirective, UseMultiDirective, SlotChildrenDirective],
+	template: ` <ng-template [auSlotChildren]="defaultSlots">
 			<ng-content></ng-content>
 		</ng-template>
 		@if (!state().hidden) {
 			<div
 				class="toast"
-				[class.d-flex]="!state().slotHeader"
+				[class.d-flex]="!state().header"
 				[class.toast-dismissible]="state().dismissible"
 				[auUseMulti]="[widget.directives.autoHideDirective, widget.directives.transitionDirective, widget.directives.bodyDirective]"
 			>
-				<ng-template [auSlot]="state().slotStructure" [auSlotProps]="{state: state(), widget}"></ng-template>
+				<ng-template [auSlot]="state().structure" [auSlotProps]="{state: state(), widget}"></ng-template>
 			</div>
 		}`,
 })
@@ -158,14 +158,23 @@ export class ToastComponent extends BaseWidgetDirective<ToastWidget> implements 
 	 */
 	@Input('auAriaCloseButtonLabel') ariaCloseButtonLabel: string | undefined;
 
-	@Input('auSlotDefault') slotDefault: SlotContent<ToastContext>;
+	/**
+	 * Template for the toast content
+	 */
+	@Input('auChildren') children: SlotContent<ToastContext>;
 	@ContentChild(ToastBodyDirective, {static: false})
 	slotDefaultFromContent: ToastBodyDirective | undefined;
 
-	@Input('auSlotStructure') slotStructure: SlotContent<ToastContext>;
+	/**
+	 * Global template for the toast component
+	 */
+	@Input('auStructure') structure: SlotContent<ToastContext>;
 	@ContentChild(ToastStructureDirective, {static: false}) slotStructureFromContent: ToastStructureDirective | undefined;
 
-	@Input('auSlotHeader') slotHeader: SlotContent<ToastContext>;
+	/**
+	 * Header template for the toast component
+	 */
+	@Input('auHeader') header: SlotContent<ToastContext>;
 	@ContentChild(ToastHeaderDirective, {static: false}) slotHeaderFromContent: ToastHeaderDirective | undefined;
 
 	/**
@@ -202,9 +211,9 @@ export class ToastComponent extends BaseWidgetDirective<ToastWidget> implements 
 
 	ngAfterContentChecked(): void {
 		this._widget.patchSlots({
-			slotDefault: this.slotDefaultFromContent?.templateRef,
-			slotStructure: this.slotStructureFromContent?.templateRef,
-			slotHeader: this.slotHeaderFromContent?.templateRef,
+			children: this.slotDefaultFromContent?.templateRef,
+			structure: this.slotStructureFromContent?.templateRef,
+			header: this.slotHeaderFromContent?.templateRef,
 		});
 	}
 }

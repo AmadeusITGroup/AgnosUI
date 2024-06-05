@@ -1,14 +1,12 @@
 import {Alert} from '@agnos-ui/react-bootstrap/components/alert';
 
-const Usage = () => (
+export default () => (
 	<>
 		<Alert type="primary" dismissible={false}>
 			Label provided by slot
 		</Alert>
-		<Alert type="secondary" dismissible={false} slotDefault="Label provided by property" />
-		<Alert type="info" dismissible={false} slotDefault="When both prop and slot are provided, the prop's content will take precedence.">
-			This content is ignored.
-		</Alert>
+		{/* eslint-disable-next-line react/no-children-prop */}
+		<Alert type="secondary" dismissible={false} children="Label provided by property" />
+		Typescript prevents tsx to set the content by property and slot.
 	</>
 );
-export default Usage;

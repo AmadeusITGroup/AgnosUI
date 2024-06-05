@@ -24,6 +24,18 @@
 			"rules": {
 				"@agnos-ui/check-replace-imports": ["error", "@agnos-ui/react-bootstrap"]
 			}
+		},
+		{
+			"files": ["demo/src/bootstrap/**/*.route.tsx"],
+			"rules": {
+				"react/display-name": ["off"]
+			}
+		},
+		{
+			"files": ["demo/src/daisyui/**/*.route.tsx"],
+			"rules": {
+				"react/display-name": ["off"]
+			}
 		}
 	]
 }

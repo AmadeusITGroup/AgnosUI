@@ -10,17 +10,17 @@
 	let valueLabelToggle = true;
 </script>
 
-<h2>Slider with form control</h2>
+<h3>Slider with form control</h3>
 <Slider min={0} max={100} stepSize={1} bind:values={sliderControl} showMinMaxLabels={minMaxLabelToggle} showValueLabels={valueLabelToggle} />
 Form control value: {sliderControl.join(', ')}
 <hr />
 
-<h2>Slider with value</h2>
+<h3>Slider with value</h3>
 <Slider min={0} max={100} stepSize={1} bind:values={sliderValues} /> Value:
 {sliderValues}
 <hr />
 
-<h2>Disabled slider</h2>
+<h3>Disabled slider</h3>
 <Slider min={0} max={100} stepSize={1} bind:values={disabledControl} disabled={disabledToggle} readonly={readonlyToggle} />
 
 <div class="form-check form-switch">

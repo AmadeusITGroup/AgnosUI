@@ -36,7 +36,7 @@
 		<span class="visually-hidden">({index < $visibleRating$ ? '*' : ' '})</span>
 		<span use:starDirective={{index}}>
 			<Slot slotContent={$slotStar$} props={{fill, index}} let:component let:props>
-				<svelte:fragment slot="slot" let:props><slot name="star" {...props} /></svelte:fragment>
+				<svelte:fragment slot="slot" let:props><slot name="slotStar" {...props} /></svelte:fragment>
 				<svelte:component this={component} {...props} />
 			</Slot>
 		</span>

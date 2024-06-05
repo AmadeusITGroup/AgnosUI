@@ -9,7 +9,7 @@
 	import {getAccordionApi} from './accordion';
 
 	const defaultConfig: Partial<AccordionItemProps> = {
-		slotItemStructure: ItemDefaultStructure,
+		structure: ItemDefaultStructure,
 	};
 </script>
 
@@ -32,7 +32,7 @@
 		},
 	});
 	const {
-		stores: {slotItemStructure$},
+		stores: {structure$},
 		directives: {itemDirective},
 		state$,
 	} = widget;
@@ -47,12 +47,12 @@
 </script>
 
 <div class="accordion-item" use:itemDirective>
-	<Slot slotContent={$slotItemStructure$} props={slotContext} let:component let:props>
-		<svelte:fragment slot="slot" let:props><slot name="itemStructure" {...props} /></svelte:fragment>
+	<Slot slotContent={$structure$} props={slotContext} let:component let:props>
+		<svelte:fragment slot="slot" let:props><slot name="structure" {...props} /></svelte:fragment>
 		<svelte:component this={component} {...props}>
-			<svelte:fragment slot="itemBody" let:state let:widget><slot name="itemBody" {state} {widget} /></svelte:fragment>
-			<svelte:fragment slot="itemHeader" let:state let:widget><slot name="itemHeader" {state} {widget} /></svelte:fragment>
-			<svelte:fragment slot="itemStructure" let:state let:widget><slot name="itemStructure" {state} {widget} /></svelte:fragment>
+			<svelte:fragment let:state let:widget><slot {state} {widget} /></svelte:fragment>
+			<svelte:fragment slot="header" let:state let:widget><slot name="header" {state} {widget} /></svelte:fragment>
+			<svelte:fragment slot="structure" let:state let:widget><slot name="structure" {state} {widget} /></svelte:fragment>
 		</svelte:component>
 	</Slot>
 </div>

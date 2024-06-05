@@ -40,10 +40,10 @@ const HandleLabelDisplay = ({
 const MinMaxLabels = (slotContext: SliderContext) => (
 	<>
 		<div {...useDirective(slotContext.widget.directives.minLabelDirective)}>
-			<Slot slotContent={slotContext.state.slotLabel} props={{value: slotContext.state.min, ...slotContext}} />
+			<Slot slotContent={slotContext.state.label} props={{value: slotContext.state.min, ...slotContext}} />
 		</div>
 		<div {...useDirective(slotContext.widget.directives.maxLabelDirective)}>
-			<Slot slotContent={slotContext.state.slotLabel} props={{value: slotContext.state.max, ...slotContext}} />
+			<Slot slotContent={slotContext.state.label} props={{value: slotContext.state.max, ...slotContext}} />
 		</div>
 	</>
 );
@@ -52,15 +52,15 @@ const CombinedLabel = (slotContext: SliderContext) => (
 	<div {...useDirective(slotContext.widget.directives.combinedHandleLabelDisplayDirective)}>
 		{slotContext.state.rtl ? (
 			<>
-				<Slot slotContent={slotContext.state.slotLabel} props={{value: slotContext.state.sortedValues[1], ...slotContext}} />
+				<Slot slotContent={slotContext.state.label} props={{value: slotContext.state.sortedValues[1], ...slotContext}} />
 				{' - '}
-				<Slot slotContent={slotContext.state.slotLabel} props={{value: slotContext.state.sortedValues[0], ...slotContext}} />
+				<Slot slotContent={slotContext.state.label} props={{value: slotContext.state.sortedValues[0], ...slotContext}} />
 			</>
 		) : (
 			<>
-				<Slot slotContent={slotContext.state.slotLabel} props={{value: slotContext.state.sortedValues[0], ...slotContext}} />
+				<Slot slotContent={slotContext.state.label} props={{value: slotContext.state.sortedValues[0], ...slotContext}} />
 				{' - '}
-				<Slot slotContent={slotContext.state.slotLabel} props={{value: slotContext.state.sortedValues[1], ...slotContext}} />
+				<Slot slotContent={slotContext.state.label} props={{value: slotContext.state.sortedValues[1], ...slotContext}} />
 			</>
 		)}
 	</div>
@@ -77,10 +77,10 @@ export const DefaultSlotStructure = (slotContext: SliderContext) => (
 
 		{slotContext.state.sortedHandles.map((item, i) => (
 			<React.Fragment key={item.id}>
-				<Slot slotContent={slotContext.state.slotHandle} props={{item, ...slotContext}} />
+				<Slot slotContent={slotContext.state.handle} props={{item, ...slotContext}} />
 				{slotContext.state.showValueLabels && !slotContext.state.combinedLabelDisplay && (
 					<HandleLabelDisplay directive={slotContext.widget.directives.handleLabelDisplayDirective} index={i}>
-						<Slot slotContent={slotContext.state.slotLabel} props={{value: slotContext.state.values[i], ...slotContext}} />
+						<Slot slotContent={slotContext.state.label} props={{value: slotContext.state.values[i], ...slotContext}} />
 					</HandleLabelDisplay>
 				)}
 			</React.Fragment>
@@ -89,8 +89,8 @@ export const DefaultSlotStructure = (slotContext: SliderContext) => (
 );
 
 const defaultConfig: Partial<SliderProps> = {
-	slotStructure: DefaultSlotStructure,
-	slotHandle: DefaultSlotHandle,
+	structure: DefaultSlotStructure,
+	handle: DefaultSlotHandle,
 };
 
 export function Slider(props: PropsWithChildren<Partial<SliderProps>>) {
@@ -99,7 +99,7 @@ export function Slider(props: PropsWithChildren<Partial<SliderProps>>) {
 
 	return (
 		<div {...useDirective(widget.directives.sliderDirective)}>
-			<Slot slotContent={state.slotStructure} props={slotContext} />
+			<Slot slotContent={state.structure} props={slotContext} />
 		</div>
 	);
 }

@@ -1,6 +1,6 @@
 import {Accordion, AccordionItem} from './Accordion';
 
-const AccordionDaisyUIDemo = () => (
+export default () => (
 	<Accordion closeOthers itemDestroyOnHide>
 		<AccordionItem header="First header" visible>
 			First content
@@ -9,4 +9,3 @@ const AccordionDaisyUIDemo = () => (
 		<AccordionItem header="Third header">Third content</AccordionItem>
 	</Accordion>
 );
-export default AccordionDaisyUIDemo;

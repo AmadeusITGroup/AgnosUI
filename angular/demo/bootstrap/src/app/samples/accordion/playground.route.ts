@@ -11,14 +11,8 @@ const undefinedAccordionConfig = getUndefinedValues(getAccordionDefaultConfig())
 	imports: [AgnosUIAngularModule],
 	providers: [provideHashConfig('accordion')],
 	template: ` <div auAccordion>
-		<div auAccordionItem>
-			<ng-template auAccordionItemHeader>Header 1</ng-template>
-			<ng-template auAccordionItemBody>Body 1 </ng-template>
-		</div>
-		<div auAccordionItem>
-			<ng-template auAccordionItemHeader>Header 2</ng-template>
-			<ng-template auAccordionItemBody>Body 2</ng-template>
-		</div>
+		<div auAccordionItem auHeader="Header 1">Body 1</div>
+		<div auAccordionItem auHeader="Header 2">Body 2</div>
 	</div>`,
 })
 export default class PlaygroundComponent {

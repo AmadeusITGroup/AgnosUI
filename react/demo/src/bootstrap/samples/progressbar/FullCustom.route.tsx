@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react';
 import '@agnos-ui/common/samples/progressbar/custom.scss';
 import {Coffee} from './Coffee';
 
-const FullCustomDemo = () => {
+export default () => {
 	const [value, setValue] = useState(0);
 	const [running, setRunning] = useState(false);
 	useEffect(() => {
@@ -28,7 +28,7 @@ const FullCustomDemo = () => {
 	return (
 		<div className="d-flex align-items-center flex-wrap">
 			<div style={{width: '350px'}}>
-				<Progressbar value={value} slotStructure={Coffee} />
+				<Progressbar value={value} structure={Coffee} />
 			</div>
 			<div className="d-flex flex-column justify-content-evenly h-100 ms-5">
 				<div className="btn-group" role="group">
@@ -49,4 +49,3 @@ const FullCustomDemo = () => {
 		</div>
 	);
 };
-export default FullCustomDemo;

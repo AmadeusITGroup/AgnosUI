@@ -107,6 +107,9 @@ export class RatingComponent extends BaseWidgetDirective<RatingWidget> implement
 	 */
 	@Input({alias: 'auResettable', transform: auBooleanAttribute}) resettable: boolean | undefined;
 
+	/**
+	 * The template to override the way each star is displayed.
+	 */
 	@Input('auSlotStar') slotStar: SlotContent<AdaptSlotContentProps<StarContext>>;
 	@ContentChild(RatingStarDirective, {static: false}) slotStarFromContent: RatingStarDirective | undefined;
 

@@ -13,12 +13,12 @@
 		$$slots,
 		$$props,
 		defaultConfig: {
-			slotStructure: ProgressbarDefaultStructure,
+			structure: ProgressbarDefaultStructure,
 		},
 		events: {},
 	});
 	const {
-		stores: {slotStructure$, className$},
+		stores: {structure$, className$},
 		state$,
 		directives: {ariaDirective},
 	} = widget;
@@ -29,7 +29,7 @@
 </script>
 
 <div use:ariaDirective class={$className$ || undefined}>
-	<Slot slotContent={$slotStructure$} props={slotContext} let:component let:props>
+	<Slot slotContent={$structure$} props={slotContext} let:component let:props>
 		<svelte:fragment slot="slot" let:props><slot name="structure" {...props} /></svelte:fragment>
 		<svelte:component this={component} {...props}>
 			<svelte:fragment let:state let:widget><slot {state} {widget} /></svelte:fragment>

@@ -29,7 +29,7 @@ interface SelectExtraProps<Item> {
 	 * The template to override the way each badge on the left of the input is displayed.
 	 * This define the content of the badge inside the badge container.
 	 */
-	slotBadgeLabel: SlotContent<SelectItemContext<Item>>;
+	badgeLabel: SlotContent<SelectItemContext<Item>>;
 
 	/**
 	 * The template to override the way each item is displayed in the list.
@@ -44,7 +44,7 @@ export interface SelectProps<Item> extends CoreProps<Item>, SelectExtraProps<Ite
 export type SelectWidget<Item> = Widget<SelectProps<Item>, SelectState<Item>, SelectApi<Item>, SelectActions<Item>, SelectDirectives<Item>>;
 
 const defaultConfigExtraProps: SelectExtraProps<any> = {
-	slotBadgeLabel: ({itemContext}: SelectItemContext<any>) => itemContext.item,
+	badgeLabel: ({itemContext}: SelectItemContext<any>) => itemContext.item,
 	slotItem: ({itemContext}: SelectItemContext<any>) => itemContext.item,
 };
 

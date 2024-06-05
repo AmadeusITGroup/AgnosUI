@@ -1,7 +1,7 @@
 import {Slot} from '@agnos-ui/react-headless/slot';
 import {useWidgetWithConfig} from '../../config';
 import {useDirectives, classDirective} from '@agnos-ui/react-headless/utils/directive';
-import type {PropsWithChildren, ForwardedRef, ForwardRefExoticComponent, RefAttributes} from 'react';
+import type {ForwardedRef, ForwardRefExoticComponent, RefAttributes} from 'react';
 import {forwardRef, useImperativeHandle} from 'react';
 import {createAlert as coreCreateAlert} from '@agnos-ui/core-bootstrap/components/alert';
 import type {AlertApi} from '@agnos-ui/core-bootstrap/components/alert';
@@ -19,7 +19,7 @@ const DefaultSlotStructure = (slotContext: AlertContext) => {
 	return (
 		<>
 			<div className="alert-body">
-				<Slot slotContent={slotContext.state.slotDefault} props={slotContext}></Slot>
+				<Slot slotContent={slotContext.state.children} props={slotContext}></Slot>
 			</div>
 			{slotContext.state.dismissible && (
 				<button
@@ -34,7 +34,7 @@ const DefaultSlotStructure = (slotContext: AlertContext) => {
 };
 
 const defaultConfig: Partial<AlertProps> = {
-	slotStructure: DefaultSlotStructure,
+	structure: DefaultSlotStructure,
 };
 
 const AlertElement = (slotContext: AlertContext) => (
@@ -48,15 +48,15 @@ const AlertElement = (slotContext: AlertContext) => (
 			slotContext.widget.directives.transitionDirective,
 		)}
 	>
-		<Slot slotContent={slotContext.state.slotStructure} props={slotContext}></Slot>
+		<Slot slotContent={slotContext.state.structure} props={slotContext}></Slot>
 	</div>
 );
 
-export const Alert: ForwardRefExoticComponent<PropsWithChildren<Partial<AlertProps>> & RefAttributes<AlertApi>> = forwardRef(function Alert(
-	props: PropsWithChildren<Partial<AlertProps>>,
+export const Alert: ForwardRefExoticComponent<Partial<AlertProps> & RefAttributes<AlertApi>> = forwardRef(function Alert(
+	props: Partial<AlertProps>,
 	ref: ForwardedRef<AlertApi>,
 ) {
-	const [state, widget] = useWidgetWithConfig(createAlert, props, 'alert', {...defaultConfig, slotDefault: props.children});
+	const [state, widget] = useWidgetWithConfig(createAlert, props, 'alert', defaultConfig);
 	useImperativeHandle(ref, () => widget.api, []);
 	const slotContext = {
 		state,

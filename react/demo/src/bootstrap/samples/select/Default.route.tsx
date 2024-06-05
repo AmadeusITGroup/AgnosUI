@@ -5,7 +5,7 @@ const wordsA = ['apple', 'apricot', 'asparagus', 'astronaut', 'athletic', 'autum
 const wordsB = ['banana', 'baseball', 'basketball', 'beautiful', 'bedroom', 'bee', 'bicycle'];
 const wordsC = ['cat', 'caterpillar', 'cave', 'chair', 'cheese', 'cherry', 'chicken'];
 
-const Default = () => {
+export default () => {
 	const [mainList] = useState([...wordsA, ...wordsB, ...wordsC]);
 	const [items, setItems] = useState([] as string[]);
 	const [filterTextProp, setFilterTextProp] = useState(undefined as string | undefined);
@@ -21,4 +21,3 @@ const Default = () => {
 		</div>
 	);
 };
-export default Default;

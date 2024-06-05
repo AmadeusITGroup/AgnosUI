@@ -1,7 +1,7 @@
 import {Slider} from '@agnos-ui/react-bootstrap/components/slider';
 import {useState} from 'react';
 
-const DefaultSliderDemo = () => {
+export default () => {
 	const [sliderControl, setSliderControl] = useState([70]);
 	const [disabledControl, setDisabledControl] = useState([60]);
 	const [sliderValues, setSliderValues] = useState([20]);
@@ -12,7 +12,7 @@ const DefaultSliderDemo = () => {
 
 	return (
 		<>
-			<h2>Slider with form control</h2>
+			<h3>Slider with form control</h3>
 			<Slider
 				min={0}
 				max={100}
@@ -24,11 +24,11 @@ const DefaultSliderDemo = () => {
 			/>
 			Form control value: {sliderControl.join(', ')}
 			<hr />
-			<h2>Slider with value</h2>
+			<h3>Slider with value</h3>
 			<Slider min={0} max={100} stepSize={1} values={sliderValues} onValuesChange={setSliderValues} />
 			Value: {sliderValues.join(', ')}
 			<hr />
-			<h2>Disabled slider</h2>
+			<h3>Disabled slider</h3>
 			<Slider
 				min={0}
 				max={100}
@@ -93,4 +93,3 @@ const DefaultSliderDemo = () => {
 		</>
 	);
 };
-export default DefaultSliderDemo;

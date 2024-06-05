@@ -3,7 +3,7 @@ import {Toast} from '@agnos-ui/react-bootstrap/components/toast';
 import {WidgetsDefaultConfig} from '@agnos-ui/react-bootstrap/config';
 import {useRef} from 'react';
 
-const DefaultToastDemo = () => {
+export default () => {
 	const refToast = useRef<ToastApi>(null);
 	function reset() {
 		refToast.current!.open();
@@ -15,7 +15,7 @@ const DefaultToastDemo = () => {
 				Color schemes are based on the Bootstrap classes, in order to have out-of-the-box text accessibility use the helper classes{' '}
 				<code>.text-bg-*</code>, e.g. <code>.text.bg-primary</code>
 			</p>
-			<Toast ref={refToast} className="text-bg-primary" slotHeader="I am header" autoHide={false}>
+			<Toast ref={refToast} className="text-bg-primary" header="I am header" autoHide={false}>
 				Simple primary toast
 			</Toast>
 
@@ -43,4 +43,3 @@ const DefaultToastDemo = () => {
 		</>
 	);
 };
-export default DefaultToastDemo;

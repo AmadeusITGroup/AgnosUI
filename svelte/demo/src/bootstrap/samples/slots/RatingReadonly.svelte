@@ -34,7 +34,7 @@
                 The api is currently a bit tricky, until Svelte 5 arrives with snippets.
             -->
 			<Slot slotContent={$slotStar$} props={{fill, index}} let:component let:props>
-				<svelte:fragment slot="slot" let:props><slot name="star" {...props} /></svelte:fragment>
+				<svelte:fragment slot="slot" let:props><slot name="slotStar" {...props} /></svelte:fragment>
 				<svelte:component this={component} {...props} />
 			</Slot>
 		</span>

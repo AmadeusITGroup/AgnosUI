@@ -22,7 +22,7 @@ const AlertIcon = ({widget, state}: AlertContext) => {
 		<>
 			<span className="d-flex me-2">{typeIcon[state.type]({})}</span>
 			<div className="alert-body">
-				<Slot slotContent={state.slotDefault} props={{widget, state}}></Slot>
+				<Slot slotContent={state.children} props={{widget, state}} />
 			</div>
 			{state.dismissible ? (
 				<button type="button" className="btn-close ms-auto" onClick={widget.api.close} aria-label={state.ariaCloseButtonLabel}></button>
@@ -31,12 +31,12 @@ const AlertIcon = ({widget, state}: AlertContext) => {
 	);
 };
 
-const IconDemo = () => (
+export default () => (
 	<WidgetsDefaultConfig
 		alert={{
 			dismissible: false,
 			className: 'd-flex align-items-center',
-			slotStructure: AlertIcon,
+			structure: AlertIcon,
 		}}
 	>
 		<Alert type="success">Alert success with a customisable icon</Alert>
@@ -46,5 +46,3 @@ const IconDemo = () => (
 		<Alert type="light">Alert light with a customisable icon</Alert>
 	</WidgetsDefaultConfig>
 );
-
-export default IconDemo;

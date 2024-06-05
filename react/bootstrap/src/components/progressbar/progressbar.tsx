@@ -22,22 +22,22 @@ function DefaultSlotContent(slotContext: ProgressbarContext) {
 	return (
 		<div className="progress" style={{height: slotContext.state.height || undefined}}>
 			<div className={classes} style={{width: `${slotContext.state.percentage}%`}}>
-				<Slot slotContent={slotContext.state.slotDefault} props={slotContext} />
+				<Slot slotContent={slotContext.state.children} props={slotContext} />
 			</div>
 		</div>
 	);
 }
 
 const defaultConfig: Partial<ProgressbarProps> = {
-	slotStructure: DefaultSlotContent,
+	structure: DefaultSlotContent,
 };
 
 export const Progressbar = (props: PropsWithChildren<Partial<ProgressbarProps>>) => {
-	const [state, widget] = useWidgetWithConfig(createProgressbar, props, 'progressbar', {...defaultConfig, slotDefault: props.children});
+	const [state, widget] = useWidgetWithConfig(createProgressbar, props, 'progressbar', defaultConfig);
 	const slotContext: ProgressbarContext = {state, widget: toSlotContextWidget(widget)};
 	return (
 		<div {...useDirective(widget.directives.ariaDirective)} className={state.className || undefined}>
-			<Slot slotContent={state.slotStructure} props={slotContext} />
+			<Slot slotContent={state.structure} props={slotContext} />
 		</div>
 	);
 };

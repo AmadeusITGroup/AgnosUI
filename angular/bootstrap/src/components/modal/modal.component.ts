@@ -2,7 +2,7 @@ import type {SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
 import {
 	BaseWidgetDirective,
 	ComponentTemplate,
-	SlotDefaultDirective,
+	SlotChildrenDirective,
 	SlotDirective,
 	UseDirective,
 	UseMultiDirective,
@@ -91,24 +91,24 @@ export class ModalFooterDirective<Data> {
 	template: `
 		<ng-template auModalHeader #header let-state="state" let-widget="widget">
 			<h5 class="modal-title">
-				<ng-template [auSlot]="state.slotTitle" [auSlotProps]="{state, widget}"></ng-template>
+				<ng-template [auSlot]="state.title" [auSlotProps]="{state, widget}"></ng-template>
 			</h5>
 			@if (state.closeButton) {
 				<button class="btn-close" [auUse]="widget.directives.closeButtonDirective"></button>
 			}
 		</ng-template>
 		<ng-template auModalStructure #structure let-state="state" let-widget="widget">
-			@if (state.slotTitle) {
+			@if (state.title) {
 				<div class="modal-header">
-					<ng-template [auSlot]="state.slotHeader" [auSlotProps]="{state, widget}"></ng-template>
+					<ng-template [auSlot]="state.header" [auSlotProps]="{state, widget}"></ng-template>
 				</div>
 			}
 			<div class="modal-body">
-				<ng-template [auSlot]="state.slotDefault" [auSlotProps]="{state, widget}"></ng-template>
+				<ng-template [auSlot]="state.children" [auSlotProps]="{state, widget}"></ng-template>
 			</div>
-			@if (state.slotFooter) {
+			@if (state.footer) {
 				<div class="modal-footer">
-					<ng-template [auSlot]="state.slotFooter" [auSlotProps]="{state, widget}"></ng-template>
+					<ng-template [auSlot]="state.footer" [auSlotProps]="{state, widget}"></ng-template>
 				</div>
 			}
 		</ng-template>
@@ -130,8 +130,8 @@ export const modalDefaultSlotHeader = new ComponentTemplate(ModalDefaultSlotsCom
 export const modalDefaultSlotStructure = new ComponentTemplate(ModalDefaultSlotsComponent, 'structure');
 
 const defaultConfig: Partial<ModalProps<any>> = {
-	slotHeader: modalDefaultSlotHeader,
-	slotStructure: modalDefaultSlotStructure,
+	header: modalDefaultSlotHeader,
+	structure: modalDefaultSlotStructure,
 };
 
 /**
@@ -141,9 +141,9 @@ const defaultConfig: Partial<ModalProps<any>> = {
 	selector: '[auModal]',
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [UseMultiDirective, SlotDirective, SlotDefaultDirective],
+	imports: [UseMultiDirective, SlotDirective, SlotChildrenDirective],
 	template: `
-		<ng-template [auSlotDefault]="defaultSlots"><ng-content></ng-content></ng-template>
+		<ng-template [auSlotChildren]="defaultSlots"><ng-content></ng-content></ng-template>
 		@if (!state().backdropHidden) {
 			<div class="modal-backdrop" [auUseMulti]="[widget.directives.backdropPortalDirective, widget.directives.backdropDirective]"></div>
 		}
@@ -151,7 +151,7 @@ const defaultConfig: Partial<ModalProps<any>> = {
 			<div class="modal d-block" [auUseMulti]="[widget.directives.modalPortalDirective, widget.directives.modalDirective]">
 				<div class="modal-dialog {{ state().fullscreen ? 'modal-fullscreen' : '' }}">
 					<div class="modal-content">
-						<ng-template [auSlot]="state().slotStructure" [auSlotProps]="{state: state(), widget}"></ng-template>
+						<ng-template [auSlot]="state().structure" [auSlotProps]="{state: state(), widget}"></ng-template>
 					</div>
 				</div>
 			</div>
@@ -221,29 +221,46 @@ export class ModalComponent<Data> extends BaseWidgetDirective<ModalWidget<Data>>
 	 */
 	@Input({alias: 'auFullscreen', transform: auBooleanAttribute}) fullscreen: boolean | undefined;
 
-	@Input('auSlotStructure') slotStructure: SlotContent<ModalContext<Data>>;
+	/**
+	 * Structure of the modal.
+	 * The default structure uses {@link ModalCommonPropsAndState.header|header}, {@link ModalCommonPropsAndState.children|children} and {@link ModalCommonPropsAndState.footer|footer}.
+	 */
+	@Input('auStructure') structure: SlotContent<ModalContext<Data>>;
 	@ContentChild(ModalStructureDirective, {static: false})
 	slotStructureFromContent: ModalStructureDirective<Data> | undefined;
 
-	@Input('auSlotHeader') slotHeader: SlotContent<ModalContext<Data>>;
+	/**
+	 * Header of the modal. The default header includes {@link ModalCommonPropsAndState.title|title}.
+	 */
+	@Input('auHeader') header: SlotContent<ModalContext<Data>>;
 	@ContentChild(ModalHeaderDirective, {static: false})
 	slotHeaderFromContent: ModalHeaderDirective<Data> | undefined;
 
-	@Input('auSlotTitle') slotTitle: SlotContent<ModalContext<Data>>;
+	/**
+	 * Title of the modal.
+	 */
+	@Input('auTitle') title: SlotContent<ModalContext<Data>>;
 	@ContentChild(ModalTitleDirective, {static: false})
 	slotTitleFromContent: ModalTitleDirective<Data> | undefined;
 
-	@Input('auSlotDefault') slotDefault: SlotContent<ModalContext<Data>>;
+	/**
+	 * Body of the modal.
+	 */
+	@Input('auChildren') children: SlotContent<ModalContext<Data>>;
 	@ContentChild(ModalBodyDirective, {static: false})
-	slotDefaultFromContent: ModalBodyDirective<Data> | undefined;
+	slotChildrenFromContent: ModalBodyDirective<Data> | undefined;
 
-	@Input('auSlotFooter') slotFooter: SlotContent<ModalContext<Data>>;
+	/**
+	 * Footer of the modal.
+	 */
+	@Input('auFooter') footer: SlotContent<ModalContext<Data>>;
 	@ContentChild(ModalFooterDirective, {static: false})
 	slotFooterFromContent: ModalFooterDirective<Data> | undefined;
 
 	/**
 	 * Data to use in content slots
 	 */
+	// eslint-disable-next-line @agnos-ui/angular-check-props
 	@Input('auContentData') contentData: Data | undefined;
 
 	/**
@@ -282,11 +299,11 @@ export class ModalComponent<Data> extends BaseWidgetDirective<ModalWidget<Data>>
 
 	ngAfterContentChecked(): void {
 		this._widget.patchSlots({
-			slotDefault: this.slotDefaultFromContent?.templateRef,
-			slotFooter: this.slotFooterFromContent?.templateRef,
-			slotHeader: this.slotHeaderFromContent?.templateRef,
-			slotStructure: this.slotStructureFromContent?.templateRef,
-			slotTitle: this.slotTitleFromContent?.templateRef,
-		});
+			children: this.slotChildrenFromContent?.templateRef,
+			footer: this.slotFooterFromContent?.templateRef,
+			header: this.slotHeaderFromContent?.templateRef,
+			structure: this.slotStructureFromContent?.templateRef,
+			title: this.slotTitleFromContent?.templateRef,
+		} as any);
 	}
 }

@@ -33,7 +33,7 @@
 	});
 	export const api: SelectApi<Item> = widget.api;
 	const {
-		stores: {id$, ariaLabel$, highlighted$, open$, selectedContexts$, slotBadgeLabel$, slotItem$, visibleItems$, className$, filterText$},
+		stores: {id$, ariaLabel$, highlighted$, open$, selectedContexts$, badgeLabel$, slotItem$, visibleItems$, className$, filterText$},
 		state$,
 		actions: {onInput, onInputKeydown},
 		directives: {
@@ -54,13 +54,15 @@
 	<div use:hasFocusDirective use:inputContainerDirective class="d-flex align-items-center flex-wrap gap-1">
 		{#each $selectedContexts$ as itemContext (itemContext.id)}
 			<div use:badgeAttributesDirective={itemContext}>
-				<Slot slotContent={$slotBadgeLabel$} props={{state: $state$, widget, itemContext}} let:component let:props>
+				<Slot slotContent={$badgeLabel$} props={{state: $state$, widget, itemContext}} let:component let:props>
 					<svelte:fragment slot="slot" let:props><slot name="badgeLabel" {...props} /></svelte:fragment>
 					<svelte:component this={component} {...props}>
 						<svelte:fragment slot="badgeLabel" let:itemContext let:state let:widget
 							><slot name="badgeLabel" {itemContext} {state} {widget} /></svelte:fragment
 						>
-						<svelte:fragment slot="item" let:itemContext let:state let:widget><slot name="item" {itemContext} {state} {widget} /></svelte:fragment>
+						<svelte:fragment slot="slotItem" let:itemContext let:state let:widget
+							><slot name="slotItem" {itemContext} {state} {widget} /></svelte:fragment
+						>
 					</svelte:component>
 				</Slot>
 			</div>
@@ -85,12 +87,14 @@
 				{@const isHighlighted = itemContext === $highlighted$}
 				<li class="dropdown-item position-relative" class:text-bg-primary={isHighlighted} use:itemAttributesDirective={itemContext}>
 					<Slot slotContent={$slotItem$} props={{state: $state$, widget, itemContext}} let:component let:props>
-						<svelte:fragment slot="slot" let:props><slot name="item" {...props} /></svelte:fragment>
+						<svelte:fragment slot="slot" let:props><slot name="slotItem" {...props} /></svelte:fragment>
 						<svelte:component this={component} {...props}>
 							<svelte:fragment slot="badgeLabel" let:itemContext let:state let:widget
 								><slot name="badgeLabel" {itemContext} {state} {widget} /></svelte:fragment
 							>
-							<svelte:fragment slot="item" let:itemContext let:state let:widget><slot name="item" {itemContext} {state} {widget} /></svelte:fragment>
+							<svelte:fragment slot="slotItem" let:itemContext let:state let:widget
+								><slot name="slotItem" {itemContext} {state} {widget} /></svelte:fragment
+							>
 						</svelte:component>
 					</Slot>
 				</li>

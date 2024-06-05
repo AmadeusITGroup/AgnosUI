@@ -1,7 +1,7 @@
 import {useWidgetWithConfig} from '../../config';
 import {Slot} from '@agnos-ui/react-headless/slot';
 import {useDirectives, classDirective} from '@agnos-ui/react-headless/utils/directive';
-import type {ForwardRefExoticComponent, PropsWithChildren, RefAttributes} from 'react';
+import type {ForwardRefExoticComponent, RefAttributes} from 'react';
 import {forwardRef, useImperativeHandle} from 'react';
 import type {AdaptSlotContentProps, AdaptWidgetSlots, WidgetFactory, WidgetProps, WidgetState} from '@agnos-ui/react-headless/types';
 import type {ToastApi} from '@agnos-ui/core-bootstrap/components/toast';
@@ -17,7 +17,7 @@ export const createToast: WidgetFactory<ToastWidget> = coreCreateToast as any;
 
 const ToastHeader = (slotContext: ToastContext) => (
 	<div className="toast-header">
-		<Slot slotContent={slotContext.state.slotHeader} props={slotContext} />
+		<Slot slotContent={slotContext.state.header} props={slotContext} />
 		{slotContext.state.dismissible && (
 			<button {...useDirectives([classDirective, 'btn-close me-0 ms-auto'], slotContext.widget.directives.closeButtonDirective)} />
 		)}
@@ -30,37 +30,37 @@ const ToastCloseButtonNoHeader = (slotContext: ToastContext) => (
 
 const DefaultSlotStructure = (slotContext: ToastContext) => (
 	<>
-		{slotContext.state.slotHeader && <ToastHeader {...slotContext} />}
+		{slotContext.state.header && <ToastHeader {...slotContext} />}
 
 		<div className="toast-body">
-			<Slot slotContent={slotContext.state.slotDefault} props={slotContext} />
+			<Slot slotContent={slotContext.state.children} props={slotContext} />
 		</div>
-		{slotContext.state.dismissible && !slotContext.state.slotHeader && <ToastCloseButtonNoHeader {...slotContext} />}
+		{slotContext.state.dismissible && !slotContext.state.header && <ToastCloseButtonNoHeader {...slotContext} />}
 	</>
 );
 
 const defaultConfig: Partial<ToastProps> = {
-	slotStructure: DefaultSlotStructure,
+	structure: DefaultSlotStructure,
 };
 
 const ToastElement = (slotContext: ToastContext) => (
 	<div
 		{...useDirectives(
-			[classDirective, `toast ${slotContext.state.dismissible ? 'toast-dismissible' : ''} ${!slotContext.state.slotHeader ? 'd-flex' : ''}`],
+			[classDirective, `toast ${slotContext.state.dismissible ? 'toast-dismissible' : ''} ${!slotContext.state.header ? 'd-flex' : ''}`],
 			slotContext.widget.directives.transitionDirective,
 			slotContext.widget.directives.autoHideDirective,
 			slotContext.widget.directives.bodyDirective,
 		)}
 	>
-		<Slot slotContent={slotContext.state.slotStructure} props={slotContext} />
+		<Slot slotContent={slotContext.state.structure} props={slotContext} />
 	</div>
 );
 
-export const Toast: ForwardRefExoticComponent<PropsWithChildren<Partial<ToastProps>> & RefAttributes<ToastApi>> = forwardRef(function Toast(
-	props: PropsWithChildren<Partial<ToastProps>>,
+export const Toast: ForwardRefExoticComponent<Partial<ToastProps> & RefAttributes<ToastApi>> = forwardRef(function Toast(
+	props: Partial<ToastProps>,
 	ref,
 ) {
-	const [state, widget] = useWidgetWithConfig(createToast, props, 'toast', {...defaultConfig, slotDefault: props.children});
+	const [state, widget] = useWidgetWithConfig(createToast, props, 'toast', defaultConfig);
 	useImperativeHandle(ref, () => widget.api, []);
 	const slotContext = {
 		state,

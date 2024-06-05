@@ -18,18 +18,18 @@
 			<!-- svelte-ignore a11y-missing-attribute -->
 			<a class="page-link" use:widget.directives.pageFirst>
 				<span aria-hidden="true">
-					<Slot slotContent={state.slotFirst} props={slotContext} let:component let:props>
-						<svelte:fragment slot="slot" let:props><slot name="first" {...props} /></svelte:fragment>
+					<Slot slotContent={state.firstPageLabel} props={slotContext} let:component let:props>
+						<svelte:fragment slot="slot" let:props><slot name="firstPageLabel" {...props} /></svelte:fragment>
 						<svelte:component this={component} {...props}>
-							<svelte:fragment slot="ellipsis" let:state let:widget><slot name="ellipsis" {state} {widget} /></svelte:fragment>
-							<svelte:fragment slot="first" let:state let:widget><slot name="first" {state} {widget} /></svelte:fragment>
-							<svelte:fragment slot="last" let:state let:widget><slot name="last" {state} {widget} /></svelte:fragment>
-							<svelte:fragment slot="next" let:state let:widget><slot name="next" {state} {widget} /></svelte:fragment>
+							<svelte:fragment slot="ellipsisLabel" let:state let:widget><slot name="ellipsisLabel" {state} {widget} /></svelte:fragment>
+							<svelte:fragment slot="firstPageLabel" let:state let:widget><slot name="firstPageLabel" {state} {widget} /></svelte:fragment>
+							<svelte:fragment slot="lastPageLabel" let:state let:widget><slot name="lastPageLabel" {state} {widget} /></svelte:fragment>
+							<svelte:fragment slot="nextPageLabel" let:state let:widget><slot name="nextPageLabel" {state} {widget} /></svelte:fragment>
 							<svelte:fragment slot="numberLabel" let:displayedPage let:state let:widget
 								><slot name="numberLabel" {displayedPage} {state} {widget} /></svelte:fragment
 							>
-							<svelte:fragment slot="pages" let:state let:widget><slot name="pages" {state} {widget} /></svelte:fragment>
-							<svelte:fragment slot="previous" let:state let:widget><slot name="previous" {state} {widget} /></svelte:fragment>
+							<svelte:fragment slot="previousPageLabel" let:state let:widget><slot name="previousPageLabel" {state} {widget} /></svelte:fragment>
+							<svelte:fragment slot="slotPages" let:state let:widget><slot name="slotPages" {state} {widget} /></svelte:fragment>
 							<svelte:fragment slot="structure" let:state let:widget><slot name="structure" {state} {widget} /></svelte:fragment>
 						</svelte:component>
 					</Slot>
@@ -42,18 +42,18 @@
 			<!-- svelte-ignore a11y-missing-attribute -->
 			<a class="page-link" use:widget.directives.pagePrev>
 				<span aria-hidden="true">
-					<Slot slotContent={state.slotPrevious} props={slotContext} let:component let:props>
-						<svelte:fragment slot="slot" let:props><slot name="previous" {...props} /></svelte:fragment>
+					<Slot slotContent={state.previousPageLabel} props={slotContext} let:component let:props>
+						<svelte:fragment slot="slot" let:props><slot name="previousPageLabel" {...props} /></svelte:fragment>
 						<svelte:component this={component} {...props}>
-							<svelte:fragment slot="ellipsis" let:state let:widget><slot name="ellipsis" {state} {widget} /></svelte:fragment>
-							<svelte:fragment slot="first" let:state let:widget><slot name="first" {state} {widget} /></svelte:fragment>
-							<svelte:fragment slot="last" let:state let:widget><slot name="last" {state} {widget} /></svelte:fragment>
-							<svelte:fragment slot="next" let:state let:widget><slot name="next" {state} {widget} /></svelte:fragment>
+							<svelte:fragment slot="ellipsisLabel" let:state let:widget><slot name="ellipsisLabel" {state} {widget} /></svelte:fragment>
+							<svelte:fragment slot="firstPageLabel" let:state let:widget><slot name="firstPageLabel" {state} {widget} /></svelte:fragment>
+							<svelte:fragment slot="lastPageLabel" let:state let:widget><slot name="lastPageLabel" {state} {widget} /></svelte:fragment>
+							<svelte:fragment slot="nextPageLabel" let:state let:widget><slot name="nextPageLabel" {state} {widget} /></svelte:fragment>
 							<svelte:fragment slot="numberLabel" let:displayedPage let:state let:widget
 								><slot name="numberLabel" {displayedPage} {state} {widget} /></svelte:fragment
 							>
-							<svelte:fragment slot="pages" let:state let:widget><slot name="pages" {state} {widget} /></svelte:fragment>
-							<svelte:fragment slot="previous" let:state let:widget><slot name="previous" {state} {widget} /></svelte:fragment>
+							<svelte:fragment slot="previousPageLabel" let:state let:widget><slot name="previousPageLabel" {state} {widget} /></svelte:fragment>
+							<svelte:fragment slot="slotPages" let:state let:widget><slot name="slotPages" {state} {widget} /></svelte:fragment>
 							<svelte:fragment slot="structure" let:state let:widget><slot name="structure" {state} {widget} /></svelte:fragment>
 						</svelte:component>
 					</Slot>
@@ -62,17 +62,17 @@
 		</li>
 	{/if}
 	<Slot slotContent={state.slotPages} props={slotContext} let:component let:props>
-		<svelte:fragment slot="slot" let:props><slot name="pages" {...props} /></svelte:fragment>
+		<svelte:fragment slot="slot" let:props><slot name="slotPages" {...props} /></svelte:fragment>
 		<svelte:component this={component} {...props}>
-			<svelte:fragment slot="ellipsis" let:state let:widget><slot name="ellipsis" {state} {widget} /></svelte:fragment>
-			<svelte:fragment slot="first" let:state let:widget><slot name="first" {state} {widget} /></svelte:fragment>
-			<svelte:fragment slot="last" let:state let:widget><slot name="last" {state} {widget} /></svelte:fragment>
-			<svelte:fragment slot="next" let:state let:widget><slot name="next" {state} {widget} /></svelte:fragment>
+			<svelte:fragment slot="ellipsisLabel" let:state let:widget><slot name="ellipsisLabel" {state} {widget} /></svelte:fragment>
+			<svelte:fragment slot="firstPageLabel" let:state let:widget><slot name="firstPageLabel" {state} {widget} /></svelte:fragment>
+			<svelte:fragment slot="lastPageLabel" let:state let:widget><slot name="lastPageLabel" {state} {widget} /></svelte:fragment>
+			<svelte:fragment slot="nextPageLabel" let:state let:widget><slot name="nextPageLabel" {state} {widget} /></svelte:fragment>
 			<svelte:fragment slot="numberLabel" let:displayedPage let:state let:widget
 				><slot name="numberLabel" {displayedPage} {state} {widget} /></svelte:fragment
 			>
-			<svelte:fragment slot="pages" let:state let:widget><slot name="pages" {state} {widget} /></svelte:fragment>
-			<svelte:fragment slot="previous" let:state let:widget><slot name="previous" {state} {widget} /></svelte:fragment>
+			<svelte:fragment slot="previousPageLabel" let:state let:widget><slot name="previousPageLabel" {state} {widget} /></svelte:fragment>
+			<svelte:fragment slot="slotPages" let:state let:widget><slot name="slotPages" {state} {widget} /></svelte:fragment>
 			<svelte:fragment slot="structure" let:state let:widget><slot name="structure" {state} {widget} /></svelte:fragment>
 		</svelte:component>
 	</Slot>
@@ -81,18 +81,18 @@
 			<!-- svelte-ignore a11y-missing-attribute -->
 			<a class="page-link" use:widget.directives.pageNext>
 				<span aria-hidden="true">
-					<Slot slotContent={state.slotNext} props={slotContext} let:component let:props>
-						<svelte:fragment slot="slot" let:props><slot name="next" {...props} /></svelte:fragment>
+					<Slot slotContent={state.nextPageLabel} props={slotContext} let:component let:props>
+						<svelte:fragment slot="slot" let:props><slot name="nextPageLabel" {...props} /></svelte:fragment>
 						<svelte:component this={component} {...props}>
-							<svelte:fragment slot="ellipsis" let:state let:widget><slot name="ellipsis" {state} {widget} /></svelte:fragment>
-							<svelte:fragment slot="first" let:state let:widget><slot name="first" {state} {widget} /></svelte:fragment>
-							<svelte:fragment slot="last" let:state let:widget><slot name="last" {state} {widget} /></svelte:fragment>
-							<svelte:fragment slot="next" let:state let:widget><slot name="next" {state} {widget} /></svelte:fragment>
+							<svelte:fragment slot="ellipsisLabel" let:state let:widget><slot name="ellipsisLabel" {state} {widget} /></svelte:fragment>
+							<svelte:fragment slot="firstPageLabel" let:state let:widget><slot name="firstPageLabel" {state} {widget} /></svelte:fragment>
+							<svelte:fragment slot="lastPageLabel" let:state let:widget><slot name="lastPageLabel" {state} {widget} /></svelte:fragment>
+							<svelte:fragment slot="nextPageLabel" let:state let:widget><slot name="nextPageLabel" {state} {widget} /></svelte:fragment>
 							<svelte:fragment slot="numberLabel" let:displayedPage let:state let:widget
 								><slot name="numberLabel" {displayedPage} {state} {widget} /></svelte:fragment
 							>
-							<svelte:fragment slot="pages" let:state let:widget><slot name="pages" {state} {widget} /></svelte:fragment>
-							<svelte:fragment slot="previous" let:state let:widget><slot name="previous" {state} {widget} /></svelte:fragment>
+							<svelte:fragment slot="previousPageLabel" let:state let:widget><slot name="previousPageLabel" {state} {widget} /></svelte:fragment>
+							<svelte:fragment slot="slotPages" let:state let:widget><slot name="slotPages" {state} {widget} /></svelte:fragment>
 							<svelte:fragment slot="structure" let:state let:widget><slot name="structure" {state} {widget} /></svelte:fragment>
 						</svelte:component>
 					</Slot>
@@ -105,18 +105,18 @@
 			<!-- svelte-ignore a11y-missing-attribute -->
 			<a class="page-link" use:widget.directives.pageLast>
 				<span aria-hidden="true">
-					<Slot slotContent={state.slotLast} props={slotContext} let:component let:props>
-						<svelte:fragment slot="slot" let:props><slot name="last" {...props} /></svelte:fragment>
+					<Slot slotContent={state.lastPageLabel} props={slotContext} let:component let:props>
+						<svelte:fragment slot="slot" let:props><slot name="lastPageLabel" {...props} /></svelte:fragment>
 						<svelte:component this={component} {...props}>
-							<svelte:fragment slot="ellipsis" let:state let:widget><slot name="ellipsis" {state} {widget} /></svelte:fragment>
-							<svelte:fragment slot="first" let:state let:widget><slot name="first" {state} {widget} /></svelte:fragment>
-							<svelte:fragment slot="last" let:state let:widget><slot name="last" {state} {widget} /></svelte:fragment>
-							<svelte:fragment slot="next" let:state let:widget><slot name="next" {state} {widget} /></svelte:fragment>
+							<svelte:fragment slot="ellipsisLabel" let:state let:widget><slot name="ellipsisLabel" {state} {widget} /></svelte:fragment>
+							<svelte:fragment slot="firstPageLabel" let:state let:widget><slot name="firstPageLabel" {state} {widget} /></svelte:fragment>
+							<svelte:fragment slot="lastPageLabel" let:state let:widget><slot name="lastPageLabel" {state} {widget} /></svelte:fragment>
+							<svelte:fragment slot="nextPageLabel" let:state let:widget><slot name="nextPageLabel" {state} {widget} /></svelte:fragment>
 							<svelte:fragment slot="numberLabel" let:displayedPage let:state let:widget
 								><slot name="numberLabel" {displayedPage} {state} {widget} /></svelte:fragment
 							>
-							<svelte:fragment slot="pages" let:state let:widget><slot name="pages" {state} {widget} /></svelte:fragment>
-							<svelte:fragment slot="previous" let:state let:widget><slot name="previous" {state} {widget} /></svelte:fragment>
+							<svelte:fragment slot="previousPageLabel" let:state let:widget><slot name="previousPageLabel" {state} {widget} /></svelte:fragment>
+							<svelte:fragment slot="slotPages" let:state let:widget><slot name="slotPages" {state} {widget} /></svelte:fragment>
 							<svelte:fragment slot="structure" let:state let:widget><slot name="structure" {state} {widget} /></svelte:fragment>
 						</svelte:component>
 					</Slot>

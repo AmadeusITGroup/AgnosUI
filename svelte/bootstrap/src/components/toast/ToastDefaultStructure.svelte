@@ -11,9 +11,9 @@
 	$: slotContext = {widget, state};
 </script>
 
-{#if state.slotHeader}
+{#if state.header}
 	<div class="toast-header">
-		<Slot slotContent={state.slotHeader} props={slotContext} let:component let:props>
+		<Slot slotContent={state.header} props={slotContext} let:component let:props>
 			<svelte:fragment slot="slot" let:props><slot name="header" {...props} /></svelte:fragment>
 			<svelte:component this={component} {...props}>
 				<svelte:fragment let:state let:widget><slot {state} {widget} /></svelte:fragment>
@@ -28,7 +28,7 @@
 {/if}
 
 <div class="toast-body">
-	<Slot slotContent={state.slotDefault} props={slotContext} let:component let:props>
+	<Slot slotContent={state.children} props={slotContext} let:component let:props>
 		<svelte:fragment slot="slot" let:props><slot {...props} /></svelte:fragment>
 		<svelte:component this={component} {...props}>
 			<svelte:fragment let:state let:widget><slot {state} {widget} /></svelte:fragment>
@@ -37,6 +37,6 @@
 		</svelte:component>
 	</Slot>
 </div>
-{#if state.dismissible && !state.slotHeader}
+{#if state.dismissible && !state.header}
 	<button class="btn-close btn-close-white me-2 m-auto" use:widget.directives.closeButtonDirective />
 {/if}
