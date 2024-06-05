@@ -60,8 +60,7 @@ export class AlertDefaultSlotsComponent {
 
 export const alertDefaultSlotStructure = new ComponentTemplate(AlertDefaultSlotsComponent, 'structure');
 
-export type PartialAlertProps = Partial<AlertProps>;
-const defaultConfig: PartialAlertProps = {
+const defaultConfig: Partial<AlertProps> = {
 	slotStructure: alertDefaultSlotStructure,
 };
 
@@ -157,7 +156,7 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> implements 
 	 */
 	@Output('auShown') shown = new EventEmitter<void>();
 
-	readonly defaultSlots: WritableSignal<PartialAlertProps> = writable(defaultConfig);
+	readonly defaultSlots = writable(defaultConfig);
 	/**
 	 * CSS classes to be applied on the widget main container
 	 */
