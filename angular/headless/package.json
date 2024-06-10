@@ -97,7 +97,7 @@
 	},
 	"dependencies": {
 		"@agnos-ui/core": "0.0.0",
-		"tslib": "^2.6.2"
+		"tslib": "^2.6.3"
 	},
 	"devDependencies": {
 		"@angular-devkit/build-angular": "^18.0.3",

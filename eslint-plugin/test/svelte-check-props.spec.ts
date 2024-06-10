@@ -26,12 +26,14 @@ describe('svelte-check-props', () => {
 
 	const invalid: (InvalidTestCase<MessageIds<typeof svelteCheckPropsRule>, []> & {outputError?: boolean})[] = [
 		{
+			name: 'extra prop',
 			filename: 'file.svelte',
 			code: codeTemplate('export let someProp: string | undefined;', ''),
 			errors: [{messageId: 'extraProp', data: {name: 'someProp'}}],
 			output: codeTemplate('', ''),
 		},
 		{
+			name: 'extra props',
 			filename: 'file.svelte',
 			code: codeTemplate('export let someProp1: string | undefined, someProp2: string | undefined;', ''),
 			errors: [
@@ -41,6 +43,7 @@ describe('svelte-check-props', () => {
 			output: codeTemplate('', ''),
 		},
 		{
+			name: 'extra prop among other props',
 			filename: 'file.svelte',
 			code: codeTemplate(
 				'export let someProp1: string | undefined, someProp2: string | undefined;',
@@ -55,6 +58,7 @@ describe('svelte-check-props', () => {
 			),
 		},
 		{
+			name: 'extra props amoung other props',
 			filename: 'file.svelte',
 			code: codeTemplate(
 				'export let someProp1: string | undefined, someProp2: string | undefined, someProp3: string | undefined;',
@@ -72,6 +76,7 @@ describe('svelte-check-props', () => {
 			),
 		},
 		{
+			name: 'yet another extra prop',
 			filename: 'file.svelte',
 			code: codeTemplate(
 				'export let someProp1: string | undefined, someProp2: string | undefined;',
@@ -86,6 +91,7 @@ describe('svelte-check-props', () => {
 			),
 		},
 		{
+			name: 'yet another extra props',
 			filename: 'file.svelte',
 			code: codeTemplate(
 				'export let someProp1: string | undefined, someProp2: string | undefined, someProp3: string | undefined;',
@@ -103,6 +109,7 @@ describe('svelte-check-props', () => {
 			),
 		},
 		{
+			name: 'so many extra props',
 			filename: 'file.svelte',
 			code: codeTemplate(
 				'export let someProp1: string | undefined, someProp2: string | undefined, someProp3: string | undefined, someProp4: string | undefined;',
@@ -121,6 +128,7 @@ describe('svelte-check-props', () => {
 			),
 		},
 		{
+			name: 'extra extra extra props',
 			filename: 'file.svelte',
 			code: codeTemplate(
 				'export let someProp1: string | undefined, someProp2: string | undefined, someProp3: string | undefined, someProp4: string | undefined;',
@@ -138,6 +146,7 @@ describe('svelte-check-props', () => {
 			),
 		},
 		{
+			name: 'missing bound prop',
 			filename: 'file.svelte',
 			code: codeTemplate('', 'someProp: string; onSomePropChange: (event: string) => void;', '{onSomePropChange: (event) => {someProp = event;}}'),
 			errors: [{messageId: 'missingBoundProp', data: {name: 'someProp'}}],
@@ -148,6 +157,7 @@ describe('svelte-check-props', () => {
 			),
 		},
 		{
+			name: 'missing bound prop in api',
 			filename: 'file.svelte',
 			code: codeTemplate(
 				'let someProp: string | undefined;',
@@ -157,6 +167,7 @@ describe('svelte-check-props', () => {
 			errors: [{messageId: 'missingBoundPropInAPI', data: {name: 'someProp'}}],
 		},
 		{
+			name: 'extra prop + missing bound prop',
 			filename: 'file.svelte',
 			code: codeTemplate(
 				'export let someProp: string | undefined;',
@@ -171,6 +182,7 @@ describe('svelte-check-props', () => {
 			outputError: true,
 		},
 		{
+			name: 'invalid prop type',
 			filename: 'file.svelte',
 			code: codeTemplate(
 				'export let someProp: string;',
@@ -185,6 +197,7 @@ describe('svelte-check-props', () => {
 			),
 		},
 		{
+			name: 'invalid string or undefined prop type',
 			filename: 'file.svelte',
 			code: codeTemplate(
 				'export let someProp: string | undefined;',
@@ -199,6 +212,7 @@ describe('svelte-check-props', () => {
 			),
 		},
 		{
+			name: 'invalid untyped prop',
 			filename: 'file.svelte',
 			code: codeTemplate(
 				'export let someProp;',
@@ -213,6 +227,7 @@ describe('svelte-check-props', () => {
 			),
 		},
 		{
+			name: 'missing binding assignment',
 			filename: 'file.svelte',
 			code: codeTemplate('export let something: number | undefined;', 'onSomethingChange: (event: number) => void;\nsomething: number;'),
 			errors: [{messageId: 'missingBindingAssignment', data: {propBinding: 'something', widgetProp: 'onSomethingChange'}}],
@@ -223,6 +238,7 @@ describe('svelte-check-props', () => {
 			),
 		},
 		{
+			name: 'another missing binding assignment',
 			filename: 'file.svelte',
 			code: codeTemplate(
 				'export let something: number | undefined;',
@@ -237,6 +253,7 @@ describe('svelte-check-props', () => {
 			),
 		},
 		{
+			name: 'yet another missing binding assignment',
 			filename: 'file.svelte',
 			code: codeTemplate(
 				'export let something: number | undefined;',
@@ -251,6 +268,7 @@ describe('svelte-check-props', () => {
 			),
 		},
 		{
+			name: 'yet yet another missing binding assignment',
 			filename: 'file.svelte',
 			code: codeTemplate(
 				'export let something: number | undefined;',
@@ -265,6 +283,7 @@ describe('svelte-check-props', () => {
 			),
 		},
 		{
+			name: 'yet yet yet another missing binding assignment',
 			filename: 'file.svelte',
 			code: codeTemplate(
 				'export let something: number | undefined;',
@@ -279,6 +298,7 @@ describe('svelte-check-props', () => {
 			),
 		},
 		{
+			name: 'why so many missing binding assignments',
 			filename: 'file.svelte',
 			code: codeTemplate(
 				'export let something: number | undefined;',
@@ -297,20 +317,24 @@ describe('svelte-check-props', () => {
 	ruleTester.run('svelte-check-props', svelteCheckPropsRule, {
 		valid: [
 			{
+				name: 'empty code',
 				code: '',
 			},
 			{
-				// ignore widget in context module
+				name: 'ignore widget in context module',
 				code: '<script lang="ts" context="module">const widget = {patch(items: Partial<{onSomething: (event: number) => {}}>) {}};</script>',
 			},
 			{
+				name: 'no props',
 				code: codeTemplate('', ''),
 			},
 			{
+				name: 'just one event prop',
 				filename: 'file.svelte',
 				code: codeTemplate('', 'onSomething: (event: number) => void;'),
 			},
 			{
+				name: 'a prop with its associated event prop',
 				filename: 'file.svelte',
 				code: codeTemplate(
 					'export let something: number | undefined;',
@@ -320,7 +344,8 @@ describe('svelte-check-props', () => {
 			},
 			...invalid
 				.filter(({output, outputError}) => !!output && !outputError)
-				.map(({output}) => ({
+				.map(({output, name}) => ({
+					name: `fix: ${name}`,
 					code: output!,
 				})),
 		],
