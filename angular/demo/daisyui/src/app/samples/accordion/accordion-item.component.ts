@@ -1,4 +1,4 @@
-import type {AccordionItemWidget, AccordionItemProps, WidgetFactory} from '@agnos-ui/angular-headless';
+import type {AccordionItemWidget, WidgetFactory} from '@agnos-ui/angular-headless';
 import {
 	BaseWidgetDirective,
 	UseDirective,
@@ -7,7 +7,7 @@ import {
 	callWidgetFactory,
 	createSimpleClassTransition,
 } from '@agnos-ui/angular-headless';
-import {type AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, Output, inject} from '@angular/core';
+import {type AfterViewInit, ChangeDetectionStrategy, Component, inject, input, model, output} from '@angular/core';
 import {AccordionComponent} from './accordion.component';
 
 @Component({
@@ -35,20 +35,12 @@ import {AccordionComponent} from './accordion.component';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWidget> implements AfterViewInit {
-	@Input()
-	className?: AccordionItemProps['className'];
-	@Input({transform: auBooleanAttribute})
-	destroyOnHide?: AccordionItemProps['destroyOnHide'];
-	@Input({transform: auBooleanAttribute})
-	visible?: AccordionItemProps['visible'];
-	@Input()
-	id?: AccordionItemProps['id'];
-	@Output()
-	visibleChange = new EventEmitter<boolean>();
-	@Output()
-	shown = new EventEmitter<void>();
-	@Output()
-	hidden = new EventEmitter<void>();
+	readonly className = input<string>();
+	readonly destroyOnHide = input(undefined, {transform: auBooleanAttribute});
+	readonly visible = model(false);
+	readonly id = input<string>();
+	readonly shown = output();
+	readonly hidden = output();
 
 	readonly accordionComponent = inject(AccordionComponent);
 	readonly _widget = callWidgetFactory({
@@ -60,9 +52,9 @@ export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWid
 			}),
 		},
 		events: {
-			onVisibleChange: (visible) => this.visibleChange.emit(visible),
-			onHidden: () => this.hidden.emit(),
-			onShown: () => this.shown.emit(),
+			onVisibleChange: (visible) => this.visible.set(visible),
+			onHidden: this.hidden.emit,
+			onShown: this.shown.emit,
 		},
 	});
 	ngAfterViewInit() {

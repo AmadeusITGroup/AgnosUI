@@ -1,5 +1,5 @@
-import {BaseWidgetDirective, type ToastWidget, type ToastProps, auBooleanAttribute, callWidgetFactory, createToast} from '@agnos-ui/angular-headless';
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output, inject} from '@angular/core';
+import {BaseWidgetDirective, type ToastWidget, auBooleanAttribute, callWidgetFactory, createToast} from '@agnos-ui/angular-headless';
+import {ChangeDetectionStrategy, Component, inject, input, model, output} from '@angular/core';
 import closeIcon from '@agnos-ui/common/samples/common/close_icon.svg';
 import {DomSanitizer} from '@angular/platform-browser';
 
@@ -26,19 +26,16 @@ import {DomSanitizer} from '@angular/platform-browser';
 export class ToastComponent extends BaseWidgetDirective<ToastWidget> {
 	readonly closeIcon = inject(DomSanitizer).bypassSecurityTrustHtml(closeIcon);
 
-	@Input({transform: auBooleanAttribute})
-	visible?: ToastProps['visible'];
-	@Input({transform: auBooleanAttribute})
-	dismissible?: ToastProps['dismissible'];
-	@Input() ariaCloseButtonLabel?: ToastProps['ariaCloseButtonLabel'];
-	@Input() className?: ToastProps['className'];
-	@Output() visibleChange = new EventEmitter<boolean>();
-	@Output() hidden = new EventEmitter<void>();
-	@Output() shown = new EventEmitter<void>();
+	readonly visible = model(false);
+	readonly dismissible = input(undefined, {transform: auBooleanAttribute});
+	readonly ariaCloseButtonLabel = input<string>();
+	readonly className = input<string>();
+	readonly hidden = output();
+	readonly shown = output();
 
 	readonly _widget = callWidgetFactory({
 		factory: createToast,
 		widgetName: 'toast',
-		events: {onVisibleChange: (event) => this.visibleChange.emit(event), onShown: () => this.shown.emit(), onHidden: () => this.hidden.emit()},
+		events: {onVisibleChange: this.visible.set, onShown: this.shown.emit, onHidden: this.hidden.emit},
 	});
 }

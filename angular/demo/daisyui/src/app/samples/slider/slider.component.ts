@@ -1,6 +1,5 @@
 import {
 	BaseWidgetDirective,
-	type SliderProps,
 	type SliderWidget,
 	auBooleanAttribute,
 	auNumberAttribute,
@@ -8,7 +7,7 @@ import {
 	createSlider,
 	UseDirective,
 } from '@agnos-ui/angular-headless';
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, NgZone, Output, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, NgZone, inject, input, model} from '@angular/core';
 import {take} from 'rxjs';
 
 @Component({
@@ -21,20 +20,19 @@ import {take} from 'rxjs';
 export class SliderComponent extends BaseWidgetDirective<SliderWidget> {
 	private readonly _zone = inject(NgZone);
 
-	@Input({transform: auBooleanAttribute}) disabled?: SliderProps['disabled'];
-	@Input({transform: auNumberAttribute}) min?: SliderProps['min'];
-	@Input({transform: auNumberAttribute}) max?: SliderProps['max'];
-	@Input({transform: auNumberAttribute}) stepSize?: SliderProps['stepSize'];
-	@Input() values?: SliderProps['values'];
-	@Input() className?: SliderProps['className'];
-	@Output() valuesChange = new EventEmitter<number[]>();
+	readonly disabled = input(undefined, {transform: auBooleanAttribute});
+	readonly min = input(undefined, {transform: auNumberAttribute});
+	readonly max = input(undefined, {transform: auNumberAttribute});
+	readonly stepSize = input(undefined, {transform: auNumberAttribute});
+	readonly values = model([0]);
+	readonly className = input<string>();
 
 	readonly _widget = callWidgetFactory({
 		factory: createSlider,
 		widgetName: 'slider',
 		events: {
 			onValuesChange: (event) => {
-				this.valuesChange.emit(event);
+				this.values.set(event);
 			},
 		},
 	});
