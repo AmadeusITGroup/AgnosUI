@@ -9,7 +9,7 @@
 		"preview": "vite preview"
 	},
 	"devDependencies": {
-		"@amadeus-it-group/tansu": "^1.0.0",
+		"@amadeus-it-group/tansu": "divdavem/tansu#c34a1945c15b1a2c48720f44619f816b7c4d5026",
 		"@floating-ui/dom": "^1.6.5",
 		"@sveltejs/vite-plugin-svelte": "^3.1.1",
 		"@tsconfig/svelte": "^5.0.4",
