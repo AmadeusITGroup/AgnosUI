@@ -117,7 +117,7 @@
 		"classnames": "^2.5.1"
 	},
 	"peerDependencies": {
-		"@amadeus-it-group/tansu": "^1.0.0",
+		"@amadeus-it-group/tansu": "divdavem/tansu#c34a1945c15b1a2c48720f44619f816b7c4d5026",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1"
 	},

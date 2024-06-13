@@ -6,7 +6,7 @@
 	import type {Placement} from '@floating-ui/dom';
 
 	export let content: string;
-	export let placement$: Readable<Placement>;
+	export let placement$: Readable<Placement | undefined>;
 	export let directive: Directive;
 	export let arrowDirective: Directive;
 </script>
