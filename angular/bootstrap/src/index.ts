@@ -22,7 +22,7 @@ export type {AlertContext, AlertProps, AlertState, AlertWidget} from './componen
 export {createAlert, getAlertDefaultConfig} from './components/alert';
 export * from './components/alert';
 
-export type {ModalContext, ModalProps, ModalState, ModalWidget} from './components/modal';
+export type {ModalContext, ModalProps, ModalState, ModalWidget, ModalApi} from './components/modal';
 export {createModal, getModalDefaultConfig} from './components/modal';
 export * from './components/modal';
 

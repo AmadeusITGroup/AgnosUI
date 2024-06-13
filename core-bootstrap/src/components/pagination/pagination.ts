@@ -19,12 +19,12 @@ export type PaginationContext = WidgetSlotContext<PaginationWidget>;
 /**
  * A type for the slot context of the pagination widget when the slot is the number label
  */
-export interface PaginationNumberContext extends PaginationContext {
+export type PaginationNumberContext = PaginationContext & {
 	/**
 	 * Displayed page
 	 */
 	displayedPage: number;
-}
+};
 
 interface PaginationExtraProps {
 	/**

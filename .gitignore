@@ -14,3 +14,4 @@ generated
 vite.config.ts.timestamp-*
 verdaccio/storage
 blob-report
+*.gen.ts

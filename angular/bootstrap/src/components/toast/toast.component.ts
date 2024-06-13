@@ -112,7 +112,7 @@ export class ToastComponent extends BaseWidgetDirective<ToastWidget> implements 
 
 	/**
 	 * The transition function will be executed when the alert is displayed or hidden.
-	 * Depending on the value of CommonAlertProps.animatedOnInit, the animation can be optionally skipped during the showing process.
+	 * Depending on the value of `animatedOnInit`, the animation can be optionally skipped during the showing process.
 	 */
 	@Input('auTransition')
 	transition: TransitionFn | undefined;

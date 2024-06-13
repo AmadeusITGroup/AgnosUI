@@ -1,4 +1,10 @@
-import type {ModalProps as CoreProps, ModalState as CoreState, ModalActions, ModalApi, ModalDirectives} from '@agnos-ui/core/components/modal';
+import type {
+	ModalProps as CoreProps,
+	ModalState as CoreState,
+	ModalActions,
+	ModalApi as CoreApi,
+	ModalDirectives,
+} from '@agnos-ui/core/components/modal';
 import {createModal as createCoreModal, getModalDefaultConfig as getCoreDefaultConfig} from '@agnos-ui/core/components/modal';
 import type {ConfigValidator, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '@agnos-ui/core/types';
 import {fadeTransition} from '../../services/transitions';
@@ -48,7 +54,14 @@ interface ModalExtraProps<Data> {
 export interface ModalState<Data> extends CoreState, ModalExtraProps<Data> {}
 export interface ModalProps<Data> extends CoreProps, ModalExtraProps<Data> {}
 
-export type ModalWidget<Data> = Widget<ModalProps<Data>, ModalState<Data>, ModalApi, ModalActions, ModalDirectives>;
+export interface ModalApi<Data> extends Omit<CoreApi, 'patch'> {
+	/**
+	 * Method to change some modal properties.
+	 */
+	patch: ModalWidget<Data>['patch'];
+}
+
+export type ModalWidget<Data> = Widget<ModalProps<Data>, ModalState<Data>, ModalApi<Data>, ModalActions, ModalDirectives>;
 
 const defaultConfigExtraProps: ModalExtraProps<any> = {
 	contentData: undefined,

@@ -3,20 +3,11 @@ import type {ForwardRefExoticComponent, ForwardedRef, PropsWithChildren, RefAttr
 import {createContext, forwardRef, useContext, useEffect, useImperativeHandle} from 'react';
 import {useWidgetWithConfig} from '../../config';
 import {classDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
-import type {AdaptSlotContentProps, AdaptWidgetSlots, Directive, WidgetFactory, WidgetProps, WidgetState} from '@agnos-ui/react-headless/types';
-import type {AccordionItemApi} from '@agnos-ui/core-bootstrap/components/accordion';
+import type {Directive, WidgetFactory} from '@agnos-ui/react-headless/types';
 import {createAccordion as coreCreateAccordion} from '@agnos-ui/core-bootstrap/components/accordion';
+import type {AccordionWidget, AccordionItemContext, AccordionApi, AccordionItemProps, AccordionProps, AccordionItemApi} from './accordion.gen';
 
-export * from '@agnos-ui/core-bootstrap/components/accordion';
-
-export type AccordionWidget = AdaptWidgetSlots<import('@agnos-ui/core-bootstrap/components/accordion').AccordionWidget>;
-export type AccordionProps = WidgetProps<AccordionWidget>;
-export type AccordionState = WidgetState<AccordionWidget>;
-export type AccordionApi = AccordionWidget['api'];
-export type AccordionItemWidget = AdaptWidgetSlots<import('@agnos-ui/core-bootstrap/components/accordion').AccordionItemWidget>;
-export type AccordionItemProps = WidgetProps<AccordionItemWidget>;
-export type AccordionItemState = WidgetState<AccordionItemWidget>;
-export type AccordionItemContext = AdaptSlotContentProps<import('@agnos-ui/core-bootstrap/components/accordion').AccordionItemContext>;
+export type * from './accordion.gen';
 export const createAccordion: WidgetFactory<AccordionWidget> = coreCreateAccordion as any;
 
 type AccordionTag = `h${1 | 2 | 3 | 4 | 5 | 6}`;
@@ -53,7 +44,7 @@ const defaultConfig: Partial<AccordionItemProps> = {
 export const AccordionItem: ForwardRefExoticComponent<PropsWithChildren<Partial<AccordionItemProps>> & RefAttributes<AccordionItemApi>> = forwardRef(
 	function AccordionItem(props: PropsWithChildren<Partial<AccordionItemProps>>, ref: ForwardedRef<AccordionItemApi>) {
 		const {registerItem} = useContext(AccordionDIContext);
-		const [state, widget] = useWidgetWithConfig(registerItem as WidgetFactory<AccordionItemWidget>, props, null, {
+		const [state, widget] = useWidgetWithConfig(registerItem!, props, null, {
 			...defaultConfig,
 		});
 		const slotContext: AccordionItemContext = {

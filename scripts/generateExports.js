@@ -52,7 +52,7 @@ const generateExports = async (destination, source, dependencyPkg, includeCompon
 	const srcFiles = (
 		await glob(`{generated/**,services,services/transitions,utils,.}/*.{ts,tsx}`, {
 			cwd: sourceFolder,
-			ignore: ['**/*.d.ts', '**/*.spec.ts', 'index.ts'],
+			ignore: ['**/*.d.ts', '**/*.spec.ts', 'index.ts', 'generated/components/**'],
 		})
 	).map(normalizePath);
 	for (const srcFile of srcFiles) {

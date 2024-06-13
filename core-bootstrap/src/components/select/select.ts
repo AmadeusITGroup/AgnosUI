@@ -17,12 +17,12 @@ export * from '@agnos-ui/core/components/select';
  */
 export type SelectContext<Item> = WidgetSlotContext<SelectWidget<Item>>;
 
-export interface SelectItemContext<Item> extends SelectContext<Item> {
+export type SelectItemContext<Item> = SelectContext<Item> & {
 	/**
 	 * Contextual data related to an item
 	 */
 	itemContext: ItemContext<Item>;
-}
+};
 
 interface SelectExtraProps<Item> {
 	/**

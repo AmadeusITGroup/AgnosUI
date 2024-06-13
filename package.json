@@ -141,6 +141,7 @@
 				"./angular/headless:generate:exports",
 				"./react/headless:generate:exports",
 				"./react/bootstrap:generate:exports",
+				"./react/bootstrap:generate:component-types",
 				"./svelte/headless:generate:exports",
 				"./svelte/bootstrap:generate:exports"
 			]

@@ -1,7 +1,6 @@
-import type {AdaptSlotContentProps} from '@agnos-ui/react-bootstrap/types';
 import type {ProgressbarContext} from '@agnos-ui/react-bootstrap/components/progressbar';
 
-export const Coffee = ({state}: AdaptSlotContentProps<ProgressbarContext>) => (
+export const Coffee = ({state}: ProgressbarContext) => (
 	<div className="position-relative" style={{height: '300px'}}>
 		<div className="cup">
 			<div className="cup-fill-parent">

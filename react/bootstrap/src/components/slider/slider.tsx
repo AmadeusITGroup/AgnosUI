@@ -1,21 +1,22 @@
 import {useDirective} from '@agnos-ui/react-headless/utils/directive';
 import {useWidgetWithConfig} from '../../config';
-import type {AdaptSlotContentProps, AdaptWidgetSlots, WidgetFactory, WidgetProps, WidgetState} from '@agnos-ui/react-headless/types';
+import type {WidgetFactory} from '@agnos-ui/react-headless/types';
 import {toSlotContextWidget} from '@agnos-ui/react-headless/types';
 import type {PropsWithChildren} from 'react';
 import React from 'react';
 import {Slot} from '@agnos-ui/react-headless/slot';
-import type {ProgressDisplayOptions, SliderDirectives, SliderHandle} from '@agnos-ui/core-bootstrap/components/slider';
 import {createSlider as coreCreateSlider} from '@agnos-ui/core-bootstrap/components/slider';
+import type {
+	SliderWidget,
+	SliderSlotHandleContext,
+	SliderContext,
+	SliderProps,
+	ProgressDisplayOptions,
+	SliderDirectives,
+	SliderHandle,
+} from './slider.gen';
 
-export * from '@agnos-ui/core-bootstrap/components/slider';
-
-export type SliderWidget = AdaptWidgetSlots<import('@agnos-ui/core-bootstrap/components/slider').SliderWidget>;
-export type SliderProps = WidgetProps<SliderWidget>;
-export type SliderState = WidgetState<SliderWidget>;
-export type SliderContext = AdaptSlotContentProps<import('@agnos-ui/core-bootstrap/components/slider').SliderContext>;
-export type SliderSlotLabelContext = AdaptSlotContentProps<import('@agnos-ui/core-bootstrap/components/slider').SliderSlotLabelContext>;
-export type SliderSlotHandleContext = AdaptSlotContentProps<import('@agnos-ui/core-bootstrap/components/slider').SliderSlotHandleContext>;
+export type * from './slider.gen';
 export const createSlider: WidgetFactory<SliderWidget> = coreCreateSlider as any;
 
 export const DefaultSlotHandle = (slotContext: SliderSlotHandleContext) => {
