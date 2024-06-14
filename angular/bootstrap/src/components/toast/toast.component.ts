@@ -158,13 +158,22 @@ export class ToastComponent extends BaseWidgetDirective<ToastWidget> implements 
 	 */
 	@Input('auAriaCloseButtonLabel') ariaCloseButtonLabel: string | undefined;
 
+	/**
+	 * Template for the toast content
+	 */
 	@Input('auSlotDefault') slotDefault: SlotContent<ToastContext>;
 	@ContentChild(ToastBodyDirective, {static: false})
 	slotDefaultFromContent: ToastBodyDirective | undefined;
 
+	/**
+	 * Global template for the toast component
+	 */
 	@Input('auSlotStructure') slotStructure: SlotContent<ToastContext>;
 	@ContentChild(ToastStructureDirective, {static: false}) slotStructureFromContent: ToastStructureDirective | undefined;
 
+	/**
+	 * Header template for the toast component
+	 */
 	@Input('auSlotHeader') slotHeader: SlotContent<ToastContext>;
 	@ContentChild(ToastHeaderDirective, {static: false}) slotHeaderFromContent: ToastHeaderDirective | undefined;
 

@@ -1,10 +1,8 @@
-import type {AdaptWidgetSlots, WidgetProps, WidgetState, AdaptSlotContentProps, PropsConfig} from '@agnos-ui/angular-headless';
-import {createModal as coreCreateModal} from '@agnos-ui/core-bootstrap/components/modal';
+import type {PropsConfig} from '@agnos-ui/angular-headless';
+import {createModal as coreCreateModal, getModalDefaultConfig as coreGetModalDefaultConfig} from '@agnos-ui/core-bootstrap/components/modal';
+import type {ModalProps, ModalWidget} from './modal.gen';
 
-export * from '@agnos-ui/core-bootstrap/components/modal';
-
-export interface ModalWidget<Data> extends AdaptWidgetSlots<import('@agnos-ui/core-bootstrap/components/modal').ModalWidget<Data>> {}
-export type ModalProps<Data> = WidgetProps<ModalWidget<Data>>;
-export type ModalState<Data> = WidgetState<ModalWidget<Data>>;
-export interface ModalContext<Data> extends AdaptSlotContentProps<import('@agnos-ui/core-bootstrap/components/modal').ModalContext<Data>> {}
+export type * from './modal.gen';
+export {modalCloseButtonClick, modalOutsideClick} from '@agnos-ui/angular-headless';
 export const createModal: <Data>(config?: PropsConfig<ModalProps<Data>>) => ModalWidget<Data> = coreCreateModal as any;
+export const getModalDefaultConfig: () => ModalProps<any> = coreGetModalDefaultConfig as any;

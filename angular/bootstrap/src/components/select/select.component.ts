@@ -1,4 +1,4 @@
-import type {AdaptSlotContentProps, SlotContent} from '@agnos-ui/angular-headless';
+import type {SlotContent} from '@agnos-ui/angular-headless';
 import {
 	BaseWidgetDirective,
 	SlotDirective,
@@ -16,7 +16,7 @@ import {createSelect} from './select';
 
 @Directive({selector: 'ng-template[auSelectBadgeLabel]', standalone: true})
 export class SelectBadgeLabelDirective<Item> {
-	public templateRef = inject(TemplateRef<AdaptSlotContentProps<SelectItemContext<Item>>>);
+	public templateRef = inject(TemplateRef<SelectItemContext<Item>>);
 	static ngTemplateContextGuard<Item>(_dir: SelectBadgeLabelDirective<Item>, context: unknown): context is SelectItemContext<Item> {
 		return true;
 	}
@@ -24,7 +24,7 @@ export class SelectBadgeLabelDirective<Item> {
 
 @Directive({selector: 'ng-template[auSelectItem]', standalone: true})
 export class SelectItemDirective<Item> {
-	public templateRef = inject(TemplateRef<AdaptSlotContentProps<SelectItemContext<Item>>>);
+	public templateRef = inject(TemplateRef<SelectItemContext<Item>>);
 	static ngTemplateContextGuard<Item>(_dir: SelectItemDirective<Item>, context: unknown): context is SelectItemContext<Item> {
 		return true;
 	}
@@ -147,9 +147,17 @@ export class SelectComponent<Item> extends BaseWidgetDirective<SelectWidget<Item
 	 */
 	@Input('auMenuClassName') menuClassName: string | undefined;
 
+	/**
+	 * The template to override the way each badge on the left of the input is displayed.
+	 * This define the content of the badge inside the badge container.
+	 */
 	@Input('auSlotBadgeLabel') slotBadgeLabel: SlotContent<SelectItemContext<Item>>;
 	@ContentChild(SelectBadgeLabelDirective, {static: false}) slotSelectBadgeLabelFromContent: SelectBadgeLabelDirective<Item> | undefined;
 
+	/**
+	 * The template to override the way each item is displayed in the list.
+	 * This define the content of the badge inside the badge container.
+	 */
 	@Input('auSlotItem') slotItem: SlotContent<SelectItemContext<Item>>;
 	@ContentChild(SelectItemDirective, {static: false}) slotSelectItemFromContent: SelectItemDirective<Item> | undefined;
 

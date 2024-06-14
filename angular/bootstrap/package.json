@@ -17,9 +17,21 @@
 		"check": "wireit"
 	},
 	"wireit": {
+		"generate:component-types": {
+			"command": "tsx --tsconfig ../../scripts/bootstrapTypes/tsconfig.json ../../scripts/bootstrapTypes/genTypeExports.ts angular",
+			"files": [
+				"../../core/src/**",
+				"../../core-bootstrap/src/**",
+				"../../scripts/bootstrapTypes/genTypeExports.ts"
+			],
+			"output": [
+				"src/components/**/*.gen.ts"
+			]
+		},
 		"build:src": {
 			"command": "ng build",
 			"dependencies": [
+				"generate:component-types",
 				"../headless:build",
 				"../../core-bootstrap:build"
 			],

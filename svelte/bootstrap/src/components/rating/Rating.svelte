@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type {RatingApi, RatingProps, RatingSlots} from './rating';
+	import type {RatingProps, RatingSlots} from './rating';
 	import {createRating} from './rating';
 	import {callWidgetFactory} from '../../config';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
@@ -20,7 +20,6 @@
 			},
 		},
 	});
-	export const api: RatingApi = widget.api;
 
 	const {
 		stores: {visibleRating$, stars$, slotStar$},

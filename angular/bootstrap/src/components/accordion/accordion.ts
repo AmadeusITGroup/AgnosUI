@@ -1,14 +1,12 @@
-import type {AdaptWidgetSlots, WidgetProps, WidgetState, AdaptSlotContentProps, WidgetFactory} from '@agnos-ui/angular-headless';
-import {createAccordion as coreCreateAccordion} from '@agnos-ui/core-bootstrap/components/accordion';
+import type {WidgetFactory} from '@agnos-ui/angular-headless';
+import {
+	createAccordion as coreCreateAccordion,
+	getAccordionDefaultConfig as coreGetAccordionDefaultConfig,
+	createAccordionItem as coreCreateAccordionItem,
+} from '@agnos-ui/core-bootstrap/components/accordion';
+import type {AccordionItemWidget, AccordionProps, AccordionWidget} from './accordion.gen';
 
-export * from '@agnos-ui/core-bootstrap/components/accordion';
-
-export type AccordionWidget = AdaptWidgetSlots<import('@agnos-ui/core-bootstrap/components/accordion').AccordionWidget>;
-export type AccordionProps = WidgetProps<AccordionWidget>;
-export type AccordionState = WidgetState<AccordionWidget>;
-export type AccordionApi = AccordionWidget['api'];
-export type AccordionItemWidget = AdaptWidgetSlots<import('@agnos-ui/core-bootstrap/components/accordion').AccordionItemWidget>;
-export type AccordionItemProps = WidgetProps<AccordionItemWidget>;
-export type AccordionItemState = WidgetState<AccordionItemWidget>;
-export type AccordionItemContext = AdaptSlotContentProps<import('@agnos-ui/core-bootstrap/components/accordion').AccordionItemContext>;
-export const createAccordion: WidgetFactory<AccordionWidget> = coreCreateAccordion as WidgetFactory<AccordionWidget>;
+export type * from './accordion.gen';
+export const createAccordion: WidgetFactory<AccordionWidget> = coreCreateAccordion as any;
+export const getAccordionDefaultConfig: () => AccordionProps = coreGetAccordionDefaultConfig as any;
+export const createAccordionItem: WidgetFactory<AccordionItemWidget> = coreCreateAccordionItem as any;

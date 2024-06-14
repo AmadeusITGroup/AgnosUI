@@ -1,6 +1,6 @@
 export * from '@agnos-ui/core/types';
 
-import type {SlotContent as CoreSlotContent, Widget, WidgetFactory, WidgetProps, WidgetSlotContext, WidgetState} from '@agnos-ui/core/types';
+import type {SlotContent as CoreSlotContent, WidgetProps, WidgetSlotContext} from '@agnos-ui/core/types';
 import type {ComponentType, SvelteComponent} from 'svelte';
 
 export const useSvelteSlot = Symbol('useSvelteSlot');
@@ -18,26 +18,3 @@ export type SlotSvelteComponent<Props extends object = object> = ComponentType<
 >;
 
 export type SlotContent<Props extends object = object> = CoreSlotContent<Props> | SlotSvelteComponent<Props> | typeof useSvelteSlot;
-
-export type AdaptSlotContentProps<Props extends Record<string, any>> =
-	Props extends WidgetSlotContext<infer U>
-		? WidgetSlotContext<AdaptWidgetSlots<U>> & AdaptPropsSlots<Omit<Props, keyof WidgetSlotContext<any>>>
-		: AdaptPropsSlots<Props>;
-
-export type AdaptPropsSlots<Props> = Omit<Props, `slot${string}`> & {
-	[K in keyof Props & `slot${string}`]: Props[K] extends CoreSlotContent<infer U> ? SlotContent<AdaptSlotContentProps<U>> : Props[K];
-};
-
-export type AdaptWidgetFactories<T> = {
-	[K in keyof T]: T[K] extends WidgetFactory<infer U> ? WidgetFactory<AdaptWidgetSlots<U>> : T[K];
-};
-
-export type AdaptWidgetSlots<W extends Widget> = Widget<
-	AdaptPropsSlots<WidgetProps<W>>,
-	AdaptPropsSlots<WidgetState<W>>,
-	AdaptWidgetFactories<W['api']>,
-	W['actions'],
-	W['directives']
->;
-
-export type PropType<Props, K extends keyof Props> = Props[K];

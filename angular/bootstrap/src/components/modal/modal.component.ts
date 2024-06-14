@@ -221,22 +221,38 @@ export class ModalComponent<Data> extends BaseWidgetDirective<ModalWidget<Data>>
 	 */
 	@Input({alias: 'auFullscreen', transform: auBooleanAttribute}) fullscreen: boolean | undefined;
 
+	/**
+	 * Structure of the modal.
+	 * The default structure uses ModalCommonPropsAndState.slotHeader slotHeader, ModalCommonPropsAndState.slotDefault slotDefault and ModalCommonPropsAndState.slotFooter slotFooter.
+	 */
 	@Input('auSlotStructure') slotStructure: SlotContent<ModalContext<Data>>;
 	@ContentChild(ModalStructureDirective, {static: false})
 	slotStructureFromContent: ModalStructureDirective<Data> | undefined;
 
+	/**
+	 * Header of the modal. The default header includes ModalCommonPropsAndState.slotTitle slotTitle.
+	 */
 	@Input('auSlotHeader') slotHeader: SlotContent<ModalContext<Data>>;
 	@ContentChild(ModalHeaderDirective, {static: false})
 	slotHeaderFromContent: ModalHeaderDirective<Data> | undefined;
 
+	/**
+	 * Title of the modal.
+	 */
 	@Input('auSlotTitle') slotTitle: SlotContent<ModalContext<Data>>;
 	@ContentChild(ModalTitleDirective, {static: false})
 	slotTitleFromContent: ModalTitleDirective<Data> | undefined;
 
+	/**
+	 * Body of the modal.
+	 */
 	@Input('auSlotDefault') slotDefault: SlotContent<ModalContext<Data>>;
 	@ContentChild(ModalBodyDirective, {static: false})
 	slotDefaultFromContent: ModalBodyDirective<Data> | undefined;
 
+	/**
+	 * Footer of the modal.
+	 */
 	@Input('auSlotFooter') slotFooter: SlotContent<ModalContext<Data>>;
 	@ContentChild(ModalFooterDirective, {static: false})
 	slotFooterFromContent: ModalFooterDirective<Data> | undefined;
@@ -252,7 +268,7 @@ export class ModalComponent<Data> extends BaseWidgetDirective<ModalWidget<Data>>
 	@Output('auVisibleChange') visibleChange = new EventEmitter<boolean>();
 
 	/**
-	 * Event to be triggered when the modal is about to be closed (i.e. the close method was called).
+	 * Event to be triggered when the modal is about to be closed (i.e. the ModalApi.closeclose  method was called).
 	 */
 	@Output('auBeforeClose') beforeClose = new EventEmitter<ModalBeforeCloseEvent>();
 

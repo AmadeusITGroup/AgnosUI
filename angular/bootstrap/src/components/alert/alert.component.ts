@@ -135,10 +135,16 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> implements 
 	 */
 	@Input('auAriaCloseButtonLabel') ariaCloseButtonLabel: string | undefined;
 
+	/**
+	 * Template for the alert content
+	 */
 	@Input('auSlotDefault') slotDefault: SlotContent<AlertContext>;
 	@ContentChild(AlertBodyDirective, {static: false})
 	slotDefaultFromContent: AlertBodyDirective | undefined;
 
+	/**
+	 * Global template for the alert component
+	 */
 	@Input('auSlotStructure') slotStructure: SlotContent<AlertContext>;
 	@ContentChild(AlertStructureDirective, {static: false}) slotStructureFromContent: AlertStructureDirective | undefined;
 

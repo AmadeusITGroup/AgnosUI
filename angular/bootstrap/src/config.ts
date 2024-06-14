@@ -1,21 +1,13 @@
-import type {
-	AdaptPropsSlots,
-	AngularWidget,
-	Partial2Levels,
-	Widget,
-	WidgetFactory,
-	WidgetProps,
-	WidgetsConfigStore,
-} from '@agnos-ui/angular-headless';
+import type {AngularWidget, Partial2Levels, Widget, WidgetFactory, WidgetProps, WidgetsConfigStore} from '@agnos-ui/angular-headless';
 import {widgetsConfigFactory} from '@agnos-ui/angular-headless';
 import type {BootstrapWidgetsConfig} from '@agnos-ui/core-bootstrap/config';
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import type {FactoryProvider} from '@angular/core';
 import {InjectionToken} from '@angular/core';
 
-export type WidgetsConfig = {
-	[WidgetName in keyof BootstrapWidgetsConfig]: AdaptPropsSlots<BootstrapWidgetsConfig[WidgetName]>;
-};
+import type {WidgetsConfig} from './config.gen';
+export type {WidgetsConfig};
+
 type AdaptParentConfig = (config: Partial2Levels<WidgetsConfig>) => Partial2Levels<WidgetsConfig>;
 type InjectWidgetsConfig = (config?: Partial2Levels<WidgetsConfig>) => WidgetsConfigStore<WidgetsConfig>;
 

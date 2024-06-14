@@ -1,18 +1,15 @@
 import type {Widget, WidgetFactory, WidgetProps} from '@agnos-ui/core/types';
-import type {Partial2Levels, WidgetsConfigStore, WidgetsConfig as CoreWidgetsConfig} from '@agnos-ui/core/config';
+import type {Partial2Levels, WidgetsConfigStore, WidgetsConfig} from '@agnos-ui/core/config';
 import {createWidgetsConfig} from '@agnos-ui/core/config';
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {computed} from '@amadeus-it-group/tansu';
 import type {FactoryProvider} from '@angular/core';
 import {InjectionToken, Injector, Optional, SkipSelf, inject, runInInjectionContext} from '@angular/core';
-import type {AdaptPropsSlots, AngularWidget} from './types';
+import type {AngularWidget} from './types';
 import {callWidgetFactoryWithConfig} from './utils/widget';
 
 export * from '@agnos-ui/core/config';
 
-export type WidgetsConfig = {
-	[WidgetName in keyof CoreWidgetsConfig]: AdaptPropsSlots<CoreWidgetsConfig[WidgetName]>;
-};
 type AdaptParentConfig<Config> = (config: Partial2Levels<Config>) => Partial2Levels<Config>;
 type InjectWidgetsConfig<Config> = (config?: Partial2Levels<Config>) => WidgetsConfigStore<Config>;
 

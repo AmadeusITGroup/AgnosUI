@@ -1,9 +1,7 @@
-import type {AdaptWidgetSlots, WidgetProps, WidgetState, WidgetFactory} from '@agnos-ui/angular-headless';
-import {createRating as coreCreateRating} from '@agnos-ui/core-bootstrap/components/rating';
+import type {WidgetFactory} from '@agnos-ui/angular-headless';
+import {createRating as coreCreateRating, getRatingDefaultConfig as coreGetRatingDefaultConfig} from '@agnos-ui/core-bootstrap/components/rating';
+import type {RatingProps, RatingWidget} from './rating.gen';
 
-export * from '@agnos-ui/core-bootstrap/components/rating';
-
-export type RatingWidget = AdaptWidgetSlots<import('@agnos-ui/core-bootstrap/components/rating').RatingWidget>;
-export type RatingProps = WidgetProps<RatingWidget>;
-export type RatingState = WidgetState<RatingWidget>;
+export type * from './rating.gen';
 export const createRating: WidgetFactory<RatingWidget> = coreCreateRating as any;
+export const getRatingDefaultConfig: () => RatingProps = coreGetRatingDefaultConfig as any;

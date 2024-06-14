@@ -296,34 +296,76 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 		},
 	});
 
+	/**
+	 * The template to use for the ellipsis slot
+	 * for I18n, we suggest to use the global configuration
+	 * override any configuration parameters provided for this
+	 */
 	@Input('auSlotEllipsis') slotEllipsis: SlotContent<PaginationContext>;
 	@ContentChild(PaginationEllipsisDirective, {static: false})
 	slotEllipsisFromContent: PaginationEllipsisDirective | undefined;
 
+	/**
+	 * The template to use for the first slot
+	 * for I18n, we suggest to use the global configuration
+	 * override any configuration parameters provided for this
+	 */
 	@Input('auSlotFirst') slotFirst: SlotContent<PaginationContext>;
 	@ContentChild(PaginationFirstDirective, {static: false})
 	slotFirstFromContent: PaginationFirstDirective | undefined;
 
+	/**
+	 * The template to use for the previous slot
+	 * for I18n, we suggest to use the global configuration
+	 * override any configuration parameters provided for this
+	 */
 	@Input('auSlotPrevious') slotPrevious: SlotContent<PaginationContext>;
 	@ContentChild(PaginationPreviousDirective, {static: false})
 	slotPreviousFromContent: PaginationPreviousDirective | undefined;
 
+	/**
+	 * The template to use for the next slot
+	 * for I18n, we suggest to use the global configuration
+	 * override any configuration parameters provided for this
+	 */
 	@Input('auSlotNext') slotNext: SlotContent<PaginationContext>;
 	@ContentChild(PaginationNextDirective, {static: false})
 	slotNextFromContent: PaginationNextDirective | undefined;
 
+	/**
+	 * The template to use for the last slot
+	 * for I18n, we suggest to use the global configuration
+	 * override any configuration parameters provided for this
+	 */
 	@Input('auSlotLast') slotLast: SlotContent<PaginationContext>;
 	@ContentChild(PaginationLastDirective, {static: false})
 	slotLastFromContent: PaginationLastDirective | undefined;
 
+	/**
+	 * The template to use for the pages slot
+	 * To use to customize the pages view
+	 * override any configuration parameters provided for this
+	 */
 	@Input('auSlotPages') slotPages: SlotContent<PaginationContext>;
 	@ContentChild(PaginationPagesDirective, {static: false})
 	slotPagesFromContent: PaginationPagesDirective | undefined;
 
+	/**
+	 * The template to use for the number slot
+	 * override any configuration parameters provided for this
+	 * for I18n, we suggest to use the global configuration
+	 */
 	@Input('auSlotNumberLabel') slotNumberLabel: SlotContent<PaginationNumberContext>;
 	@ContentChild(PaginationNumberDirective, {static: false})
 	slotNumberLabelFromContent: PaginationNumberDirective | undefined;
 
+	/**
+	 * The template to use for the structure of the pagination component
+	 * The default structure uses PaginationCommonPropsAndState.slotEllipsis slotEllipsis, PaginationCommonPropsAndState.slotFirst slotFirst,
+	 * PaginationCommonPropsAndState.slotPrevious slotPrevious, PaginationCommonPropsAndState.slotNext slotNext,
+	 * PaginationCommonPropsAndState.slotLast slotLast, PaginationCommonPropsAndState.slotPages slotPages,
+	 * PaginationCommonPropsAndState.slotNumberLabel slotNumberLabel,
+	 */
 	@Input('auSlotStructure') slotStructure: SlotContent<PaginationContext>;
 	@ContentChild(PaginationStructureDirective, {static: false})
 	slotStructureFromContent: PaginationStructureDirective | undefined;

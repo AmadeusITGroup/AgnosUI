@@ -98,8 +98,14 @@ export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget>
 	 */
 	@Input('auClassName') className: string | undefined;
 
+	/**
+	 * Label of the progress.
+	 */
 	@Input('auSlotDefault') slotDefault: SlotContent<ProgressbarContext>;
 
+	/**
+	 * Global template for the Progressbar.
+	 */
 	@Input('auSlotStructure') slotStructure: SlotContent<ProgressbarContext>;
 	@ContentChild(ProgressbarStructureDirective, {static: false}) slotStructureFromContent: ProgressbarStructureDirective | undefined;
 

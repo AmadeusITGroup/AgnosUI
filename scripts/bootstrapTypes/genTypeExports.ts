@@ -56,6 +56,10 @@ function getTypesImportsMap(nodes: Node[], excludedNames: Set<string>) {
 						moduleSpecifier = path.posix.join(modulePath.join('/'), moduleSpecifier);
 					}
 					moduleSpecifier = moduleSpecifier.replace(/^@agnos-ui\/core\//, `@agnos-ui/${framework}-headless/`);
+					// small exception for Angular, as we do not have subpath exports yet
+					if (moduleSpecifier.startsWith('@agnos-ui/angular-headless/')) {
+						moduleSpecifier = '@agnos-ui/angular-headless';
+					}
 					processedNames.add(name);
 					let importsArray = importsByModule.get(moduleSpecifier);
 					if (!importsArray) {
@@ -87,7 +91,11 @@ for (const component of components) {
 	const exportedNodes: Node[] = [];
 	const exportNames = new Set<string>();
 	for (const bootstrapExport of exportsList.filter(
-		(btsExport) => !btsExport.name.endsWith('CommonPropsAndState') && !btsExport.name.endsWith('ExtraProps') && !btsExport.name.startsWith('Common'),
+		(btsExport) =>
+			!btsExport.name.endsWith('CommonPropsAndState') &&
+			!btsExport.name.endsWith('ExtraProps') &&
+			!btsExport.name.startsWith('Common') &&
+			!btsExport.name.startsWith('Extra'),
 	)) {
 		exportNames.add(bootstrapExport.name);
 		const node = bootstrapExport.getDeclarations()![0];
