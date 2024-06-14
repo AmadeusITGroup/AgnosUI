@@ -1,17 +1,13 @@
 import type {Widget, WidgetFactory, WidgetProps, WidgetState} from '@agnos-ui/core/types';
-import {createWidgetsConfig, type WidgetsConfigStore, type WidgetsConfig as CoreWidgetsConfig, type Partial2Levels} from '@agnos-ui/core/config';
+import {createWidgetsConfig, type WidgetsConfigStore, type WidgetsConfig, type Partial2Levels} from '@agnos-ui/core/config';
 import {computed} from '@amadeus-it-group/tansu';
 import type {ReactNode} from 'react';
 import {createContext, useContext, useEffect, useMemo} from 'react';
-import type {AdaptPropsSlots} from './types';
 import {useWidget} from './utils/widget';
 import {usePropsAsStore} from './utils/stores';
 
 export * from '@agnos-ui/core/config';
 
-export type WidgetsConfig = {
-	[WidgetName in keyof CoreWidgetsConfig]: AdaptPropsSlots<CoreWidgetsConfig[WidgetName]>;
-};
 type DefaultConfigInput<Config> = Partial2Levels<Config> & {
 	adaptParentConfig?: (config: Partial2Levels<Config>) => Partial2Levels<Config>;
 	children?: ReactNode | undefined;
@@ -25,7 +21,7 @@ type DefaultConfigInput<Config> = Partial2Levels<Config> & {
  * @param widgetsConfigContext - the widgets config context
  * @returns the use functions and react component
  */
-export const widgetsConfigFactory = <Config extends {[widgetName: string]: object} = WidgetsConfig>(
+export const widgetsConfigFactory = <Config extends Record<string, object> = WidgetsConfig>(
 	widgetsConfigContext = createContext(undefined as undefined | WidgetsConfigStore<Config>),
 ) => {
 	const useWidgetContext = <Props extends object>(widgetName: keyof Config | null, defaultConfig?: Partial<Props>) => {

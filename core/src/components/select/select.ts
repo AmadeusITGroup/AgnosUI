@@ -67,11 +67,11 @@ export interface SelectCommonPropsAndState<Item> extends WidgetsCommonPropsAndSt
 	loading: boolean;
 }
 
-export interface SelectProps<T> extends SelectCommonPropsAndState<T> {
+export interface SelectProps<Item> extends SelectCommonPropsAndState<Item> {
 	/**
 	 * List of available items for the dropdown
 	 */
-	items: T[];
+	items: Item[];
 
 	/**
 	 * List of allowed placements for the dropdown.
@@ -83,7 +83,7 @@ export interface SelectProps<T> extends SelectCommonPropsAndState<T> {
 	 * Custom function to get the id of an item
 	 * By default, the item is returned
 	 */
-	itemIdFn(item: T): string;
+	itemIdFn(item: Item): string;
 
 	/**
 	 * Retrieves navigable elements within an HTML element containing badges and the input.
@@ -109,7 +109,7 @@ export interface SelectProps<T> extends SelectCommonPropsAndState<T> {
 	/**
 	 * Callback called when the selection change
 	 */
-	onSelectedChange(selected: T[]): void;
+	onSelectedChange(selected: Item[]): void;
 }
 
 /**
@@ -138,7 +138,6 @@ export interface SelectState<Item> extends SelectCommonPropsAndState<Item> {
 	 */
 	visibleItems: ItemContext<Item>[];
 
-	/**
 	/**
 	 * List of selected items to be display
 	 */

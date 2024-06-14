@@ -84,7 +84,7 @@ export const createWidgetsConfig = <T>(
 	);
 };
 
-export interface WidgetsConfig {
+export type WidgetsConfig = {
 	/**
 	 * the pagination widget config
 	 */
@@ -121,4 +121,4 @@ export interface WidgetsConfig {
 	 * toast widget config
 	 */
 	toast: ToastProps;
-}
+};

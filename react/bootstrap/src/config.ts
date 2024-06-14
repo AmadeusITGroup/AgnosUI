@@ -1,14 +1,14 @@
 import type {Partial2Levels, WidgetsConfigStore} from '@agnos-ui/react-headless/config';
 import {widgetsConfigFactory} from '@agnos-ui/react-headless/config';
-import type {AdaptPropsSlots, Widget, WidgetFactory, WidgetProps, WidgetState} from '@agnos-ui/react-headless/types';
+import type {Widget, WidgetFactory, WidgetProps, WidgetState} from '@agnos-ui/react-headless/types';
 import type {BootstrapWidgetsConfig} from '@agnos-ui/core-bootstrap/config';
 import type {ReactNode, Context} from 'react';
 
 export * from '@agnos-ui/react-headless/config';
 
-export type WidgetsConfig = {
-	[WidgetName in keyof BootstrapWidgetsConfig]: AdaptPropsSlots<BootstrapWidgetsConfig[WidgetName]>;
-};
+import type {WidgetsConfig} from './config.gen';
+export type {WidgetsConfig};
+
 type DefaultConfigInput = Partial2Levels<WidgetsConfig> & {
 	adaptParentConfig?: (config: Partial2Levels<WidgetsConfig>) => Partial2Levels<WidgetsConfig>;
 	children?: ReactNode | undefined;

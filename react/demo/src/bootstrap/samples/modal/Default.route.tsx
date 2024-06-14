@@ -3,7 +3,7 @@ import {Modal, modalCloseButtonClick, modalOutsideClick} from '@agnos-ui/react-b
 import {useRef, useState} from 'react';
 
 const DefaultDemo = () => {
-	const modal = useRef<ModalApi>(null);
+	const modal = useRef<ModalApi<any>>(null);
 	const [message, setMessage] = useState('');
 	const [fullscreen, setFullscreen] = useState(false);
 	return (

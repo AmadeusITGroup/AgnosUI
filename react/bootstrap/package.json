@@ -61,16 +61,29 @@
 			"files": [
 				"src/**",
 				"!src/generated/**",
+				"!src/components/**/*.gen.ts",
 				"../../scripts/generateExports.js"
 			],
 			"output": [
 				"src/generated/**"
 			]
 		},
+		"generate:component-types": {
+			"command": "tsx --tsconfig ../../scripts/bootstrapTypes/tsconfig.json ../../scripts/bootstrapTypes/genTypeExports.ts react",
+			"files": [
+				"../../core/src/**",
+				"../../core-bootstrap/src/**",
+				"../../scripts/bootstrapTypes/genTypeExports.ts"
+			],
+			"output": [
+				"src/components/**/*.gen.ts"
+			]
+		},
 		"build:src": {
 			"command": "vite build && tsc -p tsconfig.build.json",
 			"dependencies": [
 				"generate:exports",
+				"generate:component-types",
 				"../headless:build",
 				"../../core-bootstrap:build"
 			],

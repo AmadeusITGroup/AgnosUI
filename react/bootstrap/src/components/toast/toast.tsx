@@ -3,16 +3,11 @@ import {Slot} from '@agnos-ui/react-headless/slot';
 import {useDirectives, classDirective} from '@agnos-ui/react-headless/utils/directive';
 import type {ForwardRefExoticComponent, PropsWithChildren, RefAttributes} from 'react';
 import {forwardRef, useImperativeHandle} from 'react';
-import type {AdaptSlotContentProps, AdaptWidgetSlots, WidgetFactory, WidgetProps, WidgetState} from '@agnos-ui/react-headless/types';
-import type {ToastApi} from '@agnos-ui/core-bootstrap/components/toast';
+import type {WidgetFactory} from '@agnos-ui/react-headless/types';
 import {createToast as coreCreateToast} from '@agnos-ui/core-bootstrap/components/toast';
+import type {ToastWidget, ToastContext, ToastProps, ToastApi} from './toast.gen';
 
-export * from '@agnos-ui/core-bootstrap/components/toast';
-
-export type ToastWidget = AdaptWidgetSlots<import('@agnos-ui/core-bootstrap/components/toast').ToastWidget>;
-export type ToastProps = WidgetProps<ToastWidget>;
-export type ToastState = WidgetState<ToastWidget>;
-export type ToastContext = AdaptSlotContentProps<import('@agnos-ui/core-bootstrap/components/toast').ToastContext>;
+export type * from './toast.gen';
 export const createToast: WidgetFactory<ToastWidget> = coreCreateToast as any;
 
 const ToastHeader = (slotContext: ToastContext) => (
