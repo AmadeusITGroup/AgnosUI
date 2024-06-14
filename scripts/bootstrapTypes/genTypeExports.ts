@@ -29,20 +29,47 @@ const typeChecker = program.getTypeChecker();
 /**
  * Utility method to resolve all used types from some provided typescript code.
  *
- * @param sourceCode the typescript source code
- * @returns the Set of used types
+ * @param nodes the typescript source code nodes
+ * @returns the map to import used types
  */
-function getAllTypesFromSourceCode(sourceCode: string): Set<string> {
-	const sourceFile = ts.createSourceFile('temp.ts', sourceCode, ts.ScriptTarget.Latest, true);
-	const types = new Set<string>();
+function getTypesImportsMap(nodes: Node[], excludedNames: Set<string>) {
+	const importsByModule = new Map<string, string[]>();
+	const processedNames = new Set<string>(excludedNames);
 	function visit(node: Node) {
 		if (ts.isTypeReferenceNode(node)) {
-			types.add(node.typeName.getText(sourceFile));
+			const name = node.typeName.getText();
+			if (!processedNames.has(name)) {
+				let symbol = typeChecker.getSymbolAtLocation(node.typeName);
+				while (symbol && symbol.flags & ts.SymbolFlags.Alias && !(symbol.declarations?.[0] && ts.isImportSpecifier(symbol.declarations?.[0]))) {
+					symbol = typeChecker.getImmediateAliasedSymbol(symbol);
+				}
+				const declaration = symbol?.declarations?.[0];
+				if (declaration && ts.isImportSpecifier(declaration) && ts.isStringLiteral(declaration.parent.parent.parent.moduleSpecifier)) {
+					let moduleSpecifier = declaration.parent.parent.parent.moduleSpecifier.text;
+					if (moduleSpecifier.startsWith('.')) {
+						const modulePath = path.relative(root, path.dirname(declaration.getSourceFile().fileName)).split(path.sep);
+						if (modulePath[0] !== 'core-bootstrap' && modulePath[0] !== 'core') {
+							throw new Error('Unexpected import path: ' + moduleSpecifier + ' in ' + declaration.getSourceFile().fileName);
+						}
+						modulePath[0] = `@agnos-ui/${modulePath[0]}`;
+						modulePath.splice(1, 1); // remove src
+						moduleSpecifier = path.posix.join(modulePath.join('/'), moduleSpecifier);
+					}
+					moduleSpecifier = moduleSpecifier.replace(/^@agnos-ui\/core\//, `@agnos-ui/${framework}-headless/`);
+					processedNames.add(name);
+					let importsArray = importsByModule.get(moduleSpecifier);
+					if (!importsArray) {
+						importsArray = [];
+						importsByModule.set(moduleSpecifier, importsArray);
+					}
+					importsArray.push(name);
+				}
+			}
 		}
 		ts.forEachChild(node, visit);
 	}
-	visit(sourceFile);
-	return types;
+	nodes.forEach(visit);
+	return importsByModule;
 }
 
 const componentsProps: [string, string, number][] = [];
@@ -57,7 +84,8 @@ for (const component of components) {
 	// core-bootstrap/src/components/${component}/${component}.ts and filter out Extra or Common ones.
 	const exportsList = typeChecker.getExportsOfModule(sourceFileSymbol);
 	let exports = '';
-	const exportNames = new Set();
+	const exportedNodes: Node[] = [];
+	const exportNames = new Set<string>();
 	for (const bootstrapExport of exportsList.filter(
 		(btsExport) => !btsExport.name.endsWith('CommonPropsAndState') && !btsExport.name.endsWith('ExtraProps') && !btsExport.name.startsWith('Common'),
 	)) {
@@ -66,15 +94,18 @@ for (const component of components) {
 		if (ts.isTypeAliasDeclaration(node)) {
 			// type aliases are copied as defined
 			exports += node.getText() + '\n\n';
+			exportedNodes.push(node);
 		} else if (ts.isInterfaceDeclaration(node)) {
 			// interfaces are resolved to obtain a *flattened* version
 			exports += `export interface ${bootstrapExport.name}${node.typeParameters?.length ? `<${node.typeParameters.map((typeParam) => typeParam.getText()).join(', ')}>` : ''} {\n`;
+			exportedNodes.push(...(node.typeParameters ?? []));
 			for (const property of typeChecker.getTypeAtLocation(node).getProperties()) {
 				const propertyDeclaration = property.getDeclarations()![0];
 				// TODO the js documentation is copied as-is, though it could be interesting for Props interfaces
 				// to add the tag @defaultValue based on the getDefaultConfig functions
 				exports += `\t/**\n\t * ${ts.displayPartsToString(property.getDocumentationComment(typeChecker)).split('\n').join('\n\t * ')}\n\t */\n`;
 				exports += `\t${propertyDeclaration.getText()}\n`;
+				exportedNodes.push(propertyDeclaration);
 			}
 			exports += `}\n\n`;
 			if (bootstrapExport.name === `${component.slice(0, 1).toUpperCase()}${component.slice(1)}Props`) {
@@ -82,50 +113,11 @@ for (const component of components) {
 			}
 		}
 	}
-	const allUsedTypes = getAllTypesFromSourceCode(exports);
-
-	// We now resolve all necessary imports to add on top of the generated file.
-	// For this we go through all files in core-bootstrap and core to resolve type-only imports by name / location.
-	// Once this map is built, we change the `@agnos-ui/core` location to be `@agnos-ui/${framework}-headless` instead.
-	const mapImportsByModule = new Map<string, Set<string>>();
-	const visited = new Set();
-	const queue: string[] = [`@agnos-ui/core-bootstrap/components/${component}/${component}`];
-	visited.add(queue[0]);
-	visited.add('@agnos-ui/core/components/commonProps');
-
-	while (queue.length) {
-		const modulePath = queue.shift()!.replace(/^@agnos-ui\/core\/components\/([^/]+)$/, '@agnos-ui/core/components/$1/$1');
-		const filePath = modulePath.replace('@agnos-ui/core-bootstrap', 'core-bootstrap/src').replace('@agnos-ui/core', 'core/src') + '.ts';
-		for (const node of program.getSourceFile(path.join(root, filePath))!.statements) {
-			if (ts.isImportDeclaration(node) && ts.isStringLiteral(node.moduleSpecifier) && node.importClause?.isTypeOnly) {
-				const bindings = node.importClause.namedBindings!;
-				if (ts.isNamedImports(bindings)) {
-					for (const element of bindings.elements) {
-						let moduleSpecifier = node.moduleSpecifier.text;
-						if (moduleSpecifier.startsWith('.')) {
-							moduleSpecifier = path.posix.join(modulePath.slice(0, modulePath.lastIndexOf('/')), moduleSpecifier);
-						}
-						if (moduleSpecifier.startsWith('@agnos-ui/core') && !visited.has(moduleSpecifier)) {
-							queue.push(moduleSpecifier);
-							visited.add(moduleSpecifier);
-						}
-						const importName = element.name.text;
-						if (!exportNames.has(importName) && allUsedTypes.has(importName)) {
-							moduleSpecifier = moduleSpecifier.replace('@agnos-ui/core/', `@agnos-ui/${framework}-headless/`);
-							if (!mapImportsByModule.has(moduleSpecifier)) {
-								mapImportsByModule.set(moduleSpecifier, new Set());
-							}
-							mapImportsByModule.get(moduleSpecifier)!.add(importName);
-						}
-					}
-				}
-			}
-		}
-	}
+	const mapImportsByModule = getTypesImportsMap(exportedNodes, exportNames);
 
 	let imports = '';
-	for (const entry of mapImportsByModule.entries()) {
-		imports += `import type {${[...entry[1].values()].join(', ')}} from '${entry[0]}';\n`;
+	for (const [importFile, importNames] of mapImportsByModule.entries()) {
+		imports += `import type {${importNames.join(', ')}} from '${importFile}';\n`;
 	}
 	await writeFile(path.join(root, `${framework}/bootstrap/src/components/${component}/${component}.gen.ts`), imports + '\n' + exports);
 }
