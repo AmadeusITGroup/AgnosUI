@@ -82,11 +82,11 @@
 		"@floating-ui/dom": "^1.6.5"
 	},
 	"devDependencies": {
-		"@sveltejs/package": "^2.3.1",
+		"@sveltejs/package": "^2.3.2",
 		"@sveltejs/vite-plugin-svelte": "^3.1.1",
 		"autoprefixer": "^10.4.19",
 		"daisyui": "^4.12.2",
-		"eslint-plugin-svelte": "^2.39.3",
+		"eslint-plugin-svelte": "^2.39.4",
 		"postcss": "^8.4.38",
 		"prettier-plugin-svelte": "^3.2.4",
 		"svelte": "^4.2.18",
