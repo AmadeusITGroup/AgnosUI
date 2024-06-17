@@ -7,13 +7,14 @@ import {useDirective, classDirective, useDirectives} from '@agnos-ui/react-headl
 import type {PropsWithChildren, Ref, RefAttributes} from 'react';
 import ReactDOM from 'react-dom/client';
 import {forwardRef, useImperativeHandle} from 'react';
-import {createModal as coreCreateModal} from '@agnos-ui/core-bootstrap/components/modal';
+import {createModal as coreCreateModal, getModalDefaultConfig as coreGetModalDefaultConfig} from '@agnos-ui/core-bootstrap/components/modal';
 import classNames from 'classnames';
 import type {ModalApi, ModalContext, ModalProps, ModalWidget} from './modal.gen';
 
 export type * from './modal.gen';
 export const createModal: <Data>(propsConfig?: PropsConfig<ModalProps<Data>>) => ModalWidget<Data> = coreCreateModal as any;
 export {modalCloseButtonClick, modalOutsideClick} from '@agnos-ui/react-headless/components/modal';
+export const getModalDefaultConfig: () => ModalProps<any> = coreGetModalDefaultConfig as any;
 
 const CloseButton = ({directive}: {directive: Directive}) => <button className="btn-close" {...useDirective(directive)} />;
 

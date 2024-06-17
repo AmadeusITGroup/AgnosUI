@@ -1,4 +1,4 @@
-import type {AdaptSlotContentProps, RatingWidget, SlotContent, StarContext} from '@agnos-ui/angular-bootstrap';
+import type {RatingWidget, SlotContent, StarContext} from '@agnos-ui/angular-bootstrap';
 import {BaseWidgetDirective, SlotDirective, auNumberAttribute, callWidgetFactory, createRating} from '@agnos-ui/angular-bootstrap';
 import type {AfterContentChecked} from '@angular/core';
 import {ChangeDetectionStrategy, Component, ContentChild, Directive, Input, TemplateRef, inject} from '@angular/core';
@@ -8,7 +8,7 @@ import {ChangeDetectionStrategy, Component, ContentChild, Directive, Input, Temp
  */
 @Directive({selector: 'ng-template[appRatingStar]', standalone: true})
 export class RatingReadonlyStarDirective {
-	public templateRef = inject(TemplateRef<AdaptSlotContentProps<StarContext>>);
+	public templateRef = inject(TemplateRef<StarContext>);
 	static ngTemplateContextGuard(_dir: RatingReadonlyStarDirective, context: unknown): context is StarContext {
 		return true;
 	}
@@ -48,7 +48,7 @@ export class RatingReadonlyComponent extends BaseWidgetDirective<RatingWidget> i
 	});
 
 	@Input()
-	slotStar: SlotContent<AdaptSlotContentProps<StarContext>>;
+	slotStar: SlotContent<StarContext>;
 	@ContentChild(RatingReadonlyStarDirective, {static: false}) slotStarFromContent: RatingReadonlyStarDirective | undefined;
 
 	@Input({transform: auNumberAttribute}) rating: number | undefined;

@@ -61,6 +61,7 @@
 			],
 			"files": [
 				"src/**",
+				"!src/components/**/*.gen.ts",
 				"!src/generated/**",
 				"../../scripts/generateExports.js"
 			],
@@ -68,10 +69,22 @@
 				"src/generated/**"
 			]
 		},
+		"generate:component-types": {
+			"command": "tsx --tsconfig ../../scripts/bootstrapTypes/tsconfig.json ../../scripts/bootstrapTypes/genTypeExports.ts svelte",
+			"files": [
+				"../../core/src/**",
+				"../../core-bootstrap/src/**",
+				"../../scripts/bootstrapTypes/genTypeExports.ts"
+			],
+			"output": [
+				"src/components/**/*.gen.ts"
+			]
+		},
 		"build:src": {
 			"command": "svelte-package -i src",
 			"dependencies": [
 				"generate:exports",
+				"generate:component-types",
 				"../headless:build",
 				"../../core-bootstrap:build",
 				"../preprocess:build"
@@ -115,6 +128,7 @@
 			"command": "svelte-check --fail-on-warnings --output human-verbose",
 			"dependencies": [
 				"generate:exports",
+				"generate:component-types",
 				"../headless:build",
 				"../../core-bootstrap:build"
 			],

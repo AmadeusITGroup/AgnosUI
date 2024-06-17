@@ -1,15 +1,9 @@
-export * from '@agnos-ui/core-bootstrap/components/rating';
+import type {WidgetPropsSlots, WidgetFactory} from '@agnos-ui/svelte-headless/types';
+import {createRating as coreCreateRating, getRatingDefaultConfig as coreGetRatingDefaultConfig} from '@agnos-ui/core-bootstrap/components/rating';
+import type {RatingWidget, RatingProps} from './rating.gen';
 
-import type {AdaptWidgetSlots, WidgetPropsSlots, WidgetFactory, WidgetProps, WidgetState, PropType} from '@agnos-ui/svelte-headless/types';
-import {createRating as coreCreateRating} from '@agnos-ui/core-bootstrap/components/rating';
-import type {RatingWidget as CoreWidget} from '@agnos-ui/core-bootstrap/components/rating';
-
-// widget
-export interface RatingWidget extends AdaptWidgetSlots<CoreWidget> {}
-export interface RatingProps extends WidgetProps<RatingWidget> {}
-export interface RatingState extends WidgetState<RatingWidget> {}
-export interface RatingApi extends PropType<RatingWidget, 'api'> {}
-// slots
-export interface RatingSlots extends WidgetPropsSlots<RatingProps> {}
-// factory
+export type * from './rating.gen';
 export const createRating: WidgetFactory<RatingWidget> = coreCreateRating as any;
+export const getRatingDefaultConfig: () => RatingProps = coreGetRatingDefaultConfig as any;
+
+export interface RatingSlots extends WidgetPropsSlots<RatingProps> {}

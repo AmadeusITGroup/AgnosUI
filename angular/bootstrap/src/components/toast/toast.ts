@@ -1,10 +1,7 @@
-import type {AdaptWidgetSlots, WidgetProps, WidgetState, AdaptSlotContentProps, WidgetFactory} from '@agnos-ui/angular-headless';
-import {createToast as coreCreateToast} from '@agnos-ui/core-bootstrap/components/toast';
+import type {WidgetFactory} from '@agnos-ui/angular-headless';
+import {createToast as coreCreateToast, getToastDefaultConfig as coreGetToastDefaultConfig} from '@agnos-ui/core-bootstrap/components/toast';
+import type {ToastProps, ToastWidget} from './toast.gen';
 
-export * from '@agnos-ui/core-bootstrap/components/toast';
-
-export type ToastWidget = AdaptWidgetSlots<import('@agnos-ui/core-bootstrap/components/toast').ToastWidget>;
-export type ToastProps = WidgetProps<ToastWidget>;
-export type ToastState = WidgetState<ToastWidget>;
-export type ToastContext = AdaptSlotContentProps<import('@agnos-ui/core-bootstrap/components/toast').ToastContext>;
+export type * from './toast.gen';
 export const createToast: WidgetFactory<ToastWidget> = coreCreateToast as any;
+export const getToastDefaultConfig: () => ToastProps = coreGetToastDefaultConfig as any;

@@ -5,7 +5,7 @@ import {toSlotContextWidget} from '@agnos-ui/react-headless/types';
 import type {PropsWithChildren} from 'react';
 import React from 'react';
 import {Slot} from '@agnos-ui/react-headless/slot';
-import {createSlider as coreCreateSlider} from '@agnos-ui/core-bootstrap/components/slider';
+import {createSlider as coreCreateSlider, getSliderDefaultConfig as coreGetSliderDefaultConfig} from '@agnos-ui/core-bootstrap/components/slider';
 import type {
 	SliderWidget,
 	SliderSlotHandleContext,
@@ -18,6 +18,7 @@ import type {
 
 export type * from './slider.gen';
 export const createSlider: WidgetFactory<SliderWidget> = coreCreateSlider as any;
+export const getSliderDefaultConfig: () => SliderProps = coreGetSliderDefaultConfig as any;
 
 export const DefaultSlotHandle = (slotContext: SliderSlotHandleContext) => {
 	return <button {...useDirective<{item: SliderHandle}>(slotContext.widget.directives.handleDirective, {item: slotContext.item})}>&nbsp;</button>;

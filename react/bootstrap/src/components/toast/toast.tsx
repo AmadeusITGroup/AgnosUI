@@ -4,11 +4,12 @@ import {useDirectives, classDirective} from '@agnos-ui/react-headless/utils/dire
 import type {ForwardRefExoticComponent, PropsWithChildren, RefAttributes} from 'react';
 import {forwardRef, useImperativeHandle} from 'react';
 import type {WidgetFactory} from '@agnos-ui/react-headless/types';
-import {createToast as coreCreateToast} from '@agnos-ui/core-bootstrap/components/toast';
+import {createToast as coreCreateToast, getToastDefaultConfig as coreGetToastDefaultConfig} from '@agnos-ui/core-bootstrap/components/toast';
 import type {ToastWidget, ToastContext, ToastProps, ToastApi} from './toast.gen';
 
 export type * from './toast.gen';
 export const createToast: WidgetFactory<ToastWidget> = coreCreateToast as any;
+export const getToastDefaultConfig: () => ToastProps = coreGetToastDefaultConfig as any;
 
 const ToastHeader = (slotContext: ToastContext) => (
 	<div className="toast-header">

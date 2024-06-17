@@ -4,11 +4,25 @@ import {createContext, forwardRef, useContext, useEffect, useImperativeHandle} f
 import {useWidgetWithConfig} from '../../config';
 import {classDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
 import type {Directive, WidgetFactory} from '@agnos-ui/react-headless/types';
-import {createAccordion as coreCreateAccordion} from '@agnos-ui/core-bootstrap/components/accordion';
-import type {AccordionWidget, AccordionItemContext, AccordionApi, AccordionItemProps, AccordionProps, AccordionItemApi} from './accordion.gen';
+import {
+	createAccordion as coreCreateAccordion,
+	getAccordionDefaultConfig as coreGetAccordionDefaultConfig,
+	createAccordionItem as coreCreateAccordionItem,
+} from '@agnos-ui/core-bootstrap/components/accordion';
+import type {
+	AccordionWidget,
+	AccordionItemContext,
+	AccordionApi,
+	AccordionItemProps,
+	AccordionProps,
+	AccordionItemApi,
+	AccordionItemWidget,
+} from './accordion.gen';
 
 export type * from './accordion.gen';
 export const createAccordion: WidgetFactory<AccordionWidget> = coreCreateAccordion as any;
+export const getAccordionDefaultConfig: () => AccordionProps = coreGetAccordionDefaultConfig as any;
+export const createAccordionItem: WidgetFactory<AccordionItemWidget> = coreCreateAccordionItem as any;
 
 type AccordionTag = `h${1 | 2 | 3 | 4 | 5 | 6}`;
 

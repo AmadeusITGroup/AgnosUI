@@ -1,4 +1,4 @@
-import type {AdaptSlotContentProps, SlotContent} from '@agnos-ui/angular-headless';
+import type {SlotContent} from '@agnos-ui/angular-headless';
 import {
 	BaseWidgetDirective,
 	SlotDirective,
@@ -29,7 +29,7 @@ import {createRating} from './rating';
 
 @Directive({selector: 'ng-template[auRatingStar]', standalone: true})
 export class RatingStarDirective {
-	public templateRef = inject(TemplateRef<AdaptSlotContentProps<StarContext>>);
+	public templateRef = inject(TemplateRef<StarContext>);
 	static ngTemplateContextGuard(_dir: RatingStarDirective, context: unknown): context is StarContext {
 		return true;
 	}
@@ -107,7 +107,10 @@ export class RatingComponent extends BaseWidgetDirective<RatingWidget> implement
 	 */
 	@Input({alias: 'auResettable', transform: auBooleanAttribute}) resettable: boolean | undefined;
 
-	@Input('auSlotStar') slotStar: SlotContent<AdaptSlotContentProps<StarContext>>;
+	/**
+	 * The template to override the way each star is displayed.
+	 */
+	@Input('auSlotStar') slotStar: SlotContent<StarContext>;
 	@ContentChild(RatingStarDirective, {static: false}) slotStarFromContent: RatingStarDirective | undefined;
 
 	/**

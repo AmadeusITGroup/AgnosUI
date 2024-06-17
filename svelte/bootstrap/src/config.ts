@@ -1,14 +1,12 @@
 import type {Partial2Levels, WidgetsConfigStore} from '@agnos-ui/svelte-headless/config';
 import {widgetsConfigFactory} from '@agnos-ui/svelte-headless/config';
-import type {AdaptPropsSlots, SlotsPresent, Widget, WidgetFactory, WidgetProps} from '@agnos-ui/svelte-headless/types';
-import type {BootstrapWidgetsConfig} from '@agnos-ui/core-bootstrap/config';
+import type {SlotsPresent, Widget, WidgetFactory, WidgetProps} from '@agnos-ui/svelte-headless/types';
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 
 export * from '@agnos-ui/svelte-headless/config';
 
-export type WidgetsConfig = {
-	[WidgetName in keyof BootstrapWidgetsConfig]: AdaptPropsSlots<BootstrapWidgetsConfig[WidgetName]>;
-};
+import type {WidgetsConfig} from './config.gen';
+export type {WidgetsConfig};
 
 type WidgetFactoryInput<W extends Widget> = {
 	factory: WidgetFactory<W>;

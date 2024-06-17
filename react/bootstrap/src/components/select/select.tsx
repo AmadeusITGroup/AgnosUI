@@ -1,4 +1,4 @@
-import {createSelect as coreCreateSelect} from '@agnos-ui/core-bootstrap/components/select';
+import {createSelect as coreCreateSelect, getSelectDefaultConfig as coreGetSelectDefaultConfig} from '@agnos-ui/core-bootstrap/components/select';
 import {Slot} from '@agnos-ui/react-headless/slot';
 import type {PropsConfig} from '@agnos-ui/react-headless/types';
 import {toSlotContextWidget} from '@agnos-ui/react-headless/types';
@@ -9,6 +9,7 @@ import type {SelectProps, SelectWidget, SelectItemContext, SelectContext, ItemCo
 
 export type * from './select.gen';
 export const createSelect: <Item>(propsConfig?: PropsConfig<SelectProps<Item>>) => SelectWidget<Item> = coreCreateSelect as any;
+export const getSelectDefaultConfig: () => SelectProps<any> = coreGetSelectDefaultConfig as any;
 
 function DefaultBadge<Item>(slotContext: SelectItemContext<Item>) {
 	return <>{'' + slotContext.itemContext.item}</>;

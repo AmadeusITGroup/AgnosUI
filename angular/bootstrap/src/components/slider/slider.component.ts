@@ -243,12 +243,21 @@ export class SliderComponent extends BaseWidgetDirective<SliderWidget> implement
 	@Output('auValuesChange')
 	valuesChange = new EventEmitter<number[]>();
 
+	/**
+	 * Slot to change the default labels of the slider
+	 */
 	@Input('auSlotLabel') slotLabel: SlotContent<SliderSlotLabelContext>;
 	@ContentChild(SliderLabelDirective, {static: false}) slotLabelFromContent: SliderLabelDirective | undefined;
 
+	/**
+	 * Slot to change the default display of the slider
+	 */
 	@Input('auSlotStructure') slotStructure: SlotContent<SliderContext>;
 	@ContentChild(SliderStructureDirective, {static: false}) slotStructureFromContent: SliderStructureDirective | undefined;
 
+	/**
+	 * Slot to change the handlers
+	 */
 	@Input('auSlotHandle') slotHandle: SlotContent<SliderSlotHandleContext>;
 	@ContentChild(SliderHandleDirective, {static: false}) slotHandleFromContent: SliderHandleDirective | undefined;
 

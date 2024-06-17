@@ -4,12 +4,16 @@ import {toSlotContextWidget} from '@agnos-ui/react-headless/types';
 import {Slot} from '@agnos-ui/react-headless/slot';
 import {useDirective} from '@agnos-ui/react-headless/utils/directive';
 import classNames from 'classnames';
-import {createProgressbar as coreCreateProgressbar} from '@agnos-ui/core-bootstrap/components/progressbar';
+import {
+	createProgressbar as coreCreateProgressbar,
+	getProgressbarDefaultConfig as coreGetProgressbarDefaultConfig,
+} from '@agnos-ui/core-bootstrap/components/progressbar';
 import type {WidgetFactory} from '@agnos-ui/react-headless/types';
 import type {ProgressbarContext, ProgressbarProps, ProgressbarWidget} from './progressbar.gen';
 
 export type * from './progressbar.gen';
 export const createProgressbar: WidgetFactory<ProgressbarWidget> = coreCreateProgressbar as any;
+export const getProgressbarDefaultConfig: () => ProgressbarProps = coreGetProgressbarDefaultConfig as any;
 
 function DefaultSlotContent(slotContext: ProgressbarContext) {
 	const {striped, animated, type} = slotContext.state;

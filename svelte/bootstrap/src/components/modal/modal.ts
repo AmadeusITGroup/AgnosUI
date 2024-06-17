@@ -1,24 +1,10 @@
-export * from '@agnos-ui/core-bootstrap/components/modal';
+import type {WidgetPropsSlots, PropsConfig} from '@agnos-ui/svelte-headless/types';
+import {createModal as coreCreateModal, getModalDefaultConfig as coreGetModalDefaultConfig} from '@agnos-ui/core-bootstrap/components/modal';
+import type {ModalProps, ModalWidget} from './modal.gen';
 
-import type {
-	AdaptSlotContentProps,
-	AdaptWidgetSlots,
-	WidgetPropsSlots,
-	PropsConfig,
-	WidgetProps,
-	WidgetState,
-	PropType,
-} from '@agnos-ui/svelte-headless/types';
-import {createModal as coreCreateModal} from '@agnos-ui/core-bootstrap/components/modal';
-import type {ModalWidget as CoreWidget, ModalContext as CoreContext} from '@agnos-ui/core-bootstrap/components/modal';
-
-// widget
-export interface ModalWidget<Data> extends AdaptWidgetSlots<CoreWidget<Data>> {}
-export interface ModalProps<Data> extends WidgetProps<ModalWidget<Data>> {}
-export interface ModalState<Data> extends WidgetState<ModalWidget<Data>> {}
-export interface ModalApi<Data> extends PropType<ModalWidget<Data>, 'api'> {}
-// slots
-export interface ModalSlots<Data> extends WidgetPropsSlots<ModalProps<Data>> {}
-export interface ModalContext<Data> extends AdaptSlotContentProps<CoreContext<Data>> {}
-// factory
+export type * from './modal.gen';
 export const createModal: <Data>(propsConfig?: PropsConfig<ModalProps<Data>>) => ModalWidget<Data> = coreCreateModal as any;
+export {modalCloseButtonClick, modalOutsideClick} from '@agnos-ui/core-bootstrap/components/modal';
+export const getModalDefaultConfig: () => ModalProps<any> = coreGetModalDefaultConfig as any;
+
+export interface ModalSlots<Data> extends WidgetPropsSlots<ModalProps<Data>> {}
