@@ -1,1 +1,0 @@
-import{e as s}from"./extendWidget-DmHfBe22.js";import{c as a,g as e}from"./pagination--GkwduJn-C49-moJ3.js";const t={slotEllipsis:"…",slotFirst:"«",slotPrevious:"‹",slotNext:"›",slotLast:"»",slotPages:void 0,slotStructure:void 0,slotNumberLabel:({displayedPage:o})=>`${o}`};function r(){return{...e(),...t}}const l=s(a,t,{});export{l as c,r as g};
