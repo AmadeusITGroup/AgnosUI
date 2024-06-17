@@ -118,12 +118,15 @@ const tagReplacements = new Map([
 	['ng-component', ''],
 	['au-component', ''],
 ]);
-const filterTagName = (tagName: string) => {
+const filterTagName = (tagName: string, attributes: HTMLAttribute[]) => {
 	const mapResult = tagReplacements.get(tagName);
 	if (mapResult != null) {
 		return mapResult;
 	}
 	if (tagName.startsWith('app-')) {
+		return '';
+	}
+	if (tagName === 'link' && attributes.some((attr) => attr.name === 'rel' && attr.value === 'modulepreload')) {
 		return '';
 	}
 	return tagName;
@@ -138,7 +141,7 @@ export const filterHtmlStructure = (node: HTMLNode): HTMLNode => {
 	if (removeTagsAndDescendants.has(tagName)) {
 		return null;
 	}
-	tagName = filterTagName(tagName);
+	tagName = filterTagName(tagName, attributes);
 	if (tagName == '') {
 		attributes = [];
 	}
