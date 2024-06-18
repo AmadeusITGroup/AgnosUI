@@ -2,7 +2,7 @@ import type {SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
 import {
 	BaseWidgetDirective,
 	ComponentTemplate,
-	SlotDefaultDirective,
+	ContentAsSlotDirective,
 	SlotDirective,
 	UseDirective,
 	UseMultiDirective,
@@ -66,7 +66,7 @@ export class ToastHeaderDirective {
 			</div>
 		}
 		<div class="toast-body">
-			<ng-template [auSlot]="state.slotDefault" [auSlotProps]="{state, widget}"></ng-template>
+			<ng-template [auSlot]="state.children" [auSlotProps]="{state, widget}"></ng-template>
 		</div>
 		@if (state.dismissible && !state.slotHeader) {
 			<button class="btn-close btn-close-white me-2 m-auto" [auUse]="widget.directives.closeButtonDirective"></button>
@@ -87,8 +87,8 @@ const defaultConfig: Partial<ToastProps> = {
 	selector: '[auToast]',
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [SlotDirective, UseMultiDirective, SlotDefaultDirective],
-	template: ` <ng-template [auSlotDefault]="defaultSlots">
+	imports: [SlotDirective, UseMultiDirective, ContentAsSlotDirective],
+	template: ` <ng-template [auContentAsSlot]="defaultSlots">
 			<ng-content></ng-content>
 		</ng-template>
 		@if (!state().hidden) {
@@ -161,7 +161,7 @@ export class ToastComponent extends BaseWidgetDirective<ToastWidget> implements 
 	/**
 	 * Template for the toast content
 	 */
-	@Input('auSlotDefault') slotDefault: SlotContent<ToastContext>;
+	@Input('auChildren') children: SlotContent<ToastContext>;
 	@ContentChild(ToastBodyDirective, {static: false})
 	slotDefaultFromContent: ToastBodyDirective | undefined;
 
@@ -211,7 +211,7 @@ export class ToastComponent extends BaseWidgetDirective<ToastWidget> implements 
 
 	ngAfterContentChecked(): void {
 		this._widget.patchSlots({
-			slotDefault: this.slotDefaultFromContent?.templateRef,
+			children: this.slotDefaultFromContent?.templateRef,
 			slotStructure: this.slotStructureFromContent?.templateRef,
 			slotHeader: this.slotHeaderFromContent?.templateRef,
 		});

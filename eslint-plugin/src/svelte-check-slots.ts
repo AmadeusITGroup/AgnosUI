@@ -6,7 +6,7 @@ import {addIndentation, getIndentation} from './ast-utils';
 
 const keepAttributes = ['slotContent', 'props'];
 
-const toSlotName = (propName: string) => (propName.startsWith('slot') ? `${propName[4].toLowerCase()}${propName.substring(5)}` : null);
+const toSlotName = (propName: string) => (propName.startsWith('slot') ? `${propName[4].toLowerCase()}${propName.substring(5)}` : propName);
 
 const getAttributeNode = (node: SvelteAST.SvelteElement, attrName: string) => {
 	for (const attr of node.startTag.attributes) {
@@ -54,11 +54,11 @@ const sortSlots = ({slot: slot1}: {slot: string}, {slot: slot2}: {slot: string})
 	if (slot1 === slot2) {
 		return 0;
 	}
-	if (slot1 === 'default') {
+	if (slot1 === 'children') {
 		// put default slot first
 		return -1;
 	}
-	if (slot2 === 'default') {
+	if (slot2 === 'children') {
 		// put default slot first
 		return 1;
 	}
@@ -82,8 +82,8 @@ const extractExpectedSlotsList = (node: SvelteAST.SvelteElement, context: Readon
 	for (const property of stateSymbolType) {
 		const propName = property.name;
 		const slot = toSlotName(propName);
-		if (slot) {
-			const slotType = checker.getTypeOfSymbolAtLocation(property, propsTsNode);
+		const slotType = checker.getTypeOfSymbolAtLocation(property, propsTsNode);
+		if (checker.typeToString(slotType).startsWith('SlotContent<')) {
 			res.push({slot, params: extractSlotParams(slotType)});
 		}
 	}
@@ -104,7 +104,7 @@ const extractSlotName = (node: SvelteAST.SvelteElement) => {
 };
 
 const buildNodeText = (slotAttributes: string, slotName: string, slotsList: ReturnType<typeof extractExpectedSlotsList>) => {
-	const slotNameArg = slotName === 'default' ? '' : ` name=${JSON.stringify(slotName)}`;
+	const slotNameArg = slotName === 'children' ? '' : ` name=${JSON.stringify(slotName)}`;
 	let output = `<Slot${slotAttributes} let:component let:props>\n\t<svelte:fragment slot="slot" let:props><slot${slotNameArg} {...props} /></svelte:fragment>\n`;
 	if (slotsList.length > 0) {
 		output += `\t<svelte:component this={component} {...props}>\n`;
@@ -115,7 +115,7 @@ const buildNodeText = (slotAttributes: string, slotName: string, slotsList: Retu
 				defParam += ` let:${param}`;
 				useParam += ` {${param}}`;
 			}
-			if (slot === 'default') {
+			if (slot === 'children') {
 				output += `\t\t<svelte:fragment${defParam}><slot${useParam} /></svelte:fragment>\n`;
 			} else {
 				const strSlot = JSON.stringify(slot);

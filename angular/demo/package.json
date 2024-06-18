@@ -31,6 +31,7 @@
 			"command": "ng serve bootstrap",
 			"dependencies": [
 				"../headless:generate:exports",
+				"../bootstrap:generate:component-types",
 				"generate:links"
 			],
 			"service": true
@@ -54,6 +55,7 @@
 			"dependencies": [
 				"../../code-coverage:build",
 				"../headless:generate:exports",
+				"../bootstrap:generate:component-types",
 				"generate:links"
 			],
 			"service": true

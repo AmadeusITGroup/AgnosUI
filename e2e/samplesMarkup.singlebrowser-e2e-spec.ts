@@ -14,7 +14,7 @@ test(`Routes check`, async () => {
 
 test.describe(`Samples markup consistency check`, async () => {
 	const samplesExtraHash: Record<string, string> = {
-		'bootstrap/modal/playground': '#{"props":{"visible":true,"slotDefault":"Dialog content","slotTitle":"Dialog"}}',
+		'bootstrap/modal/playground': '#{"props":{"visible":true,"children":"Dialog content","slotTitle":"Dialog"}}',
 	};
 
 	const samplesExtraAction: Record<string, (page: Page) => Promise<void>> = {

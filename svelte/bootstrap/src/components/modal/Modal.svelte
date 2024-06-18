@@ -16,7 +16,7 @@
 <script lang="ts">
 	type Data = $$Generic; // eslint-disable-line no-undef
 	type $$Props = Partial<ModalProps<Data>>;
-	type $$Slots = ModalSlots<Data>;
+	type $$Slots = ModalSlots;
 
 	export let visible: boolean | undefined = undefined;
 

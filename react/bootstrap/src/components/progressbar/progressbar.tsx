@@ -1,4 +1,3 @@
-import {type PropsWithChildren} from 'react';
 import {useWidgetWithConfig} from '../../config';
 import {toSlotContextWidget} from '@agnos-ui/react-headless/types';
 import {Slot} from '@agnos-ui/react-headless/slot';
@@ -21,7 +20,7 @@ function DefaultSlotContent(slotContext: ProgressbarContext) {
 	return (
 		<div className="progress" style={{height: slotContext.state.height || undefined}}>
 			<div className={classes} style={{width: `${slotContext.state.percentage}%`}}>
-				<Slot slotContent={slotContext.state.slotDefault} props={slotContext} />
+				<Slot slotContent={slotContext.state.children} props={slotContext} />
 			</div>
 		</div>
 	);
@@ -31,8 +30,8 @@ const defaultConfig: Partial<ProgressbarProps> = {
 	slotStructure: DefaultSlotContent,
 };
 
-export const Progressbar = (props: PropsWithChildren<Partial<ProgressbarProps>>) => {
-	const [state, widget] = useWidgetWithConfig(createProgressbar, props, 'progressbar', {...defaultConfig, slotDefault: props.children});
+export const Progressbar = (props: Partial<ProgressbarProps>) => {
+	const [state, widget] = useWidgetWithConfig(createProgressbar, props, 'progressbar', defaultConfig);
 	const slotContext: ProgressbarContext = {state, widget: toSlotContextWidget(widget)};
 	return (
 		<div {...useDirective(widget.directives.ariaDirective)} className={state.className || undefined}>

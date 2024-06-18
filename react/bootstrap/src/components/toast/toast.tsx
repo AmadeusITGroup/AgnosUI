@@ -1,7 +1,7 @@
 import {useWidgetWithConfig} from '../../config';
 import {Slot} from '@agnos-ui/react-headless/slot';
 import {useDirectives, classDirective} from '@agnos-ui/react-headless/utils/directive';
-import type {ForwardRefExoticComponent, PropsWithChildren, RefAttributes} from 'react';
+import type {ForwardRefExoticComponent, RefAttributes} from 'react';
 import {forwardRef, useImperativeHandle} from 'react';
 import type {WidgetFactory} from '@agnos-ui/react-headless/types';
 import {createToast as coreCreateToast, getToastDefaultConfig as coreGetToastDefaultConfig} from '@agnos-ui/core-bootstrap/components/toast';
@@ -29,7 +29,7 @@ const DefaultSlotStructure = (slotContext: ToastContext) => (
 		{slotContext.state.slotHeader && <ToastHeader {...slotContext} />}
 
 		<div className="toast-body">
-			<Slot slotContent={slotContext.state.slotDefault} props={slotContext} />
+			<Slot slotContent={slotContext.state.children} props={slotContext} />
 		</div>
 		{slotContext.state.dismissible && !slotContext.state.slotHeader && <ToastCloseButtonNoHeader {...slotContext} />}
 	</>
@@ -52,11 +52,11 @@ const ToastElement = (slotContext: ToastContext) => (
 	</div>
 );
 
-export const Toast: ForwardRefExoticComponent<PropsWithChildren<Partial<ToastProps>> & RefAttributes<ToastApi>> = forwardRef(function Toast(
-	props: PropsWithChildren<Partial<ToastProps>>,
+export const Toast: ForwardRefExoticComponent<Partial<ToastProps> & RefAttributes<ToastApi>> = forwardRef(function Toast(
+	props: Partial<ToastProps>,
 	ref,
 ) {
-	const [state, widget] = useWidgetWithConfig(createToast, props, 'toast', {...defaultConfig, slotDefault: props.children});
+	const [state, widget] = useWidgetWithConfig(createToast, props, 'toast', {...defaultConfig, children: props.children});
 	useImperativeHandle(ref, () => widget.api, []);
 	const slotContext = {
 		state,

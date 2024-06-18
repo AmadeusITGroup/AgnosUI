@@ -28,7 +28,7 @@
 {/if}
 
 <div class="toast-body">
-	<Slot slotContent={state.slotDefault} props={slotContext} let:component let:props>
+	<Slot slotContent={state.children} props={slotContext} let:component let:props>
 		<svelte:fragment slot="slot" let:props><slot {...props} /></svelte:fragment>
 		<svelte:component this={component} {...props}>
 			<svelte:fragment let:state let:widget><slot {state} {widget} /></svelte:fragment>

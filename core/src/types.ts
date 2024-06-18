@@ -144,3 +144,6 @@ export type StyleKey = Exclude<
 	| 'cssText'
 >;
 export type StyleValue = string | undefined | null;
+
+export type Extends<T, U> = T extends U ? 1 : 0;
+export type IsSlotContent<T> = Extends<T, SlotContent<any>> | Extends<SlotContent<any>, T> extends 1 ? T : 0;
