@@ -18,7 +18,7 @@ interface ProgressbarExtraProps {
 	/**
 	 * Global template for the Progressbar.
 	 */
-	slotStructure: SlotContent<ProgressbarContext>;
+	structure: SlotContent<ProgressbarContext>;
 	/**
 	 * Label of the progress.
 	 */
@@ -48,7 +48,7 @@ export interface ProgressbarProps extends CoreProps, ProgressbarExtraProps {}
 export type ProgressbarWidget = Widget<ProgressbarProps, ProgressbarState, ProgressbarApi, object, ProgressbarDirectives>;
 
 const defaultConfigExtraProps: ProgressbarExtraProps = {
-	slotStructure: undefined,
+	structure: undefined,
 	children: undefined,
 	height: '',
 	striped: false,

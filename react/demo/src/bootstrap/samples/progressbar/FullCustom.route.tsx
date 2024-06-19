@@ -28,7 +28,7 @@ const FullCustomDemo = () => {
 	return (
 		<div className="d-flex align-items-center flex-wrap">
 			<div style={{width: '350px'}}>
-				<Progressbar value={value} slotStructure={Coffee} />
+				<Progressbar value={value} structure={Coffee} />
 			</div>
 			<div className="d-flex flex-column justify-content-evenly h-100 ms-5">
 				<div className="btn-group" role="group">

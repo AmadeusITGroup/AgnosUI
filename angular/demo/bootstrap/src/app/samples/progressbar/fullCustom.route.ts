@@ -8,7 +8,7 @@ import CoffeeProgressbarComponent from './cofee-progressbar.component';
 @Component({
 	standalone: true,
 	imports: [ProgressbarComponent],
-	providers: [provideWidgetsConfig(() => ({progressbar: {slotStructure: CoffeeProgressbarComponent}}))],
+	providers: [provideWidgetsConfig(() => ({progressbar: {structure: CoffeeProgressbarComponent}}))],
 	template: `
 		<div class="d-flex align-items-center flex-wrap">
 			<div style="width: 350px">
