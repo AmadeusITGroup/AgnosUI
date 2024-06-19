@@ -28,7 +28,7 @@ const propsValuesList = {
 	defaultPageFactory: {value: getPaginationDefaultConfig().pagesFactory, label: 'DefaultPageFactory'},
 	simpleLabel: {value: getPaginationDefaultConfig().ariaPageLabel, label: 'SimpleLabel'},
 	pageLabel: {value: (processPage: number, pageCount: number) => `Page ${processPage} of ${pageCount}`, label: 'PageLabel'},
-	slotNumberLabel: {value: getPaginationDefaultConfig().slotNumberLabel, label: 'SlotNumberLabel'},
+	numberLabel: {value: getPaginationDefaultConfig().numberLabel, label: 'NumberLabel'},
 	//slider
 	sliderLabelHandleDefault: {
 		value: (value: number) => `${value}`,

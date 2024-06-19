@@ -8,7 +8,7 @@
 		onPageChange: ['noop', 'log'],
 		pagesFactory: ['defaultPageFactory'],
 		ariaPageLabel: ['simpleLabel', 'pageLabel'],
-		slotNumberLabel: ['slotNumberLabel'],
+		numberLabel: ['numberLabel'],
 	};
 </script>
 

@@ -29,12 +29,12 @@ export type PaginationNumberContext = PaginationContext & {
 interface PaginationExtraProps {
 	/**
 	 * The template to use for the structure of the pagination component
-	 * The default structure uses {@link PaginationCommonPropsAndState.slotEllipsis|slotEllipsis}, {@link PaginationCommonPropsAndState.slotFirst|slotFirst},
-	 * {@link PaginationCommonPropsAndState.slotPrevious|slotPrevious}, {@link PaginationCommonPropsAndState.slotNext|slotNext},
-	 * {@link PaginationCommonPropsAndState.slotLast|slotLast}, {@link PaginationCommonPropsAndState.slotPages|slotPages},
-	 * {@link PaginationCommonPropsAndState.slotNumberLabel|slotNumberLabel},
+	 * The default structure uses {@link PaginationProps.ellipsisLabel|ellipsisLabel}, {@link PaginationProps.firstPageLabel|firstPageLabel},
+	 * {@link PaginationProps.previousPageLabel|previousPageLabel}, {@link PaginationProps.nextPageLabel|nextPageLabel},
+	 * {@link PaginationProps.lastPageLabel|lastPageLabel}, {@link PaginationProps.pagesDisplay|pagesDisplay},
+	 * {@link PaginationProps.numberLabel|numberLabel},
 	 */
-	slotStructure: SlotContent<PaginationContext>;
+	structure: SlotContent<PaginationContext>;
 
 	/**
 	 * The template to use for the ellipsis slot
@@ -42,7 +42,7 @@ interface PaginationExtraProps {
 	 * override any configuration parameters provided for this
 	 * @defaultValue '…'
 	 */
-	slotEllipsis: SlotContent<PaginationContext>;
+	ellipsisLabel: SlotContent<PaginationContext>;
 
 	/**
 	 * The template to use for the first slot
@@ -50,7 +50,7 @@ interface PaginationExtraProps {
 	 * override any configuration parameters provided for this
 	 * @defaultValue '«'
 	 */
-	slotFirst: SlotContent<PaginationContext>;
+	firstPageLabel: SlotContent<PaginationContext>;
 
 	/**
 	 * The template to use for the previous slot
@@ -58,7 +58,7 @@ interface PaginationExtraProps {
 	 * override any configuration parameters provided for this
 	 * @defaultValue '‹'
 	 */
-	slotPrevious: SlotContent<PaginationContext>;
+	previousPageLabel: SlotContent<PaginationContext>;
 
 	/**
 	 * The template to use for the next slot
@@ -66,7 +66,7 @@ interface PaginationExtraProps {
 	 * override any configuration parameters provided for this
 	 * @defaultValue '›'
 	 */
-	slotNext: SlotContent<PaginationContext>;
+	nextPageLabel: SlotContent<PaginationContext>;
 
 	/**
 	 * The template to use for the last slot
@@ -74,14 +74,14 @@ interface PaginationExtraProps {
 	 * override any configuration parameters provided for this
 	 * @defaultValue '»'
 	 */
-	slotLast: SlotContent<PaginationContext>;
+	lastPageLabel: SlotContent<PaginationContext>;
 
 	/**
 	 * The template to use for the pages slot
 	 * To use to customize the pages view
 	 * override any configuration parameters provided for this
 	 */
-	slotPages: SlotContent<PaginationContext>;
+	pagesDisplay: SlotContent<PaginationContext>;
 
 	/**
 	 * The template to use for the number slot
@@ -93,7 +93,7 @@ interface PaginationExtraProps {
 	 * ```
 	 * @param displayedPage - The current page number
 	 */
-	slotNumberLabel: SlotContent<PaginationNumberContext>;
+	numberLabel: SlotContent<PaginationNumberContext>;
 }
 
 export interface PaginationState extends CoreState, PaginationExtraProps {}
@@ -102,14 +102,14 @@ export interface PaginationProps extends CoreProps, PaginationExtraProps {}
 export type PaginationWidget = Widget<PaginationProps, PaginationState, PaginationApi, PaginationActions, PaginationDirectives>;
 
 const defaultConfigExtraProps: PaginationExtraProps = {
-	slotEllipsis: '…',
-	slotFirst: '«',
-	slotPrevious: '‹',
-	slotNext: '›',
-	slotLast: '»',
-	slotPages: undefined,
-	slotStructure: undefined,
-	slotNumberLabel: ({displayedPage}: PaginationNumberContext) => `${displayedPage}`,
+	structure: undefined,
+	ellipsisLabel: '…',
+	firstPageLabel: '«',
+	previousPageLabel: '‹',
+	nextPageLabel: '›',
+	lastPageLabel: '»',
+	numberLabel: ({displayedPage}: PaginationNumberContext) => `${displayedPage}`,
+	pagesDisplay: undefined,
 };
 /**
  * Retrieve a shallow copy of the default Pagination config

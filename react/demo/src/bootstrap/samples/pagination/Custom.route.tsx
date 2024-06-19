@@ -64,15 +64,15 @@ const PaginationCustom = () => {
 			<p>A pagination with customized links:</p>
 			<Pagination
 				ariaLabel={'Page navigation with customized links'}
-				slotPrevious={'Prev'}
-				slotNext={'Next'}
-				slotNumberLabel={getPageSymbol}
+				previousPageLabel={'Prev'}
+				nextPageLabel={'Next'}
+				numberLabel={getPageSymbol}
 				page={customPage}
 				onPageChange={setPage}
 			/>
 			<hr />
 			<p>A pagination with customized pages:</p>
-			<Pagination page={customPage} onPageChange={setPage} slotPages={CustomPages} ariaLabel={'Page navigation with customized pages'} />
+			<Pagination page={customPage} onPageChange={setPage} pagesDisplay={CustomPages} ariaLabel={'Page navigation with customized pages'} />
 		</WidgetsDefaultConfig>
 	);
 };
