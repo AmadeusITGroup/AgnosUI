@@ -49,7 +49,7 @@ export class RatingStarDirective {
 		@for (item of state().stars; track trackByIndex(index); let index = $index) {
 			<span class="visually-hidden">({{ index < state().visibleRating ? '*' : ' ' }})</span>
 			<span [auUse]="[_widget.directives.starDirective, {index}]">
-				<ng-template [auSlot]="state().slotStar" [auSlotProps]="state().stars[index]"></ng-template>
+				<ng-template [auSlot]="state().star" [auSlotProps]="state().stars[index]"></ng-template>
 			</span>
 		}
 	`,
@@ -110,7 +110,7 @@ export class RatingComponent extends BaseWidgetDirective<RatingWidget> implement
 	/**
 	 * The template to override the way each star is displayed.
 	 */
-	@Input('auSlotStar') slotStar: SlotContent<StarContext>;
+	@Input('auStar') star: SlotContent<StarContext>;
 	@ContentChild(RatingStarDirective, {static: false}) slotStarFromContent: RatingStarDirective | undefined;
 
 	/**
@@ -173,7 +173,7 @@ export class RatingComponent extends BaseWidgetDirective<RatingWidget> implement
 
 	ngAfterContentChecked(): void {
 		this._widget.patchSlots({
-			slotStar: this.slotStarFromContent?.templateRef,
+			star: this.slotStarFromContent?.templateRef,
 		});
 	}
 

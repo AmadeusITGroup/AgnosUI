@@ -15,7 +15,7 @@ interface RatingExtraProps {
 	/**
 	 * The template to override the way each star is displayed.
 	 */
-	slotStar: SlotContent<StarContext>;
+	star: SlotContent<StarContext>;
 }
 
 export interface RatingState extends CoreState, RatingExtraProps {}
@@ -24,7 +24,7 @@ export interface RatingProps extends CoreProps, RatingExtraProps {}
 export type RatingWidget = Widget<RatingProps, RatingState, object, RatingActions, RatingDirectives>;
 
 const defaultConfigExtraProps: RatingExtraProps = {
-	slotStar: ({fill}: StarContext) => String.fromCharCode(fill === 100 ? 9733 : 9734),
+	star: ({fill}: StarContext) => String.fromCharCode(fill === 100 ? 9733 : 9734),
 };
 
 /**

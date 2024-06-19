@@ -22,7 +22,7 @@
 	});
 
 	const {
-		stores: {visibleRating$, stars$, slotStar$},
+		stores: {visibleRating$, stars$, star$},
 		directives: {containerDirective, starDirective},
 	} = widget;
 
@@ -34,7 +34,7 @@
 	{#each $stars$ as { fill, index }}
 		<span class="visually-hidden">({index < $visibleRating$ ? '*' : ' '})</span>
 		<span use:starDirective={{index}}>
-			<Slot slotContent={$slotStar$} props={{fill, index}} let:component let:props>
+			<Slot slotContent={$star$} props={{fill, index}} let:component let:props>
 				<svelte:fragment slot="slot" let:props><slot name="star" {...props} /></svelte:fragment>
 				<svelte:component this={component} {...props} />
 			</Slot>

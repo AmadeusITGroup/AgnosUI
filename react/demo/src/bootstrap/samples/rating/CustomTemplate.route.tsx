@@ -12,5 +12,5 @@ const CustomStar = ({fill, index}: StarContext) => {
 	}
 	return <span className={starClassname.join(' ')}>&#9733;</span>;
 };
-const RatingDemo = () => <Rating className="rating-custom" rating={7} slotStar={CustomStar} ariaLabel="custom rating" />;
+const RatingDemo = () => <Rating className="rating-custom" rating={7} star={CustomStar} ariaLabel="custom rating" />;
 export default RatingDemo;

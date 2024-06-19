@@ -16,7 +16,7 @@ function Star({star, state, directive}: {star: StarContext; state: RatingState; 
 		<React.Fragment key={star.index}>
 			<span className="visually-hidden">({star.index < state.visibleRating ? '*' : ' '})</span>
 			<span {...useDirective(directive, arg)}>
-				<Slot slotContent={state.slotStar} props={star}></Slot>
+				<Slot slotContent={state.star} props={star}></Slot>
 			</span>
 		</React.Fragment>
 	);

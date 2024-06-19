@@ -22,7 +22,7 @@ const propsValuesList = {
 			`${rating} ${rating === 1 ? 'star' : 'stars'} out of ${maxRating} ${maxRating === 1 ? 'star' : 'stars'}`,
 		label: 'StarRatingValue',
 	},
-	starIconRating: {value: getRatingDefaultConfig().slotStar, label: 'StarIconRating'},
+	starIconRating: {value: getRatingDefaultConfig().star, label: 'StarIconRating'},
 	heartIconRating: {value: ({fill}: {fill: number}) => String.fromCharCode(fill === 100 ? 9829 : 9825), label: 'HeartIconRating'},
 	//pagination
 	defaultPageFactory: {value: getPaginationDefaultConfig().pagesFactory, label: 'DefaultPageFactory'},

@@ -9,7 +9,7 @@ const RatingDemo = () => (
 		readonly={true}
 		maxRating={5}
 		className="rating-readonly"
-		slotStar={({fill}: StarContext) => {
+		star={({fill}: StarContext) => {
 			const starClassname = ['star'];
 			if (fill === 100) {
 				starClassname.push('full');

@@ -15,7 +15,7 @@ export class RatingReadonlyStarDirective {
 }
 
 /**
- * To use the defined slotStar, we simply need to use the {@link SlotDirective} and give it the prop as input.
+ * To use the defined star, we simply need to use the {@link SlotDirective} and give it the prop as input.
  * The auSlotProps is used to provide context to the slot.
  */
 @Component({
@@ -27,7 +27,7 @@ export class RatingReadonlyStarDirective {
 		<div class="d-inline-flex au-rating" [class]="state().className">
 			@for (item of state().stars; track item) {
 				<span class="au-rating-star">
-					<ng-template [auSlot]="state().slotStar" [auSlotProps]="item"></ng-template>
+					<ng-template [auSlot]="state().star" [auSlotProps]="item"></ng-template>
 				</span>
 			}
 		</div>
@@ -48,7 +48,7 @@ export class RatingReadonlyComponent extends BaseWidgetDirective<RatingWidget> i
 	});
 
 	@Input()
-	slotStar: SlotContent<StarContext>;
+	star: SlotContent<StarContext>;
 	@ContentChild(RatingReadonlyStarDirective, {static: false}) slotStarFromContent: RatingReadonlyStarDirective | undefined;
 
 	@Input({transform: auNumberAttribute}) rating: number | undefined;
@@ -59,7 +59,7 @@ export class RatingReadonlyComponent extends BaseWidgetDirective<RatingWidget> i
 
 	ngAfterContentChecked(): void {
 		this._widget.patchSlots({
-			slotStar: this.slotStarFromContent?.templateRef,
+			star: this.slotStarFromContent?.templateRef,
 		});
 	}
 }
