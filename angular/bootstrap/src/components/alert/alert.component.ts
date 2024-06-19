@@ -62,7 +62,7 @@ export const alertDefaultSlotStructure = new ComponentTemplate(AlertDefaultSlots
 
 export type PartialAlertProps = Partial<AlertProps>;
 const defaultConfig: PartialAlertProps = {
-	slotStructure: alertDefaultSlotStructure,
+	structure: alertDefaultSlotStructure,
 };
 
 @Component({
@@ -80,7 +80,7 @@ const defaultConfig: PartialAlertProps = {
 				class="au-alert alert alert-{{ state().type }} {{ state().className }} {{ state().dismissible ? 'alert-dismissible' : '' }}"
 				role="alert"
 			>
-				<ng-template [auSlot]="state().slotStructure" [auSlotProps]="{state: state(), widget}"></ng-template>
+				<ng-template [auSlot]="state().structure" [auSlotProps]="{state: state(), widget}"></ng-template>
 			</div>
 		}`,
 })
@@ -145,7 +145,7 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> implements 
 	/**
 	 * Global template for the alert component
 	 */
-	@Input('auSlotStructure') slotStructure: SlotContent<AlertContext>;
+	@Input('auStructure') structure: SlotContent<AlertContext>;
 	@ContentChild(AlertStructureDirective, {static: false}) slotStructureFromContent: AlertStructureDirective | undefined;
 
 	/**
@@ -183,7 +183,7 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> implements 
 	ngAfterContentChecked(): void {
 		this._widget.patchSlots({
 			children: this.slotDefaultFromContent?.templateRef,
-			slotStructure: this.slotStructureFromContent?.templateRef,
+			structure: this.slotStructureFromContent?.templateRef,
 		});
 	}
 }

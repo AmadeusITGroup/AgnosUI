@@ -14,7 +14,7 @@ interface AlertExtraProps {
 	/**
 	 * Global template for the alert component
 	 */
-	slotStructure: SlotContent<AlertContext>;
+	structure: SlotContent<AlertContext>;
 	/**
 	 * Template for the alert content
 	 */
@@ -31,7 +31,7 @@ export interface AlertProps extends CoreProps, AlertExtraProps {}
 export type AlertWidget = Widget<AlertProps, AlertState, AlertApi, object, AlertDirectives>;
 
 const defaultConfigExtraProps: AlertExtraProps = {
-	slotStructure: undefined,
+	structure: undefined,
 	children: undefined,
 	type: 'primary',
 };

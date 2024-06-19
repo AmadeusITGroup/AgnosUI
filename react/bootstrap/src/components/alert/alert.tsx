@@ -23,7 +23,7 @@ const DefaultSlotStructure = (slotContext: AlertContext) => (
 );
 
 const defaultConfig: Partial<AlertProps> = {
-	slotStructure: DefaultSlotStructure,
+	structure: DefaultSlotStructure,
 };
 
 const AlertElement = (slotContext: AlertContext) => (
@@ -37,7 +37,7 @@ const AlertElement = (slotContext: AlertContext) => (
 			slotContext.widget.directives.transitionDirective,
 		)}
 	>
-		<Slot slotContent={slotContext.state.slotStructure} props={slotContext}></Slot>
+		<Slot slotContent={slotContext.state.structure} props={slotContext}></Slot>
 	</div>
 );
 

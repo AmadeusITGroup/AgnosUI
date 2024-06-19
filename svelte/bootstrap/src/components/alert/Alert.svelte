@@ -5,7 +5,7 @@
 	import AlertDefaultStructure from './AlertDefaultStructure.svelte';
 
 	const defaultConfig: Partial<AlertProps> = {
-		slotStructure: AlertDefaultStructure,
+		structure: AlertDefaultStructure,
 	};
 </script>
 
@@ -29,7 +29,7 @@
 	export const api: AlertApi = widget.api;
 
 	const {
-		stores: {slotStructure$, hidden$},
+		stores: {structure$, hidden$},
 		directives: {transitionDirective},
 		state$,
 	} = widget;
@@ -44,7 +44,7 @@
 		class="au-alert alert alert-{$state$.type} {$state$.className} {$state$.dismissible ? 'alert-dismissible' : ''}"
 		use:transitionDirective
 	>
-		<Slot slotContent={$slotStructure$} props={slotContext} let:component let:props>
+		<Slot slotContent={$structure$} props={slotContext} let:component let:props>
 			<svelte:fragment slot="slot" let:props><slot name="structure" {...props} /></svelte:fragment>
 			<svelte:component this={component} {...props}>
 				<svelte:fragment let:state let:widget><slot {state} {widget} /></svelte:fragment>
