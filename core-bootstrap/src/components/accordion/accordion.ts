@@ -26,26 +26,35 @@ interface AccordionExtraProps {
 	/**
 	 * Structure of the accordion-item. The default item structure is: accordion-item
 	 * contains accordion header and accordion-item body container; the accordion header contains the accordion button
-	 * (that contains `slotItemHeader`), while the accordion-item body container contains the accordion body (that contains `slotItemBody`).
-	 * The itemTransition it applied on this element.
+	 * (that contains `header`), while the accordion-item body container contains the accordion body (that contains `children`).
+	 * The itemTransition is applied on this element.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	slotItemStructure: SlotContent<AccordionItemContext>;
+	itemStructure: SlotContent<AccordionItemContext>;
 }
-interface AccordionItemExtraProps extends AccordionExtraProps {
+interface AccordionItemExtraProps {
+	/**
+	 * Structure of the accordion-item. The default item structure is: accordion-item
+	 * contains accordion header and accordion-item body container; the accordion header contains the accordion button
+	 * (that contains `header`), while the accordion-item body container contains the accordion body (that contains `children`).
+	 * The itemTransition is applied on this element.
+	 *
+	 * It is a prop of the accordion-item.
+	 */
+	structure: SlotContent<AccordionItemContext>;
 	/**
 	 * Content present in the accordion body.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	slotItemBody: SlotContent<AccordionItemContext>;
+	children: SlotContent<AccordionItemContext>;
 	/**
 	 * Content present in the accordion button inside the accordion header.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	slotItemHeader: SlotContent<AccordionItemContext>;
+	header: SlotContent<AccordionItemContext>;
 }
 
 export interface AccordionState extends CoreState, AccordionExtraProps {}
@@ -59,12 +68,12 @@ export interface AccordionItemProps extends CoreItemProps, AccordionItemExtraPro
 export type AccordionItemWidget = Widget<AccordionItemProps, AccordionItemState, AccordionItemApi, AccordionItemActions, AccordionItemDirectives>;
 
 const defaultConfigExtraProps: AccordionExtraProps = {
-	slotItemStructure: undefined,
+	itemStructure: undefined,
 };
 const defaultConfigItemExtraProps: AccordionItemExtraProps = {
-	slotItemStructure: undefined,
-	slotItemBody: undefined,
-	slotItemHeader: undefined,
+	structure: undefined,
+	children: undefined,
+	header: undefined,
 };
 
 const defaultPropsWithoutOverride: AccordionProps = {
@@ -87,9 +96,9 @@ const accordionItemDefaultConfig: AccordionItemProps = {
 	bodyClassName: '',
 	headingTag: '',
 	className: '',
-	slotItemStructure: undefined,
-	slotItemBody: undefined,
-	slotItemHeader: undefined,
+	structure: undefined,
+	children: undefined,
+	header: undefined,
 };
 const accordionItemProps = Object.keys(accordionItemDefaultConfig);
 

@@ -4,16 +4,10 @@
 </script>
 
 <Accordion>
-	<AccordionItem visible>
-		<svelte:fragment slot="itemHeader">Simple</svelte:fragment>
-		<svelte:fragment slot="itemBody">{BODY}</svelte:fragment>
-	</AccordionItem>
+	<AccordionItem header="Simple" visible>{BODY}</AccordionItem>
 	<AccordionItem>
-		<svelte:fragment slot="itemHeader"><span>&#9733; <b>Fancy</b> title &#9733;</span></svelte:fragment>
-		<svelte:fragment slot="itemBody">{BODY}</svelte:fragment>
+		<span slot="header">&#9733; <b>Fancy</b> title &#9733;</span>
+		{BODY}
 	</AccordionItem>
-	<AccordionItem disabled>
-		<svelte:fragment slot="itemHeader">Disabled</svelte:fragment>
-		<svelte:fragment slot="itemBody">{BODY}</svelte:fragment>
-	</AccordionItem>
+	<AccordionItem header="Disabled" disabled>{BODY}</AccordionItem>
 </Accordion>
