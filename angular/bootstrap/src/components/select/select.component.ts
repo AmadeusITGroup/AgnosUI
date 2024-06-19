@@ -22,10 +22,10 @@ export class SelectBadgeLabelDirective<Item> {
 	}
 }
 
-@Directive({selector: 'ng-template[auSelectItem]', standalone: true})
-export class SelectItemDirective<Item> {
+@Directive({selector: 'ng-template[auSelectItemLabel]', standalone: true})
+export class SelectItemLabelDirective<Item> {
 	public templateRef = inject(TemplateRef<SelectItemContext<Item>>);
-	static ngTemplateContextGuard<Item>(_dir: SelectItemDirective<Item>, context: unknown): context is SelectItemContext<Item> {
+	static ngTemplateContextGuard<Item>(_dir: SelectItemLabelDirective<Item>, context: unknown): context is SelectItemContext<Item> {
 		return true;
 	}
 }
@@ -47,7 +47,7 @@ export class SelectItemDirective<Item> {
 				@if (state.selectedContexts; as selectedContexts) {
 					@for (itemContext of selectedContexts; track itemCtxTrackBy($index, itemContext)) {
 						<div [auUse]="[_widget.directives.badgeAttributesDirective, itemContext]">
-							<ng-template [auSlot]="state.slotBadgeLabel" [auSlotProps]="{state, widget, itemContext}"></ng-template>
+							<ng-template [auSlot]="state.badgeLabel" [auSlotProps]="{state, widget, itemContext}"></ng-template>
 						</div>
 					}
 				}
@@ -76,7 +76,7 @@ export class SelectItemDirective<Item> {
 							[auUse]="[_widget.directives.itemAttributesDirective, itemContext]"
 							[class.text-bg-primary]="itemContext === state.highlighted"
 						>
-							<ng-template [auSlot]="state.slotItem" [auSlotProps]="{state, widget, itemContext}"></ng-template>
+							<ng-template [auSlot]="state.itemLabel" [auSlotProps]="{state, widget, itemContext}"></ng-template>
 						</li>
 					}
 				</ul>
@@ -151,15 +151,15 @@ export class SelectComponent<Item> extends BaseWidgetDirective<SelectWidget<Item
 	 * The template to override the way each badge on the left of the input is displayed.
 	 * This define the content of the badge inside the badge container.
 	 */
-	@Input('auSlotBadgeLabel') slotBadgeLabel: SlotContent<SelectItemContext<Item>>;
+	@Input('auBadgeLabel') badgeLabel: SlotContent<SelectItemContext<Item>>;
 	@ContentChild(SelectBadgeLabelDirective, {static: false}) slotSelectBadgeLabelFromContent: SelectBadgeLabelDirective<Item> | undefined;
 
 	/**
 	 * The template to override the way each item is displayed in the list.
 	 * This define the content of the badge inside the badge container.
 	 */
-	@Input('auSlotItem') slotItem: SlotContent<SelectItemContext<Item>>;
-	@ContentChild(SelectItemDirective, {static: false}) slotSelectItemFromContent: SelectItemDirective<Item> | undefined;
+	@Input('auItemLabel') itemLabel: SlotContent<SelectItemContext<Item>>;
+	@ContentChild(SelectItemLabelDirective, {static: false}) slotSelectItemLabelFromContent: SelectItemLabelDirective<Item> | undefined;
 
 	/**
 	 * Callback called when the text filter change
@@ -210,8 +210,8 @@ export class SelectComponent<Item> extends BaseWidgetDirective<SelectWidget<Item
 
 	ngAfterContentChecked(): void {
 		this._widget.patchSlots({
-			slotBadgeLabel: this.slotSelectBadgeLabelFromContent?.templateRef,
-			slotItem: this.slotSelectItemFromContent?.templateRef,
+			badgeLabel: this.slotSelectBadgeLabelFromContent?.templateRef,
+			itemLabel: this.slotSelectItemLabelFromContent?.templateRef,
 		});
 	}
 }

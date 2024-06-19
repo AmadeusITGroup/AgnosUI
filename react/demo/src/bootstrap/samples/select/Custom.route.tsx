@@ -39,7 +39,7 @@ const SlotBadgeLabel = ({itemContext, widget}: SelectItemContext<WikiResult>) =>
 	);
 };
 
-const SlotItem = ({itemContext}: SelectItemContext<WikiResult>) => {
+const SlotItemLabel = ({itemContext}: SelectItemContext<WikiResult>) => {
 	const item = itemContext.item;
 	return (
 		<>
@@ -83,8 +83,8 @@ const Custom = () => {
 				navSelector={navSelector}
 				onFilterTextChange={onFilterTextChange}
 				onSelectedChange={onSelectedChange}
-				slotBadgeLabel={SlotBadgeLabel}
-				slotItem={SlotItem}
+				badgeLabel={SlotBadgeLabel}
+				itemLabel={SlotItemLabel}
 				badgeClassName="badge text-bg-light d-flex align-items-center"
 			/>
 			<span className="fw-bold">Selection: </span>
