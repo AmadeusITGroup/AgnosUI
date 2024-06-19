@@ -20,17 +20,17 @@ interface SliderExtraProps {
 	/**
 	 * Slot to change the default display of the slider
 	 */
-	slotStructure: SlotContent<SliderContext>;
+	structure: SlotContent<SliderContext>;
 
 	/**
 	 * Slot to change the default labels of the slider
 	 */
-	slotLabel: SlotContent<SliderSlotLabelContext>;
+	label: SlotContent<SliderSlotLabelContext>;
 
 	/**
 	 *  Slot to change the handlers
 	 */
-	slotHandle: SlotContent<SliderSlotHandleContext>;
+	handle: SlotContent<SliderSlotHandleContext>;
 }
 
 export interface SliderState extends CoreState, SliderExtraProps {}
@@ -39,9 +39,9 @@ export interface SliderProps extends CoreProps, SliderExtraProps {}
 export type SliderWidget = Widget<SliderProps, SliderState, SliderApi, SliderActions, SliderDirectives>;
 
 const defaultConfigExtraProps: SliderExtraProps = {
-	slotStructure: undefined,
-	slotLabel: ({value}: SliderSlotLabelContext) => '' + value,
-	slotHandle: undefined,
+	structure: undefined,
+	label: ({value}: SliderSlotLabelContext) => '' + value,
+	handle: undefined,
 };
 
 /**

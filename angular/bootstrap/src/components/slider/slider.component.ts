@@ -92,28 +92,28 @@ export class SliderStructureDirective {
 			<div [auUse]="widget.directives.clickableAreaDirective"></div>
 			@if (state.showMinMaxLabels) {
 				<div [auUse]="widget.directives.minLabelDirective">
-					<ng-template [auSlot]="state.slotLabel" [auSlotProps]="{state, widget, value: state.min}"></ng-template>
+					<ng-template [auSlot]="state.label" [auSlotProps]="{state, widget, value: state.min}"></ng-template>
 				</div>
 				<div [auUse]="widget.directives.maxLabelDirective">
-					<ng-template [auSlot]="state.slotLabel" [auSlotProps]="{state, widget, value: state.max}"></ng-template>
+					<ng-template [auSlot]="state.label" [auSlotProps]="{state, widget, value: state.max}"></ng-template>
 				</div>
 			}
 			@if (state.showValueLabels && state.combinedLabelDisplay) {
 				<div [auUse]="widget.directives.combinedHandleLabelDisplayDirective">
 					@if (state.rtl) {
-						<ng-template [auSlot]="state.slotLabel" [auSlotProps]="{state, widget, value: state.sortedValues[1]}"></ng-template> -
-						<ng-template [auSlot]="state.slotLabel" [auSlotProps]="{state, widget, value: state.sortedValues[0]}"></ng-template>
+						<ng-template [auSlot]="state.label" [auSlotProps]="{state, widget, value: state.sortedValues[1]}"></ng-template> -
+						<ng-template [auSlot]="state.label" [auSlotProps]="{state, widget, value: state.sortedValues[0]}"></ng-template>
 					} @else {
-						<ng-template [auSlot]="state.slotLabel" [auSlotProps]="{state, widget, value: state.sortedValues[0]}"></ng-template> -
-						<ng-template [auSlot]="state.slotLabel" [auSlotProps]="{state, widget, value: state.sortedValues[1]}"></ng-template>
+						<ng-template [auSlot]="state.label" [auSlotProps]="{state, widget, value: state.sortedValues[0]}"></ng-template> -
+						<ng-template [auSlot]="state.label" [auSlotProps]="{state, widget, value: state.sortedValues[1]}"></ng-template>
 					}
 				</div>
 			}
 			@for (item of state.sortedHandles; track item.id; let i = $index) {
-				<ng-template [auSlot]="state.slotHandle" [auSlotProps]="{state, widget, item}"></ng-template>
+				<ng-template [auSlot]="state.handle" [auSlotProps]="{state, widget, item}"></ng-template>
 				@if (state.showValueLabels && !state.combinedLabelDisplay) {
 					<div [auUse]="[widget.directives.handleLabelDisplayDirective, {index: i}]">
-						<ng-template [auSlot]="state.slotLabel" [auSlotProps]="{state, widget, value: state.values[i]}"></ng-template>
+						<ng-template [auSlot]="state.label" [auSlotProps]="{state, widget, value: state.values[i]}"></ng-template>
 					</div>
 				}
 			}
@@ -128,8 +128,8 @@ export const sliderDefaultSlotStructure = new ComponentTemplate(SliderDefaultStr
 
 export type PartialSliderProps = Partial<SliderProps>;
 const defaultConfig: PartialSliderProps = {
-	slotStructure: sliderDefaultSlotStructure,
-	slotHandle: sliderDefaultSlotHandle,
+	structure: sliderDefaultSlotStructure,
+	handle: sliderDefaultSlotHandle,
 };
 
 @Component({
@@ -142,7 +142,7 @@ const defaultConfig: PartialSliderProps = {
 	host: {
 		'(blur)': 'handleBlur()',
 	},
-	template: ` <ng-template [auSlot]="state().slotStructure" [auSlotProps]="{state: state(), widget}"></ng-template> `,
+	template: ` <ng-template [auSlot]="state().structure" [auSlotProps]="{state: state(), widget}"></ng-template> `,
 })
 export class SliderComponent extends BaseWidgetDirective<SliderWidget> implements AfterContentChecked {
 	readonly defaultSlots: WritableSignal<PartialSliderProps> = writable(defaultConfig);
@@ -245,19 +245,19 @@ export class SliderComponent extends BaseWidgetDirective<SliderWidget> implement
 	/**
 	 * Slot to change the default labels of the slider
 	 */
-	@Input('auSlotLabel') slotLabel: SlotContent<SliderSlotLabelContext>;
+	@Input('auLabel') label: SlotContent<SliderSlotLabelContext>;
 	@ContentChild(SliderLabelDirective, {static: false}) slotLabelFromContent: SliderLabelDirective | undefined;
 
 	/**
 	 * Slot to change the default display of the slider
 	 */
-	@Input('auSlotStructure') slotStructure: SlotContent<SliderContext>;
+	@Input('auStructure') structure: SlotContent<SliderContext>;
 	@ContentChild(SliderStructureDirective, {static: false}) slotStructureFromContent: SliderStructureDirective | undefined;
 
 	/**
 	 * Slot to change the handlers
 	 */
-	@Input('auSlotHandle') slotHandle: SlotContent<SliderSlotHandleContext>;
+	@Input('auHandle') handle: SlotContent<SliderSlotHandleContext>;
 	@ContentChild(SliderHandleDirective, {static: false}) slotHandleFromContent: SliderHandleDirective | undefined;
 
 	/**
@@ -299,9 +299,9 @@ export class SliderComponent extends BaseWidgetDirective<SliderWidget> implement
 
 	ngAfterContentChecked(): void {
 		this._widget.patchSlots({
-			slotStructure: this.slotStructureFromContent?.templateRef,
-			slotHandle: this.slotHandleFromContent?.templateRef,
-			slotLabel: this.slotLabelFromContent?.templateRef,
+			structure: this.slotStructureFromContent?.templateRef,
+			handle: this.slotHandleFromContent?.templateRef,
+			label: this.slotLabelFromContent?.templateRef,
 		});
 	}
 }
