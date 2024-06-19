@@ -91,24 +91,24 @@ export class ModalFooterDirective<Data> {
 	template: `
 		<ng-template auModalHeader #header let-state="state" let-widget="widget">
 			<h5 class="modal-title">
-				<ng-template [auSlot]="state.slotTitle" [auSlotProps]="{state, widget}"></ng-template>
+				<ng-template [auSlot]="state.title" [auSlotProps]="{state, widget}"></ng-template>
 			</h5>
 			@if (state.closeButton) {
 				<button class="btn-close" [auUse]="widget.directives.closeButtonDirective"></button>
 			}
 		</ng-template>
 		<ng-template auModalStructure #structure let-state="state" let-widget="widget">
-			@if (state.slotTitle) {
+			@if (state.title) {
 				<div class="modal-header">
-					<ng-template [auSlot]="state.slotHeader" [auSlotProps]="{state, widget}"></ng-template>
+					<ng-template [auSlot]="state.header" [auSlotProps]="{state, widget}"></ng-template>
 				</div>
 			}
 			<div class="modal-body">
 				<ng-template [auSlot]="state.children" [auSlotProps]="{state, widget}"></ng-template>
 			</div>
-			@if (state.slotFooter) {
+			@if (state.footer) {
 				<div class="modal-footer">
-					<ng-template [auSlot]="state.slotFooter" [auSlotProps]="{state, widget}"></ng-template>
+					<ng-template [auSlot]="state.footer" [auSlotProps]="{state, widget}"></ng-template>
 				</div>
 			}
 		</ng-template>
@@ -130,8 +130,8 @@ export const modalDefaultSlotHeader = new ComponentTemplate(ModalDefaultSlotsCom
 export const modalDefaultSlotStructure = new ComponentTemplate(ModalDefaultSlotsComponent, 'structure');
 
 const defaultConfig: Partial<ModalProps<any>> = {
-	slotHeader: modalDefaultSlotHeader,
-	slotStructure: modalDefaultSlotStructure,
+	header: modalDefaultSlotHeader,
+	structure: modalDefaultSlotStructure,
 };
 
 /**
@@ -151,7 +151,7 @@ const defaultConfig: Partial<ModalProps<any>> = {
 			<div class="modal d-block" [auUseMulti]="[widget.directives.modalPortalDirective, widget.directives.modalDirective]">
 				<div class="modal-dialog {{ state().fullscreen ? 'modal-fullscreen' : '' }}">
 					<div class="modal-content">
-						<ng-template [auSlot]="state().slotStructure" [auSlotProps]="{state: state(), widget}"></ng-template>
+						<ng-template [auSlot]="state().structure" [auSlotProps]="{state: state(), widget}"></ng-template>
 					</div>
 				</div>
 			</div>
@@ -223,23 +223,23 @@ export class ModalComponent<Data> extends BaseWidgetDirective<ModalWidget<Data>>
 
 	/**
 	 * Structure of the modal.
-	 * The default structure uses ModalCommonPropsAndState.slotHeader slotHeader, ModalCommonPropsAndState.children children and ModalCommonPropsAndState.slotFooter slotFooter.
+	 * The default structure uses ModalCommonPropsAndState.header header, ModalCommonPropsAndState.children children and ModalCommonPropsAndState.footer footer.
 	 */
-	@Input('auSlotStructure') slotStructure: SlotContent<ModalContext<Data>>;
+	@Input('auStructure') structure: SlotContent<ModalContext<Data>>;
 	@ContentChild(ModalStructureDirective, {static: false})
 	slotStructureFromContent: ModalStructureDirective<Data> | undefined;
 
 	/**
-	 * Header of the modal. The default header includes ModalCommonPropsAndState.slotTitle slotTitle.
+	 * Header of the modal. The default header includes ModalCommonPropsAndState.title title.
 	 */
-	@Input('auSlotHeader') slotHeader: SlotContent<ModalContext<Data>>;
+	@Input('auHeader') header: SlotContent<ModalContext<Data>>;
 	@ContentChild(ModalHeaderDirective, {static: false})
 	slotHeaderFromContent: ModalHeaderDirective<Data> | undefined;
 
 	/**
 	 * Title of the modal.
 	 */
-	@Input('auSlotTitle') slotTitle: SlotContent<ModalContext<Data>>;
+	@Input('auTitle') title: SlotContent<ModalContext<Data>>;
 	@ContentChild(ModalTitleDirective, {static: false})
 	slotTitleFromContent: ModalTitleDirective<Data> | undefined;
 
@@ -253,7 +253,7 @@ export class ModalComponent<Data> extends BaseWidgetDirective<ModalWidget<Data>>
 	/**
 	 * Footer of the modal.
 	 */
-	@Input('auSlotFooter') slotFooter: SlotContent<ModalContext<Data>>;
+	@Input('auFooter') footer: SlotContent<ModalContext<Data>>;
 	@ContentChild(ModalFooterDirective, {static: false})
 	slotFooterFromContent: ModalFooterDirective<Data> | undefined;
 
@@ -299,10 +299,10 @@ export class ModalComponent<Data> extends BaseWidgetDirective<ModalWidget<Data>>
 	ngAfterContentChecked(): void {
 		this._widget.patchSlots({
 			children: this.slotDefaultFromContent?.templateRef,
-			slotFooter: this.slotFooterFromContent?.templateRef,
-			slotHeader: this.slotHeaderFromContent?.templateRef,
-			slotStructure: this.slotStructureFromContent?.templateRef,
-			slotTitle: this.slotTitleFromContent?.templateRef,
+			footer: this.slotFooterFromContent?.templateRef,
+			header: this.slotHeaderFromContent?.templateRef,
+			structure: this.slotStructureFromContent?.templateRef,
+			title: this.slotTitleFromContent?.templateRef,
 		} as any);
 	}
 }

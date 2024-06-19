@@ -111,7 +111,7 @@ Close`,
 
 		test(`Modal with body and footer`, async ({page}) => {
 			const modalPO = new ModalPO(page, 0);
-			await page.goto('#/modal/playground#{"props":{"visible":true,"children":"Body","slotFooter":"Footer"}}');
+			await page.goto('#/modal/playground#{"props":{"visible":true,"children":"Body","footer":"Footer"}}');
 			expect(await modalPO.state()).toStrictEqual(
 				assign(getExpectedState(), {
 					footer: 'Footer',
@@ -121,7 +121,7 @@ Close`,
 
 		test(`Modal with body, footer and title`, async ({page}) => {
 			const modalPO = new ModalPO(page, 0);
-			await page.goto('#/modal/playground#{"props":{"visible":true,"children":"Body","slotFooter":"Footer","slotTitle":"Title"}}');
+			await page.goto('#/modal/playground#{"props":{"visible":true,"children":"Body","footer":"Footer","title":"Title"}}');
 			expect(await modalPO.state()).toStrictEqual(
 				assign(getExpectedState(), {
 					title: 'Title',
@@ -134,9 +134,7 @@ Close`,
 
 		test(`Modal with body, footer and title without close button`, async ({page}) => {
 			const modalPO = new ModalPO(page, 0);
-			await page.goto(
-				'#/modal/playground#{"props":{"visible":true,"children":"Body","slotFooter":"Footer","slotTitle":"Title","closeButton":false}}',
-			);
+			await page.goto('#/modal/playground#{"props":{"visible":true,"children":"Body","footer":"Footer","title":"Title","closeButton":false}}');
 			expect(await modalPO.state()).toStrictEqual(
 				assign(getExpectedState(), {
 					title: 'Title',
@@ -150,7 +148,7 @@ Close`,
 		test(`Modal with body, footer and title replaced by header`, async ({page}) => {
 			const modalPO = new ModalPO(page, 0);
 			await page.goto(
-				'#/modal/playground#{"props":{"visible":true,"children":"Body","slotFooter":"Footer","closeButton":true,"slotHeader":"Header","slotTitle":"Title"}}',
+				'#/modal/playground#{"props":{"visible":true,"children":"Body","footer":"Footer","closeButton":true,"header":"Header","title":"Title"}}',
 			);
 			expect(await modalPO.state()).toStrictEqual(
 				assign(getExpectedState(), {

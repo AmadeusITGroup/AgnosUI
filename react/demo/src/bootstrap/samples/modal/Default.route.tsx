@@ -10,8 +10,8 @@ const DefaultDemo = () => {
 		<>
 			<Modal
 				ref={modal}
-				slotTitle="Save changes"
-				slotFooter={
+				title="Save changes"
+				footer={
 					<>
 						<button type="button" className="btn btn-outline-primary" onClick={() => modal.current!.close(true)}>
 							Yes

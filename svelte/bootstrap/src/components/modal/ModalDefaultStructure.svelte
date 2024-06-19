@@ -11,9 +11,9 @@
 	$: slotContext = {widget, state};
 </script>
 
-{#if state.slotTitle}
+{#if state.title}
 	<div class="modal-header">
-		<Slot slotContent={state.slotHeader} props={slotContext} let:component let:props>
+		<Slot slotContent={state.header} props={slotContext} let:component let:props>
 			<svelte:fragment slot="slot" let:props><slot name="header" {...props} /></svelte:fragment>
 			<svelte:component this={component} {...props}>
 				<svelte:fragment let:state let:widget><slot {state} {widget} /></svelte:fragment>
@@ -38,9 +38,9 @@
 		</svelte:component>
 	</Slot>
 </div>
-{#if state.slotFooter}
+{#if state.footer}
 	<div class="modal-footer">
-		<Slot slotContent={state.slotFooter} props={slotContext} let:component let:props>
+		<Slot slotContent={state.footer} props={slotContext} let:component let:props>
 			<svelte:fragment slot="slot" let:props><slot name="footer" {...props} /></svelte:fragment>
 			<svelte:component this={component} {...props}>
 				<svelte:fragment let:state let:widget><slot {state} {widget} /></svelte:fragment>

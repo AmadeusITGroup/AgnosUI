@@ -22,7 +22,7 @@ const DefaultSlotHeader = <Data,>(slotContext: ModalContext<Data>) => {
 	return (
 		<>
 			<h5 className="modal-title">
-				<Slot slotContent={slotContext.state.slotTitle} props={slotContext} />
+				<Slot slotContent={slotContext.state.title} props={slotContext} />
 			</h5>
 			{slotContext.state.closeButton && <CloseButton directive={slotContext.widget.directives.closeButtonDirective} />}
 		</>
@@ -31,25 +31,25 @@ const DefaultSlotHeader = <Data,>(slotContext: ModalContext<Data>) => {
 
 const DefaultSlotStructure = <Data,>(slotContext: ModalContext<Data>) => (
 	<>
-		{slotContext.state.slotTitle && (
+		{slotContext.state.title && (
 			<div className="modal-header">
-				<Slot slotContent={slotContext.state.slotHeader} props={slotContext} />
+				<Slot slotContent={slotContext.state.header} props={slotContext} />
 			</div>
 		)}
 		<div className="modal-body">
 			<Slot slotContent={slotContext.state.children} props={slotContext} />
 		</div>
-		{slotContext.state.slotFooter && (
+		{slotContext.state.footer && (
 			<div className="modal-footer">
-				<Slot slotContent={slotContext.state.slotFooter} props={slotContext} />
+				<Slot slotContent={slotContext.state.footer} props={slotContext} />
 			</div>
 		)}
 	</>
 );
 
 const defaultConfig: Partial<ModalProps<any>> = {
-	slotHeader: DefaultSlotHeader,
-	slotStructure: DefaultSlotStructure,
+	header: DefaultSlotHeader,
+	structure: DefaultSlotStructure,
 };
 
 const BackdropElement = <Data,>({widget}: ModalContext<Data>) => (
@@ -62,7 +62,7 @@ const ModalElement = <Data,>(slotContext: ModalContext<Data>) => {
 		<div {...useDirectives([classDirective, 'modal d-block'], slotContext.widget.directives.modalDirective)}>
 			<div className={classNames('modal-dialog', {'modal-fullscreen': fullscreen})}>
 				<div className="modal-content">
-					<Slot slotContent={slotContext.state.slotStructure} props={slotContext} />
+					<Slot slotContent={slotContext.state.structure} props={slotContext} />
 				</div>
 			</div>
 		</div>

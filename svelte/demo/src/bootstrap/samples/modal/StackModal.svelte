@@ -10,7 +10,7 @@
 </script>
 
 This is a modal<br /><br />
-<button class="btn btn-outline-primary m-1" on:click={() => openModal({slotTitle: 'Other modal', children: Self, container: state.modalElement})}>
+<button class="btn btn-outline-primary m-1" on:click={() => openModal({title: 'Other modal', children: Self, container: state.modalElement})}>
 	Launch other modal</button
 ><br />
 <button class="btn btn-outline-secondary m-1" on:click={() => widget.api.patch({backdrop: true})}>Enable backdrop</button><button
