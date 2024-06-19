@@ -3,7 +3,7 @@
 	import {createWidgetsDefaultConfig} from '@agnos-ui/svelte-bootstrap/config';
 	import ActionStructure from './ActionStructure.svelte';
 
-	createWidgetsDefaultConfig().set({toast: {autoHide: false, dismissible: true, className: 'text-bg-success', slotStructure: ActionStructure}});
+	createWidgetsDefaultConfig().set({toast: {autoHide: false, dismissible: true, className: 'text-bg-success', structure: ActionStructure}});
 	export let visible = true;
 
 	function reset() {

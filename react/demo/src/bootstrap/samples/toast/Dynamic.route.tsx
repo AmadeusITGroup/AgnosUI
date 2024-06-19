@@ -68,7 +68,7 @@ const DynamicToastDemo = () => {
 				{[...toastMap].map(([position, toastArray]) => (
 					<div className={`toast-container p-3 ${position}`} key={position}>
 						{toastArray.map((toast) => (
-							<Toast key={`${toast.id}`} onHidden={() => removeToast(toast)} slotHeader={`I am header`}>
+							<Toast key={`${toast.id}`} onHidden={() => removeToast(toast)} header={`I am header`}>
 								Simple toast
 							</Toast>
 						))}

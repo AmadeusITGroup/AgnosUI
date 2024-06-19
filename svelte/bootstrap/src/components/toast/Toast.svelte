@@ -6,7 +6,7 @@
 	import ToastDefaultStructure from './ToastDefaultStructure.svelte';
 
 	const defaultConfig: Partial<ToastProps> = {
-		slotStructure: ToastDefaultStructure,
+		structure: ToastDefaultStructure,
 	};
 </script>
 
@@ -30,7 +30,7 @@
 	export const api: ToastApi = widget.api;
 
 	const {
-		stores: {slotStructure$, hidden$},
+		stores: {structure$, hidden$, header$, dismissible$},
 		directives: {transitionDirective, autoHideDirective, bodyDirective},
 		state$,
 	} = widget;
@@ -40,15 +40,8 @@
 </script>
 
 {#if !$hidden$}
-	<div
-		class="toast"
-		class:toast-dismissible={$state$.dismissible}
-		class:d-flex={!$state$.slotHeader}
-		use:transitionDirective
-		use:autoHideDirective
-		use:bodyDirective
-	>
-		<Slot slotContent={$slotStructure$} props={slotContext} let:component let:props>
+	<div class="toast" class:toast-dismissible={$dismissible$} class:d-flex={!$header$} use:transitionDirective use:autoHideDirective use:bodyDirective>
+		<Slot slotContent={$structure$} props={slotContext} let:component let:props>
 			<svelte:fragment slot="slot" let:props><slot name="structure" {...props} /></svelte:fragment>
 			<svelte:component this={component} {...props}>
 				<svelte:fragment let:state let:widget><slot {state} {widget} /></svelte:fragment>
