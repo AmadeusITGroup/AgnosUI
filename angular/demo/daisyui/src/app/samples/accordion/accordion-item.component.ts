@@ -53,8 +53,8 @@ export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWid
 		},
 		events: {
 			onVisibleChange: (visible) => this.visible.set(visible),
-			onHidden: this.hidden.emit,
-			onShown: this.shown.emit,
+			onHidden: () => this.hidden.emit(),
+			onShown: () => this.shown.emit(),
 		},
 	});
 	ngAfterViewInit() {

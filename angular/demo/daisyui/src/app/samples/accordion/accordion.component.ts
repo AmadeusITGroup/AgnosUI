@@ -22,8 +22,8 @@ export class AccordionComponent extends BaseWidgetDirective<AccordionWidget> {
 		factory: createAccordion,
 		widgetName: 'accordion',
 		events: {
-			onItemShown: this.itemShown.emit,
-			onItemHidden: this.itemHidden.emit,
+			onItemShown: (id) => this.itemShown.emit(id),
+			onItemHidden: (id) => this.itemHidden.emit(id),
 		},
 	});
 }
