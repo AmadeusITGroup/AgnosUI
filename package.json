@@ -78,6 +78,7 @@
 		"format:check": "prettier . \"**/*.svelte\" --check --cache .",
 		"lint": "wireit",
 		"dev": "wireit",
+		"dev:stackblitz": "wireit",
 		"dev:coverage": "wireit",
 		"preview": "npm run preview -w demo",
 		"preview:coverage": "npm run preview:coverage -w demo",
@@ -96,6 +97,14 @@
 				"./react/demo:dev",
 				"./svelte/demo:dev",
 				"./demo:dev"
+			]
+		},
+		"dev:stackblitz": {
+			"dependencies": [
+				"./angular/demo:dev",
+				"./react/demo:dev",
+				"./svelte/demo:dev",
+				"./demo:dev:stackblitz"
 			]
 		},
 		"dev:coverage": {

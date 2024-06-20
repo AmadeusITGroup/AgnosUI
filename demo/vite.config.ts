@@ -67,6 +67,7 @@ export default defineConfig((config) => ({
 	],
 	define: {
 		'import.meta.env.AGNOSUI_VERSION': version,
+		'import.meta.env.STACKBLITZ': process.env.STACKBLITZ === 'true',
 	},
 	optimizeDeps: {
 		include: ['@amadeus-it-group/tansu', '@floating-ui/dom', 'svelte-markdown', 'marked', '@stackblitz/sdk', 'shiki', 'compare-versions'],
