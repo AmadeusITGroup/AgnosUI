@@ -8,7 +8,7 @@ import AlertIconComponent from './alert-icon.component';
 	imports: [AlertComponent],
 	providers: [
 		provideWidgetsConfig((config) => {
-			config.alert = {...config.alert, dismissible: false, className: 'd-flex align-items-center', slotStructure: AlertIconComponent};
+			config.alert = {...config.alert, dismissible: false, className: 'd-flex align-items-center', structure: AlertIconComponent};
 			return config;
 		}),
 	],

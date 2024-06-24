@@ -36,7 +36,7 @@ const IconDemo = () => (
 		alert={{
 			dismissible: false,
 			className: 'd-flex align-items-center',
-			slotStructure: AlertIcon,
+			structure: AlertIcon,
 		}}
 	>
 		<Alert type="success">Alert success with a customisable icon</Alert>

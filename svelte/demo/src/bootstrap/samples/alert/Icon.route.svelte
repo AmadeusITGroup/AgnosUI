@@ -3,7 +3,7 @@
 	import {createWidgetsDefaultConfig} from '@agnos-ui/svelte-bootstrap/config';
 	import IconStructure from './IconStructure.svelte';
 
-	createWidgetsDefaultConfig().set({alert: {dismissible: false, className: 'd-flex align-items-center', slotStructure: IconStructure}});
+	createWidgetsDefaultConfig().set({alert: {dismissible: false, className: 'd-flex align-items-center', structure: IconStructure}});
 </script>
 
 <Alert type="success">Alert success with a customisable icon</Alert>
