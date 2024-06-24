@@ -5,6 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "wireit",
+		"dev:stackblitz": "wireit",
 		"dev:coverage": "wireit dev",
 		"build": "wireit",
 		"generate:doc": "wireit",
@@ -53,6 +54,19 @@
 			],
 			"service": true
 		},
+		"dev:stackblitz": {
+			"command": "vite dev",
+			"dependencies": [
+				"generate:doc",
+				"../angular/bootstrap:build",
+				"../react/bootstrap:build",
+				"../svelte/bootstrap:build"
+			],
+			"service": true,
+			"env": {
+				"STACKBLITZ": "true"
+			}
+		},
 		"build": {
 			"command": "vite build",
 			"dependencies": [
@@ -62,6 +76,9 @@
 				"../svelte/demo:build",
 				"sveltekit"
 			],
+			"env": {
+				"STACKBLITZ": "true"
+			},
 			"files": [
 				"static/**",
 				"vite.config.ts",

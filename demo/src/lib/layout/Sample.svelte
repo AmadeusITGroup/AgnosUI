@@ -101,13 +101,15 @@
 				use:tooltip={{content: 'Toggle code'}}
 				on:click={() => (showCode = !showCode)}><Svg className="icon-24 align-middle" svg={codeSvg} /></button
 			>
-			<button
-				class="btn btn-sm btn-link m-1 p-0"
-				aria-label="Open example in stackblitz"
-				use:tooltip={{content: 'Edit in Stackblitz'}}
-				on:click={async () => (await import('../stackblitz')).openInStackblitz(sample, $selectedFramework$)}
-				><Svg className="icon-24 align-middle" svg={stackblitz} /></button
-			>
+			{#if import.meta.env.STACKBLITZ}
+				<button
+					class="btn btn-sm btn-link m-1 p-0"
+					aria-label="Open example in stackblitz"
+					use:tooltip={{content: 'Edit in Stackblitz'}}
+					on:click={async () => (await import('../stackblitz')).openInStackblitz(sample, $selectedFramework$)}
+					><Svg className="icon-24 align-middle" svg={stackblitz} /></button
+				>
+			{/if}
 			<a
 				href={sampleUrl}
 				class="action m-1 p-0"
