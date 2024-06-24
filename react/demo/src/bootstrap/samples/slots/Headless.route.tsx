@@ -19,7 +19,7 @@ const Headless = () => (
 		<RatingReadonly rating={7} maxRating={10} />
 
 		<div className="mt-2">Using a slot to customize the display:</div>
-		<RatingReadonly rating={7} maxRating={10} className="rating-custom" slotStar={CustomStar} />
+		<RatingReadonly rating={7} maxRating={10} className="rating-custom" star={CustomStar} />
 	</>
 );
 export default Headless;

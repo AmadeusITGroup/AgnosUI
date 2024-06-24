@@ -94,22 +94,22 @@
 	<div id="btn-config-slotStar" class="btn-group mb-2">
 		<button
 			class="btn btn-sm btn-outline-secondary"
-			class:active={$widgetsConfig$.rating?.slotStar === CustomStar}
-			on:click={() => updateRatingConfig({slotStar: CustomStar})}
+			class:active={$widgetsConfig$.rating?.star === CustomStar}
+			on:click={() => updateRatingConfig({star: CustomStar})}
 		>
 			custom
 		</button>
 		<button
 			class="btn btn-sm btn-outline-secondary"
-			class:active={$widgetsConfig$.rating?.slotStar === '*'}
-			on:click={() => updateRatingConfig({slotStar: '*'})}
+			class:active={$widgetsConfig$.rating?.star === '*'}
+			on:click={() => updateRatingConfig({star: '*'})}
 		>
 			'*'
 		</button>
 		<button
 			class="btn btn-sm btn-outline-secondary"
-			class:active={!$widgetsConfig$.rating?.slotStar}
-			on:click={() => updateRatingConfig({slotStar: undefined})}
+			class:active={!$widgetsConfig$.rating?.star}
+			on:click={() => updateRatingConfig({star: undefined})}
 		>
 			undefined
 		</button>

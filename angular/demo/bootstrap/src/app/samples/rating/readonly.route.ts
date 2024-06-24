@@ -13,7 +13,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 				<span [innerHTML]="sanitizer.bypassSecurityTrustHtml(heartFill)"></span>
 			</span>
 		</ng-template>
-		<div class="rating-readonly" auRating="3.64" [auSlotStar]="custom" auReadonly auMaxRating="5" auAriaLabel="readonly rating"></div>
+		<div class="rating-readonly" auRating="3.64" [auStar]="custom" auReadonly auMaxRating="5" auAriaLabel="readonly rating"></div>
 	`,
 	encapsulation: ViewEncapsulation.None,
 	styles: "@import '@agnos-ui/common/samples/rating/readonly.scss';",

@@ -3,7 +3,7 @@
 	import {Slot} from '@agnos-ui/svelte-bootstrap/slot';
 	import {callWidgetFactory} from '@agnos-ui/svelte-bootstrap/config';
 
-	type $$Props = Pick<Partial<RatingProps>, 'rating' | 'maxRating' | 'className' | 'slotStar'>;
+	type $$Props = Pick<Partial<RatingProps>, 'rating' | 'maxRating' | 'className' | 'star'>;
 	type $$Slots = RatingSlots;
 
 	const widget = callWidgetFactory({
@@ -21,7 +21,7 @@
 	export const api = widget.api;
 
 	const {
-		stores: {stars$, className$, slotStar$},
+		stores: {stars$, className$, star$},
 	} = widget;
 	$: widget.patchChangedProps($$props);
 </script>
@@ -33,7 +33,7 @@
                 Simply use the Slot component from @agnos-ui/svelte-headless.
                 The api is currently a bit tricky, until Svelte 5 arrives with snippets.
             -->
-			<Slot slotContent={$slotStar$} props={{fill, index}} let:component let:props>
+			<Slot slotContent={$star$} props={{fill, index}} let:component let:props>
 				<svelte:fragment slot="slot" let:props><slot name="star" {...props} /></svelte:fragment>
 				<svelte:component this={component} {...props} />
 			</Slot>

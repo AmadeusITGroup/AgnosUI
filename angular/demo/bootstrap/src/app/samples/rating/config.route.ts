@@ -91,22 +91,22 @@ import {Component} from '@angular/core';
 			<div id="btn-config-slotStar" class="btn-group mb-2">
 				<button
 					class="btn btn-sm btn-outline-secondary"
-					[class.active]="widgetsConfig().rating?.slotStar === custom"
-					(click)="updateRatingConfig({slotStar: custom})"
+					[class.active]="widgetsConfig().rating?.star === custom"
+					(click)="updateRatingConfig({star: custom})"
 				>
 					custom
 				</button>
 				<button
 					class="btn btn-sm btn-outline-secondary"
-					[class.active]="widgetsConfig().rating?.slotStar === '*'"
-					(click)="updateRatingConfig({slotStar: '*'})"
+					[class.active]="widgetsConfig().rating?.star === '*'"
+					(click)="updateRatingConfig({star: '*'})"
 				>
 					'*'
 				</button>
 				<button
 					class="btn btn-sm btn-outline-secondary"
-					[class.active]="!widgetsConfig().rating?.slotStar"
-					(click)="updateRatingConfig({slotStar: undefined})"
+					[class.active]="!widgetsConfig().rating?.star"
+					(click)="updateRatingConfig({star: undefined})"
 				>
 					undefined
 				</button>

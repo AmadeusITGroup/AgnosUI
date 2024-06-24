@@ -9,7 +9,7 @@
 		onHover: ['noop', 'log'],
 		onLeave: ['noop', 'log'],
 		onRatingChange: ['noop', 'log'],
-		slotStar: ['starIconRating', 'heartIconRating'],
+		star: ['starIconRating', 'heartIconRating'],
 	};
 </script>
 

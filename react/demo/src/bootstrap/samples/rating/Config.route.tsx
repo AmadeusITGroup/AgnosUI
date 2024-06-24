@@ -103,20 +103,20 @@ const RatingDemo = () => {
 				slotStar:&nbsp;
 				<div id="btn-config-slotStar" className="btn-group mb-2">
 					<button
-						className={`btn btn-sm btn-outline-secondary ${ratingConfig.slotStar === CustomStar ? 'active' : ''}`}
-						onClick={() => updateRatingConfig({slotStar: CustomStar})}
+						className={`btn btn-sm btn-outline-secondary ${ratingConfig.star === CustomStar ? 'active' : ''}`}
+						onClick={() => updateRatingConfig({star: CustomStar})}
 					>
 						custom
 					</button>
 					<button
-						className={`btn btn-sm btn-outline-secondary ${ratingConfig.slotStar === '*' ? 'active' : ''}`}
-						onClick={() => updateRatingConfig({slotStar: '*'})}
+						className={`btn btn-sm btn-outline-secondary ${ratingConfig.star === '*' ? 'active' : ''}`}
+						onClick={() => updateRatingConfig({star: '*'})}
 					>
 						&apos;*&apos;
 					</button>
 					<button
-						className={`btn btn-sm btn-outline-secondary ${ratingConfig.slotStar === undefined ? 'active' : ''}`}
-						onClick={() => updateRatingConfig({slotStar: undefined})}
+						className={`btn btn-sm btn-outline-secondary ${ratingConfig.star === undefined ? 'active' : ''}`}
+						onClick={() => updateRatingConfig({star: undefined})}
 					>
 						undefined
 					</button>
