@@ -15,6 +15,7 @@
 			"command": "vite",
 			"dependencies": [
 				"../bootstrap:generate:exports",
+				"../bootstrap:generate:component-types",
 				"../headless:generate:exports"
 			],
 			"service": true
@@ -24,6 +25,7 @@
 			"dependencies": [
 				"../../code-coverage:build",
 				"../bootstrap:generate:exports",
+				"../bootstrap:generate:component-types",
 				"../headless:generate:exports"
 			],
 			"service": true

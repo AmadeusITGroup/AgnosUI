@@ -16,7 +16,7 @@ export interface ToastExtraProps {
 	/**
 	 * Template for the toast content
 	 */
-	slotDefault: SlotContent<ToastContext>;
+	children: SlotContent<ToastContext>;
 	/**
 	 * Header template for the toast component
 	 */
@@ -30,7 +30,7 @@ export type ToastWidget = Widget<ToastProps, ToastState, ToastApi, object, Toast
 
 const defaultConfigExtraProps: ToastExtraProps = {
 	slotStructure: undefined,
-	slotDefault: undefined,
+	children: undefined,
 	slotHeader: undefined,
 };
 const coreOverride: Partial<CoreProps> = {

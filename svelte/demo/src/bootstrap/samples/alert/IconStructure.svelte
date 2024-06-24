@@ -24,7 +24,7 @@
 
 <span class="d-flex me-2">{@html typeIcon[state.type]}</span>
 <div class="alert-body">
-	<Slot slotContent={state.slotDefault} props={{widget, state}} let:component let:props>
+	<Slot slotContent={state.children} props={{widget, state}} let:component let:props>
 		<svelte:fragment slot="slot" let:props><slot {...props} /></svelte:fragment>
 		<svelte:component this={component} {...props}>
 			<svelte:fragment let:state let:widget><slot {state} {widget} /></svelte:fragment>

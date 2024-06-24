@@ -4,7 +4,7 @@
 
 	type Data = $$Generic; // eslint-disable-line no-undef
 	type $$Props = ModalContext<Data>;
-	type $$Slots = ModalSlots<Data>;
+	type $$Slots = ModalSlots;
 
 	export let state: $$Props['state'];
 	export let widget: $$Props['widget'];

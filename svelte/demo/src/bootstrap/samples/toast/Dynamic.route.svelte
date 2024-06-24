@@ -58,7 +58,7 @@
 		</select>
 		<button
 			class="btn btn-primary addToast ms-2"
-			on:click={() => toasts$.add({autoHide: true, delay: 3000, className: position, slotDefault: 'Simple toast', slotHeader: 'I am header'})}
+			on:click={() => toasts$.add({autoHide: true, delay: 3000, className: position, children: 'Simple toast', slotHeader: 'I am header'})}
 			>Show toast</button
 		>
 	</div>
@@ -68,8 +68,8 @@
 	{#each $toasts$.entries() as [position, toasts]}
 		<div class={`toast-container p-3 ${position}`}>
 			{#each toasts as toast}
-				{@const {dismissible, animatedOnInit, animated, slotDefault, slotHeader} = toast}
-				<Toast {dismissible} {animatedOnInit} {animated} {slotDefault} {slotHeader} onHidden={() => toasts$.remove(toast)} />
+				{@const {dismissible, animatedOnInit, animated, children, slotHeader} = toast}
+				<Toast {dismissible} {animatedOnInit} {animated} {children} {slotHeader} onHidden={() => toasts$.remove(toast)} />
 			{/each}
 		</div>
 	{/each}

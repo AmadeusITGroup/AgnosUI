@@ -1,7 +1,7 @@
 import {Slot} from '@agnos-ui/react-headless/slot';
 import {useWidgetWithConfig} from '../../config';
 import {useDirectives, classDirective} from '@agnos-ui/react-headless/utils/directive';
-import type {PropsWithChildren, ForwardedRef, ForwardRefExoticComponent, RefAttributes} from 'react';
+import type {ForwardedRef, ForwardRefExoticComponent, RefAttributes} from 'react';
 import {forwardRef, useImperativeHandle} from 'react';
 import {createAlert as coreCreateAlert, getAlertDefaultConfig as coreGetAlertDefaultConfig} from '@agnos-ui/core-bootstrap/components/alert';
 import type {WidgetFactory} from '@agnos-ui/react-headless/types';
@@ -14,7 +14,7 @@ export const getAlertDefaultConfig: () => AlertProps = coreGetAlertDefaultConfig
 const DefaultSlotStructure = (slotContext: AlertContext) => (
 	<>
 		<div className="alert-body">
-			<Slot slotContent={slotContext.state.slotDefault} props={slotContext}></Slot>
+			<Slot slotContent={slotContext.state.children} props={slotContext}></Slot>
 		</div>
 		{slotContext.state.dismissible && (
 			<button type="button" className="btn-close" onClick={slotContext.widget.api.close} aria-label={slotContext.state.ariaCloseButtonLabel}></button>
@@ -41,11 +41,11 @@ const AlertElement = (slotContext: AlertContext) => (
 	</div>
 );
 
-export const Alert: ForwardRefExoticComponent<PropsWithChildren<Partial<AlertProps>> & RefAttributes<AlertApi>> = forwardRef(function Alert(
-	props: PropsWithChildren<Partial<AlertProps>>,
+export const Alert: ForwardRefExoticComponent<Partial<AlertProps> & RefAttributes<AlertApi>> = forwardRef(function Alert(
+	props: Partial<AlertProps>,
 	ref: ForwardedRef<AlertApi>,
 ) {
-	const [state, widget] = useWidgetWithConfig(createAlert, props, 'alert', {...defaultConfig, slotDefault: props.children});
+	const [state, widget] = useWidgetWithConfig(createAlert, props, 'alert', defaultConfig);
 	useImperativeHandle(ref, () => widget.api, []);
 	const slotContext = {
 		state,

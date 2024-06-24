@@ -1,8 +1,7 @@
 <script lang="ts">
 	import type {ModalSlots} from '@agnos-ui/svelte-bootstrap/components/modal';
-	type ModalContent = {name: string};
-	type $$Props = ModalSlots<ModalContent>['default'];
-	type $$Slots = ModalSlots<ModalContent>;
+	type $$Props = ModalSlots['default'];
+	type $$Slots = ModalSlots;
 	export let widget: $$Props['widget'];
 	export let state: $$Props['state'];
 </script>
