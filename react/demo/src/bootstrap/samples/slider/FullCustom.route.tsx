@@ -15,7 +15,7 @@ const FullCustomSliderDemo = () => {
 				stepSize={1}
 				values={sliderControl}
 				onValuesChange={setSliderControl}
-				slotStructure={CustomSliderComponent}
+				structure={CustomSliderComponent}
 				vertical
 				className="custom-slider"
 			/>

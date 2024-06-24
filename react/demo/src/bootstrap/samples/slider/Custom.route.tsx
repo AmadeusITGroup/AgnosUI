@@ -16,7 +16,7 @@ const CustomSliderDemo = () => {
 				stepSize={1}
 				values={sliderCustomLabelControl}
 				onValuesChange={setSliderCustomLabelControl}
-				slotLabel={({value}: {value: number}) => '' + value + '%'}
+				label={({value}: {value: number}) => '' + value + '%'}
 				className="au-custom-slider-container"
 			/>
 			<hr />
@@ -27,7 +27,7 @@ const CustomSliderDemo = () => {
 				stepSize={1}
 				values={sliderCustomHandleControl}
 				onValuesChange={setSliderCustomHandleControl}
-				slotHandle={CustomSlotHandle}
+				handle={CustomSlotHandle}
 				className="au-custom-slider-container"
 			/>
 		</>

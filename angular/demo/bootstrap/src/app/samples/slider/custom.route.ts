@@ -21,7 +21,7 @@ import CustomHandleSliderComponent from './custom-handle.component';
 			auStepSize="1"
 			[formControl]="sliderCustomHandleControl"
 			auClassName="au-custom-slider-container"
-			[auSlotHandle]="sliderCustomSlotHandle"
+			[auHandle]="sliderCustomSlotHandle"
 		></div>
 	`,
 	styles: "@import '@agnos-ui/common/samples/slider/custom.scss';",
