@@ -25,7 +25,7 @@
 		"@angular/router": "^18.0.3",
 		"@floating-ui/dom": "^1.6.5",
 		"autoprefixer": "^10.4.19",
-		"daisyui": "^4.12.2",
+		"daisyui": "^4.12.7",
 		"postcss": "^8.4.38",
 		"rxjs": "^7.8.1",
 		"tailwindcss": "^3.4.4",
