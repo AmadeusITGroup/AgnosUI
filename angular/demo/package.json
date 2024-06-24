@@ -188,7 +188,7 @@
 		"@angular/cli": "^18.0.4",
 		"@angular/compiler-cli": "^18.0.3",
 		"autoprefixer": "^10.4.19",
-		"daisyui": "^4.12.2",
+		"daisyui": "^4.12.7",
 		"postcss": "^8.4.38",
 		"tailwindcss": "^3.4.4",
 		"typescript": "~5.4.5"
