@@ -10,7 +10,7 @@ import biCheckCircleFill from 'bootstrap-icons/icons/check-circle-fill.svg';
 	imports: [AgnosUIAngularModule],
 	providers: [
 		provideWidgetsConfig((config) => {
-			config.toast = {...config.toast, className: 'text-bg-success', autoHide: false, dismissible: true, slotStructure: ToastIconComponent};
+			config.toast = {...config.toast, className: 'text-bg-success', autoHide: false, dismissible: true, structure: ToastIconComponent};
 			return config;
 		}),
 	],

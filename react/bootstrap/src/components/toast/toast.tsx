@@ -13,7 +13,7 @@ export const getToastDefaultConfig: () => ToastProps = coreGetToastDefaultConfig
 
 const ToastHeader = (slotContext: ToastContext) => (
 	<div className="toast-header">
-		<Slot slotContent={slotContext.state.slotHeader} props={slotContext} />
+		<Slot slotContent={slotContext.state.header} props={slotContext} />
 		{slotContext.state.dismissible && (
 			<button {...useDirectives([classDirective, 'btn-close me-0 ms-auto'], slotContext.widget.directives.closeButtonDirective)} />
 		)}
@@ -26,29 +26,29 @@ const ToastCloseButtonNoHeader = (slotContext: ToastContext) => (
 
 const DefaultSlotStructure = (slotContext: ToastContext) => (
 	<>
-		{slotContext.state.slotHeader && <ToastHeader {...slotContext} />}
+		{slotContext.state.header && <ToastHeader {...slotContext} />}
 
 		<div className="toast-body">
 			<Slot slotContent={slotContext.state.children} props={slotContext} />
 		</div>
-		{slotContext.state.dismissible && !slotContext.state.slotHeader && <ToastCloseButtonNoHeader {...slotContext} />}
+		{slotContext.state.dismissible && !slotContext.state.header && <ToastCloseButtonNoHeader {...slotContext} />}
 	</>
 );
 
 const defaultConfig: Partial<ToastProps> = {
-	slotStructure: DefaultSlotStructure,
+	structure: DefaultSlotStructure,
 };
 
 const ToastElement = (slotContext: ToastContext) => (
 	<div
 		{...useDirectives(
-			[classDirective, `toast ${slotContext.state.dismissible ? 'toast-dismissible' : ''} ${!slotContext.state.slotHeader ? 'd-flex' : ''}`],
+			[classDirective, `toast ${slotContext.state.dismissible ? 'toast-dismissible' : ''} ${!slotContext.state.header ? 'd-flex' : ''}`],
 			slotContext.widget.directives.transitionDirective,
 			slotContext.widget.directives.autoHideDirective,
 			slotContext.widget.directives.bodyDirective,
 		)}
 	>
-		<Slot slotContent={slotContext.state.slotStructure} props={slotContext} />
+		<Slot slotContent={slotContext.state.structure} props={slotContext} />
 	</div>
 );
 

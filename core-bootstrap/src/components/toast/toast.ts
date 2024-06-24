@@ -12,7 +12,7 @@ export interface ToastExtraProps {
 	/**
 	 * Global template for the toast component
 	 */
-	slotStructure: SlotContent<ToastContext>;
+	structure: SlotContent<ToastContext>;
 	/**
 	 * Template for the toast content
 	 */
@@ -20,7 +20,7 @@ export interface ToastExtraProps {
 	/**
 	 * Header template for the toast component
 	 */
-	slotHeader: SlotContent<ToastContext>;
+	header: SlotContent<ToastContext>;
 }
 
 export interface ToastState extends CoreState, ToastExtraProps {}
@@ -29,9 +29,9 @@ export interface ToastProps extends CoreProps, ToastExtraProps {}
 export type ToastWidget = Widget<ToastProps, ToastState, ToastApi, object, ToastDirectives>;
 
 const defaultConfigExtraProps: ToastExtraProps = {
-	slotStructure: undefined,
+	structure: undefined,
 	children: undefined,
-	slotHeader: undefined,
+	header: undefined,
 };
 const coreOverride: Partial<CoreProps> = {
 	transition: fadeTransition,

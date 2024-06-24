@@ -25,7 +25,7 @@ const ActionToastDemo = () => {
 						dismissible: true,
 						className: 'text-bg-success',
 						autoHide: false,
-						slotStructure: ToastAction,
+						structure: ToastAction,
 					}}
 				>
 					<Toast ref={refToast}>This is a toast with action</Toast>
