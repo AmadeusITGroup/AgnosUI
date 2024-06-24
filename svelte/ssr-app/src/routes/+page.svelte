@@ -20,18 +20,9 @@
 	<h2>Accordion</h2>
 	<div class="my-3">
 		<Accordion>
-			<AccordionItem visible>
-				<svelte:fragment slot="itemHeader">First</svelte:fragment>
-				<svelte:fragment slot="itemBody">Content 1</svelte:fragment>
-			</AccordionItem>
-			<AccordionItem>
-				<svelte:fragment slot="itemHeader">Second</svelte:fragment>
-				<svelte:fragment slot="itemBody">Content 2</svelte:fragment>
-			</AccordionItem>
-			<AccordionItem disabled>
-				<svelte:fragment slot="itemHeader">Disabled</svelte:fragment>
-				<svelte:fragment slot="itemBody">Content 3</svelte:fragment>
-			</AccordionItem>
+			<AccordionItem header="First" visible>Content 1</AccordionItem>
+			<AccordionItem header="Second">Content 2</AccordionItem>
+			<AccordionItem header="Disabled" disabled>Content 3</AccordionItem>
 		</Accordion>
 	</div>
 	<h2>Alert</h2>

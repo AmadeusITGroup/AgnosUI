@@ -3,18 +3,9 @@
 	<h2>Accordion</h2>
 	<div class="my-3">
 		<div auAccordion>
-			<div auAccordionItem auVisible>
-				<ng-template auAccordionItemHeader>First</ng-template>
-				<ng-template auAccordionItemBody>Content 1 </ng-template>
-			</div>
-			<div auAccordionItem>
-				<ng-template auAccordionItemHeader>Second</ng-template>
-				<ng-template auAccordionItemBody>Content 2 </ng-template>
-			</div>
-			<div auAccordionItem auDisabled>
-				<ng-template auAccordionItemHeader>Disabled</ng-template>
-				<ng-template auAccordionItemBody>Content 3 </ng-template>
-			</div>
+			<div auAccordionItem auHeader="First" auVisible>Content 1</div>
+			<div auAccordionItem auHeader="Second">Content 2</div>
+			<div auAccordionItem auHeader="Disabled" auDisabled>Content 3</div>
 		</div>
 	</div>
 	<h2>Alert</h2>

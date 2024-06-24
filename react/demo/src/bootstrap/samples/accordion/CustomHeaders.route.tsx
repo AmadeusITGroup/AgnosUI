@@ -101,9 +101,9 @@ const AccordionDemo = () => {
 
 	return (
 		<Accordion ref={refAccordion}>
-			<AccordionItem slotItemStructure={StructureOne} />
-			<AccordionItem slotItemStructure={StructureTwo} />
-			<AccordionItem slotItemStructure={StructureThree} disabled={thirdItemDisabled} />
+			<AccordionItem structure={StructureOne} />
+			<AccordionItem structure={StructureTwo} />
+			<AccordionItem structure={StructureThree} disabled={thirdItemDisabled} />
 		</Accordion>
 	);
 };

@@ -15,12 +15,12 @@
 
 <svelte:element this={headingTag} class="accordion-header" use:slotContext.widget.directives.headerDirective>
 	<button use:slotContext.widget.directives.buttonDirective class="accordion-button">
-		<Slot slotContent={state.slotItemHeader} props={slotContext} let:component let:props>
-			<svelte:fragment slot="slot" let:props><slot name="itemHeader" {...props} /></svelte:fragment>
+		<Slot slotContent={state.header} props={slotContext} let:component let:props>
+			<svelte:fragment slot="slot" let:props><slot name="header" {...props} /></svelte:fragment>
 			<svelte:component this={component} {...props}>
-				<svelte:fragment slot="itemBody" let:state let:widget><slot name="itemBody" {state} {widget} /></svelte:fragment>
-				<svelte:fragment slot="itemHeader" let:state let:widget><slot name="itemHeader" {state} {widget} /></svelte:fragment>
-				<svelte:fragment slot="itemStructure" let:state let:widget><slot name="itemStructure" {state} {widget} /></svelte:fragment>
+				<svelte:fragment let:state let:widget><slot {state} {widget} /></svelte:fragment>
+				<svelte:fragment slot="header" let:state let:widget><slot name="header" {state} {widget} /></svelte:fragment>
+				<svelte:fragment slot="structure" let:state let:widget><slot name="structure" {state} {widget} /></svelte:fragment>
 			</svelte:component>
 		</Slot>
 	</button>
@@ -28,12 +28,12 @@
 {#if state.shouldBeInDOM}
 	<div class="accordion-collapse" use:widget.directives.bodyContainerDirective>
 		<div class="accordion-body" use:widget.directives.bodyDirective>
-			<Slot slotContent={state.slotItemBody} props={slotContext} let:component let:props>
-				<svelte:fragment slot="slot" let:props><slot name="itemBody" {...props} /></svelte:fragment>
+			<Slot slotContent={state.children} props={slotContext} let:component let:props>
+				<svelte:fragment slot="slot" let:props><slot {...props} /></svelte:fragment>
 				<svelte:component this={component} {...props}>
-					<svelte:fragment slot="itemBody" let:state let:widget><slot name="itemBody" {state} {widget} /></svelte:fragment>
-					<svelte:fragment slot="itemHeader" let:state let:widget><slot name="itemHeader" {state} {widget} /></svelte:fragment>
-					<svelte:fragment slot="itemStructure" let:state let:widget><slot name="itemStructure" {state} {widget} /></svelte:fragment>
+					<svelte:fragment let:state let:widget><slot {state} {widget} /></svelte:fragment>
+					<svelte:fragment slot="header" let:state let:widget><slot name="header" {state} {widget} /></svelte:fragment>
+					<svelte:fragment slot="structure" let:state let:widget><slot name="structure" {state} {widget} /></svelte:fragment>
 				</svelte:component>
 			</Slot>
 		</div>

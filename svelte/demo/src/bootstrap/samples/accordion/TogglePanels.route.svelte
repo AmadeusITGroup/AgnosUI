@@ -9,14 +9,8 @@
 </script>
 
 <Accordion bind:this={accordion}>
-	<AccordionItem id="first">
-		<svelte:fragment slot="itemHeader">First panel</svelte:fragment>
-		<svelte:fragment slot="itemBody">{BODY}</svelte:fragment>
-	</AccordionItem>
-	<AccordionItem id="second" bind:this={secondAccordionItem}>
-		<svelte:fragment slot="itemHeader">Second panel</svelte:fragment>
-		<svelte:fragment slot="itemBody">{BODY}</svelte:fragment>
-	</AccordionItem>
+	<AccordionItem id="first" header="First panel">{BODY}</AccordionItem>
+	<AccordionItem id="second" header="Second panel" bind:this={secondAccordionItem}>{BODY}</AccordionItem>
 </Accordion>
 <hr />
 <div class="d-flex flex-wrap gap-2">
