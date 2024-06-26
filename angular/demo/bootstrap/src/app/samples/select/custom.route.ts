@@ -39,7 +39,7 @@ function getHtmlText(html: string) {
 						(click)="widget.actions.onRemoveBadgeClick($event, itemContext.item)"
 					></button>
 				</ng-template>
-				<ng-template auSelectItem let-widget="widget" let-itemContext="itemContext">
+				<ng-template auSelectItemLabel let-widget="widget" let-itemContext="itemContext">
 					<div class="fw-bold">{{ itemContext.item.title }}</div>
 					<div class="text-wrap wiki-desc">{{ itemContext.item.snippet }}</div>
 				</ng-template>
