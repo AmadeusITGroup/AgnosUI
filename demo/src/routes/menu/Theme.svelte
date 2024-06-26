@@ -82,7 +82,13 @@
 			{/each}
 		</button>
 		{#if $open$}
-			<div use:directive class="dropdown-menu dropdown-menu-end bs-popover-auto position-absolute" class:show={$open$}>
+			<div
+				use:directive
+				class="dropdown-menu dropdown-menu-end bs-popover-auto position-absolute"
+				class:show={$open$}
+				data-popper-placement="bottom-end"
+				data-bs-popper="absolute"
+			>
 				{#each themes as theme, index}
 					<button
 						use:giveFocus={index}
