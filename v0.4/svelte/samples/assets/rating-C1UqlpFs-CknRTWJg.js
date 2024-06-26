@@ -1,0 +1,1 @@
+import{g as e,c as r}from"./rating-D6Tv_4Vx-BmIoKksH.js";import{e as o}from"./extendWidget-8zXnCiQz.js";const t={star:({fill:a})=>String.fromCharCode(a===100?9733:9734)};function i(){return{...e(),...t}}const f=o(r,t,{});export{f as c,i as g};
