@@ -32,12 +32,27 @@
 				? $page.url.pathname.replace(`/${currentVersion.folder}/`, `/${version.folder}/`)
 				: `${$pathToRoot$.replace(currentVersion.folder, version.folder)}docs/${$selectedFramework$}/getting-started/introduction`,
 	}));
+	const regexNext = /-next/;
+	$: includesNext = !!versions[1]?.version?.match?.(regexNext);
+	const versionLabel = (index: number, version: string, withNext: boolean) => {
+		if (withNext) {
+			if (index === 1) {
+				return `Next (${version})`;
+			} else {
+				return index === 2 ? `Latest (${version})` : version;
+			}
+		} else {
+			return index === 1 ? `Latest (${version})` : version;
+		}
+	};
 </script>
 
 <div class="nav-item">
 	<div class="dropdown">
 		<button
-			class="btn nav-link dropdown-toggle align-items-center d-flex {currentVersion.version === 'PREVIEW' ? 'badge text-bg-warning' : ''}"
+			class="btn nav-link dropdown-toggle align-items-center d-flex {currentVersion.version === 'PREVIEW' || currentVersion.folder === 'next'
+				? 'badge text-bg-warning'
+				: ''}"
 			aria-label="demo version select"
 			on:mousedown|preventDefault
 			on:click={() => ($open$ = !$open$)}
@@ -47,7 +62,13 @@
 			{currentVersion.version}
 		</button>
 		{#if $open$}
-			<div use:directive class="dropdown-menu dropdown-menu-end bs-popover-auto position-absolute" class:show={$open$}>
+			<div
+				use:directive
+				class="dropdown-menu dropdown-menu-end bs-popover-auto position-absolute"
+				class:show={$open$}
+				data-popper-placement="bottom-end"
+				data-bs-popper="absolute"
+			>
 				{#each versionsWithUrl as version, index}
 					<a
 						use:giveFocus={index}
@@ -58,7 +79,7 @@
 							$open$ = !$open$;
 						}}
 					>
-						{index === 1 ? `Latest (${version.version})` : version.version}
+						{versionLabel(index, version.version, includesNext)}
 					</a>
 				{/each}
 			</div>
