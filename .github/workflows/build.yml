@@ -81,7 +81,8 @@ jobs:
       - if: inputs.version != '' && inputs.npmPublish
         run: |
           npm whoami
-          node ./scripts/npmPublish.js --provenance
+          export PUBLISH_TAG="$(node ../scripts/publishTag.js "${{ inputs.version }}")"
+          node ./scripts/npmPublish.js --provenance --tag "$PUBLISH_TAG"
           npm run -w demo update:stackblitzPkgs ${{ inputs.version }}
           npm run build -w demo
           git commit -a -m v${{ inputs.version }}
