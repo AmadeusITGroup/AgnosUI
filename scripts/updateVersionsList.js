@@ -16,14 +16,10 @@ const availableVersions = fs
 
 availableVersions.sort((a, b) => -semver.compareBuild(a.version, b.version));
 fs.writeFileSync('versions.json', JSON.stringify(availableVersions));
-try {
-	fs.unlinkSync('latest');
-} catch (e) {
-	if (e.code !== 'ENOENT') {
-		throw e;
-	}
-}
-fs.symlinkSync(availableVersions[0].folder, 'latest');
+fs.rmSync('next', {force: true});
+fs.rmSync('latest', {force: true});
+fs.symlinkSync(availableVersions[0].folder, 'next');
+fs.symlinkSync(availableVersions[availableVersions[0].version.match(/-next/) ? 1 : 0].folder, 'latest');
 
 console.log('Ordered list of available versions:');
 console.log(availableVersions);

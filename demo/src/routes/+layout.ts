@@ -17,7 +17,12 @@ export const load = async () => {
 				return {...ver, version: `v${ver.version}`};
 			}),
 		);
-		versions[1].folder = 'latest';
+		if (versions[1].version.match(/-next/)) {
+			versions[1].folder = 'next';
+			versions[2].folder = 'latest';
+		} else {
+			versions[1].folder = 'latest';
+		}
 	}
 	return {
 		versions,
