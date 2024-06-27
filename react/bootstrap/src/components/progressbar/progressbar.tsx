@@ -27,7 +27,7 @@ function DefaultSlotContent(slotContext: ProgressbarContext) {
 }
 
 const defaultConfig: Partial<ProgressbarProps> = {
-	slotStructure: DefaultSlotContent,
+	structure: DefaultSlotContent,
 };
 
 export const Progressbar = (props: Partial<ProgressbarProps>) => {
@@ -35,7 +35,7 @@ export const Progressbar = (props: Partial<ProgressbarProps>) => {
 	const slotContext: ProgressbarContext = {state, widget: toSlotContextWidget(widget)};
 	return (
 		<div {...useDirective(widget.directives.ariaDirective)} className={state.className || undefined}>
-			<Slot slotContent={state.slotStructure} props={slotContext} />
+			<Slot slotContent={state.structure} props={slotContext} />
 		</div>
 	);
 };

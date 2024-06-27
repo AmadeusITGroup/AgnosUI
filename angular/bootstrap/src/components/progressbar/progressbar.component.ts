@@ -54,7 +54,7 @@ export const progressbarDefaultSlotStructure = new ComponentTemplate(Progressbar
 
 export type PartialProgressbarProps = Partial<ProgressbarProps>;
 const defaultConfig: PartialProgressbarProps = {
-	slotStructure: progressbarDefaultSlotStructure,
+	structure: progressbarDefaultSlotStructure,
 };
 
 @Component({
@@ -67,7 +67,7 @@ const defaultConfig: PartialProgressbarProps = {
 	},
 	template: `
 		<ng-template [auContentAsSlot]="defaultSlots"><ng-content></ng-content></ng-template>
-		<ng-template [auSlot]="state().slotStructure" [auSlotProps]="{state: state(), widget}"></ng-template>
+		<ng-template [auSlot]="state().structure" [auSlotProps]="{state: state(), widget}"></ng-template>
 	`,
 })
 export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget> implements AfterContentChecked {
@@ -106,7 +106,7 @@ export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget>
 	/**
 	 * Global template for the Progressbar.
 	 */
-	@Input('auSlotStructure') slotStructure: SlotContent<ProgressbarContext>;
+	@Input('auStructure') structure: SlotContent<ProgressbarContext>;
 	@ContentChild(ProgressbarStructureDirective, {static: false}) slotStructureFromContent: ProgressbarStructureDirective | undefined;
 
 	/**
@@ -147,7 +147,7 @@ export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget>
 	ngAfterContentChecked(): void {
 		this._widget.patchSlots({
 			children: undefined,
-			slotStructure: this.slotStructureFromContent?.templateRef,
+			structure: this.slotStructureFromContent?.templateRef,
 		});
 	}
 }
