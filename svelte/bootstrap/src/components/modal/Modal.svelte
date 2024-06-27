@@ -8,8 +8,8 @@
 	import ModalDefaultStructure from './ModalDefaultStructure.svelte';
 
 	const defaultConfig: Partial<ModalProps<any>> = {
-		slotStructure: ModalDefaultStructure,
-		slotHeader: ModalDefaultHeader,
+		structure: ModalDefaultStructure,
+		header: ModalDefaultHeader,
 	};
 </script>
 
@@ -35,7 +35,7 @@
 	export const api: ModalApi<Data> = widget.api;
 
 	const {
-		stores: {backdropHidden$, hidden$, slotStructure$},
+		stores: {backdropHidden$, hidden$, structure$},
 		directives: {backdropDirective, backdropPortalDirective, modalDirective, modalPortalDirective},
 		state$,
 	} = widget;
@@ -52,7 +52,7 @@
 	<div class="modal d-block" use:modalPortalDirective use:modalDirective>
 		<div class="modal-dialog {$state$.fullscreen ? 'modal-fullscreen' : ''}">
 			<div class="modal-content">
-				<Slot slotContent={$slotStructure$} props={slotContext} let:component let:props>
+				<Slot slotContent={$structure$} props={slotContext} let:component let:props>
 					<svelte:fragment slot="slot" let:props><slot name="structure" {...props} /></svelte:fragment>
 					<svelte:component this={component} {...props}>
 						<svelte:fragment let:state let:widget><slot {state} {widget} /></svelte:fragment>
