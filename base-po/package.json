@@ -8,6 +8,7 @@
 		"playwright",
 		"testing"
 	],
+	"type": "module",
 	"main": "dist/lib/index.js",
 	"module": "dist/lib/index.mjs",
 	"types": "dist/lib/index.d.ts",
@@ -57,7 +58,7 @@
 		}
 	},
 	"peerDependencies": {
-		"@playwright/test": "^1.44.1"
+		"@playwright/test": "^1.45.0"
 	},
 	"files": [
 		"dist/lib"

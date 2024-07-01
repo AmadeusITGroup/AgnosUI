@@ -11,6 +11,7 @@
 		"testing",
 		"widgets"
 	],
+	"type": "module",
 	"main": "dist/lib/index.js",
 	"module": "dist/lib/index.mjs",
 	"types": "dist/dts/index.d.ts",
@@ -69,7 +70,7 @@
 		"@agnos-ui/base-po": "0.0.0"
 	},
 	"peerDependencies": {
-		"@playwright/test": "^1.44.1"
+		"@playwright/test": "^1.45.0"
 	},
 	"files": [
 		"dist/lib"

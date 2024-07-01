@@ -23,7 +23,7 @@
 		"@angular/platform-browser": "^18.0.5",
 		"@angular/platform-browser-dynamic": "^18.0.5",
 		"@angular/router": "^18.0.5",
-		"@floating-ui/dom": "^1.6.5",
+		"@floating-ui/dom": "^1.6.7",
 		"bootstrap-icons": "^1.11.3",
 		"rxjs": "^7.8.1",
 		"tslib": "^2.6.3",
