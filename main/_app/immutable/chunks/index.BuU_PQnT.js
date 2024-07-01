@@ -1,0 +1,11 @@
+const t=`"use strict";
+Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
+const pagination = require("../../pagination-DeZ2Eb3e.cjs");
+exports.DefaultPages = pagination.DefaultPages;
+exports.DefaultStructure = pagination.DefaultStructure;
+exports.NavButton = pagination.NavButton;
+exports.PageItem = pagination.PageItem;
+exports.Pagination = pagination.Pagination;
+exports.createPagination = pagination.createPagination;
+exports.getPaginationDefaultConfig = pagination.getPaginationDefaultConfig;
+`;export{t as default};
