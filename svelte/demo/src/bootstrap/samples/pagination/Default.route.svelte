@@ -12,9 +12,9 @@
 <Pagination bind:page collectionSize={60} directionLinks={false} />
 
 <h5>With boundary links:</h5>
-<Pagination bind:page collectionSize={60} boundaryLinks={true} />
+<Pagination bind:page collectionSize={60} boundaryLinks />
 
 <div class="mb-3">Current page: <span id="defaultPage">{page}</span></div>
 
 <h5>Disabled pagination:</h5>
-<Pagination bind:page={pageAlone} collectionSize={60} disabled={true} ariaLabel={'Disabled pagination'} />
+<Pagination bind:page={pageAlone} collectionSize={60} disabled ariaLabel={'Disabled pagination'} />

@@ -8,15 +8,15 @@
 </script>
 
 <h2>Horizontal slider</h2>
-<Slider min={0} max={100} stepSize={1} rtl={true} bind:values={sliderControl} />
+<Slider min={0} max={100} stepSize={1} rtl bind:values={sliderControl} />
 <br />
-<Slider min={0} max={100} stepSize={1} rtl={true} bind:values={sliderRangeControl} />
+<Slider min={0} max={100} stepSize={1} rtl bind:values={sliderRangeControl} />
 <h2>Vertical slider</h2>
 <div class="d-flex" style="height: 350px">
 	<div class="col-6" style="height: 300px">
-		<Slider min={0} max={100} stepSize={1} rtl={true} vertical={true} bind:values={sliderVerticalControl} className="my-0" />
+		<Slider min={0} max={100} stepSize={1} rtl vertical bind:values={sliderVerticalControl} className="my-0" />
 	</div>
 	<div class="col-6" style="height: 300px">
-		<Slider min={0} max={100} stepSize={1} rtl={true} vertical={true} bind:values={sliderRangeVerticalControl} className="my-0" />
+		<Slider min={0} max={100} stepSize={1} rtl vertical bind:values={sliderRangeVerticalControl} className="my-0" />
 	</div>
 </div>
