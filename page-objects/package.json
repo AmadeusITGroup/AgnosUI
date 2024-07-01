@@ -11,6 +11,7 @@
 		"testing",
 		"widgets"
 	],
+	"type": "module",
 	"main": "dist/lib/index.js",
 	"module": "dist/lib/index.mjs",
 	"types": "dist/dts/index.d.ts",
