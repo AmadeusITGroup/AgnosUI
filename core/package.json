@@ -136,7 +136,7 @@
 	},
 	"peerDependencies": {
 		"@amadeus-it-group/tansu": "^1.0.0",
-		"@floating-ui/dom": "^1.6.5",
+		"@floating-ui/dom": "^1.6.7",
 		"esm-env": "^1.0.0"
 	},
 	"sideEffects": false

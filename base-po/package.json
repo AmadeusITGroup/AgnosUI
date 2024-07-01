@@ -57,7 +57,7 @@
 		}
 	},
 	"peerDependencies": {
-		"@playwright/test": "^1.44.1"
+		"@playwright/test": "^1.45.0"
 	},
 	"files": [
 		"dist/lib"
