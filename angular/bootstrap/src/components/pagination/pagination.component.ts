@@ -116,12 +116,12 @@ export class PaginationStructureDirective {
 				<li class="page-item" [class.active]="page === state.page" [class.disabled]="page === -1 || state.disabled">
 					@if (page === -1) {
 						<div class="page-link au-ellipsis" aria-hidden="true">
-							<ng-template [auSlot]="state.slotEllipsis" [auSlotProps]="{state, widget}"></ng-template>
+							<ng-template [auSlot]="state.ellipsisLabel" [auSlotProps]="{state, widget}"></ng-template>
 						</div>
 						<span class="visually-hidden">{{ state.ariaEllipsisLabel }}</span>
 					} @else {
 						<a class="page-link" [auUse]="[widget.directives.pageLink, {page}]">
-							<ng-template [auSlot]="state.slotNumberLabel" [auSlotProps]="{state, widget, displayedPage: page}"></ng-template>
+							<ng-template [auSlot]="state.numberLabel" [auSlotProps]="{state, widget, displayedPage: page}"></ng-template>
 							@if (state.page === page) {
 								<span class="visually-hidden">{{ state.activeLabel }}</span>
 							}
@@ -136,7 +136,7 @@ export class PaginationStructureDirective {
 					<li class="page-item" [class.disabled]="state.previousDisabled">
 						<a class="page-link" [auUse]="widget.directives.pageFirst">
 							<span aria-hidden="true">
-								<ng-template [auSlot]="state.slotFirst" [auSlotProps]="{widget, state}"></ng-template>
+								<ng-template [auSlot]="state.firstPageLabel" [auSlotProps]="{widget, state}"></ng-template>
 							</span>
 						</a>
 					</li>
@@ -145,17 +145,17 @@ export class PaginationStructureDirective {
 					<li class="page-item" [class.disabled]="state.previousDisabled">
 						<a class="page-link" [auUse]="widget.directives.pagePrev">
 							<span aria-hidden="true">
-								<ng-template [auSlot]="state.slotPrevious" [auSlotProps]="{widget, state}"></ng-template>
+								<ng-template [auSlot]="state.previousPageLabel" [auSlotProps]="{widget, state}"></ng-template>
 							</span>
 						</a>
 					</li>
 				}
-				<ng-template [auSlot]="state.slotPages" [auSlotProps]="{widget, state}"></ng-template>
+				<ng-template [auSlot]="state.pagesDisplay" [auSlotProps]="{widget, state}"></ng-template>
 				@if (state.directionLinks) {
 					<li class="page-item" [class.disabled]="state.nextDisabled">
 						<a class="page-link" [auUse]="widget.directives.pageNext">
 							<span aria-hidden="true">
-								<ng-template [auSlot]="state.slotNext" [auSlotProps]="{widget, state}"></ng-template>
+								<ng-template [auSlot]="state.nextPageLabel" [auSlotProps]="{widget, state}"></ng-template>
 							</span>
 						</a>
 					</li>
@@ -164,7 +164,7 @@ export class PaginationStructureDirective {
 					<li class="page-item" [class.disabled]="state.nextDisabled">
 						<a class="page-link" [auUse]="widget.directives.pageLast">
 							<span aria-hidden="true">
-								<ng-template [auSlot]="state.slotLast" [auSlotProps]="{widget, state}"></ng-template>
+								<ng-template [auSlot]="state.lastPageLabel" [auSlotProps]="{widget, state}"></ng-template>
 							</span>
 						</a>
 					</li>
@@ -188,8 +188,8 @@ export const paginationDefaultSlotPages = new ComponentTemplate(PaginationDefaul
 export const paginationDefaultSlotStructure = new ComponentTemplate(PaginationDefaultSlotsComponent, 'structure');
 
 const defaultConfig: Partial<PaginationProps> = {
-	slotStructure: paginationDefaultSlotStructure,
-	slotPages: paginationDefaultSlotPages,
+	structure: paginationDefaultSlotStructure,
+	pagesDisplay: paginationDefaultSlotPages,
 };
 
 @Component({
@@ -201,7 +201,7 @@ const defaultConfig: Partial<PaginationProps> = {
 		'[attr.aria-label]': 'state().ariaLabel',
 	},
 	encapsulation: ViewEncapsulation.None,
-	template: `<ng-template [auSlotProps]="{state: state(), widget}" [auSlot]="state().slotStructure"></ng-template>`,
+	template: `<ng-template [auSlotProps]="{state: state(), widget}" [auSlot]="state().structure"></ng-template>`,
 })
 export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> implements AfterContentChecked {
 	/**
@@ -301,7 +301,7 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
 	 */
-	@Input('auSlotEllipsis') slotEllipsis: SlotContent<PaginationContext>;
+	@Input('auEllipsisLabel') ellipsisLabel: SlotContent<PaginationContext>;
 	@ContentChild(PaginationEllipsisDirective, {static: false})
 	slotEllipsisFromContent: PaginationEllipsisDirective | undefined;
 
@@ -310,7 +310,7 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
 	 */
-	@Input('auSlotFirst') slotFirst: SlotContent<PaginationContext>;
+	@Input('auFirstPageLabel') firstPageLabel: SlotContent<PaginationContext>;
 	@ContentChild(PaginationFirstDirective, {static: false})
 	slotFirstFromContent: PaginationFirstDirective | undefined;
 
@@ -319,7 +319,7 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
 	 */
-	@Input('auSlotPrevious') slotPrevious: SlotContent<PaginationContext>;
+	@Input('auPreviousPageLabel') previousPageLabel: SlotContent<PaginationContext>;
 	@ContentChild(PaginationPreviousDirective, {static: false})
 	slotPreviousFromContent: PaginationPreviousDirective | undefined;
 
@@ -328,7 +328,7 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
 	 */
-	@Input('auSlotNext') slotNext: SlotContent<PaginationContext>;
+	@Input('auNextPageLabel') nextPageLabel: SlotContent<PaginationContext>;
 	@ContentChild(PaginationNextDirective, {static: false})
 	slotNextFromContent: PaginationNextDirective | undefined;
 
@@ -337,7 +337,7 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
 	 */
-	@Input('auSlotLast') slotLast: SlotContent<PaginationContext>;
+	@Input('auLastPageLabel') lastPageLabel: SlotContent<PaginationContext>;
 	@ContentChild(PaginationLastDirective, {static: false})
 	slotLastFromContent: PaginationLastDirective | undefined;
 
@@ -346,7 +346,7 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * To use to customize the pages view
 	 * override any configuration parameters provided for this
 	 */
-	@Input('auSlotPages') slotPages: SlotContent<PaginationContext>;
+	@Input('auPagesDisplay') pagesDisplay: SlotContent<PaginationContext>;
 	@ContentChild(PaginationPagesDirective, {static: false})
 	slotPagesFromContent: PaginationPagesDirective | undefined;
 
@@ -355,18 +355,18 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * override any configuration parameters provided for this
 	 * for I18n, we suggest to use the global configuration
 	 */
-	@Input('auSlotNumberLabel') slotNumberLabel: SlotContent<PaginationNumberContext>;
+	@Input('auNumberLabel') numberLabel: SlotContent<PaginationNumberContext>;
 	@ContentChild(PaginationNumberDirective, {static: false})
 	slotNumberLabelFromContent: PaginationNumberDirective | undefined;
 
 	/**
 	 * The template to use for the structure of the pagination component
-	 * The default structure uses PaginationCommonPropsAndState.slotEllipsis slotEllipsis, PaginationCommonPropsAndState.slotFirst slotFirst,
-	 * PaginationCommonPropsAndState.slotPrevious slotPrevious, PaginationCommonPropsAndState.slotNext slotNext,
-	 * PaginationCommonPropsAndState.slotLast slotLast, PaginationCommonPropsAndState.slotPages slotPages,
-	 * PaginationCommonPropsAndState.slotNumberLabel slotNumberLabel,
+	 * The default structure uses PaginationProps.ellipsisLabelellipsisLabel , PaginationProps.firstPageLabelfirstPageLabel ,
+	 * PaginationProps.previousPageLabelpreviousPageLabel , PaginationProps.nextPageLabelnextPageLabel ,
+	 * PaginationProps.lastPageLabellastPageLabel , PaginationProps.pagesDisplaypagesDisplay ,
+	 * PaginationProps.numberLabelnumberLabel ,
 	 */
-	@Input('auSlotStructure') slotStructure: SlotContent<PaginationContext>;
+	@Input('auStructure') structure: SlotContent<PaginationContext>;
 	@ContentChild(PaginationStructureDirective, {static: false})
 	slotStructureFromContent: PaginationStructureDirective | undefined;
 
@@ -441,14 +441,14 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 
 	ngAfterContentChecked(): void {
 		this._widget.patchSlots({
-			slotEllipsis: this.slotEllipsisFromContent?.templateRef,
-			slotFirst: this.slotFirstFromContent?.templateRef,
-			slotLast: this.slotLastFromContent?.templateRef,
-			slotNext: this.slotNextFromContent?.templateRef,
-			slotNumberLabel: this.slotNumberLabelFromContent?.templateRef,
-			slotPages: this.slotPagesFromContent?.templateRef,
-			slotPrevious: this.slotPreviousFromContent?.templateRef,
-			slotStructure: this.slotStructureFromContent?.templateRef,
+			structure: this.slotStructureFromContent?.templateRef,
+			ellipsisLabel: this.slotEllipsisFromContent?.templateRef,
+			firstPageLabel: this.slotFirstFromContent?.templateRef,
+			previousPageLabel: this.slotPreviousFromContent?.templateRef,
+			nextPageLabel: this.slotNextFromContent?.templateRef,
+			lastPageLabel: this.slotLastFromContent?.templateRef,
+			pagesDisplay: this.slotPagesFromContent?.templateRef,
+			numberLabel: this.slotNumberLabelFromContent?.templateRef,
 		});
 	}
 }

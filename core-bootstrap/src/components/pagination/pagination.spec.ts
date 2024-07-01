@@ -39,14 +39,14 @@ describe(`Pagination`, () => {
 			disabled: false,
 			directionLinks: true,
 			boundaryLinks: false,
-			slotEllipsis: '…',
-			slotFirst: '«',
-			slotLast: '»',
-			slotNext: '›',
-			slotNumberLabel: state.slotNumberLabel,
-			slotPages: undefined,
-			slotPrevious: '‹',
-			slotStructure: undefined,
+			structure: undefined,
+			ellipsisLabel: '…',
+			firstPageLabel: '«',
+			previousPageLabel: '‹',
+			nextPageLabel: '›',
+			lastPageLabel: '»',
+			pagesDisplay: undefined,
+			numberLabel: state.numberLabel,
 			size: null,
 			activeLabel: '(current)',
 			ariaFirstLabel: 'Action link for first page',
@@ -69,8 +69,8 @@ describe(`Pagination`, () => {
 	});
 
 	test('should include a simple slot number label factory in default config', () => {
-		const slotNumberLabel = getPaginationDefaultConfig().slotNumberLabel as (props: {displayedPage: number}) => string;
-		expect(slotNumberLabel({displayedPage: 3})).toEqual(`3`);
+		const numberLabel = getPaginationDefaultConfig().numberLabel as (props: {displayedPage: number}) => string;
+		expect(numberLabel({displayedPage: 3})).toEqual(`3`);
 	});
 
 	test(`should pages changes according to maxSize`, () => {

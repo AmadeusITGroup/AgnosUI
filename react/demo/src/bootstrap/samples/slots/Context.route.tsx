@@ -9,7 +9,7 @@ const Usage = () => {
 			<Pagination collectionSize={60} />
 
 			<p>Changing the slot displaying the page number to use letters instead:</p>
-			<Pagination collectionSize={60} slotNumberLabel={numberLabel} />
+			<Pagination collectionSize={60} numberLabel={numberLabel} />
 		</>
 	);
 };

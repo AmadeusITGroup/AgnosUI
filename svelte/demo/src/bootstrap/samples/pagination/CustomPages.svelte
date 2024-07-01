@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type {PaginationSlots} from '@agnos-ui/svelte-bootstrap/components/pagination';
 
-	type $$Props = PaginationSlots['pages'];
+	type $$Props = PaginationSlots['pagesDisplay'];
 	type $$Slots = PaginationSlots;
 
 	export let state: $$Props['state'];

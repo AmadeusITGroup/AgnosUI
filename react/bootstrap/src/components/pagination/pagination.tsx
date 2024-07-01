@@ -24,7 +24,7 @@ export function DefaultPages(slotContext: PaginationContext) {
 			jsxPages.push(
 				<li className="page-item disabled" key={'Ellipsis' + i}>
 					<div className="page-link au-ellipsis" aria-hidden="true">
-						<Slot slotContent={state.slotEllipsis} props={slotContext}></Slot>
+						<Slot slotContent={state.ellipsisLabel} props={slotContext}></Slot>
 					</div>
 					<span className="visually-hidden">{state.ariaEllipsisLabel}</span>
 				</li>,
@@ -39,7 +39,7 @@ export function DefaultPages(slotContext: PaginationContext) {
 					directive={widget.directives['pageLink']}
 					page={state.pages[i]}
 				>
-					<Slot slotContent={state.slotNumberLabel} props={{...slotContext, displayedPage: state.pages[i]}}></Slot>
+					<Slot slotContent={state.numberLabel} props={{...slotContext, displayedPage: state.pages[i]}}></Slot>
 				</PageItem>,
 			);
 		}
@@ -48,8 +48,8 @@ export function DefaultPages(slotContext: PaginationContext) {
 }
 
 const defaultConfig: Partial<PaginationProps> = {
-	slotPages: DefaultPages,
-	slotStructure: DefaultStructure,
+	pagesDisplay: DefaultPages,
+	structure: DefaultStructure,
 };
 
 export function DefaultStructure(slotContext: PaginationContext) {
@@ -60,28 +60,28 @@ export function DefaultStructure(slotContext: PaginationContext) {
 	if (state.boundaryLinks) {
 		ItemsBefore.push(
 			<NavButton key={'first'} disabled={state.previousDisabled} directive={widget.directives['pageFirst']}>
-				<Slot slotContent={state.slotFirst} props={slotContext}></Slot>
+				<Slot slotContent={state.firstPageLabel} props={slotContext}></Slot>
 			</NavButton>,
 		);
 	}
 	if (state.directionLinks) {
 		ItemsBefore.push(
 			<NavButton key={'prev'} disabled={state.previousDisabled} directive={widget.directives['pagePrev']}>
-				<Slot slotContent={state.slotPrevious} props={slotContext}></Slot>
+				<Slot slotContent={state.previousPageLabel} props={slotContext}></Slot>
 			</NavButton>,
 		);
 	}
 	if (state.directionLinks) {
 		ItemsAfter.push(
 			<NavButton key={'next'} disabled={state.nextDisabled} directive={widget.directives['pageNext']}>
-				<Slot slotContent={state.slotNext} props={slotContext}></Slot>
+				<Slot slotContent={state.nextPageLabel} props={slotContext}></Slot>
 			</NavButton>,
 		);
 	}
 	if (state.boundaryLinks) {
 		ItemsAfter.push(
 			<NavButton key={'last'} disabled={state.nextDisabled} directive={widget.directives['pageLast']}>
-				<Slot slotContent={state.slotLast} props={slotContext}></Slot>
+				<Slot slotContent={state.lastPageLabel} props={slotContext}></Slot>
 			</NavButton>,
 		);
 	}
@@ -90,7 +90,7 @@ export function DefaultStructure(slotContext: PaginationContext) {
 		<>
 			<ul className={classNames('au-pagination', 'pagination', {[`pagination-${state.size}`]: !!state.size}, state.className)}>
 				{ItemsBefore}
-				<Slot slotContent={state.slotPages} props={slotContext}></Slot>
+				<Slot slotContent={state.pagesDisplay} props={slotContext}></Slot>
 				{ItemsAfter}
 			</ul>
 			<div aria-live="polite" className="visually-hidden">
@@ -107,7 +107,7 @@ export function Pagination(props: Partial<PaginationProps>) {
 
 	return (
 		<nav aria-label={state.ariaLabel}>
-			<Slot slotContent={state.slotStructure} props={slotContext} />
+			<Slot slotContent={state.structure} props={slotContext} />
 		</nav>
 	);
 }

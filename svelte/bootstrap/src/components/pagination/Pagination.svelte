@@ -8,8 +8,8 @@
 	import PaginationDefaultStructure from './PaginationDefaultStructure.svelte';
 
 	const defaultConfig: Partial<PaginationProps> = {
-		slotStructure: PaginationDefaultStructure,
-		slotPages: PaginationDefaultPages,
+		structure: PaginationDefaultStructure,
+		pagesDisplay: PaginationDefaultPages,
 	};
 </script>
 
@@ -39,7 +39,7 @@
 	export const api: PaginationApi = widget.api;
 
 	const {
-		stores: {slotStructure$, ariaLabel$},
+		stores: {structure$, ariaLabel$},
 		state$,
 	} = widget;
 
@@ -49,18 +49,18 @@
 
 <!-- Should we put nav here ? how to custom the class of ul in this case ?-->
 <nav aria-label={$ariaLabel$}>
-	<Slot slotContent={$slotStructure$} props={slotContext} let:component let:props>
+	<Slot slotContent={$structure$} props={slotContext} let:component let:props>
 		<svelte:fragment slot="slot" let:props><slot name="structure" {...props} /></svelte:fragment>
 		<svelte:component this={component} {...props}>
-			<svelte:fragment slot="ellipsis" let:state let:widget><slot name="ellipsis" {state} {widget} /></svelte:fragment>
-			<svelte:fragment slot="first" let:state let:widget><slot name="first" {state} {widget} /></svelte:fragment>
-			<svelte:fragment slot="last" let:state let:widget><slot name="last" {state} {widget} /></svelte:fragment>
-			<svelte:fragment slot="next" let:state let:widget><slot name="next" {state} {widget} /></svelte:fragment>
+			<svelte:fragment slot="ellipsisLabel" let:state let:widget><slot name="ellipsisLabel" {state} {widget} /></svelte:fragment>
+			<svelte:fragment slot="firstPageLabel" let:state let:widget><slot name="firstPageLabel" {state} {widget} /></svelte:fragment>
+			<svelte:fragment slot="lastPageLabel" let:state let:widget><slot name="lastPageLabel" {state} {widget} /></svelte:fragment>
+			<svelte:fragment slot="nextPageLabel" let:state let:widget><slot name="nextPageLabel" {state} {widget} /></svelte:fragment>
 			<svelte:fragment slot="numberLabel" let:displayedPage let:state let:widget
 				><slot name="numberLabel" {displayedPage} {state} {widget} /></svelte:fragment
 			>
-			<svelte:fragment slot="pages" let:state let:widget><slot name="pages" {state} {widget} /></svelte:fragment>
-			<svelte:fragment slot="previous" let:state let:widget><slot name="previous" {state} {widget} /></svelte:fragment>
+			<svelte:fragment slot="pagesDisplay" let:state let:widget><slot name="pagesDisplay" {state} {widget} /></svelte:fragment>
+			<svelte:fragment slot="previousPageLabel" let:state let:widget><slot name="previousPageLabel" {state} {widget} /></svelte:fragment>
 			<svelte:fragment slot="structure" let:state let:widget><slot name="structure" {state} {widget} /></svelte:fragment>
 		</svelte:component>
 	</Slot>
