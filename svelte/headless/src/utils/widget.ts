@@ -82,10 +82,6 @@ export const callWidgetFactoryWithConfig = <W extends Widget>({
 		for (const [name, present] of Object.entries($$slots)) {
 			if (present) {
 				processedSlots[name === 'default' ? 'children' : name] = useSvelteSlot;
-				// this code currenty supports both slots with slot prefix or without prefix
-				if (name !== 'default') {
-					processedSlots[`slot${name[0].toUpperCase()}${name.substring(1)}`] = useSvelteSlot;
-				}
 			}
 		}
 	}

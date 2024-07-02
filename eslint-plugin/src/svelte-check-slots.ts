@@ -6,8 +6,6 @@ import {addIndentation, getIndentation} from './ast-utils';
 
 const keepAttributes = ['slotContent', 'props'];
 
-const toSlotName = (propName: string) => (propName.startsWith('slot') ? `${propName[4].toLowerCase()}${propName.substring(5)}` : propName);
-
 const getAttributeNode = (node: SvelteAST.SvelteElement, attrName: string) => {
 	for (const attr of node.startTag.attributes) {
 		if (attr.type === 'SvelteAttribute') {
@@ -80,8 +78,7 @@ const extractExpectedSlotsList = (node: SvelteAST.SvelteElement, context: Readon
 	}
 	const stateSymbolType = checker.getTypeOfSymbolAtLocation(stateSymbol, propsTsNode).getProperties();
 	for (const property of stateSymbolType) {
-		const propName = property.name;
-		const slot = toSlotName(propName);
+		const slot = property.name;
 		const slotType = checker.getTypeOfSymbolAtLocation(property, propsTsNode);
 		if (checker.typeToString(slotType).startsWith('SlotContent<')) {
 			res.push({slot, params: extractSlotParams(slotType)});
@@ -94,11 +91,11 @@ const extractExpectedSlotsList = (node: SvelteAST.SvelteElement, context: Readon
 const extractSlotName = (node: SvelteAST.SvelteElement) => {
 	const slotContent = getAttributeValue(node, 'slotContent');
 	if (slotContent?.type === 'MemberExpression' && slotContent.property.type === 'Identifier') {
-		return toSlotName(slotContent.property.name);
+		return slotContent.property.name;
 	}
 	if (slotContent?.type === 'Identifier') {
 		const match = /^\$(.*)\$$/.exec(slotContent.name);
-		return toSlotName(match?.[1] ?? '');
+		return match?.[1] ?? '';
 	}
 	return null;
 };
