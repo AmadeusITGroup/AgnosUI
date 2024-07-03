@@ -3,66 +3,56 @@
 	"description": "Page objects to be used when testing AgnosUI-based applications with Playwright.",
 	"version": "0.0.0",
 	"keywords": [
-		"AgnosUI",
-		"components",
 		"e2e",
 		"page-object",
 		"playwright",
-		"testing",
-		"widgets"
+		"testing"
 	],
 	"type": "module",
-	"main": "dist/lib/index.js",
-	"module": "dist/lib/index.mjs",
-	"types": "dist/dts/index.d.ts",
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
 	"scripts": {
 		"build": "wireit"
 	},
 	"wireit": {
 		"build:src": {
-			"command": "vite build",
+			"command": "vite build && tsc -p tsconfig.build.json",
 			"dependencies": [
 				"../base-po:build"
 			],
 			"files": [
 				"lib/**",
+				"tsconfig.json",
+				"../tsconfig.json",
 				"vite.config.ts"
 			],
 			"output": [
-				"dist/lib/index.js",
-				"dist/lib/index.mjs"
+				"dist/**",
+				"!dist/package.json",
+				"!dist/README.md"
 			]
 		},
-		"build:dts": {
-			"command": "tsc -p tsconfig.d.json",
+		"build:pkg": {
+			"command": "node ../scripts/buildPackageJson.js . dist",
 			"dependencies": [
-				"../base-po:build"
+				"build:src"
 			],
 			"files": [
-				"lib/**",
-				"tsconfig.json",
-				"tsconfig.d.json",
-				"../tsconfig.json"
+				"../scripts/buildPackageJson.js",
+				"../package.json",
+				"package.json",
+				"README.md"
 			],
 			"output": [
-				"dist/dts/**"
+				"dist/README.md",
+				"dist/package.json"
 			]
 		},
 		"build": {
-			"command": "api-extractor run",
 			"dependencies": [
 				"build:src",
-				"build:dts"
-			],
-			"files": [
-				"api-extractor.json",
-				"../api-extractor.json",
-				"tsconfig.json",
-				"tsconfig.d.json",
-				"../tsconfig.json"
-			],
-			"output": [
-				"dist/lib/index.d.ts"
+				"build:pkg"
 			]
 		}
 	},
@@ -72,9 +62,6 @@
 	"peerDependencies": {
 		"@playwright/test": "^1.45.0"
 	},
-	"files": [
-		"dist/lib"
-	],
 	"license": "MIT",
 	"bugs": "https://github.com/AmadeusITGroup/AgnosUI/issues",
 	"repository": {
