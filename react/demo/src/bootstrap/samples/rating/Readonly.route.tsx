@@ -6,7 +6,7 @@ import HeartFill from 'bootstrap-icons/icons/heart-fill.svg?react';
 const RatingDemo = () => (
 	<Rating
 		rating={3.64}
-		readonly={true}
+		readonly
 		maxRating={5}
 		className="rating-readonly"
 		star={({fill}: StarContext) => {

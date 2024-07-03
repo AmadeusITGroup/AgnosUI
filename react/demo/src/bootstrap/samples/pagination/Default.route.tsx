@@ -14,13 +14,13 @@ const PaginationDemo = () => {
 			<Pagination page={page} collectionSize={60} directionLinks={false} onPageChange={setPage} />
 
 			<h5>With boundary links:</h5>
-			<Pagination page={page} collectionSize={60} boundaryLinks={true} onPageChange={setPage} />
+			<Pagination page={page} collectionSize={60} boundaryLinks onPageChange={setPage} />
 
 			<div className="mb-3">
 				Current page: <span id="defaultPage">{page}</span>
 			</div>
 			<h5>Disabled pagination:</h5>
-			<Pagination page={pageAlone} collectionSize={60} ariaLabel="Disabled pagination" disabled={true} onPageChange={setPageAlone} />
+			<Pagination page={pageAlone} collectionSize={60} ariaLabel="Disabled pagination" disabled onPageChange={setPageAlone} />
 		</>
 	);
 };

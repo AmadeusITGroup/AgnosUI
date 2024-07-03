@@ -22,7 +22,7 @@ const PaginationHrefs = () => {
 				<Pagination
 					ariaLabel={'Page navigation with customized hrefs'}
 					page={pageNumber}
-					boundaryLinks={true}
+					boundaryLinks
 					pageLink={pageLink}
 					onPageChange={pageChange}
 				/>

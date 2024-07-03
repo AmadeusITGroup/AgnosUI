@@ -14,5 +14,5 @@
 <p>
 	Page hash: <small>{'#' + $hash$}</small>
 </p>
-<Pagination {page} collectionSize={60} boundaryLinks={true} ariaLabel="Page navigation with customized hrefs" {pageLink} onPageChange={pageChange}
+<Pagination {page} collectionSize={60} boundaryLinks ariaLabel="Page navigation with customized hrefs" {pageLink} onPageChange={pageChange}
 ></Pagination>
