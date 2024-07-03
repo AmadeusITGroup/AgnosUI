@@ -119,7 +119,7 @@
 		&:not([disabled]):hover {
 			border: var(--#{$prefix}slider-handle-border-hover);
 		}
-		&:focus {
+		&:focus-visible {
 			box-shadow: var(--#{$prefix}slider-handle-focus-box-shadow);
 		}
 	}
