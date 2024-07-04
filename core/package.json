@@ -90,20 +90,6 @@
 				"build:pkg"
 			]
 		},
-		"check:api-extractor": {
-			"command": "api-extractor run",
-			"dependencies": [
-				"build:src"
-			],
-			"files": [
-				"api-extractor.json",
-				"../api-extractor.json",
-				"src/**",
-				"tsconfig.json",
-				"../tsconfig.json"
-			],
-			"output": []
-		},
 		"check:tests": {
 			"command": "tsc -p tsconfig.tests.json",
 			"files": [
@@ -115,7 +101,6 @@
 		},
 		"check": {
 			"dependencies": [
-				"check:api-extractor",
 				"check:tests"
 			]
 		},

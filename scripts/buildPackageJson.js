@@ -18,7 +18,7 @@ const pkg = {
 const packageName = sourcePackage.name;
 const directory = path.posix.relative(rootPath, sourceFolder);
 const frameworkName = packageName.split('/')?.[1].split('-')?.[0];
-const isFramework = !!frameworkName && frameworkName !== 'core';
+const isFramework = !!frameworkName && ['angular', 'react', 'svelte'].includes(frameworkName);
 const isBootstrap = packageName.endsWith('-bootstrap');
 
 for (const field of ['homepage', 'bugs', 'license', 'repository']) {
@@ -28,16 +28,17 @@ for (const field of ['homepage', 'bugs', 'license', 'repository']) {
 if (!pkg.keywords) {
 	pkg.keywords = [];
 }
-if (!isFramework) {
-	pkg.keywords.unshift('headless');
-}
 if (isBootstrap) {
 	pkg.keywords.unshift('bootstrap');
+} else if (isFramework || packageName === '@agnos-ui/core') {
+	pkg.keywords.unshift('headless');
 }
 if (isFramework) {
 	pkg.keywords.unshift(frameworkName);
 }
-pkg.keywords.push(...rootPackage.keywords);
+if (packageName !== '@agnos-ui/base-po') {
+	pkg.keywords.push(...rootPackage.keywords);
+}
 pkg.repository.directory = directory;
 delete pkg.private;
 delete pkg.scripts;

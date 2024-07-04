@@ -1,4 +1,10 @@
 {
 	"extends": "../tsconfig.json",
-	"exclude": ["dist"]
+	"compilerOptions": {
+		"noEmit": false,
+		"emitDeclarationOnly": true,
+		"outDir": "dist",
+		"declaration": true
+	},
+	"include": ["lib"]
 }

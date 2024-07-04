@@ -32,7 +32,6 @@
 	"devDependencies": {
 		"@axe-core/playwright": "^4.9.1",
 		"@commitlint/cli": "^19.3.0",
-		"@microsoft/api-extractor": "^7.47.0",
 		"@playwright/test": "^1.45.0",
 		"@types/node": "^20.14.9",
 		"@types/uuid": "^10.0.0",
