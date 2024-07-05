@@ -1,6 +1,6 @@
 {
 	"name": "agnos-ui-svelte-stackblitz-demo",
-	"version": "0.0.0",
+	"version": "0.4.0-next.1",
 	"private": true,
 	"type": "module",
 	"scripts": {
@@ -19,6 +19,8 @@
 		"svelte-check": "^3.8.4",
 		"tslib": "^2.6.3",
 		"typescript": "~5.4.5",
-		"vite": "^5.3.2"
+		"vite": "^5.3.2",
+		"@agnos-ui/svelte-bootstrap": "0.4.0-next.1",
+		"@agnos-ui/svelte-preprocess": "0.4.0-next.1"
 	}
 }
