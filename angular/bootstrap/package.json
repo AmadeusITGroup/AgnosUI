@@ -77,8 +77,8 @@
 	},
 	"peerDependencies": {
 		"@amadeus-it-group/tansu": "^1.0.0",
-		"@angular/common": "^18.0.5",
-		"@angular/core": "^18.0.5"
+		"@angular/common": "^18.0.6",
+		"@angular/core": "^18.0.6"
 	},
 	"dependencies": {
 		"@agnos-ui/angular-headless": "0.0.0",
@@ -86,15 +86,15 @@
 		"tslib": "^2.6.3"
 	},
 	"devDependencies": {
-		"@angular-devkit/build-angular": "^18.0.6",
-		"@angular/animations": "^18.0.5",
-		"@angular/cli": "^18.0.6",
-		"@angular/common": "^18.0.5",
-		"@angular/compiler": "^18.0.5",
-		"@angular/core": "^18.0.5",
-		"@angular/forms": "^18.0.5",
-		"@angular/platform-browser": "^18.0.5",
-		"@angular/platform-browser-dynamic": "^18.0.5",
+		"@angular-devkit/build-angular": "^18.0.7",
+		"@angular/animations": "^18.0.6",
+		"@angular/cli": "^18.0.7",
+		"@angular/common": "^18.0.6",
+		"@angular/compiler": "^18.0.6",
+		"@angular/core": "^18.0.6",
+		"@angular/forms": "^18.0.6",
+		"@angular/platform-browser": "^18.0.6",
+		"@angular/platform-browser-dynamic": "^18.0.6",
 		"ng-packagr": "^18.0.0",
 		"rxjs": "^7.8.1",
 		"zone.js": "~0.14.7"
