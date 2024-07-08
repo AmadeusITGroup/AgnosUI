@@ -6,7 +6,7 @@
 		"@babel/core": "^7.24.7",
 		"@babel/plugin-syntax-decorators": "^7.24.7",
 		"@babel/plugin-syntax-typescript": "^7.24.7",
-		"babel-plugin-istanbul": "^6.1.1",
+		"babel-plugin-istanbul": "^7.0.0",
 		"nyc": "^17.0.0",
 		"uuid": "^10.0.0"
 	},
