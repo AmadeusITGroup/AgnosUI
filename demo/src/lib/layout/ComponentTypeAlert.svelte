@@ -26,9 +26,11 @@
 	<div class="alert-container p-3 border border-{type} rounded-end">
 		<div class="d-flex align-items-center">
 			<span class="d-flex me-2">
-				<Svg svg={typeIcon[type]} />
+				<Svg svg={typeIcon[type]} className="icon-16" />
 			</span>
-			This component is a <strong class="m-1">{componentType}</strong> component and can be used <strong class="m-1">without</strong> the Bootstrap CSS.
+			<span class="me-4">
+				This component is a <strong>{componentType}</strong> component and can be used <strong>without</strong> the Bootstrap CSS.
+			</span>
 		</div>
 		<hr />
 		Colors of the component are using the Bootstrap CSS vars (along with a default color) so that if you are using bootstrap the component will take your

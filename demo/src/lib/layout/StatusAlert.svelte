@@ -32,9 +32,11 @@
 	<div class="alert-container p-3 border border-{type} rounded-end">
 		<div class="d-flex align-items-center">
 			<span class="d-flex me-2">
-				<Svg svg={typeIcon[type]} />
+				<Svg svg={typeIcon[type]} className="icon-16" />
 			</span>
-			Warning: component is <strong class="ms-1">{statusText}</strong><br />
+			<span class="me-4">
+				Warning: component is <strong>{statusText}</strong><br />
+			</span>
 		</div>
 		<hr />
 		{statusTextBody}
