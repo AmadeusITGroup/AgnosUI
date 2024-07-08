@@ -24,9 +24,11 @@
 	<div class="alert-container p-3 border border-warning rounded-end">
 		<div class="d-flex align-items-center">
 			<span class="d-flex me-2">
-				<Svg svg={conStriped} />
+				<Svg svg={conStriped} className="icon-16" />
 			</span>
-			Warning: Playground in construction<br />
+			<span class="me-4">
+				Warning: Playground in construction<br />
+			</span>
 		</div>
 		<hr />
 		Please note that the Playground tab is still in construction.
