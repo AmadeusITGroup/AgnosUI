@@ -54,7 +54,7 @@
 			>{/if}
 	</div>
 	{#if tabs.length}
-		<ul class="nav-tabs px-4 px-lg-5 d-flex flex-nowrap content-tabset justify-content-start nav" role="tablist">
+		<ul class="nav-tabs overflow-x-auto overflow-y-hidden px-4 px-lg-5 d-flex flex-nowrap content-tabset justify-content-start nav" role="tablist">
 			{#each tabs as { title, key, path }}
 				{@const isActive = $selectedTabName$ === key}
 				<li class="nav-item" role="presentation">

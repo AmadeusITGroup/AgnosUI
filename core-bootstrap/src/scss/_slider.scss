@@ -19,6 +19,7 @@
 }
 
 .au-slider {
+	// scss-docs-start slider-css-vars
 	--#{$prefix}slider-background-color: #{$au-slider-color-background};
 	--#{$prefix}slider-font-size: #{$au-slider-font-size};
 	--#{$prefix}slider-border-radius: #{$au-slider-border-radius};
@@ -69,6 +70,7 @@
 
 	--#{$prefix}slider-disabled-color: #{$au-slider-disabled-color};
 	--#{$prefix}slider-disabled-cursor: #{$au-slider-disabled-cursor};
+	// scss-docs-end slider-css-vars
 
 	display: flex;
 	background-color: var(--#{$prefix}slider-background-color);

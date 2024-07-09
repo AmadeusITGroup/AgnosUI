@@ -3,7 +3,12 @@ $toast-max-width: unset;
 // this prefix is linked to bootstrap prefix
 $prefix: bs- !default;
 
+$au-focus-ring-opacity: 0.25 !default;
+$au-focus-ring-width: 0.25rem !default;
+$au-focus-ring-color: rgba(#0d6efd, $au-focus-ring-opacity) !default;
+
 //slider variables
+// scss-docs-start slider-vars
 $au-slider-color-background: var(--#{$prefix}secondary-bg, #e9ecef) !default;
 $au-slider-font-size: 1rem !default;
 $au-slider-line-height: 1.5 !default;
@@ -14,9 +19,6 @@ $au-slider-vertical-margin-inline-start: 1rem !default;
 $au-slider-vertical-margin-inline-end: 3rem !default;
 $au-slider-translate-vertical: translateY(-50%) !default;
 $au-slider-translate-horizontal: translateX(-50%) !default;
-$au-focus-ring-opacity: 0.25 !default;
-$au-focus-ring-width: 0.25rem !default;
-$au-focus-ring-color: rgba(#0d6efd, $au-focus-ring-opacity) !default;
 $au-slider-handle-color: var(--#{$prefix}primary, #0d6efd) !default;
 $au-slider-handle-size: 1.25rem !default;
 $au-slider-handle-border: none !default;
@@ -61,3 +63,4 @@ $au-slider-bar-size-lg: 0.3125rem !default;
 $au-slider-handle-size-lg: 1.5rem !default;
 $au-slider-font-size-lg: 1.125rem !default;
 $au-slider-offset-lg: 0rem !default;
+// scss-docs-end slider-vars

@@ -6,6 +6,7 @@ import pkg from '../core/package.json';
 import {copySamples} from './scripts/copySamples.plugin';
 import {docExtractor} from './scripts/doc.plugin';
 import {includeSamples} from './scripts/includeSamples.plugin';
+import {includeStyles} from './scripts/includeStyles.plugin';
 import {watchMarkdown} from './scripts/watchMarkdown.plugin';
 import {emitFile} from './scripts/emitFile.plugin';
 import http from 'http';
@@ -60,6 +61,7 @@ export default defineConfig((config) => ({
 	plugins: [
 		copySamples(),
 		includeSamples(),
+		includeStyles(),
 		watchMarkdown(),
 		sveltekit(),
 		docExtractor(),
