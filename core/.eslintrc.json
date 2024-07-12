@@ -29,6 +29,12 @@
 	},
 	"overrides": [
 		{
+			"files": ["src/**"],
+			"rules": {
+				"@agnos-ui/check-default-props": "error"
+			}
+		},
+		{
 			"files": ["*.spec.ts"],
 			"rules": {
 				"jsdoc/require-jsdoc": "off",

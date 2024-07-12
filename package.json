@@ -153,7 +153,9 @@
 				"./react/bootstrap:generate:component-types",
 				"./svelte/headless:generate:exports",
 				"./svelte/bootstrap:generate:exports",
-				"./svelte/bootstrap:generate:component-types"
+				"./svelte/bootstrap:generate:component-types",
+				"./demo:sveltekit",
+				"./svelte/ssr-app:sveltekit"
 			]
 		},
 		"check:ts-gen-doc": {
@@ -182,6 +184,7 @@
 		"lint": {
 			"command": "eslint --ext mjs,js,ts,tsx,svelte .",
 			"dependencies": [
+				"prepare",
 				"./eslint-plugin:build",
 				"./svelte/bootstrap:build"
 			]
