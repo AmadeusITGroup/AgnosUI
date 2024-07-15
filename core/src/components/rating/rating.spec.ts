@@ -31,7 +31,7 @@ describe(`Rating`, () => {
 		};
 
 		let defConfig: WritableSignal<Partial<RatingProps>>;
-		let consoleErrorSpy: MockInstance<Parameters<typeof console.error>, ReturnType<typeof console.error>>;
+		let consoleErrorSpy: MockInstance<typeof console.error>;
 
 		beforeEach(() => {
 			consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});

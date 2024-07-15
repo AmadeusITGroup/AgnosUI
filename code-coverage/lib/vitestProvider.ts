@@ -1,4 +1,4 @@
-import type {AfterSuiteRunMeta, CoverageProvider, CoverageProviderModule, ReportContext, Vitest} from 'vitest';
+import type {AfterSuiteRunMeta, CoverageProvider, CoverageProviderModule, Vitest} from 'vitest';
 
 const customCoverageProviderModule: CoverageProviderModule = {
 	async getProvider(): Promise<CoverageProvider> {
@@ -12,7 +12,7 @@ const customCoverageProviderModule: CoverageProviderModule = {
 			resolveOptions() {
 				return ctx!.config.coverage;
 			},
-			async clean(clean?: boolean) {
+			async clean() {
 				const {default: setup} = await import('./setup');
 				finalizeReport = await setup(ctx!.config.root);
 			},
@@ -22,7 +22,8 @@ const customCoverageProviderModule: CoverageProviderModule = {
 					await reportCoverage(ctx!.config.root, JSON.stringify(coverage));
 				}
 			},
-			async reportCoverage(reportContext?: ReportContext) {
+			async generateCoverage() {},
+			async reportCoverage() {
 				await finalizeReport?.();
 				finalizeReport = undefined;
 			},
