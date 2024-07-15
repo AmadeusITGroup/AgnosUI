@@ -51,7 +51,7 @@
 		"prettier": "^3.3.3",
 		"strip-ansi": "^7.1.0",
 		"syncpack": "^12.3.3",
-		"typescript": "~5.4.5",
+		"typescript": "~5.5.3",
 		"vite": "^5.3.3",
 		"vitest": "^1.6.0",
 		"wireit": "^0.14.5"
