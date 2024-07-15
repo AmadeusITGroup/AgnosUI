@@ -32,7 +32,7 @@ const directiveSpy = <T>() => vitest.fn((element, value: T) => ({destroy: vitest
 
 describe('directive', () => {
 	let element: HTMLElement;
-	let consoleErrorSpy: MockInstance<Parameters<typeof console.error>, ReturnType<typeof console.error>>;
+	let consoleErrorSpy: MockInstance<typeof console.error>;
 
 	beforeEach(() => {
 		consoleErrorSpy = vitest.spyOn(console, 'error').mockImplementation(() => {});
