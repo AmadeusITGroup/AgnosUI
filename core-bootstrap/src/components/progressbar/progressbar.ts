@@ -25,15 +25,21 @@ interface ProgressbarExtraProps {
 	children: SlotContent<ProgressbarContext>;
 	/**
 	 * Height of the progressbar, can be any valid css height value.
+	 *
+	 * @defaultValue `''`
 	 */
 	height: string;
 	/**
 	 * If `true`, shows a striped progressbar.
+	 *
+	 * @defaultValue `false`
 	 */
 	striped: boolean;
 	/**
 	 * If `true`, animates a striped progressbar.
 	 * Takes effect only for browsers supporting CSS3 animations, and if `striped` is `true`.
+	 *
+	 * @defaultValue `false`
 	 */
 	animated: boolean;
 	/**

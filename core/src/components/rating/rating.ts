@@ -23,21 +23,29 @@ export interface StarContext {
 export interface RatingCommonPropsAndState extends WidgetsCommonPropsAndState {
 	/**
 	 * The current rating. Could be a decimal value like `3.75`.
+	 *
+	 * @defaultValue `0`
 	 */
 	rating: number;
 
 	/**
 	 * The maximum rating that can be given.
+	 *
+	 * @defaultValue `10`
 	 */
 	maxRating: number;
 
 	/**
 	 * If `true`, the rating is disabled.
+	 *
+	 * @defaultValue `false`
 	 */
 	disabled: boolean;
 
 	/**
 	 * If `true`, the rating can't be changed.
+	 *
+	 * @defaultValue `false`
 	 */
 	readonly: boolean;
 
@@ -45,22 +53,30 @@ export interface RatingCommonPropsAndState extends WidgetsCommonPropsAndState {
 	 * Define if the rating can be reset.
 	 *
 	 * If set to true, the user can 'unset' the rating value by cliking on the current rating value.
+	 *
+	 * @defaultValue `true`
 	 */
 	resettable: boolean;
 
 	/**
 	 * Allows setting a custom rating tabindex.
 	 * If the component is disabled, `tabindex` will still be set to `-1`.
+	 *
+	 * @defaultValue `0`
 	 */
 	tabindex: number;
 
 	/**
 	 * The aria label
+	 *
+	 * @defaultValue `'Rating'`
 	 */
 	ariaLabel: string;
 
 	/**
 	 * The aria labelled by
+	 *
+	 * @defaultValue `''`
 	 */
 	ariaLabelledBy: string;
 }
@@ -70,6 +86,11 @@ export interface RatingProps extends RatingCommonPropsAndState {
 	 * Return the value for the 'aria-valuetext' attribute.
 	 * @param rating - Current rating value.
 	 * @param maxRating - maxRating value.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * (rating: number, maxRating: number) => `${rating} out of ${maxRating}`
+	 * ```
 	 */
 	ariaValueTextFn: (rating: number, maxRating: number) => string;
 
@@ -77,6 +98,11 @@ export interface RatingProps extends RatingCommonPropsAndState {
 	 * An event emitted when the rating is changed.
 	 *
 	 * Event payload is equal to the newly selected rating.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	onRatingChange: (rating: number) => void;
 
@@ -84,6 +110,11 @@ export interface RatingProps extends RatingCommonPropsAndState {
 	 * An event emitted when the user is hovering over a given rating.
 	 *
 	 * Event payload is equal to the rating being hovered over.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	onHover: (rating: number) => void;
 
@@ -91,6 +122,11 @@ export interface RatingProps extends RatingCommonPropsAndState {
 	 * An event emitted when the user stops hovering over a given rating.
 	 *
 	 * Event payload is equal to the rating of the last item being hovered over.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	onLeave: (rating: number) => void;
 }

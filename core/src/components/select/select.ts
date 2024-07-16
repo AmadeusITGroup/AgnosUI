@@ -23,46 +23,64 @@ export interface SelectCommonPropsAndState<Item> extends WidgetsCommonPropsAndSt
 
 	/**
 	 * aria-label used for the input inside the select
+	 *
+	 * @defaultValue `'Select'`
 	 */
 	ariaLabel: string | undefined;
 
 	/**
 	 * List of selected item ids
+	 *
+	 * @defaultValue `[]`
 	 */
 	selected: Item[];
 
 	/**
 	 * Filtered text to be display in the filter input
+	 *
+	 * @defaultValue `''`
 	 */
 	filterText: string;
 
 	/**
 	 * true if the select is disabled
+	 *
+	 * @defaultValue `false`
 	 */
 	disabled: boolean;
 
 	/**
 	 * true if the select is open
+	 *
+	 * @defaultValue `false`
 	 */
 	open: boolean;
 
 	/**
 	 * Class to be added on the dropdown menu container
+	 *
+	 * @defaultValue `''`
 	 */
 	menuClassName: string;
 
 	/**
 	 * Class to be added on menu items
+	 *
+	 * @defaultValue `''`
 	 */
 	menuItemClassName: string;
 
 	/**
 	 * Class to be added on selected items (displayed in the input zone)
+	 *
+	 * @defaultValue `''`
 	 */
 	badgeClassName: string;
 
 	/**
 	 * true if a loading process is being done
+	 *
+	 * @defaultValue `false`
 	 */
 	loading: boolean;
 }
@@ -70,18 +88,30 @@ export interface SelectCommonPropsAndState<Item> extends WidgetsCommonPropsAndSt
 export interface SelectProps<Item> extends SelectCommonPropsAndState<Item> {
 	/**
 	 * List of available items for the dropdown
+	 *
+	 * @defaultValue `[]`
 	 */
 	items: Item[];
 
 	/**
 	 * List of allowed placements for the dropdown.
 	 * This refers to the [allowedPlacements from floating UI](https://floating-ui.com/docs/autoPlacement#allowedplacements), given the different [Placement possibilities](https://floating-ui.com/docs/computePosition#placement).
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * ['bottom-start', 'top-start', 'bottom-end', 'top-end']
+	 * ```
 	 */
 	allowedPlacements: Placement[];
 
 	/**
 	 * Custom function to get the id of an item
 	 * By default, the item is returned
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * (item: any) => '' + item
+	 * ```
 	 */
 	itemIdFn(item: Item): string;
 
@@ -89,6 +119,11 @@ export interface SelectProps<Item> extends SelectCommonPropsAndState<Item> {
 	 * Retrieves navigable elements within an HTML element containing badges and the input.
 	 *
 	 * @param node - HTMLElement that contains the badges and the input
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * (node: HTMLElement) => node.querySelectorAll('.au-select-badge,input')
+	 * ```
 	 */
 	navSelector(node: HTMLElement): NodeListOf<HTMLSpanElement | HTMLInputElement>;
 
@@ -97,17 +132,32 @@ export interface SelectProps<Item> extends SelectCommonPropsAndState<Item> {
 	/**
 	 * Callback called dropdown open state change
 	 * @param isOpen - updated open state
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	onOpenChange(isOpen: boolean): void;
 
 	/**
 	 * Callback called when the text filter change
 	 * @param text - Filtered text
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	onFilterTextChange(text: string): void;
 
 	/**
 	 * Callback called when the selection change
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	onSelectedChange(selected: Item[]): void;
 }

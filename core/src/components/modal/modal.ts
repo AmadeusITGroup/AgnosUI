@@ -38,16 +38,22 @@ export const modalCloseButtonClick = Symbol();
 export interface ModalCommonPropsAndState extends WidgetsCommonPropsAndState {
 	/**
 	 * Value of the aria-label attribute to put on the close button.
+	 *
+	 * @defaultValue `'Close'`
 	 */
 	ariaCloseButtonLabel: string;
 
 	/**
 	 * Classes to add on the backdrop DOM element.
+	 *
+	 * @defaultValue `''`
 	 */
 	backdropClass: string;
 
 	/**
 	 * Whether to display the close button.
+	 *
+	 * @defaultValue `true`
 	 */
 	closeButton: boolean;
 
@@ -55,11 +61,18 @@ export interface ModalCommonPropsAndState extends WidgetsCommonPropsAndState {
 	 * Which element should contain the modal and backdrop DOM elements.
 	 * If it is not null, the modal and backdrop DOM elements are moved to the specified container.
 	 * Otherwise, they stay where the widget is located.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * typeof window !== 'undefined' ? document.body : null
+	 * ```
 	 */
 	container: HTMLElement | null;
 
 	/**
 	 * Whether the modal should be visible when the transition is completed.
+	 *
+	 * @defaultValue `false`
 	 */
 	visible: boolean;
 }
@@ -88,26 +101,42 @@ export interface ModalBeforeCloseEvent {
 export interface ModalProps extends ModalCommonPropsAndState {
 	/**
 	 * Whether the modal and its backdrop (if present) should be animated when shown or hidden.
+	 *
+	 * @defaultValue `true`
 	 */
 	animated: boolean;
 
 	/**
 	 * Whether a backdrop should be created behind the modal.
+	 *
+	 * @defaultValue `true`
 	 */
 	backdrop: boolean;
 
 	/**
 	 * The transition to use for the backdrop behind the modal (if present).
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * async () => {}
+	 * ```
 	 */
 	backdropTransition: TransitionFn;
 
 	/**
 	 * Whether the modal should be closed when clicking on the viewport outside the modal.
+	 *
+	 * @defaultValue `true`
 	 */
 	closeOnOutsideClick: boolean;
 
 	/**
 	 * The transition to use for the modal.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * async () => {}
+	 * ```
 	 */
 	modalTransition: TransitionFn;
 
@@ -116,6 +145,11 @@ export interface ModalProps extends ModalCommonPropsAndState {
 	 *
 	 * @param event - event giving access to the argument given to the {@link ModalApi.close|close} method and allowing
 	 * to cancel the close process.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	onBeforeClose: (event: ModalBeforeCloseEvent) => void;
 
@@ -123,16 +157,31 @@ export interface ModalProps extends ModalCommonPropsAndState {
 	 * Event to be triggered when the visible property changes.
 	 *
 	 * @param visible - new value of the visible propery
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	onVisibleChange: (visible: boolean) => void;
 
 	/**
 	 * Event to be triggered when the transition is completed and the modal is not visible.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	onHidden: () => void;
 
 	/**
 	 * Event to be triggered when the transition is completed and the modal is visible.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	onShown: () => void;
 }

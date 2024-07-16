@@ -9,21 +9,26 @@ import {createAttributesDirective} from '../../utils/directive';
 export interface ProgressbarCommonPropsAndState extends WidgetsCommonPropsAndState {
 	/**
 	 * The minimum value.
-	 * @defaultValue 0
+	 *
+	 * @defaultValue `0`
 	 */
 	min: number;
 	/**
 	 * The maximum value.
-	 * @defaultValue 100
+	 *
+	 * @defaultValue `100`
 	 */
 	max: number;
 	/**
 	 * The current value.
-	 * @defaultValue 0
+	 *
+	 * @defaultValue `0`
 	 */
 	value: number;
 	/**
 	 * The aria label.
+	 *
+	 * @defaultValue `'Progressbar'`
 	 */
 	ariaLabel: string;
 }
@@ -60,6 +65,11 @@ export interface ProgressbarProps extends ProgressbarCommonPropsAndState {
 	 * @param value - current value
 	 * @param minimum - minimum value
 	 * @param maximum - maximum value
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => undefined
+	 * ```
 	 */
 	ariaValueTextFn: (value: number, minimum: number, maximum: number) => string | undefined;
 }

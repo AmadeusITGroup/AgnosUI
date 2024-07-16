@@ -9,10 +9,14 @@ import {createCommonAlert, getCommonAlertDefaultConfig} from '../alert/common';
 export interface ToastExtraProps {
 	/**
 	 * If `true` automatically hides the toast after the delay.
+	 *
+	 * @defaultValue `true`
 	 */
 	autoHide: boolean;
 	/**
 	 * Delay in milliseconds before hiding the toast.
+	 *
+	 * @defaultValue `5000`
 	 */
 	delay: number;
 }

@@ -40,7 +40,8 @@ interface PaginationExtraProps {
 	 * The template to use for the ellipsis slot
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
-	 * @defaultValue '…'
+	 *
+	 * @defaultValue `'…'`
 	 */
 	ellipsisLabel: SlotContent<PaginationContext>;
 
@@ -48,7 +49,8 @@ interface PaginationExtraProps {
 	 * The template to use for the first slot
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
-	 * @defaultValue '«'
+	 *
+	 * @defaultValue `'«'`
 	 */
 	firstPageLabel: SlotContent<PaginationContext>;
 
@@ -56,7 +58,8 @@ interface PaginationExtraProps {
 	 * The template to use for the previous slot
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
-	 * @defaultValue '‹'
+	 *
+	 * @defaultValue `'‹'`
 	 */
 	previousPageLabel: SlotContent<PaginationContext>;
 
@@ -64,7 +67,8 @@ interface PaginationExtraProps {
 	 * The template to use for the next slot
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
-	 * @defaultValue '›'
+	 *
+	 * @defaultValue `'›'`
 	 */
 	nextPageLabel: SlotContent<PaginationContext>;
 
@@ -72,7 +76,8 @@ interface PaginationExtraProps {
 	 * The template to use for the last slot
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
-	 * @defaultValue '»'
+	 *
+	 * @defaultValue `'»'`
 	 */
 	lastPageLabel: SlotContent<PaginationContext>;
 
@@ -87,11 +92,12 @@ interface PaginationExtraProps {
 	 * The template to use for the number slot
 	 * override any configuration parameters provided for this
 	 * for I18n, we suggest to use the global configuration
+	 * @param displayedPage - The current page number
+	 *
 	 * @defaultValue
 	 * ```ts
-	 * ({displayedPage}) => `${displayedPage}`
+	 * ({displayedPage}: PaginationNumberContext) => `${displayedPage}`
 	 * ```
-	 * @param displayedPage - The current page number
 	 */
 	numberLabel: SlotContent<PaginationNumberContext>;
 }

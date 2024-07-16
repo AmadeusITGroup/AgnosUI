@@ -3,6 +3,7 @@ import {createToast as createCoreToast, getToastDefaultConfig as getCoreDefaultC
 import type {SlotContent, Widget, WidgetFactory, WidgetSlotContext} from '@agnos-ui/core/types';
 import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
 import {fadeTransition} from '../../services/transitions';
+import type {TransitionFn} from '@agnos-ui/core/services/transitions/baseTransitions';
 
 export * from '@agnos-ui/core/components/toast';
 
@@ -24,7 +25,16 @@ export interface ToastExtraProps {
 }
 
 export interface ToastState extends CoreState, ToastExtraProps {}
-export interface ToastProps extends CoreProps, ToastExtraProps {}
+export interface ToastProps extends CoreProps, ToastExtraProps {
+	/**
+	 * The transition function will be executed when the alert is displayed or hidden.
+	 *
+	 * Depending on the value of `animatedOnInit`, the animation can be optionally skipped during the showing process.
+	 *
+	 * @defaultValue `fadeTransition`
+	 */
+	transition: TransitionFn;
+}
 
 export type ToastWidget = Widget<ToastProps, ToastState, ToastApi, object, ToastDirectives>;
 
