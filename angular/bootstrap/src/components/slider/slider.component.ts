@@ -165,71 +165,111 @@ export class SliderComponent extends BaseWidgetDirective<SliderWidget> implement
 
 	/**
 	 * CSS classes to be applied on the widget main container
+	 *
+	 * @defaultValue `''`
 	 */
 	@Input('auClassName') className: string | undefined;
 
 	/**
 	 * Minimum value that can be assigned to the slider
+	 *
+	 * @defaultValue `0`
 	 */
 	@Input({alias: 'auMin', transform: auNumberAttribute})
 	min: number | undefined;
 
 	/**
 	 * Maximum value that can be assigned to the slider
+	 *
+	 * @defaultValue `100`
 	 */
 	@Input({alias: 'auMax', transform: auNumberAttribute})
 	max: number | undefined;
 
 	/**
 	 * Unit value between slider steps
+	 *
+	 * @defaultValue `1`
 	 */
 	@Input({alias: 'auStepSize', transform: auNumberAttribute})
 	stepSize: number | undefined;
 
 	/**
 	 * Current slider values
+	 *
+	 * @defaultValue `[0]`
 	 */
 	@Input('auValues')
 	values: number[] | undefined;
 
 	/**
 	 * It `true` slider display is inversed
+	 *
+	 * @defaultValue `false`
 	 */
 	@Input({alias: 'auRtl', transform: auBooleanAttribute})
 	rtl: boolean | undefined;
 
 	/**
 	 * If `true` the value labels are displayed on the slider
+	 *
+	 * @defaultValue `true`
 	 */
 	@Input({alias: 'auShowValueLabels', transform: auBooleanAttribute}) showValueLabels: boolean | undefined;
 
 	/**
 	 * If `true` the min and max labels are displayed on the slider
+	 *
+	 * @defaultValue `true`
 	 */
 	@Input({alias: 'auShowMinMaxLabels', transform: auBooleanAttribute}) showMinMaxLabels: boolean | undefined;
+
 	/**
 	 * Return the value for the 'aria-label' attribute for the handle
+	 * @param value - value of the handle
+	 * @param sortedIndex - index of the handle in the sorted list
+	 * @param index - index of the handle in the original list
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * (value: number) => '' + value
+	 * ```
 	 */
 	@Input('auAriaLabelHandle') ariaLabelHandle: ((value: number, sortedIndex: number, index: number) => string) | undefined;
+
 	/**
 	 * Return the value for the 'aria-valuetext' attribute for the handle
+	 * @param value - value of the handle
+	 * @param sortedIndex - index of the handle in the sorted list
+	 * @param index - index of the handle in the original list
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * (value: number) => '' + value
+	 * ```
 	 */
 	@Input('auAriaValueText') ariaValueText: ((value: number, sortedIndex: number, index: number) => string) | undefined;
 
 	/**
 	 * If `true` slider value cannot be changed but the slider is still focusable
+	 *
+	 * @defaultValue `false`
 	 */
 	@Input({alias: 'auReadonly', transform: auBooleanAttribute})
 	readonly: boolean | undefined;
 
 	/**
 	 * If `true` slider value cannot be changed and the slider cannot be focused
+	 *
+	 * @defaultValue `false`
 	 */
 	@Input({alias: 'auDisabled', transform: auBooleanAttribute})
 	disabled: boolean | undefined;
 
 	/**
 	 * If `true` is vertically positioned otherwise it is horizontal
+	 *
+	 * @defaultValue `false`
 	 */
 	@Input({alias: 'auVertical', transform: auBooleanAttribute})
 	vertical: boolean | undefined;
@@ -238,12 +278,22 @@ export class SliderComponent extends BaseWidgetDirective<SliderWidget> implement
 	 * An event emitted when slider values are changed
 	 *
 	 * Event payload equals to the updated slider values
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	@Output('auValuesChange')
 	valuesChange = new EventEmitter<number[]>();
 
 	/**
 	 * Slot to change the default labels of the slider
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * ({value}: SliderSlotLabelContext) => '' + value
+	 * ```
 	 */
 	@Input('auLabel') label: SlotContent<SliderSlotLabelContext>;
 	@ContentChild(SliderLabelDirective, {static: false}) slotLabelFromContent: SliderLabelDirective | undefined;

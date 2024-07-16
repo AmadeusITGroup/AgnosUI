@@ -77,26 +77,41 @@ export class RatingComponent extends BaseWidgetDirective<RatingWidget> implement
 
 	/**
 	 * Return the value for the 'aria-valuetext' attribute.
+	 * @param rating - Current rating value.
+	 * @param maxRating - maxRating value.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * (rating: number, maxRating: number) => `${rating} out of ${maxRating}`
+	 * ```
 	 */
 	@Input('auAriaValueTextFn') ariaValueTextFn: ((rating: number, maxRating: number) => string) | undefined;
 
 	/**
 	 * If `true`, the rating is disabled.
+	 *
+	 * @defaultValue `false`
 	 */
 	@Input({alias: 'auDisabled', transform: auBooleanAttribute}) disabled: boolean | undefined;
 
 	/**
 	 * The maximum rating that can be given.
+	 *
+	 * @defaultValue `10`
 	 */
 	@Input({alias: 'auMaxRating', transform: auNumberAttribute}) maxRating: number | undefined;
 
 	/**
 	 * The current rating. Could be a decimal value like `3.75`.
+	 *
+	 * @defaultValue `0`
 	 */
 	@Input({alias: 'auRating', transform: auNumberAttribute}) rating: number | undefined;
 
 	/**
 	 * If `true`, the rating can't be changed.
+	 *
+	 * @defaultValue `false`
 	 */
 	@Input({alias: 'auReadonly', transform: auBooleanAttribute}) readonly: boolean | undefined;
 
@@ -104,11 +119,18 @@ export class RatingComponent extends BaseWidgetDirective<RatingWidget> implement
 	 * Define if the rating can be reset.
 	 *
 	 * If set to true, the user can 'unset' the rating value by cliking on the current rating value.
+	 *
+	 * @defaultValue `true`
 	 */
 	@Input({alias: 'auResettable', transform: auBooleanAttribute}) resettable: boolean | undefined;
 
 	/**
 	 * The template to override the way each star is displayed.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * ({fill}: StarContext) => String.fromCharCode(fill === 100 ? 9733 : 9734)
+	 * ```
 	 */
 	@Input('auStar') star: SlotContent<StarContext>;
 	@ContentChild(RatingStarDirective, {static: false}) slotStarFromContent: RatingStarDirective | undefined;
@@ -116,21 +138,29 @@ export class RatingComponent extends BaseWidgetDirective<RatingWidget> implement
 	/**
 	 * Allows setting a custom rating tabindex.
 	 * If the component is disabled, `tabindex` will still be set to `-1`.
+	 *
+	 * @defaultValue `0`
 	 */
 	@Input({alias: 'auTabindex', transform: auNumberAttribute}) tabindex: number | undefined;
 
 	/**
 	 * CSS classes to be applied on the widget main container
+	 *
+	 * @defaultValue `''`
 	 */
 	@Input('auClassName') className: string | undefined;
 
 	/**
 	 * The aria label
+	 *
+	 * @defaultValue `'Rating'`
 	 */
 	@Input('auAriaLabel') ariaLabel: string | undefined;
 
 	/**
 	 * The aria labelled by
+	 *
+	 * @defaultValue `''`
 	 */
 	@Input('auAriaLabelledBy') ariaLabelledBy: string | undefined;
 
@@ -138,6 +168,11 @@ export class RatingComponent extends BaseWidgetDirective<RatingWidget> implement
 	 * An event emitted when the user is hovering over a given rating.
 	 *
 	 * Event payload is equal to the rating being hovered over.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	@Output('auHover') hover = new EventEmitter<number>();
 
@@ -145,6 +180,11 @@ export class RatingComponent extends BaseWidgetDirective<RatingWidget> implement
 	 * An event emitted when the user stops hovering over a given rating.
 	 *
 	 * Event payload is equal to the rating of the last item being hovered over.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	@Output('auLeave') leave = new EventEmitter<number>();
 
@@ -152,6 +192,11 @@ export class RatingComponent extends BaseWidgetDirective<RatingWidget> implement
 	 * An event emitted when the rating is changed.
 	 *
 	 * Event payload is equal to the newly selected rating.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	@Output('auRatingChange') ratingChange = new EventEmitter<number>();
 
