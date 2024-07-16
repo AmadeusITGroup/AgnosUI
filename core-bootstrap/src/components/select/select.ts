@@ -28,12 +28,22 @@ interface SelectExtraProps<Item> {
 	/**
 	 * The template to override the way each badge on the left of the input is displayed.
 	 * This define the content of the badge inside the badge container.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * ({itemContext}: SelectItemContext<any>) => itemContext.item
+	 * ```
 	 */
 	badgeLabel: SlotContent<SelectItemContext<Item>>;
 
 	/**
 	 * The template to override the way each item is displayed in the list.
 	 * This define the content of the badge inside the badge container.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * ({itemContext}: SelectItemContext<any>) => itemContext.item
+	 * ```
 	 */
 	itemLabel: SlotContent<SelectItemContext<Item>>;
 }

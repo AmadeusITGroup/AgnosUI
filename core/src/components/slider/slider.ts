@@ -69,51 +69,71 @@ export interface SliderHandle {
 export interface SliderCommonPropsAndState extends WidgetsCommonPropsAndState {
 	/**
 	 * Minimum value that can be assigned to the slider
+	 *
+	 * @defaultValue `0`
 	 */
 	min: number;
 
 	/**
 	 * Maximum value that can be assigned to the slider
+	 *
+	 * @defaultValue `100`
 	 */
 	max: number;
 
 	/**
 	 * Unit value between slider steps
+	 *
+	 * @defaultValue `1`
 	 */
 	stepSize: number;
 
 	/**
 	 * If `true` slider value cannot be changed but the slider is still focusable
+	 *
+	 * @defaultValue `false`
 	 */
 	readonly: boolean;
 
 	/**
 	 * If `true` slider value cannot be changed and the slider cannot be focused
+	 *
+	 * @defaultValue `false`
 	 */
 	disabled: boolean;
 
 	/**
 	 * If `true` is vertically positioned otherwise it is horizontal
+	 *
+	 * @defaultValue `false`
 	 */
 	vertical: boolean;
 
 	/**
 	 * Current slider values
+	 *
+	 * @defaultValue `[0]`
 	 */
 	values: number[];
 
 	/**
 	 * If `true` the value labels are displayed on the slider
+	 *
+	 * @defaultValue `true`
 	 */
 	showValueLabels: boolean;
 
 	/**
 	 * If `true` the min and max labels are displayed on the slider
+	 *
+	 * @defaultValue `true`
 	 */
 	showMinMaxLabels: boolean;
 
 	/**
 	 * It `true` slider display is inversed
+	 *
+	 * @defaultValue `false`
 	 */
 	rtl: boolean;
 }
@@ -176,6 +196,11 @@ export interface SliderProps extends SliderCommonPropsAndState {
 	 * @param value - value of the handle
 	 * @param sortedIndex - index of the handle in the sorted list
 	 * @param index - index of the handle in the original list
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * (value: number) => '' + value
+	 * ```
 	 */
 	ariaLabelHandle: (value: number, sortedIndex: number, index: number) => string;
 
@@ -184,6 +209,11 @@ export interface SliderProps extends SliderCommonPropsAndState {
 	 * @param value - value of the handle
 	 * @param sortedIndex - index of the handle in the sorted list
 	 * @param index - index of the handle in the original list
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * (value: number) => '' + value
+	 * ```
 	 */
 	ariaValueText: (value: number, sortedIndex: number, index: number) => string;
 
@@ -191,6 +221,11 @@ export interface SliderProps extends SliderCommonPropsAndState {
 	 * An event emitted when slider values are changed
 	 *
 	 * Event payload equals to the updated slider values
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	onValuesChange: (values: number[]) => void;
 }

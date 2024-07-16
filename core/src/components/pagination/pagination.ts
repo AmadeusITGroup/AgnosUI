@@ -14,7 +14,8 @@ export interface PaginationCommonPropsAndState extends WidgetsCommonPropsAndStat
 	 * The current page.
 	 *
 	 * Page numbers start with `1`.
-	 * @defaultValue 1
+	 *
+	 * @defaultValue `1`
 	 */
 	page: number; // value of the current/init page to display
 
@@ -22,7 +23,8 @@ export interface PaginationCommonPropsAndState extends WidgetsCommonPropsAndStat
 	 * The pagination display size.
 	 *
 	 * Bootstrap currently supports small and large sizes.
-	 * @defaultValue null
+	 *
+	 * @defaultValue `null`
 	 */
 	size: 'sm' | 'lg' | null;
 
@@ -31,7 +33,8 @@ export interface PaginationCommonPropsAndState extends WidgetsCommonPropsAndStat
 	 *
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
-	 * @defaultValue 'Page navigation'
+	 *
+	 * @defaultValue `'Page navigation'`
 	 */
 	ariaLabel: string;
 
@@ -39,7 +42,11 @@ export interface PaginationCommonPropsAndState extends WidgetsCommonPropsAndStat
 	 * The label for the "active" page.
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
-	 * @defaultValue '(current)'
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * '(current)'
+	 * ```
 	 */
 	activeLabel: string;
 
@@ -47,7 +54,11 @@ export interface PaginationCommonPropsAndState extends WidgetsCommonPropsAndStat
 	 * The label for the "First" page button.
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
-	 * @defaultValue 'Action link for first page'
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * 'Action link for first page'
+	 * ```
 	 */
 	ariaFirstLabel: string;
 
@@ -55,7 +66,11 @@ export interface PaginationCommonPropsAndState extends WidgetsCommonPropsAndStat
 	 * The label for the "Previous" page button.
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
-	 * @defaultValue 'Action link for previous page'
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * 'Action link for previous page'
+	 * ```
 	 */
 	ariaPreviousLabel: string;
 
@@ -63,7 +78,11 @@ export interface PaginationCommonPropsAndState extends WidgetsCommonPropsAndStat
 	 * The label for the "Next" page button.
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
-	 * @defaultValue 'Action link for next page'
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * 'Action link for next page'
+	 * ```
 	 */
 	ariaNextLabel: string;
 
@@ -71,7 +90,11 @@ export interface PaginationCommonPropsAndState extends WidgetsCommonPropsAndStat
 	 * The label for the "Last" page button.
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
-	 * @defaultValue 'Action link for last page'
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * 'Action link for last page'
+	 * ```
 	 */
 	ariaLastLabel: string;
 
@@ -79,25 +102,29 @@ export interface PaginationCommonPropsAndState extends WidgetsCommonPropsAndStat
 	 * The label for the "Ellipsis" page.
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
-	 * @defaultValue 'Ellipsis page element'
+	 *
+	 * @defaultValue `'Ellipsis page element'`
 	 */
 	ariaEllipsisLabel: string;
 
 	/**
 	 * If `true`, pagination links will be disabled.
-	 * @defaultValue false
+	 *
+	 * @defaultValue `false`
 	 */
 	disabled: boolean;
 
 	/**
 	 * If `true`, the "Next" and "Previous" page links are shown.
-	 * @defaultValue true
+	 *
+	 * @defaultValue `true`
 	 */
 	directionLinks: boolean;
 
 	/**
 	 * If `true`, the "First" and "Last" page links are shown.
-	 * @defaultValue false
+	 *
+	 * @defaultValue `false`
 	 */
 	boundaryLinks: boolean;
 }
@@ -112,14 +139,16 @@ export interface PaginationProps extends PaginationCommonPropsAndState {
 	 * Ex. if you have 100 items in your collection and displaying 20 items per page, you'll end up with 5 pages.
 	 *
 	 * Whatever the collectionSize the page number is of minimum 1.
-	 * @defaultValue 0
+	 *
+	 * @defaultValue `0`
 	 */
 	collectionSize: number;
 
 	/**
 	 * The number of items per page.
-	 * @defaultValue 10
 	 * @remarks min value is 1
+	 *
+	 * @defaultValue `10`
 	 */
 	pageSize: number;
 
@@ -142,15 +171,16 @@ export interface PaginationProps extends PaginationCommonPropsAndState {
 	 * Use Page slot to customize the pages view and not this
 	 * @param page - The current page number
 	 * @param pageCount - The total number of pages
+	 *
 	 * @defaultValue
 	 * ```ts
-	 * ({page, pageCount}) => {
-	 *  const pages: number[] = [];
-	 *	for (let i = 1; i <= pageCount; i++) {
-	 *		pages.push(i);
+	 * (_page: number, pageCount: number) => {
+	 * 		const pages: number[] = [];
+	 * 		for (let i = 1; i <= pageCount; i++) {
+	 * 			pages.push(i);
+	 * 		}
+	 * 		return pages;
 	 * 	}
-	 * 	return pages;
-	 * }
 	 * ```
 	 */
 	pagesFactory: (page: number, pageCount: number) => number[];
@@ -162,9 +192,10 @@ export interface PaginationProps extends PaginationCommonPropsAndState {
 	 * override any configuration parameters provided for this
 	 * @param processPage - The current page number
 	 * @param pageCount - The total number of pages
+	 *
 	 * @defaultValue
 	 * ```ts
-	 * ({processPage, pageCount}) => `Page ${processPage} of ${pageCount}`
+	 * (processPage: number, pageCount: number) => `Page ${processPage} of ${pageCount}`
 	 * ```
 	 */
 	ariaPageLabel: (processPage: number, pageCount: number) => string;
@@ -176,9 +207,10 @@ export interface PaginationProps extends PaginationCommonPropsAndState {
 	 * override any configuration parameters provided for this
 	 * @param currentPage - The current page number
 	 * @param pageCount - The total number of pages
+	 *
 	 * @defaultValue
 	 * ```ts
-	 * ({currentPage, pageCount}) => `Current page is ${currentPage}`
+	 * (currentPage: number, pageCount: number) => `Current page is ${currentPage}`
 	 * ```
 	 */
 	ariaLiveLabel: (currentPage: number, pageCount: number) => string;
@@ -187,9 +219,10 @@ export interface PaginationProps extends PaginationCommonPropsAndState {
 	 * Factory function providing the href for a "Page" page anchor,
 	 * based on the current page number
 	 * @param pageNumber - The index to use in the link
+	 *
 	 * @defaultValue
 	 * ```ts
-	 * (_pageNumber) => '#'
+	 * (_page: number) => PAGE_LINK_DEFAULT
 	 * ```
 	 */
 	pageLink: (pageNumber: number) => string;

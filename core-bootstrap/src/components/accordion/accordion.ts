@@ -17,6 +17,7 @@ import {
 import {collapseVerticalTransition} from '../../services/transitions';
 import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
 import type {SlotContent, Widget, WidgetFactory, WidgetSlotContext} from '@agnos-ui/core/types';
+import type {TransitionFn} from '@agnos-ui/core/services/transitions/baseTransitions';
 
 export * from '@agnos-ui/core/components/accordion';
 
@@ -58,7 +59,17 @@ interface AccordionItemExtraProps {
 }
 
 export interface AccordionState extends CoreState, AccordionExtraProps {}
-export interface AccordionProps extends CoreProps, AccordionExtraProps {}
+export interface AccordionProps extends CoreProps, AccordionExtraProps {
+	/**
+	 * The transition to use for the accordion-item body-container when the accordion-item is toggled.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * collapseVerticalTransition
+	 * ```
+	 */
+	itemTransition: TransitionFn;
+}
 
 export type AccordionWidget = Widget<AccordionProps, AccordionState, AccordionApi, object, AccordionDirectives>;
 

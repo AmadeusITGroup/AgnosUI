@@ -5,6 +5,7 @@ import {typeString} from '@agnos-ui/core/utils/writables';
 import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
 import {fadeTransition} from '../../services/transitions';
 import type {BSContextualClass} from '../../types';
+import type {TransitionFn} from '@agnos-ui/core/services/transitions/baseTransitions';
 
 export * from '@agnos-ui/core/components/alert';
 
@@ -21,12 +22,23 @@ interface AlertExtraProps {
 	children: SlotContent<AlertContext>;
 	/**
 	 * Type of the alert, following bootstrap types.
+	 *
+	 * @defaultValue `'primary'`
 	 */
 	type: BSContextualClass;
 }
 
 export interface AlertState extends CoreState, AlertExtraProps {}
-export interface AlertProps extends CoreProps, AlertExtraProps {}
+export interface AlertProps extends CoreProps, AlertExtraProps {
+	/**
+	 * The transition function will be executed when the alert is displayed or hidden.
+	 *
+	 * Depending on the value of `animatedOnInit`, the animation can be optionally skipped during the showing process.
+	 *
+	 * @defaultValue `fadeTransition`
+	 */
+	transition: TransitionFn;
+}
 
 export type AlertWidget = Widget<AlertProps, AlertState, AlertApi, object, AlertDirectives>;
 

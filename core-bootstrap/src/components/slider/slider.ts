@@ -24,6 +24,11 @@ interface SliderExtraProps {
 
 	/**
 	 * Slot to change the default labels of the slider
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * ({value}: SliderSlotLabelContext) => '' + value
+	 * ```
 	 */
 	label: SlotContent<SliderSlotLabelContext>;
 

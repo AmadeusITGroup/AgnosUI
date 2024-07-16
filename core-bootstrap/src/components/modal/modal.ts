@@ -10,6 +10,7 @@ import type {ConfigValidator, PropsConfig, SlotContent, Widget, WidgetSlotContex
 import {fadeTransition} from '../../services/transitions';
 import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
 import {typeBoolean} from '@agnos-ui/core/utils/writables';
+import type {TransitionFn} from '@agnos-ui/core/services/transitions/baseTransitions';
 
 export * from '@agnos-ui/core/components/modal';
 
@@ -47,12 +48,28 @@ interface ModalExtraProps<Data> {
 	title: SlotContent<ModalContext<Data>>;
 	/**
 	 * Option to create a fullscreen modal, according to the bootstrap documentation.
+	 *
+	 * @defaultValue `false`
 	 */
 	fullscreen: boolean;
 }
 
 export interface ModalState<Data> extends CoreState, ModalExtraProps<Data> {}
-export interface ModalProps<Data> extends CoreProps, ModalExtraProps<Data> {}
+export interface ModalProps<Data> extends CoreProps, ModalExtraProps<Data> {
+	/**
+	 * The transition to use for the backdrop behind the modal (if present).
+	 *
+	 * @defaultValue `fadeTransition`
+	 */
+	backdropTransition: TransitionFn;
+
+	/**
+	 * The transition to use for the modal.
+	 *
+	 * @defaultValue `fadeTransition`
+	 */
+	modalTransition: TransitionFn;
+}
 
 export interface ModalApi<Data> extends Omit<CoreApi, 'patch'> {
 	/**

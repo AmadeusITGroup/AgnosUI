@@ -35,55 +35,88 @@ function getItem(items: AccordionItemWidget[], id: string): AccordionItemWidget 
 export interface AccordionProps extends WidgetsCommonPropsAndState {
 	/**
 	 * If `true`, only one accordion-item at the time can stay open.
+	 *
+	 * @defaultValue `false`
 	 */
 	closeOthers: boolean;
 	/**
 	 * An event fired when an item is shown.
 	 *
 	 * Event payload is the id of the item.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	onItemShown: (itemId: string) => void;
 	/**
 	 * An event fired when an item is hidden.
 	 *
 	 * Event payload is the id of the item.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	onItemHidden: (itemId: string) => void;
 	/**
 	 * If `true`, the accordion-item body container will be removed from the DOM when the accordion-item is collapsed. It will be just hidden otherwise.
+	 *
+	 * @defaultValue `true`
 	 */
 	itemDestroyOnHide: boolean;
 	/**
 	 * If `true`, accordion-item will be animated.
+	 *
+	 * @defaultValue `true`
 	 */
 	itemAnimated: boolean;
 	/**
 	 * The transition to use for the accordion-item body-container when the accordion-item is toggled.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * async () => {}
+	 * ```
 	 */
 	itemTransition: TransitionFn;
 	/**
 	 * CSS classes to add on the accordion-item DOM element.
+	 *
+	 * @defaultValue `''`
 	 */
 	itemClassName: string;
 	/**
 	 * CSS classes to add on the accordion-item header DOM element.
+	 *
+	 * @defaultValue `''`
 	 */
 	itemHeaderClassName: string;
 	/**
 	 * CSS classes to add on the accordion-item toggle button DOM element.
+	 *
+	 * @defaultValue `''`
 	 */
 	itemButtonClassName: string;
 	/**
 	 * CSS classes to add on the accordion-item body container DOM element.
 	 * The accordion-item body container is the DOM element on what the itemTransition is applied.
+	 *
+	 * @defaultValue `''`
 	 */
 	itemBodyContainerClassName: string;
 	/**
 	 * CSS classes to add on the accordion-item body DOM element.
+	 *
+	 * @defaultValue `''`
 	 */
 	itemBodyClassName: string;
 	/**
 	 * The html tag to use for the accordion-item-header.
+	 *
+	 * @defaultValue `''`
 	 */
 	itemHeadingTag: string;
 }

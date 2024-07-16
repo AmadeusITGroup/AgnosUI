@@ -14,6 +14,11 @@ export * from '@agnos-ui/core/components/rating';
 interface RatingExtraProps {
 	/**
 	 * The template to override the way each star is displayed.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * ({fill}: StarContext) => String.fromCharCode(fill === 100 ? 9733 : 9734)
+	 * ```
 	 */
 	star: SlotContent<StarContext>;
 }
