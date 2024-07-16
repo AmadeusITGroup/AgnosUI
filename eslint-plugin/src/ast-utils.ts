@@ -3,7 +3,7 @@ import {ASTUtils, ESLintUtils, TSESTree} from '@typescript-eslint/utils';
 import type {AST as SvelteAST} from 'svelte-eslint-parser';
 import type ts from 'typescript';
 import type {Type} from 'typescript';
-import {SignatureKind, TypeFormatFlags} from 'typescript';
+import {SignatureKind, TypeFormatFlags, SyntaxKind, getLeadingCommentRanges} from 'typescript';
 
 export interface EventInfo {
 	doc: string;
@@ -17,21 +17,29 @@ export interface PropInfo {
 	type: Type;
 }
 
+const tsDocIndentAndStarRegExp = /\r?\n\s*\* ?/g;
 export const docFromSymbol = (symbol: ts.Symbol, checker: ts.TypeChecker) => {
-	return symbol
-		.getDocumentationComment(checker)
-		.map((item, index, array) => {
-			switch (item.kind) {
-				// remove links when copying as they can cause issues:
-				case 'link':
-					return '';
-				case 'linkName':
-					return array[index + 1]?.kind === 'linkText' ? '' : item.text;
-				default:
-					return item.text;
+	const declaration = symbol.getDeclarations()?.[0];
+	if (!declaration) {
+		return '';
+	}
+	const sourceFile = declaration.getSourceFile();
+	const text = sourceFile.text;
+	const comments = getLeadingCommentRanges(text, declaration.getFullStart());
+	let tsDocCommentText = '';
+	for (const comment of comments ?? []) {
+		if (comment.kind === SyntaxKind.MultiLineCommentTrivia) {
+			const commentText = text.substring(comment.pos, comment.end);
+			if (commentText.startsWith('/**')) {
+				tsDocCommentText = commentText;
+				break;
 			}
-		})
-		.join('');
+		}
+	}
+	return tsDocCommentText
+		.substring(3, tsDocCommentText.length - 2)
+		.replace(tsDocIndentAndStarRegExp, '\n')
+		.trim();
 };
 
 const spaceRegExp = /\s+/g;
