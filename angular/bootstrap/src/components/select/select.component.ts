@@ -87,6 +87,8 @@ export class SelectItemLabelDirective<Item> {
 export class SelectComponent<Item> extends BaseWidgetDirective<SelectWidget<Item>> implements AfterContentChecked {
 	/**
 	 * aria-label used for the input inside the select
+	 *
+	 * @defaultValue `'Select'`
 	 */
 	@Input('auAriaLabel') ariaLabel: string | undefined;
 
@@ -97,59 +99,90 @@ export class SelectComponent<Item> extends BaseWidgetDirective<SelectWidget<Item
 
 	/**
 	 * List of available items for the dropdown
+	 *
+	 * @defaultValue `[]`
 	 */
 	@Input('auItems') items: Item[] | undefined;
 
 	/**
 	 * List of allowed placements for the dropdown.
 	 * This refers to the [allowedPlacements from floating UI](https://floating-ui.com/docs/autoPlacement#allowedplacements), given the different [Placement possibilities](https://floating-ui.com/docs/computePosition#placement).
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * ['bottom-start', 'top-start', 'bottom-end', 'top-end']
+	 * ```
 	 */
 	@Input('auAllowedPlacements') allowedPlacements: Placement[] | undefined;
 
 	/**
 	 * true if the select is open
+	 *
+	 * @defaultValue `false`
 	 */
 	@Input({alias: 'auOpen', transform: auBooleanAttribute}) open: boolean | undefined;
 
 	/**
 	 * Filtered text to be display in the filter input
+	 *
+	 * @defaultValue `''`
 	 */
 	@Input('auFilterText') filterText: string | undefined;
 
 	/**
 	 * CSS classes to be applied on the widget main container
+	 *
+	 * @defaultValue `''`
 	 */
 	@Input('auClassName') className: string | undefined;
 
 	/**
 	 * true if the select is disabled
+	 *
+	 * @defaultValue `false`
 	 */
 	@Input({alias: 'auDisabled', transform: auBooleanAttribute}) disabled: boolean | undefined;
 
 	/**
 	 * List of selected item ids
+	 *
+	 * @defaultValue `[]`
 	 */
 	@Input('auSelected') selected: Item[] | undefined;
 
 	/**
 	 * true if a loading process is being done
+	 *
+	 * @defaultValue `false`
 	 */
 	@Input({alias: 'auLoading', transform: auBooleanAttribute}) loading: boolean | undefined;
 
 	/**
 	 * Custom function to get the id of an item
 	 * By default, the item is returned
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * (item: any) => '' + item
+	 * ```
 	 */
 	@Input('auItemIdFn') itemIdFn: ((item: Item) => string) | undefined;
 
 	/**
 	 * Class to be added on the dropdown menu container
+	 *
+	 * @defaultValue `''`
 	 */
 	@Input('auMenuClassName') menuClassName: string | undefined;
 
 	/**
 	 * The template to override the way each badge on the left of the input is displayed.
 	 * This define the content of the badge inside the badge container.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * ({itemContext}: SelectItemContext<any>) => itemContext.item
+	 * ```
 	 */
 	@Input('auBadgeLabel') badgeLabel: SlotContent<SelectItemContext<Item>>;
 	@ContentChild(SelectBadgeLabelDirective, {static: false}) slotSelectBadgeLabelFromContent: SelectBadgeLabelDirective<Item> | undefined;
@@ -157,37 +190,70 @@ export class SelectComponent<Item> extends BaseWidgetDirective<SelectWidget<Item
 	/**
 	 * The template to override the way each item is displayed in the list.
 	 * This define the content of the badge inside the badge container.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * ({itemContext}: SelectItemContext<any>) => itemContext.item
+	 * ```
 	 */
 	@Input('auItemLabel') itemLabel: SlotContent<SelectItemContext<Item>>;
 	@ContentChild(SelectItemLabelDirective, {static: false}) slotSelectItemLabelFromContent: SelectItemLabelDirective<Item> | undefined;
 
 	/**
 	 * Callback called when the text filter change
+	 * @param text - Filtered text
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	@Output('auFilterTextChange') filterTextChange = new EventEmitter<string>();
 
 	/**
 	 * Callback called when the selection change
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	@Output('auSelectedChange') selectedChange = new EventEmitter<Item[]>();
 
 	/**
 	 * Callback called dropdown open state change
+	 * @param isOpen - updated open state
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	@Output('auOpenChange') openChange = new EventEmitter<boolean>();
 
 	/**
 	 * Class to be added on menu items
+	 *
+	 * @defaultValue `''`
 	 */
 	@Input('auMenuItemClassName') menuItemClassName: string | undefined;
 
 	/**
 	 * Class to be added on selected items (displayed in the input zone)
+	 *
+	 * @defaultValue `''`
 	 */
 	@Input('auBadgeClassName') badgeClassName: string | undefined;
 
 	/**
 	 * Retrieves navigable elements within an HTML element containing badges and the input.
+	 *
+	 * @param node - HTMLElement that contains the badges and the input
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * (node: HTMLElement) => node.querySelectorAll('.au-select-badge,input')
+	 * ```
 	 */
 	@Input('auNavSelector') navSelector: ((node: HTMLElement) => NodeListOf<HTMLSpanElement | HTMLInputElement>) | undefined;
 

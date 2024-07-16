@@ -161,31 +161,43 @@ const defaultConfig: Partial<ModalProps<any>> = {
 export class ModalComponent<Data> extends BaseWidgetDirective<ModalWidget<Data>> implements AfterContentChecked {
 	/**
 	 * Whether the modal and its backdrop (if present) should be animated when shown or hidden.
+	 *
+	 * @defaultValue `true`
 	 */
 	@Input({alias: 'auAnimated', transform: auBooleanAttribute}) animated: boolean | undefined;
 
 	/**
 	 * The transition to use for the backdrop behind the modal (if present).
+	 *
+	 * @defaultValue `fadeTransition`
 	 */
 	@Input('auBackdropTransition') backdropTransition: TransitionFn | undefined;
 
 	/**
 	 * The transition to use for the modal.
+	 *
+	 * @defaultValue `fadeTransition`
 	 */
 	@Input('auModalTransition') modalTransition: TransitionFn | undefined;
 
 	/**
 	 * Whether the modal should be visible when the transition is completed.
+	 *
+	 * @defaultValue `false`
 	 */
 	@Input({alias: 'auVisible', transform: auBooleanAttribute}) visible: boolean | undefined;
 
 	/**
 	 * Whether a backdrop should be created behind the modal.
+	 *
+	 * @defaultValue `true`
 	 */
 	@Input({alias: 'auBackdrop', transform: auBooleanAttribute}) backdrop: boolean | undefined;
 
 	/**
 	 * Whether the modal should be closed when clicking on the viewport outside the modal.
+	 *
+	 * @defaultValue `true`
 	 */
 	@Input({alias: 'auCloseOnOutsideClick', transform: auBooleanAttribute}) closeOnOutsideClick: boolean | undefined;
 
@@ -193,44 +205,59 @@ export class ModalComponent<Data> extends BaseWidgetDirective<ModalWidget<Data>>
 	 * Which element should contain the modal and backdrop DOM elements.
 	 * If it is not null, the modal and backdrop DOM elements are moved to the specified container.
 	 * Otherwise, they stay where the widget is located.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * typeof window !== 'undefined' ? document.body : null
+	 * ```
 	 */
 	@Input('auContainer') container: HTMLElement | null | undefined;
 
 	/**
 	 * Value of the aria-label attribute to put on the close button.
+	 *
+	 * @defaultValue `'Close'`
 	 */
 	@Input('auAriaCloseButtonLabel') ariaCloseButtonLabel: string | undefined;
 
 	/**
 	 * Classes to add on the backdrop DOM element.
+	 *
+	 * @defaultValue `''`
 	 */
 	@Input('auBackdropClass') backdropClass: string | undefined;
 
 	/**
 	 * Whether to display the close button.
+	 *
+	 * @defaultValue `true`
 	 */
 	@Input({alias: 'auCloseButton', transform: auBooleanAttribute}) closeButton: boolean | undefined;
 
 	/**
 	 * CSS classes to be applied on the widget main container
+	 *
+	 * @defaultValue `''`
 	 */
 	@Input('auClassName') className: string | undefined;
 
 	/**
 	 * Option to create a fullscreen modal, according to the bootstrap documentation.
+	 *
+	 * @defaultValue `false`
 	 */
 	@Input({alias: 'auFullscreen', transform: auBooleanAttribute}) fullscreen: boolean | undefined;
 
 	/**
 	 * Structure of the modal.
-	 * The default structure uses ModalCommonPropsAndState.header header, ModalCommonPropsAndState.children children and ModalCommonPropsAndState.footer footer.
+	 * The default structure uses {@link ModalCommonPropsAndState.header|header}, {@link ModalCommonPropsAndState.children|children} and {@link ModalCommonPropsAndState.footer|footer}.
 	 */
 	@Input('auStructure') structure: SlotContent<ModalContext<Data>>;
 	@ContentChild(ModalStructureDirective, {static: false})
 	slotStructureFromContent: ModalStructureDirective<Data> | undefined;
 
 	/**
-	 * Header of the modal. The default header includes ModalCommonPropsAndState.title title.
+	 * Header of the modal. The default header includes {@link ModalCommonPropsAndState.title|title}.
 	 */
 	@Input('auHeader') header: SlotContent<ModalContext<Data>>;
 	@ContentChild(ModalHeaderDirective, {static: false})
@@ -264,21 +291,46 @@ export class ModalComponent<Data> extends BaseWidgetDirective<ModalWidget<Data>>
 
 	/**
 	 * Event to be triggered when the visible property changes.
+	 *
+	 * @param visible - new value of the visible propery
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	@Output('auVisibleChange') visibleChange = new EventEmitter<boolean>();
 
 	/**
-	 * Event to be triggered when the modal is about to be closed (i.e. the ModalApi.closeclose  method was called).
+	 * Event to be triggered when the modal is about to be closed (i.e. the {@link ModalApi.close|close} method was called).
+	 *
+	 * @param event - event giving access to the argument given to the {@link ModalApi.close|close} method and allowing
+	 * to cancel the close process.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	@Output('auBeforeClose') beforeClose = new EventEmitter<ModalBeforeCloseEvent>();
 
 	/**
 	 * Event to be triggered when the transition is completed and the modal is not visible.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	@Output('auHidden') hidden = new EventEmitter<void>();
 
 	/**
 	 * Event to be triggered when the transition is completed and the modal is visible.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	@Output('auShown') shown = new EventEmitter<void>();
 

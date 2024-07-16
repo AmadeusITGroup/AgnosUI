@@ -194,8 +194,11 @@ export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWid
 	 * The transition to use for the accordion-item body-container when the accordion-item is toggled.
 	 */
 	@Input('auTransition') transition: TransitionFn | undefined;
+
 	/**
 	 * CSS classes to be applied on the widget main container
+	 *
+	 * @defaultValue `''`
 	 */
 	@Input('auClassName') className: string | undefined;
 	/**
@@ -292,11 +295,15 @@ export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWid
 export class AccordionDirective extends BaseWidgetDirective<AccordionWidget> {
 	/**
 	 * If `true`, only one accordion-item at the time can stay open.
+	 *
+	 * @defaultValue `false`
 	 */
 	@Input({alias: 'auCloseOthers', transform: auBooleanAttribute}) closeOthers: boolean | undefined;
 
 	/**
 	 * CSS classes to be applied on the widget main container
+	 *
+	 * @defaultValue `''`
 	 */
 	@Input('auClassName') className: string | undefined;
 
@@ -304,25 +311,47 @@ export class AccordionDirective extends BaseWidgetDirective<AccordionWidget> {
 	 * An event fired when an item is shown.
 	 *
 	 * Event payload is the id of the item.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	@Output('auItemShown') itemShown: EventEmitter<string> = new EventEmitter<string>();
+
 	/**
 	 * An event fired when an item is hidden.
 	 *
 	 * Event payload is the id of the item.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	@Output('auItemHidden') itemHidden: EventEmitter<string> = new EventEmitter<string>();
 
 	/**
 	 * If `true`, the accordion-item body container will be removed from the DOM when the accordion-item is collapsed. It will be just hidden otherwise.
+	 *
+	 * @defaultValue `true`
 	 */
 	@Input({alias: 'auItemDestroyOnHide', transform: auBooleanAttribute}) itemDestroyOnHide: boolean | undefined;
+
 	/**
 	 * If `true`, accordion-item will be animated.
+	 *
+	 * @defaultValue `true`
 	 */
 	@Input({alias: 'auItemAnimated', transform: auBooleanAttribute}) itemAnimated: boolean | undefined;
+
 	/**
 	 * The transition to use for the accordion-item body-container when the accordion-item is toggled.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * collapseVerticalTransition
+	 * ```
 	 */
 	@Input('auItemTransition') itemTransition: TransitionFn | undefined;
 
@@ -335,29 +364,47 @@ export class AccordionDirective extends BaseWidgetDirective<AccordionWidget> {
 	 * It is a prop of the accordion-item.
 	 */
 	@Input('auItemStructure') itemStructure: SlotContent<AccordionItemContext>;
+
 	/**
 	 * CSS classes to add on the accordion-item DOM element.
+	 *
+	 * @defaultValue `''`
 	 */
 	@Input('auItemClassName') itemClassName: string | undefined;
+
 	/**
 	 * CSS classes to add on the accordion-item header DOM element.
+	 *
+	 * @defaultValue `''`
 	 */
 	@Input('auItemHeaderClassName') itemHeaderClassName: string | undefined;
+
 	/**
 	 * CSS classes to add on the accordion-item toggle button DOM element.
+	 *
+	 * @defaultValue `''`
 	 */
 	@Input('auItemButtonClassName') itemButtonClassName: string | undefined;
+
 	/**
 	 * CSS classes to add on the accordion-item body container DOM element.
 	 * The accordion-item body container is the DOM element on what the itemTransition is applied.
+	 *
+	 * @defaultValue `''`
 	 */
 	@Input('auItemBodyContainerClassName') itemBodyContainerClassName: string | undefined;
+
 	/**
 	 * CSS classes to add on the accordion-item body DOM element.
+	 *
+	 * @defaultValue `''`
 	 */
 	@Input('auItemBodyClassName') itemBodyClassName: string | undefined;
+
 	/**
 	 * The html tag to use for the accordion-item-header.
+	 *
+	 * @defaultValue `''`
 	 */
 	@Input('auItemHeadingTag') itemHeadingTag: string | undefined;
 

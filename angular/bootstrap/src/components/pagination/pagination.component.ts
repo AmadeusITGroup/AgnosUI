@@ -211,6 +211,11 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * override any configuration parameters provided for this
 	 * @param processPage - The current page number
 	 * @param pageCount - The total number of pages
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * (processPage: number, pageCount: number) => `Page ${processPage} of ${pageCount}`
+	 * ```
 	 */
 	@Input('auAriaPageLabel') ariaPageLabel: ((processPage: number, pageCount: number) => string) | undefined;
 
@@ -219,6 +224,13 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * This is used for accessibility purposes.
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
+	 * @param currentPage - The current page number
+	 * @param pageCount - The total number of pages
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * (currentPage: number, pageCount: number) => `Current page is ${currentPage}`
+	 * ```
 	 */
 	@Input('auAriaLiveLabel') ariaLiveLabel: ((currentPage: number, pageCount: number) => string) | undefined;
 
@@ -227,7 +239,8 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 *
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
-	 * @defaultValue 'Page navigation'
+	 *
+	 * @defaultValue `'Page navigation'`
 	 */
 	@Input('auAriaLabel') ariaLabel: string | undefined;
 
@@ -235,7 +248,11 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * The label for the "active" page.
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
-	 * @defaultValue '(current)'
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * '(current)'
+	 * ```
 	 */
 	@Input('auActiveLabel') activeLabel: string | undefined;
 
@@ -243,7 +260,11 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * The label for the "First" page button.
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
-	 * @defaultValue 'Action link for first page'
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * 'Action link for first page'
+	 * ```
 	 */
 	@Input('auAriaFirstLabel') ariaFirstLabel: string | undefined;
 
@@ -251,7 +272,11 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * The label for the "Previous" page button.
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
-	 * @defaultValue 'Action link for previous page'
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * 'Action link for previous page'
+	 * ```
 	 */
 	@Input('auAriaPreviousLabel') ariaPreviousLabel: string | undefined;
 
@@ -259,7 +284,11 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * The label for the "Next" page button.
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
-	 * @defaultValue 'Action link for next page'
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * 'Action link for next page'
+	 * ```
 	 */
 	@Input('auAriaNextLabel') ariaNextLabel: string | undefined;
 
@@ -267,7 +296,11 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * The label for the "Last" page button.
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
-	 * @defaultValue 'Action link for last page'
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * 'Action link for last page'
+	 * ```
 	 */
 	@Input('auAriaLastLabel') ariaLastLabel: string | undefined;
 
@@ -275,7 +308,8 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * The label for the "Ellipsis" page.
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
-	 * @defaultValue 'Ellipsis page element'
+	 *
+	 * @defaultValue `'Ellipsis page element'`
 	 */
 	@Input('auAriaEllipsisLabel') ariaEllipsisLabel: string | undefined;
 
@@ -284,6 +318,10 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * based on the current page number
 	 * @param pageNumber - The index to use in the link
 	 *
+	 * @defaultValue
+	 * ```ts
+	 * (_page: number) => PAGE_LINK_DEFAULT
+	 * ```
 	 */
 	@Input('auPageLink') pageLink: ((pageNumber: number) => string) | undefined;
 
@@ -300,6 +338,8 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * The template to use for the ellipsis slot
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
+	 *
+	 * @defaultValue `'…'`
 	 */
 	@Input('auEllipsisLabel') ellipsisLabel: SlotContent<PaginationContext>;
 	@ContentChild(PaginationEllipsisDirective, {static: false})
@@ -309,6 +349,8 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * The template to use for the first slot
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
+	 *
+	 * @defaultValue `'«'`
 	 */
 	@Input('auFirstPageLabel') firstPageLabel: SlotContent<PaginationContext>;
 	@ContentChild(PaginationFirstDirective, {static: false})
@@ -318,6 +360,8 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * The template to use for the previous slot
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
+	 *
+	 * @defaultValue `'‹'`
 	 */
 	@Input('auPreviousPageLabel') previousPageLabel: SlotContent<PaginationContext>;
 	@ContentChild(PaginationPreviousDirective, {static: false})
@@ -327,6 +371,8 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * The template to use for the next slot
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
+	 *
+	 * @defaultValue `'›'`
 	 */
 	@Input('auNextPageLabel') nextPageLabel: SlotContent<PaginationContext>;
 	@ContentChild(PaginationNextDirective, {static: false})
@@ -336,6 +382,8 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * The template to use for the last slot
 	 * for I18n, we suggest to use the global configuration
 	 * override any configuration parameters provided for this
+	 *
+	 * @defaultValue `'»'`
 	 */
 	@Input('auLastPageLabel') lastPageLabel: SlotContent<PaginationContext>;
 	@ContentChild(PaginationLastDirective, {static: false})
@@ -354,6 +402,12 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * The template to use for the number slot
 	 * override any configuration parameters provided for this
 	 * for I18n, we suggest to use the global configuration
+	 * @param displayedPage - The current page number
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * ({displayedPage}: PaginationNumberContext) => `${displayedPage}`
+	 * ```
 	 */
 	@Input('auNumberLabel') numberLabel: SlotContent<PaginationNumberContext>;
 	@ContentChild(PaginationNumberDirective, {static: false})
@@ -361,10 +415,10 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 
 	/**
 	 * The template to use for the structure of the pagination component
-	 * The default structure uses PaginationProps.ellipsisLabelellipsisLabel , PaginationProps.firstPageLabelfirstPageLabel ,
-	 * PaginationProps.previousPageLabelpreviousPageLabel , PaginationProps.nextPageLabelnextPageLabel ,
-	 * PaginationProps.lastPageLabellastPageLabel , PaginationProps.pagesDisplaypagesDisplay ,
-	 * PaginationProps.numberLabelnumberLabel ,
+	 * The default structure uses {@link PaginationProps.ellipsisLabel|ellipsisLabel}, {@link PaginationProps.firstPageLabel|firstPageLabel},
+	 * {@link PaginationProps.previousPageLabel|previousPageLabel}, {@link PaginationProps.nextPageLabel|nextPageLabel},
+	 * {@link PaginationProps.lastPageLabel|lastPageLabel}, {@link PaginationProps.pagesDisplay|pagesDisplay},
+	 * {@link PaginationProps.numberLabel|numberLabel},
 	 */
 	@Input('auStructure') structure: SlotContent<PaginationContext>;
 	@ContentChild(PaginationStructureDirective, {static: false})
@@ -372,16 +426,22 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 
 	/**
 	 * If `true`, pagination links will be disabled.
+	 *
+	 * @defaultValue `false`
 	 */
 	@Input({alias: 'auDisabled', transform: auBooleanAttribute}) disabled: boolean | undefined;
 
 	/**
 	 * If `true`, the "First" and "Last" page links are shown.
+	 *
+	 * @defaultValue `false`
 	 */
 	@Input({alias: 'auBoundaryLinks', transform: auBooleanAttribute}) boundaryLinks: boolean | undefined;
 
 	/**
 	 * If `true`, the "Next" and "Previous" page links are shown.
+	 *
+	 * @defaultValue `true`
 	 */
 	@Input({alias: 'auDirectionLinks', transform: auBooleanAttribute}) directionLinks: boolean | undefined;
 
@@ -389,10 +449,13 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * The number of items in your paginated collection.
 	 *
 	 * Note, that this is not the number of pages. Page numbers are calculated dynamically based on
-	 * `collectionSize` and `pageSize`. Ex. if you have 100 items in your collection and displaying 20 items per page,
-	 * you'll end up with 5 pages.
+	 * `collectionSize` and `pageSize`.
+	 *
+	 * Ex. if you have 100 items in your collection and displaying 20 items per page, you'll end up with 5 pages.
+	 *
 	 * Whatever the collectionSize the page number is of minimum 1.
-	 * @defaultValue 0
+	 *
+	 * @defaultValue `0`
 	 */
 	@Input({alias: 'auCollectionSize', transform: auNumberAttribute}) collectionSize: number | undefined;
 
@@ -400,13 +463,16 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * The current page.
 	 *
 	 * Page numbers start with `1`.
-	 * @defaultValue 1
+	 *
+	 * @defaultValue `1`
 	 */
 	@Input({alias: 'auPage', transform: auNumberAttribute}) page: number | undefined;
 
 	/**
 	 * The number of items per page.
-	 * @defaultValue 10
+	 * @remarks min value is 1
+	 *
+	 * @defaultValue `10`
 	 */
 	@Input({alias: 'auPageSize', transform: auNumberAttribute}) pageSize: number | undefined;
 
@@ -414,7 +480,8 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * The pagination display size.
 	 *
 	 * Bootstrap currently supports small and large sizes.
-	 * @defaultValue null
+	 *
+	 * @defaultValue `null`
 	 */
 	@Input('auSize') size: 'sm' | 'lg' | null | undefined;
 
@@ -422,6 +489,19 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * pagesFactory returns a function computing the array of pages to be displayed
 	 * as number (-1 are treated as ellipsis).
 	 * Use Page slot to customize the pages view and not this
+	 * @param page - The current page number
+	 * @param pageCount - The total number of pages
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * (_page: number, pageCount: number) => {
+	 * 		const pages: number[] = [];
+	 * 		for (let i = 1; i <= pageCount; i++) {
+	 * 			pages.push(i);
+	 * 		}
+	 * 		return pages;
+	 * 	}
+	 * ```
 	 */
 	@Input('auPagesFactory') pagesFactory: ((page: number, pageCount: number) => number[]) | undefined;
 
@@ -431,11 +511,17 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * Event payload is the number of the newly selected page.
 	 *
 	 * Page numbers start with `1`.
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	@Output('auPageChange') pageChange = new EventEmitter<number>();
 
 	/**
 	 * CSS classes to be applied on the widget main container
+	 *
+	 * @defaultValue `''`
 	 */
 	@Input('auClassName') className: string | undefined;
 

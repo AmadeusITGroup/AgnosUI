@@ -87,6 +87,8 @@ const defaultConfig: PartialAlertProps = {
 export class AlertComponent extends BaseWidgetDirective<AlertWidget> implements AfterContentChecked {
 	/**
 	 * Type of the alert, following bootstrap types.
+	 *
+	 * @defaultValue `'primary'`
 	 */
 	@Input('auType')
 	type: BSContextualClass | undefined;
@@ -94,6 +96,8 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> implements 
 	/**
 	 * If `true`, alert can be dismissed by the user.
 	 * The close button (×) will be displayed and you can be notified of the event with the (close) output.
+	 *
+	 * @defaultValue `true`
 	 */
 	@Input({alias: 'auDismissible', transform: auBooleanAttribute})
 	dismissible: boolean | undefined;
@@ -102,12 +106,16 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> implements 
 	 * The transition function will be executed when the alert is displayed or hidden.
 	 *
 	 * Depending on the value of `animatedOnInit`, the animation can be optionally skipped during the showing process.
+	 *
+	 * @defaultValue `fadeTransition`
 	 */
 	@Input('auTransition')
 	transition: TransitionFn | undefined;
 
 	/**
 	 * If `true` the alert is visible to the user
+	 *
+	 * @defaultValue `true`
 	 */
 	@Input({alias: 'auVisible', transform: auBooleanAttribute})
 	visible: boolean | undefined;
@@ -117,6 +125,8 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> implements 
 	 *
 	 * Animation is triggered  when the `.open()` function is called
 	 * or the visible prop is changed
+	 *
+	 * @defaultValue `false`
 	 */
 	@Input({alias: 'auAnimatedOnInit', transform: auBooleanAttribute})
 	animatedOnInit: boolean | undefined;
@@ -126,12 +136,16 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> implements 
 	 *
 	 * Animation is triggered  when clicked on the close button (×),
 	 * via the `.close()` function or the visible prop is changed
+	 *
+	 * @defaultValue `true`
 	 */
 	@Input({alias: 'auAnimated', transform: auBooleanAttribute})
 	animated: boolean | undefined;
 
 	/**
 	 * Accessibility close button label
+	 *
+	 * @defaultValue `'Close'`
 	 */
 	@Input('auAriaCloseButtonLabel') ariaCloseButtonLabel: string | undefined;
 
@@ -150,22 +164,40 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> implements 
 
 	/**
 	 * Callback called when the alert visibility changed.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	@Output('auVisibleChange') visibleChange = new EventEmitter<boolean>();
 
 	/**
 	 * Callback called when the alert is hidden.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	@Output('auHidden') hidden = new EventEmitter<void>();
 
 	/**
 	 * Callback called when the alert is shown.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	@Output('auShown') shown = new EventEmitter<void>();
 
 	readonly defaultSlots: WritableSignal<PartialAlertProps> = writable(defaultConfig);
+
 	/**
 	 * CSS classes to be applied on the widget main container
+	 *
+	 * @defaultValue `''`
 	 */
 	@Input('auClassName') className: string | undefined;
 

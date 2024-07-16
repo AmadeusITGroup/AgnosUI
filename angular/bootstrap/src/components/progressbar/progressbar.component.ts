@@ -75,26 +75,36 @@ export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget>
 
 	/**
 	 * The aria label.
+	 *
+	 * @defaultValue `'Progressbar'`
 	 */
 	@Input('auAriaLabel') ariaLabel: string | undefined;
 
 	/**
 	 * The minimum value.
+	 *
+	 * @defaultValue `0`
 	 */
 	@Input({alias: 'auMin', transform: auNumberAttribute}) min: number | undefined;
 
 	/**
 	 * The maximum value.
+	 *
+	 * @defaultValue `100`
 	 */
 	@Input({alias: 'auMax', transform: auNumberAttribute}) max: number | undefined;
 
 	/**
 	 * The current value.
+	 *
+	 * @defaultValue `0`
 	 */
 	@Input({alias: 'auValue', transform: auNumberAttribute}) value: number | undefined;
 
 	/**
 	 * CSS classes to be applied on the widget main container
+	 *
+	 * @defaultValue `''`
 	 */
 	@Input('auClassName') className: string | undefined;
 
@@ -111,22 +121,36 @@ export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget>
 
 	/**
 	 * Height of the progressbar, can be any valid css height value.
+	 *
+	 * @defaultValue `''`
 	 */
 	@Input('auHeight') height: string | undefined;
 
 	/**
 	 * If `true`, animates a striped progressbar.
 	 * Takes effect only for browsers supporting CSS3 animations, and if `striped` is `true`.
+	 *
+	 * @defaultValue `false`
 	 */
 	@Input({alias: 'auAnimated', transform: auBooleanAttribute}) animated: boolean | undefined;
 
 	/**
 	 * If `true`, shows a striped progressbar.
+	 *
+	 * @defaultValue `false`
 	 */
 	@Input({alias: 'auStriped', transform: auBooleanAttribute}) striped: boolean | undefined;
 
 	/**
 	 * Return the value for the 'aria-valuetext' attribute.
+	 * @param value - current value
+	 * @param minimum - minimum value
+	 * @param maximum - maximum value
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => undefined
+	 * ```
 	 */
 	@Input('auAriaValueTextFn') ariaValueTextFn: ((value: number, minimum: number, maximum: number) => string | undefined) | undefined;
 
