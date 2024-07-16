@@ -101,7 +101,7 @@ for (const component of components) {
 		const node = bootstrapExport.getDeclarations()![0];
 		if (ts.isTypeAliasDeclaration(node)) {
 			// type aliases are copied as defined
-			exports += node.getText() + '\n\n';
+			exports += node.getFullText() + '\n\n';
 			exportedNodes.push(node);
 		} else if (ts.isInterfaceDeclaration(node)) {
 			// interfaces are resolved to obtain a *flattened* version
@@ -109,10 +109,7 @@ for (const component of components) {
 			exportedNodes.push(...(node.typeParameters ?? []));
 			for (const property of typeChecker.getTypeAtLocation(node).getProperties()) {
 				const propertyDeclaration = property.getDeclarations()![0];
-				// TODO the js documentation is copied as-is, though it could be interesting for Props interfaces
-				// to add the tag @defaultValue based on the getDefaultConfig functions
-				exports += `\t/**\n\t * ${ts.displayPartsToString(property.getDocumentationComment(typeChecker)).split('\n').join('\n\t * ')}\n\t */\n`;
-				exports += `\t${propertyDeclaration.getText()}\n`;
+				exports += `\t${propertyDeclaration.getFullText()}\n`;
 				exportedNodes.push(propertyDeclaration);
 			}
 			exports += `}\n\n`;
