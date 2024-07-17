@@ -11,6 +11,8 @@
 	interface Theme extends DropdownButton {
 		name: string;
 		icon: string;
+		onclick: () => void;
+		isSelected: boolean;
 	}
 
 	const currentTheme$ = writable('auto');

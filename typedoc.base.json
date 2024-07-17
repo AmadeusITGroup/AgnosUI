@@ -1,0 +1,32 @@
+{
+	"$schema": "https://typedoc-plugin-markdown.org/schema.json",
+	"plugin": ["typedoc-plugin-mdn-links", "typedoc-plugin-markdown"],
+	"hidePageHeader": true,
+	"hideBreadcrumbs": true,
+	"hidePageTitle": true,
+	"hideGroupHeadings": true,
+	"categorizeByGroup": false,
+	"externalSymbolLinkMappings": {
+		"@amadeus-it-group/tansu": {
+			"ReadableSignal": "https://amadeusitgroup.github.io/tansu/interfaces/ReadableSignal.html",
+			"WritableSignal": "https://amadeusitgroup.github.io/tansu/interfaces/WritableSignal.html"
+		},
+		"@angular/core": {
+			"Type": "https://angular.dev/api/core/Type",
+			"TemplateRef": "https://angular.dev/api/core/TemplateRef",
+			"InjectionToken": "https://angular.dev/api/core/InjectionToken",
+			"OnInit": "https://angular.dev/api/core/OnInit",
+			"OnChanges": "https://angular.dev/api/core/OnChanges",
+			"OnDestroy": "https://angular.dev/api/core/OnDestroy",
+			"AfterContentChecked": "https://angular.dev/api/core/AfterContentChecked",
+			"AfterViewInit": "https://angular.dev/api/core/AfterViewInit",
+			"FactoryProvider": "https://angular.dev/api/core/FactoryProvider",
+			"ControlValueAccessor": "https://angular.dev/api/forms/ControlValueAccessor"
+		},
+		"svelte": {
+			"ComponentType": "https://svelte.dev/docs/svelte#types-componenttype",
+			"SvelteComponent": "https://svelte.dev/docs/svelte#types-sveltecomponent"
+		}
+	},
+	"pretty": false
+}

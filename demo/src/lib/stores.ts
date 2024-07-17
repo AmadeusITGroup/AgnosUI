@@ -29,6 +29,7 @@ export const canonicalURL$ = computed(() => {
 });
 
 export type Frameworks = 'angular' | 'react' | 'svelte';
+export type ApiFrameworks = 'typescript' | Frameworks;
 
 /**
  * Current selected framework
@@ -36,11 +37,23 @@ export type Frameworks = 'angular' | 'react' | 'svelte';
 export const selectedFramework$ = derived(
 	page,
 	(p, set) => {
-		if (p.params.framework) {
+		if (p.params.framework && p.params.framework !== 'typescript') {
 			set(p.params.framework as Frameworks);
 		}
 	},
 	'angular' as Frameworks,
+);
+/**
+ * Current non-typescript selected framework
+ */
+export const selectedApiFramework$ = derived(
+	page,
+	(p, set) => {
+		if (p.params.framework) {
+			set(p.params.framework as ApiFrameworks);
+		}
+	},
+	'angular' as ApiFrameworks,
 );
 
 const tabRegExp = /^\/docs\/\[framework\]\/(components|daisyUI)\/[^/]*\/([^/]*)/;

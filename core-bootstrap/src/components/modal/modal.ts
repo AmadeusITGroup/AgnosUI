@@ -32,13 +32,13 @@ interface ModalExtraProps<Data> {
 	footer: SlotContent<ModalContext<Data>>;
 
 	/**
-	 * Header of the modal. The default header includes {@link ModalCommonPropsAndState.title|title}.
+	 * Header of the modal. The default header includes {@link ModalProps.title|title}.
 	 */
 	header: SlotContent<ModalContext<Data>>;
 
 	/**
 	 * Structure of the modal.
-	 * The default structure uses {@link ModalCommonPropsAndState.header|header}, {@link ModalCommonPropsAndState.children|children} and {@link ModalCommonPropsAndState.footer|footer}.
+	 * The default structure uses {@link ModalProps.header|header}, {@link ModalProps.children|children} and {@link ModalProps.footer|footer}.
 	 */
 	structure: SlotContent<ModalContext<Data>>;
 

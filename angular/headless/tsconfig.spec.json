@@ -4,6 +4,6 @@
 	"compilerOptions": {
 		"outDir": "./dist/out-tsc/spec"
 	},
-	"files": ["test.ts"],
+	"files": ["test.ts", "vitest.config.ts"],
 	"include": ["**/*.spec.ts", "**/*.d.ts"]
 }

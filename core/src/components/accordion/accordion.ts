@@ -237,7 +237,7 @@ export interface AccordionItemDirectives {
 	itemDirective: Directive;
 }
 
-export interface AccordionItemCommonPropsAndState extends WidgetsCommonPropsAndState {
+interface AccordionItemCommonPropsAndState extends WidgetsCommonPropsAndState {
 	/**
 	 * If `true`, the accordion-item will be visible (expanded). Otherwise, it will be hidden (collapsed).
 	 */

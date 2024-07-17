@@ -6,7 +6,7 @@ import {computed} from '@amadeus-it-group/tansu';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 import {createAttributesDirective} from '../../utils/directive';
 
-export interface ProgressbarCommonPropsAndState extends WidgetsCommonPropsAndState {
+interface ProgressbarCommonPropsAndState extends WidgetsCommonPropsAndState {
 	/**
 	 * The minimum value.
 	 *

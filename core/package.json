@@ -117,6 +117,20 @@
 			"output": [
 				"coverage/**"
 			]
+		},
+		"generate:typedoc": {
+			"command": "typedoc",
+			"files": [
+				"src/**",
+				"tsconfig.json",
+				"../tsconfig.json",
+				"typedoc.json",
+				"../typedoc.base.json"
+			],
+			"output": [
+				"generated/md/**",
+				"generated/typescript-headless.json"
+			]
 		}
 	},
 	"peerDependencies": {

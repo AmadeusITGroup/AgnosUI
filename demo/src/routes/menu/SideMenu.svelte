@@ -4,22 +4,26 @@
 
 <script lang="ts">
 	import {page} from '$app/stores';
-	import {pathToRoot$, selectedFramework$} from '$lib/stores';
+	import {pathToRoot$, selectedApiFramework$} from '$lib/stores';
 	import CollapsibleSection from './CollapsibleSection.svelte';
 	import angularLogo from '$resources/logo-angular.svg?raw';
 	import reactLogo from '$resources/logo-react.svg?raw';
 	import svelteLogo from '$resources/logo-svelte.svg?raw';
 	import Dropdown from '$lib/layout/Dropdown.svelte';
+	import agnosUILogo from '$resources/agnosui-logo.svg?raw';
+	import bootstrapLogo from '$resources/bootstrap.svg?raw';
+	import typescriptLogo from '$resources/logo-typescript.svg?raw';
 
 	import './menu.scss';
 	import Svg from '$lib/layout/Svg.svelte';
 	import type {DropdownAnchor} from '$lib/layout/dropdown';
 
-	const regexFwk = /^(.*\/)(angular|react|svelte)(\/.*)$/;
+	const regexFwk = /^(.*\/)(angular|react|svelte|typescript)(\/.*)$/;
+	const regexPkg = /^(.*\/api\/)(angular|react|svelte|typescript)\/(bootstrap|headless)(\/.*)$/;
 	$: matchFwk = $page.url.pathname.match(regexFwk);
+	$: matchPkg = $page.url.pathname.match(regexPkg);
 
 	const angularLogoPrefix = counter++ + '-';
-	// very ugly patch of angular logo to work around the issue of the logo not showing on mobile.
 	const patchedAngularLogo = angularLogo
 		.replace(/id="([^"]+)"/g, `id="${angularLogoPrefix}$1"`)
 		.replace(/url\(#([^)]+)/g, `url(#${angularLogoPrefix}$1`);
@@ -30,30 +34,62 @@
 	let frameworks: FwkLink[];
 	$: frameworks = matchFwk
 		? [
+				...(($page.data.includesPkg
+					? [
+							{
+								tag: 'a',
+								id: 'Typescript',
+								href: `${matchFwk[1]}typescript${matchFwk[3]}`,
+								isSelected: $selectedApiFramework$ === 'typescript',
+								logo: typescriptLogo,
+							},
+						]
+					: []) as FwkLink[]),
 				{
 					tag: 'a',
 					id: 'Angular',
 					href: `${matchFwk[1]}angular${matchFwk[3]}`,
-					isSelected: $selectedFramework$ === 'angular',
+					isSelected: $selectedApiFramework$ === 'angular',
 					logo: patchedAngularLogo,
 				},
 				{
 					tag: 'a',
 					id: 'React',
 					href: `${matchFwk[1]}react${matchFwk[3]}`,
-					isSelected: $selectedFramework$ === 'react',
+					isSelected: $selectedApiFramework$ === 'react',
 					logo: reactLogo,
 				},
 				{
 					tag: 'a',
 					id: 'Svelte',
 					href: `${matchFwk[1]}svelte${matchFwk[3]}`,
-					isSelected: $selectedFramework$ === 'svelte',
+					isSelected: $selectedApiFramework$ === 'svelte',
 					logo: svelteLogo,
 				},
 			]
 		: [];
 	$: selectedFwk = frameworks.find((fwk) => fwk.isSelected)!;
+
+	let packages: FwkLink[];
+	$: packages = matchPkg
+		? [
+				{
+					tag: 'a',
+					id: 'Headless',
+					href: `${matchPkg[1]}${matchPkg[2]}/headless${matchPkg[4]}`,
+					isSelected: $page.params.type === 'headless',
+					logo: agnosUILogo,
+				},
+				{
+					tag: 'a',
+					id: 'Bootstrap',
+					href: `${matchPkg[1]}${matchPkg[2]}/bootstrap${matchPkg[4]}`,
+					isSelected: $page.params.type === 'bootstrap',
+					logo: bootstrapLogo,
+				},
+			]
+		: [];
+	$: selectedPkg = packages.find((pkg) => pkg.isSelected)!;
 </script>
 
 <nav class="w-100 mt-1">
@@ -69,6 +105,20 @@
 				{item.id}
 			</svelte:fragment>
 		</Dropdown>
+	{/if}
+	{#if $page.data.includesPkg}
+		<strong class="d-flex w-100 align-items-center fw-semibold">Package </strong>
+		<Dropdown ariaLabel="choose the package" items={packages} dropdownClass="mb-2 mt-1" btnClass="btn-outline-primary">
+			<svelte:fragment slot="button">
+				<Svg svg={selectedPkg.logo} className="icon-20 align-middle me-3" />
+				<span class="pkg-name">{selectedPkg.id}</span>
+			</svelte:fragment>
+			<svelte:fragment slot="item" let:item>
+				<Svg svg={item.logo} className="icon-20 align-middle me-3" />
+				{item.id}
+			</svelte:fragment>
+		</Dropdown>
+		<hr />
 	{/if}
 	{#each $page.data.menu ?? [] as { title, submenu, path } (title)}
 		{#if path}
@@ -107,6 +157,10 @@
 <style>
 	.fwk-name {
 		min-width: 65px;
+		text-align: start;
+	}
+	.pkg-name {
+		min-width: 80px;
 		text-align: start;
 	}
 </style>

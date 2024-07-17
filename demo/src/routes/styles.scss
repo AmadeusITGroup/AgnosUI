@@ -203,6 +203,14 @@ header {
 	view-transition-name: demo-mobile-menu;
 }
 
+blockquote {
+	@extend .border, .bg-light-subtle;
+	padding: 0.5rem 1.5rem;
+	> p {
+		margin-bottom: 0;
+	}
+}
+
 .shiki {
 	margin-bottom: 0;
 	padding: 0.5rem 1.5rem;
@@ -268,6 +276,9 @@ iframe {
 			font-style: var(--shiki-dark-font-style) !important;
 			font-weight: var(--shiki-dark-font-weight) !important;
 			text-decoration: var(--shiki-dark-text-decoration) !important;
+		}
+		blockquote {
+			background-color: #131313 !important;
 		}
 	}
 }

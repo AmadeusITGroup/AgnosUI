@@ -15,6 +15,7 @@ export function getTokens(src: string): marked.TokensList {
 					tokens.splice(indexLastSubHeading, i - indexLastSubHeading, {
 						type: 'section',
 						tokens: tokens.slice(indexLastSubHeading, i),
+						depth: 3,
 					} as unknown as marked.Token);
 					i = indexLastSubHeading + 1;
 				}
@@ -26,6 +27,7 @@ export function getTokens(src: string): marked.TokensList {
 						tokens.splice(indexLastSubHeading, i - indexLastSubHeading, {
 							type: 'section',
 							tokens: tokens.slice(indexLastSubHeading, i),
+							depth: 3,
 						} as unknown as marked.Token);
 						i = indexLastSubHeading + 1;
 					}
@@ -33,6 +35,7 @@ export function getTokens(src: string): marked.TokensList {
 					tokens.splice(indexLastHeading, i - indexLastHeading, {
 						type: 'section',
 						tokens: tokens.slice(indexLastHeading, i),
+						depth: 2,
 					} as unknown as marked.Token);
 					i = indexLastHeading + 1;
 					indexLastSubHeading = -1;
@@ -44,12 +47,14 @@ export function getTokens(src: string): marked.TokensList {
 			tokens.splice(indexLastSubHeading, tokens.length - indexLastSubHeading, {
 				type: 'section',
 				tokens: tokens.slice(indexLastSubHeading, tokens.length),
+				depth: 3,
 			} as unknown as marked.Token);
 		}
 		if (indexLastHeading >= 0) {
 			tokens.splice(indexLastHeading, tokens.length - indexLastHeading, {
 				type: 'section',
 				tokens: tokens.slice(indexLastHeading, tokens.length),
+				depth: 2,
 			} as unknown as marked.Token);
 		}
 	};

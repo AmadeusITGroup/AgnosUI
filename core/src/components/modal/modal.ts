@@ -35,7 +35,7 @@ export const modalCloseButtonClick = Symbol();
 /**
  * Properties of the modal widget that are also in the state of the modal.
  */
-export interface ModalCommonPropsAndState extends WidgetsCommonPropsAndState {
+interface ModalCommonPropsAndState extends WidgetsCommonPropsAndState {
 	/**
 	 * Value of the aria-label attribute to put on the close button.
 	 *
@@ -192,7 +192,7 @@ export interface ModalProps extends ModalCommonPropsAndState {
 export interface ModalState extends ModalCommonPropsAndState {
 	/**
 	 * Whether the backdrop is fully hidden. This can be true either because {@link ModalProps.backdrop|backdrop} is false or
-	 * because {@link ModalCommonPropsAndState.visible|visible} is false and there is no current transition.
+	 * because {@link ModalProps.visible|visible} is false and there is no current transition.
 	 */
 	backdropHidden: boolean;
 
