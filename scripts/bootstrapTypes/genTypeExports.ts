@@ -26,6 +26,12 @@ const program = ts.createProgram([path.join(root, 'core-bootstrap/src/index.ts')
 });
 const typeChecker = program.getTypeChecker();
 
+const hardCodedImports: Record<string, string> = {
+	WidgetFactory: '@agnos-ui/core/types',
+	PropsConfig: '@agnos-ui/core/types',
+	ConfigValidator: '@agnos-ui/core/types',
+};
+
 /**
  * Utility method to resolve all used types from some provided typescript code.
  *
@@ -37,15 +43,16 @@ function getTypesImportsMap(nodes: Node[], excludedNames: Set<string>) {
 	const processedNames = new Set<string>(excludedNames);
 	function visit(node: Node) {
 		if (ts.isTypeReferenceNode(node)) {
-			const name = node.typeName.getText();
+			const name = ts.isIdentifier(node.typeName) ? node.typeName.text : node.typeName.getText();
 			if (!processedNames.has(name)) {
 				let symbol = typeChecker.getSymbolAtLocation(node.typeName);
+				let moduleSpecifier: string | undefined;
 				while (symbol && symbol.flags & ts.SymbolFlags.Alias && !(symbol.declarations?.[0] && ts.isImportSpecifier(symbol.declarations?.[0]))) {
 					symbol = typeChecker.getImmediateAliasedSymbol(symbol);
 				}
 				const declaration = symbol?.declarations?.[0];
 				if (declaration && ts.isImportSpecifier(declaration) && ts.isStringLiteral(declaration.parent.parent.parent.moduleSpecifier)) {
-					let moduleSpecifier = declaration.parent.parent.parent.moduleSpecifier.text;
+					moduleSpecifier = declaration.parent.parent.parent.moduleSpecifier.text;
 					if (moduleSpecifier.startsWith('.')) {
 						const modulePath = path.relative(root, path.dirname(declaration.getSourceFile().fileName)).split(path.sep);
 						if (modulePath[0] !== 'core-bootstrap' && modulePath[0] !== 'core') {
@@ -55,6 +62,10 @@ function getTypesImportsMap(nodes: Node[], excludedNames: Set<string>) {
 						modulePath.splice(1, 1); // remove src
 						moduleSpecifier = path.posix.join(modulePath.join('/'), moduleSpecifier);
 					}
+				} else if (Object.hasOwn(hardCodedImports, name)) {
+					moduleSpecifier = hardCodedImports[name];
+				}
+				if (moduleSpecifier) {
 					moduleSpecifier = moduleSpecifier.replace(/^@agnos-ui\/core\//, `@agnos-ui/${framework}-headless/`);
 					// small exception for Angular, as we do not have subpath exports yet
 					if (moduleSpecifier.startsWith('@agnos-ui/angular-headless/')) {
@@ -87,6 +98,7 @@ for (const component of components) {
 	// We take all type aliases or interface exports from the file
 	// core-bootstrap/src/components/${component}/${component}.ts and filter out Extra or Common ones.
 	const exportsList = typeChecker.getExportsOfModule(sourceFileSymbol);
+	const coreImports: string[] = [];
 	let exports = '';
 	const exportedNodes: Node[] = [];
 	const exportNames = new Set<string>();
@@ -116,11 +128,23 @@ for (const component of components) {
 			if (bootstrapExport.name === `${component.slice(0, 1).toUpperCase()}${component.slice(1)}Props`) {
 				componentsProps.push([component, bootstrapExport.name, node.typeParameters?.length ?? 0]);
 			}
+		} else if (ts.isFunctionDeclaration(node) || (ts.isVariableDeclaration(node) && node.parent.flags & ts.NodeFlags.Const)) {
+			const name = bootstrapExport.name;
+			const docNode = ts.isVariableDeclaration(node) ? node.parent.parent : node;
+			const doc = docNode.getSourceFile().text.substring(docNode.getFullStart(), docNode.getStart());
+			coreImports.push(name);
+			const exportType = typeChecker.getTypeOfSymbol(bootstrapExport);
+			const exportTypeString = typeChecker.typeToString(exportType, undefined, ts.TypeFormatFlags.NoTruncation);
+			exportedNodes.push(typeChecker.typeToTypeNode(exportType, undefined, ts.NodeBuilderFlags.NoTruncation)!);
+			exports += `${doc}const export_${name}: ${exportTypeString} = ${name} as any;\nexport {export_${name} as ${name}};\n\n`;
 		}
 	}
 	const mapImportsByModule = getTypesImportsMap(exportedNodes, exportNames);
 
 	let imports = '';
+	if (coreImports.length > 0) {
+		imports += `import {${coreImports.join(', ')}} from '@agnos-ui/core-bootstrap/components/${component}';\n`;
+	}
 	for (const [importFile, importNames] of mapImportsByModule.entries()) {
 		imports += `import type {${importNames.join(', ')}} from '${importFile}';\n`;
 	}
