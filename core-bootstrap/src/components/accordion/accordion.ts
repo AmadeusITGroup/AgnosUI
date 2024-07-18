@@ -114,11 +114,11 @@ const accordionItemDefaultConfig: AccordionItemProps = {
 const accordionItemProps = Object.keys(accordionItemDefaultConfig);
 
 /**
- * Create an AccordioItemnWidget with given config props
- * @param config - an optional alert config
- * @returns an AccordionWidget
+ * Create an AccordionItemWidget with given config props
+ * @param config - an optional AccordionItem config
+ * @returns an AccordionItemWidget
  */
-export const createAccordionItem = extendWidgetProps(createCoreAccordionItem, defaultConfigItemExtraProps);
+export const createAccordionItem: WidgetFactory<AccordionItemWidget> = extendWidgetProps(createCoreAccordionItem, defaultConfigItemExtraProps);
 
 const coreOverride: Partial<AccordionProps> = {
 	itemTransition: collapseVerticalTransition,
@@ -132,6 +132,11 @@ export function getAccordionDefaultConfig(): AccordionProps {
 	return {...defaultPropsWithoutOverride, ...coreOverride};
 }
 
+/**
+ * Create an AccordionWidget with given config props
+ * @param config - an optional accordion config
+ * @returns an AccordionWidget
+ */
 export const createAccordion: WidgetFactory<AccordionWidget> = factoryCreateAccordion(
 	createAccordionItem,
 	accordionItemProps,
