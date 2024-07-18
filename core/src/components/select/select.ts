@@ -343,7 +343,7 @@ export interface SelectActions<Item> {
 
 export type SelectWidget<Item> = Widget<SelectProps<Item>, SelectState<Item>, SelectApi<Item>, SelectActions<Item>, SelectDirectives<Item>>;
 
-export const defaultConfig: SelectProps<any> = {
+const defaultConfig: SelectProps<any> = {
 	id: undefined,
 	ariaLabel: 'Select',
 	open: false,

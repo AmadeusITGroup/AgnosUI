@@ -121,7 +121,7 @@ export interface CommonAlertDirectives {
 
 export type CommonAlertWidget = Widget<CommonAlertProps, CommonAlertState, CommonAlertApi, object, CommonAlertDirectives>;
 
-export const defaultCommonAlertConfig: CommonAlertProps = {
+const defaultCommonAlertConfig: CommonAlertProps = {
 	visible: true,
 	dismissible: true,
 	ariaCloseButtonLabel: 'Close',
@@ -142,7 +142,7 @@ export function getCommonAlertDefaultConfig(): CommonAlertProps {
 	return {...defaultCommonAlertConfig};
 }
 
-export const commonAlertConfigValidator: ConfigValidator<CommonAlertProps> = {
+const commonAlertConfigValidator: ConfigValidator<CommonAlertProps> = {
 	dismissible: typeBoolean,
 };
 

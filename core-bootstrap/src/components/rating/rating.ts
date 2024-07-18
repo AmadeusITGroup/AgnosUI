@@ -41,9 +41,9 @@ export function getRatingDefaultConfig(): RatingProps {
 }
 
 /**
- * Create a Progressbar with given config props
- * @param config - an optional progressbar config
- * @returns a ProgressbarWidget
+ * Create a RatingWidget with given config props
+ * @param config - an optional rating config
+ * @returns a RatingWidget
  */
 
 export const createRating: WidgetFactory<RatingWidget> = extendWidgetProps(createCoreRating, defaultConfigExtraProps, {});

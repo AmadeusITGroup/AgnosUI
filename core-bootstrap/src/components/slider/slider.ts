@@ -59,7 +59,7 @@ export function getSliderDefaultConfig(): SliderProps {
 
 /**
  * Create a Slider with given config props
- * @param config - an optional progressbar config
+ * @param config - an optional slider config
  * @returns a SliderWidget
  */
 
