@@ -26,7 +26,7 @@
 		});
 	});
 	const {
-		stores: {visible$, hidden$},
+		stores: {visible$},
 		api: {toggle},
 		directives: {directive},
 	} = createTransition({
@@ -53,11 +53,9 @@
 			<rect class="vertical" class:expanded={$visible$} x="45" y="20" width="10" height="60" fill="currentColor" />
 		</svg>
 	</button>
-	{#if !$hidden$}
-		<div class="contents" use:directive={{transition: collapseVerticalTransition, animated: $paramAnimated$}}>
-			<slot />
-		</div>
-	{/if}
+	<div class="contents" use:directive={{transition: collapseVerticalTransition, animated: $paramAnimated$}}>
+		<slot />
+	</div>
 </div>
 
 <style lang="scss">

@@ -2,7 +2,7 @@
 	import Svg from '$lib/layout/Svg.svelte';
 	import github from 'bootstrap-icons/icons/github.svg?raw';
 	import twitter from 'bootstrap-icons/icons/twitter-x.svg?raw';
-	import {canonicalURL$, pathToRoot$, routeLevel$} from '$lib/stores';
+	import {canonicalURL$, pathToRoot$, routeLevel$, selectedFramework$} from '$lib/stores';
 	import './styles.scss';
 	import {afterNavigate, beforeNavigate, onNavigate} from '$app/navigation';
 	import {page, updated} from '$app/stores';
@@ -81,7 +81,7 @@
 				<div class="d-flex align-items-center"></div>
 				<a
 					class="nav-link"
-					href="{$pathToRoot$}docs/angular/getting-started/introduction"
+					href="{$pathToRoot$}docs/{$selectedFramework$}/getting-started/introduction"
 					class:active={$page.route.id?.startsWith('/docs/')}
 					aria-current={$page.route.id?.startsWith('/docs/') ? 'page' : undefined}>Documentation</a
 				>

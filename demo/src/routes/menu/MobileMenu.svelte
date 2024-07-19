@@ -4,7 +4,7 @@
 	import twitter from 'bootstrap-icons/icons/twitter-x.svg?raw';
 	import MobileDialog from './MobileDialog.svelte';
 	import Svg from '$lib/layout/Svg.svelte';
-	import {pathToRoot$} from '$lib/stores';
+	import {pathToRoot$, selectedFramework$} from '$lib/stores';
 	import {page} from '$app/stores';
 
 	let open = false;
@@ -29,7 +29,7 @@
 	<nav class="navbar navbar-light flex-column align-items-stretch">
 		<a
 			class="nav-item nav-link"
-			href="{$pathToRoot$}docs/angular/getting-started/introduction"
+			href="{$pathToRoot$}docs/{$selectedFramework$}/getting-started/introduction"
 			class:active={$page.route.id?.startsWith('/docs/')}
 			aria-current={$page.route.id?.startsWith('/docs/') ? 'page' : undefined}
 		>

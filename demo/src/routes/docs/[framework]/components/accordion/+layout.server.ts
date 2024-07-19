@@ -11,7 +11,6 @@ export const load = async () => {
 		prev: {
 			title: 'Bootstrap Components: Introduction',
 			slug: 'bootstrap-components/introduction',
-			subpath: '',
 		},
 		next: {
 			title: 'Alert',

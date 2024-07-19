@@ -10,7 +10,6 @@ export const load = async () => {
 		prev: {
 			title: 'Headless Components: Introduction',
 			slug: 'headless-components/introduction',
-			subpath: '',
 		},
 		next: {
 			title: 'Alert',
