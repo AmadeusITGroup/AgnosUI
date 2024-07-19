@@ -1,0 +1,11 @@
+const t=`"use strict";
+Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
+const pagination = require("../../pagination-ChA90-py.cjs");
+exports.DefaultPages = pagination.DefaultPages;
+exports.DefaultStructure = pagination.DefaultStructure;
+exports.NavButton = pagination.NavButton;
+exports.PageItem = pagination.PageItem;
+exports.Pagination = pagination.Pagination;
+exports.createPagination = pagination.export_createPagination;
+exports.getPaginationDefaultConfig = pagination.export_getPaginationDefaultConfig;
+`;export{t as default};

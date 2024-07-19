@@ -1,0 +1,3 @@
+const i=`export * from './accordion.component';
+export * from './accordion.gen';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi9zcmMvY29tcG9uZW50cy9hY2NvcmRpb24vaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsY0FBYyx1QkFBdUIsQ0FBQztBQUN0QyxjQUFjLGlCQUFpQixDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0ICogZnJvbSAnLi9hY2NvcmRpb24uY29tcG9uZW50JztcbmV4cG9ydCAqIGZyb20gJy4vYWNjb3JkaW9uLmdlbic7XG4iXX0=`;export{i as default};

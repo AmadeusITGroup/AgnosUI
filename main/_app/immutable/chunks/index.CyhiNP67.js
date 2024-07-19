@@ -1,0 +1,10 @@
+const o=`"use strict";
+Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
+const modal = require("../../modal-Cyt40iyH.cjs");
+exports.Modal = modal.Modal;
+exports.createModal = modal.export_createModal;
+exports.getModalDefaultConfig = modal.export_getModalDefaultConfig;
+exports.modalCloseButtonClick = modal.export_modalCloseButtonClick;
+exports.modalOutsideClick = modal.export_modalOutsideClick;
+exports.openModal = modal.openModal;
+`;export{o as default};

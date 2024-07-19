@@ -1,0 +1,3 @@
+const i=`export * from './alert.component';
+export * from './alert.gen';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi9zcmMvY29tcG9uZW50cy9hbGVydC9pbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxjQUFjLG1CQUFtQixDQUFDO0FBQ2xDLGNBQWMsYUFBYSxDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0ICogZnJvbSAnLi9hbGVydC5jb21wb25lbnQnO1xuZXhwb3J0ICogZnJvbSAnLi9hbGVydC5nZW4nO1xuIl19`;export{i as default};

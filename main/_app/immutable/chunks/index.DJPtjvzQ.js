@@ -1,4 +1,0 @@
-const c=`export * from './modal';
-export * from './modal.component';
-export * from './modal.service';
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi9zcmMvY29tcG9uZW50cy9tb2RhbC9pbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxjQUFjLFNBQVMsQ0FBQztBQUN4QixjQUFjLG1CQUFtQixDQUFDO0FBQ2xDLGNBQWMsaUJBQWlCLENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyJleHBvcnQgKiBmcm9tICcuL21vZGFsJztcbmV4cG9ydCAqIGZyb20gJy4vbW9kYWwuY29tcG9uZW50JztcbmV4cG9ydCAqIGZyb20gJy4vbW9kYWwuc2VydmljZSc7XG4iXX0=`;export{c as default};

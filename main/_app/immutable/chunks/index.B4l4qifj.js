@@ -1,3 +1,0 @@
-const c=`export * from './accordion';
-export * from './accordion.component';
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi9zcmMvY29tcG9uZW50cy9hY2NvcmRpb24vaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsY0FBYyxhQUFhLENBQUM7QUFDNUIsY0FBYyx1QkFBdUIsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCAqIGZyb20gJy4vYWNjb3JkaW9uJztcbmV4cG9ydCAqIGZyb20gJy4vYWNjb3JkaW9uLmNvbXBvbmVudCc7XG4iXX0=`;export{c as default};
