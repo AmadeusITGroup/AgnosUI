@@ -32,7 +32,7 @@ interface Doc {
 		slug: string;
 		content?: string;
 		title: string;
-		subpath: string;
+		subpath?: string;
 		status: string;
 		attributes: Record<string, string>;
 	}[];
@@ -63,7 +63,6 @@ for (const [key, value] of Object.entries(docFiles)) {
 			slug: `${name.toLowerCase()}/${normalizedFileName.toLowerCase()}`,
 			content: fmData.body,
 			title: normalizedFileName.replace('-', ' '),
-			subpath: '',
 			status: '',
 			attributes: fmData.attributes,
 		});

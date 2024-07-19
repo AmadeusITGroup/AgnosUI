@@ -1,4 +1,4 @@
-import {computed, get} from '@amadeus-it-group/tansu';
+import {computed, derived, get} from '@amadeus-it-group/tansu';
 import {browser} from '$app/environment';
 import {page} from '$app/stores';
 import {createIntersection} from '@agnos-ui/svelte-bootstrap/services/intersection';
@@ -33,9 +33,15 @@ export type Frameworks = 'angular' | 'react' | 'svelte';
 /**
  * Current selected framework
  */
-export const selectedFramework$ = computed(() => {
-	return <Frameworks>(get(page).params.framework ?? 'angular');
-});
+export const selectedFramework$ = derived(
+	page,
+	(p, set) => {
+		if (p.params.framework) {
+			set(p.params.framework as Frameworks);
+		}
+	},
+	'angular' as Frameworks,
+);
 
 const tabRegExp = /^\/docs\/\[framework\]\/(components|daisyUI)\/[^/]*\/([^/]*)/;
 /**
@@ -44,12 +50,6 @@ const tabRegExp = /^\/docs\/\[framework\]\/(components|daisyUI)\/[^/]*\/([^/]*)/
 export const selectedTabName$ = computed(() => {
 	const match = tabRegExp.exec(get(page).route.id || '');
 	return match?.[2];
-});
-
-const frameworkKeyRegExp = /\/docs\/[a-z]*\/(.*)$/;
-export const frameworkLessUrl$ = computed(() => {
-	const $page = get(page);
-	return $page.url.pathname.match(frameworkKeyRegExp)?.[1] ?? '/';
 });
 
 export const intersectionApi = createIntersection();

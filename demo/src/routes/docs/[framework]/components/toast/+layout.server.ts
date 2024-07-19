@@ -20,7 +20,6 @@ export const load = async () => {
 		next: {
 			title: 'Services: Introduction',
 			slug: 'services/introduction',
-			subpath: '',
 		},
 	};
 };

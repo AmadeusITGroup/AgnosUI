@@ -1,108 +1,87 @@
 <script lang="ts">
 	import Svg from '$lib/layout/Svg.svelte';
-	import {createHasFocus} from '@agnos-ui/svelte-bootstrap/services/focustrack';
-	import {writable} from '@amadeus-it-group/tansu';
+	import Dropdown from '$lib/layout/Dropdown.svelte';
+	import {computed, writable, type ReadableSignal} from '@amadeus-it-group/tansu';
 	import halfCircle from 'bootstrap-icons/icons/circle-half.svg?raw';
 	import moon from 'bootstrap-icons/icons/moon-stars-fill.svg?raw';
 	import sun from 'bootstrap-icons/icons/sun-fill.svg?raw';
 	import {onMount} from 'svelte';
+	import type {DropdownButton} from '$lib/layout/dropdown';
 
-	interface Theme {
-		id: string;
+	interface Theme extends DropdownButton {
 		name: string;
 		icon: string;
 	}
 
-	const themes: Theme[] = [
-		{id: 'auto', name: 'Auto', icon: halfCircle},
-		{id: 'light', name: 'Light', icon: sun},
-		{id: 'dark', name: 'Dark', icon: moon},
-	];
-	const currentTheme$ = writable({id: 'auto', name: 'auto', icon: halfCircle});
+	const currentTheme$ = writable('auto');
+	const themes$: ReadableSignal<Theme[]> = computed(() => [
+		{
+			tag: 'button',
+			id: 'auto',
+			name: 'Auto',
+			icon: halfCircle,
+			onclick: () => {
+				setTheme('auto');
+			},
+			isSelected: currentTheme$() === 'auto',
+		},
+		{
+			tag: 'button',
+			id: 'light',
+			name: 'Light',
+			icon: sun,
+			onclick: () => {
+				setTheme('light');
+			},
+			isSelected: currentTheme$() === 'light',
+		},
+		{
+			tag: 'button',
+			id: 'dark',
+			name: 'Dark',
+			icon: moon,
+			onclick: () => {
+				setTheme('dark');
+			},
+			isSelected: currentTheme$() === 'dark',
+		},
+	]);
 
-	function getPreferredTheme(): Theme {
-		if (currentTheme$()) {
-			return currentTheme$();
-		} else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-			return themes.find((t) => t.id === 'dark')!;
-		} else {
-			return themes.find((t) => t.id === 'light')!;
-		}
+	function setTheme(id: string): void {
+		currentTheme$.set(id);
+		localStorage.setItem('theme', id);
+		applyTheme(id);
 	}
 
-	const open$ = writable(false);
-	function setTheme(theme: Theme): void {
-		currentTheme$.set(theme);
-		localStorage.setItem('theme', theme.id);
-		if (theme.id === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+	function applyTheme(id: string) {
+		if (id === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
 			document.documentElement.setAttribute('data-bs-theme', 'dark');
 		} else {
-			document.documentElement.setAttribute('data-bs-theme', theme.id);
+			document.documentElement.setAttribute('data-bs-theme', id);
 		}
-		document.documentElement.setAttribute('data-agnos-theme', theme.id);
+		document.documentElement.setAttribute('data-agnos-theme', id);
 	}
-
-	const {hasFocus$, directive} = createHasFocus();
-	$: $open$ = $hasFocus$;
 
 	onMount(() => {
 		// First we search in localStorage
-		const theme = themes.find((t) => t.id === localStorage.getItem('theme'));
-		if (theme) {
-			currentTheme$.set(theme);
-		}
-		setTheme(getPreferredTheme());
+		setTheme(localStorage.getItem('theme') ?? 'auto');
 		window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-			if (currentTheme$().id !== 'light' || currentTheme$().id !== ('dark' as any)) {
-				setTheme(getPreferredTheme());
+			if (currentTheme$() === 'auto') {
+				applyTheme('auto');
 			}
 		});
 	});
-
-	function giveFocus(el: HTMLButtonElement, index: number) {
-		if (index === 0) {
-			el.focus();
-		}
-	}
 </script>
 
 <div class="nav-item">
-	<div class="dropdown">
-		<button
-			class="btn nav-link dropdown-toggle align-items-center d-flex btn-dark-mode"
-			aria-label="toggle the dark mode"
-			on:mousedown|preventDefault
-			on:click={() => ($open$ = !$open$)}
-			type="button"
-			data-bs-toggle="dropdown"
-			aria-expanded={$open$}
-		>
-			{#each themes as theme}
+	<Dropdown btnClass="btn-dark-mode nav-link" ariaLabel="toggle the dark mode" items={$themes$} placement="end">
+		<svelte:fragment slot="button">
+			{#each $themes$ as theme}
 				<Svg svg={theme.icon} className={theme.id} />
 			{/each}
-		</button>
-		{#if $open$}
-			<div
-				use:directive
-				class="dropdown-menu dropdown-menu-end bs-popover-auto position-absolute"
-				class:show={$open$}
-				data-popper-placement="bottom-end"
-				data-bs-popper="absolute"
-			>
-				{#each themes as theme, index}
-					<button
-						use:giveFocus={index}
-						class="dropdown-item d-flex align-items-center"
-						class:active={theme.id === $currentTheme$.id}
-						on:click={() => {
-							setTheme(theme);
-							$open$ = !$open$;
-						}}
-					>
-						<Svg className="me-3" svg={theme.icon} />{theme.name}
-					</button>
-				{/each}
-			</div>
-		{/if}
-	</div>
+		</svelte:fragment>
+		<svelte:fragment slot="item" let:item>
+			<Svg className="me-3" svg={item.icon} />{item.name}
+		</svelte:fragment>
+	</Dropdown>
 </div>
