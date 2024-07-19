@@ -1,15 +1,12 @@
 import {Slot} from '@agnos-ui/react-headless/slot';
-import {useWidgetWithConfig} from '../../config';
-import {useDirectives, classDirective} from '@agnos-ui/react-headless/utils/directive';
+import {classDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
 import type {ForwardedRef, ForwardRefExoticComponent, RefAttributes} from 'react';
 import {forwardRef, useImperativeHandle} from 'react';
-import {createAlert as coreCreateAlert, getAlertDefaultConfig as coreGetAlertDefaultConfig} from '@agnos-ui/core-bootstrap/components/alert';
-import type {WidgetFactory} from '@agnos-ui/react-headless/types';
-import type {AlertContext, AlertProps, AlertWidget, AlertApi} from './alert.gen';
+import {useWidgetWithConfig} from '../../config';
+import type {AlertApi, AlertContext, AlertProps} from './alert.gen';
+import {createAlert} from './alert.gen';
 
-export type * from './alert.gen';
-export const createAlert: WidgetFactory<AlertWidget> = coreCreateAlert as any;
-export const getAlertDefaultConfig: () => AlertProps = coreGetAlertDefaultConfig as any;
+export * from './alert.gen';
 
 const DefaultSlotStructure = (slotContext: AlertContext) => (
 	<>

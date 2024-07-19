@@ -26,8 +26,8 @@ import {
 } from '@angular/core';
 import {callWidgetFactory} from '../../config';
 
-import type {ToastContext, ToastProps, ToastWidget} from './toast';
-import {createToast} from './toast';
+import type {ToastContext, ToastProps, ToastWidget} from './toast.gen';
+import {createToast} from './toast.gen';
 
 @Directive({selector: 'ng-template[auToastBody]', standalone: true})
 export class ToastBodyDirective {

@@ -1,28 +1,13 @@
 import {Slot} from '@agnos-ui/react-headless/slot';
+import type {Directive} from '@agnos-ui/react-headless/types';
+import {classDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
 import type {ForwardRefExoticComponent, ForwardedRef, PropsWithChildren, RefAttributes} from 'react';
 import {createContext, forwardRef, useContext, useEffect, useImperativeHandle} from 'react';
 import {useWidgetWithConfig} from '../../config';
-import {classDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
-import type {Directive, WidgetFactory} from '@agnos-ui/react-headless/types';
-import {
-	createAccordion as coreCreateAccordion,
-	getAccordionDefaultConfig as coreGetAccordionDefaultConfig,
-	createAccordionItem as coreCreateAccordionItem,
-} from '@agnos-ui/core-bootstrap/components/accordion';
-import type {
-	AccordionWidget,
-	AccordionItemContext,
-	AccordionApi,
-	AccordionItemProps,
-	AccordionProps,
-	AccordionItemApi,
-	AccordionItemWidget,
-} from './accordion.gen';
+import type {AccordionApi, AccordionItemApi, AccordionItemContext, AccordionItemProps, AccordionProps} from './accordion.gen';
+import {createAccordion} from './accordion.gen';
 
-export type * from './accordion.gen';
-export const createAccordion: WidgetFactory<AccordionWidget> = coreCreateAccordion as any;
-export const getAccordionDefaultConfig: () => AccordionProps = coreGetAccordionDefaultConfig as any;
-export const createAccordionItem: WidgetFactory<AccordionItemWidget> = coreCreateAccordionItem as any;
+export * from './accordion.gen';
 
 type AccordionTag = `h${1 | 2 | 3 | 4 | 5 | 6}`;
 

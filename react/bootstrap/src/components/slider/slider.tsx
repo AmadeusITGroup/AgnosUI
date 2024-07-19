@@ -1,24 +1,13 @@
-import {useDirective} from '@agnos-ui/react-headless/utils/directive';
-import {useWidgetWithConfig} from '../../config';
-import type {WidgetFactory} from '@agnos-ui/react-headless/types';
+import {Slot} from '@agnos-ui/react-headless/slot';
 import {toSlotContextWidget} from '@agnos-ui/react-headless/types';
+import {useDirective} from '@agnos-ui/react-headless/utils/directive';
 import type {PropsWithChildren} from 'react';
 import React from 'react';
-import {Slot} from '@agnos-ui/react-headless/slot';
-import {createSlider as coreCreateSlider, getSliderDefaultConfig as coreGetSliderDefaultConfig} from '@agnos-ui/core-bootstrap/components/slider';
-import type {
-	SliderWidget,
-	SliderSlotHandleContext,
-	SliderContext,
-	SliderProps,
-	ProgressDisplayOptions,
-	SliderDirectives,
-	SliderHandle,
-} from './slider.gen';
+import {useWidgetWithConfig} from '../../config';
+import type {ProgressDisplayOptions, SliderContext, SliderDirectives, SliderHandle, SliderProps, SliderSlotHandleContext} from './slider.gen';
+import {createSlider} from './slider.gen';
 
-export type * from './slider.gen';
-export const createSlider: WidgetFactory<SliderWidget> = coreCreateSlider as any;
-export const getSliderDefaultConfig: () => SliderProps = coreGetSliderDefaultConfig as any;
+export * from './slider.gen';
 
 export const DefaultSlotHandle = (slotContext: SliderSlotHandleContext) => {
 	return <button {...useDirective<{item: SliderHandle}>(slotContext.widget.directives.handleDirective, {item: slotContext.item})}>&nbsp;</button>;

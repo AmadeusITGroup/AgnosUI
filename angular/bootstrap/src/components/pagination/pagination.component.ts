@@ -15,8 +15,8 @@ import {
 	inject,
 } from '@angular/core';
 import {callWidgetFactory} from '../../config';
-import type {PaginationContext, PaginationNumberContext, PaginationProps, PaginationWidget} from './pagination';
-import {createPagination} from './pagination';
+import type {PaginationContext, PaginationNumberContext, PaginationProps, PaginationWidget} from './pagination.gen';
+import {createPagination} from './pagination.gen';
 
 /**
  * A directive to use to give the 'ellipsis' link template to the pagination component

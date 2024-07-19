@@ -11,8 +11,8 @@ import type {AfterContentChecked} from '@angular/core';
 import {ChangeDetectionStrategy, Component, ContentChild, Directive, EventEmitter, Input, Output, TemplateRef, inject} from '@angular/core';
 import type {Placement} from '@floating-ui/dom';
 import {callWidgetFactory} from '../../config';
-import type {ItemContext, SelectItemContext, SelectWidget} from './select';
-import {createSelect} from './select';
+import type {ItemContext, SelectItemContext, SelectWidget} from './select.gen';
+import {createSelect} from './select.gen';
 
 @Directive({selector: 'ng-template[auSelectBadgeLabel]', standalone: true})
 export class SelectBadgeLabelDirective<Item> {

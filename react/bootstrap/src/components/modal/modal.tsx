@@ -1,20 +1,17 @@
-import {Portal} from '@agnos-ui/react-headless/utils/portal';
-import type {Directive, PropsConfig} from '@agnos-ui/react-headless/types';
-import {toSlotContextWidget} from '@agnos-ui/react-headless/types';
 import {Slot} from '@agnos-ui/react-headless/slot';
-import {useWidgetWithConfig} from '../../config';
-import {useDirective, classDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
-import type {Ref, RefAttributes} from 'react';
-import ReactDOM from 'react-dom/client';
-import {forwardRef, useImperativeHandle} from 'react';
-import {createModal as coreCreateModal, getModalDefaultConfig as coreGetModalDefaultConfig} from '@agnos-ui/core-bootstrap/components/modal';
+import type {Directive} from '@agnos-ui/react-headless/types';
+import {toSlotContextWidget} from '@agnos-ui/react-headless/types';
+import {classDirective, useDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
+import {Portal} from '@agnos-ui/react-headless/utils/portal';
 import classNames from 'classnames';
-import type {ModalApi, ModalContext, ModalProps, ModalWidget} from './modal.gen';
+import type {Ref, RefAttributes} from 'react';
+import {forwardRef, useImperativeHandle} from 'react';
+import ReactDOM from 'react-dom/client';
+import {useWidgetWithConfig} from '../../config';
+import type {ModalApi, ModalContext, ModalProps} from './modal.gen';
+import {createModal} from './modal.gen';
 
-export type * from './modal.gen';
-export const createModal: <Data>(propsConfig?: PropsConfig<ModalProps<Data>>) => ModalWidget<Data> = coreCreateModal as any;
-export {modalCloseButtonClick, modalOutsideClick} from '@agnos-ui/react-headless/components/modal';
-export const getModalDefaultConfig: () => ModalProps<any> = coreGetModalDefaultConfig as any;
+export * from './modal.gen';
 
 const CloseButton = ({directive}: {directive: Directive}) => <button className="btn-close" {...useDirective(directive)} />;
 

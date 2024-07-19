@@ -28,8 +28,8 @@ import {
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {take} from 'rxjs';
 import {callWidgetFactory} from '../../config';
-import type {SliderContext, SliderProps, SliderSlotHandleContext, SliderSlotLabelContext, SliderWidget} from './slider';
-import {createSlider} from './slider';
+import type {SliderContext, SliderProps, SliderSlotHandleContext, SliderSlotLabelContext, SliderWidget} from './slider.gen';
+import {createSlider} from './slider.gen';
 
 @Directive({selector: 'ng-template[auSliderLabel]', standalone: true})
 export class SliderLabelDirective {

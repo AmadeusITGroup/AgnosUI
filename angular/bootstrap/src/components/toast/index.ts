@@ -1,2 +1,2 @@
 export * from './toast.component';
-export * from './toast';
+export * from './toast.gen';

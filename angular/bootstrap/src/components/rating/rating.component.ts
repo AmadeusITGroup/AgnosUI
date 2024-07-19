@@ -24,8 +24,8 @@ import {
 import type {ControlValueAccessor} from '@angular/forms';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {callWidgetFactory} from '../../config';
-import type {RatingWidget, StarContext} from './rating';
-import {createRating} from './rating';
+import type {RatingWidget, StarContext} from './rating.gen';
+import {createRating} from './rating.gen';
 
 @Directive({selector: 'ng-template[auRatingStar]', standalone: true})
 export class RatingStarDirective {

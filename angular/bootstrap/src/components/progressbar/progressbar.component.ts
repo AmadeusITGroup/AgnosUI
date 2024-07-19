@@ -12,8 +12,8 @@ import {type WritableSignal, writable} from '@amadeus-it-group/tansu';
 import {NgClass} from '@angular/common';
 import type {AfterContentChecked} from '@angular/core';
 import {ChangeDetectionStrategy, Component, ContentChild, Directive, Input, TemplateRef, ViewChild, inject} from '@angular/core';
-import type {ProgressbarContext, ProgressbarProps, ProgressbarWidget} from './progressbar';
-import {createProgressbar} from './progressbar';
+import type {ProgressbarContext, ProgressbarProps, ProgressbarWidget} from './progressbar.gen';
+import {createProgressbar} from './progressbar.gen';
 
 import {callWidgetFactory} from '../../config';
 import type {BSContextualClass} from '@agnos-ui/core-bootstrap/types';

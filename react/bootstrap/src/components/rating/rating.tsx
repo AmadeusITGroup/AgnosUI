@@ -1,14 +1,11 @@
 import {Slot} from '@agnos-ui/react-headless/slot';
-import {useWidgetWithConfig} from '../../config';
-import {useDirective, useDirectives, classDirective} from '@agnos-ui/react-headless/utils/directive';
+import {classDirective, useDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
 import React from 'react';
-import {createRating as coreCreateRating, getRatingDefaultConfig as coreGetRatingDefaultConfig} from '@agnos-ui/core-bootstrap/components/rating';
-import type {WidgetFactory} from '@agnos-ui/react-headless/types';
-import type {RatingDirectives, RatingState, RatingWidget, StarContext, RatingProps} from './rating.gen';
+import {useWidgetWithConfig} from '../../config';
+import type {RatingDirectives, RatingProps, RatingState, StarContext} from './rating.gen';
+import {createRating} from './rating.gen';
 
-export type * from './rating.gen';
-export const createRating: WidgetFactory<RatingWidget> = coreCreateRating as any;
-export const getRatingDefaultConfig: () => RatingProps = coreGetRatingDefaultConfig as any;
+export * from './rating.gen';
 
 function Star({star, state, directive}: {star: StarContext; state: RatingState; directive: RatingDirectives['starDirective']}) {
 	const arg = {index: star.index};
