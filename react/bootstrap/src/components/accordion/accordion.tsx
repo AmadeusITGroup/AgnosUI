@@ -7,8 +7,6 @@ import {useWidgetWithConfig} from '../../config';
 import type {AccordionApi, AccordionItemApi, AccordionItemContext, AccordionItemProps, AccordionProps} from './accordion.gen';
 import {createAccordion} from './accordion.gen';
 
-export * from './accordion.gen';
-
 type AccordionTag = `h${1 | 2 | 3 | 4 | 5 | 6}`;
 
 const Header = (props: PropsWithChildren<{headerTag: string; directive: Directive}>) => {

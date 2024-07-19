@@ -6,8 +6,6 @@ import {useWidgetWithConfig} from '../../config';
 import type {AlertApi, AlertContext, AlertProps} from './alert.gen';
 import {createAlert} from './alert.gen';
 
-export * from './alert.gen';
-
 const DefaultSlotStructure = (slotContext: AlertContext) => (
 	<>
 		<div className="alert-body">

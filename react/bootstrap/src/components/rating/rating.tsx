@@ -5,8 +5,6 @@ import {useWidgetWithConfig} from '../../config';
 import type {RatingDirectives, RatingProps, RatingState, StarContext} from './rating.gen';
 import {createRating} from './rating.gen';
 
-export * from './rating.gen';
-
 function Star({star, state, directive}: {star: StarContext; state: RatingState; directive: RatingDirectives['starDirective']}) {
 	const arg = {index: star.index};
 	return (

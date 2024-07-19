@@ -11,8 +11,6 @@ import {useWidgetWithConfig} from '../../config';
 import type {ModalApi, ModalContext, ModalProps} from './modal.gen';
 import {createModal} from './modal.gen';
 
-export * from './modal.gen';
-
 const CloseButton = ({directive}: {directive: Directive}) => <button className="btn-close" {...useDirective(directive)} />;
 
 const DefaultSlotHeader = <Data,>(slotContext: ModalContext<Data>) => {

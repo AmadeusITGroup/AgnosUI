@@ -6,8 +6,6 @@ import {useWidgetWithConfig} from '../../config';
 import type {ToastApi, ToastContext, ToastProps} from './toast.gen';
 import {createToast} from './toast.gen';
 
-export * from './toast.gen';
-
 const ToastHeader = (slotContext: ToastContext) => (
 	<div className="toast-header">
 		<Slot slotContent={slotContext.state.header} props={slotContext} />
