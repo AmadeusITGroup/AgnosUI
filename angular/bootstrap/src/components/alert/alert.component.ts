@@ -7,8 +7,8 @@ import {
 	UseDirective,
 	auBooleanAttribute,
 } from '@agnos-ui/angular-headless';
-import type {AlertContext, AlertProps, AlertWidget} from './alert';
-import {createAlert} from './alert';
+import type {AlertContext, AlertProps, AlertWidget} from './alert.gen';
+import {createAlert} from './alert.gen';
 import {type WritableSignal, writable} from '@amadeus-it-group/tansu';
 import type {AfterContentChecked} from '@angular/core';
 import {

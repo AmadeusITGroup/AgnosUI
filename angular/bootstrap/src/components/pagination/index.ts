@@ -1,2 +1,2 @@
 export * from './pagination.component';
-export * from './pagination';
+export * from './pagination.gen';

@@ -23,8 +23,8 @@ import {
 	inject,
 } from '@angular/core';
 import {callWidgetFactory} from '../../config';
-import type {AccordionItemContext, AccordionItemProps, AccordionItemWidget, AccordionWidget} from './accordion';
-import {createAccordion} from './accordion';
+import type {AccordionItemContext, AccordionItemProps, AccordionItemWidget, AccordionWidget} from './accordion.gen';
+import {createAccordion} from './accordion.gen';
 import {writable} from '@amadeus-it-group/tansu';
 
 @Directive({selector: 'ng-template[auAccordionItemBody]', standalone: true})

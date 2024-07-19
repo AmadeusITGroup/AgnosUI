@@ -1,7 +1,7 @@
-import type {ModalProps} from './modal';
 import {ApplicationRef, createComponent, EnvironmentInjector, EventEmitter, inject, Injectable, Injector} from '@angular/core';
 import type {Subscription} from 'rxjs';
 import {ModalComponent} from './modal.component';
+import type {ModalProps} from './modal.gen';
 
 export interface ModalServiceOpenOptions {
 	injector?: Injector;

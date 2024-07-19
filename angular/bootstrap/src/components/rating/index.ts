@@ -1,2 +1,2 @@
 export * from './rating.component';
-export * from './rating';
+export * from './rating.gen';

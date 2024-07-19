@@ -19,7 +19,7 @@ export type {
 	AccordionItemApi,
 	AccordionItemDirectives,
 } from './components/accordion';
-export {createAccordion, getAccordionDefaultConfig, createAccordionItem} from './components/accordion';
+export {createAccordion, getAccordionDefaultConfig, createAccordionItem, factoryCreateAccordion} from './components/accordion';
 export * from './components/accordion';
 
 export type {AlertContext, AlertProps, AlertState, AlertWidget, AlertApi, AlertDirectives} from './components/alert';
@@ -36,7 +36,7 @@ export type {
 	ModalActions,
 	ModalBeforeCloseEvent,
 } from './components/modal';
-export {createModal, getModalDefaultConfig} from './components/modal';
+export {createModal, getModalDefaultConfig, modalCloseButtonClick, modalOutsideClick} from './components/modal';
 export * from './components/modal';
 
 export type {
