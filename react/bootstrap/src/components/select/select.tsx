@@ -6,8 +6,6 @@ import {useWidgetWithConfig} from '../../config';
 import type {ItemContext, SelectContext, SelectItemContext, SelectProps, SelectWidget} from './select.gen';
 import {createSelect} from './select.gen';
 
-export * from './select.gen';
-
 function DefaultBadge<Item>(slotContext: SelectItemContext<Item>) {
 	return <>{'' + slotContext.itemContext.item}</>;
 }

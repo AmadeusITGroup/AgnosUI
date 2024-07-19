@@ -7,8 +7,6 @@ import {useWidgetWithConfig} from '../../config';
 import type {ProgressDisplayOptions, SliderContext, SliderDirectives, SliderHandle, SliderProps, SliderSlotHandleContext} from './slider.gen';
 import {createSlider} from './slider.gen';
 
-export * from './slider.gen';
-
 export const DefaultSlotHandle = (slotContext: SliderSlotHandleContext) => {
 	return <button {...useDirective<{item: SliderHandle}>(slotContext.widget.directives.handleDirective, {item: slotContext.item})}>&nbsp;</button>;
 };

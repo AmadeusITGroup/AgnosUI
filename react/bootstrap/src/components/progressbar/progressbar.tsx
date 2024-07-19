@@ -6,8 +6,6 @@ import {useWidgetWithConfig} from '../../config';
 import type {ProgressbarContext, ProgressbarProps} from './progressbar.gen';
 import {createProgressbar} from './progressbar.gen';
 
-export * from './progressbar.gen';
-
 function DefaultSlotContent(slotContext: ProgressbarContext) {
 	const {striped, animated, type} = slotContext.state;
 	const classes = classNames('progress-bar', {'progress-bar-striped': striped}, {'progress-bar-animated': animated}, {[`text-bg-${type}`]: !!type});

@@ -6,10 +6,6 @@ import {NavButton, PageItem} from './pageItem';
 import type {PaginationContext, PaginationProps} from './pagination.gen';
 import {createPagination} from './pagination.gen';
 
-export * from './pagination.gen';
-
-export * from './pageItem';
-
 export function DefaultPages(slotContext: PaginationContext) {
 	const {widget, state} = slotContext;
 	const jsxPages = [];
