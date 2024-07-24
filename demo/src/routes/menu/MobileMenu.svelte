@@ -4,7 +4,7 @@
 	import twitter from 'bootstrap-icons/icons/twitter-x.svg?raw';
 	import MobileDialog from './MobileDialog.svelte';
 	import Svg from '$lib/layout/Svg.svelte';
-	import {pathToRoot$, selectedFramework$} from '$lib/stores';
+	import {pathToRoot$, selectedFramework$, selectedApiFramework$} from '$lib/stores';
 	import {page} from '$app/stores';
 
 	let open = false;
@@ -12,6 +12,7 @@
 	function onClose() {
 		open = false;
 	}
+	$: isApi = $page.route.id?.startsWith('/api/');
 </script>
 
 <button
@@ -35,6 +36,15 @@
 		>
 			Documentation
 		</a>
+		{#if import.meta.env.API}
+			<hr />
+			<a
+				class="nav-link"
+				href="{$pathToRoot$}api/{$selectedApiFramework$}/bootstrap/types"
+				class:active={isApi}
+				aria-current={isApi ? 'page' : undefined}>API</a
+			>
+		{/if}
 		<hr />
 		<a
 			class="nav-item nav-link"

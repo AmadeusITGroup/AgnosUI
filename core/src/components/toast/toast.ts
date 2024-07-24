@@ -6,7 +6,7 @@ import {typeBoolean, typeNumberInRangeFactory} from '../../utils/writables';
 import type {CommonAlertApi, CommonAlertDirectives, CommonAlertProps, CommonAlertState, CommonAlertWidget} from '../alert/common';
 import {createCommonAlert, getCommonAlertDefaultConfig} from '../alert/common';
 
-export interface ToastExtraProps {
+interface ToastExtraProps {
 	/**
 	 * If `true` automatically hides the toast after the delay.
 	 *
@@ -21,7 +21,7 @@ export interface ToastExtraProps {
 	delay: number;
 }
 
-export interface ExtraDirectives {
+interface ExtraDirectives {
 	/**
 	 * Directive that handles the autohide of the toast component
 	 */

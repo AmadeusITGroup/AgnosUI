@@ -15,7 +15,7 @@ import {noop} from '../../utils/internal/func';
 import {bindableDerived, bindableProp, stateStores, writablesForProps} from '../../utils/stores';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 
-export interface SelectCommonPropsAndState<Item> extends WidgetsCommonPropsAndState {
+interface SelectCommonPropsAndState<Item> extends WidgetsCommonPropsAndState {
 	/**
 	 * id used for the input inside the select
 	 */

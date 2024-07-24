@@ -122,6 +122,26 @@
 				"build:src",
 				"build:pkg"
 			]
+		},
+		"generate:typedoc": {
+			"command": "typedoc",
+			"dependencies": [
+				"generate:exports",
+				"generate:component-types"
+			],
+			"files": [
+				"src/**",
+				"!src/generated/**",
+				"tsconfig.json",
+				"../tsconfig.json",
+				"../../tsconfig.json",
+				"typedoc.json",
+				"../../typedoc.base.json"
+			],
+			"output": [
+				"generated/md/**",
+				"generated/react-bootstrap.json"
+			]
 		}
 	},
 	"dependencies": {

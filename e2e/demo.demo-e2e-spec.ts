@@ -2,6 +2,7 @@ import {globSync} from 'glob';
 import path from 'path';
 import {expect, test} from './fixture';
 import {analyze, normalizePath} from './utils';
+import {componentsMetadata, daisyUIMetadata} from '../demo/src/lib/components-metadata';
 
 const pathToFrameworkDir = normalizePath(path.join(import.meta.dirname, '../demo/src/routes'));
 const pathToDocsDir = normalizePath(path.join(import.meta.dirname, '../docs'));
@@ -9,14 +10,25 @@ const pathToDocsDir = normalizePath(path.join(import.meta.dirname, '../docs'));
 const allRoutes = globSync(`**/+page.svelte`, {cwd: pathToFrameworkDir}).flatMap((route) => {
 	const normalizedRoute = normalizePath(route)
 		.replace(/\/?\+page\.svelte$/g, '')
-		.replace('[framework]', 'svelte');
-	return normalizedRoute === 'docs/svelte/[...slug]'
-		? globSync('**/*.md', {cwd: pathToDocsDir, ignore: '**/doc.md'}).map((mdRoute) =>
-				normalizePath(mdRoute)
-					.replace(/^\d{2}-([^/]*)\/\d{2}-([^/]*)\.md$/, 'docs/svelte/$1/$2')
-					.toLowerCase(),
-			)
-		: normalizedRoute;
+		.replace('[framework]', 'svelte')
+		.replace('[type]', 'bootstrap');
+	if (normalizedRoute === 'docs/svelte/[...slug]') {
+		return globSync('**/*.md', {cwd: pathToDocsDir, ignore: '**/doc.md'}).map((mdRoute) =>
+			normalizePath(mdRoute)
+				.replace(/^\d{2}-([^/]*)\/\d{2}-([^/]*)\.md$/, 'docs/svelte/$1/$2')
+				.toLowerCase(),
+		);
+	}
+	if (normalizedRoute === 'docs/svelte/daisyUI/[component]/api') {
+		return Object.keys(daisyUIMetadata).map((component) => normalizedRoute.replace('[component]', component.toLowerCase()));
+	}
+	if (normalizedRoute === 'docs/svelte/components/[component]/api') {
+		return Object.keys(componentsMetadata).map((component) => normalizedRoute.replace('[component]', component.toLowerCase()));
+	}
+	if (normalizedRoute === 'api/svelte/bootstrap/[...slug]') {
+		return Object.keys(componentsMetadata).map((component) => normalizedRoute.replace('[...slug]', `components/${component.toLowerCase()}`));
+	}
+	return normalizedRoute;
 });
 
 test.describe.parallel('Demo Website', () => {

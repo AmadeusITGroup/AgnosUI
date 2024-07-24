@@ -20,7 +20,7 @@ export interface StarContext {
 	index: number;
 }
 
-export interface RatingCommonPropsAndState extends WidgetsCommonPropsAndState {
+interface RatingCommonPropsAndState extends WidgetsCommonPropsAndState {
 	/**
 	 * The current rating. Could be a decimal value like `3.75`.
 	 *

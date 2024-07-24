@@ -1,4 +1,4 @@
-# @agnos-ui/angular
+# @agnos-ui/angular-bootstrap
 
 [![npm](https://img.shields.io/npm/v/@agnos-ui/angular-bootstrap)](https://www.npmjs.com/package/@agnos-ui/angular-bootstrap)
 

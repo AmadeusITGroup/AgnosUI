@@ -50,6 +50,9 @@
 		"prettier": "^3.3.3",
 		"strip-ansi": "^7.1.0",
 		"syncpack": "^12.3.3",
+		"typedoc": "^0.26.4",
+		"typedoc-plugin-markdown": "^4.1.2",
+		"typedoc-plugin-mdn-links": "^3.2.3",
 		"typescript": "~5.5.3",
 		"vite": "^5.3.4",
 		"vitest": "^2.0.3",
@@ -77,6 +80,7 @@
 		"lint": "wireit",
 		"dev": "wireit",
 		"dev:stackblitz": "wireit",
+		"dev:api": "wireit",
 		"dev:coverage": "wireit",
 		"preview": "npm run preview -w demo",
 		"preview:coverage": "npm run preview:coverage -w demo",
@@ -103,6 +107,14 @@
 				"./react/demo:dev",
 				"./svelte/demo:dev",
 				"./demo:dev:stackblitz"
+			]
+		},
+		"dev:api": {
+			"dependencies": [
+				"./angular/demo:dev",
+				"./react/demo:dev",
+				"./svelte/demo:dev",
+				"./demo:dev:api"
 			]
 		},
 		"dev:coverage": {

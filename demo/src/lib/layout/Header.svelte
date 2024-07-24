@@ -1,27 +1,26 @@
 <script lang="ts">
-	import {pathToRoot$, selectedFramework$, selectedTabName$} from '../stores';
+	import {pathToRoot$, selectedApiFramework$, selectedPackageType$, selectedTabName$} from '../stores';
 	import {page} from '$app/stores';
 	import {getTitle} from '../../app';
 	import Svg from '$lib/layout/Svg.svelte';
 	import angularLogo from '$resources/logo-angular.svg?raw';
 	import reactLogo from '$resources/logo-react.svg?raw';
 	import svelteLogo from '$resources/logo-svelte.svg?raw';
+	import typescriptLogo from '$resources/logo-typescript.svg?raw';
 	import daisyUILogo from '$resources/logo-daisyUI.svg?raw';
-	import bootstrapLogo from 'bootstrap-icons/icons/bootstrap-fill.svg?raw';
+	import bootstrapLogo from '$resources/bootstrap.svg?raw';
 
 	export let title: string;
+	export let pageTitle = '';
 	export let status: string = '';
-	export let noMeta = false;
 	export let cssFramework = '';
-	export let selectedFramework = '';
 
 	$: tabs = $page.data.tabs ?? [];
+	$: builtPageTitle = getTitle(pageTitle || title, $selectedApiFramework$, $selectedPackageType$);
 </script>
 
 <svelte:head>
-	{#if !noMeta}
-		<title>{getTitle(title, $selectedFramework$)}</title>
-	{/if}
+	<title>{builtPageTitle}</title>
 </svelte:head>
 
 <header
@@ -31,27 +30,32 @@
 	class:pb-5={tabs.length}
 	class:pb-3={!tabs.length}
 >
-	<div class="row align-items-center w-100" class:pb-3={tabs.length}>
-		<h1 class="text-primary col-auto me-3 me-md-none mb-0 p-0 p-md-3 text-center text-md-start">
+	<div class="w-100 d-flex flex-wrap flex-row-reverse justify-content-between align-items-center" class:pb-3={tabs.length}>
+		<div class="d-flex ms-auto gap-2 justify-content-center">
+			{#if status === 'inprogress'}<span class="badge text-bg-warning">In progress</span>{/if}
+			{#if status === 'beta'}<span class="badge text-bg-info">Beta</span>{/if}
+			{#if $selectedApiFramework$ === 'typescript'}<span class="d-block d-md-none p-0"
+					><Svg svg={typescriptLogo} className="icon-24 d-flex position-relative" /></span
+				>{/if}
+			{#if $selectedApiFramework$ === 'react'}<span class="d-block d-md-none p-0"
+					><Svg svg={reactLogo} className="icon-24 d-flex position-relative" /></span
+				>{/if}
+			{#if $selectedApiFramework$ === 'angular'}<span class="d-block d-md-none p-0"
+					><Svg svg={angularLogo} className="icon-24 d-flex position-relative" /></span
+				>{/if}
+			{#if $selectedApiFramework$ === 'svelte'}<span class="d-block d-md-none p-0"
+					><Svg svg={svelteLogo} className="icon-24 d-flex position-relative" /></span
+				>{/if}
+			{#if cssFramework === 'bootstrap'}<span class="d-block d-md-none p-0"
+					><Svg svg={bootstrapLogo} className="icon-24 d-flex logo-bootstrap position-relative" /></span
+				>{/if}
+			{#if cssFramework === 'daisyUI'}<span class="d-block d-md-none p-0"><Svg svg={daisyUILogo} className="icon-24 d-flex position-relative" /></span
+				>{/if}
+			{#if cssFramework === 'headless'}<span class="d-block d-md-none badge rounded-pill text-bg-info">headless</span>{/if}
+		</div>
+		<h1 class="text-primary me-3 me-md-none mb-0 p-0 p-md-3 text-center text-md-start">
 			{title}
 		</h1>
-		{#if status === 'inprogress'}<span class="col-auto badge text-bg-warning">In progress</span>{/if}
-		{#if status === 'beta'}<span class="col-auto badge text-bg-info">Beta</span>{/if}
-		{#if selectedFramework === 'react'}<span class="col-auto d-block d-md-none p-0"
-				><Svg svg={reactLogo} className="pres-card-logo d-flex position-relative" /></span
-			>{/if}
-		{#if selectedFramework === 'angular'}<span class="col-auto d-block d-md-none p-0"
-				><Svg svg={angularLogo} className="pres-card-logo d-flex position-relative" /></span
-			>{/if}
-		{#if selectedFramework === 'svelte'}<span class="col-auto d-block d-md-none p-0"
-				><Svg svg={svelteLogo} className="pres-card-logo d-flex position-relative" /></span
-			>{/if}
-		{#if cssFramework === 'Bootstrap'}<span class="col-auto d-block d-md-none p-0"
-				><Svg svg={bootstrapLogo} className="pres-card-logo d-flex logo-bootstrap position-relative" /></span
-			>{/if}
-		{#if cssFramework === 'daisyUI'}<span class="col-auto d-block d-md-none p-0"
-				><Svg svg={daisyUILogo} className="pres-card-logo d-flex position-relative" /></span
-			>{/if}
 	</div>
 	{#if tabs.length}
 		<ul class="nav-tabs overflow-x-auto overflow-y-hidden px-4 px-lg-5 d-flex flex-nowrap content-tabset justify-content-start nav" role="tablist">
@@ -59,7 +63,7 @@
 				{@const isActive = $selectedTabName$ === key}
 				<li class="nav-item" role="presentation">
 					<a
-						href={`${$pathToRoot$}docs/${$selectedFramework$}${path}`}
+						href={`${$pathToRoot$}docs/${$selectedApiFramework$}${path}`}
 						role="tab"
 						class="nav-link au-nav-link-onlightbg"
 						aria-selected={isActive}
@@ -90,5 +94,8 @@
 			left: 0;
 			top: 0;
 		}
+	}
+	h1 {
+		font-size: calc(1.375rem + 1.5vw);
 	}
 </style>

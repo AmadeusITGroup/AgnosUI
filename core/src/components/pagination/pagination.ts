@@ -9,7 +9,7 @@ import {noop} from '../../utils/internal/func';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 import {createAttributesDirective} from '../../utils/directive';
 
-export interface PaginationCommonPropsAndState extends WidgetsCommonPropsAndState {
+interface PaginationCommonPropsAndState extends WidgetsCommonPropsAndState {
 	/**
 	 * The current page.
 	 *

@@ -9,5 +9,5 @@ export * from './components/slider';
 export * from './components/toast';
 
 export * from './services/transitions';
-
 export * from './config';
+export * from './types';

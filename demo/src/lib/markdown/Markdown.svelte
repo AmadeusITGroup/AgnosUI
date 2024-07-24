@@ -10,11 +10,19 @@
 	import MdListItem from './renderers/MdListItem.svelte';
 	import MdCodeSpan from './renderers/MdCodeSpan.svelte';
 	import {getTokens} from './getTokens';
+	import {setContext} from 'svelte';
+	import MdEscape from '$lib/markdown/renderers/MdEscape.svelte';
 
 	export let source: string;
+	export let overrideRenderers: Partial<Renderers> = {};
+	export let apiSymbol: string = '';
+
+	if (apiSymbol) {
+		setContext('ApiSymbol', apiSymbol);
+	}
 
 	$: tokens = getTokens(source);
-	const renderers: Partial<Renderers> = {
+	$: renderers = {
 		image: MdImage,
 		heading: Heading,
 		code: MdCode,
@@ -23,6 +31,8 @@
 		paragraph: MdParagraph,
 		listitem: MdListItem,
 		codespan: MdCodeSpan,
+		escape: MdEscape,
+		...overrideRenderers,
 	} as Partial<Renderers>;
 </script>
 

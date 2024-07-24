@@ -1,5 +1,4 @@
 // types
-export * from './components/commonProps';
 export * from './types';
 
 // components
@@ -25,6 +24,7 @@ export * from './services/navManager';
 export * from './services/portal';
 export * from './services/resizeObserver';
 export * from './services/siblingsInert';
+export * from './services/hash';
 
 // services transitions
 export * from './services/transitions/baseTransitions';

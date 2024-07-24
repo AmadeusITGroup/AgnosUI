@@ -66,7 +66,7 @@ export interface SliderHandle {
 	ariaValueText: string;
 }
 
-export interface SliderCommonPropsAndState extends WidgetsCommonPropsAndState {
+interface SliderCommonPropsAndState extends WidgetsCommonPropsAndState {
 	/**
 	 * Minimum value that can be assigned to the slider
 	 *

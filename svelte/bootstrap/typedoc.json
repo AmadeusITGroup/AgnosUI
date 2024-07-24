@@ -1,0 +1,7 @@
+{
+	"extends": ["../../typedoc.base.json"],
+	"entryPoints": ["src/index.ts"],
+	"tsconfig": "tsconfig.typedoc.json",
+	"out": "generated/md",
+	"json": "generated/svelte-bootstrap.json"
+}

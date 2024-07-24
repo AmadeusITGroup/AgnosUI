@@ -6,6 +6,7 @@
 	"scripts": {
 		"dev": "wireit",
 		"dev:stackblitz": "wireit",
+		"dev:api": "wireit",
 		"dev:coverage": "wireit dev",
 		"build": "wireit",
 		"generate:doc": "wireit",
@@ -54,6 +55,19 @@
 			],
 			"service": true
 		},
+		"generate:all": {
+			"dependencies": [
+				"generate:doc",
+				"../core:generate:typedoc",
+				"../core-bootstrap:generate:typedoc",
+				"../react/headless:generate:typedoc",
+				"../react/bootstrap:generate:typedoc",
+				"../svelte/headless:generate:typedoc",
+				"../svelte/bootstrap:generate:typedoc",
+				"../angular/headless:generate:typedoc",
+				"../angular/bootstrap:generate:typedoc"
+			]
+		},
 		"dev:stackblitz": {
 			"command": "vite dev",
 			"dependencies": [
@@ -67,17 +81,28 @@
 				"STACKBLITZ": "true"
 			}
 		},
+		"dev:api": {
+			"command": "vite dev",
+			"dependencies": [
+				"generate:all"
+			],
+			"service": true,
+			"env": {
+				"API": "true"
+			}
+		},
 		"build": {
 			"command": "vite build",
 			"dependencies": [
-				"generate:doc",
+				"generate:all",
 				"../angular/demo:build",
 				"../react/demo:build",
 				"../svelte/demo:build",
 				"sveltekit"
 			],
 			"env": {
-				"STACKBLITZ": "true"
+				"STACKBLITZ": "true",
+				"API": "true"
 			},
 			"files": [
 				"static/**",
@@ -93,13 +118,16 @@
 		"build:coverage": {
 			"command": "vite build",
 			"dependencies": [
-				"generate:doc",
+				"generate:all",
 				"../angular/demo:build:coverage",
 				"../react/demo:build:coverage",
 				"../svelte/demo:build:coverage",
 				"../svelte/bootstrap:build",
 				"sveltekit"
 			],
+			"env": {
+				"API": "true"
+			},
 			"files": [
 				"static/**",
 				"vite.config.ts",
