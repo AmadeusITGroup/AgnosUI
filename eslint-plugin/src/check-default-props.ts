@@ -97,7 +97,7 @@ function visitFunctionLike(node: ts.FunctionLikeDeclaration, typeChecker: ts.Typ
 
 const everythingAfterNonSpaceRegExp = /\S.*$/;
 const defaultValueRegExp = /@defaultValue[\s\S]*?(?=@\w+|$)/g;
-const endingEmptyLinesRegExp = /(\r?\n\s+\*\s*)+$/;
+const endingEmptyLinesRegExp = /(\r?\n\s+\* *)+$/;
 
 const createFix = (propDeclaration: ts.Declaration, actualDefaultValue: string | undefined): ReportFixFunction =>
 	function* (fixer) {
