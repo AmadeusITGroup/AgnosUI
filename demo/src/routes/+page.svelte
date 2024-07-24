@@ -9,7 +9,7 @@
 </script>
 
 <svelte:head>
-	<title>AgnosUI - Home page</title>
+	<title>Home page - AgnosUI</title>
 	<meta name="description" content="Svelte demo app" />
 </svelte:head>
 

@@ -21,6 +21,9 @@
 			"AfterContentChecked": "https://angular.dev/api/core/AfterContentChecked",
 			"AfterViewInit": "https://angular.dev/api/core/AfterViewInit",
 			"FactoryProvider": "https://angular.dev/api/core/FactoryProvider",
+			"Signal": "https://angular.dev/api/core/Signal"
+		},
+		"@angular/forms": {
 			"ControlValueAccessor": "https://angular.dev/api/forms/ControlValueAccessor"
 		},
 		"svelte": {

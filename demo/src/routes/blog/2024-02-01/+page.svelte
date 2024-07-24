@@ -10,6 +10,6 @@
 	<meta name="description" content="Blog article exploring State Management with Tansu." />
 </svelte:head>
 
-<Header title="State management with Tansu" noMeta />
+<Header title="State management with Tansu" />
 <Published date="02/01/2024" />
 <Markdown {source} />

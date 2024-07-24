@@ -3,8 +3,8 @@ import {afterUpdate} from 'svelte';
 
 const textToLinesRegex = /\r/g;
 
-export function getTitle(title: string, frameworkName = '') {
-	return `AgnosUI - ${title}` + (frameworkName ? ` for ${frameworkName}` : '');
+export function getTitle(title: string, frameworkName = '', packageType = '') {
+	return `${title} - ${frameworkName ? `${frameworkName.slice(0, 1).toUpperCase() + frameworkName.slice(1)}${packageType ? ` ${packageType.slice(0, 1).toUpperCase() + packageType.slice(1)}` : ''} - ` : ''}AgnosUI`;
 }
 
 /**

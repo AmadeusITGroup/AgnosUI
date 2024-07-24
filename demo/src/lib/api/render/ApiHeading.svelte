@@ -8,7 +8,6 @@
 	import fileFont from 'bootstrap-icons/icons/file-font-fill.svg?raw';
 	import gear from 'bootstrap-icons/icons/gear-fill.svg?raw';
 	import alignStart from 'bootstrap-icons/icons/align-start.svg?raw';
-	import {selectedApiFramework$} from '$lib/stores';
 	import Svg from '$lib/layout/Svg.svelte';
 	import {getContext} from 'svelte';
 
@@ -65,7 +64,7 @@
 </script>
 
 {#if depth === 1}
-	<Header title={text} selectedFramework={$selectedApiFramework$} />
+	<Header title={text} />
 {:else if depth === 2}
 	{@const compType = text.slice(0, text.indexOf('_'))}
 	{@const id = text
@@ -73,12 +72,12 @@
 		.toLowerCase()
 		.replace(/\s/g, '-')
 		.trim()}
-	<div class="d-flex align-items-center mb-2 flex-wrap">
+	<div class="d-flex flex-column flex-md-row align-items-start align-items-md-center mb-2 flex-wrap">
 		<h2 {id} class="{headerClassName} text-primary-emphasis">
-			{text.slice(text.indexOf('_') + 1)}
-			<a class="anchor-link" href="#{id}" aria-label="link to {text}"><Svg className="icon-24 align-middle" svg={link} /></a>
+			<span class="text-break">{text.slice(text.indexOf('_') + 1)}</span>
+			<a class="anchor-link d-none d-md-inline" href="#{id}" aria-label="link to {text}"><Svg className="icon-24 align-middle" svg={link} /></a>
 		</h2>
-		<span class="ms-auto badge rounded-pill {badgeFromType(compType)}">{compType}</span>
+		<span class="ms-md-auto mb-2 badge rounded-pill {badgeFromType(compType)}">{compType}</span>
 	</div>
 {:else if depth === 3 || depth === 5}
 	{@const svg = svgFromHeaderText()}

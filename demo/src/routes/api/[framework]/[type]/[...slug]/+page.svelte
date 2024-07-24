@@ -7,8 +7,8 @@
 	import Svg from '$lib/layout/Svg.svelte';
 	import biInfoCircleFill from 'bootstrap-icons/icons/info-circle-fill.svg?raw';
 	import Header from '$lib/layout/Header.svelte';
-	import {selectedApiFramework$} from '$lib/stores';
 	import ApiSection from '$lib/api/render/ApiSection.svelte';
+	import {selectedPackageType$} from '$lib/stores';
 
 	export let data;
 
@@ -24,7 +24,7 @@
 	<meta name="description" content={`API Documentation for ${data.slug.replace('/', ' ').replace('-', ' ')}`} />
 </svelte:head>
 
-<Header title={data.title} selectedFramework={$selectedApiFramework$} />
+<Header title={data.title} cssFramework={$selectedPackageType$} />
 <Alert type="info" className="p-0 border-0 border-start border-5 border-info" visible dismissible={false}>
 	<div class="alert-container p-3 border border-info rounded-end">
 		<div class="d-flex align-items-center">
@@ -32,7 +32,7 @@
 				<Svg svg={biInfoCircleFill} className="icon-16" />
 			</span>
 			<span>
-				All following symbols can be imported from <strong>{data.import}</strong>
+				All following symbols can be imported from <strong class="text-break">{data.import}</strong>
 			</span>
 		</div>
 	</div>
