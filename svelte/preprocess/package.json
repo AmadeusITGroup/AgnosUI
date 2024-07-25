@@ -1,7 +1,7 @@
 {
 	"name": "@agnos-ui/svelte-preprocess",
 	"description": "Preprocessor to run Svelte directives server-side.",
-	"version": "0.0.0",
+	"version": "0.4.0",
 	"private": true,
 	"type": "module",
 	"main": "./dist/index.cjs",
