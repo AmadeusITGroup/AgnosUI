@@ -239,6 +239,10 @@ iframe {
 	@include color-mode(dark, true) {
 		color-scheme: dark;
 
+		.nav-link:focus-visible {
+			box-shadow: 0 0 0 0.25rem $secondary-bg-subtle-dark;
+		}
+
 		.iframe-container {
 			background-color: #212529;
 		}

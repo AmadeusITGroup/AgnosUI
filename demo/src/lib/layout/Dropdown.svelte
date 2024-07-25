@@ -24,6 +24,11 @@
 	export let items: Item[];
 	export let placement: 'start' | 'end' = 'start';
 	export let dropdownClass: string = '';
+
+	const onpointerDown = (event: PointerEvent) => {
+		event.preventDefault();
+		(event.target as HTMLElement).focus();
+	};
 </script>
 
 <div class="dropdown {dropdownClass}">
@@ -48,6 +53,7 @@
 					href={item.tag === 'a' ? item.href : undefined}
 					class:active={item.isSelected}
 					aria-current={item.isSelected ? 'page' : false}
+					on:pointerdown={onpointerDown}
 					on:click={() => {
 						if (item.tag === 'button') {
 							item.onclick();
