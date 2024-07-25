@@ -58,7 +58,7 @@
 	},
 	"wireit": {
 		"build": {
-			"command": "vite build && tsc -p tsconfig.build.json && node ../scripts/buildPackageJson.js . dist && sass src/scss/agnosui.scss dist/css/agnosui.css && node scripts/copyScss.js",
+			"command": "vite build && tsc -p tsconfig.build.json && node ../scripts/buildPackageJson.js . dist && node scripts/copyScss.js && sass dist/scss/agnosui.scss dist/css/agnosui.css",
 			"files": [
 				"src/**",
 				"tsconfig.build.json",
