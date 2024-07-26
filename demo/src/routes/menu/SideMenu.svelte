@@ -36,6 +36,10 @@
 	function giveFocus(el: HTMLAnchorElement) {
 		el.focus();
 	}
+	const onpointerDown = (event: PointerEvent) => {
+		event.preventDefault();
+		(event.target as HTMLElement).focus();
+	};
 </script>
 
 <nav class="w-100 mt-1">
@@ -63,6 +67,7 @@
 							class:active={isAngular}
 							aria-current={!isAngular || 'page'}
 							on:click={() => ($open$ = !$open$)}
+							on:pointerdown={onpointerDown}
 						>
 							<Svg svg={patchedAngularLogo} className="icon-20 align-middle me-3" />
 							Angular
@@ -75,6 +80,7 @@
 							class:active={isReact}
 							aria-current={!isReact || 'page'}
 							on:click={() => ($open$ = !$open$)}
+							on:pointerdown={onpointerDown}
 						>
 							<Svg svg={reactLogo} className="icon-20 align-middle me-3" />
 							React
@@ -87,6 +93,7 @@
 							class:active={isSvelte}
 							aria-current={!isSvelte || 'page'}
 							on:click={() => ($open$ = !$open$)}
+							on:pointerdown={onpointerDown}
 						>
 							<Svg svg={svelteLogo} className="icon-20 align-middle me-3" />
 							Svelte
