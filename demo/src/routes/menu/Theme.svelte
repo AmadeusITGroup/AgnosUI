@@ -64,6 +64,10 @@
 			el.focus();
 		}
 	}
+	const onpointerDown = (event: PointerEvent) => {
+		event.preventDefault();
+		(event.target as HTMLElement).focus();
+	};
 </script>
 
 <div class="nav-item">
@@ -98,6 +102,7 @@
 							setTheme(theme);
 							$open$ = !$open$;
 						}}
+						on:pointerdown={onpointerDown}
 					>
 						<Svg className="me-3" svg={theme.icon} />{theme.name}
 					</button>

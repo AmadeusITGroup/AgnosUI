@@ -45,6 +45,10 @@
 			return index === 1 ? `Latest (${version})` : version;
 		}
 	};
+	const onpointerDown = (event: PointerEvent) => {
+		event.preventDefault();
+		(event.target as HTMLElement).focus();
+	};
 </script>
 
 <div class="nav-item">
@@ -79,6 +83,7 @@
 						on:click={() => {
 							$open$ = !$open$;
 						}}
+						on:pointerdown={onpointerDown}
 					>
 						{versionLabel(index, version.version, includesNext)}
 					</a>
