@@ -53,7 +53,7 @@
 		"typedoc": "^0.26.4",
 		"typedoc-plugin-markdown": "^4.1.2",
 		"typedoc-plugin-mdn-links": "^3.2.3",
-		"typescript": "~5.5.3",
+		"typescript": "~5.5.4",
 		"vite": "^5.3.4",
 		"vitest": "^2.0.3",
 		"wireit": "^0.14.5"
