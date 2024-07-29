@@ -38,13 +38,13 @@
 			"require": "./dist/config.cjs",
 			"default": "./dist/config.js"
 		},
-		"./scss/agnosui.scss": {
-			"require": "./src/scss/agnosui.scss",
-			"default": "./src/scss/agnosui.scss"
+		"./scss/*.scss": {
+			"require": "./src/scss/*.scss",
+			"default": "./src/scss/*.scss"
 		},
-		"./css/agnosui.css": {
-			"require": "./dist/css/agnosui.css",
-			"default": "./dist/css/agnosui.css"
+		"./css/*.css": {
+			"require": "./dist/css/*.css",
+			"default": "./dist/css/*.css"
 		}
 	},
 	"scripts": {
@@ -58,7 +58,7 @@
 	},
 	"wireit": {
 		"build": {
-			"command": "vite build && tsc -p tsconfig.build.json && node ../scripts/buildPackageJson.js . dist && node scripts/copyScss.js && sass dist/scss/agnosui.scss dist/css/agnosui.css",
+			"command": "vite build && tsc -p tsconfig.build.json && node ../scripts/buildPackageJson.js . dist && node scripts/copyScss.js && sass dist/scss:dist/css",
 			"files": [
 				"src/**",
 				"tsconfig.build.json",
