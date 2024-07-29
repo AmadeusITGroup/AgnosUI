@@ -1,0 +1,10 @@
+@use 'variables';
+
+.au-select:focus-within {
+	box-shadow: var(--#{variables.$prefix}focus-ring-x, 0) var(--#{variables.$prefix}focus-ring-y, 0) var(--#{variables.$prefix}focus-ring-blur, 0)
+		var(--#{variables.$prefix}focus-ring-width) var(--#{variables.$prefix}focus-ring-color);
+}
+
+.au-select-input {
+	outline: none;
+}
