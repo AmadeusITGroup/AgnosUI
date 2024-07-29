@@ -8,8 +8,8 @@
 	"private": true,
 	"type": "module",
 	"keywords": [
-		"AgnosUI",
 		"accordion",
+		"AgnosUI",
 		"alert",
 		"components",
 		"modal",
