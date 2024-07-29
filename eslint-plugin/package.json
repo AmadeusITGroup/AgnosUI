@@ -8,7 +8,7 @@
 		"@typescript-eslint/utils": "^7.16.1"
 	},
 	"peerDependencies": {
-		"typescript": "~5.5.3"
+		"typescript": "~5.5.4"
 	},
 	"devDependencies": {
 		"@angular/core": "^18.1.2",
