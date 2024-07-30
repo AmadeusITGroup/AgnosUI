@@ -37,12 +37,14 @@
 	--#{variables.$prefix}slider-translate-horizontal: #{variables.$au-slider-translate-horizontal};
 
 	--#{variables.$prefix}slider-handle-color: #{variables.$au-slider-handle-color};
+	--#{variables.$prefix}slider-handle-hover-color: #{variables.$au-slider-handle-hover-color};
 	--#{variables.$prefix}slider-handle-size: #{variables.$au-slider-handle-size};
 	--#{variables.$prefix}slider-handle-border: #{variables.$au-slider-handle-border};
 	--#{variables.$prefix}slider-handle-border-hover: #{variables.$au-slider-handle-border-hover};
 	--#{variables.$prefix}slider-handle-border-radius: #{variables.$au-slider-handle-border-radius};
 	--#{variables.$prefix}slider-handle-outline: #{variables.$au-slider-handle-outline};
 	--#{variables.$prefix}slider-handle-focus-box-shadow: #{variables.$au-slider-handle-focus-box-shadow};
+	--#{variables.$prefix}slider-handle-focus-hover-box-shadow: #{variables.$au-slider-handle-focus-hover-box-shadow};
 
 	--#{variables.$prefix}slider-progress-color: #{variables.$au-slider-progress-color};
 	--#{variables.$prefix}slider-progress-height: #{variables.$au-slider-progress-height};
@@ -132,6 +134,10 @@
 
 		&:not([disabled]):hover {
 			border: var(--#{variables.$prefix}slider-handle-border-hover);
+			background-color: var(--#{variables.$prefix}slider-handle-hover-color);
+			&:focus-visible {
+				box-shadow: var(--#{variables.$prefix}slider-handle-focus-hover-box-shadow);
+			}
 		}
 		&:focus-visible {
 			box-shadow: var(--#{variables.$prefix}slider-handle-focus-box-shadow);
