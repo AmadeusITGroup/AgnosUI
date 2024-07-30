@@ -1,6 +1,6 @@
 {
 	"name": "agnos-ui-react-stackblitz-demo",
-	"version": "0.0.0",
+	"version": "0.4.1",
 	"private": true,
 	"type": "module",
 	"scripts": {
@@ -23,6 +23,7 @@
 		"tslib": "^2.6.3",
 		"typescript": "~5.5.4",
 		"vite": "^5.3.5",
-		"vite-plugin-svgr": "^4.2.0"
+		"vite-plugin-svgr": "^4.2.0",
+		"@agnos-ui/react-headless": "0.4.1"
 	}
 }

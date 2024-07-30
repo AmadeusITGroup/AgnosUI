@@ -1,7 +1,7 @@
 {
 	"name": "@agnos-ui/angular-bootstrap",
 	"description": "Bootstrap-based widget library for Angular.",
-	"version": "0.0.0",
+	"version": "0.4.1",
 	"type": "module",
 	"exports": {
 		".": {
@@ -99,8 +99,8 @@
 		"@angular/core": "^18.1.2"
 	},
 	"dependencies": {
-		"@agnos-ui/angular-headless": "0.0.0",
-		"@agnos-ui/core-bootstrap": "0.0.0",
+		"@agnos-ui/angular-headless": "0.4.1",
+		"@agnos-ui/core-bootstrap": "0.4.1",
 		"tslib": "^2.6.3"
 	},
 	"devDependencies": {
