@@ -8,8 +8,12 @@ export function getMenu(component: string) {
 	const isFirst = index === 0;
 	const isLast = index === componentNames.length - 1;
 
+	const componentMetadata = daisyUIMetadata[componentCapitalized]!;
+
 	return {
-		...daisyUIMetadata[componentCapitalized],
+		title: componentMetadata.title,
+		status: componentMetadata.status,
+		since: componentMetadata.since,
 		tabs: [
 			{title: 'Examples', key: 'headless', path: `/daisyUI/${component}/headless`},
 			{title: 'Api', key: 'api', path: `/daisyUI/${component}/api`},

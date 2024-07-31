@@ -17,7 +17,6 @@
 	export let visible: boolean | undefined = undefined;
 	const widget = callWidgetFactory({
 		factory: registerItem as WidgetFactory<AccordionItemWidget>,
-		$$slots: {},
 		$$props,
 		events: {
 			onVisibleChange: (event) => {
