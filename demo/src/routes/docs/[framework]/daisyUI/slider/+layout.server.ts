@@ -1,21 +1,3 @@
-import {daisyUIMetadata} from '$lib/components-metadata';
+import {getMenu} from '../getMenu';
 
-export const load = async () => {
-	return {
-		...daisyUIMetadata.Slider,
-		tabs: [
-			{title: 'Examples', key: 'headless', path: '/daisyUI/slider/headless'},
-			{title: 'Api', key: 'api', path: '/daisyUI/slider/api'},
-		],
-		prev: {
-			title: 'Rating',
-			slug: 'daisyUI/rating/',
-			subpath: 'headless',
-		},
-		next: {
-			title: 'Toast',
-			slug: 'daisyUI/toast/',
-			subpath: 'headless',
-		},
-	};
-};
+export const load = () => getMenu('slider');
