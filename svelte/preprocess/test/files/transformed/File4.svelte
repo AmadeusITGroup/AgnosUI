@@ -1,5 +1,5 @@
 <script context="module">
-import {ssrAttributes as __AgnosUISveltePreprocess__ssrAttributes, classDirective as __AgnosUISveltePreprocess__classDirective} from '@agnos-ui/svelte-headless/utils/directive';
+import {ssrAttributes as __AgnosUISveltePreprocess__ssrAttributes, classDirective as __AgnosUISveltePreprocess__classDirective} from '@agnos-ui/svelte-headless/utils';
 import {BROWSER as __AgnosUISveltePreprocess__BROWSER} from 'esm-env';
 
 	const myDirective = () => {};

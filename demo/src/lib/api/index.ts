@@ -52,7 +52,7 @@ async function getMapMdLocationBySymbol(framework: string, type: string) {
 }
 
 const regexComponent = /\/src\/(generated\/)?components\/([^/]+)/;
-const regexTransitions = /\/src\/(generated\/)?services\/transitions($|\/)/;
+const regexTransitions = /\/src\/(generated\/)?transitions($|\/)/;
 const regexService = /\/src\/(generated\/)?services($|\/)/;
 const regexUtil = /\/src\/(generated\/)?utils($|\/)/;
 
@@ -84,14 +84,15 @@ async function buildListTypedocPages(framework: string, type: string) {
 			symbolLocation.set(doc.name, `components/${componentName}`);
 		}
 		const matchTransition = source.match(regexTransitions);
-		const matchService = source.match(regexService);
 		if (matchTransition) {
 			if (!transitions.has(fileName)) {
 				transitions.set(fileName, []);
 			}
 			transitions.get(fileName)!.push(doc);
-			symbolLocation.set(doc.name, `services/transitions/${fileName}`);
-		} else if (matchService) {
+			symbolLocation.set(doc.name, `transitions/${fileName}`);
+		}
+		const matchService = source.match(regexService);
+		if (matchService) {
 			if (!services.has(fileName)) {
 				services.set(fileName, []);
 			}
@@ -166,8 +167,8 @@ async function buildListTypedocPages(framework: string, type: string) {
 				name: 'Transitions',
 				files: [...transitions.keys()].sort().map((transition) => ({
 					label: transition,
-					path: `api/${framework}/${type}/services/transitions/${transition}`,
-					slug: `services/transitions/${transition}`,
+					path: `api/${framework}/${type}/transitions/${transition}`,
+					slug: `transitions/${transition}`,
 					docs: transitions.get(transition),
 				})),
 			},
@@ -288,7 +289,7 @@ export async function retrieveMarkdown(framework: string, type: string, slug: st
 	if (['config', 'types', 'slot'].includes(slug)) {
 		docs = categories.find((category) => category.path === slug)!.docs!;
 	} else {
-		const [categoryName] = slug.startsWith('services/transitions') ? ['transitions'] : slug.split('/');
+		const [categoryName] = slug.split('/');
 		const category = categories.find((cat) => cat.name.toLowerCase() === categoryName);
 		if (category) {
 			docs = category.files?.find((file) => file.slug === slug)?.docs ?? [];
@@ -306,6 +307,6 @@ export async function retrieveMarkdown(framework: string, type: string, slug: st
 				? `@agnos-ui/angular-${type}`
 				: framework === 'typescript'
 					? `@agnos-ui/core${type === 'bootstrap' ? '-bootstrap' : ''}/${slug}`
-					: `@agnos-ui/${framework}-${type}/${slug}`,
+					: `@agnos-ui/${framework}-${type}/${slug.startsWith('components') || !slug.includes('/') ? slug : slug.slice(0, slug.indexOf('/'))}`,
 	};
 }

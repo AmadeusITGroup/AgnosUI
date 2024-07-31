@@ -1,11 +1,9 @@
 import {useMemo, type PropsWithChildren} from 'react';
-import {createTransition} from '@agnos-ui/react-bootstrap/services/transitions/baseTransitions';
-import {collapseVerticalTransition} from '@agnos-ui/react-bootstrap/services/transitions/bootstrap';
-import {useDirective} from '@agnos-ui/react-bootstrap/utils/directive';
+import {createTransition, collapseVerticalTransition} from '@agnos-ui/react-bootstrap/transitions';
+import {useDirective, useObservable} from '@agnos-ui/react-bootstrap/utils';
 import type {Directive} from '@agnos-ui/react-bootstrap/types';
 import '@agnos-ui/common/samples/transition/collapse.scss';
 import CollapseIcon from '@agnos-ui/common/samples/transition/collapseButton.svg?react';
-import {useObservable} from '@agnos-ui/react-bootstrap/utils/stores';
 
 const CollapseContent = ({directive, children}: PropsWithChildren<{directive: Directive}>) => (
 	<div id="collapse-content" {...useDirective(directive)}>

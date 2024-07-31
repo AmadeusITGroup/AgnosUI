@@ -7,10 +7,10 @@ import type {
 } from '@agnos-ui/core/components/modal';
 import {createModal as createCoreModal, getModalDefaultConfig as getCoreDefaultConfig} from '@agnos-ui/core/components/modal';
 import type {ConfigValidator, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '@agnos-ui/core/types';
-import {fadeTransition} from '../../services/transitions';
-import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
-import {typeBoolean} from '@agnos-ui/core/utils/writables';
-import type {TransitionFn} from '@agnos-ui/core/services/transitions/baseTransitions';
+import {fadeTransition} from '../../transitions';
+import {extendWidgetProps} from '@agnos-ui/core/services';
+import {typeBoolean} from '@agnos-ui/core/utils';
+import type {TransitionFn} from '@agnos-ui/core/transitions';
 
 export * from '@agnos-ui/core/components/modal';
 

@@ -1,7 +1,7 @@
-import type {SSRHTMLElement} from '../../types';
-import {isBrowserHTMLElement} from '../../utils/directive';
-import {noop} from '../../utils/internal/func';
-import {promiseFromEvent, promiseFromTimeout} from '../../utils/internal/promise';
+import type {SSRHTMLElement} from '../types';
+import {isBrowserHTMLElement} from '../utils/directive';
+import {noop} from '../utils/internal/func';
+import {promiseFromEvent, promiseFromTimeout} from '../utils/internal/promise';
 import type {TransitionFn} from './baseTransitions';
 
 /**

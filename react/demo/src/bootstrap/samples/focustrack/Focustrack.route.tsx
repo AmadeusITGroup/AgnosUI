@@ -1,7 +1,5 @@
-// import {useState} from "react";
-import {activeElement$, createHasFocus} from '@agnos-ui/react-bootstrap/services/focustrack';
-import {useDirective} from '@agnos-ui/react-bootstrap/utils/directive';
-import {useObservable} from '@agnos-ui/react-bootstrap/utils/stores';
+import {activeElement$, createHasFocus} from '@agnos-ui/react-bootstrap/services';
+import {useDirective, useObservable} from '@agnos-ui/react-bootstrap/utils';
 import {useState, useEffect} from 'react';
 
 const Focustrack = () => {

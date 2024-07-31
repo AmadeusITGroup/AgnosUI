@@ -1,5 +1,5 @@
-import {isBrowserHTMLElement} from '../../utils/directive';
-import {addClasses, reflow, removeClasses} from '../../utils/internal/dom';
+import {isBrowserHTMLElement} from '../utils/directive';
+import {addClasses, reflow, removeClasses} from '../utils/internal/dom';
 import type {TransitionFn} from './baseTransitions';
 import {createCSSTransition} from './cssTransitions';
 

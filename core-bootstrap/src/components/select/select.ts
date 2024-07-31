@@ -7,7 +7,7 @@ import type {
 	SelectState as CoreState,
 } from '@agnos-ui/core/components/select';
 import {createSelect as createCoreSelect, getSelectDefaultConfig as getCoreDefaultConfig} from '@agnos-ui/core/components/select';
-import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
+import {extendWidgetProps} from '@agnos-ui/core/services';
 import type {PropsConfig, SlotContent, Widget, WidgetSlotContext} from '@agnos-ui/core/types';
 
 export * from '@agnos-ui/core/components/select';

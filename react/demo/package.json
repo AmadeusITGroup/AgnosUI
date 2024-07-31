@@ -14,7 +14,6 @@
 		"dev": {
 			"command": "vite",
 			"dependencies": [
-				"../bootstrap:generate:exports",
 				"../bootstrap:generate:component-types",
 				"../headless:generate:exports"
 			],
@@ -24,7 +23,6 @@
 			"command": "vite -c vite.coverage.config.ts",
 			"dependencies": [
 				"../../code-coverage:build",
-				"../bootstrap:generate:exports",
 				"../bootstrap:generate:component-types",
 				"../headless:generate:exports"
 			],
@@ -47,7 +45,6 @@
 			"command": "vite build -c vite.coverage.config.ts",
 			"dependencies": [
 				"../../code-coverage:build",
-				"../bootstrap:generate:exports",
 				"../headless:generate:exports"
 			],
 			"files": [

@@ -1,8 +1,6 @@
 import {Slot} from '@agnos-ui/react-headless/slot';
-import type {Directive} from '@agnos-ui/react-headless/types';
-import {toSlotContextWidget} from '@agnos-ui/react-headless/types';
-import {classDirective, useDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
-import {Portal} from '@agnos-ui/react-headless/utils/portal';
+import {toSlotContextWidget, type Directive} from '@agnos-ui/react-headless/types';
+import {classDirective, useDirective, useDirectives, Portal} from '@agnos-ui/react-headless/utils';
 import classNames from 'classnames';
 import type {Ref, RefAttributes} from 'react';
 import {forwardRef, useImperativeHandle} from 'react';

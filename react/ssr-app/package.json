@@ -42,7 +42,6 @@
 				"NODE_ENV": "development"
 			},
 			"dependencies": [
-				"../bootstrap:generate:exports",
 				"../headless:generate:exports"
 			],
 			"service": true

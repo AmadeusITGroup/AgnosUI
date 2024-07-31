@@ -10,7 +10,8 @@ import {
 	type WidgetProps,
 	type WidgetState,
 } from '../types';
-import {toAngularSignal, toReadableStore} from './stores';
+import {toAngularSignal} from './stores';
+import {toReadableStore} from '@agnos-ui/core/utils';
 import {ZoneWrapper} from './zone';
 
 const createPatchSlots = <T extends object>(set: (object: Partial<T>) => void) => {

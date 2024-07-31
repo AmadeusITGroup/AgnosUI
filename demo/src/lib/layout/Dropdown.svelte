@@ -1,6 +1,6 @@
 <script lang="ts">
 	import {writable} from '@amadeus-it-group/tansu';
-	import {createHasFocus} from '@agnos-ui/svelte-bootstrap/services/focustrack';
+	import {createHasFocus} from '@agnos-ui/svelte-bootstrap/services';
 	import type {DropdownItem} from './dropdown';
 
 	const open$ = writable(false);

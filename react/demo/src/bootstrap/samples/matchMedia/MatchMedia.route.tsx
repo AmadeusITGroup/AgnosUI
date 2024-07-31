@@ -1,4 +1,4 @@
-import {useObservable} from '@agnos-ui/react-bootstrap/utils/stores';
+import {useObservable} from '@agnos-ui/react-bootstrap/utils';
 import {Alert} from '@agnos-ui/react-bootstrap/components/alert';
 import {aboveMd$} from './stores';
 

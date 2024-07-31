@@ -1,9 +1,9 @@
 import type {AccordionApi, AccordionItemProps, AccordionProps, AccordionItemWidget} from '@agnos-ui/react-headless/components/accordion';
 import {createAccordion} from '@agnos-ui/react-headless/components/accordion';
 import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
-import {createSimpleClassTransition} from '@agnos-ui/react-headless/services/transitions/simpleClassTransition';
+import {createSimpleClassTransition} from '@agnos-ui/react-headless/transitions';
 import type {WidgetFactory} from '@agnos-ui/react-headless/types';
-import {classDirective, useDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
+import {classDirective, useDirective, useDirectives} from '@agnos-ui/react-headless/utils';
 import type {Context, PropsWithChildren, ReactNode, KeyboardEvent} from 'react';
 import {createContext, useContext, useEffect} from 'react';
 

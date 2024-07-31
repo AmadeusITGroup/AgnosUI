@@ -1,8 +1,7 @@
 import '@agnos-ui/common/samples/floatingui/floatingui.scss';
-import {browserDirective, useDirective} from '@agnos-ui/react-bootstrap/utils/directive';
-import {useObservable} from '@agnos-ui/react-bootstrap/utils/stores';
-import {createFloatingUI} from '@agnos-ui/react-bootstrap/services/floatingUI';
-import type {FloatingUI} from '@agnos-ui/react-bootstrap/services/floatingUI';
+import {browserDirective, useDirective} from '@agnos-ui/react-bootstrap/utils';
+import {useObservable} from '@agnos-ui/react-bootstrap/utils';
+import {createFloatingUI, type FloatingUI} from '@agnos-ui/react-bootstrap/services';
 import {autoPlacement, hide, offset, shift} from '@floating-ui/dom';
 import {useMemo, useState} from 'react';
 

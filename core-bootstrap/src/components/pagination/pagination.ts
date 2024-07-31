@@ -1,4 +1,4 @@
-import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
+import {extendWidgetProps} from '@agnos-ui/core/services';
 import type {SlotContent, Widget, WidgetFactory, WidgetSlotContext} from '@agnos-ui/core/types';
 import type {
 	PaginationActions,

@@ -1,7 +1,6 @@
 <script lang="ts">
 	import {page} from '$app/stores';
-	import {createTransition} from '@agnos-ui/svelte-bootstrap/services/transitions/baseTransitions';
-	import {collapseVerticalTransition} from '@agnos-ui/svelte-bootstrap/services/transitions/bootstrap';
+	import {createTransition, collapseVerticalTransition} from '@agnos-ui/svelte-bootstrap/transitions';
 	import {writable} from '@amadeus-it-group/tansu';
 	import type {Page} from '@sveltejs/kit';
 	import {onMount} from 'svelte';

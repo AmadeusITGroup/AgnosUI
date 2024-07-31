@@ -1,10 +1,8 @@
 import type {Directive, DirectivesAndOptParam} from '@agnos-ui/core/types';
-import {attributesData, multiDirective} from '@agnos-ui/core/utils/directive';
+import {attributesData, multiDirective} from '@agnos-ui/core/utils';
 import {BROWSER} from 'esm-env';
 import type {RefCallback} from 'react';
 import {useCallback, useRef} from 'react';
-
-export * from '@agnos-ui/core/utils/directive';
 
 const attributesMap = new Map([
 	['tabindex', 'tabIndex'],

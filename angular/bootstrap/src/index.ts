@@ -103,7 +103,7 @@ export type {ToastContext, ToastProps, ToastState, ToastWidget, ToastApi, ToastD
 export {createToast, getToastDefaultConfig} from './components/toast';
 export * from './components/toast';
 
-export * from '@agnos-ui/core-bootstrap/services/transitions';
+export * from '@agnos-ui/core-bootstrap/transitions';
 export * from '@agnos-ui/core-bootstrap/types';
 
 export type {WidgetsConfig} from './config';

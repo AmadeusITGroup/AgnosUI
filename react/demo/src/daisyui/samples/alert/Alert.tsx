@@ -1,9 +1,8 @@
-import type {AlertProps} from '@agnos-ui/react-headless/components/alert';
 import {createAlert} from '@agnos-ui/react-headless/components/alert';
-import type {AlertWidget, AlertState} from '@agnos-ui/react-headless/components/alert';
+import type {AlertWidget, AlertState, AlertProps} from '@agnos-ui/react-headless/components/alert';
 import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
-import {createSimpleClassTransition} from '@agnos-ui/react-headless/services/transitions/simpleClassTransition';
-import {useDirective} from '@agnos-ui/react-headless/utils/directive';
+import {createSimpleClassTransition} from '@agnos-ui/react-headless/transitions';
+import {useDirective} from '@agnos-ui/react-headless/utils';
 import CloseIcon from '@agnos-ui/common/samples/common/close_icon.svg?react';
 import type {PropsWithChildren} from 'react';
 

@@ -67,6 +67,12 @@ function getTypesImportsMap(nodes: Node[], excludedNames: Set<string>) {
 				}
 				if (moduleSpecifier) {
 					moduleSpecifier = moduleSpecifier.replace(/^@agnos-ui\/core\//, `@agnos-ui/${framework}-headless/`);
+					if (moduleSpecifier.split('').filter((c) => c === '/').length > 2) {
+						moduleSpecifier = moduleSpecifier.slice(
+							0,
+							moduleSpecifier.indexOf('/', moduleSpecifier.indexOf('/', moduleSpecifier.indexOf('/') + 1) + 1),
+						);
+					}
 					// small exception for Angular, as we do not have subpath exports yet
 					if (moduleSpecifier.startsWith('@agnos-ui/angular-headless/')) {
 						moduleSpecifier = '@agnos-ui/angular-headless';

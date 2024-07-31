@@ -6,7 +6,7 @@ import type {
 	RatingProps as CoreProps,
 } from '@agnos-ui/core/components/rating';
 import {getRatingDefaultConfig as getCoreDefaultConfig, createRating as createCoreRating} from '@agnos-ui/core/components/rating';
-import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
+import {extendWidgetProps} from '@agnos-ui/core/services';
 import type {SlotContent, Widget, WidgetFactory} from '@agnos-ui/core/types';
 
 export * from '@agnos-ui/core/components/rating';

@@ -1,5 +1,5 @@
-import type {TransitionFn} from '../../services/transitions/baseTransitions';
-import {createTransition} from '../../services/transitions/baseTransitions';
+import type {TransitionFn} from '../../transitions/baseTransitions';
+import {createTransition} from '../../transitions/baseTransitions';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 import type {ConfigValidator, Directive, PropsConfig, Widget} from '../../types';
 import {noop} from '../../utils/internal/func';

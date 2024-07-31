@@ -16,7 +16,6 @@
 			"service": true,
 			"dependencies": [
 				"../preprocess:build",
-				"../bootstrap:generate:exports",
 				"../bootstrap:generate:component-types",
 				"../headless:generate:exports"
 			]
@@ -27,7 +26,6 @@
 			"dependencies": [
 				"../../code-coverage:build",
 				"../preprocess:build",
-				"../bootstrap:generate:exports",
 				"../bootstrap:generate:component-types",
 				"../headless:generate:exports"
 			]
@@ -51,7 +49,6 @@
 			"dependencies": [
 				"../../code-coverage:build",
 				"../preprocess:build",
-				"../bootstrap:generate:exports",
 				"../headless:generate:exports"
 			],
 			"files": [

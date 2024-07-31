@@ -1,5 +1,5 @@
-import {browserDirective} from '@agnos-ui/svelte-bootstrap/utils/directive';
-import {createResizeObserver} from '@agnos-ui/svelte-bootstrap/services/resizeObserver';
+import {browserDirective} from '@agnos-ui/svelte-bootstrap/utils';
+import {createResizeObserver} from '@agnos-ui/svelte-bootstrap/services';
 import {asReadable, writable, type UnsubscribeFunction} from '@amadeus-it-group/tansu';
 import {derived} from 'svelte/store';
 

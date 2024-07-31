@@ -2,7 +2,7 @@
 	import {createAlert} from '@agnos-ui/svelte-headless/components/alert';
 	import type {AlertProps} from '@agnos-ui/svelte-headless/components/alert';
 	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
-	import {createSimpleClassTransition} from '@agnos-ui/svelte-headless/services/transitions/simpleClassTransition';
+	import {createSimpleClassTransition} from '@agnos-ui/svelte-headless/transitions';
 	import closeIconSvg from '@agnos-ui/common/samples/common/close_icon.svg?raw';
 	type $$Props = Partial<Pick<AlertProps, 'className' | 'visible' | 'dismissible' | 'ariaCloseButtonLabel'>>;
 

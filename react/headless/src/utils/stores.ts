@@ -1,9 +1,7 @@
-import {findChangedProperties} from '@agnos-ui/core/utils/stores';
+import {findChangedProperties} from '@agnos-ui/core/utils';
 import type {ReadableSignal, WritableSignal} from '@amadeus-it-group/tansu';
 import {asReadable, writable} from '@amadeus-it-group/tansu';
 import {useEffect, useMemo, useRef, useState} from 'react';
-
-export * from '@agnos-ui/core/utils/stores';
 
 /**
  * Observe a readable store inside of a react component.

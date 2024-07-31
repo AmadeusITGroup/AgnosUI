@@ -1,4 +1,4 @@
-import {useDirective} from '@agnos-ui/react-bootstrap/utils/directive';
+import {useDirective} from '@agnos-ui/react-bootstrap/utils';
 import type {SliderContext} from '@agnos-ui/react-bootstrap/components/slider';
 
 const CustomSliderComponent = (slotContext: SliderContext) => {

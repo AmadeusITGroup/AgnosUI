@@ -1,4 +1,4 @@
-import {useDirective} from '@agnos-ui/react-bootstrap/utils/directive';
+import {useDirective} from '@agnos-ui/react-bootstrap/utils';
 import {useState} from 'react';
 
 //Agnostic directive created in the previous section

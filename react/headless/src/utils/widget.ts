@@ -1,5 +1,5 @@
 import type {PropsConfig, Widget, WidgetFactory, WidgetProps, WidgetState} from '@agnos-ui/core/types';
-import {findChangedProperties} from '@agnos-ui/core/utils/stores';
+import {findChangedProperties} from '@agnos-ui/core/utils';
 import {useEffect, useMemo, useRef} from 'react';
 import {useObservable} from './stores';
 

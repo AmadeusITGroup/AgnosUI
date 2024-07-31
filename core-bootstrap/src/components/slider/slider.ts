@@ -7,7 +7,7 @@ import type {
 	SliderState as CoreState,
 } from '@agnos-ui/core/components/slider';
 import {createSlider as createCoreSlider, getSliderDefaultConfig as getCoreDefaultConfig} from '@agnos-ui/core/components/slider';
-import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
+import {extendWidgetProps} from '@agnos-ui/core/services';
 import type {SlotContent, Widget, WidgetFactory, WidgetSlotContext} from '@agnos-ui/core/types';
 
 export * from '@agnos-ui/core/components/slider';

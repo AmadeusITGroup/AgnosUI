@@ -28,10 +28,10 @@
 			"require": "./dist/components/*/index.cjs",
 			"default": "./dist/components/*/index.js"
 		},
-		"./services/transitions": {
-			"types": "./dist/services/transitions/index.d.ts",
-			"require": "./dist/services/transitions/index.cjs",
-			"default": "./dist/services/transitions/index.js"
+		"./transitions": {
+			"types": "./dist/transitions/index.d.ts",
+			"require": "./dist/transitions/index.cjs",
+			"default": "./dist/transitions/index.js"
 		},
 		"./config": {
 			"types": "./dist/config.d.ts",

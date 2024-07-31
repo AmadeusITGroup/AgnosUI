@@ -1,4 +1,4 @@
-import {useDirective} from '@agnos-ui/react-bootstrap/utils/directive';
+import {useDirective} from '@agnos-ui/react-bootstrap/utils';
 import {Accordion, AccordionItem} from '@agnos-ui/react-bootstrap/components/accordion';
 import type {AccordionApi, AccordionItemContext} from '@agnos-ui/react-bootstrap/components/accordion';
 import {useRef, useState} from 'react';

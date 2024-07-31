@@ -33,20 +33,20 @@
 			"require": "./dist/types.cjs",
 			"default": "./dist/types.js"
 		},
-		"./services/*": {
-			"types": "./dist/generated/services/*.d.ts",
-			"require": "./dist/generated/services/*.cjs",
-			"default": "./dist/generated/services/*.js"
+		"./services": {
+			"types": "./dist/services/index.d.ts",
+			"require": "./dist/services/index.cjs",
+			"default": "./dist/services/index.js"
 		},
-		"./services/transitions/*": {
-			"types": "./dist/generated/services/transitions/*.d.ts",
-			"require": "./dist/generated/services/transitions/*.cjs",
-			"default": "./dist/generated/services/transitions/*.js"
+		"./transitions": {
+			"types": "./dist/transitions/index.d.ts",
+			"require": "./dist/transitions/index.cjs",
+			"default": "./dist/transitions/index.js"
 		},
-		"./utils/*": {
-			"types": "./dist/generated/utils/*.d.ts",
-			"require": "./dist/generated/utils/*.cjs",
-			"default": "./dist/generated/utils/*.js"
+		"./utils": {
+			"types": "./dist/utils/index.d.ts",
+			"require": "./dist/utils/index.cjs",
+			"default": "./dist/utils/index.js"
 		}
 	},
 	"scripts": {
@@ -54,7 +54,7 @@
 	},
 	"wireit": {
 		"generate:exports": {
-			"command": "node ../../scripts/generateExports.js react/headless core @agnos-ui/core true",
+			"command": "node ../../scripts/generateExports.js react/headless core @agnos-ui/core",
 			"files": [
 				"src/**",
 				"../../core/src/**",

@@ -1,10 +1,8 @@
 import type {Directive as AgnosUIDirective, DirectiveAndParam, DirectivesAndOptParam} from '@agnos-ui/core/types';
-import {multiDirective} from '@agnos-ui/core/utils/directive';
+import {multiDirective} from '@agnos-ui/core/utils';
 import {isPlatformServer} from '@angular/common';
 import type {OnChanges} from '@angular/core';
 import {DestroyRef, Directive, ElementRef, Injector, Input, PLATFORM_ID, afterNextRender, inject, runInInjectionContext} from '@angular/core';
-
-export * from '@agnos-ui/core/utils/directive';
 
 /**
  * Set up an agnos-ui directive as an angular host directive.

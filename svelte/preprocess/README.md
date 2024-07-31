@@ -52,7 +52,7 @@ The preprocessor will transform it into something like:
 
 ```svelte
 <script>
-	import {ssrAttributes} from '@agnos-ui/svelte-headless/utils/directive';
+	import {ssrAttributes} from '@agnos-ui/svelte-headless/utils';
 	import {BROWSER} from 'esm-env';
 	import {myDirective} from './myDirective';
 </script>

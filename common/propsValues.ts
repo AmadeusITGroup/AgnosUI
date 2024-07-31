@@ -1,5 +1,5 @@
 import {getPaginationDefaultConfig, getRatingDefaultConfig} from '@agnos-ui/core-bootstrap';
-import {collapseVerticalTransition, fadeTransition} from '@agnos-ui/core-bootstrap/services/transitions';
+import {collapseVerticalTransition, fadeTransition} from '@agnos-ui/core-bootstrap/transitions';
 
 export type PropsValues = keyof typeof propsValuesList;
 

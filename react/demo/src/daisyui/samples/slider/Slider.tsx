@@ -1,6 +1,6 @@
 import {type SliderProps, createSlider} from '@agnos-ui/react-headless/components/slider';
 import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
-import {useDirective} from '@agnos-ui/react-headless/utils/directive';
+import {useDirective} from '@agnos-ui/react-headless/utils';
 
 export function Slider(props: Partial<Pick<SliderProps, 'min' | 'max' | 'values' | 'stepSize' | 'className' | 'onValuesChange'>>) {
 	const [
