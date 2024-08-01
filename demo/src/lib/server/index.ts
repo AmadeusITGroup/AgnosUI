@@ -3,28 +3,19 @@ import frontMatter from 'front-matter';
 
 const validMdRegex = /^\d{2}-[a-zA-Z-]*\.md$/g;
 
-const componentsSubMenu = [
-	{...componentsMetadata.Accordion, slug: 'components/accordion/', subpath: 'examples', attributes: {}},
-	{...componentsMetadata.Alert, slug: `components/alert/`, subpath: 'examples', attributes: {}},
-	{...componentsMetadata.Modal, slug: `components/modal/`, subpath: 'examples', attributes: {}},
-	{...componentsMetadata.Pagination, slug: `components/pagination/`, subpath: 'examples', attributes: {}},
-	{...componentsMetadata.Progressbar, slug: `components/progressbar/`, subpath: 'examples', attributes: {}},
-	{...componentsMetadata.Rating, slug: `components/rating/`, subpath: 'examples', attributes: {}},
-	{...componentsMetadata.Select, slug: `components/select/`, subpath: 'examples', attributes: {}},
-	{...componentsMetadata.Slider, slug: `components/slider/`, subpath: 'examples', attributes: {}},
-	{...componentsMetadata.Toast, slug: `components/toast/`, subpath: 'examples', attributes: {}},
-];
+const componentsSubMenu = Object.entries(componentsMetadata).map(([key, val]) => ({
+	title: val.title,
+	status: val.status,
+	slug: `components/${key.toLowerCase()}/`,
+	subpath: 'examples',
+}));
 
-const daisyUISubMenu = [
-	{...daisyUIMetadata.Accordion, slug: `daisyUI/accordion/`, subpath: 'headless', attributes: {}},
-	{...daisyUIMetadata.Alert, slug: `daisyUI/alert/`, subpath: 'headless', attributes: {}},
-	{...daisyUIMetadata.Modal, slug: `daisyUI/modal/`, subpath: 'headless', attributes: {}},
-	{...daisyUIMetadata.Pagination, slug: `daisyUI/pagination/`, subpath: 'headless', attributes: {}},
-	{...daisyUIMetadata.Progressbar, slug: `daisyUI/progressbar/`, subpath: 'headless', attributes: {}},
-	{...daisyUIMetadata.Rating, slug: `daisyUI/rating/`, subpath: 'headless', attributes: {}},
-	{...daisyUIMetadata.Slider, slug: `daisyUI/slider/`, subpath: 'headless', attributes: {}},
-	{...daisyUIMetadata.Toast, slug: `daisyUI/toast/`, subpath: 'headless', attributes: {}},
-];
+const daisyUISubMenu = Object.entries(daisyUIMetadata).map(([key, val]) => ({
+	title: val.title,
+	status: val.status,
+	slug: `daisyUI/${key.toLowerCase()}/`,
+	subpath: 'headless',
+}));
 
 interface Doc {
 	name: string;
@@ -34,7 +25,7 @@ interface Doc {
 		title: string;
 		subpath?: string;
 		status: string;
-		attributes: Record<string, string>;
+		attributes?: Record<string, string>;
 	}[];
 }
 
@@ -134,5 +125,5 @@ export function retrieveMarkdown(slug: string, framework: string) {
 			}
 		}
 	}
-	return file ? {prev, next, content: preparseMarkdown(file.content!, framework), ...file.attributes} : undefined;
+	return file ? {prev, next, content: preparseMarkdown(file.content!, framework), ...(file.attributes ?? {})} : undefined;
 }

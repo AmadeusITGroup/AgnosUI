@@ -8,7 +8,6 @@
 	const widget = callWidgetFactory({
 		factory: createAccordion,
 		widgetName: 'accordion',
-		$$slots: {},
 		$$props,
 		events: {
 			onItemVisibleChange: () => {},
