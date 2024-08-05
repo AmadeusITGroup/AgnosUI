@@ -1,0 +1,234 @@
+<body>
+	<div
+	 class="container mx-auto p-3"
+	 id="root"
+	>
+		<div
+		 class="flex justify-center w-full"
+		>
+			<div
+			 class="max-w-[600px] self-center"
+			>
+				<div
+				 class="active:cursor-grabbing cursor-grab flex flex-col-reverse overflow-hidden relative"
+				>
+					<div
+					 class="cursor-auto flex gap-2 justify-center py-2 w-full"
+					>
+						<button
+						 aria-label="Go to slide 1"
+						 class="btn btn-active btn-xs md:btn-sm"
+						>
+							"1"
+						</button>
+						<button
+						 aria-label="Go to slide 2"
+						 class="btn btn-xs md:btn-sm"
+						>
+							"2"
+						</button>
+						<button
+						 aria-label="Go to slide 3"
+						 class="btn btn-xs md:btn-sm"
+						>
+							"3"
+						</button>
+						<button
+						 aria-label="Go to slide 4"
+						 class="btn btn-xs md:btn-sm"
+						>
+							"4"
+						</button>
+						<button
+						 aria-label="Go to slide 5"
+						 class="btn btn-xs md:btn-sm"
+						>
+							"5"
+						</button>
+						<button
+						 aria-label="Go to slide 6"
+						 class="btn btn-xs md:btn-sm"
+						>
+							"6"
+						</button>
+					</div>
+					<div
+					 class="container flex"
+					 style="transform: translate3d(0px, 0px, 0px);"
+					>
+						<div
+						 class="basis-full flex grow-0 justify-center min-w-0 shrink-0"
+						>
+							<img
+							 alt="random picsum"
+							 class="aspect-[4/3] object-contain select-none w-full"
+							 loading="lazy"
+							 src="https://picsum.photos/600/450.webp?random=1"
+							/>
+						</div>
+						<div
+						 class="basis-full flex grow-0 justify-center min-w-0 shrink-0"
+						>
+							<img
+							 alt="random picsum"
+							 class="aspect-[4/3] object-contain select-none w-full"
+							 loading="lazy"
+							 src="https://picsum.photos/600/450.webp?random=2"
+							/>
+						</div>
+						<div
+						 class="basis-full flex grow-0 justify-center min-w-0 shrink-0"
+						>
+							<img
+							 alt="random picsum"
+							 class="aspect-[4/3] object-contain select-none w-full"
+							 loading="lazy"
+							 src="https://picsum.photos/450/600.webp?random=3"
+							/>
+						</div>
+						<div
+						 class="basis-full flex grow-0 justify-center min-w-0 shrink-0"
+						>
+							<img
+							 alt="random picsum"
+							 class="aspect-[4/3] object-contain select-none w-full"
+							 loading="lazy"
+							 src="https://picsum.photos/600/450.webp?random=4"
+							/>
+						</div>
+						<div
+						 class="basis-full flex grow-0 justify-center min-w-0 shrink-0"
+						>
+							<img
+							 alt="random picsum"
+							 class="aspect-[4/3] object-contain select-none w-full"
+							 loading="lazy"
+							 src="https://picsum.photos/600/450.webp?random=5"
+							/>
+						</div>
+						<div
+						 class="basis-full flex grow-0 justify-center min-w-0 shrink-0"
+						>
+							<img
+							 alt="random picsum"
+							 class="aspect-[4/3] object-contain select-none w-full"
+							 loading="lazy"
+							 src="https://picsum.photos/600/450.webp?random=6"
+							/>
+						</div>
+					</div>
+					<div
+					 class="-translate-y-1/2 absolute flex justify-between left-5 right-5 top-1/2 transform"
+					>
+						<button
+						 aria-label="Go to previous slide"
+						 class="btn btn-circle btn-sm hover:opacity-100 md:btn-md opacity-75"
+						 disabled="disabled"
+						>
+							<svg
+							 class="fill-current h-6 md:h-8 md:w-8 w-6"
+							 height="24"
+							 viewBox="0 0 24 24"
+							 width="24"
+							 xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+								 d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z"
+								/>
+							</svg>
+						</button>
+						<button
+						 aria-label="Go to next slide"
+						 class="btn btn-circle btn-sm hover:opacity-100 md:btn-md opacity-75"
+						>
+							<svg
+							 class="fill-current h-6 md:h-8 md:w-8 w-6"
+							 height="24"
+							 viewBox="0 0 24 24"
+							 width="24"
+							 xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+								 d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"
+								/>
+							</svg>
+						</button>
+					</div>
+				</div>
+				<div
+				 class="form-control items-start"
+				>
+					<label
+					 class="cursor-pointer gap-3 label"
+					>
+						<span
+						 class="label-text"
+						>
+							"Loop"
+						</span>
+						<input
+						 class="toggle toggle-primary"
+						 type="checkbox"
+						/>
+					</label>
+					<label
+					 class="gap-3 label"
+					>
+						<span
+						 class="label-text"
+						>
+							"Autoplay"
+						</span>
+						<input
+						 checked="checked"
+						 class="toggle toggle-primary"
+						 disabled="disabled"
+						 type="checkbox"
+						/>
+					</label>
+					<label
+					 class="cursor-pointer gap-3 label"
+					>
+						<span
+						 class="label-text"
+						>
+							"Drag free"
+						</span>
+						<input
+						 class="toggle toggle-primary"
+						 type="checkbox"
+						/>
+					</label>
+					<label
+					 class="cursor-pointer gap-3 label"
+					>
+						<span
+						 class="label-text"
+						>
+							"Navigation Indicators"
+						</span>
+						<input
+						 checked="checked"
+						 class="toggle toggle-primary"
+						 type="checkbox"
+						/>
+					</label>
+					<label
+					 class="cursor-pointer gap-3 label"
+					>
+						<span
+						 class="label-text"
+						>
+							"Navigation Arrows"
+						</span>
+						<input
+						 checked="checked"
+						 class="toggle toggle-primary"
+						 type="checkbox"
+						/>
+					</label>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>

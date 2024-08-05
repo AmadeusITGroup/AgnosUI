@@ -1,0 +1,64 @@
+<div #mainContainer class="grid grid-flow-row max-h-dvh">
+	<div class="overflow-hidden relative cursor-grab active:cursor-grabbing" [auUse]="mainCarouselDirectives.emblaDirective">
+		<div class="flex max-h-full">
+			@for (photoWithLoadState of photosWithLoadState(); track photoWithLoadState; let index = $index) {
+				<div class="relative basis-full min-w-0 shrink-0 grow-0 flex justify-center">
+					<app-gallery-image
+						[src]="photoWithLoadState.src"
+						[alt]="photoWithLoadState.alt"
+						[aspectRatio]="aspectRatio()"
+						[loadRequested]="photoWithLoadState.loadRequested()"
+						[sources]="photoWithLoadState.sources"
+						[toShow]="showImage(index)"
+					/>
+				</div>
+			}
+		</div>
+		@if (withNavArrows()) {
+			<div class="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
+				<button
+					class="btn btn-sm md:btn-md btn-circle opacity-75 hover:opacity-100"
+					(pointerdown)="$event.preventDefault()"
+					[disabled]="!mainCarouselState.canScrollPrev()"
+					(click)="mainCarouselApi.scrollPrev()"
+					aria-label="Go to previous photo"
+					[innerHTML]="previousSvg"
+				></button>
+				<button
+					class="btn btn-sm md:btn-md btn-circle opacity-75 hover:opacity-100"
+					(pointerdown)="$event.preventDefault()"
+					[disabled]="!mainCarouselState.canScrollNext()"
+					(click)="mainCarouselApi.scrollNext()"
+					aria-label="Go to next photo"
+					[innerHTML]="nextSvg"
+				></button>
+			</div>
+		}
+		@if (canFullScreen()) {
+			<div class="absolute right-5 bottom-5 flex">
+				<button
+					class="btn btn-sm md:btn-md btn-square opacity-75 hover:opacity-100"
+					(click)="toggleFullScreen()"
+					[attr.aria-label]="isFullScreen() ? 'leave fullscreen' : 'open photo in fullscreen'"
+					[innerHTML]="isFullScreen() ? compressSvg : expandSvg"
+				></button>
+			</div>
+		}
+	</div>
+	<div class="overflow-hidden relative mt-1 mb-2" [auUse]="thumbCarouselDirectives.emblaDirective">
+		<div class="grid grid-flow-col auto-cols-max gap-2 mx-1 my-1">
+			@for (photo of photos(); track photo; let index = $index) {
+				<div class="content-center">
+					<button
+						class="shadow-primary"
+						(click)="scrollToSlide(index)"
+						[class.ring]="mainCarouselState.selectedScrollSnap() === index"
+						attr.aria-label="Go to photo {{ index + 1 }}"
+					>
+						<img class="select-none" alt="random picsum" [src]="photo.thumbnail" loading="lazy" [style.aspect-ratio]="aspectRatio()" />
+					</button>
+				</div>
+			}
+		</div>
+	</div>
+</div>
