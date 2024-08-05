@@ -3,7 +3,7 @@
 	"version": "0.0.0",
 	"private": true,
 	"dependencies": {
-		"@babel/core": "^7.24.9",
+		"@babel/core": "^7.25.2",
 		"@babel/plugin-syntax-decorators": "^7.24.7",
 		"@babel/plugin-syntax-typescript": "^7.24.7",
 		"babel-plugin-istanbul": "^7.0.0",
