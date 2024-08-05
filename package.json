@@ -193,7 +193,7 @@
 			]
 		},
 		"lint": {
-			"command": "eslint --ext mjs,js,ts,tsx,svelte .",
+			"command": "ESLINT_USE_FLAT_CONFIG=false eslint --ext mjs,js,ts,tsx,svelte .",
 			"dependencies": [
 				"prepare",
 				"./eslint-plugin:build",

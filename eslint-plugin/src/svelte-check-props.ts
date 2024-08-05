@@ -234,7 +234,7 @@ export const svelteCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 		let widgetNode: TSESTree.VariableDeclarator | undefined;
 		return {
 			SvelteScriptElement(node: SvelteAST.SvelteScriptElement) {
-				scriptScope = context.getScope();
+				scriptScope = context.sourceCode.getScope(node as any);
 				inContextModule = isContextModuleScript(node);
 			},
 			'SvelteScriptElement:exit'() {
@@ -243,7 +243,7 @@ export const svelteCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 			VariableDeclarator(node) {
 				// only take into account declarations done in the top-most scope (with no upper scope),
 				// and not in a context="module" script
-				if (inContextModule || context.getScope() !== scriptScope) return;
+				if (inContextModule || context.sourceCode.getScope(node) !== scriptScope) return;
 				if (node.id.type === TSESTree.AST_NODE_TYPES.Identifier) {
 					if (node.id.name === 'widget') {
 						widgetNode = node;
