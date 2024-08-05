@@ -19,34 +19,34 @@
 			"default": "./dist/components/*/index.js"
 		},
 		"./config": {
-			"types": "./dist/generated/config.d.ts",
-			"svelte": "./dist/generated/config.js",
-			"default": "./dist/generated/config.js"
+			"types": "./dist/config.d.ts",
+			"svelte": "./dist/config.js",
+			"default": "./dist/config.js"
 		},
 		"./slot": {
-			"types": "./dist/generated/slot.d.ts",
-			"svelte": "./dist/generated/slot.js",
-			"default": "./dist/generated/slot.js"
+			"types": "./dist/slot.d.ts",
+			"svelte": "./dist/slot.js",
+			"default": "./dist/slot.js"
 		},
 		"./types": {
-			"types": "./dist/generated/types.d.ts",
-			"svelte": "./dist/generated/types.js",
-			"default": "./dist/generated/types.js"
+			"types": "./dist/types.d.ts",
+			"svelte": "./dist/types.js",
+			"default": "./dist/types.js"
 		},
-		"./services/*": {
-			"types": "./dist/generated/services/*.d.ts",
-			"svelte": "./dist/generated/services/*.js",
-			"default": "./dist/generated/services/*.js"
+		"./services": {
+			"types": "./dist/services/index.d.ts",
+			"svelte": "./dist/services/index.js",
+			"default": "./dist/services/index.js"
 		},
-		"./services/transitions/*": {
-			"types": "./dist/generated/services/transitions/*.d.ts",
-			"svelte": "./dist/generated/services/transitions/*.js",
-			"default": "./dist/generated/services/transitions/*.js"
+		"./transitions": {
+			"types": "./dist/transitions/index.d.ts",
+			"svelte": "./dist/transitions/index.js",
+			"default": "./dist/transitions/index.js"
 		},
-		"./utils/*": {
-			"types": "./dist/generated/utils/*.d.ts",
-			"svelte": "./dist/generated/utils/*.js",
-			"default": "./dist/generated/utils/*.js"
+		"./utils": {
+			"types": "./dist/utils/index.d.ts",
+			"svelte": "./dist/utils/index.js",
+			"default": "./dist/utils/index.js"
 		}
 	},
 	"scripts": {
@@ -54,21 +54,6 @@
 		"check": "wireit"
 	},
 	"wireit": {
-		"generate:exports": {
-			"command": "node ../../scripts/generateExports.js svelte/bootstrap svelte/headless @agnos-ui/svelte-headless",
-			"dependencies": [
-				"../headless:generate:exports"
-			],
-			"files": [
-				"src/**",
-				"!src/components/**/*.gen.ts",
-				"!src/generated/**",
-				"../../scripts/generateExports.js"
-			],
-			"output": [
-				"src/generated/**"
-			]
-		},
 		"generate:component-types": {
 			"command": "tsx --tsconfig ../../scripts/bootstrapTypes/tsconfig.json ../../scripts/bootstrapTypes/genTypeExports.ts svelte",
 			"files": [
@@ -83,7 +68,6 @@
 		"build:src": {
 			"command": "svelte-package -i src",
 			"dependencies": [
-				"generate:exports",
 				"generate:component-types",
 				"../headless:build",
 				"../../core-bootstrap:build",
@@ -127,7 +111,6 @@
 		"check": {
 			"command": "svelte-check --fail-on-warnings --output human-verbose",
 			"dependencies": [
-				"generate:exports",
 				"generate:component-types",
 				"../headless:build",
 				"../../core-bootstrap:build"
@@ -143,7 +126,6 @@
 		"generate:typedoc": {
 			"command": "typedoc",
 			"dependencies": [
-				"generate:exports",
 				"generate:component-types"
 			],
 			"files": [

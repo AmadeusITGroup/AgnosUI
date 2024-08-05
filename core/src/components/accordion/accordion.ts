@@ -1,6 +1,6 @@
 import {stateStores, writablesForProps, normalizeConfigStores, mergeConfigStores} from '../../utils/stores';
-import type {TransitionFn} from '../../services/transitions/baseTransitions';
-import {createTransition} from '../../services/transitions/baseTransitions';
+import type {TransitionFn} from '../../transitions/baseTransitions';
+import {createTransition} from '../../transitions/baseTransitions';
 import type {ConfigValidator, Directive, PropsConfig, Widget, WidgetFactory} from '../../types';
 import {asWritable, computed, readable, writable} from '@amadeus-it-group/tansu';
 import {noop} from '../../utils/internal/func';

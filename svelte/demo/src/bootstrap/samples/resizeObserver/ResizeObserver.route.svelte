@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '@agnos-ui/common/samples/resizeobserver/resizeobserver.scss';
-	import {createResizeObserver} from '@agnos-ui/svelte-bootstrap/services/resizeObserver';
+	import {createResizeObserver} from '@agnos-ui/svelte-bootstrap/services';
 
 	const {dimensions$, directive: resizeDirective} = createResizeObserver();
 	$: observedHeight$ = $dimensions$?.contentRect?.height;

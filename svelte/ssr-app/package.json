@@ -68,7 +68,6 @@
 		"dev": {
 			"command": "vite dev",
 			"dependencies": [
-				"../bootstrap:generate:exports",
 				"../headless:generate:exports",
 				"../preprocess:build"
 			],

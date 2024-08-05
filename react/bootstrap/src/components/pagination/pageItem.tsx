@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import {type Directive} from '@agnos-ui/react-headless/types';
-import {classDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
+import {classDirective, useDirectives} from '@agnos-ui/react-headless/utils';
 
 export interface PageItemProps extends React.HTMLAttributes<HTMLAnchorElement> {
 	disabled?: boolean;

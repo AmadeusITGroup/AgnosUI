@@ -1,5 +1,5 @@
 import {Slot} from '@agnos-ui/react-headless/slot';
-import {classDirective, useDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
+import {classDirective, useDirective, useDirectives} from '@agnos-ui/react-headless/utils';
 import React from 'react';
 import {useWidgetWithConfig} from '../../config';
 import type {RatingDirectives, RatingProps, RatingState, StarContext} from './rating.gen';

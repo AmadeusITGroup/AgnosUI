@@ -25,7 +25,7 @@ const mkdirIfNotExists = async (generationFolder, file) => {
 	}
 };
 
-const generateExports = async (destination, source, dependencyPkg, includeComponents) => {
+const generateExports = async (destination, source, dependencyPkg) => {
 	if (!destination) {
 		throw new Error('No destination folder provided');
 	}
@@ -48,35 +48,9 @@ const generateExports = async (destination, source, dependencyPkg, includeCompon
 		await mkdirIfNotExists(generationFolder, file);
 	};
 
-	// first we go through all files in the source source folder
-	const srcFiles = (
-		await glob(`{generated/**,services,services/transitions,utils,.}/*.{ts,tsx}`, {
-			cwd: sourceFolder,
-			ignore: ['**/*.d.ts', '**/*.gen.ts', '**/*.spec.ts', 'index.ts', 'generated/components/**'],
-		})
-	).map(normalizePath);
-	for (const srcFile of srcFiles) {
-		// removing a potential generated/ prefix, as the lib will go through the generated folder of the headless
-		const file = srcFile.startsWith('generated/') ? srcFile.substring(10) : srcFile;
-		await addGenerationFile(file);
-	}
-
-	// then we check if there is any override present in the destination source folder
-	const destFiles = (
-		await glob(`{services,services/transitions,utils,.}/*.{ts,tsx}`, {
-			cwd: destFolder,
-			ignore: ['**/*.gen.ts', '**/*.spec.ts', 'index.ts'],
-		})
-	).map(normalizePath);
-	for (const destFile of destFiles) {
-		await addGenerationFile(destFile, true);
-	}
-
-	if (includeComponents) {
-		const componentIndexes = (await glob(`components/**/index.ts`, {cwd: sourceFolder})).map(normalizePath);
-		for (const srcFile of componentIndexes) {
-			await addGenerationFile(srcFile);
-		}
+	const componentIndexes = (await glob(`components/**/index.ts`, {cwd: sourceFolder})).map(normalizePath);
+	for (const srcFile of componentIndexes) {
+		await addGenerationFile(srcFile);
 	}
 
 	const generationInfos = [...generationMap.values()];
@@ -105,4 +79,4 @@ const generateExports = async (destination, source, dependencyPkg, includeCompon
 	);
 };
 
-generateExports(process.argv[2], process.argv[3], process.argv[4], process.argv[5] === 'true');
+generateExports(process.argv[2], process.argv[3], process.argv[4]);

@@ -1,4 +1,4 @@
-import {useObservable} from '@agnos-ui/react-bootstrap/utils/stores';
+import {useObservable} from '@agnos-ui/react-bootstrap/utils';
 import {hashObject$} from '@agnos-ui/common/utils';
 import {getPropValues} from '@agnos-ui/common/propsValues';
 

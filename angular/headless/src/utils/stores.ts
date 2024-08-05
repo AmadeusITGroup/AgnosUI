@@ -3,8 +3,6 @@ import type {Signal} from '@angular/core';
 import {DestroyRef, inject, signal} from '@angular/core';
 import {ZoneWrapper} from './zone';
 
-export * from '@agnos-ui/core/utils/stores';
-
 /**
  * Convert a tansu readable signal into an Angular signal.
  *

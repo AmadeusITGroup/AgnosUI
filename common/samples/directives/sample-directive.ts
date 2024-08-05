@@ -1,5 +1,5 @@
 import type {Directive} from '@agnos-ui/core/types';
-import {browserDirective} from '@agnos-ui/core/utils/directive';
+import {browserDirective} from '@agnos-ui/core/utils';
 
 export const createSampleDirective: Directive<string> = browserDirective((element: HTMLElement, text: string) => {
 	console.log('Directive has been executed on node ', element.id);

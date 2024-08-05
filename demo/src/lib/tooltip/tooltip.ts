@@ -1,6 +1,6 @@
 import Tooltip from '$lib/tooltip/Tooltip.svelte';
-import {browserDirective} from '@agnos-ui/svelte-bootstrap/utils/directive';
-import {createFloatingUI} from '@agnos-ui/svelte-bootstrap/services/floatingUI';
+import {browserDirective} from '@agnos-ui/svelte-bootstrap/utils';
+import {createFloatingUI} from '@agnos-ui/svelte-bootstrap/services';
 import {flip, offset} from '@floating-ui/dom';
 
 export const tooltip = browserDirective((button: HTMLElement, options: {content: string}) => {

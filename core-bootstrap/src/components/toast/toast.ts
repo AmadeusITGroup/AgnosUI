@@ -1,9 +1,9 @@
 import type {ToastDirectives, ToastState as CoreState, ToastProps as CoreProps, ToastApi} from '@agnos-ui/core/components/toast';
 import {createToast as createCoreToast, getToastDefaultConfig as getCoreDefaultConfig} from '@agnos-ui/core/components/toast';
 import type {SlotContent, Widget, WidgetFactory, WidgetSlotContext} from '@agnos-ui/core/types';
-import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
-import {fadeTransition} from '../../services/transitions';
-import type {TransitionFn} from '@agnos-ui/core/services/transitions/baseTransitions';
+import {extendWidgetProps} from '@agnos-ui/core/services';
+import {fadeTransition} from '../../transitions';
+import type {TransitionFn} from '@agnos-ui/core/transitions';
 
 export * from '@agnos-ui/core/components/toast';
 

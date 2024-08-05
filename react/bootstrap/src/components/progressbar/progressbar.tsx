@@ -1,6 +1,6 @@
 import {Slot} from '@agnos-ui/react-headless/slot';
 import {toSlotContextWidget} from '@agnos-ui/react-headless/types';
-import {useDirective} from '@agnos-ui/react-headless/utils/directive';
+import {useDirective} from '@agnos-ui/react-headless/utils';
 import classNames from 'classnames';
 import {useWidgetWithConfig} from '../../config';
 import type {ProgressbarContext, ProgressbarProps} from './progressbar.gen';

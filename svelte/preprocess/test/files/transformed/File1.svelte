@@ -1,5 +1,5 @@
 <script>
-import {ssrAttributes as __AgnosUISveltePreprocess__ssrAttributes} from '@agnos-ui/svelte-headless/utils/directive';
+import {ssrAttributes as __AgnosUISveltePreprocess__ssrAttributes} from '@agnos-ui/svelte-headless/utils';
 import {BROWSER as __AgnosUISveltePreprocess__BROWSER} from 'esm-env';
 
 	const directive1 = () => {};

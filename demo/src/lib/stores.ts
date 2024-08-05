@@ -1,7 +1,7 @@
 import {computed, derived, get} from '@amadeus-it-group/tansu';
 import {browser} from '$app/environment';
 import {page} from '$app/stores';
-import {createIntersection} from '@agnos-ui/svelte-bootstrap/services/intersection';
+import {createIntersection} from '@agnos-ui/svelte-bootstrap/services';
 
 // Return how deep the current route is compared to base
 export const routeLevel$ = computed(() => {

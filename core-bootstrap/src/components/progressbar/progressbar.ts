@@ -1,8 +1,8 @@
 import type {ProgressbarDirectives, ProgressbarState as CoreState, ProgressbarProps as CoreProps} from '@agnos-ui/core/components/progressbar';
 import {createProgressbar as createCoreProgressbar, getProgressbarDefaultConfig as getCoreDefaultConfig} from '@agnos-ui/core/components/progressbar';
 import type {ConfigValidator, SlotContent, Widget, WidgetFactory, WidgetSlotContext} from '@agnos-ui/core/types';
-import {typeBoolean, typeString} from '@agnos-ui/core/utils/writables';
-import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
+import {typeBoolean, typeString} from '@agnos-ui/core/utils';
+import {extendWidgetProps} from '@agnos-ui/core/services';
 import type {BSContextualClass} from '../../types';
 
 export * from '@agnos-ui/core/components/progressbar';
