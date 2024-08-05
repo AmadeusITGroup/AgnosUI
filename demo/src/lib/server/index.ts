@@ -4,14 +4,14 @@ import frontMatter from 'front-matter';
 const validMdRegex = /^\d{2}-[a-zA-Z-]*\.md$/g;
 
 const componentsSubMenu = Object.entries(componentsMetadata).map(([key, val]) => ({
-	title: val.title,
+	title: key,
 	status: val.status,
 	slug: `components/${key.toLowerCase()}/`,
 	subpath: 'examples',
 }));
 
 const daisyUISubMenu = Object.entries(daisyUIMetadata).map(([key, val]) => ({
-	title: val.title,
+	title: key,
 	status: val.status,
 	slug: `daisyUI/${key.toLowerCase()}/`,
 	subpath: 'headless',
