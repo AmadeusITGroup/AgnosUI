@@ -31,7 +31,7 @@ export const publish = async (extraArgs = []) => {
 				cwd: join(import.meta.dirname, '..', directory),
 			});
 			await processEndPromise(proc);
-		} catch (error) {
+		} catch (_error) {
 			failures++;
 		}
 	}

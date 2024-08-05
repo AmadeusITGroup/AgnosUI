@@ -17,10 +17,10 @@
 	},
 	"wireit": {
 		"build:src": {
-			"command": "vite build && tsc",
+			"command": "vite build && tsc -p tsconfig.build.json",
 			"files": [
 				"lib/**",
-				"tsconfig.json",
+				"tsconfig.build.json",
 				"../tsconfig.json",
 				"vite.config.ts"
 			],

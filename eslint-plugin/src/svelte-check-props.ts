@@ -237,7 +237,7 @@ export const svelteCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 				scriptScope = context.getScope();
 				inContextModule = isContextModuleScript(node);
 			},
-			'SvelteScriptElement:exit'(node: SvelteAST.SvelteScriptElement) {
+			'SvelteScriptElement:exit'() {
 				inContextModule = false;
 			},
 			VariableDeclarator(node) {
@@ -257,7 +257,7 @@ export const svelteCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 					}
 				}
 			},
-			'Program:exit'(node) {
+			'Program:exit'() {
 				if (widgetNode) {
 					const widgetInfo = getInfoFromWidgetNode(widgetNode, context);
 					if (widgetInfo) {
@@ -317,7 +317,6 @@ export const svelteCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 	meta: {
 		docs: {
 			description: 'Check AgnosUI props in svelte components.',
-			recommended: 'recommended',
 		},
 		fixable: 'code',
 		messages: {

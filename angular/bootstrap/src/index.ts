@@ -47,20 +47,12 @@ export type {
 	PaginationWidget,
 	DirectionsHrefs,
 	PaginationActions,
-	PaginationApi,
 	PaginationDirectives,
 } from './components/pagination';
 export {createPagination, getPaginationDefaultConfig} from './components/pagination';
 export * from './components/pagination';
 
-export type {
-	ProgressbarContext,
-	ProgressbarProps,
-	ProgressbarState,
-	ProgressbarWidget,
-	ProgressbarApi,
-	ProgressbarDirectives,
-} from './components/progressbar';
+export type {ProgressbarContext, ProgressbarProps, ProgressbarState, ProgressbarWidget, ProgressbarDirectives} from './components/progressbar';
 export {createProgressbar, getProgressbarDefaultConfig} from './components/progressbar';
 export * from './components/progressbar';
 
@@ -90,7 +82,6 @@ export type {
 	SliderState,
 	SliderWidget,
 	SliderActions,
-	SliderApi,
 	SliderHandle,
 	HandleDisplayOptions,
 	ProgressDisplayOptions,

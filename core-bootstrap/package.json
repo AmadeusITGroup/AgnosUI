@@ -74,10 +74,11 @@
 			]
 		},
 		"check": {
-			"command": "tsc -p tsconfig.tests.json",
+			"command": "tsc",
 			"files": [
 				"src/**",
-				"tsconfig.tests.json",
+				"tsconfig.json",
+				"vite.config.ts",
 				"vitest.config.ts"
 			],
 			"output": []
@@ -89,7 +90,7 @@
 			],
 			"files": [
 				"src/**",
-				"tsconfig.tests.json",
+				"tsconfig.json",
 				"vitest.config.ts"
 			],
 			"output": [

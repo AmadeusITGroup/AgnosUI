@@ -32,7 +32,7 @@ import {callWidgetFactory} from '../../config';
 @Directive({selector: 'ng-template[auModalStructure]', standalone: true})
 export class ModalStructureDirective<Data> {
 	public templateRef = inject(TemplateRef<ModalContext<Data>>);
-	static ngTemplateContextGuard<Data>(dir: ModalStructureDirective<Data>, context: unknown): context is ModalContext<Data> {
+	static ngTemplateContextGuard<Data>(_dir: ModalStructureDirective<Data>, context: unknown): context is ModalContext<Data> {
 		return true;
 	}
 }

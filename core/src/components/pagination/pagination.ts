@@ -210,7 +210,7 @@ export interface PaginationProps extends PaginationCommonPropsAndState {
 	 *
 	 * @defaultValue
 	 * ```ts
-	 * (currentPage: number, pageCount: number) => `Current page is ${currentPage}`
+	 * (currentPage: number) => `Current page is ${currentPage}`
 	 * ```
 	 */
 	ariaLiveLabel: (currentPage: number, pageCount: number) => string;
@@ -325,9 +325,7 @@ export interface PaginationDirectives {
 	pageLast: Directive;
 }
 
-export interface PaginationApi {}
-
-export type PaginationWidget = Widget<PaginationProps, PaginationState, PaginationApi, PaginationActions, PaginationDirectives>;
+export type PaginationWidget = Widget<PaginationProps, PaginationState, object, PaginationActions, PaginationDirectives>;
 
 const PAGE_LINK_DEFAULT = '#';
 
@@ -355,7 +353,7 @@ const defaultConfig: PaginationProps = {
 	ariaNextLabel: 'Action link for next page',
 	ariaLastLabel: 'Action link for last page',
 	ariaEllipsisLabel: 'Ellipsis page element',
-	ariaLiveLabel: (currentPage: number, pageCount: number) => `Current page is ${currentPage}`,
+	ariaLiveLabel: (currentPage: number) => `Current page is ${currentPage}`,
 	className: '',
 	pageLink: (_page: number) => PAGE_LINK_DEFAULT,
 };

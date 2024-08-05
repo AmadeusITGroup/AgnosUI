@@ -7,6 +7,7 @@ import {directivesPreprocess} from '@agnos-ui/svelte-preprocess';
 
 const __dirname = import.meta.dirname;
 
+/** @type {Record<string, string>} */
 export const alias = {
 	'@agnos-ui/common': path.join(__dirname, '../common'),
 	'@agnos-ui/doc': path.join(__dirname, '../scripts/doc'),

@@ -28,7 +28,7 @@ function getDirectiveAttributes<T = void>(directive: Directive<T>, args?: T) {
 	return attributes;
 }
 
-const directiveSpy = <T>() => vitest.fn((element, value: T) => ({destroy: vitest.fn(), update: vitest.fn()}));
+const directiveSpy = <T>() => vitest.fn((_element, _value: T) => ({destroy: vitest.fn(), update: vitest.fn()}));
 
 describe('directive', () => {
 	let element: HTMLElement;
@@ -47,7 +47,7 @@ describe('directive', () => {
 			const store = writable(1);
 			const directiveArg$ = asReadable(store);
 			vitest.spyOn(directiveArg$, 'subscribe');
-			const directive = vitest.fn((element, value) => ({destroy: vitest.fn(), update: vitest.fn()}));
+			const directive = vitest.fn(() => ({destroy: vitest.fn(), update: vitest.fn()}));
 			const boundDirective = bindDirective(directive, directiveArg$);
 			expect(directive).not.toHaveBeenCalled();
 			expect(directiveArg$.subscribe).not.toHaveBeenCalled();
@@ -68,7 +68,7 @@ describe('directive', () => {
 
 	describe('bindDirectiveNoArg', () => {
 		test('Basic functionalities', () => {
-			const directive = vitest.fn((element, value) => ({destroy: vitest.fn(), update: vitest.fn()}));
+			const directive = vitest.fn((_element, _value) => ({destroy: vitest.fn(), update: vitest.fn()}));
 			const boundDirective = bindDirectiveNoArg(directive);
 			expect(directive).not.toHaveBeenCalled();
 			const boundDirectiveInstance = boundDirective(element, 1 as any); // the argument should be ignored
@@ -122,7 +122,7 @@ describe('directive', () => {
 
 	describe('directiveUpdate', () => {
 		test('Basic functionalities', () => {
-			const update = vitest.fn((num: number) => {});
+			const update = vitest.fn(() => {});
 			const directive = directiveUpdate(update);
 			expect(update).not.toHaveBeenCalled();
 			const instance = directive(element, 1);
@@ -254,7 +254,7 @@ describe('directive', () => {
 		test('should wrap calls to directives in batch', () => {
 			const storeAndDirective = () => {
 				const store = writable(0);
-				const directive = (element: HTMLElement, value: number) => {
+				const directive = (_element: HTMLElement, value: number) => {
 					store.set(value);
 					return {
 						update(value: number) {

@@ -60,10 +60,12 @@
 			]
 		},
 		"check": {
-			"command": "tsc -p tsconfig.check.json",
+			"command": "tsc",
 			"files": [
 				"src/**",
-				"tsconfig.check.json"
+				"tsconfig.json",
+				"../tsconfig.json",
+				"../../tsconfig.json"
 			],
 			"output": [],
 			"dependencies": [

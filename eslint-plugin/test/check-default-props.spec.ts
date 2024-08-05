@@ -3,6 +3,7 @@ import {RuleTester} from '@typescript-eslint/rule-tester';
 import type {TSESLint} from '@typescript-eslint/utils';
 import {afterAll, describe, test} from 'vitest';
 import {checkDefaultPropsRule} from '../src/check-default-props';
+import eslintParser from '@typescript-eslint/parser';
 
 RuleTester.describe = describe;
 RuleTester.it = test;
@@ -10,10 +11,12 @@ RuleTester.afterAll = afterAll;
 
 describe('check-default-propss', () => {
 	const ruleTester = new RuleTester({
-		parser: require.resolve('@typescript-eslint/parser'),
-		parserOptions: {
-			project: './tsconfig.test.json',
-			tsconfigRootDir: __dirname,
+		languageOptions: {
+			parser: eslintParser,
+			parserOptions: {
+				project: './tsconfig.test.json',
+				tsconfigRootDir: __dirname,
+			},
 		},
 	});
 
@@ -262,7 +265,7 @@ export function getMyWidgetDefaultConfig(): MyType {
 			...invalid
 				.filter(({output}) => !!output)
 				.map(({output}) => ({
-					code: output!,
+					code: Array.isArray(output!) ? output!.join('') : output!,
 				})),
 		],
 		invalid,

@@ -30,7 +30,7 @@ import {writable} from '@amadeus-it-group/tansu';
 @Directive({selector: 'ng-template[auAccordionItemBody]', standalone: true})
 export class AccordionBodyDirective {
 	public templateRef = inject(TemplateRef<AccordionItemContext>);
-	static ngTemplateContextGuard(dir: AccordionBodyDirective, context: unknown): context is AccordionItemContext {
+	static ngTemplateContextGuard(_dir: AccordionBodyDirective, context: unknown): context is AccordionItemContext {
 		return true;
 	}
 }
@@ -38,7 +38,7 @@ export class AccordionBodyDirective {
 @Directive({selector: 'ng-template[auAccordionItemHeader]', standalone: true})
 export class AccordionHeaderDirective {
 	public templateRef = inject(TemplateRef<AccordionItemContext>);
-	static ngTemplateContextGuard(dir: AccordionHeaderDirective, context: unknown): context is AccordionItemContext {
+	static ngTemplateContextGuard(_dir: AccordionHeaderDirective, context: unknown): context is AccordionItemContext {
 		return true;
 	}
 }
@@ -46,7 +46,7 @@ export class AccordionHeaderDirective {
 @Directive({selector: 'ng-template[auAccordionItemStructure]', standalone: true})
 export class AccordionItemStructureDirective {
 	public templateRef = inject(TemplateRef<AccordionItemContext>);
-	static ngTemplateContextGuard(dir: AccordionItemStructureDirective, context: unknown): context is AccordionItemContext {
+	static ngTemplateContextGuard(_dir: AccordionItemStructureDirective, context: unknown): context is AccordionItemContext {
 		return true;
 	}
 }

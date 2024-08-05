@@ -1,6 +1,5 @@
 import type {
 	SliderActions,
-	SliderApi,
 	SliderDirectives,
 	SliderHandle,
 	SliderProps as CoreProps,
@@ -41,7 +40,7 @@ interface SliderExtraProps {
 export interface SliderState extends CoreState, SliderExtraProps {}
 export interface SliderProps extends CoreProps, SliderExtraProps {}
 
-export type SliderWidget = Widget<SliderProps, SliderState, SliderApi, SliderActions, SliderDirectives>;
+export type SliderWidget = Widget<SliderProps, SliderState, object, SliderActions, SliderDirectives>;
 
 const defaultConfigExtraProps: SliderExtraProps = {
 	structure: undefined,

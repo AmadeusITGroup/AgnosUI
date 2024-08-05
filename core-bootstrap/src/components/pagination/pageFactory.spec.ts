@@ -4,7 +4,7 @@ import {ngBootstrapPagination} from './pageFactory';
 
 describe(`Pagination bootstrap factory`, () => {
 	let pageFactory: (page: number, pageCount: number) => number[];
-	let consoleErrorSpy: MockInstance<Parameters<typeof console.error>, ReturnType<typeof console.error>>;
+	let consoleErrorSpy: MockInstance<typeof console.error>;
 
 	beforeEach(() => {
 		consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});

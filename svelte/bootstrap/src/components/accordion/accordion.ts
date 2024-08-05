@@ -4,6 +4,7 @@ import type {AccordionApi, AccordionItemProps, AccordionProps} from './accordion
 export * from './accordion.gen';
 
 export interface AccordionSlots extends WidgetPropsSlots<AccordionProps> {}
+
 export interface AccordionItemSlots extends WidgetPropsSlots<AccordionItemProps> {}
 
 // context

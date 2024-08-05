@@ -18,7 +18,7 @@ export interface PropInfo {
 }
 
 const tsDocIndentAndStarRegExp = /\r?\n\s*\* ?/g;
-export const docFromSymbol = (symbol: ts.Symbol, checker: ts.TypeChecker) => {
+export const docFromSymbol = (symbol: ts.Symbol) => {
 	const declaration = symbol.getDeclarations()?.[0];
 	if (!declaration) {
 		return '';
@@ -128,7 +128,7 @@ export const getInfoFromWidgetNode = (widgetNode: TSESTree.Node, context: Readon
 	const bindings: string[] = [];
 	for (const symbol of patchParamType.getProperties()) {
 		const name = symbol.getName();
-		const doc = docFromSymbol(symbol, checker);
+		const doc = docFromSymbol(symbol);
 		let tsType = checker.getTypeOfSymbolAtLocation(symbol, widgetTSNode);
 		if (name.startsWith('on')) {
 			const eventName = `${name[2].toLowerCase()}${name.slice(3)}`;
@@ -193,5 +193,5 @@ export const getNodeDocumentation = (node: TSESTree.Node, context: Readonly<TSES
 	const checker = parserServices.program.getTypeChecker();
 	const tsNode = parserServices.esTreeNodeToTSNodeMap.get(node);
 	const symbol = checker.getSymbolAtLocation(tsNode)!;
-	return docFromSymbol(symbol, checker);
+	return docFromSymbol(symbol);
 };

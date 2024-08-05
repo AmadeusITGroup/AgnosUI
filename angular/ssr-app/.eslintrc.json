@@ -3,10 +3,6 @@
 	"overrides": [
 		{
 			"files": ["src/**/*.ts"],
-			"parserOptions": {
-				"project": ["tsconfig.json"],
-				"createDefaultProgram": true
-			},
 			"rules": {
 				"@angular-eslint/directive-selector": [
 					"error",

@@ -310,7 +310,7 @@ describe(`Pagination`, () => {
 	});
 
 	test('should onChange be called correctly', () => {
-		function onPageChangeCustom(page: number) {}
+		function onPageChangeCustom(_page: number) {}
 		const mock = vi.fn().mockImplementation(onPageChangeCustom);
 		pagination.patch({onPageChange: mock});
 		pagination.patch({collectionSize: 70, page: 4});

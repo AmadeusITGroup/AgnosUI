@@ -23,9 +23,9 @@
 	{/each}
 	{#await promise}
 		<div use:directive1>promise is loading</div>
-	{:then value}
+	{:then _value}
 		<div use:directive1>promise is resolved</div>
-	{:catch error}
+	{:catch _error}
 		<div use:directive1>promise is in error</div>
 	{/await}
 </div>

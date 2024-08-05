@@ -3,6 +3,8 @@ import {RuleTester} from '@typescript-eslint/rule-tester';
 import type {TSESLint} from '@typescript-eslint/utils';
 import {afterAll, describe, test} from 'vitest';
 import {svelteCheckPropsRule} from '../src/svelte-check-props';
+import svelteParser from 'svelte-eslint-parser';
+import eslintPluginSvelte from 'eslint-plugin-svelte';
 
 RuleTester.describe = describe;
 RuleTester.it = test;
@@ -13,13 +15,15 @@ describe('svelte-check-props', () => {
 		`<script lang="ts" context="module">\ninterface MyWidgetProps {\n${widgetProps}\n}\ninterface MyWidget {\n\tpatch(props: Partial<MyWidgetProps>): void\n}\nconst callWidgetFactory: (config: any) => MyWidget;\n</script><script lang="ts">\n${scriptContent}\nlet widget = callWidgetFactory({events:${events}});\n</script>`;
 
 	const ruleTester = new RuleTester({
-		plugins: ['svelte'],
-		parser: require.resolve('svelte-eslint-parser'),
-		parserOptions: {
-			parser: '@typescript-eslint/parser',
-			project: './tsconfig.test.json',
-			tsconfigRootDir: __dirname,
-			extraFileExtensions: ['.svelte'],
+		plugins: {svelte: eslintPluginSvelte},
+		languageOptions: {
+			parser: svelteParser,
+			parserOptions: {
+				parser: '@typescript-eslint/parser',
+				project: './tsconfig.test.json',
+				tsconfigRootDir: __dirname,
+				extraFileExtensions: ['.svelte'],
+			},
 		},
 	});
 	type MessageIds<T extends TSESLint.RuleModule<any, any>> = T extends TSESLint.RuleModule<infer U, any> ? U : never;
@@ -346,7 +350,7 @@ describe('svelte-check-props', () => {
 				.filter(({output, outputError}) => !!output && !outputError)
 				.map(({output, name}) => ({
 					name: `fix: ${name}`,
-					code: output!,
+					code: Array.isArray(output!) ? output!.join('') : output!,
 				})),
 		],
 		invalid: invalid.map(({outputError, ...testCase}) => testCase),

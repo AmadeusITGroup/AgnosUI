@@ -101,7 +101,7 @@ export class PaginationPagesDirective {
 @Directive({selector: 'ng-template[auPaginationStructure]', standalone: true})
 export class PaginationStructureDirective {
 	public templateRef = inject(TemplateRef<PaginationContext>);
-	static ngTemplateContextGuard(dir: PaginationStructureDirective, context: unknown): context is PaginationContext {
+	static ngTemplateContextGuard(_dir: PaginationStructureDirective, context: unknown): context is PaginationContext {
 		return true;
 	}
 }
@@ -229,7 +229,7 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 *
 	 * @defaultValue
 	 * ```ts
-	 * (currentPage: number, pageCount: number) => `Current page is ${currentPage}`
+	 * (currentPage: number) => `Current page is ${currentPage}`
 	 * ```
 	 */
 	@Input('auAriaLiveLabel') ariaLiveLabel: ((currentPage: number, pageCount: number) => string) | undefined;

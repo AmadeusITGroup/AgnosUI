@@ -1,0 +1,4 @@
+{
+	"extends": "../../tsconfig.json",
+	"files": ["postcss.config.js", "tailwind.config.js", "scripts/regen-links.js"]
+}

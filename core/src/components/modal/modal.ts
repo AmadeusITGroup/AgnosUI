@@ -529,7 +529,7 @@ export function createModal(config$?: PropsConfig<ModalProps>): ModalWidget {
 					close(modalOutsideClick);
 				}
 			},
-			closeButtonClick(event) {
+			closeButtonClick() {
 				close(modalCloseButtonClick);
 			},
 		},

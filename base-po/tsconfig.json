@@ -1,10 +1,5 @@
 {
 	"extends": "../tsconfig.json",
-	"compilerOptions": {
-		"noEmit": false,
-		"emitDeclarationOnly": true,
-		"outDir": "dist",
-		"declaration": true
-	},
-	"include": ["lib"]
+	"include": ["lib"],
+	"files": ["vite.config.ts"]
 }

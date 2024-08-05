@@ -26,9 +26,9 @@ import {BROWSER as __AgnosUISveltePreprocess__BROWSER} from 'esm-env';
 	{/each}
 	{#await promise}
 		<div use:directive1 {...__AgnosUISveltePreprocess__BROWSER ? {} : __AgnosUISveltePreprocess__ssrAttributes(directive1)}>promise is loading</div>
-	{:then value}
+	{:then _value}
 		<div use:directive1 {...__AgnosUISveltePreprocess__BROWSER ? {} : __AgnosUISveltePreprocess__ssrAttributes(directive1)}>promise is resolved</div>
-	{:catch error}
+	{:catch _error}
 		<div use:directive1 {...__AgnosUISveltePreprocess__BROWSER ? {} : __AgnosUISveltePreprocess__ssrAttributes(directive1)}>promise is in error</div>
 	{/await}
 </div>

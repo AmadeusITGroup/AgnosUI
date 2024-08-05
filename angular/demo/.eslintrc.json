@@ -3,10 +3,6 @@
 	"overrides": [
 		{
 			"files": ["bootstrap/**/*.ts"],
-			"parserOptions": {
-				"project": ["angular/demo/bootstrap/tsconfig.json"],
-				"createDefaultProgram": true
-			},
 			"rules": {
 				"@angular-eslint/directive-selector": [
 					"error",
@@ -28,10 +24,6 @@
 		},
 		{
 			"files": ["daisyui/**/*.ts"],
-			"parserOptions": {
-				"project": ["angular/demo/daisyui/tsconfig.json"],
-				"createDefaultProgram": true
-			},
 			"rules": {
 				"@angular-eslint/directive-selector": [
 					"error",

@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-	import type {PaginationApi, PaginationProps, PaginationSlots} from './pagination';
+	import type {PaginationProps, PaginationSlots} from './pagination';
 	import {createPagination} from './pagination';
 	import {toSlotContextWidget} from '@agnos-ui/svelte-headless/types';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
@@ -36,7 +36,6 @@
 			},
 		},
 	});
-	export const api: PaginationApi = widget.api;
 
 	const {
 		stores: {structure$, ariaLabel$},

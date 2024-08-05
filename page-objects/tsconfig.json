@@ -4,5 +4,6 @@
 		"paths": {
 			"@agnos-ui/base-po": ["./base-po/lib"]
 		}
-	}
+	},
+	"files": ["vite.config.ts"]
 }

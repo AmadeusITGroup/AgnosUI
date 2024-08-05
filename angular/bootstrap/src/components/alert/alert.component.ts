@@ -29,7 +29,7 @@ import type {BSContextualClass} from '@agnos-ui/core-bootstrap/types';
 @Directive({selector: 'ng-template[auAlertBody]', standalone: true})
 export class AlertBodyDirective {
 	public templateRef = inject(TemplateRef<AlertContext>);
-	static ngTemplateContextGuard(dir: AlertBodyDirective, context: unknown): context is AlertContext {
+	static ngTemplateContextGuard(_dir: AlertBodyDirective, context: unknown): context is AlertContext {
 		return true;
 	}
 }
@@ -37,7 +37,7 @@ export class AlertBodyDirective {
 @Directive({selector: 'ng-template[auAlertStructure]', standalone: true})
 export class AlertStructureDirective {
 	public templateRef = inject(TemplateRef<AlertContext>);
-	static ngTemplateContextGuard(dir: AlertStructureDirective, context: unknown): context is AlertContext {
+	static ngTemplateContextGuard(_dir: AlertStructureDirective, context: unknown): context is AlertContext {
 		return true;
 	}
 }

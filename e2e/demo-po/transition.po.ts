@@ -62,8 +62,8 @@ export class TransitionPO extends BasePO {
 			const toCamelCase = (str: string) =>
 				str
 					.trim()
-					.replace(/\s+(\w)/g, (a, b) => b.toUpperCase())
-					.replace(/^(\w)/g, (a, b) => b.toLowerCase());
+					.replace(/\s+(\w)/g, (_a, b) => b.toUpperCase())
+					.replace(/^(\w)/g, (_a, b) => b.toLowerCase());
 			const state: Partial<State> = {};
 			for (const child of rootNode.querySelector('ul')!.children) {
 				const [property, value] = child.textContent!.split('=');

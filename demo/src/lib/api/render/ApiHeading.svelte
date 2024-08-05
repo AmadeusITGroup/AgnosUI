@@ -15,6 +15,7 @@
 	export let text: string;
 	export let headerClassName: string = '';
 	export let raw: string;
+	// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 	raw;
 
 	const apiSymbol = getContext<string>('ApiSymbol');

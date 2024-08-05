@@ -230,8 +230,6 @@ export interface SliderProps extends SliderCommonPropsAndState {
 	onValuesChange: (values: number[]) => void;
 }
 
-export interface SliderApi {}
-
 export interface SliderDirectives {
 	/**
 	 * Directive to get the slider component elementRef
@@ -302,7 +300,7 @@ export interface SliderActions {
 	touchStart(event: TouchEvent, handleId: number): void;
 }
 
-export type SliderWidget = Widget<SliderProps, SliderState, SliderApi, SliderActions, SliderDirectives>;
+export type SliderWidget = Widget<SliderProps, SliderState, object, SliderActions, SliderDirectives>;
 
 const defaultSliderConfig: SliderProps = {
 	min: 0,
@@ -563,7 +561,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 	const handleDisplayOptions$ = computed(() => {
 		const vertical = vertical$(),
 			rtl = rtl$();
-		return valuesPercent$().map((vp, index) => {
+		return valuesPercent$().map((vp) => {
 			return {
 				left: rtl ? (vertical ? null : 100 - vp) : vertical ? null : vp,
 				top: rtl ? (vertical ? vp : null) : vertical ? 100 - vp : null,

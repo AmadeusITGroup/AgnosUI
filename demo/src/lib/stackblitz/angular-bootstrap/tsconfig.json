@@ -14,5 +14,6 @@
 		"paths": {
 			"bootstrap-icons/icons/*": ["./node_modules/bootstrap-icons/icons/*"]
 		}
-	}
+	},
+	"include": ["src"]
 }

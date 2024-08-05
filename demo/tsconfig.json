@@ -8,11 +8,13 @@
 		"skipLibCheck": true,
 		"esModuleInterop": true,
 		"resolveJsonModule": true,
-		"importsNotUsedAsValues": "error",
+		"verbatimModuleSyntax": true,
 		"isolatedModules": true,
 		"forceConsistentCasingInFileNames": true,
-		"noEmit": true
-	}
+		"noEmit": true,
+		"checkJs": true
+	},
+	"files": ["svelte.config.js"]
 	// Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
 	//
 	// If you want to overwrite includes/excludes, make sure to copy over the relevant includes/excludes

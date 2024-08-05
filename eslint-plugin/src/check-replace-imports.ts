@@ -117,7 +117,6 @@ export const checkReplaceImportsRule = ESLintUtils.RuleCreator.withoutDocs({
 	meta: {
 		docs: {
 			description: '',
-			recommended: 'recommended',
 		},
 		fixable: 'code',
 		messages: {

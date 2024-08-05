@@ -17,8 +17,8 @@ import type {WritableSignal} from '@amadeus-it-group/tansu';
 
 abstract class SlotHandler<Props extends Record<string, any>, Slot extends SlotContent<Props> = SlotContent<Props>> {
 	constructor(public viewContainerRef: ViewContainerRef) {}
-	slotChange(slot: Slot, props: Props) {}
-	propsChange(slot: Slot, props: Props) {}
+	slotChange(_slot: Slot, _props: Props) {}
+	propsChange(_slot: Slot, _props: Props) {}
 	destroy() {}
 }
 
@@ -86,7 +86,7 @@ class ComponentSlotHandler<Props extends Record<string, any>> extends SlotHandle
 		}
 	}
 
-	override propsChange(slot: Type<unknown>, props: Props): void {
+	override propsChange(_slot: Type<unknown>, props: Props): void {
 		const oldProperties = new Set(this.#properties);
 		this.#applyProperties(props, oldProperties);
 		const componentRef = this.#componentRef!;
@@ -114,7 +114,7 @@ class TemplateRefSlotHandler<Props extends Record<string, any>> extends SlotHand
 		this.#viewRef = this.viewContainerRef.createEmbeddedView(slot, props);
 	}
 
-	override propsChange(slot: TemplateRef<Props>, props: Props): void {
+	override propsChange(_slot: TemplateRef<Props>, props: Props): void {
 		if (this.#viewRef) {
 			const templateProps = this.#props!;
 			const oldProperties = new Set<keyof Props>(Object.keys(templateProps));
@@ -155,7 +155,7 @@ class ComponentTemplateSlotHandler<
 		this.#templateSlotHandler.slotChange(this.#templateRef, props);
 	}
 
-	override propsChange(slot: ComponentTemplate<Props, K, T>, props: Props): void {
+	override propsChange(_slot: ComponentTemplate<Props, K, T>, props: Props): void {
 		this.#templateSlotHandler.propsChange(this.#templateRef!, props);
 	}
 

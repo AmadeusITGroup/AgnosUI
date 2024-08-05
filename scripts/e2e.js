@@ -70,7 +70,7 @@ try {
 		cwd: path.join(import.meta.dirname, '..'),
 		stdio: [0, 1, 2],
 	});
-} catch (e) {
+} catch (_e) {
 	// Hide node internal error
 	process.exit(-1);
 }

@@ -2,7 +2,7 @@ import {glob} from 'glob';
 import type {UserConfig} from 'vite';
 import {defineConfig} from 'vite';
 import {peerDependencies, exports as pkgExports} from './package.json';
-import {exclude as ignore} from './tsconfig.json';
+import {exclude as ignore} from './tsconfig.build.json';
 
 const pathRegExp = /\\/g;
 const normalizePath = (str: string) => str.replace(pathRegExp, '/');

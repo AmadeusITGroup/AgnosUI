@@ -64,7 +64,7 @@ describe(`Alert`, () => {
 					onHiddenCounter++;
 					promiseOnHidden = promiseWithResolve();
 				},
-				onVisibleChange(event) {
+				onVisibleChange() {
 					onVisibleChangeCounter++;
 				},
 			},

@@ -1,8 +1,11 @@
 {
-	"extends": "./tsconfig.build.json",
+	"extends": "../tsconfig.json",
 	"compilerOptions": {
 		"paths": {
 			"@agnos-ui/core/*": ["./core/src/*"]
-		}
-	}
+		},
+		"allowJs": true
+	},
+	"include": ["src"],
+	"files": ["vite.config.ts", "vitest.config.ts", "scripts/copyScss.js"]
 }
