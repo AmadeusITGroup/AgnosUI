@@ -1,1 +1,0 @@
-import{r as a}from"./directive-3-8yr-ZK-C5h7Dwqe.js";const s=typeof window>"u"?a(""):a("",h=>{function e(){const n=location.hash;h(n?n.substring(1):"")}return window.addEventListener("hashchange",e),e(),()=>window.removeEventListener("hashchange",e)});export{s as h};

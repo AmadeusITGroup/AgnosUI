@@ -1,0 +1,1 @@
+import{e as t}from"./extendWidget-DK6uxMz1.js";import{g as i,c as o}from"./pagination-Crbg2Q3m-BFBK9c08.js";const a={structure:void 0,ellipsisLabel:"…",firstPageLabel:"«",previousPageLabel:"‹",nextPageLabel:"›",lastPageLabel:"»",numberLabel:({displayedPage:e})=>`${e}`,pagesDisplay:void 0};function r(){return{...i(),...a}}const s=t(o,a,{});export{s as c,r as g};
