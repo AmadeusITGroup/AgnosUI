@@ -40,7 +40,7 @@
 		"@vitest/browser": "^2.0.5",
 		"@vitest/ui": "^2.0.5",
 		"bootstrap": "^5.3.3",
-		"eslint": "^8.57.0",
+		"eslint": "^9.8.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-jsdoc": "^48.11.0",
 		"express": "^4.19.2",
@@ -193,7 +193,7 @@
 			]
 		},
 		"lint": {
-			"command": "eslint --ext mjs,js,ts,tsx,svelte .",
+			"command": "ESLINT_USE_FLAT_CONFIG=false eslint --ext mjs,js,ts,tsx,svelte .",
 			"dependencies": [
 				"prepare",
 				"./eslint-plugin:build",
