@@ -54,7 +54,7 @@ async function getAllApi() {
 			for (const doc of docs) {
 				if (doc.path) {
 					allApiDocs.push(`api/${fwk}/${pkgType}/${doc.path}`);
-				} else {
+				} else if (doc.files) {
 					for (const subDoc of doc.files) {
 						allApiDocs.push(`${subDoc.path}`);
 					}

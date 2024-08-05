@@ -6,5 +6,6 @@
 			"@agnos-ui/react-headless/*": ["./react/headless/src/*", "./react/headless/src/generated/*"],
 			"@agnos-ui/core-bootstrap/*": ["./core-bootstrap/src/*"]
 		}
-	}
+	},
+	"files": ["vite.config.ts"]
 }

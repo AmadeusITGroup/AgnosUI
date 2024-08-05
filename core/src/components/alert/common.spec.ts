@@ -64,7 +64,7 @@ describe(`Common Alert`, () => {
 					onHiddenCounter++;
 					promiseOnHidden = promiseWithResolve();
 				},
-				onVisibleChange(event) {
+				onVisibleChange() {
 					onVisibleChangeCounter++;
 				},
 			},

@@ -15,7 +15,7 @@ export type PromiseValue<T> = T extends Promise<infer U> ? U : never;
  * @param route
  * @returns
  */
-export async function analyze(page: Page, route: string): Promise<AxeResults> {
+export async function analyze(page: Page): Promise<AxeResults> {
 	const analyser = new AxeBuilder({page}).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']);
 	return analyser.analyze();
 }

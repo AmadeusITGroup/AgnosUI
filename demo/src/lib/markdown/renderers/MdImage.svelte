@@ -13,7 +13,7 @@
 				className = matches[1];
 				srcPromise = import(`../../../resources/images/${matches[1]}.${matches[2]}`);
 			}
-		} catch (error) {
+		} catch (_) {
 			// Avoid server crash
 		}
 	}

@@ -32,7 +32,7 @@ import {createToast} from './toast.gen';
 @Directive({selector: 'ng-template[auToastBody]', standalone: true})
 export class ToastBodyDirective {
 	public templateRef = inject(TemplateRef<ToastContext>);
-	static ngTemplateContextGuard(dir: ToastBodyDirective, context: unknown): context is ToastContext {
+	static ngTemplateContextGuard(_dir: ToastBodyDirective, context: unknown): context is ToastContext {
 		return true;
 	}
 }
@@ -40,7 +40,7 @@ export class ToastBodyDirective {
 @Directive({selector: 'ng-template[auToastStructure]', standalone: true})
 export class ToastStructureDirective {
 	public templateRef = inject(TemplateRef<ToastContext>);
-	static ngTemplateContextGuard(dir: ToastStructureDirective, context: unknown): context is ToastContext {
+	static ngTemplateContextGuard(_dir: ToastStructureDirective, context: unknown): context is ToastContext {
 		return true;
 	}
 }
@@ -48,7 +48,7 @@ export class ToastStructureDirective {
 @Directive({selector: 'ng-template[auToastHeader]', standalone: true})
 export class ToastHeaderDirective {
 	public templateRef = inject(TemplateRef<ToastContext>);
-	static ngTemplateContextGuard(dir: ToastHeaderDirective, context: unknown): context is ToastContext {
+	static ngTemplateContextGuard(_dir: ToastHeaderDirective, context: unknown): context is ToastContext {
 		return true;
 	}
 }

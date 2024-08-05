@@ -9,6 +9,9 @@
 		"resolveJsonModule": true,
 		"moduleResolution": "bundler",
 		"isolatedModules": true,
-		"forceConsistentCasingInFileNames": true
-	}
+		"forceConsistentCasingInFileNames": true,
+		"allowJs": true
+	},
+	"include": ["src"],
+	"files": ["postcss.config.js", "svelte.config.js", "tailwind.config.js", "vite.config.ts"]
 }

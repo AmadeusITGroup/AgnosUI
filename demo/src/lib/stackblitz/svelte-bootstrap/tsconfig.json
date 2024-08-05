@@ -9,6 +9,9 @@
 		"resolveJsonModule": true,
 		"moduleResolution": "bundler",
 		"isolatedModules": true,
-		"forceConsistentCasingInFileNames": true
-	}
+		"forceConsistentCasingInFileNames": true,
+		"allowJs": true
+	},
+	"include": ["src"],
+	"files": ["svelte.config.js", "vite.config.ts"]
 }

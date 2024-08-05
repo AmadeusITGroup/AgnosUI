@@ -18,7 +18,8 @@ export const isBrowserHTMLElement: (element: SSRHTMLElement) => element is HTMLE
 			const contentWindow = (element as any as Element)?.ownerDocument?.defaultView ?? window;
 			return element instanceof contentWindow.HTMLElement;
 		}) as any)
-	: (element) => false;
+	: // eslint-disable-next-line @typescript-eslint/no-unused-vars
+		(element) => false;
 
 /**
  * Creates a directive that wraps the provided directive to only run it in a browser environment (and not in a server-side rendering environment).
@@ -31,7 +32,8 @@ export const browserDirective: <T, U extends HTMLElement>(directive: Directive<T
 				return directive(node as any, args);
 			}
 		}
-	: (directive) => () => {};
+	: // eslint-disable-next-line @typescript-eslint/no-unused-vars
+		(directive) => () => {};
 
 /**
  * Binds the given directive to a store that provides its argument.
@@ -129,7 +131,7 @@ export const directiveSubscribe =
  */
 export const directiveUpdate =
 	<T>(update: (arg: T) => void): Directive<T> =>
-	(element, arg) => {
+	(_element, arg) => {
 		update(arg);
 		return {
 			update,

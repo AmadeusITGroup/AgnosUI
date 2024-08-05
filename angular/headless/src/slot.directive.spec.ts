@@ -77,7 +77,7 @@ describe('slot directive', () => {
 			template: 'Hello {{myProp}}!',
 		})
 		class HelloComponent {
-			@Input() myProp: string;
+			@Input() myProp = '';
 		}
 
 		@Component({
@@ -87,7 +87,7 @@ describe('slot directive', () => {
 			template: 'Goodbye {{myProp}}!',
 		})
 		class GoodbyeComponent {
-			@Input() myProp: string;
+			@Input() myProp = '';
 		}
 
 		const fixture = TestBed.createComponent(TestComponent);
@@ -117,8 +117,8 @@ describe('slot directive', () => {
 			`,
 		})
 		class TemplateTestComponent {
-			@ViewChild('hello') hello: TemplateRef<{myProp: string}>;
-			@ViewChild('goodbye') goodbye: TemplateRef<{myProp: string}>;
+			@ViewChild('hello') hello?: TemplateRef<{myProp: string}>;
+			@ViewChild('goodbye') goodbye?: TemplateRef<{myProp: string}>;
 			@Input() mySlot: SlotContent<{myProp: string}>;
 			@Input() mySlotProps = {myProp: 'world'};
 		}
@@ -150,8 +150,8 @@ describe('slot directive', () => {
 			`,
 		})
 		class HelloAndGoodbyeComponent {
-			@ViewChild('hello', {static: true}) hello: TemplateRef<{myProp: string}>;
-			@ViewChild('goodbye', {static: true}) goodbye: TemplateRef<{myProp: string}>;
+			@ViewChild('hello', {static: true}) hello!: TemplateRef<{myProp: string}>;
+			@ViewChild('goodbye', {static: true}) goodbye!: TemplateRef<{myProp: string}>;
 		}
 
 		const fixture = TestBed.createComponent(TestComponent);

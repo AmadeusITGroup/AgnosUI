@@ -64,13 +64,13 @@
 			]
 		},
 		"check": {
-			"command": "svelte-check --fail-on-warnings --output human-verbose",
+			"command": "svelte-check --fail-on-warnings --output human-verbose --tsconfig tsconfig.check.json",
 			"dependencies": [
 				"../bootstrap:build"
 			],
 			"files": [
 				"src/**",
-				"tsconfig.json",
+				"tsconfig.check.json",
 				"../tsconfig.json",
 				"../../tsconfig.json"
 			],

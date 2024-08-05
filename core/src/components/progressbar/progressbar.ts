@@ -74,10 +74,7 @@ export interface ProgressbarProps extends ProgressbarCommonPropsAndState {
 	ariaValueTextFn: (value: number, minimum: number, maximum: number) => string | undefined;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface ProgressbarApi {}
-
-export type ProgressbarWidget = Widget<ProgressbarProps, ProgressbarState, ProgressbarApi, object, ProgressbarDirectives>;
+export type ProgressbarWidget = Widget<ProgressbarProps, ProgressbarState, object, object, ProgressbarDirectives>;
 
 const defaultConfig: ProgressbarProps = {
 	min: 0,

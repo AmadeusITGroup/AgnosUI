@@ -232,7 +232,6 @@ export const checkDefaultPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 	meta: {
 		docs: {
 			description: 'Check AgnosUI default props in tsdoc.',
-			recommended: 'recommended',
 		},
 		fixable: 'code',
 		messages: {

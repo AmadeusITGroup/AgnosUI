@@ -1,10 +1,5 @@
 {
 	"extends": ["../.eslintrc.json", "plugin:jsdoc/recommended-typescript-error"],
-	"parserOptions": {
-		"ecmaVersion": "latest",
-		"sourceType": "module",
-		"project": ["core-bootstrap/tsconfig.json"]
-	},
 	"rules": {
 		"jsdoc/tag-lines": "off",
 		"jsdoc/check-tag-names": [
@@ -35,9 +30,6 @@
 	"overrides": [
 		{
 			"files": ["vite.config.ts", "vitest.config.ts", "**/*.spec.ts", "**/__mocks__/**", "**/*.spec-utils.ts", "scripts/*"],
-			"parserOptions": {
-				"project": ["tsconfig.json"]
-			},
 			"env": {
 				"node": true
 			}

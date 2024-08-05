@@ -7,7 +7,7 @@ export const copySamples = (): Plugin => {
 	return {
 		name: 'copy-samples',
 		apply: 'build',
-		async buildStart(info) {
+		async buildStart() {
 			for (const framework of ['angular', 'react', 'svelte']) {
 				const src = path.join(import.meta.dirname, `../../${framework}/demo/dist/`);
 				const dst = `${framework}/samples/`;

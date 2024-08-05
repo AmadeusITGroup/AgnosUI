@@ -15,7 +15,7 @@ export const isURLReady = async (url: string, signal: AbortSignal) => {
 		const res = await fetch(url, {signal: abortController.signal});
 		await res.body?.cancel();
 		return res.ok;
-	} catch (error) {
+	} catch (_) {
 		return false;
 	} finally {
 		signal.removeEventListener('abort', listener);
@@ -67,7 +67,11 @@ export const runProcess = (processName: string, command: string[], abortSignal: 
 			.on('close', (code, signal) => {
 				logger.log(`${prefix}${processName} exited with ${code != null ? `code ${code}` : `signal ${signal}`}`);
 				abortSignal.removeEventListener('abort', onAbort);
-				code === 0 ? resolve() : reject(new Error(`${processName} failed with code ${code}`));
+				if (code === 0) {
+					resolve();
+				} else {
+					reject(new Error(`${processName} failed with code ${code}`));
+				}
 			})
 			.on('error', (error) => {
 				logger.log(`${prefix}${processName} failed to start: ${error}`);

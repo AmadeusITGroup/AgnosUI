@@ -507,7 +507,9 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 		// Waiting for refresh by the framework, to have the elements inside or outside the dom
 		if (referenceElement instanceof HTMLElement) {
 			setTimeout(() => {
-				focusLeft({event, referenceElement}) || focusRight({event, referenceElement});
+				if (!focusLeft({event, referenceElement})) {
+					focusRight({event, referenceElement});
+				}
 			});
 		}
 		event.preventDefault();

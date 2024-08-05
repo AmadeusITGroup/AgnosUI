@@ -84,6 +84,7 @@
 			"files": [
 				"bootstrap/src/**",
 				"angular.json",
+				"bootstrap/tsconfig.build.json",
 				"tsconfig.build.json",
 				"../tsconfig.json",
 				"../../tsconfig.json"
@@ -102,7 +103,7 @@
 				"daisyui/src/**",
 				"postcss.config.js",
 				"tailwind.config.js",
-				"daisyui/tsconfig.json",
+				"daisyui/tsconfig.build.json",
 				"angular.json",
 				"tsconfig.build.json",
 				"../tsconfig.json",

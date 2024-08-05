@@ -131,7 +131,7 @@ describe('Checks', () => {
 	});
 
 	test(`'allowNull' should add null to accepted values of a type guard`, () => {
-		const alwaysFalse = vi.fn((value: any) => false);
+		const alwaysFalse = vi.fn(() => false);
 		const withAllowNull = allowNull(alwaysFalse as unknown as (value: any) => value is never);
 		expect(withAllowNull(null)).toBe(true);
 		expect(alwaysFalse).not.toHaveBeenCalled();

@@ -19,7 +19,7 @@ const slotWrapper = <Props,>(slotContent: SlotFunction<Props>) => {
 	return res;
 };
 
-/* eslint-disable-next-line @typescript-eslint/ban-types */
+/* eslint-disable-next-line @typescript-eslint/no-unsafe-function-type */
 const isReactComponent = <Props,>(item: Function): item is React.ComponentClass<Props, any> => item.prototype instanceof Component;
 
 /**

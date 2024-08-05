@@ -6,7 +6,7 @@ export default (): Plugin => {
 	return {
 		name: '@agnos-ui/code-coverage',
 		enforce: 'pre',
-		transform(code, id, options) {
+		transform(code, id) {
 			if (!filter(id) || !canInstrument(id)) return;
 			return instrumentFile(code, id);
 		},

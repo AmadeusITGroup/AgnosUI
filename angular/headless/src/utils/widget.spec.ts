@@ -71,7 +71,7 @@ describe('callWidgetFactoryWithConfig', () => {
 					}),
 				},
 				directives: {
-					myDirective: createZoneCheckFn('myDirective', (arg) => ({
+					myDirective: createZoneCheckFn('myDirective', () => ({
 						update: createZoneCheckFn('myDirectiveUpdate', noop),
 						destroy: createZoneCheckFn('myDirectiveDestroy', noop),
 					})),

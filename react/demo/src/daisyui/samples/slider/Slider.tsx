@@ -17,7 +17,7 @@ export function Slider(props: Partial<Pick<SliderProps, 'min' | 'max' | 'values'
 			min={state.min}
 			max={state.max}
 			value={state.sortedHandles[0].value}
-			onChange={(e) => null}
+			onChange={() => null}
 			step={state.stepSize}
 			className="range"
 			aria-label={state.sortedHandles[0].ariaLabel}

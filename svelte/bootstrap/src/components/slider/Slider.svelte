@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-	import type {SliderApi, SliderProps, SliderSlots} from './slider';
+	import type {SliderProps, SliderSlots} from './slider';
 	import {createSlider} from './slider';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import {callWidgetFactory} from '../../config';
@@ -30,7 +30,6 @@
 			},
 		},
 	});
-	export const api: SliderApi = widget.api;
 
 	const {
 		stores: {structure$},

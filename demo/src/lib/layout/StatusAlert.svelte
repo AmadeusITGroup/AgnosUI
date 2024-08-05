@@ -23,6 +23,7 @@
 	$: componentName = $page.url.pathname.match(regex)?.[2];
 	$: issueUrl = `https://github.com/AmadeusITGroup/AgnosUI/issues?q=is%3Aopen+is%3Aissue+label%3A%22widget%3A+${componentName}%22`;
 	$: {
+		// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 		componentName;
 		alert?.api.open();
 	}

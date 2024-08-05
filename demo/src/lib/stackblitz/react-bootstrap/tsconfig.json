@@ -11,6 +11,9 @@
 		"moduleResolution": "bundler",
 		"isolatedModules": true,
 		"forceConsistentCasingInFileNames": true,
-		"noEmit": true
-	}
+		"noEmit": true,
+		"allowJs": true
+	},
+	"include": ["src"],
+	"files": ["vite.config.ts"]
 }

@@ -3,6 +3,7 @@ import {RuleTester} from '@typescript-eslint/rule-tester';
 import type {TSESLint} from '@typescript-eslint/utils';
 import {afterAll, describe, test} from 'vitest';
 import {angularCheckPropsRule} from '../src/angular-check-props';
+import eslintParser from '@typescript-eslint/parser';
 
 RuleTester.describe = describe;
 RuleTester.it = test;
@@ -13,10 +14,12 @@ describe('angular-check-props', () => {
 		`import { Component, EventEmitter } from "@angular/core";\ninterface MyWidgetProps {\n${widgetProps}\n}\ninterface MyWidget {\n\tpatch(props: Partial<MyWidgetProps>): void\n}\nconst callWidgetFactory: (config: any) => MyWidget;\n@Component({})\nclass MyComponent {\n${classContent}\n\t_widget = callWidgetFactory({events: ${events}});\n}`;
 
 	const ruleTester = new RuleTester({
-		parser: require.resolve('@typescript-eslint/parser'),
-		parserOptions: {
-			project: './tsconfig.test.json',
-			tsconfigRootDir: __dirname,
+		languageOptions: {
+			parser: eslintParser,
+			parserOptions: {
+				project: './tsconfig.test.json',
+				tsconfigRootDir: __dirname,
+			},
 		},
 	});
 	type MessageIds<T extends TSESLint.RuleModule<any, any>> = T extends TSESLint.RuleModule<infer U, any> ? U : never;
@@ -318,7 +321,7 @@ describe('angular-check-props', () => {
 			...invalid
 				.filter(({output}) => !!output)
 				.map(({output, name}) => ({
-					code: output!,
+					code: Array.isArray(output!) ? output!.join('') : output!,
 					name: `fix: ${name}`,
 				})),
 		],

@@ -3,6 +3,7 @@ import {RuleTester} from '@typescript-eslint/rule-tester';
 import type {TSESLint} from '@typescript-eslint/utils';
 import {afterAll, describe, test} from 'vitest';
 import {checkReplaceImportsRule} from '../src/check-replace-imports';
+import eslintParser from '@typescript-eslint/parser';
 
 RuleTester.describe = describe;
 RuleTester.it = test;
@@ -10,10 +11,12 @@ RuleTester.afterAll = afterAll;
 
 describe('check-replace-imports', () => {
 	const ruleTester = new RuleTester({
-		parser: require.resolve('@typescript-eslint/parser'),
-		parserOptions: {
-			project: './tsconfig.test.json',
-			tsconfigRootDir: __dirname,
+		languageOptions: {
+			parser: eslintParser,
+			parserOptions: {
+				project: './tsconfig.test.json',
+				tsconfigRootDir: __dirname,
+			},
 		},
 	});
 
@@ -79,7 +82,7 @@ describe('check-replace-imports', () => {
 			...invalid
 				.filter(({output}) => !!output)
 				.map(({output, options}) => ({
-					code: output!,
+					code: Array.isArray(output!) ? output!.join('') : output!,
 					options,
 				})),
 		],

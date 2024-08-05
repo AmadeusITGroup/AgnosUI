@@ -69,11 +69,11 @@
 		right: 0;
 		background-color: var(--bs-body-bg);
 		z-index: 1000;
+		view-transition-name: dialog;
 
 		:global(.demo-links-link) {
 			display: block !important;
 		}
-		view-transition-name: dialog;
 	}
 
 	.btn-close {

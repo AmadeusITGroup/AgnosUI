@@ -411,7 +411,7 @@ describe(`Stores service`, () => {
 			expect(onChangeCalls).toEqual([2, 4, 3]);
 			expect(values).toEqual([1, 2, 4, 3]);
 
-			const newListener = vi.fn((value) => {
+			const newListener = vi.fn(() => {
 				// this should do nothing
 				valueMax$.set(5);
 			});
@@ -530,7 +530,7 @@ describe(`Stores service`, () => {
 			expect(onChangeCalls).toEqual([2, 4, 3]);
 			expect(values).toEqual([1, 3, 2, 4, 3, 4, 3]);
 
-			const newListener = vi.fn((value) => {
+			const newListener = vi.fn(() => {
 				// this should do nothing
 				valueMax$.set(5);
 			});

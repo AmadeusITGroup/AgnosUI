@@ -116,10 +116,18 @@ export class PaginationPO extends BasePO {
 			const previousElem = rootNode.querySelector('a.au-previous');
 			const nextElem = rootNode.querySelector('a.au-next');
 			const lastElem = rootNode.querySelector('a.au-last');
-			firstElem && (hrefsNavigation.first = getHref(firstElem)!);
-			previousElem && (hrefsNavigation.previous = getHref(previousElem)!);
-			nextElem && (hrefsNavigation.next = getHref(nextElem)!);
-			lastElem && (hrefsNavigation.last = getHref(lastElem)!);
+			if (firstElem) {
+				hrefsNavigation.first = getHref(firstElem)!;
+			}
+			if (previousElem) {
+				hrefsNavigation.previous = getHref(previousElem)!;
+			}
+			if (nextElem) {
+				hrefsNavigation.next = getHref(nextElem)!;
+			}
+			if (lastElem) {
+				hrefsNavigation.last = getHref(lastElem)!;
+			}
 
 			for (const element of pagesElements) {
 				hrefs.push(element.getAttribute('href') || '');

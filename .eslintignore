@@ -11,3 +11,4 @@ eslint-plugin/test/file.svelte
 verdaccio/storage
 .wireit
 svelte/preprocess/test/files/transformed
+**/*.gen.ts

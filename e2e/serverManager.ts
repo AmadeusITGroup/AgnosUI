@@ -91,7 +91,7 @@ const createRunnableOperation = (
 			abortController.abort();
 			try {
 				await exitPromise;
-			} catch (error) {
+			} catch (_) {
 				// ignore errors
 			}
 		},
