@@ -53,8 +53,8 @@
 
 	afterNavigate((navigation) => {
 		if (!navigation.to?.url?.hash) {
-			const toFwkSubPath = navigation.to?.url?.href?.match(regexFwkSubPath)?.[2] as string | undefined;
-			const fromFwkSubPath = navigation.from?.url?.href?.match(regexFwkSubPath)?.[2] as string | undefined;
+			const toFwkSubPath = navigation.to?.url?.href?.match(regexFwkSubPath)?.[2];
+			const fromFwkSubPath = navigation.from?.url?.href?.match(regexFwkSubPath)?.[2];
 			if (!toFwkSubPath || !fromFwkSubPath || toFwkSubPath !== fromFwkSubPath) {
 				container.scrollTo(0, 0);
 			}

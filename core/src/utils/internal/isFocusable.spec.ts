@@ -15,14 +15,16 @@ describe(`isFocusable`, () => {
 		return document.activeElement === element;
 	};
 
-	const testCase = (expectedResult: boolean, markup: string, querySelector?: string) =>
-		test(querySelector ? `${querySelector} in ${markup}` : markup, () => {
+	const testCase = (expectedResult: boolean, markup: string, querySelector?: string) => {
+		const testName = querySelector ? `${querySelector} in ${markup}` : markup;
+		test(testName, () => {
 			parentElement.innerHTML = markup;
 			const element: HTMLElement = querySelector ? parentElement.querySelector(querySelector)! : (parentElement.firstElementChild as HTMLElement);
 			const isFocusableResult = isFocusable(element);
 			expect(checkFocusable(element)).toBe(expectedResult);
 			expect(isFocusableResult).toBe(expectedResult);
 		});
+	};
 
 	describe('input', () => {
 		testCase(true, '<input>');

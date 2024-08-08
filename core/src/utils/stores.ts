@@ -114,7 +114,7 @@ export function writableWithDefault<T>(
 				console.error('Not setting invalid value', value);
 				return;
 			}
-			value = normalizedValue as T;
+			value = normalizedValue;
 		}
 		own$.set(value);
 	});
@@ -304,7 +304,7 @@ export const stateStores = <A extends object>(inputStores: {[K in keyof A as `${
 export const bindableDerived = <T, U extends [WritableSignal<T>, ...StoreInput<any>[]]>(
 	onChange$: ReadableSignal<(value: T) => void>,
 	stores: U,
-	adjustValue = (arg: StoresInputValues<U>) => arg[0] as T,
+	adjustValue = (arg: StoresInputValues<U>) => arg[0],
 	equal = (currentValue: T, newValue: T) => newValue === currentValue,
 ) => {
 	let currentValue = stores[0]();

@@ -61,7 +61,7 @@ export default class ConfigAlertComponent {
 	dismissible = true;
 	type = this.styleList[0].value;
 
-	async showAlert(alert: AlertComponent) {
+	showAlert(alert: AlertComponent) {
 		alert.api.open();
 	}
 }

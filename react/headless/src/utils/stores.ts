@@ -42,5 +42,5 @@ export const usePropsAsStore = <T extends object>(props?: Partial<T>): ReadableS
 		storeRef.current!.set({...props});
 	}, [props]);
 
-	return useMemo(() => asReadable(storeRef.current!), [storeRef.current!]);
+	return useMemo(() => asReadable(storeRef.current!), [storeRef.current]);
 };

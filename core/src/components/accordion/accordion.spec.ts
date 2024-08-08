@@ -259,7 +259,7 @@ describe(`Accordion`, () => {
 		expectOpenItems(state, [false, true, false, false]);
 	});
 
-	test(`should call initDone to enable the transition on item`, async () => {
+	test(`should call initDone to enable the transition on item`, () => {
 		const el = document.createElement('div');
 		const transition = vi.fn();
 		const itemWidget = accordion.api.registerItem({props: {transition}});

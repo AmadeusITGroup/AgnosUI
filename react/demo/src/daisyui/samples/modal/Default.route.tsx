@@ -5,7 +5,7 @@ const ModalDemo = () => (
 		className="btn"
 		aria-haspopup="dialog"
 		onClick={() =>
-			openModal({
+			void openModal({
 				closeOnOutsideClick: true,
 				children: (
 					<>

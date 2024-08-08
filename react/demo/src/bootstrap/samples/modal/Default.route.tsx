@@ -6,6 +6,17 @@ const DefaultDemo = () => {
 	const modal = useRef<ModalApi<any>>(null);
 	const [message, setMessage] = useState('');
 	const [fullscreen, setFullscreen] = useState(false);
+	const onClick = async () => {
+		setMessage('');
+		const result = await modal.current!.open();
+		if (result === modalCloseButtonClick) {
+			setMessage('You clicked on the close button.');
+		} else if (result === modalOutsideClick) {
+			setMessage('You clicked outside the modal.');
+		} else {
+			setMessage(`You answered the question with "${result ? 'Yes' : 'No'}".`);
+		}
+	};
 	return (
 		<>
 			<Modal
@@ -25,21 +36,7 @@ const DefaultDemo = () => {
 			>
 				Do you want to save your changes?
 			</Modal>
-			<button
-				type="button"
-				className="btn btn-primary"
-				onClick={async () => {
-					setMessage('');
-					const result = await modal.current!.open();
-					if (result === modalCloseButtonClick) {
-						setMessage('You clicked on the close button.');
-					} else if (result === modalOutsideClick) {
-						setMessage('You clicked outside the modal.');
-					} else {
-						setMessage(`You answered the question with "${result ? 'Yes' : 'No'}".`);
-					}
-				}}
-			>
+			<button type="button" className="btn btn-primary" onClick={() => void onClick()}>
 				Launch demo modal
 			</button>
 			<div className="form-check form-switch mt-3">

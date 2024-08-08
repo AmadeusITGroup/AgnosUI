@@ -82,7 +82,7 @@ describe('check-replace-imports', () => {
 			...invalid
 				.filter(({output}) => !!output)
 				.map(({output, options}) => ({
-					code: Array.isArray(output!) ? output!.join('') : output!,
+					code: Array.isArray(output!) ? output.join('') : output!,
 					options,
 				})),
 		],

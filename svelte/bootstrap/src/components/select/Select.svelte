@@ -6,7 +6,7 @@
 </script>
 
 <script lang="ts">
-	type Item = $$Generic; // eslint-disable-line no-undef
+	type Item = $$Generic;
 	type $$Props = Partial<SelectProps<Item>>;
 	type $$Slots = SelectSlots<Item>;
 

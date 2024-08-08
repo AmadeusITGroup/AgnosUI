@@ -122,7 +122,7 @@ describe('callWidgetFactoryWithConfig', () => {
 		log.push('after autoDetectChanges');
 		expect(fixture.nativeElement.innerText.trim()).toBe('derived from defValue 0');
 		log.push('before first await 0');
-		await 0;
+		await Promise.resolve(0);
 		log.push('after first await 0');
 		ngZone.run(
 			createZoneCheckFn('ngZone.run', () => {
@@ -143,7 +143,7 @@ describe('callWidgetFactoryWithConfig', () => {
 		fixture.destroy();
 		log.push('after destroy');
 		log.push('before last await 0');
-		await 0;
+		await Promise.resolve(0);
 		log.push('after last await 0');
 		expect(log).toStrictEqual([
 			'enter ngZone',
@@ -200,7 +200,7 @@ describe('callWidgetFactoryWithConfig', () => {
 		]);
 	});
 
-	it('calls the core with the correct init values', async () => {
+	it('calls the core with the correct init values', () => {
 		type MyWidget = Widget<{myValue: string}, {myValue: string}, Record<string, never>, Record<string, never>, Record<string, never>>;
 
 		const factory: WidgetFactory<MyWidget> = (propsConfig) => {

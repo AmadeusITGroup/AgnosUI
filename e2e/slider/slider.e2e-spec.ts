@@ -140,8 +140,8 @@ test.describe(`Slider tests`, () => {
 					}),
 				);
 
-			expect(await minLabelLocator.isVisible()).toBe(false);
-			expect(await maxLabelLocator.isVisible()).toBe(true);
+			await expect(minLabelLocator).toBeHidden();
+			await expect(maxLabelLocator).toBeVisible();
 
 			await page.keyboard.press('End');
 
@@ -156,8 +156,8 @@ test.describe(`Slider tests`, () => {
 					}),
 				);
 
-			expect(await minLabelLocator.isVisible()).toBe(true);
-			expect(await maxLabelLocator.isVisible()).toBe(false);
+			await expect(minLabelLocator).toBeVisible();
+			await expect(maxLabelLocator).toBeHidden();
 		});
 
 		test(`should render slider disabled when passing the 'disabled' option`, async ({page}) => {
@@ -234,7 +234,7 @@ test.describe(`Slider tests`, () => {
 			await sliderPO.locatorHandle.click();
 			await page.keyboard.press('Home');
 
-			await expect(sliderPO.locatorMinLabelHorizontal).not.toBeVisible();
+			await expect(sliderPO.locatorMinLabelHorizontal).toBeHidden();
 
 			await sliderDemoPO.showMinMaxToggle.click();
 
@@ -367,8 +367,8 @@ test.describe(`Slider tests`, () => {
 			expect((await sliderPO.sliderHandleState()).at(1)).toEqual(expectedState[1]);
 			expect((await sliderPO.sliderProgressState())[0]).toEqual('left: 0%; width: 40%; height: 100%;');
 
-			expect(await minLabelLocator.isVisible()).toBe(false);
-			expect(await maxLabelLocator.isVisible()).toBe(true);
+			await expect(minLabelLocator).toBeHidden();
+			await expect(maxLabelLocator).toBeVisible();
 
 			await page.keyboard.press('End');
 
@@ -393,8 +393,8 @@ test.describe(`Slider tests`, () => {
 			expect((await sliderPO.sliderHandleState()).at(1)).toEqual(expectedState[1]);
 			expect((await sliderPO.sliderProgressState())[0]).toEqual('left: 40%; width: 60%; height: 100%;');
 
-			expect(await minLabelLocator.isVisible()).toBe(true);
-			expect(await maxLabelLocator.isVisible()).toBe(false);
+			await expect(minLabelLocator).toBeVisible();
+			await expect(maxLabelLocator).toBeHidden();
 		});
 
 		test(`should add / remove combined label from dom`, async ({page}) => {
@@ -490,8 +490,8 @@ test.describe(`Slider tests`, () => {
 			expect((await sliderPO.sliderHandleState()).at(1)).toEqual(expectedState[1]);
 			expect((await sliderPO.sliderProgressState())[0]).toEqual('bottom: 0%; width: 100%; height: 40%;');
 
-			expect(await minLabelLocator.isVisible()).toBe(false);
-			expect(await maxLabelLocator.isVisible()).toBe(true);
+			await expect(minLabelLocator).toBeHidden();
+			await expect(maxLabelLocator).toBeVisible();
 
 			await page.keyboard.press('End');
 
@@ -516,8 +516,8 @@ test.describe(`Slider tests`, () => {
 			expect((await sliderPO.sliderHandleState()).at(1)).toEqual(expectedState[1]);
 			expect((await sliderPO.sliderProgressState())[0]).toEqual('bottom: 40%; width: 100%; height: 60%;');
 
-			expect(await minLabelLocator.isVisible()).toBe(true);
-			expect(await maxLabelLocator.isVisible()).toBe(false);
+			await expect(minLabelLocator).toBeVisible();
+			await expect(maxLabelLocator).toBeHidden();
 		});
 	});
 });

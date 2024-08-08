@@ -36,7 +36,7 @@ const Collapse = ({expanded, headerText, children}: PropsWithChildren<{expanded?
 				<button
 					type="button"
 					id="collapse-toggle"
-					onClick={() => toggle()}
+					onClick={() => void toggle()}
 					className="btn toggle-button"
 					aria-controls="collapse-content"
 					aria-expanded={state.visible || undefined}

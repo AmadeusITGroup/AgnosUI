@@ -13,7 +13,7 @@ export const createBaseFrameworkProcessors = (): Record<Frameworks, StackblitzPr
 			isBootstrapCondition,
 		),
 		addAsyncFiles(import.meta.glob('./angular-daisyui/**', {query: '?raw', import: 'default'}) as any, '', './angular-daisyui/', isDaisyuiCondition),
-		async (project, sample) => {
+		(project, sample) => {
 			project.files['src/main.ts'] =
 				`import {bootstrapApplication} from '@angular/platform-browser';\nimport MainComponent from './${sample.files.angular.entryPoint.replace(
 					/\.ts$/,
@@ -29,7 +29,7 @@ export const createBaseFrameworkProcessors = (): Record<Frameworks, StackblitzPr
 			isBootstrapCondition,
 		),
 		addAsyncFiles(import.meta.glob('./react-daisyui/**', {query: '?raw', import: 'default'}) as any, '', './react-daisyui/', isDaisyuiCondition),
-		async (project, sample) => {
+		(project, sample) => {
 			project.files['src/main.tsx'] = `import {createRoot} from "react-dom/client";\nimport "./main.css";\nimport App from ${JSON.stringify(
 				`./${sample.files.react.entryPoint.replace(/\.tsx?$/, '')}`,
 			)};\nconst rootElement = document.getElementById('root')!;\nconst root = createRoot(rootElement);\nroot.render(<App />)`;
@@ -43,7 +43,7 @@ export const createBaseFrameworkProcessors = (): Record<Frameworks, StackblitzPr
 			isBootstrapCondition,
 		),
 		addAsyncFiles(import.meta.glob('./svelte-daisyui/**', {query: '?raw', import: 'default'}) as any, '', './svelte-daisyui/', isDaisyuiCondition),
-		async (project, sample) => {
+		(project, sample) => {
 			project.files['src/main.ts'] = `import "./main.css";\nimport App from ${JSON.stringify(
 				`./${sample.files.svelte.entryPoint}`,
 			)};\nconst app = new App({target: document.getElementById('root')!});\nexport default app;`;

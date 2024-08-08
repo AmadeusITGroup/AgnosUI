@@ -20,10 +20,9 @@ const RatingDemo = () => {
 
 	return (
 		<>
-			<label className="form-label" id="ratingLabel">
+			<div className="form-label" id="ratingLabel">
 				Rating of your experience
-			</label>
-			<br />
+			</div>
 			<Rating rating={ctrl.value} disabled={ctrl.disabled} onRatingChange={(value) => updateCtrl({value})} ariaLabelledBy="ratingLabel" />
 			<div id="form-msg" className="form-text small">
 				{ctrl.valid && <div className="text-success">Thanks!</div>}

@@ -33,7 +33,7 @@ describe('toAngularSignal', () => {
 		expect(signal()).toBe(2); // no change as the subscription was ended
 	});
 
-	it('subscribes and unsubscribes outside Angular zone', async () => {
+	it('subscribes and unsubscribes outside Angular zone', () => {
 		const ngZone = TestBed.inject(NgZone);
 		const tansuStore = readable(0 as number, {
 			onUse: createZoneCheckFn('onUse', (set) => {
