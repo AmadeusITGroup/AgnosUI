@@ -38,7 +38,7 @@
 
 	const compareFn = new Intl.Collator('en').compare;
 	function onSelectedChange(items: WikiResult[]) {
-		selected = (<WikiResult[]>(items || [])).sort((a, b) => compareFn(a.title, b.title));
+		selected = (items || []).sort((a, b) => compareFn(a.title, b.title));
 	}
 
 	const navSelector = (node: HTMLElement) => node.querySelectorAll<HTMLSpanElement | HTMLInputElement>('a,button,input');

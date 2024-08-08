@@ -43,8 +43,8 @@ export class ModalPO extends BasePO {
 		return this.locatorRoot.locator(this.selectors.backdrop);
 	}
 
-	async state() {
-		return this.locatorRoot.evaluate(async (rootNode: HTMLElement, selectors) => {
+	state() {
+		return this.locatorRoot.evaluate((rootNode: HTMLElement, selectors) => {
 			const closeButton = rootNode.querySelector<HTMLButtonElement>(selectors.closeButton)?.getAttribute('aria-label');
 			const header = rootNode.querySelector<HTMLDivElement>(selectors.header)?.innerText?.trim();
 			const title = rootNode.querySelector<HTMLDivElement>(selectors.title)?.innerText?.trim();

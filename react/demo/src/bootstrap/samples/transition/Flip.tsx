@@ -24,12 +24,12 @@ const Flip = ({hiddenText, children}: PropsWithChildren<{hiddenText: string}>) =
 			<div className="flip-card-inner" {...useDirective(directive)}>
 				<div className="flip-card-front">
 					{children}
-					<button className="btn btn-outline-secondary" onClick={() => hide()}>
+					<button className="btn btn-outline-secondary" onClick={() => void hide()}>
 						Hide again.
 					</button>
 				</div>
 				<div className="flip-card-back">
-					<button className="btn btn-outline-primary" onClick={() => show()}>
+					<button className="btn btn-outline-primary" onClick={() => void show()}>
 						{hiddenText}
 					</button>
 				</div>

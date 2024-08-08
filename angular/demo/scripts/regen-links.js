@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import {glob} from 'glob';
 import path from 'path';
 import {writeFile, mkdir, rm} from 'fs/promises';

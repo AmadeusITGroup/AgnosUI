@@ -51,7 +51,7 @@ jobs:
       - run: npm run build:ci
       - run: npm run check
       - run: npm run format:check
-      - run: npm run lint
+      - run: npm run lint -- --quiet
       - name: check stackblitz angular bootstrap lockfile
         run: npm ci --dry-run
         working-directory: demo/src/lib/stackblitz/angular-bootstrap

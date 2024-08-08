@@ -32,7 +32,7 @@ export const cleanTempFolder = async () => {
 
 const getFreePort = async () => {
 	const server = createServer();
-	return await new Promise((resolve, reject) =>
+	return await new Promise<number>((resolve, reject) =>
 		server.on('error', reject).listen(0, '127.0.0.1', () => {
 			const port = (server.address() as AddressInfo).port;
 			server.close(() => resolve(port));

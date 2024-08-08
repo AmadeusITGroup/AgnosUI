@@ -354,7 +354,7 @@ export default async () => {
 				url: urlPath ? new URL(urlPath, server?.url).href : undefined,
 				deleteURL: deleteId ? `/${deleteId}` : undefined,
 			});
-		} catch (error) {
+		} catch (error: any) {
 			res.status(500).json({error: `${error}`, logs: unsharedOperations?.map((operation) => operation.getLogs())});
 			if (deleteId) {
 				await stopOperations(deleteId);
@@ -366,7 +366,7 @@ export default async () => {
 		try {
 			await stopOperations(req.params.deleteId);
 			res.json({});
-		} catch (error) {
+		} catch (error: any) {
 			res.status(500).json({error: `${error}`});
 		}
 	});

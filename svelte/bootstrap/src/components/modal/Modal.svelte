@@ -14,7 +14,7 @@
 </script>
 
 <script lang="ts">
-	type Data = $$Generic; // eslint-disable-line no-undef
+	type Data = $$Generic;
 	type $$Props = Partial<ModalProps<Data>>;
 	type $$Slots = ModalSlots;
 

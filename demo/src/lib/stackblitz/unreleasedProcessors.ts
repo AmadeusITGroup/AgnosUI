@@ -8,7 +8,7 @@ export const createFrameworkProcessors =
 		: () => {
 				const res = createBaseFrameworkProcessors();
 
-				const mergePackageJson: StackblitzProcessor = async ({files}) => {
+				const mergePackageJson: StackblitzProcessor = ({files}) => {
 					const packageJson = JSON.parse(files['package.json']);
 					for (const file of Object.keys(files)) {
 						if (file.startsWith('packages/') && file.endsWith('/package.json')) {

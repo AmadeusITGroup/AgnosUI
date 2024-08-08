@@ -51,5 +51,5 @@ export const getPropValues = (config: Record<string, any>) => {
 };
 
 export const getPropValueLabel = (key: PropsValues) => {
-	return propsValuesList[key as PropsValues].label;
+	return propsValuesList[key].label;
 };

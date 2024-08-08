@@ -6,7 +6,7 @@ import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 	standalone: true,
 	imports: [AgnosUIAngularModule, ReactiveFormsModule],
 	template: `
-		<label class="form-label" id="ratingLabel">Rating of your experience</label><br />
+		<div class="form-label" id="ratingLabel">Rating of your experience</div>
 		<div [auRating] [formControl]="ctrl" auAriaLabelledBy="ratingLabel"></div>
 		<div id="form-msg" class="form-text small">
 			@if (ctrl.valid) {

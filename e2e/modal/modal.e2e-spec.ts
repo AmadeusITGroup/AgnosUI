@@ -93,7 +93,7 @@ Close`,
 		await modalPO.locatorRoot.waitFor({state: 'hidden'});
 	});
 
-	test.describe.parallel(`Modal customizability`, async () => {
+	test.describe.parallel(`Modal customizability`, () => {
 		const getExpectedState = (): State => ({
 			rootClasses: ['d-block', 'fade', 'modal', 'show'],
 			header: undefined,

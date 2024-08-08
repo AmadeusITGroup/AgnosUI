@@ -28,7 +28,7 @@
 			code = text.trim();
 		}
 	}
-	async function getSample(text: string, lang: string) {
+	function getSample(text: string, lang: string) {
 		if (lang === 'sample') {
 			const match = text.trim().match(/^\{([^:]+):([a-zA-Z-/]+):(\d+)(:noCode)?(:noResize)?\}$/);
 			if (match) {

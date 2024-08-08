@@ -6,11 +6,13 @@ import {addIndentation} from './ast-utils';
 
 const defaultConfigFnregExp = /^get([a-zA-Z]*)DefaultConfig$/;
 
-class ErrorAtNode {
+class ErrorAtNode extends Error {
 	constructor(
 		public node: ts.Node,
 		public message: string,
-	) {}
+	) {
+		super(message);
+	}
 }
 
 function evaluateFunctionCall(functionLike: ts.FunctionLikeDeclaration, typeChecker: ts.TypeChecker) {

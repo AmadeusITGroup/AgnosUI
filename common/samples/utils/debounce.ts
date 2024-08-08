@@ -15,7 +15,7 @@ export function debounce<T extends Array<any>>(fn: (...args: T) => any, time: nu
 	};
 }
 
-export const abortPrevious = <T extends any[]>(fn: (abortSignal: AbortSignal, ...args: T) => void) => {
+export const abortPrevious = <T extends any[]>(fn: (abortSignal: AbortSignal, ...args: T) => void | Promise<void>) => {
 	let abortController: AbortController | undefined;
 	return (...args: T) => {
 		abortController?.abort();

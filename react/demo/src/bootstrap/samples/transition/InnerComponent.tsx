@@ -108,13 +108,13 @@ const InnerComponent = () => {
 				</label>
 
 				<div className="d-flex flex-wrap gap-2">
-					<button type="button" className="btn btn-outline-primary" onClick={() => transitionWidget.api.toggle()}>
+					<button type="button" className="btn btn-outline-primary" onClick={() => void transitionWidget.api.toggle()}>
 						Toggle
 					</button>
-					<button type="button" className="btn btn-outline-primary" onClick={() => transitionWidget.api.toggle(undefined, true)}>
+					<button type="button" className="btn btn-outline-primary" onClick={() => void transitionWidget.api.toggle(undefined, true)}>
 						Toggle with animation
 					</button>
-					<button type="button" className="btn btn-outline-primary" onClick={() => transitionWidget.api.toggle(undefined, false)}>
+					<button type="button" className="btn btn-outline-primary" onClick={() => void transitionWidget.api.toggle(undefined, false)}>
 						Toggle without animation
 					</button>
 				</div>

@@ -6,7 +6,7 @@
 
 	const imgRegExp = /resources\/images\/(.*)\.(svg|webp|png|jpg)/i;
 	let srcPromise: Promise<any>;
-	async function getSrc(href: string) {
+	function getSrc(href: string) {
 		try {
 			const matches = href.match(imgRegExp);
 			if (matches) {

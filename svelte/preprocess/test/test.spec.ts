@@ -3,7 +3,7 @@ import {preprocess, compile} from 'svelte/compiler';
 import {expect, test} from 'vitest';
 import {directivesPreprocess} from '../src';
 
-const testSourceFiles = import.meta.glob('./files/source/*.svelte', {
+const testSourceFiles = import.meta.glob<boolean, string, string>('./files/source/*.svelte', {
 	query: '?raw',
 	import: 'default',
 });
@@ -11,7 +11,7 @@ const transformedFilesFolder = join(import.meta.dirname, 'files', 'transformed')
 
 for (const [filename, readFile] of Object.entries(testSourceFiles)) {
 	test(filename, async () => {
-		const fileContent: string = (await readFile()) as any;
+		const fileContent: string = await readFile();
 		const transformedFile = await preprocess(fileContent, [directivesPreprocess()], {filename});
 		// check that compiler doesn't throw:
 		compile(transformedFile.code);

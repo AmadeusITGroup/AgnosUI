@@ -105,4 +105,4 @@ const generateExports = async (destination, source, dependencyPkg, includeCompon
 	);
 };
 
-generateExports(process.argv[2], process.argv[3], process.argv[4], process.argv[5] === 'true');
+await generateExports(process.argv[2], process.argv[3], process.argv[4], process.argv[5] === 'true');

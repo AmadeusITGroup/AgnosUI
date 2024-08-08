@@ -38,8 +38,8 @@ test.describe.parallel(`Pagination tests`, () => {
 		await paginationPO.locatorRoot.waitFor();
 		await expect.poll(() => paginationPO.state()).toEqual(initState);
 		await expect.poll(() => paginationDemoPO.defaultPaginationDemoState()).toEqual({page: 4});
-		await expect(paginationPO.locatorPreviousButton).not.toBeDisabled();
-		await expect(paginationPO.locatorNextButton).not.toBeDisabled();
+		await expect(paginationPO.locatorPreviousButton).toBeEnabled();
+		await expect(paginationPO.locatorNextButton).toBeEnabled();
 		const disabledPaginationPO = new PaginationPO(page, 3);
 		await expect.poll(() => disabledPaginationPO.state()).toEqual(disabledInitState);
 		const paginationWithBoundariesPO = new PaginationPO(page, 2);

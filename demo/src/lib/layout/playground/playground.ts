@@ -12,8 +12,8 @@ function setPlaygroundContext(context: Playground) {
 	setContext(playgroundSymbol, context);
 }
 
-export function getPlaygroundContext() {
-	return getContext(playgroundSymbol) as Playground;
+export function getPlaygroundContext(): Playground {
+	return getContext(playgroundSymbol);
 }
 
 interface PlaygroundProps {

@@ -5,7 +5,6 @@
 
 	const open$ = writable(false);
 
-	// eslint-disable-next-line no-undef
 	type Item = $$Generic<DropdownItem>;
 
 	const {hasFocus$, directive} = createHasFocus();

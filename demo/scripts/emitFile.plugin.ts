@@ -5,7 +5,7 @@ export const emitFile = (emittedFile: EmittedFile): Plugin => {
 	return {
 		name: 'emit-file',
 		apply: 'build',
-		async buildStart() {
+		buildStart() {
 			this.emitFile(emittedFile);
 		},
 	};
