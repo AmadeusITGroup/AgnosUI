@@ -338,7 +338,15 @@ export const createTransition = (config?: PropsConfig<TransitionProps>): Transit
 		}
 	};
 
-	const directive = mergeDirectives<void | Partial<TransitionProps>>(storeDirective, directiveUpdate(patch), directiveSubscribe(visibleAction$));
+	const directive = mergeDirectives<void | Partial<TransitionProps>>(
+		storeDirective,
+		directiveUpdate((args: void | Partial<TransitionProps>) => {
+			if (args) {
+				patch(args);
+			}
+		}),
+		directiveSubscribe(visibleAction$),
+	);
 
 	return {
 		...stateStores({

@@ -4,7 +4,7 @@ const decimalRegExp = /(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/;
  * @param number - decimal number
  * @returns the decimal precision of the number
  */
-export function getDecimalPrecision(number: number) {
+export function getDecimalPrecision(number: number): number {
 	const matches = ('' + number).match(decimalRegExp);
 	return Math.max(
 		0,

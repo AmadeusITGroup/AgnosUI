@@ -7,7 +7,7 @@ import {BROWSER} from 'esm-env';
 const evtFocusIn = 'focusin';
 const evtFocusOut = 'focusout';
 
-export const activeElement$ = !BROWSER
+export const activeElement$: ReadableSignal<Element | null> = !BROWSER
 	? readable(null)
 	: readable(<Element | null>null, {
 			onUse({set}) {

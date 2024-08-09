@@ -1,4 +1,4 @@
-import {asReadable, derived} from '@amadeus-it-group/tansu';
+import {asReadable, derived, type ReadableSignal} from '@amadeus-it-group/tansu';
 import {noop} from '../utils/internal/func';
 import type {PropsConfig} from '../types';
 import {writablesForProps} from '../utils/stores';
@@ -31,7 +31,13 @@ const defaultValues: IntersectionProps = {
  * @param config - the props config for the intersection service
  * @returns the intersection service
  */
-export const createIntersection = (config?: PropsConfig<IntersectionProps>) => {
+export const createIntersection = (
+	config?: PropsConfig<IntersectionProps>,
+): {
+	elements$: ReadableSignal<HTMLElement[]>;
+	visibleElements$: ReadableSignal<Map<Element, IntersectionObserverEntry>>;
+	patch: (storesValues: Partial<IntersectionProps>) => void;
+} => {
 	const [{elements$, options$}, patch] = writablesForProps(defaultValues, config);
 
 	const visibleElements$ = derived(

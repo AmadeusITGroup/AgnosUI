@@ -217,7 +217,7 @@ const defaultConfig: RatingProps = {
  * Returns a shallow copy of the default rating config.
  * @returns a copy of the default config
  */
-export function getRatingDefaultConfig() {
+export function getRatingDefaultConfig(): RatingProps {
 	return {...defaultConfig};
 }
 

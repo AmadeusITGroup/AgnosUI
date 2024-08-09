@@ -1,7 +1,7 @@
-import {readable} from '@amadeus-it-group/tansu';
+import {readable, type ReadableSignal} from '@amadeus-it-group/tansu';
 
 /** Store exposing the location.hash string */
-export const hash$ = readable(<string>'', {
+export const hash$: ReadableSignal<string> = readable(<string>'', {
 	onUse({set}) {
 		function handleHashChange() {
 			const hash = location.hash;

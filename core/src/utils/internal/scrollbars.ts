@@ -23,7 +23,7 @@ let internalRevert = noop;
 /**
  * A function to remove the scrollbars on the body element. It can be reverted using the {@link revertScrollbars} function.
  */
-export const removeScrollbars = () => {
+export const removeScrollbars = (): void => {
 	internalRevert();
 	internalRevert = internalRemoveScrollbars();
 };
@@ -31,7 +31,7 @@ export const removeScrollbars = () => {
 /**
  * A function to revert the removal of scrollbars performed by the {@link removeScrollbars} function.
  */
-export const revertScrollbars = () => {
+export const revertScrollbars = (): void => {
 	internalRevert();
 	internalRevert = noop;
 };

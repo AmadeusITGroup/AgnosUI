@@ -323,7 +323,7 @@ const defaultSliderConfig: SliderProps = {
  * Returns a shallow copy of the default slider config.
  * @returns a copy of the default config
  */
-export function getSliderDefaultConfig() {
+export function getSliderDefaultConfig(): SliderProps {
 	return {...defaultSliderConfig};
 }
 
