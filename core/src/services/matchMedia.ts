@@ -1,4 +1,4 @@
-import {readable} from '@amadeus-it-group/tansu';
+import {readable, type ReadableSignal} from '@amadeus-it-group/tansu';
 import {BROWSER} from 'esm-env';
 import {addEvent} from '../utils/internal/dom';
 
@@ -8,7 +8,7 @@ import {addEvent} from '../utils/internal/dom';
  * @param query - the query to match
  * @returns a readable store tracking the match media query state
  */
-export const createMatchMedia = (query: string) =>
+export const createMatchMedia = (query: string): ReadableSignal<boolean> =>
 	BROWSER
 		? readable(false, {
 				onUse({set}) {

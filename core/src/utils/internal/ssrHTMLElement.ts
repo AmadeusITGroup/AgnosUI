@@ -1,6 +1,6 @@
 import type {SSRHTMLElement, StyleKey, StyleValue} from '../../types';
 
-export const ssrHTMLElementAttributesAndStyle = Symbol('attributesAndStyle');
+export const ssrHTMLElementAttributesAndStyle: unique symbol = Symbol('attributesAndStyle');
 
 const spaceRegExp = /\s+/;
 

@@ -78,8 +78,8 @@ const noArg = readable(undefined);
  * @param directive - directive to wrap
  * @returns The resulting directive.
  */
-export const bindDirectiveNoArg = <T, U extends SSRHTMLElement = SSRHTMLElement>(directive: Directive<T | void, U>) =>
-	bindDirective(directive, noArg);
+export const bindDirectiveNoArg = <T, U extends SSRHTMLElement = SSRHTMLElement>(directive: Directive<T, U>): Directive<void, U> =>
+	bindDirective(directive as Directive<void, U>, noArg);
 
 /**
  * Maps the argument to another argument of a directive using a provided function.
@@ -211,7 +211,7 @@ export const createStoreArrayDirective = (): {directive: Directive; elements$: R
  * and the `elements$` property that is the store containing an array of all the elements on which the directive is currently
  * used.
  */
-export const createBrowserStoreArrayDirective = () => {
+export const createBrowserStoreArrayDirective = (): {directive: Directive<void, SSRHTMLElement>; elements$: ReadableSignal<HTMLElement[]>} => {
 	const {directive, elements$} = createStoreArrayDirective();
 	return {directive: browserDirective(directive), elements$: elements$ as ReadableSignal<HTMLElement[]>};
 };
@@ -271,7 +271,10 @@ export const createStoreDirective = (): {directive: Directive; element$: Readabl
  * and the `element$` property that is the store containing the element on which the directive is currently used (or null
  * if the store is not currently used).
  */
-export const createBrowserStoreDirective = () => {
+export const createBrowserStoreDirective = (): {
+	directive: Directive<void, SSRHTMLElement>;
+	element$: ReadableSignal<HTMLElement | null>;
+} => {
 	const {directive, element$} = createStoreDirective();
 	return {directive: browserDirective(directive), element$: element$ as ReadableSignal<HTMLElement | null>};
 };
@@ -310,7 +313,13 @@ export const mergeDirectives =
  * @param directives - the directives to apply
  * @returns The directive instance.
  */
-export const multiDirective = <T extends any[], U extends SSRHTMLElement = SSRHTMLElement>(element: U, directives: DirectivesAndOptParam<T, U>) => {
+export const multiDirective = <T extends any[], U extends SSRHTMLElement = SSRHTMLElement>(
+	element: U,
+	directives: DirectivesAndOptParam<T, U>,
+): {
+	update: (directives: DirectivesAndOptParam<any[], U>) => void;
+	destroy: () => void;
+} => {
 	const instances: {[K in keyof T]: {directive: Directive<T[K], U>; instance: ReturnType<Directive<T[K], U>>; arg: T[K]}} = [] as any;
 	const update = (directives: DirectivesAndOptParam<any[], U>) =>
 		batch(() => {
@@ -468,7 +477,7 @@ export const classDirective: Directive<string> = createAttributesDirective<strin
  * @param directives - List of directives to generate attributes from. Each parameter can be the directive or an array with the directive and its parameter
  * @returns JSON object with name/value for the attributes
  */
-export function directiveAttributes<T extends any[]>(...directives: DirectivesAndOptParam<T>) {
+export function directiveAttributes<T extends any[]>(...directives: DirectivesAndOptParam<T>): Record<string, string> {
 	const {attributes, classNames, style} = attributesData(...directives);
 	if (classNames.length) {
 		attributes['class'] = classNames.join(' ');
@@ -488,4 +497,6 @@ export function directiveAttributes<T extends any[]>(...directives: DirectivesAn
  *
  * @returns JSON object with name/value for the attributes
  */
-export const ssrAttributes = BROWSER ? () => ({}) : directiveAttributes;
+export const ssrAttributes: <T extends any[]>(...directives: DirectivesAndOptParam<T>) => Record<string, string> = BROWSER
+	? () => ({})
+	: directiveAttributes;

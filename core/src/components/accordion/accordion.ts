@@ -638,4 +638,4 @@ export function factoryCreateAccordion(
  * @param config - config of the accordion, either as a store or as an object containing values or stores.
  * @returns a new accordion widget instance
  */
-export const createAccordion = factoryCreateAccordion();
+export const createAccordion: WidgetFactory<AccordionWidget> = factoryCreateAccordion();

@@ -5,7 +5,7 @@
  * @param b - the second input
  * @returns 1, 0 or -1 depending on the default compare
  */
-export const compareDefault = (a: any, b: any) => (a < b ? -1 : a > b ? 1 : 0);
+export const compareDefault = (a: any, b: any): -1 | 0 | 1 => (a < b ? -1 : a > b ? 1 : 0);
 
 /**
  * A comparision function between DOM elements, based on [Node.compareDocumentPosition](https://developer.mozilla.org/fr/docs/Web/API/Node/compareDocumentPosition).
@@ -14,7 +14,7 @@ export const compareDefault = (a: any, b: any) => (a < b ? -1 : a > b ? 1 : 0);
  * @param element2 - the second node
  * @returns 1, 0 or -1
  */
-export const compareDomOrder = (element1: Node, element2: Node) => {
+export const compareDomOrder = (element1: Node, element2: Node): 0 | 1 | -1 => {
 	if (element1 === element2) {
 		return 0;
 	}

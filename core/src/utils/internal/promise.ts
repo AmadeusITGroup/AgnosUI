@@ -117,7 +117,13 @@ const truthyValue = (value: unknown) => !!value;
  * @param condition - the condition function
  * @returns the promise and an unsubscribe function
  */
-export const promiseFromStore = <T>(store: ReadableSignal<T>, condition: (value: T) => boolean = truthyValue) => {
+export const promiseFromStore = <T>(
+	store: ReadableSignal<T>,
+	condition: (value: T) => boolean = truthyValue,
+): {
+	promise: Promise<T>;
+	unsubscribe(): void;
+} => {
 	let resolve: (value: T) => void;
 	const promise = new Promise<T>((r) => (resolve = r));
 	let unsubscribe = () => {
@@ -149,7 +155,13 @@ export const promiseFromStore = <T>(store: ReadableSignal<T>, condition: (value:
  * @param event - the event to listen to
  * @returns the promise and an unsubscribe function
  */
-export const promiseFromEvent = (element: EventTarget, event: string) => {
+export const promiseFromEvent = (
+	element: EventTarget,
+	event: string,
+): {
+	promise: Promise<Event>;
+	unsubscribe(): void;
+} => {
 	let resolve: (event: Event) => void;
 	const promise = new Promise<Event>((r) => (resolve = r));
 	let unsubscribe = () => {
@@ -177,7 +189,12 @@ export const promiseFromEvent = (element: EventTarget, event: string) => {
  * @param delay - the delay in milli seconds
  * @returns a promise and an unsubscribe function
  */
-export const promiseFromTimeout = (delay: number) => {
+export const promiseFromTimeout = (
+	delay: number,
+): {
+	promise: Promise<void>;
+	unsubscribe(): void;
+} => {
 	let timeout: any;
 	return {
 		promise: new Promise<void>((r) => {
@@ -199,7 +216,10 @@ export const promiseFromTimeout = (delay: number) => {
  * Utility method to create a promise with resolve
  * @returns a promise with resolve
  */
-export const promiseWithResolve = () => {
+export const promiseWithResolve = (): {
+	promise: Promise<void>;
+	resolve: (value: void | Promise<void>) => void;
+} => {
 	let resolve: (value: void | Promise<void>) => void;
 	const promise = new Promise<void>((r) => {
 		resolve = r;
