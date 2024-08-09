@@ -46,7 +46,7 @@ describe(`createTransition`, () => {
 				onVisibleChange,
 			},
 		});
-		const directiveInstance = transitionInstance.directives.directive(element);
+		const directiveInstance = transitionInstance.directives.directive(element, {});
 		await transitionInstance.api.show();
 		events.push('here');
 		await transitionInstance.api.hide();

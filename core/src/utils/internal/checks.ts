@@ -38,7 +38,7 @@ export function isString(value: any): value is string {
  * an array type guard
  * @returns true if the value is an array
  */
-export const isArray = Array.isArray;
+export const isArray: (arg: any) => arg is any[] = Array.isArray;
 
 // TODO should we check that max > min?
 /**

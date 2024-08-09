@@ -2,12 +2,16 @@ import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {derived} from '@amadeus-it-group/tansu';
 import {createBrowserStoreDirective} from '../utils/directive';
 import {noop} from '../utils/internal/func';
+import type {Directive, SSRHTMLElement} from '../types';
 
 /**
  * Create a resize observer object
  * @returns An object containing the store with the dimentions of observed element (ResizeObserverEntry), the directive to be applied to the html element to be observed
  */
-export const createResizeObserver = () => {
+export const createResizeObserver = (): {
+	dimensions$: ReadableSignal<ResizeObserverEntry | undefined>;
+	directive: Directive<void, SSRHTMLElement>;
+} => {
 	const {element$, directive} = createBrowserStoreDirective();
 
 	const observedElement$ = derived<ResizeObserverEntry | undefined, ReadableSignal<HTMLElement | null>>(

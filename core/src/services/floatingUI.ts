@@ -10,7 +10,7 @@ import type {
 	Strategy,
 } from '@floating-ui/dom';
 import {arrow, autoUpdate, computePosition} from '@floating-ui/dom';
-import type {PropsConfig} from '../types';
+import type {Directive, PropsConfig, SSRHTMLElement, Widget} from '../types';
 import {createBrowserStoreDirective, directiveSubscribe, mergeDirectives} from '../utils/directive';
 import {promiseStoreToValueStore} from '../utils/internal/promise';
 import {stateStores, writablesForProps} from '../utils/stores';
@@ -55,13 +55,28 @@ export interface FloatingUIState {
 	middlewareData: MiddlewareData | undefined;
 }
 
+export interface FloatingUIDirectives {
+	/**
+	 * Directive to attach to the reference element
+	 */
+	referenceDirective: Directive<void, SSRHTMLElement>;
+	/**
+	 * Directive to attach to the floating element
+	 */
+	floatingDirective: Directive<void, SSRHTMLElement>;
+	/**
+	 * Directive to attach to the arrow element
+	 */
+	arrowDirective: Directive<void, SSRHTMLElement>;
+}
+
 const defaultConfig: FloatingUIProps = {
 	computePositionOptions: {},
 	autoUpdateOptions: {},
 	arrowOptions: {},
 };
 
-export type FloatingUI = ReturnType<typeof createFloatingUI>;
+export type FloatingUI = Omit<Widget<FloatingUIProps, FloatingUIState, object, object, FloatingUIDirectives>, 'api' | 'actions'>;
 
 /**
  * Create a floating UI service.
@@ -71,7 +86,7 @@ export type FloatingUI = ReturnType<typeof createFloatingUI>;
  * @param propsConfig - the props config for the floating UI service
  * @returns the floating UI service
  */
-export const createFloatingUI = (propsConfig?: PropsConfig<FloatingUIProps>) => {
+export const createFloatingUI = (propsConfig?: PropsConfig<FloatingUIProps>): FloatingUI => {
 	const [{autoUpdateOptions$, computePositionOptions$: computePositionInputOptions$, arrowOptions$: arrowInputOptions$}, patch] = writablesForProps(
 		defaultConfig,
 		propsConfig,

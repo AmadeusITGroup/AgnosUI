@@ -34,10 +34,10 @@ export type WithoutDollar<S extends `${string}$`> = S extends `${infer U}$` ? U 
  * @param stores - object of stores
  * @returns the patch function
  */
-export function createPatch<T extends object>(stores: ToWritableSignal<T>) {
-	return function <U extends Partial<T>>(storesValues?: U | void) {
+export function createPatch<T extends object>(stores: ToWritableSignal<T>): (storesValues: Partial<T>) => void {
+	return function (storesValues: Partial<T>) {
 		batch(() => {
-			for (const [name, value] of Object.entries(storesValues ?? {})) {
+			for (const [name, value] of Object.entries(storesValues)) {
 				(stores as any)[`${name}$`]?.set(value);
 			}
 		});
@@ -132,14 +132,14 @@ export const isStore = (x: any): x is ReadableSignal<any> => !!(x && typeof x ==
  * @param x - either a store or a simple value
  * @returns either x if x is already a store, or readable(x) otherwise
  */
-export const toReadableStore = <T>(x: ReadableSignal<T> | T) => (isStore(x) ? x : readable(x));
+export const toReadableStore = <T>(x: ReadableSignal<T> | T): ReadableSignal<T> => (isStore(x) ? x : readable(x));
 
 /**
  * If the provided argument is already a store, it is returned as is, otherwise, a writable store is created with the provided argument as its initial value.
  * @param x - either a writable store or a simple value
  * @returns either x if x is already a store, or writable(x) otherwise
  */
-export const toWritableStore = <T>(x: WritableSignal<T> | T) => (isStore(x) ? x : writable(x));
+export const toWritableStore = <T>(x: WritableSignal<T> | T): WritableSignal<T> => (isStore(x) ? x : writable(x));
 
 /**
  * Extract and normalize config stores.
@@ -172,7 +172,11 @@ export const normalizeConfigStores = <T extends object>(
  * @param config2 - the second config
  * @returns the merged config
  */
-export const mergeConfigStores = <T extends object>(keys: (keyof T)[], config1?: ReadableSignals<T>, config2?: ReadableSignals<T>) => {
+export const mergeConfigStores = <T extends object>(
+	keys: (keyof T)[],
+	config1?: ReadableSignals<T>,
+	config2?: ReadableSignals<T>,
+): ReadableSignals<T> => {
 	const res: ReadableSignals<T> = {};
 	for (const key of keys) {
 		const config1Store = config1?.[key];
@@ -304,9 +308,9 @@ export const stateStores = <A extends object>(inputStores: {[K in keyof A as `${
 export const bindableDerived = <T, U extends [WritableSignal<T>, ...StoreInput<any>[]]>(
 	onChange$: ReadableSignal<(value: T) => void>,
 	stores: U,
-	adjustValue = (arg: StoresInputValues<U>) => arg[0] as T,
-	equal = (currentValue: T, newValue: T) => newValue === currentValue,
-) => {
+	adjustValue: (arg: StoresInputValues<U>) => T = (arg: StoresInputValues<U>) => arg[0] as T,
+	equal: (currentValue: T, newValue: T) => boolean = (currentValue: T, newValue: T) => newValue === currentValue,
+): WritableSignal<T> => {
 	let currentValue = stores[0]();
 	return asWritable(
 		derived(stores, {
@@ -345,7 +349,7 @@ export const bindableProp = <T>(
 	onChange$: ReadableSignal<(newValue: T) => void>,
 	adjustValue: (value: T) => T = identity,
 	equal: (a: T, b: T) => boolean = tansuDefaultEqual,
-) =>
+): WritableSignal<T> =>
 	asWritable(
 		computed(() => adjustValue(store$()), {equal}),
 		(newValue) => {

@@ -362,7 +362,7 @@ const defaultConfig: PaginationProps = {
  * Returns a shallow copy of the default pagination config
  * @returns a copy of the default config
  */
-export function getPaginationDefaultConfig() {
+export function getPaginationDefaultConfig(): PaginationProps {
 	return {...defaultConfig};
 }
 

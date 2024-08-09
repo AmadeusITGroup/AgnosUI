@@ -1,5 +1,6 @@
 import {createCSSTransition} from './cssTransitions';
 import {addClasses, reflow, removeClasses} from '../../utils/internal/dom';
+import type {TransitionFn} from './baseTransitions';
 
 export interface SimpleClassTransitionConfig {
 	/**
@@ -42,7 +43,7 @@ export interface SimpleClassTransitionContext {
  * @param config - the transition config
  * @returns the simple class transition
  */
-export const createSimpleClassTransition = (config: SimpleClassTransitionConfig) => {
+export const createSimpleClassTransition = (config: SimpleClassTransitionConfig): TransitionFn => {
 	const {animationPendingClasses, animationPendingShowClasses, animationPendingHideClasses, showClasses, hideClasses} = config;
 	return createCSSTransition((element, direction, animated, context: SimpleClassTransitionContext) => {
 		removeClasses(element, showClasses);
