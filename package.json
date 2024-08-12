@@ -42,7 +42,7 @@
 		"bootstrap": "^5.3.3",
 		"eslint": "^9.8.0",
 		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-jsdoc": "^48.11.0",
+		"eslint-plugin-jsdoc": "^50.0.1",
 		"express": "^4.19.2",
 		"glob": "11.0.0",
 		"husky": "^9.1.4",
