@@ -168,12 +168,12 @@
 	"dependencies": {
 		"@agnos-ui/svelte-bootstrap": "0.0.0",
 		"@amadeus-it-group/tansu": "^1.0.0",
-		"@floating-ui/dom": "^1.6.8"
+		"@floating-ui/dom": "^1.6.10"
 	},
 	"devDependencies": {
 		"@stackblitz/sdk": "^1.11.0",
-		"@sveltejs/adapter-static": "^3.0.2",
-		"@sveltejs/kit": "^2.5.20",
+		"@sveltejs/adapter-static": "^3.0.3",
+		"@sveltejs/kit": "^2.5.21",
 		"@sveltejs/vite-plugin-svelte": "^3.1.1",
 		"@types/dom-view-transitions": "^1.0.5",
 		"bootstrap-icons": "^1.11.3",
@@ -185,6 +185,6 @@
 		"svelte": "^4.2.18",
 		"svelte-check": "^3.8.5",
 		"svelte-markdown": "^0.4.1",
-		"tsx": "^4.16.5"
+		"tsx": "^4.17.0"
 	}
 }
