@@ -132,7 +132,7 @@
 	},
 	"peerDependencies": {
 		"@amadeus-it-group/tansu": "^1.0.0",
-		"@floating-ui/dom": "^1.6.8",
+		"@floating-ui/dom": "^1.6.10",
 		"esm-env": "^1.0.0"
 	},
 	"sideEffects": false
