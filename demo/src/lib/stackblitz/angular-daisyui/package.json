@@ -28,7 +28,7 @@
 		"daisyui": "^4.12.10",
 		"postcss": "^8.4.41",
 		"rxjs": "^7.8.1",
-		"tailwindcss": "^3.4.9",
+		"tailwindcss": "^3.4.10",
 		"tslib": "^2.6.3",
 		"typescript": "~5.5.4",
 		"zone.js": "~0.14.10"
