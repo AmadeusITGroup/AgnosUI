@@ -49,7 +49,7 @@
 		"npm-run-all2": "^6.2.2",
 		"prettier": "^3.3.3",
 		"strip-ansi": "^7.1.0",
-		"syncpack": "^12.4.0",
+		"syncpack": "^13.0.0",
 		"typedoc": "^0.26.6",
 		"typedoc-plugin-markdown": "^4.2.5",
 		"typedoc-plugin-mdn-links": "^3.2.9",
