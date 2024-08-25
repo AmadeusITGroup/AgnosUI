@@ -174,7 +174,7 @@
 		"@stackblitz/sdk": "^1.11.0",
 		"@sveltejs/adapter-static": "^3.0.4",
 		"@sveltejs/kit": "^2.5.24",
-		"@sveltejs/vite-plugin-svelte": "^3.1.1",
+		"@sveltejs/vite-plugin-svelte": "^3.1.2",
 		"@types/dom-view-transitions": "^1.0.5",
 		"bootstrap-icons": "^1.11.3",
 		"compare-versions": "^6.1.1",
@@ -182,9 +182,9 @@
 		"front-matter": "^4.0.2",
 		"prettier-plugin-svelte": "^3.2.6",
 		"shiki": "^1.14.1",
-		"svelte": "^4.2.18",
-		"svelte-check": "^3.8.5",
+		"svelte": "^4.2.19",
+		"svelte-check": "^3.8.6",
 		"svelte-markdown": "^0.4.1",
-		"tsx": "^4.17.0"
+		"tsx": "^4.18.0"
 	}
 }

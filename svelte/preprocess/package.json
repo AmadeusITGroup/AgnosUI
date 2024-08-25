@@ -59,13 +59,13 @@
 		}
 	},
 	"devDependencies": {
-		"svelte": "^4.2.18"
+		"svelte": "^4.2.19"
 	},
 	"dependencies": {
 		"magic-string": "^0.30.11"
 	},
 	"peerDependencies": {
-		"svelte": "^4.2.18"
+		"svelte": "^4.2.19"
 	},
 	"sideEffects": false
 }
