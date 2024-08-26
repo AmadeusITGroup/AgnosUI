@@ -2,6 +2,7 @@
 	import Header from '$lib/layout/Header.svelte';
 	import Published from '$lib/layout/Published.svelte';
 	import Markdown from '$lib/markdown/Markdown.svelte';
+	import ShareButton from '../ShareButton.svelte';
 	import source from './tansu-reactivity.md?raw';
 </script>
 
@@ -11,5 +12,6 @@
 </svelte:head>
 
 <Header title="State management with Tansu" />
+<ShareButton />
 <Published date="02/01/2024" />
 <Markdown {source} />
