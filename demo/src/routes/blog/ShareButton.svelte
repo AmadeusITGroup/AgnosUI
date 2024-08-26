@@ -13,7 +13,7 @@
 		} else {
 			let shareUrl = '';
 			if (platform === 'twitter') {
-				shareUrl = `https://twitter.com/share?url=${encodedUrl}`;
+				shareUrl = `https://twitter.com/share?url=${encodedUrl}`; /*Add more social media*/
 			} else if (platform === 'facebook') {
 				shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
 			} else if (platform === 'linkedin') {
