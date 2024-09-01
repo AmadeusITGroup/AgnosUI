@@ -25,18 +25,18 @@
 		"url": "git+https://github.com/AmadeusITGroup/AgnosUI.git"
 	},
 	"engines": {
-		"npm": "^10.8.2",
+		"npm": "^10.8.3",
 		"node": "^20.17.0"
 	},
-	"packageManager": "npm@10.8.2",
+	"packageManager": "npm@10.8.3",
 	"devDependencies": {
 		"@axe-core/playwright": "^4.10.0",
-		"@commitlint/cli": "^19.4.0",
+		"@commitlint/cli": "^19.4.1",
 		"@playwright/test": "^1.46.1",
-		"@types/node": "^20.16.1",
+		"@types/node": "^20.16.3",
 		"@types/uuid": "^10.0.0",
-		"@typescript-eslint/eslint-plugin": "^8.2.0",
-		"@typescript-eslint/parser": "^8.2.0",
+		"@typescript-eslint/eslint-plugin": "^8.3.0",
+		"@typescript-eslint/parser": "^8.3.0",
 		"@vitest/browser": "^2.0.5",
 		"@vitest/ui": "^2.0.5",
 		"bootstrap": "^5.3.3",
@@ -52,7 +52,7 @@
 		"syncpack": "^13.0.0",
 		"typedoc": "^0.26.6",
 		"typedoc-plugin-markdown": "^4.2.6",
-		"typedoc-plugin-mdn-links": "^3.2.10",
+		"typedoc-plugin-mdn-links": "^3.2.11",
 		"typescript": "~5.5.4",
 		"vite": "^5.4.2",
 		"vitest": "^2.0.5",
@@ -60,9 +60,9 @@
 	},
 	"optionalDependencies": {
 		"@esbuild/darwin-arm64": "0.23.1",
-		"@rollup/rollup-darwin-arm64": "4.21.0",
-		"@rollup/rollup-darwin-x64": "4.21.0",
-		"@rollup/rollup-win32-x64-msvc": "4.21.0",
+		"@rollup/rollup-darwin-arm64": "4.21.2",
+		"@rollup/rollup-darwin-x64": "4.21.2",
+		"@rollup/rollup-win32-x64-msvc": "4.21.2",
 		"@lmdb/lmdb-win32-x64": "3.0.14"
 	},
 	"scripts": {
