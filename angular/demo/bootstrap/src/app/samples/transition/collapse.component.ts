@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, booleanAttribute} from '@angular/core';
+import {ChangeDetectionStrategy, Component, booleanAttribute, input} from '@angular/core';
 import {UseDirective, collapseVerticalTransition, createTransition, toAngularSignal} from '@agnos-ui/angular-bootstrap';
 
 @Component({
@@ -17,7 +17,7 @@ import {UseDirective, collapseVerticalTransition, createTransition, toAngularSig
 					aria-controls="collapse-content"
 					[attr.aria-expanded]="state().visible"
 				>
-					{{ headerText }}
+					{{ headerText() }}
 					<span class="ms-1 collapse-icon" [class.expanded]="state().visible">
 						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 100 100">
 							<rect class="horizontal" x="20" y="45" width="60" height="10" fill="currentColor" />
@@ -27,7 +27,7 @@ import {UseDirective, collapseVerticalTransition, createTransition, toAngularSig
 				</button>
 			</div>
 			@if (!state().hidden) {
-				<div [auUse]="[transition.directives.directive, {visible: expanded}]" id="collapse-content">
+				<div [auUse]="[transition.directives.directive, {visible: expanded()}]" id="collapse-content">
 					<div class="card-body">
 						<ng-content />
 					</div>
@@ -45,9 +45,6 @@ export default class CollapseComponent {
 	});
 	readonly state = toAngularSignal(this.transition.state$);
 
-	@Input()
-	headerText?: string;
-
-	@Input({transform: booleanAttribute})
-	expanded = false;
+	readonly headerText = input<string>();
+	readonly expanded = input(false, {transform: booleanAttribute});
 }

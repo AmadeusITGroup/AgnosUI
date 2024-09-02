@@ -1,5 +1,5 @@
 import {AgnosUIAngularModule} from '@agnos-ui/angular-bootstrap';
-import {Component} from '@angular/core';
+import {Component, signal} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @Component({
@@ -13,10 +13,10 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 		<h2>Slider with values</h2>
 		<div auSlider auMin="0" auMax="100" auStepSize="1" [(auValues)]="sliderValues"></div>
-		Values: {{ sliderValues.join(', ') }}
+		Values: {{ sliderValues().join(', ') }}
 	`,
 })
 export default class RangeSliderComponent {
-	sliderControl = new FormControl([10, 40, 50, 60, 90]);
-	sliderValues = [10, 40];
+	readonly sliderControl = new FormControl([10, 40, 50, 60, 90]);
+	readonly sliderValues = signal([10, 40]);
 }

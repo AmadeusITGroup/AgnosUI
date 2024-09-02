@@ -1,7 +1,6 @@
 import type {SliderHandle, SliderWidget} from '@agnos-ui/angular-bootstrap';
 import {SlotComponent, UseDirective} from '@agnos-ui/angular-bootstrap';
-import {ChangeDetectionStrategy, Component, Input, NgZone, inject} from '@angular/core';
-import {take} from 'rxjs';
+import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 
 @Component({
 	standalone: true,
@@ -11,7 +10,7 @@ import {take} from 'rxjs';
 	},
 	imports: [UseDirective],
 	template: `
-		<button class="custom-handle" [auUse]="[widget.directives.handleDirective, {item}]">
+		<button class="custom-handle" [auUse]="[widget.directives.handleDirective, {item: item()}]">
 			<svg xmlns="http://www.w3.org/2000/svg" fill="var(--bs-slider-handle-color)" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
 				<path
 					stroke-linecap="round"
@@ -24,14 +23,5 @@ import {take} from 'rxjs';
 	styles: "@import '@agnos-ui/common/samples/slider/custom.scss';",
 })
 export default class CustomHandleSliderComponent extends SlotComponent<SliderWidget> {
-	private readonly _zone = inject(NgZone);
-
-	@Input() item!: SliderHandle;
-
-	onKeyDown(event: KeyboardEvent, handleId: number, widgetOnKeyDownFn: (event: KeyboardEvent, handleId: number) => void) {
-		widgetOnKeyDownFn(event, handleId);
-		this._zone.onStable.pipe(take(1)).subscribe(() => {
-			(event.target as HTMLElement).focus();
-		});
-	}
+	readonly item = input.required<SliderHandle>();
 }

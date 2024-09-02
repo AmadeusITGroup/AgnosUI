@@ -1,6 +1,6 @@
 import {AlertComponent} from '@agnos-ui/angular-bootstrap';
 import type {AlertProps} from '@agnos-ui/angular-bootstrap';
-import {Component, Injectable} from '@angular/core';
+import {Component, inject, Injectable} from '@angular/core';
 
 @Injectable({providedIn: 'root'})
 class AlertContainerService {
@@ -37,7 +37,7 @@ class AlertContainerService {
 	`,
 })
 export class ChildComponent {
-	constructor(readonly alertContainerService: AlertContainerService) {}
+	readonly alertContainerService = inject(AlertContainerService);
 
 	removeAlert(type: Partial<AlertProps>) {
 		this.alertContainerService.remove(type);
@@ -57,7 +57,7 @@ export class ChildComponent {
 	`,
 })
 export default class ParentComponent {
-	constructor(readonly alertContainerService: AlertContainerService) {}
+	readonly alertContainerService = inject(AlertContainerService);
 
 	addError() {
 		this.alertContainerService.add({type: 'danger', children: 'Error', dismissible: true, animated: true});

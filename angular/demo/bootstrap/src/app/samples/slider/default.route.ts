@@ -1,6 +1,6 @@
 import {AgnosUIAngularModule} from '@agnos-ui/angular-bootstrap';
 import type {OnInit} from '@angular/core';
-import {Component} from '@angular/core';
+import {Component, signal} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @Component({
@@ -14,8 +14,8 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 			auMax="100"
 			auStepSize="1"
 			[formControl]="sliderControl"
-			[auShowMinMaxLabels]="showMinMax"
-			[auShowValueLabels]="showValues"
+			[auShowMinMaxLabels]="showMinMax()"
+			[auShowValueLabels]="showValues()"
 		></div>
 		Form control value:
 		{{ sliderControl.value }}
@@ -24,11 +24,11 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 		<h2>Slider with value</h2>
 		<div auSlider auMin="0" auMax="100" auStepSize="1" [(auValues)]="sliderValues"></div>
 		Value:
-		{{ sliderValues }}
+		{{ sliderValues() }}
 		<hr />
 
 		<h2>Disabled slider</h2>
-		<div auSlider auMin="0" auMax="100" auStepSize="1" [formControl]="disabledControl" [auReadonly]="readonlyToggle"></div>
+		<div auSlider auMin="0" auMax="100" auStepSize="1" [formControl]="disabledControl" [auReadonly]="readonlyToggle()"></div>
 
 		<div class="form-check form-switch">
 			<input class="form-check-input" type="checkbox" role="switch" id="disabled" [(ngModel)]="disabledToggle" (change)="handleDisabled()" />
@@ -50,20 +50,20 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 	`,
 })
 export default class DefaultSliderComponent implements OnInit {
-	sliderControl = new FormControl([70]);
-	disabledControl = new FormControl(60);
-	sliderValues = [20];
-	disabledToggle = true;
-	readonlyToggle = true;
-	showMinMax = true;
-	showValues = true;
+	readonly sliderControl = new FormControl([70]);
+	readonly disabledControl = new FormControl(60);
+	readonly sliderValues = signal([20]);
+	readonly disabledToggle = signal(true);
+	readonly readonlyToggle = signal(true);
+	readonly showMinMax = signal(true);
+	readonly showValues = signal(true);
 
 	ngOnInit() {
 		this.disabledControl.disable();
 	}
 
 	handleDisabled() {
-		if (this.disabledToggle) {
+		if (this.disabledToggle()) {
 			this.disabledControl.disable();
 		} else {
 			this.disabledControl.enable();

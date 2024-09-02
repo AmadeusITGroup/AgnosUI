@@ -24,6 +24,5 @@ import CoffeeSliderComponent from './coffee-slider.component';
 })
 export default class CustomSliderComponent {
 	readonly sliderCoffeeSlotStructure = CoffeeSliderComponent;
-
-	sliderControl = new FormControl([50]);
+	readonly sliderControl = new FormControl([50]);
 }

@@ -1,6 +1,6 @@
 import {AgnosUIAngularModule} from '@agnos-ui/angular-bootstrap';
 import type {AlertComponent} from '@agnos-ui/angular-bootstrap';
-import {Component} from '@angular/core';
+import {Component, signal} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
 export enum AlertStatus {
@@ -38,7 +38,7 @@ export enum AlertStatus {
 		<br />
 		<br />
 
-		<au-component auAlert #alert [auAnimated]="animated" [auAnimatedOnInit]="animatedOnInit" [auDismissible]="dismissible" [auType]="type">
+		<au-component auAlert #alert [auAnimated]="animated()" [auAnimatedOnInit]="animatedOnInit()" [auDismissible]="dismissible()" [auType]="type()">
 			<h4 class="alert-heading">Well done!</h4>
 			<p>
 				Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing
@@ -49,17 +49,17 @@ export enum AlertStatus {
 		</au-component>`,
 })
 export default class ConfigAlertComponent {
-	styleList = Object.entries(AlertStatus).map((entry) => {
+	readonly styleList = Object.entries(AlertStatus).map((entry) => {
 		return {
 			value: entry[1],
 			label: entry[0],
 		};
 	});
 
-	animatedOnInit = true;
-	animated = true;
-	dismissible = true;
-	type = this.styleList[0].value;
+	readonly animatedOnInit = signal(true);
+	readonly animated = signal(true);
+	readonly dismissible = signal(true);
+	readonly type = signal(this.styleList[0].value);
 
 	async showAlert(alert: AlertComponent) {
 		alert.api.open();
