@@ -20,7 +20,7 @@
 		"tdd": "vitest",
 		"tdd:ui": "vitest --ui",
 		"test": "tsc -p test/tsconfig.json && vitest run",
-		"test:coverage": "vitest run --coverage"
+		"test:coverage": "tsc -p test/tsconfig.json && vitest run --coverage"
 	},
 	"wireit": {
 		"build:src": {
