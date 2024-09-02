@@ -1,0 +1,9 @@
+{
+	"extends": "../tsconfig.json",
+	"include": ["files"],
+	"files": ["test.spec.ts", "vite-env.d.ts"],
+	"compilerOptions": {
+		"noEmit": true,
+		"emitDeclarationOnly": false
+	}
+}
