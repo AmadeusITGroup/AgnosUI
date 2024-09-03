@@ -1,6 +1,6 @@
 # AgnosUI
 
-A framework-agnostic widget library.
+A framework-agnostic component library.
 
 This is a monorepo organised with multiple npm packages:
 
@@ -15,7 +15,7 @@ Then for each supported framework, a corresponding package is present with frame
 Finally, two other npm packages are available for testing purposes:
 
 - [`base-po`](base-po) contains a base class for page objects when writing end-to-end tests with Playwright
-- [`page-objects`](page-objects) contains page objects for each AgnosUI widget
+- [`page-objects`](page-objects) contains page objects for each AgnosUI component
 
 ## Running AgnosUI locally
 

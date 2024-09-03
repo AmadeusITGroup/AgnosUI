@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/@agnos-ui/svelte-headless)](https://www.npmjs.com/package/@agnos-ui/svelte-headless)
 
-Headless widget library for [Svelte](https://svelte.dev/).
+Headless component library for [Svelte](https://svelte.dev/).
 
 ## Installation
 
@@ -12,4 +12,4 @@ npm install @agnos-ui/svelte-headless
 
 ## Usage
 
-Please check [our demo site](https://amadeusitgroup.github.io/AgnosUI/latest/) to see all the available widgets and how to use them.
+Please check [our demo site](https://amadeusitgroup.github.io/AgnosUI/latest/) to see all the available components and how to use them.

@@ -1,6 +1,6 @@
 {
 	"name": "@agnos-ui/react-bootstrap",
-	"description": "Bootstrap-based widget library for React.",
+	"description": "Bootstrap-based component library for React.",
 	"version": "0.0.0",
 	"private": true,
 	"type": "module",

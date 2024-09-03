@@ -1,6 +1,6 @@
 {
 	"name": "@agnos-ui/svelte-bootstrap",
-	"description": "Bootstrap-based widget library for Svelte.",
+	"description": "Bootstrap-based component library for Svelte.",
 	"version": "0.0.0",
 	"private": true,
 	"type": "module",

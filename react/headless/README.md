@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/@agnos-ui/react-headless)](https://www.npmjs.com/package/@agnos-ui/react-headless)
 
-Headless widget library for [React](https://react.dev/).
+Headless component library for [React](https://react.dev/).
 
 ## Installation
 
@@ -12,4 +12,4 @@ npm install @agnos-ui/react-headless
 
 ## Usage
 
-Please check [our demo site](https://amadeusitgroup.github.io/AgnosUI/latest/) to see all the available widgets and how to use them.
+Please check [our demo site](https://amadeusitgroup.github.io/AgnosUI/latest/) to see all the available components and how to use them.

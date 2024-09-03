@@ -13,7 +13,7 @@
 	<meta name="description" content="Svelte demo app" />
 </svelte:head>
 
-<!-- TODO make a list of widget and iterate over it when needed -->
+<!-- TODO make a list of component and iterate over it when needed -->
 <div class="container-xxl d-flex flex-column align-items-center pt-5">
 	<div class="d-flex flex-md-row flex-column">
 		<div class="order-md-1 order-2">
@@ -21,19 +21,19 @@
 				<span
 					><span class="au-clip">AgnosUI</span>
 					<br />
-					Where web widgets shine.</span
+					Where web components shine.</span
 				>
 			</h1>
-			<h2 class="text-primary-emphasis text-sm-start text-center">Perfected open-source widget libraries</h2>
+			<h2 class="text-primary-emphasis text-sm-start text-center">Perfected open-source component libraries</h2>
 			<ul class="au-landing-list">
 				<li class="d-flex align-items-start">
-					<Svg svg={bullet} className="bullet me-3" />Configurable Typescript widget factories
+					<Svg svg={bullet} className="bullet me-3" />Configurable Typescript component factories
 				</li>
 				<li class="d-flex align-items-start">
 					<Svg svg={bullet} className="bullet me-3" />Headless wrappers for Angular, React and Svelte
 				</li>
 				<li class="d-flex align-items-start">
-					<Svg svg={bullet} className="bullet me-3" />Bootstrap-compliant ready-to-use widgets for Angular, React and Svelte.
+					<Svg svg={bullet} className="bullet me-3" />Bootstrap-compliant ready-to-use components for Angular, React and Svelte.
 				</li>
 			</ul>
 		</div>
@@ -86,21 +86,23 @@
 <div class="au-features container-xxl mt-5">
 	<div class="cards row align-content-around">
 		<LandingCard title="Framework agnostic">
-			A framework-agnostic core of widget factories that provide reactive models and APIs to drive the data. You can use it with any front-end
+			A framework-agnostic core of component factories that provide reactive models and APIs to drive the data. You can use it with any front-end
 			framework.
 		</LandingCard>
-		<LandingCard title="Headless widgets">
-			Each widget is provided in headless mode in Angular, React and Svelte using the same factory. You can use them with any front-end CSS framework.
+		<LandingCard title="Headless components">
+			Each component is provided in headless mode in Angular, React and Svelte using the same factory. You can use them with any front-end CSS
+			framework.
 		</LandingCard>
 		<LandingCard title="Consistent">Widgets are provided for Angular, React and Svelte with the exact same markup and functionalities.</LandingCard>
 		<LandingCard title="Accessible">Widgets are designed with a strong emphasis on accessibility and tested for it</LandingCard>
 		<LandingCard title="Highly configurable">
-			Default values for all widgets props are configurable at any point of the application subtree.
+			Default values for all components props are configurable at any point of the application subtree.
 		</LandingCard>
 		<LandingCard title="Fully tested">Unit tests for headless with Vitest. E2e tests for adapters with Playwright.</LandingCard>
-		<LandingCard title="Bootstrap widgets">
-			Highly customizable Bootstrap CSS widgets are available for Angular, React and Svelte in separated packages.
+		<LandingCard title="Bootstrap components">
+			Highly customizable Bootstrap CSS components are available for Angular, React and Svelte in separated packages.
 		</LandingCard>
+		<LandingCard title="SSR compliant">All our components are SSR compliant and can be used in a server-side rendered application.</LandingCard>
 	</div>
 </div>
 <footer class="au-footer pt-2 mt-2">

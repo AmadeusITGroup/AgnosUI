@@ -1,6 +1,6 @@
 {
 	"name": "@agnos-ui/core",
-	"description": "Framework-agnostic headless widget library.",
+	"description": "Framework-agnostic headless component library.",
 	"version": "0.0.0",
 	"private": true,
 	"type": "module",

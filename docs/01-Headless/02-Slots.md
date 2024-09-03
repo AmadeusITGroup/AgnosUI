@@ -18,7 +18,7 @@ This separation of structure and content enhances code reusability and promotes 
 
 ## AgnosUI Slot
 
-AgnosUI core widgets include slots as **properties** prefixed by _slot_ in their states.  
+AgnosUI core components include slots as **properties** prefixed by _slot_ in their states.  
 This allows to specifiy the projected content in multiple manners, like simple `string`, context-aware functions, standard slots or even fully-fledged components.
 
 To illustrate the basic usage, let's see in action how we can use a simple slot in the Bootstrap flavour of the **Alert** component:
@@ -29,7 +29,7 @@ To illustrate the basic usage, let's see in action how we can use a simple slot 
 
 ## Context
 
-Slots have access to a context, which for most cases is the widget state.  
+Slots have access to a context, which for most cases is the component state.  
 It is possible however to extend the context, which enables powerful customization. Here is an example with the Bootstrap flavour of the **Pagination** component:
 
 ```sample
@@ -39,7 +39,7 @@ It is possible however to extend the context, which enables powerful customizati
 ## Integration with Configuration
 
 As explained above, AgnosUI slots are inherently properties, thus benefit from the [Configuration](01-Configuration.md).  
-For instance, we may configure the _slotStructure_ of the **Alert** to use a custom component, allowing to fully customize the widget.
+For instance, we may configure the _slotStructure_ of the **Alert** to use a custom component, allowing to fully customize the component.
 
 ```sample
 {Slot Configuration:alert/icon:402}
