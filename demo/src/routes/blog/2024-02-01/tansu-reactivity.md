@@ -406,6 +406,3 @@ In this exploration of state management with Tansu, we've delved into powerful t
 The examples presented, highlight the flexibility Tansu offers in managing state at varying levels of complexity. Whether you're dealing with local or server-driven data, the principles explored here provide a foundation for structuring your application's state in a way that promotes maintainability and scalability.
 
 Incorporating these techniques into your projects not only enhances the clarity of your code but also contributes to a more robust and responsive state management.
-
-**Fabrice Basso<br>
-Software engineer at Amadeus**
