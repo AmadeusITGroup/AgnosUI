@@ -10,11 +10,11 @@ The “headless” part refers to the logic of the component, which is decoupled
 
 Leveraging its core, AgnosUI provides headless components across various frameworks. These components not only share the core API but also adhere to the best practices and implementation strategies specific to each framework. This ensures seamless integration and optimal performance.
 
-## Anatomy of a Widget Creation
+## Anatomy of a Component Creation
 
-AgnosUI includes pre-built widgets for supported frameworks. To use these widgets directly, you may not need to dive deeply into this section, except for understanding `directives`.
+AgnosUI includes pre-built components for supported frameworks. To use these components directly, you may not need to dive deeply into this section, except for understanding `directives`.
 
-Creating a new widget with the core typically involves the following base code:
+Creating a new component with the core typically involves the following base code:
 
 ```typescript
 const {patch, stores, directives, actions, api} = create[WidgetName](props);
@@ -24,12 +24,12 @@ Let's break down the components.
 
 ### props
 
-`props` contain the essential values for the widget, received through attributes.
+`props` contain the essential values for the component, received through attributes.
 
-As an example, consider a rating widget requiring the value prop:
+As an example, consider a rating component requiring the value prop:
 
 ```typescript
-const widget = createRating({value: 2});
+const component = createRating({value: 2});
 ```
 
 Which is used in the HTML as follows:
@@ -38,20 +38,20 @@ Which is used in the HTML as follows:
 <Rating value="{2}" />
 ```
 
-`props` may also include functions beginning with `on...`. These are specific methods called when a prop changes. For instance, in the rating widget, you can provide the `onRatingChange` method to be invoked every time the rating value changes, with the new value.
+`props` may also include functions beginning with `on...`. These are specific methods called when a prop changes. For instance, in the rating component, you can provide the `onRatingChange` method to be invoked every time the rating value changes, with the new value.
 
 > - Every `prop` comes with a default value.
 > - In all supported frameworks, these default prop values are customizable at any level within the component subtrees. The method of injecting these configurations is specific to the framework overseeing these component trees. Additional details can be found on [the dedicated page](01-Configuration.md).
 
 ### patch
 
-The `patch` function receives a partial of the props parameters, allowing modification of the initial props provided to the widget.
+The `patch` function receives a partial of the props parameters, allowing modification of the initial props provided to the component.
 
 ### stores
 
-List of Tansu stores showing the widget's current state.
+List of Tansu stores showing the component's current state.
 
-or example, in a rating widget, you'll find stores such as `rating$` and `visibleRating$`.
+or example, in a rating component, you'll find stores such as `rating$` and `visibleRating$`.
 
 - `rating$`: holds the current numeric value of the rating.
 
@@ -59,7 +59,7 @@ or example, in a rating widget, you'll find stores such as `rating$` and `visibl
 
 Each store can be subscribed to or integrated into the UI framework system.
 
-> `state$` is a persistent store in all widgets, grouping all other store values together. Depending on the framework or use case, it might be more convenient to use individual stores or the global `state$`.
+> `state$` is a persistent store in all components, grouping all other store values together. Depending on the framework or use case, it might be more convenient to use individual stores or the global `state$`.
 
 ### directives
 
@@ -71,8 +71,8 @@ Refer to the [dedicated section](03-Directives.md) for more details.
 
 ### actions
 
-`actions` contain functions designed to be directly plugged into the UI, such as `click` or `hover` in the rating widget, connected to specific HTML element events.
+`actions` contain functions designed to be directly plugged into the UI, such as `click` or `hover` in the rating component, connected to specific HTML element events.
 
 ### api
 
-`api` includes functions for programmatically changing the widget's state. Unlike the previous section, these functions are not specifically designed to be plugged into the UI.
+`api` includes functions for programmatically changing the component's state. Unlike the previous section, these functions are not specifically designed to be plugged into the UI.

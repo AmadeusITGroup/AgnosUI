@@ -1,6 +1,6 @@
 {
 	"name": "@agnos-ui/angular-headless",
-	"description": "Headless widget library for Angular.",
+	"description": "Headless component library for Angular.",
 	"version": "0.0.0",
 	"type": "module",
 	"exports": {

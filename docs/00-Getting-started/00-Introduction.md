@@ -4,40 +4,38 @@ since: 0.1.1
 
 # Introduction
 
-AgnosUI is a versatile widget library designed for various frameworks, providing a consistent user interface across platforms. Its core (also referred to as headless), written in pure TypeScript, serves as a foundation that can be utilized by any framework to generate a user interface.
+AgnosUI is a versatile component library designed for various frameworks, providing a consistent user interface across platforms. Its core, written in pure TypeScript, serves as a foundation that can be utilized by any framework to generate a user interface.
 
 You can integrate AgnosUI in two primary ways:
 
-- Use the ready-made widgets provided for your specific framework.
+- Use the ready-made components provided for your specific framework.
 
-This straightforward approach allows you to quickly incorporate widgets into your project. Refer to the component documentation for usage details. Currently, AgnosUI supports Angular, React, and Svelte.
+This straightforward approach allows you to quickly incorporate components into your project. Refer to the component documentation for usage details. Currently, AgnosUI supports Angular, React, and Svelte.
 
-- use the headless functionality to create your own customized widget.
+- use the headless functionality to create your own customized component.
 
-This approach offers complete customization of widgets, including markup and styling, while benefiting from AgnosUI's headless capabilities for managing display and interactions.
+This approach offers complete customization of components, including markup and styling, while benefiting from AgnosUI's headless capabilities for managing display and interactions.
 
-This method requires a deeper understanding and more effort, detailed in the comprehensive documentation. You can start building your widget based on existing widget code.
+This method requires a deeper understanding and more effort, detailed in the comprehensive documentation. You can start building your component based on existing component code.
 
 ## Motivation
 
-Maintaining full widget libraries over time can be challenging due to framework changes, shifts in usage patterns, and projects adopting different frameworks. AgnosUI addresses this challenge by separating the state and behavior of a widget from its rendering engine (the frameworks). This separation brings stability and several benefits:
+Maintaining full component libraries over time can be challenging due to framework changes, shifts in usage patterns, and projects adopting different frameworks. AgnosUI addresses this challenge by separating the state and behavior of a component from its rendering engine (the frameworks). This separation brings stability and several benefits:
 
 - Core functionalities are managed in pure TypeScript, avoiding issues tied to UI frameworks' constraints.
 - The main code stays the same even if the framework changes.
 - Fixes or new features seamlessly apply to all supported frameworks.
 - Unit tests are straightforward, focusing on the core written in pure Typescript for enduring reliability.
-- UI Frameworks are used only rendering the UI based on the widget state.
+- UI Frameworks are used only rendering the UI based on the component state.
 - Consistency is maintained across frameworks, ensuring uniformity for organizations using different frameworks.
 
 ## How does it work ?
 
-The basic idea is to manage a widget from a data point of view only and APIs to interact with these data. This is a global picture:
-
-The fundamental concept of AgnosUI revolves around managing a widget purely from a data perspective, along with APIs to interact with this data. The high-level workflow is illustrated below:
+The fundamental concept of AgnosUI revolves around managing a component purely from a data perspective, along with APIs to interact with this data. The high-level workflow is illustrated below:
 
 ![svg](../../demo/src/resources/images/overview-workflow.svg)
 
-AgnosUI constructs widgets based on data, independent of the rendering engine in use. To be framework-agnostic, the system must provide:
+AgnosUI constructs components based on data, independent of the rendering engine in use. To be framework-agnostic, the system must provide:
 
 - All necessary data for the UI.
 - APIs to modify this data.
@@ -62,18 +60,18 @@ In this project, a Tansu object is typically referred to as a `store`, and corre
 
 Currently, AgnosUI provides UI adapters for three frameworks: Angular, React, and Svelte.
 
-Using them is straightforward, just like any other external library. Import a widget and use it in your project. Refer to the specific documentation for each framework to understand the implementation details.
+Using them is straightforward, just like any other external library. Import a component and use it in your project. Refer to the specific documentation for each framework to understand the implementation details.
 
 To make the most of AgnosUI, familiarize yourself with the following concepts:
 
-- AgnosUI comes with a comprehensive configuration system. Each prop of every widget has a default value that can be overridden at any level of the component subtree. For more details, check out the [configuration section](../01-Headless/01-Configuration.md).
+- AgnosUI comes with a comprehensive configuration system. Each prop of every component has a default value that can be overridden at any level of the component subtree. For more details, check out the [configuration section](../01-Headless/01-Configuration.md).
 
-- Slots provide a means to customize your widget through content projection. Learn more in [this section](../01-Headless/02-Slots.md).
+- Slots provide a means to customize your component through content projection. Learn more in [this section](../01-Headless/02-Slots.md).
 
 - Certain utilities are designed to be used as or with a directive. Directives are simple functions that can be applied to a DOM element. Learn more about this topic in [this section](../01-Headless/03-Directives.md).
 
 ## Headless
 
-As AgnosUI widgets are built on a reactive data system, you can leverage the core to create your own markup, using the data and the API to manage the UI and its behavior.
+As AgnosUI components are built on a reactive data system, you can leverage the core to create your own markup, using the data and the API to manage the UI and its behavior.
 
 Learn more about this in the [headless section](../01-Headless/00-Introduction.md)

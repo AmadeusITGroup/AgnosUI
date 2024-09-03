@@ -1,6 +1,6 @@
 {
 	"name": "@agnos-ui/angular-bootstrap",
-	"description": "Bootstrap-based widget library for Angular.",
+	"description": "Bootstrap-based component library for Angular.",
 	"version": "0.0.0",
 	"type": "module",
 	"exports": {

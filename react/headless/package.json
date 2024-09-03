@@ -1,6 +1,6 @@
 {
 	"name": "@agnos-ui/react-headless",
-	"description": "Headless widget library for React.",
+	"description": "Headless component library for React.",
 	"version": "0.0.0",
 	"private": true,
 	"type": "module",

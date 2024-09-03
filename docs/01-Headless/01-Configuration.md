@@ -6,7 +6,7 @@ since: 0.1.1
 
 ## Overview
 
-We call **Configuration** the AgnosUI system to set the default state of widgets deeply in the application tree.  
+We call **Configuration** the AgnosUI system to set the default state of components deeply in the application tree.  
 This is usually referred as **context injection** and is handy to configure a part of a web application, without having to pass properties down the chain.
 
 You can check how each framework handles this need on their respective documentation:
@@ -17,12 +17,12 @@ You can check how each framework handles this need on their respective documenta
     <li><a href="https://angular.io/guide/creating-injectable-service" target="_blank">context injection in Angular</a></li>
 </ul>
 
-The configuration is available out of the box as soon as widgets are created using the AgnosUI headless factories.  
-The headless packages also provide utilities for each framework to retrieve and update widget configuration.
+The configuration is available out of the box as soon as components are created using the AgnosUI headless factories.  
+The headless packages also provide utilities for each framework to retrieve and update component configuration.
 
 ## In Action
 
-One of the most use cases of configuration is setting a default config for multiple sibling widgets.  
+One of the most use cases of configuration is setting a default config for multiple sibling components.  
 Let's see it in action, using the Bootstrap flavour of the **Alert** component:
 
 ```sample
