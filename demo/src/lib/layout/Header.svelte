@@ -17,6 +17,7 @@
 
 	$: tabs = $page.data.tabs ?? [];
 	$: builtPageTitle = getTitle(pageTitle || title, $selectedApiFramework$, $selectedPackageType$);
+	$: includesFwk = !!$page.params.framework;
 </script>
 
 <svelte:head>
@@ -34,18 +35,20 @@
 		<div class="d-flex ms-auto gap-2 justify-content-center">
 			{#if status === 'inprogress'}<span class="badge text-bg-warning">In progress</span>{/if}
 			{#if status === 'beta'}<span class="badge text-bg-info">Beta</span>{/if}
-			{#if $selectedApiFramework$ === 'typescript'}<span class="d-block d-md-none p-0"
-					><Svg svg={typescriptLogo} className="icon-24 d-flex position-relative" /></span
-				>{/if}
-			{#if $selectedApiFramework$ === 'react'}<span class="d-block d-md-none p-0"
-					><Svg svg={reactLogo} className="icon-24 d-flex position-relative" /></span
-				>{/if}
-			{#if $selectedApiFramework$ === 'angular'}<span class="d-block d-md-none p-0"
-					><Svg svg={angularLogo} className="icon-24 d-flex position-relative" /></span
-				>{/if}
-			{#if $selectedApiFramework$ === 'svelte'}<span class="d-block d-md-none p-0"
-					><Svg svg={svelteLogo} className="icon-24 d-flex position-relative" /></span
-				>{/if}
+			{#if includesFwk}
+				{#if $selectedApiFramework$ === 'typescript'}<span class="d-block d-md-none p-0"
+						><Svg svg={typescriptLogo} className="icon-24 d-flex position-relative" /></span
+					>{/if}
+				{#if $selectedApiFramework$ === 'react'}<span class="d-block d-md-none p-0"
+						><Svg svg={reactLogo} className="icon-24 d-flex position-relative" /></span
+					>{/if}
+				{#if $selectedApiFramework$ === 'angular'}<span class="d-block d-md-none p-0"
+						><Svg svg={angularLogo} className="icon-24 d-flex position-relative" /></span
+					>{/if}
+				{#if $selectedApiFramework$ === 'svelte'}<span class="d-block d-md-none p-0"
+						><Svg svg={svelteLogo} className="icon-24 d-flex position-relative" /></span
+					>{/if}
+			{/if}
 			{#if cssFramework === 'bootstrap'}<span class="d-block d-md-none p-0"
 					><Svg svg={bootstrapLogo} className="icon-24 d-flex logo-bootstrap position-relative" /></span
 				>{/if}
