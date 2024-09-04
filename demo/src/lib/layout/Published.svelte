@@ -22,13 +22,13 @@
 	export let date;
 	export let author: keyof typeof authorLogo;
 
-	$: encodedUrl = encodeURIComponent(`https://amadeusitgroup.github.io/AgnosUI/latest` + $page.url.pathname);
+	$: encodedUrl = encodeURIComponent($page.url.href);
 	$: formattedDate = Intl.DateTimeFormat('en-US', {dateStyle: 'medium'}).format(new Date(date));
 </script>
 
 <div class="d-flex flex-wrap">
 	<div class="d-flex gap-3">
-		<img src={authorLogo[author].icon} alt="Publisher avatar" class="avatar" />
+		<img src={authorLogo[author].icon} alt="Publisher avatar" class="avatar" width="50" height="50" />
 		<div>
 			<strong>{authorLogo[author].title}</strong>
 			<div>Published on {formattedDate}</div>
