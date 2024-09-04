@@ -18,10 +18,6 @@
 	};
 </script>
 
-<svelte:head>
-	<meta name="description" content={`API Documentation for ${data.component}`} />
-</svelte:head>
-
 {#if data.import}
 	<Alert type="info" className="p-0 border-0 border-start border-5 border-info" visible dismissible={false}>
 		<div class="alert-container p-3 border border-info rounded-end">

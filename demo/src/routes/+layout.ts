@@ -26,5 +26,13 @@ export const load = async () => {
 	}
 	return {
 		versions,
+		pageMeta: {
+			title: 'AgnosUI - Where web components shine',
+			description:
+				'Perfected component library for Svelte, React and Angular. Reactive and accessible, supports headless or Bootstrap. Providing: accordion, alert, modal, pagination, progressbar, rating, select, slider, toast, focus track, tooltip, pop-over, transition.',
+			socialImage: 'https://amadeusitgroup.github.io/AgnosUI/latest/agnosui-logo.png',
+			socialImageAlt: 'Icon of AgnosUI',
+			shareUrl: 'https://amadeusitgroup.github.io/AgnosUI/latest/',
+		},
 	};
 };

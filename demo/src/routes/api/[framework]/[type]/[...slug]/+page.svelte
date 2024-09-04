@@ -20,10 +20,6 @@
 	};
 </script>
 
-<svelte:head>
-	<meta name="description" content={`API Documentation for ${data.slug.replace('/', ' ').replace('-', ' ')}`} />
-</svelte:head>
-
 <Header title={data.title} cssFramework={$selectedPackageType$} />
 <Alert type="info" className="p-0 border-0 border-start border-5 border-info" visible dismissible={false}>
 	<div class="alert-container p-3 border border-info rounded-end">
