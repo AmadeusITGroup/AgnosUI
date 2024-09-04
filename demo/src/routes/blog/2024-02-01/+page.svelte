@@ -8,7 +8,7 @@
 </script>
 
 <Header title={data.pageMeta.title} />
-<Published date="02/01/2024" author="fbasso" />
+<Published date="02/01/2024" author="fbasso" title={data.pageMeta.title} />
 <img
 	src="https://amadeusitgroup.github.io/AgnosUI/static/tansu-blog.webp"
 	alt="frontend development"
