@@ -9,6 +9,7 @@
 		"preview": "vite preview"
 	},
 	"devDependencies": {
+		"@agnos-ui/react-bootstrap": "0.4.1",
 		"@amadeus-it-group/tansu": "^1.0.0",
 		"@floating-ui/dom": "^1.6.8",
 		"@types/react": "^18.3.3",
@@ -21,7 +22,6 @@
 		"tslib": "^2.6.3",
 		"typescript": "~5.5.4",
 		"vite": "^5.3.5",
-		"vite-plugin-svgr": "^4.2.0",
-		"@agnos-ui/react-bootstrap": "0.4.1"
+		"vite-plugin-svgr": "^4.2.0"
 	}
 }

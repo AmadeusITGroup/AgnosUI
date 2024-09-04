@@ -9,6 +9,8 @@
 		"preview": "vite preview"
 	},
 	"devDependencies": {
+		"@agnos-ui/svelte-bootstrap": "0.4.1",
+		"@agnos-ui/svelte-preprocess": "0.4.1",
 		"@amadeus-it-group/tansu": "^1.0.0",
 		"@floating-ui/dom": "^1.6.8",
 		"@sveltejs/vite-plugin-svelte": "^3.1.1",
@@ -19,8 +21,6 @@
 		"svelte-check": "^3.8.4",
 		"tslib": "^2.6.3",
 		"typescript": "~5.5.4",
-		"vite": "^5.3.5",
-		"@agnos-ui/svelte-bootstrap": "0.4.1",
-		"@agnos-ui/svelte-preprocess": "0.4.1"
+		"vite": "^5.3.5"
 	}
 }
