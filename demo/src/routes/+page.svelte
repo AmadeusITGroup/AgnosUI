@@ -10,7 +10,6 @@
 
 <svelte:head>
 	<title>Home page - AgnosUI</title>
-	<meta name="description" content="Svelte demo app" />
 </svelte:head>
 
 <!-- TODO make a list of component and iterate over it when needed -->

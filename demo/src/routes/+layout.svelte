@@ -70,6 +70,26 @@
 
 <svelte:head>
 	<link rel="canonical" href={$canonicalURL$} />
+	<!-- Schema.org for Google -->
+	<meta itemprop="name" content={$page.data.pageMeta.title} />
+	<meta itemprop="description" content={$page.data.pageMeta.description} />
+	<meta name="description" content={$page.data.pageMeta.description} />
+	<!-- Twitter -->
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={$page.data.pageMeta.title} />
+	<meta property="twitter:domain" content="amadeusitgroup.github.io" />
+	<meta property="twitter:url" content={$page.data.pageMeta.shareUrl} />
+	<meta name="twitter:image" content={$page.data.pageMeta.socialImage} />
+	<meta name="twitter:image:alt" content={$page.data.pageMeta.socialImageAlt} />
+	<meta name="twitter:description" content={$page.data.pageMeta.description} />
+	<!-- Open Graph general (Facebook, Pinterest & Google+) -->
+	<meta name="og:title" content={$page.data.pageMeta.title} />
+	<meta name="og:description" content={$page.data.pageMeta.description} />
+	<meta name="og:url" content={$page.data.pageMeta.shareUrl} />
+	<meta name="og:site_name" content="AgnosUI" />
+	<meta name="og:locale" content="en" />
+	<meta name="og:type" content="website" />
+	<meta property="og:image" content={$page.data.pageMeta.socialImage} />
 </svelte:head>
 
 <div class="agnos-ui">

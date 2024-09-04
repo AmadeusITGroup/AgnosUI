@@ -24,6 +24,9 @@ export const load = async ({params}) => {
 		return {
 			slug: params.slug,
 			...file,
+			pageMeta: {
+				description: `API Documentation for ${params.slug.replace('/', ' ').replace('-', ' ')}`,
+			},
 		};
 	}
 };
