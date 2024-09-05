@@ -7,8 +7,7 @@ import {
 	createSlider,
 	UseDirective,
 } from '@agnos-ui/angular-headless';
-import {ChangeDetectionStrategy, Component, NgZone, inject, input, model} from '@angular/core';
-import {take} from 'rxjs';
+import {ChangeDetectionStrategy, Component, input, model} from '@angular/core';
 
 @Component({
 	selector: 'app-slider',
@@ -18,8 +17,6 @@ import {take} from 'rxjs';
 	templateUrl: './slider.component.html',
 })
 export class SliderComponent extends BaseWidgetDirective<SliderWidget> {
-	private readonly _zone = inject(NgZone);
-
 	readonly disabled = input(undefined, {transform: auBooleanAttribute});
 	readonly min = input(undefined, {transform: auNumberAttribute});
 	readonly max = input(undefined, {transform: auNumberAttribute});
@@ -36,11 +33,4 @@ export class SliderComponent extends BaseWidgetDirective<SliderWidget> {
 			},
 		},
 	});
-
-	onKeyDown(event: KeyboardEvent) {
-		this.widget.actions.keydown(event, 0);
-		this._zone.onStable.pipe(take(1)).subscribe(() => {
-			(event.target as HTMLElement).focus();
-		});
-	}
 }

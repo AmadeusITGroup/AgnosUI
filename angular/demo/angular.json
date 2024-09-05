@@ -34,12 +34,6 @@
 					},
 					"configurations": {
 						"coverage": {
-							"fileReplacements": [
-								{
-									"replace": "bootstrap/src/environments/environment.ts",
-									"with": "bootstrap/src/environments/environment.prod.ts"
-								}
-							],
 							"outputHashing": "all",
 							"tsConfig": "bootstrap/tsconfig.json"
 						},
@@ -54,12 +48,6 @@
 									"type": "anyComponentStyle",
 									"maximumWarning": "2kb",
 									"maximumError": "4kb"
-								}
-							],
-							"fileReplacements": [
-								{
-									"replace": "bootstrap/src/environments/environment.ts",
-									"with": "bootstrap/src/environments/environment.prod.ts"
 								}
 							],
 							"outputHashing": "all"
@@ -122,12 +110,6 @@
 					},
 					"configurations": {
 						"coverage": {
-							"fileReplacements": [
-								{
-									"replace": "daisyui/src/environments/environment.ts",
-									"with": "daisyui/src/environments/environment.prod.ts"
-								}
-							],
 							"outputHashing": "all",
 							"tsConfig": "daisyui/tsconfig.json"
 						},
@@ -142,12 +124,6 @@
 									"type": "anyComponentStyle",
 									"maximumWarning": "2kb",
 									"maximumError": "4kb"
-								}
-							],
-							"fileReplacements": [
-								{
-									"replace": "daisyui/src/environments/environment.ts",
-									"with": "daisyui/src/environments/environment.prod.ts"
 								}
 							],
 							"outputHashing": "all"

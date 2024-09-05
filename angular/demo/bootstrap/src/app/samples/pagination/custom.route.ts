@@ -1,6 +1,6 @@
 import {AgnosUIAngularModule} from '@agnos-ui/angular-bootstrap';
 import type {PaginationContext} from '@agnos-ui/angular-bootstrap';
-import {Component} from '@angular/core';
+import {Component, signal} from '@angular/core';
 
 const FILTER_PAG_REGEX = /[^0-9]/g;
 
@@ -46,7 +46,7 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
 	`,
 })
 export default class PaginationComponent {
-	customPage = 4;
+	readonly customPage = signal(4);
 
 	getPageSymbol(displayedPage: number) {
 		return ['A', 'B', 'C', 'D', 'E', 'F'][displayedPage - 1];

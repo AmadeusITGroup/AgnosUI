@@ -1,5 +1,5 @@
 import {AgnosUIAngularModule} from '@agnos-ui/angular-bootstrap';
-import {Component} from '@angular/core';
+import {Component, signal} from '@angular/core';
 
 @Component({
 	standalone: true,
@@ -15,7 +15,7 @@ import {Component} from '@angular/core';
 		<nav auPagination auCollectionSize="60" [(auPage)]="page" auBoundaryLinks></nav>
 
 		<div class="mb-3">
-			Current page: <span id="defaultPage">{{ page }}</span>
+			Current page: <span id="defaultPage">{{ page() }}</span>
 		</div>
 
 		<h5>Disabled pagination:</h5>
@@ -23,6 +23,6 @@ import {Component} from '@angular/core';
 	`,
 })
 export default class DefaultPaginationComponent {
-	page = 4;
-	pageAlone = 1;
+	readonly page = signal(4);
+	readonly pageAlone = signal(1);
 }

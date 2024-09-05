@@ -8,7 +8,7 @@
 	[class]="'range'"
 	[attr.aria-label]="state().sortedHandles[0].ariaLabel"
 	(click)="widget.actions.click($event)"
-	(keydown)="onKeyDown($event)"
+	(keydown)="widget.actions.keydown($event, 0)"
 	(mousedown)="widget.actions.mouseDown($event, 0)"
 	(touchstart)="widget.actions.touchStart($event, 0)"
 />

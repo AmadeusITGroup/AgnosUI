@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 import {UseDirective, createSimpleClassTransition, createTransition} from '@agnos-ui/angular-bootstrap';
 
 @Component({
@@ -14,7 +14,7 @@ import {UseDirective, createSimpleClassTransition, createTransition} from '@agno
 					<button class="btn btn-outline-secondary" (click)="transition.api.hide()">Hide again.</button>
 				</div>
 				<div class="flip-card-back">
-					<button class="btn btn-outline-primary" (click)="transition.api.show()">{{ hiddenText }}</button>
+					<button class="btn btn-outline-primary" (click)="transition.api.show()">{{ hiddenText() }}</button>
 				</div>
 			</div>
 		</div>
@@ -28,7 +28,5 @@ export default class FlipComponent {
 			transition: createSimpleClassTransition({hideClasses: ['hide'], animationPendingHideClasses: ['hide']}),
 		},
 	});
-
-	@Input()
-	hiddenText?: string;
+	readonly hiddenText = input('');
 }

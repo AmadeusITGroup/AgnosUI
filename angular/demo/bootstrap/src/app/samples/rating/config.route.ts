@@ -1,6 +1,6 @@
 import type {RatingProps} from '@agnos-ui/angular-bootstrap';
 import {RatingComponent, injectWidgetsConfig, provideWidgetsConfig, toAngularSignal} from '@agnos-ui/angular-bootstrap';
-import {Component} from '@angular/core';
+import {Component, signal} from '@angular/core';
 
 @Component({
 	standalone: true,
@@ -115,7 +115,7 @@ import {Component} from '@angular/core';
 	`,
 })
 export default class RatingConfigComponent {
-	rating = 3;
+	readonly rating = signal(3);
 	private readonly widgetsConfig$ = injectWidgetsConfig();
 	public readonly widgetsConfig = toAngularSignal(this.widgetsConfig$);
 

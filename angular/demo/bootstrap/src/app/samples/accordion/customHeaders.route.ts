@@ -1,5 +1,5 @@
 import {AgnosUIAngularModule, UseDirective} from '@agnos-ui/angular-bootstrap';
-import {Component} from '@angular/core';
+import {Component, signal} from '@angular/core';
 import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 
 @Component({
@@ -52,8 +52,8 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 							>
 								Toggle second
 							</button>
-							<button type="button" class="btn btn-sm btn-outline-secondary" (click)="thirdDisabled = !thirdDisabled">
-								{{ thirdDisabled ? 'En' : 'Dis' }}able third
+							<button type="button" class="btn btn-sm btn-outline-secondary" (click)="toggleThirdDisabled()">
+								{{ thirdDisabled() ? 'En' : 'Dis' }}able third
 							</button>
 							<button type="button" class="btn btn-sm btn-outline-danger" (click)="accordion.api.collapseAll()">Collapse all</button>
 						</div>
@@ -67,7 +67,7 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 					}
 				</ng-template>
 			</div>
-			<div auAccordionItem [auDisabled]="thirdDisabled">
+			<div auAccordionItem [auDisabled]="thirdDisabled()">
 				<ng-template auAccordionItemStructure let-state="state" let-widget="widget">
 					<div
 						[auUse]="widget.directives.headerDirective"
@@ -83,7 +83,7 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 						>
 							Third panel
 						</button>
-						@if (thirdDisabled) {
+						@if (thirdDisabled()) {
 							<p class="text-muted m-0 small">[I'm&nbsp;disabled]</p>
 						}
 					</div>
@@ -101,6 +101,9 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 	styles: "@import '@agnos-ui/common/samples/accordion/custom.scss';",
 })
 export default class AccordionComponent {
-	thirdDisabled = false;
-	BODY = BODY;
+	readonly thirdDisabled = signal(false);
+	toggleThirdDisabled() {
+		this.thirdDisabled.update((val) => !val);
+	}
+	readonly BODY = BODY;
 }

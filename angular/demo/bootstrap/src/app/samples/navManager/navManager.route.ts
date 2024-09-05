@@ -1,6 +1,6 @@
 import type {NavManagerItemConfig} from '@agnos-ui/angular-bootstrap';
 import {AgnosUIAngularModule, createNavManager} from '@agnos-ui/angular-bootstrap';
-import {Component, Input} from '@angular/core';
+import {Component, input} from '@angular/core';
 
 @Component({
 	standalone: true,
@@ -8,20 +8,20 @@ import {Component, Input} from '@angular/core';
 	imports: [AgnosUIAngularModule],
 	template: `
 		<div class="d-flex demo-navmanager-line">
-			<input [auUse]="[navManager.directive, navManagerConfig]" type="text" [value]="text" class="form-control me-1" />
-			<span [auUse]="[navManager.directive, navManagerConfig]" tabindex="-1" class="form-control w-auto me-1">{{ text }}</span>
+			<input [auUse]="[navManager.directive, navManagerConfig]" type="text" [value]="text()" class="form-control me-1" />
+			<span [auUse]="[navManager.directive, navManagerConfig]" tabindex="-1" class="form-control w-auto me-1">{{ text() }}</span>
 			<input [auUse]="[navManager.directive, navManagerConfig]" tabindex="-1" type="checkbox" class="form-check-input align-self-center me-1" />
-			<input [auUse]="[navManager.directive, navManagerConfig]" tabindex="-1" type="text" [value]="text" disabled class="form-control me-1" />
-			<input [auUse]="[navManager.directive, navManagerConfig]" tabindex="-1" type="text" [value]="text" class="form-control me-1" />
+			<input [auUse]="[navManager.directive, navManagerConfig]" tabindex="-1" type="text" [value]="text()" disabled class="form-control me-1" />
+			<input [auUse]="[navManager.directive, navManagerConfig]" tabindex="-1" type="text" [value]="text()" class="form-control me-1" />
 		</div>
 	`,
 })
 export class NavmanagerLineComponent {
-	@Input() text = '';
+	readonly text = input('');
 
-	navManager = createNavManager();
+	readonly navManager = createNavManager();
 
-	navManagerConfig: NavManagerItemConfig = {
+	readonly navManagerConfig: NavManagerItemConfig = {
 		keys: {
 			ArrowLeft: this.navManager.focusLeft,
 			ArrowRight: this.navManager.focusRight,

@@ -1,6 +1,6 @@
 import {AgnosUIAngularModule, createResizeObserver, toAngularSignal} from '@agnos-ui/angular-bootstrap';
 import {UseDirective} from '@agnos-ui/angular-headless';
-import {ChangeDetectionStrategy, Component, computed} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, signal} from '@angular/core';
 
 @Component({
 	standalone: true,
@@ -17,7 +17,7 @@ import {ChangeDetectionStrategy, Component, computed} from '@angular/core';
 				cols="50"
 				class="form-control"
 				[class.fontsize]="observedHeight$() && observedHeight$()! > 200"
-				[style.height.px]="heightValue"
+				[style.height.px]="heightValue()"
 			>
 This simple example is using the resizeObserver feature from @agnos-ui/core and displays the height of the textarea below it.
 Modify the height to more than 200 px and see the font size changing.
@@ -34,7 +34,7 @@ Modify the height to more than 200 px and see the font size changing.
 	styles: "@import '@agnos-ui/common/samples/resizeobserver/resizeobserver.scss';",
 })
 export default class ResizeObserverComponent {
-	heightValue = 180;
+	readonly heightValue = signal(180);
 
 	readonly resizeObserver = createResizeObserver();
 
@@ -45,10 +45,10 @@ export default class ResizeObserverComponent {
 	readonly observedHeight$ = computed(() => this.dimensions$()?.contentRect?.height);
 
 	increaseHeight() {
-		this.heightValue = (this.observedHeight$() || 0) + 50;
+		this.heightValue.set((this.observedHeight$() || 0) + 50);
 	}
 
 	decreaseHeight() {
-		this.heightValue = this.observedHeight$() ? this.observedHeight$()! - 50 : 0;
+		this.heightValue.set(this.observedHeight$() ? this.observedHeight$()! - 50 : 0);
 	}
 }

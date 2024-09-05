@@ -17,7 +17,6 @@ import {
 	Directive,
 	EventEmitter,
 	Input,
-	NgZone,
 	Output,
 	TemplateRef,
 	ViewChild,
@@ -26,7 +25,6 @@ import {
 	inject,
 } from '@angular/core';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
-import {take} from 'rxjs';
 import {callWidgetFactory} from '../../config';
 import type {SliderContext, SliderProps, SliderSlotHandleContext, SliderSlotLabelContext, SliderWidget} from './slider.gen';
 import {createSlider} from './slider.gen';
@@ -58,16 +56,7 @@ export class SliderHandleDirective {
 	`,
 })
 export class SliderDefaultHandleSlotComponent {
-	private readonly _zone = inject(NgZone);
-
 	@ViewChild('handle', {static: true}) readonly handle!: TemplateRef<SliderSlotHandleContext>;
-
-	onKeyDown(event: KeyboardEvent, handleId: number, widgetOnKeyDownFn: (event: KeyboardEvent, handleId: number) => void) {
-		widgetOnKeyDownFn(event, handleId);
-		this._zone.onStable.pipe(take(1)).subscribe(() => {
-			(event.target as HTMLElement).focus();
-		});
-	}
 }
 
 export const sliderDefaultSlotHandle = new ComponentTemplate(SliderDefaultHandleSlotComponent, 'handle');

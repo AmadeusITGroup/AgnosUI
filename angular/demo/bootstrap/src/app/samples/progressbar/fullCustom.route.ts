@@ -1,6 +1,6 @@
 import {ProgressbarComponent, provideWidgetsConfig} from '@agnos-ui/angular-bootstrap';
 import type {OnDestroy} from '@angular/core';
-import {Component} from '@angular/core';
+import {Component, signal} from '@angular/core';
 import type {Subscription} from 'rxjs';
 import {interval, takeWhile} from 'rxjs';
 import CoffeeProgressbarComponent from './cofee-progressbar.component';
@@ -12,7 +12,7 @@ import CoffeeProgressbarComponent from './cofee-progressbar.component';
 	template: `
 		<div class="d-flex align-items-center flex-wrap">
 			<div style="width: 350px">
-				<div auProgressbar #progressbar [auValue]="value"></div>
+				<div auProgressbar #progressbar [auValue]="value()"></div>
 			</div>
 			<div class="d-flex flex-column justify-content-evenly h-100 ms-5">
 				<div class="btn-group" role="group">
@@ -27,7 +27,7 @@ import CoffeeProgressbarComponent from './cofee-progressbar.component';
 					<button class="btn btn-outline-primary" [disabled]="!progressbar.state().started" (click)="stop(true)">Reset</button>
 				</div>
 				<p class="mt-3">
-					<span>{{ value === 0 ? 'Need to wake up.' : value < 100 ? 'Retrieving coffee... ' + value + '%' : 'Ready to work !' }}</span>
+					<span>{{ !subscription ? 'Need to wake up.' : value() < 100 ? 'Retrieving coffee... ' + value() + '%' : 'Ready to work !' }}</span>
 				</p>
 			</div>
 		</div>
@@ -35,15 +35,15 @@ import CoffeeProgressbarComponent from './cofee-progressbar.component';
 	styles: "@import '@agnos-ui/common/samples/progressbar/custom.scss';",
 })
 export default class FullCustomProgressBarComponent implements OnDestroy {
-	value = 0;
+	readonly value = signal(0);
 	subscription: Subscription | undefined;
 
 	start() {
 		if (!this.subscription) {
 			this.subscription = interval(500)
-				.pipe(takeWhile(() => this.value < 100))
+				.pipe(takeWhile(() => this.value() < 100))
 				.subscribe(() => {
-					this.value += 10;
+					this.value.update((val) => val + 10);
 				});
 		}
 	}
@@ -51,7 +51,7 @@ export default class FullCustomProgressBarComponent implements OnDestroy {
 		this.subscription?.unsubscribe();
 		this.subscription = undefined;
 		if (reset) {
-			this.value = 0;
+			this.value.set(0);
 		}
 	}
 	toggleProgress() {

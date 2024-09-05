@@ -1,7 +1,6 @@
 import type {RatingWidget, SlotContent, StarContext} from '@agnos-ui/angular-bootstrap';
-import {BaseWidgetDirective, SlotDirective, auNumberAttribute, callWidgetFactory, createRating} from '@agnos-ui/angular-bootstrap';
-import type {AfterContentChecked} from '@angular/core';
-import {ChangeDetectionStrategy, Component, ContentChild, Directive, Input, TemplateRef, inject} from '@angular/core';
+import {BaseWidgetDirective, SlotDirective, callWidgetFactory, createRating} from '@agnos-ui/angular-bootstrap';
+import {ChangeDetectionStrategy, Component, Directive, TemplateRef, contentChild, effect, inject, input, numberAttribute} from '@angular/core';
 
 /**
  * This directive allows the component to retrieve the slot template.
@@ -33,7 +32,7 @@ export class RatingReadonlyStarDirective {
 		</div>
 	`,
 })
-export class RatingReadonlyComponent extends BaseWidgetDirective<RatingWidget> implements AfterContentChecked {
+export class RatingReadonlyComponent extends BaseWidgetDirective<RatingWidget> {
 	readonly _widget = callWidgetFactory({
 		factory: createRating,
 		widgetName: 'rating',
@@ -47,19 +46,22 @@ export class RatingReadonlyComponent extends BaseWidgetDirective<RatingWidget> i
 		},
 	});
 
-	@Input()
-	star: SlotContent<StarContext>;
-	@ContentChild(RatingReadonlyStarDirective, {static: false}) slotStarFromContent: RatingReadonlyStarDirective | undefined;
+	readonly className = input<string>();
+	readonly rating = input.required({transform: numberAttribute});
+	readonly maxRating = input.required({transform: numberAttribute});
 
-	@Input({transform: auNumberAttribute}) rating: number | undefined;
+	readonly star = input<SlotContent<StarContext>>();
+	readonly slotStarFromContent = contentChild(RatingReadonlyStarDirective);
 
-	@Input({transform: auNumberAttribute}) maxRating: number | undefined;
-
-	@Input() className: string | undefined;
-
-	ngAfterContentChecked(): void {
-		this._widget.patchSlots({
-			star: this.slotStarFromContent?.templateRef,
-		});
+	constructor() {
+		super();
+		effect(
+			() => {
+				this._widget.patchSlots({
+					star: this.slotStarFromContent()?.templateRef,
+				});
+			},
+			{allowSignalWrites: true},
+		);
 	}
 }
