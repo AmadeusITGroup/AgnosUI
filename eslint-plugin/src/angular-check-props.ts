@@ -406,7 +406,7 @@ export const angularCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 									if (
 										nodeType.target?.symbol?.name != 'EventEmitter' ||
 										nodeType.typeArguments?.length !== 1 ||
-										!isSameType(nodeType.typeArguments![0], outputInfo.type, context)
+										!isSameType(nodeType.typeArguments[0], outputInfo.type, context)
 									) {
 										reportInvalidOutputPropType(classMember, name, nodeType, outputInfo, context);
 									}

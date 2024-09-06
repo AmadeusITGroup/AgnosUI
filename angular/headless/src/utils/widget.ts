@@ -116,14 +116,23 @@ function patchSimpleChanges(patchFn: (obj: any) => void, changes: SimpleChanges)
 export abstract class BaseWidgetDirective<W extends Widget> implements OnChanges, OnInit {
 	protected abstract readonly _widget: AngularWidget<W>;
 
+	/**
+	 *
+	 */
 	get api(): W['api'] {
 		return this._widget.api;
 	}
 
+	/**
+	 *
+	 */
 	get state(): Signal<WidgetState<W>> {
 		return this._widget.ngState;
 	}
 
+	/**
+	 *
+	 */
 	get widget(): ContextWidget<W> {
 		return this._widget.widget;
 	}

@@ -249,7 +249,7 @@ export const createTransition = (config?: PropsConfig<TransitionProps>): Transit
 				promise,
 			};
 			currentTransition$.set(currentTransition);
-			resolve!(
+			resolve(
 				(async () => {
 					try {
 						await transitionFn(element, visible ? 'show' : 'hide', animated, signal, context);

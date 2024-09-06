@@ -67,7 +67,7 @@ export default class CustomSelectComponent {
 	}
 
 	navSelector(node: HTMLElement) {
-		return node.querySelectorAll('a,button,input') as NodeListOf<HTMLSpanElement | HTMLInputElement>;
+		return node.querySelectorAll('a,button,input');
 	}
 
 	onFilterTextChange = debounce(
@@ -83,6 +83,6 @@ export default class CustomSelectComponent {
 	);
 
 	onSelectedChange(selected: WikiResult[]) {
-		this.selected.set((<WikiResult[]>(selected || [])).sort((a, b) => compareFn(a.title, b.title)));
+		this.selected.set((selected || []).sort((a, b) => compareFn(a.title, b.title)));
 	}
 }

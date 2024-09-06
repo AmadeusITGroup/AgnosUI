@@ -612,7 +612,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 		}
 		const sortedValues = sortedValues$();
 		const closestBigger = sortedValues.find((sv) => sv > clickedPercent * 100);
-		const closestBiggerIndex = closestBigger ? sortedValues.indexOf(closestBigger!) : sortedValues.length - 1;
+		const closestBiggerIndex = closestBigger ? sortedValues.indexOf(closestBigger) : sortedValues.length - 1;
 		const midPoint = sortedValues[closestBiggerIndex - 1] + (sortedValues[closestBiggerIndex] - sortedValues[closestBiggerIndex - 1]) / 2;
 		const closestValue = sortedValues[clickedPercent * 100 <= midPoint ? closestBiggerIndex - 1 : closestBiggerIndex];
 		return values.indexOf(closestValue);
