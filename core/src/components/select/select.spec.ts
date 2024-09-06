@@ -297,7 +297,7 @@ describe(`Select model`, () => {
 				beforeEach(() => {
 					preventDefaultCallNb = 0;
 					container.innerHTML = `<input id="input" />`;
-					input = container.querySelector('#input')! as HTMLElement;
+					input = container.querySelector('#input')!;
 					const selectWidget = testCtx.selectWidget;
 					const hasFocusDirective = selectWidget.directives.hasFocusDirective(container)!;
 					const containerDirective = selectWidget.directives.inputContainerDirective(container);
@@ -390,7 +390,7 @@ describe(`Select model`, () => {
 					assign(expectedStateAfterSelection, {
 						selected: [itemCtx.item],
 						selectedContexts: [{id: 'aa', item: itemCtx.item, selected: true}],
-						highlighted: {...expectedState.highlighted!, item: items[0], selected: true},
+						highlighted: {...expectedState.highlighted, item: items[0], selected: true},
 					});
 					expectedStateAfterSelection.visibleItems[0].selected = true;
 					expect(getState(), 'First item selected').toEqual(expectedStateAfterSelection);
@@ -432,9 +432,9 @@ describe(`Select model`, () => {
 						<div id="bb" class="au-select-badge" tabindex="-1">bb</div>
 						<input id="input"/>
 					`;
-					input = container.querySelector('#input')! as HTMLInputElement;
-					badgeA = container.querySelector('#aa')! as HTMLDivElement;
-					badgeB = container.querySelector('#bb')! as HTMLDivElement;
+					input = container.querySelector('#input')!;
+					badgeA = container.querySelector('#aa')!;
+					badgeB = container.querySelector('#bb')!;
 
 					const hasFocusDirective = selectWidget.directives.hasFocusDirective(container)!;
 					const containerDirective = selectWidget.directives.inputContainerDirective(container);

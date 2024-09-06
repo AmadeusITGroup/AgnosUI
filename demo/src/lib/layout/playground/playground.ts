@@ -13,7 +13,7 @@ function setPlaygroundContext(context: Playground) {
 }
 
 export function getPlaygroundContext() {
-	return getContext(playgroundSymbol) as Playground;
+	return getContext(playgroundSymbol);
 }
 
 interface PlaygroundProps {

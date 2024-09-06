@@ -321,7 +321,7 @@ describe('angular-check-props', () => {
 			...invalid
 				.filter(({output}) => !!output)
 				.map(({output, name}) => ({
-					code: Array.isArray(output!) ? output!.join('') : output!,
+					code: Array.isArray(output!) ? output.join('') : output!,
 					name: `fix: ${name}`,
 				})),
 		],

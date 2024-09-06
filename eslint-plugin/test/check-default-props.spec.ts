@@ -265,7 +265,7 @@ export function getMyWidgetDefaultConfig(): MyType {
 			...invalid
 				.filter(({output}) => !!output)
 				.map(({output}) => ({
-					code: Array.isArray(output!) ? output!.join('') : output!,
+					code: Array.isArray(output!) ? output.join('') : output!,
 				})),
 		],
 		invalid,

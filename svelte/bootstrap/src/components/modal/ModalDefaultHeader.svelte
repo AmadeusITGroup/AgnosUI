@@ -2,7 +2,7 @@
 	import type {ModalContext, ModalSlots} from './modal';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 
-	type Data = $$Generic; // eslint-disable-line no-undef
+	type Data = $$Generic;
 	type $$Props = ModalContext<Data>;
 	type $$Slots = ModalSlots;
 

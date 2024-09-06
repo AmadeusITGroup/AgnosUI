@@ -350,7 +350,7 @@ describe('svelte-check-props', () => {
 				.filter(({output, outputError}) => !!output && !outputError)
 				.map(({output, name}) => ({
 					name: `fix: ${name}`,
-					code: Array.isArray(output!) ? output!.join('') : output!,
+					code: Array.isArray(output!) ? output.join('') : output!,
 				})),
 		],
 		invalid: invalid.map(({outputError, ...testCase}) => testCase),
