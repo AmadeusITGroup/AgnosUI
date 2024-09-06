@@ -8,11 +8,11 @@ test.describe.configure({mode: 'parallel'});
 
 const samples = Object.keys(samplesList());
 
-test(`Routes check`, async () => {
+test(`Routes check`, () => {
 	expect(samples.length, `markup routes musn't be empty`).toBeGreaterThan(0);
 });
 
-test.describe(`Samples markup consistency check`, async () => {
+test.describe(`Samples markup consistency check`, () => {
 	const samplesExtraHash: Record<string, string> = {
 		'bootstrap/modal/playground': '#{"props":{"visible":true,"children":"Dialog content","title":"Dialog"}}',
 	};

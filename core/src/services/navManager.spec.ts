@@ -128,7 +128,7 @@ for (const {direction, arrowNext, arrowPrevious} of [
 			const element3 = document.getElementById('element3') as HTMLInputElement;
 			const element4 = document.getElementById('element4')!;
 			const navManager = createNavManager();
-			const selector = vi.fn((divElement: HTMLElement) => divElement.querySelectorAll('span,input'));
+			const selector = vi.fn((divElement: HTMLElement) => divElement.querySelectorAll<HTMLSpanElement | HTMLInputElement>('span,input'));
 			const directive = navManager.directive(divElement, {
 				keys: {
 					ArrowRight: navManager.focusRight,

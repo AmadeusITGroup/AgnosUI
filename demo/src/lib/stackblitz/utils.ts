@@ -3,7 +3,7 @@ import type {Frameworks} from '$lib/stores';
 import type {Project} from '@stackblitz/sdk';
 import type {AsyncFilesSet} from '../layout/sample';
 
-export type StackblitzProcessor = (project: Project, sample: SampleInfo, framework: Frameworks) => Promise<void>;
+export type StackblitzProcessor = (project: Project, sample: SampleInfo, framework: Frameworks) => Promise<void> | void;
 
 export const isBootstrapCondition = (sample: SampleInfo) => sample.style === 'bootstrap';
 export const isDaisyuiCondition = (sample: SampleInfo) => sample.style === 'daisyui';

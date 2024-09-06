@@ -61,7 +61,7 @@ export default class ConfigAlertComponent {
 	readonly dismissible = signal(true);
 	readonly type = signal(this.styleList[0].value);
 
-	async showAlert(alert: AlertComponent) {
+	showAlert(alert: AlertComponent) {
 		alert.api.open();
 	}
 }

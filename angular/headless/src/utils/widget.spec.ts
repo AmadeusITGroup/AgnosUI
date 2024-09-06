@@ -200,7 +200,7 @@ describe('callWidgetFactoryWithConfig', () => {
 		]);
 	});
 
-	it('calls the core with the correct init values', async () => {
+	it('calls the core with the correct init values', () => {
 		type MyWidget = Widget<{myValue: string}, {myValue: string}, Record<string, never>, Record<string, never>, Record<string, never>>;
 
 		const factory: WidgetFactory<MyWidget> = (propsConfig) => {
