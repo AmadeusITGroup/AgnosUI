@@ -32,19 +32,24 @@
 	"devDependencies": {
 		"@axe-core/playwright": "^4.10.0",
 		"@commitlint/cli": "^19.4.1",
+		"@eslint/js": "^9.8.0",
 		"@playwright/test": "^1.46.1",
 		"@types/node": "^20.16.5",
 		"@types/uuid": "^10.0.0",
-		"@typescript-eslint/eslint-plugin": "^8.4.0",
-		"@typescript-eslint/parser": "^8.4.0",
 		"@vitest/browser": "^2.0.5",
 		"@vitest/ui": "^2.0.5",
+		"angular-eslint": "^18.2.0",
 		"bootstrap": "^5.3.3",
 		"eslint": "^9.10.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-jsdoc": "^50.2.2",
+		"eslint-plugin-playwright": "^1.6.2",
+		"eslint-plugin-react": "^7.35.0",
+		"eslint-plugin-svelte": "^2.43.0",
+		"eslint-plugin-vitest": "^0.5.4",
 		"express": "^4.19.2",
 		"glob": "11.0.0",
+		"globals": "^15.9.0",
 		"husky": "^9.1.5",
 		"npm-run-all2": "^6.2.2",
 		"prettier": "^3.3.3",
@@ -54,6 +59,7 @@
 		"typedoc-plugin-markdown": "^4.2.7",
 		"typedoc-plugin-mdn-links": "^3.2.12",
 		"typescript": "~5.5.4",
+		"typescript-eslint": "^8.2.0",
 		"vite": "^5.4.3",
 		"vitest": "^2.0.5",
 		"wireit": "^0.14.9"
@@ -166,7 +172,8 @@
 				"./svelte/bootstrap:generate:exports",
 				"./svelte/bootstrap:generate:component-types",
 				"./demo:sveltekit",
-				"./svelte/ssr-app:sveltekit"
+				"./svelte/ssr-app:sveltekit",
+				"./eslint-plugin:build"
 			]
 		},
 		"check:ts-gen-doc": {
@@ -193,7 +200,7 @@
 			]
 		},
 		"lint": {
-			"command": "ESLINT_USE_FLAT_CONFIG=false eslint --ext mjs,js,ts,tsx,svelte .",
+			"command": "eslint --cache --color",
 			"dependencies": [
 				"prepare",
 				"./eslint-plugin:build",

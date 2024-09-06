@@ -178,7 +178,6 @@
 		"@types/dom-view-transitions": "^1.0.5",
 		"bootstrap-icons": "^1.11.3",
 		"compare-versions": "^6.1.1",
-		"eslint-plugin-svelte": "^2.43.0",
 		"front-matter": "^4.0.2",
 		"prettier-plugin-svelte": "^3.2.6",
 		"shiki": "^1.16.2",
