@@ -99,7 +99,7 @@ describe('directive', () => {
 			expect(hasSubscribers).toBe(true);
 			instance?.destroy?.();
 			expect(hasSubscribers).toBe(true);
-			await 0;
+			await Promise.resolve();
 			expect(hasSubscribers).toBe(false);
 		});
 

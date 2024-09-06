@@ -39,7 +39,7 @@ export class ZoneWrapper {
 					if (!this.#runPlanned) {
 						this.#runPlanned = true;
 						void (async () => {
-							await 0;
+							await Promise.resolve();
 							this.#runPlanned = false;
 							if (this.#runNeeded) {
 								this.ngZoneRun(noop);

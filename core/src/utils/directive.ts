@@ -115,7 +115,7 @@ export const directiveSubscribe =
 		return {
 			destroy: async () => {
 				if (asyncUnsubscribe) {
-					await 0;
+					await Promise.resolve();
 				}
 				unsubscribe();
 			},
