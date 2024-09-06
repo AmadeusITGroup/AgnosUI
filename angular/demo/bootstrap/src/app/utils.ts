@@ -39,7 +39,7 @@ export function hashChangeHook(propsCallback: (props: any) => void) {
 
 	async function callPropsCallback(props: any) {
 		lastProps = props;
-		await 0;
+		await Promise.resolve();
 		if (lastProps === props) {
 			propsCallback(props);
 		}

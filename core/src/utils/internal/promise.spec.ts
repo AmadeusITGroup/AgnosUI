@@ -91,7 +91,7 @@ describe('promiseStoreToPromiseStateStore', () => {
 		const promiseStateStore$ = promiseStoreToPromiseStateStore(promiseStore$);
 		let state = promiseStateStore$();
 		expect(state).toBe(promisePending);
-		await 0;
+		await Promise.resolve();
 		state = promiseStateStore$();
 		expect(state.status).toBe('fulfilled');
 		expect((state as PromiseFulfilledResult<any>).value).toBe(firstResolvedValue);
@@ -108,17 +108,17 @@ describe('promiseStoreToPromiseStateStore', () => {
 		});
 		expect(states.length).toBe(1);
 		expect(states[0]).toBe(promisePending);
-		await 0;
+		await Promise.resolve();
 		promiseStore$.set(second.promise);
 		expect(states.length).toBe(1);
 		second.resolve('second');
-		await 0;
+		await Promise.resolve();
 		expect(states.length).toBe(2);
 		expect(states[1]).toEqual({status: 'fulfilled', value: 'second'});
 		first.resolve('first'); // the first promise is ignored
-		await 0;
+		await Promise.resolve();
 		expect(states.length).toBe(2);
-		await 0;
+		await Promise.resolve();
 		expect(states.length).toBe(2);
 		// now let's come back to the first promise:
 		promiseStore$.set(first.promise);
@@ -139,20 +139,20 @@ describe('promiseStoreToPromiseStateStore', () => {
 		});
 		expect(states.length).toBe(1);
 		expect(states[0]).toBe(promisePending);
-		await 0;
+		await Promise.resolve();
 		expect(states.length).toBe(2);
 		expect(states[1]).toEqual({status: 'fulfilled', value: 'value'});
 		promiseStore$.set(secondPromise);
 		// the promise status cannot be known synchronously
 		expect(states.length).toBe(3);
 		expect(states[2]).toBe(promisePending);
-		await 0;
+		await Promise.resolve();
 		expect(states.length).toBe(4);
 		expect(states[3]).toEqual({status: 'fulfilled', value: 'value'});
 		// now let's come back to the first promise, which has the same value as the second:
 		promiseStore$.set(firstPromise);
 		expect(states.length).toBe(4); // no change
-		await 0;
+		await Promise.resolve();
 		expect(states.length).toBe(4); // no change
 	});
 
@@ -168,20 +168,20 @@ describe('promiseStoreToPromiseStateStore', () => {
 		});
 		expect(states.length).toBe(1);
 		expect(states[0]).toBe(promisePending);
-		await 0;
+		await Promise.resolve();
 		expect(states.length).toBe(2);
 		expect(states[1]).toEqual({status: 'rejected', reason: 'reason'});
 		promiseStore$.set(secondPromise);
 		// the promise status cannot be known synchronously
 		expect(states.length).toBe(3);
 		expect(states[2]).toBe(promisePending);
-		await 0;
+		await Promise.resolve();
 		expect(states.length).toBe(4);
 		expect(states[3]).toEqual({status: 'rejected', reason: 'reason'});
 		// now let's come back to the first promise, which has the same value as the second:
 		promiseStore$.set(firstPromise);
 		expect(states.length).toBe(4); // no change
-		await 0;
+		await Promise.resolve();
 		expect(states.length).toBe(4); // no change
 	});
 });
@@ -197,16 +197,16 @@ describe('promiseStoreToValueStore', () => {
 		});
 		expect(states.length).toBe(1);
 		expect(states[0]).toBe('initial');
-		await 0;
+		await Promise.resolve();
 		expect(states.length).toBe(2);
 		expect(states[1]).toBe('value');
 		promiseStore$.set(Promise.reject('ignored-rejection'));
 		expect(states.length).toBe(2);
-		await 0;
+		await Promise.resolve();
 		expect(states.length).toBe(2);
 		promiseStore$.set(Promise.resolve('other'));
 		expect(states.length).toBe(2); // the new value cannot be known synchronously
-		await 0;
+		await Promise.resolve();
 		expect(states.length).toBe(3);
 		expect(states[2]).toBe('other');
 		promiseStore$.set(firstPromise); // the old value is already known

@@ -469,7 +469,7 @@ describe(`Select model`, () => {
 							}),
 						);
 
-						await 0;
+						await Promise.resolve();
 						badgeB.parentElement?.removeChild(badgeB);
 
 						await vi.waitUntil(() => document.activeElement === badgeA);
