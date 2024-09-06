@@ -117,21 +117,24 @@ export abstract class BaseWidgetDirective<W extends Widget> implements OnChanges
 	protected abstract readonly _widget: AngularWidget<W>;
 
 	/**
-	 *
+	 * Retrieves the widget api
+	 * @returns the widget api
 	 */
 	get api(): W['api'] {
 		return this._widget.api;
 	}
 
 	/**
-	 *
+	 * Retrieves the widget state as an Angular {@link Signal}
+	 * @returns the widget state
 	 */
 	get state(): Signal<WidgetState<W>> {
 		return this._widget.ngState;
 	}
 
 	/**
-	 *
+	 * Retrieves the widget
+	 * @returns the widget
 	 */
 	get widget(): ContextWidget<W> {
 		return this._widget.widget;
