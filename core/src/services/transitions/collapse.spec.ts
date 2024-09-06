@@ -39,46 +39,46 @@ describe('createCollapseTransition', () => {
 		document.body.innerHTML = '';
 	});
 
-	const checkClasses = (classes: string[]) => {
+	const expectClasses = (classes: string[]) => {
 		expect([...element.classList.values()]).toEqual(classes);
 	};
 
 	test('animations enabled', async () => {
-		checkClasses(['hide']);
+		expectClasses(['hide']);
 		let promise = transition.api.toggle(true, true);
-		checkClasses(['anim']);
+		expectClasses(['anim']);
 		await promise;
-		checkClasses(['show']);
+		expectClasses(['show']);
 		promise = transition.api.toggle(false, true);
-		checkClasses(['anim']);
+		expectClasses(['anim']);
 		await promise;
-		checkClasses(['hide']);
+		expectClasses(['hide']);
 	});
 
 	test('disabled animations (false in toggle)', async () => {
 		const reflow = vi.spyOn(element, 'getBoundingClientRect');
-		checkClasses(['hide']);
+		expectClasses(['hide']);
 		let promise = transition.api.toggle(true, false);
-		checkClasses(['show']);
+		expectClasses(['show']);
 		await promise;
-		checkClasses(['show']);
+		expectClasses(['show']);
 		promise = transition.api.toggle(false, false);
-		checkClasses(['hide']);
+		expectClasses(['hide']);
 		await promise;
-		checkClasses(['hide']);
+		expectClasses(['hide']);
 		expect(reflow).not.toHaveBeenCalled();
 	});
 
 	test('disabled animations (transition-property: none in css)', async () => {
-		checkClasses(['hide']);
+		expectClasses(['hide']);
 		element.style.transitionProperty = 'none';
 		let promise = transition.api.toggle(true, true);
-		checkClasses(['show']);
+		expectClasses(['show']);
 		await promise;
-		checkClasses(['show']);
+		expectClasses(['show']);
 		promise = transition.api.toggle(false, true);
-		checkClasses(['hide']);
+		expectClasses(['hide']);
 		await promise;
-		checkClasses(['hide']);
+		expectClasses(['hide']);
 	});
 });
