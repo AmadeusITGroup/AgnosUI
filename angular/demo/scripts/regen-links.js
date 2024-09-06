@@ -28,9 +28,9 @@ async function generateLinks(project) {
 		}
 		return comp;
 	}
-	export const SAMPLE_ROUTES: Route[] = [${files.map(
-		(file) => `{path: '${file.toLowerCase()}', loadComponent: () => importAndNotify(() => import('../samples/${file}.route'))}`,
-	)}];
+	export const SAMPLE_ROUTES: Route[] = [${files
+		.map((file) => `{path: '${file.toLowerCase()}', loadComponent: () => importAndNotify(() => import('../samples/${file}.route'))}`)
+		.join(', ')}];
 	`;
 
 	const generatedFolder = path.join(__dirname, `../${project}/src/app/generated`);

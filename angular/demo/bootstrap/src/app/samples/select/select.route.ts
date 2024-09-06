@@ -9,6 +9,7 @@ import {FormsModule} from '@angular/forms';
 	template: `
 		<h2>Multiselect example</h2>
 		<div class="mb-3">
+			<!-- eslint-disable-next-line @angular-eslint/template/label-has-associated-control -->
 			<label class="form-label">Multiselect</label>
 			<div auSelect [auItems]="items()" [(auFilterText)]="filterText"></div>
 		</div>

@@ -74,7 +74,7 @@ export const runProcess = (processName: string, command: string[], abortSignal: 
 				}
 			})
 			.on('error', (error) => {
-				logger.log(`${prefix}${processName} failed to start: ${error}`);
+				logger.log(`${prefix}${processName} failed to start: ${error.message}`);
 			});
 	});
 
