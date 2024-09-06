@@ -9,8 +9,8 @@
 	}
 </script>
 
-<!-- svelte-ignore a11y-label-has-associated-control -->
-<label class="form-label" id="ratingLabel">Rating of your experience</label><br />
+<div class="form-label" id="ratingLabel">Rating of your experience</div>
+<br />
 <Rating bind:rating={ctrl.value} disabled={ctrl.disabled} ariaLabelledBy="ratingLabel" />
 <div id="form-msg" class="form-text small">
 	{#if ctrl.valid}

@@ -27,7 +27,7 @@ identity.toString = () => 'promise';
 
 describe('promiseStateStore', () => {
 	const testWithValue = <T>(value: T) => {
-		test(`test with simple value ${value}`, () => {
+		test(`test with simple value ${value as any}`, () => {
 			const store = promiseStateStore(value);
 			const storeValue = store();
 			expect(storeValue.status).toEqual('fulfilled');
@@ -35,7 +35,7 @@ describe('promiseStateStore', () => {
 		});
 
 		for (const promiseWrapper of [identity, wrapInThenable]) {
-			test(`test with ${promiseWrapper} resolving to ${value}`, async () => {
+			test(`test with ${promiseWrapper as any} resolving to ${value as any}`, async () => {
 				const {promise, resolve} = promiseWithResolve<T>();
 				const thenable = promiseWrapper(promise);
 				const store = promiseStateStore(thenable);
@@ -50,7 +50,7 @@ describe('promiseStateStore', () => {
 				expect((storeValue as PromiseFulfilledResult<T>).value).toBe(value);
 			});
 
-			test(`test with ${promiseWrapper} throwing ${value}`, async () => {
+			test(`test with ${promiseWrapper as any} throwing ${value as any}`, async () => {
 				const {promise, reject} = promiseWithResolve();
 				const thenable = promiseWrapper(promise);
 				const store = promiseStateStore(thenable);
@@ -157,7 +157,9 @@ describe('promiseStoreToPromiseStateStore', () => {
 	});
 
 	test('promises rejected with the same reason', async () => {
+		// eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
 		const firstPromise = Promise.reject('reason');
+		// eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
 		const secondPromise = Promise.reject('reason');
 		expect(firstPromise).not.toBe(secondPromise); // different objects but same rejected value
 		const states: PromiseState<any>[] = [];
@@ -200,7 +202,7 @@ describe('promiseStoreToValueStore', () => {
 		await Promise.resolve();
 		expect(states.length).toBe(2);
 		expect(states[1]).toBe('value');
-		promiseStore$.set(Promise.reject('ignored-rejection'));
+		promiseStore$.set(Promise.reject(new Error('ignored-rejection')));
 		expect(states.length).toBe(2);
 		await Promise.resolve();
 		expect(states.length).toBe(2);

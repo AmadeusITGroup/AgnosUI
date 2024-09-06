@@ -30,6 +30,7 @@ test.describe(`Samples markup consistency check`, () => {
 			test.skip(({sampleInfo}) => !sampleInfo, `The sample cannot be tested in this configuration`);
 
 			test(`should have a consistent markup`, async ({page, baseURL}) => {
+				// eslint-disable-next-line playwright/no-networkidle
 				await page.goto(`${baseURL}${samplesExtraHash[sampleKey] ?? ''}`, {waitUntil: 'networkidle'});
 				await expect.poll(async () => (await page.locator('#root').innerHTML()).trim().length).toBeGreaterThan(0);
 				await samplesExtraAction[sampleKey]?.(page);

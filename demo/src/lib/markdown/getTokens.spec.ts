@@ -15,16 +15,16 @@ describe('getTokens', () => {
 		],
 	});
 
-	const testGetTokens = (inputMarkdown: string, expectedHtml: string) => {
+	const expectGetTokens = (inputMarkdown: string, expectedHtml: string) => {
 		expect(marked.parser(getTokens(inputMarkdown)).trim()).toEqual(expectedHtml.trim());
 	};
 
 	test('will not do anything on markdown without any heading', () => {
-		testGetTokens('Some markdown text', '<p>Some markdown text</p>');
+		expectGetTokens('Some markdown text', '<p>Some markdown text</p>');
 	});
 
 	test('will wrap up in section when using level 2 headings', () => {
-		testGetTokens(
+		expectGetTokens(
 			`
 # Introduction
 
@@ -39,7 +39,7 @@ Hello sirs !`,
 	});
 
 	test('will wrap up in two sections when using two level 2 headings', () => {
-		testGetTokens(
+		expectGetTokens(
 			`
 # Introduction
 
@@ -60,7 +60,7 @@ Hello ladies !`,
 	});
 
 	test('will properly work with level 3 headings', () => {
-		testGetTokens(
+		expectGetTokens(
 			`
 # Introduction
 
