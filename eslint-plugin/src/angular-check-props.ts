@@ -367,21 +367,21 @@ export const angularCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 									if (inputType) {
 										if (
 											!decoratorArguments.length ||
-											decoratorArguments[0].type !== 'ObjectExpression' ||
+											decoratorArguments[0].type !== TSESTree.AST_NODE_TYPES.ObjectExpression ||
 											!decoratorArguments[0].properties.some(
 												(prop) =>
-													prop.type === 'Property' &&
-													prop.key.type === 'Identifier' &&
+													prop.type === TSESTree.AST_NODE_TYPES.Property &&
+													prop.key.type === TSESTree.AST_NODE_TYPES.Identifier &&
 													prop.key.name === 'alias' &&
-													prop.value.type === 'Literal' &&
+													prop.value.type === TSESTree.AST_NODE_TYPES.Literal &&
 													prop.value.value === inputValidAlias,
 											) ||
 											!decoratorArguments[0].properties.some(
 												(prop) =>
-													prop.type === 'Property' &&
-													prop.key.type === 'Identifier' &&
+													prop.type === TSESTree.AST_NODE_TYPES.Property &&
+													prop.key.type === TSESTree.AST_NODE_TYPES.Identifier &&
 													prop.key.name === 'transform' &&
-													prop.value.type === 'Identifier' &&
+													prop.value.type === TSESTree.AST_NODE_TYPES.Identifier &&
 													prop.value.name === (inputType === 'Boolean' ? 'auBooleanAttribute' : 'auNumberAttribute'),
 											)
 										) {
@@ -389,7 +389,7 @@ export const angularCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 										}
 									} else if (
 										!decoratorArguments.length ||
-										decoratorArguments[0].type !== 'Literal' ||
+										decoratorArguments[0].type !== TSESTree.AST_NODE_TYPES.Literal ||
 										decoratorArguments[0].value !== inputValidAlias
 									) {
 										reportInvalidAlias(classMember, name, 'input', inputValidAlias, context);
@@ -421,7 +421,11 @@ export const angularCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 									}
 									const outputValidAlias = validAlias(name);
 									const decoratorArguments = (getDecorator(classMember, 'Output')!.expression as TSESTree.CallExpression).arguments;
-									if (!decoratorArguments.length || decoratorArguments[0].type !== 'Literal' || decoratorArguments[0].value !== outputValidAlias) {
+									if (
+										!decoratorArguments.length ||
+										decoratorArguments[0].type !== TSESTree.AST_NODE_TYPES.Literal ||
+										decoratorArguments[0].value !== outputValidAlias
+									) {
 										reportInvalidAlias(classMember, name, 'output', outputValidAlias, context);
 									}
 								} else {
