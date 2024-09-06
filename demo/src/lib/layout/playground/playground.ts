@@ -12,7 +12,7 @@ function setPlaygroundContext(context: Playground) {
 	setContext(playgroundSymbol, context);
 }
 
-export function getPlaygroundContext() {
+export function getPlaygroundContext(): Playground {
 	return getContext(playgroundSymbol);
 }
 

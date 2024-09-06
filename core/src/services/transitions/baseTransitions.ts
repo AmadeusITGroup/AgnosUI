@@ -34,7 +34,7 @@ export type TransitionFn = (
 	 * Context of the current transition. It is reused between calls if the previous transition was stopped while running on the same element.
 	 */
 	context: object,
-) => Promise<void>;
+) => Promise<void> | void;
 
 export interface TransitionProps {
 	/**
@@ -171,7 +171,7 @@ const neverEndingPromise = new Promise<never>(noop);
  * @param element - the element to animate
  * @param direction - the direction
  */
-export const noAnimation: TransitionFn = async (element, direction) => {
+export const noAnimation: TransitionFn = (element, direction) => {
 	element.style.display = direction === 'show' ? '' : 'none';
 };
 

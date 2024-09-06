@@ -49,7 +49,7 @@ const SlotItemLabel = ({itemContext}: SelectItemContext<WikiResult>) => {
 	);
 };
 
-const navSelector = (node: HTMLElement) => node.querySelectorAll('a,button,input');
+const navSelector = (node: HTMLElement) => node.querySelectorAll<HTMLSpanElement | HTMLInputElement>('a,button,input');
 const Custom = () => {
 	const [items, setItems] = useState([] as WikiResult[]);
 	const [selected, setSelected] = useState([] as WikiResult[]);

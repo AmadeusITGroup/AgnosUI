@@ -27,7 +27,7 @@ export const listSamples = (): Plugin => ({
 			return {id};
 		}
 	},
-	async load(id) {
+	load(id) {
 		if (id === samplesListId) {
 			let output = '';
 			const samples = getSamplesList();

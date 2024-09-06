@@ -6,7 +6,7 @@ import type {TemplateNode, Attribute} from 'svelte/types/compiler/interfaces';
 export const directivesPreprocess = (): PreprocessorGroup => {
 	return {
 		name: 'AgnosUI',
-		markup: async ({content, filename}) => {
+		markup: ({content, filename}) => {
 			const varPrefix = '__AgnosUISveltePreprocess__';
 			if (
 				content.includes(varPrefix) // avoids double processing

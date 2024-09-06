@@ -1,7 +1,8 @@
-import type {AfterSuiteRunMeta, CoverageProvider, CoverageProviderModule, Vitest} from 'vitest';
+import type {CoverageProvider, CoverageProviderModule, Vitest} from 'vitest/node';
+import type {AfterSuiteRunMeta} from 'vitest';
 
 const customCoverageProviderModule: CoverageProviderModule = {
-	async getProvider(): Promise<CoverageProvider> {
+	getProvider(): CoverageProvider {
 		let ctx: Vitest | undefined;
 		let finalizeReport: undefined | (() => Promise<void>);
 		return {

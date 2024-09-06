@@ -47,7 +47,7 @@ const addExtension = (directory: string, depPath: string) => {
 export const includeSamples = (): Plugin => {
 	return {
 		name: 'include-samples',
-		async resolveId(source) {
+		resolveId(source) {
 			if (source.startsWith(samplePrefix)) {
 				return {id: source};
 			}

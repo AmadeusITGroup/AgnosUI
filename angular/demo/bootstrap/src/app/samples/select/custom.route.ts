@@ -66,7 +66,7 @@ export default class CustomSelectComponent {
 		return 'page-' + item.pageid;
 	}
 
-	navSelector(node: HTMLElement) {
+	navSelector(node: HTMLElement): NodeListOf<HTMLSpanElement | HTMLInputElement> {
 		return node.querySelectorAll('a,button,input');
 	}
 

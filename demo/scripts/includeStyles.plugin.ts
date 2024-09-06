@@ -19,7 +19,7 @@ const rawStyleSuffix = '?raw&style';
 export const includeStyles = (): Plugin => {
 	return {
 		name: 'include-styles',
-		async resolveId(source) {
+		resolveId(source) {
 			if (source.startsWith(stylePrefix)) {
 				return {id: source};
 			}
