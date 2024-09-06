@@ -19,8 +19,7 @@ export class ModalService {
 		});
 		const subscriptions: Subscription[] = [];
 		try {
-			for (const prop of Object.keys(options) as (string & keyof ModalProps<Data>)[]) {
-				const value = options[prop];
+			for (const [prop, value] of Object.entries(options)) {
 				if (prop.startsWith('on')) {
 					const eventName = `${prop[2].toLowerCase()}${prop.substring(3)}`;
 					const eventEmitter = (component.instance as any)[eventName];
