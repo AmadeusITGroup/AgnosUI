@@ -92,8 +92,9 @@
 			Each component is provided in headless mode in Angular, React and Svelte using the same factory. You can use them with any front-end CSS
 			framework.
 		</LandingCard>
-		<LandingCard title="Consistent">Widgets are provided for Angular, React and Svelte with the exact same markup and functionalities.</LandingCard>
-		<LandingCard title="Accessible">Widgets are designed with a strong emphasis on accessibility and tested for it</LandingCard>
+		<LandingCard title="Consistent">Components are provided for Angular, React and Svelte with the exact same markup and functionalities.</LandingCard
+		>
+		<LandingCard title="Accessible">Components are designed with a strong emphasis on accessibility and tested for it</LandingCard>
 		<LandingCard title="Highly configurable">
 			Default values for all components props are configurable at any point of the application subtree.
 		</LandingCard>

@@ -9,14 +9,14 @@
 
 <Section label="Default rating" level={2}>
 	<p>
-		The simplest example shows how the user may interact with the widget to set a rating.<br />
+		The simplest example shows how the user may interact with the component to set a rating.<br />
 		The value can be unset by clicking on the current rating.
 	</p>
 	<Sample title="Rating example" sample={sampleDefault} height={130} />
 </Section>
 
 <Section label="Readonly" level={2}>
-	<p>The readonly example below showcases how to disable the widget and use custom star display to support decimal ratings.</p>
+	<p>The readonly example below showcases how to disable the component and use custom star display to support decimal ratings.</p>
 	<Sample title="Read only rating" sample={sampleReadonly} height={95} />
 </Section>
 
@@ -26,7 +26,7 @@
 </Section>
 
 <Section label="Form integration" level={2}>
-	<p>The widget can be integrated in a form as a mandatory field.</p>
+	<p>The component can be integrated in a form as a mandatory field.</p>
 	<Sample title="Form" sample={sampleForm} height={183} />
 </Section>
 
