@@ -68,7 +68,7 @@ export const mergeInto = <T>(destination: T, source: T | undefined, levels: numb
  * The resulting store is writable, its set function is actually the set function of the own$ store.
  */
 export const createWidgetsConfig = <T>(
-	parent$?: WidgetsConfigStore<T> | undefined,
+	parent$?: WidgetsConfigStore<T>,
 	adaptParentConfig: (config: Partial2Levels<T>) => Partial2Levels<T> = identity,
 ): WidgetsConfigStore<T> => {
 	const own$ = writable({} as Partial2Levels<T>);

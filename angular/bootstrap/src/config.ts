@@ -13,7 +13,7 @@ type InjectWidgetsConfig = (config?: Partial2Levels<WidgetsConfig>) => WidgetsCo
 
 const widgetFactories: {
 	widgetsConfigInjectionToken: InjectionToken<WidgetsConfigStore<WidgetsConfig>>;
-	provideWidgetsConfig: (adaptParentConfig?: AdaptParentConfig | undefined) => FactoryProvider;
+	provideWidgetsConfig: (adaptParentConfig?: AdaptParentConfig) => FactoryProvider;
 	injectWidgetConfig: <N extends keyof BootstrapWidgetsConfig>(widgetName: N) => ReadableSignal<Partial<WidgetsConfig[N]> | undefined>;
 	injectWidgetsConfig: InjectWidgetsConfig;
 	callWidgetFactory: <W extends Widget<object, object, object, object, object>>({
