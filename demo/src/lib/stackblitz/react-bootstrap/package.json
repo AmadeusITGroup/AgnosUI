@@ -17,10 +17,10 @@
 		"bootstrap-icons": "^1.11.3",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
-		"sass": "^1.77.8",
+		"sass": "^1.78.0",
 		"tslib": "^2.7.0",
 		"typescript": "~5.5.4",
-		"vite": "^5.4.2",
+		"vite": "^5.4.3",
 		"vite-plugin-svgr": "^4.2.0"
 	}
 }
