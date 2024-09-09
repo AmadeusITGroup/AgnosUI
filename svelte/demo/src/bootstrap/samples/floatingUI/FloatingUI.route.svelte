@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '@agnos-ui/common/samples/floatingui/floatingui.scss';
-	import {createFloatingUI} from '@agnos-ui/svelte-bootstrap/services/floatingUI';
+	import {createFloatingUI} from '@agnos-ui/svelte-bootstrap/services';
 	import {autoPlacement, hide, offset, shift} from '@floating-ui/dom';
 
 	const {

@@ -14,10 +14,10 @@ import {
 	createAccordionItem as createCoreAccordionItem,
 	getAccordionDefaultConfig as getCoreDefaultConfig,
 } from '@agnos-ui/core/components/accordion';
-import {collapseVerticalTransition} from '../../services/transitions';
-import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
+import {collapseVerticalTransition} from '../../transitions';
+import {extendWidgetProps} from '@agnos-ui/core/services';
 import type {SlotContent, Widget, WidgetFactory, WidgetSlotContext} from '@agnos-ui/core/types';
-import type {TransitionFn} from '@agnos-ui/core/services/transitions/baseTransitions';
+import type {TransitionFn} from '@agnos-ui/core/transitions';
 
 export * from '@agnos-ui/core/components/accordion';
 

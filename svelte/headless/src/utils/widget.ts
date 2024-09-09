@@ -1,4 +1,4 @@
-import {findChangedProperties, toReadableStore} from '@agnos-ui/core/utils/stores';
+import {findChangedProperties, toReadableStore} from '@agnos-ui/core/utils';
 import type {ReadableSignal, WritableSignal} from '@amadeus-it-group/tansu';
 import {asWritable, computed, writable} from '@amadeus-it-group/tansu';
 import type {PropsConfig, SlotContent, SlotSvelteComponent, SlotsPresent, Widget, WidgetFactory, WidgetProps} from '../types';

@@ -8,4 +8,9 @@ export * from './components/select';
 export * from './components/slider';
 export * from './components/toast';
 
-export * from './generated';
+export * from './config';
+export * from './types';
+export * from './slot';
+export * from './services';
+export * from './transitions';
+export * from './utils';

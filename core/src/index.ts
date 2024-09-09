@@ -15,23 +15,10 @@ export * from './components/toast';
 export * from './config';
 
 // services
-export * from './services/extendWidget';
-export * from './services/floatingUI';
-export * from './services/focustrack';
-export * from './services/intersection';
-export * from './services/matchMedia';
-export * from './services/navManager';
-export * from './services/portal';
-export * from './services/resizeObserver';
-export * from './services/siblingsInert';
-export * from './services/hash';
+export * from './services';
 
-// services transitions
-export * from './services/transitions/baseTransitions';
-export * from './services/transitions/cssTransitions';
-export * from './services/transitions/simpleClassTransition';
+// transitions
+export * from './transitions';
 
 // public utils
-export * from './utils/directive';
-export * from './utils/stores';
-export * from './utils/writables';
+export * from './utils';

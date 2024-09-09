@@ -3,7 +3,7 @@
 	import type {WidgetFactory} from '@agnos-ui/svelte-headless/types';
 	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
 	import {onMount} from 'svelte';
-	import {createSimpleClassTransition} from '@agnos-ui/svelte-headless/services/transitions/simpleClassTransition';
+	import {createSimpleClassTransition} from '@agnos-ui/svelte-headless/transitions';
 	import {getAccordionApi} from './accordion';
 
 	type $$Props = Partial<Pick<AccordionItemProps, 'className' | 'destroyOnHide' | 'onVisibleChange' | 'visible' | 'onHidden' | 'onShown' | 'id'>>;

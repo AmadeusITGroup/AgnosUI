@@ -1,10 +1,10 @@
 import {batch, computed, derived, writable} from '@amadeus-it-group/tansu';
-import {typeBoolean, typeBooleanOrNull, typeFunction} from '../../utils/writables';
-import type {ConfigValidator, Directive, PropsConfig, SSRHTMLElement, Widget} from '../../types';
-import {promiseWithResolve} from '../../utils/internal/promise';
-import {noop} from '../../utils/internal/func';
-import {bindableDerived, stateStores, writablesForProps} from '../../utils/stores';
-import {createStoreDirective, directiveSubscribe, directiveUpdate, mergeDirectives} from '../../utils/directive';
+import {typeBoolean, typeBooleanOrNull, typeFunction} from '../utils/writables';
+import type {ConfigValidator, Directive, PropsConfig, SSRHTMLElement, Widget} from '../types';
+import {promiseWithResolve} from '../utils/internal/promise';
+import {noop} from '../utils/internal/func';
+import {bindableDerived, stateStores, writablesForProps} from '../utils/stores';
+import {createStoreDirective, directiveSubscribe, directiveUpdate, mergeDirectives} from '../utils/directive';
 
 /**
  * Function that implements a transition.

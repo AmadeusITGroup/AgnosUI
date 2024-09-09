@@ -1,5 +1,5 @@
 import {Slot} from '@agnos-ui/react-headless/slot';
-import {classDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
+import {classDirective, useDirectives} from '@agnos-ui/react-headless/utils';
 import type {ForwardedRef, ForwardRefExoticComponent, RefAttributes} from 'react';
 import {forwardRef, useImperativeHandle} from 'react';
 import {useWidgetWithConfig} from '../../config';

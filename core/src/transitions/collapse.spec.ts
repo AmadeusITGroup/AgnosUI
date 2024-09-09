@@ -1,10 +1,10 @@
 import {afterEach, beforeEach, describe, expect, test, vi} from 'vitest';
-import type {Directive} from '../../types';
+import type {Directive} from '../types';
 import type {TransitionFn, TransitionWidget} from './baseTransitions';
 import {createTransition} from './baseTransitions';
-import {createSimpleClassTransition} from './simpleClassTransition';
+import {createCollapseTransition} from './collapse';
 
-describe('createSimpleClassTransition', () => {
+describe('createCollapseTransition', () => {
 	let element: HTMLElement;
 	let myTransition: TransitionFn;
 	let transition: TransitionWidget;
@@ -13,17 +13,15 @@ describe('createSimpleClassTransition', () => {
 	beforeEach(() => {
 		const style = document.createElement('style');
 		style.innerHTML = `
-		  .anim { transition-property: opacity; transition-duration: 0.1s; transition-delay: 0s; }
-		  .anim-hide, hide { opacity: 0; }
-		  .anim-show, show { opacity: 100%; }
+		  .anim { transition-property: height; transition-duration: 0.1s; transition-delay: 0s; }
+		  .hide { display: none; }
+		  .show { display: block; }
 		`;
 		document.body.appendChild(style);
 		element = document.createElement('div');
 		document.body.appendChild(element);
-		myTransition = createSimpleClassTransition({
+		myTransition = createCollapseTransition({
 			animationPendingClasses: ['anim'],
-			animationPendingHideClasses: ['anim-hide'],
-			animationPendingShowClasses: ['anim-show'],
 			hideClasses: ['hide'],
 			showClasses: ['show'],
 		});
@@ -48,41 +46,13 @@ describe('createSimpleClassTransition', () => {
 	test('animations enabled', async () => {
 		checkClasses(['hide']);
 		let promise = transition.api.toggle(true, true);
-		checkClasses(['anim', 'anim-show']);
+		checkClasses(['anim']);
 		await promise;
 		checkClasses(['show']);
 		promise = transition.api.toggle(false, true);
-		checkClasses(['anim', 'anim-hide']);
+		checkClasses(['anim']);
 		await promise;
 		checkClasses(['hide']);
-	});
-
-	test('show animation reverted', async () => {
-		checkClasses(['hide']);
-		const promise1 = transition.api.toggle(true, true);
-		checkClasses(['anim', 'anim-show']);
-		const promise2 = transition.api.toggle(false, true);
-		checkClasses(['anim', 'anim-hide']);
-		await promise2;
-		checkClasses(['hide']);
-		void promise1.finally(() => {
-			throw new Error('promise1 is expected not to resolve');
-		});
-	});
-
-	test('hide animation reverted', async () => {
-		checkClasses(['hide']);
-		await transition.api.toggle(true, false);
-		checkClasses(['show']);
-		const promise1 = transition.api.toggle(false, true);
-		checkClasses(['anim', 'anim-hide']);
-		const promise2 = transition.api.toggle(true, true);
-		checkClasses(['anim', 'anim-show']);
-		await promise2;
-		checkClasses(['show']);
-		void promise1.finally(() => {
-			throw new Error('promise1 is expected not to resolve');
-		});
 	});
 
 	test('disabled animations (false in toggle)', async () => {

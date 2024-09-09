@@ -82,7 +82,7 @@ export const directivesPreprocess = (): PreprocessorGroup => {
 
 			processItem(parsedCode.html);
 			if (requiredImports.size > 0) {
-				const importStatement = `\nimport {${[...requiredImports].map((importName) => `${importName} as ${varPrefix}${importName}`).join(', ')}} from '@agnos-ui/svelte-headless/utils/directive';\nimport {BROWSER as ${varPrefix}BROWSER} from 'esm-env';\n`;
+				const importStatement = `\nimport {${[...requiredImports].map((importName) => `${importName} as ${varPrefix}${importName}`).join(', ')}} from '@agnos-ui/svelte-headless/utils';\nimport {BROWSER as ${varPrefix}BROWSER} from 'esm-env';\n`;
 				const moduleOrInstance = parsedCode.module ?? parsedCode.instance;
 				if (moduleOrInstance) {
 					const start = content.indexOf('>', moduleOrInstance.start) + 1;

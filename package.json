@@ -160,10 +160,8 @@
 				"./angular/headless:generate:exports",
 				"./angular/bootstrap:generate:component-types",
 				"./react/headless:generate:exports",
-				"./react/bootstrap:generate:exports",
 				"./react/bootstrap:generate:component-types",
 				"./svelte/headless:generate:exports",
-				"./svelte/bootstrap:generate:exports",
 				"./svelte/bootstrap:generate:component-types",
 				"./demo:sveltekit",
 				"./svelte/ssr-app:sveltekit"

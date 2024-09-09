@@ -1,5 +1,4 @@
-import type {TransitionFn} from '@agnos-ui/core/services/transitions/baseTransitions';
-import {createCollapseTransition, type CollapseConfig} from '@agnos-ui/core/services/transitions/collapse';
+import {createCollapseTransition, type CollapseConfig, type TransitionFn} from '@agnos-ui/core/transitions';
 
 const verticalConfig: CollapseConfig = {
 	dimension: 'height',

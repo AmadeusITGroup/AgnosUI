@@ -1,5 +1,4 @@
-import type {TransitionFn} from '@agnos-ui/core/services/transitions/baseTransitions';
-import {createSimpleClassTransition} from '@agnos-ui/core/services/transitions/simpleClassTransition';
+import {createSimpleClassTransition, type TransitionFn} from '@agnos-ui/core/transitions';
 
 export const fadeTransition: TransitionFn = createSimpleClassTransition({
 	animationPendingClasses: ['fade'],

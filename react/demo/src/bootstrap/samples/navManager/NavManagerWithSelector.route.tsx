@@ -1,6 +1,5 @@
-import type {NavManagerItemConfig} from '@agnos-ui/react-bootstrap/services/navManager';
-import {createNavManager} from '@agnos-ui/react-bootstrap/services/navManager';
-import {useDirective} from '@agnos-ui/react-bootstrap/utils/directive';
+import {createNavManager, type NavManagerItemConfig} from '@agnos-ui/react-bootstrap/services';
+import {useDirective} from '@agnos-ui/react-bootstrap/utils';
 import {useMemo} from 'react';
 
 const NavmanagerSampleLine = ({text}: {text: string}) => {
