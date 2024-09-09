@@ -18,6 +18,8 @@
 	export let noresize = false;
 	export let listPropsValues: Record<string, PropsValues[]> = {};
 	const {values$, sampleParameters$, help$} = createPlayground({config, types, doc, listPropsValues});
+
+	$: console.log(doc);
 </script>
 
 <Alert type="warning" className="p-0 border-0 border-start border-5 border-warning" visible>
