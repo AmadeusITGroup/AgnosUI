@@ -16,7 +16,13 @@ export interface ComponentMetadata<Props> {
 
 type Metadata = {[WidgetName in keyof WidgetsConfig as Capitalize<WidgetName>]: ComponentMetadata<WidgetsConfig[WidgetName]>};
 // TODO once Select is added to the headless examples, remove the Partial
-type DaisyMetadata = Partial<{[WidgetName in keyof HeadlessConfig as Capitalize<WidgetName>]: ComponentMetadata<HeadlessConfig[WidgetName]>}>;
+// The collapse is not in the code config but only an example is in the demo headless with daisyUI.
+// So I add to manually add it here.
+type DaisyMetadata = Partial<
+	{[WidgetName in keyof HeadlessConfig as Capitalize<WidgetName>]: ComponentMetadata<HeadlessConfig[WidgetName]>} & {
+		Collapse: ComponentMetadata<'COLLAPSE'>;
+	}
+>;
 
 /**
  * Metadata for each component
@@ -36,6 +42,12 @@ export const componentsMetadata: Metadata = {
 		playgroundProps: {
 			children: 'This is an alert',
 		},
+	},
+	Collapse: {
+		title: 'Collapse',
+		status: 'beta',
+		since: 'v0.5.0',
+		type: 'bootstrap',
 	},
 	Modal: {
 		title: 'Modal',
@@ -106,6 +118,12 @@ export const daisyUIMetadata: DaisyMetadata = {
 		title: 'Alert',
 		status: 'stable',
 		since: 'v0.3.0',
+		type: 'daisyUI',
+	},
+	Collapse: {
+		title: 'Collapse',
+		status: 'beta',
+		since: 'v0.5.0',
 		type: 'daisyUI',
 	},
 	Modal: {
