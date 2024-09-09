@@ -19,13 +19,13 @@ const widgetFactories: {
 	WidgetsDefaultConfig: ({children, adaptParentConfig, ...props}: DefaultConfigInput) => import('react/jsx-runtime').JSX.Element;
 	useWidgetContext: <Props extends object>(
 		widgetName: keyof BootstrapWidgetsConfig | null,
-		defaultConfig?: Partial<Props> | undefined,
+		defaultConfig?: Partial<Props>,
 	) => import('@amadeus-it-group/tansu').ReadableSignal<Partial<Props>>;
 	useWidgetWithConfig: <W extends Widget<object, object, object, object, object>>(
 		factory: WidgetFactory<W>,
 		props: Partial<WidgetProps<W>> | undefined,
 		widgetName: keyof BootstrapWidgetsConfig | null,
-		defaultProps?: Partial<WidgetProps<W>> | undefined,
+		defaultProps?: Partial<WidgetProps<W>>,
 	) => [WidgetState<W>, W];
 } = widgetsConfigFactory<WidgetsConfig>();
 export const {widgetsConfigContext, WidgetsDefaultConfig, useWidgetContext, useWidgetWithConfig} = widgetFactories;
