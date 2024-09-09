@@ -16,7 +16,7 @@
 </Section>
 
 <Section label="Fully customized" level={2}>
-	<p>The display can be fully customized while keeping the widget's functionality and accessibility.</p>
+	<p>The display can be fully customized while keeping the component's functionality and accessibility.</p>
 	<Sample title="Customized progressbar" sample={sampleFullCustom} height={335} />
 </Section>
 
