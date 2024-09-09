@@ -29,7 +29,7 @@ export type WidgetsConfigStore<T> = WritableSignal<Partial2Levels<T>> & {
  * @returns the destination object in most cases, or the source in some cases (if the source is not undefined and either levels is smaller than 1
  * or the source is not an object)
  */
-export const mergeInto = <T>(destination: T, source: T | undefined, levels = Infinity): T => {
+export const mergeInto = <T>(destination: T, source: T | undefined, levels: number = Infinity): T => {
 	if (source !== undefined) {
 		if (typeof source === 'object' && source && levels >= 1) {
 			if (!destination) {

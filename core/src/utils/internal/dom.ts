@@ -1,4 +1,4 @@
-import type {ReadableSignal} from '@amadeus-it-group/tansu';
+import type {ReadableSignal, UnsubscribeFunction, UnsubscribeObject} from '@amadeus-it-group/tansu';
 import type {AttributeValue, SSRHTMLElement, StyleKey, StyleValue} from '../../types';
 import {BROWSER} from 'esm-env';
 import {noop} from './func';
@@ -9,7 +9,7 @@ import {isBrowserHTMLElement} from '../directive';
  * @param elements - array of DOM elements
  * @returns the common ancestor, or null if the array is empty or if there is no common ancestor (e.g.: if elements are detached)
  */
-export const computeCommonAncestor = (elements: HTMLElement[]) => {
+export const computeCommonAncestor = (elements: HTMLElement[]): HTMLElement | null => {
 	const length = elements.length;
 	if (length === 0) return null;
 	let ancestor: HTMLElement | null = elements[0];
@@ -38,8 +38,8 @@ export const computeCommonAncestor = (elements: HTMLElement[]) => {
  * Launch a reflow using a call to the provided html element getBoudingClientRect
  * @param element - the html element
  */
-export const reflow = BROWSER
-	? (element: SSRHTMLElement = document.body) => {
+export const reflow: (element?: SSRHTMLElement) => void = BROWSER
+	? (element: SSRHTMLElement = document.body): void => {
 			if (isBrowserHTMLElement(element)) {
 				element.getBoundingClientRect();
 			}
@@ -52,7 +52,7 @@ export const reflow = BROWSER
  * @param element - the HTML element
  * @param classes - the css lcasses
  */
-export const addClasses = (element: SSRHTMLElement, classes?: string[]) => {
+export const addClasses = (element: SSRHTMLElement, classes?: string[]): void => {
 	if (classes && classes.length > 0) {
 		element.classList.add(...classes);
 	}
@@ -63,7 +63,7 @@ export const addClasses = (element: SSRHTMLElement, classes?: string[]) => {
  * @param element - the HTML element
  * @param classes - the css classes
  */
-export const removeClasses = (element: SSRHTMLElement, classes?: string[]) => {
+export const removeClasses = (element: SSRHTMLElement, classes?: string[]): void => {
 	if (classes && classes.length > 0) {
 		element.classList.remove(...classes);
 	}
@@ -156,7 +156,11 @@ function attributeSubscribe(node: SSRHTMLElement, attributeName: string, value$:
  *
  * @returns unsubscription method to remove the binding
  */
-export function bindAttribute(node: SSRHTMLElement, attributeName: string, value$: ReadableSignal<AttributeValue>) {
+export function bindAttribute(
+	node: SSRHTMLElement,
+	attributeName: string,
+	value$: ReadableSignal<AttributeValue>,
+): UnsubscribeFunction & UnsubscribeObject {
 	const isClass = attributeName === 'class';
 	return isClass
 		? classNamesSubscribe(node, value$ as ReadableSignal<string>) // Specific case for classnames
@@ -174,7 +178,7 @@ export function bindAttribute(node: SSRHTMLElement, attributeName: string, value
  *
  * @returns unsubscription method to remove the binding
  */
-export function bindStyle(node: SSRHTMLElement, styleName: StyleKey, value$: ReadableSignal<StyleValue>) {
+export function bindStyle(node: SSRHTMLElement, styleName: StyleKey, value$: ReadableSignal<StyleValue>): UnsubscribeFunction & UnsubscribeObject {
 	return value$.subscribe((value) => {
 		const style = node.style;
 		style[styleName] = '' + (notEmpty(value) ? value : '');
@@ -191,7 +195,7 @@ export function bindStyle(node: SSRHTMLElement, styleName: StyleKey, value$: Rea
  *
  * @returns unsubscription method to remove the binding
  */
-export function bindClassName(node: SSRHTMLElement, className: string, value$: ReadableSignal<boolean>) {
+export function bindClassName(node: SSRHTMLElement, className: string, value$: ReadableSignal<boolean>): () => void {
 	const unsubscribe = value$.subscribe((isPresent) => {
 		node.classList.toggle(className, isPresent);
 	});

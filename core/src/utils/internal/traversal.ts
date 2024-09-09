@@ -104,14 +104,17 @@ function _traversal<T>(key: string, value: T, fn: TraversalFn, index?: number) {
  * const transformedJson = transform(json);
  * ```
  */
-export function createTraversal(fn: TraversalFn) {
+export function createTraversal(fn: TraversalFn): (json: any) => any {
 	return (json: any) => _traversal('', json, fn);
 }
 /**
  * Utility method to create a promise with resolve
  * @returns a promise with resolve
  */
-export const promiseWithResolve = () => {
+export const promiseWithResolve = (): {
+	promise: Promise<void>;
+	resolve: (value: void | Promise<void>) => void;
+} => {
 	let resolve: (value: void | Promise<void>) => void;
 	const promise = new Promise<void>((r) => {
 		resolve = r;

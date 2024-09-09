@@ -1,11 +1,69 @@
-import {computed, writable} from '@amadeus-it-group/tansu';
+import {computed, type ReadableSignal, writable} from '@amadeus-it-group/tansu';
 import {browserDirective, registrationArray} from '../utils/directive';
 import {computeCommonAncestor} from '../utils/internal/dom';
 import {isFocusable} from '../utils/internal/isFocusable';
 import {compareDomOrder} from '../utils/internal/sort';
 import {getTextDirection} from '../utils/internal/textDirection';
+import type {Directive, SSRHTMLElement} from '../types';
 
-export type NavManager = ReturnType<typeof createNavManager>;
+export type FocusNeighbour = (arg?: {event?: Event; referenceElement?: HTMLElement | null}) => HTMLElement | null;
+export type FocusEnd = (arg?: {event?: Event}) => HTMLElement | null;
+
+export type NavManager<T> = {
+	/**
+	 * Store containing the navigable elements in DOM order
+	 */
+	elementsInDomOrder$: ReadableSignal<HTMLElement[]>;
+	/**
+	 * Directive to attach the nav manager
+	 */
+	directive: Directive<NavManagerItemConfig<T>, SSRHTMLElement>;
+	/**
+	 * Refresh the elements list.
+	 * @param now force the instant refresh of the elements
+	 */
+	refreshElements: (now?: boolean) => void;
+	/**
+	 * Focus the element at the given idex.
+	 * If the element at the given index is not focusable, use the moveDirection to step into the next focusable element.
+	 * @param index the index of the element to focus
+	 * @param moveDirection a move direction
+	 * @returns the new focusable element if found, null otherwise
+	 */
+	focusIndex: (index: number, moveDirection: -1 | 0 | 1) => HTMLElement | null;
+	/**
+	 * Focus the previous element, respecting the anscestor direction.
+	 */
+	focusPrevious: FocusNeighbour;
+	/**
+	 * Focus the next element, respecting the anscestor direction.
+	 */
+	focusNext: FocusNeighbour;
+	/**
+	 * Focus the first element, respecting the anscestor direction.
+	 */
+	focusFirst: FocusEnd;
+	/**
+	 * Focus the element at the left-end of the list.
+	 */
+	focusFirstLeft: FocusEnd;
+	/**
+	 * Focus the element at the right-end of the list.
+	 */
+	focusFirstRight: FocusEnd;
+	/**
+	 * Focus the last element, respecting the anscestor direction.
+	 */
+	focusLast: FocusEnd;
+	/**
+	 * Focus the next focusable element to the left of the currently focused element.
+	 */
+	focusLeft: FocusNeighbour;
+	/**
+	 * Focus the next focusable element to the right of the currently focused element.
+	 */
+	focusRight: FocusNeighbour;
+};
 
 // cf https://html.spec.whatwg.org/multipage/input.html#concept-input-apply
 const textInputTypes = new Set(['text', 'search', 'url', 'tel', 'password']);
@@ -17,7 +75,7 @@ const isTextInput = (element: any): element is HTMLInputElement => element insta
  * @param event - keyboard event
  * @returns the name of the key, including modifiers
  */
-export const getKeyName = (event: KeyboardEvent) => {
+export const getKeyName = (event: KeyboardEvent): string => {
 	let key = event.key;
 	if (event.shiftKey) {
 		key = `Shift+${key}`;
@@ -42,7 +100,7 @@ export const getKeyName = (event: KeyboardEvent) => {
  * @returns true if the keyboard event is an ArrowLeft, ArrowRight, Home or End key press that should make the cursor move inside
  * the input and false otherwise.
  */
-export const isInternalInputNavigation = (event: KeyboardEvent) => {
+export const isInternalInputNavigation = (event: KeyboardEvent): boolean => {
 	const {target, key} = event;
 	if (isTextInput(target) && (key === 'ArrowLeft' || key === 'ArrowRight' || key === 'Home' || key === 'End')) {
 		let startPosition: boolean;
@@ -68,7 +126,7 @@ export const isInternalInputNavigation = (event: KeyboardEvent) => {
  * - directiveElement: DOM element which has the navigation manager directive
  * - navManager: navigation manager instance
  */
-export type NavManagerKeyHandler<T = any> = (info: {directiveElement: HTMLElement; event: Event; navManager: NavManager; context?: T}) => void;
+export type NavManagerKeyHandler<T = any> = (info: {directiveElement: HTMLElement; event: Event; navManager: NavManager<T>; context?: T}) => void;
 
 /**
  * Type of the parameter of the navigation manager directive.
@@ -108,7 +166,7 @@ const defaultSelector: NavManagerItemConfig<any>['selector'] = (directiveElement
  *
  * @returns a new instance of the navigation manager
  */
-export const createNavManager = () => {
+export const createNavManager = <T>(): NavManager<T> => {
 	const directiveInstances$ = registrationArray<() => Iterable<HTMLElement>>();
 	const elementsRefresh$ = writable({});
 	const refreshElements = (now = true) => {
@@ -179,7 +237,7 @@ export const createNavManager = () => {
 			return null;
 		};
 
-	const directive = browserDirective(<T = any>(directiveElement: HTMLElement, config: NavManagerItemConfig<T>) => {
+	const directive = browserDirective((directiveElement: HTMLElement, config: NavManagerItemConfig<T>) => {
 		const onKeyDown = (event: KeyboardEvent) => {
 			if (isInternalInputNavigation(event)) {
 				return;

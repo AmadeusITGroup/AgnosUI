@@ -368,7 +368,7 @@ const defaultConfig: SelectProps<any> = {
  * Returns a shallow copy of the default select config.
  * @returns a copy of the default config
  */
-export function getSelectDefaultConfig() {
+export function getSelectDefaultConfig(): SelectProps<any> {
 	return {...defaultConfig};
 }
 

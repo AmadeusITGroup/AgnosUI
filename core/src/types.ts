@@ -113,7 +113,7 @@ export type DirectivesAndOptParam<T extends any[], U extends SSRHTMLElement = SS
 
 export type SlotContent<Props extends object = object> = undefined | null | string | ((props: Props) => string);
 
-export const INVALID_VALUE = Symbol();
+export const INVALID_VALUE: unique symbol = Symbol();
 export type NormalizeValue<T> = (value: T) => T | typeof INVALID_VALUE;
 
 export interface WritableWithDefaultOptions<T> {

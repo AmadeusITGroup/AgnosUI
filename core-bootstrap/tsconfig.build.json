@@ -4,7 +4,8 @@
 		"outDir": "dist",
 		"noEmit": false,
 		"emitDeclarationOnly": true,
-		"declaration": true
+		"declaration": true,
+		"isolatedDeclarations": true
 	},
 	"include": ["src"],
 	"exclude": ["**/*.spec.ts", "**/__mocks__/**", "**/*.spec-utils.ts"]

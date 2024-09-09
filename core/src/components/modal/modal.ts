@@ -24,13 +24,13 @@ import {sliblingsInert} from '../../services/siblingsInert';
  * Value present in the {@link ModalBeforeCloseEvent.result|result} property of the {@link ModalProps.onBeforeClose|onBeforeClose} event
  * and returned by the {@link ModalApi.open|open} method, when the modal is closed by a click inside the viewport but outside the modal.
  */
-export const modalOutsideClick = Symbol();
+export const modalOutsideClick: unique symbol = Symbol();
 
 /**
  * Value present in the {@link ModalBeforeCloseEvent.result|result} property of the {@link ModalProps.onBeforeClose|onBeforeClose} event
  * and returned by the {@link ModalApi.open|open} method, when the modal is closed by a click on the close button.
  */
-export const modalCloseButtonClick = Symbol();
+export const modalCloseButtonClick: unique symbol = Symbol();
 
 /**
  * Properties of the modal widget that are also in the state of the modal.
@@ -336,7 +336,7 @@ const configValidator: ConfigValidator<ModalProps> = {
  * Returns a copy of the default modal config.
  * @returns a copy of the default modal config
  */
-export function getModalDefaultConfig() {
+export function getModalDefaultConfig(): ModalProps {
 	return {...defaultConfig};
 }
 

@@ -9,7 +9,7 @@ import {INVALID_VALUE} from '../types';
  * @returns a function that takes a value as input, checks if it respects the type guard and returns `INVALID_VALUE` otherwise
  */
 export const testToNormalizeValue =
-	<T>(filter: (value: any) => value is T) =>
+	<T>(filter: (value: any) => value is T): ((value: any) => T | typeof INVALID_VALUE) =>
 	(value: any) =>
 		filter(value) ? value : INVALID_VALUE;
 
