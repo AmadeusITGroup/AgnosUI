@@ -38,13 +38,13 @@
 			"require": "./dist/config.cjs",
 			"default": "./dist/config.js"
 		},
-		"./scss/*.scss": {
-			"require": "./src/scss/*.scss",
-			"default": "./src/scss/*.scss"
+		"./scss/*": {
+			"require": "./src/scss/*",
+			"default": "./src/scss/*"
 		},
-		"./css/*.css": {
-			"require": "./dist/css/*.css",
-			"default": "./dist/css/*.css"
+		"./css/*": {
+			"require": "./dist/css/*",
+			"default": "./dist/css/*"
 		}
 	},
 	"scripts": {
