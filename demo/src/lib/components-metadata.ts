@@ -1,4 +1,6 @@
 import type {WidgetsConfig} from '@agnos-ui/svelte-bootstrap/config';
+// eslint-disable-next-line @agnos-ui/check-replace-imports
+import type {WidgetsConfig as HeadlessConfig} from '@agnos-ui/svelte-headless/config';
 
 export type ComponentStatus = 'stable' | 'beta' | 'inprogress' | 'deprecated';
 export type ComponentType = 'bootstrap' | 'standalone' | 'daisyUI';
@@ -12,8 +14,9 @@ export interface ComponentMetadata<Props> {
 	playgroundProps?: Partial<Props>;
 }
 
+type Metadata = {[WidgetName in keyof WidgetsConfig as Capitalize<WidgetName>]: ComponentMetadata<WidgetsConfig[WidgetName]>};
 // TODO once Select is added to the headless examples, remove the Partial
-type Metadata = Partial<{[WidgetName in keyof WidgetsConfig as Capitalize<WidgetName>]: ComponentMetadata<WidgetsConfig[WidgetName]>}>;
+type DaisyMetadata = Partial<{[WidgetName in keyof HeadlessConfig as Capitalize<WidgetName>]: ComponentMetadata<HeadlessConfig[WidgetName]>}>;
 
 /**
  * Metadata for each component
@@ -92,7 +95,7 @@ export const componentsMetadata: Metadata = {
 /**
  * Metadata for each component
  */
-export const daisyUIMetadata: Metadata = {
+export const daisyUIMetadata: DaisyMetadata = {
 	Accordion: {
 		title: 'Accordion',
 		status: 'stable',

@@ -1,5 +1,6 @@
 import {daisyUIMetadata} from '$lib/components-metadata';
-import type {WidgetsConfig} from '@agnos-ui/svelte-bootstrap/config';
+// eslint-disable-next-line @agnos-ui/check-replace-imports
+import type {WidgetsConfig} from '@agnos-ui/svelte-headless/config';
 
 export function getMenu(component: string) {
 	const componentCapitalized = (component.slice(0, 1).toUpperCase() + component.slice(1)) as Capitalize<keyof WidgetsConfig>;

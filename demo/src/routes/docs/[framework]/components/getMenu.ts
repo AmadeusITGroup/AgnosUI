@@ -8,7 +8,7 @@ export function getMenu(component: string) {
 	const isFirst = index === 0;
 	const isLast = index === componentNames.length - 1;
 
-	const componentMetadata = componentsMetadata[componentCapitalized]!;
+	const componentMetadata = componentsMetadata[componentCapitalized];
 
 	return {
 		title: componentMetadata.title,
