@@ -15,7 +15,9 @@ const externalDependencies = [...Object.keys(dependencies)];
 export default defineConfig(async (): Promise<UserConfig> => {
 	const entry: Record<string, string> = {};
 
-	for (const [, exportInfo] of Object.entries(pkgExports).filter(([key]) => !key.endsWith('css'))) {
+	const styleRegex = /\/(scss|css)\//;
+
+	for (const [, exportInfo] of Object.entries(pkgExports).filter(([key]) => !key.match(styleRegex))) {
 		const pattern = exportInfo.default.replace(/^\.\/dist\//, './src/').replace(/\.js$/, '.{ts,tsx}');
 		const files = await glob(pattern, {cwd: __dirname});
 		for (const file of files) {
