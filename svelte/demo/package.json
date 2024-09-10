@@ -1,6 +1,6 @@
 {
 	"name": "@agnos-ui/svelte-demo",
-	"version": "0.4.1",
+	"version": "0.4.2",
 	"type": "module",
 	"private": true,
 	"scripts": {
@@ -78,8 +78,8 @@
 		}
 	},
 	"dependencies": {
-		"@agnos-ui/core-bootstrap": "0.4.1",
-		"@agnos-ui/svelte-bootstrap": "0.4.1",
+		"@agnos-ui/core-bootstrap": "0.4.2",
+		"@agnos-ui/svelte-bootstrap": "0.4.2",
 		"@amadeus-it-group/tansu": "^1.0.0",
 		"@floating-ui/dom": "^1.6.8"
 	},
