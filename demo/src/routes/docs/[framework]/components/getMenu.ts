@@ -18,11 +18,13 @@ export function getMenu(component: string) {
 			{title: 'Examples', key: 'examples', path: `/components/${component}/examples`},
 			{title: 'Api', key: 'api', path: `/components/${component}/api`},
 			...(componentMetadata.includeStyles ? [{title: 'Styling', key: 'style', path: '/components/slider/style'}] : []),
+			/** TODO show Playground tab again when we have finished building it
 			{
 				title: 'Playground',
 				key: 'playground',
 				path: `/components/${component}/playground${componentMetadata.playgroundProps ? `#${JSON.stringify({props: componentMetadata.playgroundProps})}` : ''}`,
 			},
+			 */
 		],
 		prev: {
 			title: isFirst ? 'Bootstrap Components: Introduction' : componentNames[index - 1],
