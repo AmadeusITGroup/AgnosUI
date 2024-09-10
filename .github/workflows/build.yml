@@ -13,10 +13,6 @@ on:
         description: 'Version number (x.y.z) to set before executing the build'
         type: string
         default: ''
-      npmPublish:
-        description: 'Whether to publish the package on npm'
-        type: boolean
-        default: false
       docPublish:
         description: 'Whether to publish the documentation on gh-pages'
         type: boolean
@@ -46,6 +42,7 @@ jobs:
           git config --global user.email github-actions@github.com
       - if: inputs.version != ''
         run: |
+          npm run -w demo update:stackblitzPkgs
           node scripts/setVersion.js "${{ inputs.version }}"
           npm run syncpack:check
       - run: npm run build:ci
@@ -78,7 +75,7 @@ jobs:
           disable_search: true
           token: ${{ secrets.CODECOV_TOKEN }}
       - run: npm run -w verdaccio verdaccio-publish
-      - if: inputs.version != '' && inputs.npmPublish
+      - if: inputs.version != ''
         run: |
           npm whoami
           export PUBLISH_TAG="$(node ./scripts/publishTag.js "${{ inputs.version }}")"
@@ -88,7 +85,9 @@ jobs:
           git commit -a -m v${{ inputs.version }}
           git tag v${{ inputs.version }}
           git show HEAD
-          git push origin v${{ inputs.version }}
+          export RELEASE_BRANCH=release/$(node scripts/versionDocFolder.js ${{ inputs.version }})
+          git checkout -B $RELEASE_BRANCH
+          git push origin v${{ inputs.version }} $RELEASE_BRANCH
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - if: inputs.docPublish && (inputs.version != '' || inputs.docPath != '')
