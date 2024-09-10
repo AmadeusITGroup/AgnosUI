@@ -15,7 +15,6 @@ jobs:
     uses: './.github/workflows/build.yml'
     with:
       version: ${{ inputs.version }}
-      npmPublish: true
       docPublish: true
     secrets:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
