@@ -28,3 +28,4 @@ for (const framework of ['angular', 'react', 'svelte']) {
 		await exec(`npm install --package-lock-only --prefix ${folder}`);
 	}
 }
+await exec('syncpack format', {cwd: join(import.meta.dirname, '..', '..')});
