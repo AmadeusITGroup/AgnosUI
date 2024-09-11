@@ -5,9 +5,6 @@ on:
       NPM_TOKEN:
         description: 'NPM token to use to publish packages'
         required: false
-      CODECOV_TOKEN:
-        description: 'Token to upload codecov reports'
-        required: false
     inputs:
       version:
         description: 'Version number (x.y.z) to set before executing the build'
@@ -73,7 +70,7 @@ jobs:
           files: core/coverage/lcov.info,core-bootstrap/coverage/lcov.info,angular/headless/coverage/lcov.info,svelte/preprocess/coverage/lcov.info
           flags: unit
           disable_search: true
-          token: ${{ secrets.CODECOV_TOKEN }}
+          use_oidc: true
       - run: npm run -w verdaccio verdaccio-publish
       - if: inputs.version != ''
         run: |
