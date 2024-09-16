@@ -5,17 +5,17 @@
 	"main": "dist/index.cjs",
 	"type": "module",
 	"dependencies": {
-		"@typescript-eslint/utils": "^8.4.0"
+		"@typescript-eslint/utils": "^8.5.0"
 	},
 	"peerDependencies": {
 		"typescript": "~5.5.4"
 	},
 	"devDependencies": {
 		"@angular/core": "^18.2.0",
-		"@typescript-eslint/rule-tester": "^8.4.0",
-		"@vitest/coverage-v8": "^2.0.5",
+		"@typescript-eslint/rule-tester": "^8.5.0",
+		"@vitest/coverage-v8": "^2.1.1",
 		"svelte": "^4.2.19",
-		"svelte-eslint-parser": "^0.41.0"
+		"svelte-eslint-parser": "^0.41.1"
 	},
 	"scripts": {
 		"build": "wireit",
