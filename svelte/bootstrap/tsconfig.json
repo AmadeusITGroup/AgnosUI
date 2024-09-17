@@ -1,8 +1,10 @@
 {
-	"extends": ["../tsconfig.json"],
-	"include": ["src"],
+	"extends": "./tsconfig.build.json",
 	"compilerOptions": {
-		"allowJs": true
-	},
-	"files": ["svelte.config.js"]
+		"paths": {
+			"@agnos-ui/core/*": ["./core/src/*"],
+			"@agnos-ui/svelte-headless/*": ["./svelte/headless/src/*", "./svelte/headless/src/generated/*"],
+			"@agnos-ui/core-bootstrap/*": ["./core-bootstrap/src/*"]
+		}
+	}
 }

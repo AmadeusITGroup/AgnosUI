@@ -81,7 +81,7 @@
 			]
 		},
 		"build:src": {
-			"command": "svelte-package -i src",
+			"command": "svelte-package -i src --tsconfig tsconfig.build.json",
 			"dependencies": [
 				"generate:exports",
 				"generate:component-types",
