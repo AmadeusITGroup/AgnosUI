@@ -93,7 +93,7 @@
 				"svelte.config.js",
 				"src/**",
 				"!src/generated/**",
-				"tsconfig.json",
+				"tsconfig.build.json",
 				"../tsconfig.json",
 				"../../tsconfig.json"
 			],
@@ -125,7 +125,7 @@
 			]
 		},
 		"check": {
-			"command": "svelte-check --fail-on-warnings --output human-verbose",
+			"command": "svelte-check --fail-on-warnings --output human-verbose --tsconfig tsconfig.build.json",
 			"dependencies": [
 				"generate:exports",
 				"generate:component-types",
@@ -134,7 +134,7 @@
 			],
 			"files": [
 				"src/**",
-				"tsconfig.json",
+				"tsconfig.build.json",
 				"../tsconfig.json",
 				"../../tsconfig.json"
 			],

@@ -203,8 +203,7 @@
 			"command": "eslint --cache --color",
 			"dependencies": [
 				"prepare",
-				"./eslint-plugin:build",
-				"./svelte/bootstrap:build"
+				"./eslint-plugin:build"
 			]
 		}
 	},

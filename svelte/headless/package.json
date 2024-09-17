@@ -75,7 +75,7 @@
 			"files": [
 				"src/**",
 				"!src/generated/**",
-				"tsconfig.json",
+				"tsconfig.build.json",
 				"../tsconfig.json",
 				"../../tsconfig.json"
 			],
@@ -108,14 +108,14 @@
 			]
 		},
 		"check": {
-			"command": "svelte-check --fail-on-warnings --output human-verbose",
+			"command": "svelte-check --fail-on-warnings --output human-verbose --tsconfig tsconfig.build.json",
 			"dependencies": [
 				"generate:exports",
 				"../../core:build"
 			],
 			"files": [
 				"src/**",
-				"tsconfig.json",
+				"tsconfig.build.json",
 				"../tsconfig.json",
 				"../../tsconfig.json"
 			],
