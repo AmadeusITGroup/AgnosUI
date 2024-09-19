@@ -71,6 +71,7 @@
 	--#{variables.$prefix}slider-clickable-area-translate: #{variables.$au-slider-clickable-area-translateY};
 	--#{variables.$prefix}slider-clickable-area-vertical-translate: #{variables.$au-slider-clickable-area-translateX};
 	--#{variables.$prefix}slider-clickable-area-vertical-flex-shrink: #{variables.$au-slider-clickable-area-vertical-flex-shrink};
+	--#{variables.$prefix}slider-clickable-area-cursor: #{variables.$au-slider-clickable-area-cursor};
 
 	--#{variables.$prefix}slider-disabled-color: #{variables.$au-slider-disabled-color};
 	--#{variables.$prefix}slider-disabled-cursor: #{variables.$au-slider-disabled-cursor};
@@ -219,6 +220,7 @@
 		height: var(--#{variables.$prefix}slider-clickable-area-main-size);
 		width: var(--#{variables.$prefix}slider-clickable-area-secondary-size);
 		transform: var(--#{variables.$prefix}slider-clickable-area-translate);
+		cursor: var(--#{variables.$prefix}slider-clickable-area-cursor);
 	}
 
 	.au-slider-clickable-area-vertical {
@@ -226,6 +228,7 @@
 		height: var(--#{variables.$prefix}slider-clickable-area-secondary-size);
 		transform: var(--#{variables.$prefix}slider-clickable-area-vertical-translate);
 		flex-shrink: var(--#{variables.$prefix}slider-clickable-area-vertical-flex-shrink);
+		cursor: var(--#{variables.$prefix}slider-clickable-area-cursor);
 	}
 
 	&.disabled {
