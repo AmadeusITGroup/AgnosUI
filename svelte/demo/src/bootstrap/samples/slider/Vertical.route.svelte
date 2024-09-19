@@ -1,8 +1,8 @@
 <script lang="ts">
 	import {Slider} from '@agnos-ui/svelte-bootstrap/components/slider';
 
-	let sliderControl = [10, 40];
-	let sliderControlRange = [40];
+	let sliderControl = $state([10, 40]);
+	let sliderControlRange = $state([40]);
 </script>
 
 <div class="d-flex" style="height: 350px">

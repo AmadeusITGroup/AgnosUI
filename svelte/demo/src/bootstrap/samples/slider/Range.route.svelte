@@ -1,8 +1,8 @@
 <script lang="ts">
 	import {Slider} from '@agnos-ui/svelte-bootstrap/components/slider';
 
-	let sliderControl = [10, 40, 50, 60, 90];
-	let sliderValues = [10, 40];
+	let sliderControl = $state([10, 40, 50, 60, 90]);
+	let sliderValues = $state([10, 40]);
 </script>
 
 <h2>Slider with form control</h2>

@@ -4,6 +4,4 @@
 
 <Alert type="primary" dismissible={false}>Label provided by slot</Alert>
 <Alert type="secondary" dismissible={false} children="Label provided by property" />
-<Alert type="info" dismissible={false} children="When both prop and slot are provided, the prop's content will take precedence."
-	>This content is ignored.</Alert
->
+<p>Trying to set children through snippet and property at the same time will result in an error.</p>

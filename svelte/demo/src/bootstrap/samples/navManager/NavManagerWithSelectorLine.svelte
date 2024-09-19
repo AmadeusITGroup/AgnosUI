@@ -16,7 +16,7 @@
 		selector: (divElement) => divElement.querySelectorAll('input,span'),
 	};
 
-	export let text = '';
+	let {text = ''} = $props();
 </script>
 
 <div class="d-flex demo-navmanager-line" use:directive={navManagerConfig}>

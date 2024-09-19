@@ -10,7 +10,7 @@
 			label: entry[0],
 		};
 	});
-	let position = ToastPositions.topLeft;
+	let position = $state(ToastPositions.topLeft);
 
 	function createToasts() {
 		const {subscribe, update} = writable(new Map(Object.values(ToastPositions).map((entry) => [entry as string, [] as Partial<ToastProps>[]])));
@@ -32,7 +32,7 @@
 		};
 	}
 
-	export const toasts$ = createToasts();
+	const toasts$ = createToasts();
 </script>
 
 <p class="mb-2">To position toast wherever you want you should have a <code>toast-container</code> with a custom position defined by CSS classes.</p>
@@ -47,7 +47,7 @@
 		</select>
 		<button
 			class="btn btn-primary addToast ms-2"
-			on:click={() => toasts$.add({autoHide: true, delay: 3000, className: position, children: 'Simple toast', header: 'I am header'})}
+			onclick={() => toasts$.add({autoHide: true, delay: 3000, className: position, children: 'Simple toast', header: 'I am header'})}
 			>Show toast</button
 		>
 	</div>

@@ -1,10 +1,10 @@
 <script lang="ts">
 	import {Slider} from '@agnos-ui/svelte-bootstrap/components/slider';
 
-	let sliderControl = [30];
-	let sliderRangeControl = [30, 70];
-	let sliderVerticalControl = [30];
-	let sliderRangeVerticalControl = [30, 70];
+	let sliderControl = $state([30]);
+	let sliderRangeControl = $state([30, 70]);
+	let sliderVerticalControl = $state([30]);
+	let sliderRangeVerticalControl = $state([30, 70]);
 </script>
 
 <h2>Horizontal slider</h2>

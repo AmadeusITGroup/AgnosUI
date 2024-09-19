@@ -14,7 +14,7 @@
 	});
 </script>
 
-<button class="btn btn-primary showAlert" on:click={() => alert.api.open()} type="button">Show alert</button>
+<button class="btn btn-primary showAlert" onclick={() => alert.api.open()} type="button">Show alert</button>
 
 <br />
 <br />

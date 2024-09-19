@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
 	import {writable} from '@amadeus-it-group/tansu';
 	import type {TransitionFn} from '@agnos-ui/svelte-bootstrap/services/transitions/baseTransitions';
 	import {createTransition} from '@agnos-ui/svelte-bootstrap/services/transitions/baseTransitions';
@@ -46,19 +46,19 @@
 			type="button"
 			class="btn btn-sm btn-outline-secondary"
 			class:active={$paramTransition$ === collapseVerticalTransition}
-			on:click={() => changeTransition(collapseVerticalTransition)}>Vertical collapse</button
+			onclick={() => changeTransition(collapseVerticalTransition)}>Vertical collapse</button
 		>
 		<button
 			type="button"
 			class="btn btn-sm btn-outline-secondary"
 			class:active={$paramTransition$ === collapseHorizontalTransition}
-			on:click={() => changeTransition(collapseHorizontalTransition)}>Horizontal collapse</button
+			onclick={() => changeTransition(collapseHorizontalTransition)}>Horizontal collapse</button
 		>
 		<button
 			type="button"
 			class="btn btn-sm btn-outline-secondary"
 			class:active={$paramTransition$ === fadeTransition}
-			on:click={() => changeTransition(fadeTransition)}>Fade</button
+			onclick={() => changeTransition(fadeTransition)}>Fade</button
 		>
 	</div>
 	<div class="h6 mt-2">Other properties:</div>
@@ -68,9 +68,9 @@
 	<label class="form-check mb-2"><input type="checkbox" class="form-check-input" bind:checked={$checkBoxVisible$} />Visible</label>
 
 	<div class="d-flex flex-wrap gap-2">
-		<button type="button" class="btn btn-outline-primary" on:click={() => toggle()}>Toggle</button>
-		<button type="button" class="btn btn-outline-primary" on:click={() => toggle(undefined, true)}>Toggle with animation</button>
-		<button type="button" class="btn btn-outline-primary" on:click={() => toggle(undefined, false)}>Toggle without animation</button>
+		<button type="button" class="btn btn-outline-primary" onclick={() => toggle()}>Toggle</button>
+		<button type="button" class="btn btn-outline-primary" onclick={() => toggle(undefined, true)}>Toggle with animation</button>
+		<button type="button" class="btn btn-outline-primary" onclick={() => toggle(undefined, false)}>Toggle without animation</button>
 	</div>
 
 	<ul class="mt-2">

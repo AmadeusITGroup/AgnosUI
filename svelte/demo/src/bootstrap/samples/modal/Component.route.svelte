@@ -1,7 +1,11 @@
 <script lang="ts">
-	import {openModal} from '@agnos-ui/svelte-bootstrap/components/modal';
-	import ComponentModal from './ComponentModal.svelte';
-	const launch = () => openModal({title: 'Hi there!', children: ComponentModal, contentData: {name: 'World'}});
+	import {type ModalContext, openModal} from '@agnos-ui/svelte-bootstrap/components/modal';
+	const onclick = () => openModal({title: 'Hi there!', children, contentData: {name: 'World'}});
 </script>
 
-<button type="button" class="btn btn-primary" on:click={() => launch()}>Launch demo modal</button>
+{#snippet children({state, widget}: ModalContext<{name: string}>)}
+	<p>Hello, {state.contentData.name}!</p>
+	<button type="button" class="btn btn-outline-primary" onclick={() => widget.api.close()}>Close</button>
+{/snippet}
+
+<button type="button" class="btn btn-primary" {onclick}>Launch demo modal</button>

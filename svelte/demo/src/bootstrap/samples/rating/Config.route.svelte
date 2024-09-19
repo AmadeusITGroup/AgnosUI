@@ -1,17 +1,22 @@
 <script lang="ts">
-	import type {RatingProps} from '@agnos-ui/svelte-bootstrap/components/rating';
+	import type {RatingProps, StarContext} from '@agnos-ui/svelte-bootstrap/components/rating';
 	import {Rating} from '@agnos-ui/svelte-bootstrap/components/rating';
 	import {createWidgetsDefaultConfig} from '@agnos-ui/svelte-bootstrap/config';
-	import CustomStar from './CustomStar.svelte';
 
 	const widgetsConfig$ = createWidgetsDefaultConfig();
 
-	let rating = 3;
+	let rating = $state(3);
 
 	function updateRatingConfig(change: Partial<RatingProps>) {
 		$widgetsConfig$ = {...$widgetsConfig$, rating: {...$widgetsConfig$.rating, ...change}};
 	}
 </script>
+
+{#snippet customStar({fill}: StarContext)}
+	<span class="star" class:full={fill === 100}>
+		<span class="half" style:width={fill + '%'}>&hearts;</span>&hearts;
+	</span>
+{/snippet}
 
 <Rating bind:rating />
 <div class="mt-3">
@@ -20,14 +25,14 @@
 		<button
 			class="btn btn-sm btn-outline-secondary"
 			class:active={$widgetsConfig$.rating?.disabled}
-			on:click={() => updateRatingConfig({disabled: true})}
+			onclick={() => updateRatingConfig({disabled: true})}
 		>
 			true
 		</button>
 		<button
 			class="btn btn-sm btn-outline-secondary"
 			class:active={!$widgetsConfig$.rating?.disabled}
-			on:click={() => updateRatingConfig({disabled: false})}
+			onclick={() => updateRatingConfig({disabled: false})}
 		>
 			false
 		</button>
@@ -38,28 +43,28 @@
 		<button
 			class="btn btn-sm btn-outline-secondary"
 			class:active={$widgetsConfig$.rating?.maxRating === 40}
-			on:click={() => updateRatingConfig({maxRating: 40})}
+			onclick={() => updateRatingConfig({maxRating: 40})}
 		>
 			40
 		</button>
 		<button
 			class="btn btn-sm btn-outline-secondary"
 			class:active={$widgetsConfig$.rating?.maxRating === 30}
-			on:click={() => updateRatingConfig({maxRating: 30})}
+			onclick={() => updateRatingConfig({maxRating: 30})}
 		>
 			30
 		</button>
 		<button
 			class="btn btn-sm btn-outline-secondary"
 			class:active={$widgetsConfig$.rating?.maxRating === 20}
-			on:click={() => updateRatingConfig({maxRating: 20})}
+			onclick={() => updateRatingConfig({maxRating: 20})}
 		>
 			20
 		</button>
 		<button
 			class="btn btn-sm btn-outline-secondary"
 			class:active={$widgetsConfig$.rating?.maxRating === undefined}
-			on:click={() => updateRatingConfig({maxRating: undefined})}
+			onclick={() => updateRatingConfig({maxRating: undefined})}
 		>
 			undefined
 		</button>
@@ -70,21 +75,21 @@
 		<button
 			class="btn btn-sm btn-outline-secondary"
 			class:active={$widgetsConfig$.rating?.className === 'fs-1'}
-			on:click={() => updateRatingConfig({className: 'fs-1'})}
+			onclick={() => updateRatingConfig({className: 'fs-1'})}
 		>
 			fs-1
 		</button>
 		<button
 			class="btn btn-sm btn-outline-secondary"
 			class:active={$widgetsConfig$.rating?.className === 'fs-2'}
-			on:click={() => updateRatingConfig({className: 'fs-2'})}
+			onclick={() => updateRatingConfig({className: 'fs-2'})}
 		>
 			fs-2
 		</button>
 		<button
 			class="btn btn-sm btn-outline-secondary"
 			class:active={!$widgetsConfig$.rating?.className}
-			on:click={() => updateRatingConfig({className: undefined})}
+			onclick={() => updateRatingConfig({className: undefined})}
 		>
 			undefined
 		</button>
@@ -94,22 +99,22 @@
 	<div id="btn-config-slotStar" class="btn-group mb-2">
 		<button
 			class="btn btn-sm btn-outline-secondary"
-			class:active={$widgetsConfig$.rating?.star === CustomStar}
-			on:click={() => updateRatingConfig({star: CustomStar})}
+			class:active={$widgetsConfig$.rating?.star === customStar}
+			onclick={() => updateRatingConfig({star: customStar})}
 		>
 			custom
 		</button>
 		<button
 			class="btn btn-sm btn-outline-secondary"
 			class:active={$widgetsConfig$.rating?.star === '*'}
-			on:click={() => updateRatingConfig({star: '*'})}
+			onclick={() => updateRatingConfig({star: '*'})}
 		>
 			'*'
 		</button>
 		<button
 			class="btn btn-sm btn-outline-secondary"
 			class:active={!$widgetsConfig$.rating?.star}
-			on:click={() => updateRatingConfig({star: undefined})}
+			onclick={() => updateRatingConfig({star: undefined})}
 		>
 			undefined
 		</button>

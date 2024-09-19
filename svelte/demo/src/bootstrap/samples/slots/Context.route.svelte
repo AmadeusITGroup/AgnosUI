@@ -7,7 +7,7 @@
 
 <p>Changing the slot displaying the page number to use letters instead:</p>
 <Pagination collectionSize={60}>
-	<svelte:fragment slot="numberLabel" let:displayedPage>
+	{#snippet numberLabel({displayedPage})}
 		{['A', 'B', 'C', 'D', 'E', 'F'][displayedPage - 1]}
-	</svelte:fragment>
+	{/snippet}
 </Pagination>

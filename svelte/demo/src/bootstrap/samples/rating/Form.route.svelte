@@ -1,33 +1,28 @@
 <script lang="ts">
 	import {Rating} from '@agnos-ui/svelte-bootstrap/components/rating';
 
-	let ctrl = {value: 0, valid: false, invalid: true, disabled: false};
-	$: {
-		const isValid = ctrl.value >= 1;
-		const enabled = !ctrl.disabled;
-		ctrl = Object.assign(ctrl, {valid: enabled && isValid, invalid: enabled && !isValid});
-	}
+	let disabled = $state(false);
+	let value = $state(0);
+	let valueValid = $derived(value >= 1);
+	let valid = $derived(!disabled && valueValid);
+	let invalid = $derived(!disabled && !valueValid);
 </script>
 
 <div class="form-label" id="ratingLabel">Rating of your experience</div>
 <br />
-<Rating bind:rating={ctrl.value} disabled={ctrl.disabled} ariaLabelledBy="ratingLabel" />
+<Rating bind:rating={value} {disabled} ariaLabelledBy="ratingLabel" />
 <div id="form-msg" class="form-text small">
-	{#if ctrl.valid}
+	{#if valid}
 		<div class="text-success">Thanks!</div>
 	{/if}
-	{#if ctrl.invalid}
+	{#if invalid}
 		<div class="text-danger-emphasis">Please rate us</div>
 	{/if}
 </div>
-<pre>Model: <span id="form-model"><b>{ctrl.value}</b></span></pre>
+<pre>Model: <span id="form-model"><b>{value}</b></span></pre>
 <div class="d-flex flex-wrap gap-2">
-	<button
-		id="form-btn-enable"
-		class="btn btn-sm btn-outline-{ctrl.disabled ? 'danger' : 'success'}"
-		on:click={() => (ctrl.disabled = !ctrl.disabled)}
-	>
-		{ctrl.disabled ? 'control disabled' : ' control enabled'}
+	<button id="form-btn-enable" class="btn btn-sm btn-outline-{disabled ? 'danger' : 'success'}" onclick={() => (disabled = !disabled)}>
+		{disabled ? 'control disabled' : ' control enabled'}
 	</button>
-	<button id="form-btn-clear" class="btn btn-sm btn-outline-primary" on:click={() => (ctrl.value = 0)}>Clear</button>
+	<button id="form-btn-clear" class="btn btn-sm btn-outline-primary" onclick={() => (value = 0)}>Clear</button>
 </div>
