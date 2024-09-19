@@ -1,24 +1,16 @@
-<script lang="ts" context="module">
+<script lang="ts" generics="Item">
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import {callWidgetFactory} from '../../config';
-	import type {SelectApi, SelectProps, SelectSlots, SelectWidget} from './select';
-	import {createSelect} from './select';
-</script>
+	import type {SelectApi, SelectItemContext, SelectProps, SelectWidget} from './select.gen';
+	import {createSelect} from './select.gen';
 
-<script lang="ts">
-	type Item = $$Generic;
-	type $$Props = Partial<SelectProps<Item>>;
-	type $$Slots = SelectSlots<Item>;
-
-	export let open: boolean | undefined = false;
-	export let filterText: string | undefined = undefined;
-	export let selected: Item[] | undefined = undefined;
+	let {open = $bindable(false), filterText = $bindable(), selected = $bindable(), ...props}: Partial<SelectProps<Item>> = $props();
 
 	const widget = callWidgetFactory<SelectWidget<Item>>({
 		factory: createSelect,
 		widgetName: 'select',
-		$$slots,
-		$$props,
+		props: {...props, open, filterText, selected},
+		defaultConfig: {badgeLabel, itemLabel},
 		events: {
 			onOpenChange: function (isOpen: boolean): void {
 				open = isOpen;
@@ -47,24 +39,21 @@
 		},
 	} = widget;
 
-	$: widget.patchChangedProps($$props);
+	$effect(() => widget.patchChangedProps({...props, open, filterText, selected}));
 </script>
+
+{#snippet badgeLabel({itemContext}: SelectItemContext<Item>)}
+	{itemContext.item}
+{/snippet}
+{#snippet itemLabel({itemContext}: SelectItemContext<Item>)}
+	{itemContext.item}
+{/snippet}
 
 <div use:referenceDirective class="au-select dropdown border border-1 p-1 mb-3 d-block {$className$}">
 	<div use:hasFocusDirective use:inputContainerDirective class="d-flex align-items-center flex-wrap gap-1">
 		{#each $selectedContexts$ as itemContext (itemContext.id)}
 			<div use:badgeAttributesDirective={itemContext}>
-				<Slot slotContent={$badgeLabel$} props={{state: $state$, widget, itemContext}} let:component let:props>
-					<svelte:fragment slot="slot" let:props><slot name="badgeLabel" {...props} /></svelte:fragment>
-					<svelte:component this={component} {...props}>
-						<svelte:fragment slot="badgeLabel" let:itemContext let:state let:widget
-							><slot name="badgeLabel" {itemContext} {state} {widget} /></svelte:fragment
-						>
-						<svelte:fragment slot="itemLabel" let:itemContext let:state let:widget
-							><slot name="itemLabel" {itemContext} {state} {widget} /></svelte:fragment
-						>
-					</svelte:component>
-				</Slot>
+				<Slot content={$badgeLabel$} props={{state: $state$, widget, itemContext}} />
 			</div>
 		{/each}
 		<input
@@ -77,8 +66,8 @@
 			autoCorrect="off"
 			autoCapitalize="none"
 			autoComplete="off"
-			on:input={onInput}
-			on:keydown={onInputKeydown}
+			oninput={onInput}
+			onkeydown={onInputKeydown}
 		/>
 	</div>
 	{#if $open$ && $visibleItems$.length > 0}
@@ -86,17 +75,7 @@
 			{#each $visibleItems$ as itemContext (itemContext.id)}
 				{@const isHighlighted = itemContext === $highlighted$}
 				<li class="dropdown-item position-relative" class:text-bg-primary={isHighlighted} use:itemAttributesDirective={itemContext}>
-					<Slot slotContent={$itemLabel$} props={{state: $state$, widget, itemContext}} let:component let:props>
-						<svelte:fragment slot="slot" let:props><slot name="itemLabel" {...props} /></svelte:fragment>
-						<svelte:component this={component} {...props}>
-							<svelte:fragment slot="badgeLabel" let:itemContext let:state let:widget
-								><slot name="badgeLabel" {itemContext} {state} {widget} /></svelte:fragment
-							>
-							<svelte:fragment slot="itemLabel" let:itemContext let:state let:widget
-								><slot name="itemLabel" {itemContext} {state} {widget} /></svelte:fragment
-							>
-						</svelte:component>
-					</Slot>
+					<Slot content={$itemLabel$} props={{state: $state$, widget, itemContext}} />
 				</li>
 			{/each}
 		</ul>

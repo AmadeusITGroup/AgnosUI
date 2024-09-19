@@ -1,31 +1,22 @@
-<script lang="ts" context="module">
+<script lang="ts">
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
-	import {createAlert, type AlertApi, type AlertProps, type AlertSlots} from './alert';
+	import {type AlertContext, createAlert, type AlertApi, type AlertProps} from './alert.gen';
 	import {callWidgetFactory} from '../../config';
 	import AlertDefaultStructure from './AlertDefaultStructure.svelte';
 
-	const defaultConfig: Partial<AlertProps> = {
-		structure: AlertDefaultStructure,
-	};
-</script>
-
-<script lang="ts">
-	type $$Props = Partial<AlertProps>;
-	type $$Slots = AlertSlots;
+	let {visible = $bindable(), ...props}: Partial<AlertProps> = $props();
 
 	const widget = callWidgetFactory({
 		factory: createAlert,
 		widgetName: 'alert',
-		$$slots,
-		$$props,
-		defaultConfig,
+		props: {...props, visible},
+		defaultConfig: {structure},
 		events: {
 			onVisibleChange: (event) => {
 				visible = event;
 			},
 		},
 	});
-	export let visible: boolean | undefined = undefined;
 	export const api: AlertApi = widget.api;
 
 	const {
@@ -34,9 +25,13 @@
 		state$,
 	} = widget;
 
-	$: widget.patchChangedProps($$props);
-	$: slotContext = {widget, state: $state$};
+	$effect(() => widget.patchChangedProps({...props, visible}));
+	let slotContext = $derived({widget, state: $state$});
 </script>
+
+{#snippet structure(props: AlertContext)}
+	<AlertDefaultStructure {...props} />
+{/snippet}
 
 {#if !$hidden$}
 	<div
@@ -44,12 +39,6 @@
 		class="au-alert alert alert-{$state$.type} {$state$.className} {$state$.dismissible ? 'alert-dismissible' : ''}"
 		use:transitionDirective
 	>
-		<Slot slotContent={$structure$} props={slotContext} let:component let:props>
-			<svelte:fragment slot="slot" let:props><slot name="structure" {...props} /></svelte:fragment>
-			<svelte:component this={component} {...props}>
-				<svelte:fragment let:state let:widget><slot {state} {widget} /></svelte:fragment>
-				<svelte:fragment slot="structure" let:state let:widget><slot name="structure" {state} {widget} /></svelte:fragment>
-			</svelte:component>
-		</Slot>
+		<Slot content={$structure$} props={slotContext} />
 	</div>
 {/if}

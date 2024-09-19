@@ -1,4 +1,4 @@
 import Toast from './Toast.svelte';
 
-export * from './toast';
+export * from './toast.gen';
 export {Toast};
