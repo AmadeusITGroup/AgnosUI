@@ -5,15 +5,21 @@
 
 <Accordion closeOthers itemDestroyOnHide>
 	<AccordionItem visible>
-		<svelte:fragment slot="header">First header</svelte:fragment>
-		<svelte:fragment slot="body">First content</svelte:fragment>
+		{#snippet header()}
+			First header
+		{/snippet}
+		First content
 	</AccordionItem>
 	<AccordionItem>
-		<svelte:fragment slot="header">Second header</svelte:fragment>
-		<svelte:fragment slot="body">Second content</svelte:fragment>
+		{#snippet header()}
+			Second header
+		{/snippet}
+		Second content
 	</AccordionItem>
 	<AccordionItem>
-		<svelte:fragment slot="header">Third header</svelte:fragment>
-		<svelte:fragment slot="body">Third content</svelte:fragment>
+		{#snippet header()}
+			Third header
+		{/snippet}
+		Third content
 	</AccordionItem>
 </Accordion>

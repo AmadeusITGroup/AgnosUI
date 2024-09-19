@@ -2,15 +2,15 @@
 	import {createProgressbar, type ProgressbarProps} from '@agnos-ui/svelte-headless/components/progressbar';
 	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
 
-	type $$Props = Partial<ProgressbarProps>;
+	let props: Partial<ProgressbarProps> = $props();
 
-	const widget = callWidgetFactory({factory: createProgressbar, widgetName: 'progressbar', $$props});
+	const widget = callWidgetFactory({factory: createProgressbar, widgetName: 'progressbar', props});
 
 	const {
 		stores: {className$, percentage$},
 		directives: {ariaDirective},
 	} = widget;
-	$: widget.patchChangedProps($$props);
+	$effect(() => widget.patchChangedProps({...props}));
 
 	const percentFormat = new Intl.NumberFormat('default', {
 		style: 'percent',

@@ -2,18 +2,23 @@
 	import {type AccordionProps, createAccordion} from '@agnos-ui/svelte-headless/components/accordion';
 	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
 	import {setAccordionApi} from './accordion';
+	import type {Snippet} from 'svelte';
 
-	type $$Props = Partial<Pick<AccordionProps, 'closeOthers' | 'onItemShown' | 'onItemHidden' | 'itemDestroyOnHide' | 'className'>>;
+	let {
+		children,
+		...props
+	}: Partial<Pick<AccordionProps, 'closeOthers' | 'onItemShown' | 'onItemHidden' | 'itemDestroyOnHide' | 'className'>> & {children: Snippet} =
+		$props();
 
 	const widget = callWidgetFactory({
 		factory: createAccordion,
 		widgetName: 'accordion',
-		$$props,
+		props,
 	});
 	setAccordionApi(widget.api);
-	$: widget.patchChangedProps($$props);
+	$effect(() => widget.patchChangedProps({...props}));
 </script>
 
 <div class="flex flex-col gap-2" use:widget.directives.accordionDirective>
-	<slot />
+	{@render children()}
 </div>

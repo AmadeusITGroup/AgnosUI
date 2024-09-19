@@ -2,11 +2,19 @@
 	import {type AccordionItemProps, type AccordionItemWidget} from '@agnos-ui/svelte-headless/components/accordion';
 	import type {WidgetFactory} from '@agnos-ui/svelte-headless/types';
 	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
-	import {onMount} from 'svelte';
+	import {onMount, type Snippet} from 'svelte';
 	import {createSimpleClassTransition} from '@agnos-ui/svelte-headless/services/transitions/simpleClassTransition';
 	import {getAccordionApi} from './accordion';
 
-	type $$Props = Partial<Pick<AccordionItemProps, 'className' | 'destroyOnHide' | 'onVisibleChange' | 'visible' | 'onHidden' | 'onShown' | 'id'>>;
+	let {
+		header,
+		children,
+		visible = $bindable(),
+		...props
+	}: Partial<Pick<AccordionItemProps, 'className' | 'destroyOnHide' | 'onVisibleChange' | 'visible' | 'onHidden' | 'onShown' | 'id'>> & {
+		header: Snippet;
+		children: Snippet;
+	} = $props();
 
 	const transition = createSimpleClassTransition({
 		showClasses: ['collapse-open'],
@@ -14,10 +22,9 @@
 	});
 
 	const {registerItem} = getAccordionApi();
-	export let visible: boolean | undefined = undefined;
 	const widget = callWidgetFactory({
 		factory: registerItem as WidgetFactory<AccordionItemWidget>,
-		$$props,
+		props: {visible, ...props},
 		events: {
 			onVisibleChange: (event) => {
 				visible = event;
@@ -32,9 +39,9 @@
 		directives: {itemDirective, toggleDirective, transitionDirective, bodyContainerAttrsDirective},
 		api: {toggle},
 	} = widget;
-	$: widget.patchChangedProps($$props);
+	$effect(() => widget.patchChangedProps({visible, ...props}));
 
-	const onEnter = (e: KeyboardEvent) => {
+	const onkeydown = (e: KeyboardEvent) => {
 		if (e.key === 'Enter') {
 			toggle();
 		}
@@ -43,12 +50,12 @@
 </script>
 
 <div class="collapse collapse-arrow bg-base-200" use:itemDirective use:transitionDirective>
-	<div role="button" tabindex="0" class="collapse-title text-xl font-medium focus-visible:outline-none" use:toggleDirective on:keydown={onEnter}>
-		<slot name="header"></slot>
+	<div role="button" tabindex="0" class="collapse-title text-xl font-medium focus-visible:outline-none" use:toggleDirective {onkeydown}>
+		{@render header()}
 	</div>
 	<div class="collapse-content" use:bodyContainerAttrsDirective>
 		{#if $shouldBeInDOM$}
-			<slot name="body"></slot>
+			{@render children()}
 		{/if}
 	</div>
 </div>
