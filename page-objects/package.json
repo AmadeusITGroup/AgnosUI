@@ -1,7 +1,7 @@
 {
 	"name": "@agnos-ui/page-objects",
 	"description": "Page objects to be used when testing AgnosUI-based applications with Playwright.",
-	"version": "0.4.2",
+	"version": "0.4.3",
 	"keywords": [
 		"e2e",
 		"page-object",
@@ -57,7 +57,7 @@
 		}
 	},
 	"dependencies": {
-		"@agnos-ui/base-po": "0.4.2"
+		"@agnos-ui/base-po": "0.4.3"
 	},
 	"peerDependencies": {
 		"@playwright/test": "^1.45.3"

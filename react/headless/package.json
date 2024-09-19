@@ -1,7 +1,7 @@
 {
 	"name": "@agnos-ui/react-headless",
 	"description": "Headless widget library for React.",
-	"version": "0.4.2",
+	"version": "0.4.3",
 	"private": true,
 	"type": "module",
 	"main": "./dist/index.cjs",
@@ -128,7 +128,7 @@
 		}
 	},
 	"dependencies": {
-		"@agnos-ui/core": "0.4.2",
+		"@agnos-ui/core": "0.4.3",
 		"classnames": "^2.5.1"
 	},
 	"peerDependencies": {
