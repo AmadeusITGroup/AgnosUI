@@ -5,7 +5,7 @@ import eslintConfigPrettier from 'eslint-config-prettier';
 import eslintPluginSvelte from 'eslint-plugin-svelte';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
-import vitest from 'eslint-plugin-vitest';
+import vitest from '@vitest/eslint-plugin';
 import playwright from 'eslint-plugin-playwright';
 import agnosUi from '@agnos-ui/eslint-plugin';
 import jsdoc from 'eslint-plugin-jsdoc';
