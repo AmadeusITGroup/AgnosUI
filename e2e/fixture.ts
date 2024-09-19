@@ -44,12 +44,8 @@ export const test = base.extend<FixtureOptions>({
 	baseURL: [
 		async ({project, framework, sampleKey, sampleInfo}, use) => {
 			test.skip(project === 'stackblitz' && sampleInfo?.sampleName === 'playground', 'Playground samples are not supported in stackblitz');
-			test.skip(
-				sampleKey === 'daisyui/modal/default' && framework === 'svelte',
-				`The modal headless samples is not using a service yet, as snippets makes this so much easier.`,
-			);
 			test.fixme(
-				sampleKey === 'bootstrap/slots/usage' && framework === 'react',
+				sampleKey === 'bootstrap/slots/usage',
 				`The slots usage sample needs to be reworked after changes made to use the children property.`,
 			);
 			const answer = await request(serverManagerURL, {
