@@ -242,5 +242,9 @@
 			background-color: var(--#{variables.$prefix}slider-disabled-color);
 			cursor: var(--#{variables.$prefix}slider-disabled-cursor);
 		}
+		.au-slider-clickable-area,
+		.au-slider-clickable-area-vertical {
+			cursor: var(--#{variables.$prefix}slider-disabled-cursor);
+		}
 	}
 }
