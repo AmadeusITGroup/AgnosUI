@@ -60,7 +60,7 @@
 		"@agnos-ui/base-po": "0.0.0"
 	},
 	"peerDependencies": {
-		"@playwright/test": "^1.47.1"
+		"@playwright/test": "^1.47.2"
 	},
 	"license": "MIT",
 	"bugs": "https://github.com/AmadeusITGroup/AgnosUI/issues",

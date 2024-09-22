@@ -7,15 +7,15 @@
 		"@babel/plugin-syntax-decorators": "^7.24.7",
 		"@babel/plugin-syntax-typescript": "^7.25.4",
 		"babel-plugin-istanbul": "^7.0.0",
-		"nyc": "^17.0.0",
+		"nyc": "^17.1.0",
 		"uuid": "^10.0.0"
 	},
 	"peerDependencies": {
-		"vite": "^5.4.5"
+		"vite": "^5.4.7"
 	},
 	"devDependencies": {
 		"@types/babel__core": "^7.20.5",
-		"vite": "^5.4.5"
+		"vite": "^5.4.7"
 	},
 	"scripts": {
 		"build": "wireit"
