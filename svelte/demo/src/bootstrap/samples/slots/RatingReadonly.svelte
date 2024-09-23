@@ -14,9 +14,6 @@
 			...$$props,
 			readonly: true,
 		},
-		events: {
-			onRatingChange: () => {},
-		},
 	});
 	export const api = widget.api;
 

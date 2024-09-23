@@ -11,7 +11,6 @@
 		widgetName: 'accordion',
 		$$slots: $$slots as any,
 		$$props,
-		events: {},
 	});
 	export const api: AccordionApi = widget.api;
 

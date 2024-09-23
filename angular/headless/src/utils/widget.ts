@@ -56,7 +56,7 @@ export const callWidgetFactoryWithConfig = <W extends Widget>({
 	factory: WidgetFactory<W>;
 	defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
 	widgetConfig?: null | undefined | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
-	events?: Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}`>;
+	events?: Partial<Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}`>>;
 	afterInit?: () => void;
 }): AngularWidget<W> => {
 	const injector = inject(Injector);

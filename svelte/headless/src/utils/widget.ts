@@ -73,7 +73,7 @@ export const callWidgetFactoryWithConfig = <W extends Widget>({
 	$$slots?: SlotsPresent<WidgetProps<W>>;
 	defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
 	widgetConfig?: null | undefined | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
-	events?: Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}Change`>;
+	events?: Partial<Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}Change`>>;
 	$$props: Partial<WidgetProps<W>>;
 }): W & {patchChangedProps: W['patch']} => {
 	const defaultConfig$ = toReadableStore(defaultConfig);

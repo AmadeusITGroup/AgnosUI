@@ -15,7 +15,6 @@
 		defaultConfig: {
 			structure: ProgressbarDefaultStructure,
 		},
-		events: {},
 	});
 	const {
 		stores: {structure$, className$},

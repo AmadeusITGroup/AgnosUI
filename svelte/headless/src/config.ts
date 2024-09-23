@@ -13,7 +13,7 @@ type WidgetFactoryInput<Config extends {[widgetName: string]: object}, W extends
 	widgetName?: null | keyof Config;
 	$$slots?: SlotsPresent<WidgetProps<W>>;
 	defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
-	events?: Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}Change`>;
+	events?: Partial<Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}Change`>>;
 	$$props: Partial<WidgetProps<W>>;
 };
 type AdaptParentConfig<Config> = (config: Partial2Levels<Config>) => Partial2Levels<Config>;
