@@ -1,6 +1,6 @@
 {
 	"name": "agnos-ui-svelte-stackblitz-demo",
-	"version": "0.4.3",
+	"version": "0.4.4",
 	"private": true,
 	"type": "module",
 	"scripts": {
@@ -9,8 +9,8 @@
 		"preview": "vite preview"
 	},
 	"devDependencies": {
-		"@agnos-ui/svelte-bootstrap": "0.4.3",
-		"@agnos-ui/svelte-preprocess": "0.4.3",
+		"@agnos-ui/svelte-bootstrap": "0.4.4",
+		"@agnos-ui/svelte-preprocess": "0.4.4",
 		"@amadeus-it-group/tansu": "^1.0.0",
 		"@floating-ui/dom": "^1.6.8",
 		"@sveltejs/vite-plugin-svelte": "^3.1.1",

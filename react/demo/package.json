@@ -1,6 +1,6 @@
 {
 	"name": "@agnos-ui/react-demo",
-	"version": "0.4.3",
+	"version": "0.4.4",
 	"private": true,
 	"type": "module",
 	"scripts": {
@@ -87,8 +87,8 @@
 		"vite-plugin-svgr": "^4.2.0"
 	},
 	"dependencies": {
-		"@agnos-ui/core-bootstrap": "0.4.3",
-		"@agnos-ui/react-bootstrap": "0.4.3",
+		"@agnos-ui/core-bootstrap": "0.4.4",
+		"@agnos-ui/react-bootstrap": "0.4.4",
 		"@amadeus-it-group/tansu": "^1.0.0",
 		"@floating-ui/dom": "^1.6.8",
 		"classnames": "^2.5.1"

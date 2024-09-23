@@ -1,7 +1,7 @@
 {
 	"name": "@agnos-ui/svelte-bootstrap",
 	"description": "Bootstrap-based widget library for Svelte.",
-	"version": "0.4.3",
+	"version": "0.4.4",
 	"private": true,
 	"type": "module",
 	"main": "./dist/index.js",
@@ -163,8 +163,8 @@
 		}
 	},
 	"dependencies": {
-		"@agnos-ui/core-bootstrap": "0.4.3",
-		"@agnos-ui/svelte-headless": "0.4.3"
+		"@agnos-ui/core-bootstrap": "0.4.4",
+		"@agnos-ui/svelte-headless": "0.4.4"
 	},
 	"peerDependencies": {
 		"@amadeus-it-group/tansu": "^1.0.0",
