@@ -14,11 +14,11 @@
 		"@sveltejs/vite-plugin-svelte": "^3.1.2",
 		"@tsconfig/svelte": "^5.0.4",
 		"bootstrap-icons": "^1.11.3",
-		"sass": "^1.78.0",
+		"sass": "^1.79.3",
 		"svelte": "^4.2.19",
 		"svelte-check": "^4.0.2",
 		"tslib": "^2.7.0",
 		"typescript": "~5.5.4",
-		"vite": "^5.4.5"
+		"vite": "^5.4.7"
 	}
 }
