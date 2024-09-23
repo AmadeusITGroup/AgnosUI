@@ -9,9 +9,6 @@
 		factory: createAccordion,
 		widgetName: 'accordion',
 		$$props,
-		events: {
-			onItemVisibleChange: () => {},
-		},
 	});
 	setAccordionApi(widget.api);
 	$: widget.patchChangedProps($$props);

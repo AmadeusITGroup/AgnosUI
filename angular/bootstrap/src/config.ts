@@ -26,7 +26,7 @@ const widgetFactories: {
 		factory: WidgetFactory<W>;
 		widgetName?: keyof BootstrapWidgetsConfig | null | undefined;
 		defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined> | undefined;
-		events?: Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}`>;
+		events?: Partial<Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}`>>;
 		afterInit?: (() => void) | undefined;
 	}) => AngularWidget<W>;
 } = widgetsConfigFactory<WidgetsConfig>(new InjectionToken<WidgetsConfigStore<WidgetsConfig>>('bootstrapWidgetsConfig'));
