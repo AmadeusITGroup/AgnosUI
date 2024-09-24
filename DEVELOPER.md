@@ -2,15 +2,18 @@
 
 A framework-agnostic component library.
 
+## Organization of the repository
+
 This is a monorepo organised with multiple npm packages:
 
 - [`core`](core) contains the framework agnostic sources
+- [`core-bootstrap`](core-bootstrap) contains framework agnostic utilities / overrides for bootstrap support
 
-Then for each supported framework, a corresponding package is present with framework-specific code. Each of them contains the `lib` folder, with components using the `core`, and the `demo` folder, hosting the demo application.
+Each framework will include the following packages:
 
-- [`angular`](angular) contains Angular sources, with the server running on port 4200
-- [`react`](react) contains React sources, with the server running on port 3000
-- [`svelte`](svelte) contains Svelte sources, with the server running on port 3001
+- `headless` delivering the headless wrappers to use the core components with the selected framework
+- `bootstrap` delivering bootstrap-compliant implementations of the components, powered by the headless wrappers and the core components
+- `demo` the demo pages showcasing examples on how to the use the above packages.
 
 Finally, two other npm packages are available for testing purposes:
 
