@@ -41,7 +41,7 @@ To start using AgnosUI in your project, follow the instructions in the [Installa
 
 ## Contributing
 
-We welcome contributions from the community to make AgnosUI even better. Please read our [Contribution Guidelines](DEVELOPER.md) to get started.
+We welcome contributions from the community to make AgnosUI even better. Please read our [Contribution Guidelines](CONTRIBUTING.md) to get started.
 
 ## License
 
