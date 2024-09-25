@@ -1,13 +1,12 @@
+import {TreeComponent, type TreeItem} from '@agnos-ui/angular-bootstrap';
 import {Component} from '@angular/core';
-import {AgnosUIAngularModule, type TreeItem} from '@agnos-ui/angular-bootstrap';
 
 @Component({
-	selector: 'app-root',
 	standalone: true,
-	imports: [AgnosUIAngularModule],
-	templateUrl: './app.component.html',
+	template: ` <au-component auTree [auNodes]="nodes"></au-component> `,
+	imports: [TreeComponent],
 })
-export class AppComponent {
+export default class BasicTreeComponent {
 	readonly nodes: TreeItem[] = [
 		{
 			label: 'Node 1',

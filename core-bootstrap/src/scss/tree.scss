@@ -1,0 +1,76 @@
+@use 'variables';
+@import '_functions';
+
+.au-tree {
+	// scss-docs-start tree-css-vars
+	--#{variables.$prefix}tree-item-padding-start: #{variables.$au-tree-item-padding-start};
+	--#{variables.$prefix}tree-expand-icon-margin-inline-end: #{variables.$au-tree-expand-icon-margin-inline-end};
+	--#{variables.$prefix}tree-expand-icon-border-radius: #{variables.$au-tree-expand-icon-border-radius};
+	--#{variables.$prefix}tree-expand-icon-background-color: #{variables.$au-tree-expand-icon-background-color};
+	--#{variables.$prefix}tree-expand-icon-background-color-hover: #{variables.$au-tree-expand-icon-background-color-hover};
+	--#{variables.$prefix}tree-expand-icon-width: #{variables.$au-tree-expand-icon-width};
+	--#{variables.$prefix}tree-expand-icon-height: #{variables.$au-tree-expand-icon-height};
+	--#{variables.$prefix}tree-expand-icon-default: #{escape-svg(variables.$au-tree-expand-icon-default)};
+	--#{variables.$prefix}tree-expand-icon-hover: #{escape-svg(variables.$au-tree-expand-icon-hover)};
+	// scss-docs-end tree-css-vars
+
+	list-style: none;
+	padding: 0;
+	margin: 0;
+
+	ul {
+		display: flex;
+		flex-direction: column;
+		list-style: none;
+		padding-inline-start: var(--#{variables.$prefix}tree-item-padding-start);
+		margin: 0;
+	}
+
+	li {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	.au-tree-item {
+		position: relative;
+		display: flex;
+		align-items: center;
+	}
+
+	.au-tree-expand-icon-placeholder {
+		display: flex;
+		width: calc(var(--#{variables.$prefix}tree-expand-icon-width) + var(--#{variables.$prefix}tree-expand-icon-margin-inline-end));
+	}
+
+	.au-tree-expand-icon {
+		position: relative;
+		width: var(--#{variables.$prefix}tree-expand-icon-width);
+		height: var(--#{variables.$prefix}tree-expand-icon-height);
+		border-radius: var(--#{variables.$prefix}tree-expand-icon-border-radius);
+		display: inline-flex;
+		border: 0;
+		padding-inline: 0;
+		margin-inline-end: var(--#{variables.$prefix}tree-expand-icon-margin-inline-end);
+		background-color: var(--#{variables.$prefix}tree-expand-icon-background-color);
+
+		&:hover {
+			--#{variables.$prefix}tree-expand-icon-default: var(--#{variables.$prefix}tree-expand-icon-hover);
+			--#{variables.$prefix}tree-expand-icon-background-color: var(--#{variables.$prefix}tree-expand-icon-background-color-hover);
+		}
+	}
+
+	.au-tree-expand-icon::after {
+		position: absolute;
+		content: var(--#{variables.$prefix}tree-expand-icon-default);
+		transition: transform 0.3s;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+
+	/* Expanded state */
+	.au-tree-expand-icon-expanded::after {
+		transform: translate(-55%, -50%) rotate(90deg);
+	}
+}

@@ -8,5 +8,6 @@ export * from './components/rating';
 export * from './components/select';
 export * from './components/slider';
 export * from './components/toast';
+export * from './components/tree';
 
 export * from './generated';

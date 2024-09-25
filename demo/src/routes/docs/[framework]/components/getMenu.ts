@@ -18,7 +18,7 @@ export function getMenu(component: string) {
 		tabs: [
 			{title: 'Examples', key: 'examples', path: `/components/${component}/examples`},
 			{title: 'Api', key: 'api', path: `/components/${component}/api`},
-			...(componentMetadata.includeStyles ? [{title: 'Styling', key: 'style', path: '/components/slider/style'}] : []),
+			...(componentMetadata.includeStyles ? [{title: 'Styling', key: 'style', path: `/components/${component}/style`}] : []),
 			/** TODO show Playground tab again when we have finished building it
 			{
 				title: 'Playground',
