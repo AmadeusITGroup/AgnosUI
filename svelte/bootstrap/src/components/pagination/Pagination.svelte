@@ -1,35 +1,23 @@
-<script lang="ts" context="module">
-	import type {PaginationProps, PaginationSlots} from './pagination';
-	import {createPagination} from './pagination';
+<script lang="ts">
+	import type {PaginationContext, PaginationNumberContext, PaginationProps} from './pagination.gen';
+	import {createPagination} from './pagination.gen';
 	import {toSlotContextWidget} from '@agnos-ui/svelte-headless/types';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import {callWidgetFactory} from '../../config';
 	import PaginationDefaultPages from './PaginationDefaultPages.svelte';
 	import PaginationDefaultStructure from './PaginationDefaultStructure.svelte';
 
-	const defaultConfig: Partial<PaginationProps> = {
-		structure: PaginationDefaultStructure,
-		pagesDisplay: PaginationDefaultPages,
-	};
-</script>
-
-<script lang="ts">
-	type $$Props = Partial<PaginationProps>;
-	type $$Slots = PaginationSlots;
-
-	/**
-	 *  The current page.
-	 *
-	 *  Page numbers start with `1`.
-	 */
-	export let page: $$Props['page'] = undefined;
+	let {page = $bindable(), ...props}: Partial<PaginationProps> = $props();
 
 	const widget = callWidgetFactory({
 		factory: createPagination,
 		widgetName: 'pagination',
-		$$slots,
-		$$props,
-		defaultConfig,
+		props: {...props, page},
+		defaultConfig: {
+			structure,
+			pagesDisplay,
+			numberLabel,
+		},
 		events: {
 			onPageChange: (value: number) => {
 				page = value;
@@ -42,25 +30,21 @@
 		state$,
 	} = widget;
 
-	$: widget.patchChangedProps($$props);
-	$: slotContext = {widget: toSlotContextWidget(widget), state: $state$};
+	$effect(() => widget.patchChangedProps({...props, page}));
+	let slotContext = $derived({widget: toSlotContextWidget(widget), state: $state$});
 </script>
+
+{#snippet structure(props: PaginationContext)}
+	<PaginationDefaultStructure {...props} />
+{/snippet}
+{#snippet pagesDisplay(props: PaginationContext)}
+	<PaginationDefaultPages {...props} />
+{/snippet}
+{#snippet numberLabel({displayedPage}: PaginationNumberContext)}
+	{displayedPage}
+{/snippet}
 
 <!-- Should we put nav here ? how to custom the class of ul in this case ?-->
 <nav aria-label={$ariaLabel$}>
-	<Slot slotContent={$structure$} props={slotContext} let:component let:props>
-		<svelte:fragment slot="slot" let:props><slot name="structure" {...props} /></svelte:fragment>
-		<svelte:component this={component} {...props}>
-			<svelte:fragment slot="ellipsisLabel" let:state let:widget><slot name="ellipsisLabel" {state} {widget} /></svelte:fragment>
-			<svelte:fragment slot="firstPageLabel" let:state let:widget><slot name="firstPageLabel" {state} {widget} /></svelte:fragment>
-			<svelte:fragment slot="lastPageLabel" let:state let:widget><slot name="lastPageLabel" {state} {widget} /></svelte:fragment>
-			<svelte:fragment slot="nextPageLabel" let:state let:widget><slot name="nextPageLabel" {state} {widget} /></svelte:fragment>
-			<svelte:fragment slot="numberLabel" let:displayedPage let:state let:widget
-				><slot name="numberLabel" {displayedPage} {state} {widget} /></svelte:fragment
-			>
-			<svelte:fragment slot="pagesDisplay" let:state let:widget><slot name="pagesDisplay" {state} {widget} /></svelte:fragment>
-			<svelte:fragment slot="previousPageLabel" let:state let:widget><slot name="previousPageLabel" {state} {widget} /></svelte:fragment>
-			<svelte:fragment slot="structure" let:state let:widget><slot name="structure" {state} {widget} /></svelte:fragment>
-		</svelte:component>
-	</Slot>
+	<Slot content={$structure$} props={slotContext} />
 </nav>

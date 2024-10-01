@@ -2,20 +2,22 @@
 	import {Pagination} from '@agnos-ui/svelte-bootstrap/components/pagination';
 	import CustomPages from './CustomPages.svelte';
 
-	function getPageSymbol(displayedPage: number) {
-		return ['A', 'B', 'C', 'D', 'E', 'F'][displayedPage - 1];
-	}
+	const getPageSymbol = (displayedPage: number) => ['A', 'B', 'C', 'D', 'E', 'F'][displayedPage - 1];
 
 	let page = 4;
 </script>
 
 <p>A pagination with customized links:</p>
 <Pagination bind:page collectionSize={60} previousPageLabel="Prev" nextPageLabel="Next" ariaLabel="Page navigation with customized links">
-	<svelte:fragment slot="numberLabel" let:displayedPage>
+	{#snippet numberLabel({displayedPage})}
 		{getPageSymbol(displayedPage)}
-	</svelte:fragment>
+	{/snippet}
 </Pagination>
 <hr />
 
 <p>A pagination with customized pages:</p>
-<Pagination bind:page collectionSize={60} pagesDisplay={CustomPages} ariaLabel="Page navigation with customized pages" />
+<Pagination bind:page collectionSize={60} ariaLabel="Page navigation with customized pages">
+	{#snippet pagesDisplay(props)}
+		<CustomPages {...props} />
+	{/snippet}
+</Pagination>

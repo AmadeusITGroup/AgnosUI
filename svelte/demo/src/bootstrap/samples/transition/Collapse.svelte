@@ -3,9 +3,9 @@
 	import {collapseVerticalTransition} from '@agnos-ui/svelte-bootstrap/services/transitions/bootstrap';
 	import '@agnos-ui/common/samples/transition/collapse.scss';
 	import collapseIcon from '@agnos-ui/common/samples/transition/collapseButton.svg?raw';
+	import type {Snippet} from 'svelte';
 
-	export let headerText: string;
-	export let expanded = false;
+	let {headerText, expanded = false, children}: {headerText: string; expanded: boolean; children: Snippet} = $props();
 
 	const {
 		stores: {visible$, hidden$},
@@ -24,7 +24,7 @@
 		<button
 			type="button"
 			id="collapse-toggle"
-			on:click={() => toggle()}
+			onclick={() => toggle()}
 			class="btn toggle-button"
 			aria-controls="collapse-content"
 			aria-expanded={$visible$ || undefined}
@@ -38,7 +38,7 @@
 	{#if !$hidden$}
 		<div id="collapse-content" use:directive>
 			<div class="card-body">
-				<slot />
+				{@render children()}
 			</div>
 		</div>
 	{/if}

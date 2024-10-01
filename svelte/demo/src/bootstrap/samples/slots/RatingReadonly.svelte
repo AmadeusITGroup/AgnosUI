@@ -1,17 +1,16 @@
 <script lang="ts">
-	import {createRating, type RatingProps, type RatingSlots} from '@agnos-ui/svelte-bootstrap/components/rating';
+	import {createRating, type StarContext, type RatingProps} from '@agnos-ui/svelte-bootstrap/components/rating';
 	import {Slot} from '@agnos-ui/svelte-bootstrap/slot';
 	import {callWidgetFactory} from '@agnos-ui/svelte-bootstrap/config';
 
-	type $$Props = Pick<Partial<RatingProps>, 'rating' | 'maxRating' | 'className' | 'star'>;
-	type $$Slots = RatingSlots;
+	let props: Pick<Partial<RatingProps>, 'rating' | 'maxRating' | 'className' | 'star'> = $props();
 
 	const widget = callWidgetFactory({
 		factory: createRating,
 		widgetName: 'rating',
-		$$slots,
-		$$props: {
-			...$$props,
+		defaultConfig: {star},
+		props: {
+			...props,
 			readonly: true,
 		},
 	});
@@ -20,8 +19,12 @@
 	const {
 		stores: {stars$, className$, star$},
 	} = widget;
-	$: widget.patchChangedProps($$props);
+	$effect(() => widget.patchChangedProps({...props}));
 </script>
+
+{#snippet star({fill}: StarContext)}
+	{String.fromCharCode(fill === 100 ? 9733 : 9734)}
+{/snippet}
 
 <div class="d-inline-flex au-rating {$className$}">
 	{#each $stars$ as { fill, index }}
@@ -30,10 +33,7 @@
                 Simply use the Slot component from @agnos-ui/svelte-headless.
                 The api is currently a bit tricky, until Svelte 5 arrives with snippets.
             -->
-			<Slot slotContent={$star$} props={{fill, index}} let:component let:props>
-				<svelte:fragment slot="slot" let:props><slot name="star" {...props} /></svelte:fragment>
-				<svelte:component this={component} {...props} />
-			</Slot>
+			<Slot content={$star$} props={{fill, index}} />
 		</span>
 	{/each}
 </div>

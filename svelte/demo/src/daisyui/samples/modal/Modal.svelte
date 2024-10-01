@@ -1,20 +1,14 @@
 <script lang="ts">
 	import {createModal} from '@agnos-ui/svelte-headless/components/modal';
-	import type {ModalProps} from '@agnos-ui/svelte-headless/components/modal';
+	import type {DaisyModalProps} from './modal';
 	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
 
-	type $$Props = Partial<Pick<ModalProps, 'closeOnOutsideClick' | 'ariaCloseButtonLabel' | 'closeButton' | 'visible' | 'onVisibleChange'>>;
+	let {children, closeOnOutsideClick, visible = $bindable(), ...props}: DaisyModalProps = $props();
 
-	export const {
-		stores: {visible$, closeButton$},
-		directives: {closeButtonDirective, dialogDirective},
-		patchChangedProps,
-		patch,
-		api,
-	} = callWidgetFactory({
+	const widget = callWidgetFactory({
 		factory: createModal,
 		widgetName: 'modal',
-		$$props,
+		props: {visible, closeOnOutsideClick, ...props},
 		defaultConfig: {closeButton: true},
 		events: {
 			onVisibleChange: (event) => {
@@ -22,15 +16,19 @@
 			},
 		},
 	});
-	export let visible: boolean | undefined = undefined;
-	export let closeOnOutsideClick: boolean | undefined = undefined;
+	export const api = widget.api;
+	const {
+		stores: {closeButton$},
+		directives: {closeButtonDirective, dialogDirective},
+		patchChangedProps,
+	} = widget;
 
-	$: patchChangedProps($$props);
+	$effect(() => patchChangedProps({visible, closeOnOutsideClick, ...props}));
 </script>
 
-<dialog class="modal modal-bottom sm:modal-middle" on:close={api.close} use:dialogDirective>
+<dialog class="modal modal-bottom sm:modal-middle" onclose={api.close} use:dialogDirective>
 	<div class="modal-box">
-		<slot />
+		{@render children()}
 		{#if $closeButton$}
 			<form method="dialog">
 				<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" use:closeButtonDirective> ✕ </button>
@@ -39,7 +37,7 @@
 	</div>
 	{#if closeOnOutsideClick}
 		<form method="dialog" class="modal-backdrop">
-			<button on:click={api.close}>Close</button>
+			<button onclick={api.close}>Close</button>
 		</form>
 	{/if}
 </dialog>

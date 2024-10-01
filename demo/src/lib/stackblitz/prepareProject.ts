@@ -44,9 +44,9 @@ export const createBaseFrameworkProcessors = (): Record<Frameworks, StackblitzPr
 		),
 		addAsyncFiles(import.meta.glob('./svelte-daisyui/**', {query: '?raw', import: 'default'}) as any, '', './svelte-daisyui/', isDaisyuiCondition),
 		(project, sample) => {
-			project.files['src/main.ts'] = `import "./main.css";\nimport App from ${JSON.stringify(
+			project.files['src/main.ts'] = `import "./main.css";\nimport {mount} from 'svelte';\nimport App from ${JSON.stringify(
 				`./${sample.files.svelte.entryPoint}`,
-			)};\nconst app = new App({target: document.getElementById('root')!});\nexport default app;`;
+			)};\nconst app = mount(App, {target: document.getElementById('root')!});\nexport default app;`;
 			project.template = 'node';
 		},
 	],

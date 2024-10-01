@@ -1,9 +1,13 @@
 <script lang="ts">
-	import {Progressbar} from '@agnos-ui/svelte-bootstrap/components/progressbar';
+	import {Progressbar, type ProgressbarContext} from '@agnos-ui/svelte-bootstrap/components/progressbar';
 	import {createWidgetsDefaultConfig} from '@agnos-ui/svelte-bootstrap/config';
 
-	createWidgetsDefaultConfig().set({progressbar: {children: (widget) => `${widget.state.percentage}%`}});
+	createWidgetsDefaultConfig().set({progressbar: {children}});
 </script>
+
+{#snippet children({state: {percentage}}: ProgressbarContext)}
+	{percentage}%
+{/snippet}
 
 <div class="d-flex flex-column gap-2">
 	<Progressbar value={20} />

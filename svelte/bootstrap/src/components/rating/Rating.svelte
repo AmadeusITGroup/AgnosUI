@@ -1,19 +1,16 @@
 <script lang="ts">
-	import type {RatingProps, RatingSlots} from './rating';
-	import {createRating} from './rating';
+	import type {RatingProps, StarContext} from './rating.gen';
+	import {createRating} from './rating.gen';
 	import {callWidgetFactory} from '../../config';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 
-	type $$Props = Partial<RatingProps>;
-	type $$Slots = RatingSlots;
-
-	export let rating: number | undefined = undefined;
+	let {rating = $bindable(), ...props}: Partial<RatingProps> = $props();
 
 	const widget = callWidgetFactory({
 		factory: createRating,
 		widgetName: 'rating',
-		$$slots,
-		$$props,
+		props: {...props, rating},
+		defaultConfig: {star},
 		events: {
 			onRatingChange: (value: number) => {
 				rating = value;
@@ -26,18 +23,19 @@
 		directives: {containerDirective, starDirective},
 	} = widget;
 
-	$: widget.patchChangedProps($$props);
+	$effect(() => widget.patchChangedProps({...props, rating}));
 </script>
+
+{#snippet star({fill}: StarContext)}
+	{String.fromCharCode(fill === 100 ? 9733 : 9734)}
+{/snippet}
 
 <div use:containerDirective class="d-inline-flex">
 	<!-- on:blur={onTouched} ?? -->
 	{#each $stars$ as { fill, index }}
 		<span class="visually-hidden">({index < $visibleRating$ ? '*' : ' '})</span>
 		<span use:starDirective={{index}}>
-			<Slot slotContent={$star$} props={{fill, index}} let:component let:props>
-				<svelte:fragment slot="slot" let:props><slot name="star" {...props} /></svelte:fragment>
-				<svelte:component this={component} {...props} />
-			</Slot>
+			<Slot content={$star$} props={{fill, index}} />
 		</span>
 	{/each}
 </div>

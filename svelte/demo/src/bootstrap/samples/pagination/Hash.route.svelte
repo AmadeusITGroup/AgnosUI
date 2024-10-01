@@ -3,7 +3,7 @@
 
 	import {hash$} from '@agnos-ui/common/samples/utils/hashUtil';
 
-	$: page = +($hash$.split('#')[1] ?? 4);
+	let page = $derived(+($hash$.split('#')[1] ?? 4));
 
 	const pageLink = (currentPage: number) => `#${$hash$.split('#')[0]}#${currentPage}`;
 
@@ -14,5 +14,4 @@
 <p>
 	Page hash: <small>{'#' + $hash$}</small>
 </p>
-<Pagination {page} collectionSize={60} boundaryLinks ariaLabel="Page navigation with customized hrefs" {pageLink} onPageChange={pageChange}
-></Pagination>
+<Pagination {page} collectionSize={60} boundaryLinks ariaLabel="Page navigation with customized hrefs" {pageLink} onPageChange={pageChange} />

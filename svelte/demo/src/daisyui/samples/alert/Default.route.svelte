@@ -1,10 +1,10 @@
 <script lang="ts">
 	import Alert from './Alert.svelte';
 
-	let visible = true;
+	let visible = $state(true);
 </script>
 
-<button class="btn btn-primary" on:click={() => (visible = true)}>Reset Alert</button>
+<button class="btn btn-primary" onclick={() => (visible = true)}>Reset Alert</button>
 <div class="flex flex-col gap-3 mt-3">
 	<Alert className="alert-success" bind:visible>
 		<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"

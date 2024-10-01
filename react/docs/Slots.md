@@ -1,5 +1,3 @@
-## Slots in React
-
 React manages slots using the `children` specific property, as [documented here](https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children).  
 We support this behavior, while going further.
 

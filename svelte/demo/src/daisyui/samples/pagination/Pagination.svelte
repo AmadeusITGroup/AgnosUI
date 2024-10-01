@@ -3,19 +3,12 @@
 	import {createPagination} from '@agnos-ui/svelte-headless/components/pagination';
 	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
 
-	type $$Props = Partial<PaginationProps>;
-
-	/**
-	 *  The current page.
-	 *
-	 *  Page numbers start with `1`.
-	 */
-	export let page: $$Props['page'] = undefined;
+	let {page = $bindable(), ...props}: Partial<PaginationProps> = $props();
 
 	const widget = callWidgetFactory({
 		factory: createPagination,
 		widgetName: 'pagination',
-		$$props,
+		props: {...props, page},
 		events: {
 			onPageChange: (value: number) => {
 				page = value;
@@ -40,7 +33,8 @@
 		state$,
 		actions: {first, previous, next, last},
 	} = widget;
-	$: widget.patchChangedProps($$props);
+
+	$effect(() => widget.patchChangedProps({...props, page}));
 </script>
 
 <nav aria-label={$ariaLabel$}>
@@ -49,7 +43,7 @@
 			<button
 				class="join-item btn btn-outline"
 				aria-label={$ariaFirstLabel$}
-				on:click={() => first()}
+				onclick={() => first()}
 				disabled={$previousDisabled$}
 				aria-disabled={$previousDisabled$ ? 'true' : null}
 				tabindex={$previousDisabled$ ? -1 : undefined}
@@ -62,20 +56,20 @@
 				class="join-item btn btn-outline"
 				disabled={$previousDisabled$}
 				aria-label={$ariaPreviousLabel$}
-				on:click={() => previous()}
+				onclick={() => previous()}
 				tabindex={$previousDisabled$ ? -1 : undefined}
 				aria-disabled={$previousDisabled$ ? 'true' : null}
 			>
 				<span aria-hidden="true"> ‹ </span>
 			</button>
 		{/if}
-		{#each $state$.pages as page, i}
+		{#each $state$.pages as page}
 			<button
 				class="join-item btn btn-outline"
 				class:btn-active={page === $state$.page}
 				aria-current={page === $state$.page ? 'page' : null}
 				tabindex={page === -1 ? -1 : $state$.disabled ? -1 : undefined}
-				on:click={page === -1 ? () => {} : () => widget.actions.select(page)}
+				onclick={page === -1 ? () => {} : () => widget.actions.select(page)}
 				disabled={page === -1 || $state$.disabled}
 				>{page}
 				{#if $state$.page === page}<span class="sr-only">{$state$.activeLabel}</span>{/if}
@@ -86,7 +80,7 @@
 				class="join-item btn btn-outline"
 				disabled={$nextDisabled$}
 				aria-label={$ariaNextLabel$}
-				on:click={() => next()}
+				onclick={() => next()}
 				tabindex={$nextDisabled$ ? -1 : undefined}
 				aria-disabled={$nextDisabled$ ? 'true' : null}
 			>
@@ -97,7 +91,7 @@
 			<button
 				class="join-item btn btn-outline"
 				aria-label={$ariaLastLabel$}
-				on:click={() => last()}
+				onclick={() => last()}
 				disabled={$nextDisabled$}
 				tabindex={$nextDisabled$ ? -1 : undefined}
 				aria-disabled={$nextDisabled$ ? 'true' : null}

@@ -4,17 +4,16 @@ import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {computed} from '@amadeus-it-group/tansu';
 import {getContext, setContext} from 'svelte';
 import {callWidgetFactoryWithConfig} from './utils/widget';
-import type {SlotsPresent, Widget, WidgetProps, WidgetFactory} from './types';
+import type {Widget, WidgetProps, WidgetFactory} from './types';
 
 export * from '@agnos-ui/core/config';
 
 type WidgetFactoryInput<Config extends {[widgetName: string]: object}, W extends Widget> = {
 	factory: WidgetFactory<W>;
 	widgetName?: null | keyof Config;
-	$$slots?: SlotsPresent<WidgetProps<W>>;
 	defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
 	events?: Partial<Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}Change`>>;
-	$$props: Partial<WidgetProps<W>>;
+	props: Partial<WidgetProps<W>>;
 };
 type AdaptParentConfig<Config> = (config: Partial2Levels<Config>) => Partial2Levels<Config>;
 type CreateWidgetsDefaultConfig<Config extends {[widgetName: string]: object}> = (
@@ -84,21 +83,13 @@ export const widgetsConfigFactory = <Config extends {[widgetName: string]: objec
 		return computed(() => widgetsConfig?.()[widgetName]);
 	};
 
-	const callWidgetFactory = <W extends Widget>({
-		factory,
-		widgetName = null,
-		$$slots,
-		defaultConfig = {},
-		events,
-		$$props,
-	}: WidgetFactoryInput<Config, W>) =>
+	const callWidgetFactory = <W extends Widget>({factory, widgetName = null, defaultConfig = {}, events, props}: WidgetFactoryInput<Config, W>) =>
 		callWidgetFactoryWithConfig<W>({
 			factory,
-			$$slots,
 			defaultConfig,
 			widgetConfig: widgetName ? (getContextWidgetConfig(widgetName) as any) : null,
 			events,
-			$$props,
+			props,
 		});
 
 	return {

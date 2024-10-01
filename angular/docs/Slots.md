@@ -1,5 +1,3 @@
-## Slots in Angular
-
 Angular applications usually handle slots using [content projection](https://angular.dev/guide/components/content-projection).  
 We support this behavior, while going further.
 

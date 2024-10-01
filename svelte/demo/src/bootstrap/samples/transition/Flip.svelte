@@ -2,8 +2,9 @@
 	import {createTransition} from '@agnos-ui/svelte-bootstrap/services/transitions/baseTransitions';
 	import {createSimpleClassTransition} from '@agnos-ui/svelte-bootstrap/services/transitions/simpleClassTransition';
 	import '@agnos-ui/common/samples/transition/flip.scss';
+	import type {Snippet} from 'svelte';
 
-	export let hiddenText: string;
+	let {hiddenText, children}: {hiddenText: string; children: Snippet} = $props();
 
 	const {
 		api: {show, hide},
@@ -19,11 +20,11 @@
 <div class="flip-card">
 	<div class="flip-card-inner" use:directive>
 		<div class="flip-card-front">
-			<slot />
-			<button class="btn btn-outline-secondary" on:click={() => hide()}>Hide again.</button>
+			{@render children()}
+			<button class="btn btn-outline-secondary" onclick={() => hide()}>Hide again.</button>
 		</div>
 		<div class="flip-card-back">
-			<button class="btn btn-outline-primary" on:click={() => show()}>{hiddenText}</button>
+			<button class="btn btn-outline-primary" onclick={() => show()}>{hiddenText}</button>
 		</div>
 	</div>
 </div>

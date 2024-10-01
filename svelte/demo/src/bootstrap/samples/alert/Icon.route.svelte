@@ -1,10 +1,14 @@
 <script lang="ts">
-	import {Alert} from '@agnos-ui/svelte-bootstrap/components/alert';
+	import {Alert, type AlertContext} from '@agnos-ui/svelte-bootstrap/components/alert';
 	import {createWidgetsDefaultConfig} from '@agnos-ui/svelte-bootstrap/config';
 	import IconStructure from './IconStructure.svelte';
 
-	createWidgetsDefaultConfig().set({alert: {dismissible: false, className: 'd-flex align-items-center', structure: IconStructure}});
+	createWidgetsDefaultConfig().set({alert: {dismissible: false, className: 'd-flex align-items-center', structure}});
 </script>
+
+{#snippet structure(props: AlertContext)}
+	<IconStructure {...props} />
+{/snippet}
 
 <Alert type="success">Alert success with a customisable icon</Alert>
 <Alert type="warning">Alert warning with a customisable icon</Alert>

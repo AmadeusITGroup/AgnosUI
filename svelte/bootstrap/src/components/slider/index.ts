@@ -1,4 +1,4 @@
 import Slider from './Slider.svelte';
 
-export * from './slider';
+export * from './slider.gen';
 export {Slider};

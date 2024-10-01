@@ -1,13 +1,11 @@
 <script lang="ts">
 	import '@agnos-ui/common/samples/slider/custom.scss';
-	import type {SliderSlots} from '@agnos-ui/svelte-bootstrap/components/slider';
-	type $$Props = SliderSlots['handle'];
-	type $$Slots = SliderSlots;
+	import type {SliderSlotHandleContext} from '@agnos-ui/svelte-bootstrap/components/slider';
 
-	export let item: $$Props['item'];
-	export let widget: $$Props['widget'];
+	let {item, widget}: SliderSlotHandleContext = $props();
 </script>
 
+<!-- svelte-ignore a11y_consider_explicit_label -->
 <button class="custom-handle" use:widget.directives.handleDirective={{item}}>
 	<svg xmlns="http://www.w3.org/2000/svg" fill="var(--bs-slider-handle-color)" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
 		<path

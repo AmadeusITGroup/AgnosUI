@@ -18,8 +18,15 @@ This separation of structure and content enhances code reusability and promotes 
 
 ## AgnosUI Slot
 
-AgnosUI core components include slots as **properties** prefixed by _slot_ in their states.  
-This allows to specifiy the projected content in multiple manners, like simple `string`, context-aware functions, standard slots or even fully-fledged components.
+AgnosUI components include slots as **properties**. This allows to specify the projected content in multiple manners, depending on the framework.
+
+<!-- <framework-specific src="Slots.md"> -->
+<p align="center">
+    <a href="../../angular/docs/Slots.md">Slots in Angular</a>&nbsp;&nbsp;
+    <a href="../../react/docs/Slots.md">Slots in React</a>&nbsp;&nbsp;
+    <a href="../../svelte/docs/Slots.md">Slots in Svelte</a>
+</p>
+<!-- </framework-specific> -->
 
 To illustrate the basic usage, let's see in action how we can use a simple slot in the Bootstrap flavour of the **Alert** component:
 
@@ -45,19 +52,10 @@ For instance, we may configure the _slotStructure_ of the **Alert** to use a cus
 {Slot Configuration:alert/icon:402}
 ```
 
-<!-- <framework-specific src="Slots.md"> -->
-
 ## Headless Usage
 
 AgnosUI provides utilities to manage slots for each framework, as frameworks have differences in their implementations of slots / templates / snippets.  
 To learn more about the specificies of each framework, go here:
-
-<p align="center">
-    <a href="../../angular/docs/Slots.md">Slots in Angular</a>&nbsp;&nbsp;
-    <a href="../../react/docs/Slots.md">Slots in React</a>&nbsp;&nbsp;
-    <a href="../../svelte/docs/Slots.md">Slots in Svelte</a>
-</p>
-<!-- </framework-specific> -->
 
 ## Headless example
 

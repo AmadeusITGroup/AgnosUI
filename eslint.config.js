@@ -269,19 +269,13 @@ export default tseslint.config(
 	{
 		files: ['**/*.svelte'],
 		rules: {
-			'@agnos-ui/svelte-check-slots': 'error',
+			'prefer-const': ['off'],
 		},
 		languageOptions: {
 			parser: svelteParser,
 			parserOptions: {
 				parser: tseslint.parser,
 			},
-		},
-	},
-	{
-		files: ['svelte/bootstrap/**/*.svelte'],
-		rules: {
-			'@agnos-ui/svelte-check-props': 'error',
 		},
 	},
 	{
@@ -294,15 +288,6 @@ export default tseslint.config(
 		files: ['svelte/bootstrap/**', 'svelte/demo/src/daisyui/**'],
 		rules: {
 			'@agnos-ui/check-replace-imports': ['error', '@agnos-ui/svelte-headless'],
-			'@typescript-eslint/no-unused-vars': [
-				'error',
-				{
-					vars: 'all',
-					args: 'none',
-					ignoreRestSiblings: false,
-					varsIgnorePattern: '^\\$\\$(Props|Slots)$',
-				},
-			],
 		},
 	},
 	{

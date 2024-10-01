@@ -11,8 +11,8 @@
 		title: string;
 		snippet: string;
 	}
-	let items: WikiResult[] = [];
-	let selected: WikiResult[] = [];
+	let items = $state<WikiResult[]>([]);
+	let selected = $state<WikiResult[]>([]);
 
 	const itemIdFn = (item: WikiResult) => {
 		return 'page-' + item.pageid;
@@ -46,20 +46,21 @@
 
 <div class="custom-select my-auto mb-3">
 	<Select {items} {itemIdFn} {onFilterTextChange} {onSelectedChange} {navSelector} badgeClassName="badge text-bg-light d-flex align-items-center">
-		<svelte:fragment slot="badgeLabel" let:itemContext let:widget>
+		{#snippet badgeLabel({itemContext, widget})}
 			<a href={`${basePageUrl}${itemContext.item.pageid}`} target="_blank" rel="noreferrer">{itemContext.item.title}</a>
 			<button
 				type="button"
 				class="btn-close ms-1 wiki-btn-close"
 				aria-label="Close"
-				on:click={(e) => widget.actions.onRemoveBadgeClick(e, itemContext.item)}
+				onclick={(e) => widget.actions.onRemoveBadgeClick(e, itemContext.item)}
 			></button>
-		</svelte:fragment>
-		<label for={'' + itemContext.id} slot="itemLabel" let:itemContext>
-			{@const item = itemContext.item}
-			<div class="fw-bold">{item.title}</div>
-			<div class="text-wrap wiki-desc">{item.snippet}</div>
-		</label>
+		{/snippet}
+		{#snippet itemLabel({itemContext: {id, item}})}
+			<label for={'' + id}>
+				<div class="fw-bold">{item.title}</div>
+				<div class="text-wrap wiki-desc">{item.snippet}</div>
+			</label>
+		{/snippet}
 	</Select>
 
 	<span class="fw-bold">Selection: </span>

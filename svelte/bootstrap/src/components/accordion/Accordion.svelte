@@ -1,26 +1,22 @@
 <script lang="ts">
-	import type {AccordionApi, AccordionProps, AccordionSlots} from './accordion';
+	import type {AccordionApi, AccordionProps} from './accordion';
+	import type {Snippet} from 'svelte';
 	import {callWidgetFactory} from '../../config';
 	import {createAccordion, setAccordionApi} from './accordion';
 
-	type $$Props = Partial<AccordionProps>;
-	type $$Slots = {default: Record<string, never>} & AccordionSlots;
+	let {children, ...props}: Partial<AccordionProps> & {children: Snippet} = $props();
 
 	const widget = callWidgetFactory({
 		factory: createAccordion,
 		widgetName: 'accordion',
-		$$slots: $$slots as any,
-		$$props,
+		props,
 	});
 	export const api: AccordionApi = widget.api;
 
-	const {
-		directives: {accordionDirective},
-	} = widget;
 	setAccordionApi(widget.api);
-	$: widget.patchChangedProps($$props);
+	$effect(() => widget.patchChangedProps({...props}));
 </script>
 
-<div class="accordion" use:accordionDirective>
-	<slot />
+<div class="accordion" use:widget.directives.accordionDirective>
+	{@render children()}
 </div>
