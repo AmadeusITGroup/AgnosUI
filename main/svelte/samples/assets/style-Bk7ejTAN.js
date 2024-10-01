@@ -1,0 +1,1 @@
+function p(r,e,t,n,l){var i=r.__attributes??(r.__attributes={}),s=r.style,y="style-"+e;i[y]===t&&(!l||s.getPropertyValue(e)===t)||(i[y]=t,t==null?s.removeProperty(e):s.setProperty(e,t,""))}export{p as s};

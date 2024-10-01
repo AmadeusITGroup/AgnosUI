@@ -1,1 +1,0 @@
-import{S as a,i as r,s as l,k as i,g as c,n,h as m}from"./AppCommon-B0X1wpkD.js";function u(o){let e;return{c(){e=i("h3"),e.textContent="Coming soon..."},m(t,s){c(t,e,s)},p:n,i:n,o:n,d(t){t&&m(e)}}}class f extends a{constructor(e){super(),r(this,e,null,u,l,{})}}export{f as default};
