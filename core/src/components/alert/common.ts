@@ -6,6 +6,9 @@ import {noop} from '../../utils/internal/func';
 import {stateStores, writablesForProps} from '../../utils/stores';
 import {typeBoolean, typeFunction, typeString} from '../../utils/writables';
 
+/**
+ * Interface representing the common properties and state for an alert component.
+ */
 export interface CommonAlertCommonPropsAndState extends WidgetsCommonPropsAndState {
 	/**
 	 * If `true`, alert can be dismissed by the user.
@@ -29,6 +32,9 @@ export interface CommonAlertCommonPropsAndState extends WidgetsCommonPropsAndSta
 	ariaCloseButtonLabel: string;
 }
 
+/**
+ * Represents the state of a common alert component.
+ */
 export interface CommonAlertState extends CommonAlertCommonPropsAndState {
 	/**
 	 * Is `true` when the alert is hidden. Compared to `visible`, this is updated after the transition is executed.
@@ -36,6 +42,9 @@ export interface CommonAlertState extends CommonAlertCommonPropsAndState {
 	hidden: boolean;
 }
 
+/**
+ * Interface representing the common properties for an alert component.
+ */
 export interface CommonAlertProps extends CommonAlertCommonPropsAndState {
 	/**
 	 * Callback called when the alert visibility changed.
@@ -99,6 +108,9 @@ export interface CommonAlertProps extends CommonAlertCommonPropsAndState {
 	animated: boolean;
 }
 
+/**
+ * Interface representing the common API for alert components.
+ */
 export interface CommonAlertApi {
 	/**
 	 * Triggers alert closing programmatically (same as clicking on the close button (×)).
@@ -111,6 +123,9 @@ export interface CommonAlertApi {
 	open(): void;
 }
 
+/**
+ * Interface representing common alert directives.
+ */
 export interface CommonAlertDirectives {
 	/**
 	 * the transition directive, piloting what is the visual effect of going from hidden to visible
@@ -118,6 +133,9 @@ export interface CommonAlertDirectives {
 	transitionDirective: Directive;
 }
 
+/**
+ * Represents a common alert widget with specified properties, state, API, and directives.
+ */
 export type CommonAlertWidget = Widget<CommonAlertProps, CommonAlertState, CommonAlertApi, CommonAlertDirectives>;
 
 const defaultCommonAlertConfig: CommonAlertProps = {

@@ -22,9 +22,14 @@ export const isBrowserHTMLElement: (element: SSRHTMLElement) => element is HTMLE
 		(element) => false;
 
 /**
- * Creates a directive that wraps the provided directive to only run it in a browser environment (and not in a server-side rendering environment).
- * @param directive - The directive to run only in a browser.
- * @returns The wrapped directive.
+ * A higher-order directive function that conditionally applies a directive based on the environment.
+ * If running in a browser environment, it applies the given directive to the node.
+ * If not in a browser environment, it returns a no-op function.
+ *
+ * @template T - The type of the directive's argument.
+ * @template U - The type of the HTML element the directive is applied to.
+ * @param {Directive<T, U>} directive - The directive to be conditionally applied.
+ * @returns {Directive<T, SSRHTMLElement>} - A directive that applies the given directive in a browser environment, or a no-op in a non-browser environment.
  */
 export const browserDirective: <T, U extends HTMLElement>(directive: Directive<T, U>) => Directive<T, SSRHTMLElement> = BROWSER
 	? (directive) => (node, args) => {
@@ -44,9 +49,11 @@ export const browserDirective: <T, U extends HTMLElement>(directive: Directive<T
  * and will call the provided directive with the content of the provided store as its argument,
  * calling its update method when the content of the store changes.
  *
- * @param directive - directive to bind
- * @param directiveArg$ - store containing the argument of the directive
- * @returns The bound directive that can be used with no argument.
+ * @template T - The type of the directive argument.
+ * @template U - The type of the SSRHTMLElement, defaults to SSRHTMLElement.
+ * @param {Directive<T, U>} directive - The directive to bind to the element.
+ * @param {ReadableSignal<T>} directiveArg$ - The signal to subscribe to for directive updates.
+ * @returns {Directive<void, U>} A directive that manages the lifecycle of the bound directive.
  */
 export const bindDirective =
 	<T, U extends SSRHTMLElement = SSRHTMLElement>(directive: Directive<T, U>, directiveArg$: ReadableSignal<T>): Directive<void, U> =>
@@ -75,18 +82,24 @@ const noArg = readable(undefined);
  * Returns a directive that ignores any argument passed to it and calls the provided directive without any
  * argument.
  *
- * @param directive - directive to wrap
- * @returns The resulting directive.
+ * @template T - The type of the directive's argument.
+ * @template U - The type of the SSRHTMLElement, defaults to SSRHTMLElement.
+ * @param directive - The directive to bind without arguments.
+ * @returns A new directive that does not require any arguments.
  */
 export const bindDirectiveNoArg = <T, U extends SSRHTMLElement = SSRHTMLElement>(directive: Directive<T, U>): Directive<void, U> =>
 	bindDirective(directive as Directive<void, U>, noArg);
 
 /**
- * Maps the argument to another argument of a directive using a provided function.
+ * Maps the argument of a directive to a new value using a provided function.
  *
- * @param directive - The directive to be applied.
- * @param fn - The function to map the argument.
- * @returns A new directive that applies the mapping function to the argument.
+ * @template T - The type of the original argument.
+ * @template U - The type of the mapped argument.
+ * @template V - The type of the SSRHTMLElement, defaults to SSRHTMLElement.
+ *
+ * @param {Directive<U, V>} directive - The original directive to be mapped.
+ * @param {(arg: T) => U} fn - The function to map the original argument to the new argument.
+ * @returns {Directive<T, V>} A new directive with the mapped argument.
  */
 export const mapDirectiveArg =
 	<T, U, V extends SSRHTMLElement = SSRHTMLElement>(directive: Directive<U, V>, fn: (arg: T) => U): Directive<T, V> =>
@@ -126,6 +139,7 @@ export const directiveSubscribe =
  * Returns a directive that calls the provided function with the arguments passed to the directive
  * on initialization and each time they are updated.
  *
+ * @template T - The type of the argument that the update function accepts.
  * @param update - Function called with the directive argument when the directive is initialized and when its argument is updated.
  * @returns The resulting directive.
  */
@@ -141,8 +155,13 @@ export const directiveUpdate =
 const equalOption = {equal: Object.is};
 
 /**
- * Utility to create a store that contains an array of items.
- * @returns a store containing an array of items.
+ * Creates a registration array that allows elements to be added and removed.
+ *
+ * @template T - The type of elements in the array.
+ * @returns An object that includes a readable signal of the array and a register function.
+ *
+ * The returned object has the following properties:
+ * - `register`: A function to add an element to the array. It takes an element of type `T` as a parameter and returns a function to remove the element from the array.
  */
 export const registrationArray = <T>(): ReadableSignal<T[]> & {register: (element: T) => () => void} => {
 	const elements$ = writable([] as T[], equalOption);
@@ -289,8 +308,14 @@ export const createBrowserStoreDirective = (): {
  * All calls to the directives (to create, update and destroy them) are wrapped in a call to the
  * batch function of tansu
  *
- * @param args - directives to merge into a single directive.
- * @returns The resulting merged directive.
+ * @template T - The type of the argument passed to the directive.
+ * @template U - The type of the SSRHTMLElement, defaults to SSRHTMLElement.
+ * @param {...(Directive<T, U> | Directive<void, U>)[]} args - The directives to merge.
+ * @returns {Directive<T, U>} A new directive that applies all the given directives.
+ *
+ * The returned directive has the following lifecycle methods:
+ * - `update(arg)`: Updates all merged directives with the given argument.
+ * - `destroy()`: Destroys all merged directives in reverse order.
  */
 export const mergeDirectives =
 	<T, U extends SSRHTMLElement = SSRHTMLElement>(...args: (Directive<T, U> | Directive<void, U>)[]): Directive<T, U> =>
@@ -307,11 +332,17 @@ export const mergeDirectives =
 	};
 
 /**
- * Directive that applies all the directives passed as arguments.
+ * Applies multiple directives to a given SSRHTMLElement and provides methods to update or destroy them.
  *
- * @param element - the element to apply the directives to
- * @param directives - the directives to apply
- * @returns The directive instance.
+ * @template T - A tuple type representing the arguments for each directive.
+ * @template U - The type of the SSRHTMLElement, defaults to SSRHTMLElement.
+ *
+ * @param {U} element - The SSRHTMLElement to which the directives will be applied.
+ * @param {DirectivesAndOptParam<T, U>} directives - An array of directives and their optional parameters.
+ *
+ * @returns {Object} An object containing:
+ * - `update`: A function to update the directives with new parameters.
+ * - `destroy`: A function to destroy all applied directives.
  */
 export const multiDirective = <T extends any[], U extends SSRHTMLElement = SSRHTMLElement>(
 	element: U,
@@ -357,7 +388,7 @@ export interface AttributesDirectiveProps {
 	 * Events to be attached to an HTML element.
 	 * @remarks
 	 * Key-value pairs where keys are event types and values are event handlers.
-	 */
+xw	 */
 	events?: Partial<{
 		[K in keyof HTMLElementEventMap]:
 			| {
@@ -390,12 +421,17 @@ export interface AttributesDirectiveProps {
 }
 
 /**
- * Creates a directive for server-side rendering with bindable elements.
- * This directive binds events, attributes, styles, and classNames to an HTML element.
+ * Creates a directive that binds attributes, styles, class names, and events to a DOM node.
  *
- * @param propsFn - A function that returns the AttributesDirectiveProps with the data to bind.
- * This function can take an optional parameter that corrspond to the second parameter of the created directive.
- * @returns A directive object with bound events, attributes, styles, and classNames.
+ * @template T - The type of the arguments passed to the directive.
+ * @param propsFn - A function that takes a readable signal of type `T` and returns an object containing
+ *                  attributes, styles, class names, and events to bind to the node.
+ * @returns A directive function that can be used to bind the specified properties to a DOM node.
+ *
+ * The returned directive function takes a DOM node and arguments of type `T`, and sets up the bindings
+ * specified by the `propsFn` function. It returns an object with `update` and `destroy` methods:
+ * - `update(args: T)`: Updates the arguments passed to the directive.
+ * - `destroy()`: Cleans up all bindings and event listeners.
  */
 export const createAttributesDirective =
 	<T = void>(propsFn: (arg: ReadableSignal<T>) => AttributesDirectiveProps): Directive<T> =>
@@ -444,6 +480,7 @@ export const createAttributesDirective =
  *   - The `classNames` value is an array of string representing the classes to be applied
  *   - The `style` value is a JSON representation of the styles to be applied
  *
+ * @template T - The type of the directives array.
  * @param directives - List of directives to generate attributes from. Each parameter can be the directive or an array with the directive and its parameter
  * @returns JSON object with the `attributes`, `class` and `style` keys.
  */
@@ -472,10 +509,16 @@ export const attributesData = <T extends any[]>(
 export const classDirective: Directive<string> = createAttributesDirective<string>((className) => ({attributes: {class: className}}));
 
 /**
- * Returns JSON representation of the attributes to be applied derived from a list of directives.
+ * Combines multiple directives into a single attributes object.
  *
- * @param directives - List of directives to generate attributes from. Each parameter can be the directive or an array with the directive and its parameter
- * @returns JSON object with name/value for the attributes
+ * This function processes an array of directives and optional parameters,
+ * extracting attributes, class names, and styles. It then combines these
+ * into a single attributes object, where class names are joined into a
+ * single string and styles are formatted as a CSS string.
+ *
+ * @template T - The type of the directives and optional parameters.
+ * @param {...DirectivesAndOptParam<T>} directives - The directives and optional parameters to process.
+ * @returns {Record<string, string>} An object containing the combined attributes.
  */
 export function directiveAttributes<T extends any[]>(...directives: DirectivesAndOptParam<T>): Record<string, string> {
 	const {attributes, classNames, style} = attributesData(...directives);
@@ -493,9 +536,15 @@ export function directiveAttributes<T extends any[]>(...directives: DirectivesAn
 }
 
 /**
- * Same as {@link directiveAttributes}, but returns an empty object when run in a browser environement.
+ * Generates a record of SSR (Server-Side Rendering) attributes based on the provided directives.
  *
- * @returns JSON object with name/value for the attributes
+ * This function behaves differently depending on the environment:
+ * - In a browser environment (`BROWSER` is true), it returns an empty object.
+ * - In a non-browser environment, it delegates to the `directiveAttributes` function.
+ *
+ * @template T - A tuple type representing the directives and optional parameters.
+ * @param {...DirectivesAndOptParam<T>} directives - The directives and optional parameters to generate SSR attributes for.
+ * @returns {Record<string, string>} A record of SSR attributes.
  */
 export const ssrAttributes: <T extends any[]>(...directives: DirectivesAndOptParam<T>) => Record<string, string> = BROWSER
 	? () => ({})

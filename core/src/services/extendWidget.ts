@@ -14,6 +14,10 @@ import type {
 
 /**
  * Type extending the original Widget props and state with ExtraProps
+ *
+ * @template W - The base widget type to be extended.
+ * @template ExtraProps - Additional properties to be added to the widget.
+ * @template ExtraDirectives - Additional directives to be added to the widget. Defaults to an empty object.
  */
 export type ExtendWidgetProps<W extends Widget, ExtraProps extends object, ExtraDirectives extends object = object> = Widget<
 	ExtendWidgetAdaptSlotWidgetProps<WidgetProps<W>, ExtraProps, ExtraDirectives>,
@@ -23,12 +27,24 @@ export type ExtendWidgetProps<W extends Widget, ExtraProps extends object, Extra
 >;
 
 /**
- * Type merging the passed interfaces together
+ * Combines two interface types into a single type.
+ *
+ * @template Interfaces - The base interface type.
+ * @template ExtraInterfaces - The additional interface type to extend the base interface.
+ * @typedef {Interfaces & ExtraInterfaces} ExtendWidgetInterfaces - The resulting type that includes properties from both Interfaces and ExtraInterfaces.
  */
 export type ExtendWidgetInterfaces<Interfaces, ExtraInterfaces> = Interfaces & ExtraInterfaces;
 
 /**
- * Type replacing the original Props with WidgetSlotContext contaning ExtraProps
+ * Type to adapt the slot content properties of a widget by extending its props, extra props, and extra directives.
+ *
+ * @template Props - The original properties of the widget slot context.
+ * @template ExtraProps - Additional properties to extend the widget slot context.
+ * @template ExtraDirectives - Additional directives to extend the widget slot context.
+ *
+ * @remarks
+ * This type conditionally checks if `Props` extends `WidgetSlotContext` and, if so, extends the widget slot context
+ * with additional properties and directives while omitting the original widget slot context properties.
  */
 export type ExtendWidgetAdaptSlotContentProps<Props extends Record<string, any>, ExtraProps extends object, ExtraDirectives extends object> =
 	Props extends WidgetSlotContext<infer U>
@@ -36,7 +52,19 @@ export type ExtendWidgetAdaptSlotContentProps<Props extends Record<string, any>,
 		: Props;
 
 /**
- * Type enriching the original widget slot Props with ExtraProps slots
+ * Type definition for extending widget properties with additional properties and directives.
+ *
+ * This type takes three generic parameters:
+ * - `Props`: The original properties of the widget.
+ * - `ExtraProps`: Additional properties to be merged with the original properties.
+ * - `ExtraDirectives`: Additional directives to be merged with the original properties.
+ *
+ * The resulting type combines `ExtraProps` with the original `Props`. For each property in `Props`,
+ * if the property is of type `SlotContent`, it will be extended with the additional properties and directives.
+ *
+ * @template Props - The original properties of the widget.
+ * @template ExtraProps - Additional properties to be merged with the original properties.
+ * @template ExtraDirectives - Additional directives to be merged with the original properties.
  */
 export type ExtendWidgetAdaptSlotWidgetProps<Props, ExtraProps extends object, ExtraDirectives extends object> = ExtraProps & {
 	[K in keyof Props]: IsSlotContent<Props[K]> extends SlotContent<infer U>
@@ -46,6 +74,11 @@ export type ExtendWidgetAdaptSlotWidgetProps<Props, ExtraProps extends object, E
 
 /**
  * Method to extend the original widget with extra props with validator
+ *
+ * @template W - The type of the widget.
+ * @template ExtraProps - The type of the additional properties.
+ * @template ExtraDirectives - The type of the additional directives (default is an empty object).
+ *
  * @param factory - original widget factory
  * @param extraPropsDefaults - object containing default value for each extra prop
  * @param extraPropsConfig - object verifying the type of each extra prop

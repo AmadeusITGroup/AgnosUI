@@ -3,6 +3,9 @@ import {noop} from '../utils/internal/func';
 import type {PropsConfig} from '../types';
 import {writablesForProps} from '../utils/stores';
 
+/**
+ * Interface representing the properties for the Intersection service.
+ */
 export interface IntersectionProps {
 	/**
 	 * elements to observe

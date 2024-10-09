@@ -26,6 +26,9 @@ export function getTransitionDurationMs(element: HTMLElement): number {
 	return (transitionDelaySec + transitionDurationSec) * 1000;
 }
 
+/**
+ * Defines a function type for CSS transitions.
+ */
 export type CSSTransitionFn = (element: SSRHTMLElement, direction: 'show' | 'hide', animated: boolean, context: object) => void | (() => void);
 
 /**

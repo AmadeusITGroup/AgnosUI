@@ -36,6 +36,9 @@ export type TransitionFn = (
 	context: object,
 ) => Promise<void> | void;
 
+/**
+ * Properties for configuring a transition.
+ */
 export interface TransitionProps {
 	/**
 	 * Transition to be called.
@@ -121,6 +124,9 @@ export interface TransitionState {
 	hidden: boolean;
 }
 
+/**
+ * Interface representing the API for managing transitions of an element.
+ */
 export interface TransitionApi {
 	/**
 	 * Runs the transition to show the element. It is equivalent to {@link TransitionApi.toggle | toggle} with true as the first parameter.
@@ -154,6 +160,9 @@ export interface TransitionApi {
 	toggle: (visible?: boolean, animated?: boolean) => Promise<void>;
 }
 
+/**
+ * Interface representing transition directives.
+ */
 export interface TransitionDirectives {
 	/**
 	 * the transition directive
