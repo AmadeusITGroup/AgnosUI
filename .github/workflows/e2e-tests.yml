@@ -47,7 +47,7 @@ jobs:
         with:
           directory: coverage
           flags: e2e
-          use_oidc: true
+          use_oidc: ${{ !(github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork) }}
       - uses: actions/setup-node@v4
         with:
           node-version: '20.x'
