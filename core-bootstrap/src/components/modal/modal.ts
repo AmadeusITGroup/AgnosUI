@@ -14,6 +14,11 @@ import type {TransitionFn} from '@agnos-ui/core/services/transitions/baseTransit
 
 export * from '@agnos-ui/core/components/modal';
 
+/**
+ * Represents the context for a modal component.
+ *
+ * @template Data - The type of data associated with the modal.
+ */
 export type ModalContext<Data> = WidgetSlotContext<ModalWidget<Data>>;
 
 interface ModalExtraProps<Data> {

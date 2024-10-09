@@ -6,9 +6,23 @@ import {compareDomOrder} from '../utils/internal/sort';
 import {getTextDirection} from '../utils/internal/textDirection';
 import type {Directive, SSRHTMLElement} from '../types';
 
+/**
+ * A type representing a function that determines the neighboring element to focus on.
+ * @returns The next HTMLElement to focus on, or null if no suitable element is found.
+ */
 export type FocusNeighbour = (arg?: {event?: Event; referenceElement?: HTMLElement | null}) => HTMLElement | null;
+
+/**
+ * A type representing a function that focuses on the end element.
+ * @returns The HTMLElement that was focused, or null if no element was focused.
+ */
 export type FocusEnd = (arg?: {event?: Event}) => HTMLElement | null;
 
+/**
+ * Represents a navigation manager that handles focusable elements in the DOM.
+ *
+ * @template T - The type of the configuration for the navigation manager items.
+ */
 export type NavManager<T> = {
 	/**
 	 * Store containing the navigable elements in DOM order
@@ -125,11 +139,14 @@ export const isInternalInputNavigation = (event: KeyboardEvent): boolean => {
  * - event: key event
  * - directiveElement: DOM element which has the navigation manager directive
  * - navManager: navigation manager instance
+ * @template T - The type of the context object, defaults to `any`.
  */
 export type NavManagerKeyHandler<T = any> = (info: {directiveElement: HTMLElement; event: Event; navManager: NavManager<T>; context?: T}) => void;
 
 /**
- * Type of the parameter of the navigation manager directive.
+ * Configuration object for a navigation manager item.
+ *
+ * @template T - The type of the context object.
  */
 export interface NavManagerItemConfig<T = any> {
 	/**
@@ -164,7 +181,8 @@ const defaultSelector: NavManagerItemConfig<any>['selector'] = (directiveElement
  *
  * It provides some utilities to move the focus between those elements (focusFirst/focusLast, focusLeft/focusRight, focusPrevious/focusNext).
  *
- * @returns a new instance of the navigation manager
+ * @template T - The type of the context object used in the navigation manager.
+ * @returns {NavManager<T>} An object containing methods and properties for managing focus navigation.
  */
 export const createNavManager = <T>(): NavManager<T> => {
 	const directiveInstances$ = registrationArray<() => Iterable<HTMLElement>>();

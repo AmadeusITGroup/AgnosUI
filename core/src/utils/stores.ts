@@ -4,14 +4,32 @@ import type {ConfigValidator, PropsConfig, ValuesOrReadableSignals, WritableWith
 import {INVALID_VALUE} from '../types';
 import {identity} from './internal/func';
 
+/**
+ * Transforms the properties of a given type `P` into writable signals.
+ * Each property key in `P` is suffixed with a `$` and its type is converted to a `WritableSignal`.
+ * @template P - The original type whose properties are to be transformed.
+ */
 export type ToWritableSignal<P> = {
 	[K in keyof P as `${K & string}$`]-?: WritableSignal<P[K], P[K] | undefined>;
 };
 
+/**
+ * Represents a collection of readable signals for an object type `T`.
+ * Each key in the object corresponds to a key in `T`, and the value is an optional `ReadableSignal`
+ * that can hold the value of the corresponding property in `T` or `undefined`.
+ *
+ * @template T - The object type for which the readable signals are defined.
+ */
 export type ReadableSignals<T extends object> = {
 	[K in keyof T]?: ReadableSignal<T[K] | undefined>;
 };
 
+/**
+ * A utility type that removes the trailing dollar sign (`$`) from a string type.
+ *
+ * @template S - A string type that ends with a dollar sign (`$`).
+ * @returns The string type without the trailing dollar sign (`$`), or `never` if the input type does not end with a dollar sign.
+ */
 export type WithoutDollar<S extends `${string}$`> = S extends `${infer U}$` ? U : never;
 
 /**
@@ -31,8 +49,9 @@ export type WithoutDollar<S extends `${string}$`> = S extends `${infer U}$` ? U 
  * patch({a: 2, c: 2}) // will perform storeA$.set(2), c is ignored.
  *
  * ```
- * @param stores - object of stores
- * @returns the patch function
+ * @template T - The type of the object that the stores represent.
+ * @param {ToWritableSignal<T>} stores - The stores to be updated.
+ * @returns {(storesValues: Partial<T>) => void} - A function that takes partial values of the stores and updates them.
  */
 export function createPatch<T extends object>(stores: ToWritableSignal<T>): (storesValues: Partial<T>) => void {
 	return function (storesValues: Partial<T>) {
@@ -51,9 +70,10 @@ export function createPatch<T extends object>(stores: ToWritableSignal<T>): (sto
  * and `obj2` are different, with the values from `obj2`, or null if objects
  * are identical.
  *
- * @param obj1 - First object
- * @param obj2 - Second object
- * @returns the object with changed properties
+ * @template T - The type of the objects being compared.
+ * @param obj1 - The first partial object to compare.
+ * @param obj2 - The second partial object to compare.
+ * @returns A partial object containing the properties that have different values, or `null` if the objects are identical.
  */
 export function findChangedProperties<T extends Record<string, any>>(obj1: Partial<T>, obj2: Partial<T>): Partial<T> | null {
 	if (obj1 === obj2) {
@@ -79,6 +99,8 @@ export function findChangedProperties<T extends Record<string, any>>(obj1: Parti
  * either from the `config$` store or from the `set` or `update` functions. If a value is invalid (i.e. normalizeValue
  * returns the `invalidValue` symbol), an error is logged on the console and it is either not set (if it comes from the
  * `set` or `update` functions), or the `defValue` is used instead (if the invalid value comes from the `config$` store).
+ *
+ * @template T - The type of the value.
  *
  * @param defValue - Default value used when both the own value and the config$ value are undefined.
  * @param config$ - Store containing the default value used when the own value is undefined
@@ -129,24 +151,28 @@ export const isStore = (x: any): x is ReadableSignal<any> => !!(x && typeof x ==
 
 /**
  * If the provided argument is already a store, it is returned as is, otherwise, a readable store is created with the provided argument as its initial value.
- * @param x - either a store or a simple value
- * @returns either x if x is already a store, or readable(x) otherwise
+ * @template T - The type of the value.
+ * @param {ReadableSignal<T> | T} x - The value to be converted to a readable store.
+ * @returns {ReadableSignal<T>} - The readable store containing the value.
  */
 export const toReadableStore = <T>(x: ReadableSignal<T> | T): ReadableSignal<T> => (isStore(x) ? x : readable(x));
 
 /**
- * If the provided argument is already a store, it is returned as is, otherwise, a writable store is created with the provided argument as its initial value.
- * @param x - either a writable store or a simple value
- * @returns either x if x is already a store, or writable(x) otherwise
+ * Converts a value or a writable signal into a writable signal.
+ *
+ * @template T - The type of the value or signal.
+ * @param {WritableSignal<T> | T} x - The value or writable signal to convert.
+ * @returns {WritableSignal<T>} - The resulting writable signal.
  */
 export const toWritableStore = <T>(x: WritableSignal<T> | T): WritableSignal<T> => (isStore(x) ? x : writable(x));
 
 /**
- * Extract and normalize config stores.
+ * Normalizes configuration stores by converting them into readable signals.
  *
- * @param keys - the keys of the stores to extract / normalize
- * @param config - the config stores
- * @returns the normalized config stores
+ * @template T - The type of the configuration object.
+ * @param {Array<keyof T>} keys - An array of keys to normalize from the configuration object.
+ * @param {ReadableSignal<Partial<T>> | ValuesOrReadableSignals<T>} [config] - The configuration object or readable signals to normalize.
+ * @returns {ReadableSignals<T>} An object containing readable signals for each key in the configuration.
  */
 export const normalizeConfigStores = <T extends object>(
 	keys: (keyof T)[],
@@ -165,12 +191,14 @@ export const normalizeConfigStores = <T extends object>(
 };
 
 /**
- * Merge two stores configs into one
+ * Merges two configuration stores into one, prioritizing the first store's values
+ * when both stores have a value for the same key.
  *
- * @param keys - the keys of the stores to extract and merge from the two provided configs
- * @param config1 - the first config
- * @param config2 - the second config
- * @returns the merged config
+ * @template T - The type of the configuration object.
+ * @param {Array<keyof T>} keys - The keys to merge from the configuration stores.
+ * @param {ReadableSignals<T>} [config1] - The first configuration store.
+ * @param {ReadableSignals<T>} [config2] - The second configuration store.
+ * @returns {ReadableSignals<T>} - The merged configuration store.
  */
 export const mergeConfigStores = <T extends object>(
 	keys: (keyof T)[],
@@ -190,6 +218,8 @@ export const mergeConfigStores = <T extends object>(
  * Returns an object containing, for each property of `defConfig`, a corresponding writable with the normalization and default value logic
  * described in {@link writableWithDefault}. Keys in the returned object are the same as the ones present in `defConfig`,
  * with the exta `$` suffix (showing that they are stores).
+ *
+ * @template T - The type of the default configuration object.
  *
  * @param defConfig - object containing, for each property, a default value to use in case `config$` does not provide the suitable default
  * value for that property
@@ -231,6 +261,8 @@ export const writablesWithDefault = <T extends object>(
 
 /**
  * Shortcut for calling both {@link writablesWithDefault} and {@link createPatch} in one call.
+ *
+ * @template T - The type of the properties configuration object.
  * @param defConfig - object containing, for each property, a default value to use in case `config` does not provide the suitable default
  * value for that property
  * @param propsConfig - either a store of objects containing, for each property of `defConfig`, the default value or an object containing
@@ -267,6 +299,7 @@ export const writablesForProps = <T extends object>(
 /**
  * Using input stores, this function builds an object containing the stores as readable and a global state.
  *
+ * @template A - The type of the state object.
  * @param inputStores - the input stores
  * @returns the object containing the stores as readable and the global state
  */
@@ -298,12 +331,17 @@ export const stateStores = <A extends object>(inputStores: {[K in keyof A as `${
 };
 
 /**
- * Creates a derived store that binds to multiple stores and triggers a callback when the value changes for any reason.
- * @param onChange$ - A readable signal containing a callback function to execute when the value changes.
- * @param stores - An array of Svelte stores, with the main store at index 0.
- * @param adjustValue - A function to adjust the value of the main store. By default, the value of the main store is returned.
- * @param equal - A function to determine if two values are equal. Used to compare the ajusted value with the current one.
- * @returns The derived store that reflects the combined state of the input stores.
+ * Creates a writable signal that derives its value from multiple stores and allows for custom adjustment and equality checks.
+ *
+ * @template T - The type of the derived value.
+ * @template U - A tuple type where the first element is a writable signal of type T and the rest are store inputs.
+ *
+ * @param {ReadableSignal<(value: T) => void>} onChange$ - A readable signal that emits a function to be called when the derived value changes.
+ * @param {U} stores - A tuple of stores where the first element is a writable signal of type T and the rest are store inputs.
+ * @param {(arg: StoresInputValues<U>) => T} [adjustValue=(arg: StoresInputValues<U>) => arg[0]] - A function to adjust the derived value based on the input values from the stores.
+ * @param {(currentValue: T, newValue: T) => boolean} [equal=(currentValue: T, newValue: T) => newValue === currentValue] - A function to compare the current and new values for equality.
+ *
+ * @returns {WritableSignal<T>} A writable signal that derives its value from the provided stores and allows for custom adjustment and equality checks.
  */
 export const bindableDerived = <T, U extends [WritableSignal<T>, ...StoreInput<any>[]]>(
 	onChange$: ReadableSignal<(value: T) => void>,
@@ -335,14 +373,14 @@ export const bindableDerived = <T, U extends [WritableSignal<T>, ...StoreInput<a
 };
 
 /**
- * Creates a computed store that contains the adjusted value of the given store and that triggers a callback when the value changes from the set or update
- * method of the returned writable store.
- * @param store$ - store to be bound
- * @param onChange$ - A readable signal containing a callback function to execute when the value changes from the set or update method of the returned writable store.
- * @param adjustValue - A function to adjust the value of the store, called in a reactive context each time the value changes or any called dependency changes.
- * By default, the value of store$ is returned.
- * @param equal - A function to determine if two values are equal.
- * @returns A writable store that contains the adjusted value of the given store, with the set or update functions that trigger the onChange$ callback.
+ * Creates a bindable property that synchronizes a writable signal with an optional adjustment function and equality check.
+ *
+ * @template T - The type of the value being stored.
+ * @param {WritableSignal<T, T | undefined>} store$ - The writable signal that holds the current value.
+ * @param {ReadableSignal<(newValue: T) => void>} onChange$ - A readable signal that triggers a callback when the value changes.
+ * @param {(value: T) => T} [adjustValue=identity] - An optional function to adjust the value before storing it. Defaults to the identity function.
+ * @param {(a: T, b: T) => boolean} [equal=tansuDefaultEqual] - An optional function to compare values for equality. Defaults to `tansuDefaultEqual`.
+ * @returns {WritableSignal<T>} A writable signal that synchronizes with the provided store and triggers the onChange callback when updated.
  */
 export const bindableProp = <T>(
 	store$: WritableSignal<T, T | undefined>,
