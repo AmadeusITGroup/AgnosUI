@@ -108,11 +108,30 @@ export const widgetsConfigFactory = <Config extends {[widgetName: string]: objec
 		return widgetsConfig;
 	};
 
+	/**
+	 * Injects the configuration for a specific widget.
+	 *
+	 * @template N - The key of the widget configuration in the `Config` type.
+	 * @param widgetName - The name of the widget whose configuration is to be injected.
+	 * @returns A `ReadableSignal` that provides a partial configuration of the specified widget or `undefined` if the configuration is not available.
+	 */
 	const injectWidgetConfig = <N extends keyof Config>(widgetName: N): ReadableSignal<Partial<Config[N]> | undefined> => {
 		const widgetsConfig = inject(widgetsConfigInjectionToken, {optional: true});
 		return computed(() => widgetsConfig?.()[widgetName]);
 	};
 
+	/**
+	 * Creates and initializes a widget using the provided factory and configuration options.
+	 *
+	 * @template W - The type of the widget.
+	 * @param params - The parameters for creating the widget.
+	 * @param params.factory - The factory function to create the widget.
+	 * @param params.widgetName - The name of the widget configuration to inject, if any.
+	 * @param params.defaultConfig - The default configuration for the widget.
+	 * @param params.events - The event handlers for the widget.
+	 * @param params.afterInit - A callback function to be called after the widget is initialized.
+	 * @returns The initialized widget.
+	 */
 	const callWidgetFactory = <W extends Widget>({
 		factory,
 		widgetName = null,

@@ -20,6 +20,13 @@ export type {WidgetsConfig};
 type AdaptParentConfig = (config: Partial2Levels<WidgetsConfig>) => Partial2Levels<WidgetsConfig>;
 type InjectWidgetsConfig = (config?: Partial2Levels<WidgetsConfig>) => WidgetsConfigStore<WidgetsConfig>;
 
+/**
+ * @param factory - The widget factory.
+ * @param widgetName - The name of the widget.
+ * @param defaultConfig - The default configuration for the widget.
+ * @param events - The events for the widget.
+ * @param afterInit - The function to call after initialization.
+ */
 const widgetFactories: {
 	widgetsConfigInjectionToken: InjectionToken<WidgetsConfigStore<WidgetsConfig>>;
 	provideWidgetsConfig: (adaptParentConfig?: AdaptParentConfig) => FactoryProvider;
