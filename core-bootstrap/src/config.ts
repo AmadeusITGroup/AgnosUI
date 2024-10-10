@@ -1,5 +1,6 @@
 import type {AccordionProps} from './components/accordion';
 import type {AlertProps} from './components/alert';
+import type {CollapseProps} from './components/collapse';
 import type {ModalProps} from './components/modal';
 import type {PaginationProps} from './components/pagination';
 import type {ProgressbarProps} from './components/progressbar';
@@ -45,4 +46,8 @@ export interface BootstrapWidgetsConfig {
 	 * toast widget config
 	 */
 	toast: ToastProps;
+	/**
+	 * collapse widget config
+	 */
+	collapse: CollapseProps;
 }

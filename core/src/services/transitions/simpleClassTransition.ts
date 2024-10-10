@@ -37,7 +37,7 @@ export interface SimpleClassTransitionContext {
  *
  * The config includes the classes that will be attached / removed depending on the transition state.
  * `animationPendingClasses` are the classes attached when the transition is in a pending state
- * `animationPendingShowClasses` and `animationPendingHideClasses` are attached when transitionning towards one direction
+ * `animationPendingShowClasses` and `animationPendingHideClasses` are attached when transitioning towards one direction
  * `showClasses` and `hideClasses` are attached when the transition has reached the show or hide state respectively
  *
  * @param config - the transition config

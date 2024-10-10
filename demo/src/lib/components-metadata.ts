@@ -37,6 +37,12 @@ export const componentsMetadata: Metadata = {
 			children: 'This is an alert',
 		},
 	},
+	Collapse: {
+		title: 'Collapse',
+		status: 'beta',
+		since: 'v0.5.0',
+		type: 'bootstrap',
+	},
 	Modal: {
 		title: 'Modal',
 		status: 'stable',
@@ -106,6 +112,12 @@ export const daisyUIMetadata: DaisyMetadata = {
 		title: 'Alert',
 		status: 'stable',
 		since: 'v0.3.0',
+		type: 'daisyUI',
+	},
+	Collapse: {
+		title: 'Collapse',
+		status: 'beta',
+		since: 'v0.5.0',
 		type: 'daisyUI',
 	},
 	Modal: {

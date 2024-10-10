@@ -121,4 +121,8 @@ export type WidgetsConfig = {
 	 * toast widget config
 	 */
 	toast: ToastProps;
+	/**
+	 * collapse widget config
+	 */
+	collapse: any;
 };

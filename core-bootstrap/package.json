@@ -118,5 +118,8 @@
 	"dependencies": {
 		"@agnos-ui/core": "0.0.0"
 	},
+	"peerDependencies": {
+		"@amadeus-it-group/tansu": "^1.0.0"
+	},
 	"sideEffects": false
 }

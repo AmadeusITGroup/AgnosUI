@@ -1,0 +1,178 @@
+import {createTransition} from '@agnos-ui/core/services/transitions/baseTransitions';
+import type {ConfigValidator, Directive, PropsConfig, Widget} from '@agnos-ui/core/types';
+import {stateStores, writablesForProps} from '@agnos-ui/core/utils/stores';
+import {bindDirectiveNoArg} from '@agnos-ui/core/utils/directive';
+import {typeBoolean} from '@agnos-ui/core/utils/writables';
+import {collapseHorizontalTransition, collapseVerticalTransition} from '../../services/transitions/collapse';
+import {asWritable, computed} from '@amadeus-it-group/tansu';
+
+export interface CommonCollapseCommonPropsAndState {
+	/**
+	 * CSS classes to be applied on the widget main container
+	 *
+	 * @defaultValue `''`
+	 */
+	className: string;
+	/**
+	 * If `true`, collapse can be dismissed by the user.
+	 * The close button (×) will be displayed and you can be notified of the event with the (close) output.
+	 *
+	 * @defaultValue `false`
+	 */
+	horizontal: boolean;
+	/**
+	 * If `true` the collapse is visible to the user
+	 *
+	 * @defaultValue `true`
+	 */
+	visible: boolean;
+}
+
+export interface CommonCollapseState extends CommonCollapseCommonPropsAndState {
+	/**
+	 * Is `true` when the collapse is hidden. Compared to `visible`, this is updated after the transition is executed.
+	 */
+	hidden: boolean;
+}
+
+export interface CommonCollapseProps extends CommonCollapseCommonPropsAndState {
+	/**
+	 * Callback called when the collapse visibility changed.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
+	 */
+	onVisibleChange: (visible: boolean) => void;
+
+	/**
+	 * Callback called when the collapse is hidden.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
+	 */
+	onHidden: () => void;
+
+	/**
+	 * Callback called when the collapse is shown.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
+	 */
+	onShown: () => void;
+
+	/**
+	 * If `true`, collapse opening will be animated at init time.
+	 *
+	 * @defaultValue `false`
+	 */
+	animatedOnInit: boolean;
+	/**
+	 * If `true`, collapse closing and opening will be animated.
+	 *
+	 * @defaultValue `true`
+	 */
+	animated: boolean;
+}
+
+export interface CommonCollapseApi {
+	/**
+	 * Triggers collapse closing programmatically.
+	 */
+	close(): void;
+
+	/**
+	 * Triggers the collapse content to be displayed for the user.
+	 */
+	open(): void;
+
+	/**
+	 * Toggles the collapse content visibility.
+	 */
+	toggle(): void;
+}
+
+export interface CommonCollapseDirectives {
+	/**
+	 * the transition directive, piloting what is the visual effect of going from hidden to visible
+	 */
+	transitionDirective: Directive;
+}
+
+export type CommonCollapseWidget = Widget<CommonCollapseProps, CommonCollapseState, CommonCollapseApi, object, CommonCollapseDirectives>;
+
+const defaultCommonCollapseConfig: CommonCollapseProps = {
+	visible: true,
+	horizontal: false,
+	onVisibleChange: () => {},
+	onShown: () => {},
+	onHidden: () => {},
+	animated: true,
+	animatedOnInit: false,
+	className: '',
+};
+
+/**
+ * Retrieve a shallow copy of the default collapse config
+ * @returns the default collapse config
+ */
+export function getCommonCollapseDefaultConfig(): CommonCollapseProps {
+	return {...defaultCommonCollapseConfig};
+}
+
+const commonCollapseConfigValidator: ConfigValidator<CommonCollapseProps> = {
+	horizontal: typeBoolean,
+};
+
+/**
+ * Create an CollapseWidget with given config props
+ * @param config - an optional collapse config
+ * @returns an CollapseWidget
+ */
+export function createCommonCollapse(config?: PropsConfig<CommonCollapseProps>): CommonCollapseWidget {
+	const [{animatedOnInit$, animated$, visible$: requestedVisible$, onVisibleChange$, onHidden$, onShown$, horizontal$, ...stateProps}, patch] =
+		writablesForProps(defaultCommonCollapseConfig, config, commonCollapseConfigValidator);
+
+	const currentTransitionFn$ = asWritable(
+		computed(() => {
+			if (horizontal$()) {
+				return collapseHorizontalTransition;
+			} else {
+				return collapseVerticalTransition;
+			}
+		}),
+	);
+
+	const transition = createTransition({
+		props: {
+			transition: currentTransitionFn$,
+			visible: requestedVisible$,
+			animated: animated$,
+			animatedOnInit: animatedOnInit$,
+			onVisibleChange: onVisibleChange$,
+			onHidden: onHidden$,
+			onShown: onShown$,
+		},
+	});
+
+	const visible$ = transition.stores.visible$;
+	const hidden$ = transition.stores.hidden$;
+	return {
+		...stateStores({...stateProps, visible$, hidden$, horizontal$}),
+		patch,
+		api: {
+			open: () => transition.api.show(),
+			close: () => transition.api.hide(),
+			toggle: () => transition.api.toggle(),
+		},
+		directives: {
+			transitionDirective: bindDirectiveNoArg(transition.directives.directive),
+		},
+		actions: {},
+	};
+}

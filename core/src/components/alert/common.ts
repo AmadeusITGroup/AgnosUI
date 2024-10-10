@@ -178,13 +178,6 @@ export function createCommonAlert(config?: PropsConfig<CommonAlertProps>): Commo
 			onShown: onShown$,
 		},
 	});
-	const close = () => {
-		patch({visible: false});
-	};
-
-	const open = () => {
-		patch({visible: true});
-	};
 
 	const visible$ = transition.stores.visible$;
 	const hidden$ = transition.stores.hidden$;
@@ -192,8 +185,8 @@ export function createCommonAlert(config?: PropsConfig<CommonAlertProps>): Commo
 		...stateStores({...stateProps, visible$, hidden$}),
 		patch,
 		api: {
-			open,
-			close,
+			open: transition.api.show,
+			close: transition.api.hide,
 		},
 		directives: {
 			transitionDirective: bindDirectiveNoArg(transition.directives.directive),
