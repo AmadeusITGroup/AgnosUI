@@ -50,8 +50,8 @@ export type WithoutDollar<S extends `${string}$`> = S extends `${infer U}$` ? U 
  *
  * ```
  * @template T - The type of the object that the stores represent.
- * @param {ToWritableSignal<T>} stores - The stores to be updated.
- * @returns {(storesValues: Partial<T>) => void} - A function that takes partial values of the stores and updates them.
+ * @param stores - The stores to be updated.
+ * @returns - A function that takes partial values of the stores and updates them.
  */
 export function createPatch<T extends object>(stores: ToWritableSignal<T>): (storesValues: Partial<T>) => void {
 	return function (storesValues: Partial<T>) {
@@ -152,8 +152,8 @@ export const isStore = (x: any): x is ReadableSignal<any> => !!(x && typeof x ==
 /**
  * If the provided argument is already a store, it is returned as is, otherwise, a readable store is created with the provided argument as its initial value.
  * @template T - The type of the value.
- * @param {ReadableSignal<T> | T} x - The value to be converted to a readable store.
- * @returns {ReadableSignal<T>} - The readable store containing the value.
+ * @param x - The value to be converted to a readable store.
+ * @returns - The readable store containing the value.
  */
 export const toReadableStore = <T>(x: ReadableSignal<T> | T): ReadableSignal<T> => (isStore(x) ? x : readable(x));
 
@@ -161,8 +161,8 @@ export const toReadableStore = <T>(x: ReadableSignal<T> | T): ReadableSignal<T> 
  * Converts a value or a writable signal into a writable signal.
  *
  * @template T - The type of the value or signal.
- * @param {WritableSignal<T> | T} x - The value or writable signal to convert.
- * @returns {WritableSignal<T>} - The resulting writable signal.
+ * @param x - The value or writable signal to convert.
+ * @returns - The resulting writable signal.
  */
 export const toWritableStore = <T>(x: WritableSignal<T> | T): WritableSignal<T> => (isStore(x) ? x : writable(x));
 
@@ -170,9 +170,9 @@ export const toWritableStore = <T>(x: WritableSignal<T> | T): WritableSignal<T> 
  * Normalizes configuration stores by converting them into readable signals.
  *
  * @template T - The type of the configuration object.
- * @param {Array<keyof T>} keys - An array of keys to normalize from the configuration object.
- * @param {ReadableSignal<Partial<T>> | ValuesOrReadableSignals<T>} [config] - The configuration object or readable signals to normalize.
- * @returns {ReadableSignals<T>} An object containing readable signals for each key in the configuration.
+ * @param keys - An array of keys to normalize from the configuration object.
+ * @param [config] - The configuration object or readable signals to normalize.
+ * @returns An object containing readable signals for each key in the configuration.
  */
 export const normalizeConfigStores = <T extends object>(
 	keys: (keyof T)[],
@@ -195,10 +195,10 @@ export const normalizeConfigStores = <T extends object>(
  * when both stores have a value for the same key.
  *
  * @template T - The type of the configuration object.
- * @param {Array<keyof T>} keys - The keys to merge from the configuration stores.
- * @param {ReadableSignals<T>} [config1] - The first configuration store.
- * @param {ReadableSignals<T>} [config2] - The second configuration store.
- * @returns {ReadableSignals<T>} - The merged configuration store.
+ * @param keys - The keys to merge from the configuration stores.
+ * @param [config1] - The first configuration store.
+ * @param [config2] - The second configuration store.
+ * @returns - The merged configuration store.
  */
 export const mergeConfigStores = <T extends object>(
 	keys: (keyof T)[],
@@ -336,12 +336,12 @@ export const stateStores = <A extends object>(inputStores: {[K in keyof A as `${
  * @template T - The type of the derived value.
  * @template U - A tuple type where the first element is a writable signal of type T and the rest are store inputs.
  *
- * @param {ReadableSignal<(value: T) => void>} onChange$ - A readable signal that emits a function to be called when the derived value changes.
- * @param {U} stores - A tuple of stores where the first element is a writable signal of type T and the rest are store inputs.
- * @param {(arg: StoresInputValues<U>) => T} [adjustValue=(arg: StoresInputValues<U>) => arg[0]] - A function to adjust the derived value based on the input values from the stores.
- * @param {(currentValue: T, newValue: T) => boolean} [equal=(currentValue: T, newValue: T) => newValue === currentValue] - A function to compare the current and new values for equality.
+ * @param onChange$ - A readable signal that emits a function to be called when the derived value changes.
+ * @param stores - A tuple of stores where the first element is a writable signal of type T and the rest are store inputs.
+ * @param adjustValue - A function to adjust the derived value based on the input values from the stores.
+ * @param equal - A function to compare the current and new values for equality.
  *
- * @returns {WritableSignal<T>} A writable signal that derives its value from the provided stores and allows for custom adjustment and equality checks.
+ * @returns A writable signal that derives its value from the provided stores and allows for custom adjustment and equality checks.
  */
 export const bindableDerived = <T, U extends [WritableSignal<T>, ...StoreInput<any>[]]>(
 	onChange$: ReadableSignal<(value: T) => void>,
@@ -376,11 +376,11 @@ export const bindableDerived = <T, U extends [WritableSignal<T>, ...StoreInput<a
  * Creates a bindable property that synchronizes a writable signal with an optional adjustment function and equality check.
  *
  * @template T - The type of the value being stored.
- * @param {WritableSignal<T, T | undefined>} store$ - The writable signal that holds the current value.
- * @param {ReadableSignal<(newValue: T) => void>} onChange$ - A readable signal that triggers a callback when the value changes.
- * @param {(value: T) => T} [adjustValue=identity] - An optional function to adjust the value before storing it. Defaults to the identity function.
- * @param {(a: T, b: T) => boolean} [equal=tansuDefaultEqual] - An optional function to compare values for equality. Defaults to `tansuDefaultEqual`.
- * @returns {WritableSignal<T>} A writable signal that synchronizes with the provided store and triggers the onChange callback when updated.
+ * @param store$ - The writable signal that holds the current value.
+ * @param onChange$ - A readable signal that triggers a callback when the value changes.
+ * @param [adjustValue] - An optional function to adjust the value before storing it. Defaults to the identity function.
+ * @param [equal] - An optional function to compare values for equality. Defaults to `tansuDefaultEqual`.
+ * @returns A writable signal that synchronizes with the provided store and triggers the onChange callback when updated.
  */
 export const bindableProp = <T>(
 	store$: WritableSignal<T, T | undefined>,

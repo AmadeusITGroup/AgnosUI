@@ -18,6 +18,7 @@ type InjectWidgetsConfig<Config> = (config?: Partial2Levels<Config>) => WidgetsC
  *
  * It can be used when extending the core and creating new widgets.
  *
+ * @template Config - The type of the widgets configuration object.
  * @param widgetsConfigInjectionToken - the widgets config injection token
  * @returns the utilities to create / manage widgets and contexts
  */
