@@ -53,7 +53,17 @@ interface ModalExtraProps<Data> {
 	fullscreen: boolean;
 }
 
+/**
+ * Represents the state of a modal component.
+ *
+ * @template Data - The type of the data associated with the modal.
+ */
 export interface ModalState<Data> extends CoreState, ModalExtraProps<Data> {}
+/**
+ * Interface representing the properties for a modal component.
+ *
+ * @template Data - The type of data that the modal will handle.
+ */
 export interface ModalProps<Data> extends CoreProps, ModalExtraProps<Data> {
 	/**
 	 * The transition to use for the backdrop behind the modal (if present).
@@ -70,6 +80,11 @@ export interface ModalProps<Data> extends CoreProps, ModalExtraProps<Data> {
 	modalTransition: TransitionFn;
 }
 
+/**
+ * Interface representing the API for a modal component.
+ *
+ * @template Data - The type of data associated with the modal.
+ */
 export interface ModalApi<Data> extends Omit<CoreApi, 'patch'> {
 	/**
 	 * Method to change some modal properties.
@@ -77,6 +92,11 @@ export interface ModalApi<Data> extends Omit<CoreApi, 'patch'> {
 	patch: ModalWidget<Data>['patch'];
 }
 
+/**
+ * Represents a modal widget with specific data type.
+ *
+ * @template Data - The type of data that the modal widget will handle.
+ */
 export type ModalWidget<Data> = Widget<ModalProps<Data>, ModalState<Data>, ModalApi<Data>, ModalDirectives>;
 
 const defaultConfigExtraProps: ModalExtraProps<any> = {

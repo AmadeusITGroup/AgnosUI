@@ -9,6 +9,9 @@ import type {SelectProps} from './components/select';
 import type {SliderProps} from './components/slider';
 import type {ToastProps} from './components/toast';
 
+/**
+ * Configuration interface for various Bootstrap widgets.
+ */
 export interface BootstrapWidgetsConfig {
 	/**
 	 * the pagination widget config
