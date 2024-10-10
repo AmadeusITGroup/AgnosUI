@@ -101,9 +101,21 @@ interface PaginationExtraProps {
 	numberLabel: SlotContent<PaginationNumberContext>;
 }
 
+/**
+ * Represents the state of a pagination component.
+ */
 export interface PaginationState extends CoreState, PaginationExtraProps {}
+/**
+ * Represents the properties for the Pagination component.
+ */
 export interface PaginationProps extends CoreProps, PaginationExtraProps {}
 
+/**
+ * Represents a pagination widget component.
+ *
+ * This type defines a widget that handles pagination functionality,
+ * including properties, state, actions, and directives specific to pagination.
+ */
 export type PaginationWidget = Widget<PaginationProps, PaginationState, object, PaginationActions, PaginationDirectives>;
 
 const defaultConfigExtraProps: PaginationExtraProps = {

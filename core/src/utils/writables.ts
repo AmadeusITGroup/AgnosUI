@@ -5,8 +5,11 @@ import {INVALID_VALUE} from '../types';
 /**
  * Check if a value respects a provided type guard.
  *
- * @param filter - the guard function
- * @returns a function that takes a value as input, checks if it respects the type guard and returns `INVALID_VALUE` otherwise
+ * @template T - The type that the filter function validates.
+ * @param filter - A function that takes a value and returns a boolean indicating
+ *                 whether the value is of type T.
+ * @returns A function that takes a value and returns the value if it passes the filter,
+ *          otherwise returns `INVALID_VALUE`.
  */
 export const testToNormalizeValue =
 	<T>(filter: (value: any) => value is T): ((value: any) => T | typeof INVALID_VALUE) =>
