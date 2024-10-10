@@ -8,6 +8,7 @@ export * from '@agnos-ui/core/utils/stores';
 /**
  * Observe a readable store inside of a react component.
  *
+ * @template T - The type of the value emitted by the ReadableSignal.
  * @param store$ - the readable store
  * @returns the observed value of the store
  */
@@ -89,6 +90,7 @@ const propsEqual = <T extends object>(a: T, b: T) => !findChangedProperties(a, b
 /**
  * Turn react props into readable stores.
  *
+ * @template T - The type of the props object.
  * @param props - the props
  * @returns the readable stores
  */
