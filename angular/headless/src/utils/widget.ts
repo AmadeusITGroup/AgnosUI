@@ -123,6 +123,12 @@ function patchSimpleChanges(patchFn: (obj: any) => void, changes: SimpleChanges)
 	patchFn(obj);
 }
 
+/**
+ * An abstract base class for widget directives, providing common functionality
+ * for Angular components that interact with widgets.
+ *
+ * @template W - The type of the widget.
+ */
 @Directive()
 export abstract class BaseWidgetDirective<W extends Widget> implements OnChanges, OnInit, AfterContentChecked {
 	constructor(private readonly _widget: AngularWidget<W>) {}

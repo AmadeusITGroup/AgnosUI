@@ -182,7 +182,7 @@ const defaultSelector: NavManagerItemConfig<any>['selector'] = (directiveElement
  * It provides some utilities to move the focus between those elements (focusFirst/focusLast, focusLeft/focusRight, focusPrevious/focusNext).
  *
  * @template T - The type of the context object used in the navigation manager.
- * @returns {NavManager<T>} An object containing methods and properties for managing focus navigation.
+ * @returns An object containing methods and properties for managing focus navigation.
  */
 export const createNavManager = <T>(): NavManager<T> => {
 	const directiveInstances$ = registrationArray<() => Iterable<HTMLElement>>();

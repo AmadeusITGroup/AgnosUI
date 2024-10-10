@@ -188,6 +188,21 @@ const getSlotType = (value: any): undefined | {new (viewContainerRef: ViewContai
 	return undefined;
 };
 
+/**
+ * A directive that manages slot content and its properties.
+ *
+ * @template Props - A record type representing the properties for the slot.
+ *
+ * @implements {OnChanges}
+ * @implements {OnDestroy}
+ *
+ * @property {SlotContent<Props>} slot - The slot content to be managed.
+ * @property {Props} props - The properties for the slot content.
+ *
+ * @remarks
+ * This directive handles changes to the slot content and its properties,
+ * and manages the lifecycle of the slot handler.
+ */
 @Directive({
 	selector: '[auSlot]',
 	standalone: true,

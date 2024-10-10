@@ -28,8 +28,8 @@ export const isBrowserHTMLElement: (element: SSRHTMLElement) => element is HTMLE
  *
  * @template T - The type of the directive's argument.
  * @template U - The type of the HTML element the directive is applied to.
- * @param {Directive<T, U>} directive - The directive to be conditionally applied.
- * @returns {Directive<T, SSRHTMLElement>} - A directive that applies the given directive in a browser environment, or a no-op in a non-browser environment.
+ * @param directive - The directive to be conditionally applied.
+ * @returns - A directive that applies the given directive in a browser environment, or a no-op in a non-browser environment.
  */
 export const browserDirective: <T, U extends HTMLElement>(directive: Directive<T, U>) => Directive<T, SSRHTMLElement> = BROWSER
 	? (directive) => (node, args) => {
@@ -51,9 +51,9 @@ export const browserDirective: <T, U extends HTMLElement>(directive: Directive<T
  *
  * @template T - The type of the directive argument.
  * @template U - The type of the SSRHTMLElement, defaults to SSRHTMLElement.
- * @param {Directive<T, U>} directive - The directive to bind to the element.
- * @param {ReadableSignal<T>} directiveArg$ - The signal to subscribe to for directive updates.
- * @returns {Directive<void, U>} A directive that manages the lifecycle of the bound directive.
+ * @param directive - The directive to bind to the element.
+ * @param directiveArg$ - The signal to subscribe to for directive updates.
+ * @returns A directive that manages the lifecycle of the bound directive.
  */
 export const bindDirective =
 	<T, U extends SSRHTMLElement = SSRHTMLElement>(directive: Directive<T, U>, directiveArg$: ReadableSignal<T>): Directive<void, U> =>
@@ -97,9 +97,9 @@ export const bindDirectiveNoArg = <T, U extends SSRHTMLElement = SSRHTMLElement>
  * @template U - The type of the mapped argument.
  * @template V - The type of the SSRHTMLElement, defaults to SSRHTMLElement.
  *
- * @param {Directive<U, V>} directive - The original directive to be mapped.
- * @param {(arg: T) => U} fn - The function to map the original argument to the new argument.
- * @returns {Directive<T, V>} A new directive with the mapped argument.
+ * @param directive - The original directive to be mapped.
+ * @param fn - The function to map the original argument to the new argument.
+ * @returns A new directive with the mapped argument.
  */
 export const mapDirectiveArg =
 	<T, U, V extends SSRHTMLElement = SSRHTMLElement>(directive: Directive<U, V>, fn: (arg: T) => U): Directive<T, V> =>
@@ -310,8 +310,8 @@ export const createBrowserStoreDirective = (): {
  *
  * @template T - The type of the argument passed to the directive.
  * @template U - The type of the SSRHTMLElement, defaults to SSRHTMLElement.
- * @param {...(Directive<T, U> | Directive<void, U>)[]} args - The directives to merge.
- * @returns {Directive<T, U>} A new directive that applies all the given directives.
+ * @param args - The directives to merge.
+ * @returns A new directive that applies all the given directives.
  *
  * The returned directive has the following lifecycle methods:
  * - `update(arg)`: Updates all merged directives with the given argument.
@@ -337,10 +337,10 @@ export const mergeDirectives =
  * @template T - A tuple type representing the arguments for each directive.
  * @template U - The type of the SSRHTMLElement, defaults to SSRHTMLElement.
  *
- * @param {U} element - The SSRHTMLElement to which the directives will be applied.
- * @param {DirectivesAndOptParam<T, U>} directives - An array of directives and their optional parameters.
+ * @param element - The SSRHTMLElement to which the directives will be applied.
+ * @param directives - An array of directives and their optional parameters.
  *
- * @returns {Object} An object containing:
+ * @returns An object containing:
  * - `update`: A function to update the directives with new parameters.
  * - `destroy`: A function to destroy all applied directives.
  */
@@ -388,7 +388,8 @@ export interface AttributesDirectiveProps {
 	 * Events to be attached to an HTML element.
 	 * @remarks
 	 * Key-value pairs where keys are event types and values are event handlers.
-xw	 */
+xw
+	 */
 	events?: Partial<{
 		[K in keyof HTMLElementEventMap]:
 			| {
@@ -517,8 +518,8 @@ export const classDirective: Directive<string> = createAttributesDirective<strin
  * single string and styles are formatted as a CSS string.
  *
  * @template T - The type of the directives and optional parameters.
- * @param {...DirectivesAndOptParam<T>} directives - The directives and optional parameters to process.
- * @returns {Record<string, string>} An object containing the combined attributes.
+ * @param directives - The directives and optional parameters to process.
+ * @returns An object containing the combined attributes.
  */
 export function directiveAttributes<T extends any[]>(...directives: DirectivesAndOptParam<T>): Record<string, string> {
 	const {attributes, classNames, style} = attributesData(...directives);
@@ -543,8 +544,7 @@ export function directiveAttributes<T extends any[]>(...directives: DirectivesAn
  * - In a non-browser environment, it delegates to the `directiveAttributes` function.
  *
  * @template T - A tuple type representing the directives and optional parameters.
- * @param {...DirectivesAndOptParam<T>} directives - The directives and optional parameters to generate SSR attributes for.
- * @returns {Record<string, string>} A record of SSR attributes.
+ * @returns A record of SSR attributes.
  */
 export const ssrAttributes: <T extends any[]>(...directives: DirectivesAndOptParam<T>) => Record<string, string> = BROWSER
 	? () => ({})
