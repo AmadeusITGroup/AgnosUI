@@ -6,10 +6,20 @@
 
 	let {visible = $bindable(), ...props}: Partial<AlertProps> = $props();
 
-	const widget = callWidgetFactory({
+	const {
+		widget: {
+			directives: {transitionDirective},
+			state,
+			api: alertApi,
+		},
+		slotContext,
+	} = callWidgetFactory({
 		factory: createAlert,
 		widgetName: 'alert',
-		props: {...props, visible},
+		get props() {
+			return {...props, visible};
+		},
+		enablePatchChanged: true,
 		defaultConfig: {structure},
 		events: {
 			onVisibleChange: (event) => {
@@ -17,28 +27,19 @@
 			},
 		},
 	});
-	export const api: AlertApi = widget.api;
-
-	const {
-		stores: {structure$, hidden$},
-		directives: {transitionDirective},
-		state$,
-	} = widget;
-
-	$effect(() => widget.patchChangedProps({...props, visible}));
-	let slotContext = $derived({widget, state: $state$});
+	export const api: AlertApi = alertApi;
 </script>
 
 {#snippet structure(props: AlertContext)}
 	<AlertDefaultStructure {...props} />
 {/snippet}
 
-{#if !$hidden$}
+{#if !state.hidden}
 	<div
 		role="alert"
-		class="au-alert alert alert-{$state$.type} {$state$.className} {$state$.dismissible ? 'alert-dismissible' : ''}"
+		class="au-alert alert alert-{state.type} {state.className} {state.dismissible ? 'alert-dismissible' : ''}"
 		use:transitionDirective
 	>
-		<Slot content={$structure$} props={slotContext} />
+		<Slot content={state.structure} props={slotContext} />
 	</div>
 {/if}

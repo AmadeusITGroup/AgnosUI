@@ -9,7 +9,8 @@ import InfoCircle from 'bootstrap-icons/icons/info-circle-fill.svg?react';
 import LightBulb from 'bootstrap-icons/icons/lightbulb.svg?react';
 import type {FunctionComponent, SVGProps} from 'react';
 
-const AlertIcon = ({widget, state}: AlertContext) => {
+const AlertIcon = (slotContext: AlertContext) => {
+	const {state, api} = slotContext;
 	const typeIcon: Record<string, FunctionComponent<SVGProps<SVGSVGElement> & {title?: string | undefined}>> = {
 		success: CheckCircle,
 		info: InfoCircle,
@@ -22,10 +23,10 @@ const AlertIcon = ({widget, state}: AlertContext) => {
 		<>
 			<span className="d-flex me-2">{typeIcon[state.type]({})}</span>
 			<div className="alert-body">
-				<Slot slotContent={state.children} props={{widget, state}}></Slot>
+				<Slot slotContent={state.children} props={slotContext}></Slot>
 			</div>
 			{state.dismissible ? (
-				<button type="button" className="btn-close ms-auto" onClick={widget.api.close} aria-label={state.ariaCloseButtonLabel}></button>
+				<button type="button" className="btn-close ms-auto" onClick={api.close} aria-label={state.ariaCloseButtonLabel}></button>
 			) : null}
 		</>
 	);

@@ -1,6 +1,5 @@
 import {auBooleanAttribute, BaseWidgetDirective, useDirectiveForHost} from '@agnos-ui/angular-headless';
-import type {CollapseWidget} from '@agnos-ui/core-bootstrap/components/collapse';
-import {createCollapse} from '@agnos-ui/core-bootstrap/components/collapse';
+import {createCollapse, type CollapseWidget} from './collapse.gen';
 import {Directive, EventEmitter, Input, Output} from '@angular/core';
 import {callWidgetFactory} from '../../config';
 
@@ -78,7 +77,6 @@ export class CollapseDirective extends BaseWidgetDirective<CollapseWidget> {
 	readonly _widget = callWidgetFactory({
 		factory: createCollapse,
 		widgetName: 'collapse',
-		defaultConfig: {},
 		events: {
 			onVisibleChange: (event) => this.visibleChange.emit(event),
 			onShown: () => this.shown.emit(),

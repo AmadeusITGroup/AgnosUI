@@ -7,7 +7,7 @@
 	import biLightbulb from 'bootstrap-icons/icons/lightbulb.svg?raw';
 	import type {AlertContext} from '@agnos-ui/svelte-bootstrap/components/alert';
 
-	let {state, widget}: AlertContext = $props();
+	let {state, api, ...restProps}: AlertContext = $props();
 
 	const typeIcon: Record<string, string> = {
 		success: biCheckCircleFill,
@@ -20,8 +20,8 @@
 
 <span class="d-flex me-2">{@html typeIcon[state.type]}</span>
 <div class="alert-body">
-	<Slot content={state.children} props={{widget, state}} />
+	<Slot content={state.children} props={{state, api, ...restProps}} />
 </div>
 {#if state.dismissible}
-	<button type="button" class="btn-close ms-auto" onclick={() => widget.api.close()} aria-label={state.ariaCloseButtonLabel}></button>
+	<button type="button" class="btn-close ms-auto" onclick={() => api.close()} aria-label={state.ariaCloseButtonLabel}></button>
 {/if}

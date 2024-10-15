@@ -10,15 +10,17 @@
 	}: Partial<Pick<AccordionProps, 'closeOthers' | 'onItemShown' | 'onItemHidden' | 'itemDestroyOnHide' | 'className'>> & {children: Snippet} =
 		$props();
 
-	const widget = callWidgetFactory({
+	const {api, directives} = callWidgetFactory({
 		factory: createAccordion,
 		widgetName: 'accordion',
-		props,
+		get props() {
+			return props;
+		},
+		enablePatchChanged: true,
 	});
-	setAccordionApi(widget.api);
-	$effect(() => widget.patchChangedProps({...props}));
+	setAccordionApi(api);
 </script>
 
-<div class="flex flex-col gap-2" use:widget.directives.accordionDirective>
+<div class="flex flex-col gap-2" use:directives.accordionDirective>
 	{@render children()}
 </div>

@@ -58,6 +58,6 @@ export class RatingComponent extends BaseWidgetDirective<RatingWidget> implement
 	}
 
 	getAriaLabel(index: number) {
-		return `${this._widget.stores.ariaLabel$()} star ${index + 1}`;
+		return `${this.state().ariaLabel} star ${index + 1}`;
 	}
 }

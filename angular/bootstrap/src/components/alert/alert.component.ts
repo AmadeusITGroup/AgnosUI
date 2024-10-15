@@ -45,12 +45,12 @@ export class AlertStructureDirective {
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [SlotDirective, AlertStructureDirective],
-	template: ` <ng-template auAlertStructure #structure let-state="state" let-widget="widget">
+	template: ` <ng-template auAlertStructure #structure let-state="state" let-api="api" let-actions="actions" let-directives="directives">
 		<div class="alert-body">
-			<ng-template [auSlot]="state.children" [auSlotProps]="{state, widget}"></ng-template>
+			<ng-template [auSlot]="state.children" [auSlotProps]="{state, api, actions, directives}"></ng-template>
 		</div>
 		@if (state.dismissible) {
-			<button type="button" class="btn-close" (click)="widget.api.close()" [attr.aria-label]="state.ariaCloseButtonLabel"></button>
+			<button type="button" class="btn-close" (click)="api.close()" [attr.aria-label]="state.ariaCloseButtonLabel"></button>
 		}
 	</ng-template>`,
 })
@@ -76,11 +76,11 @@ const defaultConfig: PartialAlertProps = {
 
 		@if (!state().hidden) {
 			<div
-				[auUse]="widget.directives.transitionDirective"
+				[auUse]="directives.transitionDirective"
 				class="au-alert alert alert-{{ state().type }} {{ state().className }} {{ state().dismissible ? 'alert-dismissible' : '' }}"
 				role="alert"
 			>
-				<ng-template [auSlot]="state().structure" [auSlotProps]="{state: state(), widget}"></ng-template>
+				<ng-template [auSlot]="state().structure" [auSlotProps]="{state: state(), actions, api, directives}"></ng-template>
 			</div>
 		}`,
 })

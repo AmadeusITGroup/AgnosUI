@@ -3,32 +3,32 @@
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import {callWidgetFactory} from '../../config';
 	import ProgressbarDefaultStructure from './ProgressbarDefaultStructure.svelte';
-	import {toSlotContextWidget} from '@agnos-ui/svelte-headless/types';
 
 	let props: Partial<ProgressbarProps> = $props();
 
-	const widget = callWidgetFactory({
+	const {
+		widget: {
+			state,
+			directives: {ariaDirective},
+		},
+		slotContext,
+	} = callWidgetFactory({
 		factory: createProgressbar,
 		widgetName: 'progressbar',
-		props,
+		get props() {
+			return props;
+		},
+		enablePatchChanged: true,
 		defaultConfig: {
 			structure,
 		},
 	});
-	const {
-		stores: {structure$, className$},
-		state$,
-		directives: {ariaDirective},
-	} = widget;
-
-	$effect(() => widget.patchChangedProps({...props}));
-	let slotContext = $derived({widget: toSlotContextWidget(widget), state: $state$});
 </script>
 
 {#snippet structure(props: ProgressbarContext)}
 	<ProgressbarDefaultStructure {...props} />
 {/snippet}
 
-<div use:ariaDirective class={$className$ || undefined}>
-	<Slot content={$structure$} props={slotContext} />
+<div use:ariaDirective class={state.className || undefined}>
+	<Slot content={state.structure} props={slotContext} />
 </div>

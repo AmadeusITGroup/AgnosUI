@@ -1,15 +1,7 @@
 import {computed, writable, type ReadableSignal} from '@amadeus-it-group/tansu';
 import type {OnChanges, OnInit, Signal, SimpleChanges} from '@angular/core';
 import {Directive, Injector, inject, runInInjectionContext} from '@angular/core';
-import {
-	toSlotContextWidget,
-	type AngularWidget,
-	type ContextWidget,
-	type Widget,
-	type WidgetFactory,
-	type WidgetProps,
-	type WidgetState,
-} from '../types';
+import {type AngularWidget, type Widget, type WidgetFactory, type WidgetProps, type WidgetState} from '../types';
 import {toAngularSignal, toReadableStore} from './stores';
 import {ZoneWrapper} from './zone';
 
@@ -82,16 +74,18 @@ export const callWidgetFactoryWithConfig = <W extends Widget>({
 					config: computed(() => ({...defaultConfig$(), ...widgetConfig?.(), ...slots$(), ...(events as Partial<WidgetProps<W>>)})),
 					props,
 				});
-				const wrappedWidget: W = {
-					...widget,
+				const wrappedWidget = {
+					state$: widget.state$,
 					patch: zoneWrapper.outsideNgZone(widget.patch),
 					directives: zoneWrapper.outsideNgZoneWrapDirectivesObject(widget.directives),
 					actions: zoneWrapper.outsideNgZoneWrapFunctionsObject(widget.actions),
 					api: zoneWrapper.outsideNgZoneWrapFunctionsObject(widget.api),
 				};
 				Object.assign(res, wrappedWidget, {
-					widget: toSlotContextWidget(wrappedWidget),
-					ngState: toAngularSignal(wrappedWidget.state$ as ReadableSignal<WidgetState<W>>),
+					api: wrappedWidget.api,
+					actions: wrappedWidget.actions,
+					directives: wrappedWidget.directives,
+					state: toAngularSignal(wrappedWidget.state$ as ReadableSignal<WidgetState<W>>),
 				});
 				afterInit?.();
 				initDone();
@@ -129,15 +123,23 @@ export abstract class BaseWidgetDirective<W extends Widget> implements OnChanges
 	 * @returns the widget state
 	 */
 	get state(): Signal<WidgetState<W>> {
-		return this._widget.ngState;
+		return this._widget.state;
 	}
 
 	/**
-	 * Retrieves the widget
-	 * @returns the widget
+	 * Retrieves the widget actions
+	 * @returns the widget actions
 	 */
-	get widget(): ContextWidget<W> {
-		return this._widget.widget;
+	get actions(): W['actions'] {
+		return this._widget.actions;
+	}
+
+	/**
+	 * Retrieves the widget directives
+	 * @returns the widget directives
+	 */
+	get directives(): W['directives'] {
+		return this._widget.directives;
 	}
 
 	/** @inheritdoc */

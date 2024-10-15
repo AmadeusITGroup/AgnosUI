@@ -8,26 +8,22 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 	template: `
 		<div auAccordion #accordion="auAccordion">
 			<div auAccordionItem>
-				<ng-template auAccordionItemStructure let-state="state" let-widget="widget">
+				<ng-template auAccordionItemStructure let-state="state" let-directives="directives">
 					<div
-						[auUse]="widget.directives.headerDirective"
+						[auUse]="directives.headerDirective"
 						class="accordion-button accordion-header custom-header justify-content-between"
 						[class.collapsed]="!state.visible"
 						role="heading"
 						aria-level="2"
 					>
 						<p class="m-0">First panel - {{ state.visible ? 'opened' : 'collapsed' }}</p>
-						<button
-							type="button"
-							class="btn btn-link p-0 {{ state.buttonClassName }} au-accordion-item-button"
-							[auUse]="widget.directives.toggleDirective"
-						>
+						<button type="button" class="btn btn-link p-0 {{ state.buttonClassName }} au-accordion-item-button" [auUse]="directives.toggleDirective">
 							Toggle first
 						</button>
 					</div>
 					@if (state!.shouldBeInDOM) {
-						<div [auUse]="widget.directives.bodyContainerDirective" class="accordion-collapse">
-							<div class="accordion-body" [auUse]="widget.directives.bodyDirective">
+						<div [auUse]="directives.bodyContainerDirective" class="accordion-collapse">
+							<div class="accordion-body" [auUse]="directives.bodyDirective">
 								{{ BODY }}
 							</div>
 						</div>
@@ -35,18 +31,18 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 				</ng-template>
 			</div>
 			<div auAccordionItem>
-				<ng-template auAccordionItemStructure let-state="state" let-widget="widget">
+				<ng-template auAccordionItemStructure let-state="state" let-directives="directives">
 					<div
 						class="accordion-button accordion-header custom-header justify-content-between"
 						[class.collapsed]="!state.visible"
-						[auUse]="widget.directives.headerDirective"
+						[auUse]="directives.headerDirective"
 						role="heading"
 						aria-level="2"
 					>
 						<p class="m-0">Second panel</p>
 						<div class="d-flex flex-wrap gap-2">
 							<button
-								[auUse]="widget.directives.toggleDirective"
+								[auUse]="directives.toggleDirective"
 								type="button"
 								class="btn btn-sm btn-outline-primary {{ state.buttonClassName }} au-accordion-item-button"
 							>
@@ -59,8 +55,8 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 						</div>
 					</div>
 					@if (state!.shouldBeInDOM) {
-						<div [auUse]="widget.directives.bodyContainerDirective" class="accordion-collapse">
-							<div [auUse]="widget.directives.bodyDirective" class="accordion-body">
+						<div [auUse]="directives.bodyContainerDirective" class="accordion-collapse">
+							<div [auUse]="directives.bodyDirective" class="accordion-body">
 								{{ BODY }}
 							</div>
 						</div>
@@ -68,9 +64,9 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 				</ng-template>
 			</div>
 			<div auAccordionItem [auDisabled]="thirdDisabled()">
-				<ng-template auAccordionItemStructure let-state="state" let-widget="widget">
+				<ng-template auAccordionItemStructure let-state="state" let-directives="directives">
 					<div
-						[auUse]="widget.directives.headerDirective"
+						[auUse]="directives.headerDirective"
 						class="accordion-button accordion-header custom-header justify-content-between"
 						[class.collapsed]="!state.visible"
 						role="heading"
@@ -79,7 +75,7 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 						<button
 							type="button"
 							class="p-0 btn btn-link container-fluid text-start au-accordion-item-button {{ state.buttonClassName }}"
-							[auUse]="widget.directives.toggleDirective"
+							[auUse]="directives.toggleDirective"
 						>
 							Third panel
 						</button>
@@ -88,8 +84,8 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 						}
 					</div>
 					@if (state!.shouldBeInDOM) {
-						<div [auUse]="widget.directives.bodyContainerDirective" class="accordion-collapse">
-							<div class="accordion-body" [auUse]="widget.directives.bodyDirective">
+						<div [auUse]="directives.bodyContainerDirective" class="accordion-collapse">
+							<div class="accordion-body" [auUse]="directives.bodyDirective">
 								{{ BODY }}
 							</div>
 						</div>

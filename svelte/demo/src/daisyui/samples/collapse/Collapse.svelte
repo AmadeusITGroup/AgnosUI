@@ -8,14 +8,19 @@
 	 * The `createSimpleClassTransition` is a helper to create a transition that will add a class to the element but you don't have to add classes as this
 	 * DaisyUI CSS is not using this feature.
 	 */
-	let {children, ...props}: Partial<{title: string; onHidden: () => void; onShown: () => void}> & {children: Snippet} = $props();
+	let {
+		children,
+		title = 'Focus me to see content',
+		onHidden,
+		onShown,
+	}: Partial<{title: string; onHidden: () => void; onShown: () => void}> & {children: Snippet} = $props();
 
 	const transition = createTransition({
 		props: {
 			visible: false, // could be something in an input that also add the collapse-open class
 			transition: createSimpleClassTransition({}),
-			onShown: () => props.onShown?.(),
-			onHidden: () => props.onHidden?.(),
+			onShown: () => onShown?.(),
+			onHidden: () => onHidden?.(),
 		},
 	});
 
@@ -29,6 +34,6 @@
 	onblur={() => transition.api.hide()}
 	onfocus={() => transition.api.show()}
 >
-	<div class="collapse-title font-medium text-xl">{props.title ?? 'Focus me to see content'}</div>
+	<div class="collapse-title font-medium text-xl">{title}</div>
 	<div class="collapse-content">{@render children()}</div>
 </div>

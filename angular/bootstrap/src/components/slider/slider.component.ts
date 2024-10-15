@@ -50,8 +50,8 @@ export class SliderHandleDirective {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [UseDirective, SliderHandleDirective],
 	template: `
-		<ng-template auSliderHandle #handle let-state="state" let-widget="widget" let-item="item">
-			<button [auUse]="[widget.directives.handleDirective, {item}]">&nbsp;</button>
+		<ng-template auSliderHandle #handle let-state="state" let-directives="directives" let-item="item">
+			<button [auUse]="[directives.handleDirective, {item}]">&nbsp;</button>
 		</ng-template>
 	`,
 })
@@ -74,35 +74,35 @@ export class SliderStructureDirective {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [SlotDirective, SliderStructureDirective, UseDirective],
 	template: `
-		<ng-template auSliderStructure #structure let-state="state" let-widget="widget">
+		<ng-template auSliderStructure #structure let-state="state" let-actions="actions" let-api="api" let-directives="directives">
 			@for (option of state.progressDisplayOptions; track option) {
-				<div [auUse]="[widget.directives.progressDisplayDirective, {option}]"></div>
+				<div [auUse]="[directives.progressDisplayDirective, {option}]"></div>
 			}
-			<div [auUse]="widget.directives.clickableAreaDirective"></div>
+			<div [auUse]="directives.clickableAreaDirective"></div>
 			@if (state.showMinMaxLabels) {
-				<div [auUse]="widget.directives.minLabelDirective">
-					<ng-template [auSlot]="state.label" [auSlotProps]="{state, widget, value: state.min}"></ng-template>
+				<div [auUse]="directives.minLabelDirective">
+					<ng-template [auSlot]="state.label" [auSlotProps]="{state, api, actions, directives, value: state.min}"></ng-template>
 				</div>
-				<div [auUse]="widget.directives.maxLabelDirective">
-					<ng-template [auSlot]="state.label" [auSlotProps]="{state, widget, value: state.max}"></ng-template>
+				<div [auUse]="directives.maxLabelDirective">
+					<ng-template [auSlot]="state.label" [auSlotProps]="{state, api, actions, directives, value: state.max}"></ng-template>
 				</div>
 			}
 			@if (state.showValueLabels && state.combinedLabelDisplay) {
-				<div [auUse]="widget.directives.combinedHandleLabelDisplayDirective">
+				<div [auUse]="directives.combinedHandleLabelDisplayDirective">
 					@if (state.rtl) {
-						<ng-template [auSlot]="state.label" [auSlotProps]="{state, widget, value: state.sortedValues[1]}"></ng-template> -
-						<ng-template [auSlot]="state.label" [auSlotProps]="{state, widget, value: state.sortedValues[0]}"></ng-template>
+						<ng-template [auSlot]="state.label" [auSlotProps]="{state, api, actions, directives, value: state.sortedValues[1]}"></ng-template> -
+						<ng-template [auSlot]="state.label" [auSlotProps]="{state, api, actions, directives, value: state.sortedValues[0]}"></ng-template>
 					} @else {
-						<ng-template [auSlot]="state.label" [auSlotProps]="{state, widget, value: state.sortedValues[0]}"></ng-template> -
-						<ng-template [auSlot]="state.label" [auSlotProps]="{state, widget, value: state.sortedValues[1]}"></ng-template>
+						<ng-template [auSlot]="state.label" [auSlotProps]="{state, api, actions, directives, value: state.sortedValues[0]}"></ng-template> -
+						<ng-template [auSlot]="state.label" [auSlotProps]="{state, api, actions, directives, value: state.sortedValues[1]}"></ng-template>
 					}
 				</div>
 			}
 			@for (item of state.sortedHandles; track item.id; let i = $index) {
-				<ng-template [auSlot]="state.handle" [auSlotProps]="{state, widget, item}"></ng-template>
+				<ng-template [auSlot]="state.handle" [auSlotProps]="{state, api, actions, directives, item}"></ng-template>
 				@if (state.showValueLabels && !state.combinedLabelDisplay) {
-					<div [auUse]="[widget.directives.handleLabelDisplayDirective, {index: i}]">
-						<ng-template [auSlot]="state.label" [auSlotProps]="{state, widget, value: state.values[i]}"></ng-template>
+					<div [auUse]="[directives.handleLabelDisplayDirective, {index: i}]">
+						<ng-template [auSlot]="state.label" [auSlotProps]="{state, api, actions, directives, value: state.values[i]}"></ng-template>
 					</div>
 				}
 			}
@@ -131,7 +131,7 @@ const defaultConfig: PartialSliderProps = {
 	host: {
 		'(blur)': 'handleBlur()',
 	},
-	template: ` <ng-template [auSlot]="state().structure" [auSlotProps]="{state: state(), widget}"></ng-template> `,
+	template: ` <ng-template [auSlot]="state().structure" [auSlotProps]="{state: state(), actions, api, directives}"></ng-template> `,
 })
 export class SliderComponent extends BaseWidgetDirective<SliderWidget> implements AfterContentChecked {
 	readonly defaultSlots: WritableSignal<PartialSliderProps> = writable(defaultConfig);

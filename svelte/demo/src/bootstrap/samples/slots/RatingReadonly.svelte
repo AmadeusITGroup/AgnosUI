@@ -5,35 +5,34 @@
 
 	let props: Pick<Partial<RatingProps>, 'rating' | 'maxRating' | 'className' | 'star'> = $props();
 
-	const widget = callWidgetFactory({
+	const {
+		widget: {state, api: ratingApi},
+	} = callWidgetFactory({
 		factory: createRating,
 		widgetName: 'rating',
 		defaultConfig: {star},
-		props: {
-			...props,
-			readonly: true,
+		get props() {
+			return {
+				...props,
+				readonly: true,
+			};
 		},
 	});
-	export const api = widget.api;
-
-	const {
-		stores: {stars$, className$, star$},
-	} = widget;
-	$effect(() => widget.patchChangedProps({...props}));
+	export const api = ratingApi;
 </script>
 
 {#snippet star({fill}: StarContext)}
 	{String.fromCharCode(fill === 100 ? 9733 : 9734)}
 {/snippet}
 
-<div class="d-inline-flex au-rating {$className$}">
-	{#each $stars$ as { fill, index }}
+<div class="d-inline-flex au-rating {state.className}">
+	{#each state.stars as { fill, index }}
 		<span class="au-rating-star">
 			<!-- 
                 Simply use the Slot component from @agnos-ui/svelte-headless.
                 The api is currently a bit tricky, until Svelte 5 arrives with snippets.
             -->
-			<Slot content={$star$} props={{fill, index}} />
+			<Slot content={state.star} props={{fill, index}} />
 		</span>
 	{/each}
 </div>

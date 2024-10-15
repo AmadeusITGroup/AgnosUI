@@ -3,9 +3,9 @@
 	const onclick = () => openModal({title: 'Hi there!', children, contentData: {name: 'World'}});
 </script>
 
-{#snippet children({state, widget}: ModalContext<{name: string}>)}
+{#snippet children({state, api}: ModalContext<{name: string}>)}
 	<p>Hello, {state.contentData.name}!</p>
-	<button type="button" class="btn btn-outline-primary" onclick={() => widget.api.close()}>Close</button>
+	<button type="button" class="btn btn-outline-primary" onclick={() => api.close()}>Close</button>
 {/snippet}
 
 <button type="button" class="btn btn-primary" {onclick}>Launch demo modal</button>

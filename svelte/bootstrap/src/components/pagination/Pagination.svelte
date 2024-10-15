@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type {PaginationContext, PaginationNumberContext, PaginationProps} from './pagination.gen';
 	import {createPagination} from './pagination.gen';
-	import {toSlotContextWidget} from '@agnos-ui/svelte-headless/types';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import {callWidgetFactory} from '../../config';
 	import PaginationDefaultPages from './PaginationDefaultPages.svelte';
@@ -9,10 +8,13 @@
 
 	let {page = $bindable(), ...props}: Partial<PaginationProps> = $props();
 
-	const widget = callWidgetFactory({
+	const {widget, slotContext} = callWidgetFactory({
 		factory: createPagination,
 		widgetName: 'pagination',
-		props: {...props, page},
+		get props() {
+			return {...props, page};
+		},
+		enablePatchChanged: true,
 		defaultConfig: {
 			structure,
 			pagesDisplay,
@@ -24,14 +26,6 @@
 			},
 		},
 	});
-
-	const {
-		stores: {structure$, ariaLabel$},
-		state$,
-	} = widget;
-
-	$effect(() => widget.patchChangedProps({...props, page}));
-	let slotContext = $derived({widget: toSlotContextWidget(widget), state: $state$});
 </script>
 
 {#snippet structure(props: PaginationContext)}
@@ -45,6 +39,6 @@
 {/snippet}
 
 <!-- Should we put nav here ? how to custom the class of ul in this case ?-->
-<nav aria-label={$ariaLabel$}>
-	<Slot content={$structure$} props={slotContext} />
+<nav aria-label={widget.state.ariaLabel}>
+	<Slot content={widget.state.structure} props={slotContext} />
 </nav>

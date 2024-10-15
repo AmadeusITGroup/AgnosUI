@@ -1,9 +1,9 @@
-import {AgnosUIAngularModule} from '@agnos-ui/angular-bootstrap';
+import {CollapseDirective} from '@agnos-ui/angular-bootstrap';
 import {Component} from '@angular/core';
 
 @Component({
 	standalone: true,
-	imports: [AgnosUIAngularModule],
+	imports: [CollapseDirective],
 	template: `
 		<button class="btn btn-primary m-2" type="button" (click)="collapse.api.open()">Open collapse</button>
 		<button class="btn btn-primary m-2" type="button" (click)="collapse.api.close()">Close collapse</button>

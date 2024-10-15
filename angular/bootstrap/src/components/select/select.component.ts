@@ -40,14 +40,11 @@ export class SelectItemLabelDirective<Item> {
 	},
 	template: `
 		@if (state(); as state) {
-			<div
-				[auUseMulti]="[widget.directives.hasFocusDirective, widget.directives.inputContainerDirective]"
-				class="d-flex align-items-center flex-wrap gap-1"
-			>
+			<div [auUseMulti]="[directives.hasFocusDirective, directives.inputContainerDirective]" class="d-flex align-items-center flex-wrap gap-1">
 				@if (state.selectedContexts; as selectedContexts) {
 					@for (itemContext of selectedContexts; track itemCtxTrackBy($index, itemContext)) {
 						<div [auUse]="[_widget.directives.badgeAttributesDirective, itemContext]">
-							<ng-template [auSlot]="state.badgeLabel" [auSlotProps]="{state, widget, itemContext}"></ng-template>
+							<ng-template [auSlot]="state.badgeLabel" [auSlotProps]="{state, actions, api, directives, itemContext}"></ng-template>
 						</div>
 					}
 				}
@@ -61,13 +58,13 @@ export class SelectItemLabelDirective<Item> {
 					autoCorrect="off"
 					autoCapitalize="none"
 					autoComplete="off"
-					(input)="_widget.actions.onInput($event)"
-					(keydown)="_widget.actions.onInputKeydown($event)"
+					(input)="actions.onInput($event)"
+					(keydown)="actions.onInputKeydown($event)"
 				/>
 			</div>
 			@if (state.open && state.visibleItems.length) {
 				<ul
-					[auUseMulti]="[widget.directives.hasFocusDirective, widget.directives.floatingDirective, widget.directives.menuAttributesDirective]"
+					[auUseMulti]="[directives.hasFocusDirective, directives.floatingDirective, directives.menuAttributesDirective]"
 					class="dropdown-menu show"
 				>
 					@for (itemContext of state.visibleItems; track itemCtxTrackBy($index, itemContext)) {
@@ -76,7 +73,7 @@ export class SelectItemLabelDirective<Item> {
 							[auUse]="[_widget.directives.itemAttributesDirective, itemContext]"
 							[class.text-bg-primary]="itemContext === state.highlighted"
 						>
-							<ng-template [auSlot]="state.itemLabel" [auSlotProps]="{state, widget, itemContext}"></ng-template>
+							<ng-template [auSlot]="state.itemLabel" [auSlotProps]="{state, actions, api, directives, itemContext}"></ng-template>
 						</li>
 					}
 				</ul>

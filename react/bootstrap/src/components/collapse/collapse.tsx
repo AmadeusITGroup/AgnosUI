@@ -7,9 +7,9 @@ import {useDirectives} from '@agnos-ui/react-headless/utils/directive';
 
 export const Collapse: ForwardRefExoticComponent<PropsWithChildren<Partial<CollapseProps>> & RefAttributes<CollapseApi>> = forwardRef(
 	function Collapse(props: PropsWithChildren<Partial<CollapseProps>>, ref: ForwardedRef<CollapseApi>) {
-		const [_state, widget] = useWidgetWithConfig(createCollapse, props, 'collapse', {});
-		useImperativeHandle(ref, () => widget.api, []);
+		const {api, directives} = useWidgetWithConfig(createCollapse, props, 'collapse', {});
+		useImperativeHandle(ref, () => api, []);
 
-		return <div {...useDirectives(widget.directives.transitionDirective)}>{props.children}</div>;
+		return <div {...useDirectives(directives.transitionDirective)}>{props.children}</div>;
 	},
 );
