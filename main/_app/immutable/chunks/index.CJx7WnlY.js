@@ -1,0 +1,3 @@
+const c=`export * from './collapse.component';
+export * from './collapse.gen';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi9zcmMvY29tcG9uZW50cy9jb2xsYXBzZS9pbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxjQUFjLHNCQUFzQixDQUFDO0FBQ3JDLGNBQWMsZ0JBQWdCLENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyJleHBvcnQgKiBmcm9tICcuL2NvbGxhcHNlLmNvbXBvbmVudCc7XG5leHBvcnQgKiBmcm9tICcuL2NvbGxhcHNlLmdlbic7XG4iXX0=`;export{c as default};

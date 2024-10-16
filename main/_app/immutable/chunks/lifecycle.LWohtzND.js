@@ -1,0 +1,1 @@
+import{G as r,k as e,i as c,u as i,I as a,g as l,J as u,K as _}from"./runtime.BY4A4uhu.js";function g(){const s=c,n=s.l.u;n&&(n.b.length&&r(()=>{f(s),a(n.b)}),e(()=>{const o=i(()=>n.m.map(_));return()=>{for(const t of o)typeof t=="function"&&t()}}),n.a.length&&e(()=>{f(s),a(n.a)}))}function f(s){if(s.l.s)for(const n of s.l.s)l(n);u(s.s)}export{g as i};
