@@ -11,10 +11,23 @@ import {identity} from './utils/internal/func';
 import type {SliderProps} from './components/slider/slider';
 import type {ToastProps} from './components/toast/toast';
 
+/**
+ * A utility type that makes all properties of an object type `T` optional,
+ * and also makes all properties of the nested objects within `T` optional.
+ *
+ * @template T - The object type to be transformed.
+ */
 export type Partial2Levels<T> = Partial<{
 	[Level1 in keyof T]: Partial<T[Level1]>;
 }>;
 
+/**
+ * Represents a store for widget configurations with support for partial updates
+ * at two levels of depth. This store includes signals for its own state, an optional
+ * parent state, and an optional adapted parent state.
+ *
+ * @template T - The type of the widget configuration.
+ */
 export type WidgetsConfigStore<T> = WritableSignal<Partial2Levels<T>> & {
 	own$: WritableSignal<Partial2Levels<T>>;
 	parent$: undefined | WritableSignal<Partial2Levels<T>>;
@@ -84,6 +97,9 @@ export const createWidgetsConfig = <T>(
 	);
 };
 
+/**
+ * Configuration for various widgets used in the application.
+ */
 export type WidgetsConfig = {
 	/**
 	 * the pagination widget config
