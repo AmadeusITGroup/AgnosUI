@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type {PaginationContext} from '@agnos-ui/svelte-bootstrap/components/pagination';
 
-	let {state, widget}: PaginationContext = $props();
+	let {state, actions}: PaginationContext = $props();
 
 	const FILTER_PAG_REGEX = /[^0-9]/g;
 	function handleKeyDownEnter(e: KeyboardEvent & {currentTarget: EventTarget & HTMLInputElement}) {
@@ -12,8 +12,8 @@
 	function handleTheChange(e: (FocusEvent | KeyboardEvent) & {currentTarget: EventTarget & HTMLInputElement}) {
 		const value = e.currentTarget.value;
 		const intValue = parseInt(value);
-		widget.actions.select(intValue);
-		e.currentTarget.value = widget.stores.page$().toString();
+		actions.select(intValue);
+		e.currentTarget.value = state.page.toString();
 	}
 	function formatInput(e: Event & {currentTarget: EventTarget & HTMLInputElement}) {
 		e.currentTarget.value = e.currentTarget.value.replace(FILTER_PAG_REGEX, '');

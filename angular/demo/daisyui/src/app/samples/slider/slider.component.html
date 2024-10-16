@@ -1,5 +1,5 @@
 <input
-	[auUse]="widget.directives.sliderDirective"
+	[auUse]="directives.sliderDirective"
 	type="range"
 	[min]="state().min"
 	[max]="state().max"
@@ -7,8 +7,8 @@
 	[step]="state().stepSize"
 	[class]="'range'"
 	[attr.aria-label]="state().sortedHandles[0].ariaLabel"
-	(click)="widget.actions.click($event)"
-	(keydown)="widget.actions.keydown($event, 0)"
-	(mousedown)="widget.actions.mouseDown($event, 0)"
-	(touchstart)="widget.actions.touchStart($event, 0)"
+	(click)="actions.click($event)"
+	(keydown)="actions.keydown($event, 0)"
+	(mousedown)="actions.mouseDown($event, 0)"
+	(touchstart)="actions.touchStart($event, 0)"
 />

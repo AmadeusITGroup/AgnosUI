@@ -18,7 +18,7 @@ import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 		[class]="state().className"
 		[style.--thickness]="'0.4rem'"
 		[style.--value]="state().percentage"
-		[auUse]="widget.directives.ariaDirective"
+		[auUse]="directives.ariaDirective"
 	>
 		{{ percentFormat.format(state().percentage / 100) }}
 	</div>`,

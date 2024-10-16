@@ -1,6 +1,5 @@
 import {Slot} from '@agnos-ui/react-headless/slot';
 import type {Directive} from '@agnos-ui/react-headless/types';
-import {toSlotContextWidget} from '@agnos-ui/react-headless/types';
 import {classDirective, useDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
 import {Portal} from '@agnos-ui/react-headless/utils/portal';
 import classNames from 'classnames';
@@ -19,7 +18,7 @@ const DefaultSlotHeader = <Data,>(slotContext: ModalContext<Data>) => {
 			<h5 className="modal-title">
 				<Slot slotContent={slotContext.state.title} props={slotContext} />
 			</h5>
-			{slotContext.state.closeButton && <CloseButton directive={slotContext.widget.directives.closeButtonDirective} />}
+			{slotContext.state.closeButton && <CloseButton directive={slotContext.directives.closeButtonDirective} />}
 		</>
 	);
 };
@@ -47,14 +46,14 @@ const defaultConfig: Partial<ModalProps<any>> = {
 	structure: DefaultSlotStructure,
 };
 
-const BackdropElement = <Data,>({widget}: ModalContext<Data>) => (
-	<div {...useDirectives([classDirective, 'modal-backdrop'], widget.directives.backdropDirective)} />
+const BackdropElement = <Data,>({directives}: ModalContext<Data>) => (
+	<div {...useDirectives([classDirective, 'modal-backdrop'], directives.backdropDirective)} />
 );
 
 const ModalElement = <Data,>(slotContext: ModalContext<Data>) => {
 	const {fullscreen} = slotContext.state;
 	return (
-		<div {...useDirectives([classDirective, 'modal d-block'], slotContext.widget.directives.modalDirective)}>
+		<div {...useDirectives([classDirective, 'modal d-block'], slotContext.directives.modalDirective)}>
 			<div className={classNames('modal-dialog', {'modal-fullscreen': fullscreen})}>
 				<div className="modal-content">
 					<Slot slotContent={slotContext.state.structure} props={slotContext} />
@@ -65,12 +64,9 @@ const ModalElement = <Data,>(slotContext: ModalContext<Data>) => {
 };
 
 export const Modal = forwardRef(function Modal<Data>(props: Partial<ModalProps<Data>>, ref: Ref<ModalApi<Data>>) {
-	const [state, widget] = useWidgetWithConfig(createModal<Data>, props, 'modal', defaultConfig);
-	useImperativeHandle(ref, () => widget.api, []);
-	const slotContext: ModalContext<Data> = {
-		state,
-		widget: toSlotContextWidget(widget),
-	};
+	const {state, api, actions, directives} = useWidgetWithConfig(createModal<Data>, props, 'modal', defaultConfig);
+	useImperativeHandle(ref, () => api, []);
+	const slotContext: ModalContext<Data> = {state, api, actions, directives};
 	return (
 		<Portal container={state.container}>
 			{!state.backdropHidden && <BackdropElement {...slotContext} />}

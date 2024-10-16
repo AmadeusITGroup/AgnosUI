@@ -21,11 +21,13 @@ const widgetFactories: {
 		widgetName: keyof BootstrapWidgetsConfig | null,
 		defaultConfig?: Partial<Props>,
 	) => import('@amadeus-it-group/tansu').ReadableSignal<Partial<Props>>;
-	useWidgetWithConfig: <W extends Widget<object, object, object, object, object>>(
+	useWidgetWithConfig: <W extends Widget>(
 		factory: WidgetFactory<W>,
 		props: Partial<WidgetProps<W>> | undefined,
 		widgetName: keyof BootstrapWidgetsConfig | null,
 		defaultProps?: Partial<WidgetProps<W>>,
-	) => [WidgetState<W>, W];
+	) => Pick<W, 'actions' | 'directives' | 'api' | 'patch'> & {
+		state: WidgetState<W>;
+	};
 } = widgetsConfigFactory<WidgetsConfig>();
 export const {widgetsConfigContext, WidgetsDefaultConfig, useWidgetContext, useWidgetWithConfig} = widgetFactories;

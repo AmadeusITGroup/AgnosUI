@@ -6,10 +6,29 @@
 
 	let {open = $bindable(false), filterText = $bindable(), selected = $bindable(), ...props}: Partial<SelectProps<Item>> = $props();
 
-	const widget = callWidgetFactory<SelectWidget<Item>>({
+	const {
+		widget: {
+			state,
+			actions: {onInput, onInputKeydown},
+			directives: {
+				floatingDirective,
+				hasFocusDirective,
+				referenceDirective,
+				inputContainerDirective,
+				badgeAttributesDirective,
+				menuAttributesDirective,
+				itemAttributesDirective,
+			},
+			api: selectApi,
+		},
+		slotContext,
+	} = callWidgetFactory<SelectWidget<Item>>({
 		factory: createSelect,
 		widgetName: 'select',
-		props: {...props, open, filterText, selected},
+		get props() {
+			return {...props, open, filterText, selected};
+		},
+		enablePatchChanged: true,
 		defaultConfig: {badgeLabel, itemLabel},
 		events: {
 			onOpenChange: function (isOpen: boolean): void {
@@ -23,23 +42,7 @@
 			},
 		},
 	});
-	export const api: SelectApi<Item> = widget.api;
-	const {
-		stores: {id$, ariaLabel$, highlighted$, open$, selectedContexts$, badgeLabel$, itemLabel$, visibleItems$, className$, filterText$},
-		state$,
-		actions: {onInput, onInputKeydown},
-		directives: {
-			floatingDirective,
-			hasFocusDirective,
-			referenceDirective,
-			inputContainerDirective,
-			badgeAttributesDirective,
-			menuAttributesDirective,
-			itemAttributesDirective,
-		},
-	} = widget;
-
-	$effect(() => widget.patchChangedProps({...props, open, filterText, selected}));
+	export const api: SelectApi<Item> = selectApi;
 </script>
 
 {#snippet badgeLabel({itemContext}: SelectItemContext<Item>)}
@@ -49,19 +52,19 @@
 	{itemContext.item}
 {/snippet}
 
-<div use:referenceDirective class="au-select dropdown border border-1 p-1 mb-3 d-block {$className$}">
+<div use:referenceDirective class="au-select dropdown border border-1 p-1 mb-3 d-block {state.className}">
 	<div use:hasFocusDirective use:inputContainerDirective class="d-flex align-items-center flex-wrap gap-1">
-		{#each $selectedContexts$ as itemContext (itemContext.id)}
+		{#each state.selectedContexts as itemContext (itemContext.id)}
 			<div use:badgeAttributesDirective={itemContext}>
-				<Slot content={$badgeLabel$} props={{state: $state$, widget, itemContext}} />
+				<Slot content={state.badgeLabel} props={{...slotContext, itemContext}} />
 			</div>
 		{/each}
 		<input
-			id={$id$}
-			aria-label={$ariaLabel$}
+			id={state.id}
+			aria-label={state.ariaLabel}
 			type="text"
 			class="au-select-input flex-grow-1 border-0"
-			value={$filterText$}
+			value={state.filterText}
 			aria-autocomplete="list"
 			autoCorrect="off"
 			autoCapitalize="none"
@@ -70,12 +73,12 @@
 			onkeydown={onInputKeydown}
 		/>
 	</div>
-	{#if $open$ && $visibleItems$.length > 0}
+	{#if state.open && state.visibleItems.length > 0}
 		<ul use:hasFocusDirective use:floatingDirective use:menuAttributesDirective class="dropdown-menu show">
-			{#each $visibleItems$ as itemContext (itemContext.id)}
-				{@const isHighlighted = itemContext === $highlighted$}
+			{#each state.visibleItems as itemContext (itemContext.id)}
+				{@const isHighlighted = itemContext === state.highlighted}
 				<li class="dropdown-item position-relative" class:text-bg-primary={isHighlighted} use:itemAttributesDirective={itemContext}>
-					<Slot content={$itemLabel$} props={{state: $state$, widget, itemContext}} />
+					<Slot content={state.itemLabel} props={{...slotContext, itemContext}} />
 				</li>
 			{/each}
 		</ul>

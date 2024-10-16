@@ -10,12 +10,12 @@ const AccordionDemo = () => {
 	const [thirdItemDisabled, setThirdItemDisabled] = useState<boolean>(false);
 
 	const Collapse = (props: {slotContext: AccordionItemContext}) => {
-		const {state, widget} = props.slotContext;
+		const {state, directives} = props.slotContext;
 		return (
 			<>
 				{state.shouldBeInDOM ? (
-					<div className="accordion-collapse" {...useDirective(widget.directives.bodyContainerDirective)}>
-						<div className="accordion-body" {...useDirective(widget.directives.bodyDirective)}>
+					<div className="accordion-collapse" {...useDirective(directives.bodyContainerDirective)}>
+						<div className="accordion-body" {...useDirective(directives.bodyDirective)}>
 							{BODY}
 						</div>
 					</div>
@@ -31,13 +31,13 @@ const AccordionDemo = () => {
 					className={`accordion-button accordion-header custom-header justify-content-between ${slotContext.state.visible ? '' : 'collapsed'}`}
 					role="heading"
 					aria-level={2}
-					{...useDirective(slotContext.widget.directives.headerDirective)}
+					{...useDirective(slotContext.directives.headerDirective)}
 				>
 					<p className="m-0">First panel - {slotContext.state.visible ? 'opened' : 'collapsed'}</p>
 					<button
 						type="button"
 						className={`btn btn-link p-0 ${slotContext.state.buttonClassName} au-accordion-item-button`}
-						{...useDirective(slotContext.widget.directives.toggleDirective)}
+						{...useDirective(slotContext.directives.toggleDirective)}
 					>
 						Toggle first
 					</button>
@@ -53,14 +53,14 @@ const AccordionDemo = () => {
 					className={`accordion-button accordion-header custom-header justify-content-between ${slotContext.state.visible ? '' : 'collapsed'}`}
 					role="heading"
 					aria-level={2}
-					{...useDirective(slotContext.widget.directives.headerDirective)}
+					{...useDirective(slotContext.directives.headerDirective)}
 				>
 					<p className="m-0">Second panel</p>
 					<div className="d-flex flex-wrap gap-2">
 						<button
 							type="button"
 							className={`btn btn-sm btn-outline-primary ${slotContext.state.buttonClassName} au-accordion-item-button`}
-							{...useDirective(slotContext.widget.directives.toggleDirective)}
+							{...useDirective(slotContext.directives.toggleDirective)}
 						>
 							Toggle second
 						</button>
@@ -83,12 +83,12 @@ const AccordionDemo = () => {
 					className={`accordion-button accordion-header custom-header justify-content-between ${slotContext.state.visible ? '' : 'collapsed'}`}
 					role="heading"
 					aria-level={2}
-					{...useDirective(slotContext.widget.directives.headerDirective)}
+					{...useDirective(slotContext.directives.headerDirective)}
 				>
 					<button
 						type="button"
 						className={`p-0 btn btn-link container-fluid text-start ${slotContext.state.buttonClassName} au-accordion-item-button`}
-						{...useDirective(slotContext.widget.directives.toggleDirective)}
+						{...useDirective(slotContext.directives.toggleDirective)}
 					>
 						Third panel
 					</button>

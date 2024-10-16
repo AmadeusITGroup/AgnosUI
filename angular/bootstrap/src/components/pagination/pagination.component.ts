@@ -111,17 +111,17 @@ export class PaginationStructureDirective {
 	imports: [SlotDirective, PaginationPagesDirective, PaginationStructureDirective, UseDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
-		<ng-template auPaginationPages #pages let-state="state" let-widget="widget">
+		<ng-template auPaginationPages #pages let-state="state" let-api="api" let-actions="actions" let-directives="directives">
 			@for (page of state.pages; track page; let i = $index) {
 				<li class="page-item" [class.active]="page === state.page" [class.disabled]="page === -1 || state.disabled">
 					@if (page === -1) {
 						<div class="page-link au-ellipsis" aria-hidden="true">
-							<ng-template [auSlot]="state.ellipsisLabel" [auSlotProps]="{state, widget}"></ng-template>
+							<ng-template [auSlot]="state.ellipsisLabel" [auSlotProps]="{state, actions, api, directives}"></ng-template>
 						</div>
 						<span class="visually-hidden">{{ state.ariaEllipsisLabel }}</span>
 					} @else {
-						<a class="page-link" [auUse]="[widget.directives.pageLink, {page}]">
-							<ng-template [auSlot]="state.numberLabel" [auSlotProps]="{state, widget, displayedPage: page}"></ng-template>
+						<a class="page-link" [auUse]="[directives.pageLink, {page}]">
+							<ng-template [auSlot]="state.numberLabel" [auSlotProps]="{state, actions, api, directives, displayedPage: page}"></ng-template>
 							@if (state.page === page) {
 								<span class="visually-hidden">{{ state.activeLabel }}</span>
 							}
@@ -130,41 +130,41 @@ export class PaginationStructureDirective {
 				</li>
 			}
 		</ng-template>
-		<ng-template auPaginationStructure #structure let-state="state" let-widget="widget">
+		<ng-template auPaginationStructure #structure let-state="state" let-api="api" let-actions="actions" let-directives="directives">
 			<ul [class]="'au-pagination pagination' + (state.size ? ' pagination-' + state.size : '') + ' ' + state.className">
 				@if (state.boundaryLinks) {
 					<li class="page-item" [class.disabled]="state.previousDisabled">
-						<a class="page-link" [auUse]="widget.directives.pageFirst">
+						<a class="page-link" [auUse]="directives.pageFirst">
 							<span aria-hidden="true">
-								<ng-template [auSlot]="state.firstPageLabel" [auSlotProps]="{widget, state}"></ng-template>
+								<ng-template [auSlot]="state.firstPageLabel" [auSlotProps]="{state, actions, api, directives}"></ng-template>
 							</span>
 						</a>
 					</li>
 				}
 				@if (state.directionLinks) {
 					<li class="page-item" [class.disabled]="state.previousDisabled">
-						<a class="page-link" [auUse]="widget.directives.pagePrev">
+						<a class="page-link" [auUse]="directives.pagePrev">
 							<span aria-hidden="true">
-								<ng-template [auSlot]="state.previousPageLabel" [auSlotProps]="{widget, state}"></ng-template>
+								<ng-template [auSlot]="state.previousPageLabel" [auSlotProps]="{state, actions, api, directives}"></ng-template>
 							</span>
 						</a>
 					</li>
 				}
-				<ng-template [auSlot]="state.pagesDisplay" [auSlotProps]="{widget, state}"></ng-template>
+				<ng-template [auSlot]="state.pagesDisplay" [auSlotProps]="{state, actions, api, directives}"></ng-template>
 				@if (state.directionLinks) {
 					<li class="page-item" [class.disabled]="state.nextDisabled">
-						<a class="page-link" [auUse]="widget.directives.pageNext">
+						<a class="page-link" [auUse]="directives.pageNext">
 							<span aria-hidden="true">
-								<ng-template [auSlot]="state.nextPageLabel" [auSlotProps]="{widget, state}"></ng-template>
+								<ng-template [auSlot]="state.nextPageLabel" [auSlotProps]="{state, actions, api, directives}"></ng-template>
 							</span>
 						</a>
 					</li>
 				}
 				@if (state.boundaryLinks) {
 					<li class="page-item" [class.disabled]="state.nextDisabled">
-						<a class="page-link" [auUse]="widget.directives.pageLast">
+						<a class="page-link" [auUse]="directives.pageLast">
 							<span aria-hidden="true">
-								<ng-template [auSlot]="state.lastPageLabel" [auSlotProps]="{widget, state}"></ng-template>
+								<ng-template [auSlot]="state.lastPageLabel" [auSlotProps]="{state, actions, api, directives}"></ng-template>
 							</span>
 						</a>
 					</li>
@@ -201,7 +201,7 @@ const defaultConfig: Partial<PaginationProps> = {
 		'[attr.aria-label]': 'state().ariaLabel',
 	},
 	encapsulation: ViewEncapsulation.None,
-	template: `<ng-template [auSlotProps]="{state: state(), widget}" [auSlot]="state().structure"></ng-template>`,
+	template: `<ng-template [auSlotProps]="{state: state(), actions, api, directives}" [auSlot]="state().structure"></ng-template>`,
 })
 export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> implements AfterContentChecked {
 	/**

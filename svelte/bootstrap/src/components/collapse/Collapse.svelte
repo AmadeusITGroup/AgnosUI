@@ -6,20 +6,19 @@
 
 	let {children, ...props}: Partial<CollapseProps> & {children: Snippet} = $props();
 
-	const widget = callWidgetFactory({
+	const {
+		widget: {directives, api: collapseApi},
+	} = callWidgetFactory({
 		factory: createCollapse,
 		widgetName: 'collapse',
-		props,
+		get props() {
+			return props;
+		},
+		enablePatchChanged: true,
 	});
-	export const api: CollapseApi = widget.api;
-
-	const {
-		directives: {transitionDirective},
-	} = widget;
-
-	$effect(() => widget.patchChangedProps({...props}));
+	export const api: CollapseApi = collapseApi;
 </script>
 
-<div use:transitionDirective>
+<div use:directives.transitionDirective>
 	{@render children()}
 </div>

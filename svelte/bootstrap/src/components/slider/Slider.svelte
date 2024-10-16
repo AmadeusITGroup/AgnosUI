@@ -5,14 +5,22 @@
 	import {callWidgetFactory} from '../../config';
 	import SliderDefaultStructure from './SliderDefaultStructure.svelte';
 	import SliderDefaultHandle from './SliderDefaultHandle.svelte';
-	import {toSlotContextWidget} from '@agnos-ui/svelte-headless/types';
 
 	let {values = $bindable(), ...props}: Partial<SliderProps> = $props();
 
-	const widget = callWidgetFactory({
+	const {
+		widget: {
+			directives: {sliderDirective},
+			state,
+		},
+		slotContext,
+	} = callWidgetFactory({
 		factory: createSlider,
 		widgetName: 'slider',
-		props: {...props, values},
+		get props() {
+			return {...props, values};
+		},
+		enablePatchChanged: true,
 		defaultConfig: {structure, handle, label},
 		events: {
 			onValuesChange: function (newValues: number[]): void {
@@ -20,15 +28,6 @@
 			},
 		},
 	});
-
-	const {
-		stores: {structure$},
-		directives: {sliderDirective},
-		state$,
-	} = widget;
-
-	$effect(() => widget.patchChangedProps({...props, values}));
-	let slotContext = $derived({widget: toSlotContextWidget(widget), state: $state$});
 </script>
 
 {#snippet structure(props: SliderContext)}
@@ -43,5 +42,5 @@
 
 <!-- on:blur={onTouched} ?? -->
 <div use:sliderDirective>
-	<Slot content={$structure$} props={slotContext} />
+	<Slot content={state.structure} props={slotContext} />
 </div>

@@ -3,15 +3,24 @@
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import {createToast} from './toast.gen';
 	import {callWidgetFactory} from '../../config';
-	import {toSlotContextWidget} from '@agnos-ui/svelte-headless/types';
 	import ToastDefaultStructure from './ToastDefaultStructure.svelte';
 
 	let {visible = $bindable(), ...props}: Partial<ToastProps> = $props();
 
-	const widget = callWidgetFactory({
+	const {
+		widget: {
+			directives: {transitionDirective, autoHideDirective, bodyDirective},
+			state,
+			api: toastApi,
+		},
+		slotContext,
+	} = callWidgetFactory({
 		factory: createToast,
 		widgetName: 'toast',
-		props: {...props, visible},
+		get props() {
+			return {...props, visible};
+		},
+		enablePatchChanged: true,
 		defaultConfig: {structure},
 		events: {
 			onVisibleChange: (event) => {
@@ -19,24 +28,22 @@
 			},
 		},
 	});
-	export const api: ToastApi = widget.api;
-
-	const {
-		stores: {structure$, hidden$, header$, dismissible$},
-		directives: {transitionDirective, autoHideDirective, bodyDirective},
-		state$,
-	} = widget;
-
-	$effect(() => widget.patchChangedProps({...props, visible}));
-	let slotContext = $derived({widget: toSlotContextWidget(widget), state: $state$});
+	export const api: ToastApi = toastApi;
 </script>
 
 {#snippet structure(props: ToastContext)}
 	<ToastDefaultStructure {...props} />
 {/snippet}
 
-{#if !$hidden$}
-	<div class="toast" class:toast-dismissible={$dismissible$} class:d-flex={!$header$} use:transitionDirective use:autoHideDirective use:bodyDirective>
-		<Slot content={$structure$} props={slotContext} />
+{#if !state.hidden}
+	<div
+		class="toast"
+		class:toast-dismissible={state.dismissible}
+		class:d-flex={!state.header}
+		use:transitionDirective
+		use:autoHideDirective
+		use:bodyDirective
+	>
+		<Slot content={state.structure} props={slotContext} />
 	</div>
 {/if}

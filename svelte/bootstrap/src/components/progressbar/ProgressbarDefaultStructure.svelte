@@ -2,8 +2,8 @@
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import type {ProgressbarContext} from './progressbar.gen';
 
-	let {state, widget}: ProgressbarContext = $props();
-	let slotContext = $derived({widget, state});
+	let {state, ...restProps}: ProgressbarContext = $props();
+	let slotContext = $derived({state, ...restProps});
 </script>
 
 <div class="progress" style:height={state.height}>

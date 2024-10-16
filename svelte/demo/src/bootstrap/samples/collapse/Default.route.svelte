@@ -4,7 +4,7 @@
 	let collapse: Collapse;
 </script>
 
-<button class="btn btn-primary m-2" type="button" on:click={() => collapse.api.open()}>Open collapse</button>
-<button class="btn btn-primary m-2" type="button" on:click={() => collapse.api.close()}>Close collapse</button>
-<button class="btn btn-primary m-2" type="button" on:click={() => collapse.api.toggle()}>Toggle collapse</button>
+<button class="btn btn-primary m-2" type="button" onclick={() => collapse.api.open()}>Open collapse</button>
+<button class="btn btn-primary m-2" type="button" onclick={() => collapse.api.close()}>Close collapse</button>
+<button class="btn btn-primary m-2" type="button" onclick={() => collapse.api.toggle()}>Toggle collapse</button>
 <Collapse bind:this={collapse} onHidden={() => console.log('Hidden')}>Visible content</Collapse>

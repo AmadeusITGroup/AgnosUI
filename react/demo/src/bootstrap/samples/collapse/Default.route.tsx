@@ -7,13 +7,13 @@ const CollapseDemo = () => {
 
 	return (
 		<>
-			<button className="btn btn-primary m-2" type="button" onClick={() => refCollapse?.current?.open()}>
+			<button className="btn btn-primary m-2" type="button" onClick={() => refCollapse.current?.open()}>
 				Open collapse
 			</button>
-			<button className="btn btn-primary m-2" type="button" onClick={() => refCollapse?.current?.close()}>
+			<button className="btn btn-primary m-2" type="button" onClick={() => refCollapse.current?.close()}>
 				Close collapse
 			</button>
-			<button className="btn btn-primary m-2" type="button" onClick={() => refCollapse?.current?.toggle()}>
+			<button className="btn btn-primary m-2" type="button" onClick={() => refCollapse.current?.toggle()}>
 				Toggle collapse
 			</button>
 			<Collapse ref={refCollapse}>Visible content</Collapse>
