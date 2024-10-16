@@ -81,7 +81,7 @@ export interface TransitionProps {
 	/**
 	 * Function to be called when the visible property changes.
 	 *
-	 * @param visible - new value of the visible propery
+	 * @param visible - new value of the visible property
 	 */
 	onVisibleChange: (visible: boolean) => void;
 }

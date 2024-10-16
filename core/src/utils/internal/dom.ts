@@ -35,7 +35,7 @@ export const computeCommonAncestor = (elements: HTMLElement[]): HTMLElement | nu
 };
 
 /**
- * Launch a reflow using a call to the provided html element getBoudingClientRect
+ * Launch a reflow using a call to the provided html element getBoundingClientRect
  * @param element - the html element
  */
 export const reflow: (element?: SSRHTMLElement) => void = BROWSER
@@ -50,7 +50,7 @@ export const reflow: (element?: SSRHTMLElement) => void = BROWSER
  * Attach the given css classes to the element
  *
  * @param element - the HTML element
- * @param classes - the css lcasses
+ * @param classes - the css classes
  */
 export const addClasses = (element: SSRHTMLElement, classes?: string[]): void => {
 	if (classes && classes.length > 0) {

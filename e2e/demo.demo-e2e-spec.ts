@@ -28,7 +28,14 @@ const allRoutes = globSync(`**/+page.svelte`, {cwd: pathToFrameworkDir}).flatMap
 	if (normalizedRoute === 'api/svelte/bootstrap/[...slug]') {
 		return Object.keys(componentsMetadata).map((component) => normalizedRoute.replace('[...slug]', `components/${component.toLowerCase()}`));
 	}
-	return normalizedRoute;
+	// because this url is already in the generated routes using daisyUIMetadata
+	const exceptionUrl = 'docs/svelte/daisyUI/collapse/api';
+	const routes = [normalizedRoute];
+	const index = routes.indexOf(exceptionUrl);
+	if (index !== -1) {
+		routes.splice(index, 1);
+	}
+	return routes;
 });
 
 test.describe.parallel('Demo Website', () => {
