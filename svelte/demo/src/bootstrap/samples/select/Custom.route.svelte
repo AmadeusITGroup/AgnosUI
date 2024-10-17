@@ -48,11 +48,7 @@
 	<Select {items} {itemIdFn} {onFilterTextChange} {onSelectedChange} {navSelector} badgeClassName="badge text-bg-light d-flex align-items-center">
 		{#snippet badgeLabel({itemContext, widget})}
 			<a href={`${basePageUrl}${itemContext.item.pageid}`} target="_blank" rel="noreferrer">{itemContext.item.title}</a>
-			<button
-				type="button"
-				class="btn-close ms-1 wiki-btn-close"
-				aria-label="Close"
-				onclick={(e) => widget.actions.onRemoveBadgeClick(e, itemContext.item)}
+			<button type="button" class="btn-close ms-1 wiki-btn-close" aria-label="Close" use:widget.directives.badgeCloseButtonDirective={itemContext}
 			></button>
 		{/snippet}
 		{#snippet itemLabel({itemContext: {id, item}})}

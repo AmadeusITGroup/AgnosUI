@@ -114,11 +114,13 @@ describe(`Accordion`, () => {
 	});
 
 	test(`itemVisibleState update properly`, () => {
+		const button = document.createElement('button');
 		const i = accordion.api.registerItem();
+		i.directives.buttonDirective(button);
 		expect(i.state$().visible).toBe(false);
-		i.actions.click();
+		button.click();
 		expect(i.state$().visible).toBe(true);
-		i.actions.click();
+		button.click();
 	});
 
 	test(`should expand all the items and close them`, () => {
@@ -277,12 +279,14 @@ describe(`Accordion`, () => {
 
 	test(`should not work click when item is disabled`, () => {
 		const element = document.createElement('div');
+		const button = document.createElement('button');
 		const i = accordion.api.registerItem({props: {disabled: true}});
 		i.directives.itemDirective(element);
+		i.directives.buttonDirective(button);
 		expectOpenItems(state, [false]);
 		i.patch({visible: true});
 		expectOpenItems(state, [true]);
-		i.actions.click();
+		button.click();
 		expectOpenItems(state, [true]);
 	});
 

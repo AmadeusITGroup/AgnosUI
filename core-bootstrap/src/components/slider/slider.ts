@@ -1,10 +1,4 @@
-import type {
-	SliderActions,
-	SliderDirectives,
-	SliderHandle,
-	SliderProps as CoreProps,
-	SliderState as CoreState,
-} from '@agnos-ui/core/components/slider';
+import type {SliderDirectives, SliderHandle, SliderProps as CoreProps, SliderState as CoreState} from '@agnos-ui/core/components/slider';
 import {createSlider as createCoreSlider, getSliderDefaultConfig as getCoreDefaultConfig} from '@agnos-ui/core/components/slider';
 import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
 import type {SlotContent, Widget, WidgetFactory, WidgetSlotContext} from '@agnos-ui/core/types';
@@ -40,7 +34,7 @@ interface SliderExtraProps {
 export interface SliderState extends CoreState, SliderExtraProps {}
 export interface SliderProps extends CoreProps, SliderExtraProps {}
 
-export type SliderWidget = Widget<SliderProps, SliderState, object, SliderActions, SliderDirectives>;
+export type SliderWidget = Widget<SliderProps, SliderState, object, object, SliderDirectives>;
 
 const defaultConfigExtraProps: SliderExtraProps = {
 	structure: undefined,

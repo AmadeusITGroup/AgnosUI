@@ -46,24 +46,12 @@ export class SelectItemLabelDirective<Item> {
 			>
 				@if (state.selectedContexts; as selectedContexts) {
 					@for (itemContext of selectedContexts; track itemCtxTrackBy($index, itemContext)) {
-						<div [auUse]="[_widget.directives.badgeAttributesDirective, itemContext]">
+						<div [auUse]="[widget.directives.badgeAttributesDirective, itemContext]">
 							<ng-template [auSlot]="state.badgeLabel" [auSlotProps]="{state, widget, itemContext}"></ng-template>
 						</div>
 					}
 				}
-				<input
-					attr.id="{{ state.id }}"
-					attr.aria-label="{{ state.ariaLabel }}"
-					type="text"
-					class="au-select-input flex-grow-1 border-0"
-					[value]="state.filterText"
-					aria-autocomplete="list"
-					autoCorrect="off"
-					autoCapitalize="none"
-					autoComplete="off"
-					(input)="_widget.actions.onInput($event)"
-					(keydown)="_widget.actions.onInputKeydown($event)"
-				/>
+				<input [auUse]="widget.directives.inputDirective" [value]="state.filterText" />
 			</div>
 			@if (state.open && state.visibleItems.length) {
 				<ul

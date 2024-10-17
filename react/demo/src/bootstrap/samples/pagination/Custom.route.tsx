@@ -16,7 +16,7 @@ function CustomPages({widget, state}: PaginationContext) {
 	function handleTheChange(e: FocusEvent<HTMLInputElement> | KeyboardEvent<HTMLInputElement>) {
 		const value = e.currentTarget.value;
 		const intValue = parseInt(value);
-		widget.actions.select(intValue);
+		widget.api.select(intValue);
 		setValue(widget.stores.page$().toString());
 	}
 	function formatInput(e: FormEvent<HTMLInputElement>) {

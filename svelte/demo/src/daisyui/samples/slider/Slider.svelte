@@ -16,7 +16,7 @@
 	});
 	const {
 		stores: {min$, max$, stepSize$, sortedHandles$},
-		directives: {sliderDirective},
+		directives: {sliderDirective, clickableAreaDirective, handleEventsDirective},
 		patchChangedProps,
 	} = widget;
 	$effect(() => patchChangedProps({...props, values}));
@@ -25,14 +25,12 @@
 <input
 	type="range"
 	use:sliderDirective
+	use:clickableAreaDirective
+	use:handleEventsDirective={{item: {id: 0}}}
 	min={$min$}
 	max={$max$}
 	value={$sortedHandles$[0].value}
 	step={$stepSize$}
 	class="range"
 	aria-label={$sortedHandles$[0].ariaLabel}
-	onclick={widget.actions.click}
-	onkeydown={(e) => widget.actions.keydown(e, 0)}
-	onmousedown={(e) => widget.actions.mouseDown(e, 0)}
-	ontouchstart={(e) => widget.actions.touchStart(e, 0)}
 />

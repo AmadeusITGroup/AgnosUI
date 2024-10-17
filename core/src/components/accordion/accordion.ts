@@ -172,13 +172,6 @@ export interface AccordionDirectives {
 
 export type AccordionWidget = Widget<AccordionProps, AccordionState, AccordionApi, object, AccordionDirectives>;
 
-export interface AccordionItemActions {
-	/**
-	 * Action to be called when the user clicks on the accordion-item button. If the accordion-item is disabled nothing will happen.
-	 */
-	click(): void;
-}
-
 export interface AccordionItemApi {
 	/**
 	 * It will collapse the accordion-item.
@@ -311,7 +304,7 @@ export interface AccordionItemState extends AccordionItemCommonPropsAndState {
 	shouldBeInDOM: boolean;
 }
 
-export type AccordionItemWidget = Widget<AccordionItemProps, AccordionItemState, AccordionItemApi, AccordionItemActions, AccordionItemDirectives>;
+export type AccordionItemWidget = Widget<AccordionItemProps, AccordionItemState, AccordionItemApi, object, AccordionItemDirectives>;
 
 const defaultAccordionConfig: AccordionProps = {
 	closeOthers: false,
@@ -436,11 +429,6 @@ export function createAccordionItem(config?: PropsConfig<AccordionItemProps>): A
 		},
 	});
 	const shouldBeInDOM$ = computed(() => destroyOnHide$() === false || !transition.stores.hidden$());
-	const clickAction = () => {
-		if (!disabled$()) {
-			visible$.update((c: boolean) => !c);
-		}
-	};
 	const toggleDirective = createAttributesDirective(() => ({
 		attributes: {
 			id: computed(() => `${id$()}-toggle`),
@@ -450,7 +438,13 @@ export function createAccordionItem(config?: PropsConfig<AccordionItemProps>): A
 			disabled: disabled$,
 		},
 		classNames: {collapsed: computed(() => !visible$())},
-		events: {click: clickAction},
+		events: {
+			click: () => {
+				if (!disabled$()) {
+					visible$.update((c: boolean) => !c);
+				}
+			},
+		},
 	}));
 	const transitionDirective = bindDirectiveNoArg(transition.directives.directive);
 	const bodyContainerAttrsDirective = createAttributesDirective(() => ({
@@ -474,9 +468,6 @@ export function createAccordionItem(config?: PropsConfig<AccordionItemProps>): A
 			...stateProps,
 		}),
 		patch,
-		actions: {
-			click: clickAction,
-		},
 		api: {
 			initDone: () => {
 				initDone$.set(true);
@@ -491,6 +482,7 @@ export function createAccordionItem(config?: PropsConfig<AccordionItemProps>): A
 				visible$.update((c: boolean) => !c);
 			},
 		},
+		actions: {},
 		directives: {
 			toggleDirective,
 			buttonDirective: mergeDirectives(

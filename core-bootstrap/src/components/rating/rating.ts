@@ -1,10 +1,4 @@
-import type {
-	RatingActions,
-	RatingDirectives,
-	StarContext,
-	RatingState as CoreState,
-	RatingProps as CoreProps,
-} from '@agnos-ui/core/components/rating';
+import type {RatingApi, RatingDirectives, StarContext, RatingState as CoreState, RatingProps as CoreProps} from '@agnos-ui/core/components/rating';
 import {getRatingDefaultConfig as getCoreDefaultConfig, createRating as createCoreRating} from '@agnos-ui/core/components/rating';
 import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
 import type {SlotContent, Widget, WidgetFactory} from '@agnos-ui/core/types';
@@ -26,7 +20,7 @@ interface RatingExtraProps {
 export interface RatingState extends CoreState, RatingExtraProps {}
 export interface RatingProps extends CoreProps, RatingExtraProps {}
 
-export type RatingWidget = Widget<RatingProps, RatingState, object, RatingActions, RatingDirectives>;
+export type RatingWidget = Widget<RatingProps, RatingState, RatingApi, object, RatingDirectives>;
 
 const defaultConfigExtraProps: RatingExtraProps = {
 	star: ({fill}: StarContext) => String.fromCharCode(fill === 100 ? 9733 : 9734),

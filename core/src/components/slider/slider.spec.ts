@@ -4,6 +4,7 @@ import {beforeEach, describe, expect, test, vi} from 'vitest';
 import type {HandleDisplayOptions, ProgressDisplayOptions, SliderProps, SliderState, SliderWidget} from './slider';
 import {createSlider} from './slider';
 import {assign} from '../../../../common/utils';
+import {attachDirectiveAndSendEvent} from '../components.spec-utils';
 
 // TODO move to the utils?
 function keyboardEvent(key: string): KeyboardEvent {
@@ -59,6 +60,15 @@ describe(`Slider basic`, () => {
 	let slider: SliderWidget;
 	let normalizedState$: ReadableSignal<SliderState>;
 	let defConfig: WritableSignal<Partial<SliderProps>>;
+
+	const clickAreaX = (clientX: number) => {
+		attachDirectiveAndSendEvent(slider.directives.clickableAreaDirective, undefined, (node) =>
+			node.dispatchEvent(new MouseEvent('click', {clientX})),
+		);
+	};
+	const useKeyOnHandle = (key: string) => {
+		attachDirectiveAndSendEvent(slider.directives.handleEventsDirective, {item: {id: 0}}, (node) => node.dispatchEvent(keyboardEvent(key)));
+	};
 
 	beforeEach(() => {
 		const sliderElement = document.createElement('div');
@@ -425,7 +435,7 @@ describe(`Slider basic`, () => {
 			}),
 		);
 
-		slider.actions.click(new MouseEvent('click', {clientX: 0}));
+		clickAreaX(0);
 
 		expect(normalizedState$()).toStrictEqual(
 			assign(expectedState, {
@@ -511,7 +521,7 @@ describe(`Slider basic`, () => {
 	});
 
 	test(`should set handle to 100 and hide the max label when clicked outside the slider on the right side`, () => {
-		slider.actions.click(new MouseEvent('click', {clientX: 120}));
+		clickAreaX(120);
 
 		const expectedState = defaultState();
 
@@ -546,7 +556,7 @@ describe(`Slider basic`, () => {
 	});
 
 	test(`should set handle to a proper percent when clicked inside the slider`, () => {
-		slider.actions.click(new MouseEvent('click', {clientX: 70}));
+		clickAreaX(70);
 
 		const expectedState = defaultState();
 
@@ -580,7 +590,7 @@ describe(`Slider basic`, () => {
 	});
 
 	test(`should not go below minimum on arrow left and down arrow key stroke`, () => {
-		slider.actions.keydown(keyboardEvent('ArrowDown'), 0);
+		useKeyOnHandle('ArrowDown');
 
 		const expectedState = defaultState();
 
@@ -612,7 +622,7 @@ describe(`Slider basic`, () => {
 			}),
 		);
 
-		slider.actions.keydown(keyboardEvent('ArrowLeft'), 0);
+		useKeyOnHandle('ArrowLeft');
 
 		expect(normalizedState$()).toStrictEqual(expectedState);
 	});
@@ -652,7 +662,7 @@ describe(`Slider basic`, () => {
 			}),
 		);
 
-		slider.actions.keydown(keyboardEvent('ArrowDown'), 0);
+		useKeyOnHandle('ArrowDown');
 
 		expect(normalizedState$()).toStrictEqual(
 			assign(expectedState, {
@@ -681,7 +691,7 @@ describe(`Slider basic`, () => {
 			}),
 		);
 
-		slider.actions.keydown(keyboardEvent('ArrowLeft'), 0);
+		useKeyOnHandle('ArrowLeft');
 
 		expect(normalizedState$()).toStrictEqual(
 			assign(expectedState, {
@@ -716,7 +726,7 @@ describe(`Slider basic`, () => {
 			values: [100],
 		});
 
-		slider.actions.keydown(keyboardEvent('ArrowUp'), 0);
+		useKeyOnHandle('ArrowUp');
 
 		const expectedState = defaultState();
 
@@ -749,7 +759,7 @@ describe(`Slider basic`, () => {
 			}),
 		);
 
-		slider.actions.keydown(keyboardEvent('ArrowRight'), 0);
+		useKeyOnHandle('ArrowRight');
 
 		expect(normalizedState$()).toStrictEqual(expectedState);
 	});
@@ -789,7 +799,7 @@ describe(`Slider basic`, () => {
 			}),
 		);
 
-		slider.actions.keydown(keyboardEvent('ArrowUp'), 0);
+		useKeyOnHandle('ArrowUp');
 
 		expect(normalizedState$()).toStrictEqual(
 			assign(expectedState, {
@@ -818,7 +828,7 @@ describe(`Slider basic`, () => {
 			}),
 		);
 
-		slider.actions.keydown(keyboardEvent('ArrowRight'), 0);
+		useKeyOnHandle('ArrowRight');
 
 		expect(normalizedState$()).toStrictEqual(
 			assign(expectedState, {
@@ -883,7 +893,7 @@ describe(`Slider basic`, () => {
 			}),
 		);
 
-		slider.actions.keydown(keyboardEvent('Home'), 0);
+		useKeyOnHandle('Home');
 
 		expect(normalizedState$()).toStrictEqual(
 			assign(expectedState, {
@@ -949,7 +959,7 @@ describe(`Slider basic`, () => {
 			}),
 		);
 
-		slider.actions.keydown(keyboardEvent('End'), 0);
+		useKeyOnHandle('End');
 
 		expect(normalizedState$()).toStrictEqual(
 			assign(expectedState, {
@@ -996,11 +1006,11 @@ describe(`Slider basic`, () => {
 
 		expect(normalizedState$()).toStrictEqual(expectedState);
 
-		slider.actions.click(new MouseEvent('click', {clientX: 50}));
+		clickAreaX(50);
 
 		expect(normalizedState$()).toStrictEqual(expectedState);
 
-		slider.actions.keydown(keyboardEvent('Home'), 0);
+		useKeyOnHandle('Home');
 
 		expect(normalizedState$()).toStrictEqual(expectedState);
 	});
@@ -1021,11 +1031,11 @@ describe(`Slider basic`, () => {
 
 		expect(normalizedState$()).toStrictEqual(expectedState);
 
-		slider.actions.click(new MouseEvent('click', {clientX: 50}));
+		clickAreaX(50);
 
 		expect(normalizedState$()).toStrictEqual(expectedState);
 
-		slider.actions.keydown(keyboardEvent('Home'), 0);
+		useKeyOnHandle('Home');
 
 		expect(normalizedState$()).toStrictEqual(expectedState);
 	});
@@ -1056,7 +1066,7 @@ describe(`Slider basic`, () => {
 			}),
 		);
 
-		slider.actions.keydown(keyboardEvent('ArrowUp'), 0);
+		useKeyOnHandle('ArrowUp');
 
 		expect(normalizedState$()).toStrictEqual(
 			assign(expectedState, {
@@ -1137,7 +1147,7 @@ describe(`Slider basic`, () => {
 			}),
 		);
 
-		slider.actions.keydown(keyboardEvent('ArrowLeft'), 0);
+		useKeyOnHandle('ArrowLeft');
 
 		expect(normalizedState$()).toStrictEqual(
 			assign(expectedState, {
@@ -1274,7 +1284,7 @@ describe(`Slider basic`, () => {
 			}),
 		);
 
-		slider.actions.keydown(keyboardEvent('ArrowUp'), 0);
+		useKeyOnHandle('ArrowUp');
 
 		expect(normalizedState$()).toStrictEqual(
 			assign(expectedState, {
@@ -1307,7 +1317,7 @@ describe(`Slider basic`, () => {
 			}),
 		);
 
-		slider.actions.keydown(keyboardEvent('ArrowLeft'), 0);
+		useKeyOnHandle('ArrowLeft');
 
 		expect(normalizedState$()).toStrictEqual(
 			assign(expectedState, {
@@ -1340,7 +1350,7 @@ describe(`Slider basic`, () => {
 			}),
 		);
 
-		slider.actions.keydown(keyboardEvent('ArrowDown'), 0);
+		useKeyOnHandle('ArrowDown');
 
 		expect(normalizedState$()).toStrictEqual(
 			assign(expectedState, {
@@ -1373,7 +1383,7 @@ describe(`Slider basic`, () => {
 			}),
 		);
 
-		slider.actions.keydown(keyboardEvent('ArrowRight'), 0);
+		useKeyOnHandle('ArrowRight');
 
 		expect(normalizedState$()).toStrictEqual(
 			assign(expectedState, {
@@ -1412,6 +1422,15 @@ describe(`Slider range`, () => {
 	let slider: SliderWidget;
 	let normalizedState$: ReadableSignal<SliderState>;
 	let defConfig: WritableSignal<Partial<SliderProps>>;
+
+	const clickAreaX = (clientX: number) => {
+		attachDirectiveAndSendEvent(slider.directives.clickableAreaDirective, undefined, (node) =>
+			node.dispatchEvent(new MouseEvent('click', {clientX})),
+		);
+	};
+	const useKeyOnHandle = (key: string, handleId = 0) => {
+		attachDirectiveAndSendEvent(slider.directives.handleEventsDirective, {item: {id: handleId}}, (node) => node.dispatchEvent(keyboardEvent(key)));
+	};
 
 	beforeEach(() => {
 		defConfig = writable({});
@@ -1540,7 +1559,7 @@ describe(`Slider range`, () => {
 			}),
 		);
 
-		slider.actions.click(new MouseEvent('click', {clientX: 60}));
+		clickAreaX(60);
 
 		expect(normalizedState$()).toStrictEqual(
 			assign(expectedState, {
@@ -1634,7 +1653,7 @@ describe(`Slider range`, () => {
 			}),
 		);
 
-		slider.actions.keydown(keyboardEvent('End'), 0);
+		useKeyOnHandle('End');
 
 		expect(normalizedState$()).toStrictEqual(
 			assign(expectedState, {
@@ -1679,7 +1698,7 @@ describe(`Slider range`, () => {
 			}),
 		);
 
-		slider.actions.click(new MouseEvent('click', {clientX: 70}));
+		clickAreaX(70);
 
 		expect(normalizedState$()).toStrictEqual(
 			assign(expectedState, {
@@ -1774,7 +1793,7 @@ describe(`Slider range`, () => {
 			}),
 		);
 
-		slider.actions.click(new MouseEvent('click', {clientX: 70}));
+		clickAreaX(70);
 
 		expect(normalizedState$()).toStrictEqual(
 			assign(expectedState, {
@@ -1878,6 +1897,10 @@ describe(`Slider vertical`, () => {
 	let slider: SliderWidget;
 	let normalizedState$: ReadableSignal<SliderState>;
 	let defConfig: WritableSignal<Partial<SliderProps>>;
+
+	const useKeyOnHandle = (key: string, handleId = 0) => {
+		attachDirectiveAndSendEvent(slider.directives.handleEventsDirective, {item: {id: handleId}}, (node) => node.dispatchEvent(keyboardEvent(key)));
+	};
 
 	beforeEach(() => {
 		defConfig = writable({});
@@ -2017,7 +2040,7 @@ describe(`Slider vertical`, () => {
 			}),
 		);
 
-		slider.actions.keydown(keyboardEvent('ArrowDown'), 0);
+		useKeyOnHandle('ArrowDown');
 
 		expect(normalizedState$()).toStrictEqual(
 			assign(expectedState, {
@@ -2049,7 +2072,7 @@ describe(`Slider vertical`, () => {
 			}),
 		);
 
-		slider.actions.keydown(keyboardEvent('ArrowRight'), 0);
+		useKeyOnHandle('ArrowRight');
 
 		expect(normalizedState$()).toStrictEqual(
 			assign(expectedState, {
@@ -2081,7 +2104,7 @@ describe(`Slider vertical`, () => {
 			}),
 		);
 
-		slider.actions.keydown(keyboardEvent('ArrowUp'), 0);
+		useKeyOnHandle('ArrowUp');
 
 		expect(normalizedState$()).toStrictEqual(
 			assign(expectedState, {
@@ -2113,7 +2136,7 @@ describe(`Slider vertical`, () => {
 			}),
 		);
 
-		slider.actions.keydown(keyboardEvent('ArrowLeft'), 0);
+		useKeyOnHandle('ArrowLeft');
 
 		expect(normalizedState$()).toStrictEqual(
 			assign(expectedState, {
@@ -2185,7 +2208,7 @@ describe(`Slider vertical`, () => {
 			}),
 		);
 
-		slider.actions.keydown(keyboardEvent('ArrowDown'), 0);
+		useKeyOnHandle('ArrowDown');
 
 		expect(normalizedState$()).toStrictEqual(
 			assign(expectedState, {
@@ -2217,7 +2240,7 @@ describe(`Slider vertical`, () => {
 			}),
 		);
 
-		slider.actions.keydown(keyboardEvent('ArrowRight'), 0);
+		useKeyOnHandle('ArrowRight');
 
 		expect(normalizedState$()).toStrictEqual(
 			assign(expectedState, {
@@ -2249,7 +2272,7 @@ describe(`Slider vertical`, () => {
 			}),
 		);
 
-		slider.actions.keydown(keyboardEvent('ArrowUp'), 0);
+		useKeyOnHandle('ArrowUp');
 
 		expect(normalizedState$()).toStrictEqual(
 			assign(expectedState, {
@@ -2281,7 +2304,7 @@ describe(`Slider vertical`, () => {
 			}),
 		);
 
-		slider.actions.keydown(keyboardEvent('ArrowLeft'), 0);
+		useKeyOnHandle('ArrowLeft');
 
 		expect(normalizedState$()).toStrictEqual(
 			assign(expectedState, {
