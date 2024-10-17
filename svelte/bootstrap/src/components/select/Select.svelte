@@ -25,9 +25,8 @@
 	});
 	export const api: SelectApi<Item> = widget.api;
 	const {
-		stores: {id$, ariaLabel$, highlighted$, open$, selectedContexts$, badgeLabel$, itemLabel$, visibleItems$, className$, filterText$},
+		stores: {highlighted$, open$, selectedContexts$, badgeLabel$, itemLabel$, visibleItems$, className$, filterText$},
 		state$,
-		actions: {onInput, onInputKeydown},
 		directives: {
 			floatingDirective,
 			hasFocusDirective,
@@ -36,6 +35,7 @@
 			badgeAttributesDirective,
 			menuAttributesDirective,
 			itemAttributesDirective,
+			inputDirective,
 		},
 	} = widget;
 
@@ -56,19 +56,7 @@
 				<Slot content={$badgeLabel$} props={{state: $state$, widget, itemContext}} />
 			</div>
 		{/each}
-		<input
-			id={$id$}
-			aria-label={$ariaLabel$}
-			type="text"
-			class="au-select-input flex-grow-1 border-0"
-			value={$filterText$}
-			aria-autocomplete="list"
-			autoCorrect="off"
-			autoCapitalize="none"
-			autoComplete="off"
-			oninput={onInput}
-			onkeydown={onInputKeydown}
-		/>
+		<input value={$filterText$} use:inputDirective />
 	</div>
 	{#if $open$ && $visibleItems$.length > 0}
 		<ul use:hasFocusDirective use:floatingDirective use:menuAttributesDirective class="dropdown-menu show">

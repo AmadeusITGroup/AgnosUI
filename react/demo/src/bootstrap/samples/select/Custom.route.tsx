@@ -2,6 +2,7 @@ import {abortPrevious, debounce} from '@agnos-ui/common/samples/utils/debounce';
 import type {SelectItemContext} from '@agnos-ui/react-bootstrap/components/select';
 import {Select} from '@agnos-ui/react-bootstrap/components/select';
 import React, {useCallback, useState} from 'react';
+import {useDirective} from '@agnos-ui/react-bootstrap/utils/directive';
 
 import '@agnos-ui/common/samples/select/custom.scss';
 
@@ -33,7 +34,7 @@ const SlotBadgeLabel = ({itemContext, widget}: SelectItemContext<WikiResult>) =>
 				type="button"
 				className="btn-close ms-1 wiki-btn-close"
 				aria-label="Close"
-				onClick={(e) => widget.actions.onRemoveBadgeClick(e.nativeEvent, itemContext.item)}
+				{...useDirective(widget.directives.badgeCloseButtonDirective, itemContext)}
 			></button>
 		</>
 	);

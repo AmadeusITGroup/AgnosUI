@@ -39,11 +39,6 @@ export class RatingReadonlyComponent extends BaseWidgetDirective<RatingWidget> {
 		defaultConfig: {
 			readonly: true,
 		},
-		events: {
-			onHover: () => {},
-			onLeave: () => {},
-			onRatingChange: () => {},
-		},
 	});
 
 	readonly className = input<string>();

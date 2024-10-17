@@ -6,14 +6,13 @@ import type {WidgetState} from '../../types';
 import {directiveAttributes} from '../../utils/directive';
 import type {RatingProps, RatingWidget} from './rating';
 import {createRating} from './rating';
-import {getAttributes} from '../components.spec-utils';
+import {attachDirectiveAndClick, attachDirectiveAndSendEvent, getAttributes} from '../components.spec-utils';
 
 function keyboardEvent(key: string): KeyboardEvent {
-	return {
-		key,
-		preventDefault() {},
-		stopPropagation() {},
-	} as KeyboardEvent;
+	const keyboardEvent = new KeyboardEvent('keydown', {key});
+	vi.spyOn(keyboardEvent, 'preventDefault');
+	vi.spyOn(keyboardEvent, 'stopPropagation');
+	return keyboardEvent;
 }
 
 describe(`Rating`, () => {
@@ -344,8 +343,7 @@ describe(`Rating`, () => {
 			expect(hovers).toEqual([]);
 			expect(leaves).toEqual([]);
 
-			// hover 2
-			rating.actions.hover(2);
+			attachDirectiveAndSendEvent(rating.directives.starDirective, {index: 1}, (node) => node.dispatchEvent(new Event('mouseenter')));
 			expect(hovers).toEqual([2]);
 			expect(leaves).toEqual([]);
 			expect(state.visibleRating).toBe(2);
@@ -361,7 +359,7 @@ describe(`Rating`, () => {
 			]);
 
 			// hover 1
-			rating.actions.hover(1);
+			attachDirectiveAndSendEvent(rating.directives.starDirective, {index: 0}, (node) => node.dispatchEvent(new Event('mouseenter')));
 			expect(hovers).toEqual([2, 1]);
 			expect(leaves).toEqual([]);
 			expect(state.visibleRating).toBe(1);
@@ -377,7 +375,7 @@ describe(`Rating`, () => {
 			]);
 
 			// leave
-			rating.actions.leave();
+			attachDirectiveAndSendEvent(rating.directives.containerDirective, undefined, (node) => node.dispatchEvent(new Event('mouseleave')));
 			expect(hovers).toEqual([2, 1]);
 			expect(leaves).toEqual([1]);
 			expect(state.visibleRating).toBe(0.75);
@@ -385,7 +383,7 @@ describe(`Rating`, () => {
 			expect(stateChangeCount).toBe(5);
 
 			// hover -1 -> ignored
-			rating.actions.hover(-1);
+			attachDirectiveAndSendEvent(rating.directives.starDirective, {index: -1}, (node) => node.dispatchEvent(new Event('mouseenter')));
 			expect(hovers).toEqual([2, 1]);
 			expect(leaves).toEqual([1]);
 			expect(state.visibleRating).toBe(0.75);
@@ -393,7 +391,7 @@ describe(`Rating`, () => {
 			expect(stateChangeCount).toBe(5);
 
 			// hover 5 -> ignored
-			rating.actions.hover(5);
+			attachDirectiveAndSendEvent(rating.directives.starDirective, {index: 4}, (node) => node.dispatchEvent(new Event('mouseenter')));
 			expect(hovers).toEqual([2, 1]);
 			expect(leaves).toEqual([1]);
 			expect(state.visibleRating).toBe(0.75);
@@ -455,21 +453,21 @@ describe(`Rating`, () => {
 			expect(state).toMatchObject({rating: 0, maxRating: 10, resettable: true});
 			expect(stateChangeCount).toBe(1);
 
-			rating.actions.click(3);
+			attachDirectiveAndClick(rating.directives.starDirective, {index: 2});
 			expect(state).toMatchObject({rating: 3});
 			expect(stateChangeCount).toBe(2);
 
-			rating.actions.click(0);
-			expect(state).toMatchObject({rating: 3});
-			expect(stateChangeCount).toBe(2);
+			attachDirectiveAndClick(rating.directives.starDirective, {index: 0});
+			expect(state).toMatchObject({rating: 1});
+			expect(stateChangeCount).toBe(3);
 
-			rating.actions.click(-1);
-			expect(state).toMatchObject({rating: 3});
-			expect(stateChangeCount).toBe(2);
+			attachDirectiveAndClick(rating.directives.starDirective, {index: -1});
+			expect(state).toMatchObject({rating: 1});
+			expect(stateChangeCount).toBe(3);
 
-			rating.actions.click(11);
-			expect(state).toMatchObject({rating: 3});
-			expect(stateChangeCount).toBe(2);
+			attachDirectiveAndClick(rating.directives.starDirective, {index: 11});
+			expect(state).toMatchObject({rating: 1});
+			expect(stateChangeCount).toBe(3);
 		});
 
 		test(`should be 'resettable' or not`, () => {
@@ -477,7 +475,7 @@ describe(`Rating`, () => {
 			expect(state).toMatchObject({rating: 5, maxRating: 10, resettable: true});
 			expect(stateChangeCount).toBe(2);
 
-			rating.actions.click(5);
+			attachDirectiveAndClick(rating.directives.starDirective, {index: 4});
 			expect(state).toMatchObject({rating: 0});
 			expect(stateChangeCount).toBe(3);
 
@@ -485,7 +483,7 @@ describe(`Rating`, () => {
 			expect(state).toMatchObject({rating: 5, resettable: false});
 			expect(stateChangeCount).toBe(4);
 
-			rating.actions.click(5);
+			attachDirectiveAndClick(rating.directives.starDirective, {index: 4});
 			expect(state).toMatchObject({rating: 5});
 			expect(stateChangeCount).toBe(4);
 		});
@@ -512,7 +510,7 @@ describe(`Rating`, () => {
 			expect(stateChangeCount).toBe(2);
 
 			// user interactions should be ignored
-			rating.actions.click(3);
+			attachDirectiveAndClick(rating.directives.starDirective, {index: 3});
 			expect(state).toMatchObject({rating: 5});
 			expect(stateChangeCount).toBe(2);
 		});
@@ -523,7 +521,7 @@ describe(`Rating`, () => {
 			expect(stateChangeCount).toBe(2);
 
 			// user interactions should be ignored
-			rating.actions.click(3);
+			attachDirectiveAndClick(rating.directives.starDirective, {index: 3});
 			expect(state).toMatchObject({rating: 5});
 			expect(stateChangeCount).toBe(2);
 		});
@@ -532,40 +530,43 @@ describe(`Rating`, () => {
 			rating.patch({rating: 5});
 			expect(state).toMatchObject({disabled: false, readonly: false, rating: 5, maxRating: 10});
 
-			const evt = keyboardEvent('');
-			const preventDefault = vi.spyOn(evt, 'preventDefault');
-			const stopPropagation = vi.spyOn(evt, 'stopPropagation');
+			let evt = keyboardEvent('ArrowLeft');
 
 			// Known keys
-			rating.actions.handleKey({...evt, key: 'ArrowLeft'});
+			attachDirectiveAndSendEvent(rating.directives.containerDirective, undefined, (node) => node.dispatchEvent(evt));
 			expect(state).toMatchObject({rating: 4});
-			expect(preventDefault).toHaveBeenCalledTimes(1);
-			expect(stopPropagation).toHaveBeenCalledTimes(1);
+			expect(evt.preventDefault).toHaveBeenCalledOnce();
+			expect(evt.stopPropagation).toHaveBeenCalledOnce();
 
-			rating.actions.handleKey({...evt, key: 'ArrowDown'});
+			evt = keyboardEvent('ArrowDown');
+			attachDirectiveAndSendEvent(rating.directives.containerDirective, undefined, (node) => node.dispatchEvent(evt));
 			expect(state).toMatchObject({rating: 3});
-			expect(preventDefault).toHaveBeenCalledTimes(2);
-			expect(stopPropagation).toHaveBeenCalledTimes(2);
+			expect(evt.preventDefault).toHaveBeenCalledOnce();
+			expect(evt.stopPropagation).toHaveBeenCalledOnce();
 
-			rating.actions.handleKey({...evt, key: 'ArrowUp'});
+			evt = keyboardEvent('ArrowUp');
+			attachDirectiveAndSendEvent(rating.directives.containerDirective, undefined, (node) => node.dispatchEvent(evt));
 			expect(state).toMatchObject({rating: 4});
-			expect(preventDefault).toHaveBeenCalledTimes(3);
-			expect(stopPropagation).toHaveBeenCalledTimes(3);
+			expect(evt.preventDefault).toHaveBeenCalledOnce();
+			expect(evt.stopPropagation).toHaveBeenCalledOnce();
 
-			rating.actions.handleKey({...evt, key: 'ArrowRight'});
+			evt = keyboardEvent('ArrowRight');
+			attachDirectiveAndSendEvent(rating.directives.containerDirective, undefined, (node) => node.dispatchEvent(evt));
 			expect(state).toMatchObject({rating: 5});
-			expect(preventDefault).toHaveBeenCalledTimes(4);
-			expect(stopPropagation).toHaveBeenCalledTimes(4);
+			expect(evt.preventDefault).toHaveBeenCalledOnce();
+			expect(evt.stopPropagation).toHaveBeenCalledOnce();
 
-			rating.actions.handleKey({...evt, key: 'Home'});
+			evt = keyboardEvent('Home');
+			attachDirectiveAndSendEvent(rating.directives.containerDirective, undefined, (node) => node.dispatchEvent(evt));
 			expect(state).toMatchObject({rating: 0});
-			expect(preventDefault).toHaveBeenCalledTimes(5);
-			expect(stopPropagation).toHaveBeenCalledTimes(5);
+			expect(evt.preventDefault).toHaveBeenCalledOnce();
+			expect(evt.stopPropagation).toHaveBeenCalledOnce();
 
-			rating.actions.handleKey({...evt, key: 'End'});
+			evt = keyboardEvent('End');
+			attachDirectiveAndSendEvent(rating.directives.containerDirective, undefined, (node) => node.dispatchEvent(evt));
 			expect(state).toMatchObject({rating: 10});
-			expect(preventDefault).toHaveBeenCalledTimes(6);
-			expect(stopPropagation).toHaveBeenCalledTimes(6);
+			expect(evt.preventDefault).toHaveBeenCalledOnce();
+			expect(evt.stopPropagation).toHaveBeenCalledOnce();
 		});
 
 		test(`should ignore unknown keyboard events`, () => {
@@ -577,7 +578,7 @@ describe(`Rating`, () => {
 			const stopPropagation = vi.spyOn(evt, 'stopPropagation');
 
 			// Unknown keys
-			rating.actions.handleKey(evt);
+			attachDirectiveAndSendEvent(rating.directives.containerDirective, undefined, (node) => node.dispatchEvent(evt));
 			expect(state).toMatchObject({rating: 5});
 			expect(preventDefault).not.toHaveBeenCalled();
 			expect(stopPropagation).not.toHaveBeenCalled();
@@ -587,23 +588,21 @@ describe(`Rating`, () => {
 			rating.patch({rating: 5});
 			expect(state).toMatchObject({disabled: false, readonly: false, rating: 5, maxRating: 10});
 
-			const evt = keyboardEvent('');
-			const preventDefault = vi.spyOn(evt, 'preventDefault');
-			const stopPropagation = vi.spyOn(evt, 'stopPropagation');
+			const evt = keyboardEvent('ArrowLeft');
 
 			// Disabled
 			rating.patch({readonly: false, disabled: true});
-			rating.actions.handleKey({...evt, key: 'ArrowLeft'});
+			attachDirectiveAndSendEvent(rating.directives.containerDirective, undefined, (node) => node.dispatchEvent(evt));
 			expect(state).toMatchObject({rating: 5});
-			expect(preventDefault).toHaveBeenCalledTimes(0);
-			expect(stopPropagation).toHaveBeenCalledTimes(0);
+			expect(evt.preventDefault).toHaveBeenCalledTimes(0);
+			expect(evt.stopPropagation).toHaveBeenCalledTimes(0);
 
 			// Readonly
 			rating.patch({readonly: true, disabled: false});
-			rating.actions.handleKey({...evt, key: 'ArrowLeft'});
+			attachDirectiveAndSendEvent(rating.directives.containerDirective, undefined, (node) => node.dispatchEvent(evt));
 			expect(state).toMatchObject({rating: 5});
-			expect(preventDefault).toHaveBeenCalledTimes(0);
-			expect(stopPropagation).toHaveBeenCalledTimes(0);
+			expect(evt.preventDefault).toHaveBeenCalledTimes(0);
+			expect(evt.stopPropagation).toHaveBeenCalledTimes(0);
 		});
 
 		test(`should follow updated default config as long as it is not overridden`, () => {
@@ -671,9 +670,10 @@ describe(`Rating`, () => {
 			});
 			const unsubscribe = ratingWidget.stores.visibleRating$.subscribe((value) => visibleRatingValues.push(value));
 			expect(visibleRatingValues).toEqual([2]);
-			ratingWidget.actions.hover(8);
+
+			attachDirectiveAndSendEvent(ratingWidget.directives.starDirective, {index: 7}, (node) => node.dispatchEvent(new Event('mouseenter')));
 			expect(visibleRatingValues).toEqual([2, 8]);
-			ratingWidget.actions.click(8);
+			attachDirectiveAndClick(ratingWidget.directives.starDirective, {index: 7});
 			expect(values).toEqual([8]);
 			unsubscribe();
 		});

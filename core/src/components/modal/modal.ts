@@ -238,26 +238,6 @@ export interface ModalApi {
 }
 
 /**
- * Actions of the modal widget.
- */
-export interface ModalActions {
-	/**
-	 * Action to be called when the user clicks on the close button. It closes the modal with the {@link modalCloseButtonClick} result.
-	 * @param event - mouse event
-	 */
-	closeButtonClick(event: Pick<MouseEvent, never>): void;
-
-	/**
-	 * Action to be called when the user clicks on the modal DOM element (which is supposed to have the size of the full viewport).
-	 * If the click is not done on a descendant of the modal DOM element, it is considered to be done outside the modal
-	 * and, depending on the value of the {@link ModalProps.closeOnOutsideClick|closeOnOutsideClick} prop, the modal is or isn't closed
-	 * (with the {@link modalOutsideClick} result).
-	 * @param event - mouse event
-	 */
-	modalClick(event: Pick<MouseEvent, 'target' | 'currentTarget'>): void;
-}
-
-/**
  * Directives of the modal widget.
  */
 export interface ModalDirectives {
@@ -294,7 +274,7 @@ export interface ModalDirectives {
 /**
  * Modal widget.
  */
-export type ModalWidget = Widget<ModalProps, ModalState, ModalApi, ModalActions, ModalDirectives>;
+export type ModalWidget = Widget<ModalProps, ModalState, ModalApi, object, ModalDirectives>;
 
 const defaultConfig: ModalProps = {
 	animated: true,
@@ -453,7 +433,7 @@ export function createModal(config$?: PropsConfig<ModalProps>): ModalWidget {
 			'aria-label': ariaCloseButtonLabel$,
 		},
 		events: {
-			click: res.actions.closeButtonClick,
+			click: () => close(modalCloseButtonClick),
 		},
 	}));
 
@@ -468,7 +448,11 @@ export function createModal(config$?: PropsConfig<ModalProps>): ModalWidget {
 			class: className$,
 		},
 		events: {
-			click: res.actions.modalClick,
+			click: (event) => {
+				if (event.currentTarget === event.target && closeOnOutsideClick$()) {
+					close(modalOutsideClick);
+				}
+			},
 		},
 	}));
 
@@ -523,16 +507,7 @@ export function createModal(config$?: PropsConfig<ModalProps>): ModalWidget {
 			},
 			patch,
 		},
-		actions: {
-			modalClick(event) {
-				if (event.currentTarget === event.target && closeOnOutsideClick$()) {
-					close(modalOutsideClick);
-				}
-			},
-			closeButtonClick() {
-				close(modalCloseButtonClick);
-			},
-		},
+		actions: {},
 	};
 
 	return res;

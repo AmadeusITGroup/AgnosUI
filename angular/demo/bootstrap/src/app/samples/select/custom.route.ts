@@ -36,7 +36,7 @@ function getHtmlText(html: string) {
 						type="button"
 						class="btn-close ms-1 wiki-btn-close"
 						aria-label="Close"
-						(click)="widget.actions.onRemoveBadgeClick($event, itemContext.item)"
+						[auUse]="[widget.directives.badgeCloseButtonDirective, itemContext]"
 					></button>
 				</ng-template>
 				<ng-template auSelectItemLabel let-widget="widget" let-itemContext="itemContext">

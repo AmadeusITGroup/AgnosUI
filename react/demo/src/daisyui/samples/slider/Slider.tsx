@@ -1,13 +1,12 @@
 import {type SliderProps, createSlider} from '@agnos-ui/react-headless/components/slider';
 import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
-import {useDirective} from '@agnos-ui/react-headless/utils/directive';
+import {useDirectives} from '@agnos-ui/react-headless/utils/directive';
 
 export function Slider(props: Partial<Pick<SliderProps, 'min' | 'max' | 'values' | 'stepSize' | 'className' | 'onValuesChange'>>) {
 	const [
 		state,
 		{
-			actions: {click, keydown, mouseDown, touchStart},
-			directives: {sliderDirective},
+			directives: {sliderDirective, clickableAreaDirective, handleEventsDirective},
 		},
 	] = useWidgetWithConfig(createSlider, props, 'slider');
 
@@ -21,11 +20,7 @@ export function Slider(props: Partial<Pick<SliderProps, 'min' | 'max' | 'values'
 			step={state.stepSize}
 			className="range"
 			aria-label={state.sortedHandles[0].ariaLabel}
-			onClick={(e) => click(e.nativeEvent)}
-			onKeyDown={(e) => keydown(e.nativeEvent, 0)}
-			onMouseDown={(e) => mouseDown(e.nativeEvent, 0)}
-			onTouchStart={(e) => touchStart(e.nativeEvent, 0)}
-			{...useDirective(sliderDirective)}
+			{...useDirectives([sliderDirective, undefined], [clickableAreaDirective, undefined], [handleEventsDirective, {item: {id: 0}}])}
 		/>
 	);
 }

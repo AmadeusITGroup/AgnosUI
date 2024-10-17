@@ -311,37 +311,18 @@ export interface SelectDirectives<Item> {
 	 * A directive that applies all the necessary attributes to the dropdown item
 	 */
 	itemAttributesDirective: Directive<ItemContext<Item>>;
+
+	/**
+	 * A directive to be applied to the input
+	 */
+	inputDirective: Directive;
+	/**
+	 * A directive to be applied to a button that closes a badge
+	 */
+	badgeCloseButtonDirective: Directive<ItemContext<Item>>;
 }
 
-export interface SelectActions<Item> {
-	// Dom methods
-
-	/**
-	 * Method to be plugged to on the 'input' event. The input text will be used as the filter text.
-	 */
-	onInput: (e: {target: any}) => void;
-
-	/**
-	 * Method to be attached to the node element to close a badge on click.
-	 */
-	onRemoveBadgeClick: (event: MouseEvent, item: Item) => void;
-
-	/**
-	 * Method to be plugged to on an keydown event of the main input, in order to control the keyboard interactions with the highlighted item.
-	 * It manages arrow keys to move the highlighted item, or enter to toggle the item.
-	 */
-	onInputKeydown: (event: KeyboardEvent) => void;
-
-	/**
-	 * Method to be plugged to on an keydown event of a badge container, in order to manage main actions on badges.
-	 *
-	 * @param event - keyboard event
-	 * @param item - corresponding item
-	 */
-	onBadgeKeydown: (event: KeyboardEvent, item: Item) => void;
-}
-
-export type SelectWidget<Item> = Widget<SelectProps<Item>, SelectState<Item>, SelectApi<Item>, SelectActions<Item>, SelectDirectives<Item>>;
+export type SelectWidget<Item> = Widget<SelectProps<Item>, SelectState<Item>, SelectApi<Item>, object, SelectDirectives<Item>>;
 
 const defaultConfig: SelectProps<any> = {
 	id: undefined,
@@ -533,7 +514,20 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 			'au-select-badge': true,
 		},
 		events: {
-			keydown: (e: KeyboardEvent) => widget.actions.onBadgeKeydown(e, itemContext$().item),
+			keydown: (event: KeyboardEvent) => {
+				let keyManaged = false;
+				switch (event.key) {
+					case 'Backspace':
+					case 'Delete': {
+						onRemoveBadge(event, itemContext$().item);
+						keyManaged = true;
+						break;
+					}
+				}
+				if (keyManaged) {
+					event.preventDefault();
+				}
+			},
 		},
 	}));
 
@@ -561,6 +555,79 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 		},
 		events: {
 			click: () => widget.api.toggleItem(itemContext$().item),
+		},
+	}));
+
+	const inputDirective = createAttributesDirective(() => ({
+		attributes: {
+			id: id$(),
+			type: 'text',
+			'aria-label': ariaLabel$(),
+			'aria-autocomplete': 'list',
+			autocorrect: 'off',
+			autocapitalize: 'none',
+			autocomplete: 'off',
+		},
+		classNames: {
+			'au-select-input': true,
+		},
+		events: {
+			input: (event: Event) => {
+				const value = (event.target as HTMLInputElement).value;
+				batch(() => {
+					open$.set(value != null && value !== '');
+					filterText$.set(value);
+				});
+			},
+			keydown: ({ctrlKey, key, preventDefault}) => {
+				let keyManaged = true;
+				switch (key) {
+					case 'ArrowDown': {
+						const isOpen = open$();
+						if (isOpen) {
+							if (ctrlKey) {
+								widget.api.highlightLast();
+							} else {
+								widget.api.highlightNext();
+							}
+						} else {
+							widget.api.open();
+							widget.api.highlightFirst();
+						}
+						break;
+					}
+					case 'ArrowUp':
+						if (ctrlKey) {
+							widget.api.highlightFirst();
+						} else {
+							widget.api.highlightPrevious();
+						}
+						break;
+					case 'Enter': {
+						const itemCtx = highlighted$();
+						if (itemCtx) {
+							widget.api.toggleItem(itemCtx.item);
+						}
+						break;
+					}
+					case 'Escape':
+						open$.set(false);
+						break;
+					default:
+						keyManaged = false;
+				}
+				if (keyManaged) {
+					preventDefault();
+				}
+			},
+		},
+	}));
+
+	const badgeCloseButtonDirective = createAttributesDirective((itemContext$: ReadableSignal<ItemContext<Item>>) => ({
+		events: {
+			click: (event: MouseEvent) => {
+				onRemoveBadge(event, itemContext$().item);
+			},
 		},
 	}));
 
@@ -662,78 +729,10 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 			badgeAttributesDirective,
 			menuAttributesDirective,
 			itemAttributesDirective,
+			inputDirective,
+			badgeCloseButtonDirective,
 		},
-		actions: {
-			onInput({target}: {target: HTMLInputElement}) {
-				const value = target.value;
-				batch(() => {
-					open$.set(value != null && value !== '');
-					filterText$.set(value);
-				});
-			},
-
-			onRemoveBadgeClick(event: MouseEvent, item: Item) {
-				onRemoveBadge(event, item);
-			},
-
-			onInputKeydown(e: KeyboardEvent) {
-				const {ctrlKey, key} = e;
-
-				let keyManaged = true;
-				switch (key) {
-					case 'ArrowDown': {
-						const isOpen = open$();
-						if (isOpen) {
-							if (ctrlKey) {
-								widget.api.highlightLast();
-							} else {
-								widget.api.highlightNext();
-							}
-						} else {
-							widget.api.open();
-							widget.api.highlightFirst();
-						}
-						break;
-					}
-					case 'ArrowUp':
-						if (ctrlKey) {
-							widget.api.highlightFirst();
-						} else {
-							widget.api.highlightPrevious();
-						}
-						break;
-					case 'Enter': {
-						const itemCtx = highlighted$();
-						if (itemCtx) {
-							widget.api.toggleItem(itemCtx.item);
-						}
-						break;
-					}
-					case 'Escape':
-						open$.set(false);
-						break;
-					default:
-						keyManaged = false;
-				}
-				if (keyManaged) {
-					e.preventDefault();
-				}
-			},
-			onBadgeKeydown(event: KeyboardEvent, item: Item) {
-				let keyManaged = false;
-				switch (event.key) {
-					case 'Backspace':
-					case 'Delete': {
-						onRemoveBadge(event, item);
-						keyManaged = true;
-						break;
-					}
-				}
-				if (keyManaged) {
-					event.preventDefault();
-				}
-			},
-		},
+		actions: {},
 	};
 
 	return widget;

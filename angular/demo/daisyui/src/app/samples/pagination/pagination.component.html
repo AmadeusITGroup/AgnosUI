@@ -4,7 +4,7 @@
 			<button
 				class="join-item btn btn-outline"
 				[attr.aria-label]="state().ariaFirstLabel"
-				(click)="widget.actions.first()"
+				(click)="widget.api.first()"
 				[disabled]="state().previousDisabled"
 				[attr.aria-disabled]="state().previousDisabled ? 'true' : null"
 				[attr.tabindex]="state().previousDisabled ? -1 : undefined"
@@ -16,7 +16,7 @@
 			<button
 				class="join-item btn btn-outline"
 				[attr.aria-label]="state().ariaPreviousLabel"
-				(click)="widget.actions.previous()"
+				(click)="widget.api.previous()"
 				[disabled]="state().previousDisabled"
 				[attr.aria-disabled]="state().previousDisabled ? 'true' : null"
 				[attr.tabindex]="state().previousDisabled ? -1 : undefined"
@@ -31,7 +31,7 @@
 				[attr.aria-current]="page === state().page ? 'page' : null"
 				[attr.tabindex]="state().disabled ? -1 : undefined"
 				[class.disabled]="state().disabled"
-				(click)="widget.actions.select(page)"
+				(click)="widget.api.select(page)"
 			>
 				{{ page }}
 				@if (state().page === page) {
@@ -43,7 +43,7 @@
 			<button
 				class="join-item btn btn-outline"
 				[attr.aria-label]="state().ariaNextLabel"
-				(click)="widget.actions.next()"
+				(click)="widget.api.next()"
 				[disabled]="state().nextDisabled"
 				[attr.aria-disabled]="state().nextDisabled ? 'true' : null"
 				[attr.tabindex]="state().nextDisabled ? -1 : undefined"
@@ -55,7 +55,7 @@
 			<button
 				class="join-item btn btn-outline"
 				[attr.aria-label]="state().ariaLastLabel"
-				(click)="widget.actions.last()"
+				(click)="widget.api.last()"
 				[disabled]="state().nextDisabled"
 				[attr.aria-disabled]="state().nextDisabled ? 'true' : null"
 				[attr.tabindex]="state().nextDisabled ? -1 : undefined"
