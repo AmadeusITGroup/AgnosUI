@@ -9,6 +9,9 @@ export * from '@agnos-ui/core/utils/directive';
 const attributesMap = new Map([
 	['tabindex', 'tabIndex'],
 	['for', 'htmlFor'],
+	['autocomplete', 'autoComplete'],
+	['autocapitalize', 'autoCapitalize'],
+	['autocorrect', 'autoCorrect'],
 ]);
 
 /**

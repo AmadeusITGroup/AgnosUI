@@ -14,9 +14,9 @@ export function Rating(
 			{stars.map(({index}) => (
 				<React.Fragment key={index}>
 					<input
-						onMouseLeave={widget.actions.leave}
-						onMouseEnter={() => widget.actions.hover(index + 1)}
-						onClick={() => widget.actions.click(index + 1)}
+						onMouseLeave={widget.api.leave}
+						onMouseEnter={() => widget.api.setHoveredRating(index + 1)}
+						onClick={() => widget.api.setRating(index + 1)}
 						// React throws a warning if an onChange is not provided.
 						onChange={() => {}}
 						type="radio"

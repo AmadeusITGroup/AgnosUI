@@ -1,11 +1,4 @@
-import type {
-	ItemContext,
-	SelectActions,
-	SelectApi,
-	SelectDirectives,
-	SelectProps as CoreProps,
-	SelectState as CoreState,
-} from '@agnos-ui/core/components/select';
+import type {ItemContext, SelectApi, SelectDirectives, SelectProps as CoreProps, SelectState as CoreState} from '@agnos-ui/core/components/select';
 import {createSelect as createCoreSelect, getSelectDefaultConfig as getCoreDefaultConfig} from '@agnos-ui/core/components/select';
 import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
 import type {PropsConfig, SlotContent, Widget, WidgetSlotContext} from '@agnos-ui/core/types';
@@ -51,7 +44,7 @@ interface SelectExtraProps<Item> {
 export interface SelectState<Item> extends CoreState<Item>, SelectExtraProps<Item> {}
 export interface SelectProps<Item> extends CoreProps<Item>, SelectExtraProps<Item> {}
 
-export type SelectWidget<Item> = Widget<SelectProps<Item>, SelectState<Item>, SelectApi<Item>, SelectActions<Item>, SelectDirectives<Item>>;
+export type SelectWidget<Item> = Widget<SelectProps<Item>, SelectState<Item>, SelectApi<Item>, object, SelectDirectives<Item>>;
 
 const defaultConfigExtraProps: SelectExtraProps<any> = {
 	badgeLabel: ({itemContext}: SelectItemContext<any>) => itemContext.item,

@@ -5,6 +5,8 @@
 		"paths": {
 			"@agnos-ui/core": ["./core/src"],
 			"@agnos-ui/core/*": ["./core/src/*"],
+			"@agnos-ui/core-bootstrap": ["./core-bootstrap/src"],
+			"@agnos-ui/core-bootstrap/*": ["./core-bootstrap/src/*"],
 			"@agnos-ui/angular-headless": ["./angular/headless/src"],
 			"@agnos-ui/angular-bootstrap": ["./angular/bootstrap/src"],
 			"@agnos-ui/common/*": ["./common/*"],
