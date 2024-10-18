@@ -5,10 +5,17 @@
 
 	let {children, closeOnOutsideClick, visible = $bindable(), ...props}: DaisyModalProps = $props();
 
-	const widget = callWidgetFactory({
+	const {
+		state,
+		directives: {closeButtonDirective, dialogDirective},
+		api: modalApi,
+	} = callWidgetFactory({
 		factory: createModal,
 		widgetName: 'modal',
-		props: {visible, closeOnOutsideClick, ...props},
+		get props() {
+			return {visible, closeOnOutsideClick, ...props};
+		},
+		enablePatchChanged: true,
 		defaultConfig: {closeButton: true},
 		events: {
 			onVisibleChange: (event) => {
@@ -16,20 +23,13 @@
 			},
 		},
 	});
-	export const api = widget.api;
-	const {
-		stores: {closeButton$},
-		directives: {closeButtonDirective, dialogDirective},
-		patchChangedProps,
-	} = widget;
-
-	$effect(() => patchChangedProps({visible, closeOnOutsideClick, ...props}));
+	export const api = modalApi;
 </script>
 
 <dialog class="modal modal-bottom sm:modal-middle" onclose={api.close} use:dialogDirective>
 	<div class="modal-box">
 		{@render children()}
-		{#if $closeButton$}
+		{#if state.closeButton}
 			<form method="dialog">
 				<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" use:closeButtonDirective> ✕ </button>
 			</form>

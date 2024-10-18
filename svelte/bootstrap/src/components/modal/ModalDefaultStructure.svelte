@@ -2,21 +2,20 @@
 	import type {ModalContext} from './modal.gen';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 
-	let {state, widget}: ModalContext<Data> = $props();
-	let slotContext = $derived({widget, state});
+	let widget: ModalContext<Data> = $props();
 </script>
 
-{#if state.title}
+{#if widget.state.title}
 	<div class="modal-header">
-		<Slot content={state.header} props={slotContext} />
+		<Slot content={widget.state.header} props={widget} />
 	</div>
 {/if}
 
 <div class="modal-body">
-	<Slot content={state.children} props={slotContext} />
+	<Slot content={widget.state.children} props={widget} />
 </div>
-{#if state.footer}
+{#if widget.state.footer}
 	<div class="modal-footer">
-		<Slot content={state.footer} props={slotContext} />
+		<Slot content={widget.state.footer} props={widget} />
 	</div>
 {/if}

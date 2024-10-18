@@ -24,7 +24,10 @@
 	const {registerItem} = getAccordionApi();
 	const widget = callWidgetFactory({
 		factory: registerItem as WidgetFactory<AccordionItemWidget>,
-		props: {visible, ...props},
+		get props() {
+			return {visible, ...props};
+		},
+		enablePatchChanged: true,
 		events: {
 			onVisibleChange: (event) => {
 				visible = event;
@@ -35,11 +38,10 @@
 		},
 	});
 	const {
-		stores: {shouldBeInDOM$},
+		state,
 		directives: {itemDirective, toggleDirective, transitionDirective, bodyContainerAttrsDirective},
 		api: {toggle},
 	} = widget;
-	$effect(() => widget.patchChangedProps({visible, ...props}));
 
 	const onkeydown = (e: KeyboardEvent) => {
 		if (e.key === 'Enter') {
@@ -54,7 +56,7 @@
 		{@render header()}
 	</div>
 	<div class="collapse-content" use:bodyContainerAttrsDirective>
-		{#if $shouldBeInDOM$}
+		{#if state.shouldBeInDOM}
 			{@render children()}
 		{/if}
 	</div>

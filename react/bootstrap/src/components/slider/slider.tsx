@@ -1,5 +1,4 @@
 import {Slot} from '@agnos-ui/react-headless/slot';
-import {toSlotContextWidget} from '@agnos-ui/react-headless/types';
 import {useDirective} from '@agnos-ui/react-headless/utils/directive';
 import type {PropsWithChildren} from 'react';
 import React from 'react';
@@ -8,7 +7,7 @@ import type {ProgressDisplayOptions, SliderContext, SliderDirectives, SliderHand
 import {createSlider} from './slider.gen';
 
 export const DefaultSlotHandle = (slotContext: SliderSlotHandleContext) => {
-	return <button {...useDirective<{item: SliderHandle}>(slotContext.widget.directives.handleDirective, {item: slotContext.item})}>&nbsp;</button>;
+	return <button {...useDirective<{item: SliderHandle}>(slotContext.directives.handleDirective, {item: slotContext.item})}>&nbsp;</button>;
 };
 
 const ProgressDisplay = ({directive, option}: {directive: SliderDirectives['progressDisplayDirective']; option: ProgressDisplayOptions}) => {
@@ -28,17 +27,17 @@ const HandleLabelDisplay = ({
 
 const MinMaxLabels = (slotContext: SliderContext) => (
 	<>
-		<div {...useDirective(slotContext.widget.directives.minLabelDirective)}>
+		<div {...useDirective(slotContext.directives.minLabelDirective)}>
 			<Slot slotContent={slotContext.state.label} props={{value: slotContext.state.min, ...slotContext}} />
 		</div>
-		<div {...useDirective(slotContext.widget.directives.maxLabelDirective)}>
+		<div {...useDirective(slotContext.directives.maxLabelDirective)}>
 			<Slot slotContent={slotContext.state.label} props={{value: slotContext.state.max, ...slotContext}} />
 		</div>
 	</>
 );
 
 const CombinedLabel = (slotContext: SliderContext) => (
-	<div {...useDirective(slotContext.widget.directives.combinedHandleLabelDisplayDirective)}>
+	<div {...useDirective(slotContext.directives.combinedHandleLabelDisplayDirective)}>
 		{slotContext.state.rtl ? (
 			<>
 				<Slot slotContent={slotContext.state.label} props={{value: slotContext.state.sortedValues[1], ...slotContext}} />
@@ -58,9 +57,9 @@ const CombinedLabel = (slotContext: SliderContext) => (
 export const DefaultSlotStructure = (slotContext: SliderContext) => (
 	<>
 		{slotContext.state.progressDisplayOptions.map((option, index) => (
-			<ProgressDisplay key={index} directive={slotContext.widget.directives.progressDisplayDirective} option={option} />
+			<ProgressDisplay key={index} directive={slotContext.directives.progressDisplayDirective} option={option} />
 		))}
-		<div {...useDirective(slotContext.widget.directives.clickableAreaDirective)} />
+		<div {...useDirective(slotContext.directives.clickableAreaDirective)} />
 		{slotContext.state.showMinMaxLabels && <MinMaxLabels {...slotContext} />}
 		{slotContext.state.showValueLabels && slotContext.state.combinedLabelDisplay && <CombinedLabel {...slotContext} />}
 
@@ -68,7 +67,7 @@ export const DefaultSlotStructure = (slotContext: SliderContext) => (
 			<React.Fragment key={item.id}>
 				<Slot slotContent={slotContext.state.handle} props={{item, ...slotContext}} />
 				{slotContext.state.showValueLabels && !slotContext.state.combinedLabelDisplay && (
-					<HandleLabelDisplay directive={slotContext.widget.directives.handleLabelDisplayDirective} index={i}>
+					<HandleLabelDisplay directive={slotContext.directives.handleLabelDisplayDirective} index={i}>
 						<Slot slotContent={slotContext.state.label} props={{value: slotContext.state.values[i], ...slotContext}} />
 					</HandleLabelDisplay>
 				)}
@@ -83,12 +82,11 @@ const defaultConfig: Partial<SliderProps> = {
 };
 
 export function Slider(props: PropsWithChildren<Partial<SliderProps>>) {
-	const [state, widget] = useWidgetWithConfig(createSlider, props, 'slider', {...defaultConfig});
-	const slotContext: SliderContext = {state, widget: toSlotContextWidget(widget)};
+	const widgetContext = useWidgetWithConfig(createSlider, props, 'slider', {...defaultConfig});
 
 	return (
-		<div {...useDirective(widget.directives.sliderDirective)}>
-			<Slot slotContent={state.structure} props={slotContext} />
+		<div {...useDirective(widgetContext.directives.sliderDirective)}>
+			<Slot slotContent={widgetContext.state.structure} props={widgetContext} />
 		</div>
 	);
 }

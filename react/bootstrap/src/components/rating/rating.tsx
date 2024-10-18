@@ -18,11 +18,10 @@ function Star({star, state, directive}: {star: StarContext; state: RatingState; 
 }
 
 export function Rating(props: Partial<RatingProps>) {
-	const [state, widget] = useWidgetWithConfig(createRating, props, 'rating');
-
 	const {
+		state,
 		directives: {containerDirective, starDirective},
-	} = widget;
+	} = useWidgetWithConfig(createRating, props, 'rating');
 
 	return (
 		<div {...useDirectives([classDirective, 'd-inline-flex'], containerDirective)}>

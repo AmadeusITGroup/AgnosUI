@@ -4,22 +4,22 @@
 
 	let {values = $bindable(), ...props}: Partial<Pick<SliderProps, 'min' | 'max' | 'values' | 'stepSize' | 'className'>> = $props();
 
-	const widget = callWidgetFactory({
+	const {
+		state,
+		directives: {sliderDirective, clickableAreaDirective, handleEventsDirective},
+	} = callWidgetFactory({
 		factory: createSlider,
 		widgetName: 'slider',
-		props: {...props, values},
+		get props() {
+			return {...props, values};
+		},
+		enablePatchChanged: true,
 		events: {
 			onValuesChange: (value: number[]) => {
 				values = value;
 			},
 		},
 	});
-	const {
-		stores: {min$, max$, stepSize$, sortedHandles$},
-		directives: {sliderDirective, clickableAreaDirective, handleEventsDirective},
-		patchChangedProps,
-	} = widget;
-	$effect(() => patchChangedProps({...props, values}));
 </script>
 
 <input
@@ -27,10 +27,10 @@
 	use:sliderDirective
 	use:clickableAreaDirective
 	use:handleEventsDirective={{item: {id: 0}}}
-	min={$min$}
-	max={$max$}
-	value={$sortedHandles$[0].value}
-	step={$stepSize$}
+	min={state.min}
+	max={state.max}
+	value={state.sortedHandles[0].value}
+	step={state.stepSize}
 	class="range"
-	aria-label={$sortedHandles$[0].ariaLabel}
+	aria-label={state.sortedHandles[0].ariaLabel}
 />

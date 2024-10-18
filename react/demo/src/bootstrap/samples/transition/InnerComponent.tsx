@@ -4,8 +4,8 @@ import {collapseHorizontalTransition, collapseVerticalTransition, fadeTransition
 import {createTransition} from '@agnos-ui/react-bootstrap/services/transitions/baseTransitions';
 import {useDirective} from '@agnos-ui/react-bootstrap/utils/directive';
 import {useObservable} from '@agnos-ui/react-bootstrap/utils/stores';
-import {useWidget} from '@agnos-ui/react-bootstrap/utils/widget';
 import type {Directive} from '@agnos-ui/react-bootstrap/types';
+import {useMemo} from 'react';
 
 const paramTransition$ = writable(collapseVerticalTransition);
 const paramAnimated$ = writable(true);
@@ -26,23 +26,25 @@ const InnerComponent = () => {
 	const paramAnimated = useObservable(paramAnimated$);
 	const paramAnimatedOnInit = useObservable(paramAnimatedOnInit$);
 	const paramRemoveFromDom = useObservable(paramRemoveFromDom$);
-	const [transitionState, transitionWidget] = useWidget(
-		createTransition,
-		{},
-		{
-			props: {
-				transition: paramTransition$,
-				animated: paramAnimated$,
-				animatedOnInit: paramAnimatedOnInit$,
-				visible: paramVisible$,
-			},
-		},
+	const transition = useMemo(
+		() =>
+			createTransition({
+				props: {
+					transition: paramTransition$,
+					animated: paramAnimated$,
+					animatedOnInit: paramAnimatedOnInit$,
+					visible: paramVisible$,
+				},
+			}),
+		[],
 	);
+	const state = useObservable(transition.state$);
+	const {api, directives} = transition;
 
 	const changeTransition = (newTransition: TransitionFn) => {
 		// Make sure the element is removed from the DOM
 		// so that it does not keep state from the previous transition
-		void transitionWidget.api.toggle(false, false);
+		void api.toggle(false, false);
 		paramRemoveFromDom$.set(true);
 		paramTransition$.set(newTransition);
 	};
@@ -98,34 +100,29 @@ const InnerComponent = () => {
 					Remove from DOM
 				</label>
 				<label className="form-check mb-2">
-					<input
-						type="checkbox"
-						className="form-check-input"
-						checked={transitionState.visible}
-						onChange={() => transitionWidget.patch({visible: !transitionState.visible})}
-					/>
+					<input type="checkbox" className="form-check-input" checked={state.visible} onChange={() => transition.patch({visible: !state.visible})} />
 					Visible
 				</label>
 
 				<div className="d-flex flex-wrap gap-2">
-					<button type="button" className="btn btn-outline-primary" onClick={() => transitionWidget.api.toggle()}>
+					<button type="button" className="btn btn-outline-primary" onClick={() => api.toggle()}>
 						Toggle
 					</button>
-					<button type="button" className="btn btn-outline-primary" onClick={() => transitionWidget.api.toggle(undefined, true)}>
+					<button type="button" className="btn btn-outline-primary" onClick={() => api.toggle(undefined, true)}>
 						Toggle with animation
 					</button>
-					<button type="button" className="btn btn-outline-primary" onClick={() => transitionWidget.api.toggle(undefined, false)}>
+					<button type="button" className="btn btn-outline-primary" onClick={() => api.toggle(undefined, false)}>
 						Toggle without animation
 					</button>
 				</div>
 				<ul className="mt-2">
-					<li>visible = {transitionState.visible + ''}</li>
-					<li>transitioning = {transitionState.transitioning + ''}</li>
-					<li>shown = {transitionState.shown + ''}</li>
-					<li>hidden = {transitionState.hidden + ''}</li>
+					<li>visible = {state.visible + ''}</li>
+					<li>transitioning = {state.transitioning + ''}</li>
+					<li>shown = {state.shown + ''}</li>
+					<li>hidden = {state.hidden + ''}</li>
 				</ul>
 
-				{(!paramRemoveFromDom || !transitionState.hidden) && <Content directive={transitionWidget.directives.directive} />}
+				{(!paramRemoveFromDom || !state.hidden) && <Content directive={directives.directive} />}
 			</div>
 		</>
 	);

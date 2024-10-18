@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import {useMemo, type CSSProperties} from 'react';
 
 export function RadialProgress(props: Partial<ProgressbarProps>) {
-	const [state, widget] = useWidgetWithConfig(createProgressbar, props, 'progressbar');
+	const {state, directives} = useWidgetWithConfig(createProgressbar, props, 'progressbar');
 
 	const percentFormat = useMemo(
 		() =>
@@ -21,7 +21,7 @@ export function RadialProgress(props: Partial<ProgressbarProps>) {
 		['--value']: state.percentage,
 	} as CSSProperties;
 	return (
-		<div className={classNames('radial-progress', state.className)} style={style} {...useDirective(widget.directives.ariaDirective)}>
+		<div className={classNames('radial-progress', state.className)} style={style} {...useDirective(directives.ariaDirective)}>
 			{percentFormat.format(state.percentage / 100)}
 		</div>
 	);

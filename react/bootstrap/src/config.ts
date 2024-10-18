@@ -1,6 +1,6 @@
 import type {Partial2Levels, WidgetsConfigStore} from '@agnos-ui/react-headless/config';
 import {widgetsConfigFactory} from '@agnos-ui/react-headless/config';
-import type {Widget, WidgetFactory, WidgetProps, WidgetState} from '@agnos-ui/react-headless/types';
+import type {Widget, WidgetFactory, WidgetProps, WidgetSlotContext} from '@agnos-ui/react-headless/types';
 import type {BootstrapWidgetsConfig} from '@agnos-ui/core-bootstrap/config';
 import type {ReactNode, Context} from 'react';
 
@@ -26,6 +26,6 @@ const widgetFactories: {
 		props: Partial<WidgetProps<W>> | undefined,
 		widgetName: keyof BootstrapWidgetsConfig | null,
 		defaultProps?: Partial<WidgetProps<W>>,
-	) => [WidgetState<W>, W];
+	) => WidgetSlotContext<W>;
 } = widgetsConfigFactory<WidgetsConfig>();
 export const {widgetsConfigContext, WidgetsDefaultConfig, useWidgetContext, useWidgetWithConfig} = widgetFactories;
