@@ -1,7 +1,7 @@
 import type {ModalContext} from '@agnos-ui/react-bootstrap/components/modal';
 import {openModal} from '@agnos-ui/react-bootstrap/components/modal';
 
-const ModalBody = ({widget, state}: ModalContext<void>) => (
+const ModalBody = ({state, api}: ModalContext<void>) => (
 	<>
 		This is a modal
 		<br />
@@ -13,14 +13,14 @@ const ModalBody = ({widget, state}: ModalContext<void>) => (
 			Launch other modal
 		</button>
 		<br />
-		<button className="btn btn-outline-secondary m-1" onClick={() => widget.api.patch({backdrop: true})}>
+		<button className="btn btn-outline-secondary m-1" onClick={() => api.patch({backdrop: true})}>
 			Enable backdrop
 		</button>
-		<button className="btn btn-outline-secondary m-1" onClick={() => widget.api.patch({backdrop: false})}>
+		<button className="btn btn-outline-secondary m-1" onClick={() => api.patch({backdrop: false})}>
 			Disable backdrop
 		</button>
 		<br />
-		<button className="btn btn-outline-secondary m-1" onClick={() => widget.api.close()}>
+		<button className="btn btn-outline-secondary m-1" onClick={() => api.close()}>
 			Close
 		</button>
 	</>

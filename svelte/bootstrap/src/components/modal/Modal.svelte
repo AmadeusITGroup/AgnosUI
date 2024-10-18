@@ -1,6 +1,5 @@
 <script lang="ts" generics="Data">
 	import type {ModalWidget, ModalProps, ModalApi, ModalContext} from './modal.gen';
-	import {toSlotContextWidget} from '@agnos-ui/svelte-headless/types';
 	import {createModal} from './modal.gen';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import {callWidgetFactory} from '../../config';
@@ -12,7 +11,10 @@
 	const widget = callWidgetFactory<ModalWidget<Data>>({
 		factory: createModal,
 		widgetName: 'modal',
-		props: {...props, visible},
+		get props() {
+			return {...props, visible};
+		},
+		enablePatchChanged: true,
 		defaultConfig: {
 			header,
 			structure,
@@ -26,13 +28,9 @@
 	export const api: ModalApi<Data> = widget.api;
 
 	const {
-		stores: {backdropHidden$, hidden$, structure$},
 		directives: {backdropDirective, backdropPortalDirective, modalDirective, modalPortalDirective},
-		state$,
+		state,
 	} = widget;
-
-	$effect(() => widget.patchChangedProps({...props, visible}));
-	let slotContext = $derived({widget: toSlotContextWidget(widget), state: $state$});
 </script>
 
 {#snippet structure(props: ModalContext<Data>)}
@@ -42,15 +40,15 @@
 	<ModalDefaultHeader {...props} />
 {/snippet}
 
-{#if !$backdropHidden$}
+{#if !state.backdropHidden}
 	<div class="modal-backdrop" use:backdropPortalDirective use:backdropDirective></div>
 {/if}
 
-{#if !$hidden$}
+{#if !state.hidden}
 	<div class="modal d-block" use:modalPortalDirective use:modalDirective>
-		<div class="modal-dialog {$state$.fullscreen ? 'modal-fullscreen' : ''}">
+		<div class="modal-dialog {state.fullscreen ? 'modal-fullscreen' : ''}">
 			<div class="modal-content">
-				<Slot content={$structure$} props={slotContext} />
+				<Slot content={state.structure} props={widget} />
 			</div>
 		</div>
 	</div>

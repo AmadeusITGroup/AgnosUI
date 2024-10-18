@@ -56,7 +56,7 @@ export class AccordionItemStructureDirective {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [UseDirective, SlotDirective, AccordionHeaderDirective, AccordionBodyDirective, NgTemplateOutlet],
 	template: `
-		<ng-template #structure let-state="state" let-widget="widget">
+		<ng-template #structure let-state="state" let-api="api" let-directives="directives">
 			@switch (state.itemHeadingTag) {
 				@case ('h1') {
 					<ng-container [ngTemplateOutlet]="h1"></ng-container>
@@ -82,49 +82,49 @@ export class AccordionItemStructureDirective {
 			}
 
 			<ng-template #h1>
-				<h1 class="accordion-header" [auUse]="widget.directives.headerDirective">
+				<h1 class="accordion-header" [auUse]="directives.headerDirective">
 					<ng-template [ngTemplateOutlet]="button"></ng-template>
 				</h1>
 			</ng-template>
 
 			<ng-template #h2>
-				<h2 class="accordion-header" [auUse]="widget.directives.headerDirective">
+				<h2 class="accordion-header" [auUse]="directives.headerDirective">
 					<ng-template [ngTemplateOutlet]="button"></ng-template>
 				</h2>
 			</ng-template>
 
 			<ng-template #h3>
-				<h3 class="accordion-header" [auUse]="widget.directives.headerDirective">
+				<h3 class="accordion-header" [auUse]="directives.headerDirective">
 					<ng-template [ngTemplateOutlet]="button"></ng-template>
 				</h3>
 			</ng-template>
 
 			<ng-template #h4>
-				<h4 class="accordion-header" [auUse]="widget.directives.headerDirective">
+				<h4 class="accordion-header" [auUse]="directives.headerDirective">
 					<ng-template [ngTemplateOutlet]="button"></ng-template>
 				</h4>
 			</ng-template>
 
 			<ng-template #h5>
-				<h5 class="accordion-header" [auUse]="widget.directives.headerDirective">
+				<h5 class="accordion-header" [auUse]="directives.headerDirective">
 					<ng-template [ngTemplateOutlet]="button"></ng-template>
 				</h5>
 			</ng-template>
 			<ng-template #h6>
-				<h6 class="accordion-header" [auUse]="widget.directives.headerDirective">
+				<h6 class="accordion-header" [auUse]="directives.headerDirective">
 					<ng-template [ngTemplateOutlet]="button"></ng-template>
 				</h6>
 			</ng-template>
 
 			<ng-template #button>
-				<button class="accordion-button " [auUse]="widget.directives.buttonDirective">
-					<ng-template [auSlotProps]="{state, widget}" [auSlot]="state.header"></ng-template>
+				<button class="accordion-button " [auUse]="directives.buttonDirective">
+					<ng-template [auSlotProps]="{state, directives, api}" [auSlot]="state.header"></ng-template>
 				</button>
 			</ng-template>
 			@if (state.shouldBeInDOM) {
-				<div [auUse]="widget.directives.bodyContainerDirective" class="accordion-collapse">
-					<div class="accordion-body" [auUse]="widget.directives.bodyDirective">
-						<ng-template [auSlotProps]="{state, widget}" [auSlot]="state.children"></ng-template>
+				<div [auUse]="directives.bodyContainerDirective" class="accordion-collapse">
+					<div class="accordion-body" [auUse]="directives.bodyDirective">
+						<ng-template [auSlotProps]="{state, directives, api}" [auSlot]="state.children"></ng-template>
 					</div>
 				</div>
 			}
@@ -153,7 +153,7 @@ const defaultConfig: Partial<AccordionItemProps> = {
 		<ng-template [auContentAsSlot]="defaultSlots">
 			<ng-content></ng-content>
 		</ng-template>
-		<ng-template [auSlotProps]="{state: state(), widget}" [auSlot]="state().structure"></ng-template>
+		<ng-template [auSlotProps]="{state: state(), api, directives}" [auSlot]="state().structure"></ng-template>
 	`,
 })
 export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWidget> implements AfterContentChecked, AfterViewInit {

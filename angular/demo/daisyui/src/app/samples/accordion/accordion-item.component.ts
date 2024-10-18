@@ -14,17 +14,17 @@ import {AccordionComponent} from './accordion.component';
 	selector: 'app-accordion-item',
 	imports: [UseDirective, UseMultiDirective],
 	template: `
-		<div class="collapse collapse-arrow bg-base-200" [auUseMulti]="[widget.directives.itemDirective, widget.directives.transitionDirective]">
+		<div class="collapse collapse-arrow bg-base-200" [auUseMulti]="[directives.itemDirective, directives.transitionDirective]">
 			<div
 				role="button"
 				tabindex="0"
 				class="collapse-title text-xl font-medium focus-visible:outline-none"
-				[auUse]="widget.directives.toggleDirective"
+				[auUse]="directives.toggleDirective"
 				(keydown)="onEnter($event)"
 			>
 				<ng-content select="[header]" />
 			</div>
-			<div class="collapse-content" [auUse]="widget.directives.bodyContainerAttrsDirective">
+			<div class="collapse-content" [auUse]="directives.bodyContainerAttrsDirective">
 				@if (state().shouldBeInDOM) {
 					<ng-content />
 				}
@@ -63,7 +63,7 @@ export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWid
 
 	onEnter(e: KeyboardEvent) {
 		if (e.key === 'Enter') {
-			this.widget.api.toggle();
+			this.api.toggle();
 		}
 	}
 }

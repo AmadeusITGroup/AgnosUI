@@ -12,13 +12,10 @@ const AccordionDIContext: Context<Partial<AccordionApi>> = createContext({});
 export const Accordion = (
 	props: PropsWithChildren<Partial<Pick<AccordionProps, 'closeOthers' | 'onItemShown' | 'onItemHidden' | 'itemDestroyOnHide' | 'className'>>>,
 ) => {
-	const [
-		,
-		{
-			api,
-			directives: {accordionDirective},
-		},
-	] = useWidgetWithConfig(createAccordion, props, 'accordion');
+	const {
+		api,
+		directives: {accordionDirective},
+	} = useWidgetWithConfig(createAccordion, props, 'accordion');
 	return (
 		<AccordionDIContext.Provider value={api}>
 			<div {...useDirectives([classDirective, 'flex flex-col gap-2'], accordionDirective)}>{props.children}</div>
@@ -36,13 +33,11 @@ export const AccordionItem = (
 		showClasses: ['collapse-open'],
 		animationPendingShowClasses: ['collapse-open'],
 	});
-	const [
-		{shouldBeInDOM},
-		{
-			api,
-			directives: {itemDirective, transitionDirective, toggleDirective, bodyContainerAttrsDirective},
-		},
-	] = useWidgetWithConfig(registerItem as WidgetFactory<AccordionItemWidget>, props, null, {transition});
+	const {
+		state: {shouldBeInDOM},
+		api,
+		directives: {itemDirective, transitionDirective, toggleDirective, bodyContainerAttrsDirective},
+	} = useWidgetWithConfig(registerItem as WidgetFactory<AccordionItemWidget>, props, null, {transition});
 	useEffect(api.initDone, []);
 	const onEnter = (e: KeyboardEvent<HTMLDivElement>) => {
 		if (e.key === 'Enter') {

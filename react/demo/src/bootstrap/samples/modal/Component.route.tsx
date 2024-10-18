@@ -3,10 +3,10 @@ import {openModal} from '@agnos-ui/react-bootstrap/components/modal';
 
 type ModalContent = {name: string};
 
-const ModalBody = ({widget, state}: ModalContext<ModalContent>) => (
+const ModalBody = ({state, api}: ModalContext<ModalContent>) => (
 	<>
 		<p>Hello, {state.contentData.name}!</p>
-		<button type="button" className="btn btn-outline-primary" onClick={() => widget.api.close()}>
+		<button type="button" className="btn btn-outline-primary" onClick={() => api.close()}>
 			Close
 		</button>
 	</>

@@ -24,7 +24,7 @@ function getHtmlText(html: string) {
 
 const itemIdFn = (item: WikiResult) => 'page-' + item.pageid;
 
-const SlotBadgeLabel = ({itemContext, widget}: SelectItemContext<WikiResult>) => {
+const SlotBadgeLabel = ({itemContext, directives}: SelectItemContext<WikiResult>) => {
 	return (
 		<>
 			<a href={basePageUrl + itemContext.item.pageid} target="_blank" rel="noreferrer">
@@ -34,7 +34,7 @@ const SlotBadgeLabel = ({itemContext, widget}: SelectItemContext<WikiResult>) =>
 				type="button"
 				className="btn-close ms-1 wiki-btn-close"
 				aria-label="Close"
-				{...useDirective(widget.directives.badgeCloseButtonDirective, itemContext)}
+				{...useDirective(directives.badgeCloseButtonDirective, itemContext)}
 			></button>
 		</>
 	);

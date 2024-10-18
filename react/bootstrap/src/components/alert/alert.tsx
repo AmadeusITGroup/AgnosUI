@@ -12,7 +12,7 @@ const DefaultSlotStructure = (slotContext: AlertContext) => (
 			<Slot slotContent={slotContext.state.children} props={slotContext}></Slot>
 		</div>
 		{slotContext.state.dismissible && (
-			<button type="button" className="btn-close" onClick={slotContext.widget.api.close} aria-label={slotContext.state.ariaCloseButtonLabel}></button>
+			<button type="button" className="btn-close" onClick={slotContext.api.close} aria-label={slotContext.state.ariaCloseButtonLabel}></button>
 		)}
 	</>
 );
@@ -29,7 +29,7 @@ const AlertElement = (slotContext: AlertContext) => (
 				classDirective,
 				`au-alert alert alert-${slotContext.state.type} ${slotContext.state.className} ${slotContext.state.dismissible ? 'alert-dismissible' : ''}`,
 			],
-			slotContext.widget.directives.transitionDirective,
+			slotContext.directives.transitionDirective,
 		)}
 	>
 		<Slot slotContent={slotContext.state.structure} props={slotContext}></Slot>
@@ -40,12 +40,7 @@ export const Alert: ForwardRefExoticComponent<Partial<AlertProps> & RefAttribute
 	props: Partial<AlertProps>,
 	ref: ForwardedRef<AlertApi>,
 ) {
-	const [state, widget] = useWidgetWithConfig(createAlert, props, 'alert', defaultConfig);
-	useImperativeHandle(ref, () => widget.api, []);
-	const slotContext = {
-		state,
-		widget,
-	};
-
-	return <>{!state.hidden && <AlertElement {...slotContext} />}</>;
+	const widgetContext = useWidgetWithConfig(createAlert, props, 'alert', defaultConfig);
+	useImperativeHandle(ref, () => widgetContext.api, []);
+	return <>{!widgetContext.state.hidden && <AlertElement {...widgetContext} />}</>;
 });

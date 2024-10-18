@@ -10,28 +10,26 @@
 		...props
 	}: Partial<Pick<Props, 'className' | 'visible' | 'dismissible' | 'ariaCloseButtonLabel'>> & {children: Snippet} = $props();
 
-	const {
-		stores: {className$, dismissible$, ariaCloseButtonLabel$, hidden$},
-		patchChangedProps,
-		api,
-	} = callWidgetFactory({
+	const {state, api} = callWidgetFactory({
 		factory: createToast,
 		widgetName: 'toast',
-		props: {...props, visible},
+		get props() {
+			return {...props, visible};
+		},
+		enablePatchChanged: true,
 		events: {
 			onVisibleChange: (event) => {
 				visible = event;
 			},
 		},
 	});
-	$effect(() => patchChangedProps({...props, visible}));
 </script>
 
-{#if !$hidden$}
-	<div class="alert {$className$} flex">
+{#if !state.hidden}
+	<div class="alert {state.className} flex">
 		{@render children()}
-		{#if $dismissible$}
-			<button class="btn btn-sm btn-circle btn-ghost" onclick={api.close} aria-label={$ariaCloseButtonLabel$}>
+		{#if state.dismissible}
+			<button class="btn btn-sm btn-circle btn-ghost" onclick={api.close} aria-label={state.ariaCloseButtonLabel}>
 				{@html closeIconSvg}
 			</button>
 		{/if}

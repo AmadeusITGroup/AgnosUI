@@ -2,7 +2,7 @@
 	import '@agnos-ui/common/samples/slider/custom.scss';
 	import type {SliderContext} from '@agnos-ui/svelte-bootstrap/components/slider';
 
-	let {state, widget}: SliderContext = $props();
+	let {state, directives}: SliderContext = $props();
 </script>
 
 <div class="position-relative cup-container">
@@ -18,6 +18,6 @@
 		</div>
 	</div>
 </div>
-<button class="coffee-indicator" use:widget.directives.handleDirective={{item: state.sortedHandles[0]}}>
+<button class="coffee-indicator" use:directives.handleDirective={{item: state.sortedHandles[0]}}>
 	{'' + state.sortedHandles[0].value}
 </button>
