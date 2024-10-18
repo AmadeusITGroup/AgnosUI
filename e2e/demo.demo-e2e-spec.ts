@@ -55,7 +55,7 @@ test.describe('Sitemap', () => {
 
 	test(`sitemap.xml should contain the blog and framework introduction pages`, async ({page}) => {
 		await page.goto('sitemap.xml');
-		const domain = 'https://amadeusitgroup.github.io/AgnosUI/latest';
+		const domain = 'https://www.agnosui.dev/latest';
 		const routes = [
 			'/blog/2024-02-01',
 			'/docs/angular/getting-started/introduction',
@@ -69,7 +69,7 @@ test.describe('Sitemap', () => {
 
 	test(`sitemap.xml should not contain the samples`, async ({page}) => {
 		await page.goto('sitemap.xml');
-		const domain = 'https://amadeusitgroup.github.io/AgnosUI/latest';
+		const domain = 'https://www.agnosui.dev/latest';
 		const routes = ['/angular/samples', '/react/samples', '/svelte/samples'];
 		const urlsetLocator = page.locator('urlset');
 		await urlsetLocator.waitFor({state: 'attached'});
