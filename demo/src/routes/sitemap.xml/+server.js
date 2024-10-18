@@ -45,7 +45,7 @@ const allRoutes = Object.keys(import.meta.glob('../**/+page.svelte', {query: '?u
 		return frameworks.map((fwk) => route.replace('[framework]', fwk));
 	});
 
-const BASE = 'https://amadeusitgroup.github.io/AgnosUI/latest/';
+const BASE = 'https://www.agnosui.dev/latest/';
 async function getAllApi() {
 	const allApiDocs = [];
 	for (const fwk of apiFrameworks) {

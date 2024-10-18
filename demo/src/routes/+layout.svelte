@@ -77,7 +77,7 @@
 	<!-- Twitter -->
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content={$page.data.pageMeta.title} />
-	<meta property="twitter:domain" content="amadeusitgroup.github.io" />
+	<meta property="twitter:domain" content="www.agnosui.dev" />
 	<meta property="twitter:url" content={$page.data.pageMeta.shareUrl} />
 	<meta name="twitter:image" content={$page.data.pageMeta.socialImage} />
 	<meta name="twitter:image:alt" content={$page.data.pageMeta.socialImageAlt} />

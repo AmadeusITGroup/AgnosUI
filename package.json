@@ -2,7 +2,7 @@
 	"name": "@agnos-ui/agnos-ui",
 	"description": "Framework-agnostic widget library.",
 	"version": "0.4.4",
-	"homepage": "https://amadeusitgroup.github.io/AgnosUI/latest/",
+	"homepage": "https://www.agnosui.dev/latest/",
 	"bugs": "https://github.com/AmadeusITGroup/AgnosUI/issues",
 	"license": "MIT",
 	"private": true,
