@@ -27,7 +27,7 @@ Feel free to explore the [demo site](https://www.agnosui.dev/latest/) to see Agn
 
 4. **Flexible Component Customization**: AgnosUI allows developers to configure and override any component props at any point within the component subtree. This flexibility enables extensive customization possibilities, empowering developers to tailor the components to suit their specific project requirements.
 
-5. **Thorough Testing**: The core of AgnosUI undergoes comprehensive unit testing using [Vitest](https://vitest.dev/), ensuring its independence from any specific framework. Additionally, rigorous end-to-end tests are conducted with [Playwright](https://playwright.dev/) across different frameworks and browsers (Chromium, Firefox, Webkit). As the markup remains consistent for all frameworks, these tests are inherently framework-agnostic, guaranteeing robust and reliable component functionalities.
+5. **Thorough Testing**: The core of AgnosUI undergoes comprehensive unit testing using [Vitest](https://vitest.dev/), ensuring its independence from any specific framework. Additionally, rigorous end-to-end tests are conducted with [Playwright](https://playwright.dev/) across different frameworks and browsers (Chromium, Firefox, Webkit). As the markup remains consistent for all frameworks, these tests are inherently framework-agnostic, guaranteeing robust and reliable component functionalities. We ensure the SSR compliancy in all frameworks. We are also doing integration tests of the library using Verdaccio.
 
 ## Advantages
 
