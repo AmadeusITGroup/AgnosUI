@@ -1,0 +1,6 @@
+const e=`"use strict";
+Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
+const select = require("../../select-D_s1G9eu.cjs");
+exports.createSelect = select.createSelect;
+exports.getSelectDefaultConfig = select.getSelectDefaultConfig;
+`;export{e as default};
