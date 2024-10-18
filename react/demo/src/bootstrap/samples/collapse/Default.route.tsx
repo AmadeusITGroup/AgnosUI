@@ -7,16 +7,20 @@ const CollapseDemo = () => {
 
 	return (
 		<>
-			<button className="btn btn-primary m-2" type="button" onClick={() => refCollapse?.current?.open()}>
-				Open collapse
-			</button>
-			<button className="btn btn-primary m-2" type="button" onClick={() => refCollapse?.current?.close()}>
-				Close collapse
-			</button>
-			<button className="btn btn-primary m-2" type="button" onClick={() => refCollapse?.current?.toggle()}>
-				Toggle collapse
-			</button>
-			<Collapse ref={refCollapse}>Visible content</Collapse>
+			<p className="d-inline-flex gap-1">
+				<button className="btn btn-primary" type="button" onClick={() => refCollapse?.current?.open()}>
+					Open collapse
+				</button>
+				<button className="btn btn-primary" type="button" onClick={() => refCollapse?.current?.close()}>
+					Close collapse
+				</button>
+				<button className="btn btn-primary" type="button" onClick={() => refCollapse?.current?.toggle()}>
+					Toggle collapse
+				</button>
+			</p>
+			<Collapse ref={refCollapse}>
+				<div className="card card-body">Visible content</div>
+			</Collapse>
 		</>
 	);
 };

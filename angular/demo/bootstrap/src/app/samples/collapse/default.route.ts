@@ -5,10 +5,14 @@ import {Component} from '@angular/core';
 	standalone: true,
 	imports: [AgnosUIAngularModule],
 	template: `
-		<button class="btn btn-primary m-2" type="button" (click)="collapse.api.open()">Open collapse</button>
-		<button class="btn btn-primary m-2" type="button" (click)="collapse.api.close()">Close collapse</button>
-		<button class="btn btn-primary m-2" type="button" (click)="collapse.api.toggle()">Toggle collapse</button>
-		<div auCollapse #collapse="auCollapse">Visible content</div>
+		<p class="d-inline-flex gap-1">
+			<button class="btn btn-primary" type="button" (click)="collapse.api.open()">Open collapse</button>
+			<button class="btn btn-primary" type="button" (click)="collapse.api.close()">Close collapse</button>
+			<button class="btn btn-primary" type="button" (click)="collapse.api.toggle()">Toggle collapse</button>
+		</p>
+		<div auCollapse #collapse="auCollapse">
+			<div class="card card-body">Visible content</div>
+		</div>
 	`,
 })
 export default class DefaultCollapseComponent {}
