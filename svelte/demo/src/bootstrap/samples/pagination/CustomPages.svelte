@@ -12,7 +12,7 @@
 	function handleTheChange(e: (FocusEvent | KeyboardEvent) & {currentTarget: EventTarget & HTMLInputElement}) {
 		const value = e.currentTarget.value;
 		const intValue = parseInt(value);
-		widget.actions.select(intValue);
+		widget.api.select(intValue);
 		e.currentTarget.value = widget.stores.page$().toString();
 	}
 	function formatInput(e: Event & {currentTarget: EventTarget & HTMLInputElement}) {

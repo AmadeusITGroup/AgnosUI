@@ -1,7 +1,6 @@
 import {computed, type ReadableSignal} from '@amadeus-it-group/tansu';
 import {beforeEach, describe, expect, test, vi} from 'vitest';
 import {assign} from '../../../../common/utils';
-import {addEvent} from '../../utils/internal/dom';
 import type {ItemContext, SelectProps, SelectState, SelectWidget} from './select';
 import {createSelect, getSelectDefaultConfig} from './select';
 
@@ -187,7 +186,10 @@ describe(`Select model`, () => {
 					visibleItems: expectedState.visibleItems.filter(({item}) => item.includes(text)),
 				});
 
-				selectWidget.actions.onInput({target: {value: text}});
+				const input = document.createElement('input');
+				const directiveDestroy = selectWidget.directives.inputDirective(input);
+				input.value = text;
+				input.dispatchEvent(new Event('input'));
 				expect(getState(), 'state after text filtering').toStrictEqual(expectedState);
 
 				text = 'Bb';
@@ -195,8 +197,10 @@ describe(`Select model`, () => {
 					filterText: text,
 				});
 
-				selectWidget.actions.onInput({target: {value: text}});
+				input.value = text;
+				input.dispatchEvent(new Event('input'));
 				expect(getState(), 'filtering with different case').toEqual(expectedState);
+				directiveDestroy?.destroy?.();
 			});
 
 			test('typing', () => {
@@ -204,7 +208,11 @@ describe(`Select model`, () => {
 				const expectedState = getState();
 				const mock = vi.fn().mockImplementation(selectProps.onFilterTextChange!);
 				selectWidget.patch({onFilterTextChange: mock});
-				selectWidget.actions.onInput({target: {value: 'aa'}});
+
+				const input = document.createElement('input');
+				const directiveDestroy = selectWidget.directives.inputDirective(input);
+				input.value = 'aa';
+				input.dispatchEvent(new Event('input'));
 				assign(expectedState, {
 					open: true,
 					filterText: 'aa',
@@ -216,9 +224,11 @@ describe(`Select model`, () => {
 				});
 				expect(getState()).toStrictEqual(expectedState);
 				expect(mock).toHaveBeenCalledWith('aa');
-				selectWidget.actions.onInput({target: {value: 'aa'}});
+				input.value = 'aa';
+				input.dispatchEvent(new Event('input'));
 				expect(mock).toHaveBeenCalledTimes(1);
 				vi.resetAllMocks();
+				directiveDestroy?.destroy?.();
 			});
 
 			test(`Functionnal api for highlighted item`, () => {
@@ -301,12 +311,12 @@ describe(`Select model`, () => {
 					const selectWidget = testCtx.selectWidget;
 					const hasFocusDirective = selectWidget.directives.hasFocusDirective(container)!;
 					const containerDirective = selectWidget.directives.inputContainerDirective(container);
-					const removeInputEvent = addEvent(input, 'keydown', selectWidget.actions.onInputKeydown);
+					const inputDirective = selectWidget.directives.inputDirective(input);
 
 					return () => {
 						containerDirective?.destroy?.();
 						hasFocusDirective.destroy?.();
-						removeInputEvent();
+						inputDirective?.destroy?.();
 					};
 				});
 
@@ -438,16 +448,16 @@ describe(`Select model`, () => {
 
 					const hasFocusDirective = selectWidget.directives.hasFocusDirective(container)!;
 					const containerDirective = selectWidget.directives.inputContainerDirective(container);
-					const removeInputEvent = addEvent(input, 'keydown', selectWidget.actions.onInputKeydown);
-					const removebadgeAEvent = addEvent(badgeA, 'keydown', (e) => selectWidget.actions.onBadgeKeydown(e, 'aa'));
-					const removebadgeBEvent = addEvent(badgeB, 'keydown', (e) => selectWidget.actions.onBadgeKeydown(e, 'bb'));
+					const inputDirective = selectWidget.directives.inputDirective(input);
+					const badgeADirective = selectWidget.directives.badgeAttributesDirective(badgeA, testCtx.getState().visibleItems[0]);
+					const badgeBDirective = selectWidget.directives.badgeAttributesDirective(badgeB, testCtx.getState().visibleItems[1]);
 
 					return () => {
 						containerDirective?.destroy?.();
 						hasFocusDirective.destroy?.();
-						removeInputEvent();
-						removebadgeAEvent();
-						removebadgeBEvent();
+						inputDirective?.destroy?.();
+						badgeADirective?.destroy?.();
+						badgeBDirective?.destroy?.();
 					};
 				});
 

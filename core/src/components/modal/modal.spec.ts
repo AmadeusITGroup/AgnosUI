@@ -1,5 +1,6 @@
 import {describe, expect, test, beforeEach} from 'vitest';
 import {createModal, modalCloseButtonClick, modalOutsideClick} from './modal';
+import {attachDirectiveAndClick} from '../components.spec-utils';
 
 describe('modal', () => {
 	const noopTransition = async () => {};
@@ -68,7 +69,7 @@ describe('modal', () => {
 		});
 		const directive = modal.directives.modalDirective(element);
 		const promise = modal.api.open();
-		modal.actions.closeButtonClick({} as any as MouseEvent);
+		attachDirectiveAndClick(modal.directives.closeButtonDirective);
 		const result = await promise;
 		expect(result).toBe(modalCloseButtonClick);
 		directive?.destroy?.();
@@ -84,7 +85,7 @@ describe('modal', () => {
 		});
 		const directive = modal.directives.modalDirective(element);
 		const promise = modal.api.open();
-		modal.actions.modalClick({currentTarget: element, target: element} as any as MouseEvent);
+		element.click();
 		const result = await promise;
 		expect(result).toBe(modalOutsideClick);
 		directive?.destroy?.();
@@ -99,7 +100,7 @@ describe('modal', () => {
 		let settled = false;
 		const promise = modal.api.open();
 		// should not close the modal:
-		modal.actions.modalClick({currentTarget: element, target: element} as any as MouseEvent);
+		element.click();
 		void promise.finally(() => (settled = true));
 		await new Promise((resolve) => setTimeout(resolve, 100));
 		directive?.destroy?.();

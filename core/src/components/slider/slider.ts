@@ -247,6 +247,10 @@ export interface SliderDirectives {
 	clickableAreaDirective: Directive;
 
 	/**
+	 * Directive to apply handle events handlers
+	 */
+	handleEventsDirective: Directive<{item: {id: number}}>;
+	/**
 	 * Directive to apply to the slider handle if any
 	 */
 	handleDirective: Directive<{item: SliderHandle}>;
@@ -272,35 +276,7 @@ export interface SliderDirectives {
 	handleLabelDisplayDirective: Directive<{index: number}>;
 }
 
-export interface SliderActions {
-	/**
-	 * Method to handle click on the slider
-	 * @param event - mouse event
-	 */
-	click(event: MouseEvent): void;
-	/**
-	 * Method to process the keyboard event
-	 * @param event - keyboard event object
-	 * @param handleNumber - id of the modified handle
-	 */
-	keydown(event: KeyboardEvent, handleNumber: number): void;
-
-	/**
-	 * Method describing the behavior of the slider handle on mouse down event
-	 * @param event - mouse event
-	 * @param handleId - numeric id of the handle
-	 */
-	mouseDown(event: MouseEvent, handleId: number): void;
-
-	/**
-	 * Method describing the behavior of the slider handle on touch start event
-	 * @param event - touch event
-	 * @param handleId - number id of the handle
-	 */
-	touchStart(event: TouchEvent, handleId: number): void;
-}
-
-export type SliderWidget = Widget<SliderProps, SliderState, object, SliderActions, SliderDirectives>;
+export type SliderWidget = Widget<SliderProps, SliderState, object, object, SliderDirectives>;
 
 const defaultSliderConfig: SliderProps = {
 	min: 0,
@@ -673,113 +649,10 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 		},
 	}));
 
-	const widget: SliderWidget = {
-		...stateStores({
-			min$,
-			max$,
-			stepSize$,
-			values$,
-			sortedValues$,
-			sortedHandles$,
-			minValueLabelDisplay$,
-			maxValueLabelDisplay$,
-			combinedLabelDisplay$,
-			interactive$,
-			combinedLabelPositionLeft$,
-			combinedLabelPositionTop$,
-			progressDisplayOptions$,
-			handleDisplayOptions$,
-			showValueLabels$,
-			showMinMaxLabels$,
-			rtl$,
-			...stateProps,
-		}),
-		patch,
-		api: {},
-		directives: {
-			sliderDirective: mergeDirectives(sliderDirective, resizeDirective, containerDirective),
-			progressDisplayDirective: createAttributesDirective((progressContext$: ReadableSignal<{option: ProgressDisplayOptions}>) => ({
-				styles: {
-					left: computed(() => percent(progressContext$().option.left)),
-					right: computed(() => percent(progressContext$().option.right)),
-					top: computed(() => percent(progressContext$().option.top)),
-					bottom: computed(() => percent(progressContext$().option.bottom)),
-					width: computed(() => percent(progressContext$().option.width)),
-					height: computed(() => percent(progressContext$().option.height)),
-				},
-				classNames: {
-					'au-slider-progress': true,
-				},
-			})),
-			clickableAreaDirective: createAttributesDirective(() => ({
-				events: {
-					click: (event: MouseEvent) => widget.actions.click(event),
-				},
-				classNames: {
-					'au-slider-clickable-area': horizontal$,
-					'au-slider-clickable-area-vertical': vertical$,
-				},
-			})),
-			handleDirective: createAttributesDirective((handleContext$: ReadableSignal<{item: SliderHandle}>) => ({
-				events: {
-					keydown: (event: KeyboardEvent) => widget.actions.keydown(event, handleContext$().item.id),
-					mousedown: (event: MouseEvent) => widget.actions.mouseDown(event, handleContext$().item.id),
-					touchstart: (event: TouchEvent) => widget.actions.touchStart(event, handleContext$().item.id),
-				},
-				attributes: {
-					role: 'slider',
-					'aria-valuemin': min$,
-					'aria-valuemax': max$,
-					'aria-valuenow': computed(() => handleContext$().item.value),
-					'aria-valuetext': computed(() => handleContext$().item.ariaValueText),
-					'aria-label': computed(() => handleContext$().item.ariaLabel),
-					'aria-orientation': computed(() => (vertical$() ? 'vertical' : undefined)),
-					'aria-disabled': computed(() => (disabled$() ? 'true' : undefined)),
-					disabled: disabled$,
-					'aria-readonly': computed(() => (readonly$() ? 'true' : undefined)),
-				},
-				styles: {
-					left: computed(() => percent(handleDisplayOptions$()[handleContext$().item.id].left)),
-					top: computed(() => percent(handleDisplayOptions$()[handleContext$().item.id].top)),
-				},
-				classNames: {
-					'au-slider-handle': true,
-					'au-slider-handle-vertical': vertical$,
-					'au-slider-handle-horizontal': horizontal$,
-				},
-			})),
-			minLabelDirective: mergeDirectives(minLabelDomDirective, minLabelDirective),
-			maxLabelDirective: mergeDirectives(maxLabelDomDirective, maxLabelDirective),
-			combinedHandleLabelDisplayDirective: createAttributesDirective(() => ({
-				classNames: {
-					'au-slider-label-vertical': vertical$,
-					'au-slider-label-vertical-now': vertical$,
-					'au-slider-label': horizontal$,
-					'au-slider-label-now': horizontal$,
-				},
-				styles: {
-					left: computed(() => percent(combinedLabelPositionLeft$())),
-					top: computed(() => percent(combinedLabelPositionTop$())),
-				},
-			})),
-			handleLabelDisplayDirective: createAttributesDirective((labelDisplayContext$: ReadableSignal<{index: number}>) => ({
-				classNames: {
-					'au-slider-label-vertical': vertical$,
-					'au-slider-label-vertical-now': vertical$,
-					'au-slider-label': horizontal$,
-					'au-slider-label-now': horizontal$,
-				},
-				styles: {
-					left: computed(() => percent(handleDisplayOptions$()[labelDisplayContext$().index].left)),
-					top: computed(() => percent(handleDisplayOptions$()[labelDisplayContext$().index].top)),
-				},
-			})),
-		},
-		actions: {
-			click(event: MouseEvent) {
-				adjustCoordinate(vertical$() ? event.clientY : event.clientX);
-			},
-			keydown(event: KeyboardEvent, handleIndex: number) {
+	const handleEventsDirective = createAttributesDirective((handleContext$: ReadableSignal<{item: {id: number}}>) => ({
+		events: {
+			keydown: (event: KeyboardEvent) => {
+				const handleIndex = handleContext$().item.id;
 				const {key} = event;
 				const rtl = rtl$(),
 					stepSize = stepSize$(),
@@ -827,7 +700,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 					event.stopPropagation();
 				}
 			},
-			mouseDown(event: MouseEvent, handleId: number) {
+			mousedown: (event: MouseEvent) => {
 				event.preventDefault();
 				const currentTarget = event.target as HTMLElement;
 				const handleDrag = (e: MouseEvent) => {
@@ -836,7 +709,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 					currentTarget.focus();
 					if (_prevCoordinate !== newCoord) {
 						_prevCoordinate = newCoord;
-						adjustCoordinate(newCoord, handleId);
+						adjustCoordinate(newCoord, handleContext$().item.id);
 					}
 				};
 				if (interactive$()) {
@@ -853,7 +726,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 					);
 				}
 			},
-			touchStart(event: TouchEvent, handleId: number) {
+			touchstart: (event: TouchEvent) => {
 				event.preventDefault();
 				const handleDrag = (e: TouchEvent) => {
 					e.preventDefault();
@@ -861,7 +734,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 					(event.target as HTMLElement).focus();
 					if (_prevCoordinate !== newCoord) {
 						_prevCoordinate = newCoord;
-						adjustCoordinate(newCoord, handleId);
+						adjustCoordinate(newCoord, handleContext$().item.id);
 					}
 				};
 				if (interactive$()) {
@@ -887,6 +760,112 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 				}
 			},
 		},
+	}));
+
+	const widget: SliderWidget = {
+		...stateStores({
+			min$,
+			max$,
+			stepSize$,
+			values$,
+			sortedValues$,
+			sortedHandles$,
+			minValueLabelDisplay$,
+			maxValueLabelDisplay$,
+			combinedLabelDisplay$,
+			interactive$,
+			combinedLabelPositionLeft$,
+			combinedLabelPositionTop$,
+			progressDisplayOptions$,
+			handleDisplayOptions$,
+			showValueLabels$,
+			showMinMaxLabels$,
+			rtl$,
+			...stateProps,
+		}),
+		patch,
+		api: {},
+		directives: {
+			sliderDirective: mergeDirectives(sliderDirective, resizeDirective, containerDirective),
+			progressDisplayDirective: createAttributesDirective((progressContext$: ReadableSignal<{option: ProgressDisplayOptions}>) => ({
+				styles: {
+					left: computed(() => percent(progressContext$().option.left)),
+					right: computed(() => percent(progressContext$().option.right)),
+					top: computed(() => percent(progressContext$().option.top)),
+					bottom: computed(() => percent(progressContext$().option.bottom)),
+					width: computed(() => percent(progressContext$().option.width)),
+					height: computed(() => percent(progressContext$().option.height)),
+				},
+				classNames: {
+					'au-slider-progress': true,
+				},
+			})),
+			clickableAreaDirective: createAttributesDirective(() => ({
+				events: {
+					click: (event: MouseEvent) => {
+						adjustCoordinate(vertical$() ? event.clientY : event.clientX);
+					},
+				},
+				classNames: {
+					'au-slider-clickable-area': horizontal$,
+					'au-slider-clickable-area-vertical': vertical$,
+				},
+			})),
+			handleEventsDirective,
+			handleDirective: mergeDirectives(
+				handleEventsDirective,
+				createAttributesDirective((handleContext$: ReadableSignal<{item: SliderHandle}>) => ({
+					attributes: {
+						role: 'slider',
+						'aria-valuemin': min$,
+						'aria-valuemax': max$,
+						'aria-valuenow': computed(() => handleContext$().item.value),
+						'aria-valuetext': computed(() => handleContext$().item.ariaValueText),
+						'aria-label': computed(() => handleContext$().item.ariaLabel),
+						'aria-orientation': computed(() => (vertical$() ? 'vertical' : undefined)),
+						'aria-disabled': computed(() => (disabled$() ? 'true' : undefined)),
+						disabled: disabled$,
+						'aria-readonly': computed(() => (readonly$() ? 'true' : undefined)),
+					},
+					styles: {
+						left: computed(() => percent(handleDisplayOptions$()[handleContext$().item.id].left)),
+						top: computed(() => percent(handleDisplayOptions$()[handleContext$().item.id].top)),
+					},
+					classNames: {
+						'au-slider-handle': true,
+						'au-slider-handle-vertical': vertical$,
+						'au-slider-handle-horizontal': horizontal$,
+					},
+				})),
+			),
+			minLabelDirective: mergeDirectives(minLabelDomDirective, minLabelDirective),
+			maxLabelDirective: mergeDirectives(maxLabelDomDirective, maxLabelDirective),
+			combinedHandleLabelDisplayDirective: createAttributesDirective(() => ({
+				classNames: {
+					'au-slider-label-vertical': vertical$,
+					'au-slider-label-vertical-now': vertical$,
+					'au-slider-label': horizontal$,
+					'au-slider-label-now': horizontal$,
+				},
+				styles: {
+					left: computed(() => percent(combinedLabelPositionLeft$())),
+					top: computed(() => percent(combinedLabelPositionTop$())),
+				},
+			})),
+			handleLabelDisplayDirective: createAttributesDirective((labelDisplayContext$: ReadableSignal<{index: number}>) => ({
+				classNames: {
+					'au-slider-label-vertical': vertical$,
+					'au-slider-label-vertical-now': vertical$,
+					'au-slider-label': horizontal$,
+					'au-slider-label-now': horizontal$,
+				},
+				styles: {
+					left: computed(() => percent(handleDisplayOptions$()[labelDisplayContext$().index].left)),
+					top: computed(() => percent(handleDisplayOptions$()[labelDisplayContext$().index].top)),
+				},
+			})),
+		},
+		actions: {},
 	};
 
 	return widget;

@@ -6,7 +6,7 @@ export function Pagination(props: Partial<PaginationProps>) {
 	const [
 		state,
 		{
-			actions: {first, last, next, previous, select},
+			api: {first, last, next, previous, select},
 		},
 	] = useWidgetWithConfig(createPagination, props, 'pagination');
 

@@ -1,7 +1,6 @@
 import type {
 	AccordionApi,
 	AccordionDirectives,
-	AccordionItemActions,
 	AccordionItemApi,
 	AccordionProps as CoreProps,
 	AccordionState as CoreState,
@@ -76,7 +75,7 @@ export type AccordionWidget = Widget<AccordionProps, AccordionState, AccordionAp
 export interface AccordionItemState extends CoreItemState, AccordionItemExtraProps {}
 export interface AccordionItemProps extends CoreItemProps, AccordionItemExtraProps {}
 
-export type AccordionItemWidget = Widget<AccordionItemProps, AccordionItemState, AccordionItemApi, AccordionItemActions, AccordionItemDirectives>;
+export type AccordionItemWidget = Widget<AccordionItemProps, AccordionItemState, AccordionItemApi, object, AccordionItemDirectives>;
 
 const defaultConfigExtraProps: AccordionExtraProps = {
 	itemStructure: undefined,

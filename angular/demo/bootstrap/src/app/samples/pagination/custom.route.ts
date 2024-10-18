@@ -59,7 +59,7 @@ export default class PaginationComponent {
 	handleTheChange(input: HTMLInputElement, widget: PaginationContext['widget']) {
 		const value = input.value;
 		const intValue = parseInt(value);
-		widget.actions.select(intValue);
+		widget.api.select(intValue);
 		input.value = widget.stores.page$().toString();
 	}
 }

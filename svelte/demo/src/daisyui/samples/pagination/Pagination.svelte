@@ -31,7 +31,7 @@
 			className$,
 		},
 		state$,
-		actions: {first, previous, next, last},
+		api: {first, previous, next, last, select},
 	} = widget;
 
 	$effect(() => widget.patchChangedProps({...props, page}));
@@ -69,7 +69,7 @@
 				class:btn-active={page === $state$.page}
 				aria-current={page === $state$.page ? 'page' : null}
 				tabindex={page === -1 ? -1 : $state$.disabled ? -1 : undefined}
-				onclick={page === -1 ? () => {} : () => widget.actions.select(page)}
+				onclick={page === -1 ? () => {} : () => select(page)}
 				disabled={page === -1 || $state$.disabled}
 				>{page}
 				{#if $state$.page === page}<span class="sr-only">{$state$.activeLabel}</span>{/if}

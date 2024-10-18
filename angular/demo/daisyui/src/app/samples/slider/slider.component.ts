@@ -5,14 +5,14 @@ import {
 	auNumberAttribute,
 	callWidgetFactory,
 	createSlider,
-	UseDirective,
+	UseMultiDirective,
 } from '@agnos-ui/angular-headless';
 import {ChangeDetectionStrategy, Component, input, model} from '@angular/core';
 
 @Component({
 	selector: 'app-slider',
 	standalone: true,
-	imports: [UseDirective],
+	imports: [UseMultiDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	templateUrl: './slider.component.html',
 })

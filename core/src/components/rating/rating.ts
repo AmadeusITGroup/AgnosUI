@@ -163,39 +163,28 @@ export interface RatingState extends RatingCommonPropsAndState {
 	stars: StarContext[];
 }
 
-export interface RatingActions {
+export interface RatingApi {
 	/**
-	 * Method to be used when a star is clicked.
+	 * Sets the rating value.
 	 *
-	 * To be used in the onclick event of a star
 	 * @param index - Star index, starting from 1
 	 */
-	click(index: number): void;
+	setRating(index: number): void;
 
 	/**
-	 * Method to be used when the mouse enter in a star.
+	 * Sets the hovered rating value.
 	 *
-	 * To be used in the onmouseenter of a star
 	 * @param index - Star index, starting from 1
 	 */
-	hover(index: number): void;
+	setHoveredRating(index: number): void;
 
 	/**
-	 * Method to be used when the mouse leave the widget.
-	 *
-	 * To be used in the onmouseleave of the rating container
+	 * Leave the rating, resetting the visible rating to the rating value and triggering the onLeave callback
 	 */
 	leave(): void;
-
-	/**
-	 * Method to be used to handle the keyboard.
-	 *
-	 * To be used in the onkeydown of the rating container
-	 */
-	handleKey(event: KeyboardEvent): void;
 }
 
-export type RatingWidget = Widget<RatingProps, RatingState, object, RatingActions, RatingDirectives>;
+export type RatingWidget = Widget<RatingProps, RatingState, RatingApi, object, RatingDirectives>;
 
 const defaultConfig: RatingProps = {
 	rating: 0,
@@ -265,7 +254,7 @@ export function createRating(config?: PropsConfig<RatingProps>): RatingWidget {
 	// clean inputs adjustment to valid range
 	const tabindex$ = computed(() => (disabled$() ? -1 : _dirtyTabindex$()));
 
-	const rating$ = bindableProp(_dirtyRating$, onRatingChange$, (dirtyRating) => clamp(dirtyRating, maxRating$()));
+	const rating$ = bindableProp(_dirtyRating$, onRatingChange$, (dirtyRating) => clamp(dirtyRating, maxRating$(), 0));
 
 	// internal inputs
 	const _hoveredRating$ = writable(0);
@@ -296,57 +285,42 @@ export function createRating(config?: PropsConfig<RatingProps>): RatingWidget {
 			...stateProps,
 		}),
 		patch,
-		actions: {
-			click: (index: number) => {
-				if (interactive$() && index > 0 && index <= maxRating$()) {
-					rating$.update((rating) => (rating === index && resettable$() ? 0 : index));
-				}
-			},
-			hover: (index: number) => {
-				if (interactive$() && index > 0 && index <= maxRating$()) {
-					_hoveredRating$.set(index);
-					onHover$()(index);
-				}
-			},
-			leave: () => {
-				if (interactive$()) {
-					onLeave$()(_hoveredRating$());
-					_hoveredRating$.set(0);
-				}
-			},
-			handleKey(event: KeyboardEvent) {
-				if (interactive$()) {
-					const {key} = event;
-					switch (key) {
-						case 'ArrowLeft':
-						case 'ArrowDown':
-							rating$.update((rating) => rating - 1);
-							break;
-						case 'ArrowRight':
-						case 'ArrowUp':
-							rating$.update((rating) => rating + 1);
-							break;
-						case 'Home':
-						case 'PageDown':
-							rating$.set(0);
-							break;
-						case 'End':
-						case 'PageUp':
-							rating$.set(maxRating$());
-							break;
-						default:
-							return;
-					}
-					event.preventDefault();
-					event.stopPropagation();
-				}
-			},
-		},
+		actions: {},
 		directives: {
 			containerDirective: createAttributesDirective(() => ({
 				events: {
-					keydown: (e) => widget.actions.handleKey(e),
-					mouseleave: () => widget.actions.leave(),
+					keydown: (event: KeyboardEvent) => {
+						if (interactive$()) {
+							const {key} = event;
+							switch (key) {
+								case 'ArrowLeft':
+								case 'ArrowDown':
+									rating$.update((rating) => rating - 1);
+									break;
+								case 'ArrowRight':
+								case 'ArrowUp':
+									rating$.update((rating) => rating + 1);
+									break;
+								case 'Home':
+								case 'PageDown':
+									rating$.set(0);
+									break;
+								case 'End':
+								case 'PageUp':
+									rating$.set(maxRating$());
+									break;
+								default:
+									return;
+							}
+							event.preventDefault();
+							event.stopPropagation();
+						}
+					},
+					mouseleave: () => {
+						if (interactive$()) {
+							widget.api.leave();
+						}
+					},
 				},
 				attributes: {
 					role: 'slider',
@@ -368,8 +342,19 @@ export function createRating(config?: PropsConfig<RatingProps>): RatingWidget {
 			starDirective: createAttributesDirective((starContext$: ReadableSignal<{index: number}>) => {
 				return {
 					events: {
-						mouseenter: () => widget.actions.hover(starContext$().index + 1),
-						click: () => widget.actions.click(starContext$().index + 1),
+						mouseenter: () => {
+							const index = starContext$().index + 1;
+							if (interactive$() && index > 0 && index <= maxRating$()) {
+								_hoveredRating$.set(index);
+								onHover$()(index);
+							}
+						},
+						click: () => {
+							const index = starContext$().index + 1;
+							if (interactive$() && index > 0 && index <= maxRating$()) {
+								rating$.update((rating) => (rating === index && resettable$() ? 0 : index));
+							}
+						},
 					},
 					styles: {
 						cursor: computed(() => (interactive$() ? 'pointer' : 'default')),
@@ -380,7 +365,19 @@ export function createRating(config?: PropsConfig<RatingProps>): RatingWidget {
 				};
 			}),
 		},
-		api: {},
+		api: {
+			setRating(index: number) {
+				rating$.set(index);
+			},
+			setHoveredRating(index: number) {
+				onHover$()(index);
+				_hoveredRating$.set(index);
+			},
+			leave() {
+				onLeave$()(visibleRating$());
+				_hoveredRating$.set(0);
+			},
+		},
 	};
 
 	return widget;

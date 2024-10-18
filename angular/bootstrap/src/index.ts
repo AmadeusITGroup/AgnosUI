@@ -15,7 +15,6 @@ export type {
 	AccordionState,
 	AccordionWidget,
 	AccordionDirectives,
-	AccordionItemActions,
 	AccordionItemApi,
 	AccordionItemDirectives,
 } from './components/accordion';
@@ -28,16 +27,7 @@ export * from './components/alert';
 
 export * from './components/collapse';
 
-export type {
-	ModalContext,
-	ModalProps,
-	ModalState,
-	ModalWidget,
-	ModalApi,
-	ModalDirectives,
-	ModalActions,
-	ModalBeforeCloseEvent,
-} from './components/modal';
+export type {ModalContext, ModalProps, ModalState, ModalWidget, ModalApi, ModalDirectives, ModalBeforeCloseEvent} from './components/modal';
 export {createModal, getModalDefaultConfig, modalCloseButtonClick, modalOutsideClick} from './components/modal';
 export * from './components/modal';
 
@@ -48,7 +38,7 @@ export type {
 	PaginationState,
 	PaginationWidget,
 	DirectionsHrefs,
-	PaginationActions,
+	PaginationApi,
 	PaginationDirectives,
 } from './components/pagination';
 export {createPagination, getPaginationDefaultConfig} from './components/pagination';
@@ -58,7 +48,7 @@ export type {ProgressbarContext, ProgressbarProps, ProgressbarState, Progressbar
 export {createProgressbar, getProgressbarDefaultConfig} from './components/progressbar';
 export * from './components/progressbar';
 
-export type {RatingProps, RatingState, RatingWidget, StarContext, RatingActions, RatingDirectives} from './components/rating';
+export type {RatingProps, RatingState, RatingWidget, StarContext, RatingApi, RatingDirectives} from './components/rating';
 export {createRating, getRatingDefaultConfig} from './components/rating';
 export * from './components/rating';
 
@@ -69,7 +59,6 @@ export type {
 	SelectState,
 	SelectWidget,
 	ItemContext,
-	SelectActions,
 	SelectApi,
 	SelectDirectives,
 } from './components/select';
@@ -83,7 +72,6 @@ export type {
 	SliderSlotLabelContext,
 	SliderState,
 	SliderWidget,
-	SliderActions,
 	SliderHandle,
 	HandleDisplayOptions,
 	ProgressDisplayOptions,

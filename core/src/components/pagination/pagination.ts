@@ -271,28 +271,28 @@ export interface PaginationState extends PaginationCommonPropsAndState {
 	ariaLiveLabelText: string;
 }
 
-export interface PaginationActions {
+export interface PaginationApi {
 	/**
 	 * To "go" to a specific page
 	 * @param page - The page number to select
 	 */
-	select(page: number, event?: MouseEvent): void;
+	select(page: number): void;
 	/**
 	 * To "go" to the first page
 	 */
-	first(event?: MouseEvent): void;
+	first(): void;
 	/**
 	 * To "go" to the previous page
 	 */
-	previous(event?: MouseEvent): void;
+	previous(): void;
 	/**
 	 * To "go" to the next page
 	 */
-	next(event?: MouseEvent): void;
+	next(): void;
 	/**
 	 * To "go" to the last page
 	 */
-	last(event?: MouseEvent): void;
+	last(): void;
 }
 
 export interface PaginationDirectives {
@@ -325,7 +325,7 @@ export interface PaginationDirectives {
 	pageLast: Directive;
 }
 
-export type PaginationWidget = Widget<PaginationProps, PaginationState, object, PaginationActions, PaginationDirectives>;
+export type PaginationWidget = Widget<PaginationProps, PaginationState, PaginationApi, object, PaginationDirectives>;
 
 const PAGE_LINK_DEFAULT = '#';
 
@@ -463,19 +463,14 @@ export function createPagination(config?: PropsConfig<PaginationProps>): Paginat
 	 * For navigation outside current browser tab let the default behavior, without updating the page number;
 	 * @param pageNumber current page number
 	 * @param event UI event triggered when page changed
-	 * @param pageNavigationHandler change handler callback for navigation elements
 	 */
-	function handleNavigation(pageNumber: number, event?: MouseEvent, pageNavigationHandler?: (pN: number) => number) {
+	function handleNavigation(pageNumber: number, event?: MouseEvent) {
 		if (pagesHrefs$()[pageNumber - 1] === PAGE_LINK_DEFAULT) {
 			event?.preventDefault();
 		}
 		if (!event || !(event.ctrlKey || event.metaKey)) {
 			event?.preventDefault();
-			if (pageNavigationHandler) {
-				page$.update(pageNavigationHandler);
-			} else {
-				page$.set(pageNumber);
-			}
+			page$.set(pageNumber);
 		}
 	}
 
@@ -498,54 +493,49 @@ export function createPagination(config?: PropsConfig<PaginationProps>): Paginat
 			...stateProps,
 		}),
 		patch,
-		actions: {
+		actions: {},
+		api: {
 			/**
 			 * Set the current page pageNumber (starting from 1)
 			 * @param pageNumber - Current page number to set.
 			 * Value is normalized between 1 and the number of page
-			 * @param event UI event that triggered the select
 			 */
-			select(pageNumber: number, event?: MouseEvent) {
-				handleNavigation(pageNumber, event);
+			select(pageNumber: number) {
+				page$.set(pageNumber);
 			},
 
 			/**
 			 * Select the first page
-			 * @param event Event triggering the action
 			 */
-			first(event?: MouseEvent) {
-				handleNavigation(1, event);
+			first() {
+				page$.set(1);
 			},
 
 			/**
 			 * Select the previous page
-			 * @param event Event triggering the action
 			 */
-			previous(event?: MouseEvent) {
-				handleNavigation(page$() - 1, event, (page) => page - 1);
+			previous() {
+				page$.update((p) => p - 1);
 			},
 
 			/**
 			 * Select the next page
-			 * @param event Event triggering the action
 			 */
-			next(event?: MouseEvent) {
-				handleNavigation(page$() + 1, event, (page) => page + 1);
+			next() {
+				page$.update((p) => p + 1);
 			},
 
 			/**
 			 * Select the last page
-			 * @param event Event triggering the action
 			 */
-			last(event?: MouseEvent) {
-				handleNavigation(pageCount$(), event);
+			last() {
+				page$.set(pageCount$());
 			},
 		},
-		api: {},
 		directives: {
 			pageLink: createAttributesDirective((pageLinkContext$: ReadableSignal<{page: number}>) => ({
 				events: {
-					click: (e) => widget.actions.select(pageLinkContext$().page, e),
+					click: (e) => handleNavigation(pageLinkContext$().page, e),
 				},
 				attributes: {
 					'aria-current': computed(() => (page$() === pageLinkContext$().page ? 'page' : undefined)),
@@ -560,7 +550,7 @@ export function createPagination(config?: PropsConfig<PaginationProps>): Paginat
 			})),
 			pageFirst: createAttributesDirective(() => ({
 				events: {
-					click: (e) => widget.actions.first(e),
+					click: (e) => handleNavigation(1, e),
 				},
 				attributes: {
 					'aria-label': ariaFirstLabel$,
@@ -574,7 +564,7 @@ export function createPagination(config?: PropsConfig<PaginationProps>): Paginat
 			})),
 			pagePrev: createAttributesDirective(() => ({
 				events: {
-					click: (e) => widget.actions.previous(e),
+					click: (e) => handleNavigation(page$() - 1, e),
 				},
 				attributes: {
 					'aria-label': ariaPreviousLabel$,
@@ -588,7 +578,7 @@ export function createPagination(config?: PropsConfig<PaginationProps>): Paginat
 			})),
 			pageNext: createAttributesDirective(() => ({
 				events: {
-					click: (e) => widget.actions.next(e),
+					click: (e) => handleNavigation(page$() + 1, e),
 				},
 				attributes: {
 					'aria-label': ariaNextLabel$,
@@ -602,7 +592,7 @@ export function createPagination(config?: PropsConfig<PaginationProps>): Paginat
 			})),
 			pageLast: createAttributesDirective(() => ({
 				events: {
-					click: (e) => widget.actions.last(e),
+					click: (e) => handleNavigation(pageCount$(), e),
 				},
 				attributes: {
 					'aria-label': ariaLastLabel$,

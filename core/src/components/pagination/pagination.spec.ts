@@ -3,6 +3,7 @@ import {beforeEach, describe, expect, test, vi} from 'vitest';
 import type {PaginationState, PaginationWidget} from './pagination';
 import {createPagination, getPaginationDefaultConfig} from './pagination';
 import {assign} from '../../../../common/utils';
+import {attachDirectiveAndClick} from '../components.spec-utils';
 
 describe(`Pagination`, () => {
 	let pagination: PaginationWidget;
@@ -78,19 +79,19 @@ describe(`Pagination`, () => {
 		const pages = Array.from({length: 20}, (_, index) => index + 1);
 		const pagesHrefs = Array.from({length: 20}, (_, __) => `#`);
 
-		pagination.actions.first();
+		attachDirectiveAndClick(pagination.directives.pageFirst);
 		expect(state).toStrictEqual(assign(expectedState, {page: 1, pageCount: 20, pagesLabel, nextDisabled: false, pages, pagesHrefs}));
 
-		pagination.actions.next();
+		attachDirectiveAndClick(pagination.directives.pageNext);
 		expect(state).toStrictEqual(assign(expectedState, {page: 2, previousDisabled: false, ariaLiveLabelText: 'Current page is 2'}));
 
-		pagination.actions.select(5);
+		attachDirectiveAndClick(pagination.directives.pageLink, {page: 5});
 		expect(state).toStrictEqual(assign(expectedState, {page: 5, ariaLiveLabelText: 'Current page is 5'}));
 
-		pagination.actions.last();
+		attachDirectiveAndClick(pagination.directives.pageLast);
 		expect(state).toStrictEqual(assign(expectedState, {page: 20, nextDisabled: true, ariaLiveLabelText: 'Current page is 20'}));
 
-		pagination.actions.previous();
+		attachDirectiveAndClick(pagination.directives.pagePrev);
 		expect(state).toStrictEqual(assign(expectedState, {page: 19, nextDisabled: false, ariaLiveLabelText: 'Current page is 19'}));
 	});
 
@@ -116,7 +117,7 @@ describe(`Pagination`, () => {
 		};
 		expect(state).toStrictEqual(expectedState);
 
-		pagination.actions.next();
+		attachDirectiveAndClick(pagination.directives.pageNext);
 		expectedState = assign(expectedState, {
 			page: 4,
 			directionsHrefs: {
@@ -127,7 +128,7 @@ describe(`Pagination`, () => {
 		});
 		expect(state).toStrictEqual(expectedState);
 
-		pagination.actions.next();
+		attachDirectiveAndClick(pagination.directives.pageNext);
 		expectedState = assign(expectedState, {
 			page: 5,
 			nextDisabled: true,
@@ -139,7 +140,7 @@ describe(`Pagination`, () => {
 		});
 		expect(state).toStrictEqual(expectedState);
 
-		pagination.actions.first();
+		attachDirectiveAndClick(pagination.directives.pageFirst);
 		expectedState = assign(expectedState, {
 			page: 1,
 			nextDisabled: false,
@@ -315,7 +316,7 @@ describe(`Pagination`, () => {
 		pagination.patch({onPageChange: mock});
 		pagination.patch({collectionSize: 70, page: 4});
 		expect(mock).not.toHaveBeenCalled();
-		pagination.actions.previous();
+		attachDirectiveAndClick(pagination.directives.pagePrev);
 		expect(mock).toHaveBeenCalledTimes(1);
 		expect(mock).toHaveBeenCalledWith(3);
 		mock.mockRestore();

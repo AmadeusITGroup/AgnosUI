@@ -12,9 +12,9 @@ test.describe('Accessibility', () => {
 		await expect.poll(async () => (await selectPO.state()).badges.length).toBeGreaterThan(0);
 		await selectPO.locatorMenu.waitFor();
 
-		expect((await analyze(page, page.url())).violations).toEqual([]);
+		expect((await analyze(page)).violations).toEqual([]);
 
 		await switchTheme(page, 'dark');
-		expect((await analyze(page, page.url())).violations).toEqual([]);
+		expect((await analyze(page)).violations).toEqual([]);
 	});
 });

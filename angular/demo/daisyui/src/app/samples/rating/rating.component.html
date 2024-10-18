@@ -2,9 +2,9 @@
 	@for (item of state().stars; track trackByIndex(index); let index = $index) {
 		<input
 			(blur)="onTouched()"
-			(mouseleave)="_widget.actions.leave()"
-			(mouseenter)="_widget.actions.hover(index + 1)"
-			(click)="_widget.actions.click(index + 1)"
+			(mouseleave)="api.leave()"
+			(mouseenter)="api.setHoveredRating(index + 1)"
+			(click)="api.setRating(index + 1)"
 			type="radio"
 			name="rating-1"
 			class="mask mask-star"
