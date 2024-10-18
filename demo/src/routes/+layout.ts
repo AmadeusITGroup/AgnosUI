@@ -11,7 +11,7 @@ export const load = async () => {
 			versions.push({folder: 'latest', version: `v${import.meta.env.AGNOSUI_VERSION}`});
 		}
 	} else {
-		const versionFetch = await fetch('https://amadeusitgroup.github.io/AgnosUI/versions.json');
+		const versionFetch = await fetch('https://www.agnosui.dev/versions.json');
 		versions = [{folder: 'main', version: 'PREVIEW'}].concat(
 			(await versionFetch.json()).map((ver: Version) => {
 				return {...ver, version: `v${ver.version}`};
