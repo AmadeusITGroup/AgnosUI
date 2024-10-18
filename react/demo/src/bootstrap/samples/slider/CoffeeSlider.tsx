@@ -19,10 +19,7 @@ const CustomSliderComponent = (slotContext: SliderContext) => {
 					</div>
 				</div>
 			</div>
-			<button
-				className="coffee-indicator"
-				{...useDirective(slotContext.widget.directives.handleDirective, {item: slotContext.state.sortedHandles[0]})}
-			>
+			<button className="coffee-indicator" {...useDirective(slotContext.directives.handleDirective, {item: slotContext.state.sortedHandles[0]})}>
 				{'' + slotContext.state.sortedHandles[0].value}
 			</button>
 		</>

@@ -2,8 +2,8 @@
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import type {ProgressbarContext} from './progressbar.gen';
 
-	let {state, widget}: ProgressbarContext = $props();
-	let slotContext = $derived({widget, state});
+	let widget: ProgressbarContext = $props();
+	const state = widget.state;
 </script>
 
 <div class="progress" style:height={state.height}>
@@ -13,6 +13,6 @@
 		class:progress-bar-animated={state.animated}
 		style:width={`${state.percentage}%`}
 	>
-		<Slot content={state.children} props={slotContext} />
+		<Slot content={state.children} props={widget} />
 	</div>
 </div>

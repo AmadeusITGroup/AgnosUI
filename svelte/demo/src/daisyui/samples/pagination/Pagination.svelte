@@ -5,102 +5,88 @@
 
 	let {page = $bindable(), ...props}: Partial<PaginationProps> = $props();
 
-	const widget = callWidgetFactory({
+	const {
+		state,
+		api: {first, previous, next, last, select},
+	} = callWidgetFactory({
 		factory: createPagination,
 		widgetName: 'pagination',
-		props: {...props, page},
+		get props() {
+			return {...props, page};
+		},
+		enablePatchChanged: true,
 		events: {
 			onPageChange: (value: number) => {
 				page = value;
 			},
 		},
 	});
-
-	const {
-		stores: {
-			boundaryLinks$,
-			directionLinks$,
-			nextDisabled$,
-			previousDisabled$,
-			ariaLabel$,
-			ariaFirstLabel$,
-			ariaPreviousLabel$,
-			ariaNextLabel$,
-			ariaLastLabel$,
-			ariaLiveLabelText$,
-			className$,
-		},
-		state$,
-		api: {first, previous, next, last, select},
-	} = widget;
-
-	$effect(() => widget.patchChangedProps({...props, page}));
 </script>
 
-<nav aria-label={$ariaLabel$}>
-	<div class="join {$className$}">
-		{#if $boundaryLinks$}
+<nav aria-label={state.ariaLabel}>
+	<div class="join {state.className}">
+		{#if state.boundaryLinks}
 			<button
 				class="join-item btn btn-outline"
-				aria-label={$ariaFirstLabel$}
+				aria-label={state.ariaFirstLabel}
 				onclick={() => first()}
-				disabled={$previousDisabled$}
-				aria-disabled={$previousDisabled$ ? 'true' : null}
-				tabindex={$previousDisabled$ ? -1 : undefined}
+				disabled={state.previousDisabled}
+				aria-disabled={state.previousDisabled ? 'true' : null}
+				tabindex={state.previousDisabled ? -1 : undefined}
 			>
 				<span aria-hidden="true"> « </span>
 			</button>
 		{/if}
-		{#if $directionLinks$}
+		{#if state.directionLinks}
 			<button
 				class="join-item btn btn-outline"
-				disabled={$previousDisabled$}
-				aria-label={$ariaPreviousLabel$}
+				disabled={state.previousDisabled}
+				aria-label={state.ariaPreviousLabel}
 				onclick={() => previous()}
-				tabindex={$previousDisabled$ ? -1 : undefined}
-				aria-disabled={$previousDisabled$ ? 'true' : null}
+				tabindex={state.previousDisabled ? -1 : undefined}
+				aria-disabled={state.previousDisabled ? 'true' : null}
 			>
 				<span aria-hidden="true"> ‹ </span>
 			</button>
 		{/if}
-		{#each $state$.pages as page}
+		{#each state.pages as page}
 			<button
 				class="join-item btn btn-outline"
-				class:btn-active={page === $state$.page}
-				aria-current={page === $state$.page ? 'page' : null}
-				tabindex={page === -1 ? -1 : $state$.disabled ? -1 : undefined}
+				class:btn-active={page === state.page}
+				aria-current={page === state.page ? 'page' : null}
+				tabindex={page === -1 ? -1 : state.disabled ? -1 : undefined}
 				onclick={page === -1 ? () => {} : () => select(page)}
-				disabled={page === -1 || $state$.disabled}
+				disabled={page === -1 || state.disabled}
 				>{page}
-				{#if $state$.page === page}<span class="sr-only">{$state$.activeLabel}</span>{/if}
+				{#if state.page === page}<span class="sr-only">{state.activeLabel}</span>{/if}
 			</button>
 		{/each}
-		{#if $directionLinks$}
+		{#if state.directionLinks}
 			<button
 				class="join-item btn btn-outline"
-				disabled={$nextDisabled$}
-				aria-label={$ariaNextLabel$}
+				disabled={state.nextDisabled}
+				aria-label={state.ariaNextLabel}
 				onclick={() => next()}
-				tabindex={$nextDisabled$ ? -1 : undefined}
-				aria-disabled={$nextDisabled$ ? 'true' : null}
+				tabindex={state.nextDisabled ? -1 : undefined}
+				aria-disabled={state.nextDisabled ? 'true' : null}
 			>
 				<span aria-hidden="true"> › </span>
 			</button>
 		{/if}
-		{#if $boundaryLinks$}
+		{#if state.boundaryLinks}
 			<button
 				class="join-item btn btn-outline"
-				aria-label={$ariaLastLabel$}
+				aria-label={state.ariaLastLabel}
 				onclick={() => last()}
-				disabled={$nextDisabled$}
-				tabindex={$nextDisabled$ ? -1 : undefined}
-				aria-disabled={$nextDisabled$ ? 'true' : null}
+				disabled={state.nextDisabled}
+				tabindex={state.nextDisabled ? -1 : undefined}
+				aria-disabled={state.nextDisabled ? 'true' : null}
 			>
 				<span aria-hidden="true"> » </span>
 			</button>
 		{/if}
 	</div>
 	<div aria-live="polite" class="sr-only">
-		{`${$ariaLiveLabelText$}`}
+		{`${state.ariaLiveLabelText}`}
 	</div>
 </nav>

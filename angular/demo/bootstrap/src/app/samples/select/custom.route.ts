@@ -30,16 +30,16 @@ function getHtmlText(html: string) {
 				(auSelectedChange)="onSelectedChange($event)"
 				auBadgeClassName="badge text-bg-light d-flex align-items-center"
 			>
-				<ng-template auSelectBadgeLabel let-itemContext="itemContext" let-widget="widget">
+				<ng-template auSelectBadgeLabel let-itemContext="itemContext" let-directives="directives">
 					<a attr.href="{{ basePageUrl + itemContext.item.pageid }}" target="_blank" rel="noreferrer">{{ itemContext.item.title }}</a>
 					<button
 						type="button"
 						class="btn-close ms-1 wiki-btn-close"
 						aria-label="Close"
-						[auUse]="[widget.directives.badgeCloseButtonDirective, itemContext]"
+						[auUse]="[directives.badgeCloseButtonDirective, itemContext]"
 					></button>
 				</ng-template>
-				<ng-template auSelectItemLabel let-widget="widget" let-itemContext="itemContext">
+				<ng-template auSelectItemLabel let-itemContext="itemContext">
 					<div class="fw-bold">{{ itemContext.item.title }}</div>
 					<div class="text-wrap wiki-desc">{{ itemContext.item.snippet }}</div>
 				</ng-template>

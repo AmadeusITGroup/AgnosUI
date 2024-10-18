@@ -5,7 +5,9 @@ import {useWidgetWithConfig} from '@agnos-ui/react-bootstrap/config';
 import React from 'react';
 
 export function RatingReadonly(props: Pick<Partial<RatingProps>, 'rating' | 'maxRating' | 'className' | 'star'>) {
-	const [{className, stars, star: slotStar}] = useWidgetWithConfig(createRating, {...props, readonly: true}, 'rating');
+	const {
+		state: {className, stars, star: slotStar},
+	} = useWidgetWithConfig(createRating, {...props, readonly: true}, 'rating');
 
 	// applying the Slot is just a matter of retrieving the prop and using the provided AgnosUI Slot component.
 	return (

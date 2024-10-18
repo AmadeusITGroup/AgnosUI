@@ -1,6 +1,6 @@
 <script lang="ts">
 	import {type ModalContext, openModal} from '@agnos-ui/svelte-bootstrap/components/modal';
-	let {state, widget}: ModalContext<void> = $props();
+	let {state, api}: ModalContext<void> = $props();
 </script>
 
 This is a modal<br /><br />
@@ -10,8 +10,8 @@ This is a modal<br /><br />
 >
 	Launch other modal</button
 ><br />
-<button class="btn btn-outline-secondary m-1" onclick={() => widget.api.patch({backdrop: true})}>Enable backdrop</button><button
+<button class="btn btn-outline-secondary m-1" onclick={() => api.patch({backdrop: true})}>Enable backdrop</button><button
 	class="btn btn-outline-secondary m-1"
-	onclick={() => widget.api.patch({backdrop: false})}>Disable backdrop</button
+	onclick={() => api.patch({backdrop: false})}>Disable backdrop</button
 ><br />
-<button class="btn btn-outline-secondary m-1" onclick={() => widget.api.close()}>Close</button>
+<button class="btn btn-outline-secondary m-1" onclick={() => api.close()}>Close</button>

@@ -1,9 +1,5 @@
 <input
-	[auUseMulti]="[
-		[widget.directives.sliderDirective, undefined],
-		[widget.directives.clickableAreaDirective, undefined],
-		[widget.directives.handleEventsDirective, {item: {id: 0}}],
-	]"
+	[auUseMulti]="[directives.sliderDirective, directives.clickableAreaDirective, [directives.handleEventsDirective, {item: {id: 0}}]]"
 	type="range"
 	[min]="state().min"
 	[max]="state().max"

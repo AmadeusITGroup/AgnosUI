@@ -1,7 +1,8 @@
 import {findChangedProperties, toReadableStore} from '@agnos-ui/core/utils/stores';
 import type {ReadableSignal, WritableSignal} from '@amadeus-it-group/tansu';
 import {asWritable, computed, writable} from '@amadeus-it-group/tansu';
-import type {PropsConfig, Widget, WidgetFactory, WidgetProps} from '../types';
+import type {PropsConfig, Widget, WidgetFactory, WidgetProps, WidgetSlotContext, WidgetState} from '../types';
+import {fromStore} from 'svelte/store';
 
 function createPatchChangedProps<T extends object>(previousProps: Partial<T>, patchFn: (arg: Partial<T>) => void) {
 	return (props: Partial<T>) => {
@@ -57,21 +58,19 @@ const eventStore = <T extends any[]>(
  * @param parameter.widgetConfig - the config of the widget, overriding the defaultConfig
  * @param parameter.events - the events of the widget
  * @param parameter.props - the props of the widget
+ * @param parameter.enablePatchChanged - enable patching changed props
  * @returns the widget
  */
-export const callWidgetFactoryWithConfig = <W extends Widget>({
-	factory,
-	defaultConfig,
-	widgetConfig,
-	events,
-	props,
-}: {
+export const callWidgetFactoryWithConfig = <W extends Widget>(parameter: {
 	factory: WidgetFactory<W>;
 	defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
 	widgetConfig?: null | undefined | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
 	events?: Partial<Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}Change`>>;
-	props: Partial<WidgetProps<W>>;
-}): W & {patchChangedProps: W['patch']} => {
+	props?: Partial<WidgetProps<W>>;
+	enablePatchChanged?: true;
+}): WidgetSlotContext<W> => {
+	const {factory, defaultConfig, widgetConfig, events, enablePatchChanged} = parameter;
+	const props: Partial<WidgetProps<W>> = parameter.props ?? {};
 	const defaultConfig$ = toReadableStore(defaultConfig);
 	const propsWithEvents: PropsConfig<WidgetProps<W>>['props'] = {...props};
 	if (events) {
@@ -83,5 +82,25 @@ export const callWidgetFactoryWithConfig = <W extends Widget>({
 		config: computed(() => ({...defaultConfig$(), ...widgetConfig?.()})),
 		props: propsWithEvents,
 	});
-	return {...widget, patchChangedProps: createPatchChangedProps(props, widget.patch)};
+	const runes = Object.fromEntries(
+		Object.entries<ReadableSignal<unknown>>(widget.stores as any).map(([key, val]) => [key.slice(0, -1), fromStore(val)]),
+	);
+	if (enablePatchChanged) {
+		const patch = createPatchChangedProps(props, widget.patch);
+		$effect(() => {
+			patch(parameter.props!);
+		});
+	}
+	return {
+		api: widget.api,
+		directives: widget.directives,
+		state: new Proxy(runes, {
+			get(target, name, receiver) {
+				if (Reflect.has(target, name)) {
+					return Reflect.get(target, name, receiver).current;
+				}
+				return undefined;
+			},
+		}) as WidgetState<W>,
+	};
 };

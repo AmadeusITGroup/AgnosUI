@@ -48,7 +48,7 @@ export class RatingStarDirective {
 	template: `
 		@for (item of state().stars; track trackByIndex(index); let index = $index) {
 			<span class="visually-hidden">({{ index < state().visibleRating ? '*' : ' ' }})</span>
-			<span [auUse]="[_widget.directives.starDirective, {index}]">
+			<span [auUse]="[directives.starDirective, {index}]">
 				<ng-template [auSlot]="state().star" [auSlotProps]="state().stars[index]"></ng-template>
 			</span>
 		}

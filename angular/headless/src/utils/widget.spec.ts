@@ -77,7 +77,7 @@ describe('callWidgetFactoryWithConfig', () => {
 		@Component({
 			standalone: true,
 			imports: [UseDirective],
-			template: `<button type="button" [auUse]="_widget.directives.myDirective" (click)="onClick()">
+			template: `<button type="button" [auUse]="directives.myDirective" (click)="onClick()">
 				{{ state().derivedValue }} {{ state().counter }}
 			</button>`,
 			changeDetection: ChangeDetectionStrategy.OnPush,
