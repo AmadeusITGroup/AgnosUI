@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type {AccordionItemApi, AccordionItemContext, AccordionItemProps, AccordionItemWidget} from './accordion';
 	import type {WidgetFactory} from '@agnos-ui/svelte-headless/types';
-	import {toSlotContextWidget} from '@agnos-ui/svelte-headless/types';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import {callWidgetFactory} from '../../config';
 	import {onMount} from 'svelte';
@@ -12,9 +11,12 @@
 	const {registerItem} = accordionApi;
 
 	let {visible = $bindable(), ...props}: Partial<AccordionItemProps> = $props();
-	const widget = callWidgetFactory({
+	const {widget, slotContext} = callWidgetFactory({
 		factory: registerItem as WidgetFactory<AccordionItemWidget>,
-		props: {...props, visible},
+		get props() {
+			return {...props, visible} as Partial<AccordionItemProps>;
+		},
+		enablePatchChanged: true,
 		defaultConfig: {structure},
 		events: {
 			onVisibleChange: (event) => {
@@ -23,14 +25,10 @@
 		},
 	});
 	const {
-		stores: {structure$},
+		state,
 		directives: {itemDirective},
-		state$,
 	} = widget;
 	export const api: AccordionItemApi = widget.api;
-
-	$effect(() => widget.patchChangedProps({...props, visible}));
-	let slotContext = $derived({widget: toSlotContextWidget(widget), state: $state$});
 
 	onMount(() => {
 		widget.api.initDone();
@@ -42,5 +40,5 @@
 {/snippet}
 
 <div class="accordion-item" use:itemDirective>
-	<Slot content={$structure$} props={slotContext} />
+	<Slot content={state.structure} props={slotContext} />
 </div>

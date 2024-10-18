@@ -2,7 +2,7 @@ import {useDirective} from '@agnos-ui/react-bootstrap/utils/directive';
 import type {SliderSlotHandleContext} from '@agnos-ui/react-bootstrap/components/slider';
 
 const CustomSlotHandle = (slotContext: SliderSlotHandleContext) => (
-	<button className="custom-handle" {...useDirective(slotContext.widget.directives.handleDirective, {item: slotContext.item})}>
+	<button className="custom-handle" {...useDirective(slotContext.directives.handleDirective, {item: slotContext.item})}>
 		<svg xmlns="http://www.w3.org/2000/svg" fill="var(--bs-slider-handle-color)" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
 			<path
 				strokeLinecap="round"

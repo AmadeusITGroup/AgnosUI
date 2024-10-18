@@ -6,12 +6,12 @@ import {ChangeDetectionStrategy, Component, input, model} from '@angular/core';
 	selector: 'app-modal',
 	imports: [UseDirective],
 	template: `
-		<dialog class="modal modal-bottom sm:modal-middle" (close)="api.close()" [auUse]="widget.directives.dialogDirective">
+		<dialog class="modal modal-bottom sm:modal-middle" (close)="api.close()" [auUse]="directives.dialogDirective">
 			<div class="modal-box">
 				<ng-content />
 				@if (state().closeButton) {
 					<form method="dialog">
-						<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" [auUse]="widget.directives.closeButtonDirective">✕</button>
+						<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" [auUse]="directives.closeButtonDirective">✕</button>
 					</form>
 				}
 			</div>

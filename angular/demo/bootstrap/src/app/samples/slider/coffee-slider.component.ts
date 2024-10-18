@@ -23,7 +23,7 @@ import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/co
 				</div>
 			</div>
 		</div>
-		<button class="coffee-indicator" [auUse]="[widget.directives.handleDirective, {item: state.sortedHandles[0]}]">
+		<button class="coffee-indicator" [auUse]="[directives.handleDirective, {item: state.sortedHandles[0]}]">
 			{{ '' + state.sortedHandles[0].value }}
 		</button>
 	`,

@@ -2,10 +2,8 @@
 	import type {PaginationContext} from '@agnos-ui/svelte-bootstrap/components/pagination';
 	import {Slot} from '@agnos-ui/svelte-bootstrap/slot';
 
-	let {state, widget}: PaginationContext = $props();
-	const {
-		stores: {page$, ellipsisLabel$, numberLabel$},
-	} = widget;
+	let {state, directives, ...restProps}: PaginationContext = $props();
+	let slotContext = $derived({state, directives, ...restProps});
 	const onclick = (e: MouseEvent) => {
 		e.preventDefault();
 		e.stopPropagation();
@@ -17,13 +15,13 @@
 		{#if page === -1}
 			<!-- svelte-ignore a11y_invalid_attribute -->
 			<a class="page-link au-ellipsis" tabindex="-1" aria-disabled="true" {onclick} href="#">
-				<Slot content={$ellipsisLabel$} props={{state, widget}} />
+				<Slot content={state.ellipsisLabel} props={slotContext} />
 			</a>
 		{:else}
 			<!-- svelte-ignore a11y_missing_attribute -->
-			<a class="page-link" use:widget.directives.pageLink={{page}}>
-				<Slot content={$numberLabel$} props={{state, widget, displayedPage: page}} />
-				{#if $page$ === page}
+			<a class="page-link" use:directives.pageLink={{page}}>
+				<Slot content={state.numberLabel} props={{...slotContext, displayedPage: page}} />
+				{#if state.page === page}
 					<span class="visually-hidden">{state.activeLabel}</span>
 				{/if}
 			</a>

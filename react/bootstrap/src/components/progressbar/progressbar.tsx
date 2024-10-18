@@ -1,5 +1,4 @@
 import {Slot} from '@agnos-ui/react-headless/slot';
-import {toSlotContextWidget} from '@agnos-ui/react-headless/types';
 import {useDirective} from '@agnos-ui/react-headless/utils/directive';
 import classNames from 'classnames';
 import {useWidgetWithConfig} from '../../config';
@@ -23,10 +22,10 @@ const defaultConfig: Partial<ProgressbarProps> = {
 };
 
 export const Progressbar = (props: Partial<ProgressbarProps>) => {
-	const [state, widget] = useWidgetWithConfig(createProgressbar, props, 'progressbar', defaultConfig);
-	const slotContext: ProgressbarContext = {state, widget: toSlotContextWidget(widget)};
+	const {state, api, actions, directives} = useWidgetWithConfig(createProgressbar, props, 'progressbar', defaultConfig);
+	const slotContext: ProgressbarContext = {state, api, actions, directives};
 	return (
-		<div {...useDirective(widget.directives.ariaDirective)} className={state.className || undefined}>
+		<div {...useDirective(directives.ariaDirective)} className={state.className || undefined}>
 			<Slot slotContent={state.structure} props={slotContext} />
 		</div>
 	);

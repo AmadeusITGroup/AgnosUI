@@ -1,14 +1,14 @@
 import {useDirective} from '@agnos-ui/react-bootstrap/utils/directive';
 import type {SliderContext} from '@agnos-ui/react-bootstrap/components/slider';
 
-const CustomSliderComponent = (slotContext: SliderContext) => {
+const CustomSliderComponent = ({state, directives}: SliderContext) => {
 	return (
 		<>
 			<div className="position-relative cup-container">
 				<div className="cup">
 					<div className="cup-fill-parent">
-						<div className="cup-fill" style={{height: `${slotContext.state.progressDisplayOptions[0].height}%`}}>
-							{slotContext.state.progressDisplayOptions[0].height >= 50 ? (
+						<div className="cup-fill" style={{height: `${state.progressDisplayOptions[0].height}%`}}>
+							{state.progressDisplayOptions[0].height >= 50 ? (
 								<>
 									<div className="bubble bubble-1"></div>
 									<div className="bubble bubble-2"></div>
@@ -19,11 +19,8 @@ const CustomSliderComponent = (slotContext: SliderContext) => {
 					</div>
 				</div>
 			</div>
-			<button
-				className="coffee-indicator"
-				{...useDirective(slotContext.widget.directives.handleDirective, {item: slotContext.state.sortedHandles[0]})}
-			>
-				{'' + slotContext.state.sortedHandles[0].value}
+			<button className="coffee-indicator" {...useDirective(directives.handleDirective, {item: state.sortedHandles[0]})}>
+				{'' + state.sortedHandles[0].value}
 			</button>
 		</>
 	);

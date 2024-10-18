@@ -10,13 +10,13 @@ const ToastHeader = (slotContext: ToastContext) => (
 	<div className="toast-header">
 		<Slot slotContent={slotContext.state.header} props={slotContext} />
 		{slotContext.state.dismissible && (
-			<button {...useDirectives([classDirective, 'btn-close me-0 ms-auto'], slotContext.widget.directives.closeButtonDirective)} />
+			<button {...useDirectives([classDirective, 'btn-close me-0 ms-auto'], slotContext.directives.closeButtonDirective)} />
 		)}
 	</div>
 );
 
 const ToastCloseButtonNoHeader = (slotContext: ToastContext) => (
-	<button {...useDirectives([classDirective, 'btn-close btn-close-white me-2 m-auto'], slotContext.widget.directives.closeButtonDirective)} />
+	<button {...useDirectives([classDirective, 'btn-close btn-close-white me-2 m-auto'], slotContext.directives.closeButtonDirective)} />
 );
 
 const DefaultSlotStructure = (slotContext: ToastContext) => (
@@ -38,9 +38,9 @@ const ToastElement = (slotContext: ToastContext) => (
 	<div
 		{...useDirectives(
 			[classDirective, `toast ${slotContext.state.dismissible ? 'toast-dismissible' : ''} ${!slotContext.state.header ? 'd-flex' : ''}`],
-			slotContext.widget.directives.transitionDirective,
-			slotContext.widget.directives.autoHideDirective,
-			slotContext.widget.directives.bodyDirective,
+			slotContext.directives.transitionDirective,
+			slotContext.directives.autoHideDirective,
+			slotContext.directives.bodyDirective,
 		)}
 	>
 		<Slot slotContent={slotContext.state.structure} props={slotContext} />
@@ -51,11 +51,13 @@ export const Toast: ForwardRefExoticComponent<Partial<ToastProps> & RefAttribute
 	props: Partial<ToastProps>,
 	ref,
 ) {
-	const [state, widget] = useWidgetWithConfig(createToast, props, 'toast', {...defaultConfig, children: props.children});
-	useImperativeHandle(ref, () => widget.api, []);
+	const {state, api, actions, directives} = useWidgetWithConfig(createToast, props, 'toast', {...defaultConfig, children: props.children});
+	useImperativeHandle(ref, () => api, []);
 	const slotContext = {
 		state,
-		widget,
+		api,
+		actions,
+		directives,
 	};
 
 	return <>{!state.hidden && <ToastElement {...slotContext} />}</>;

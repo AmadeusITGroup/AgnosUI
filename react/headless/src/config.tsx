@@ -1,4 +1,4 @@
-import type {Widget, WidgetFactory, WidgetProps, WidgetState} from '@agnos-ui/core/types';
+import type {Widget, WidgetFactory, WidgetProps} from '@agnos-ui/core/types';
 import {createWidgetsConfig, type WidgetsConfigStore, type WidgetsConfig, type Partial2Levels} from '@agnos-ui/core/config';
 import {computed} from '@amadeus-it-group/tansu';
 import type {ReactNode} from 'react';
@@ -35,7 +35,7 @@ export const widgetsConfigFactory = <Config extends Record<string, object> = Wid
 		props: Partial<WidgetProps<W>> | undefined,
 		widgetName: keyof Config | null,
 		defaultProps?: Partial<WidgetProps<W>>,
-	): [WidgetState<W>, W] => useWidget(factory, props, {config: useWidgetContext(widgetName, defaultProps)});
+	) => useWidget(factory, props, {config: useWidgetContext(widgetName, defaultProps)});
 
 	/**
 	 * React component that provides in the React context (for all AgnosUI descendant widgets) a new widgets default configuration
