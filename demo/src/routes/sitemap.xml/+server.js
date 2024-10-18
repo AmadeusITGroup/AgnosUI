@@ -22,7 +22,7 @@ const allRoutes = Object.keys(import.meta.glob('../**/+page.svelte', {query: '?u
 		return frameworks.map((fwk) => route.replace('[framework]', fwk));
 	});
 
-const BASE = 'https://amadeusitgroup.github.io/AgnosUI/latest/';
+const BASE = 'https://www.agnosui.dev/latest/';
 
 export async function GET() {
 	return new Response(
