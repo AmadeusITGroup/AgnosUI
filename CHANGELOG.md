@@ -10,10 +10,10 @@ It comes out with a new component and a new service, while enhancing the documen
   - **Beta** components have all the basic functionalities implemented, but more polishing features are being implemented / considered
 - the **slider** component now supports slots for strong customization ⚙️
 - the **pagination** component now supports a `slotStructure` for full customization ⚙️
-- a new [toast](https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/components/toast/examples) component is available
-- a new [resize observer](https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/services/resize-observer) service is available 🦦
+- a new [toast](https://www.agnosui.dev/latest/docs/angular/components/toast/examples) component is available
+- a new [resize observer](https://www.agnosui.dev/latest/docs/angular/services/resize-observer) service is available 🦦
 - the documentation website now supports dark mode 🌕
-- the documentation website now documents how to use [transitions](https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/services/transition)
+- the documentation website now documents how to use [transitions](https://www.agnosui.dev/latest/docs/angular/services/transition)
 
 ### Breaking changes
 
@@ -230,19 +230,19 @@ First official release of AgnosUI :fire:
 
 Introduction of the following widgets
 
-- [accordion](https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/components/accordion/examples)
-- [alert](https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/components/alert/examples)
-- [modal](https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/components/modal/examples)
-- [pagination](https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/components/pagination/examples)
-- [progressbar](https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/components/progressbar/examples)
-- [rating](https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/components/rating/examples)
-- [select](https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/components/select/examples)
-- [slider](https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/components/slider/examples)
+- [accordion](https://www.agnosui.dev/latest/docs/svelte/components/accordion/examples)
+- [alert](https://www.agnosui.dev/latest/docs/svelte/components/alert/examples)
+- [modal](https://www.agnosui.dev/latest/docs/svelte/components/modal/examples)
+- [pagination](https://www.agnosui.dev/latest/docs/svelte/components/pagination/examples)
+- [progressbar](https://www.agnosui.dev/latest/docs/svelte/components/progressbar/examples)
+- [rating](https://www.agnosui.dev/latest/docs/svelte/components/rating/examples)
+- [select](https://www.agnosui.dev/latest/docs/svelte/components/select/examples)
+- [slider](https://www.agnosui.dev/latest/docs/svelte/components/slider/examples)
 
 Introduction of the following services
 
-- [focus track](https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/services/focustrack)
-- [floating UI](https://amadeusitgroup.github.io/AgnosUI/latest/docs/svelte/services/floating-ui)
+- [focus track](https://www.agnosui.dev/latest/docs/svelte/services/focustrack)
+- [floating UI](https://www.agnosui.dev/latest/docs/svelte/services/floating-ui)
 
 ### Features
 

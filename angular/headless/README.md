@@ -12,4 +12,4 @@ npm install @agnos-ui/angular-headless
 
 ## Usage
 
-Please check [our demo site](https://amadeusitgroup.github.io/AgnosUI/latest/) to see all the available components and how to use them.
+Please check [our demo site](https://www.agnosui.dev/latest/) to see all the available components and how to use them.
