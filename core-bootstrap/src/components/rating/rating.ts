@@ -20,7 +20,7 @@ interface RatingExtraProps {
 export interface RatingState extends CoreState, RatingExtraProps {}
 export interface RatingProps extends CoreProps, RatingExtraProps {}
 
-export type RatingWidget = Widget<RatingProps, RatingState, RatingApi, object, RatingDirectives>;
+export type RatingWidget = Widget<RatingProps, RatingState, RatingApi, RatingDirectives>;
 
 const defaultConfigExtraProps: RatingExtraProps = {
 	star: ({fill}: StarContext) => String.fromCharCode(fill === 100 ? 9733 : 9734),

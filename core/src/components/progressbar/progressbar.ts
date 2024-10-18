@@ -74,7 +74,7 @@ export interface ProgressbarProps extends ProgressbarCommonPropsAndState {
 	ariaValueTextFn: (value: number, minimum: number, maximum: number) => string | undefined;
 }
 
-export type ProgressbarWidget = Widget<ProgressbarProps, ProgressbarState, object, object, ProgressbarDirectives>;
+export type ProgressbarWidget = Widget<ProgressbarProps, ProgressbarState, object, ProgressbarDirectives>;
 
 const defaultConfig: ProgressbarProps = {
 	min: 0,
@@ -163,6 +163,5 @@ export function createProgressbar(config?: PropsConfig<ProgressbarProps>): Progr
 				},
 			})),
 		},
-		actions: {},
 	};
 }

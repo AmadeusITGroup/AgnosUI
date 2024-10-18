@@ -161,7 +161,7 @@ export interface TransitionDirectives {
 	directive: Directive<void | Partial<TransitionProps>>;
 }
 
-export type TransitionWidget = Widget<TransitionProps, TransitionState, TransitionApi, object, TransitionDirectives>;
+export type TransitionWidget = Widget<TransitionProps, TransitionState, TransitionApi, TransitionDirectives>;
 
 const neverEndingPromise = new Promise<never>(noop);
 
@@ -361,7 +361,6 @@ export const createTransition = (config?: PropsConfig<TransitionProps>): Transit
 		directives: {
 			directive,
 		},
-		actions: {},
 		api: {
 			show: toggle.bind(null, true),
 			hide: toggle.bind(null, false),

@@ -6,7 +6,7 @@ since: 0.1.1
 
 A headless component is a design pattern where the component applies a separation of concerns between the logic (or "head") and the user interface (or "body").
 
-The “headless” part refers to the logic of the component, which is decoupled from its visual representation. This means that the component doesn’t have a user interface, but it does have functionality and exposes actions (APIs), states, directives but keeps internally their implementation.
+The “headless” part refers to the logic of the component, which is decoupled from its visual representation. This means that the component doesn’t have a user interface, but it does have functionality and exposes an api, states, directives but keeps internally their implementation.
 
 Leveraging its core, AgnosUI provides headless components across various frameworks. These components not only share the core API but also adhere to the best practices and implementation strategies specific to each framework. This ensures seamless integration and optimal performance.
 
@@ -17,7 +17,7 @@ AgnosUI includes pre-built components for supported frameworks. To use these com
 Creating a new component with the core typically involves the following base code:
 
 ```typescript
-const {patch, stores, directives, actions, api} = create[WidgetName](props);
+const {patch, stores, directives, api} = create[WidgetName](props);
 ```
 
 Let's break down the components.
@@ -68,10 +68,6 @@ Each store can be subscribed to or integrated into the UI framework system.
 These must be applied to the appropriate elements in the UI to ensure correct behavior.
 
 Refer to the [dedicated section](03-Directives.md) for more details.
-
-### actions
-
-`actions` contain functions designed to be directly plugged into the UI, such as `click` or `hover` in the rating component, connected to specific HTML element events.
 
 ### api
 

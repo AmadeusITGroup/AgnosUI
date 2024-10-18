@@ -40,7 +40,7 @@ export interface AlertProps extends CoreProps, AlertExtraProps {
 	transition: TransitionFn;
 }
 
-export type AlertWidget = Widget<AlertProps, AlertState, AlertApi, object, AlertDirectives>;
+export type AlertWidget = Widget<AlertProps, AlertState, AlertApi, AlertDirectives>;
 
 const defaultConfigExtraProps: AlertExtraProps = {
 	structure: undefined,

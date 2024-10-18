@@ -325,7 +325,7 @@ export interface PaginationDirectives {
 	pageLast: Directive;
 }
 
-export type PaginationWidget = Widget<PaginationProps, PaginationState, PaginationApi, object, PaginationDirectives>;
+export type PaginationWidget = Widget<PaginationProps, PaginationState, PaginationApi, PaginationDirectives>;
 
 const PAGE_LINK_DEFAULT = '#';
 
@@ -493,7 +493,6 @@ export function createPagination(config?: PropsConfig<PaginationProps>): Paginat
 			...stateProps,
 		}),
 		patch,
-		actions: {},
 		api: {
 			/**
 			 * Set the current page pageNumber (starting from 1)

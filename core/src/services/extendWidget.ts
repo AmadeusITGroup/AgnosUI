@@ -19,7 +19,6 @@ export type ExtendWidgetProps<W extends Widget, ExtraProps extends object, Extra
 	ExtendWidgetAdaptSlotWidgetProps<WidgetProps<W>, ExtraProps, ExtraDirectives>,
 	ExtendWidgetAdaptSlotWidgetProps<WidgetState<W>, ExtraProps, ExtraDirectives>,
 	W['api'],
-	W['actions'],
 	ExtendWidgetInterfaces<W['directives'], ExtraDirectives>
 >;
 

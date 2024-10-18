@@ -46,7 +46,7 @@ interface ProgressbarExtraProps {
 export interface ProgressbarState extends CoreState, ProgressbarExtraProps {}
 export interface ProgressbarProps extends CoreProps, ProgressbarExtraProps {}
 
-export type ProgressbarWidget = Widget<ProgressbarProps, ProgressbarState, object, object, ProgressbarDirectives>;
+export type ProgressbarWidget = Widget<ProgressbarProps, ProgressbarState, object, ProgressbarDirectives>;
 
 const defaultConfigExtraProps: ProgressbarExtraProps = {
 	structure: undefined,

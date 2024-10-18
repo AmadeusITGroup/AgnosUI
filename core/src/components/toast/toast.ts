@@ -44,7 +44,7 @@ export interface ToastApi extends CommonAlertApi {}
 
 export interface ToastDirectives extends CommonAlertDirectives, ExtraDirectives {}
 
-export type ToastWidget = Widget<ToastProps, ToastState, ToastApi, object, ToastDirectives>;
+export type ToastWidget = Widget<ToastProps, ToastState, ToastApi, ToastDirectives>;
 
 const toastDefaultConfig: ToastExtraProps = {
 	autoHide: true,

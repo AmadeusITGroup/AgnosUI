@@ -26,7 +26,6 @@ export interface Widget<
 	Props extends object = object,
 	State extends object = object,
 	Api extends object = object,
-	Actions extends object = object,
 	Directives extends object = object,
 > {
 	/**
@@ -47,17 +46,12 @@ export interface Widget<
 	 */
 	directives: Directives;
 	/**
-	 * all the handlers that should be connected to user interactions i.e. click, keyboard and touch interactions.
-	 * typically, the handlers are event listeners that call api functions to affect the widget state
-	 */
-	actions: Actions;
-	/**
 	 * all the api functions to interact with the widget
 	 */
 	api: Api;
 }
 
-export type ContextWidget<W extends Widget> = Pick<W, 'actions' | 'api' | 'directives' | 'state$' | 'stores'>;
+export type ContextWidget<W extends Widget> = Pick<W, 'api' | 'directives' | 'state$' | 'stores'>;
 
 export interface WidgetSlotContext<W extends Widget> {
 	/**
@@ -71,13 +65,12 @@ export interface WidgetSlotContext<W extends Widget> {
 }
 
 /**
- * Extract actions, api, directives, state and stores from the widget to be passed to slots as context.
+ * Extract api, directives, state and stores from the widget to be passed to slots as context.
  *
  * @param w - the widget
  * @returns the slot context
  */
 export const toSlotContextWidget = <W extends Widget>(w: W): ContextWidget<W> => ({
-	actions: w.actions,
 	api: w.api,
 	directives: w.directives,
 	state$: w.state$,

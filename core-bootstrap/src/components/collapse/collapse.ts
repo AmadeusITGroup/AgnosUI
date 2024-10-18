@@ -103,7 +103,7 @@ export interface CollapseDirectives {
 	transitionDirective: Directive;
 }
 
-export type CollapseWidget = Widget<CollapseProps, CollapseState, CollapseApi, object, CollapseDirectives>;
+export type CollapseWidget = Widget<CollapseProps, CollapseState, CollapseApi, CollapseDirectives>;
 
 const defaultCollapseConfig: CollapseProps = {
 	visible: true,
@@ -164,6 +164,5 @@ export function createCollapse(config?: PropsConfig<CollapseProps>): CollapseWid
 		directives: {
 			transitionDirective: bindDirectiveNoArg(transition.directives.directive),
 		},
-		actions: {},
 	};
 }

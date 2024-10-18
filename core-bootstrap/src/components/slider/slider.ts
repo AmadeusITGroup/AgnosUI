@@ -34,7 +34,7 @@ interface SliderExtraProps {
 export interface SliderState extends CoreState, SliderExtraProps {}
 export interface SliderProps extends CoreProps, SliderExtraProps {}
 
-export type SliderWidget = Widget<SliderProps, SliderState, object, object, SliderDirectives>;
+export type SliderWidget = Widget<SliderProps, SliderState, object, SliderDirectives>;
 
 const defaultConfigExtraProps: SliderExtraProps = {
 	structure: undefined,

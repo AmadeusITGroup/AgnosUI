@@ -33,12 +33,11 @@ describe('callWidgetFactoryWithConfig', () => {
 			{onMyAction: () => void; onCounterChange: (value: number) => void; myValue: string},
 			{derivedValue: string; counter: number},
 			{myApiFn: () => void; incrementCounter: () => void},
-			{myAction: () => void},
 			{myDirective: Directive}
 		>;
 
 		const factory: WidgetFactory<MyWidget> = createZoneCheckFn('factory', (propsConfig) => {
-			const [{onMyAction$, onCounterChange$, myValue$}, patch] = writablesForProps(
+			const [{onCounterChange$, myValue$}, patch] = writablesForProps(
 				{
 					onMyAction: noop,
 					onCounterChange: noop,
@@ -63,11 +62,6 @@ describe('callWidgetFactoryWithConfig', () => {
 						const value = counter$() + 1;
 						counter$.set(value);
 						onCounterChange$()(value);
-					}),
-				},
-				actions: {
-					myAction: createZoneCheckFn('myAction', () => {
-						onMyAction$()();
 					}),
 				},
 				directives: {
@@ -103,8 +97,6 @@ describe('callWidgetFactoryWithConfig', () => {
 					onMyAction: () => this.myAction.emit(),
 				},
 			});
-
-			onClick = createZoneCheckFn('onClick', () => this._widget.actions.myAction());
 		}
 
 		const ngZone = TestBed.inject(NgZone);
@@ -175,12 +167,6 @@ describe('callWidgetFactoryWithConfig', () => {
 			'after ngZone.run',
 			'before click',
 			'enter ngZone',
-			'begin onClick, ngZone = true',
-			'begin myAction, ngZone = false',
-			'begin myActionListener, ngZone = true',
-			'end myActionListener, ngZone = true',
-			'end myAction, ngZone = false',
-			'end onClick, ngZone = true',
 			'leave ngZone',
 			'after click',
 			'before incrementCounter',
@@ -201,7 +187,7 @@ describe('callWidgetFactoryWithConfig', () => {
 	});
 
 	it('calls the core with the correct init values', () => {
-		type MyWidget = Widget<{myValue: string}, {myValue: string}, Record<string, never>, Record<string, never>, Record<string, never>>;
+		type MyWidget = Widget<{myValue: string}, {myValue: string}, Record<string, never>, Record<string, never>>;
 
 		const factory: WidgetFactory<MyWidget> = (propsConfig) => {
 			const [{myValue$}, patch] = writablesForProps(
@@ -219,7 +205,6 @@ describe('callWidgetFactoryWithConfig', () => {
 					myValue$,
 				}),
 				api: {},
-				actions: {},
 				directives: {},
 				patch,
 			};

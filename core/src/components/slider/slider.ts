@@ -276,7 +276,7 @@ export interface SliderDirectives {
 	handleLabelDisplayDirective: Directive<{index: number}>;
 }
 
-export type SliderWidget = Widget<SliderProps, SliderState, object, object, SliderDirectives>;
+export type SliderWidget = Widget<SliderProps, SliderState, object, SliderDirectives>;
 
 const defaultSliderConfig: SliderProps = {
 	min: 0,
@@ -865,7 +865,6 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 				},
 			})),
 		},
-		actions: {},
 	};
 
 	return widget;

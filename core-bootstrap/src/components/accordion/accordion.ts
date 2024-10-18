@@ -70,12 +70,12 @@ export interface AccordionProps extends CoreProps, AccordionExtraProps {
 	itemTransition: TransitionFn;
 }
 
-export type AccordionWidget = Widget<AccordionProps, AccordionState, AccordionApi, object, AccordionDirectives>;
+export type AccordionWidget = Widget<AccordionProps, AccordionState, AccordionApi, AccordionDirectives>;
 
 export interface AccordionItemState extends CoreItemState, AccordionItemExtraProps {}
 export interface AccordionItemProps extends CoreItemProps, AccordionItemExtraProps {}
 
-export type AccordionItemWidget = Widget<AccordionItemProps, AccordionItemState, AccordionItemApi, object, AccordionItemDirectives>;
+export type AccordionItemWidget = Widget<AccordionItemProps, AccordionItemState, AccordionItemApi, AccordionItemDirectives>;
 
 const defaultConfigExtraProps: AccordionExtraProps = {
 	itemStructure: undefined,

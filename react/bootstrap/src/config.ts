@@ -21,7 +21,7 @@ const widgetFactories: {
 		widgetName: keyof BootstrapWidgetsConfig | null,
 		defaultConfig?: Partial<Props>,
 	) => import('@amadeus-it-group/tansu').ReadableSignal<Partial<Props>>;
-	useWidgetWithConfig: <W extends Widget<object, object, object, object, object>>(
+	useWidgetWithConfig: <W extends Widget<object, object, object, object>>(
 		factory: WidgetFactory<W>,
 		props: Partial<WidgetProps<W>> | undefined,
 		widgetName: keyof BootstrapWidgetsConfig | null,

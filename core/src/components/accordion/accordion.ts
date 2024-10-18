@@ -170,7 +170,7 @@ export interface AccordionDirectives {
 	accordionDirective: Directive;
 }
 
-export type AccordionWidget = Widget<AccordionProps, AccordionState, AccordionApi, object, AccordionDirectives>;
+export type AccordionWidget = Widget<AccordionProps, AccordionState, AccordionApi, AccordionDirectives>;
 
 export interface AccordionItemApi {
 	/**
@@ -304,7 +304,7 @@ export interface AccordionItemState extends AccordionItemCommonPropsAndState {
 	shouldBeInDOM: boolean;
 }
 
-export type AccordionItemWidget = Widget<AccordionItemProps, AccordionItemState, AccordionItemApi, object, AccordionItemDirectives>;
+export type AccordionItemWidget = Widget<AccordionItemProps, AccordionItemState, AccordionItemApi, AccordionItemDirectives>;
 
 const defaultAccordionConfig: AccordionProps = {
 	closeOthers: false,
@@ -482,7 +482,6 @@ export function createAccordionItem(config?: PropsConfig<AccordionItemProps>): A
 				visible$.update((c: boolean) => !c);
 			},
 		},
-		actions: {},
 		directives: {
 			toggleDirective,
 			buttonDirective: mergeDirectives(
@@ -552,7 +551,6 @@ export function factoryCreateAccordion(
 		return {
 			...stateStores({itemWidgets$, className$}),
 			patch,
-			actions: {},
 			api: {
 				expand: (id: string) => {
 					getItem(itemWidgets$(), id)?.api.expand();
