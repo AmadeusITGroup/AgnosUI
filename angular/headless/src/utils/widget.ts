@@ -38,13 +38,14 @@ const createPatchSlots = <T extends object>(set: (object: Partial<T>) => void) =
 /**
  * Call a widget factory using provided configs.
  *
- * @param parameter - the parameter
- * @param parameter.factory - the widget factory to call
- * @param parameter.defaultConfig - the default config of the widget
- * @param parameter.widgetConfig - the config of the widget, overriding the defaultConfig
- * @param parameter.events - the events of the widget
- * @param parameter.afterInit - a callback to call after successful setup of the widget
- * @returns the widget
+ * @template W - The type of the widget.
+ * @param params - The parameters for the widget factory.
+ * @param params.factory - The factory function to create the widget.
+ * @param [params.defaultConfig] - The default configuration for the widget.
+ * @param [params.widgetConfig] - The specific configuration for the widget.
+ * @param [params.events] - The event handlers for the widget.
+ * @param [params.afterInit] - A callback function to be called after the widget is initialized.
+ * @returns The initialized Angular widget.
  */
 export const callWidgetFactoryWithConfig = <W extends Widget>({
 	factory,
@@ -112,6 +113,12 @@ function patchSimpleChanges(patchFn: (obj: any) => void, changes: SimpleChanges)
 	patchFn(obj);
 }
 
+/**
+ * An abstract base class for widget directives, providing common functionality
+ * for Angular components that interact with widgets.
+ *
+ * @template W - The type of the widget.
+ */
 @Directive()
 export abstract class BaseWidgetDirective<W extends Widget> implements OnChanges, OnInit {
 	protected abstract readonly _widget: AngularWidget<W>;

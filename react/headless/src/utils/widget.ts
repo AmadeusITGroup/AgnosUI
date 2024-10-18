@@ -7,7 +7,7 @@ import {useObservable} from './stores';
  * The useWidget function.
  *
  * Allows to create and attach an agnos-ui/core widget to the current react component.
- *
+ * @template W - The type of the widget.
  * @param createWidget - the widget factory
  * @param props - the props
  * @param propsConfig - the props config

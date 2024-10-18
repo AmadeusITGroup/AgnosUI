@@ -85,6 +85,9 @@ interface SelectCommonPropsAndState<Item> extends WidgetsCommonPropsAndState {
 	loading: boolean;
 }
 
+/**
+ * Props for the Select component.
+ */
 export interface SelectProps<Item> extends SelectCommonPropsAndState<Item> {
 	/**
 	 * List of available items for the dropdown
@@ -182,6 +185,9 @@ export interface ItemContext<T> {
 	selected: boolean;
 }
 
+/**
+ * Represents the state of a Select component.
+ */
 export interface SelectState<Item> extends SelectCommonPropsAndState<Item> {
 	/**
 	 * List of item contexts, to be displayed in the menu
@@ -205,6 +211,9 @@ export interface SelectState<Item> extends SelectCommonPropsAndState<Item> {
 	placement: Placement | undefined;
 }
 
+/**
+ * Interface representing the API for a Select component.
+ */
 export interface SelectApi<Item> {
 	/**
 	 * Clear all the selected items
@@ -276,6 +285,9 @@ export interface SelectApi<Item> {
 	toggle(isOpen?: boolean): void;
 }
 
+/**
+ * Interface representing the directives used in the Select component.
+ */
 export interface SelectDirectives<Item> {
 	/**
 	 * Directive to be used in the input group and the menu containers
@@ -313,6 +325,9 @@ export interface SelectDirectives<Item> {
 	itemAttributesDirective: Directive<ItemContext<Item>>;
 }
 
+/**
+ * Interface representing the actions available for a Select component.
+ */
 export interface SelectActions<Item> {
 	// Dom methods
 
@@ -341,6 +356,9 @@ export interface SelectActions<Item> {
 	onBadgeKeydown: (event: KeyboardEvent, item: Item) => void;
 }
 
+/**
+ * Represents a Select widget component.
+ */
 export type SelectWidget<Item> = Widget<SelectProps<Item>, SelectState<Item>, SelectApi<Item>, SelectActions<Item>, SelectDirectives<Item>>;
 
 const defaultConfig: SelectProps<any> = {
