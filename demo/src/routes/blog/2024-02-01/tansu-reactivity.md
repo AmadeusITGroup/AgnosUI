@@ -1,4 +1,4 @@
-In [AgnosUI](https://amadeusitgroup.github.io/AgnosUI/latest/), we employ [Tansu](https://github.com/AmadeusITGroup/tansu) to handle our component states.
+In [AgnosUI](https://www.agnosui.dev/latest/), we employ [Tansu](https://github.com/AmadeusITGroup/tansu) to handle our component states.
 
 This article explores the effective ways to use Tansu for broader state management, drawing upon our practical experience in developing AgnosUI. To follow along, we assume that you have a basic understanding of Tansu's API, as explained in the [README](https://github.com/AmadeusITGroup/tansu/blob/master/README.md) (no need to know them in detail). Feel free to refer to it for reference if needed.
 

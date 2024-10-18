@@ -20,7 +20,7 @@ export const relativePathToRoot$ = computed(() => {
 
 export const pathToRoot$ = browser ? computed(() => new URL(relativePathToRoot$(), window.location.href).href) : relativePathToRoot$;
 
-const baseCanonicalURL = 'https://amadeusitgroup.github.io/AgnosUI/latest/';
+const baseCanonicalURL = 'https://www.agnosui.dev/latest/';
 export const canonicalURL$ = computed(() => {
 	const pageURL = get(page).url.href;
 	const rootURL = new URL(relativePathToRoot$(), pageURL).href;

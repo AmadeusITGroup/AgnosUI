@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/@agnos-ui/svelte-preprocess)](https://www.npmjs.com/package/@agnos-ui/svelte-preprocess)
 
-Preprocessor to run [Svelte](https://svelte.dev/) [actions](https://svelte.dev/docs/svelte-action) server-side, which are called [directives](https://amadeusitgroup.github.io/AgnosUI/latest/docs/angular/headless/directives) in AgnosUI.
+Preprocessor to run [Svelte](https://svelte.dev/) [actions](https://svelte.dev/docs/svelte-action) server-side, which are called [directives](https://www.agnosui.dev/latest/docs/angular/headless/directives) in AgnosUI.
 
 ## Installation
 
