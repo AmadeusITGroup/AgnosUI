@@ -1,1 +1,0 @@
-import{w as t}from"./config-OMIq8Q7I.js";const o=t(Symbol("bootstrapWidgetsConfig")),{widgetsDefaultConfigKey:i,createWidgetsDefaultConfig:g,getContextWidgetConfig:a,callWidgetFactory:s}=o;export{g as a,s as c};
