@@ -274,7 +274,7 @@ export interface ModalDirectives {
 /**
  * Modal widget.
  */
-export type ModalWidget = Widget<ModalProps, ModalState, ModalApi, object, ModalDirectives>;
+export type ModalWidget = Widget<ModalProps, ModalState, ModalApi, ModalDirectives>;
 
 const defaultConfig: ModalProps = {
 	animated: true,
@@ -507,7 +507,6 @@ export function createModal(config$?: PropsConfig<ModalProps>): ModalWidget {
 			},
 			patch,
 		},
-		actions: {},
 	};
 
 	return res;

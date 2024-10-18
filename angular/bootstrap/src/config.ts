@@ -16,7 +16,7 @@ const widgetFactories: {
 	provideWidgetsConfig: (adaptParentConfig?: AdaptParentConfig) => FactoryProvider;
 	injectWidgetConfig: <N extends keyof BootstrapWidgetsConfig>(widgetName: N) => ReadableSignal<Partial<WidgetsConfig[N]> | undefined>;
 	injectWidgetsConfig: InjectWidgetsConfig;
-	callWidgetFactory: <W extends Widget<object, object, object, object, object>>({
+	callWidgetFactory: <W extends Widget<object, object, object, object>>({
 		factory,
 		widgetName,
 		defaultConfig,

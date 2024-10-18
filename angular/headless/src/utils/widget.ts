@@ -86,7 +86,6 @@ export const callWidgetFactoryWithConfig = <W extends Widget>({
 					...widget,
 					patch: zoneWrapper.outsideNgZone(widget.patch),
 					directives: zoneWrapper.outsideNgZoneWrapDirectivesObject(widget.directives),
-					actions: zoneWrapper.outsideNgZoneWrapFunctionsObject(widget.actions),
 					api: zoneWrapper.outsideNgZoneWrapFunctionsObject(widget.api),
 				};
 				Object.assign(res, wrappedWidget, {

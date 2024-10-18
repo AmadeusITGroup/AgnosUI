@@ -6,7 +6,7 @@ export interface AlertState extends CommonAlertState {}
 export interface AlertProps extends CommonAlertProps {}
 export interface AlertApi extends CommonAlertApi {}
 export interface AlertDirectives extends CommonAlertDirectives {}
-export type AlertWidget = Widget<AlertProps, AlertState, AlertApi, object, AlertDirectives>;
+export type AlertWidget = Widget<AlertProps, AlertState, AlertApi, AlertDirectives>;
 
 /**
  * Retrieve a shallow copy of the default alert config

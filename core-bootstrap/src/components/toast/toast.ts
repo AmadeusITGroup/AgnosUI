@@ -36,7 +36,7 @@ export interface ToastProps extends CoreProps, ToastExtraProps {
 	transition: TransitionFn;
 }
 
-export type ToastWidget = Widget<ToastProps, ToastState, ToastApi, object, ToastDirectives>;
+export type ToastWidget = Widget<ToastProps, ToastState, ToastApi, ToastDirectives>;
 
 const defaultConfigExtraProps: ToastExtraProps = {
 	structure: undefined,

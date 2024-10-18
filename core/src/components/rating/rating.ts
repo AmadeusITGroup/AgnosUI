@@ -184,7 +184,7 @@ export interface RatingApi {
 	leave(): void;
 }
 
-export type RatingWidget = Widget<RatingProps, RatingState, RatingApi, object, RatingDirectives>;
+export type RatingWidget = Widget<RatingProps, RatingState, RatingApi, RatingDirectives>;
 
 const defaultConfig: RatingProps = {
 	rating: 0,
@@ -285,7 +285,6 @@ export function createRating(config?: PropsConfig<RatingProps>): RatingWidget {
 			...stateProps,
 		}),
 		patch,
-		actions: {},
 		directives: {
 			containerDirective: createAttributesDirective(() => ({
 				events: {

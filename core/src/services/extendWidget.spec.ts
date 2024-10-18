@@ -39,7 +39,6 @@ describe(`extendWidgetProps`, () => {
 				myOtherNewProp: 'value',
 			},
 		});
-		expect(Object.keys(customWidget.actions)).toEqual(Object.keys(originalWidget.actions));
 		expect(Object.keys(customWidget.api)).toEqual(Object.keys(originalWidget.api));
 		expect(Object.keys(customWidget.directives)).toEqual(Object.keys(originalWidget.directives));
 		expect(Object.keys(customWidget.stores)).toEqual([...Object.keys(originalWidget.stores), 'myNewProp$', 'myOtherNewProp$']);

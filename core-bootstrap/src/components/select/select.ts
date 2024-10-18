@@ -44,7 +44,7 @@ interface SelectExtraProps<Item> {
 export interface SelectState<Item> extends CoreState<Item>, SelectExtraProps<Item> {}
 export interface SelectProps<Item> extends CoreProps<Item>, SelectExtraProps<Item> {}
 
-export type SelectWidget<Item> = Widget<SelectProps<Item>, SelectState<Item>, SelectApi<Item>, object, SelectDirectives<Item>>;
+export type SelectWidget<Item> = Widget<SelectProps<Item>, SelectState<Item>, SelectApi<Item>, SelectDirectives<Item>>;
 
 const defaultConfigExtraProps: SelectExtraProps<any> = {
 	badgeLabel: ({itemContext}: SelectItemContext<any>) => itemContext.item,

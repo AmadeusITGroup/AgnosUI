@@ -104,7 +104,7 @@ interface PaginationExtraProps {
 export interface PaginationState extends CoreState, PaginationExtraProps {}
 export interface PaginationProps extends CoreProps, PaginationExtraProps {}
 
-export type PaginationWidget = Widget<PaginationProps, PaginationState, PaginationApi, object, PaginationDirectives>;
+export type PaginationWidget = Widget<PaginationProps, PaginationState, PaginationApi, PaginationDirectives>;
 
 const defaultConfigExtraProps: PaginationExtraProps = {
 	structure: undefined,

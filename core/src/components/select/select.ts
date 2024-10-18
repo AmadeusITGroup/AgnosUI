@@ -322,7 +322,7 @@ export interface SelectDirectives<Item> {
 	badgeCloseButtonDirective: Directive<ItemContext<Item>>;
 }
 
-export type SelectWidget<Item> = Widget<SelectProps<Item>, SelectState<Item>, SelectApi<Item>, object, SelectDirectives<Item>>;
+export type SelectWidget<Item> = Widget<SelectProps<Item>, SelectState<Item>, SelectApi<Item>, SelectDirectives<Item>>;
 
 const defaultConfig: SelectProps<any> = {
 	id: undefined,
@@ -732,7 +732,6 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 			inputDirective,
 			badgeCloseButtonDirective,
 		},
-		actions: {},
 	};
 
 	return widget;

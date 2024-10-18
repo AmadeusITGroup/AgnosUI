@@ -76,7 +76,7 @@ const defaultConfig: FloatingUIProps = {
 	arrowOptions: {},
 };
 
-export type FloatingUI = Omit<Widget<FloatingUIProps, FloatingUIState, object, object, FloatingUIDirectives>, 'api' | 'actions'>;
+export type FloatingUI = Omit<Widget<FloatingUIProps, FloatingUIState, object, FloatingUIDirectives>, 'api'>;
 
 /**
  * Create a floating UI service.

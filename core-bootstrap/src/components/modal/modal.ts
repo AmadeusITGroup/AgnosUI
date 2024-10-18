@@ -72,7 +72,7 @@ export interface ModalApi<Data> extends Omit<CoreApi, 'patch'> {
 	patch: ModalWidget<Data>['patch'];
 }
 
-export type ModalWidget<Data> = Widget<ModalProps<Data>, ModalState<Data>, ModalApi<Data>, object, ModalDirectives>;
+export type ModalWidget<Data> = Widget<ModalProps<Data>, ModalState<Data>, ModalApi<Data>, ModalDirectives>;
 
 const defaultConfigExtraProps: ModalExtraProps<any> = {
 	contentData: undefined,

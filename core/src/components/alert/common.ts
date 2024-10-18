@@ -119,7 +119,7 @@ export interface CommonAlertDirectives {
 	transitionDirective: Directive;
 }
 
-export type CommonAlertWidget = Widget<CommonAlertProps, CommonAlertState, CommonAlertApi, object, CommonAlertDirectives>;
+export type CommonAlertWidget = Widget<CommonAlertProps, CommonAlertState, CommonAlertApi, CommonAlertDirectives>;
 
 const defaultCommonAlertConfig: CommonAlertProps = {
 	visible: true,
@@ -191,6 +191,5 @@ export function createCommonAlert(config?: PropsConfig<CommonAlertProps>): Commo
 		directives: {
 			transitionDirective: bindDirectiveNoArg(transition.directives.directive),
 		},
-		actions: {},
 	};
 }
