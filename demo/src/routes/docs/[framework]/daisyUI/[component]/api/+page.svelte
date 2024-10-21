@@ -7,15 +7,16 @@
 	import Svg from '$lib/layout/Svg.svelte';
 	import biInfoCircleFill from 'bootstrap-icons/icons/info-circle-fill.svg?raw';
 	import ApiSection from '$lib/api/render/ApiSection.svelte';
+	import type {PageData} from './$types';
 
-	export let data;
+	let {data}: {data: PageData} = $props();
 
 	const overrideRenderers = {
 		heading: ApiHeading,
 		paragraph: ApiParagraph,
 		code: ApiCode,
 		section: ApiSection,
-	};
+	} as any;
 </script>
 
 {#if data.import}

@@ -11,16 +11,20 @@
 		warning: biExclamationTriangleFill,
 	};
 
-	export let componentType: string;
+	let {
+		componentType,
+	}: {
+		componentType: string;
+	} = $props();
 	let alert: Alert;
 
-	$: type = 'info' as AlertProps['type'];
-	$: componentName = $page.url.pathname.match(regex)?.[2];
-	$: {
+	let type = $derived('info' as AlertProps['type']);
+	let componentName = $derived($page.url.pathname.match(regex)?.[2]);
+	$effect(() => {
 		// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 		componentName;
-		alert?.api.open();
-	}
+		alert!.api.open();
+	});
 </script>
 
 <Alert bind:this={alert} {type} className="p-0 border-0 border-start border-5 border-{type}">

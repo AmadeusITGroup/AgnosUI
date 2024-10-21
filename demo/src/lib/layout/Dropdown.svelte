@@ -1,14 +1,18 @@
 <script lang="ts">
-	import {writable} from '@amadeus-it-group/tansu';
 	import {createHasFocus} from '@agnos-ui/svelte-bootstrap/services/focustrack';
 	import type {DropdownItem} from './dropdown';
+	import {fromStore} from 'svelte/store';
+	import type {Snippet} from 'svelte';
 
-	const open$ = writable(false);
+	let open = $state(false);
 
 	type Item = $$Generic<DropdownItem>;
 
 	const {hasFocus$, directive} = createHasFocus();
-	$: $open$ = $hasFocus$;
+	const focus = fromStore(hasFocus$);
+	$effect(() => {
+		open = focus.current;
+	});
 
 	function giveFocus(el: HTMLAnchorElement | HTMLButtonElement, index: number) {
 		if (index === 0) {
@@ -16,17 +20,26 @@
 		}
 	}
 
-	const toggle = () => open$.update((val) => !val);
+	const toggle = () => (open = !open);
 
-	export let ariaLabel: string;
-	export let btnClass: string = '';
-	export let items: Item[];
-	export let placement: 'start' | 'end' = 'start';
-	export let dropdownClass: string = '';
+	interface Props {
+		ariaLabel: string;
+		btnClass: string;
+		items: Item[];
+		placement?: 'start' | 'end';
+		dropdownClass?: string;
+		buttonSnip: Snippet;
+		itemSnip: Snippet<[Item, number]>;
+	}
+
+	let {ariaLabel, btnClass = '', items, placement = 'start', dropdownClass = '', buttonSnip, itemSnip}: Props = $props();
 
 	const onpointerDown = (event: PointerEvent) => {
 		event.preventDefault();
 		(event.target as HTMLElement).focus();
+	};
+	const onmousedown = (event: MouseEvent) => {
+		event.preventDefault();
 	};
 </script>
 
@@ -34,16 +47,16 @@
 	<button
 		class="btn dropdown-toggle align-items-center d-flex {btnClass}"
 		aria-label={ariaLabel}
-		on:mousedown|preventDefault
-		on:click={toggle}
+		{onmousedown}
+		onclick={toggle}
 		type="button"
-		aria-expanded={$open$}
+		aria-expanded={open}
 	>
-		<slot name="button" />
+		{@render buttonSnip()}
 	</button>
-	{#if $open$}
-		<div use:directive class="dropdown-menu dropdown-menu-{placement} position-absolute" class:show={$open$} data-bs-popper="absolute">
-			<!-- svelte-ignore a11y-no-static-element-interactions -->
+	{#if open}
+		<div use:directive class="dropdown-menu dropdown-menu-{placement} position-absolute" class:show={open} data-bs-popper="absolute">
+			<!-- svelte-ignore a11y_no_static_element_interactions -->
 			{#each items as item, index (item.id)}
 				<svelte:element
 					this={item.tag}
@@ -52,15 +65,15 @@
 					href={item.tag === 'a' ? item.href : undefined}
 					class:active={item.isSelected}
 					aria-current={item.isSelected ? 'page' : false}
-					on:pointerdown={onpointerDown}
-					on:click={() => {
+					onpointerdown={onpointerDown}
+					onclick={() => {
 						if (item.tag === 'button') {
 							item.onclick();
 						}
 						toggle();
 					}}
 				>
-					<slot name="item" {item} {index} />
+					{@render itemSnip(item, index)}
 				</svelte:element>
 			{/each}
 		</div>

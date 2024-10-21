@@ -1,4 +1,9 @@
-<li class="mb-2"><slot /></li>
+<script>
+	/** @type {{children: import('svelte').Snippet}} */
+	let {children} = $props();
+</script>
+
+<li class="mb-2">{@render children()}</li>
 
 <style>
 	li::marker {

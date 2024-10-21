@@ -3,8 +3,9 @@
 	import Published from '$lib/layout/Published.svelte';
 	import Markdown from '$lib/markdown/Markdown.svelte';
 	import source from './tansu-reactivity.md?raw';
+	import type {PageData} from './$types';
 
-	export let data;
+	let {data}: {data: PageData} = $props();
 </script>
 
 <Header title={data.pageMeta.title} />

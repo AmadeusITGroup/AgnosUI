@@ -1,31 +1,28 @@
 <script lang="ts">
-	export let href = '';
-	export let title: string;
-	export let text = '';
-	let className = 'w-100';
+	interface Props {
+		href?: string;
+		title: string;
+		text?: string;
+	}
+
+	let {href = '', title, text = ''}: Props = $props();
+	let className = $state('w-100');
 
 	const imgRegExp = /resources\/images\/(.*)\.(svg|webp|png|jpg)/i;
-	let srcPromise: Promise<any>;
-	function getSrc(href: string) {
+	let srcPromise: Promise<any> | undefined = $derived.by(() => {
 		try {
 			const matches = href.match(imgRegExp);
 			if (matches) {
 				className = matches[1];
-				srcPromise = import(`../../../resources/images/${matches[1]}.${matches[2]}`);
+				return import(`../../../resources/images/${matches[1]}.${matches[2]}`);
 			}
 		} catch (_) {
 			// Avoid server crash
+			return undefined;
 		}
-	}
-	$: void getSrc(href);
+	});
 </script>
 
-{#await srcPromise}
-	<div class="d-flex justify-content-center">
-		<div class="spinner-border" role="status">
-			<span class="visually-hidden">Loading...</span>
-		</div>
-	</div>
-{:then srcModule}
+{#await srcPromise then srcModule}
 	<img class={className} src={srcModule.default} {title} alt={text} />
 {/await}

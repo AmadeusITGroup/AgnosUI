@@ -3,13 +3,17 @@
 	import type {ValueContextApi} from './playground';
 	import {getPlaygroundContext} from './playground';
 
-	export let valueContext: ValueContextApi;
-	$: ({key, defaultValue, config, prop, type} = valueContext);
+	interface Props {
+		valueContext: ValueContextApi;
+	}
+
+	let {valueContext}: Props = $props();
+	let {key, defaultValue, config, prop, type} = $derived(valueContext);
 	const {showHelp} = getPlaygroundContext();
 </script>
 
 <tr>
-	<td> <button class="btn btn-link align-middle" on:click={() => showHelp(key)}>{key}</button></td>
+	<td> <button class="btn btn-link align-middle" onclick={() => showHelp(key)}>{key}</button></td>
 	<PlaygroundValue {type} {defaultValue} api={config} placeholder={defaultValue} ariaLabel="property {key} config input" />
 	<PlaygroundValue {type} {defaultValue} api={prop} ariaLabel="property {key} value input" />
 </tr>
