@@ -14,6 +14,7 @@ export function getMenu(component: string) {
 		title: componentMetadata.title,
 		status: componentMetadata.status,
 		since: componentMetadata.since,
+		type: componentMetadata.type,
 		tabs: [
 			{title: 'Examples', key: 'examples', path: `/components/${component}/examples`},
 			{title: 'Api', key: 'api', path: `/components/${component}/api`},

@@ -1,9 +1,12 @@
-<script>
+<script lang="ts">
 	import {page} from '$app/stores';
 	import {pathToRoot$, selectedFramework$} from '$lib/stores';
+	import type {Snippet} from 'svelte';
+
+	let {children}: {children: Snippet} = $props();
 </script>
 
-<slot />
+{@render children()}
 
 <hr />
 

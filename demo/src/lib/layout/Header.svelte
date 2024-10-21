@@ -10,14 +10,18 @@
 	import daisyUILogo from '$resources/logo-daisyUI.svg?raw';
 	import bootstrapLogo from '$resources/bootstrap.svg?raw';
 
-	export let title: string;
-	export let pageTitle = '';
-	export let status: string = '';
-	export let cssFramework = '';
+	interface Props {
+		title: string;
+		pageTitle?: string;
+		status?: string;
+		cssFramework?: string;
+	}
 
-	$: tabs = $page.data.tabs ?? [];
-	$: builtPageTitle = getTitle(pageTitle || title, $selectedApiFramework$, $selectedPackageType$);
-	$: includesFwk = !!$page.params.framework;
+	let {title, pageTitle = '', status = '', cssFramework = ''}: Props = $props();
+
+	let tabs = $derived($page.data.tabs ?? []);
+	let builtPageTitle = $derived(getTitle(pageTitle || title, $selectedApiFramework$, $selectedPackageType$));
+	let includesFwk = $derived(!!$page.params.framework);
 </script>
 
 <svelte:head>

@@ -1,13 +1,19 @@
 <script lang="ts">
 	import Heading from '$lib/layout/Heading.svelte';
+	import type {Snippet} from 'svelte';
 
-	export let level: 1 | 2 | 3;
-	export let label: string;
-	export let id: string = label.toLowerCase().replace(/\s/g, '-').trim();
-	export let headerClassName: string | undefined = undefined;
+	interface Props {
+		level: 1 | 2 | 3;
+		label: string;
+		id?: string;
+		headerClassName?: string | undefined;
+		children: Snippet;
+	}
+
+	let {level, label, id = label.toLowerCase().replace(/\s/g, '-').trim(), headerClassName = undefined, children}: Props = $props();
 </script>
 
 <section>
 	<Heading depth={level} text={label} {id} {headerClassName} />
-	<slot />
+	{@render children()}
 </section>

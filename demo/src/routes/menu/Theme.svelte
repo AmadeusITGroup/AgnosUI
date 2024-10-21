@@ -77,13 +77,13 @@
 
 <div class="nav-item">
 	<Dropdown btnClass="btn-dark-mode nav-link" ariaLabel="toggle the dark mode" items={$themes$} placement="end">
-		<svelte:fragment slot="button">
+		{#snippet buttonSnip()}
 			{#each $themes$ as theme}
 				<Svg svg={theme.icon} className={theme.id} />
 			{/each}
-		</svelte:fragment>
-		<svelte:fragment slot="item" let:item>
+		{/snippet}
+		{#snippet itemSnip(item)}
 			<Svg className="me-3" svg={item.icon} />{item.name}
-		</svelte:fragment>
+		{/snippet}
 	</Dropdown>
 </div>

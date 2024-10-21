@@ -8,9 +8,6 @@ export const load = ({params}) => {
 		return {
 			slug: params.slug,
 			...file,
-			pageMeta: {
-				description: `Documentation for ${params.slug.replace('/', ' ').replace('-', ' ')}`,
-			},
 		};
 	}
 };

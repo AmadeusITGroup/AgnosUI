@@ -6,13 +6,13 @@
 	import TOC from './TOC.svelte';
 	import MobileDialog from './MobileDialog.svelte';
 
-	let isMenuExpanded = false;
-	let isOnThisPageExpanded = false;
+	let isMenuExpanded = $state(false);
+	let isOnThisPageExpanded = $state(false);
 
-	$: title = isMenuExpanded ? 'Menu' : isOnThisPageExpanded ? 'On this page' : '';
-	$: open = isMenuExpanded || isOnThisPageExpanded;
+	let title = $derived(isMenuExpanded ? 'Menu' : isOnThisPageExpanded ? 'On this page' : '');
+	let open = $derived(isMenuExpanded || isOnThisPageExpanded);
 
-	function onClose() {
+	function onclose() {
 		isMenuExpanded = isOnThisPageExpanded = false;
 	}
 </script>
@@ -21,7 +21,7 @@
 	<button
 		class="d-md-none text-dark-emphasis d-flex align-items-center btn btn-link link-underline link-underline-opacity-0"
 		aria-expanded={isMenuExpanded}
-		on:click={() => {
+		onclick={() => {
 			isMenuExpanded = true;
 		}}
 	>
@@ -30,7 +30,7 @@
 	<button
 		class="text-dark-emphasis d-flex align-items-center btn btn-link link-underline link-underline-opacity-0"
 		aria-expanded={isOnThisPageExpanded}
-		on:click={() => {
+		onclick={() => {
 			isOnThisPageExpanded = true;
 		}}
 	>
@@ -39,7 +39,7 @@
 	</button>
 </div>
 
-<MobileDialog {title} {open} on:close={onClose}>
+<MobileDialog {title} {open} {onclose}>
 	{#if isMenuExpanded}
 		<SideMenu />
 	{:else}

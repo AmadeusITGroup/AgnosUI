@@ -1,12 +1,9 @@
 <script lang="ts">
-	export let component: () => Promise<{default: any}>;
-	$: promise = component();
+	let {component}: {component: () => Promise<{default: any}>} = $props();
+	let promise = $derived(component());
 </script>
 
-{#await promise}
-	<slot />
-{:then resolvedComponent}
-	<svelte:component this={resolvedComponent.default} {...$$restProps} />
-{:catch}
-	<slot name="error" />
+{#await promise then resolvedComponent}
+	{@const ResolvedComponent = resolvedComponent.default}
+	<ResolvedComponent />
 {/await}

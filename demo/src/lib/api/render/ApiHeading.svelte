@@ -11,10 +11,14 @@
 	import Svg from '$lib/layout/Svg.svelte';
 	import {getContext} from 'svelte';
 
-	export let depth: 1 | 2 | 3 | 4 | 5 | 6;
-	export let text: string;
-	export let headerClassName: string = '';
-	export let raw: string;
+	interface Props {
+		depth: 1 | 2 | 3 | 4 | 5 | 6;
+		text: string;
+		headerClassName: string;
+		raw: string;
+	}
+
+	let {depth, text, headerClassName = '', raw}: Props = $props();
 	// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 	raw;
 

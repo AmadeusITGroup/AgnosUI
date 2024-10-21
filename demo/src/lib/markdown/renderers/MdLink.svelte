@@ -1,9 +1,15 @@
 <script lang="ts">
 	import {page} from '$app/stores';
 	import type {Page} from '@sveltejs/kit';
+	import type {Snippet} from 'svelte';
 
-	export let href = '';
-	export let title: string;
+	interface Props {
+		href?: string;
+		title: string;
+		children: Snippet;
+	}
+
+	let {href = '', title, children}: Props = $props();
 
 	const validMdRegex = /^\d{2}-([a-zA-Z-]*)\.md$/;
 	const categoryRegex = /\/\d{2}-([a-zA-Z-]*\/)/g;
@@ -23,7 +29,7 @@
 			return inputHref.match(validMdRegex)?.[1]?.toLowerCase() ?? href;
 		}
 	}
-	$: appliedHref = computedAppliedHref(href, $page);
+	let appliedHref = $derived(computedAppliedHref(href, $page));
 </script>
 
-<a href={appliedHref} {title}><slot /></a>
+<a href={appliedHref} {title}>{@render children()}</a>

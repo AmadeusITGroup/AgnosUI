@@ -10,13 +10,17 @@
 	import conStriped from 'bootstrap-icons/icons/cone-striped.svg?raw';
 	import Svg from '../Svg.svelte';
 
-	export let sample: SampleInfo;
-	export let config: Record<string, any>;
-	export let doc: WidgetDoc;
-	export let types: Record<string, string> = {};
-	export let height = 100;
-	export let noresize = false;
-	export let listPropsValues: Record<string, PropsValues[]> = {};
+	interface Props {
+		sample: SampleInfo;
+		config: Record<string, any>;
+		doc: WidgetDoc;
+		types?: Record<string, string>;
+		height?: number;
+		noresize?: boolean;
+		listPropsValues?: Record<string, PropsValues[]>;
+	}
+
+	let {sample, config, doc, types = {}, height = 100, noresize = false, listPropsValues = {}}: Props = $props();
 	const {values$, sampleParameters$, help$} = createPlayground({config, types, doc, listPropsValues});
 </script>
 
@@ -47,9 +51,9 @@
 				<tr class="border-0 bg-transparent">
 					<th class="border-0">Prop</th>
 					<th class="border-0">Config</th>
-					<th class="border-0" />
+					<th class="border-0"></th>
 					<th class="border-0">Value</th>
-					<th class="border-0" />
+					<th class="border-0"></th>
 				</tr>
 			</thead>
 			<tbody>

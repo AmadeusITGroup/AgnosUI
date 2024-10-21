@@ -4,14 +4,20 @@
 	import sample from '@agnos-ui/samples/bootstrap/modal/playground';
 	import doc from '@agnos-ui/generated/doc/api.json?modal&extractApi';
 	import type {PropsValues} from '@agnos-ui/common/propsValues';
-	export let listPropsValues: {[key in keyof ReturnType<typeof getModalDefaultConfig>]?: PropsValues[]} = {
-		backdropTransition: ['fade'],
-		modalTransition: ['fade'],
-		onBeforeClose: ['noop', 'log'],
-		onHidden: ['noop', 'log'],
-		onShown: ['noop', 'log'],
-		onVisibleChange: ['noop', 'log'],
-	};
+	interface Props {
+		listPropsValues?: {[key in keyof ReturnType<typeof getModalDefaultConfig>]?: PropsValues[]};
+	}
+
+	let {
+		listPropsValues = {
+			backdropTransition: ['fade'],
+			modalTransition: ['fade'],
+			onBeforeClose: ['noop', 'log'],
+			onHidden: ['noop', 'log'],
+			onShown: ['noop', 'log'],
+			onVisibleChange: ['noop', 'log'],
+		},
+	}: Props = $props();
 </script>
 
 <Playground {sample} config={getModalDefaultConfig()} height={250} noresize {doc} {listPropsValues} />

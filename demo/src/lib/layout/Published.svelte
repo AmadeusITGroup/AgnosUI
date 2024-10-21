@@ -21,20 +21,24 @@
 		},
 	} satisfies Record<string, AuthorInfo>;
 
-	export let date: string;
-	export let author: keyof typeof authorLogo;
-	export let title: string;
+	interface Props {
+		date: string;
+		author: keyof typeof authorLogo;
+		title: string;
+	}
 
-	let canWebShare = false;
-	let mounted = false;
+	let {date, author, title}: Props = $props();
 
-	$: encodedUrl = encodeURIComponent($page.url.href);
-	$: encodedTitle = encodeURIComponent(title);
-	$: formattedDate = Intl.DateTimeFormat('en-US', {dateStyle: 'medium'}).format(new Date(date));
-	$: webShareData = {
+	let canWebShare = $state(false);
+	let mounted = $state(false);
+
+	let encodedUrl = $derived(encodeURIComponent($page.url.href));
+	let encodedTitle = $derived(encodeURIComponent(title));
+	let formattedDate = $derived(Intl.DateTimeFormat('en-US', {dateStyle: 'medium'}).format(new Date(date)));
+	let webShareData = $derived({
 		url: $page.url.href,
 		title,
-	};
+	});
 
 	onMount(() => {
 		canWebShare = !!navigator.canShare?.(webShareData);
@@ -59,7 +63,7 @@
 	<div class="d-flex flex-grow-1 justify-content-end gap-3 ms-5 align-self-end">
 		{#if mounted}
 			{#if canWebShare}
-				<button class="nav-link" aria-label="Share blog post" on:click={webShare}>
+				<button class="nav-link" aria-label="Share blog post" onclick={webShare}>
 					<Svg className="icon-20 align-middle" svg={share} />
 				</button>
 			{:else}
