@@ -51,31 +51,12 @@ export interface Widget<
 	api: Api;
 }
 
-export type ContextWidget<W extends Widget> = Pick<W, 'api' | 'directives' | 'state$' | 'stores'>;
-
-export interface WidgetSlotContext<W extends Widget> {
+export interface WidgetSlotContext<W extends Widget> extends Pick<W, 'api' | 'directives'> {
 	/**
 	 * the state of the widget
 	 */
 	state: WidgetState<W>;
-	/**
-	 * the widget
-	 */
-	widget: ContextWidget<W>;
 }
-
-/**
- * Extract api, directives, state and stores from the widget to be passed to slots as context.
- *
- * @param w - the widget
- * @returns the slot context
- */
-export const toSlotContextWidget = <W extends Widget>(w: W): ContextWidget<W> => ({
-	api: w.api,
-	directives: w.directives,
-	state$: w.state$,
-	stores: w.stores,
-});
 
 export type WidgetState<T extends {state$: SubscribableStore<any>}> = T extends {state$: SubscribableStore<infer U extends object>} ? U : never;
 export type WidgetProps<T extends {patch: (arg: any) => void}> = T extends {patch: (arg: Partial<infer U extends object>) => void} ? U : never;

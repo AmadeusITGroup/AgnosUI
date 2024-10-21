@@ -7,7 +7,7 @@ import {type PropsWithChildren} from 'react';
 export const Toast = (
 	props: PropsWithChildren<Partial<Pick<ToastProps, 'className' | 'visible' | 'dismissible' | 'ariaCloseButtonLabel' | 'onVisibleChange'>>>,
 ) => {
-	const [state, {api}] = useWidgetWithConfig(createToast, props, 'toast');
+	const {state, api} = useWidgetWithConfig(createToast, props, 'toast');
 	return (
 		<>
 			{!state.hidden && (

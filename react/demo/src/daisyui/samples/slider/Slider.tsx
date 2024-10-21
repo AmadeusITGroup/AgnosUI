@@ -3,12 +3,10 @@ import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
 import {useDirectives} from '@agnos-ui/react-headless/utils/directive';
 
 export function Slider(props: Partial<Pick<SliderProps, 'min' | 'max' | 'values' | 'stepSize' | 'className' | 'onValuesChange'>>) {
-	const [
+	const {
 		state,
-		{
-			directives: {sliderDirective, clickableAreaDirective, handleEventsDirective},
-		},
-	] = useWidgetWithConfig(createSlider, props, 'slider');
+		directives: {sliderDirective, clickableAreaDirective, handleEventsDirective},
+	} = useWidgetWithConfig(createSlider, props, 'slider');
 
 	return (
 		<input

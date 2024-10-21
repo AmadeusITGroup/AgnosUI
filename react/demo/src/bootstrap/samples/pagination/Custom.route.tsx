@@ -6,7 +6,7 @@ import type {FormEvent, FocusEvent, KeyboardEvent} from 'react';
 
 const FILTER_PAG_REGEX = /[^0-9]/g;
 
-function CustomPages({widget, state}: PaginationContext) {
+function CustomPages({state, api}: PaginationContext) {
 	const [inputVal, setValue] = useState(state.page.toString());
 	function handleKeyDownEnter(e: KeyboardEvent<HTMLInputElement>) {
 		if (e.key === 'Enter') {
@@ -16,8 +16,8 @@ function CustomPages({widget, state}: PaginationContext) {
 	function handleTheChange(e: FocusEvent<HTMLInputElement> | KeyboardEvent<HTMLInputElement>) {
 		const value = e.currentTarget.value;
 		const intValue = parseInt(value);
-		widget.api.select(intValue);
-		setValue(widget.stores.page$().toString());
+		api.select(intValue);
+		setValue(state.page.toString());
 	}
 	function formatInput(e: FormEvent<HTMLInputElement>) {
 		setValue(e.currentTarget.value.replace(FILTER_PAG_REGEX, ''));

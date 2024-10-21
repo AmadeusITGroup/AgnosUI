@@ -9,7 +9,10 @@
 	const widget = callWidgetFactory({
 		factory: createAlert,
 		widgetName: 'alert',
-		props: {...props, visible},
+		get props() {
+			return {...props, visible};
+		},
+		enablePatchChanged: true,
 		defaultConfig: {structure},
 		events: {
 			onVisibleChange: (event) => {
@@ -20,25 +23,21 @@
 	export const api: AlertApi = widget.api;
 
 	const {
-		stores: {structure$, hidden$},
+		state,
 		directives: {transitionDirective},
-		state$,
 	} = widget;
-
-	$effect(() => widget.patchChangedProps({...props, visible}));
-	let slotContext = $derived({widget, state: $state$});
 </script>
 
 {#snippet structure(props: AlertContext)}
 	<AlertDefaultStructure {...props} />
 {/snippet}
 
-{#if !$hidden$}
+{#if !state.hidden}
 	<div
 		role="alert"
-		class="au-alert alert alert-{$state$.type} {$state$.className} {$state$.dismissible ? 'alert-dismissible' : ''}"
+		class="au-alert alert alert-{state.type} {state.className} {state.dismissible ? 'alert-dismissible' : ''}"
 		use:transitionDirective
 	>
-		<Slot content={$structure$} props={slotContext} />
+		<Slot content={state.structure} props={widget} />
 	</div>
 {/if}

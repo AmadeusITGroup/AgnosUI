@@ -19,14 +19,16 @@
 	});
 
 	const {
-		stores: {className$, dismissible$, ariaCloseButtonLabel$, hidden$},
+		state,
 		directives: {transitionDirective},
-		patchChangedProps,
 		api,
 	} = callWidgetFactory({
 		factory: createAlert,
 		widgetName: 'alert',
-		props: {...props, visible},
+		get props() {
+			return {...props, visible};
+		},
+		enablePatchChanged: true,
 		defaultConfig: {transition},
 		events: {
 			onVisibleChange: (event) => {
@@ -34,15 +36,13 @@
 			},
 		},
 	});
-
-	$effect(() => patchChangedProps({...props, visible}));
 </script>
 
-{#if !$hidden$}
-	<div role="alert" class="flex alert {$className$}" use:transitionDirective>
+{#if !state.hidden}
+	<div role="alert" class="flex alert {state.className}" use:transitionDirective>
 		{@render children()}
-		{#if $dismissible$}
-			<button class="btn btn-sm btn-circle btn-ghost ms-auto" onclick={api.close} aria-label={$ariaCloseButtonLabel$}>
+		{#if state.dismissible}
+			<button class="btn btn-sm btn-circle btn-ghost ms-auto" onclick={api.close} aria-label={state.ariaCloseButtonLabel}>
 				{@html closeIconSvg}
 			</button>
 		{/if}

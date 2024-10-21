@@ -56,20 +56,20 @@ export class ToastHeaderDirective {
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [SlotDirective, ToastStructureDirective, UseDirective],
-	template: ` <ng-template auToastStructure #structure let-state="state" let-widget="widget">
+	template: ` <ng-template auToastStructure #structure let-state="state" let-api="api" let-directives="directives">
 		@if (state.header) {
 			<div class="toast-header">
-				<ng-template [auSlot]="state.header" [auSlotProps]="{state, widget}"></ng-template>
+				<ng-template [auSlot]="state.header" [auSlotProps]="{state, api, directives}"></ng-template>
 				@if (state.dismissible) {
-					<button class="btn-close me-0 ms-auto" [auUse]="widget.directives.closeButtonDirective"></button>
+					<button class="btn-close me-0 ms-auto" [auUse]="directives.closeButtonDirective"></button>
 				}
 			</div>
 		}
 		<div class="toast-body">
-			<ng-template [auSlot]="state.children" [auSlotProps]="{state, widget}"></ng-template>
+			<ng-template [auSlot]="state.children" [auSlotProps]="{state, api, directives}"></ng-template>
 		</div>
 		@if (state.dismissible && !state.header) {
-			<button class="btn-close btn-close-white me-2 m-auto" [auUse]="widget.directives.closeButtonDirective"></button>
+			<button class="btn-close btn-close-white me-2 m-auto" [auUse]="directives.closeButtonDirective"></button>
 		}
 	</ng-template>`,
 })
@@ -96,9 +96,9 @@ const defaultConfig: Partial<ToastProps> = {
 				class="toast"
 				[class.d-flex]="!state().header"
 				[class.toast-dismissible]="state().dismissible"
-				[auUseMulti]="[widget.directives.autoHideDirective, widget.directives.transitionDirective, widget.directives.bodyDirective]"
+				[auUseMulti]="[directives.autoHideDirective, directives.transitionDirective, directives.bodyDirective]"
 			>
-				<ng-template [auSlot]="state().structure" [auSlotProps]="{state: state(), widget}"></ng-template>
+				<ng-template [auSlot]="state().structure" [auSlotProps]="{state: state(), api, directives}"></ng-template>
 			</div>
 		}`,
 })

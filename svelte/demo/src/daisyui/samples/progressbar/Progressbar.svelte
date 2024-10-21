@@ -5,11 +5,16 @@
 	let props: Partial<Omit<ProgressbarProps, 'min'>> = $props();
 
 	const {
-		stores: {value$, max$, className$},
+		state,
 		directives: {ariaDirective},
-		patchChangedProps,
-	} = callWidgetFactory({factory: createProgressbar, widgetName: 'progressbar', props});
-	$effect(() => patchChangedProps({...props}));
+	} = callWidgetFactory({
+		factory: createProgressbar,
+		widgetName: 'progressbar',
+		get props() {
+			return props;
+		},
+		enablePatchChanged: true,
+	});
 </script>
 
-<progress use:ariaDirective class="progress {$className$}" value={$value$} max={$max$}></progress>
+<progress use:ariaDirective class="progress {state.className}" value={state.value} max={state.max}></progress>
