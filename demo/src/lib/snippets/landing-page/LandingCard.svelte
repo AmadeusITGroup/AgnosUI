@@ -1,8 +1,14 @@
 <script lang="ts">
 	import Svg from '$lib/layout/Svg.svelte';
+	import type {Snippet} from 'svelte';
 
-	export let title: string;
-	export let svg = '';
+	interface Props {
+		title: string;
+		svg?: string;
+		children: Snippet;
+	}
+
+	let {title, svg = '', children}: Props = $props();
 </script>
 
 <div class="col-12 col-md-6 col-lg-4 mb-3">
@@ -17,7 +23,7 @@
 				<div class="card-body">
 					<h5 class="card-title">{title}</h5>
 					<p class="card-text">
-						<slot />
+						{@render children()}
 					</p>
 				</div>
 			</div>

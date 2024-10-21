@@ -1,8 +1,12 @@
 <script lang="ts">
-	export let svg: string;
-	export let className = '';
+	interface Props {
+		svg: string;
+		className?: string;
+	}
 
-	$: computedClass = `svg ${className}`.trim();
+	let {svg, className = ''}: Props = $props();
+
+	let computedClass = $derived(`svg ${className}`.trim());
 </script>
 
 <!-- eslint-disable-next-line svelte/no-at-html-tags -->

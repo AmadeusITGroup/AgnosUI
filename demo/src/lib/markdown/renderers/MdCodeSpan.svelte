@@ -1,5 +1,6 @@
 <script>
-	export let raw;
+	/** @type {{raw: string}} */
+	let {raw} = $props();
 </script>
 
 <code class="fw-semibold">{raw.replace(/`/g, '')}</code>

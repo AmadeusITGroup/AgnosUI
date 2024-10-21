@@ -4,10 +4,14 @@
 	import Code from '../Code.svelte';
 	import Section from '$lib/layout/Section.svelte';
 
-	export let title: string;
-	export let properties: PropertyDoc[];
-	export let noLastHr = false;
-	$: titleLowercase = title.toLowerCase();
+	interface Props {
+		title: string;
+		properties: PropertyDoc[];
+		noLastHr?: boolean;
+	}
+
+	let {title, properties, noLastHr = false}: Props = $props();
+	let titleLowercase = $derived(title.toLowerCase());
 </script>
 
 {#if properties.length}

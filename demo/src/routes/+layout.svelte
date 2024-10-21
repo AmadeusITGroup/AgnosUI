@@ -16,23 +16,29 @@
 	import type {Snapshot} from '@sveltejs/kit';
 	import Theme from './menu/Theme.svelte';
 	import Versions from './menu/Versions.svelte';
+	import type {Snippet} from 'svelte';
+	import type {LayoutData} from './$types';
+
+	let appUpdated = $state(false);
 
 	const onServiceWorkerUpdate = () => {
 		void updated.check();
 	};
 
-	$: isMainPage = $routeLevel$ === 0;
-	$: isApi = $page.route.id?.startsWith('/api/');
+	let isMainPage = $derived($routeLevel$ === 0);
+	let isApi = $derived($page.route.id?.startsWith('/api/'));
 
 	onMount(() => {
+		const unsuscribe = updated.subscribe((val) => (appUpdated = val));
 		navigator.serviceWorker?.addEventListener('controllerchange', onServiceWorkerUpdate);
 		return () => {
+			unsuscribe();
 			navigator.serviceWorker?.removeEventListener('controllerchange', onServiceWorkerUpdate);
 		};
 	});
 
 	beforeNavigate(({willUnload, to}) => {
-		if ($updated && !willUnload && to?.url) {
+		if (appUpdated && !willUnload && to?.url) {
 			// force reload of the page on navigation when a new version of the site has been detected
 			location.href = to.url.href;
 		}
@@ -65,7 +71,13 @@
 		restore: (y) => container.scrollTo(0, y),
 	};
 
-	export let data;
+	let {
+		data,
+		children,
+	}: {
+		data: LayoutData;
+		children: Snippet;
+	} = $props();
 </script>
 
 <svelte:head>
@@ -141,7 +153,7 @@
 	</nav>
 	<div class="demo-main d-flex flex-column z-0" bind:this={container}>
 		{#if isMainPage}
-			<slot />
+			{@render children()}
 		{:else}
 			<div class="container-xxl">
 				<div class="row flex-wrap flex-sm-nowrap align-content-between">
@@ -153,7 +165,7 @@
 							<MobileSubMenu />
 						</div>
 						<MainSection>
-							<slot />
+							{@render children()}
 						</MainSection>
 					</div>
 					<div class="ms-lg-4 ms-xl-5 demo-toc d-none d-lg-flex col-auto side-menu me-auto">

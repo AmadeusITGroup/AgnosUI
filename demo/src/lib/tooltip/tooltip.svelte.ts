@@ -2,12 +2,9 @@ import Tooltip from '$lib/tooltip/Tooltip.svelte';
 import {browserDirective} from '@agnos-ui/svelte-bootstrap/utils/directive';
 import {createFloatingUI} from '@agnos-ui/svelte-bootstrap/services/floatingUI';
 import {flip, offset} from '@floating-ui/dom';
+import {mount, unmount} from 'svelte';
 
 export const tooltip = browserDirective((button: HTMLElement, options: {content: string}) => {
-	const content = options.content;
-
-	let componentInstance: Tooltip | undefined;
-
 	const {
 		directives: {floatingDirective, referenceDirective, arrowDirective},
 		stores: {placement$},
@@ -22,6 +19,13 @@ export const tooltip = browserDirective((button: HTMLElement, options: {content:
 			},
 		},
 	});
+	const props = $state({
+		content: options.content,
+		placement$,
+		directive: floatingDirective,
+		arrowDirective,
+	});
+	let componentInstance: Record<string, any> | undefined;
 
 	const directiveInstance = referenceDirective(button);
 
@@ -30,23 +34,23 @@ export const tooltip = browserDirective((button: HTMLElement, options: {content:
 
 	function show() {
 		if (!componentInstance) {
-			componentInstance = new Tooltip({
+			componentInstance = mount(Tooltip, {
 				target: document.body,
-				props: {content, placement$, directive: floatingDirective, arrowDirective},
+				props,
 			});
 		}
 	}
 
 	function hide() {
-		componentInstance?.$destroy();
-		componentInstance = undefined;
+		if (componentInstance) {
+			unmount(componentInstance);
+			componentInstance = undefined;
+		}
 	}
 
 	return {
 		update(options: {content: string}) {
-			if (componentInstance) {
-				componentInstance.content = options.content;
-			}
+			props.content = options.content;
 		},
 		destroy() {
 			hide();

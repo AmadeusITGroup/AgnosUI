@@ -4,12 +4,18 @@
 	import sample from '@agnos-ui/samples/bootstrap/pagination/playground';
 	import doc from '@agnos-ui/generated/doc/api.json?pagination&extractApi';
 	import type {PropsValues} from '@agnos-ui/common/propsValues';
-	export let listPropsValues: {[key in keyof ReturnType<typeof getPaginationDefaultConfig>]?: PropsValues[]} = {
-		onPageChange: ['noop', 'log'],
-		pagesFactory: ['defaultPageFactory'],
-		ariaPageLabel: ['simpleLabel', 'pageLabel'],
-		numberLabel: ['numberLabel'],
-	};
+	interface Props {
+		listPropsValues?: {[key in keyof ReturnType<typeof getPaginationDefaultConfig>]?: PropsValues[]};
+	}
+
+	let {
+		listPropsValues = {
+			onPageChange: ['noop', 'log'],
+			pagesFactory: ['defaultPageFactory'],
+			ariaPageLabel: ['simpleLabel', 'pageLabel'],
+			numberLabel: ['numberLabel'],
+		},
+	}: Props = $props();
 </script>
 
 <Playground {sample} config={getPaginationDefaultConfig()} {doc} {listPropsValues} />

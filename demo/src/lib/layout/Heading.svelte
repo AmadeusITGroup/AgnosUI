@@ -3,10 +3,14 @@
 	import Svg from './Svg.svelte';
 	import link from 'bootstrap-icons/icons/link-45deg.svg?raw';
 
-	export let depth: 1 | 2 | 3 | 4 | 5 | 6;
-	export let text: string;
-	export let id: string = text.toLowerCase().replace(/\s/g, '-').trim();
-	export let headerClassName: string = '';
+	interface Props {
+		depth: 1 | 2 | 3 | 4 | 5 | 6;
+		text: string;
+		id?: string;
+		headerClassName?: string;
+	}
+
+	let {depth, text, id = text.toLowerCase().replace(/\s/g, '-').trim(), headerClassName = ''}: Props = $props();
 </script>
 
 {#if depth > 1}
