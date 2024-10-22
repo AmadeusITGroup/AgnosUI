@@ -25,6 +25,65 @@ export function useObservable<T>(store$: ReadableSignal<T>) {
 	return value;
 }
 
+/**
+ * Hook to create a proxy object that subscribes to observable stores and triggers re-renders on updates.
+ *
+ * @template State - The shape of the state object.
+ * @param stores - An object where keys are suffixed with `$` and values are readable signals.
+ * @returns - A proxy object that reflects the current state of the observables.
+ *
+ */
+export function useObservablesProxy<State>(stores: {[K in keyof State & string as `${K}$`]: ReadableSignal<State[K]>}): State {
+	const [, triggerRerender] = useState({});
+	const internalState = useMemo(() => {
+		const internalState = {
+			hasEffect: false,
+			storeInfo: {} as Record<string, {unsubscribe: null | (() => void)}>,
+			checkStoreSubscribed: (key: string) => {
+				const store = (stores as any)[`${key}$`];
+				if (store) {
+					let storeInfo = internalState.storeInfo[key];
+					if (!storeInfo) {
+						storeInfo = {unsubscribe: null};
+						internalState.storeInfo[key] = storeInfo;
+					}
+					if (internalState.hasEffect && !storeInfo.unsubscribe) {
+						storeInfo.unsubscribe = store.subscribe(() => {
+							triggerRerender({});
+						});
+					}
+				}
+				return store;
+			},
+			proxy: new Proxy(
+				{},
+				{
+					get(_target, name) {
+						const store = typeof name === 'string' ? internalState.checkStoreSubscribed(name) : null;
+						return store?.();
+					},
+				},
+			),
+		};
+		return internalState;
+	}, []);
+	useEffect(() => {
+		internalState.hasEffect = true;
+		for (const key of Object.keys(internalState.storeInfo)) {
+			internalState.checkStoreSubscribed(key);
+		}
+		return () => {
+			internalState.hasEffect = false;
+			for (const info of Object.values(internalState.storeInfo)) {
+				const unsubscribe = info.unsubscribe;
+				info.unsubscribe = null;
+				unsubscribe?.();
+			}
+		};
+	}, [stores]);
+	return internalState.proxy as State;
+}
+
 const propsEqual = <T extends object>(a: T, b: T) => !findChangedProperties(a, b);
 
 /**
