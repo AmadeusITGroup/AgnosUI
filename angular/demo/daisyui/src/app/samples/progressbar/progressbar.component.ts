@@ -15,10 +15,10 @@ import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `<progress
 		class="progress"
-		[class]="state().className"
+		[class]="state.className()"
 		[auUse]="directives.ariaDirective"
-		[attr.value]="state().value"
-		[attr.max]="state().max"
+		[attr.value]="state.value()"
+		[attr.max]="state.max()"
 	></progress>`,
 })
 export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget> {

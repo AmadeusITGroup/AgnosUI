@@ -6,7 +6,7 @@ import {Component} from '@angular/core';
 	imports: [ProgressbarComponent],
 	providers: [
 		provideWidgetsConfig((config) => {
-			config.progressbar = {...config.progressbar, children: (widget) => `${widget.state.percentage}%`};
+			config.progressbar = {...config.progressbar, children: (widget) => `${widget.state.percentage()}%`};
 			return config;
 		}),
 	],

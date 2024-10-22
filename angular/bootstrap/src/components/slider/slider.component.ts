@@ -75,34 +75,34 @@ export class SliderStructureDirective {
 	imports: [SlotDirective, SliderStructureDirective, UseDirective],
 	template: `
 		<ng-template auSliderStructure #structure let-state="state" let-directives="directives" let-api="api">
-			@for (option of state.progressDisplayOptions; track option) {
+			@for (option of state.progressDisplayOptions(); track option) {
 				<div [auUse]="[directives.progressDisplayDirective, {option}]"></div>
 			}
 			<div [auUse]="directives.clickableAreaDirective"></div>
-			@if (state.showMinMaxLabels) {
+			@if (state.showMinMaxLabels()) {
 				<div [auUse]="directives.minLabelDirective">
-					<ng-template [auSlot]="state.label" [auSlotProps]="{state, api, directives, value: state.min}"></ng-template>
+					<ng-template [auSlot]="state.label()" [auSlotProps]="{state, api, directives, value: state.min()}"></ng-template>
 				</div>
 				<div [auUse]="directives.maxLabelDirective">
-					<ng-template [auSlot]="state.label" [auSlotProps]="{state, api, directives, value: state.max}"></ng-template>
+					<ng-template [auSlot]="state.label()" [auSlotProps]="{state, api, directives, value: state.max()}"></ng-template>
 				</div>
 			}
-			@if (state.showValueLabels && state.combinedLabelDisplay) {
+			@if (state.showValueLabels() && state.combinedLabelDisplay()) {
 				<div [auUse]="directives.combinedHandleLabelDisplayDirective">
-					@if (state.rtl) {
-						<ng-template [auSlot]="state.label" [auSlotProps]="{state, api, directives, value: state.sortedValues[1]}"></ng-template> -
-						<ng-template [auSlot]="state.label" [auSlotProps]="{state, api, directives, value: state.sortedValues[0]}"></ng-template>
+					@if (state.rtl()) {
+						<ng-template [auSlot]="state.label()" [auSlotProps]="{state, api, directives, value: state.sortedValues()[1]}"></ng-template> -
+						<ng-template [auSlot]="state.label()" [auSlotProps]="{state, api, directives, value: state.sortedValues()[0]}"></ng-template>
 					} @else {
-						<ng-template [auSlot]="state.label" [auSlotProps]="{state, api, directives, value: state.sortedValues[0]}"></ng-template> -
-						<ng-template [auSlot]="state.label" [auSlotProps]="{state, api, directives, value: state.sortedValues[1]}"></ng-template>
+						<ng-template [auSlot]="state.label()" [auSlotProps]="{state, api, directives, value: state.sortedValues()[0]}"></ng-template> -
+						<ng-template [auSlot]="state.label()" [auSlotProps]="{state, api, directives, value: state.sortedValues()[1]}"></ng-template>
 					}
 				</div>
 			}
-			@for (item of state.sortedHandles; track item.id; let i = $index) {
-				<ng-template [auSlot]="state.handle" [auSlotProps]="{state, api, directives, item}"></ng-template>
-				@if (state.showValueLabels && !state.combinedLabelDisplay) {
+			@for (item of state.sortedHandles(); track item.id; let i = $index) {
+				<ng-template [auSlot]="state.handle()" [auSlotProps]="{state, api, directives, item}"></ng-template>
+				@if (state.showValueLabels() && !state.combinedLabelDisplay()) {
 					<div [auUse]="[directives.handleLabelDisplayDirective, {index: i}]">
-						<ng-template [auSlot]="state.label" [auSlotProps]="{state, api, directives, value: state.values[i]}"></ng-template>
+						<ng-template [auSlot]="state.label()" [auSlotProps]="{state, api, directives, value: state.values()[i]}"></ng-template>
 					</div>
 				}
 			}
@@ -131,7 +131,7 @@ const defaultConfig: PartialSliderProps = {
 	host: {
 		'(blur)': 'handleBlur()',
 	},
-	template: ` <ng-template [auSlot]="state().structure" [auSlotProps]="{state: state(), api, directives}"></ng-template> `,
+	template: ` <ng-template [auSlot]="state.structure()" [auSlotProps]="{state, api, directives}"></ng-template> `,
 })
 export class SliderComponent extends BaseWidgetDirective<SliderWidget> implements AfterContentChecked {
 	readonly defaultSlots: WritableSignal<PartialSliderProps> = writable(defaultConfig);

@@ -25,7 +25,7 @@ import {AccordionComponent} from './accordion.component';
 				<ng-content select="[header]" />
 			</div>
 			<div class="collapse-content" [auUse]="directives.bodyContainerAttrsDirective">
-				@if (state().shouldBeInDOM) {
+				@if (state.shouldBeInDOM()) {
 					<ng-content />
 				}
 			</div>

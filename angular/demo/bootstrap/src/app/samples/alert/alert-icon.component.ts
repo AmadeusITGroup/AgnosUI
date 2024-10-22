@@ -17,11 +17,11 @@ import {DomSanitizer} from '@angular/platform-browser';
 		style: 'display: contents;',
 	},
 	template: `
-		<span class="d-flex me-2" [innerHTML]="sanitizer.bypassSecurityTrustHtml(typeIcon[state.type])"></span>
+		<span class="d-flex me-2" [innerHTML]="sanitizer.bypassSecurityTrustHtml(typeIcon[state.type()])"></span>
 		<div class="alert-body">
-			<ng-template [auSlot]="state.children" [auSlotProps]="{state, api, directives}"></ng-template>
-			@if (state.dismissible) {
-				<button type="button" class="btn-close ms-auto" (click)="api.close()" [attr.aria-label]="state.ariaCloseButtonLabel"></button>
+			<ng-template [auSlot]="state.children()" [auSlotProps]="{state, api, directives}"></ng-template>
+			@if (state.dismissible()) {
+				<button type="button" class="btn-close ms-auto" (click)="api.close()" [attr.aria-label]="state.ariaCloseButtonLabel()"></button>
 			}
 		</div>
 	`,

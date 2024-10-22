@@ -20,7 +20,7 @@ export type SlotContent<Props extends object = object> =
 @Directive()
 export abstract class SlotComponent<W extends Widget> {
 	@Input()
-	state!: WidgetState<W>;
+	state!: AngularState<W>;
 	@Input()
 	api!: W['api'];
 	@Input()
@@ -28,10 +28,11 @@ export abstract class SlotComponent<W extends Widget> {
 }
 
 export type IsSlotContent<T> = Extends<T, SlotContent<any>> | Extends<SlotContent<any>, T> extends 1 ? T : 0;
+export type AngularState<W extends Widget> = {[key in keyof WidgetState<W>]: Signal<WidgetState<W>[key]>};
 
 export type AngularWidget<W extends Widget> = Pick<W, 'api' | 'directives' | 'patch'> & {
 	initialized: Promise<void>;
-	state: Signal<WidgetState<W>>;
+	state: AngularState<W>;
 	ngInit: () => void;
 	patchSlots(slots: {
 		[K in keyof WidgetProps<W> as IsSlotContent<WidgetProps<W>[K]> extends 0 ? never : K]: WidgetProps<W>[K] extends SlotContent<infer U>
@@ -39,3 +40,10 @@ export type AngularWidget<W extends Widget> = Pick<W, 'api' | 'directives' | 'pa
 			: never;
 	}): void;
 };
+
+export interface WidgetSlotContext<W extends Widget> extends Pick<W, 'api' | 'directives'> {
+	/**
+	 * the state of the widget
+	 */
+	state: AngularState<W>;
+}

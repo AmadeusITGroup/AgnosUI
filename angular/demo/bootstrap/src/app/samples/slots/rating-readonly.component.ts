@@ -23,10 +23,10 @@ export class RatingReadonlyStarDirective {
 	imports: [SlotDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
-		<div class="d-inline-flex au-rating" [class]="state().className">
-			@for (item of state().stars; track item) {
+		<div class="d-inline-flex au-rating" [class]="state.className()">
+			@for (item of state.stars(); track item) {
 				<span class="au-rating-star">
-					<ng-template [auSlot]="state().star" [auSlotProps]="item"></ng-template>
+					<ng-template [auSlot]="state.star()" [auSlotProps]="item"></ng-template>
 				</span>
 			}
 		</div>

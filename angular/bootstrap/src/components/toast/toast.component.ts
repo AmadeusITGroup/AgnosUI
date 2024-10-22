@@ -57,18 +57,18 @@ export class ToastHeaderDirective {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [SlotDirective, ToastStructureDirective, UseDirective],
 	template: ` <ng-template auToastStructure #structure let-state="state" let-api="api" let-directives="directives">
-		@if (state.header) {
+		@if (state.header()) {
 			<div class="toast-header">
-				<ng-template [auSlot]="state.header" [auSlotProps]="{state, api, directives}"></ng-template>
-				@if (state.dismissible) {
+				<ng-template [auSlot]="state.header()" [auSlotProps]="{state, api, directives}"></ng-template>
+				@if (state.dismissible()) {
 					<button class="btn-close me-0 ms-auto" [auUse]="directives.closeButtonDirective"></button>
 				}
 			</div>
 		}
 		<div class="toast-body">
-			<ng-template [auSlot]="state.children" [auSlotProps]="{state, api, directives}"></ng-template>
+			<ng-template [auSlot]="state.children()" [auSlotProps]="{state, api, directives}"></ng-template>
 		</div>
-		@if (state.dismissible && !state.header) {
+		@if (state.dismissible() && !state.header()) {
 			<button class="btn-close btn-close-white me-2 m-auto" [auUse]="directives.closeButtonDirective"></button>
 		}
 	</ng-template>`,
@@ -91,14 +91,14 @@ const defaultConfig: Partial<ToastProps> = {
 	template: ` <ng-template [auContentAsSlot]="defaultSlots">
 			<ng-content></ng-content>
 		</ng-template>
-		@if (!state().hidden) {
+		@if (!state.hidden()) {
 			<div
 				class="toast"
-				[class.d-flex]="!state().header"
-				[class.toast-dismissible]="state().dismissible"
+				[class.d-flex]="!state.header()"
+				[class.toast-dismissible]="state.dismissible()"
 				[auUseMulti]="[directives.autoHideDirective, directives.transitionDirective, directives.bodyDirective]"
 			>
-				<ng-template [auSlot]="state().structure" [auSlotProps]="{state: state(), api, directives}"></ng-template>
+				<ng-template [auSlot]="state.structure()" [auSlotProps]="{state, api, directives}"></ng-template>
 			</div>
 		}`,
 })

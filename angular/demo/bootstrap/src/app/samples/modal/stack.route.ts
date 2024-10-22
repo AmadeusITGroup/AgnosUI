@@ -12,7 +12,7 @@ import {Component, inject} from '@angular/core';
 			This is a modal<br /><br />
 			<button
 				class="btn btn-outline-primary m-1"
-				(click)="modalService.open({title: 'Other modal', children: recursiveModal, container: state.modalElement})"
+				(click)="modalService.open({title: 'Other modal', children: recursiveModal, container: state.modalElement()})"
 			>
 				Launch other modal</button
 			><br />

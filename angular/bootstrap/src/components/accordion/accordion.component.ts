@@ -54,10 +54,10 @@ export class AccordionItemStructureDirective {
 @Component({
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [UseDirective, SlotDirective, AccordionHeaderDirective, AccordionBodyDirective, NgTemplateOutlet],
+	imports: [UseDirective, SlotDirective, AccordionHeaderDirective, AccordionBodyDirective, NgTemplateOutlet, AccordionItemStructureDirective],
 	template: `
-		<ng-template #structure let-state="state" let-api="api" let-directives="directives">
-			@switch (state.itemHeadingTag) {
+		<ng-template auAccordionItemStructure #structure let-state="state" let-api="api" let-directives="directives">
+			@switch (state.headingTag()) {
 				@case ('h1') {
 					<ng-container [ngTemplateOutlet]="h1"></ng-container>
 				}
@@ -118,13 +118,13 @@ export class AccordionItemStructureDirective {
 
 			<ng-template #button>
 				<button class="accordion-button " [auUse]="directives.buttonDirective">
-					<ng-template [auSlotProps]="{state, directives, api}" [auSlot]="state.header"></ng-template>
+					<ng-template [auSlotProps]="{state, directives, api}" [auSlot]="state.header()"></ng-template>
 				</button>
 			</ng-template>
-			@if (state.shouldBeInDOM) {
+			@if (state.shouldBeInDOM()) {
 				<div [auUse]="directives.bodyContainerDirective" class="accordion-collapse">
 					<div class="accordion-body" [auUse]="directives.bodyDirective">
-						<ng-template [auSlotProps]="{state, directives, api}" [auSlot]="state.children"></ng-template>
+						<ng-template [auSlotProps]="{state, directives, api}" [auSlot]="state.children()"></ng-template>
 					</div>
 				</div>
 			}
@@ -153,7 +153,7 @@ const defaultConfig: Partial<AccordionItemProps> = {
 		<ng-template [auContentAsSlot]="defaultSlots">
 			<ng-content></ng-content>
 		</ng-template>
-		<ng-template [auSlotProps]="{state: state(), api, directives}" [auSlot]="state().structure"></ng-template>
+		<ng-template [auSlotProps]="{state, api, directives}" [auSlot]="state.structure()"></ng-template>
 	`,
 })
 export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWidget> implements AfterContentChecked, AfterViewInit {

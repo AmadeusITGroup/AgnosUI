@@ -1,7 +1,7 @@
-import {computed, writable, type ReadableSignal} from '@amadeus-it-group/tansu';
-import type {OnChanges, OnInit, Signal, SimpleChanges} from '@angular/core';
+import {computed, type ReadableSignal, writable} from '@amadeus-it-group/tansu';
+import type {OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Directive, Injector, inject, runInInjectionContext} from '@angular/core';
-import {type AngularWidget, type Widget, type WidgetFactory, type WidgetProps, type WidgetState} from '../types';
+import type {AngularState, AngularWidget, Widget, WidgetFactory, WidgetProps} from '../types';
 import {toAngularSignal, toReadableStore} from './stores';
 import {ZoneWrapper} from './zone';
 
@@ -56,11 +56,11 @@ export const callWidgetFactoryWithConfig = <W extends Widget>({
 	const props = {};
 	let initDone: () => void;
 	const res = {
-		initialized: new Promise((resolve) => {
+		initialized: new Promise<void>((resolve) => {
 			initDone = resolve;
 		}),
 		patchSlots: createPatchSlots(slots$.set),
-		patch(newProps) {
+		patch(newProps: Partial<WidgetProps<W>>) {
 			// temporary function replaced in ngInit
 			Object.assign(props, newProps);
 		},
@@ -78,15 +78,17 @@ export const callWidgetFactoryWithConfig = <W extends Widget>({
 					patch: zoneWrapper.outsideNgZone(widget.patch),
 					directives: zoneWrapper.outsideNgZoneWrapDirectivesObject(widget.directives),
 					api: zoneWrapper.outsideNgZoneWrapFunctionsObject(widget.api),
-					state: toAngularSignal(widget.state$ as ReadableSignal<WidgetState<W>>),
+					state: Object.fromEntries(
+						Object.entries<ReadableSignal<unknown>>(widget.stores as any).map(([key, val]) => [key.slice(0, -1), toAngularSignal(val)]),
+					),
 				});
 				afterInit?.();
 				initDone();
 			});
 		},
-	} as AngularWidget<W>;
+	};
 
-	return res;
+	return res as AngularWidget<W>;
 };
 
 function patchSimpleChanges(patchFn: (obj: any) => void, changes: SimpleChanges) {
@@ -115,7 +117,7 @@ export abstract class BaseWidgetDirective<W extends Widget> implements OnChanges
 	 * Retrieves the widget state as an Angular {@link Signal}
 	 * @returns the widget state
 	 */
-	get state(): Signal<WidgetState<W>> {
+	get state(): AngularState<W> {
 		return this._widget.state;
 	}
 

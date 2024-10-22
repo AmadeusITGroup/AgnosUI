@@ -1,5 +1,5 @@
-<div class="rating" [class]="state().className">
-	@for (item of state().stars; track trackByIndex(index); let index = $index) {
+<div class="rating" [class]="state.className()">
+	@for (item of state.stars(); track trackByIndex(index); let index = $index) {
 		<input
 			(blur)="onTouched()"
 			(mouseleave)="api.leave()"
@@ -9,7 +9,7 @@
 			name="rating-1"
 			class="mask mask-star"
 			[attr.aria-label]="getAriaLabel(index)"
-			[checked]="index + 1 === state().visibleRating"
+			[checked]="index + 1 === state.visibleRating()"
 		/>
 	}
 </div>

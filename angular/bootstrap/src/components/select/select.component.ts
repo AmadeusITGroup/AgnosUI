@@ -36,36 +36,31 @@ export class SelectItemLabelDirective<Item> {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: '[auSelect]',
 	host: {
-		'[class]': '"au-select dropdown border border-1 p-1 mb-3 d-block" + state().className',
+		'[class]': '"au-select dropdown border border-1 p-1 mb-3 d-block" + state.className()',
 	},
 	template: `
-		@if (state(); as state) {
-			<div [auUseMulti]="[directives.hasFocusDirective, directives.inputContainerDirective]" class="d-flex align-items-center flex-wrap gap-1">
-				@if (state.selectedContexts; as selectedContexts) {
-					@for (itemContext of selectedContexts; track itemCtxTrackBy($index, itemContext)) {
-						<div [auUse]="[directives.badgeAttributesDirective, itemContext]">
-							<ng-template [auSlot]="state.badgeLabel" [auSlotProps]="{state, api, directives, itemContext}"></ng-template>
-						</div>
-					}
+		<div [auUseMulti]="[directives.hasFocusDirective, directives.inputContainerDirective]" class="d-flex align-items-center flex-wrap gap-1">
+			@if (state.selectedContexts(); as selectedContexts) {
+				@for (itemContext of selectedContexts; track itemCtxTrackBy($index, itemContext)) {
+					<div [auUse]="[directives.badgeAttributesDirective, itemContext]">
+						<ng-template [auSlot]="state.badgeLabel()" [auSlotProps]="{state, api, directives, itemContext}"></ng-template>
+					</div>
 				}
-				<input [auUse]="directives.inputDirective" [value]="state.filterText" />
-			</div>
-			@if (state.open && state.visibleItems.length) {
-				<ul
-					[auUseMulti]="[directives.hasFocusDirective, directives.floatingDirective, directives.menuAttributesDirective]"
-					class="dropdown-menu show"
-				>
-					@for (itemContext of state.visibleItems; track itemCtxTrackBy($index, itemContext)) {
-						<li
-							class="dropdown-item position-relative"
-							[auUse]="[directives.itemAttributesDirective, itemContext]"
-							[class.text-bg-primary]="itemContext === state.highlighted"
-						>
-							<ng-template [auSlot]="state.itemLabel" [auSlotProps]="{state, api, directives, itemContext}"></ng-template>
-						</li>
-					}
-				</ul>
 			}
+			<input [auUse]="directives.inputDirective" [value]="state.filterText()" />
+		</div>
+		@if (state.open() && state.visibleItems().length) {
+			<ul [auUseMulti]="[directives.hasFocusDirective, directives.floatingDirective, directives.menuAttributesDirective]" class="dropdown-menu show">
+				@for (itemContext of state.visibleItems(); track itemCtxTrackBy($index, itemContext)) {
+					<li
+						class="dropdown-item position-relative"
+						[auUse]="[directives.itemAttributesDirective, itemContext]"
+						[class.text-bg-primary]="itemContext === state.highlighted()"
+					>
+						<ng-template [auSlot]="state.itemLabel()" [auSlotProps]="{state, api, directives, itemContext}"></ng-template>
+					</li>
+				}
+			</ul>
 		}
 	`,
 })

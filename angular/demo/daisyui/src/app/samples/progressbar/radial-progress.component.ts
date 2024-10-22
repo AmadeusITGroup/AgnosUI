@@ -15,12 +15,12 @@ import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 	imports: [UseDirective],
 	template: ` <div
 		class="radial-progress"
-		[class]="state().className"
+		[class]="state.className()"
 		[style.--thickness]="'0.4rem'"
-		[style.--value]="state().percentage"
+		[style.--value]="state.percentage()"
 		[auUse]="directives.ariaDirective"
 	>
-		{{ percentFormat.format(state().percentage / 100) }}
+		{{ percentFormat.format(state.percentage() / 100) }}
 	</div>`,
 })
 export class RadialProgressComponent extends BaseWidgetDirective<ProgressbarWidget> {

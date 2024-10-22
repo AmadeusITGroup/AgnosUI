@@ -32,15 +32,15 @@ export class ProgressbarStructureDirective {
 	imports: [NgClass, SlotDirective, ProgressbarStructureDirective],
 	template: `
 		<ng-template auProgressbarStructure #structure let-state="state" let-api="api" let-directives="directives">
-			<div class="progress" [style.height]="state.height">
+			<div class="progress" [style.height]="state.height()">
 				<div
 					class="progress-bar"
-					[class.progress-bar-striped]="state.striped"
-					[class.progress-bar-animated]="state.animated"
-					[ngClass]="state.type ? 'text-bg-' + state.type : undefined"
-					[style.width.%]="state.percentage"
+					[class.progress-bar-striped]="state.striped()"
+					[class.progress-bar-animated]="state.animated()"
+					[ngClass]="state.type() ? 'text-bg-' + state.type() : undefined"
+					[style.width.%]="state.percentage()"
 				>
-					<ng-template [auSlot]="state.children" [auSlotProps]="{state, api, directives}"></ng-template>
+					<ng-template [auSlot]="state.children()" [auSlotProps]="{state, api, directives}"></ng-template>
 				</div>
 			</div>
 		</ng-template>
@@ -63,11 +63,11 @@ const defaultConfig: PartialProgressbarProps = {
 	imports: [SlotDirective, ContentAsSlotDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	host: {
-		'[class]': 'state().className',
+		'[class]': 'state.className()',
 	},
 	template: `
 		<ng-template [auContentAsSlot]="defaultSlots"><ng-content></ng-content></ng-template>
-		<ng-template [auSlot]="state().structure" [auSlotProps]="{state: state(), api, directives}"></ng-template>
+		<ng-template [auSlot]="state.structure()" [auSlotProps]="{state, api, directives}"></ng-template>
 	`,
 })
 export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget> implements AfterContentChecked {
