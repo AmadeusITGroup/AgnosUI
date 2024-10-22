@@ -87,16 +87,21 @@ describe('callWidgetFactoryWithConfig', () => {
 			@Output('auCounterChange') counterChange = new EventEmitter<number>();
 			@Input('auMyValue') myValue: string | undefined;
 
-			_widget = createZoneCheckFn(
-				'callWidgetFactoryWithConfig',
-				callWidgetFactoryWithConfig,
-			)({
-				factory,
-				events: {
-					onCounterChange: (event) => this.counterChange.emit(event),
-					onMyAction: () => this.myAction.emit(),
-				},
-			});
+			constructor() {
+				super(
+					createZoneCheckFn(
+						'callWidgetFactoryWithConfig',
+						callWidgetFactoryWithConfig,
+					)({
+						factory,
+						events: {
+							onCounterChange: (event) => this.counterChange.emit(event),
+							onMyAction: () => this.myAction.emit(),
+						},
+					}),
+				);
+			}
+
 			onClick = createZoneCheckFn('onClick', () => {});
 		}
 
@@ -222,9 +227,13 @@ describe('callWidgetFactoryWithConfig', () => {
 		class MyWidgetComponent extends BaseWidgetDirective<MyWidget> {
 			@Input('auMyValue') myValue: string | undefined;
 
-			_widget = callWidgetFactoryWithConfig({
-				factory,
-			});
+			constructor() {
+				super(
+					callWidgetFactoryWithConfig({
+						factory,
+					}),
+				);
+			}
 		}
 		@Component({
 			standalone: true,

@@ -2,16 +2,12 @@ import type {SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
 import {
 	BaseWidgetDirective,
 	ComponentTemplate,
-	ContentAsSlotDirective,
 	SlotDirective,
 	UseDirective,
 	UseMultiDirective,
 	auBooleanAttribute,
 	auNumberAttribute,
 } from '@agnos-ui/angular-headless';
-import type {WritableSignal} from '@amadeus-it-group/tansu';
-import {writable} from '@amadeus-it-group/tansu';
-import type {AfterContentChecked} from '@angular/core';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -26,7 +22,7 @@ import {
 } from '@angular/core';
 import {callWidgetFactory} from '../../config';
 
-import type {ToastContext, ToastProps, ToastWidget} from './toast.gen';
+import type {ToastContext, ToastWidget} from './toast.gen';
 import {createToast} from './toast.gen';
 
 @Directive({selector: 'ng-template[auToastBody]', standalone: true})
@@ -73,22 +69,18 @@ export class ToastHeaderDirective {
 		}
 	</ng-template>`,
 })
-export class ToastDefaultSlotsComponent {
+class ToastDefaultSlotsComponent {
 	@ViewChild('structure', {static: true}) structure!: TemplateRef<ToastContext>;
 }
 
 export const toastDefaultSlotStructure = new ComponentTemplate(ToastDefaultSlotsComponent, 'structure');
 
-const defaultConfig: Partial<ToastProps> = {
-	structure: toastDefaultSlotStructure,
-};
-
 @Component({
 	selector: '[auToast]',
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [SlotDirective, UseMultiDirective, ContentAsSlotDirective],
-	template: ` <ng-template [auContentAsSlot]="defaultSlots">
+	imports: [SlotDirective, UseMultiDirective],
+	template: ` <ng-template #content>
 			<ng-content></ng-content>
 		</ng-template>
 		@if (!state.hidden()) {
@@ -102,7 +94,7 @@ const defaultConfig: Partial<ToastProps> = {
 			</div>
 		}`,
 })
-export class ToastComponent extends BaseWidgetDirective<ToastWidget> implements AfterContentChecked {
+export class ToastComponent extends BaseWidgetDirective<ToastWidget> {
 	/**
 	 * If `true`, alert can be dismissed by the user.
 	 * The close button (×) will be displayed and you can be notified of the event with the (close) output.
@@ -224,8 +216,6 @@ export class ToastComponent extends BaseWidgetDirective<ToastWidget> implements 
 	 */
 	@Output('auShown') shown = new EventEmitter<void>();
 
-	readonly defaultSlots: WritableSignal<Partial<ToastProps>> = writable(defaultConfig);
-
 	/**
 	 * CSS classes to be applied on the widget main container
 	 *
@@ -233,22 +223,29 @@ export class ToastComponent extends BaseWidgetDirective<ToastWidget> implements 
 	 */
 	@Input('auClassName') className: string | undefined;
 
-	readonly _widget = callWidgetFactory({
-		factory: createToast,
-		widgetName: 'toast',
-		defaultConfig: this.defaultSlots,
-		events: {
-			onVisibleChange: (event) => this.visibleChange.emit(event),
-			onShown: () => this.shown.emit(),
-			onHidden: () => this.hidden.emit(),
-		},
-	});
+	@ViewChild('content', {static: true})
+	slotChildren?: TemplateRef<void>;
 
-	ngAfterContentChecked(): void {
-		this._widget.patchSlots({
-			children: this.slotDefaultFromContent?.templateRef,
-			structure: this.slotStructureFromContent?.templateRef,
-			header: this.slotHeaderFromContent?.templateRef,
-		});
+	constructor() {
+		super(
+			callWidgetFactory({
+				factory: createToast,
+				widgetName: 'toast',
+				defaultConfig: {
+					structure: toastDefaultSlotStructure,
+				},
+				events: {
+					onVisibleChange: (event) => this.visibleChange.emit(event),
+					onShown: () => this.shown.emit(),
+					onHidden: () => this.hidden.emit(),
+				},
+				slotTemplates: () => ({
+					children: this.slotDefaultFromContent?.templateRef,
+					structure: this.slotStructureFromContent?.templateRef,
+					header: this.slotHeaderFromContent?.templateRef,
+				}),
+				slotChildren: () => this.slotChildren,
+			}),
+		);
 	}
 }

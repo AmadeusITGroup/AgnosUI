@@ -27,9 +27,9 @@ export default class PlaygroundComponent {
 
 	constructor() {
 		hashChangeHook((props) => {
-			this.widget._widget.patch({...undefinedAccordionConfig, ...props});
+			this.widget['_widget'].patch({...undefinedAccordionConfig, ...props});
 			this.itemWidgets?.forEach((widget) => {
-				widget._widget.patch({...undefinedAccordionConfig, ...props});
+				widget['_widget'].patch({...undefinedAccordionConfig, ...props});
 			});
 		});
 	}

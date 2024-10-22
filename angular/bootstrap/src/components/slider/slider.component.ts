@@ -8,8 +8,6 @@ import {
 	auNumberAttribute,
 	useDirectiveForHost,
 } from '@agnos-ui/angular-headless';
-import {type WritableSignal, writable} from '@amadeus-it-group/tansu';
-import type {AfterContentChecked} from '@angular/core';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -26,7 +24,7 @@ import {
 } from '@angular/core';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {callWidgetFactory} from '../../config';
-import type {SliderContext, SliderProps, SliderSlotHandleContext, SliderSlotLabelContext, SliderWidget} from './slider.gen';
+import type {SliderContext, SliderSlotHandleContext, SliderSlotLabelContext, SliderWidget} from './slider.gen';
 import {createSlider} from './slider.gen';
 
 @Directive({selector: 'ng-template[auSliderLabel]', standalone: true})
@@ -55,7 +53,7 @@ export class SliderHandleDirective {
 		</ng-template>
 	`,
 })
-export class SliderDefaultHandleSlotComponent {
+class SliderDefaultHandleSlotComponent {
 	@ViewChild('handle', {static: true}) readonly handle!: TemplateRef<SliderSlotHandleContext>;
 }
 
@@ -109,17 +107,11 @@ export class SliderStructureDirective {
 		</ng-template>
 	`,
 })
-export class SliderDefaultStructureSlotComponent {
+class SliderDefaultStructureSlotComponent {
 	@ViewChild('structure', {static: true}) structure!: TemplateRef<SliderContext>;
 }
 
 export const sliderDefaultSlotStructure = new ComponentTemplate(SliderDefaultStructureSlotComponent, 'structure');
-
-export type PartialSliderProps = Partial<SliderProps>;
-const defaultConfig: PartialSliderProps = {
-	structure: sliderDefaultSlotStructure,
-	handle: sliderDefaultSlotHandle,
-};
 
 @Component({
 	selector: '[auSlider]',
@@ -133,25 +125,7 @@ const defaultConfig: PartialSliderProps = {
 	},
 	template: ` <ng-template [auSlot]="state.structure()" [auSlotProps]="{state, api, directives}"></ng-template> `,
 })
-export class SliderComponent extends BaseWidgetDirective<SliderWidget> implements AfterContentChecked {
-	readonly defaultSlots: WritableSignal<PartialSliderProps> = writable(defaultConfig);
-
-	readonly _widget = callWidgetFactory({
-		factory: createSlider,
-		widgetName: 'slider',
-		defaultConfig: this.defaultSlots,
-		events: {
-			onValuesChange: (event) => {
-				this.onChange(event);
-				this.onTouched();
-				this.valuesChange.emit(event);
-			},
-		},
-		afterInit: () => {
-			useDirectiveForHost(this._widget.directives.sliderDirective);
-		},
-	});
-
+export class SliderComponent extends BaseWidgetDirective<SliderWidget> {
 	/**
 	 * CSS classes to be applied on the widget main container
 	 *
@@ -299,6 +273,34 @@ export class SliderComponent extends BaseWidgetDirective<SliderWidget> implement
 	@Input('auHandle') handle: SlotContent<SliderSlotHandleContext>;
 	@ContentChild(SliderHandleDirective, {static: false}) slotHandleFromContent: SliderHandleDirective | undefined;
 
+	constructor() {
+		super(
+			callWidgetFactory({
+				factory: createSlider,
+				widgetName: 'slider',
+				defaultConfig: {
+					structure: sliderDefaultSlotStructure,
+					handle: sliderDefaultSlotHandle,
+				},
+				events: {
+					onValuesChange: (event) => {
+						this.onChange(event);
+						this.onTouched();
+						this.valuesChange.emit(event);
+					},
+				},
+				afterInit: (widget) => {
+					useDirectiveForHost(widget.directives.sliderDirective);
+				},
+				slotTemplates: () => ({
+					structure: this.slotStructureFromContent?.templateRef,
+					handle: this.slotHandleFromContent?.templateRef,
+					label: this.slotLabelFromContent?.templateRef,
+				}),
+			}),
+		);
+	}
+
 	/**
 	 * Control value accessor methods
 	 */
@@ -316,31 +318,23 @@ export class SliderComponent extends BaseWidgetDirective<SliderWidget> implement
 
 	writeValue(value: any): void {
 		if (Array.isArray(value)) {
-			this._widget.patch({
+			this['_widget'].patch({
 				values: value,
 			});
 		} else {
-			this._widget.patch({
+			this['_widget'].patch({
 				values: [value],
 			});
 		}
 	}
 
 	setDisabledState(isDisabled: boolean) {
-		this._widget.patch({
+		this['_widget'].patch({
 			disabled: isDisabled,
 		});
 	}
 
 	handleBlur() {
 		this.onTouched();
-	}
-
-	ngAfterContentChecked(): void {
-		this._widget.patchSlots({
-			structure: this.slotStructureFromContent?.templateRef,
-			handle: this.slotHandleFromContent?.templateRef,
-			label: this.slotLabelFromContent?.templateRef,
-		});
 	}
 }

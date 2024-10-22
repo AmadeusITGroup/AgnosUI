@@ -28,8 +28,12 @@ export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget>
 	readonly className = input<string>();
 	readonly ariaValueTextFn = input<(value: number, minimum: number, maximum: number) => string | undefined>();
 
-	readonly _widget = callWidgetFactory({
-		factory: createProgressbar,
-		widgetName: 'progressbar',
-	});
+	constructor() {
+		super(
+			callWidgetFactory({
+				factory: createProgressbar,
+				widgetName: 'progressbar',
+			}),
+		);
+	}
 }

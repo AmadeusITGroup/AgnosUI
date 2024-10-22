@@ -17,7 +17,7 @@ export default class PlaygroundComponent {
 
 	constructor() {
 		hashChangeHook((props) => {
-			this.widget._widget.patch({...undefinedConfig, ...props});
+			this.widget['_widget'].patch({...undefinedConfig, ...props});
 		});
 	}
 }

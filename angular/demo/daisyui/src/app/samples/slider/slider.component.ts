@@ -24,13 +24,17 @@ export class SliderComponent extends BaseWidgetDirective<SliderWidget> {
 	readonly values = model([0]);
 	readonly className = input<string>();
 
-	readonly _widget = callWidgetFactory({
-		factory: createSlider,
-		widgetName: 'slider',
-		events: {
-			onValuesChange: (event) => {
-				this.values.set(event);
-			},
-		},
-	});
+	constructor() {
+		super(
+			callWidgetFactory({
+				factory: createSlider,
+				widgetName: 'slider',
+				events: {
+					onValuesChange: (event) => {
+						this.values.set(event);
+					},
+				},
+			}),
+		);
+	}
 }

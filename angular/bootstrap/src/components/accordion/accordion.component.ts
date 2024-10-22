@@ -1,15 +1,14 @@
-import type {SlotContent, TransitionFn, WidgetFactory} from '@agnos-ui/angular-headless';
+import type {SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
 import {
 	BaseWidgetDirective,
 	ComponentTemplate,
-	ContentAsSlotDirective,
 	SlotDirective,
 	UseDirective,
 	auBooleanAttribute,
 	useDirectiveForHost,
 } from '@agnos-ui/angular-headless';
 import {NgTemplateOutlet} from '@angular/common';
-import type {AfterContentChecked, AfterViewInit} from '@angular/core';
+import type {AfterViewInit} from '@angular/core';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -23,9 +22,8 @@ import {
 	inject,
 } from '@angular/core';
 import {callWidgetFactory} from '../../config';
-import type {AccordionItemContext, AccordionItemProps, AccordionItemWidget, AccordionWidget} from './accordion.gen';
+import type {AccordionItemContext, AccordionItemWidget, AccordionWidget} from './accordion.gen';
 import {createAccordion} from './accordion.gen';
-import {writable} from '@amadeus-it-group/tansu';
 
 @Directive({selector: 'ng-template[auAccordionItemBody]', standalone: true})
 export class AccordionBodyDirective {
@@ -54,7 +52,7 @@ export class AccordionItemStructureDirective {
 @Component({
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [UseDirective, SlotDirective, AccordionHeaderDirective, AccordionBodyDirective, NgTemplateOutlet, AccordionItemStructureDirective],
+	imports: [UseDirective, SlotDirective, NgTemplateOutlet, AccordionItemStructureDirective],
 	template: `
 		<ng-template auAccordionItemStructure #structure let-state="state" let-api="api" let-directives="directives">
 			@switch (state.headingTag()) {
@@ -131,14 +129,10 @@ export class AccordionItemStructureDirective {
 		</ng-template>
 	`,
 })
-export class AccordionItemDefaultSlotsComponent {
+class AccordionItemDefaultSlotsComponent {
 	@ViewChild('structure', {static: true}) structure!: TemplateRef<AccordionItemContext>;
 }
 export const accordionItemDefaultSlotItemStructure = new ComponentTemplate(AccordionItemDefaultSlotsComponent, 'structure');
-
-const defaultConfig: Partial<AccordionItemProps> = {
-	structure: accordionItemDefaultSlotItemStructure,
-};
 
 @Component({
 	selector: '[auAccordionItem]',
@@ -148,15 +142,13 @@ const defaultConfig: Partial<AccordionItemProps> = {
 	host: {
 		class: 'accordion-item',
 	},
-	imports: [SlotDirective, UseDirective, ContentAsSlotDirective],
+	imports: [SlotDirective, UseDirective],
 	template: `
-		<ng-template [auContentAsSlot]="defaultSlots">
-			<ng-content></ng-content>
-		</ng-template>
+		<ng-template #content><ng-content></ng-content></ng-template>
 		<ng-template [auSlotProps]="{state, api, directives}" [auSlot]="state.structure()"></ng-template>
 	`,
 })
-export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWidget> implements AfterContentChecked, AfterViewInit {
+export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWidget> implements AfterViewInit {
 	/**
 	 * Content present in the accordion button inside the accordion header.
 	 *
@@ -255,28 +247,32 @@ export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWid
 	 */
 	@Output('auVisibleChange') visibleChange = new EventEmitter<boolean>();
 
-	readonly ad = inject(AccordionDirective);
-	readonly defaultSlots = writable(defaultConfig);
+	@ViewChild('content', {static: true})
+	slotChildren?: TemplateRef<void>;
 
-	readonly _widget = callWidgetFactory<AccordionItemWidget>({
-		factory: ((arg) => this.ad.api.registerItem(arg)) as WidgetFactory<AccordionItemWidget>,
-		defaultConfig: this.defaultSlots,
-		events: {
-			onVisibleChange: (visible) => this.visibleChange.emit(visible),
-			onHidden: () => this.hidden.emit(),
-			onShown: () => this.shown.emit(),
-		},
-		afterInit: () => {
-			useDirectiveForHost(this._widget.directives.itemDirective);
-		},
-	});
-
-	ngAfterContentChecked(): void {
-		this._widget.patchSlots({
-			structure: this.slotStructureFromContent?.templateRef,
-			header: this.slotHeaderFromContent?.templateRef,
-			children: this.slotBodyFromContent?.templateRef,
-		});
+	constructor() {
+		super(
+			callWidgetFactory<AccordionItemWidget>({
+				factory: (arg) => inject(AccordionDirective).api.registerItem(arg),
+				defaultConfig: {
+					structure: accordionItemDefaultSlotItemStructure,
+				},
+				events: {
+					onVisibleChange: (visible) => this.visibleChange.emit(visible),
+					onHidden: () => this.hidden.emit(),
+					onShown: () => this.shown.emit(),
+				},
+				afterInit: (widget) => {
+					useDirectiveForHost(widget.directives.itemDirective);
+				},
+				slotTemplates: () => ({
+					structure: this.slotStructureFromContent?.templateRef,
+					header: this.slotHeaderFromContent?.templateRef,
+					children: this.slotBodyFromContent?.templateRef,
+				}),
+				slotChildren: () => this.slotChildren,
+			}),
+		);
 	}
 
 	ngAfterViewInit() {
@@ -408,15 +404,19 @@ export class AccordionDirective extends BaseWidgetDirective<AccordionWidget> {
 	 */
 	@Input('auItemHeadingTag') itemHeadingTag: string | undefined;
 
-	readonly _widget = callWidgetFactory({
-		factory: createAccordion,
-		widgetName: 'accordion',
-		events: {
-			onItemShown: (id) => this.itemShown.emit(id),
-			onItemHidden: (id) => this.itemHidden.emit(id),
-		},
-		afterInit: () => {
-			useDirectiveForHost(this._widget.directives.accordionDirective);
-		},
-	});
+	constructor() {
+		super(
+			callWidgetFactory({
+				factory: createAccordion,
+				widgetName: 'accordion',
+				events: {
+					onItemShown: (id) => this.itemShown.emit(id),
+					onItemHidden: (id) => this.itemHidden.emit(id),
+				},
+				afterInit: (widget) => {
+					useDirectiveForHost(widget.directives.accordionDirective);
+				},
+			}),
+		);
+	}
 }

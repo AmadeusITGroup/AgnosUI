@@ -31,15 +31,19 @@ export class ModalComponent extends BaseWidgetDirective<ModalWidget> {
 	readonly ariaCloseButtonLabel = input<string>();
 	readonly visible = model(false);
 
-	readonly _widget = callWidgetFactory({
-		factory: createModal,
-		widgetName: 'modal',
-		events: {
-			onVisibleChange: (event) => this.visible.set(event),
-			onShown: () => {},
-			onHidden: () => {},
-			onBeforeClose: () => {},
-		},
-		defaultConfig: {closeButton: true},
-	});
+	constructor() {
+		super(
+			callWidgetFactory({
+				factory: createModal,
+				widgetName: 'modal',
+				events: {
+					onVisibleChange: (event) => this.visible.set(event),
+					onShown: () => {},
+					onHidden: () => {},
+					onBeforeClose: () => {},
+				},
+				defaultConfig: {closeButton: true},
+			}),
+		);
+	}
 }

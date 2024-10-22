@@ -43,20 +43,24 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> {
 	readonly hidden = output();
 	readonly shown = output();
 
-	readonly _widget = callWidgetFactory({
-		factory: createAlert,
-		widgetName: 'alert',
-		events: {
-			onVisibleChange: (event) => this.visible.set(event),
-			onShown: () => this.shown.emit(),
-			onHidden: () => this.hidden.emit(),
-		},
-		defaultConfig: {
-			transition: createSimpleClassTransition({
-				showClasses: ['transition-opacity'],
-				hideClasses: ['opacity-0'],
-				animationPendingHideClasses: ['opacity-0', 'transition-opacity'],
+	constructor() {
+		super(
+			callWidgetFactory({
+				factory: createAlert,
+				widgetName: 'alert',
+				events: {
+					onVisibleChange: (event) => this.visible.set(event),
+					onShown: () => this.shown.emit(),
+					onHidden: () => this.hidden.emit(),
+				},
+				defaultConfig: {
+					transition: createSimpleClassTransition({
+						showClasses: ['transition-opacity'],
+						hideClasses: ['opacity-0'],
+						animationPendingHideClasses: ['opacity-0', 'transition-opacity'],
+					}),
+				},
 			}),
-		},
-	});
+		);
+	}
 }

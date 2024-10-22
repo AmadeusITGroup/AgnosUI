@@ -7,7 +7,6 @@ import {
 	auNumberAttribute,
 	useDirectiveForHost,
 } from '@agnos-ui/angular-headless';
-import type {AfterContentChecked} from '@angular/core';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -55,23 +54,7 @@ export class RatingStarDirective {
 	`,
 	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => RatingComponent), multi: true}],
 })
-export class RatingComponent extends BaseWidgetDirective<RatingWidget> implements ControlValueAccessor, AfterContentChecked {
-	readonly _widget = callWidgetFactory({
-		factory: createRating,
-		widgetName: 'rating',
-		events: {
-			onHover: (event) => this.hover.emit(event),
-			onLeave: (event) => this.leave.emit(event),
-			onRatingChange: (rating: number) => {
-				this.ratingChange.emit(rating);
-				this.onChange(rating);
-			},
-		},
-		afterInit: () => {
-			useDirectiveForHost(this._widget.directives.containerDirective);
-		},
-	});
-
+export class RatingComponent extends BaseWidgetDirective<RatingWidget> implements ControlValueAccessor {
 	onChange = (_: any) => {};
 	onTouched = () => {};
 
@@ -201,7 +184,7 @@ export class RatingComponent extends BaseWidgetDirective<RatingWidget> implement
 	@Output('auRatingChange') ratingChange = new EventEmitter<number>();
 
 	writeValue(value: any): void {
-		this._widget.patch({rating: value});
+		this['_widget'].patch({rating: value});
 	}
 
 	registerOnChange(fn: (value: any) => any): void {
@@ -213,13 +196,30 @@ export class RatingComponent extends BaseWidgetDirective<RatingWidget> implement
 	}
 
 	setDisabledState(disabled: boolean): void {
-		this._widget.patch({disabled});
+		this['_widget'].patch({disabled});
 	}
 
-	ngAfterContentChecked(): void {
-		this._widget.patchSlots({
-			star: this.slotStarFromContent?.templateRef,
-		});
+	constructor() {
+		super(
+			callWidgetFactory({
+				factory: createRating,
+				widgetName: 'rating',
+				events: {
+					onHover: (event) => this.hover.emit(event),
+					onLeave: (event) => this.leave.emit(event),
+					onRatingChange: (rating: number) => {
+						this.ratingChange.emit(rating);
+						this.onChange(rating);
+					},
+				},
+				afterInit: (widget) => {
+					useDirectiveForHost(widget.directives.containerDirective);
+				},
+				slotTemplates: () => ({
+					star: this.slotStarFromContent?.templateRef,
+				}),
+			}),
+		);
 	}
 
 	trackByIndex(index: number) {

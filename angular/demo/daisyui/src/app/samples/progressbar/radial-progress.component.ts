@@ -31,10 +31,14 @@ export class RadialProgressComponent extends BaseWidgetDirective<ProgressbarWidg
 	readonly className = input<string>();
 	readonly ariaValueTextFn = input<(value: number, minimum: number, maximum: number) => string | undefined>();
 
-	readonly _widget = callWidgetFactory({
-		factory: createProgressbar,
-		widgetName: 'progressbar',
-	});
+	constructor() {
+		super(
+			callWidgetFactory({
+				factory: createProgressbar,
+				widgetName: 'progressbar',
+			}),
+		);
+	}
 	readonly percentFormat = new Intl.NumberFormat('default', {
 		style: 'percent',
 		minimumFractionDigits: 0,

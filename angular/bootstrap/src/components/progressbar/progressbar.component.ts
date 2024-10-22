@@ -1,22 +1,27 @@
 import {
 	BaseWidgetDirective,
 	ComponentTemplate,
-	ContentAsSlotDirective,
 	SlotDirective,
 	auBooleanAttribute,
 	auNumberAttribute,
 	useDirectiveForHost,
 } from '@agnos-ui/angular-headless';
 import type {SlotContent} from '@agnos-ui/angular-headless';
-import {type WritableSignal, writable} from '@amadeus-it-group/tansu';
 import {NgClass} from '@angular/common';
-import type {AfterContentChecked} from '@angular/core';
 import {ChangeDetectionStrategy, Component, ContentChild, Directive, Input, TemplateRef, ViewChild, inject} from '@angular/core';
-import type {ProgressbarContext, ProgressbarProps, ProgressbarWidget} from './progressbar.gen';
+import type {ProgressbarContext, ProgressbarWidget} from './progressbar.gen';
 import {createProgressbar} from './progressbar.gen';
 
 import {callWidgetFactory} from '../../config';
 import type {BSContextualClass} from '@agnos-ui/core-bootstrap/types';
+
+@Directive({selector: 'ng-template[auProgressbarBody]', standalone: true})
+export class ProgressbarBodyDirective {
+	public templateRef = inject(TemplateRef<ProgressbarContext>);
+	static ngTemplateContextGuard(_dir: ProgressbarStructureDirective, context: unknown): context is ProgressbarContext {
+		return true;
+	}
+}
 
 @Directive({selector: 'ng-template[auProgressbarStructure]', standalone: true})
 export class ProgressbarStructureDirective {
@@ -46,33 +51,26 @@ export class ProgressbarStructureDirective {
 		</ng-template>
 	`,
 })
-export class ProgressbarDefaultSlotsComponent {
+class ProgressbarDefaultSlotsComponent {
 	@ViewChild('structure', {static: true}) structure!: TemplateRef<ProgressbarContext>;
 }
 
 export const progressbarDefaultSlotStructure = new ComponentTemplate(ProgressbarDefaultSlotsComponent, 'structure');
 
-export type PartialProgressbarProps = Partial<ProgressbarProps>;
-const defaultConfig: PartialProgressbarProps = {
-	structure: progressbarDefaultSlotStructure,
-};
-
 @Component({
 	selector: '[auProgressbar]',
 	standalone: true,
-	imports: [SlotDirective, ContentAsSlotDirective],
+	imports: [SlotDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	host: {
 		'[class]': 'state.className()',
 	},
 	template: `
-		<ng-template [auContentAsSlot]="defaultSlots"><ng-content></ng-content></ng-template>
+		<ng-template #content><ng-content></ng-content></ng-template>
 		<ng-template [auSlot]="state.structure()" [auSlotProps]="{state, api, directives}"></ng-template>
 	`,
 })
-export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget> implements AfterContentChecked {
-	readonly defaultSlots: WritableSignal<PartialProgressbarProps> = writable(defaultConfig);
-
+export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget> {
 	/**
 	 * The aria label.
 	 *
@@ -112,6 +110,8 @@ export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget>
 	 * Label of the progress.
 	 */
 	@Input('auChildren') children: SlotContent<ProgressbarContext>;
+	@ContentChild(ProgressbarBodyDirective, {static: false})
+	slotDefaultFromContent: ProgressbarBodyDirective | undefined;
 
 	/**
 	 * Global template for the Progressbar.
@@ -159,19 +159,24 @@ export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget>
 	 */
 	@Input('auType') type: BSContextualClass | undefined;
 
-	readonly _widget = callWidgetFactory({
-		factory: createProgressbar,
-		widgetName: 'progressbar',
-		defaultConfig: this.defaultSlots,
-		afterInit: () => {
-			useDirectiveForHost(this._widget.directives.ariaDirective);
-		},
-	});
+	@ViewChild('content', {static: true})
+	slotChildren?: TemplateRef<void>;
 
-	ngAfterContentChecked(): void {
-		this._widget.patchSlots({
-			children: undefined,
-			structure: this.slotStructureFromContent?.templateRef,
-		});
+	constructor() {
+		super(
+			callWidgetFactory({
+				factory: createProgressbar,
+				widgetName: 'progressbar',
+				defaultConfig: {
+					structure: progressbarDefaultSlotStructure,
+				},
+				afterInit: (widget) => useDirectiveForHost(widget.directives.ariaDirective),
+				slotTemplates: () => ({
+					structure: this.slotStructureFromContent?.templateRef,
+					children: this.slotDefaultFromContent?.templateRef,
+				}),
+				slotChildren: () => this.slotChildren,
+			}),
+		);
 	}
 }

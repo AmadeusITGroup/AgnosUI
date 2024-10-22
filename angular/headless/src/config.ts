@@ -3,9 +3,9 @@ import type {Partial2Levels, WidgetsConfigStore, WidgetsConfig} from '@agnos-ui/
 import {createWidgetsConfig} from '@agnos-ui/core/config';
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {computed} from '@amadeus-it-group/tansu';
-import type {FactoryProvider} from '@angular/core';
+import type {FactoryProvider, TemplateRef} from '@angular/core';
 import {InjectionToken, Injector, Optional, SkipSelf, inject, runInInjectionContext} from '@angular/core';
-import type {AngularWidget} from './types';
+import type {AngularWidget, IsSlotContent, SlotContent} from './types';
 import {callWidgetFactoryWithConfig} from './utils/widget';
 
 export * from '@agnos-ui/core/config';
@@ -118,12 +118,20 @@ export const widgetsConfigFactory = <Config extends {[widgetName: string]: objec
 		defaultConfig = {},
 		events,
 		afterInit,
+		slotTemplates,
+		slotChildren,
 	}: {
 		factory: WidgetFactory<W>;
 		widgetName?: null | keyof Config;
 		defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
 		events?: Partial<Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}`>>;
-		afterInit?: () => void;
+		afterInit?: (widget: AngularWidget<W>) => void;
+		slotTemplates?: () => {
+			[K in keyof WidgetProps<W> as IsSlotContent<WidgetProps<W>[K]> extends 0 ? never : K]: WidgetProps<W>[K] extends SlotContent<infer U>
+				? TemplateRef<U> | undefined
+				: never;
+		};
+		slotChildren?: () => TemplateRef<void> | undefined;
 	}): AngularWidget<W> =>
 		callWidgetFactoryWithConfig({
 			factory,
@@ -131,6 +139,8 @@ export const widgetsConfigFactory = <Config extends {[widgetName: string]: objec
 			defaultConfig,
 			events,
 			afterInit,
+			slotTemplates: slotTemplates as any,
+			slotChildren,
 		});
 
 	return {

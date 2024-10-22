@@ -33,14 +33,6 @@ export class RatingReadonlyStarDirective {
 	`,
 })
 export class RatingReadonlyComponent extends BaseWidgetDirective<RatingWidget> {
-	readonly _widget = callWidgetFactory({
-		factory: createRating,
-		widgetName: 'rating',
-		defaultConfig: {
-			readonly: true,
-		},
-	});
-
 	readonly className = input<string>();
 	readonly rating = input.required({transform: numberAttribute});
 	readonly maxRating = input.required({transform: numberAttribute});
@@ -49,12 +41,20 @@ export class RatingReadonlyComponent extends BaseWidgetDirective<RatingWidget> {
 	readonly slotStarFromContent = contentChild(RatingReadonlyStarDirective);
 
 	constructor() {
-		super();
+		const widget = callWidgetFactory({
+			factory: createRating,
+			widgetName: 'rating',
+			defaultConfig: {
+				readonly: true,
+			},
+			slotTemplates: () => ({
+				star: this.slotStarFromContent()?.templateRef,
+			}),
+		});
+		super(widget);
 		effect(
 			() => {
-				this._widget.patchSlots({
-					star: this.slotStarFromContent()?.templateRef,
-				});
+				widget.updateSlots();
 			},
 			{allowSignalWrites: true},
 		);

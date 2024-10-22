@@ -1,6 +1,5 @@
 import type {SlotContent} from '@agnos-ui/angular-headless';
 import {BaseWidgetDirective, ComponentTemplate, SlotDirective, UseDirective, auBooleanAttribute, auNumberAttribute} from '@agnos-ui/angular-headless';
-import type {AfterContentChecked} from '@angular/core';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -15,7 +14,7 @@ import {
 	inject,
 } from '@angular/core';
 import {callWidgetFactory} from '../../config';
-import type {PaginationContext, PaginationNumberContext, PaginationProps, PaginationWidget} from './pagination.gen';
+import type {PaginationContext, PaginationNumberContext, PaginationWidget} from './pagination.gen';
 import {createPagination} from './pagination.gen';
 
 /**
@@ -174,7 +173,7 @@ export class PaginationStructureDirective {
 		</ng-template>
 	`,
 })
-export class PaginationDefaultSlotsComponent {
+class PaginationDefaultSlotsComponent {
 	@ViewChild('pages', {static: true}) pages!: TemplateRef<PaginationContext>;
 	@ViewChild('structure', {static: true}) structure!: TemplateRef<PaginationContext>;
 }
@@ -187,11 +186,6 @@ export const paginationDefaultSlotPages = new ComponentTemplate(PaginationDefaul
  */
 export const paginationDefaultSlotStructure = new ComponentTemplate(PaginationDefaultSlotsComponent, 'structure');
 
-const defaultConfig: Partial<PaginationProps> = {
-	structure: paginationDefaultSlotStructure,
-	pagesDisplay: paginationDefaultSlotPages,
-};
-
 @Component({
 	selector: '[auPagination]',
 	standalone: true,
@@ -203,7 +197,7 @@ const defaultConfig: Partial<PaginationProps> = {
 	encapsulation: ViewEncapsulation.None,
 	template: `<ng-template [auSlotProps]="{state, api, directives}" [auSlot]="state.structure()"></ng-template>`,
 })
-export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> implements AfterContentChecked {
+export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> {
 	/**
 	 * Provide the label for each "Page" page button.
 	 * This is used for accessibility purposes.
@@ -324,15 +318,6 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * ```
 	 */
 	@Input('auPageLink') pageLink: ((pageNumber: number) => string) | undefined;
-
-	readonly _widget = callWidgetFactory({
-		factory: createPagination,
-		widgetName: 'pagination',
-		defaultConfig,
-		events: {
-			onPageChange: (page: number) => this.pageChange.emit(page),
-		},
-	});
 
 	/**
 	 * The template to use for the ellipsis slot
@@ -525,16 +510,29 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 */
 	@Input('auClassName') className: string | undefined;
 
-	ngAfterContentChecked(): void {
-		this._widget.patchSlots({
-			structure: this.slotStructureFromContent?.templateRef,
-			ellipsisLabel: this.slotEllipsisFromContent?.templateRef,
-			firstPageLabel: this.slotFirstFromContent?.templateRef,
-			previousPageLabel: this.slotPreviousFromContent?.templateRef,
-			nextPageLabel: this.slotNextFromContent?.templateRef,
-			lastPageLabel: this.slotLastFromContent?.templateRef,
-			pagesDisplay: this.slotPagesFromContent?.templateRef,
-			numberLabel: this.slotNumberLabelFromContent?.templateRef,
-		});
+	constructor() {
+		super(
+			callWidgetFactory({
+				factory: createPagination,
+				widgetName: 'pagination',
+				defaultConfig: {
+					structure: paginationDefaultSlotStructure,
+					pagesDisplay: paginationDefaultSlotPages,
+				},
+				events: {
+					onPageChange: (page: number) => this.pageChange.emit(page),
+				},
+				slotTemplates: () => ({
+					structure: this.slotStructureFromContent?.templateRef,
+					ellipsisLabel: this.slotEllipsisFromContent?.templateRef,
+					firstPageLabel: this.slotFirstFromContent?.templateRef,
+					previousPageLabel: this.slotPreviousFromContent?.templateRef,
+					nextPageLabel: this.slotNextFromContent?.templateRef,
+					lastPageLabel: this.slotLastFromContent?.templateRef,
+					pagesDisplay: this.slotPagesFromContent?.templateRef,
+					numberLabel: this.slotNumberLabelFromContent?.templateRef,
+				}),
+			}),
+		);
 	}
 }

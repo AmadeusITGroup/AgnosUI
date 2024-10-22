@@ -40,7 +40,7 @@ export class ModalService {
 				component.setInput(prop, value);
 			}
 			this._applicationRef.attachView(component.hostView);
-			await component.instance._widget.initialized;
+			await component.instance['_widget'].initialized;
 			await component.instance.api.open();
 		} finally {
 			div.remove();

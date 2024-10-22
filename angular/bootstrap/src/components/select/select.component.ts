@@ -7,7 +7,6 @@ import {
 	auBooleanAttribute,
 	useDirectiveForHost,
 } from '@agnos-ui/angular-headless';
-import type {AfterContentChecked} from '@angular/core';
 import {ChangeDetectionStrategy, Component, ContentChild, Directive, EventEmitter, Input, Output, TemplateRef, inject} from '@angular/core';
 import type {Placement} from '@floating-ui/dom';
 import {callWidgetFactory} from '../../config';
@@ -64,7 +63,7 @@ export class SelectItemLabelDirective<Item> {
 		}
 	`,
 })
-export class SelectComponent<Item> extends BaseWidgetDirective<SelectWidget<Item>> implements AfterContentChecked {
+export class SelectComponent<Item> extends BaseWidgetDirective<SelectWidget<Item>> {
 	/**
 	 * aria-label used for the input inside the select
 	 *
@@ -237,27 +236,28 @@ export class SelectComponent<Item> extends BaseWidgetDirective<SelectWidget<Item
 	 */
 	@Input('auNavSelector') navSelector: ((node: HTMLElement) => NodeListOf<HTMLSpanElement | HTMLInputElement>) | undefined;
 
-	readonly _widget = callWidgetFactory<SelectWidget<Item>>({
-		factory: createSelect,
-		widgetName: 'select',
-		events: {
-			onOpenChange: (event) => this.openChange.emit(event),
-			onSelectedChange: (event) => this.selectedChange.emit(event),
-			onFilterTextChange: (event) => this.filterTextChange.emit(event),
-		},
-		afterInit: () => {
-			useDirectiveForHost(this._widget.directives.referenceDirective);
-		},
-	});
+	constructor() {
+		super(
+			callWidgetFactory<SelectWidget<Item>>({
+				factory: createSelect,
+				widgetName: 'select',
+				events: {
+					onOpenChange: (event) => this.openChange.emit(event),
+					onSelectedChange: (event) => this.selectedChange.emit(event),
+					onFilterTextChange: (event) => this.filterTextChange.emit(event),
+				},
+				afterInit: (widget) => {
+					useDirectiveForHost(widget.directives.referenceDirective);
+				},
+				slotTemplates: () => ({
+					badgeLabel: this.slotSelectBadgeLabelFromContent?.templateRef,
+					itemLabel: this.slotSelectItemLabelFromContent?.templateRef,
+				}),
+			}),
+		);
+	}
 
 	itemCtxTrackBy(_: number, itemContext: ItemContext<Item>) {
 		return itemContext.id;
-	}
-
-	ngAfterContentChecked(): void {
-		this._widget.patchSlots({
-			badgeLabel: this.slotSelectBadgeLabelFromContent?.templateRef,
-			itemLabel: this.slotSelectItemLabelFromContent?.templateRef,
-		});
 	}
 }

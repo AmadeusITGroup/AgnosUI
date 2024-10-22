@@ -33,9 +33,13 @@ export class ToastComponent extends BaseWidgetDirective<ToastWidget> {
 	readonly hidden = output();
 	readonly shown = output();
 
-	readonly _widget = callWidgetFactory({
-		factory: createToast,
-		widgetName: 'toast',
-		events: {onVisibleChange: this.visible.set, onShown: () => this.shown.emit(), onHidden: () => this.hidden.emit()},
-	});
+	constructor() {
+		super(
+			callWidgetFactory({
+				factory: createToast,
+				widgetName: 'toast',
+				events: {onVisibleChange: (v) => this.visible.set(v), onShown: () => this.shown.emit(), onHidden: () => this.hidden.emit()},
+			}),
+		);
+	}
 }
