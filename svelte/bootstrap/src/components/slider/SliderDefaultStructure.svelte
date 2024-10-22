@@ -2,38 +2,38 @@
 	import type {SliderContext} from './slider.gen';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 
-	let {state, widget}: SliderContext = $props();
-	let slotContext = $derived({widget, state});
+	let widget: SliderContext = $props();
+	let {state, directives} = widget;
 </script>
 
 {#each state.progressDisplayOptions as option}
-	<div use:widget.directives.progressDisplayDirective={{option}}></div>
+	<div use:directives.progressDisplayDirective={{option}}></div>
 {/each}
-<div use:widget.directives.clickableAreaDirective></div>
+<div use:directives.clickableAreaDirective></div>
 {#if state.showMinMaxLabels}
-	<div use:widget.directives.minLabelDirective>
-		<Slot content={state.label} props={{value: state.min, ...slotContext}} />
+	<div use:directives.minLabelDirective>
+		<Slot content={state.label} props={{value: state.min, ...widget}} />
 	</div>
-	<div use:widget.directives.maxLabelDirective>
-		<Slot content={state.label} props={{value: state.max, ...slotContext}} />
+	<div use:directives.maxLabelDirective>
+		<Slot content={state.label} props={{value: state.max, ...widget}} />
 	</div>
 {/if}
 {#if state.showValueLabels && state.combinedLabelDisplay}
-	<div use:widget.directives.combinedHandleLabelDisplayDirective>
+	<div use:directives.combinedHandleLabelDisplayDirective>
 		{#if state.rtl}
-			<Slot content={state.label} props={{value: state.sortedValues[1], ...slotContext}} /> -
-			<Slot content={state.label} props={{value: state.sortedValues[0], ...slotContext}} />
+			<Slot content={state.label} props={{value: state.sortedValues[1], ...widget}} /> -
+			<Slot content={state.label} props={{value: state.sortedValues[0], ...widget}} />
 		{:else}
-			<Slot content={state.label} props={{value: state.sortedValues[0], ...slotContext}} /> -
-			<Slot content={state.label} props={{value: state.sortedValues[1], ...slotContext}} />
+			<Slot content={state.label} props={{value: state.sortedValues[0], ...widget}} /> -
+			<Slot content={state.label} props={{value: state.sortedValues[1], ...widget}} />
 		{/if}
 	</div>
 {/if}
 {#each state.sortedHandles as item, i (item.id)}
-	<Slot content={state.handle} props={{item, ...slotContext}} />
+	<Slot content={state.handle} props={{item, ...widget}} />
 	{#if state.showValueLabels && !state.combinedLabelDisplay}
-		<div use:widget.directives.handleLabelDisplayDirective={{index: i}}>
-			<Slot content={state.label} props={{value: state.values[i], ...slotContext}} />
+		<div use:directives.handleLabelDisplayDirective={{index: i}}>
+			<Slot content={state.label} props={{value: state.values[i], ...widget}} />
 		</div>
 	{/if}
 {/each}

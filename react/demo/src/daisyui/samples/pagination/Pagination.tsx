@@ -3,12 +3,10 @@ import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
 import classNames from 'classnames';
 
 export function Pagination(props: Partial<PaginationProps>) {
-	const [
+	const {
 		state,
-		{
-			api: {first, last, next, previous, select},
-		},
-	] = useWidgetWithConfig(createPagination, props, 'pagination');
+		api: {first, last, next, previous, select},
+	} = useWidgetWithConfig(createPagination, props, 'pagination');
 
 	return (
 		<nav aria-label={state.ariaLabel}>

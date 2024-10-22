@@ -5,26 +5,26 @@
 	// You can choose here the props (form the core) you want as input
 	let {rating = $bindable(), ...props}: Pick<Partial<RatingProps>, 'rating' | 'maxRating' | 'className' | 'onHover' | 'ariaLabel'> = $props();
 
-	const widget = callWidgetFactory({
+	const {
+		state,
+		api: {setRating, setHoveredRating, leave},
+	} = callWidgetFactory({
 		factory: createRating,
 		widgetName: 'rating',
-		props: {...props, rating},
+		get props() {
+			return {...props, rating};
+		},
+		enablePatchChanged: true,
 		events: {
 			onRatingChange: (value: number) => {
 				rating = value;
 			},
 		},
 	});
-
-	const {
-		stores: {visibleRating$, stars$, className$, ariaLabel$},
-		api: {setRating, setHoveredRating, leave},
-	} = widget;
-	$effect(() => widget.patchChangedProps({...props, rating}));
 </script>
 
-<div class="rating {$className$}">
-	{#each $stars$ as { index } (index)}
+<div class="rating {state.className}">
+	{#each state.stars as { index } (index)}
 		<input
 			onmouseleave={leave}
 			onmouseenter={() => setHoveredRating(index + 1)}
@@ -32,8 +32,8 @@
 			type="radio"
 			name="rating-1"
 			class="mask mask-star"
-			aria-label={`${$ariaLabel$} star ${index + 1}`}
-			checked={index + 1 === $visibleRating$}
+			aria-label={`${state.ariaLabel} star ${index + 1}`}
+			checked={index + 1 === state.visibleRating}
 		/>
 	{/each}
 </div>

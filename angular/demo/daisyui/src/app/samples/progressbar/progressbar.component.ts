@@ -16,7 +16,7 @@ import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 	template: `<progress
 		class="progress"
 		[class]="state().className"
-		[auUse]="widget.directives.ariaDirective"
+		[auUse]="directives.ariaDirective"
 		[attr.value]="state().value"
 		[attr.max]="state().max"
 	></progress>`,

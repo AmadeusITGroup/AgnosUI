@@ -18,7 +18,7 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
 
 		<p>A pagination with customized pages:</p>
 		<nav auPagination auCollectionSize="60" [(auPage)]="customPage" auAriaLabel="Page navigation with customized pages">
-			<ng-template auPaginationPages let-widget="widget" let-state="state">
+			<ng-template auPaginationPages let-api="api" let-state="state">
 				@if (state.pages.length > 0) {
 					<li class="au-custom-pages-item">
 						<div class="mb-3 d-flex flex-nowrap px-2">
@@ -31,8 +31,8 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
 								class="form-control custom-pages-input"
 								id="paginationInput"
 								[value]="state.page"
-								(keyup.enter)="handleTheChange(i, widget)"
-								(blur)="handleTheChange(i, widget)"
+								(keyup.enter)="handleTheChange(i, api, state)"
+								(blur)="handleTheChange(i, api, state)"
 								(input)="formatInput(i)"
 								aria-labelledby="paginationInputLabel paginationDescription"
 								style="width: 2.5rem"
@@ -56,10 +56,10 @@ export default class PaginationComponent {
 		input.value = input.value.replace(FILTER_PAG_REGEX, '');
 	}
 
-	handleTheChange(input: HTMLInputElement, widget: PaginationContext['widget']) {
+	handleTheChange(input: HTMLInputElement, api: PaginationContext['api'], state: PaginationContext['state']) {
 		const value = input.value;
 		const intValue = parseInt(value);
-		widget.api.select(intValue);
-		input.value = widget.stores.page$().toString();
+		api.select(intValue);
+		input.value = state.page.toString();
 	}
 }

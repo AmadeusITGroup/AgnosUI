@@ -89,26 +89,26 @@ export class ModalFooterDirective<Data> {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [SlotDirective, ModalHeaderDirective, ModalStructureDirective, UseDirective],
 	template: `
-		<ng-template auModalHeader #header let-state="state" let-widget="widget">
+		<ng-template auModalHeader #header let-state="state" let-api="api" let-directives="directives">
 			<h5 class="modal-title">
-				<ng-template [auSlot]="state.title" [auSlotProps]="{state, widget}"></ng-template>
+				<ng-template [auSlot]="state.title" [auSlotProps]="{state, api, directives}"></ng-template>
 			</h5>
 			@if (state.closeButton) {
-				<button class="btn-close" [auUse]="widget.directives.closeButtonDirective"></button>
+				<button class="btn-close" [auUse]="directives.closeButtonDirective"></button>
 			}
 		</ng-template>
-		<ng-template auModalStructure #structure let-state="state" let-widget="widget">
+		<ng-template auModalStructure #structure let-state="state" let-api="api" let-directives="directives">
 			@if (state.title) {
 				<div class="modal-header">
-					<ng-template [auSlot]="state.header" [auSlotProps]="{state, widget}"></ng-template>
+					<ng-template [auSlot]="state.header" [auSlotProps]="{state, api, directives}"></ng-template>
 				</div>
 			}
 			<div class="modal-body">
-				<ng-template [auSlot]="state.children" [auSlotProps]="{state, widget}"></ng-template>
+				<ng-template [auSlot]="state.children" [auSlotProps]="{state, api, directives}"></ng-template>
 			</div>
 			@if (state.footer) {
 				<div class="modal-footer">
-					<ng-template [auSlot]="state.footer" [auSlotProps]="{state, widget}"></ng-template>
+					<ng-template [auSlot]="state.footer" [auSlotProps]="{state, api, directives}"></ng-template>
 				</div>
 			}
 		</ng-template>
@@ -145,13 +145,13 @@ const defaultConfig: Partial<ModalProps<any>> = {
 	template: `
 		<ng-template [auContentAsSlot]="defaultSlots"><ng-content></ng-content></ng-template>
 		@if (!state().backdropHidden) {
-			<div class="modal-backdrop" [auUseMulti]="[widget.directives.backdropPortalDirective, widget.directives.backdropDirective]"></div>
+			<div class="modal-backdrop" [auUseMulti]="[directives.backdropPortalDirective, directives.backdropDirective]"></div>
 		}
 		@if (!state().hidden) {
-			<div class="modal d-block" [auUseMulti]="[widget.directives.modalPortalDirective, widget.directives.modalDirective]">
+			<div class="modal d-block" [auUseMulti]="[directives.modalPortalDirective, directives.modalDirective]">
 				<div class="modal-dialog {{ state().fullscreen ? 'modal-fullscreen' : '' }}">
 					<div class="modal-content">
-						<ng-template [auSlot]="state().structure" [auSlotProps]="{state: state(), widget}"></ng-template>
+						<ng-template [auSlot]="state().structure" [auSlotProps]="{state: state(), api, directives}"></ng-template>
 					</div>
 				</div>
 			</div>

@@ -7,16 +7,19 @@ import React from 'react';
 export function Rating(
 	props: Pick<Partial<RatingProps>, 'rating' | 'maxRating' | 'className' | 'onHover' | 'onRatingChange' | 'onLeave' | 'ariaLabel'>,
 ) {
-	const [{visibleRating, stars, className, ariaLabel}, widget] = useWidgetWithConfig(createRating, props, 'rating');
+	const {
+		state: {visibleRating, stars, className, ariaLabel},
+		api,
+	} = useWidgetWithConfig(createRating, props, 'rating');
 
 	return (
 		<div className={classNames('rating', className)}>
 			{stars.map(({index}) => (
 				<React.Fragment key={index}>
 					<input
-						onMouseLeave={widget.api.leave}
-						onMouseEnter={() => widget.api.setHoveredRating(index + 1)}
-						onClick={() => widget.api.setRating(index + 1)}
+						onMouseLeave={api.leave}
+						onMouseEnter={() => api.setHoveredRating(index + 1)}
+						onClick={() => api.setRating(index + 1)}
 						// React throws a warning if an onChange is not provided.
 						onChange={() => {}}
 						type="radio"

@@ -17,7 +17,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 	imports: [UseDirective],
 	template: `
 		@if (!state().hidden) {
-			<div role="alert" class="flex alert {{ state().className }}" [auUse]="widget.directives.transitionDirective">
+			<div role="alert" class="flex alert {{ state().className }}" [auUse]="directives.transitionDirective">
 				<ng-content />
 				@if (state().dismissible) {
 					<button

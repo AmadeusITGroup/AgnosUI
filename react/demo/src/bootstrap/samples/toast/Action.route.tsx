@@ -40,13 +40,13 @@ const ActionToastDemo = () => {
 
 export default ActionToastDemo;
 
-const ToastAction = ({widget, state}: ToastContext) => (
+const ToastAction = (slotContext: ToastContext) => (
 	<div className="d-flex w-100">
 		<div className="d-flex align-items-center flex-grow-1 toast-body">
 			<span className="d-flex me-2">
 				<BiCheckCircleFill />
 			</span>
-			<Slot slotContent={state.children} props={{widget, state}}></Slot>
+			<Slot slotContent={slotContext.state.children} props={slotContext}></Slot>
 			<button type="button" className="btn btn-sm ms-auto text-bg-success" onClick={() => window.alert('Undo')}>
 				<span className="me-2">
 					<BiArrowCounterClockwise />
@@ -54,12 +54,12 @@ const ToastAction = ({widget, state}: ToastContext) => (
 				Undo
 			</button>
 		</div>
-		{state.dismissible ? (
+		{slotContext.state.dismissible ? (
 			<button
 				type="button"
 				className="btn-close btn-close-white me-2 m-auto"
-				onClick={widget.api.close}
-				aria-label={state.ariaCloseButtonLabel}
+				onClick={slotContext.api.close}
+				aria-label={slotContext.state.ariaCloseButtonLabel}
 			></button>
 		) : null}
 	</div>

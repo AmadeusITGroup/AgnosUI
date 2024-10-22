@@ -16,8 +16,8 @@ const Header = (props: PropsWithChildren<{headerTag: string; directive: Directiv
 };
 
 const ItemContent = (slotContext: AccordionItemContext) => (
-	<div {...useDirectives([classDirective, 'accordion-collapse'], slotContext.widget.directives.bodyContainerDirective)}>
-		<div {...useDirectives([classDirective, 'accordion-body'], slotContext.widget.directives.bodyDirective)}>
+	<div {...useDirectives([classDirective, 'accordion-collapse'], slotContext.directives.bodyContainerDirective)}>
+		<div {...useDirectives([classDirective, 'accordion-body'], slotContext.directives.bodyDirective)}>
 			<Slot slotContent={slotContext.state.children} props={slotContext}></Slot>
 		</div>
 	</div>
@@ -26,8 +26,8 @@ const ItemContent = (slotContext: AccordionItemContext) => (
 const AccordionDIContext: React.Context<Partial<AccordionApi>> = createContext({});
 const DefaultSlotStructure = (slotContext: AccordionItemContext) => (
 	<>
-		<Header directive={slotContext.widget.directives.headerDirective} headerTag={slotContext.state.headingTag}>
-			<button {...useDirectives([classDirective, 'accordion-button'], slotContext.widget.directives.buttonDirective)}>
+		<Header directive={slotContext.directives.headerDirective} headerTag={slotContext.state.headingTag}>
+			<button {...useDirectives([classDirective, 'accordion-button'], slotContext.directives.buttonDirective)}>
 				<Slot slotContent={slotContext.state.header} props={slotContext}></Slot>
 			</button>
 		</Header>
@@ -41,18 +41,15 @@ const defaultConfig: Partial<AccordionItemProps> = {
 export const AccordionItem: ForwardRefExoticComponent<Partial<AccordionItemProps> & RefAttributes<AccordionItemApi>> = forwardRef(
 	function AccordionItem(props: Partial<AccordionItemProps>, ref: ForwardedRef<AccordionItemApi>) {
 		const {registerItem} = useContext(AccordionDIContext);
-		const [state, widget] = useWidgetWithConfig(registerItem!, props, null, defaultConfig);
-		const slotContext: AccordionItemContext = {
-			state,
-			widget: widget,
-		};
-		useImperativeHandle(ref, () => widget.api, []);
+		const widgetContext = useWidgetWithConfig(registerItem!, props, null, defaultConfig);
+		const {state, api, directives} = widgetContext;
+		useImperativeHandle(ref, () => api, []);
 		useEffect(() => {
-			widget.api.initDone();
+			api.initDone();
 		}, []);
 		return (
-			<div {...useDirectives([classDirective, `accordion-item ${state.className}`], widget.directives.itemDirective)}>
-				<Slot slotContent={state.structure} props={slotContext} />
+			<div {...useDirectives([classDirective, `accordion-item ${state.className}`], directives.itemDirective)}>
+				<Slot slotContent={state.structure} props={widgetContext} />
 			</div>
 		);
 	},
@@ -60,7 +57,7 @@ export const AccordionItem: ForwardRefExoticComponent<Partial<AccordionItemProps
 
 export const Accordion: ForwardRefExoticComponent<PropsWithChildren<Partial<AccordionProps>> & RefAttributes<AccordionApi>> = forwardRef(
 	function Accordion(props: PropsWithChildren<Partial<AccordionProps>>, ref: ForwardedRef<AccordionApi>) {
-		const widget = useWidgetWithConfig(createAccordion, props, 'accordion')[1];
+		const widget = useWidgetWithConfig(createAccordion, props, 'accordion');
 		useImperativeHandle(ref, () => widget.api, []);
 		return (
 			<AccordionDIContext.Provider value={widget.api}>

@@ -4,13 +4,17 @@
 
 	let props: Partial<ProgressbarProps> = $props();
 
-	const widget = callWidgetFactory({factory: createProgressbar, widgetName: 'progressbar', props});
-
 	const {
-		stores: {className$, percentage$},
+		state,
 		directives: {ariaDirective},
-	} = widget;
-	$effect(() => widget.patchChangedProps({...props}));
+	} = callWidgetFactory({
+		factory: createProgressbar,
+		widgetName: 'progressbar',
+		get props() {
+			return props;
+		},
+		enablePatchChanged: true,
+	});
 
 	const percentFormat = new Intl.NumberFormat('default', {
 		style: 'percent',
@@ -19,6 +23,6 @@
 	});
 </script>
 
-<div use:ariaDirective class="radial-progress {$className$}" style="--thickness: 0.4rem; --value:{$percentage$};">
-	{percentFormat.format($percentage$ / 100)}
+<div use:ariaDirective class="radial-progress {state.className}" style="--thickness: 0.4rem; --value:{state.percentage};">
+	{percentFormat.format(state.percentage / 100)}
 </div>

@@ -6,7 +6,7 @@ import {ChangeDetectionStrategy, Component, input, output} from '@angular/core';
 	selector: 'app-accordion',
 	standalone: true,
 	imports: [UseDirective],
-	template: ` <div class="flex flex-col gap-2" [auUse]="widget.directives.accordionDirective">
+	template: ` <div class="flex flex-col gap-2" [auUse]="directives.accordionDirective">
 		<ng-content></ng-content>
 	</div>`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
