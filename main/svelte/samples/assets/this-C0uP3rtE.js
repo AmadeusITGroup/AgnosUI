@@ -1,1 +1,0 @@
-import{$ as h,a0 as k,a1 as S,a2 as T,a3 as c}from"./AppCommon-CHMWAYUs.js";function t(r,i){return r===i||(r==null?void 0:r[c])===i}function A(r={},i,a,q){return h(()=>{var f,s;return k(()=>{f=s,s=[],S(()=>{r!==a(...s)&&(i(r,...s),f&&t(a(...f),r)&&i(null,...f))})}),()=>{T(()=>{s&&t(a(...s),r)&&i(null,...s)})}}),r}export{A as b};

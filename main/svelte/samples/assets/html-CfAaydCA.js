@@ -1,1 +1,0 @@
-import{x as i,z as o,ar as d,B as h,as as l,H as m}from"./AppCommon-CHMWAYUs.js";function g(t,n,c,_,v){var s=t,a="",r;i(()=>{a!==(a=n()??"")&&(r!==void 0&&(m(r),r=void 0),a!==""&&(r=o(()=>{var f=a+"",e=d(f);h(l(e),e.lastChild),s.before(e)})))})}export{g as h};
