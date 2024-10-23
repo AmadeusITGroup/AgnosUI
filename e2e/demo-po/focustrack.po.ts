@@ -1,10 +1,5 @@
 import {BasePO} from '@agnos-ui/base-po';
 
-interface ActiveElement {
-	tagName: string;
-	id?: string;
-}
-
 export class FocusTrackPO extends BasePO {
 	getComponentSelector(): string {
 		return 'div.demo-focustrack';
@@ -31,17 +26,10 @@ export class FocusTrackPO extends BasePO {
 		return this.locatorRoot.locator('#disabledInput');
 	}
 
-	/**
-	 * Textarea containing the activeElements history
-	 */
-	get locatorTextareaHistory() {
-		return this.locatorRoot.locator('#activeElementHistory');
-	}
-
-	async getState(): Promise<{activeElements: ActiveElement[]; isInContainer: boolean}> {
+	async getState(): Promise<{activeElements: string[]; isInContainer: boolean}> {
 		return await this.locatorRoot.evaluate((root) => {
 			return {
-				activeElements: JSON.parse((root.querySelector('#activeElementHistory') as HTMLTextAreaElement).value),
+				activeElements: [...root.querySelectorAll('li')].map((el) => el.textContent!.trim()),
 				isInContainer: (root.querySelector('#containerHasFocus') as HTMLInputElement).checked,
 			};
 		});

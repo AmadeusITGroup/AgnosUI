@@ -1,6 +1,6 @@
 import {UseDirective, toAngularSignal} from '@agnos-ui/angular-bootstrap';
 import {activeElement$, createHasFocus} from '@agnos-ui/core';
-import {ChangeDetectionStrategy, Component, computed, effect, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, signal} from '@angular/core';
 
 @Component({
 	standalone: true,
@@ -18,9 +18,24 @@ import {ChangeDetectionStrategy, Component, computed, effect, signal} from '@ang
 				<input class="form-check-input" type="checkbox" id="containerHasFocus" [checked]="hasFocus()" disabled />
 				<label class="form-check-label" for="containerHasFocus">Focus in container</label>
 			</div>
-			<label for="activeElementHistory" class="form-label">Active element history:</label>
-			<textarea class="form-control mb-2" id="activeElementHistory" readonly>{{ activeElementsJson() }}</textarea>
-			<button class="btn btn-primary" (click)="clear()">Clear</button>
+			<div class="d-flex justify-content-between">
+				<div>Active element history:</div>
+				<button class="btn btn-sm btn-primary" (click)="clear()">Clear</button>
+			</div>
+			<div class="card my-2">
+				<div class="card-body">
+					<ul class="mb-0">
+						@for (element of activeElements(); track element) {
+							<li>
+								<strong>{{ element.tagName }}</strong>
+								@if (element.id; as id) {
+									with id <strong>{{ id }}</strong>
+								}
+							</li>
+						}
+					</ul>
+				</div>
+			</div>
 		</div>
 	`,
 })
@@ -28,7 +43,6 @@ export default class FocustrackComponent {
 	public readonly hasFocusApi = createHasFocus();
 	public readonly hasFocus = toAngularSignal(this.hasFocusApi.hasFocus$);
 	public readonly activeElements = signal<{tagName?: string; id?: string}[]>([]);
-	public readonly activeElementsJson = computed(() => JSON.stringify(this.activeElements()));
 	private readonly activeElement = toAngularSignal(activeElement$);
 
 	constructor() {

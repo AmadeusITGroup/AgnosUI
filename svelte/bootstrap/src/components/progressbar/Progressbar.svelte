@@ -9,9 +9,7 @@
 	const widget = callWidgetFactory({
 		factory: createProgressbar,
 		widgetName: 'progressbar',
-		get props() {
-			return props;
-		},
+		props,
 		enablePatchChanged: true,
 		defaultConfig: {
 			structure,

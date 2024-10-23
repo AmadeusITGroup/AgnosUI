@@ -300,15 +300,12 @@ export default tseslint.config(
 		files: ['svelte/demo/src/bootstrap/**'],
 		rules: {
 			'@agnos-ui/check-replace-imports': ['error', '@agnos-ui/svelte-bootstrap'],
-			'@typescript-eslint/no-unused-vars': [
-				'error',
-				{
-					vars: 'all',
-					args: 'none',
-					ignoreRestSiblings: false,
-					varsIgnorePattern: '^\\$\\$(Props|Slots)$',
-				},
-			],
+		},
+	},
+	{
+		files: ['svelte/demo/src/bootstrap/samples/focustrack/Focustrack.route.svelte'],
+		rules: {
+			'@typescript-eslint/no-unused-expressions': 'off',
 		},
 	},
 	// jsdoc,

@@ -2,7 +2,7 @@
 	//Agnostic directive created in the previous section
 	import {createSampleDirective} from '@agnos-ui/common/samples/directives/sample-directive';
 
-	let text = 'focus element clicked';
+	let text = $state('focus element clicked');
 </script>
 
 <div use:createSampleDirective={text}>

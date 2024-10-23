@@ -13,9 +13,7 @@
 	const {api, directives} = callWidgetFactory({
 		factory: createAccordion,
 		widgetName: 'accordion',
-		get props() {
-			return props;
-		},
+		props,
 		enablePatchChanged: true,
 	});
 	setAccordionApi(api);

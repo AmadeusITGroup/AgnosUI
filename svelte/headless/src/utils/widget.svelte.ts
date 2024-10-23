@@ -88,7 +88,7 @@ export const callWidgetFactoryWithConfig = <W extends Widget>(parameter: {
 	if (enablePatchChanged) {
 		const patch = createPatchChangedProps(props, widget.patch);
 		$effect(() => {
-			patch(parameter.props!);
+			patch({...parameter.props});
 		});
 	}
 	return {

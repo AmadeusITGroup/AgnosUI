@@ -2,6 +2,7 @@
 	import '@agnos-ui/common/samples/floatingui/floatingui.scss';
 	import {createFloatingUI} from '@agnos-ui/svelte-bootstrap/services/floatingUI';
 	import {autoPlacement, hide, offset, shift} from '@floating-ui/dom';
+	import {fromStore} from 'svelte/store';
 
 	const {
 		directives: {floatingDirective, referenceDirective, arrowDirective},
@@ -23,8 +24,10 @@
 			},
 		},
 	});
+	const placement = fromStore(placement$);
+	const middlewareData = fromStore(middlewareData$);
 
-	let displayPopover = true;
+	let displayPopover = $state(true);
 	const toggleButton = () => {
 		displayPopover = !displayPopover;
 	};
@@ -39,9 +42,9 @@
 	{#if displayPopover}
 		<div
 			use:floatingDirective
-			data-popper-placement={$placement$}
+			data-popper-placement={placement.current}
 			class="popover bs-popover-auto position-absolute"
-			class:invisible={$middlewareData$?.hide?.referenceHidden}
+			class:invisible={middlewareData.current?.hide?.referenceHidden}
 			role="tooltip"
 		>
 			<div class="popover-arrow position-absolute" use:arrowDirective></div>

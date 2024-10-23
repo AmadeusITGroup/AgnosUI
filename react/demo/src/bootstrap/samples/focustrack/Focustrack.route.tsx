@@ -31,13 +31,29 @@ const Focustrack = () => {
 					Focus in container
 				</label>
 			</div>
-			<label htmlFor="activeElementHistory" className="form-label">
-				Active element history:
-			</label>
-			<textarea className="form-control mb-2" id="activeElementHistory" value={JSON.stringify(activeElements)} readOnly />
-			<button className="btn btn-primary" onClick={() => setActiveElements([])}>
-				Clear
-			</button>
+			<div className="d-flex justify-content-between">
+				<div>Active element history:</div>
+				<button className="btn btn-sm btn-primary" onClick={() => setActiveElements([])}>
+					Clear
+				</button>
+			</div>
+			<div className="card my-2">
+				<div className="card-body">
+					<ul className="mb-0">
+						{activeElements.map((activeElement) => (
+							<li key={activeElement}>
+								<strong>{activeElement.tagName}</strong>
+								{activeElement.id && (
+									<>
+										{' '}
+										with id <strong>{activeElement.id}</strong>
+									</>
+								)}
+							</li>
+						))}
+					</ul>
+				</div>
+			</div>
 		</div>
 	);
 };

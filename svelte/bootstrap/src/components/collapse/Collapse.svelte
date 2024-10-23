@@ -12,9 +12,7 @@
 	} = callWidgetFactory({
 		factory: createCollapse,
 		widgetName: 'collapse',
-		get props() {
-			return props;
-		},
+		props,
 		enablePatchChanged: true,
 	});
 	export const api: CollapseApi = collapseApi;

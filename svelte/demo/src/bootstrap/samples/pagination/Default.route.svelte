@@ -1,8 +1,8 @@
 <script lang="ts">
 	import {Pagination} from '@agnos-ui/svelte-bootstrap/components/pagination';
 
-	let page = 4;
-	let pageAlone = 1;
+	let page = $state(4);
+	let pageAlone = $state(1);
 </script>
 
 <h5>Basic pagination:</h5>

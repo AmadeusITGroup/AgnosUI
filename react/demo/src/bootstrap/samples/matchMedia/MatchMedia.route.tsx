@@ -8,7 +8,7 @@ const MatchMediaDemo = () => {
 		<>
 			<div className="mb-2">Resize the window to see the message below updated.</div>
 			<Alert dismissible={false} type="info">
-				Window is above 768 px ? <strong>{aboveMd ? 'YES' : 'NO'}</strong>
+				Window width is above 768 px ? <strong>{aboveMd ? 'YES' : 'NO'}</strong>
 			</Alert>
 		</>
 	);
