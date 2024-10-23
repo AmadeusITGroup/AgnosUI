@@ -9,9 +9,7 @@
 	const {directives, api: accordionApi} = callWidgetFactory({
 		factory: createAccordion,
 		widgetName: 'accordion',
-		get props() {
-			return props;
-		},
+		props,
 		enablePatchChanged: true,
 	});
 	export const api: AccordionApi = accordionApi;
