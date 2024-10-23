@@ -1840,6 +1840,104 @@ describe(`Slider range`, () => {
 		);
 	});
 
+	test(`should merge the handle labels when the handles are too close for large scale numbers`, () => {
+		slider.patch({
+			max: 1_000_000,
+			values: [1_000, 50_000],
+		});
+		const expectedState = defaultState();
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
+				values: [1_000, 50_000],
+				sortedValues: [1_000, 50_000],
+				handleDisplayOptions: [
+					{
+						left: 0.1,
+						top: null,
+					},
+					{
+						left: 5,
+						top: null,
+					},
+				],
+				combinedLabelPositionLeft: 2.55,
+				progressDisplayOptions: [
+					{
+						left: 0.1,
+						right: null,
+						bottom: null,
+						top: null,
+						width: 4.9,
+						height: 100,
+					},
+				],
+				sortedHandles: [
+					{
+						id: 0,
+						value: 1000,
+						ariaLabel: '1000',
+						ariaValueText: '1000',
+					},
+					{
+						id: 1,
+						value: 50000,
+						ariaLabel: '50000',
+						ariaValueText: '50000',
+					},
+				],
+				combinedLabelDisplay: true,
+				max: 1000000,
+			}),
+		);
+
+		slider.patch({
+			values: [1_000, 700_000],
+		});
+
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
+				combinedLabelDisplay: false,
+				combinedLabelPositionLeft: 35.05,
+				handleDisplayOptions: [
+					{
+						left: 0.1,
+						top: null,
+					},
+					{
+						left: 70,
+						top: null,
+					},
+				],
+				progressDisplayOptions: [
+					{
+						bottom: null,
+						height: 100,
+						left: 0.1,
+						right: null,
+						top: null,
+						width: 69.9,
+					},
+				],
+				sortedValues: [1000, 700000],
+				values: [1000, 700000],
+				sortedHandles: [
+					{
+						ariaLabel: '1000',
+						ariaValueText: '1000',
+						id: 0,
+						value: 1000,
+					},
+					{
+						ariaLabel: '700000',
+						ariaValueText: '700000',
+						id: 1,
+						value: 700000,
+					},
+				],
+			}),
+		);
+	});
+
 	test(`should properly set the state for RTL case`, () => {
 		slider.patch({
 			values: [10, 50],
