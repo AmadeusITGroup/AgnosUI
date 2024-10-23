@@ -1,18 +1,17 @@
 <script lang="ts">
 	import '@agnos-ui/common/samples/resizeobserver/resizeobserver.scss';
 	import {createResizeObserver} from '@agnos-ui/svelte-bootstrap/services/resizeObserver';
-	import {onMount} from 'svelte';
+	import {fromStore} from 'svelte/store';
 
 	const {dimensions$, directive: resizeDirective} = createResizeObserver();
-	let observedHeight = $state(0);
-	onMount(() => dimensions$.subscribe((dimensions) => (observedHeight = dimensions?.contentRect.height ?? 0)));
+	const dimensions = fromStore(dimensions$);
 
+	let observedHeight = $derived(dimensions.current?.contentRect.height ?? 0);
 	let heightValue = $state(180);
 
 	function increaseHeight() {
 		heightValue = observedHeight + 50;
 	}
-
 	function decreaseHeight() {
 		heightValue = observedHeight ? observedHeight - 50 : 0;
 	}

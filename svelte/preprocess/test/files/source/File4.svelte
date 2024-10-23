@@ -1,9 +1,15 @@
-<script context="module">
+<script module>
 	const myDirective = () => {};
 </script>
 
 <script>
-	export let myExtraClass = '';
+	/**
+	 * @typedef {Object} Props
+	 * @property {string} [myExtraClass]
+	 */
+
+	/** @type {Props} */
+	let {myExtraClass = ''} = $props();
 </script>
 
 <div use:myDirective class="myClass {myExtraClass}"></div>

@@ -3,8 +3,10 @@
 	import {AlertStatus} from '@agnos-ui/common/samples/alert/alert-status.enum';
 
 	let alert: Alert;
-	let [animatedOnInit, animated, dismissible] = [true, true, true];
-	let type: AlertProps['type'] = 'success';
+	let animatedOnInit = $state(true);
+	let animated = $state(true);
+	let dismissible = $state(true);
+	let type: AlertProps['type'] = $state('success');
 
 	const styles = Object.entries(AlertStatus).map((entry) => {
 		return {

@@ -1,12 +1,9 @@
-<script lang="ts">
+<script lang="ts" generics="Item extends import('./dropdown').DropdownItem">
 	import {createHasFocus} from '@agnos-ui/svelte-bootstrap/services/focustrack';
-	import type {DropdownItem} from './dropdown';
 	import {fromStore} from 'svelte/store';
 	import type {Snippet} from 'svelte';
 
 	let open = $state(false);
-
-	type Item = $$Generic<DropdownItem>;
 
 	const {hasFocus$, directive} = createHasFocus();
 	const focus = fromStore(hasFocus$);

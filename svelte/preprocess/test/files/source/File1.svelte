@@ -3,10 +3,16 @@
 	const directive2 = () => {};
 	const directive3 = () => {};
 
-	export let b = 1;
-	export let array = [];
-	export let promise = new Promise(() => {});
-	export let myAttr = {a: 1, b: 2};
+	/**
+	 * @typedef {Object} Props
+	 * @property {number} [b]
+	 * @property {any} [array]
+	 * @property {any} [promise]
+	 * @property {any} [myAttr]
+	 */
+
+	/** @type {Props} */
+	let {b = 1, array = [], promise = new Promise(() => {}), myAttr = {a: 1, b: 2}} = $props();
 </script>
 
 <div use:directive1>

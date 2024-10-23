@@ -9,7 +9,7 @@ import {MatchMediaService} from './matchMedia.service';
 	template: `
 		<div class="mb-2">Resize the window to see the message below updated.</div>
 		<au-component auAlert auDismissible="false" auType="info">
-			Window is above 768 px ? <strong>{{ aboveMd() ? 'YES' : 'NO' }}</strong>
+			Window width is above 768 px ? <strong>{{ aboveMd() ? 'YES' : 'NO' }}</strong>
 		</au-component>
 	`,
 })

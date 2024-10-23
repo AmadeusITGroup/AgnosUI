@@ -53,24 +53,35 @@
 					"Focus in container"
 				</label>
 			</div>
-			<label
-			 class="form-label"
-			 for="activeElementHistory"
+			<div
+			 class="d-flex justify-content-between"
 			>
-				"Active element history:"
-			</label>
-			<textarea
-			 class="form-control mb-2"
-			 id="activeElementHistory"
-			 readonly="readonly"
+				<div>
+					"Active element history:"
+				</div>
+				<button
+				 class="btn btn-primary btn-sm"
+				>
+					"Clear"
+				</button>
+			</div>
+			<div
+			 class="card my-2"
 			>
-				"[{\"tagName\":\"body\"}]"
-			</textarea>
-			<button
-			 class="btn btn-primary"
-			>
-				"Clear"
-			</button>
+				<div
+				 class="card-body"
+				>
+					<ul
+					 class="mb-0"
+					>
+						<li>
+							<strong>
+								"body"
+							</strong>
+						</li>
+					</ul>
+				</div>
+			</div>
 		</div>
 	</div>
 </body>

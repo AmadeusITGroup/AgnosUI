@@ -4,7 +4,7 @@
 
 	const getPageSymbol = (displayedPage: number) => ['A', 'B', 'C', 'D', 'E', 'F'][displayedPage - 1];
 
-	let page = 4;
+	let page = $state(4);
 </script>
 
 <p>A pagination with customized links:</p>

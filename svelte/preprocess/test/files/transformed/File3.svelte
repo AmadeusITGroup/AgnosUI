@@ -1,4 +1,4 @@
-<script context="module">
+<script module>
 import {ssrAttributes as __AgnosUISveltePreprocess__ssrAttributes} from '@agnos-ui/svelte-headless/utils/directive';
 import {BROWSER as __AgnosUISveltePreprocess__BROWSER} from 'esm-env';
 
