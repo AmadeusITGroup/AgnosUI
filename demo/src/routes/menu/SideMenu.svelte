@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 	export let counter = 0;
 </script>
 
@@ -20,8 +20,8 @@
 
 	const regexFwk = /^(.*\/)(angular|react|svelte|typescript)(\/.*)$/;
 	const regexPkg = /^(.*\/api\/)(angular|react|svelte|typescript)\/(bootstrap|headless)(\/.*)$/;
-	$: matchFwk = $page.url.pathname.match(regexFwk);
-	$: matchPkg = $page.url.pathname.match(regexPkg);
+	let matchFwk = $derived($page.url.pathname.match(regexFwk));
+	let matchPkg = $derived($page.url.pathname.match(regexPkg));
 
 	const angularLogoPrefix = counter++ + '-';
 	const patchedAngularLogo = angularLogo
@@ -31,92 +31,93 @@
 	interface FwkLink extends DropdownAnchor {
 		logo: string;
 	}
-	let frameworks: FwkLink[];
-	$: frameworks = matchFwk
-		? [
-				...(($page.data.includesPkg
-					? [
-							{
-								tag: 'a',
-								id: 'Typescript',
-								href: `${matchFwk[1]}typescript${matchFwk[3]}`,
-								isSelected: $selectedApiFramework$ === 'typescript',
-								logo: typescriptLogo,
-							},
-						]
-					: []) as FwkLink[]),
-				{
-					tag: 'a',
-					id: 'Angular',
-					href: `${matchFwk[1]}angular${matchFwk[3]}`,
-					isSelected: $selectedApiFramework$ === 'angular',
-					logo: patchedAngularLogo,
-				},
-				{
-					tag: 'a',
-					id: 'React',
-					href: `${matchFwk[1]}react${matchFwk[3]}`,
-					isSelected: $selectedApiFramework$ === 'react',
-					logo: reactLogo,
-				},
-				{
-					tag: 'a',
-					id: 'Svelte',
-					href: `${matchFwk[1]}svelte${matchFwk[3]}`,
-					isSelected: $selectedApiFramework$ === 'svelte',
-					logo: svelteLogo,
-				},
-			]
-		: [];
-	$: selectedFwk = frameworks.find((fwk) => fwk.isSelected)!;
-
-	let packages: FwkLink[];
-	$: packages = matchPkg
-		? [
-				{
-					tag: 'a',
-					id: 'Headless',
-					href: `${matchPkg[1]}${matchPkg[2]}/headless${matchPkg[4]}`,
-					isSelected: $page.params.type === 'headless',
-					logo: agnosUILogo,
-				},
-				{
-					tag: 'a',
-					id: 'Bootstrap',
-					href: `${matchPkg[1]}${matchPkg[2]}/bootstrap${matchPkg[4]}`,
-					isSelected: $page.params.type === 'bootstrap',
-					logo: bootstrapLogo,
-				},
-			]
-		: [];
-	$: selectedPkg = packages.find((pkg) => pkg.isSelected)!;
+	let frameworks: FwkLink[] = $derived(
+		matchFwk
+			? [
+					...(($page.data.includesPkg
+						? [
+								{
+									tag: 'a',
+									id: 'Typescript',
+									href: `${matchFwk[1]}typescript${matchFwk[3]}`,
+									isSelected: $selectedApiFramework$ === 'typescript',
+									logo: typescriptLogo,
+								},
+							]
+						: []) as FwkLink[]),
+					{
+						tag: 'a',
+						id: 'Angular',
+						href: `${matchFwk[1]}angular${matchFwk[3]}`,
+						isSelected: $selectedApiFramework$ === 'angular',
+						logo: patchedAngularLogo,
+					},
+					{
+						tag: 'a',
+						id: 'React',
+						href: `${matchFwk[1]}react${matchFwk[3]}`,
+						isSelected: $selectedApiFramework$ === 'react',
+						logo: reactLogo,
+					},
+					{
+						tag: 'a',
+						id: 'Svelte',
+						href: `${matchFwk[1]}svelte${matchFwk[3]}`,
+						isSelected: $selectedApiFramework$ === 'svelte',
+						logo: svelteLogo,
+					},
+				]
+			: [],
+	);
+	let selectedFwk = $derived(frameworks.find((fwk) => fwk.isSelected)!);
+	let packages: FwkLink[] = $derived(
+		matchPkg
+			? [
+					{
+						tag: 'a',
+						id: 'Headless',
+						href: `${matchPkg[1]}${matchPkg[2]}/headless${matchPkg[4]}`,
+						isSelected: $page.params.type === 'headless',
+						logo: agnosUILogo,
+					},
+					{
+						tag: 'a',
+						id: 'Bootstrap',
+						href: `${matchPkg[1]}${matchPkg[2]}/bootstrap${matchPkg[4]}`,
+						isSelected: $page.params.type === 'bootstrap',
+						logo: bootstrapLogo,
+					},
+				]
+			: [],
+	);
+	let selectedPkg = $derived(packages.find((pkg) => pkg.isSelected)!);
 </script>
 
 <nav class="w-100 mt-1">
 	{#if $page.data.includesFwk}
 		<strong class="d-flex w-100 align-items-center fw-semibold">Framework </strong>
 		<Dropdown ariaLabel="choose the framework" items={frameworks} dropdownClass="mb-2 mt-1" btnClass="btn-outline-primary">
-			<svelte:fragment slot="button">
+			{#snippet buttonSnip()}
 				<Svg svg={selectedFwk.logo} className="icon-20 align-middle me-3" />
 				<span class="fwk-name">{selectedFwk.id}</span>
-			</svelte:fragment>
-			<svelte:fragment slot="item" let:item>
+			{/snippet}
+			{#snippet itemSnip(item)}
 				<Svg svg={item.logo} className="icon-20 align-middle me-3" />
 				{item.id}
-			</svelte:fragment>
+			{/snippet}
 		</Dropdown>
 	{/if}
 	{#if $page.data.includesPkg}
 		<strong class="d-flex w-100 align-items-center fw-semibold">Package </strong>
 		<Dropdown ariaLabel="choose the package" items={packages} dropdownClass="mb-2 mt-1" btnClass="btn-outline-primary">
-			<svelte:fragment slot="button">
+			{#snippet buttonSnip()}
 				<Svg svg={selectedPkg.logo} className="icon-20 align-middle me-3" />
 				<span class="pkg-name">{selectedPkg.id}</span>
-			</svelte:fragment>
-			<svelte:fragment slot="item" let:item>
+			{/snippet}
+			{#snippet itemSnip(item)}
 				<Svg svg={item.logo} className="icon-20 align-middle me-3" />
 				{item.id}
-			</svelte:fragment>
+			{/snippet}
 		</Dropdown>
 		<hr />
 	{/if}

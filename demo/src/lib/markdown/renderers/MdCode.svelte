@@ -5,30 +5,36 @@
 	import {selectedFramework$} from '$lib/stores';
 	import samples from '../samples';
 
-	export let lang: string;
-	export let text: string;
+	interface Props {
+		lang: string;
+		text: string;
+	}
 
-	let code = '';
-	let title: string;
-	let sample: SampleInfo;
-	let height = 500;
+	let {lang, text}: Props = $props();
 
-	let showCode = true;
-	let noresize = false;
+	let code = $state('');
+	let title = $state('');
+	let sample: SampleInfo | undefined = $state();
+	let height = $state(500);
+
+	let showCode = $state(true);
+	let noresize = $state(false);
 
 	const extensions: Map<string, string> = new Map();
 	extensions.set('typescript', 'ts');
 	extensions.set('bash', 'sh');
 
-	async function getCode(text: string, selectedFramework: string, lang: string) {
+	$effect(() => {
 		if (lang !== 'sample' && text.trim().match(/^\{[a-z-]+\}$/) && extensions.has(lang)) {
 			const codeKey = text.trim().slice(1, -1);
-			code = (await import(`../../../../../docs/code/${codeKey}/${codeKey}-${selectedFramework}.${extensions.get(lang)}?raw`)).default;
+			void import(`../../../../../docs/code/${codeKey}/${codeKey}-${$selectedFramework$}.${extensions.get(lang)}?raw`).then(
+				(val) => (code = val.default),
+			);
 		} else {
 			code = text.trim();
 		}
-	}
-	function getSample(text: string, lang: string) {
+	});
+	$effect(() => {
 		if (lang === 'sample') {
 			const match = text.trim().match(/^\{([^:]+):([a-zA-Z-/]+):(\d+)(:noCode)?(:noResize)?\}$/);
 			if (match) {
@@ -42,10 +48,7 @@
 				noresize = !!match[5];
 			}
 		}
-	}
-
-	$: void getCode(text, $selectedFramework$, lang);
-	$: void getSample(text, lang);
+	});
 </script>
 
 {#if lang === 'sample'}

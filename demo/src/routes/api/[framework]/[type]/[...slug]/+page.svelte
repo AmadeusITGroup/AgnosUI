@@ -9,15 +9,16 @@
 	import Header from '$lib/layout/Header.svelte';
 	import ApiSection from '$lib/api/render/ApiSection.svelte';
 	import {selectedPackageType$} from '$lib/stores';
+	import type {PageData} from './$types';
 
-	export let data;
+	let {data}: {data: PageData} = $props();
 
 	const overrideRenderers = {
 		heading: ApiHeading,
 		paragraph: ApiParagraph,
 		code: ApiCode,
 		section: ApiSection,
-	};
+	} as any;
 </script>
 
 <Header title={data.title} cssFramework={$selectedPackageType$} />

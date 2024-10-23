@@ -4,10 +4,13 @@
 	import ComponentTypeAlert from '$lib/layout/ComponentTypeAlert.svelte';
 	import {selectedTabName$} from '$lib/stores';
 	import {page} from '$app/stores';
+	import type {Snippet} from 'svelte';
 
-	$: tabs = $page.data.tabs ?? [];
-	$: selectedTab = tabs.find((tabItem: any) => tabItem.key === $selectedTabName$);
-	$: pageTitle = `${$page.data.title} ${selectedTab?.title.toLowerCase() ?? ''}`;
+	let {children}: {children: Snippet} = $props();
+
+	let tabs = $derived($page.data.tabs ?? []);
+	let selectedTab = $derived(tabs.find((tabItem: any) => tabItem.key === $selectedTabName$));
+	let pageTitle = $derived(`${$page.data.title} ${selectedTab?.title.toLowerCase() ?? ''}`);
 </script>
 
 <Header title={$page.data.title} {pageTitle} status={$page.data.status} cssFramework="bootstrap" />
@@ -18,5 +21,5 @@
 	{#if $page.data.type === 'standalone'}
 		<ComponentTypeAlert componentType={$page.data.type} />
 	{/if}
-	<slot />
+	{@render children()}
 </div>

@@ -1,39 +1,48 @@
 <script lang="ts">
 	import highlighter, {languageFromFileName, langs} from './highlight';
-	import {tooltip} from '$lib/tooltip/tooltip';
+	import {tooltip} from '$lib/tooltip/tooltip-directive.svelte';
 	import clipboard from 'bootstrap-icons/icons/clipboard.svg?raw';
 	import clipboardCheck from 'bootstrap-icons/icons/clipboard-check.svg?raw';
 	import Svg from './Svg.svelte';
-	import {writable} from '@amadeus-it-group/tansu';
 
-	export let code: string;
-	export let fileName: string | undefined = undefined;
-	export let language: string | undefined = undefined;
-	export let className: string = '';
-	export let noCopy = false;
+	interface Props {
+		code: string;
+		fileName?: string;
+		language?: string;
+		className?: string;
+		noCopy?: boolean;
+	}
 
-	const copied = writable(false);
+	let {code, fileName, language, className = '', noCopy = false}: Props = $props();
+
+	let copied = $state(false);
 	async function copyCode() {
 		await navigator.clipboard.writeText(code);
-		copied.set(true);
+		copied = true;
 	}
-	let showButton = false;
-	$: if (!showButton) copied.set(false);
+	let showButton = $state(false);
+	$effect(() => {
+		if (!showButton) {
+			copied = false;
+		}
+	});
 
-	$: appliedLanguage = language ?? languageFromFileName(fileName);
-	$: formattedCode = code
-		? highlighter.codeToHtml(code, {
-				lang: appliedLanguage && langs.includes(appliedLanguage) ? appliedLanguage : 'text',
-				themes: {light: 'light-plus', dark: 'dark-plus'},
-			})
-		: null;
+	let appliedLanguage = $derived(language ?? languageFromFileName(fileName));
+	let formattedCode = $derived(
+		code
+			? highlighter.codeToHtml(code, {
+					lang: appliedLanguage && langs.includes(appliedLanguage) ? appliedLanguage : 'text',
+					themes: {light: 'light-plus', dark: 'dark-plus'},
+				})
+			: null,
+	);
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
 	class={`bg-light-subtle doc p-0 d-flex ${className}`}
-	on:mouseenter={() => (showButton = !noCopy)}
-	on:mouseleave={() => (showButton = false)}
+	onmouseenter={() => (showButton = !noCopy)}
+	onmouseleave={() => (showButton = false)}
 	style:min-height={noCopy ? 'unset' : '60px'}
 >
 	{#if formattedCode != null}
@@ -43,8 +52,8 @@
 		<button
 			class="btn btn-secondary copy d-flex align-items-center justify-content-center"
 			aria-label="copy to clipboard"
-			use:tooltip={{content: $copied ? 'Copied !' : 'Copy to clipboard'}}
-			on:click={copyCode}><Svg className={`align-middle icon-20`} svg={$copied ? clipboardCheck : clipboard} /></button
+			use:tooltip={{content: copied ? 'Copied !' : 'Copy to clipboard'}}
+			onclick={copyCode}><Svg className={`align-middle icon-20`} svg={copied ? clipboardCheck : clipboard} /></button
 		>
 	{/if}
 </div>

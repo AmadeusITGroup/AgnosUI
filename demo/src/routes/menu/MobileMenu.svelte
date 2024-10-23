@@ -7,18 +7,18 @@
 	import {pathToRoot$, selectedFramework$, selectedApiFramework$} from '$lib/stores';
 	import {page} from '$app/stores';
 
-	let open = false;
+	let open = $state(false);
 
-	function onClose() {
+	function onclose() {
 		open = false;
 	}
-	$: isApi = $page.route.id?.startsWith('/api/');
+	let isApi = $derived($page.route.id?.startsWith('/api/'));
 </script>
 
 <button
 	class="btn d-flex align-items-center px-0"
 	aria-expanded={open}
-	on:click={() => {
+	onclick={() => {
 		open = true;
 	}}
 	aria-label="open the mobile menu"
@@ -26,7 +26,7 @@
 	<Svg svg={threeDots} className="icon-20 me-1" />
 </button>
 
-<MobileDialog title="AgnosUI" {open} on:close={onClose}>
+<MobileDialog title="AgnosUI" {open} {onclose}>
 	<nav class="navbar navbar-light flex-column align-items-stretch">
 		<a
 			class="nav-item nav-link"

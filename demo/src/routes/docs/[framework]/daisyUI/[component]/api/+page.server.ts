@@ -14,9 +14,6 @@ export const load = async ({params}) => {
 			component: params.component,
 			...file,
 			title: params.component.slice(0, 1).toUpperCase() + params.component.slice(1),
-			pageMeta: {
-				description: `API Documentation for ${params.component}`,
-			},
 		};
 	}
 };

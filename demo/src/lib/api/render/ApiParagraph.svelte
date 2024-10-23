@@ -1,10 +1,10 @@
 <script>
-	export let raw;
+	/** @type {{raw: any, text: any, children: import('svelte').Snippet}} */
+	let {raw, text, children} = $props();
 	// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 	raw;
-	export let text;
 	// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 	text;
 </script>
 
-<p><slot /></p>
+<p>{@render children()}</p>

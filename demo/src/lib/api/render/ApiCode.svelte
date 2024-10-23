@@ -1,7 +1,13 @@
 <script lang="ts">
 	import Code from '$lib/layout/Code.svelte';
-	export let lang: string;
-	export let text: string;
+
+	let {
+		lang,
+		text,
+	}: {
+		lang: string;
+		text: string;
+	} = $props();
 </script>
 
 <Code language={lang.trim() || 'text'} code={text.trim()} noCopy />

@@ -4,15 +4,20 @@
 	import {collapseVerticalTransition} from '@agnos-ui/svelte-bootstrap/services/transitions/bootstrap';
 	import {writable} from '@amadeus-it-group/tansu';
 	import type {Page} from '@sveltejs/kit';
-	import {onMount} from 'svelte';
+	import {onMount, type Snippet} from 'svelte';
 	import {get} from 'svelte/store';
 
-	export let headerText: string;
-	export let path: {
-		path: string;
-		subpath: string;
-		label: string;
-	}[];
+	interface Props {
+		headerText: string;
+		path: {
+			path: string;
+			subpath: string;
+			label: string;
+		}[];
+		children: Snippet;
+	}
+
+	let {headerText, path, children}: Props = $props();
 
 	const paramAnimated$ = writable(false);
 	const defaultVisible = isOnPage(get(page));
@@ -46,7 +51,7 @@
 	<button
 		class="btn p-1 d-flex align-items-center btn-header fw-semibold w-100 justify-content-between"
 		aria-expanded={$visible$}
-		on:click={() => toggle()}
+		onclick={() => toggle()}
 		>{headerText}
 		<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 100 100" class="ms-1">
 			<rect class="horizontal" x="20" y="45" width="60" height="10" fill="currentColor" />
@@ -54,7 +59,7 @@
 		</svg>
 	</button>
 	<div class="contents" use:directive={{transition: collapseVerticalTransition, animated: $paramAnimated$}}>
-		<slot />
+		{@render children()}
 	</div>
 </div>
 
