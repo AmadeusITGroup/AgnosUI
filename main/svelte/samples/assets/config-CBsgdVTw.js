@@ -1,0 +1,1 @@
+import{a as t}from"./config-Dx2j-Ppr.js";const o=t(Symbol("bootstrapWidgetsConfig")),{widgetsDefaultConfigKey:i,createWidgetsDefaultConfig:a,getContextWidgetConfig:g,callWidgetFactory:s}=o;export{a,s as c};
