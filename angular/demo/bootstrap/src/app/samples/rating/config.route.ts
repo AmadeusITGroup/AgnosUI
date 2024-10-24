@@ -1,13 +1,13 @@
 import type {RatingProps} from '@agnos-ui/angular-bootstrap';
-import {RatingComponent, injectWidgetsConfig, provideWidgetsConfig, toAngularSignal} from '@agnos-ui/angular-bootstrap';
+import {RatingComponent, RatingStarDirective, injectWidgetsConfig, provideWidgetsConfig, toAngularSignal} from '@agnos-ui/angular-bootstrap';
 import {Component, signal} from '@angular/core';
 
 @Component({
 	standalone: true,
-	imports: [RatingComponent],
+	imports: [RatingComponent, RatingStarDirective],
 	providers: [provideWidgetsConfig()],
 	template: `
-		<ng-template #custom let-fill="fill">
+		<ng-template #custom auRatingStar let-fill="fill">
 			<span class="star" [class.full]="fill === 100"> <span class="half" [style.width.%]="fill">&hearts;</span>&hearts; </span>
 		</ng-template>
 		<div [(auRating)]="rating"></div>

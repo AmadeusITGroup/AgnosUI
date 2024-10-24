@@ -75,17 +75,20 @@ export class CollapseDirective extends BaseWidgetDirective<CollapseWidget> {
 	 */
 	@Output('auShown') shown = new EventEmitter<void>();
 
-	readonly _widget = callWidgetFactory({
-		factory: createCollapse,
-		widgetName: 'collapse',
-		defaultConfig: {},
-		events: {
-			onVisibleChange: (event) => this.visibleChange.emit(event),
-			onShown: () => this.shown.emit(),
-			onHidden: () => this.hidden.emit(),
-		},
-		afterInit: () => {
-			useDirectiveForHost(this._widget.directives.transitionDirective);
-		},
-	});
+	constructor() {
+		super(
+			callWidgetFactory({
+				factory: createCollapse,
+				widgetName: 'collapse',
+				events: {
+					onVisibleChange: (event) => this.visibleChange.emit(event),
+					onShown: () => this.shown.emit(),
+					onHidden: () => this.hidden.emit(),
+				},
+				afterInit: (widget) => {
+					useDirectiveForHost(widget.directives.transitionDirective);
+				},
+			}),
+		);
+	}
 }

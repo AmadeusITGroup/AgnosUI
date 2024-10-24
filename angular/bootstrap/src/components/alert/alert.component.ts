@@ -1,16 +1,7 @@
 import type {SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
-import {
-	BaseWidgetDirective,
-	ComponentTemplate,
-	ContentAsSlotDirective,
-	SlotDirective,
-	UseDirective,
-	auBooleanAttribute,
-} from '@agnos-ui/angular-headless';
-import type {AlertContext, AlertProps, AlertWidget} from './alert.gen';
+import {BaseWidgetDirective, ComponentTemplate, SlotDirective, UseDirective, auBooleanAttribute} from '@agnos-ui/angular-headless';
+import type {AlertContext, AlertWidget} from './alert.gen';
 import {createAlert} from './alert.gen';
-import {type WritableSignal, writable} from '@amadeus-it-group/tansu';
-import type {AfterContentChecked} from '@angular/core';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -47,44 +38,39 @@ export class AlertStructureDirective {
 	imports: [SlotDirective, AlertStructureDirective],
 	template: ` <ng-template auAlertStructure #structure let-state="state" let-api="api" let-directives="directives">
 		<div class="alert-body">
-			<ng-template [auSlot]="state.children" [auSlotProps]="{state, api, directives}"></ng-template>
+			<ng-template [auSlot]="state.children()" [auSlotProps]="{state, api, directives}"></ng-template>
 		</div>
-		@if (state.dismissible) {
-			<button type="button" class="btn-close" (click)="api.close()" [attr.aria-label]="state.ariaCloseButtonLabel"></button>
+		@if (state.dismissible()) {
+			<button type="button" class="btn-close" (click)="api.close()" [attr.aria-label]="state.ariaCloseButtonLabel()"></button>
 		}
 	</ng-template>`,
 })
-export class AlertDefaultSlotsComponent {
+class AlertDefaultSlotsComponent {
 	@ViewChild('structure', {static: true}) structure!: TemplateRef<AlertContext>;
 }
 
 export const alertDefaultSlotStructure = new ComponentTemplate(AlertDefaultSlotsComponent, 'structure');
 
-export type PartialAlertProps = Partial<AlertProps>;
-const defaultConfig: PartialAlertProps = {
-	structure: alertDefaultSlotStructure,
-};
-
 @Component({
 	selector: '[auAlert]',
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [SlotDirective, UseDirective, ContentAsSlotDirective],
-	template: ` <ng-template [auContentAsSlot]="defaultSlots">
+	imports: [SlotDirective, UseDirective],
+	template: ` <ng-template #content>
 			<ng-content></ng-content>
 		</ng-template>
 
-		@if (!state().hidden) {
+		@if (!state.hidden()) {
 			<div
 				[auUse]="directives.transitionDirective"
-				class="au-alert alert alert-{{ state().type }} {{ state().className }} {{ state().dismissible ? 'alert-dismissible' : '' }}"
+				class="au-alert alert alert-{{ state.type() }} {{ state.className() }} {{ state.dismissible() ? 'alert-dismissible' : '' }}"
 				role="alert"
 			>
-				<ng-template [auSlot]="state().structure" [auSlotProps]="{state: state(), api, directives}"></ng-template>
+				<ng-template [auSlot]="state.structure()" [auSlotProps]="{state, api, directives}"></ng-template>
 			</div>
 		}`,
 })
-export class AlertComponent extends BaseWidgetDirective<AlertWidget> implements AfterContentChecked {
+export class AlertComponent extends BaseWidgetDirective<AlertWidget> {
 	/**
 	 * Type of the alert, following bootstrap types.
 	 *
@@ -192,8 +178,6 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> implements 
 	 */
 	@Output('auShown') shown = new EventEmitter<void>();
 
-	readonly defaultSlots: WritableSignal<PartialAlertProps> = writable(defaultConfig);
-
 	/**
 	 * CSS classes to be applied on the widget main container
 	 *
@@ -201,21 +185,28 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> implements 
 	 */
 	@Input('auClassName') className: string | undefined;
 
-	readonly _widget = callWidgetFactory({
-		factory: createAlert,
-		widgetName: 'alert',
-		defaultConfig: this.defaultSlots,
-		events: {
-			onVisibleChange: (event) => this.visibleChange.emit(event),
-			onShown: () => this.shown.emit(),
-			onHidden: () => this.hidden.emit(),
-		},
-	});
+	@ViewChild('content', {static: true})
+	slotChildren?: TemplateRef<void>;
 
-	ngAfterContentChecked(): void {
-		this._widget.patchSlots({
-			children: this.slotDefaultFromContent?.templateRef,
-			structure: this.slotStructureFromContent?.templateRef,
-		});
+	constructor() {
+		super(
+			callWidgetFactory({
+				factory: createAlert,
+				widgetName: 'alert',
+				defaultConfig: {
+					structure: alertDefaultSlotStructure,
+				},
+				events: {
+					onVisibleChange: (event) => this.visibleChange.emit(event),
+					onShown: () => this.shown.emit(),
+					onHidden: () => this.hidden.emit(),
+				},
+				slotTemplates: () => ({
+					children: this.slotDefaultFromContent?.templateRef,
+					structure: this.slotStructureFromContent?.templateRef,
+				}),
+				slotChildren: () => this.slotChildren,
+			}),
+		);
 	}
 }

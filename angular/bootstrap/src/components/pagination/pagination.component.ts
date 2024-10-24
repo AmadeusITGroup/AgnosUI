@@ -1,6 +1,5 @@
 import type {SlotContent} from '@agnos-ui/angular-headless';
 import {BaseWidgetDirective, ComponentTemplate, SlotDirective, UseDirective, auBooleanAttribute, auNumberAttribute} from '@agnos-ui/angular-headless';
-import type {AfterContentChecked} from '@angular/core';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -15,7 +14,7 @@ import {
 	inject,
 } from '@angular/core';
 import {callWidgetFactory} from '../../config';
-import type {PaginationContext, PaginationNumberContext, PaginationProps, PaginationWidget} from './pagination.gen';
+import type {PaginationContext, PaginationNumberContext, PaginationWidget} from './pagination.gen';
 import {createPagination} from './pagination.gen';
 
 /**
@@ -112,18 +111,18 @@ export class PaginationStructureDirective {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
 		<ng-template auPaginationPages #pages let-state="state" let-api="api" let-directives="directives">
-			@for (page of state.pages; track page; let i = $index) {
-				<li class="page-item" [class.active]="page === state.page" [class.disabled]="page === -1 || state.disabled">
+			@for (page of state.pages(); track page; let i = $index) {
+				<li class="page-item" [class.active]="page === state.page()" [class.disabled]="page === -1 || state.disabled()">
 					@if (page === -1) {
 						<div class="page-link au-ellipsis" aria-hidden="true">
-							<ng-template [auSlot]="state.ellipsisLabel" [auSlotProps]="{state, api, directives}"></ng-template>
+							<ng-template [auSlot]="state.ellipsisLabel()" [auSlotProps]="{state, api, directives}"></ng-template>
 						</div>
-						<span class="visually-hidden">{{ state.ariaEllipsisLabel }}</span>
+						<span class="visually-hidden">{{ state.ariaEllipsisLabel() }}</span>
 					} @else {
 						<a class="page-link" [auUse]="[directives.pageLink, {page}]">
-							<ng-template [auSlot]="state.numberLabel" [auSlotProps]="{state, api, directives, displayedPage: page}"></ng-template>
-							@if (state.page === page) {
-								<span class="visually-hidden">{{ state.activeLabel }}</span>
+							<ng-template [auSlot]="state.numberLabel()" [auSlotProps]="{state, api, directives, displayedPage: page}"></ng-template>
+							@if (state.page() === page) {
+								<span class="visually-hidden">{{ state.activeLabel() }}</span>
 							}
 						</a>
 					}
@@ -131,50 +130,50 @@ export class PaginationStructureDirective {
 			}
 		</ng-template>
 		<ng-template auPaginationStructure #structure let-state="state" let-api="api" let-directives="directives">
-			<ul [class]="'au-pagination pagination' + (state.size ? ' pagination-' + state.size : '') + ' ' + state.className">
-				@if (state.boundaryLinks) {
-					<li class="page-item" [class.disabled]="state.previousDisabled">
+			<ul [class]="'au-pagination pagination' + (state.size() ? ' pagination-' + state.size() : '') + ' ' + state.className()">
+				@if (state.boundaryLinks()) {
+					<li class="page-item" [class.disabled]="state.previousDisabled()">
 						<a class="page-link" [auUse]="directives.pageFirst">
 							<span aria-hidden="true">
-								<ng-template [auSlot]="state.firstPageLabel" [auSlotProps]="{state, api, directives}"></ng-template>
+								<ng-template [auSlot]="state.firstPageLabel()" [auSlotProps]="{state, api, directives}"></ng-template>
 							</span>
 						</a>
 					</li>
 				}
-				@if (state.directionLinks) {
-					<li class="page-item" [class.disabled]="state.previousDisabled">
+				@if (state.directionLinks()) {
+					<li class="page-item" [class.disabled]="state.previousDisabled()">
 						<a class="page-link" [auUse]="directives.pagePrev">
 							<span aria-hidden="true">
-								<ng-template [auSlot]="state.previousPageLabel" [auSlotProps]="{state, api, directives}"></ng-template>
+								<ng-template [auSlot]="state.previousPageLabel()" [auSlotProps]="{state, api, directives}"></ng-template>
 							</span>
 						</a>
 					</li>
 				}
-				<ng-template [auSlot]="state.pagesDisplay" [auSlotProps]="{state, api, directives}"></ng-template>
-				@if (state.directionLinks) {
-					<li class="page-item" [class.disabled]="state.nextDisabled">
+				<ng-template [auSlot]="state.pagesDisplay()" [auSlotProps]="{state, api, directives}"></ng-template>
+				@if (state.directionLinks()) {
+					<li class="page-item" [class.disabled]="state.nextDisabled()">
 						<a class="page-link" [auUse]="directives.pageNext">
 							<span aria-hidden="true">
-								<ng-template [auSlot]="state.nextPageLabel" [auSlotProps]="{state, api, directives}"></ng-template>
+								<ng-template [auSlot]="state.nextPageLabel()" [auSlotProps]="{state, api, directives}"></ng-template>
 							</span>
 						</a>
 					</li>
 				}
-				@if (state.boundaryLinks) {
-					<li class="page-item" [class.disabled]="state.nextDisabled">
+				@if (state.boundaryLinks()) {
+					<li class="page-item" [class.disabled]="state.nextDisabled()">
 						<a class="page-link" [auUse]="directives.pageLast">
 							<span aria-hidden="true">
-								<ng-template [auSlot]="state.lastPageLabel" [auSlotProps]="{state, api, directives}"></ng-template>
+								<ng-template [auSlot]="state.lastPageLabel()" [auSlotProps]="{state, api, directives}"></ng-template>
 							</span>
 						</a>
 					</li>
 				}
 			</ul>
-			<div aria-live="polite" class="visually-hidden">{{ state.ariaLiveLabelText }}</div>
+			<div aria-live="polite" class="visually-hidden">{{ state.ariaLiveLabelText() }}</div>
 		</ng-template>
 	`,
 })
-export class PaginationDefaultSlotsComponent {
+class PaginationDefaultSlotsComponent {
 	@ViewChild('pages', {static: true}) pages!: TemplateRef<PaginationContext>;
 	@ViewChild('structure', {static: true}) structure!: TemplateRef<PaginationContext>;
 }
@@ -187,23 +186,18 @@ export const paginationDefaultSlotPages = new ComponentTemplate(PaginationDefaul
  */
 export const paginationDefaultSlotStructure = new ComponentTemplate(PaginationDefaultSlotsComponent, 'structure');
 
-const defaultConfig: Partial<PaginationProps> = {
-	structure: paginationDefaultSlotStructure,
-	pagesDisplay: paginationDefaultSlotPages,
-};
-
 @Component({
 	selector: '[auPagination]',
 	standalone: true,
 	imports: [SlotDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	host: {
-		'[attr.aria-label]': 'state().ariaLabel',
+		'[attr.aria-label]': 'state.ariaLabel()',
 	},
 	encapsulation: ViewEncapsulation.None,
-	template: `<ng-template [auSlotProps]="{state: state(), api, directives}" [auSlot]="state().structure"></ng-template>`,
+	template: `<ng-template [auSlotProps]="{state, api, directives}" [auSlot]="state.structure()"></ng-template>`,
 })
-export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> implements AfterContentChecked {
+export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> {
 	/**
 	 * Provide the label for each "Page" page button.
 	 * This is used for accessibility purposes.
@@ -324,15 +318,6 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 * ```
 	 */
 	@Input('auPageLink') pageLink: ((pageNumber: number) => string) | undefined;
-
-	readonly _widget = callWidgetFactory({
-		factory: createPagination,
-		widgetName: 'pagination',
-		defaultConfig,
-		events: {
-			onPageChange: (page: number) => this.pageChange.emit(page),
-		},
-	});
 
 	/**
 	 * The template to use for the ellipsis slot
@@ -525,16 +510,29 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> i
 	 */
 	@Input('auClassName') className: string | undefined;
 
-	ngAfterContentChecked(): void {
-		this._widget.patchSlots({
-			structure: this.slotStructureFromContent?.templateRef,
-			ellipsisLabel: this.slotEllipsisFromContent?.templateRef,
-			firstPageLabel: this.slotFirstFromContent?.templateRef,
-			previousPageLabel: this.slotPreviousFromContent?.templateRef,
-			nextPageLabel: this.slotNextFromContent?.templateRef,
-			lastPageLabel: this.slotLastFromContent?.templateRef,
-			pagesDisplay: this.slotPagesFromContent?.templateRef,
-			numberLabel: this.slotNumberLabelFromContent?.templateRef,
-		});
+	constructor() {
+		super(
+			callWidgetFactory({
+				factory: createPagination,
+				widgetName: 'pagination',
+				defaultConfig: {
+					structure: paginationDefaultSlotStructure,
+					pagesDisplay: paginationDefaultSlotPages,
+				},
+				events: {
+					onPageChange: (page: number) => this.pageChange.emit(page),
+				},
+				slotTemplates: () => ({
+					structure: this.slotStructureFromContent?.templateRef,
+					ellipsisLabel: this.slotEllipsisFromContent?.templateRef,
+					firstPageLabel: this.slotFirstFromContent?.templateRef,
+					previousPageLabel: this.slotPreviousFromContent?.templateRef,
+					nextPageLabel: this.slotNextFromContent?.templateRef,
+					lastPageLabel: this.slotLastFromContent?.templateRef,
+					pagesDisplay: this.slotPagesFromContent?.templateRef,
+					numberLabel: this.slotNumberLabelFromContent?.templateRef,
+				}),
+			}),
+		);
 	}
 }

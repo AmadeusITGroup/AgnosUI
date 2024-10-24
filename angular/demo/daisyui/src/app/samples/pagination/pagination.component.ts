@@ -34,11 +34,15 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> {
 	readonly pagesFactory = input<(page: number, pageCount: number) => number[]>();
 	readonly className = input<string>();
 
-	readonly _widget = callWidgetFactory({
-		factory: createPagination,
-		widgetName: 'pagination',
-		events: {
-			onPageChange: (page: number) => this.page.set(page),
-		},
-	});
+	constructor() {
+		super(
+			callWidgetFactory({
+				factory: createPagination,
+				widgetName: 'pagination',
+				events: {
+					onPageChange: (page: number) => this.page.set(page),
+				},
+			}),
+		);
+	}
 }

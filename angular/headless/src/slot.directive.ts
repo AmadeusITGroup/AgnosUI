@@ -1,4 +1,4 @@
-import type {ComponentRef, EmbeddedViewRef, OnChanges, OnDestroy, SimpleChanges, Type, OnInit} from '@angular/core';
+import type {ComponentRef, EmbeddedViewRef, OnChanges, OnDestroy, SimpleChanges, Type} from '@angular/core';
 import {
 	Component,
 	Directive,
@@ -13,7 +13,6 @@ import {
 } from '@angular/core';
 import type {SlotContent} from './types';
 import {ComponentTemplate} from './types';
-import type {WritableSignal} from '@amadeus-it-group/tansu';
 
 abstract class SlotHandler<Props extends Record<string, any>, Slot extends SlotContent<Props> = SlotContent<Props>> {
 	constructor(public viewContainerRef: ViewContainerRef) {}
@@ -223,21 +222,5 @@ export class SlotDirective<Props extends Record<string, any>> implements OnChang
 	ngOnDestroy(): void {
 		this._slotHandler?.destroy();
 		this._slotHandler = undefined;
-	}
-}
-
-/**
- * Directive that allows to pass the templateRef associated to a ng-content to a store.
- * The input of the directive is a {@link WritableSignal}<{children: {@link SlotContent}<T>}>.
- */
-@Directive({selector: '[auContentAsSlot]', standalone: true})
-export class ContentAsSlotDirective<T extends object> implements OnInit {
-	@Input({alias: 'auContentAsSlot', required: true}) auContentAsSlot!: WritableSignal<{children?: SlotContent<T>}>;
-
-	templateRef = inject(TemplateRef<T>);
-
-	/** @inheritdoc */
-	ngOnInit(): void {
-		this.auContentAsSlot.update((value) => ({...value, children: this.templateRef}));
 	}
 }

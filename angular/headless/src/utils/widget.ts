@@ -1,7 +1,7 @@
-import {computed, writable, type ReadableSignal} from '@amadeus-it-group/tansu';
-import type {OnChanges, OnInit, Signal, SimpleChanges} from '@angular/core';
+import {computed, type ReadableSignal, writable} from '@amadeus-it-group/tansu';
+import type {AfterContentChecked, OnChanges, OnInit, SimpleChanges, TemplateRef} from '@angular/core';
 import {Directive, Injector, inject, runInInjectionContext} from '@angular/core';
-import {type AngularWidget, type Widget, type WidgetFactory, type WidgetProps, type WidgetState} from '../types';
+import type {AngularState, AngularWidget, IsSlotContent, SlotContent, Widget, WidgetFactory, WidgetProps} from '../types';
 import {toAngularSignal, toReadableStore} from './stores';
 import {ZoneWrapper} from './zone';
 
@@ -36,6 +36,8 @@ const createPatchSlots = <T extends object>(set: (object: Partial<T>) => void) =
  * @param parameter.widgetConfig - the config of the widget, overriding the defaultConfig
  * @param parameter.events - the events of the widget
  * @param parameter.afterInit - a callback to call after successful setup of the widget
+ * @param parameter.slotTemplates - a function to provide all slot templates using child queries
+ * @param parameter.slotChildren - a function to provide the default children slot using a view query
  * @returns the widget
  */
 export const callWidgetFactoryWithConfig = <W extends Widget>({
@@ -44,23 +46,37 @@ export const callWidgetFactoryWithConfig = <W extends Widget>({
 	widgetConfig,
 	events,
 	afterInit,
+	slotTemplates,
+	slotChildren,
 }: {
 	factory: WidgetFactory<W>;
 	defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
 	widgetConfig?: null | undefined | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
 	events?: Partial<Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}`>>;
-	afterInit?: () => void;
+	afterInit?: (widget: AngularWidget<W>) => void;
+	slotTemplates?: () => {
+		[K in keyof WidgetProps<W> as IsSlotContent<WidgetProps<W>[K]> extends 0 ? never : K]: WidgetProps<W>[K] extends SlotContent<infer U>
+			? TemplateRef<U> | undefined
+			: never;
+	};
+	slotChildren?: () => TemplateRef<void> | undefined;
 }): AngularWidget<W> => {
 	const injector = inject(Injector);
 	const slots$ = writable({});
 	const props = {};
 	let initDone: () => void;
+	const patchSlots = createPatchSlots(slots$.set);
+
 	const res = {
-		initialized: new Promise((resolve) => {
+		initialized: new Promise<void>((resolve) => {
 			initDone = resolve;
 		}),
-		patchSlots: createPatchSlots(slots$.set),
-		patch(newProps) {
+		updateSlots: () => {
+			if (slotTemplates) {
+				patchSlots(slotTemplates());
+			}
+		},
+		patch(newProps: Partial<WidgetProps<W>>) {
 			// temporary function replaced in ngInit
 			Object.assign(props, newProps);
 		},
@@ -71,22 +87,30 @@ export const callWidgetFactoryWithConfig = <W extends Widget>({
 				const defaultConfig$ = toReadableStore(defaultConfig);
 				events = zoneWrapper.insideNgZoneWrapFunctionsObject(events);
 				const widget = factory({
-					config: computed(() => ({...defaultConfig$(), ...widgetConfig?.(), ...slots$(), ...(events as Partial<WidgetProps<W>>)})),
+					config: computed(() => ({
+						...defaultConfig$(),
+						children: slotChildren?.(),
+						...widgetConfig?.(),
+						...slots$(),
+						...(events as Partial<WidgetProps<W>>),
+					})),
 					props,
 				});
 				Object.assign(res, {
 					patch: zoneWrapper.outsideNgZone(widget.patch),
 					directives: zoneWrapper.outsideNgZoneWrapDirectivesObject(widget.directives),
 					api: zoneWrapper.outsideNgZoneWrapFunctionsObject(widget.api),
-					state: toAngularSignal(widget.state$ as ReadableSignal<WidgetState<W>>),
+					state: Object.fromEntries(
+						Object.entries<ReadableSignal<unknown>>(widget.stores as any).map(([key, val]) => [key.slice(0, -1), toAngularSignal(val)]),
+					),
 				});
-				afterInit?.();
+				afterInit?.(res as AngularWidget<W>);
 				initDone();
 			});
 		},
-	} as AngularWidget<W>;
+	};
 
-	return res;
+	return res as AngularWidget<W>;
 };
 
 function patchSimpleChanges(patchFn: (obj: any) => void, changes: SimpleChanges) {
@@ -100,8 +124,8 @@ function patchSimpleChanges(patchFn: (obj: any) => void, changes: SimpleChanges)
 }
 
 @Directive()
-export abstract class BaseWidgetDirective<W extends Widget> implements OnChanges, OnInit {
-	protected abstract readonly _widget: AngularWidget<W>;
+export abstract class BaseWidgetDirective<W extends Widget> implements OnChanges, OnInit, AfterContentChecked {
+	constructor(private readonly _widget: AngularWidget<W>) {}
 
 	/**
 	 * Retrieves the widget api
@@ -115,7 +139,7 @@ export abstract class BaseWidgetDirective<W extends Widget> implements OnChanges
 	 * Retrieves the widget state as an Angular {@link Signal}
 	 * @returns the widget state
 	 */
-	get state(): Signal<WidgetState<W>> {
+	get state(): AngularState<W> {
 		return this._widget.state;
 	}
 
@@ -135,5 +159,10 @@ export abstract class BaseWidgetDirective<W extends Widget> implements OnChanges
 	/** @inheritdoc */
 	ngOnInit(): void {
 		this._widget.ngInit();
+	}
+
+	/** @inheritdoc */
+	ngAfterContentChecked(): void {
+		this._widget.updateSlots();
 	}
 }

@@ -6,14 +6,14 @@ import {DomSanitizer} from '@angular/platform-browser';
 @Component({
 	selector: 'app-toast',
 	template: `
-		@if (!state().hidden) {
-			<div class="alert {{ state().className }} flex">
+		@if (!state.hidden()) {
+			<div class="alert {{ state.className() }} flex">
 				<ng-content />
-				@if (state().dismissible) {
+				@if (state.dismissible()) {
 					<button
 						class="btn btn-sm btn-circle btn-ghost"
 						(click)="api.close()"
-						[attr.aria-label]="state().ariaCloseButtonLabel"
+						[attr.aria-label]="state.ariaCloseButtonLabel()"
 						[innerHTML]="closeIcon"
 					></button>
 				}
@@ -33,9 +33,13 @@ export class ToastComponent extends BaseWidgetDirective<ToastWidget> {
 	readonly hidden = output();
 	readonly shown = output();
 
-	readonly _widget = callWidgetFactory({
-		factory: createToast,
-		widgetName: 'toast',
-		events: {onVisibleChange: this.visible.set, onShown: () => this.shown.emit(), onHidden: () => this.hidden.emit()},
-	});
+	constructor() {
+		super(
+			callWidgetFactory({
+				factory: createToast,
+				widgetName: 'toast',
+				events: {onVisibleChange: (v) => this.visible.set(v), onShown: () => this.shown.emit(), onHidden: () => this.hidden.emit()},
+			}),
+		);
+	}
 }

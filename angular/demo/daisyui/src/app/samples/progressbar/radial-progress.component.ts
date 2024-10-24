@@ -15,12 +15,12 @@ import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 	imports: [UseDirective],
 	template: ` <div
 		class="radial-progress"
-		[class]="state().className"
+		[class]="state.className()"
 		[style.--thickness]="'0.4rem'"
-		[style.--value]="state().percentage"
+		[style.--value]="state.percentage()"
 		[auUse]="directives.ariaDirective"
 	>
-		{{ percentFormat.format(state().percentage / 100) }}
+		{{ percentFormat.format(state.percentage() / 100) }}
 	</div>`,
 })
 export class RadialProgressComponent extends BaseWidgetDirective<ProgressbarWidget> {
@@ -31,10 +31,14 @@ export class RadialProgressComponent extends BaseWidgetDirective<ProgressbarWidg
 	readonly className = input<string>();
 	readonly ariaValueTextFn = input<(value: number, minimum: number, maximum: number) => string | undefined>();
 
-	readonly _widget = callWidgetFactory({
-		factory: createProgressbar,
-		widgetName: 'progressbar',
-	});
+	constructor() {
+		super(
+			callWidgetFactory({
+				factory: createProgressbar,
+				widgetName: 'progressbar',
+			}),
+		);
+	}
 	readonly percentFormat = new Intl.NumberFormat('default', {
 		style: 'percent',
 		minimumFractionDigits: 0,

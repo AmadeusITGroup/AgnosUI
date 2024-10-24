@@ -30,7 +30,7 @@ import {
 	AccordionItemStructureDirective,
 } from './components/accordion/accordion.component';
 import {SliderComponent, SliderHandleDirective, SliderLabelDirective, SliderStructureDirective} from './components/slider/slider.component';
-import {ProgressbarComponent, ProgressbarStructureDirective} from './components/progressbar/progressbar.component';
+import {ProgressbarComponent, ProgressbarBodyDirective, ProgressbarStructureDirective} from './components/progressbar/progressbar.component';
 import {ToastBodyDirective, ToastComponent, ToastHeaderDirective, ToastStructureDirective} from './components/toast/toast.component';
 import {CollapseDirective} from './components/collapse';
 /* istanbul ignore next */
@@ -72,6 +72,7 @@ const components = [
 	SliderStructureDirective,
 	ProgressbarComponent,
 	ProgressbarStructureDirective,
+	ProgressbarBodyDirective,
 	ToastComponent,
 	ToastStructureDirective,
 	ToastBodyDirective,

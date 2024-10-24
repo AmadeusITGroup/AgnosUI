@@ -16,14 +16,14 @@ import {DomSanitizer} from '@angular/platform-browser';
 	selector: 'app-alert',
 	imports: [UseDirective],
 	template: `
-		@if (!state().hidden) {
-			<div role="alert" class="flex alert {{ state().className }}" [auUse]="directives.transitionDirective">
+		@if (!state.hidden()) {
+			<div role="alert" class="flex alert {{ state.className() }}" [auUse]="directives.transitionDirective">
 				<ng-content />
-				@if (state().dismissible) {
+				@if (state.dismissible()) {
 					<button
 						class="btn btn-sm btn-circle btn-ghost ms-auto"
 						(click)="api.close()"
-						[attr.aria-label]="state().ariaCloseButtonLabel"
+						[attr.aria-label]="state.ariaCloseButtonLabel()"
 						[innerHTML]="closeIcon"
 					></button>
 				}
@@ -43,20 +43,24 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> {
 	readonly hidden = output();
 	readonly shown = output();
 
-	readonly _widget = callWidgetFactory({
-		factory: createAlert,
-		widgetName: 'alert',
-		events: {
-			onVisibleChange: (event) => this.visible.set(event),
-			onShown: () => this.shown.emit(),
-			onHidden: () => this.hidden.emit(),
-		},
-		defaultConfig: {
-			transition: createSimpleClassTransition({
-				showClasses: ['transition-opacity'],
-				hideClasses: ['opacity-0'],
-				animationPendingHideClasses: ['opacity-0', 'transition-opacity'],
+	constructor() {
+		super(
+			callWidgetFactory({
+				factory: createAlert,
+				widgetName: 'alert',
+				events: {
+					onVisibleChange: (event) => this.visible.set(event),
+					onShown: () => this.shown.emit(),
+					onHidden: () => this.hidden.emit(),
+				},
+				defaultConfig: {
+					transition: createSimpleClassTransition({
+						showClasses: ['transition-opacity'],
+						hideClasses: ['opacity-0'],
+						animationPendingHideClasses: ['opacity-0', 'transition-opacity'],
+					}),
+				},
 			}),
-		},
-	});
+		);
+	}
 }

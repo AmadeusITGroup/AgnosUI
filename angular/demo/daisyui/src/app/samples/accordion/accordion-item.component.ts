@@ -1,4 +1,4 @@
-import type {AccordionItemWidget, WidgetFactory} from '@agnos-ui/angular-headless';
+import type {AccordionItemWidget} from '@agnos-ui/angular-headless';
 import {
 	BaseWidgetDirective,
 	UseDirective,
@@ -25,7 +25,7 @@ import {AccordionComponent} from './accordion.component';
 				<ng-content select="[header]" />
 			</div>
 			<div class="collapse-content" [auUse]="directives.bodyContainerAttrsDirective">
-				@if (state().shouldBeInDOM) {
+				@if (state.shouldBeInDOM()) {
 					<ng-content />
 				}
 			</div>
@@ -42,21 +42,25 @@ export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWid
 	readonly shown = output();
 	readonly hidden = output();
 
-	readonly accordionComponent = inject(AccordionComponent);
-	readonly _widget = callWidgetFactory({
-		factory: ((arg) => this.accordionComponent.api.registerItem(arg)) as WidgetFactory<AccordionItemWidget>,
-		defaultConfig: {
-			transition: createSimpleClassTransition({
-				showClasses: ['collapse-open'],
-				animationPendingShowClasses: ['collapse-open'],
+	constructor() {
+		super(
+			callWidgetFactory({
+				factory: (arg) => inject(AccordionComponent).api.registerItem(arg),
+				defaultConfig: {
+					transition: createSimpleClassTransition({
+						showClasses: ['collapse-open'],
+						animationPendingShowClasses: ['collapse-open'],
+					}),
+				},
+				events: {
+					onVisibleChange: (visible) => this.visible.set(visible),
+					onHidden: () => this.hidden.emit(),
+					onShown: () => this.shown.emit(),
+				},
 			}),
-		},
-		events: {
-			onVisibleChange: (visible) => this.visible.set(visible),
-			onHidden: () => this.hidden.emit(),
-			onShown: () => this.shown.emit(),
-		},
-	});
+		);
+	}
+
 	ngAfterViewInit() {
 		queueMicrotask(() => this.api.initDone());
 	}

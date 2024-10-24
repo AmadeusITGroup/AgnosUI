@@ -15,10 +15,10 @@ import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `<progress
 		class="progress"
-		[class]="state().className"
+		[class]="state.className()"
 		[auUse]="directives.ariaDirective"
-		[attr.value]="state().value"
-		[attr.max]="state().max"
+		[attr.value]="state.value()"
+		[attr.max]="state.max()"
 	></progress>`,
 })
 export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget> {
@@ -28,8 +28,12 @@ export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget>
 	readonly className = input<string>();
 	readonly ariaValueTextFn = input<(value: number, minimum: number, maximum: number) => string | undefined>();
 
-	readonly _widget = callWidgetFactory({
-		factory: createProgressbar,
-		widgetName: 'progressbar',
-	});
+	constructor() {
+		super(
+			callWidgetFactory({
+				factory: createProgressbar,
+				widgetName: 'progressbar',
+			}),
+		);
+	}
 }

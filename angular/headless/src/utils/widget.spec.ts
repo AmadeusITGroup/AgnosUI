@@ -78,7 +78,7 @@ describe('callWidgetFactoryWithConfig', () => {
 			standalone: true,
 			imports: [UseDirective],
 			template: `<button type="button" [auUse]="directives.myDirective" (click)="onClick()">
-				{{ state().derivedValue }} {{ state().counter }}
+				{{ state.derivedValue() }} {{ state.counter() }}
 			</button>`,
 			changeDetection: ChangeDetectionStrategy.OnPush,
 		})
@@ -87,16 +87,22 @@ describe('callWidgetFactoryWithConfig', () => {
 			@Output('auCounterChange') counterChange = new EventEmitter<number>();
 			@Input('auMyValue') myValue: string | undefined;
 
-			_widget = createZoneCheckFn(
-				'callWidgetFactoryWithConfig',
-				callWidgetFactoryWithConfig,
-			)({
-				factory,
-				events: {
-					onCounterChange: (event) => this.counterChange.emit(event),
-					onMyAction: () => this.myAction.emit(),
-				},
-			});
+			constructor() {
+				super(
+					createZoneCheckFn(
+						'callWidgetFactoryWithConfig',
+						callWidgetFactoryWithConfig,
+					)({
+						factory,
+						events: {
+							onCounterChange: (event) => this.counterChange.emit(event),
+							onMyAction: () => this.myAction.emit(),
+						},
+					}),
+				);
+			}
+
+			onClick = createZoneCheckFn('onClick', () => {});
 		}
 
 		const ngZone = TestBed.inject(NgZone);
@@ -167,6 +173,8 @@ describe('callWidgetFactoryWithConfig', () => {
 			'after ngZone.run',
 			'before click',
 			'enter ngZone',
+			'begin onClick, ngZone = true',
+			'end onClick, ngZone = true',
 			'leave ngZone',
 			'after click',
 			'before incrementCounter',
@@ -212,16 +220,20 @@ describe('callWidgetFactoryWithConfig', () => {
 
 		@Component({
 			standalone: true,
-			template: `{{ state().myValue }}`,
+			template: `{{ state.myValue() }}`,
 			changeDetection: ChangeDetectionStrategy.OnPush,
 			selector: '[auTestMyWidget]',
 		})
 		class MyWidgetComponent extends BaseWidgetDirective<MyWidget> {
 			@Input('auMyValue') myValue: string | undefined;
 
-			_widget = callWidgetFactoryWithConfig({
-				factory,
-			});
+			constructor() {
+				super(
+					callWidgetFactoryWithConfig({
+						factory,
+					}),
+				);
+			}
 		}
 		@Component({
 			standalone: true,

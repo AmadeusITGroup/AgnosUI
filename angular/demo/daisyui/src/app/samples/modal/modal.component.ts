@@ -9,7 +9,7 @@ import {ChangeDetectionStrategy, Component, input, model} from '@angular/core';
 		<dialog class="modal modal-bottom sm:modal-middle" (close)="api.close()" [auUse]="directives.dialogDirective">
 			<div class="modal-box">
 				<ng-content />
-				@if (state().closeButton) {
+				@if (state.closeButton()) {
 					<form method="dialog">
 						<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" [auUse]="directives.closeButtonDirective">✕</button>
 					</form>
@@ -31,15 +31,19 @@ export class ModalComponent extends BaseWidgetDirective<ModalWidget> {
 	readonly ariaCloseButtonLabel = input<string>();
 	readonly visible = model(false);
 
-	readonly _widget = callWidgetFactory({
-		factory: createModal,
-		widgetName: 'modal',
-		events: {
-			onVisibleChange: (event) => this.visible.set(event),
-			onShown: () => {},
-			onHidden: () => {},
-			onBeforeClose: () => {},
-		},
-		defaultConfig: {closeButton: true},
-	});
+	constructor() {
+		super(
+			callWidgetFactory({
+				factory: createModal,
+				widgetName: 'modal',
+				events: {
+					onVisibleChange: (event) => this.visible.set(event),
+					onShown: () => {},
+					onHidden: () => {},
+					onBeforeClose: () => {},
+				},
+				defaultConfig: {closeButton: true},
+			}),
+		);
+	}
 }

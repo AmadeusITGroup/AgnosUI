@@ -13,8 +13,8 @@ import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/co
 		<div class="cup-container position-relative">
 			<div class="cup">
 				<div class="cup-fill-parent">
-					<div class="cup-fill" [style.height.%]="state.progressDisplayOptions[0].height">
-						@if (state.progressDisplayOptions[0].height >= 50) {
+					<div class="cup-fill" [style.height.%]="state.progressDisplayOptions()[0].height">
+						@if (state.progressDisplayOptions()[0].height >= 50) {
 							<div class="bubble bubble-1"></div>
 							<div class="bubble bubble-2"></div>
 							<div class="bubble bubble-3"></div>
@@ -23,8 +23,8 @@ import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/co
 				</div>
 			</div>
 		</div>
-		<button class="coffee-indicator" [auUse]="[directives.handleDirective, {item: state.sortedHandles[0]}]">
-			{{ '' + state.sortedHandles[0].value }}
+		<button class="coffee-indicator" [auUse]="[directives.handleDirective, {item: state.sortedHandles()[0]}]">
+			{{ '' + state.sortedHandles()[0].value }}
 		</button>
 	`,
 	encapsulation: ViewEncapsulation.None,

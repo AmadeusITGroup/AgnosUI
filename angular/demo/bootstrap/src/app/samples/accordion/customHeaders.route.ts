@@ -12,16 +12,20 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 					<div
 						[auUse]="directives.headerDirective"
 						class="accordion-button accordion-header custom-header justify-content-between"
-						[class.collapsed]="!state.visible"
+						[class.collapsed]="!state.visible()"
 						role="heading"
 						aria-level="2"
 					>
-						<p class="m-0">First panel - {{ state.visible ? 'opened' : 'collapsed' }}</p>
-						<button type="button" class="btn btn-link p-0 {{ state.buttonClassName }} au-accordion-item-button" [auUse]="directives.toggleDirective">
+						<p class="m-0">First panel - {{ state.visible() ? 'opened' : 'collapsed' }}</p>
+						<button
+							type="button"
+							class="btn btn-link p-0 {{ state.buttonClassName() }} au-accordion-item-button"
+							[auUse]="directives.toggleDirective"
+						>
 							Toggle first
 						</button>
 					</div>
-					@if (state!.shouldBeInDOM) {
+					@if (state!.shouldBeInDOM()) {
 						<div [auUse]="directives.bodyContainerDirective" class="accordion-collapse">
 							<div class="accordion-body" [auUse]="directives.bodyDirective">
 								{{ BODY }}
@@ -34,7 +38,7 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 				<ng-template auAccordionItemStructure let-state="state" let-directives="directives">
 					<div
 						class="accordion-button accordion-header custom-header justify-content-between"
-						[class.collapsed]="!state.visible"
+						[class.collapsed]="!state.visible()"
 						[auUse]="directives.headerDirective"
 						role="heading"
 						aria-level="2"
@@ -44,7 +48,7 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 							<button
 								[auUse]="directives.toggleDirective"
 								type="button"
-								class="btn btn-sm btn-outline-primary {{ state.buttonClassName }} au-accordion-item-button"
+								class="btn btn-sm btn-outline-primary {{ state.buttonClassName() }} au-accordion-item-button"
 							>
 								Toggle second
 							</button>
@@ -54,7 +58,7 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 							<button type="button" class="btn btn-sm btn-outline-danger" (click)="accordion.api.collapseAll()">Collapse all</button>
 						</div>
 					</div>
-					@if (state!.shouldBeInDOM) {
+					@if (state!.shouldBeInDOM()) {
 						<div [auUse]="directives.bodyContainerDirective" class="accordion-collapse">
 							<div [auUse]="directives.bodyDirective" class="accordion-body">
 								{{ BODY }}
@@ -68,13 +72,13 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 					<div
 						[auUse]="directives.headerDirective"
 						class="accordion-button accordion-header custom-header justify-content-between"
-						[class.collapsed]="!state.visible"
+						[class.collapsed]="!state.visible()"
 						role="heading"
 						aria-level="2"
 					>
 						<button
 							type="button"
-							class="p-0 btn btn-link container-fluid text-start au-accordion-item-button {{ state.buttonClassName }}"
+							class="p-0 btn btn-link container-fluid text-start au-accordion-item-button {{ state.buttonClassName() }}"
 							[auUse]="directives.toggleDirective"
 						>
 							Third panel
@@ -83,7 +87,7 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 							<p class="text-muted m-0 small">[I'm&nbsp;disabled]</p>
 						}
 					</div>
-					@if (state!.shouldBeInDOM) {
+					@if (state.shouldBeInDOM()) {
 						<div [auUse]="directives.bodyContainerDirective" class="accordion-collapse">
 							<div class="accordion-body" [auUse]="directives.bodyDirective">
 								{{ BODY }}

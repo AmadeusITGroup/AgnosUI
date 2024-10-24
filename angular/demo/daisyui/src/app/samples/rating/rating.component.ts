@@ -19,24 +19,28 @@ export class RatingComponent extends BaseWidgetDirective<RatingWidget> implement
 	readonly hover = output<number>();
 	readonly leave = output<number>();
 
-	readonly _widget = callWidgetFactory({
-		factory: createRating,
-		widgetName: 'rating',
-		events: {
-			onHover: (rating) => this.hover.emit(rating),
-			onLeave: (rating) => this.leave.emit(rating),
-			onRatingChange: (rating: number) => {
-				this.rating.set(rating);
-				this.onChange(rating);
-			},
-		},
-	});
+	constructor() {
+		super(
+			callWidgetFactory({
+				factory: createRating,
+				widgetName: 'rating',
+				events: {
+					onHover: (rating) => this.hover.emit(rating),
+					onLeave: (rating) => this.leave.emit(rating),
+					onRatingChange: (rating: number) => {
+						this.rating.set(rating);
+						this.onChange(rating);
+					},
+				},
+			}),
+		);
+	}
 
 	onChange = (_: any) => {};
 	onTouched = () => {};
 
 	writeValue(value: any): void {
-		this._widget.patch({rating: value});
+		this['_widget'].patch({rating: value});
 	}
 
 	// Interface for usage within form with ControlValueAccessor system
@@ -49,7 +53,7 @@ export class RatingComponent extends BaseWidgetDirective<RatingWidget> implement
 	}
 
 	setDisabledState(disabled: boolean): void {
-		this._widget.patch({disabled});
+		this['_widget'].patch({disabled});
 	}
 
 	// API used in the template
@@ -58,6 +62,6 @@ export class RatingComponent extends BaseWidgetDirective<RatingWidget> implement
 	}
 
 	getAriaLabel(index: number) {
-		return `${this.state().ariaLabel} star ${index + 1}`;
+		return `${this.state.ariaLabel()} star ${index + 1}`;
 	}
 }
