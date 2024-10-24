@@ -12,6 +12,7 @@ export default defineConfig({
 			api: {
 				host: '127.0.0.1',
 			},
+			screenshotFailures: false,
 		},
 		setupFiles: ['./headless/test.ts'],
 		include: ['./**/*.spec.ts'],
