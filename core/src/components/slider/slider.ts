@@ -516,10 +516,11 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			? !valuesPercent$().some((percent) => 100 - percent < maxLabelWidth + 1)
 			: !valuesPercent$().some((percent) => percent > 100 - maxLabelWidth - 1);
 	});
-	// TODO define the intersection value
+
 	const combinedLabelDisplay$ = computed(() => {
 		const values = values$();
-		return values.length == 2 && Math.abs(values[0] - values[1]) < 10;
+		// We use a normalizing factor scaling the difference to a slider range of 100 to handle bigger numbers
+		return values.length == 2 && (Math.abs(values[0] - values[1]) * 100) / (max$() - min$()) < 10;
 	});
 	const interactive$ = computed(() => !disabled$() && !readonly$());
 
