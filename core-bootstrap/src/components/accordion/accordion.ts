@@ -20,6 +20,9 @@ import type {TransitionFn} from '@agnos-ui/core/services/transitions/baseTransit
 
 export * from '@agnos-ui/core/components/accordion';
 
+/**
+ * Represents the context for an accordion item within the accordion component.
+ */
 export type AccordionItemContext = WidgetSlotContext<AccordionItemWidget>;
 
 interface AccordionExtraProps {
@@ -57,7 +60,13 @@ interface AccordionItemExtraProps {
 	header: SlotContent<AccordionItemContext>;
 }
 
+/**
+ * Represents the state of an Accordion component.
+ */
 export interface AccordionState extends CoreState, AccordionExtraProps {}
+/**
+ * Represents the state of an AccordionItem component.
+ */
 export interface AccordionProps extends CoreProps, AccordionExtraProps {
 	/**
 	 * The transition to use for the accordion-item body-container when the accordion-item is toggled.
@@ -70,11 +79,23 @@ export interface AccordionProps extends CoreProps, AccordionExtraProps {
 	itemTransition: TransitionFn;
 }
 
+/**
+ * Represents an Accordion widget type.
+ */
 export type AccordionWidget = Widget<AccordionProps, AccordionState, AccordionApi, AccordionDirectives>;
 
+/**
+ * Represents the state of an accordion item, extending the core item state and additional properties specific to the accordion item.
+ */
 export interface AccordionItemState extends CoreItemState, AccordionItemExtraProps {}
+/**
+ * Represents the properties for an Accordion item component.
+ */
 export interface AccordionItemProps extends CoreItemProps, AccordionItemExtraProps {}
 
+/**
+ * Represents a widget for an accordion item.
+ */
 export type AccordionItemWidget = Widget<AccordionItemProps, AccordionItemState, AccordionItemApi, AccordionItemDirectives>;
 
 const defaultConfigExtraProps: AccordionExtraProps = {

@@ -9,6 +9,17 @@ import {typeBoolean, typeFunction, typeString} from '../../utils/writables';
 import {bindDirectiveNoArg, createAttributesDirective, directiveSubscribe, mergeDirectives, registrationArray} from '../../utils/directive';
 import {generateId} from '../../utils/internal/dom';
 
+/**
+ * Adjusts the visibility of accordion items based on the provided open items.
+ * If there are exactly two open items, it keeps the one that is not the old open item visible.
+ * If there are more than two open items, it keeps the first one visible.
+ * All other items are set to not visible.
+ *
+ * @param items - The array of AccordionItemWidget objects to adjust.
+ * @param openItems - An array of strings representing the IDs of the open items.
+ * @param oldOpen - (Optional) The ID of the previously open item.
+ * @returns The adjusted array of AccordionItemWidget objects.
+ */
 function adjustItemsCloseOthers(items: AccordionItemWidget[], openItems: string[], oldOpen?: string): AccordionItemWidget[] {
 	let keepOpen: undefined | string;
 	if (openItems.length == 2) {
@@ -28,10 +39,20 @@ function adjustItemsCloseOthers(items: AccordionItemWidget[], openItems: string[
 	return items;
 }
 
+/**
+ * Retrieves an accordion item by its ID.
+ *
+ * @param items - An array of `AccordionItemWidget` objects.
+ * @param id - The ID of the accordion item to retrieve.
+ * @returns The `AccordionItemWidget` with the matching ID, or `undefined` if no match is found.
+ */
 function getItem(items: AccordionItemWidget[], id: string): AccordionItemWidget | undefined {
 	return items.find((item) => item.stores.id$() === id);
 }
 
+/**
+ * Properties for the Accordion component.
+ */
 export interface AccordionProps extends WidgetsCommonPropsAndState {
 	/**
 	 * If `true`, only one accordion-item at the time can stay open.
@@ -121,6 +142,9 @@ export interface AccordionProps extends WidgetsCommonPropsAndState {
 	itemHeadingTag: string;
 }
 
+/**
+ * Represents the state of an Accordion component.
+ */
 export interface AccordionState extends WidgetsCommonPropsAndState {
 	/**
 	 * Array containing all the accordion-items contained in the accordion.
@@ -128,6 +152,9 @@ export interface AccordionState extends WidgetsCommonPropsAndState {
 	itemWidgets: AccordionItemWidget[];
 }
 
+/**
+ * Interface representing the API for an accordion component.
+ */
 export interface AccordionApi {
 	/**
 	 * Given the itemId, will expand the corresponding accordion-item.
@@ -163,6 +190,9 @@ export interface AccordionApi {
 	registerItem(itemConfig?: PropsConfig<AccordionItemProps>): AccordionItemWidget;
 }
 
+/**
+ * Interface representing the directives used in the Accordion component.
+ */
 export interface AccordionDirectives {
 	/**
 	 * Directive to put on the accordion DOM element
@@ -170,8 +200,14 @@ export interface AccordionDirectives {
 	accordionDirective: Directive;
 }
 
+/**
+ * Represents an Accordion widget with specific properties, state, API, and directives.
+ */
 export type AccordionWidget = Widget<AccordionProps, AccordionState, AccordionApi, AccordionDirectives>;
 
+/**
+ * Interface representing the API for an accordion item.
+ */
 export interface AccordionItemApi {
 	/**
 	 * It will collapse the accordion-item.
@@ -192,6 +228,9 @@ export interface AccordionItemApi {
 	initDone(): void;
 }
 
+/**
+ * Interface representing the directives used in an accordion item.
+ */
 export interface AccordionItemDirectives {
 	/**
 	 * Directive to use in special cases, if the accordion header does not use a button element to control the collapsing.
@@ -230,6 +269,9 @@ export interface AccordionItemDirectives {
 	itemDirective: Directive;
 }
 
+/**
+ * Interface representing the common properties and state for an accordion item.
+ */
 interface AccordionItemCommonPropsAndState extends WidgetsCommonPropsAndState {
 	/**
 	 * If `true`, the accordion-item will be visible (expanded). Otherwise, it will be hidden (collapsed).
@@ -267,6 +309,9 @@ interface AccordionItemCommonPropsAndState extends WidgetsCommonPropsAndState {
 	headingTag: string;
 }
 
+/**
+ * Properties for an AccordionItem component.
+ */
 export interface AccordionItemProps extends AccordionItemCommonPropsAndState {
 	/**
 	 * If `true`, accordion-item will be animated.
@@ -296,6 +341,9 @@ export interface AccordionItemProps extends AccordionItemCommonPropsAndState {
 	onVisibleChange: (visible: boolean) => void;
 }
 
+/**
+ * Represents the state of an accordion item.
+ */
 export interface AccordionItemState extends AccordionItemCommonPropsAndState {
 	/**
 	 * If `true` the content of the accordion-item collapse should be in DOM. Its value depends on the
@@ -304,6 +352,9 @@ export interface AccordionItemState extends AccordionItemCommonPropsAndState {
 	shouldBeInDOM: boolean;
 }
 
+/**
+ * Represents a widget for an accordion item.
+ */
 export type AccordionItemWidget = Widget<AccordionItemProps, AccordionItemState, AccordionItemApi, AccordionItemDirectives>;
 
 const defaultAccordionConfig: AccordionProps = {

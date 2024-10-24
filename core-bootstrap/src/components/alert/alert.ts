@@ -9,6 +9,9 @@ import type {TransitionFn} from '@agnos-ui/core/services/transitions/baseTransit
 
 export * from '@agnos-ui/core/components/alert';
 
+/**
+ * Represents the context for an Alert component.
+ */
 export type AlertContext = WidgetSlotContext<AlertWidget>;
 
 interface AlertExtraProps {
@@ -28,7 +31,13 @@ interface AlertExtraProps {
 	type: BSContextualClass;
 }
 
+/**
+ * Represents the state of an alert component.
+ */
 export interface AlertState extends CoreState, AlertExtraProps {}
+/**
+ * Represents the properties for the Alert component.
+ */
 export interface AlertProps extends CoreProps, AlertExtraProps {
 	/**
 	 * The transition function will be executed when the alert is displayed or hidden.
@@ -40,6 +49,9 @@ export interface AlertProps extends CoreProps, AlertExtraProps {
 	transition: TransitionFn;
 }
 
+/**
+ * Represents an alert widget component.
+ */
 export type AlertWidget = Widget<AlertProps, AlertState, AlertApi, AlertDirectives>;
 
 const defaultConfigExtraProps: AlertExtraProps = {

@@ -9,6 +9,9 @@ import {bindableProp, stateStores, writablesForProps} from '../../utils/stores';
 import {typeBoolean, typeFunction, typeNumber, typeString} from '../../utils/writables';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 
+/**
+ * Represents the context for a star in a rating component.
+ */
 export interface StarContext {
 	/**
 	 * indicates how much the current star is filled, from 0 to 100
@@ -81,6 +84,9 @@ interface RatingCommonPropsAndState extends WidgetsCommonPropsAndState {
 	ariaLabelledBy: string;
 }
 
+/**
+ * Interface representing the properties for the Rating widget.
+ */
 export interface RatingProps extends RatingCommonPropsAndState {
 	/**
 	 * Return the value for the 'aria-valuetext' attribute.
@@ -131,6 +137,9 @@ export interface RatingProps extends RatingCommonPropsAndState {
 	onLeave: (rating: number) => void;
 }
 
+/**
+ * Interface representing directives for a rating component.
+ */
 export interface RatingDirectives {
 	/**
 	 * A directive to be applied to the main container
@@ -144,6 +153,9 @@ export interface RatingDirectives {
 	starDirective: Directive<{index: number}>;
 }
 
+/**
+ * Represents the state of a rating component.
+ */
 export interface RatingState extends RatingCommonPropsAndState {
 	/**
 	 * the aria value of the rating
@@ -163,6 +175,9 @@ export interface RatingState extends RatingCommonPropsAndState {
 	stars: StarContext[];
 }
 
+/**
+ * Interface representing the API that can be performed on a rating component.
+ */
 export interface RatingApi {
 	/**
 	 * Sets the rating value.
@@ -184,6 +199,9 @@ export interface RatingApi {
 	leave(): void;
 }
 
+/**
+ * Represents a Rating widget.
+ */
 export type RatingWidget = Widget<RatingProps, RatingState, RatingApi, RatingDirectives>;
 
 const defaultConfig: RatingProps = {

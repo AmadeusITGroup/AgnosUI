@@ -9,6 +9,9 @@ import {bindableProp, stateStores, writablesForProps} from '../../utils/stores';
 import {typeArray, typeBoolean, typeFunction, typeNumber, typeNumberInRangeFactory} from '../../utils/writables';
 import {createResizeObserver} from '../../services/resizeObserver';
 
+/**
+ * Options for displaying progress in a slider component.
+ */
 export interface ProgressDisplayOptions {
 	/**
 	 * Right offset of the progress in %
@@ -36,6 +39,9 @@ export interface ProgressDisplayOptions {
 	height: number;
 }
 
+/**
+ * Options for displaying a handle in a slider component.
+ */
 export interface HandleDisplayOptions {
 	/**
 	 * Left offset of the handle in %
@@ -47,6 +53,9 @@ export interface HandleDisplayOptions {
 	top: number | null;
 }
 
+/**
+ * Represents a handle in a slider component.
+ */
 export interface SliderHandle {
 	/**
 	 * Value of the handle
@@ -138,6 +147,9 @@ interface SliderCommonPropsAndState extends WidgetsCommonPropsAndState {
 	rtl: boolean;
 }
 
+/**
+ * Represents the state of a slider component.
+ */
 export interface SliderState extends SliderCommonPropsAndState {
 	/**
 	 * Sorted slider values
@@ -190,6 +202,9 @@ export interface SliderState extends SliderCommonPropsAndState {
 	interactive: boolean;
 }
 
+/**
+ * Interface representing the properties for the Slider component.
+ */
 export interface SliderProps extends SliderCommonPropsAndState {
 	/**
 	 * Return the value for the 'aria-label' attribute for the handle
@@ -230,6 +245,9 @@ export interface SliderProps extends SliderCommonPropsAndState {
 	onValuesChange: (values: number[]) => void;
 }
 
+/**
+ * Interface representing various directives used in the slider component.
+ */
 export interface SliderDirectives {
 	/**
 	 * Directive to get the slider component elementRef
@@ -276,6 +294,9 @@ export interface SliderDirectives {
 	handleLabelDisplayDirective: Directive<{index: number}>;
 }
 
+/**
+ * Represents a slider widget component.
+ */
 export type SliderWidget = Widget<SliderProps, SliderState, object, SliderDirectives>;
 
 const defaultSliderConfig: SliderProps = {

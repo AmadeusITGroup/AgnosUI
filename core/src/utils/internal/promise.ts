@@ -2,12 +2,21 @@ import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {asReadable, computed, derived, equal, readable, writable} from '@amadeus-it-group/tansu';
 import {noop} from './func';
 
+/**
+ * Represents the result of a promise that is still pending.
+ */
 export interface PromisePendingResult {
 	/** Pending status */
 	status: 'pending';
 }
+/**
+ * A constant representing a pending promise result.
+ */
 export const promisePending: PromisePendingResult = {status: 'pending'};
 
+/**
+ * Represents the state of a promise, which can be either fulfilled, rejected, or pending.
+ */
 export type PromiseState<T> = PromiseFulfilledResult<T> | PromiseRejectedResult | PromisePendingResult;
 
 const isThenable = (value: any): value is PromiseLike<any> => {

@@ -15,6 +15,9 @@ import {createBrowserStoreDirective, directiveSubscribe, mergeDirectives} from '
 import {promiseStoreToValueStore} from '../utils/internal/promise';
 import {stateStores, writablesForProps} from '../utils/stores';
 
+/**
+ * Interface representing the properties for configuring Floating UI.
+ */
 export interface FloatingUIProps {
 	/**
 	 * Options to use when calling computePosition from Floating UI
@@ -32,6 +35,9 @@ export interface FloatingUIProps {
 	arrowOptions: Omit<ArrowOptions, 'element'> | Derivable<Omit<ArrowOptions, 'element'>>;
 }
 
+/**
+ * Represents the state of a floating UI element.
+ */
 export interface FloatingUIState {
 	/**
 	 * The x coordinate of the floating ui
@@ -76,6 +82,11 @@ const defaultConfig: FloatingUIProps = {
 	arrowOptions: {},
 };
 
+/**
+ * Represents the type returned by the `createFloatingUI` function.
+ *
+ * This type is used to define the structure and behavior of the Floating UI component.
+ */
 export type FloatingUI = Omit<Widget<FloatingUIProps, FloatingUIState, object, FloatingUIDirectives>, 'api'>;
 
 /**

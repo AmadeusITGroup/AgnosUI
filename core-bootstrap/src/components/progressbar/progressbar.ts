@@ -7,6 +7,11 @@ import type {BSContextualClass} from '../../types';
 
 export * from '@agnos-ui/core/components/progressbar';
 
+/**
+ * Represents the context for a Progressbar widget.
+ * This type is used to define the context object that is passed to the Progressbar widget.
+ * It extends the `WidgetSlotContext` with a specific type parameter `ProgressbarWidget`.
+ */
 export type ProgressbarContext = WidgetSlotContext<ProgressbarWidget>;
 
 interface ProgressbarExtraProps {
@@ -43,9 +48,20 @@ interface ProgressbarExtraProps {
 	type: BSContextualClass | undefined;
 }
 
+/**
+ * Represents the state of a Progressbar component.
+ */
 export interface ProgressbarState extends CoreState, ProgressbarExtraProps {}
+/**
+ * Interface representing the properties for the Progressbar component.
+ */
 export interface ProgressbarProps extends CoreProps, ProgressbarExtraProps {}
 
+/**
+ * Represents a Progressbar widget.
+ *
+ * This type defines the structure of a Progressbar widget, including its properties, state, and directives.
+ */
 export type ProgressbarWidget = Widget<ProgressbarProps, ProgressbarState, object, ProgressbarDirectives>;
 
 const defaultConfigExtraProps: ProgressbarExtraProps = {

@@ -1,6 +1,9 @@
 import type {Directive} from '../types';
 import {browserDirective} from '../utils/directive';
 
+/**
+ * Represents the arguments for a portal directive.
+ */
 export type PortalDirectiveArg =
 	| {
 			container?: HTMLElement | null | undefined;

@@ -3,6 +3,9 @@ import {addClasses, reflow, removeClasses} from '../../utils/internal/dom';
 import type {TransitionFn} from './baseTransitions';
 import {createCSSTransition} from './cssTransitions';
 
+/**
+ * Represents the context for a collapsible element.
+ */
 export interface CollapseContext {
 	/**
 	 * the maximum size of the collapseable content.
@@ -14,6 +17,9 @@ export interface CollapseContext {
 	minSize?: string;
 }
 
+/**
+ * Configuration options for the collapse transition.
+ */
 export interface CollapseConfig {
 	/**
 	 * the direction in which the collapsing is performed

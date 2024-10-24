@@ -26,6 +26,7 @@ type CreateWidgetsDefaultConfig<Config extends {[widgetName: string]: object}> =
  *
  * It can be used when extending the core and creating new widgets.
  *
+ * @template Config - The shape of the widgets configuration object.
  * @param widgetsDefaultConfigKey - the widgets config key
  * @returns the utilities to create / manage widgets and contexts
  */

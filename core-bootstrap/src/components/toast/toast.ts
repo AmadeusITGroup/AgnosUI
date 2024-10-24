@@ -7,8 +7,15 @@ import type {TransitionFn} from '@agnos-ui/core/services/transitions/baseTransit
 
 export * from '@agnos-ui/core/components/toast';
 
+/**
+ * Represents the context for a Toast widget.
+ * This type is an alias for `WidgetSlotContext<ToastWidget>`.
+ */
 export type ToastContext = WidgetSlotContext<ToastWidget>;
 
+/**
+ * Interface representing additional properties for the Toast component.
+ */
 export interface ToastExtraProps {
 	/**
 	 * Global template for the toast component
@@ -24,7 +31,13 @@ export interface ToastExtraProps {
 	header: SlotContent<ToastContext>;
 }
 
+/**
+ * Represents the state of a Toast component.
+ */
 export interface ToastState extends CoreState, ToastExtraProps {}
+/**
+ * Interface representing the properties for the Toast component.
+ */
 export interface ToastProps extends CoreProps, ToastExtraProps {
 	/**
 	 * The transition function will be executed when the alert is displayed or hidden.
@@ -36,6 +49,9 @@ export interface ToastProps extends CoreProps, ToastExtraProps {
 	transition: TransitionFn;
 }
 
+/**
+ * Represents a Toast widget component.
+ */
 export type ToastWidget = Widget<ToastProps, ToastState, ToastApi, ToastDirectives>;
 
 const defaultConfigExtraProps: ToastExtraProps = {

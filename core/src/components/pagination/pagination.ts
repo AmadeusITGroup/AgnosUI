@@ -9,6 +9,9 @@ import {noop} from '../../utils/internal/func';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 import {createAttributesDirective} from '../../utils/directive';
 
+/**
+ * Interface representing the common properties and state for a pagination component.
+ */
 interface PaginationCommonPropsAndState extends WidgetsCommonPropsAndState {
 	/**
 	 * The current page.
@@ -129,6 +132,9 @@ interface PaginationCommonPropsAndState extends WidgetsCommonPropsAndState {
 	boundaryLinks: boolean;
 }
 
+/**
+ * Interface representing the properties for the Pagination component.
+ */
 export interface PaginationProps extends PaginationCommonPropsAndState {
 	/**
 	 * The number of items in your paginated collection.
@@ -228,6 +234,9 @@ export interface PaginationProps extends PaginationCommonPropsAndState {
 	pageLink: (pageNumber: number) => string;
 }
 
+/**
+ * Interface representing the hrefs for pagination navigation links.
+ */
 export interface DirectionsHrefs {
 	/**
 	 * The href for the 'Previous' navigation link
@@ -239,6 +248,9 @@ export interface DirectionsHrefs {
 	next: string;
 }
 
+/**
+ * Represents the state of the pagination component.
+ */
 export interface PaginationState extends PaginationCommonPropsAndState {
 	/**
 	 * The number of pages.
@@ -271,6 +283,9 @@ export interface PaginationState extends PaginationCommonPropsAndState {
 	ariaLiveLabelText: string;
 }
 
+/**
+ * Interface representing pagination API for navigating through pages.
+ */
 export interface PaginationApi {
 	/**
 	 * To "go" to a specific page
@@ -295,6 +310,9 @@ export interface PaginationApi {
 	last(): void;
 }
 
+/**
+ * Interface representing the directives for pagination components.
+ */
 export interface PaginationDirectives {
 	/**
 	 * A directive to be applied to each page link
@@ -325,6 +343,9 @@ export interface PaginationDirectives {
 	pageLast: Directive;
 }
 
+/**
+ * Represents a pagination widget with specific properties, state, API, actions, and directives.
+ */
 export type PaginationWidget = Widget<PaginationProps, PaginationState, PaginationApi, PaginationDirectives>;
 
 const PAGE_LINK_DEFAULT = '#';
