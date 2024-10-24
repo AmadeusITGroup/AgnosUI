@@ -9,7 +9,7 @@ import type {TransitionFn} from '@agnos-ui/core/services/transitions/baseTransit
 
 export * from '@agnos-ui/core/components/alert';
 
-export type AlertContext = WidgetSlotContext<AlertWidget>;
+export interface AlertContext extends WidgetSlotContext<AlertWidget> {}
 
 interface AlertExtraProps {
 	/**

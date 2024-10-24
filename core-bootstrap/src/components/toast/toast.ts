@@ -7,7 +7,7 @@ import type {TransitionFn} from '@agnos-ui/core/services/transitions/baseTransit
 
 export * from '@agnos-ui/core/components/toast';
 
-export type ToastContext = WidgetSlotContext<ToastWidget>;
+export interface ToastContext extends WidgetSlotContext<ToastWidget> {}
 
 export interface ToastExtraProps {
 	/**

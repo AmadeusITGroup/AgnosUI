@@ -8,7 +8,7 @@ import type {TransitionFn} from '@agnos-ui/core/services/transitions/baseTransit
 
 export * from '@agnos-ui/core/components/modal';
 
-export type ModalContext<Data> = WidgetSlotContext<ModalWidget<Data>>;
+export interface ModalContext<Data> extends WidgetSlotContext<ModalWidget<Data>> {}
 
 interface ModalExtraProps<Data> {
 	/**

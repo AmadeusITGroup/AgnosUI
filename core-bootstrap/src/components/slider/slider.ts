@@ -5,9 +5,19 @@ import type {SlotContent, Widget, WidgetFactory, WidgetSlotContext} from '@agnos
 
 export * from '@agnos-ui/core/components/slider';
 
-export type SliderContext = WidgetSlotContext<SliderWidget>;
-export type SliderSlotLabelContext = SliderContext & {value: number};
-export type SliderSlotHandleContext = SliderContext & {item: SliderHandle};
+export interface SliderContext extends WidgetSlotContext<SliderWidget> {}
+export interface SliderSlotLabelContext extends SliderContext {
+	/**
+	 * the value of the handle the label is attached to
+	 */
+	value: number;
+}
+export interface SliderSlotHandleContext extends SliderContext {
+	/**
+	 * the handle context
+	 */
+	item: SliderHandle;
+}
 
 interface SliderExtraProps {
 	/**
