@@ -353,7 +353,10 @@ export const createTransition = (config?: PropsConfig<TransitionProps>): Transit
 			visible$,
 			element$,
 			elementPresent$,
-			transitioning$,
+			transitioning$: computed(() => {
+				void visibleAction$();
+				return transitioning$();
+			}),
 			shown$,
 			hidden$,
 		}),
