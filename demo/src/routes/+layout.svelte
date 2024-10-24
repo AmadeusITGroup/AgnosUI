@@ -6,7 +6,6 @@
 	import './styles.scss';
 	import {afterNavigate, beforeNavigate, onNavigate} from '$app/navigation';
 	import {page, updated} from '$app/stores';
-	import {onMount} from 'svelte';
 	import MobileSubMenu from './menu/MobileSubMenu.svelte';
 	import MobileMenu from './menu/MobileMenu.svelte';
 	import MainSection from '$lib/layout/MainSection.svelte';
@@ -19,26 +18,11 @@
 	import type {Snippet} from 'svelte';
 	import type {LayoutData} from './$types';
 
-	let appUpdated = $state(false);
-
-	const onServiceWorkerUpdate = () => {
-		void updated.check();
-	};
-
 	let isMainPage = $derived($routeLevel$ === 0);
 	let isApi = $derived($page.route.id?.startsWith('/api/'));
 
-	onMount(() => {
-		const unsuscribe = updated.subscribe((val) => (appUpdated = val));
-		navigator.serviceWorker?.addEventListener('controllerchange', onServiceWorkerUpdate);
-		return () => {
-			unsuscribe();
-			navigator.serviceWorker?.removeEventListener('controllerchange', onServiceWorkerUpdate);
-		};
-	});
-
 	beforeNavigate(({willUnload, to}) => {
-		if (appUpdated && !willUnload && to?.url) {
+		if ($updated && !willUnload && to?.url) {
 			// force reload of the page on navigation when a new version of the site has been detected
 			location.href = to.url.href;
 		}
