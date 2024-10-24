@@ -7,7 +7,7 @@ import type {BSContextualClass} from '../../types';
 
 export * from '@agnos-ui/core/components/progressbar';
 
-export type ProgressbarContext = WidgetSlotContext<ProgressbarWidget>;
+export interface ProgressbarContext extends WidgetSlotContext<ProgressbarWidget> {}
 
 interface ProgressbarExtraProps {
 	/**

@@ -41,6 +41,11 @@ const hardCodedImports: Record<string, string> = {
 function getTypesImportsMap(nodes: Node[], excludedNames: Set<string>) {
 	const importsByModule = new Map<string, string[]>();
 	const processedNames = new Set<string>(excludedNames);
+
+	// hardcode until someone smarter than I takes a look at how to handle stuff better with heritage clauses
+	processedNames.add('WidgetSlotContext');
+	importsByModule.set(framework === 'angular' ? '@agnos-ui/angular-headless' : `@agnos-ui/${framework}-headless/types`, ['WidgetSlotContext']);
+
 	function visit(node: Node) {
 		if (ts.isTypeReferenceNode(node)) {
 			const name = ts.isIdentifier(node.typeName) ? node.typeName.text : node.typeName.getText();
@@ -117,17 +122,21 @@ for (const component of components) {
 			exportedNodes.push(node);
 		} else if (ts.isInterfaceDeclaration(node)) {
 			// interfaces are resolved to obtain a *flattened* version
-			exports += `export interface ${bootstrapExport.name}${node.typeParameters?.length ? `<${node.typeParameters.map((typeParam) => typeParam.getText()).join(', ')}>` : ''} {\n`;
+			if (bootstrapExport.name.endsWith('Context')) {
+				exports += node.getFullText() + '\n\n';
+			} else {
+				exports += `export interface ${bootstrapExport.name}${node.typeParameters?.length ? `<${node.typeParameters.map((typeParam) => typeParam.getText()).join(', ')}>` : ''} {\n`;
+				for (const property of typeChecker.getTypeAtLocation(node).getProperties()) {
+					const propertyDeclaration = property.getDeclarations()![0];
+					exports += `\t${propertyDeclaration.getFullText()}\n`;
+					exportedNodes.push(propertyDeclaration);
+				}
+				exports += `}\n\n`;
+				if (bootstrapExport.name === `${component.slice(0, 1).toUpperCase()}${component.slice(1)}Props`) {
+					componentsProps.push([component, bootstrapExport.name, node.typeParameters?.length ?? 0]);
+				}
+			}
 			exportedNodes.push(...(node.typeParameters ?? []));
-			for (const property of typeChecker.getTypeAtLocation(node).getProperties()) {
-				const propertyDeclaration = property.getDeclarations()![0];
-				exports += `\t${propertyDeclaration.getFullText()}\n`;
-				exportedNodes.push(propertyDeclaration);
-			}
-			exports += `}\n\n`;
-			if (bootstrapExport.name === `${component.slice(0, 1).toUpperCase()}${component.slice(1)}Props`) {
-				componentsProps.push([component, bootstrapExport.name, node.typeParameters?.length ?? 0]);
-			}
 		} else if (ts.isFunctionDeclaration(node) || (ts.isVariableDeclaration(node) && node.parent.flags & ts.NodeFlags.Const)) {
 			const name = bootstrapExport.name;
 			const docNode = ts.isVariableDeclaration(node) ? node.parent.parent : node;

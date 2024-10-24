@@ -20,7 +20,7 @@ import type {TransitionFn} from '@agnos-ui/core/services/transitions/baseTransit
 
 export * from '@agnos-ui/core/components/accordion';
 
-export type AccordionItemContext = WidgetSlotContext<AccordionItemWidget>;
+export interface AccordionItemContext extends WidgetSlotContext<AccordionItemWidget> {}
 
 interface AccordionExtraProps {
 	/**
