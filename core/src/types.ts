@@ -101,7 +101,7 @@ export interface WritableWithDefaultOptions<T> {
 	equal?: StoreOptions<T>['equal'];
 }
 
-export type ConfigValidator<T extends object> = {[K in keyof T]?: WritableWithDefaultOptions<T[K]>};
+export type ConfigValidator<T extends object> = {[K in keyof T]: WritableWithDefaultOptions<T[K]> | undefined};
 
 export type AttributeValue = string | number | boolean | undefined;
 export type StyleKey = Exclude<

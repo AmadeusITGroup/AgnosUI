@@ -47,6 +47,7 @@ describe('callWidgetFactoryWithConfig', () => {
 				{
 					onMyAction: typeFunction,
 					myValue: typeString,
+					onCounterChange: undefined,
 				},
 			);
 			const derivedValue$ = computed(createZoneCheckFn('computeDerivedValue', () => `derived from ${myValue$()}`));

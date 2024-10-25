@@ -40,4 +40,4 @@ export function getRatingDefaultConfig(): RatingProps {
  * @returns a RatingWidget
  */
 
-export const createRating: WidgetFactory<RatingWidget> = extendWidgetProps(createCoreRating, defaultConfigExtraProps, {});
+export const createRating: WidgetFactory<RatingWidget> = extendWidgetProps(createCoreRating, defaultConfigExtraProps);

@@ -6,7 +6,7 @@ import type {ConfigValidator, Directive, PropsConfig, Widget} from '../../types'
 import {noop} from '../../utils/internal/func';
 import {getDecimalPrecision} from '../../utils/internal/math';
 import {bindableProp, stateStores, writablesForProps} from '../../utils/stores';
-import {typeArray, typeBoolean, typeFunction, typeNumber, typeNumberInRangeFactory} from '../../utils/writables';
+import {typeArray, typeBoolean, typeFunction, typeNumber, typeNumberInRangeFactory, typeString} from '../../utils/writables';
 import {createResizeObserver} from '../../services/resizeObserver';
 
 export interface ProgressDisplayOptions {
@@ -317,6 +317,7 @@ const configValidator: ConfigValidator<SliderProps> = {
 	showValueLabels: typeBoolean,
 	showMinMaxLabels: typeBoolean,
 	rtl: typeBoolean,
+	className: typeString,
 };
 
 /**

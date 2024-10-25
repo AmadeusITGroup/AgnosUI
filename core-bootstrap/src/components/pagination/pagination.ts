@@ -129,4 +129,4 @@ export function getPaginationDefaultConfig(): PaginationProps {
  * @param config - an optional alert config
  * @returns a PaginationWidget
  */
-export const createPagination: WidgetFactory<PaginationWidget> = extendWidgetProps(createCorePagination, defaultConfigExtraProps, {});
+export const createPagination: WidgetFactory<PaginationWidget> = extendWidgetProps(createCorePagination, defaultConfigExtraProps);

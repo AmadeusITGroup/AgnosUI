@@ -67,5 +67,4 @@ export function getSelectDefaultConfig(): SelectProps<any> {
 export const createSelect: <Item>(config?: PropsConfig<SelectProps<Item>>) => SelectWidget<Item> = extendWidgetProps(
 	createCoreSelect,
 	defaultConfigExtraProps,
-	{},
 ) as any;

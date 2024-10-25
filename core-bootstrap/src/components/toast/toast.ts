@@ -60,4 +60,13 @@ export function getToastDefaultConfig(): ToastProps {
  * @param config - an optional alert config
  * @returns an ToastWidget
  */
-export const createToast: WidgetFactory<ToastWidget> = extendWidgetProps(createCoreToast, defaultConfigExtraProps, {}, coreOverride);
+export const createToast: WidgetFactory<ToastWidget> = extendWidgetProps(
+	createCoreToast,
+	defaultConfigExtraProps,
+	{
+		structure: undefined,
+		children: undefined,
+		header: undefined,
+	},
+	coreOverride,
+);
