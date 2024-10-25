@@ -42,15 +42,11 @@ function getTypesImportsMap(nodes: Node[], excludedNames: Set<string>) {
 	const importsByModule = new Map<string, string[]>();
 	const processedNames = new Set<string>(excludedNames);
 
-	// hardcode until someone smarter than I takes a look at how to handle stuff better with heritage clauses
-	processedNames.add('WidgetSlotContext');
-	importsByModule.set(framework === 'angular' ? '@agnos-ui/angular-headless' : `@agnos-ui/${framework}-headless/types`, ['WidgetSlotContext']);
-
 	function visit(node: Node) {
-		if (ts.isTypeReferenceNode(node)) {
-			const name = ts.isIdentifier(node.typeName) ? node.typeName.text : node.typeName.getText();
+		if (ts.isIdentifier(node)) {
+			const name = node.text;
 			if (!processedNames.has(name)) {
-				let symbol = typeChecker.getSymbolAtLocation(node.typeName);
+				let symbol = typeChecker.getSymbolAtLocation(node);
 				let moduleSpecifier: string | undefined;
 				while (symbol && symbol.flags & ts.SymbolFlags.Alias && !(symbol.declarations?.[0] && ts.isImportSpecifier(symbol.declarations?.[0]))) {
 					symbol = typeChecker.getImmediateAliasedSymbol(symbol);
@@ -116,27 +112,25 @@ for (const component of components) {
 	)) {
 		exportNames.add(bootstrapExport.name);
 		const node = bootstrapExport.getDeclarations()![0];
-		if (ts.isTypeAliasDeclaration(node)) {
-			// type aliases are copied as defined
+		if (ts.isTypeAliasDeclaration(node) || (ts.isInterfaceDeclaration(node) && bootstrapExport.name.endsWith('Context'))) {
+			// type aliases
+			// and interfaces whose name ends with "Context"
+			// are copied as defined
 			exports += node.getFullText() + '\n\n';
 			exportedNodes.push(node);
 		} else if (ts.isInterfaceDeclaration(node)) {
 			// interfaces are resolved to obtain a *flattened* version
-			if (bootstrapExport.name.endsWith('Context')) {
-				exports += node.getFullText() + '\n\n';
-			} else {
-				exports += `export interface ${bootstrapExport.name}${node.typeParameters?.length ? `<${node.typeParameters.map((typeParam) => typeParam.getText()).join(', ')}>` : ''} {\n`;
-				for (const property of typeChecker.getTypeAtLocation(node).getProperties()) {
-					const propertyDeclaration = property.getDeclarations()![0];
-					exports += `\t${propertyDeclaration.getFullText()}\n`;
-					exportedNodes.push(propertyDeclaration);
-				}
-				exports += `}\n\n`;
-				if (bootstrapExport.name === `${component.slice(0, 1).toUpperCase()}${component.slice(1)}Props`) {
-					componentsProps.push([component, bootstrapExport.name, node.typeParameters?.length ?? 0]);
-				}
-			}
+			exports += `export interface ${bootstrapExport.name}${node.typeParameters?.length ? `<${node.typeParameters.map((typeParam) => typeParam.getText()).join(', ')}>` : ''} {\n`;
 			exportedNodes.push(...(node.typeParameters ?? []));
+			for (const property of typeChecker.getTypeAtLocation(node).getProperties()) {
+				const propertyDeclaration = property.getDeclarations()![0];
+				exports += `\t${propertyDeclaration.getFullText()}\n`;
+				exportedNodes.push(propertyDeclaration);
+			}
+			exports += `}\n\n`;
+			if (bootstrapExport.name === `${component.slice(0, 1).toUpperCase()}${component.slice(1)}Props`) {
+				componentsProps.push([component, bootstrapExport.name, node.typeParameters?.length ?? 0]);
+			}
 		} else if (ts.isFunctionDeclaration(node) || (ts.isVariableDeclaration(node) && node.parent.flags & ts.NodeFlags.Const)) {
 			const name = bootstrapExport.name;
 			const docNode = ts.isVariableDeclaration(node) ? node.parent.parent : node;
