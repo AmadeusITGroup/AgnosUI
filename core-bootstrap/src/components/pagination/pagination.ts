@@ -13,17 +13,17 @@ export * from '@agnos-ui/core/components/pagination';
 /**
  * A type for the slot context of the pagination widget
  */
-export type PaginationContext = WidgetSlotContext<PaginationWidget>;
+export interface PaginationContext extends WidgetSlotContext<PaginationWidget> {}
 
 /**
  * A type for the slot context of the pagination widget when the slot is the number label
  */
-export type PaginationNumberContext = PaginationContext & {
+export interface PaginationNumberContext extends PaginationContext {
 	/**
 	 * Displayed page
 	 */
 	displayedPage: number;
-};
+}
 
 interface PaginationExtraProps {
 	/**

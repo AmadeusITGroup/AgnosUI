@@ -8,14 +8,14 @@ export * from '@agnos-ui/core/components/select';
 /**
  * A type for the slot context of the pagination widget
  */
-export type SelectContext<Item> = WidgetSlotContext<SelectWidget<Item>>;
+export interface SelectContext<Item> extends WidgetSlotContext<SelectWidget<Item>> {}
 
-export type SelectItemContext<Item> = SelectContext<Item> & {
+export interface SelectItemContext<Item> extends SelectContext<Item> {
 	/**
 	 * Contextual data related to an item
 	 */
 	itemContext: ItemContext<Item>;
-};
+}
 
 interface SelectExtraProps<Item> {
 	/**

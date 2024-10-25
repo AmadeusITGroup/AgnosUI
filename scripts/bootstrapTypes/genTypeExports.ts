@@ -41,11 +41,12 @@ const hardCodedImports: Record<string, string> = {
 function getTypesImportsMap(nodes: Node[], excludedNames: Set<string>) {
 	const importsByModule = new Map<string, string[]>();
 	const processedNames = new Set<string>(excludedNames);
+
 	function visit(node: Node) {
-		if (ts.isTypeReferenceNode(node)) {
-			const name = ts.isIdentifier(node.typeName) ? node.typeName.text : node.typeName.getText();
+		if (ts.isIdentifier(node)) {
+			const name = node.text;
 			if (!processedNames.has(name)) {
-				let symbol = typeChecker.getSymbolAtLocation(node.typeName);
+				let symbol = typeChecker.getSymbolAtLocation(node);
 				let moduleSpecifier: string | undefined;
 				while (symbol && symbol.flags & ts.SymbolFlags.Alias && !(symbol.declarations?.[0] && ts.isImportSpecifier(symbol.declarations?.[0]))) {
 					symbol = typeChecker.getImmediateAliasedSymbol(symbol);
@@ -111,8 +112,10 @@ for (const component of components) {
 	)) {
 		exportNames.add(bootstrapExport.name);
 		const node = bootstrapExport.getDeclarations()![0];
-		if (ts.isTypeAliasDeclaration(node)) {
-			// type aliases are copied as defined
+		if (ts.isTypeAliasDeclaration(node) || (ts.isInterfaceDeclaration(node) && bootstrapExport.name.endsWith('Context'))) {
+			// type aliases
+			// and interfaces whose name ends with "Context"
+			// are copied as defined
 			exports += node.getFullText() + '\n\n';
 			exportedNodes.push(node);
 		} else if (ts.isInterfaceDeclaration(node)) {
