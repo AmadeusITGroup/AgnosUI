@@ -3,13 +3,15 @@
 	import {createSimpleClassTransition} from '@agnos-ui/svelte-bootstrap/services/transitions/simpleClassTransition';
 	import '@agnos-ui/common/samples/transition/flip.scss';
 	import type {Snippet} from 'svelte';
+	import {callWidgetFactory} from '@agnos-ui/svelte-bootstrap/config';
 
 	let {hiddenText, children}: {hiddenText: string; children: Snippet} = $props();
 
 	const {
 		api: {show, hide},
 		directives: {directive},
-	} = createTransition({
+	} = callWidgetFactory({
+		factory: createTransition,
 		props: {
 			visible: false,
 			transition: createSimpleClassTransition({hideClasses: ['hide'], animationPendingHideClasses: ['hide']}),

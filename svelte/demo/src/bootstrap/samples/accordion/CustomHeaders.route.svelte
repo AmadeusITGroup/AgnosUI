@@ -1,11 +1,10 @@
 <script lang="ts">
 	import {Accordion, AccordionItem} from '@agnos-ui/svelte-bootstrap/components/accordion';
 	import '@agnos-ui/common/samples/accordion/custom.scss';
-	import {writable} from 'svelte/store';
 	import BODY from '@agnos-ui/common/samples/accordion/body.txt?raw';
 
 	let accordion: Accordion;
-	const thirdItemDisabled$ = writable(false);
+	let thirdItemDisabled = $state(false);
 </script>
 
 <Accordion bind:this={accordion}>
@@ -46,8 +45,8 @@
 					<button use:directives.toggleDirective type="button" class="btn btn-sm btn-outline-primary {state.buttonClassName} au-accordion-item-button"
 						>Toggle second</button
 					>
-					<button type="button" class="btn btn-sm btn-outline-secondary" onclick={() => thirdItemDisabled$.update((disabled) => !disabled)}>
-						{$thirdItemDisabled$ ? 'En' : 'Dis'}able third
+					<button type="button" class="btn btn-sm btn-outline-secondary" onclick={() => (thirdItemDisabled = !thirdItemDisabled)}>
+						{thirdItemDisabled ? 'En' : 'Dis'}able third
 					</button>
 					<button type="button" class="btn btn-sm btn-outline-danger" onclick={() => accordion.api.collapseAll()}> Collapse all </button>
 				</div>
@@ -61,7 +60,7 @@
 			{/if}
 		{/snippet}
 	</AccordionItem>
-	<AccordionItem disabled={$thirdItemDisabled$}>
+	<AccordionItem disabled={thirdItemDisabled}>
 		{#snippet structure({state, directives})}
 			<div
 				use:directives.headerDirective
