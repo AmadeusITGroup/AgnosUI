@@ -1,4 +1,4 @@
-import type {PropsConfig, Widget, WidgetFactory, WidgetProps, WidgetSlotContext, WidgetState} from '@agnos-ui/core/types';
+import type {PropsConfig, Widget, WidgetFactory, WidgetProps, WidgetState, WidgetSlotContext} from '../types';
 import {findChangedProperties} from '@agnos-ui/core/utils/stores';
 import {useEffect, useMemo, useRef} from 'react';
 import {useObservablesProxy} from './stores';
@@ -31,5 +31,5 @@ export function useWidget<W extends Widget>(
 
 	const state = useObservablesProxy<WidgetState<W>>(coreWidget.stores as any);
 
-	return {state, api: coreWidget.api, directives: coreWidget.directives};
+	return {state, api: coreWidget.api, directives: coreWidget.directives, stores: coreWidget.stores};
 }

@@ -44,7 +44,6 @@ describe(`Pagination`, () => {
 			disabled: false,
 			directionLinks: true,
 			boundaryLinks: false,
-			size: null,
 			activeLabel: '(current)',
 			ariaFirstLabel: 'Action link for first page',
 			ariaLastLabel: 'Action link for last page',
@@ -63,14 +62,6 @@ describe(`Pagination`, () => {
 
 	test('should include a simple pageFactory implementation in default config', () => {
 		expect(getPaginationDefaultConfig().pagesFactory(5, 10)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-	});
-
-	test('should warn using invalid size value', () => {
-		pagination.patch({size: 'invalidSize' as 'sm'});
-		expect(state).toStrictEqual(assign(expectedState, {size: null}));
-		expectLogInvalidValue();
-		pagination.patch({size: 'sm'});
-		expect(state).toStrictEqual(assign(expectedState, {size: 'sm'}));
 	});
 
 	test('actions should update the state', () => {
