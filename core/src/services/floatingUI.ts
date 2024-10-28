@@ -76,7 +76,7 @@ const defaultConfig: FloatingUIProps = {
 	arrowOptions: {},
 };
 
-export type FloatingUI = Omit<Widget<FloatingUIProps, FloatingUIState, object, FloatingUIDirectives>, 'api'>;
+export type FloatingUI = Widget<FloatingUIProps, FloatingUIState, object, FloatingUIDirectives>;
 
 /**
  * Create a floating UI service.
@@ -192,5 +192,6 @@ export const createFloatingUI = (propsConfig?: PropsConfig<FloatingUIProps>): Fl
 			 */
 			arrowDirective: mergeDirectives(arrowDirective, directiveSubscribe(arrowStyleApplyAction$)),
 		},
+		api: {},
 	};
 };

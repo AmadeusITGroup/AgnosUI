@@ -1,8 +1,7 @@
 <script lang="ts">
 	import {Toast} from '@agnos-ui/svelte-bootstrap/components/toast';
-	import type {ToastProps} from '@agnos-ui/svelte-bootstrap/components/toast';
-	import {writable} from 'svelte/store';
 	import {ToastPositions} from '@agnos-ui/common/samples/toast/toast-positions.enum';
+	import {ToastService} from './toast-service.svelte';
 
 	const positions = Object.entries(ToastPositions).map((entry) => {
 		return {
@@ -12,27 +11,7 @@
 	});
 	let position = $state(ToastPositions.topLeft);
 
-	function createToasts() {
-		const {subscribe, update} = writable(new Map(Object.values(ToastPositions).map((entry) => [entry as string, [] as Partial<ToastProps>[]])));
-		return {
-			subscribe,
-			add: (toast: Partial<ToastProps>) =>
-				update((toasts) => {
-					toasts.get(toast.className!)?.push(toast);
-					return toasts;
-				}),
-			remove: (toast: Partial<ToastProps>) =>
-				update((toasts) => {
-					toasts.set(
-						toast.className!,
-						toasts.get(toast.className!)!.filter((t) => t !== toast),
-					);
-					return toasts;
-				}),
-		};
-	}
-
-	const toasts$ = createToasts();
+	const toastService = new ToastService();
 </script>
 
 <p class="mb-2">To position toast wherever you want you should have a <code>toast-container</code> with a custom position defined by CSS classes.</p>
@@ -47,18 +26,18 @@
 		</select>
 		<button
 			class="btn btn-primary addToast ms-2"
-			onclick={() => toasts$.add({autoHide: true, delay: 3000, className: position, children: 'Simple toast', header: 'I am header'})}
+			onclick={() => toastService.add({autoHide: true, delay: 3000, className: position, children: 'Simple toast', header: 'I am header'})}
 			>Show toast</button
 		>
 	</div>
 </div>
 
 <div class="d-flex position-relative mt-2 w-100" aria-live="polite" aria-atomic="true" style="height: 500px; background-color: gray;">
-	{#each $toasts$.entries() as [position, toasts]}
+	{#each Object.entries(toastService.toasts) as [position, toasts]}
 		<div class={`toast-container p-3 ${position}`}>
 			{#each toasts as toast}
 				{@const {dismissible, animatedOnInit, animated, children, header} = toast}
-				<Toast {dismissible} {animatedOnInit} {animated} {children} {header} onHidden={() => toasts$.remove(toast)} />
+				<Toast {dismissible} {animatedOnInit} {animated} {children} {header} onHidden={() => toastService.remove(toast)} />
 			{/each}
 		</div>
 	{/each}

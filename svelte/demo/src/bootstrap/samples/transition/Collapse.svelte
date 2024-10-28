@@ -4,22 +4,21 @@
 	import '@agnos-ui/common/samples/transition/collapse.scss';
 	import collapseIcon from '@agnos-ui/common/samples/transition/collapseButton.svg?raw';
 	import type {Snippet} from 'svelte';
-	import {fromStore} from 'svelte/store';
+	import {callWidgetFactory} from '@agnos-ui/svelte-bootstrap/config';
 
 	let {headerText, expanded = false, children}: {headerText: string; expanded: boolean; children: Snippet} = $props();
 
 	const {
-		stores: {visible$, hidden$},
+		state,
 		api: {toggle},
 		directives: {directive},
-	} = createTransition({
+	} = callWidgetFactory({
+		factory: createTransition,
 		props: {
 			visible: expanded,
 			transition: collapseVerticalTransition,
 		},
 	});
-	const visible = fromStore(visible$);
-	const hidden = fromStore(hidden$);
 </script>
 
 <div class="card">
@@ -30,15 +29,15 @@
 			onclick={() => toggle()}
 			class="btn toggle-button"
 			aria-controls="collapse-content"
-			aria-expanded={visible.current || undefined}
+			aria-expanded={state.visible || undefined}
 		>
 			{headerText}
-			<span class="ms-1 collapse-icon" class:expanded={visible.current}>
+			<span class="ms-1 collapse-icon" class:expanded={state.visible}>
 				{@html collapseIcon}
 			</span>
 		</button>
 	</div>
-	{#if !hidden.current}
+	{#if !state.hidden}
 		<div id="collapse-content" use:directive>
 			<div class="card-body">
 				{@render children()}
