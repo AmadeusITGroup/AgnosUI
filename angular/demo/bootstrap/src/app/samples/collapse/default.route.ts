@@ -1,18 +1,18 @@
 import {AgnosUIAngularModule} from '@agnos-ui/angular-bootstrap';
-import {Component} from '@angular/core';
+import {Component, signal} from '@angular/core';
 
 @Component({
 	standalone: true,
 	imports: [AgnosUIAngularModule],
 	template: `
-		<p class="d-inline-flex gap-1">
-			<button class="btn btn-primary" type="button" (click)="collapse.api.open()">Open collapse</button>
-			<button class="btn btn-primary" type="button" (click)="collapse.api.close()">Close collapse</button>
-			<button class="btn btn-primary" type="button" (click)="collapse.api.toggle()">Toggle collapse</button>
-		</p>
-		<div auCollapse #collapse="auCollapse">
+		<button class="btn btn-primary mb-2" type="button" aria-controls="auId-0" [attr.aria-expanded]="expanded()" (click)="collapse.api.toggle()">
+			Toggle collapse
+		</button>
+		<div auCollapse #collapse="auCollapse" id="auId-0" (auVisibleChange)="expanded.set($event)">
 			<div class="card card-body">Visible content</div>
 		</div>
 	`,
 })
-export default class DefaultCollapseComponent {}
+export default class DefaultCollapseComponent {
+	expanded = signal(true);
+}

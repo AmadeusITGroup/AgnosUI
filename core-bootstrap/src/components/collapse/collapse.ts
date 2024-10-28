@@ -77,6 +77,12 @@ export interface CollapseProps extends CollapseCommonPropsAndState {
 	 * @defaultValue `true`
 	 */
 	animated: boolean;
+	/**
+	 * id of the collapse
+	 *
+	 * @defaultValue `''`
+	 */
+	id: string;
 }
 
 export interface CollapseApi {
@@ -114,6 +120,7 @@ const defaultCollapseConfig: CollapseProps = {
 	animated: true,
 	animatedOnInit: false,
 	className: '',
+	id: '',
 };
 
 /**
@@ -133,6 +140,7 @@ const commonCollapseConfigValidator: ConfigValidator<CollapseProps> = {
 	animated: typeBoolean,
 	className: typeString,
 	visible: typeBoolean,
+	id: typeString,
 };
 
 /**
