@@ -30,7 +30,6 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> {
 	readonly collectionSize = input(undefined, {transform: auNumberAttribute});
 	readonly page = model(0);
 	readonly pageSize = input(undefined, {transform: auNumberAttribute});
-	readonly size = input<string>();
 	readonly pagesFactory = input<(page: number, pageCount: number) => number[]>();
 	readonly className = input<string>();
 

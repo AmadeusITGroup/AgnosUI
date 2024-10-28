@@ -1,5 +1,5 @@
 import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
-import type {SlotContent, Widget, WidgetFactory, WidgetSlotContext} from '@agnos-ui/core/types';
+import type {ConfigValidator, SlotContent, Widget, WidgetFactory, WidgetSlotContext} from '@agnos-ui/core/types';
 import type {
 	PaginationApi,
 	PaginationDirectives,
@@ -7,6 +7,7 @@ import type {
 	PaginationState as CoreState,
 } from '@agnos-ui/core/components/pagination';
 import {createPagination as createCorePagination, getPaginationDefaultConfig as getCoreDefaultConfig} from '@agnos-ui/core/components/pagination';
+import {createTypeEnum} from '@agnos-ui/core/utils/writables';
 
 export * from '@agnos-ui/core/components/pagination';
 
@@ -99,6 +100,15 @@ interface PaginationExtraProps {
 	 * ```
 	 */
 	numberLabel: SlotContent<PaginationNumberContext>;
+
+	/**
+	 * The pagination display size.
+	 *
+	 * Bootstrap currently supports small and large sizes.
+	 *
+	 * @defaultValue `null`
+	 */
+	size: 'sm' | 'lg' | null;
 }
 
 export interface PaginationState extends CoreState, PaginationExtraProps {}
@@ -115,7 +125,21 @@ const defaultConfigExtraProps: PaginationExtraProps = {
 	lastPageLabel: '»',
 	numberLabel: ({displayedPage}: PaginationNumberContext) => `${displayedPage}`,
 	pagesDisplay: undefined,
+	size: null,
 };
+
+const configValidator: ConfigValidator<PaginationExtraProps> = {
+	structure: undefined,
+	ellipsisLabel: undefined,
+	firstPageLabel: undefined,
+	previousPageLabel: undefined,
+	nextPageLabel: undefined,
+	lastPageLabel: undefined,
+	numberLabel: undefined,
+	pagesDisplay: undefined,
+	size: createTypeEnum(['lg', 'sm', null]),
+};
+
 /**
  * Retrieve a shallow copy of the default Pagination config
  * @returns the default Pagination config
@@ -129,4 +153,4 @@ export function getPaginationDefaultConfig(): PaginationProps {
  * @param config - an optional alert config
  * @returns a PaginationWidget
  */
-export const createPagination: WidgetFactory<PaginationWidget> = extendWidgetProps(createCorePagination, defaultConfigExtraProps);
+export const createPagination: WidgetFactory<PaginationWidget> = extendWidgetProps(createCorePagination, defaultConfigExtraProps, configValidator);

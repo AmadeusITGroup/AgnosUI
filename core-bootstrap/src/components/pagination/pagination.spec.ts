@@ -3,6 +3,7 @@ import {beforeEach, describe, expect, test, vi} from 'vitest';
 import type {PaginationState, PaginationWidget} from './pagination';
 import {createPagination, getPaginationDefaultConfig} from './pagination';
 import {ngBootstrapPagination} from './pageFactory';
+import {assign} from '../../../../common/utils';
 
 describe(`Pagination`, () => {
 	let pagination: PaginationWidget;
@@ -27,41 +28,49 @@ describe(`Pagination`, () => {
 		};
 	});
 
+	const expectLogInvalidValue = () => {
+		expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+		expect(consoleErrorSpy.mock.calls[0][0]).toContain('invalid');
+		consoleErrorSpy.mockClear();
+	};
+
+	const expectedState: PaginationState = {
+		pageCount: 1, // total number of page
+		page: 1, // current page
+		pages: [1], // list of the visible pages
+		previousDisabled: true,
+		ariaLabel: 'Page navigation',
+		className: '',
+		nextDisabled: true,
+		disabled: false,
+		directionLinks: true,
+		boundaryLinks: false,
+		structure: undefined,
+		ellipsisLabel: '…',
+		firstPageLabel: '«',
+		previousPageLabel: '‹',
+		nextPageLabel: '›',
+		lastPageLabel: '»',
+		pagesDisplay: undefined,
+		numberLabel: getPaginationDefaultConfig().numberLabel,
+		size: null,
+		activeLabel: '(current)',
+		ariaFirstLabel: 'Action link for first page',
+		ariaLastLabel: 'Action link for last page',
+		ariaNextLabel: 'Action link for next page',
+		ariaPreviousLabel: 'Action link for previous page',
+		ariaEllipsisLabel: 'Ellipsis page element',
+		ariaLiveLabelText: 'Current page is 1',
+		directionsHrefs: {
+			next: '#',
+			previous: '#',
+		},
+		pagesHrefs: ['#'],
+		pagesLabel: ['Page 1 of 1'],
+	};
+
 	test(`should have sensible state`, () => {
-		expect(state).toStrictEqual({
-			pageCount: 1, // total number of page
-			page: 1, // current page
-			pages: [1], // list of the visible pages
-			previousDisabled: true,
-			ariaLabel: 'Page navigation',
-			className: '',
-			nextDisabled: true,
-			disabled: false,
-			directionLinks: true,
-			boundaryLinks: false,
-			structure: undefined,
-			ellipsisLabel: '…',
-			firstPageLabel: '«',
-			previousPageLabel: '‹',
-			nextPageLabel: '›',
-			lastPageLabel: '»',
-			pagesDisplay: undefined,
-			numberLabel: state.numberLabel,
-			size: null,
-			activeLabel: '(current)',
-			ariaFirstLabel: 'Action link for first page',
-			ariaLastLabel: 'Action link for last page',
-			ariaNextLabel: 'Action link for next page',
-			ariaPreviousLabel: 'Action link for previous page',
-			ariaEllipsisLabel: 'Ellipsis page element',
-			ariaLiveLabelText: 'Current page is 1',
-			directionsHrefs: {
-				next: '#',
-				previous: '#',
-			},
-			pagesHrefs: ['#'],
-			pagesLabel: ['Page 1 of 1'],
-		});
+		expect(state).toStrictEqual(expectedState);
 	});
 
 	test('should include a simple pageFactory implementation in default config', () => {
@@ -223,5 +232,14 @@ describe(`Pagination`, () => {
 
 		pagination.patch({page: 12});
 		expect(state.pages).toStrictEqual([1, -1, 8, 9, 10, 11, 12]);
+	});
+
+	test('should warn using invalid size value', () => {
+		const state = {...expectedState};
+		pagination.patch({size: 'invalidSize' as 'sm'});
+		expect(state).toStrictEqual(assign(state, {size: null}));
+		expectLogInvalidValue();
+		pagination.patch({size: 'sm'});
+		expect(state).toStrictEqual(assign(state, {size: 'sm'}));
 	});
 });
