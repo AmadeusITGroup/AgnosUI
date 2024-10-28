@@ -54,4 +54,14 @@ const widgetFactories: {
 		slotChildren?: () => TemplateRef<void> | undefined;
 	}) => AngularWidget<W>;
 } = widgetsConfigFactory<WidgetsConfig>(new InjectionToken<WidgetsConfigStore<WidgetsConfig>>('bootstrapWidgetsConfig')) as any;
+
+/**
+ * Destructures and exports several functions and constants from the `widgetFactories` object.
+ *
+ * @constant {InjectionToken} widgetsConfigInjectionToken - Token used for injecting widget configuration.
+ * @function provideWidgetsConfig - Provides the widget configuration.
+ * @function injectWidgetConfig - Injects a single widget configuration.
+ * @function injectWidgetsConfig - Injects multiple widget configurations.
+ * @function callWidgetFactory - Calls the widget factory function.
+ */
 export const {widgetsConfigInjectionToken, provideWidgetsConfig, injectWidgetConfig, injectWidgetsConfig, callWidgetFactory} = widgetFactories;

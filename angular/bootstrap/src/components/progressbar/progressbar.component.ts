@@ -15,6 +15,15 @@ import {createProgressbar} from './progressbar.gen';
 import {callWidgetFactory} from '../../config';
 import type {BSContextualClass} from '@agnos-ui/core-bootstrap/types';
 
+/**
+ * Directive that provides a template reference for the progress bar context.
+ *
+ * This directive is used to inject a `TemplateRef` of type `ProgressbarContext`
+ * into the progress bar component, allowing for custom templates to be used
+ * within the progress bar.
+ *
+ * @template ProgressbarContext - The context type for the progress bar template.
+ */
 @Directive({selector: 'ng-template[auProgressbarBody]', standalone: true})
 export class ProgressbarBodyDirective {
 	public templateRef = inject(TemplateRef<ProgressbarContext>);
@@ -23,6 +32,14 @@ export class ProgressbarBodyDirective {
 	}
 }
 
+/**
+ * Directive to define the structure of a progress bar.
+ *
+ * This directive provides a template reference for the progress bar context.
+ * It also includes a static method to guard the template context type.
+ *
+ * @template ProgressbarContext - The context type for the progress bar.
+ */
 @Directive({selector: 'ng-template[auProgressbarStructure]', standalone: true})
 export class ProgressbarStructureDirective {
 	public templateRef = inject(TemplateRef<ProgressbarContext>);
@@ -55,8 +72,19 @@ class ProgressbarDefaultSlotsComponent {
 	@ViewChild('structure', {static: true}) structure!: TemplateRef<ProgressbarContext>;
 }
 
+/**
+ * Represents the default slot structure for the progress bar component.
+ * This constant is an instance of `ComponentTemplate` initialized with
+ * `ProgressbarDefaultSlotsComponent` and a structure type.
+ */
 export const progressbarDefaultSlotStructure = new ComponentTemplate(ProgressbarDefaultSlotsComponent, 'structure');
 
+/**
+ * ProgressbarComponent is a UI component that extends the BaseWidgetDirective
+ * to create a customizable progress bar widget. It provides various inputs
+ * to configure the appearance and behavior of the progress bar.
+ *
+ */
 @Component({
 	selector: '[auProgressbar]',
 	standalone: true,

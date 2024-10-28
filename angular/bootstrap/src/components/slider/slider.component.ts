@@ -27,6 +27,11 @@ import {callWidgetFactory} from '../../config';
 import type {SliderContext, SliderSlotHandleContext, SliderSlotLabelContext, SliderWidget} from './slider.gen';
 import {createSlider} from './slider.gen';
 
+/**
+ * Directive to provide a template reference for slider labels.
+ *
+ * This directive is used to inject a `TemplateRef` for the `SliderSlotLabelContext`.
+ */
 @Directive({selector: 'ng-template[auSliderLabel]', standalone: true})
 export class SliderLabelDirective {
 	public templateRef = inject(TemplateRef<SliderSlotLabelContext>);
@@ -34,7 +39,12 @@ export class SliderLabelDirective {
 		return true;
 	}
 }
-
+/**
+ * Directive representing a handle for a slider component.
+ *
+ * This directive is used to manage the template reference for the slider handle
+ * and provides a context guard for the template.
+ */
 @Directive({selector: 'ng-template[auSliderHandle]', standalone: true})
 export class SliderHandleDirective {
 	public templateRef = inject(TemplateRef<SliderSlotLabelContext>);
@@ -57,8 +67,17 @@ class SliderDefaultHandleSlotComponent {
 	@ViewChild('handle', {static: true}) readonly handle!: TemplateRef<SliderSlotHandleContext>;
 }
 
+/**
+ * A constant representing the default slot handle for the slider component.
+ * It uses the `SliderDefaultHandleSlotComponent` as the component template and assigns it the slot name 'handle'.
+ */
 export const sliderDefaultSlotHandle = new ComponentTemplate(SliderDefaultHandleSlotComponent, 'handle');
 
+/**
+ * Directive that provides structure for the slider component.
+ *
+ * This directive uses a `TemplateRef` to handle the context of the slider slot.
+ */
 @Directive({selector: 'ng-template[auSliderStructure]', standalone: true})
 export class SliderStructureDirective {
 	public templateRef = inject(TemplateRef<SliderSlotHandleContext>);
@@ -111,8 +130,18 @@ class SliderDefaultStructureSlotComponent {
 	@ViewChild('structure', {static: true}) structure!: TemplateRef<SliderContext>;
 }
 
+/**
+ * Represents the default slot structure for the slider component.
+ * This constant is an instance of `ComponentTemplate` which uses
+ * `SliderDefaultStructureSlotComponent` as its component and 'structure' as its slot name.
+ */
 export const sliderDefaultSlotStructure = new ComponentTemplate(SliderDefaultStructureSlotComponent, 'structure');
 
+/**
+ * SliderComponent is an Angular component that extends the BaseWidgetDirective
+ * to provide a customizable slider widget. This component allows for various
+ * configurations and customizations through its inputs and outputs.
+ */
 @Component({
 	selector: '[auSlider]',
 	standalone: true,

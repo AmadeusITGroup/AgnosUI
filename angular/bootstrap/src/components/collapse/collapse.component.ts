@@ -4,6 +4,11 @@ import {createCollapse} from '@agnos-ui/core-bootstrap/components/collapse';
 import {Directive, EventEmitter, Input, Output} from '@angular/core';
 import {callWidgetFactory} from '../../config';
 
+/**
+ * Directive to control the collapse behavior of an element.
+ * Extends the `BaseWidgetDirective` with a `CollapseWidget`.
+ *
+ */
 @Directive({
 	selector: '[auCollapse]',
 	standalone: true,

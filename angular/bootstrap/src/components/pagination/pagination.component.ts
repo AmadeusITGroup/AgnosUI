@@ -186,6 +186,11 @@ export const paginationDefaultSlotPages = new ComponentTemplate(PaginationDefaul
  */
 export const paginationDefaultSlotStructure = new ComponentTemplate(PaginationDefaultSlotsComponent, 'structure');
 
+/**
+ * The `PaginationComponent` is an Angular component that extends the `BaseWidgetDirective`
+ * to provide a customizable pagination widget. It includes various input properties
+ * to configure labels, templates, and behavior for accessibility and internationalization (i18n).
+ */
 @Component({
 	selector: '[auPagination]',
 	standalone: true,

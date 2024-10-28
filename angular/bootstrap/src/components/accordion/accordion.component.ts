@@ -25,6 +25,13 @@ import {callWidgetFactory} from '../../config';
 import type {AccordionItemContext, AccordionItemWidget, AccordionWidget} from './accordion.gen';
 import {createAccordion} from './accordion.gen';
 
+/**
+ * Directive to represent the body of an accordion item.
+ *
+ * This directive provides a template reference for the accordion item context.
+ *
+ * @template AccordionItemContext - The context type for the accordion item.
+ */
 @Directive({selector: 'ng-template[auAccordionItemBody]', standalone: true})
 export class AccordionBodyDirective {
 	public templateRef = inject(TemplateRef<AccordionItemContext>);
@@ -33,6 +40,13 @@ export class AccordionBodyDirective {
 	}
 }
 
+/**
+ * Directive to be used as an accordion header.
+ *
+ * This directive provides a template reference for the accordion item context.
+ *
+ * @template AccordionItemContext - The context type for the accordion item.
+ */
 @Directive({selector: 'ng-template[auAccordionItemHeader]', standalone: true})
 export class AccordionHeaderDirective {
 	public templateRef = inject(TemplateRef<AccordionItemContext>);
@@ -41,6 +55,14 @@ export class AccordionHeaderDirective {
 	}
 }
 
+/**
+ * Directive that represents the structure of an accordion item.
+ *
+ * This directive provides a template reference for the accordion item context.
+ * It also includes a static method to guard the template context type.
+ *
+ * @template AccordionItemContext - The context type for the accordion item.
+ */
 @Directive({selector: 'ng-template[auAccordionItemStructure]', standalone: true})
 export class AccordionItemStructureDirective {
 	public templateRef = inject(TemplateRef<AccordionItemContext>);
@@ -132,8 +154,17 @@ export class AccordionItemStructureDirective {
 class AccordionItemDefaultSlotsComponent {
 	@ViewChild('structure', {static: true}) structure!: TemplateRef<AccordionItemContext>;
 }
-export const accordionItemDefaultSlotItemStructure = new ComponentTemplate(AccordionItemDefaultSlotsComponent, 'structure');
+/**
+ * Represents the default slot structure for an accordion item.
+ * This constant is an instance of `ComponentTemplate` with the
+ * `AccordionItemDefaultSlotsComponent` component and a slot name of 'structure'.
+ */
+export const accordionItemDefaultSlotStructure = new ComponentTemplate(AccordionItemDefaultSlotsComponent, 'structure');
 
+/**
+ * AccordionItemComponent is a component that represents an item within an accordion.
+ * It extends the BaseWidgetDirective and implements AfterViewInit.
+ */
 @Component({
 	selector: '[auAccordionItem]',
 	exportAs: 'auAccordionItem',
@@ -255,7 +286,7 @@ export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWid
 			callWidgetFactory<AccordionItemWidget>({
 				factory: (arg) => inject(AccordionDirective).api.registerItem(arg),
 				defaultConfig: {
-					structure: accordionItemDefaultSlotItemStructure,
+					structure: accordionItemDefaultSlotStructure,
 				},
 				events: {
 					onVisibleChange: (visible) => this.visibleChange.emit(visible),
@@ -280,6 +311,13 @@ export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWid
 	}
 }
 
+/**
+ * Directive for creating an accordion component.
+ *
+ * This directive extends the `BaseWidgetDirective` and provides various inputs and outputs
+ * to customize the behavior and appearance of the accordion and its items.
+ *
+ */
 @Directive({
 	selector: '[auAccordion]',
 	exportAs: 'auAccordion',
