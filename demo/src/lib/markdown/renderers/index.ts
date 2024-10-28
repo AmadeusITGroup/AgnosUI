@@ -19,3 +19,4 @@ export {default as Html} from './MdHtml.svelte';
 export {default as Code} from './MdCode.svelte';
 export {default as Br} from './MdBr.svelte';
 export {default as Section} from './MdSection.svelte';
+export {default as Escape} from './MdEscape.svelte';

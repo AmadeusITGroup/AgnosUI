@@ -89,6 +89,7 @@ export class UseDirective<T> implements OnChanges {
 
 	readonly #useDirective = useDirectiveForHost<T>();
 
+	/** @internal */
 	ngOnChanges() {
 		const use = this.use;
 		const [directive, param] = Array.isArray(use) ? use : [use as any];
@@ -113,6 +114,7 @@ export class UseMultiDirective<T extends any[]> implements OnChanges {
 
 	readonly #useDirective = useDirectiveForHost<DirectivesAndOptParam<T>>();
 
+	/** @internal */
 	ngOnChanges() {
 		this.#useDirective.update(multiDirective, this.useMulti);
 	}
