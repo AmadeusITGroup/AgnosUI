@@ -30,8 +30,6 @@ import {createRating} from './rating.gen';
  * Directive to represent a rating star.
  *
  * This directive uses a template reference to render the star context.
- *
- * @template StarContext - The context type for the star template.
  */
 @Directive({selector: 'ng-template[auRatingStar]', standalone: true})
 export class RatingStarDirective {

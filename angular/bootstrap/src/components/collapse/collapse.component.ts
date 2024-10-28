@@ -6,8 +6,6 @@ import {callWidgetFactory} from '../../config';
 
 /**
  * Directive to control the collapse behavior of an element.
- * Extends the `BaseWidgetDirective` with a `CollapseWidget`.
- *
  */
 @Directive({
 	selector: '[auCollapse]',

@@ -157,17 +157,17 @@ export abstract class BaseWidgetDirective<W extends Widget> implements OnChanges
 		return this._widget.directives;
 	}
 
-	/** @inheritdoc */
+	/** @internal */
 	ngOnChanges(changes: SimpleChanges): void {
 		patchSimpleChanges(this._widget.patch, changes);
 	}
 
-	/** @inheritdoc */
+	/** @internal */
 	ngOnInit(): void {
 		this._widget.ngInit();
 	}
 
-	/** @inheritdoc */
+	/** @internal */
 	ngAfterContentChecked(): void {
 		this._widget.updateSlots();
 	}

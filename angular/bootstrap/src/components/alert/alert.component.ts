@@ -20,9 +20,7 @@ import type {BSContextualClass} from '@agnos-ui/core-bootstrap/types';
 /**
  * Directive to be used as a structural directive for the body of an alert component.
  *
- * This directive allows the use of a template reference for the alert body content.
- *
- * @template AlertContext - The context type for the alert body template.
+ * This directive allows the use of a template reference for the alert body content, with type {@link AlertContext}.
  */
 @Directive({selector: 'ng-template[auAlertBody]', standalone: true})
 export class AlertBodyDirective {
@@ -35,10 +33,7 @@ export class AlertBodyDirective {
 /**
  * Directive to define the structure of an alert component.
  *
- * This directive uses a `TemplateRef` to inject the template reference of the alert context.
- * It also includes a static method to guard the template context type.
- *
- * @template AlertContext - The context type for the alert template.
+ * This directive uses a `TemplateRef` to inject the template reference of the {@link AlertContext}.
  */
 @Directive({selector: 'ng-template[auAlertStructure]', standalone: true})
 export class AlertStructureDirective {

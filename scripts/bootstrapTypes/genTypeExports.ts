@@ -120,6 +120,11 @@ for (const component of components) {
 			exportedNodes.push(node);
 		} else if (ts.isInterfaceDeclaration(node)) {
 			// interfaces are resolved to obtain a *flattened* version
+			exports += `${node
+				.getChildren()
+				.filter(ts.isJSDoc)
+				.map((jsDoc) => jsDoc.getText())
+				.join('\n')}\n`;
 			exports += `export interface ${bootstrapExport.name}${node.typeParameters?.length ? `<${node.typeParameters.map((typeParam) => typeParam.getText()).join(', ')}>` : ''} {\n`;
 			exportedNodes.push(...(node.typeParameters ?? []));
 			for (const property of typeChecker.getTypeAtLocation(node).getProperties()) {

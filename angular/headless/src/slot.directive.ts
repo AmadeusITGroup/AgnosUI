@@ -215,7 +215,6 @@ export class SlotDirective<Props extends Record<string, any>> implements OnChang
 	private _slotType: ReturnType<typeof getSlotType>;
 	private _slotHandler: SlotHandler<Props> | undefined;
 
-	/** @inheritdoc */
 	ngOnChanges(changes: SimpleChanges): void {
 		const slotChange = changes['slot'];
 		const propsChange = changes['props'];
@@ -233,7 +232,6 @@ export class SlotDirective<Props extends Record<string, any>> implements OnChang
 		}
 	}
 
-	/** @inheritdoc */
 	ngOnDestroy(): void {
 		this._slotHandler?.destroy();
 		this._slotHandler = undefined;

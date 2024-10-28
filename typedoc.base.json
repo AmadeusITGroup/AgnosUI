@@ -31,5 +31,20 @@
 			"SvelteComponent": "https://svelte.dev/docs/svelte#types-sveltecomponent"
 		}
 	},
+	"excludeNotDocumented": true,
+	"excludeInternal": true,
+	"excludeNotDocumentedKinds": [
+		"Constructor",
+		"Property",
+		"Method",
+		"CallSignature",
+		"IndexSignature",
+		"ConstructorSignature",
+		"Accessor",
+		"GetSignature",
+		"SetSignature",
+		"TypeAlias",
+		"Reference"
+	],
 	"pretty": false
 }

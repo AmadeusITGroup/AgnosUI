@@ -6,7 +6,14 @@ import {useWidgetWithConfig} from '../../config';
 import type {ProgressDisplayOptions, SliderContext, SliderDirectives, SliderHandle, SliderProps, SliderSlotHandleContext} from './slider.gen';
 import {createSlider} from './slider.gen';
 
-export const DefaultSlotHandle = (slotContext: SliderSlotHandleContext) => {
+/**
+ * A functional component that renders a button element with a directive applied to it.
+ * The directive is provided through the `slotContext` parameter.
+ *
+ * @param {SliderSlotHandleContext} slotContext - The context object containing the directives and item for the slider handle.
+ * @returns {JSX.Element} A button element with the applied directive.
+ */
+export const SliderDefaultSlotHandle = (slotContext: SliderSlotHandleContext) => {
 	return <button {...useDirective<{item: SliderHandle}>(slotContext.directives.handleDirective, {item: slotContext.item})}>&nbsp;</button>;
 };
 
@@ -54,7 +61,14 @@ const CombinedLabel = (slotContext: SliderContext) => (
 	</div>
 );
 
-export const DefaultSlotStructure = (slotContext: SliderContext) => (
+/**
+ * Renders the default slot structure for the Slider component.
+ *
+ * @param {SliderContext} slotContext - The context object containing state and directives for the slider.
+ * @returns {JSX.Element} The JSX element representing the default slot structure.
+ *
+ */
+export const SliderDefaultSlotStructure = (slotContext: SliderContext) => (
 	<>
 		{slotContext.state.progressDisplayOptions.map((option, index) => (
 			<ProgressDisplay key={index} directive={slotContext.directives.progressDisplayDirective} option={option} />
@@ -76,13 +90,21 @@ export const DefaultSlotStructure = (slotContext: SliderContext) => (
 	</>
 );
 
-const defaultConfig: Partial<SliderProps> = {
-	structure: DefaultSlotStructure,
-	handle: DefaultSlotHandle,
-};
-
+/**
+ * Slider component that integrates with a widget context and renders a slot structure.
+ *
+ * @param {PropsWithChildren<Partial<SliderProps>>} props - The properties for the Slider component.
+ * @returns {JSX.Element} The rendered Slider component.
+ *
+ * The Slider component uses the `useWidgetWithConfig` hook to create a widget context with the provided
+ * configuration. It then applies the `sliderDirective` to a `div` element and renders the slot content
+ * using the `Slot` component.
+ */
 export function Slider(props: PropsWithChildren<Partial<SliderProps>>) {
-	const widgetContext = useWidgetWithConfig(createSlider, props, 'slider', {...defaultConfig});
+	const widgetContext = useWidgetWithConfig(createSlider, props, 'slider', {
+		structure: SliderDefaultSlotStructure,
+		handle: SliderDefaultSlotHandle,
+	});
 
 	return (
 		<div {...useDirective(widgetContext.directives.sliderDirective)}>

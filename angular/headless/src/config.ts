@@ -129,6 +129,8 @@ export const widgetsConfigFactory = <Config extends {[widgetName: string]: objec
 	 * @param params.widgetName - The name of the widget configuration to inject, if any.
 	 * @param params.defaultConfig - The default configuration for the widget.
 	 * @param params.events - The event handlers for the widget.
+	 * @param params.slotTemplates - A function that returns the slot templates for the widget.
+	 * @param params.slotChildren - A function that returns the slot children for the widget.
 	 * @param params.afterInit - A callback function to be called after the widget is initialized.
 	 * @returns The initialized widget.
 	 */

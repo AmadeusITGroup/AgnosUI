@@ -19,7 +19,13 @@ const ToastCloseButtonNoHeader = (slotContext: ToastContext) => (
 	<button {...useDirectives([classDirective, 'btn-close btn-close-white me-2 m-auto'], slotContext.directives.closeButtonDirective)} />
 );
 
-const DefaultSlotStructure = (slotContext: ToastContext) => (
+/**
+ * Renders the default slot structure for a Toast component.
+ *
+ * @param {ToastContext} slotContext - The context containing the state and properties for the Toast component.
+ * @returns {JSX.Element} The JSX element representing the default slot structure of the Toast.
+ */
+export const ToastDefaultSlotStructure = (slotContext: ToastContext) => (
 	<>
 		{slotContext.state.header && <ToastHeader {...slotContext} />}
 
@@ -29,10 +35,6 @@ const DefaultSlotStructure = (slotContext: ToastContext) => (
 		{slotContext.state.dismissible && !slotContext.state.header && <ToastCloseButtonNoHeader {...slotContext} />}
 	</>
 );
-
-const defaultConfig: Partial<ToastProps> = {
-	structure: DefaultSlotStructure,
-};
 
 const ToastElement = (slotContext: ToastContext) => (
 	<div
@@ -47,11 +49,26 @@ const ToastElement = (slotContext: ToastContext) => (
 	</div>
 );
 
+/**
+ * Toast component that uses a forward ref to expose the Toast API.
+ *
+ * This component utilizes the `useWidgetWithConfig` hook to create a toast widget
+ * with the provided properties and configuration. It also uses `useImperativeHandle`
+ * to expose the widget's API through the forwarded ref.
+ *
+ * @param props - Partial properties of `ToastProps` to configure the toast widget.
+ * @param ref - Ref to expose the Toast API.
+ *
+ * @returns A JSX element that conditionally renders the `ToastElement` based on the widget's state.
+ */
 export const Toast: ForwardRefExoticComponent<Partial<ToastProps> & RefAttributes<ToastApi>> = forwardRef(function Toast(
 	props: Partial<ToastProps>,
 	ref,
 ) {
-	const widgetContext = useWidgetWithConfig(createToast, props, 'toast', {...defaultConfig, children: props.children});
+	const widgetContext = useWidgetWithConfig(createToast, props, 'toast', {
+		structure: ToastDefaultSlotStructure,
+		children: props.children,
+	});
 	useImperativeHandle(ref, () => widgetContext.api, []);
 
 	return <>{!widgetContext.state.hidden && <ToastElement {...widgetContext} />}</>;

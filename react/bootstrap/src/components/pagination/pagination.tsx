@@ -5,7 +5,21 @@ import {NavButton, PageItem} from './pageItem';
 import type {PaginationContext, PaginationProps} from './pagination.gen';
 import {createPagination} from './pagination.gen';
 
-export function DefaultPages(slotContext: PaginationContext) {
+/**
+ * Renders the default slot pages for the pagination component.
+ *
+ * @param {PaginationContext} slotContext - The context containing pagination state and directives.
+ * @returns {JSX.Element | null} The rendered pagination items or null if there are no pages.
+ *
+ * The function iterates over the pages in the pagination state and generates JSX elements for each page.
+ * If a page is represented by -1, it renders an ellipsis item. Otherwise, it renders a page item.
+ *
+ * - Ellipsis items are rendered as disabled list items with an aria-hidden attribute for accessibility.
+ * - Page items are rendered using the `PageItem` component, with properties for disabled state, active state, and directives.
+ *
+ * The function returns a fragment containing the generated JSX elements, or null if there are no pages to render.
+ */
+export const PaginationDefaultSlotPages = (slotContext: PaginationContext) => {
 	const {state, directives} = slotContext;
 	const jsxPages = [];
 	for (let i = 0; i < state.pages.length; i++) {
@@ -34,14 +48,20 @@ export function DefaultPages(slotContext: PaginationContext) {
 		}
 	}
 	return jsxPages.length ? <>{jsxPages}</> : null;
-}
-
-const defaultConfig: Partial<PaginationProps> = {
-	pagesDisplay: DefaultPages,
-	structure: DefaultStructure,
 };
 
-export function DefaultStructure(slotContext: PaginationContext) {
+/**
+ * Renders the default slot structure for the pagination component.
+ *
+ * @param {PaginationContext} slotContext - The context containing the state and directives for pagination.
+ * @returns {JSX.Element} The rendered pagination component.
+ *
+ * The function constructs the pagination structure based on the provided state and directives.
+ * It conditionally includes navigation buttons for first, previous, next, and last pages based on the state.
+ * The pagination items are wrapped in an unordered list with appropriate classes.
+ * Additionally, an aria-live region is included for accessibility purposes.
+ */
+export const PaginationDefaultSlotStructure = (slotContext: PaginationContext) => {
 	const {state, directives} = slotContext;
 	const ItemsBefore = [];
 	const ItemsAfter = [];
@@ -87,11 +107,20 @@ export function DefaultStructure(slotContext: PaginationContext) {
 			</div>
 		</>
 	);
-}
+};
 
-// TODO discuss the extension of the props to the HTML UL one for react ?
+/**
+ * Pagination component that renders a navigation element for paginated content.
+ * It uses the `useWidgetWithConfig` hook to create a pagination widget with the provided props.
+ *
+ * @param {Partial<PaginationProps>} props - The properties for the Pagination component.
+ * @returns {JSX.Element} The rendered pagination navigation element.
+ */
 export function Pagination(props: Partial<PaginationProps>) {
-	const widgetContext = useWidgetWithConfig(createPagination, props, 'pagination', defaultConfig);
+	const widgetContext = useWidgetWithConfig(createPagination, props, 'pagination', {
+		pagesDisplay: PaginationDefaultSlotPages,
+		structure: PaginationDefaultSlotStructure,
+	});
 
 	return (
 		<nav aria-label={widgetContext.state.ariaLabel}>
