@@ -4,7 +4,7 @@
 	import {callWidgetFactory} from '../../config';
 	import type {Snippet} from 'svelte';
 
-	let {children, ...props}: Partial<CollapseProps> & {children: Snippet} = $props();
+	let {children, id, visible = $bindable(), ...props}: Partial<CollapseProps> & {children: Snippet} = $props();
 
 	const {
 		directives: {transitionDirective},
@@ -12,7 +12,14 @@
 	} = callWidgetFactory({
 		factory: createCollapse,
 		widgetName: 'collapse',
-		props,
+		get props() {
+			return {...props, id, visible};
+		},
+		events: {
+			onVisibleChange: (event) => {
+				visible = event;
+			},
+		},
 		enablePatchChanged: true,
 	});
 	export const api: CollapseApi = collapseApi;

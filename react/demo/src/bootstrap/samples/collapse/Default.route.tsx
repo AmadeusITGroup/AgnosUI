@@ -1,24 +1,15 @@
-import type {CollapseApi} from '@agnos-ui/react-bootstrap/components/collapse';
 import {Collapse} from '@agnos-ui/react-bootstrap/components/collapse';
-import {useRef} from 'react';
+import {useState} from 'react';
 
 const CollapseDemo = () => {
-	const refCollapse = useRef<CollapseApi>(null);
-
+	const [visible, setVisible] = useState(true);
+	const id = 'auId-0';
 	return (
 		<>
-			<p className="d-inline-flex gap-1">
-				<button className="btn btn-primary" type="button" onClick={() => refCollapse?.current?.open()}>
-					Open collapse
-				</button>
-				<button className="btn btn-primary" type="button" onClick={() => refCollapse?.current?.close()}>
-					Close collapse
-				</button>
-				<button className="btn btn-primary" type="button" onClick={() => refCollapse?.current?.toggle()}>
-					Toggle collapse
-				</button>
-			</p>
-			<Collapse ref={refCollapse}>
+			<button className="btn btn-primary mb-2" type="button" aria-expanded={visible} aria-controls={id} onClick={() => setVisible(!visible)}>
+				Toggle collapse
+			</button>
+			<Collapse id={id} visible={visible} onHidden={() => console.log('Hidden')}>
 				<div className="card card-body">Visible content</div>
 			</Collapse>
 		</>

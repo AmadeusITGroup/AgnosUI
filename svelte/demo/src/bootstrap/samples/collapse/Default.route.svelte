@@ -1,12 +1,10 @@
 <script lang="ts">
 	import {Collapse} from '@agnos-ui/svelte-bootstrap/components/collapse';
 
-	let collapse: Collapse;
+	let visible = $state(true);
 </script>
 
-<p class="d-inline-flex gap-1">
-	<button class="btn btn-primary" type="button" onclick={() => collapse.api.open()}>Open collapse</button>
-	<button class="btn btn-primary" type="button" onclick={() => collapse.api.close()}>Close collapse</button>
-	<button class="btn btn-primary" type="button" onclick={() => collapse.api.toggle()}>Toggle collapse</button>
-</p>
-<Collapse bind:this={collapse} onHidden={() => console.log('Hidden')}><div class="card card-body">Visible content</div></Collapse>
+<button class="btn btn-primary mb-2" type="button" aria-controls="auId-0" aria-expanded={visible} onclick={() => (visible = !visible)}
+	>Toggle collapse</button
+>
+<Collapse {visible} onHidden={() => console.log('Hidden')} id="auId-0"><div class="card card-body">Visible content</div></Collapse>

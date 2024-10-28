@@ -1,7 +1,7 @@
 import {createTransition} from '@agnos-ui/core/services/transitions/baseTransitions';
 import type {ConfigValidator, Directive, PropsConfig, Widget} from '@agnos-ui/core/types';
 import {stateStores, writablesForProps} from '@agnos-ui/core/utils/stores';
-import {bindDirectiveNoArg} from '@agnos-ui/core/utils/directive';
+import {bindDirectiveNoArg, createAttributesDirective, mergeDirectives} from '@agnos-ui/core/utils/directive';
 import {typeBoolean, typeFunction, typeString} from '@agnos-ui/core/utils/writables';
 import {collapseHorizontalTransition, collapseVerticalTransition} from '../../services/transitions/collapse';
 import {asWritable, computed} from '@amadeus-it-group/tansu';
@@ -77,6 +77,12 @@ export interface CollapseProps extends CollapseCommonPropsAndState {
 	 * @defaultValue `true`
 	 */
 	animated: boolean;
+	/**
+	 * id of the collapse
+	 *
+	 * @defaultValue `''`
+	 */
+	id: string;
 }
 
 export interface CollapseApi {
@@ -114,6 +120,7 @@ const defaultCollapseConfig: CollapseProps = {
 	animated: true,
 	animatedOnInit: false,
 	className: '',
+	id: '',
 };
 
 /**
@@ -133,6 +140,7 @@ const commonCollapseConfigValidator: ConfigValidator<CollapseProps> = {
 	animated: typeBoolean,
 	className: typeString,
 	visible: typeBoolean,
+	id: typeString,
 };
 
 /**
@@ -141,7 +149,7 @@ const commonCollapseConfigValidator: ConfigValidator<CollapseProps> = {
  * @returns an CollapseWidget
  */
 export function createCollapse(config?: PropsConfig<CollapseProps>): CollapseWidget {
-	const [{animatedOnInit$, animated$, visible$: requestedVisible$, onVisibleChange$, onHidden$, onShown$, horizontal$, ...stateProps}, patch] =
+	const [{animatedOnInit$, animated$, visible$: requestedVisible$, onVisibleChange$, onHidden$, onShown$, horizontal$, id$, ...stateProps}, patch] =
 		writablesForProps(defaultCollapseConfig, config, commonCollapseConfigValidator);
 
 	const currentTransitionFn$ = asWritable(computed(() => (horizontal$() ? collapseHorizontalTransition : collapseVerticalTransition)));
@@ -169,7 +177,14 @@ export function createCollapse(config?: PropsConfig<CollapseProps>): CollapseWid
 			toggle: transition.api.toggle,
 		},
 		directives: {
-			transitionDirective: bindDirectiveNoArg(transition.directives.directive),
+			transitionDirective: mergeDirectives(
+				bindDirectiveNoArg(transition.directives.directive),
+				createAttributesDirective(() => ({
+					attributes: {
+						id: computed(() => id$() || undefined),
+					},
+				})),
+			),
 		},
 	};
 }
