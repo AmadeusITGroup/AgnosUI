@@ -27,6 +27,7 @@ import {createToast} from './toast.gen';
 
 /**
  * Directive to represent the body of a toast notification.
+ * This directive uses a template reference to render the {@link ToastContext}.
  */
 @Directive({selector: 'ng-template[auToastBody]', standalone: true})
 export class ToastBodyDirective {
@@ -38,6 +39,7 @@ export class ToastBodyDirective {
 
 /**
  * Directive to define the structure of a toast component.
+ * This directive uses a template reference to render the {@link ToastContext}.
  */
 @Directive({selector: 'ng-template[auToastStructure]', standalone: true})
 export class ToastStructureDirective {
@@ -49,6 +51,7 @@ export class ToastStructureDirective {
 
 /**
  * Directive representing the header of a toast component.
+ * This directive uses a template reference to render the {@link ToastContext}.
  */
 @Directive({selector: 'ng-template[auToastHeader]', standalone: true})
 export class ToastHeaderDirective {

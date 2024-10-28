@@ -17,6 +17,8 @@ import {createSelect} from './select.gen';
  * Directive to provide a custom template for the badge label in a select component.
  *
  * @template Item - The type of the item in the select component.
+ *
+ * This directive uses a template reference to render the {@link SelectItemContext<Item>}.
  */
 @Directive({selector: 'ng-template[auSelectBadgeLabel]', standalone: true})
 export class SelectBadgeLabelDirective<Item> {
@@ -33,6 +35,8 @@ export class SelectBadgeLabelDirective<Item> {
  * in a select component. The template can be specified using an Angular `TemplateRef`.
  *
  * @template Item - The type of the items in the select component.
+ *
+ * This directive uses a template reference to render the {@link SelectItemContext<Item>}.
  */
 @Directive({selector: 'ng-template[auSelectItemLabel]', standalone: true})
 export class SelectItemLabelDirective<Item> {

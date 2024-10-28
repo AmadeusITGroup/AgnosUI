@@ -19,6 +19,7 @@ import {createPagination} from './pagination.gen';
 
 /**
  * A directive to use to give the 'ellipsis' link template to the pagination component
+ * This directive provides a template reference for the {@link PaginationContext}.
  */
 @Directive({selector: 'ng-template[auPaginationEllipsis]', standalone: true})
 export class PaginationEllipsisDirective {
@@ -30,6 +31,7 @@ export class PaginationEllipsisDirective {
 
 /**
  * A directive to use to give the 'first' link template to the pagination component
+ * This directive provides a template reference for the {@link PaginationContext}.
  */
 @Directive({selector: 'ng-template[auPaginationFirst]', standalone: true})
 export class PaginationFirstDirective {
@@ -41,6 +43,7 @@ export class PaginationFirstDirective {
 
 /**
  * A directive to use to give the 'last' link template to the pagination component
+ * This directive provides a template reference for the {@link PaginationContext}.
  */
 @Directive({selector: 'ng-template[auPaginationLast]', standalone: true})
 export class PaginationLastDirective {
@@ -52,6 +55,7 @@ export class PaginationLastDirective {
 
 /**
  * A directive to use to give the 'next' link template to the pagination component
+ * This directive provides a template reference for the {@link PaginationContext}.
  */
 @Directive({selector: 'ng-template[auPaginationNext]', standalone: true})
 export class PaginationNextDirective {
@@ -63,6 +67,7 @@ export class PaginationNextDirective {
 
 /**
  * A directive to use to give the page 'number' template to the pagination component
+ * This directive provides a template reference for the {@link PaginationNumberContext}.
  */
 @Directive({selector: 'ng-template[auPaginationNumber]', standalone: true})
 export class PaginationNumberDirective {
@@ -74,6 +79,7 @@ export class PaginationNumberDirective {
 
 /**
  * A directive to use to give the 'previous' link template to the pagination component
+ * This directive provides a template reference for the {@link PaginationContext}.
  */
 @Directive({selector: 'ng-template[auPaginationPrevious]', standalone: true})
 export class PaginationPreviousDirective {
@@ -85,6 +91,7 @@ export class PaginationPreviousDirective {
 
 /**
  * A directive to use to give the 'Pages' template for the Pages slot
+ * This directive provides a template reference for the {@link PaginationContext}.
  */
 @Directive({selector: 'ng-template[auPaginationPages]', standalone: true})
 export class PaginationPagesDirective {
@@ -96,6 +103,7 @@ export class PaginationPagesDirective {
 
 /**
  * Directive to provide the slot structure for the pagination widget.
+ * This directive provides a template reference for the {@link PaginationContext}.
  */
 @Directive({selector: 'ng-template[auPaginationStructure]', standalone: true})
 export class PaginationStructureDirective {

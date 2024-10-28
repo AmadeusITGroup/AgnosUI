@@ -30,7 +30,7 @@ import {createSlider} from './slider.gen';
 /**
  * Directive to provide a template reference for slider labels.
  *
- * This directive is used to inject a `TemplateRef` for the `SliderSlotLabelContext`.
+ * This directive uses a template reference to render the {@link SliderSlotLabelContext}.
  */
 @Directive({selector: 'ng-template[auSliderLabel]', standalone: true})
 export class SliderLabelDirective {
@@ -42,8 +42,7 @@ export class SliderLabelDirective {
 /**
  * Directive representing a handle for a slider component.
  *
- * This directive is used to manage the template reference for the slider handle
- * and provides a context guard for the template.
+ * This directive uses a template reference to render the {@link SliderSlotLabelContext}.
  */
 @Directive({selector: 'ng-template[auSliderHandle]', standalone: true})
 export class SliderHandleDirective {
