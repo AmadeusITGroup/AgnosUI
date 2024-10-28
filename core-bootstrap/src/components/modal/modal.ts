@@ -90,6 +90,12 @@ const coreOverride: Partial<CoreProps> = {
 
 const configValidator: ConfigValidator<ModalExtraProps<any>> = {
 	fullscreen: typeBoolean,
+	contentData: undefined,
+	children: undefined,
+	footer: undefined,
+	header: undefined,
+	structure: undefined,
+	title: undefined,
 };
 /**
  * Retrieve a shallow copy of the default modal config

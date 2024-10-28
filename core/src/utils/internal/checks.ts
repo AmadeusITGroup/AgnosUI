@@ -68,3 +68,12 @@ export const allowNull =
 	<T>(isType: (value: any) => value is T) =>
 	(value: any): value is T | null =>
 		value === null || isType(value);
+
+/**
+ * Builds a new type guard to check if an element belongs to an enum list
+ * @param list - the list of all enum values
+ * @returns the type guard
+ */
+export function isFromEnum<T>(list: T[]) {
+	return (value: any): value is T => list.includes(value);
+}

@@ -336,6 +336,7 @@ describe(`Stores service`, () => {
 							return value;
 						},
 					},
+					b: undefined,
 				},
 			);
 			const a: number[] = [];

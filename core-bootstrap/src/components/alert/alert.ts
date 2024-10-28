@@ -1,10 +1,10 @@
 import type {AlertDirectives, AlertState as CoreState, AlertProps as CoreProps, AlertApi} from '@agnos-ui/core/components/alert';
 import {createAlert as createCoreAlert, getAlertDefaultConfig as getCoreDefaultConfig} from '@agnos-ui/core/components/alert';
 import type {ConfigValidator, SlotContent, Widget, WidgetFactory, WidgetSlotContext} from '@agnos-ui/core/types';
-import {typeString} from '@agnos-ui/core/utils/writables';
+import {createTypeEnum} from '@agnos-ui/core/utils/writables';
 import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
 import {fadeTransition} from '../../services/transitions';
-import type {BSContextualClass} from '../../types';
+import {BS_CONTEXTUAL_CLASSES, type BSContextualClass} from '../../types';
 import type {TransitionFn} from '@agnos-ui/core/services/transitions/baseTransitions';
 
 export * from '@agnos-ui/core/components/alert';
@@ -51,7 +51,9 @@ const coreOverride: Partial<CoreProps> = {
 	transition: fadeTransition,
 };
 const configValidator: ConfigValidator<AlertExtraProps> = {
-	type: typeString as any,
+	type: createTypeEnum(BS_CONTEXTUAL_CLASSES),
+	structure: undefined,
+	children: undefined,
 };
 
 /**

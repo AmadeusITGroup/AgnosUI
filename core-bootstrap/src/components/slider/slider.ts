@@ -66,4 +66,4 @@ export function getSliderDefaultConfig(): SliderProps {
  * @returns a SliderWidget
  */
 
-export const createSlider: WidgetFactory<SliderWidget> = extendWidgetProps(createCoreSlider, defaultConfigExtraProps, {});
+export const createSlider: WidgetFactory<SliderWidget> = extendWidgetProps(createCoreSlider, defaultConfigExtraProps);

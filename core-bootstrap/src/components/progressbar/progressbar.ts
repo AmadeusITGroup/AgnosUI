@@ -1,9 +1,9 @@
 import type {ProgressbarDirectives, ProgressbarState as CoreState, ProgressbarProps as CoreProps} from '@agnos-ui/core/components/progressbar';
 import {createProgressbar as createCoreProgressbar, getProgressbarDefaultConfig as getCoreDefaultConfig} from '@agnos-ui/core/components/progressbar';
 import type {ConfigValidator, SlotContent, Widget, WidgetFactory, WidgetSlotContext} from '@agnos-ui/core/types';
-import {typeBoolean, typeString} from '@agnos-ui/core/utils/writables';
+import {createTypeEnum, typeBoolean, typeString} from '@agnos-ui/core/utils/writables';
 import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
-import type {BSContextualClass} from '../../types';
+import {BS_CONTEXTUAL_CLASSES, type BSContextualClass} from '../../types';
 
 export * from '@agnos-ui/core/components/progressbar';
 
@@ -61,7 +61,9 @@ const configValidator: ConfigValidator<ProgressbarExtraProps> = {
 	height: typeString,
 	striped: typeBoolean,
 	animated: typeBoolean,
-	type: typeString as any,
+	type: createTypeEnum([undefined, ...BS_CONTEXTUAL_CLASSES]),
+	structure: undefined,
+	children: undefined,
 };
 
 /**

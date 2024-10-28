@@ -258,7 +258,7 @@ export const writablesWithDefault = <T extends object>(
 export const writablesForProps = <T extends object>(
 	defConfig: T,
 	propsConfig?: PropsConfig<T>,
-	options?: {[K in keyof T]?: WritableWithDefaultOptions<T[K]>},
+	options?: {[K in keyof T]: WritableWithDefaultOptions<T[K]> | undefined},
 ): [ToWritableSignal<T>, ReturnType<typeof createPatch<T>>] => {
 	const stores = writablesWithDefault(defConfig, propsConfig, options);
 	return [stores, createPatch(stores)];

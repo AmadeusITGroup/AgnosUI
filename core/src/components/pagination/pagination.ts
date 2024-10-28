@@ -1,9 +1,8 @@
 import {computed} from '@amadeus-it-group/tansu';
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
-import {INVALID_VALUE} from '../../types';
 import {bindableProp, stateStores, writablesForProps} from '../../utils/stores';
 import {clamp, isNumber} from '../../utils/internal/checks';
-import {typeBoolean, typeFunction, typeNumber, typeString} from '../../utils/writables';
+import {createTypeEnum, typeBoolean, typeFunction, typeNumber, typeString} from '../../utils/writables';
 import type {ConfigValidator, PropsConfig, Widget, Directive} from '../../types';
 import {noop} from '../../utils/internal/func';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
@@ -373,7 +372,7 @@ const configValidator: ConfigValidator<PaginationProps> = {
 	disabled: typeBoolean,
 	directionLinks: typeBoolean,
 	boundaryLinks: typeBoolean,
-	size: {normalizeValue: (value) => (value === 'lg' || value === 'sm' || value === null ? value : INVALID_VALUE)},
+	size: createTypeEnum(['lg', 'sm', null]),
 	onPageChange: typeFunction,
 	pagesFactory: typeFunction,
 	ariaLabel: typeString,
@@ -386,6 +385,7 @@ const configValidator: ConfigValidator<PaginationProps> = {
 	ariaLiveLabel: typeFunction,
 	className: typeString,
 	pageLink: typeFunction,
+	ariaEllipsisLabel: typeString,
 };
 
 /**

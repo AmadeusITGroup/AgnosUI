@@ -1,4 +1,4 @@
-import {allowNull, clamp, isArray, isBoolean, isFunction, isHTMLElement, isNumber, isString} from './internal/checks';
+import {allowNull, clamp, isArray, isBoolean, isFromEnum, isFunction, isHTMLElement, isNumber, isString} from './internal/checks';
 import type {WritableWithDefaultOptions} from '../types';
 import {INVALID_VALUE} from '../types';
 
@@ -91,3 +91,15 @@ export const typeArray: WritableWithDefaultOptions<any[]> = {
 		}
 	},
 };
+
+/**
+ * Build an enum normalizer
+ * @template T - the enum type
+ * @param enumList - list of enum values to check
+ * @returns the enum normalizer
+ */
+export function createTypeEnum<T>(enumList: T[]): WritableWithDefaultOptions<T> {
+	return {
+		normalizeValue: testToNormalizeValue(isFromEnum(enumList)),
+	};
+}

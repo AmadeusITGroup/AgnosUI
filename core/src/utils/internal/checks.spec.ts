@@ -1,5 +1,5 @@
 import {describe, expect, test, vi} from 'vitest';
-import {allowNull, clamp, isArray, isBoolean, isFunction, isHTMLElement, isNumber, isString} from './checks';
+import {allowNull, clamp, isArray, isBoolean, isFromEnum, isFunction, isHTMLElement, isNumber, isString} from './checks';
 
 describe('Checks', () => {
 	test(`'isNumber' should check if value is a number`, () => {
@@ -139,5 +139,12 @@ describe('Checks', () => {
 		expect(alwaysFalse).toHaveBeenCalledTimes(1);
 		expect(withAllowNull(0)).toBe(false);
 		expect(alwaysFalse).toHaveBeenCalledTimes(2);
+	});
+
+	test(`'isFromEnum' should check if the value is part of the array`, () => {
+		const emptyEnumCheck = isFromEnum([]);
+		expect(emptyEnumCheck('value')).toBe(false);
+		const uniqEnumCheck = isFromEnum(['value']);
+		expect(uniqEnumCheck('value')).toBe(true);
 	});
 });

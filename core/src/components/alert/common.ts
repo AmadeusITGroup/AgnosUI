@@ -5,7 +5,7 @@ import type {ConfigValidator, Directive, PropsConfig, Widget} from '../../types'
 import {noop} from '../../utils/internal/func';
 import {stateStores, writablesForProps} from '../../utils/stores';
 import {bindDirectiveNoArg} from '../../utils/directive';
-import {typeBoolean} from '../../utils/writables';
+import {typeBoolean, typeFunction, typeString} from '../../utils/writables';
 
 export interface CommonAlertCommonPropsAndState extends WidgetsCommonPropsAndState {
 	/**
@@ -144,6 +144,15 @@ export function getCommonAlertDefaultConfig(): CommonAlertProps {
 
 const commonAlertConfigValidator: ConfigValidator<CommonAlertProps> = {
 	dismissible: typeBoolean,
+	onVisibleChange: typeFunction,
+	onHidden: typeFunction,
+	onShown: typeFunction,
+	transition: typeFunction,
+	animatedOnInit: typeBoolean,
+	animated: typeBoolean,
+	visible: typeBoolean,
+	ariaCloseButtonLabel: typeString,
+	className: typeString,
 };
 
 /**

@@ -2,7 +2,7 @@ import {createTransition} from '@agnos-ui/core/services/transitions/baseTransiti
 import type {ConfigValidator, Directive, PropsConfig, Widget} from '@agnos-ui/core/types';
 import {stateStores, writablesForProps} from '@agnos-ui/core/utils/stores';
 import {bindDirectiveNoArg} from '@agnos-ui/core/utils/directive';
-import {typeBoolean} from '@agnos-ui/core/utils/writables';
+import {typeBoolean, typeFunction, typeString} from '@agnos-ui/core/utils/writables';
 import {collapseHorizontalTransition, collapseVerticalTransition} from '../../services/transitions/collapse';
 import {asWritable, computed} from '@amadeus-it-group/tansu';
 
@@ -126,6 +126,13 @@ export function getCollapseDefaultConfig(): CollapseProps {
 
 const commonCollapseConfigValidator: ConfigValidator<CollapseProps> = {
 	horizontal: typeBoolean,
+	onVisibleChange: typeFunction,
+	onHidden: typeFunction,
+	onShown: typeFunction,
+	animatedOnInit: typeBoolean,
+	animated: typeBoolean,
+	className: typeString,
+	visible: typeBoolean,
 };
 
 /**
