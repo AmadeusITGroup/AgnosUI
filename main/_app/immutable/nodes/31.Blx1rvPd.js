@@ -1,0 +1,1 @@
+import"../chunks/disclose-version.CAsIwiCQ.js";import{p as r,a}from"../chunks/runtime.CoJv2S2D.js";import{M as e}from"../chunks/Markdown.D1hj096m.js";function s(t,o){r(o,!0),e(t,{get source(){return o.data.content}}),a()}export{s as component};
