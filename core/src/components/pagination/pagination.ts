@@ -2,7 +2,7 @@ import {computed} from '@amadeus-it-group/tansu';
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {bindableProp, stateStores, writablesForProps} from '../../utils/stores';
 import {clamp, isNumber} from '../../utils/internal/checks';
-import {createTypeEnum, typeBoolean, typeFunction, typeNumber, typeString} from '../../utils/writables';
+import {typeBoolean, typeFunction, typeNumber, typeString} from '../../utils/writables';
 import type {ConfigValidator, PropsConfig, Widget, Directive} from '../../types';
 import {noop} from '../../utils/internal/func';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
@@ -17,15 +17,6 @@ interface PaginationCommonPropsAndState extends WidgetsCommonPropsAndState {
 	 * @defaultValue `1`
 	 */
 	page: number; // value of the current/init page to display
-
-	/**
-	 * The pagination display size.
-	 *
-	 * Bootstrap currently supports small and large sizes.
-	 *
-	 * @defaultValue `null`
-	 */
-	size: 'sm' | 'lg' | null;
 
 	/**
 	 * The label for the nav element.
@@ -335,7 +326,6 @@ const defaultConfig: PaginationProps = {
 	disabled: false,
 	directionLinks: true,
 	boundaryLinks: false,
-	size: null,
 	onPageChange: noop,
 	pagesFactory: (_page: number, pageCount: number) => {
 		const pages: number[] = [];
@@ -372,7 +362,6 @@ const configValidator: ConfigValidator<PaginationProps> = {
 	disabled: typeBoolean,
 	directionLinks: typeBoolean,
 	boundaryLinks: typeBoolean,
-	size: createTypeEnum(['lg', 'sm', null]),
 	onPageChange: typeFunction,
 	pagesFactory: typeFunction,
 	ariaLabel: typeString,
