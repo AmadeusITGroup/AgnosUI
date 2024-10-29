@@ -46,6 +46,13 @@ export class CollapseDirective extends BaseWidgetDirective<CollapseWidget> {
 	@Input({alias: 'auVisible', transform: auBooleanAttribute}) visible: boolean | undefined;
 
 	/**
+	 * id of the collapse
+	 *
+	 * @defaultValue `''`
+	 */
+	@Input('auId') id: string | undefined;
+
+	/**
 	 * Callback called when the collapse visibility changed.
 	 *
 	 * @defaultValue
@@ -86,7 +93,7 @@ export class CollapseDirective extends BaseWidgetDirective<CollapseWidget> {
 					onHidden: () => this.hidden.emit(),
 				},
 				afterInit: (widget) => {
-					useDirectiveForHost(widget.directives.transitionDirective);
+					useDirectiveForHost(widget.directives.collapseDirective);
 				},
 			}),
 		);
