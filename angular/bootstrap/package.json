@@ -101,7 +101,7 @@
 	"dependencies": {
 		"@agnos-ui/angular-headless": "0.0.0",
 		"@agnos-ui/core-bootstrap": "0.0.0",
-		"tslib": "^2.7.0"
+		"tslib": "^2.8.0"
 	},
 	"devDependencies": {
 		"@angular-devkit/build-angular": "^18.2.5",

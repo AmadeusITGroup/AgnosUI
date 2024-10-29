@@ -180,16 +180,16 @@
 		"@angular/router": "^18.2.5",
 		"@floating-ui/dom": "^1.6.11",
 		"rxjs": "^7.8.1",
-		"tslib": "^2.7.0"
+		"tslib": "^2.8.0"
 	},
 	"devDependencies": {
 		"@angular-devkit/build-angular": "^18.2.5",
 		"@angular/cli": "^18.2.5",
 		"@angular/compiler-cli": "^18.2.5",
 		"autoprefixer": "^10.4.20",
-		"daisyui": "^4.12.10",
+		"daisyui": "^4.12.14",
 		"postcss": "^8.4.47",
-		"tailwindcss": "^3.4.13",
+		"tailwindcss": "^3.4.14",
 		"typescript": "~5.5.4"
 	}
 }
