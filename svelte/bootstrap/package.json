@@ -168,11 +168,11 @@
 	},
 	"peerDependencies": {
 		"@amadeus-it-group/tansu": "^1.0.0",
-		"esm-env": "^1.0.0",
-		"svelte": "^5.0.5"
+		"esm-env": "^1.1.4",
+		"svelte": "^5.1.4"
 	},
 	"devDependencies": {
-		"@sveltejs/package": "^2.3.5"
+		"@sveltejs/package": "^2.3.7"
 	},
 	"sideEffects": false
 }

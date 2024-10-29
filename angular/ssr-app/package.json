@@ -20,9 +20,9 @@
 		"@angular/platform-server": "^18.2.5",
 		"@angular/router": "^18.2.5",
 		"@angular/ssr": "^18.2.5",
-		"express": "^4.21.0",
+		"express": "^4.21.1",
 		"rxjs": "^7.8.1",
-		"tslib": "^2.7.0",
+		"tslib": "^2.8.0",
 		"zone.js": "~0.14.10"
 	},
 	"devDependencies": {
@@ -31,8 +31,8 @@
 		"@angular/compiler-cli": "^18.2.5",
 		"@types/express": "^5.0.0",
 		"@types/jasmine": "~5.1.4",
-		"@types/node": "^20.16.10",
-		"jasmine-core": "~5.3.0",
+		"@types/node": "^20.17.3",
+		"jasmine-core": "~5.4.0",
 		"karma": "~6.4.4",
 		"karma-chrome-launcher": "~3.2.0",
 		"karma-coverage": "~2.2.1",
