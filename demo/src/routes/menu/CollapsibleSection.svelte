@@ -39,6 +39,7 @@
 			animated: paramAnimated$,
 			animatedOnInit: paramAnimated$,
 			visible: paramVisible$,
+			transition: collapseVerticalTransition,
 		},
 	});
 
@@ -58,7 +59,7 @@
 			<rect class="vertical" class:expanded={$visible$} x="45" y="20" width="10" height="60" fill="currentColor" />
 		</svg>
 	</button>
-	<div class="contents" use:directive={{transition: collapseVerticalTransition, animated: $paramAnimated$}}>
+	<div class="contents" use:directive>
 		{@render children()}
 	</div>
 </div>

@@ -46,7 +46,7 @@ describe(`createTransition`, () => {
 				onVisibleChange,
 			},
 		});
-		const directiveInstance = transitionInstance.directives.directive(element, {});
+		const directiveInstance = transitionInstance.directives.directive(element);
 		await transitionInstance.api.show();
 		events.push('here');
 		await transitionInstance.api.hide();
@@ -479,7 +479,7 @@ describe(`createTransition`, () => {
 					events.push(`state = ${JSON.stringify(state)}`);
 				});
 				events.push('beforeCallingDirective1');
-				let directiveInstance = transitionInstance.directives.directive(element, {});
+				let directiveInstance = transitionInstance.directives.directive(element);
 				events.push('afterCallingDirective1');
 				await promiseFromStore(transitionInstance.stores.shown$).promise;
 				events.push('beforeDestroyingDirective1');
@@ -487,7 +487,7 @@ describe(`createTransition`, () => {
 				events.push('afterDestroyingDirective1');
 				element = <HTMLElement>{id: 'domEl2'};
 				events.push('beforeCallingDirective2');
-				directiveInstance = transitionInstance.directives.directive(element, {});
+				directiveInstance = transitionInstance.directives.directive(element);
 				events.push('afterCallingDirective2');
 				await promiseFromStore(transitionInstance.stores.shown$).promise;
 				events.push('beforeDestroyingDirective2');
@@ -495,7 +495,8 @@ describe(`createTransition`, () => {
 				events.push('afterDestroyingDirective2');
 				element = <HTMLElement>{id: 'domEl3'};
 				events.push('beforeCallingDirective3');
-				directiveInstance = transitionInstance.directives.directive(element, {visible: false});
+				transitionInstance.patch({visible: false});
+				directiveInstance = transitionInstance.directives.directive(element);
 				events.push('afterCallingDirective3');
 				await promiseFromStore(transitionInstance.stores.hidden$).promise;
 				events.push('beforeDestroyingDirective3');
@@ -553,6 +554,14 @@ describe(`createTransition`, () => {
 					'afterDestroyingDirective2',
 					'beforeCallingDirective3',
 					'onVisibleChange:false',
+					`state = ${JSON.stringify({
+						visible: false,
+						element: null,
+						elementPresent: false,
+						transitioning: false,
+						shown: false,
+						hidden: true,
+					})}`,
 					`transitionStart:3:domEl3:hide:anim=false:ctxt=3`,
 					`state = ${JSON.stringify({
 						visible: false,
@@ -594,7 +603,7 @@ describe(`createTransition`, () => {
 					events.push(`state = ${JSON.stringify(state)}`);
 				});
 				events.push('beforeCallingDirective1');
-				let directiveInstance = transitionInstance.directives.directive(element, {});
+				let directiveInstance = transitionInstance.directives.directive(element);
 				events.push('afterCallingDirective1');
 				await promiseFromStore(transitionInstance.stores.hidden$).promise;
 				events.push('beforeDestroyingDirective1');
@@ -602,7 +611,8 @@ describe(`createTransition`, () => {
 				events.push('afterDestroyingDirective1');
 				element = <HTMLElement>{id: 'domEl2'};
 				events.push('beforeCallingDirective2');
-				directiveInstance = transitionInstance.directives.directive(element, {visible: true});
+				transitionInstance.patch({visible: true});
+				directiveInstance = transitionInstance.directives.directive(element);
 				events.push('afterCallingDirective2');
 				await promiseFromStore(transitionInstance.stores.shown$).promise;
 				events.push('beforeDestroyingDirective2');
@@ -637,6 +647,14 @@ describe(`createTransition`, () => {
 					'afterDestroyingDirective1',
 					'beforeCallingDirective2',
 					'onVisibleChange:true',
+					`state = ${JSON.stringify({
+						visible: true,
+						element: null,
+						elementPresent: false,
+						transitioning: false,
+						shown: false,
+						hidden: false,
+					})}`,
 					`transitionStart:2:domEl2:show:anim=${animated}:ctxt=2`,
 					`state = ${JSON.stringify({
 						visible: true,

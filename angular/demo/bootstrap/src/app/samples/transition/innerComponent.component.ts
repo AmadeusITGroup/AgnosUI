@@ -94,10 +94,7 @@ const paramRemoveFromDom$ = writable(true);
 			</ul>
 
 			@if ((paramRemoveFromDom$ | async) === false || state().hidden === false) {
-				<div
-					[auUse]="[transition.directives.directive, {transition: (paramTransition$ | async)!, animated: (paramAnimated$ | async)!}]"
-					style="max-width: 300px;"
-				>
+				<div [auUse]="transition.directives.directive" style="max-width: 300px;">
 					<div class="card" style="width: 300px;">
 						<div class="card-body">You can collapse this card by clicking Toggle</div>
 					</div>
@@ -117,6 +114,7 @@ export class InnerComponent {
 			animatedOnInit: paramAnimatedOnInit$,
 			animated: paramAnimated$,
 			visible: paramVisible$,
+			transition: paramTransition$,
 		},
 	});
 	state = toAngularSignal(this.transition.state$);

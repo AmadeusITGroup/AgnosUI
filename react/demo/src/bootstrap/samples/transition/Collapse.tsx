@@ -1,11 +1,11 @@
-import {useMemo, type PropsWithChildren} from 'react';
+import {type PropsWithChildren} from 'react';
 import {createTransition} from '@agnos-ui/react-bootstrap/services/transitions/baseTransitions';
 import {collapseVerticalTransition} from '@agnos-ui/react-bootstrap/services/transitions/bootstrap';
 import {useDirective} from '@agnos-ui/react-bootstrap/utils/directive';
 import type {Directive} from '@agnos-ui/react-bootstrap/types';
 import '@agnos-ui/common/samples/transition/collapse.scss';
 import CollapseIcon from '@agnos-ui/common/samples/transition/collapseButton.svg?react';
-import {useObservable} from '@agnos-ui/react-bootstrap/utils/stores';
+import {useWidget} from '@agnos-ui/react-bootstrap/utils/widget';
 
 const CollapseContent = ({directive, children}: PropsWithChildren<{directive: Directive}>) => (
 	<div id="collapse-content" {...useDirective(directive)}>
@@ -13,22 +13,17 @@ const CollapseContent = ({directive, children}: PropsWithChildren<{directive: Di
 	</div>
 );
 
-const Collapse = ({expanded, headerText, children}: PropsWithChildren<{expanded?: boolean; headerText: string}>) => {
+const Collapse = ({
+	expanded,
+	onExpandedChange,
+	headerText,
+	children,
+}: PropsWithChildren<{expanded?: boolean; onExpandedChange?: (expanded: boolean) => void; headerText: string}>) => {
 	const {
-		state$,
+		state,
 		directives: {directive},
 		api: {toggle},
-	} = useMemo(
-		() =>
-			createTransition({
-				props: {
-					visible: expanded,
-					transition: collapseVerticalTransition,
-				},
-			}),
-		[],
-	);
-	const state = useObservable(state$);
+	} = useWidget(createTransition, {visible: expanded, transition: collapseVerticalTransition, onVisibleChange: onExpandedChange});
 
 	return (
 		<div className="card">

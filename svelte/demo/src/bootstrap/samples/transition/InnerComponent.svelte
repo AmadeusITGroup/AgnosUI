@@ -22,6 +22,7 @@
 			animatedOnInit: paramAnimatedOnInit$,
 			animated: paramAnimated$,
 			visible: paramVisible$,
+			transition: paramTransition$,
 		},
 	});
 
@@ -81,7 +82,7 @@
 	</ul>
 
 	{#if !$paramRemoveFromDom$ || !$hidden$}
-		<div use:directive={{transition: $paramTransition$, animated: $paramAnimated$}} style="max-width: 300px;">
+		<div use:directive style="max-width: 300px;">
 			<div class="card" style="width: 300px;">
 				<div class="card-body">You can collapse this card by clicking Toggle</div>
 			</div>

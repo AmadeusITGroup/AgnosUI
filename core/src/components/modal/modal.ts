@@ -10,7 +10,6 @@ import {noop} from '../../utils/internal/func';
 import {removeScrollbars, revertScrollbars} from '../../utils/internal/scrollbars';
 import {
 	bindDirective,
-	bindDirectiveNoArg,
 	browserDirective,
 	createAttributesDirective,
 	directiveSubscribe,
@@ -472,13 +471,8 @@ export function createModal(config$?: PropsConfig<ModalProps>): ModalWidget {
 		directives: {
 			modalPortalDirective,
 			backdropPortalDirective,
-			backdropDirective: mergeDirectives(bindDirectiveNoArg(backdropTransition.directives.directive), backdropAttributeDirective),
-			modalDirective: mergeDirectives(
-				bindDirectiveNoArg(modalTransition.directives.directive),
-				sliblingsInert,
-				directiveSubscribe(action$),
-				modalAttributeDirective,
-			),
+			backdropDirective: mergeDirectives(backdropTransition.directives.directive, backdropAttributeDirective),
+			modalDirective: mergeDirectives(modalTransition.directives.directive, sliblingsInert, directiveSubscribe(action$), modalAttributeDirective),
 			closeButtonDirective,
 			dialogDirective: bindDirective(
 				browserDirective((dialog: HTMLDialogElement, visible: boolean) => {

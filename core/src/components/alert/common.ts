@@ -4,7 +4,6 @@ import type {WidgetsCommonPropsAndState} from '../commonProps';
 import type {ConfigValidator, Directive, PropsConfig, Widget} from '../../types';
 import {noop} from '../../utils/internal/func';
 import {stateStores, writablesForProps} from '../../utils/stores';
-import {bindDirectiveNoArg} from '../../utils/directive';
 import {typeBoolean, typeFunction, typeString} from '../../utils/writables';
 
 export interface CommonAlertCommonPropsAndState extends WidgetsCommonPropsAndState {
@@ -198,7 +197,7 @@ export function createCommonAlert(config?: PropsConfig<CommonAlertProps>): Commo
 			close: transition.api.hide,
 		},
 		directives: {
-			transitionDirective: bindDirectiveNoArg(transition.directives.directive),
+			transitionDirective: transition.directives.directive,
 		},
 	};
 }
