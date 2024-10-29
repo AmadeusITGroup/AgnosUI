@@ -16,3 +16,4 @@ verdaccio/storage
 blob-report
 *.gen.ts
 .eslintcache
+.DS_Store

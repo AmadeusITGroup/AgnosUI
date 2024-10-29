@@ -17,7 +17,7 @@ import {
 	registrationArray,
 } from '../../utils/directive';
 import {portal} from '../../services/portal';
-import {sliblingsInert} from '../../services/siblingsInert';
+import {siblingsInert} from '../../services/siblingsInert';
 
 /**
  * Value present in the {@link ModalBeforeCloseEvent.result|result} property of the {@link ModalProps.onBeforeClose|onBeforeClose} event
@@ -472,7 +472,7 @@ export function createModal(config$?: PropsConfig<ModalProps>): ModalWidget {
 			modalPortalDirective,
 			backdropPortalDirective,
 			backdropDirective: mergeDirectives(backdropTransition.directives.directive, backdropAttributeDirective),
-			modalDirective: mergeDirectives(modalTransition.directives.directive, sliblingsInert, directiveSubscribe(action$), modalAttributeDirective),
+			modalDirective: mergeDirectives(modalTransition.directives.directive, siblingsInert, directiveSubscribe(action$), modalAttributeDirective),
 			closeButtonDirective,
 			dialogDirective: bindDirective(
 				browserDirective((dialog: HTMLDialogElement, visible: boolean) => {

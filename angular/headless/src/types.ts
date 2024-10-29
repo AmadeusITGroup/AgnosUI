@@ -76,6 +76,13 @@ export abstract class SlotComponent<W extends Widget> {
  * @template T - The type to be checked.
  */
 export type IsSlotContent<T> = Extends<T, SlotContent<any>> | Extends<SlotContent<any>, T> extends 1 ? T : 0;
+
+/**
+ * Represents the state of an Angular widget, where each key in the widget's state
+ * is mapped to a Signal of the corresponding state value.
+ *
+ * @template W - The type of the widget.
+ */
 export type AngularState<W extends Widget> = {[key in keyof WidgetState<W>]: Signal<WidgetState<W>[key]>};
 
 /**

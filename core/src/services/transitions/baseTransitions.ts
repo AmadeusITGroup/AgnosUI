@@ -170,6 +170,14 @@ export interface TransitionDirectives {
 	directive: Directive;
 }
 
+/**
+ * Represents a widget that handles transitions.
+ *
+ * @template TransitionProps - The properties required for the transition.
+ * @template TransitionState - The state management for the transition.
+ * @template TransitionApi - The API interface for the transition.
+ * @template TransitionDirectives - The directives used in the transition.
+ */
 export type TransitionWidget = Widget<TransitionProps, TransitionState, TransitionApi, TransitionDirectives>;
 
 const neverEndingPromise = new Promise<never>(noop);

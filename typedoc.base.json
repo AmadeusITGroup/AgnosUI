@@ -32,6 +32,7 @@
 	},
 	"excludeNotDocumented": true,
 	"excludeInternal": true,
+	"excludeExternals": true,
 	"excludeNotDocumentedKinds": [
 		"Constructor",
 		"Property",
