@@ -24,7 +24,7 @@ function Star({star, state, directive}: {star: StarContext; state: RatingState; 
  * @returns {JSX.Element} The rendered Rating component.
  *
  * @remarks
- * This component uses the `useWidgetWithConfig` hook to initialize and configure the rating widget.
+ * This component uses the {@link useWidgetWithConfig} hook to initialize and configure the rating widget.
  * It applies directives to the container and individual stars for styling and behavior.
  *
  */

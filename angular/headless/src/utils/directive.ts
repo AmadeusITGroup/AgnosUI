@@ -77,7 +77,7 @@ export const useDirectiveForHost = <T>(directive?: AgnosUIDirective<T>, params?:
  * @template T - The type of the parameter that can be passed to the directive.
  *
  * @remarks
- * This directive uses a private instance of `useDirectiveForHost` to manage the directive and its parameter.
+ * This directive uses a private instance of {@link useDirectiveForHost} to manage the directive and its parameter.
  */
 @Directive({
 	standalone: true,
@@ -101,14 +101,15 @@ export class UseDirective<T> implements OnChanges {
  * A directive that allows the use of multiple directives on a host element.
  *
  * @template T - A tuple type representing the directives and their optional parameters.
- *
- * @property {DirectivesAndOptParam<T>} useMulti - An input property that takes a tuple of directives and their optional parameters.
  */
 @Directive({
 	standalone: true,
 	selector: '[auUseMulti]',
 })
 export class UseMultiDirective<T extends any[]> implements OnChanges {
+	/**
+	 * An input property that takes a tuple of directives and their optional parameters.
+	 */
 	@Input({alias: 'auUseMulti', required: true})
 	useMulti!: DirectivesAndOptParam<T>;
 

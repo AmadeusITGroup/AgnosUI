@@ -111,7 +111,7 @@ export const PaginationDefaultSlotStructure = (slotContext: PaginationContext) =
 
 /**
  * Pagination component that renders a navigation element for paginated content.
- * It uses the `useWidgetWithConfig` hook to create a pagination widget with the provided props.
+ * It uses the {@link useWidgetWithConfig} hook to create a pagination widget with the provided props.
  *
  * @param {Partial<PaginationProps>} props - The properties for the Pagination component.
  * @returns {JSX.Element} The rendered pagination navigation element.

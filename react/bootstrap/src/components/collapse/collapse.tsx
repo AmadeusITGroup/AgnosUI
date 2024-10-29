@@ -8,7 +8,7 @@ import {useDirectives} from '@agnos-ui/react-headless/utils/directive';
 /**
  * Collapse component that provides a collapsible container.
  *
- * This component uses the `useWidgetWithConfig` hook to create a collapse widget
+ * This component uses the {@link useWidgetWithConfig} hook to create a collapse widget
  * and applies transition directives to the container.
  *
  * @param props - The properties for the Collapse component.

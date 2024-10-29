@@ -4,7 +4,6 @@ import type {ReadableSignal, StoreOptions, SubscribableStore, WritableSignal} fr
  * A type that maps each property of an object type `T` to either a `ReadableSignal` of that property type or the property type itself.
  *
  * @template T - The object type whose properties are being mapped.
- * @property {ReadableSignal<T[K] | undefined> | T[K]} [K] - A property of type `T[K]` or a `ReadableSignal` of type `T[K]` or `undefined`.
  */
 export type ValuesOrReadableSignals<T extends object> = {
 	[K in keyof T]?: ReadableSignal<T[K] | undefined> | T[K];
@@ -14,7 +13,6 @@ export type ValuesOrReadableSignals<T extends object> = {
  * A type that maps the properties of an object type `T` to either a `WritableSignal` of the property type or the property type itself.
  *
  * @template T - The object type whose properties are being mapped.
- * @property {WritableSignal<T[K] | undefined> | T[K]} [K] - A property of type `T[K]` or a `WritableSignal` of type `T[K] | undefined`.
  */
 export type ValuesOrWritableSignals<T extends object> = {
 	[K in keyof T]?: WritableSignal<T[K] | undefined> | T[K];
@@ -24,12 +22,6 @@ export type ValuesOrWritableSignals<T extends object> = {
  * Interface representing the configuration for properties.
  *
  * @template U - An object type representing the properties.
- *
- * @property {ValuesOrWritableSignals<U>} [props] - Object containing, for each property, either its initial value, or a store that will contain the value at any time.
- * When the value of a property is undefined or invalid, the value from the config is used.
- *
- * @property {ReadableSignal<Partial<U>> | ValuesOrReadableSignals<Partial<U>>} [config] - Either a store of objects containing, for each property, the default value,
- * or an object containing, for each property, either a store containing the default value or the default value itself.
  */
 export interface PropsConfig<U extends object> {
 	/**

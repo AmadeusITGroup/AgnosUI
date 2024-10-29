@@ -96,7 +96,7 @@ export const SliderDefaultSlotStructure = (slotContext: SliderContext) => (
  * @param {PropsWithChildren<Partial<SliderProps>>} props - The properties for the Slider component.
  * @returns {JSX.Element} The rendered Slider component.
  *
- * The Slider component uses the `useWidgetWithConfig` hook to create a widget context with the provided
+ * The Slider component uses the {@link useWidgetWithConfig} hook to create a widget context with the provided
  * configuration. It then applies the `sliderDirective` to a `div` element and renders the slot content
  * using the `Slot` component.
  */

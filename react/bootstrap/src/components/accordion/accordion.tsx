@@ -50,12 +50,12 @@ export const AccordionItemDefaultSlotStructure = (slotContext: AccordionItemCont
  * @returns {JSX.Element} The rendered AccordionItem component.
  * @remarks
  * This component uses several hooks:
- * - `useContext` to get the `registerItem` function from `AccordionDIContext`.
- * - `useWidgetWithConfig` to initialize the widget context.
- * - `useImperativeHandle` to expose the `api` to the parent component.
- * - `useEffect` to call `api.initDone()` after the component mounts.
+ * - {@link https://react.dev/reference/react/useContext | useContext} to get the `registerItem` function from {@link AccordionDIContext}.
+ * - {@link useWidgetWithConfig} to initialize the widget context.
+ * - {@link https://react.dev/reference/react/useImperativeHandle | useImperativeHandle} to expose the `api` to the parent component.
+ * - {@link https://react.dev/reference/react/useEffect | useEffect} to call `api.initDone()` after the component mounts.
  *
- * The component also uses `useDirectives` to apply directives to the rendered `div` element.
+ * The component also uses {@link useDirectives} to apply directives to the rendered `div` element.
  *
  * @see {@link useWidgetWithConfig}
  * @see {@link useDirectives}
@@ -83,8 +83,8 @@ export const AccordionItem: ForwardRefExoticComponent<Partial<AccordionItemProps
  * Accordion component that provides a collapsible content container.
  * 
  * This component uses a forward ref to expose the Accordion API to parent components.
- * It leverages the `useWidgetWithConfig` hook to create the accordion widget and 
- * `useImperativeHandle` to bind the widget API to the ref.
+ * It leverages the {@link useWidgetWithConfig} hook to create the accordion widget and 
+ * {@link https://react.dev/reference/react/useImperativeHandle | useImperativeHandle} to bind the widget API to the ref.
 
  * @param {PropsWithChildren<Partial<AccordionProps>>} props - The properties for the Accordion component.
  * @param {ForwardedRef<AccordionApi>} ref - The ref to be forwarded to the Accordion API.

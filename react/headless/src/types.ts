@@ -8,7 +8,8 @@ import type {SlotContent as CoreSlotContent} from '@agnos-ui/core/types';
  * @template Props - The type of the props that can be passed to the slot content.
  *
  * This type can be one of the following:
- * - `CoreSlotContent<Props>`: A core slot content type.
+ * - A nullish value, i.e. `null` or `undefined`
+ * - A static `string`
  * - A function that takes `props` of type `Props` and returns a `React.ReactNode`.
  * - A `React.ComponentType<Props>`, which is a React component that accepts `Props`.
  * - A `React.ReactNode`, which is any renderable React node.

@@ -44,14 +44,11 @@ export type SlotContent<Props extends object = object> =
  * A directive representing a slot component that can be used to manage the state and context of a widget.
  *
  * @template W - The type of the widget that this slot component manages.
- *
- * @property {WidgetState<W>} state - The current state of the widget.
- * @property {ContextWidget<W>} widget - The context of the widget.
  */
 @Directive()
 export abstract class SlotComponent<W extends Widget> {
 	/**
-	 * The state of the widget. Each property of the state is exposed through an Angular {@link Signal}
+	 * The state of the widget. Each property of the state is exposed through an Angular {@link https://angular.dev/api/core/Signal | Signal}
 	 */
 	@Input()
 	state!: AngularState<W>;
@@ -96,7 +93,7 @@ export interface AngularWidget<W extends Widget> extends Pick<W, 'api' | 'direct
 	 */
 	initialized: Promise<void>;
 	/**
-	 * The state of the widget. Each property of the state is exposed through an Angular {@link Signal}
+	 * The state of the widget. Each property of the state is exposed through an Angular {@link https://angular.dev/api/core/Signal | Signal}
 	 */
 	state: AngularState<W>;
 	/**

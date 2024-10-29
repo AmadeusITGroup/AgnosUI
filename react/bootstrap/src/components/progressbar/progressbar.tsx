@@ -25,7 +25,7 @@ export const ProgressbarDefaultSlotStructure = (slotContext: ProgressbarContext)
 };
 
 /**
- * Progressbar component that utilizes the `useWidgetWithConfig` hook to create a progress bar widget.
+ * Progressbar component that utilizes the {@link useWidgetWithConfig} hook to create a progress bar widget.
  *
  * @param {Partial<ProgressbarProps>} props - The properties to configure the progress bar.
  *

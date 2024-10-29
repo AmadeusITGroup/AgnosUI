@@ -33,8 +33,6 @@ export interface CollapseCommonPropsAndState {
 /**
  * Represents the state of a collapse component.
  * Extends the properties and state from `CollapseCommonPropsAndState`.
- *
- * @property hidden - Indicates whether the collapse is hidden. This is set to `true` after the transition is executed, in contrast to `visible`.
  */
 export interface CollapseState extends CollapseCommonPropsAndState {
 	/**

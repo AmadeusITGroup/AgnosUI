@@ -52,8 +52,8 @@ const ToastElement = (slotContext: ToastContext) => (
 /**
  * Toast component that uses a forward ref to expose the Toast API.
  *
- * This component utilizes the `useWidgetWithConfig` hook to create a toast widget
- * with the provided properties and configuration. It also uses `useImperativeHandle`
+ * This component utilizes the {@link useWidgetWithConfig} hook to create a toast widget
+ * with the provided properties and configuration. It also uses {@link https://react.dev/reference/react/useImperativeHandle | useImperativeHandle}
  * to expose the widget's API through the forwarded ref.
  *
  * @param props - Partial properties of `ToastProps` to configure the toast widget.

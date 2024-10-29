@@ -193,9 +193,6 @@ const getSlotType = (value: any): undefined | {new (viewContainerRef: ViewContai
  *
  * @template Props - A record type representing the properties for the slot.
  *
- * @property {SlotContent<Props>} slot - The slot content to be managed.
- * @property {Props} props - The properties for the slot content.
- *
  * @remarks
  * This directive handles changes to the slot content and its properties,
  * and manages the lifecycle of the slot handler.
@@ -205,7 +202,13 @@ const getSlotType = (value: any): undefined | {new (viewContainerRef: ViewContai
 	standalone: true,
 })
 export class SlotDirective<Props extends Record<string, any>> implements OnChanges, OnDestroy {
+	/**
+	 * The slot content to be managed.
+	 */
 	@Input('auSlot') slot: SlotContent<Props>;
+	/**
+	 * The properties for the slot content.
+	 */
 	@Input({alias: 'auSlotProps', required: true}) props!: Props;
 
 	private readonly _viewContainerRef = inject(ViewContainerRef);

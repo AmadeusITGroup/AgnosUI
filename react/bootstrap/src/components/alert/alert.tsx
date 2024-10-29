@@ -41,8 +41,8 @@ const AlertElement = (slotContext: AlertContext) => (
 /**
  * Alert component that uses a forward ref to expose an API.
  *
- * This component utilizes the `useWidgetWithConfig` hook to create an alert widget context
- * and the `useImperativeHandle` hook to expose the widget's API via the ref.
+ * This component utilizes the {@link useWidgetWithConfig} hook to create an alert widget context
+ * and the {@link https://react.dev/reference/react/useImperativeHandle | useImperativeHandle} hook to expose the widget's API via the ref.
  *
  * @param props - Partial properties of the AlertProps interface.
  * @param ref - Forwarded reference to the AlertApi.
