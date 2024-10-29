@@ -1,0 +1,1 @@
+import{m as e,a2 as r}from"./AppCommon-BIOVedX1.js";import{M as m}from"./Modal-D9-vY2Zm.js";async function c(t,{context:n}={}){const a=document.createElement("div"),o=e(m,{target:a,props:t,context:n});try{return await o.api.open()}finally{r(o)}}export{c as o};
