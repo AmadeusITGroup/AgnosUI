@@ -8,7 +8,7 @@
 export const compareDefault = (a: any, b: any): -1 | 0 | 1 => (a < b ? -1 : a > b ? 1 : 0);
 
 /**
- * A comparision function between DOM elements, based on [Node.compareDocumentPosition](https://developer.mozilla.org/fr/docs/Web/API/Node/compareDocumentPosition).
+ * A comparision function between DOM elements, based on {@link https://developer.mozilla.org/fr/docs/Web/API/Node/compareDocumentPosition | Node.compareDocumentPosition}.
  *
  * @param element1 - the first node
  * @param element2 - the second node

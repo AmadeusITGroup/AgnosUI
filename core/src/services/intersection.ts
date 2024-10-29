@@ -13,9 +13,9 @@ export interface IntersectionProps {
 	elements: HTMLElement[];
 
 	/**
-	 * IntersectionObserverInit used in the IntersectionObserver
+	 * IntersectionObserverInit used in the {@link IntersectionObserver}
 	 *
-	 * See the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver#options)
+	 * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver#options | MDN documentation}
 	 */
 	options: Partial<IntersectionObserverInit> | undefined;
 }
@@ -83,7 +83,7 @@ export const createIntersection = (
 		/**
 		 * Store of map that contains the visible elements (for the key) and the corresponding entries
 		 *
-		 * See the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry)
+		 * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry | MDN documentation}
 		 */
 		visibleElements$: asReadable(visibleElements$),
 

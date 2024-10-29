@@ -73,7 +73,7 @@ export default defineConfig((config) => ({
 		'import.meta.env.API': process.env.API === 'true',
 	},
 	optimizeDeps: {
-		include: ['@amadeus-it-group/tansu', '@floating-ui/dom', 'marked', '@stackblitz/sdk', 'shiki', 'compare-versions'],
+		include: ['@amadeus-it-group/tansu', '@floating-ui/dom', 'marked', '@stackblitz/sdk', 'shiki', 'compare-versions', 'esm-env'],
 	},
 	ssr: {
 		noExternal: ['@agnos-ui/core'],

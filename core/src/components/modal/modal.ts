@@ -265,7 +265,7 @@ export interface ModalDirectives {
 	 */
 	closeButtonDirective: Directive;
 	/**
-	 * Directive to apply to the dialog element when using the native [HTMLDialogElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement)
+	 * Directive to apply to the dialog element when using the native {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement | HTMLDialogElement}
 	 */
 	dialogDirective: Directive;
 }

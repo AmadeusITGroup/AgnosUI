@@ -127,11 +127,11 @@ export type WidgetFactory<W extends Widget> = (props?: PropsConfig<WidgetProps<W
 /**
  * Represents a server-side rendered HTML element with limited functionality.
  *
- * This interface extends a subset of the `HTMLElement` interface, providing
+ * This interface extends a subset of the {@link HTMLElement} interface, providing
  * methods to set and remove attributes, manipulate the element's classes, and
  * partially manipulate the element's style.
  *
- * It inherits the [`setAttribute`](https://developer.mozilla.org/docs/Web/API/Element/setAttribute) and [`removeAttribute`]([https://developer.mozilla.org/docs/Web/API/Element/removeAttribute) methods from the `HTMLElement` interface.
+ * It inherits the {@link https://developer.mozilla.org/docs/Web/API/Element/setAttribute | setAttribute} and {@link https://developer.mozilla.org/docs/Web/API/Element/getAttribute | getAttribute} methods from the {@link HTMLElement} interface.
  *
  */
 export interface SSRHTMLElement extends Pick<HTMLElement, 'setAttribute' | 'removeAttribute'> {
