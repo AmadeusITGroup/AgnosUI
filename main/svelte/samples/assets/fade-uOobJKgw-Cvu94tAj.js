@@ -1,1 +1,0 @@
-import{c as s}from"./simpleClassTransition-C6r75bPs.js";const e=s({animationPendingClasses:["fade"],animationPendingShowClasses:["show"],showClasses:["show","fade"],hideClasses:["d-none","fade"]});export{e as f};
