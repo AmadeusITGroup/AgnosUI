@@ -21,6 +21,7 @@ import {
 	ListItem,
 	Codespan,
 	Image,
+	Escape,
 } from './renderers';
 
 export const renderers = {
@@ -46,6 +47,7 @@ export const renderers = {
 	paragraph: Paragraph,
 	list_item: ListItem,
 	codespan: Codespan,
+	escape: Escape,
 };
 
 export type Renderers = typeof renderers;

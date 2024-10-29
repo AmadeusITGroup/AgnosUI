@@ -24,7 +24,13 @@ const ItemContent = (slotContext: AccordionItemContext) => (
 );
 
 const AccordionDIContext: React.Context<Partial<AccordionApi>> = createContext({});
-const DefaultSlotStructure = (slotContext: AccordionItemContext) => (
+/**
+ * Renders the default slot structure for an accordion item.
+ *
+ * @param {AccordionItemContext} slotContext - The context containing state and directives for the accordion item.
+ * @returns {JSX.Element} The JSX element representing the accordion item's default slot structure.
+ */
+export const AccordionItemDefaultSlotStructure = (slotContext: AccordionItemContext) => (
 	<>
 		<Header directive={slotContext.directives.headerDirective} headerTag={slotContext.state.headingTag}>
 			<button {...useDirectives([classDirective, 'accordion-button'], slotContext.directives.buttonDirective)}>
@@ -35,13 +41,31 @@ const DefaultSlotStructure = (slotContext: AccordionItemContext) => (
 	</>
 );
 
-const defaultConfig: Partial<AccordionItemProps> = {
-	structure: DefaultSlotStructure,
-};
+/**
+ * AccordionItem component is a part of the Accordion component suite.
+ *
+ * @param {Partial<AccordionItemProps>} props - The properties for the AccordionItem component.
+ * @param {ForwardedRef<AccordionItemApi>} ref - The forwarded ref to the AccordionItemApi.
+ *
+ * @returns {JSX.Element} The rendered AccordionItem component.
+ * @remarks
+ * This component uses several hooks:
+ * - {@link https://react.dev/reference/react/useContext | useContext} to get the `registerItem` function from {@link AccordionDIContext}.
+ * - {@link useWidgetWithConfig} to initialize the widget context.
+ * - {@link https://react.dev/reference/react/useImperativeHandle | useImperativeHandle} to expose the `api` to the parent component.
+ * - {@link https://react.dev/reference/react/useEffect | useEffect} to call `api.initDone()` after the component mounts.
+ *
+ * The component also uses {@link useDirectives} to apply directives to the rendered `div` element.
+ *
+ * @see {@link useWidgetWithConfig}
+ * @see {@link useDirectives}
+ */
 export const AccordionItem: ForwardRefExoticComponent<Partial<AccordionItemProps> & RefAttributes<AccordionItemApi>> = forwardRef(
 	function AccordionItem(props: Partial<AccordionItemProps>, ref: ForwardedRef<AccordionItemApi>) {
 		const {registerItem} = useContext(AccordionDIContext);
-		const widgetContext = useWidgetWithConfig(registerItem!, props, null, defaultConfig);
+		const widgetContext = useWidgetWithConfig(registerItem!, props, null, {
+			structure: AccordionItemDefaultSlotStructure,
+		});
 		const {state, api, directives} = widgetContext;
 		useImperativeHandle(ref, () => api, []);
 		useEffect(() => {
@@ -55,6 +79,19 @@ export const AccordionItem: ForwardRefExoticComponent<Partial<AccordionItemProps
 	},
 );
 
+/**
+ * Accordion component that provides a collapsible content container.
+ * 
+ * This component uses a forward ref to expose the Accordion API to parent components.
+ * It leverages the {@link useWidgetWithConfig} hook to create the accordion widget and 
+ * {@link https://react.dev/reference/react/useImperativeHandle | useImperativeHandle} to bind the widget API to the ref.
+
+ * @param {PropsWithChildren<Partial<AccordionProps>>} props - The properties for the Accordion component.
+ * @param {ForwardedRef<AccordionApi>} ref - The ref to be forwarded to the Accordion API.
+ * 
+ * @returns {JSX.Element} The rendered Accordion component.
+ * 
+ */
 export const Accordion: ForwardRefExoticComponent<PropsWithChildren<Partial<AccordionProps>> & RefAttributes<AccordionApi>> = forwardRef(
 	function Accordion(props: PropsWithChildren<Partial<AccordionProps>>, ref: ForwardedRef<AccordionApi>) {
 		const widget = useWidgetWithConfig(createAccordion, props, 'accordion');

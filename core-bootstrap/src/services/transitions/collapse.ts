@@ -14,5 +14,18 @@ const horizontalConfig: CollapseConfig = {
 	animationPendingClasses: ['collapsing', 'collapse-horizontal'],
 };
 
+/**
+ * A transition function that handles vertical collapse animations.
+ *
+ * This function is created using the `createCollapseTransition` utility with
+ * a vertical configuration. It is intended to be used for animating the
+ * collapsing and expanding of vertical elements.
+ */
 export const collapseVerticalTransition: TransitionFn = createCollapseTransition(verticalConfig);
+/**
+ * A transition function for collapsing elements horizontally.
+ *
+ * This function is created using the `createCollapseTransition` utility
+ * and is configured with `horizontalConfig`.
+ */
 export const collapseHorizontalTransition: TransitionFn = createCollapseTransition(horizontalConfig);

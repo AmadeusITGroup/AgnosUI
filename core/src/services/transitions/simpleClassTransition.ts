@@ -2,6 +2,9 @@ import {createCSSTransition} from './cssTransitions';
 import {addClasses, reflow, removeClasses} from '../../utils/internal/dom';
 import type {TransitionFn} from './baseTransitions';
 
+/**
+ * Configuration interface for simple class-based transitions.
+ */
 export interface SimpleClassTransitionConfig {
 	/**
 	 * a list of classes to add to the collapsable element while transitioning
@@ -25,6 +28,9 @@ export interface SimpleClassTransitionConfig {
 	hideClasses?: string[];
 }
 
+/**
+ * Represents the context for a simple class transition.
+ */
 export interface SimpleClassTransitionContext {
 	/**
 	 * `true` is the transition has started

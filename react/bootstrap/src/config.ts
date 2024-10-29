@@ -28,4 +28,11 @@ const widgetFactories: {
 		defaultProps?: Partial<WidgetProps<W>>,
 	) => WidgetSlotContext<W>;
 } = widgetsConfigFactory<WidgetsConfig>();
+/**
+ * Destructures and exports the following from `widgetFactories`:
+ * - `widgetsConfigContext`: The context for widget configurations.
+ * - `WidgetsDefaultConfig`: The default configuration for widgets.
+ * - `useWidgetContext`: A hook to use the widget context.
+ * - `useWidgetWithConfig`: A hook to use a widget with a specific configuration.
+ */
 export const {widgetsConfigContext, WidgetsDefaultConfig, useWidgetContext, useWidgetWithConfig} = widgetFactories;

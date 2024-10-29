@@ -17,6 +17,11 @@ import {
 import {callWidgetFactory} from '../../config';
 import type {BSContextualClass} from '@agnos-ui/core-bootstrap/types';
 
+/**
+ * Directive to be used as a structural directive for the body of an alert component.
+ *
+ * This directive allows the use of a template reference for the alert body content, with type {@link AlertContext}.
+ */
 @Directive({selector: 'ng-template[auAlertBody]', standalone: true})
 export class AlertBodyDirective {
 	public templateRef = inject(TemplateRef<AlertContext>);
@@ -25,6 +30,11 @@ export class AlertBodyDirective {
 	}
 }
 
+/**
+ * Directive to define the structure of an alert component.
+ *
+ * This directive uses a `TemplateRef` to inject the template reference of the {@link AlertContext}.
+ */
 @Directive({selector: 'ng-template[auAlertStructure]', standalone: true})
 export class AlertStructureDirective {
 	public templateRef = inject(TemplateRef<AlertContext>);
@@ -32,6 +42,7 @@ export class AlertStructureDirective {
 		return true;
 	}
 }
+
 @Component({
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -49,8 +60,19 @@ class AlertDefaultSlotsComponent {
 	@ViewChild('structure', {static: true}) structure!: TemplateRef<AlertContext>;
 }
 
-export const alertDefaultSlotStructure = new ComponentTemplate(AlertDefaultSlotsComponent, 'structure');
+/**
+ * Represents the default slot structure for the alert component.
+ */
+export const alertDefaultSlotStructure: SlotContent<AlertContext> = new ComponentTemplate(AlertDefaultSlotsComponent, 'structure');
 
+/**
+ * AlertComponent is a UI component that extends BaseWidgetDirective to provide
+ * an alert box with various customizable properties and behaviors.
+ *
+ * @remarks
+ * This component is designed to be used with Bootstrap styles and supports
+ * various Bootstrap contextual classes for different alert types.
+ */
 @Component({
 	selector: '[auAlert]',
 	standalone: true,

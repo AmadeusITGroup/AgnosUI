@@ -123,6 +123,12 @@ function patchSimpleChanges(patchFn: (obj: any) => void, changes: SimpleChanges)
 	patchFn(obj);
 }
 
+/**
+ * An abstract base class for widget directives, providing common functionality
+ * for Angular components that interact with widgets.
+ *
+ * @template W - The type of the widget.
+ */
 @Directive()
 export abstract class BaseWidgetDirective<W extends Widget> implements OnChanges, OnInit, AfterContentChecked {
 	constructor(private readonly _widget: AngularWidget<W>) {}
@@ -136,7 +142,7 @@ export abstract class BaseWidgetDirective<W extends Widget> implements OnChanges
 	}
 
 	/**
-	 * Retrieves the widget state as an Angular {@link Signal}
+	 * Retrieves the widget state as an Angular {@link https://angular.dev/api/core/Signal | Signal}
 	 * @returns the widget state
 	 */
 	get state(): AngularState<W> {
@@ -151,17 +157,20 @@ export abstract class BaseWidgetDirective<W extends Widget> implements OnChanges
 		return this._widget.directives;
 	}
 
-	/** @inheritdoc */
+	/**
+	 * @inheritdoc
+	 * @internal
+	 */
 	ngOnChanges(changes: SimpleChanges): void {
 		patchSimpleChanges(this._widget.patch, changes);
 	}
 
-	/** @inheritdoc */
+	/** @internal */
 	ngOnInit(): void {
 		this._widget.ngInit();
 	}
 
-	/** @inheritdoc */
+	/** @internal */
 	ngAfterContentChecked(): void {
 		this._widget.updateSlots();
 	}

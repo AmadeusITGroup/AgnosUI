@@ -188,19 +188,37 @@ const getSlotType = (value: any): undefined | {new (viewContainerRef: ViewContai
 	return undefined;
 };
 
+/**
+ * A directive that manages slot content and its properties.
+ *
+ * @template Props - A record type representing the properties for the slot.
+ *
+ * @remarks
+ * This directive handles changes to the slot content and its properties,
+ * and manages the lifecycle of the slot handler.
+ */
 @Directive({
 	selector: '[auSlot]',
 	standalone: true,
 })
 export class SlotDirective<Props extends Record<string, any>> implements OnChanges, OnDestroy {
+	/**
+	 * The slot content to be managed.
+	 */
 	@Input('auSlot') slot: SlotContent<Props>;
+	/**
+	 * The properties for the slot content.
+	 */
 	@Input({alias: 'auSlotProps', required: true}) props!: Props;
 
 	private readonly _viewContainerRef = inject(ViewContainerRef);
 	private _slotType: ReturnType<typeof getSlotType>;
 	private _slotHandler: SlotHandler<Props> | undefined;
 
-	/** @inheritdoc */
+	/**
+	 * @param changes SimpleChanges from Angular
+	 * @internal
+	 */
 	ngOnChanges(changes: SimpleChanges): void {
 		const slotChange = changes['slot'];
 		const propsChange = changes['props'];
@@ -218,7 +236,7 @@ export class SlotDirective<Props extends Record<string, any>> implements OnChang
 		}
 	}
 
-	/** @inheritdoc */
+	/** @internal */
 	ngOnDestroy(): void {
 		this._slotHandler?.destroy();
 		this._slotHandler = undefined;

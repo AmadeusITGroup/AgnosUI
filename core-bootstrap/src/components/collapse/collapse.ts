@@ -6,6 +6,9 @@ import {typeBoolean, typeFunction, typeString} from '@agnos-ui/core/utils/writab
 import {collapseHorizontalTransition, collapseVerticalTransition} from '../../services/transitions/collapse';
 import {asWritable, computed} from '@amadeus-it-group/tansu';
 
+/**
+ * Interface representing the common properties and state for a collapse component.
+ */
 export interface CollapseCommonPropsAndState {
 	/**
 	 * CSS classes to be applied on the widget main container
@@ -27,6 +30,10 @@ export interface CollapseCommonPropsAndState {
 	visible: boolean;
 }
 
+/**
+ * Represents the state of a collapse component.
+ * Extends the properties and state from `CollapseCommonPropsAndState`.
+ */
 export interface CollapseState extends CollapseCommonPropsAndState {
 	/**
 	 * Is `true` when the collapse is hidden. Compared to `visible`, this is updated after the transition is executed.
@@ -34,6 +41,9 @@ export interface CollapseState extends CollapseCommonPropsAndState {
 	hidden: boolean;
 }
 
+/**
+ * Properties for the Collapse component.
+ */
 export interface CollapseProps extends CollapseCommonPropsAndState {
 	/**
 	 * Callback called when the collapse visibility changed.
@@ -42,6 +52,7 @@ export interface CollapseProps extends CollapseCommonPropsAndState {
 	 * ```ts
 	 * () => {}
 	 * ```
+	 * @param visible - The new visibility state of the collapse.
 	 */
 	onVisibleChange: (visible: boolean) => void;
 
@@ -71,6 +82,7 @@ export interface CollapseProps extends CollapseCommonPropsAndState {
 	 * @defaultValue `false`
 	 */
 	animatedOnInit: boolean;
+
 	/**
 	 * If `true`, collapse closing and opening will be animated.
 	 *
@@ -85,6 +97,9 @@ export interface CollapseProps extends CollapseCommonPropsAndState {
 	id: string;
 }
 
+/**
+ * Interface representing the API for a collapsible component.
+ */
 export interface CollapseApi {
 	/**
 	 * Triggers collapse closing programmatically.
@@ -102,6 +117,9 @@ export interface CollapseApi {
 	toggle(): void;
 }
 
+/**
+ * Interface representing the directives used in a collapse component.
+ */
 export interface CollapseDirectives {
 	/**
 	 * Directive to apply the collapse.
@@ -109,6 +127,14 @@ export interface CollapseDirectives {
 	collapseDirective: Directive;
 }
 
+/**
+ * Represents a widget for handling collapse functionality.
+ *
+ * This type defines the structure of a CollapseWidget, which includes properties, state, API, and directives
+ * necessary for managing the collapse behavior in the UI.
+ *
+ * @type {Widget<CollapseProps, CollapseState, CollapseApi, CollapseDirectives>}
+ */
 export type CollapseWidget = Widget<CollapseProps, CollapseState, CollapseApi, CollapseDirectives>;
 
 const defaultCollapseConfig: CollapseProps = {

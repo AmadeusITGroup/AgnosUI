@@ -33,6 +33,9 @@ interface ProgressbarCommonPropsAndState extends WidgetsCommonPropsAndState {
 	ariaLabel: string;
 }
 
+/**
+ * Interface representing directives for a progress bar component.
+ */
 export interface ProgressbarDirectives {
 	/**
 	 * A directive to be applied to the main container that handles aria attributes.
@@ -40,6 +43,9 @@ export interface ProgressbarDirectives {
 	ariaDirective: Directive;
 }
 
+/**
+ * Represents the state of a progress bar component.
+ */
 export interface ProgressbarState extends ProgressbarCommonPropsAndState {
 	/**
 	 * Percentage of completion.
@@ -59,6 +65,9 @@ export interface ProgressbarState extends ProgressbarCommonPropsAndState {
 	ariaValueText: string | undefined;
 }
 
+/**
+ * Interface representing the properties for the Progressbar component.
+ */
 export interface ProgressbarProps extends ProgressbarCommonPropsAndState {
 	/**
 	 * Return the value for the 'aria-valuetext' attribute.
@@ -74,6 +83,9 @@ export interface ProgressbarProps extends ProgressbarCommonPropsAndState {
 	ariaValueTextFn: (value: number, minimum: number, maximum: number) => string | undefined;
 }
 
+/**
+ * Represents a Progressbar widget with specific properties, state, API, and directives.
+ */
 export type ProgressbarWidget = Widget<ProgressbarProps, ProgressbarState, object, ProgressbarDirectives>;
 
 const defaultConfig: ProgressbarProps = {

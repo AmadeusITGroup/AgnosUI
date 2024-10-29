@@ -18,6 +18,7 @@ import {callWidgetFactory} from '../../config';
 
 /**
  * Directive to provide the slot structure for the modal widget.
+ * This directive provides a template reference for the {@link ModalContext<Data>}.
  */
 @Directive({selector: 'ng-template[auModalStructure]', standalone: true})
 export class ModalStructureDirective<Data> {
@@ -29,6 +30,7 @@ export class ModalStructureDirective<Data> {
 
 /**
  * Directive to provide the slot header for the modal widget.
+ * This directive provides a template reference for the {@link ModalContext<Data>}.
  */
 @Directive({selector: 'ng-template[auModalHeader]', standalone: true})
 export class ModalHeaderDirective<Data> {
@@ -40,6 +42,7 @@ export class ModalHeaderDirective<Data> {
 
 /**
  * Directive to provide the slot title for the modal widget.
+ * This directive provides a template reference for the {@link ModalContext<Data>}.
  */
 @Directive({selector: 'ng-template[auModalTitle]', standalone: true})
 export class ModalTitleDirective<Data> {
@@ -51,6 +54,7 @@ export class ModalTitleDirective<Data> {
 
 /**
  * Directive to provide the default slot for the modal widget.
+ * This directive provides a template reference for the {@link ModalContext<Data>}.
  */
 @Directive({selector: 'ng-template[auModalBody]', standalone: true})
 export class ModalBodyDirective<Data> {
@@ -62,6 +66,7 @@ export class ModalBodyDirective<Data> {
 
 /**
  * Directive to provide the slot footer for the modal widget.
+ * This directive provides a template reference for the {@link ModalContext<Data>}.
  */
 @Directive({selector: 'ng-template[auModalFooter]', standalone: true})
 export class ModalFooterDirective<Data> {
@@ -112,12 +117,12 @@ class ModalDefaultSlotsComponent<Data> {
 /**
  * Default slot for modal header.
  */
-export const modalDefaultSlotHeader = new ComponentTemplate(ModalDefaultSlotsComponent, 'header');
+export const modalDefaultSlotHeader: SlotContent<ModalContext<any>> = new ComponentTemplate(ModalDefaultSlotsComponent, 'header');
 
 /**
  * Default slot for modal structure.
  */
-export const modalDefaultSlotStructure = new ComponentTemplate(ModalDefaultSlotsComponent, 'structure');
+export const modalDefaultSlotStructure: SlotContent<ModalContext<any>> = new ComponentTemplate(ModalDefaultSlotsComponent, 'structure');
 
 /**
  * Modal component.

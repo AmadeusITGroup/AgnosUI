@@ -25,6 +25,10 @@ import {callWidgetFactory} from '../../config';
 import type {ToastContext, ToastWidget} from './toast.gen';
 import {createToast} from './toast.gen';
 
+/**
+ * Directive to represent the body of a toast notification.
+ * This directive uses a template reference to render the {@link ToastContext}.
+ */
 @Directive({selector: 'ng-template[auToastBody]', standalone: true})
 export class ToastBodyDirective {
 	public templateRef = inject(TemplateRef<ToastContext>);
@@ -33,6 +37,10 @@ export class ToastBodyDirective {
 	}
 }
 
+/**
+ * Directive to define the structure of a toast component.
+ * This directive uses a template reference to render the {@link ToastContext}.
+ */
 @Directive({selector: 'ng-template[auToastStructure]', standalone: true})
 export class ToastStructureDirective {
 	public templateRef = inject(TemplateRef<ToastContext>);
@@ -41,6 +49,10 @@ export class ToastStructureDirective {
 	}
 }
 
+/**
+ * Directive representing the header of a toast component.
+ * This directive uses a template reference to render the {@link ToastContext}.
+ */
 @Directive({selector: 'ng-template[auToastHeader]', standalone: true})
 export class ToastHeaderDirective {
 	public templateRef = inject(TemplateRef<ToastContext>);
@@ -73,8 +85,16 @@ class ToastDefaultSlotsComponent {
 	@ViewChild('structure', {static: true}) structure!: TemplateRef<ToastContext>;
 }
 
-export const toastDefaultSlotStructure = new ComponentTemplate(ToastDefaultSlotsComponent, 'structure');
+/**
+ * Represents the default slot structure for the toast component.
+ */
+export const toastDefaultSlotStructure: SlotContent<ToastContext> = new ComponentTemplate(ToastDefaultSlotsComponent, 'structure');
 
+/**
+ * The `ToastComponent` is a UI component that displays a toast notification.
+ * It extends the `BaseWidgetDirective` and provides various configurable properties
+ * and events to control the behavior and appearance of the toast.
+ */
 @Component({
 	selector: '[auToast]',
 	standalone: true,

@@ -12,7 +12,14 @@ import {createModal} from './modal.gen';
 
 const CloseButton = ({directive}: {directive: Directive}) => <button className="btn-close" {...useDirective(directive)} />;
 
-const DefaultSlotHeader = <Data,>(slotContext: ModalContext<Data>) => (
+/**
+ * A default header component for the modal that displays a title and an optional close button.
+ *
+ * @template Data - The type of data used in the modal context.
+ * @param {ModalContext<Data>} slotContext - The context object containing the state and directives for the modal.
+ * @returns {JSX.Element} The JSX element representing the modal header.
+ */
+export const ModalDefaultSlotHeader = <Data,>(slotContext: ModalContext<Data>) => (
 	<>
 		<h5 className="modal-title">
 			<Slot slotContent={slotContext.state.title} props={slotContext} />
@@ -21,7 +28,14 @@ const DefaultSlotHeader = <Data,>(slotContext: ModalContext<Data>) => (
 	</>
 );
 
-const DefaultSlotStructure = <Data,>(slotContext: ModalContext<Data>) => (
+/**
+ * Renders the default slot structure for a modal component.
+ *
+ * @template Data - The type of the data used in the modal context.
+ * @param {ModalContext<Data>} slotContext - The context containing the state and props for the modal slots.
+ * @returns {JSX.Element} The JSX structure for the modal's default slots.
+ */
+export const ModalDefaultSlotStructure = <Data,>(slotContext: ModalContext<Data>) => (
 	<>
 		{slotContext.state.title && (
 			<div className="modal-header">
@@ -38,11 +52,6 @@ const DefaultSlotStructure = <Data,>(slotContext: ModalContext<Data>) => (
 		)}
 	</>
 );
-
-const defaultConfig: Partial<ModalProps<any>> = {
-	header: DefaultSlotHeader,
-	structure: DefaultSlotStructure,
-};
 
 const BackdropElement = <Data,>({directives}: ModalContext<Data>) => (
 	<div {...useDirectives([classDirective, 'modal-backdrop'], directives.backdropDirective)} />
@@ -61,8 +70,21 @@ const ModalElement = <Data,>(slotContext: ModalContext<Data>) => {
 	);
 };
 
+/**
+ * A Modal component that uses a forwardRef to expose its API.
+ *
+ * @template Data - The type of data that the modal will handle.
+ *
+ * @param {Partial<ModalProps<Data>>} props - The properties for the Modal component.
+ * @param {Ref<ModalApi<Data>>} ref - A ref to access the Modal API.
+ *
+ * @returns {JSX.Element} The rendered Modal component.
+ */
 export const Modal = forwardRef(function Modal<Data>(props: Partial<ModalProps<Data>>, ref: Ref<ModalApi<Data>>) {
-	const widgetContext = useWidgetWithConfig(createModal<Data>, props, 'modal', defaultConfig);
+	const widgetContext = useWidgetWithConfig(createModal<Data>, props, 'modal', {
+		header: ModalDefaultSlotHeader,
+		structure: ModalDefaultSlotStructure,
+	});
 	useImperativeHandle(ref, () => widgetContext.api, []);
 	return (
 		<Portal container={widgetContext.state.container}>
@@ -72,6 +94,13 @@ export const Modal = forwardRef(function Modal<Data>(props: Partial<ModalProps<D
 	);
 }) as <Data>(props: Partial<ModalProps<Data>> & RefAttributes<ModalApi<Data>>) => JSX.Element;
 
+/**
+ * Opens a modal dialog with the specified options.
+ *
+ * @template Data - The type of data that the modal will handle.
+ * @param {Partial<ModalProps<Data>>} options - The options to configure the modal.
+ * @returns {Promise<any>} A promise that resolves when the modal is closed.
+ */
 export async function openModal<Data>(options: Partial<ModalProps<Data>>) {
 	const root = ReactDOM.createRoot(document.createElement('div'));
 	try {

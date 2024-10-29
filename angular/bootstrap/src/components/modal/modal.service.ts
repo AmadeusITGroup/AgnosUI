@@ -3,10 +3,13 @@ import type {Subscription} from 'rxjs';
 import {ModalComponent} from './modal.component';
 import type {ModalProps} from './modal.gen';
 
-export interface ModalServiceOpenOptions {
+interface ModalServiceOpenOptions {
 	injector?: Injector;
 }
 
+/**
+ * Service to handle the opening and management of modal components.
+ */
 @Injectable({providedIn: 'root'})
 export class ModalService {
 	private readonly _injector = inject(Injector);

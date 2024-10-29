@@ -17,9 +17,19 @@ interface RatingExtraProps {
 	star: SlotContent<StarContext>;
 }
 
+/**
+ * Represents the state of a rating component.
+ */
 export interface RatingState extends CoreState, RatingExtraProps {}
+
+/**
+ * Represents the properties for the Rating component.
+ */
 export interface RatingProps extends CoreProps, RatingExtraProps {}
 
+/**
+ * Represents a Rating Widget component.
+ */
 export type RatingWidget = Widget<RatingProps, RatingState, RatingApi, RatingDirectives>;
 
 const defaultConfigExtraProps: RatingExtraProps = {

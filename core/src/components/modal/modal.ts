@@ -17,7 +17,7 @@ import {
 	registrationArray,
 } from '../../utils/directive';
 import {portal} from '../../services/portal';
-import {sliblingsInert} from '../../services/siblingsInert';
+import {siblingsInert} from '../../services/siblingsInert';
 
 /**
  * Value present in the {@link ModalBeforeCloseEvent.result|result} property of the {@link ModalProps.onBeforeClose|onBeforeClose} event
@@ -265,7 +265,7 @@ export interface ModalDirectives {
 	 */
 	closeButtonDirective: Directive;
 	/**
-	 * Directive to apply to the dialog element when using the native [HTMLDialogElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement)
+	 * Directive to apply to the dialog element when using the native {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement | HTMLDialogElement}
 	 */
 	dialogDirective: Directive;
 }
@@ -472,7 +472,7 @@ export function createModal(config$?: PropsConfig<ModalProps>): ModalWidget {
 			modalPortalDirective,
 			backdropPortalDirective,
 			backdropDirective: mergeDirectives(backdropTransition.directives.directive, backdropAttributeDirective),
-			modalDirective: mergeDirectives(modalTransition.directives.directive, sliblingsInert, directiveSubscribe(action$), modalAttributeDirective),
+			modalDirective: mergeDirectives(modalTransition.directives.directive, siblingsInert, directiveSubscribe(action$), modalAttributeDirective),
 			closeButtonDirective,
 			dialogDirective: bindDirective(
 				browserDirective((dialog: HTMLDialogElement, visible: boolean) => {

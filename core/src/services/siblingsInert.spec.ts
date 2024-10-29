@@ -1,5 +1,5 @@
 import {beforeEach, describe, expect, test} from 'vitest';
-import {sliblingsInert} from './siblingsInert';
+import {siblingsInert} from './siblingsInert';
 
 describe('sliblingsInert', () => {
 	let testArea: HTMLElement;
@@ -22,7 +22,7 @@ describe('sliblingsInert', () => {
 			<div id="otherContainerElement"></div>
 		`;
 		testArea.innerHTML = initialMarkup;
-		const instance = sliblingsInert(document.getElementById('element')!);
+		const instance = siblingsInert(document.getElementById('element')!);
 		expect(testArea.innerHTML).toBe(`
 			<div id="parentElement">
 				<div id="beforeElement" inert=""></div>
@@ -51,7 +51,7 @@ describe('sliblingsInert', () => {
 			</div>
 		`;
 		testArea.innerHTML = initialMarkup;
-		const instance1 = sliblingsInert(document.getElementById('element1')!);
+		const instance1 = siblingsInert(document.getElementById('element1')!);
 		const only1Markup = `
 			<div id="parentElement1">
 				<div id="beforeElement1" inert=""></div>
@@ -66,7 +66,7 @@ describe('sliblingsInert', () => {
 			</div>
 		`;
 		expect(testArea.innerHTML).toBe(only1Markup);
-		const instance2 = sliblingsInert(document.getElementById('element2')!);
+		const instance2 = siblingsInert(document.getElementById('element2')!);
 		expect(testArea.innerHTML).toBe(`
 			<div id="parentElement1" inert="">
 				<div id="beforeElement1"></div>
@@ -101,7 +101,7 @@ describe('sliblingsInert', () => {
 			</div>
 		`;
 		testArea.innerHTML = initialMarkup;
-		const instance1 = sliblingsInert(document.getElementById('element1')!);
+		const instance1 = siblingsInert(document.getElementById('element1')!);
 		expect(testArea.innerHTML).toBe(`
 			<div id="parentElement1">
 				<div id="beforeElement1" inert=""></div>
@@ -115,7 +115,7 @@ describe('sliblingsInert', () => {
 				<div id="alreadyHidden" inert=""></div>
 			</div>
 		`);
-		const instance2 = sliblingsInert(document.getElementById('element2')!);
+		const instance2 = siblingsInert(document.getElementById('element2')!);
 		const markup2 = `
 			<div id="parentElement1" inert="">
 				<div id="beforeElement1"></div>
@@ -143,13 +143,13 @@ describe('sliblingsInert', () => {
 			<div id="element3"></div>
 		`;
 		testArea.innerHTML = initialMarkup;
-		const instance1 = sliblingsInert(document.getElementById('element1')!);
+		const instance1 = siblingsInert(document.getElementById('element1')!);
 		expect(testArea.innerHTML).toBe(`
 			<div id="element1"></div>
 			<div id="element2" inert=""></div>
 			<div id="element3" inert=""></div>
 		`);
-		const instance2 = sliblingsInert(document.getElementById('element2')!);
+		const instance2 = siblingsInert(document.getElementById('element2')!);
 		const markup2 = `
 			<div id="element1" inert=""></div>
 			<div id="element2"></div>
@@ -169,13 +169,13 @@ describe('sliblingsInert', () => {
 			<div id="element3" inert=""></div>
 		`;
 		testArea.innerHTML = initialMarkup;
-		const instance1 = sliblingsInert(document.getElementById('element1')!);
+		const instance1 = siblingsInert(document.getElementById('element1')!);
 		expect(testArea.innerHTML).toBe(`
 			<div id="element1"></div>
 			<div id="element2" inert=""></div>
 			<div id="element3" inert=""></div>
 		`);
-		const instance2 = sliblingsInert(document.getElementById('element2')!);
+		const instance2 = siblingsInert(document.getElementById('element2')!);
 		const markup2 = `
 			<div id="element1" inert=""></div>
 			<div id="element2"></div>

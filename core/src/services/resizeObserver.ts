@@ -35,7 +35,7 @@ export const createResizeObserver = (): {
 	return {
 		/**
 		 * Store which contains the dimensions of the observed element (ResizeObserverEntry type)
-		 * See the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserverEntry)
+		 * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserverEntry | MDN documentation}
 		 */
 		dimensions$: observedElement$,
 

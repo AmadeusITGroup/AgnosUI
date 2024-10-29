@@ -6,10 +6,17 @@ import type {PropsConfig, SlotContent, Widget, WidgetSlotContext} from '@agnos-u
 export * from '@agnos-ui/core/components/select';
 
 /**
- * A type for the slot context of the pagination widget
+ * Interface for the slot context of the pagination widget
+ * @template Item - The type of the items in the Select component.
  */
 export interface SelectContext<Item> extends WidgetSlotContext<SelectWidget<Item>> {}
 
+/**
+ * Represents the context for a select item, extending the base `SelectContext` with additional
+ * contextual data specific to an item.
+ *
+ * @template Item - The type of the item within the select context.
+ */
 export interface SelectItemContext<Item> extends SelectContext<Item> {
 	/**
 	 * Contextual data related to an item
@@ -41,9 +48,24 @@ interface SelectExtraProps<Item> {
 	itemLabel: SlotContent<SelectItemContext<Item>>;
 }
 
+/**
+ * Represents the state of a Select component.
+ *
+ * @template Item - The type of the items in the select component.
+ */
 export interface SelectState<Item> extends CoreState<Item>, SelectExtraProps<Item> {}
+/**
+ * Represents the properties for the Select component.
+ *
+ * @template Item - The type of the items in the select component.
+ */
 export interface SelectProps<Item> extends CoreProps<Item>, SelectExtraProps<Item> {}
 
+/**
+ * Represents a Select widget component.
+ *
+ * @template Item - The type of the items that the select widget will handle.
+ */
 export type SelectWidget<Item> = Widget<SelectProps<Item>, SelectState<Item>, SelectApi<Item>, SelectDirectives<Item>>;
 
 const defaultConfigExtraProps: SelectExtraProps<any> = {

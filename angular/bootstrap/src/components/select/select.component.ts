@@ -13,6 +13,13 @@ import {callWidgetFactory} from '../../config';
 import type {ItemContext, SelectItemContext, SelectWidget} from './select.gen';
 import {createSelect} from './select.gen';
 
+/**
+ * Directive to provide a custom template for the badge label in a select component.
+ *
+ * @template Item - The type of the item in the select component.
+ *
+ * This directive uses a template reference to render the {@link SelectItemContext<Item>}.
+ */
 @Directive({selector: 'ng-template[auSelectBadgeLabel]', standalone: true})
 export class SelectBadgeLabelDirective<Item> {
 	public templateRef = inject(TemplateRef<SelectItemContext<Item>>);
@@ -21,6 +28,16 @@ export class SelectBadgeLabelDirective<Item> {
 	}
 }
 
+/**
+ * Directive to provide a custom label template for select items.
+ *
+ * This directive allows you to define a custom template for the labels of items
+ * in a select component. The template can be specified using an Angular `TemplateRef`.
+ *
+ * @template Item - The type of the items in the select component.
+ *
+ * This directive uses a template reference to render the {@link SelectItemContext<Item>}.
+ */
 @Directive({selector: 'ng-template[auSelectItemLabel]', standalone: true})
 export class SelectItemLabelDirective<Item> {
 	public templateRef = inject(TemplateRef<SelectItemContext<Item>>);
@@ -29,6 +46,11 @@ export class SelectItemLabelDirective<Item> {
 	}
 }
 
+/**
+ * A component that represents a customizable select dropdown widget.
+ *
+ * @template Item - The type of items in the select dropdown.
+ */
 @Component({
 	standalone: true,
 	imports: [UseMultiDirective, SlotDirective, UseDirective],

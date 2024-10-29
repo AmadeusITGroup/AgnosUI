@@ -36,14 +36,29 @@ interface ExtraDirectives {
 	closeButtonDirective: Directive;
 }
 
+/**
+ * Represents the state of a toast component.
+ */
 export interface ToastState extends CommonAlertState, ToastExtraProps {}
 
+/**
+ * Represents the properties for the toast component.
+ */
 export interface ToastProps extends CommonAlertProps, ToastExtraProps {}
 
+/**
+ * Represents the API for the toast component.
+ */
 export interface ToastApi extends CommonAlertApi {}
 
+/**
+ * Interface representing the directives for a toast component.
+ */
 export interface ToastDirectives extends CommonAlertDirectives, ExtraDirectives {}
 
+/**
+ * Represents a toast widget with specific properties, state, API, and directives.
+ */
 export type ToastWidget = Widget<ToastProps, ToastState, ToastApi, ToastDirectives>;
 
 const toastDefaultConfig: ToastExtraProps = {

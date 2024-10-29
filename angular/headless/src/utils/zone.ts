@@ -23,6 +23,10 @@ const createReturnValueWrapper =
 	(fn) =>
 		wrapResult(typeof fn === 'function' ? (((...args: any[]) => wrapReturnValue(fn(...args))) as any) : fn);
 
+/**
+ * A utility class that provides methods to run functions inside or outside of Angular's NgZone.
+ * This can be useful for optimizing performance by avoiding unnecessary change detection cycles.
+ */
 @Injectable({
 	providedIn: 'root',
 })

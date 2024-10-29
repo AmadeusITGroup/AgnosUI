@@ -2,10 +2,26 @@ import type {CommonAlertApi, CommonAlertDirectives, CommonAlertProps, CommonAler
 import {createCommonAlert, getCommonAlertDefaultConfig} from './common';
 import type {Widget, WidgetFactory} from '../../types';
 
+/**
+ * Represents the state of an alert component.
+ */
 export interface AlertState extends CommonAlertState {}
+
+/**
+ * Represents the properties for the alert component.
+ */
 export interface AlertProps extends CommonAlertProps {}
+/**
+ * Represents the API for an alert component.
+ */
 export interface AlertApi extends CommonAlertApi {}
+/**
+ * Represents the directives for an alert component.
+ */
 export interface AlertDirectives extends CommonAlertDirectives {}
+/**
+ * Represents an alert widget with specific properties, state, API, and directives.
+ */
 export type AlertWidget = Widget<AlertProps, AlertState, AlertApi, AlertDirectives>;
 
 /**

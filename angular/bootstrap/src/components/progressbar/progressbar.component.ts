@@ -15,6 +15,10 @@ import {createProgressbar} from './progressbar.gen';
 import {callWidgetFactory} from '../../config';
 import type {BSContextualClass} from '@agnos-ui/core-bootstrap/types';
 
+/**
+ * Directive that provides a template reference for the progress bar context.
+ * This directive provides a template reference for the {@link ProgressbarContext}.
+ */
 @Directive({selector: 'ng-template[auProgressbarBody]', standalone: true})
 export class ProgressbarBodyDirective {
 	public templateRef = inject(TemplateRef<ProgressbarContext>);
@@ -23,6 +27,11 @@ export class ProgressbarBodyDirective {
 	}
 }
 
+/**
+ * Directive to define the structure of a progress bar.
+ *
+ * This directive provides a template reference for the {@link ProgressbarContext}.
+ */
 @Directive({selector: 'ng-template[auProgressbarStructure]', standalone: true})
 export class ProgressbarStructureDirective {
 	public templateRef = inject(TemplateRef<ProgressbarContext>);
@@ -55,8 +64,17 @@ class ProgressbarDefaultSlotsComponent {
 	@ViewChild('structure', {static: true}) structure!: TemplateRef<ProgressbarContext>;
 }
 
-export const progressbarDefaultSlotStructure = new ComponentTemplate(ProgressbarDefaultSlotsComponent, 'structure');
+/**
+ * Represents the default slot structure for the progress bar component.
+ */
+export const progressbarDefaultSlotStructure: SlotContent<ProgressbarContext> = new ComponentTemplate(ProgressbarDefaultSlotsComponent, 'structure');
 
+/**
+ * ProgressbarComponent is a UI component that extends the BaseWidgetDirective
+ * to create a customizable progress bar widget. It provides various inputs
+ * to configure the appearance and behavior of the progress bar.
+ *
+ */
 @Component({
 	selector: '[auProgressbar]',
 	standalone: true,

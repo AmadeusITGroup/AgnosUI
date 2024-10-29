@@ -47,9 +47,7 @@ const lastElement$ = computed(
 const inertAction$ = computed(() => setSiblingsInert(lastElement$()));
 
 /**
- * sliblingsInert directive
- * When used on an element, all siblings of the element and of its ancestors will be inert with the inert attribute.
- * In case it is used on multiple elements, only the last one has an effect (the directive keeps a stack of elements
- * on which it is used, so when the last one disappears, the previous one in the list becomes the one in effect).
+ * A directive that sets the `inert` attribute on all sibling elements of the given element recursively up the DOM tree,
+ * excluding the element itself and any `<script>` elements.
  */
-export const sliblingsInert: Directive = mergeDirectives(storeArrayDirective, directiveSubscribe(inertAction$));
+export const siblingsInert: Directive = mergeDirectives(storeArrayDirective, directiveSubscribe(inertAction$));

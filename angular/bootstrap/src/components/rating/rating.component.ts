@@ -26,6 +26,11 @@ import {callWidgetFactory} from '../../config';
 import type {RatingWidget, StarContext} from './rating.gen';
 import {createRating} from './rating.gen';
 
+/**
+ * Directive to represent a rating star.
+ *
+ * This directive uses a template reference to render the {@link StarContext}.
+ */
 @Directive({selector: 'ng-template[auRatingStar]', standalone: true})
 export class RatingStarDirective {
 	public templateRef = inject(TemplateRef<StarContext>);
@@ -34,6 +39,10 @@ export class RatingStarDirective {
 	}
 }
 
+/**
+ * The `RatingComponent` is an Angular component that allows users to provide a rating.
+ * It extends `BaseWidgetDirective` and implements `ControlValueAccessor` to integrate with Angular forms.
+ */
 @Component({
 	selector: '[auRating]',
 	standalone: true,

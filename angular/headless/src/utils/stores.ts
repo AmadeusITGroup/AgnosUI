@@ -6,13 +6,17 @@ import {ZoneWrapper} from './zone';
 export * from '@agnos-ui/core/utils/stores';
 
 /**
- * Convert a tansu readable signal into an Angular signal.
+ * Converts a Tansu `ReadableSignal` to an Angular `Signal`.
  *
- * @param tansuSignal - a tansu readable signal
- * @returns an angular signal
+ * This function wraps the provided Tansu signal in an Angular signal, ensuring that updates
+ * are properly handled within Angular's zone. It subscribes to the Tansu signal and updates
+ * the Angular signal with the received values. The equality function for the Angular signal
+ * is set to always return false, ensuring that every new value from the Tansu signal triggers
+ * an update.
  *
- * @remarks
- * Note that as it uses Angular's `inject`, this can only be called at component construction time.
+ * @template T - The type of the value emitted by the signals.
+ * @param tansuSignal - The Tansu signal to convert.
+ * @returns - The resulting Angular signal.
  */
 export const toAngularSignal = <T>(tansuSignal: ReadableSignal<T>): Signal<T> => {
 	const zoneWrapper = inject(ZoneWrapper);
