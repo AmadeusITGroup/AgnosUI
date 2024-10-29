@@ -193,9 +193,6 @@ const getSlotType = (value: any): undefined | {new (viewContainerRef: ViewContai
  *
  * @template Props - A record type representing the properties for the slot.
  *
- * @implements {OnChanges}
- * @implements {OnDestroy}
- *
  * @property {SlotContent<Props>} slot - The slot content to be managed.
  * @property {Props} props - The properties for the slot content.
  *

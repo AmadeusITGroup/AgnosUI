@@ -62,11 +62,8 @@ class AlertDefaultSlotsComponent {
 
 /**
  * Represents the default slot structure for the alert component.
- *
- * This constant is an instance of `ComponentTemplate` which uses
- * `AlertDefaultSlotsComponent` as the component and 'structure' as the template type.
  */
-export const alertDefaultSlotStructure = new ComponentTemplate(AlertDefaultSlotsComponent, 'structure');
+export const alertDefaultSlotStructure: SlotContent<AlertContext> = new ComponentTemplate(AlertDefaultSlotsComponent, 'structure');
 
 /**
  * AlertComponent is a UI component that extends BaseWidgetDirective to provide

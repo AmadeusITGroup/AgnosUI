@@ -150,10 +150,11 @@ class AccordionItemDefaultSlotsComponent {
 }
 /**
  * Represents the default slot structure for an accordion item.
- * This constant is an instance of `ComponentTemplate` with the
- * `AccordionItemDefaultSlotsComponent` component and a slot name of 'structure'.
  */
-export const accordionItemDefaultSlotStructure = new ComponentTemplate(AccordionItemDefaultSlotsComponent, 'structure');
+export const accordionItemDefaultSlotStructure: SlotContent<AccordionItemContext> = new ComponentTemplate(
+	AccordionItemDefaultSlotsComponent,
+	'structure',
+);
 
 /**
  * AccordionItemComponent is a component that represents an item within an accordion.

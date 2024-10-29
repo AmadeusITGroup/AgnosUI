@@ -37,27 +37,27 @@ interface ExtraDirectives {
 }
 
 /**
- * Represents the state of a Toast component, extending the common alert state and additional toast properties.
+ * Represents the state of a toast component.
  */
 export interface ToastState extends CommonAlertState, ToastExtraProps {}
 
 /**
- * Represents the properties for the Toast component.
+ * Represents the properties for the toast component.
  */
 export interface ToastProps extends CommonAlertProps, ToastExtraProps {}
 
 /**
- * Represents the API for the Toast component, extending the common alert functionalities.
+ * Represents the API for the toast component.
  */
 export interface ToastApi extends CommonAlertApi {}
 
 /**
- * Interface representing the directives for a Toast component.
+ * Interface representing the directives for a toast component.
  */
 export interface ToastDirectives extends CommonAlertDirectives, ExtraDirectives {}
 
 /**
- * Represents a Toast widget with specific properties, state, API, and directives.
+ * Represents a toast widget with specific properties, state, API, and directives.
  */
 export type ToastWidget = Widget<ToastProps, ToastState, ToastApi, ToastDirectives>;
 

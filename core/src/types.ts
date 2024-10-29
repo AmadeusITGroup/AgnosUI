@@ -214,7 +214,7 @@ export type NormalizeValue<T> = (value: T) => T | typeof INVALID_VALUE;
  */
 export interface WritableWithDefaultOptions<T> {
 	/**
-	 * the normalize value function. should return the invalidValue symbol when the provided value is invalid
+	 * the normalize value function. should return the {@link INVALID_VALUE} symbol when the provided value is invalid
 	 */
 	normalizeValue?: NormalizeValue<T>;
 	/**

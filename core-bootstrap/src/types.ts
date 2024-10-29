@@ -15,6 +15,9 @@
  */
 export type BSContextualClass = 'success' | 'info' | 'warning' | 'danger' | 'primary' | 'secondary' | 'light' | 'dark';
 
+/**
+ * List of all contextual classes, can be used to validate that a specific string is a {@link BSContextualClass}
+ */
 export const BS_CONTEXTUAL_CLASSES: BSContextualClass[] = Object.values({
 	success: 'success',
 	info: 'info',

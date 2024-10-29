@@ -87,10 +87,8 @@ class ToastDefaultSlotsComponent {
 
 /**
  * Represents the default slot structure for the toast component.
- * This constant is an instance of `ComponentTemplate` initialized with
- * `ToastDefaultSlotsComponent` and the slot name 'structure'.
  */
-export const toastDefaultSlotStructure = new ComponentTemplate(ToastDefaultSlotsComponent, 'structure');
+export const toastDefaultSlotStructure: SlotContent<ToastContext> = new ComponentTemplate(ToastDefaultSlotsComponent, 'structure');
 
 /**
  * The `ToastComponent` is a UI component that displays a toast notification.

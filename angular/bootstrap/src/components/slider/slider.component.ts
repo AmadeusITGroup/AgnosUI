@@ -68,9 +68,8 @@ class SliderDefaultHandleSlotComponent {
 
 /**
  * A constant representing the default slot handle for the slider component.
- * It uses the `SliderDefaultHandleSlotComponent` as the component template and assigns it the slot name 'handle'.
  */
-export const sliderDefaultSlotHandle = new ComponentTemplate(SliderDefaultHandleSlotComponent, 'handle');
+export const sliderDefaultSlotHandle: SlotContent<SliderSlotHandleContext> = new ComponentTemplate(SliderDefaultHandleSlotComponent, 'handle');
 
 /**
  * Directive that provides structure for the slider component.
@@ -131,10 +130,8 @@ class SliderDefaultStructureSlotComponent {
 
 /**
  * Represents the default slot structure for the slider component.
- * This constant is an instance of `ComponentTemplate` which uses
- * `SliderDefaultStructureSlotComponent` as its component and 'structure' as its slot name.
  */
-export const sliderDefaultSlotStructure = new ComponentTemplate(SliderDefaultStructureSlotComponent, 'structure');
+export const sliderDefaultSlotStructure: SlotContent<SliderContext> = new ComponentTemplate(SliderDefaultStructureSlotComponent, 'structure');
 
 /**
  * SliderComponent is an Angular component that extends the BaseWidgetDirective

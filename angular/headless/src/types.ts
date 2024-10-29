@@ -27,7 +27,9 @@ export class ComponentTemplate<Props, K extends string, T extends {[key in K]: T
  * @template Props - The type of the properties that the slot content can accept.
  *
  * This type can be one of the following:
- * - `CoreSlotContent<Props>`: Core slot content with the specified properties.
+ * - `undefined | null`: Nullish value
+ * - `string`: A static string
+ * - `(props: Props) => string`: A function that takes props as input and returns a string template
  * - `TemplateRef<Props>`: A reference to an Angular template with the specified properties.
  * - `Type<unknown>`: A type representing an unknown component or directive.
  * - `ComponentTemplate<Props, any, any>`: A component template with the specified properties.
@@ -48,10 +50,19 @@ export type SlotContent<Props extends object = object> =
  */
 @Directive()
 export abstract class SlotComponent<W extends Widget> {
+	/**
+	 * The state of the widget. Each property of the state is exposed through an Angular {@link Signal}
+	 */
 	@Input()
 	state!: AngularState<W>;
+	/**
+	 * all the api functions to interact with the widget
+	 */
 	@Input()
 	api!: W['api'];
+	/**
+	 * directives to be used on html elements in the template of the slot
+	 */
 	@Input()
 	directives!: W['directives'];
 }
@@ -71,22 +82,25 @@ export type AngularState<W extends Widget> = {[key in keyof WidgetState<W>]: Sig
  * Represents an Angular widget that extends a base widget type.
  *
  * @template W - The type of the base widget.
- *
- * @property {Promise<void>} initialized - A promise that resolves when the widget is initialized.
- * @property {ContextWidget<W>} widget - The context widget associated with this Angular widget.
- * @property {Signal<WidgetState<W>>} ngState - A signal representing the state of the widget.
- * @property {() => void} ngInit - A function to initialize the Angular widget.
- * @property {Function} patchSlots - A function to patch the slots of the widget.
- *
- * @param slots - An object representing the slots to be patched.
- * @param slots[K] - The template reference for the slot content, or undefined if not applicable.
  */
-export type AngularWidget<W extends Widget> = Pick<W, 'api' | 'directives' | 'patch'> & {
+export interface AngularWidget<W extends Widget> extends Pick<W, 'api' | 'directives' | 'patch'> {
+	/**
+	 * A promise that resolves when the widget is initialized
+	 */
 	initialized: Promise<void>;
+	/**
+	 * The state of the widget. Each property of the state is exposed through an Angular {@link Signal}
+	 */
 	state: AngularState<W>;
+	/**
+	 * A function to initialize the Angular widget.
+	 */
 	ngInit: () => void;
+	/**
+	 * A utility function to update the slot properties.
+	 */
 	updateSlots: () => void;
-};
+}
 
 export interface WidgetSlotContext<W extends Widget> extends Pick<W, 'api' | 'directives'> {
 	/**

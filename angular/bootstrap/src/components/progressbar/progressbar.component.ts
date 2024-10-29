@@ -66,10 +66,8 @@ class ProgressbarDefaultSlotsComponent {
 
 /**
  * Represents the default slot structure for the progress bar component.
- * This constant is an instance of `ComponentTemplate` initialized with
- * `ProgressbarDefaultSlotsComponent` and a structure type.
  */
-export const progressbarDefaultSlotStructure = new ComponentTemplate(ProgressbarDefaultSlotsComponent, 'structure');
+export const progressbarDefaultSlotStructure: SlotContent<ProgressbarContext> = new ComponentTemplate(ProgressbarDefaultSlotsComponent, 'structure');
 
 /**
  * ProgressbarComponent is a UI component that extends the BaseWidgetDirective

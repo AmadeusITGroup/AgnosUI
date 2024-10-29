@@ -27,8 +27,7 @@
 			"ControlValueAccessor": "https://angular.dev/api/forms/ControlValueAccessor"
 		},
 		"svelte": {
-			"ComponentType": "https://svelte.dev/docs/svelte#types-componenttype",
-			"SvelteComponent": "https://svelte.dev/docs/svelte#types-sveltecomponent"
+			"Snippet": "https://svelte.dev/docs/svelte/svelte#Snippet"
 		}
 	},
 	"excludeNotDocumented": true,

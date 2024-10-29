@@ -188,11 +188,11 @@ class PaginationDefaultSlotsComponent {
 /**
  * The default slot for the pages
  */
-export const paginationDefaultSlotPages = new ComponentTemplate(PaginationDefaultSlotsComponent, 'pages');
+export const paginationDefaultSlotPages: SlotContent<PaginationContext> = new ComponentTemplate(PaginationDefaultSlotsComponent, 'pages');
 /**
  * The default slot for the structure
  */
-export const paginationDefaultSlotStructure = new ComponentTemplate(PaginationDefaultSlotsComponent, 'structure');
+export const paginationDefaultSlotStructure: SlotContent<PaginationContext> = new ComponentTemplate(PaginationDefaultSlotsComponent, 'structure');
 
 /**
  * The `PaginationComponent` is an Angular component that extends the `BaseWidgetDirective`

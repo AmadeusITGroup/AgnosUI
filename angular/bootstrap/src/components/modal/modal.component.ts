@@ -117,12 +117,12 @@ class ModalDefaultSlotsComponent<Data> {
 /**
  * Default slot for modal header.
  */
-export const modalDefaultSlotHeader = new ComponentTemplate(ModalDefaultSlotsComponent, 'header');
+export const modalDefaultSlotHeader: SlotContent<ModalContext<any>> = new ComponentTemplate(ModalDefaultSlotsComponent, 'header');
 
 /**
  * Default slot for modal structure.
  */
-export const modalDefaultSlotStructure = new ComponentTemplate(ModalDefaultSlotsComponent, 'structure');
+export const modalDefaultSlotStructure: SlotContent<ModalContext<any>> = new ComponentTemplate(ModalDefaultSlotsComponent, 'structure');
 
 /**
  * Modal component.
