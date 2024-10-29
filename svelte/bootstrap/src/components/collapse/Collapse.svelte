@@ -4,16 +4,16 @@
 	import {callWidgetFactory} from '../../config';
 	import type {Snippet} from 'svelte';
 
-	let {children, id, visible = $bindable(), ...props}: Partial<CollapseProps> & {children: Snippet} = $props();
+	let {children, visible = $bindable(), ...props}: Partial<CollapseProps> & {children: Snippet} = $props();
 
 	const {
-		directives: {transitionDirective},
+		directives: {collapseDirective},
 		api: collapseApi,
 	} = callWidgetFactory({
 		factory: createCollapse,
 		widgetName: 'collapse',
 		get props() {
-			return {...props, id, visible};
+			return {...props, visible};
 		},
 		events: {
 			onVisibleChange: (event) => {
@@ -25,6 +25,6 @@
 	export const api: CollapseApi = collapseApi;
 </script>
 
-<div use:transitionDirective>
+<div use:collapseDirective>
 	{@render children()}
 </div>

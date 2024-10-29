@@ -93,7 +93,7 @@ export class CollapseDirective extends BaseWidgetDirective<CollapseWidget> {
 					onHidden: () => this.hidden.emit(),
 				},
 				afterInit: (widget) => {
-					useDirectiveForHost(widget.directives.transitionDirective);
+					useDirectiveForHost(widget.directives.collapseDirective);
 				},
 			}),
 		);

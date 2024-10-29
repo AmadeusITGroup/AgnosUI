@@ -104,9 +104,9 @@ export interface CollapseApi {
 
 export interface CollapseDirectives {
 	/**
-	 * the transition directive, piloting what is the visual effect of going from hidden to visible
+	 * Directive to apply the collapse.
 	 */
-	transitionDirective: Directive;
+	collapseDirective: Directive;
 }
 
 export type CollapseWidget = Widget<CollapseProps, CollapseState, CollapseApi, CollapseDirectives>;
@@ -177,7 +177,7 @@ export function createCollapse(config?: PropsConfig<CollapseProps>): CollapseWid
 			toggle: transition.api.toggle,
 		},
 		directives: {
-			transitionDirective: mergeDirectives(
+			collapseDirective: mergeDirectives(
 				bindDirectiveNoArg(transition.directives.directive),
 				createAttributesDirective(() => ({
 					attributes: {

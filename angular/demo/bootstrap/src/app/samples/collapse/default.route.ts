@@ -14,7 +14,7 @@ import {Component, signal} from '@angular/core';
 	`,
 })
 export default class DefaultCollapseComponent {
-	expanded = signal(true);
+	readonly expanded = signal(true);
 	toggle() {
 		this.expanded.update((expanded) => !expanded);
 	}
