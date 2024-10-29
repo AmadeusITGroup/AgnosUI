@@ -1,1 +1,0 @@
-import{y as r,z as c,o as s,E as i,w as h,D as p,x as d}from"./runtime.CoJv2S2D.js";function u(o,t,f){r&&c();var n=o,a,e;s(()=>{a!==(a=t())&&(e&&(d(e),e=null),a&&(e=h(()=>f(n,a))))},i),r&&(n=p)}export{u as c};
