@@ -6,7 +6,7 @@
 	import type {Snippet} from 'svelte';
 	import {callWidgetFactory} from '@agnos-ui/svelte-bootstrap/config';
 
-	let {headerText, expanded = false, children}: {headerText: string; expanded: boolean; children: Snippet} = $props();
+	let {headerText, expanded = $bindable(), children}: {headerText: string; expanded: boolean; children: Snippet} = $props();
 
 	const {
 		state,
@@ -14,9 +14,17 @@
 		directives: {directive},
 	} = callWidgetFactory({
 		factory: createTransition,
-		props: {
-			visible: expanded,
-			transition: collapseVerticalTransition,
+		get props() {
+			return {
+				visible: expanded,
+				transition: collapseVerticalTransition,
+			};
+		},
+		enablePatchChanged: true,
+		events: {
+			onVisibleChange: (val: boolean) => {
+				expanded = val;
+			},
 		},
 	});
 </script>

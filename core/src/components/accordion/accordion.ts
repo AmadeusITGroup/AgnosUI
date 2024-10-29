@@ -6,7 +6,7 @@ import {asWritable, computed, readable, writable} from '@amadeus-it-group/tansu'
 import {noop} from '../../utils/internal/func';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 import {typeBoolean, typeFunction, typeString} from '../../utils/writables';
-import {bindDirectiveNoArg, createAttributesDirective, directiveSubscribe, mergeDirectives, registrationArray} from '../../utils/directive';
+import {createAttributesDirective, directiveSubscribe, mergeDirectives, registrationArray} from '../../utils/directive';
 import {generateId} from '../../utils/internal/dom';
 
 function adjustItemsCloseOthers(items: AccordionItemWidget[], openItems: string[], oldOpen?: string): AccordionItemWidget[] {
@@ -446,7 +446,7 @@ export function createAccordionItem(config?: PropsConfig<AccordionItemProps>): A
 			},
 		},
 	}));
-	const transitionDirective = bindDirectiveNoArg(transition.directives.directive);
+	const transitionDirective = transition.directives.directive;
 	const bodyContainerAttrsDirective = createAttributesDirective(() => ({
 		attributes: {
 			id: computed(() => `${id$()}-body-container`),

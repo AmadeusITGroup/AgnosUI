@@ -5,6 +5,6 @@ import CollapseComponent from './collapse.component';
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [CollapseComponent],
-	template: ` <app-collapse headerText="Toggle content" expanded> Content to display / hide. </app-collapse> `,
+	template: ` <app-collapse headerText="Toggle content" [expanded]="true"> Content to display / hide. </app-collapse> `,
 })
 export default class CollapseDemoComponent {}
