@@ -13,7 +13,7 @@
 	};
 
 	let {status}: {status: string} = $props();
-	let alert: Alert;
+	let alert: ReturnType<typeof Alert>;
 
 	let type = $derived((status === 'inprogress' ? 'warning' : 'info') as AlertProps['type']);
 	let statusText = $derived(status === 'inprogress' ? 'In progress' : 'Beta');

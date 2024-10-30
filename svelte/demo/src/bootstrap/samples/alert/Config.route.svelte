@@ -2,7 +2,7 @@
 	import {Alert, type AlertProps} from '@agnos-ui/svelte-bootstrap/components/alert';
 	import {AlertStatus} from '@agnos-ui/common/samples/alert/alert-status.enum';
 
-	let alert: Alert;
+	let alert: ReturnType<typeof Alert>;
 	let animatedOnInit = $state(true);
 	let animated = $state(true);
 	let dismissible = $state(true);

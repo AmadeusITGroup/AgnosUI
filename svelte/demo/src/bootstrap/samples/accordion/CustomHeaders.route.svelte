@@ -3,7 +3,7 @@
 	import '@agnos-ui/common/samples/accordion/custom.scss';
 	import BODY from '@agnos-ui/common/samples/accordion/body.txt?raw';
 
-	let accordion: Accordion;
+	let accordion: ReturnType<typeof Accordion>;
 	let thirdItemDisabled = $state(false);
 </script>
 
