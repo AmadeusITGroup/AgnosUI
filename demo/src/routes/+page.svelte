@@ -20,7 +20,7 @@
 				<span
 					><span class="au-clip">AgnosUI</span>
 					<br />
-					Where web components shine.</span
+					Where components shine.</span
 				>
 			</h1>
 			<h2 class="text-primary-emphasis text-sm-start text-center">Perfected open-source component libraries</h2>
