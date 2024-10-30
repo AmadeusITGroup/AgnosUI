@@ -1,7 +1,5 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"repositories": ["AmadeusITGroup/AgnosUI"],
-	"platform": "github",
 	"extends": ["config:recommended", ":dependencyDashboard", "group:allNonMajor"],
 	"ignorePresets": [":prHourlyLimit2", ":prConcurrentLimit10"],
 	"schedule": ["every weekend"],
@@ -18,7 +16,7 @@
 			"groupSlug": "zone.js-dependency"
 		},
 		{
-			"matchPackagePatterns": ["^@angular", "^ng-packagr"],
+			"matchPackageNames": ["/^@angular/", "/^ng-packagr/"],
 			"groupName": "Angular dependencies",
 			"groupSlug": "angular-dependencies"
 		},
@@ -30,7 +28,5 @@
 	],
 	"lockFileMaintenance": {"enabled": true, "schedule": ["every weekend"]},
 	"skipInstalls": false,
-	"vulnerabilityAlerts": {
-		"enabled": false
-	}
+	"vulnerabilityAlerts": {"enabled": false}
 }

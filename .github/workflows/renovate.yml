@@ -12,5 +12,5 @@ jobs:
       - uses: actions/checkout@v4
       - uses: renovatebot/github-action@v40.3.4
         with:
-          configurationFile: agnos-renovate.json
+          configurationFile: selfhost-renovate.json
           token: ${{ secrets.GITHUB_TOKEN }}
