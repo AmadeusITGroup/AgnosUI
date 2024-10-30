@@ -12,7 +12,7 @@
 	}: {
 		componentType: string;
 	} = $props();
-	let alert: Alert;
+	let alert: ReturnType<typeof Alert>;
 
 	let componentName = $derived($page.url.pathname.match(regex)?.[2]);
 	$effect(() => {

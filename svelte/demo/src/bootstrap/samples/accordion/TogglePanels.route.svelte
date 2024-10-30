@@ -2,8 +2,8 @@
 	import {Accordion, AccordionItem} from '@agnos-ui/svelte-bootstrap/components/accordion';
 	import BODY from '@agnos-ui/common/samples/accordion/body.txt?raw';
 
-	let accordion: Accordion;
-	let secondAccordionItem: AccordionItem;
+	let accordion: ReturnType<typeof Accordion>;
+	let secondAccordionItem: ReturnType<typeof AccordionItem>;
 </script>
 
 <Accordion bind:this={accordion}>
