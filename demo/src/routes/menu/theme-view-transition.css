@@ -1,0 +1,5 @@
+::view-transition-old(*),
+::view-transition-new(*) {
+	animation: false !important;
+	mix-blend-mode: normal !important;
+}

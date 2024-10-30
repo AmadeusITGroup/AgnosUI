@@ -17,6 +17,7 @@
 	import Versions from './menu/Versions.svelte';
 	import type {Snippet} from 'svelte';
 	import type {LayoutData} from './$types';
+	import viewTransition from './view-transition.css?raw';
 
 	let isMainPage = $derived($routeLevel$ === 0);
 	let isApi = $derived($page.route.id?.startsWith('/api/'));
@@ -29,11 +30,17 @@
 	});
 	onNavigate((navigation) => {
 		if (!document.startViewTransition) return;
-		return new Promise((resolve) => {
-			document.startViewTransition(async () => {
-				resolve();
-				await navigation.complete;
-			});
+		let styleElement = document.createElement('style');
+		styleElement.textContent = viewTransition;
+		document.head.appendChild(styleElement);
+
+		return new Promise<void>((resolve) => {
+			void document
+				.startViewTransition(async () => {
+					resolve();
+					await navigation.complete;
+				})
+				.ready.then(() => styleElement.remove());
 		});
 	});
 

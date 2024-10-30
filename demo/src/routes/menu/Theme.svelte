@@ -7,6 +7,7 @@
 	import sun from 'bootstrap-icons/icons/sun-fill.svg?raw';
 	import {onMount} from 'svelte';
 	import type {DropdownButton} from '$lib/layout/dropdown';
+	import themeViewTransition from './theme-view-transition.css?raw';
 
 	interface Theme extends DropdownButton {
 		name: string;
@@ -23,7 +24,7 @@
 			name: 'Auto',
 			icon: halfCircle,
 			onclick: () => {
-				setTheme('auto');
+				void setTheme('auto');
 			},
 			isSelected: currentTheme$() === 'auto',
 		},
@@ -33,7 +34,7 @@
 			name: 'Light',
 			icon: sun,
 			onclick: () => {
-				setTheme('light');
+				void setTheme('light');
 			},
 			isSelected: currentTheme$() === 'light',
 		},
@@ -43,16 +44,59 @@
 			name: 'Dark',
 			icon: moon,
 			onclick: () => {
-				setTheme('dark');
+				void setTheme('dark');
 			},
 			isSelected: currentTheme$() === 'dark',
 		},
 	]);
 
-	function setTheme(id: string): void {
-		currentTheme$.set(id);
-		localStorage.setItem('theme', id);
-		applyTheme(id);
+	let toggle: HTMLElement;
+
+	async function setTheme(id: string, noAnimation = false) {
+		const themeApply = () => {
+			currentTheme$.set(id);
+			localStorage.setItem('theme', id);
+			applyTheme(id);
+		};
+		const appliedTheme = (theme: string) => {
+			if (theme === 'auto') {
+				return window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'dark' : 'light';
+			} else {
+				return theme;
+			}
+		};
+		if (
+			!document.startViewTransition ||
+			window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+			noAnimation ||
+			appliedTheme(currentTheme$()) === appliedTheme(id)
+		) {
+			themeApply();
+		} else {
+			let styleElement = document.createElement('style');
+			styleElement.textContent = themeViewTransition;
+			document.head.appendChild(styleElement);
+			const viewTransition = document.startViewTransition(themeApply);
+			await viewTransition.ready;
+			const {top, left, width, height} = toggle.getBoundingClientRect();
+			const x = left + width / 2;
+			const y = top + height / 2;
+			const right = window.innerWidth - left;
+			const bottom = window.innerHeight - top;
+			const maxRadius = Math.hypot(Math.max(left, right), Math.max(top, bottom));
+			await document.documentElement.animate(
+				{
+					clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${maxRadius}px at ${x}px ${y}px)`],
+				},
+				{
+					duration: 1_000,
+					easing: 'ease-in-out',
+					pseudoElement: '::view-transition-new(root)',
+				},
+			).finished;
+			await viewTransition.finished;
+			styleElement.remove();
+		}
 	}
 
 	function applyTheme(id: string) {
@@ -66,7 +110,7 @@
 
 	onMount(() => {
 		// First we search in localStorage
-		setTheme(localStorage.getItem('theme') ?? 'auto');
+		void setTheme(localStorage.getItem('theme') ?? 'auto', true);
 		window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
 			if (currentTheme$() === 'auto') {
 				applyTheme('auto');
@@ -75,7 +119,7 @@
 	});
 </script>
 
-<div class="nav-item">
+<div class="nav-item" bind:this={toggle}>
 	<Dropdown btnClass="btn-dark-mode nav-link" ariaLabel="toggle the dark mode" items={$themes$} placement="end">
 		{#snippet buttonSnip()}
 			{#each $themes$ as theme}
