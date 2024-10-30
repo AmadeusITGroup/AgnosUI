@@ -1,4 +1,4 @@
-<h1 align="center">AgnosUI - Where web components shine</h1>
+<h1 align="center">AgnosUI - Where components shine</h1>
 
 <p align="center">
   <img src="demo/static/agnosui-logo.svg" alt="angular-logo" width="120px" height="120px"/>
