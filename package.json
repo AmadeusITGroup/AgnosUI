@@ -27,7 +27,7 @@
 	},
 	"engines": {
 		"npm": "^10.9.0",
-		"node": "^20.18.0"
+		"node": "^22.11.0"
 	},
 	"packageManager": "npm@10.9.0",
 	"devDependencies": {
@@ -44,7 +44,7 @@
 		"@commitlint/cli": "^19.5.0",
 		"@eslint/js": "^9.13.0",
 		"@playwright/test": "^1.48.2",
-		"@types/node": "^20.17.3",
+		"@types/node": "^22.8.4",
 		"@types/uuid": "^10.0.0",
 		"@vitest/browser": "^2.1.4",
 		"@vitest/eslint-plugin": "^1.1.7",
