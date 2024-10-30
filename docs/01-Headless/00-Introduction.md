@@ -8,7 +8,11 @@ A headless component is a design pattern where the component applies a separatio
 
 The “headless” part refers to the logic of the component, which is decoupled from its visual representation. This means that the component doesn’t have a user interface, but it does have functionality and exposes an api, states, directives but keeps internally their implementation.
 
-Leveraging its core, AgnosUI provides headless components across various frameworks. These components not only share the core API but also adhere to the best practices and implementation strategies specific to each framework. This ensures seamless integration and optimal performance.
+<p>
+There is different kind of "headless" libraries and the naming could change taking into account different specificities of the different libs. In a way if we refer to this <a href="https://nerdy.dev/headless-boneless-and-skinless-ui" target="_blank" aria-label="article">article</a> we are more a lifeless library.
+</p>
+
+Leveraging its core, AgnosUI provides headless/lifeless components across various frameworks. These components not only share the core API but also adhere to the best practices and implementation strategies specific to each framework. This ensures seamless integration and optimal performance.
 
 ## Anatomy of a Component Creation
 

@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/@agnos-ui/react-headless)](https://www.npmjs.com/package/@agnos-ui/react-headless)
 
-Headless component library for [React](https://react.dev/).
+Headless/Lifeless component library for [React](https://react.dev/).
 
 ## Installation
 

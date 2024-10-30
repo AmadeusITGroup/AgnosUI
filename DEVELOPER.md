@@ -12,7 +12,7 @@ This is a monorepo organised with multiple npm packages:
 Each framework will include the following packages:
 
 - `headless` delivering the headless wrappers to use the core components with the selected framework
-- `bootstrap` delivering bootstrap-compliant implementations of the components, powered by the headless wrappers and the core components
+- `bootstrap` delivering bootstrap-compliant implementations of the components, powered by the headless/lifeless wrappers and the core components
 - `demo` the demo pages showcasing examples on how to the use the above packages.
 
 Finally, two other npm packages are available for testing purposes:

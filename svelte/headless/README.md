@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/@agnos-ui/svelte-headless)](https://www.npmjs.com/package/@agnos-ui/svelte-headless)
 
-Headless component library for [Svelte](https://svelte.dev/).
+Headless/Lifeless component library for [Svelte](https://svelte.dev/).
 
 ## Installation
 

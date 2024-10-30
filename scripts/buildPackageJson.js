@@ -32,6 +32,7 @@ if (isBootstrap) {
 	pkg.keywords.unshift('bootstrap');
 } else if (isFramework || packageName === '@agnos-ui/core') {
 	pkg.keywords.unshift('headless');
+	pkg.keywords.unshift('lifeless');
 }
 if (isFramework) {
 	pkg.keywords.unshift(frameworkName);

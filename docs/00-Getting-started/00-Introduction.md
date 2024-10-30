@@ -70,7 +70,7 @@ To make the most of AgnosUI, familiarize yourself with the following concepts:
 
 - Certain utilities are designed to be used as or with a directive. Directives are simple functions that can be applied to a DOM element. Learn more about this topic in [this section](../01-Headless/03-Directives.md).
 
-## Headless
+## Headless/Lifeless
 
 As AgnosUI components are built on a reactive data system, you can leverage the core to create your own markup, using the data and the API to manage the UI and its behavior.
 

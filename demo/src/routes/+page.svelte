@@ -88,9 +88,9 @@
 			A framework-agnostic core of component factories that provide reactive models and APIs to drive the data. You can use it with any front-end
 			framework.
 		</LandingCard>
-		<LandingCard title="Headless components">
-			Each component is provided in headless mode in Angular, React and Svelte using the same factory. You can use them with any front-end CSS
-			framework.
+		<LandingCard title="Headless/Lifeless components">
+			Each component is provided in headless (lifeless) mode in Angular, React and Svelte using the same factory. You can use them with any front-end
+			CSS framework.
 		</LandingCard>
 		<LandingCard title="Consistent">Components are provided for Angular, React and Svelte with the exact same markup and functionalities.</LandingCard
 		>

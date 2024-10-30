@@ -17,7 +17,7 @@ You can check how each framework handles this need on their respective documenta
     <li><a href="https://angular.io/guide/creating-injectable-service" target="_blank">context injection in Angular</a></li>
 </ul>
 
-The configuration is available out of the box as soon as components are created using the AgnosUI headless factories.  
+The configuration is available out of the box as soon as components are created using the AgnosUI headless/lifeless factories.  
 The headless packages also provide utilities for each framework to retrieve and update component configuration.
 
 ## In Action

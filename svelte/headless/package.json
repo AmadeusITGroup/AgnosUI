@@ -1,6 +1,6 @@
 {
 	"name": "@agnos-ui/svelte-headless",
-	"description": "Headless component library for Svelte.",
+	"description": "Headless/Lifeless component library for Svelte.",
 	"version": "0.0.0",
 	"private": true,
 	"type": "module",
