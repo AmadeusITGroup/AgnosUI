@@ -1,7 +1,5 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"repositories": ["AmadeusITGroup/AgnosUI"],
-	"platform": "github",
 	"extends": ["config:recommended", ":dependencyDashboard", "group:allNonMajor"],
 	"ignorePresets": [":prHourlyLimit2", ":prConcurrentLimit10"],
 	"schedule": ["every weekend"],
@@ -13,26 +11,12 @@
 			"groupSlug": "typescript-dependencies"
 		},
 		{
-			"matchPackagePatterns": ["^."],
-			"postUpgradeTasks": {
-				"commands": ["rm package-lock.json", "npm install"],
-				"executionMode": "branch",
-				"fileFilters": ["**"]
-			}
+			"matchPackageNames": ["zone.js"],
+			"groupName": "Zone.js dependency",
+			"groupSlug": "zone.js-dependency"
 		},
 		{
-			"matchPackageNames": ["@angular/core"],
-			"postUpgradeTasks": {
-				"commands": [
-					"npm install",
-					"cd angular && npm run ng update {{{depName}}} --from={{{currentVersion}}} --to={{{newVersion}}} --migrate-only --allow-dirty --force"
-				],
-				"executionMode": "branch",
-				"fileFilters": ["**"]
-			}
-		},
-		{
-			"matchPackagePatterns": ["^@angular", "^ng-packagr", "^zone.js"],
+			"matchPackagePatterns": ["^@angular", "^ng-packagr"],
 			"groupName": "Angular dependencies",
 			"groupSlug": "angular-dependencies"
 		},
@@ -42,7 +26,9 @@
 			"groupSlug": "github-actions"
 		}
 	],
-	"allowedPostUpgradeCommands": ["^npm install$", "^cd angular && npm run ng update .*", "^rm package-lock.json$"],
 	"lockFileMaintenance": {"enabled": true, "schedule": ["every weekend"]},
-	"skipInstalls": false
+	"skipInstalls": false,
+	"vulnerabilityAlerts": {
+		"enabled": false
+	}
 }
