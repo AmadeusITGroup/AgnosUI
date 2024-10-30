@@ -23,7 +23,7 @@
 		"@angular/platform-browser": "^18.2.9",
 		"@angular/platform-browser-dynamic": "^18.2.9",
 		"@angular/router": "^18.2.9",
-		"@floating-ui/dom": "^1.6.11",
+		"@floating-ui/dom": "^1.6.12",
 		"autoprefixer": "^10.4.20",
 		"daisyui": "^4.12.14",
 		"postcss": "^8.4.47",
