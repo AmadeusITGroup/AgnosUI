@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="robots" content="noindex" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" type="image/svg+xml" href="../assets/agnosui-logo-DTZz1yWG.svg" />
+		<title>Vite App</title>
+		<script>
+			const theme = window.localStorage.getItem('theme');
+			if (theme === 'dark' || ((theme === 'auto' || !theme) && (window.parent ?? window).matchMedia('(prefers-color-scheme: dark)').matches)) {
+				document.documentElement.setAttribute('data-theme', 'dark');
+			}
+		</script>
+		<script type="module" crossorigin src="../assets/daisyui-XH34aQYy.js"></script>
+		<link rel="modulepreload" crossorigin href="../assets/App-DzjsJVPi.js">
+		<link rel="stylesheet" crossorigin href="../assets/App-BVa804XK.css">
+		<link rel="stylesheet" crossorigin href="../assets/daisyui-Bd3J-WV2.css">
+	</head>
+	<body>
+		<div id="root" class="container mx-auto p-3"></div>
+	</body>
+</html>
