@@ -13,30 +13,32 @@
 </svelte:head>
 
 <!-- TODO make a list of component and iterate over it when needed -->
-<div class="container-xxl d-flex flex-column align-items-center pt-5">
+<div class="container-xxl d-flex flex-column align-items-center pt-md-5">
 	<div class="d-flex flex-md-row flex-column">
 		<div class="order-md-1 order-2">
-			<h1 class="text-primary-emphasis text-sm-start text-center fs-sm-1 mb-md-5 mb-sm-3">
+			<h1 class="text-primary-emphasis text-sm-start text-center fs-sm-1 mb-md-5 mb-3">
 				<span
 					><span class="au-clip">AgnosUI</span>
 					<br />
 					Where components shine.</span
 				>
 			</h1>
-			<h2 class="text-primary-emphasis text-sm-start text-center">Perfected open-source component libraries</h2>
-			<ul class="au-landing-list">
-				<li class="d-flex align-items-start">
-					<Svg svg={bullet} className="bullet me-3" />Configurable Typescript component factories
-				</li>
-				<li class="d-flex align-items-start">
-					<Svg svg={bullet} className="bullet me-3" />Headless wrappers for Angular, React and Svelte
-				</li>
-				<li class="d-flex align-items-start">
-					<Svg svg={bullet} className="bullet me-3" />Bootstrap-compliant ready-to-use components for Angular, React and Svelte.
-				</li>
-			</ul>
+			<h2 class="text-primary-emphasis text-sm-start text-center">Perfected component libraries</h2>
+			<div class="d-flex justify-content-center justify-content-md-start">
+				<ul class="au-landing-list">
+					<li class="d-flex align-items-start">
+						<Svg svg={bullet} className="bullet me-3" />Typescript factories
+					</li>
+					<li class="d-flex align-items-start">
+						<Svg svg={bullet} className="bullet me-3" />Headless wrappers
+					</li>
+					<li class="d-flex align-items-start">
+						<Svg svg={bullet} className="bullet me-3" />Bootstrap-styled ready-to-use
+					</li>
+				</ul>
+			</div>
 		</div>
-		<div class="order-md-2 order-1 m-auto mb-3">
+		<div class="order-md-2 order-1 m-auto mb-md-3">
 			<div class="position-relative au-logo-container">
 				<span class="au-blur position-absolute p-4 p-sm-0"></span>
 				<Svg svg={agnosUILogo} className="agnosui-big-logo me-2" />
@@ -127,13 +129,22 @@
 	.au-logo-container {
 		width: 380px;
 		height: 380px;
+		@media (max-width: 768px) {
+			width: 300px;
+			height: 300px;
+		}
 	}
 	.au-blur {
 		width: 300px;
 		height: 300px;
-		background-image: linear-gradient(-60deg, #9240cc 50%, #fce649 50%);
+		@media (max-width: 768px) {
+			width: 250px;
+			height: 250px;
+		}
+		border-radius: 50%;
+		background-image: linear-gradient(-60deg, #9240cc 30%, #fce649 70%);
 		filter: blur(40px);
-		opacity: 0.8;
+		opacity: 0.5;
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
@@ -152,6 +163,9 @@
 		list-style-type: none;
 		font-size: 1rem;
 		margin-bottom: 0.5rem;
+		@media (max-width: 768px) {
+			padding-left: 0;
+		}
 
 		:global(.bullet) {
 			width: 20px;
