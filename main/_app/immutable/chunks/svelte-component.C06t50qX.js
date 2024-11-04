@@ -1,0 +1,1 @@
+import{z as r,A as c,v as s,E as i,x as h,F as p,y as d}from"./runtime.C-kF6ECl.js";function u(t,f,o){r&&c();var n=t,a,e;s(()=>{a!==(a=f())&&(e&&(d(e),e=null),a&&(e=h(()=>o(n,a))))},i),r&&(n=p)}export{u as c};
