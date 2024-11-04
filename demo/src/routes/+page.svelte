@@ -100,7 +100,10 @@
 		<LandingCard title="Highly configurable">
 			Default values for all components props are configurable at any point of the application subtree.
 		</LandingCard>
-		<LandingCard title="Fully tested">Unit tests for headless with Vitest. E2e tests for adapters with Playwright.</LandingCard>
+		<LandingCard title="Fully tested"
+			>Unit tests for headless with Vitest. E2e tests for adapters with Playwright (including SSR hydration tests). Integration tests of the libs with
+			Verdaccio.</LandingCard
+		>
 		<LandingCard title="Bootstrap components">
 			Highly customizable Bootstrap CSS components are available for Angular, React and Svelte in separated packages.
 		</LandingCard>
