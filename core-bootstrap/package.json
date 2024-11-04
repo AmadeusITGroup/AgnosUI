@@ -113,7 +113,7 @@
 		}
 	},
 	"devDependencies": {
-		"sass": "^1.80.5"
+		"sass": "^1.80.6"
 	},
 	"dependencies": {
 		"@agnos-ui/core": "0.0.0"

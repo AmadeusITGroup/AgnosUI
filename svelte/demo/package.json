@@ -90,7 +90,7 @@
 		"daisyui": "^4.12.14",
 		"postcss": "^8.4.47",
 		"prettier-plugin-svelte": "^3.2.7",
-		"svelte": "^5.1.4",
+		"svelte": "^5.1.9",
 		"svelte-check": "^4.0.5",
 		"tailwindcss": "^3.4.14"
 	}
