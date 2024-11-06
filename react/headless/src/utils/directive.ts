@@ -17,6 +17,7 @@ const attributesMap = new Map([
 /**
  * Returns an object with the key/value attributes for JSX, derived from a list of directives.
  *
+ * @template T — An array type representing the parameters for the directives.
  * @param directives - List of directives to generate attributes from. Each parameter can be the directive or an array with the directive and its parameter
  * @returns JSON object with key/value pairs to be applied on a JSX node.
  */

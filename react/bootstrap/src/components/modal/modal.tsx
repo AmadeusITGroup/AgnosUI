@@ -16,8 +16,8 @@ const CloseButton = ({directive}: {directive: Directive}) => <button className="
  * A default header component for the modal that displays a title and an optional close button.
  *
  * @template Data - The type of data used in the modal context.
- * @param {ModalContext<Data>} slotContext - The context object containing the state and directives for the modal.
- * @returns {JSX.Element} The JSX element representing the modal header.
+ * @param slotContext - The context object containing the state and directives for the modal.
+ * @returns The JSX element representing the modal header.
  */
 export const ModalDefaultSlotHeader = <Data,>(slotContext: ModalContext<Data>) => (
 	<>
@@ -32,8 +32,8 @@ export const ModalDefaultSlotHeader = <Data,>(slotContext: ModalContext<Data>) =
  * Renders the default slot structure for a modal component.
  *
  * @template Data - The type of the data used in the modal context.
- * @param {ModalContext<Data>} slotContext - The context containing the state and props for the modal slots.
- * @returns {JSX.Element} The JSX structure for the modal's default slots.
+ * @param slotContext - The context containing the state and props for the modal slots.
+ * @returns The JSX structure for the modal's default slots.
  */
 export const ModalDefaultSlotStructure = <Data,>(slotContext: ModalContext<Data>) => (
 	<>
@@ -98,8 +98,8 @@ export const Modal = forwardRef(function Modal<Data>(props: Partial<ModalProps<D
  * Opens a modal dialog with the specified options.
  *
  * @template Data - The type of data that the modal will handle.
- * @param {Partial<ModalProps<Data>>} options - The options to configure the modal.
- * @returns {Promise<any>} A promise that resolves when the modal is closed.
+ * @param options - The options to configure the modal.
+ * @returns A promise that resolves when the modal is closed.
  */
 export async function openModal<Data>(options: Partial<ModalProps<Data>>) {
 	const root = ReactDOM.createRoot(document.createElement('div'));

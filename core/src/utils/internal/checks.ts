@@ -71,6 +71,8 @@ export const allowNull =
 
 /**
  * Builds a new type guard to check if an element belongs to an enum list
+ *
+ * @template T - the type of the enum
  * @param list - the list of all enum values
  * @returns the type guard
  */

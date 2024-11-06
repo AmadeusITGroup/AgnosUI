@@ -20,8 +20,8 @@ function Star({star, state, directive}: {star: StarContext; state: RatingState; 
 /**
  * Rating component that displays a series of stars based on the provided state.
  *
- * @param {Partial<RatingProps>} props - The properties for the Rating component.
- * @returns {JSX.Element} The rendered Rating component.
+ * @param props - The properties for the Rating component.
+ * @returns The rendered Rating component.
  *
  * @remarks
  * This component uses the {@link useWidgetWithConfig} hook to initialize and configure the rating widget.

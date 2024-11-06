@@ -142,7 +142,7 @@ export abstract class BaseWidgetDirective<W extends Widget> implements OnChanges
 	}
 
 	/**
-	 * Retrieves the widget state as an Angular {@link https://angular.dev/api/core/Signal | Signal}
+	 * Retrieves the widget state. Each property of the state is exposed through an Angular {@link https://angular.dev/api/core/Signal | Signal}
 	 * @returns the widget state
 	 */
 	get state(): AngularState<W> {

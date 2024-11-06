@@ -106,9 +106,14 @@ export interface AngularWidget<W extends Widget> extends Pick<W, 'api' | 'direct
 	updateSlots: () => void;
 }
 
+/**
+ * Represents the context for a widget slot, providing access to the widget and its state.
+ *
+ * @template W - The type of the widget.
+ */
 export interface WidgetSlotContext<W extends Widget> extends Pick<W, 'api' | 'directives'> {
 	/**
-	 * the state of the widget
+	 * The state of the widget. Each property of the state is exposed through an Angular {@link https://angular.dev/api/core/Signal | Signal}
 	 */
 	state: AngularState<W>;
 }

@@ -8,8 +8,8 @@ import {createPagination} from './pagination.gen';
 /**
  * Renders the default slot pages for the pagination component.
  *
- * @param {PaginationContext} slotContext - The context containing pagination state and directives.
- * @returns {JSX.Element | null} The rendered pagination items or null if there are no pages.
+ * @param slotContext - The context containing pagination state and directives.
+ * @returns The rendered pagination items or null if there are no pages.
  *
  * The function iterates over the pages in the pagination state and generates JSX elements for each page.
  * If a page is represented by -1, it renders an ellipsis item. Otherwise, it renders a page item.
@@ -53,8 +53,8 @@ export const PaginationDefaultSlotPages = (slotContext: PaginationContext) => {
 /**
  * Renders the default slot structure for the pagination component.
  *
- * @param {PaginationContext} slotContext - The context containing the state and directives for pagination.
- * @returns {JSX.Element} The rendered pagination component.
+ * @param slotContext - The context containing the state and directives for pagination.
+ * @returns The rendered pagination component.
  *
  * The function constructs the pagination structure based on the provided state and directives.
  * It conditionally includes navigation buttons for first, previous, next, and last pages based on the state.
@@ -113,8 +113,8 @@ export const PaginationDefaultSlotStructure = (slotContext: PaginationContext) =
  * Pagination component that renders a navigation element for paginated content.
  * It uses the {@link useWidgetWithConfig} hook to create a pagination widget with the provided props.
  *
- * @param {Partial<PaginationProps>} props - The properties for the Pagination component.
- * @returns {JSX.Element} The rendered pagination navigation element.
+ * @param props - The properties for the Pagination component.
+ * @returns The rendered pagination navigation element.
  */
 export function Pagination(props: Partial<PaginationProps>) {
 	const widgetContext = useWidgetWithConfig(createPagination, props, 'pagination', {
