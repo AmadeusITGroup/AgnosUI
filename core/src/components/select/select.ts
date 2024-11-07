@@ -87,6 +87,8 @@ interface SelectCommonPropsAndState<Item> extends WidgetsCommonPropsAndState {
 
 /**
  * Props for the Select component.
+ *
+ * @template Item - The type of the Select Items
  */
 export interface SelectProps<Item> extends SelectCommonPropsAndState<Item> {
 	/**
@@ -167,6 +169,8 @@ export interface SelectProps<Item> extends SelectCommonPropsAndState<Item> {
 
 /**
  * Item representation built from the items provided in parameters
+ *
+ * @template T - The type of the Select Items
  */
 export interface ItemContext<T> {
 	/**
@@ -187,6 +191,8 @@ export interface ItemContext<T> {
 
 /**
  * Represents the state of a Select component.
+ *
+ * @template Item - The type of the Select Items
  */
 export interface SelectState<Item> extends SelectCommonPropsAndState<Item> {
 	/**
@@ -213,6 +219,8 @@ export interface SelectState<Item> extends SelectCommonPropsAndState<Item> {
 
 /**
  * Interface representing the API for a Select component.
+ *
+ * @template Item - The type of the Select Items
  */
 export interface SelectApi<Item> {
 	/**
@@ -287,6 +295,8 @@ export interface SelectApi<Item> {
 
 /**
  * Interface representing the directives used in the Select component.
+ *
+ * @template Item - The type of the Select Items
  */
 export interface SelectDirectives<Item> {
 	/**
@@ -336,6 +346,8 @@ export interface SelectDirectives<Item> {
 
 /**
  * Represents a Select widget component.
+ *
+ * @template Item - The type of the Select Items
  */
 export type SelectWidget<Item> = Widget<SelectProps<Item>, SelectState<Item>, SelectApi<Item>, SelectDirectives<Item>>;
 
@@ -370,6 +382,8 @@ export function getSelectDefaultConfig(): SelectProps<any> {
 
 /**
  * Create a SelectWidget with given config props
+ *
+ * @template Item - The type of the Select Items
  * @param config - an optional alert config
  * @returns a SelectWidget
  */

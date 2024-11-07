@@ -180,6 +180,8 @@ export type DirectivesAndOptParam<T extends any[], U extends SSRHTMLElement = SS
  * - `null`
  * - A `string`
  * - A function that takes `props` of type `Props` and returns a `string`
+ *
+ * @template Props - The type of the props when the slot is a function
  */
 export type SlotContent<Props extends object = object> = undefined | null | string | ((props: Props) => string);
 

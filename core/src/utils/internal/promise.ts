@@ -16,6 +16,8 @@ export const promisePending: PromisePendingResult = {status: 'pending'};
 
 /**
  * Represents the state of a promise, which can be either fulfilled, rejected, or pending.
+ *
+ * @template T - The type of the value promised
  */
 export type PromiseState<T> = PromiseFulfilledResult<T> | PromiseRejectedResult | PromisePendingResult;
 

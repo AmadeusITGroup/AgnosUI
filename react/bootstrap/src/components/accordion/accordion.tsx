@@ -27,8 +27,8 @@ const AccordionDIContext: React.Context<Partial<AccordionApi>> = createContext({
 /**
  * Renders the default slot structure for an accordion item.
  *
- * @param {AccordionItemContext} slotContext - The context containing state and directives for the accordion item.
- * @returns {JSX.Element} The JSX element representing the accordion item's default slot structure.
+ * @param slotContext - The context containing state and directives for the accordion item.
+ * @returns The JSX element representing the accordion item's default slot structure.
  */
 export const AccordionItemDefaultSlotStructure = (slotContext: AccordionItemContext) => (
 	<>
@@ -81,16 +81,16 @@ export const AccordionItem: ForwardRefExoticComponent<Partial<AccordionItemProps
 
 /**
  * Accordion component that provides a collapsible content container.
- * 
+ *
  * This component uses a forward ref to expose the Accordion API to parent components.
- * It leverages the {@link useWidgetWithConfig} hook to create the accordion widget and 
+ * It leverages the {@link useWidgetWithConfig} hook to create the accordion widget and
  * {@link https://react.dev/reference/react/useImperativeHandle | useImperativeHandle} to bind the widget API to the ref.
-
+ *
  * @param {PropsWithChildren<Partial<AccordionProps>>} props - The properties for the Accordion component.
  * @param {ForwardedRef<AccordionApi>} ref - The ref to be forwarded to the Accordion API.
- * 
+ *
  * @returns {JSX.Element} The rendered Accordion component.
- * 
+ *
  */
 export const Accordion: ForwardRefExoticComponent<PropsWithChildren<Partial<AccordionProps>> & RefAttributes<AccordionApi>> = forwardRef(
 	function Accordion(props: PropsWithChildren<Partial<AccordionProps>>, ref: ForwardedRef<AccordionApi>) {

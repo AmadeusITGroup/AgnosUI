@@ -61,6 +61,9 @@ export interface FloatingUIState {
 	middlewareData: MiddlewareData | undefined;
 }
 
+/**
+ * Interface representing the directives used to enable floating ui.
+ */
 export interface FloatingUIDirectives {
 	/**
 	 * Directive to attach to the reference element

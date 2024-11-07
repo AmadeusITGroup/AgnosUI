@@ -16,6 +16,8 @@ export function getAttributes(node: HTMLElement) {
 
 /**
  * Utility method to register a directive to a fake dom element and send an event.
+ *
+ * @template T - The type of the directive parameters
  * @param directive - the directive to attach
  * @param args - the args of the directive
  * @param sendEvent - the event dispatcher function
@@ -59,6 +61,7 @@ export function attachDirectiveAndClick<T = void>(directive: Directive<T>, args:
 /**
  * Utility method to register a directive to a fake button and click on it.
  *
+ * @template T - The type of the directive parameters
  * @param directive - the directive to attach
  * @param args - the args of the directive
  */

@@ -22,8 +22,8 @@ const ToastCloseButtonNoHeader = (slotContext: ToastContext) => (
 /**
  * Renders the default slot structure for a Toast component.
  *
- * @param {ToastContext} slotContext - The context containing the state and properties for the Toast component.
- * @returns {JSX.Element} The JSX element representing the default slot structure of the Toast.
+ * @param slotContext - The context containing the state and properties for the Toast component.
+ * @returns The JSX element representing the default slot structure of the Toast.
  */
 export const ToastDefaultSlotStructure = (slotContext: ToastContext) => (
 	<>

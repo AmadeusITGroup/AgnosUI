@@ -3,10 +3,6 @@ import type {Subscription} from 'rxjs';
 import {ModalComponent} from './modal.component';
 import type {ModalProps} from './modal.gen';
 
-interface ModalServiceOpenOptions {
-	injector?: Injector;
-}
-
 /**
  * Service to handle the opening and management of modal components.
  */
@@ -15,7 +11,15 @@ export class ModalService {
 	private readonly _injector = inject(Injector);
 	private readonly _applicationRef = inject(ApplicationRef);
 
-	async open<Data>(options: Partial<ModalProps<Data>>, {injector = this._injector}: ModalServiceOpenOptions = {}): Promise<any> {
+	/**
+	 * Opens a modal dialog with the specified options.
+	 *
+	 * @template Data - The type of data that the modal will handle.
+	 * @param options - The options to configure the modal.
+	 * @param injector - The injector to use when creating the modal component
+	 * @returns A promise that resolves when the modal is closed.
+	 */
+	async open<Data>(options: Partial<ModalProps<Data>>, injector = this._injector): Promise<any> {
 		const component = createComponent(ModalComponent, {
 			environmentInjector: injector.get(EnvironmentInjector),
 			elementInjector: injector,

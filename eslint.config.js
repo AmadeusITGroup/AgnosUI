@@ -310,8 +310,8 @@ export default tseslint.config(
 	},
 	// jsdoc,
 	{
-		files: ['{core,core-bootstrap}/src/**/*.{ts,tsx}', '{angular,react,svelte}/headless/src/**/*.{ts,tsx}'],
-		ignores: ['**/*.spec.ts'],
+		files: ['{core,core-bootstrap}/src/**/*.{ts,tsx}', '{angular,react,svelte}/{headless,bootstrap}/src/**/*.{ts,tsx}'],
+		ignores: ['**/*.spec.ts', 'angular/bootstrap/src/**/*.component.ts'],
 		plugins: {
 			jsdoc,
 		},
@@ -333,6 +333,8 @@ export default tseslint.config(
 						'TSInterfaceDeclaration > TSInterfaceBody > TSMethodSignature',
 						'TSTypeAliasDeclaration > TSTypeLiteral > TSPropertySignature',
 						'TSTypeAliasDeclaration > TSTypeLiteral > TSMethodSignature',
+						'TSInterfaceDeclaration',
+						'TSTypeAliasDeclaration',
 					],
 					require: {
 						FunctionExpression: true,
@@ -343,6 +345,7 @@ export default tseslint.config(
 					checkConstructors: false,
 				},
 			],
+			'jsdoc/require-template': ['error'],
 		},
 	},
 	// demo

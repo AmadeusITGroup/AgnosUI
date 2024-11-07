@@ -8,9 +8,9 @@ import {createProgressbar} from './progressbar.gen';
 /**
  * Renders a progress bar component with customizable appearance and behavior.
  *
- * @param {ProgressbarContext} slotContext - The context containing the state and properties for the progress bar.
+ * @param slotContext - The context containing the state and properties for the progress bar.
  *
- * @returns {JSX.Element} The rendered progress bar component.
+ * @returns The rendered progress bar component.
  */
 export const ProgressbarDefaultSlotStructure = (slotContext: ProgressbarContext) => {
 	const {striped, animated, type} = slotContext.state;
@@ -27,9 +27,9 @@ export const ProgressbarDefaultSlotStructure = (slotContext: ProgressbarContext)
 /**
  * Progressbar component that utilizes the {@link useWidgetWithConfig} hook to create a progress bar widget.
  *
- * @param {Partial<ProgressbarProps>} props - The properties to configure the progress bar.
+ * @param props - The properties to configure the progress bar.
  *
- * @returns {JSX.Element} A div element containing the progress bar with appropriate ARIA directives and slot content.
+ * @returns A div element containing the progress bar with appropriate ARIA directives and slot content.
  */
 export const Progressbar = (props: Partial<ProgressbarProps>) => {
 	const widgetContext = useWidgetWithConfig(createProgressbar, props, 'progressbar', {

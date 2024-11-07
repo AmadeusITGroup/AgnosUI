@@ -19,7 +19,7 @@ export function setAccordionApi(accordionApi: AccordionApi) {
 /**
  * Retrieves the Accordion API from the Svelte context.
  *
- * @returns {AccordionApi} The Accordion API instance.
+ * @returns The Accordion API instance.
  */
 export function getAccordionApi(): AccordionApi {
 	return getContext(contextInjectionKey);

@@ -56,16 +56,12 @@ function Rows<Item>({slotContext}: {slotContext: SelectContext<Item>; menuId: st
  * A generic Select component that provides a customizable dropdown selection interface.
  *
  * @template Item - The type of the items in the selection.
- * @param {Partial<SelectProps<Item>>} props - The properties for the Select component.
- * @returns {JSX.Element} The rendered Select component.
+ * @param props - The properties for the Select component.
+ * @returns The rendered Select component.
  *
  * @remarks
  * This component uses a widget context to manage its state and directives. It supports
  * custom badge labels and item labels through the widget configuration.
- *
- * @component
- * @param {Partial<SelectProps<Item>>} props - The properties for the Select component.
- * @returns {JSX.Element} The rendered Select component.
  */
 export function Select<Item>(props: Partial<SelectProps<Item>>) {
 	const widgetContext = useWidgetWithConfig<SelectWidget<Item>>(createSelect, props, 'select', {

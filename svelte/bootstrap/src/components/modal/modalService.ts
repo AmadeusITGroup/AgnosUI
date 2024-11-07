@@ -6,10 +6,10 @@ import Modal from './Modal.svelte';
  * Opens a modal dialog with the specified options.
  *
  * @template Data - The type of data that the modal will handle.
- * @param {Partial<ModalProps<Data>>} options - The options to configure the modal.
- * @param {Object} [context] - Optional context to pass to the modal.
- * @param {Map<any, any>} [context.context] - A map of context values to pass to the modal.
- * @returns {Promise<any>} A promise that resolves when the modal is closed.
+ * @param options - The options to configure the modal.
+ * @param context - Optional context to pass to the modal.
+ * @param context.context - A map of context values to pass to the modal.
+ * @returns A promise that resolves when the modal is closed.
  *
  * @example
  * ```typescript
