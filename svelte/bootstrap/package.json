@@ -167,7 +167,7 @@
 		"@agnos-ui/svelte-headless": "0.0.0"
 	},
 	"peerDependencies": {
-		"@amadeus-it-group/tansu": "^1.0.0",
+		"@amadeus-it-group/tansu": "divdavem/tansu#signalFirst",
 		"esm-env": "^1.1.4",
 		"svelte": "^5.2.7"
 	},

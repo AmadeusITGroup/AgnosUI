@@ -169,7 +169,7 @@
 	"dependencies": {
 		"@agnos-ui/angular-bootstrap": "0.0.0",
 		"@agnos-ui/core-bootstrap": "0.0.0",
-		"@amadeus-it-group/tansu": "^1.0.0",
+		"@amadeus-it-group/tansu": "divdavem/tansu#signalFirst",
 		"@angular/animations": "^18.2.12",
 		"@angular/common": "^18.2.12",
 		"@angular/compiler": "^18.2.12",
