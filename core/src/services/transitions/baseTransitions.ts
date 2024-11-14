@@ -239,7 +239,6 @@ export const createTransition = (config?: PropsConfig<TransitionProps>): Transit
 			promise: Promise<void>;
 		},
 	);
-	const transitioning$ = computed(() => !!currentTransition$());
 	const stop = () => {
 		let context: object | undefined;
 		currentTransition$.update((currentTransition) => {
@@ -283,10 +282,7 @@ export const createTransition = (config?: PropsConfig<TransitionProps>): Transit
 			return currentTransition;
 		});
 
-	const shown$ = computed(() => !transitioning$() && visible$() && elementPresent$());
-	const hidden$ = computed(() => !transitioning$() && !visible$());
 	const effectiveAnimation$ = computed(() => (initDone$() ? animated$() : animatedOnInit$()));
-
 	const animationFromToggle$ = writable(null as null | boolean);
 	let previousElement: SSRHTMLElement | null;
 	let previousVisible = requestedVisible$();
@@ -354,6 +350,19 @@ export const createTransition = (config?: PropsConfig<TransitionProps>): Transit
 			}
 		}
 	};
+
+	const transitioning$ = computed(() => {
+		if (elementPresent$()) {
+			// if the element is present, visibleAction$ can start a transition,
+			// so it must be updated before currentTransition$ is checked
+			// so that we don't have an intermediate state
+			// where transitioning$ is false just before it becomes true
+			void visibleAction$();
+		}
+		return !!currentTransition$();
+	});
+	const shown$ = computed(() => !transitioning$() && visible$() && elementPresent$());
+	const hidden$ = computed(() => !transitioning$() && !visible$());
 
 	const directive = mergeDirectives(storeDirective, directiveSubscribe(visibleAction$));
 
