@@ -1,6 +1,7 @@
 <script lang="ts">
 	import threeDots from 'bootstrap-icons/icons/three-dots-vertical.svg?raw';
 	import github from 'bootstrap-icons/icons/github.svg?raw';
+	import bluesky from '$resources/bluesky.svg?raw';
 	import twitter from 'bootstrap-icons/icons/twitter-x.svg?raw';
 	import MobileDialog from './MobileDialog.svelte';
 	import Svg from '$lib/layout/Svg.svelte';
@@ -63,6 +64,9 @@
 		</a>
 		<a class="nav-link ms-3" href="https://twitter.com/AgnosUI" aria-label="link to twitter / x account" target="_blank">
 			<Svg className="icon-24 align-middle" svg={twitter} />
+		</a>
+		<a class="nav-link ms-3" href="https://bsky.app/profile/agnosui.bsky.social" aria-label="link to bluesky profile" target="_blank">
+			<Svg className="icon-24 align-middle" svg={bluesky} />
 		</a>
 	</div>
 </MobileDialog>
