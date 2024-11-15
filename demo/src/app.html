@@ -27,6 +27,16 @@
 		</script>
 		<link rel="preload" href="https://www.agnosui.dev/versions.json" as="fetch" crossorigin="anonymous" />
 	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-49LCWGVXJ9"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+		gtag('js', new Date());
+		gtag('config', 'G-49LCWGVXJ9');
+	</script>
 
 	<body data-sveltekit-preload-data="hover">
 		<div id="root">%sveltekit.body%</div>
