@@ -32,7 +32,7 @@ jobs:
           cache: 'npm'
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
-      - run: npx playwright install --with-deps
+      - run: npx playwright install --with-deps --only-shell
       - run: npm run syncpack:check
       - run: |
           git config --global user.name github-actions
