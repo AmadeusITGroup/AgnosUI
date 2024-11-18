@@ -5,16 +5,16 @@
 	"main": "dist/index.cjs",
 	"type": "module",
 	"dependencies": {
-		"@typescript-eslint/utils": "^8.14.0"
+		"@typescript-eslint/utils": "^8.15.0"
 	},
 	"peerDependencies": {
 		"typescript": "~5.5.4"
 	},
 	"devDependencies": {
 		"@angular/core": "^18.2.12",
-		"@typescript-eslint/rule-tester": "^8.14.0",
-		"@vitest/coverage-v8": "^2.1.4",
-		"svelte": "^5.1.15",
+		"@typescript-eslint/rule-tester": "^8.15.0",
+		"@vitest/coverage-v8": "^2.1.5",
+		"svelte": "^5.2.3",
 		"svelte-eslint-parser": "^0.43.0"
 	},
 	"scripts": {

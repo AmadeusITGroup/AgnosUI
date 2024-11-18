@@ -173,17 +173,17 @@
 	"devDependencies": {
 		"@stackblitz/sdk": "^1.11.0",
 		"@sveltejs/adapter-static": "^3.0.6",
-		"@sveltejs/kit": "^2.8.0",
-		"@sveltejs/vite-plugin-svelte": "^4.0.0",
+		"@sveltejs/kit": "^2.8.1",
+		"@sveltejs/vite-plugin-svelte": "^4.0.1",
 		"@types/dom-view-transitions": "^1.0.5",
 		"bootstrap-icons": "^1.11.3",
 		"compare-versions": "^6.1.1",
 		"front-matter": "^4.0.2",
-		"marked": "^15.0.0",
+		"marked": "^15.0.1",
 		"prettier-plugin-svelte": "^3.2.8",
-		"shiki": "^1.22.2",
-		"svelte": "^5.1.15",
-		"svelte-check": "^4.0.7",
+		"shiki": "^1.23.1",
+		"svelte": "^5.2.3",
+		"svelte-check": "^4.0.9",
 		"tsx": "^4.19.2"
 	}
 }
