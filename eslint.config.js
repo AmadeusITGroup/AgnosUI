@@ -12,6 +12,7 @@ import jsdoc from 'eslint-plugin-jsdoc';
 import react from 'eslint-plugin-react';
 import svelteParser from 'svelte-eslint-parser';
 import angular from 'angular-eslint';
+import reactHooks from 'eslint-plugin-react-hooks';
 
 export default tseslint.config(
 	// global ignores
@@ -49,6 +50,10 @@ export default tseslint.config(
 	{
 		...playwright.configs['flat/recommended'],
 		files: ['e2e/**'],
+		rules: {
+			...playwright.configs['flat/recommended'].rules,
+			'playwright/no-conditional-in-test': 'off',
+		},
 	},
 	{
 		files: ['**/*.spec.ts'],
@@ -241,6 +246,13 @@ export default tseslint.config(
 	},
 	{
 		...react.configs.flat['jsx-runtime'],
+		files: ['react/**/*.{tsx,jsx}'],
+	},
+	{
+		plugins: {
+			['react-hooks']: reactHooks,
+		},
+		rules: reactHooks.configs.recommended.rules,
 		files: ['react/**/*.{tsx,jsx}'],
 	},
 	{

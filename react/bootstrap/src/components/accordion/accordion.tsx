@@ -67,10 +67,10 @@ export const AccordionItem: ForwardRefExoticComponent<Partial<AccordionItemProps
 			structure: AccordionItemDefaultSlotStructure,
 		});
 		const {state, api, directives} = widgetContext;
-		useImperativeHandle(ref, () => api, []);
+		useImperativeHandle(ref, () => api, [api]);
 		useEffect(() => {
 			api.initDone();
-		}, []);
+		}, [api]);
 		return (
 			<div {...useDirectives([classDirective, `accordion-item ${state.className}`], directives.itemDirective)}>
 				<Slot slotContent={state.structure} props={widgetContext} />
@@ -95,7 +95,7 @@ export const AccordionItem: ForwardRefExoticComponent<Partial<AccordionItemProps
 export const Accordion: ForwardRefExoticComponent<PropsWithChildren<Partial<AccordionProps>> & RefAttributes<AccordionApi>> = forwardRef(
 	function Accordion(props: PropsWithChildren<Partial<AccordionProps>>, ref: ForwardedRef<AccordionApi>) {
 		const widget = useWidgetWithConfig(createAccordion, props, 'accordion');
-		useImperativeHandle(ref, () => widget.api, []);
+		useImperativeHandle(ref, () => widget.api, [widget.api]);
 		return (
 			<AccordionDIContext.Provider value={widget.api}>
 				<div {...useDirectives([classDirective, 'accordion'], widget.directives.accordionDirective)}>{props.children}</div>

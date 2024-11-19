@@ -2,7 +2,7 @@ import type {Widget, WidgetFactory, WidgetProps} from '@agnos-ui/core/types';
 import {createWidgetsConfig, type WidgetsConfigStore, type WidgetsConfig, type Partial2Levels} from '@agnos-ui/core/config';
 import {computed} from '@amadeus-it-group/tansu';
 import type {ReactNode} from 'react';
-import {createContext, useContext, useEffect, useMemo} from 'react';
+import {createContext, useContext, useEffect, useMemo, useRef} from 'react';
 import {useWidget} from './utils/widget';
 import {usePropsAsStore} from './utils/stores';
 
@@ -27,7 +27,10 @@ export const widgetsConfigFactory = <Config extends Record<string, object> = Wid
 	const useWidgetContext = <Props extends object>(widgetName: keyof Config | null, defaultConfig?: Partial<Props>) => {
 		const widgetsConfig = useContext(widgetsConfigContext);
 		const defaultConfig$ = usePropsAsStore(defaultConfig);
-		return useMemo(() => computed(() => ({...defaultConfig$(), ...(widgetName ? widgetsConfig?.()[widgetName] : undefined)})), [widgetsConfig]);
+		return useMemo(
+			() => computed(() => ({...defaultConfig$(), ...(widgetName ? widgetsConfig?.()[widgetName] : undefined)})),
+			[defaultConfig$, widgetName, widgetsConfig],
+		);
 	};
 
 	const useWidgetWithConfig = <W extends Widget>(
@@ -74,18 +77,23 @@ export const widgetsConfigFactory = <Config extends Record<string, object> = Wid
 	 */
 	const WidgetsDefaultConfig = ({children, adaptParentConfig, ...props}: DefaultConfigInput<Config>) => {
 		const config$ = useContext(widgetsConfigContext);
-		let storeRecreated = false;
+		const storeRecreated = useRef(false);
+		storeRecreated.current = false;
 
 		const store$ = useMemo(() => {
 			const store = createWidgetsConfig(config$, adaptParentConfig);
 			store.set(props as any);
-			storeRecreated = true;
+			storeRecreated.current = true;
 			return store;
+			// TODO this disabled eslint rule can be put back once we can use the new `useEffectEvent`
+			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, [config$, adaptParentConfig]);
 		useEffect(() => {
-			if (!storeRecreated) {
+			if (!storeRecreated.current) {
 				store$.set(props as any);
 			}
+			// TODO this disabled eslint rule can be put back once we can use the new `useEffectEvent`
+			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, [props]);
 		return <widgetsConfigContext.Provider value={store$}>{children}</widgetsConfigContext.Provider>;
 	};

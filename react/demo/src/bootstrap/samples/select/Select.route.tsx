@@ -9,9 +9,9 @@ function getFilterTextParam() {
 	return url.searchParams.get('filterText') ?? '';
 }
 
-const MultiSelect = () => {
-	const [mainList] = useState(['Action 1', 'Action 2', 'Action 3', 'Other 1', 'Other 2', 'Other 3']);
+const mainList = ['Action 1', 'Action 2', 'Action 3', 'Other 1', 'Other 2', 'Other 3'];
 
+const MultiSelect = () => {
 	const [configFilterText, setConfigFilterText] = useState(getFilterTextParam);
 	const changeConfigFilterText = useCallback((event: ChangeEvent<HTMLInputElement>) => setConfigFilterText(event.target.value), []);
 

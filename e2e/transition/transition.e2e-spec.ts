@@ -74,6 +74,7 @@ test.describe.parallel('Transition tests', () => {
 				if (!scenario.removingDomElement) {
 					await po.locatorRemoveFromDOMCheckbox.click();
 					expectedState.removeFromDOM = false;
+					// eslint-disable-next-line playwright/no-conditional-expect
 					await expect.poll(() => po.getState()).toEqual(expectedState);
 				}
 
@@ -120,6 +121,7 @@ test.describe.parallel('Transition tests', () => {
 				if (!scenario.removingDomElement) {
 					await po.locatorRemoveFromDOMCheckbox.click();
 					expectedState.removeFromDOM = false;
+					// eslint-disable-next-line playwright/no-conditional-expect
 					await expect.poll(() => po.getState()).toEqual(expectedState);
 				}
 

@@ -8,9 +8,9 @@ const PaginationHrefs = () => {
 	const hash = useObservable(hash$);
 	const pageNumber = +(hash.split('#')[1] ?? 4);
 
-	const pageChange = useCallback((currentPage: number) => (location.hash = `#${hash.split('#')[0]}#${currentPage}`), []);
+	const pageChange = useCallback((currentPage: number) => (location.hash = `#${hash.split('#')[0]}#${currentPage}`), [hash]);
 
-	const pageLink = useCallback((currentPage: number) => `#${hash.split('#')[0]}#${currentPage}`, []);
+	const pageLink = useCallback((currentPage: number) => `#${hash.split('#')[0]}#${currentPage}`, [hash]);
 
 	return (
 		<>

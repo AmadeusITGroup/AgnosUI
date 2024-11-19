@@ -45,19 +45,21 @@ test.describe.parallel('Demo Website', () => {
 			const frames = page.frames();
 			if (frames.length > 1) {
 				const iframes = frames.slice(1);
+				// eslint-disable-next-line playwright/no-conditional-expect
 				await Promise.all(iframes.map((frame) => expect.poll(() => frame.url()).not.toBe('about:blank')));
 				await Promise.all(iframes.map((frame) => frame.waitForURL(frame.url())));
 			}
-			expect((await analyze(page, route)).violations).toEqual([]);
+			expect((await analyze(page)).violations).toEqual([]);
 			await page.evaluate(() => document.documentElement.setAttribute('data-bs-theme', 'dark'));
 			await page.locator('.btn-dark-mode').first().click();
 			await page.locator('.dropdown-menu button:has-text("Dark")').click();
-			expect((await analyze(page, route)).violations).toEqual([]);
+			expect((await analyze(page)).violations).toEqual([]);
 		});
 	}
 });
 
 test.describe('Sitemap', () => {
+	// eslint-disable-next-line playwright/no-skipped-test
 	test.skip(process.env.CI !== 'true', 'sitemap tests for CI only');
 
 	test(`sitemap.xml should contain the blog and framework introduction pages`, async ({page}) => {

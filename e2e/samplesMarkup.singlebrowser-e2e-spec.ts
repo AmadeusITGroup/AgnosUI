@@ -27,6 +27,7 @@ test.describe(`Samples markup consistency check`, () => {
 	for (const sampleKey of samples) {
 		test.describe(`Sample ${sampleKey}`, () => {
 			test.use({sampleKey});
+			// eslint-disable-next-line playwright/no-skipped-test
 			test.skip(({sampleInfo}) => !sampleInfo, `The sample cannot be tested in this configuration`);
 
 			test(`should have a consistent markup`, async ({page, baseURL}) => {

@@ -85,7 +85,7 @@ export const Modal = forwardRef(function Modal<Data>(props: Partial<ModalProps<D
 		header: ModalDefaultSlotHeader,
 		structure: ModalDefaultSlotStructure,
 	});
-	useImperativeHandle(ref, () => widgetContext.api, []);
+	useImperativeHandle(ref, () => widgetContext.api, [widgetContext.api]);
 	return (
 		<Portal container={widgetContext.state.container}>
 			{!widgetContext.state.backdropHidden && <BackdropElement {...widgetContext} />}

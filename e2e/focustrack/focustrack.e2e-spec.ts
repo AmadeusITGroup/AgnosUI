@@ -31,6 +31,7 @@ test.describe(`Select tests`, () => {
 		expectedState.activeElements.push('input with id otherFocusableInput');
 		await expect.poll(() => focustrackPO.getState()).toEqual(expectedState);
 
+		// eslint-disable-next-line playwright/no-force-option
 		await focustrackPO.locatorDisabledInput.click({force: true});
 
 		expectedState.activeElements.push('body');

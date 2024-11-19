@@ -43,6 +43,7 @@ export const test = base.extend<FixtureOptions>({
 	},
 	baseURL: [
 		async ({project, framework, sampleKey, sampleInfo}, use) => {
+			// eslint-disable-next-line playwright/no-skipped-test
 			test.skip(project === 'stackblitz' && sampleInfo?.sampleName === 'playground', 'Playground samples are not supported in stackblitz');
 			test.fixme(
 				sampleKey === 'bootstrap/slots/usage',

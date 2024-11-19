@@ -56,6 +56,6 @@ export const Alert: ForwardRefExoticComponent<Partial<AlertProps> & RefAttribute
 	const widgetContext = useWidgetWithConfig(createAlert, props, 'alert', {
 		structure: AlertDefaultSlotStructure,
 	});
-	useImperativeHandle(ref, () => widgetContext.api, []);
+	useImperativeHandle(ref, () => widgetContext.api, [widgetContext.api]);
 	return <>{!widgetContext.state.hidden && <AlertElement {...widgetContext} />}</>;
 });

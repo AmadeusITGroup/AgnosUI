@@ -128,6 +128,7 @@ test.describe.parallel(`Rating tests`, () => {
 		};
 		await expect.poll(() => ratingPO.state()).toEqual(expectedState);
 
+		// eslint-disable-next-line playwright/no-force-option
 		await ratingPO.locatorStar(4).click({force: true});
 		await expect.poll(() => ratingPO.state()).toEqual(expectedState);
 	});
@@ -159,6 +160,7 @@ test.describe.parallel(`Rating tests`, () => {
 		await expect.poll(() => ratingDemoPO.formRatingDemoState()).toEqual(expectedState);
 
 		await ratingDemoPO.locatorBtnEnabled.click();
+		// eslint-disable-next-line playwright/no-force-option
 		await ratingPO.locatorStar(2).click({force: true});
 		expectedState = {
 			...expectedState,

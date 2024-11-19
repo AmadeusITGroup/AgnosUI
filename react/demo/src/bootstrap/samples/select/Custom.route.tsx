@@ -55,11 +55,10 @@ const Custom = () => {
 	const [items, setItems] = useState([] as WikiResult[]);
 	const [selected, setSelected] = useState([] as WikiResult[]);
 
-	const [, setFilterText] = useState(undefined as string | undefined);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const onFilterTextChange = useCallback(
 		debounce(
 			abortPrevious(async (signal: AbortSignal, text: string) => {
-				setFilterText(text);
 				const response = await fetch(
 					'https://en.wikipedia.org/w/api.php?action=query&list=search&prop=info&inprop=url&utf8=&format=json&origin=*&srlimit=5&srsearch=' + text,
 					{signal},

@@ -38,7 +38,7 @@ export const AccordionItem = (
 		api,
 		directives: {itemDirective, transitionDirective, toggleDirective, bodyContainerAttrsDirective},
 	} = useWidgetWithConfig(registerItem as WidgetFactory<AccordionItemWidget>, props, null, {transition});
-	useEffect(api.initDone, []);
+	useEffect(() => api.initDone(), [api]);
 	const onEnter = (e: KeyboardEvent<HTMLDivElement>) => {
 		if (e.key === 'Enter') {
 			api.toggle();
