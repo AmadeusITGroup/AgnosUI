@@ -45,13 +45,13 @@
 			</div>
 		</div>
 	</div>
-	<div class="card-body au-landing-card p-4 rounded mx-3">
+	<div class="card-body my-4">
 		<h5 class="card-title pres-card-title mb-4">Get started with</h5>
-		<div class="card-text row">
-			<div class="col-12 col-sm-4 mb-2 mb-md-0">
+		<div class="card-text btn-grid">
+			<div>
 				<a
 					href="docs/angular/getting-started/introduction"
-					class="btn btn-outline-primary rounded-pill d-flex align-items-center justify-content-center px-3"
+					class="btn btn-outline-primary rounded-pill d-flex align-items-center justify-content-start px-sm-3"
 					aria-label="link to angular examples"
 					title="Angular"
 				>
@@ -59,10 +59,10 @@
 					Angular
 				</a>
 			</div>
-			<div class="col-12 col-sm-4 mb-2 mb-md-0">
+			<div>
 				<a
 					href="docs/react/getting-started/introduction"
-					class="btn btn-outline-primary rounded-pill d-flex align-items-center justify-content-center px-3"
+					class="btn btn-outline-primary rounded-pill d-flex align-items-center justify-content-start px-sm-3"
 					aria-label="link to react examples"
 					title="React"
 				>
@@ -70,10 +70,10 @@
 					React
 				</a>
 			</div>
-			<div class="col-12 col-sm-4 mb-2 mb-md-0">
+			<div>
 				<a
 					href="docs/svelte/getting-started/introduction"
-					class="btn btn-outline-primary rounded-pill d-flex align-items-center justify-content-center px-3"
+					class="btn btn-outline-primary rounded-pill d-flex align-items-center justify-content-start px-sm-3"
 					aria-label="link to svelte examples"
 					title="Svelte"
 				>
@@ -84,7 +84,7 @@
 		</div>
 	</div>
 </div>
-<div class="au-features container-xxl mt-5">
+<div class="au-features container-xxl mt-2 mt-sm-5">
 	<div class="cards row align-content-around">
 		<LandingCard title="Framework agnostic">
 			A framework-agnostic core of component factories that provide reactive models and APIs to drive the data. You can use it with any front-end
@@ -125,6 +125,11 @@
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
+	}
+	.btn-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 0.5rem;
 	}
 	.au-logo-container {
 		width: 380px;
