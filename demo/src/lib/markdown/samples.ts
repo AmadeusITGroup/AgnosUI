@@ -14,6 +14,8 @@ import transitionCollapse from '@agnos-ui/samples/bootstrap/transition/collapseD
 import transitionFlip from '@agnos-ui/samples/bootstrap/transition/flipDemo';
 import transitionTransition from '@agnos-ui/samples/bootstrap/transition/transition';
 import matchMedia from '@agnos-ui/samples/bootstrap/matchMedia/matchMedia';
+import navManager from '@agnos-ui/samples/bootstrap/navManager/navManager';
+import navManagerWithSelector from '@agnos-ui/samples/bootstrap/navManager/navManagerWithSelector';
 
 const samples: Map<string, SampleInfo> = new Map();
 samples.set('focustrack/focustrack', focustrack);
@@ -30,4 +32,6 @@ samples.set('transition/collapse', transitionCollapse);
 samples.set('transition/flip', transitionFlip);
 samples.set('transition/transition', transitionTransition);
 samples.set('matchMedia/matchMedia', matchMedia);
+samples.set('navManager/navManager', navManager);
+samples.set('navManager/navManagerWithSelector', navManagerWithSelector);
 export default samples;
