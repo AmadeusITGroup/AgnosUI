@@ -22,13 +22,13 @@ const NavmanagerSampleLine = ({text}: {text: string}) => {
 
 	return (
 		<div className="d-flex demo-navmanager-line" {...useDirective(navManager.directive, navManagerConfig)}>
-			<input type="text" defaultValue={text} className="form-control me-1" />
+			<input type="text" aria-label="navigable-input-1" defaultValue={text} className="form-control me-1" />
 			<span tabIndex={-1} className="form-control w-auto me-1">
 				{text}
 			</span>
-			<input tabIndex={-1} type="checkbox" className="form-check-input align-self-center me-1" />
-			<input tabIndex={-1} type="text" defaultValue={text} disabled className="form-control me-1" />
-			<input tabIndex={-1} type="text" defaultValue={text} className="form-control me-1" />
+			<input tabIndex={-1} type="checkbox" aria-label="navigable-input-2" className="form-check-input align-self-center me-1" />
+			<input tabIndex={-1} type="text" aria-label="navigable-input-3" defaultValue={text} disabled className="form-control me-1" />
+			<input tabIndex={-1} type="text" aria-label="navigable-input-4" defaultValue={text} className="form-control me-1" />
 		</div>
 	);
 };

@@ -7,11 +7,11 @@ import {Component, input} from '@angular/core';
 	imports: [AgnosUIAngularModule],
 	template: `
 		<div class="d-flex demo-navmanager-line" [auUse]="[navManager.directive, navManagerConfig]">
-			<input type="text" [value]="text()" class="form-control me-1" />
+			<input type="text" aria-label="navigable-input-1" [value]="text()" class="form-control me-1" />
 			<span tabindex="-1" class="form-control w-auto me-1">{{ text() }}</span>
-			<input tabindex="-1" type="checkbox" class="form-check-input align-self-center me-1" />
-			<input tabindex="-1" type="text" [value]="text()" disabled class="form-control me-1" />
-			<input tabindex="-1" type="text" [value]="text()" class="form-control me-1" />
+			<input tabindex="-1" aria-label="navigable-input-2" type="checkbox" class="form-check-input align-self-center me-1" />
+			<input tabindex="-1" aria-label="navigable-input-3" type="text" [value]="text()" disabled class="form-control me-1" />
+			<input tabindex="-1" aria-label="navigable-input-4" type="text" [value]="text()" class="form-control me-1" />
 		</div>
 	`,
 })

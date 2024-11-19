@@ -46,15 +46,15 @@ export type NavManager<T> = {
 	 */
 	focusIndex: (index: number, moveDirection: -1 | 0 | 1) => HTMLElement | null;
 	/**
-	 * Focus the previous element, respecting the anscestor direction.
+	 * Focus the previous element, respecting the ancestor direction.
 	 */
 	focusPrevious: FocusNeighbour;
 	/**
-	 * Focus the next element, respecting the anscestor direction.
+	 * Focus the next element, respecting the ancestor direction.
 	 */
 	focusNext: FocusNeighbour;
 	/**
-	 * Focus the first element, respecting the anscestor direction.
+	 * Focus the first element, respecting the ancestor direction.
 	 */
 	focusFirst: FocusEnd;
 	/**
@@ -66,7 +66,7 @@ export type NavManager<T> = {
 	 */
 	focusFirstRight: FocusEnd;
 	/**
-	 * Focus the last element, respecting the anscestor direction.
+	 * Focus the last element, respecting the ancestor direction.
 	 */
 	focusLast: FocusEnd;
 	/**
