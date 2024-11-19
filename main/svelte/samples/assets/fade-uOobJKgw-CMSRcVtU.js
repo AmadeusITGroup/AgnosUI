@@ -1,0 +1,1 @@
+import{c as s}from"./simpleClassTransition-DE7_T3VJ.js";const e=s({animationPendingClasses:["fade"],animationPendingShowClasses:["show"],showClasses:["show","fade"],hideClasses:["d-none","fade"]});export{e as f};

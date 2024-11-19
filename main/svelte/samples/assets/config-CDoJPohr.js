@@ -1,0 +1,1 @@
+import{w as t}from"./config-B5mXcbCA.js";const o=t(Symbol("bootstrapWidgetsConfig")),{widgetsDefaultConfigKey:i,createWidgetsDefaultConfig:g,getContextWidgetConfig:a,callWidgetFactory:s}=o;export{g as a,s as c};
