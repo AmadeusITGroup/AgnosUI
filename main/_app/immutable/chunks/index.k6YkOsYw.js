@@ -1,0 +1,11 @@
+const o=`"use strict";
+Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
+const accordion = require("../../accordion-01ch6GZW.cjs");
+exports.Accordion = accordion.Accordion;
+exports.AccordionItem = accordion.AccordionItem;
+exports.AccordionItemDefaultSlotStructure = accordion.AccordionItemDefaultSlotStructure;
+exports.createAccordion = accordion.export_createAccordion;
+exports.createAccordionItem = accordion.export_createAccordionItem;
+exports.factoryCreateAccordion = accordion.export_factoryCreateAccordion;
+exports.getAccordionDefaultConfig = accordion.export_getAccordionDefaultConfig;
+`;export{o as default};
