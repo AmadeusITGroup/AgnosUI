@@ -19,10 +19,10 @@
 			>
 		{/if}
 	</div>
-	<div>
+	<div class="d-flex flex-column align-items-end">
 		{#if $page.data.next}
-			<div class="fw-bolder text-end">NEXT</div>
-			<a class="text-end" href="{$pathToRoot$}docs/{$selectedFramework$}/{$page.data.next.slug}{$page.data.next.subpath ?? ''}"
+			<div class="fw-bolder text-end w-100">NEXT</div>
+			<a class="text-end w-100" href="{$pathToRoot$}docs/{$selectedFramework$}/{$page.data.next.slug}{$page.data.next.subpath ?? ''}"
 				>{$page.data.next.title}</a
 			>
 		{/if}
