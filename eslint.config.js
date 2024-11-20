@@ -53,6 +53,7 @@ export default tseslint.config(
 		rules: {
 			...playwright.configs['flat/recommended'].rules,
 			'playwright/no-conditional-in-test': 'off',
+			'playwright/expect-expect': 'error',
 		},
 	},
 	{
