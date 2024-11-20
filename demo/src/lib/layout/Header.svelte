@@ -20,7 +20,8 @@
 	let {title, pageTitle = '', status = '', cssFramework = ''}: Props = $props();
 
 	let tabs = $derived($page.data.tabs ?? []);
-	let builtPageTitle = $derived(getTitle(pageTitle || title, $selectedApiFramework$, $selectedPackageType$));
+	let isBlog = $derived($page.route.id?.startsWith('/blog/'));
+	let builtPageTitle = $derived(getTitle(pageTitle || title, isBlog ? '' : $selectedApiFramework$, $selectedPackageType$));
 	let includesFwk = $derived(!!$page.params.framework);
 </script>
 
