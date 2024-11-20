@@ -7,7 +7,6 @@ import {getUndefinedValues, hashChangeHook, provideHashConfig} from '../../utils
 const undefinedConfig = getUndefinedValues(getModalDefaultConfig());
 
 @Component({
-	standalone: true,
 	imports: [AgnosUIAngularModule],
 	providers: provideHashConfig('modal'),
 	template: `<div><au-component auModal #widget /></div>`,

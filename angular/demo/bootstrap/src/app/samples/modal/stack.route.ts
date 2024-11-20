@@ -2,7 +2,6 @@ import {AgnosUIAngularModule, ModalService} from '@agnos-ui/angular-bootstrap';
 import {Component, inject} from '@angular/core';
 
 @Component({
-	standalone: true,
 	imports: [AgnosUIAngularModule],
 	template: `
 		<button class="btn btn-primary" (click)="modalService.open({title: 'First modal', className: 'modal-sm', children: recursiveModal})">

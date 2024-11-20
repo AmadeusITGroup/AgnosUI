@@ -2,7 +2,6 @@ import {SelectComponent} from '@agnos-ui/angular-bootstrap';
 import {Component, computed, signal} from '@angular/core';
 
 @Component({
-	standalone: true,
 	imports: [SelectComponent],
 	template: `
 		<div style="height: 400px;">

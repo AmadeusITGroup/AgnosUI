@@ -7,7 +7,6 @@ import {getUndefinedValues, hashChangeHook, provideHashConfig} from '../../utils
 const undefinedConfig = getUndefinedValues(getPaginationDefaultConfig());
 
 @Component({
-	standalone: true,
 	imports: [AgnosUIAngularModule],
 	providers: provideHashConfig('pagination'),
 	template: `<nav auPagination #widget></nav>`,

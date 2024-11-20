@@ -6,7 +6,6 @@ import {getUndefinedValues, hashChangeHook, provideHashConfig} from '../../utils
 const undefinedConfig = getUndefinedValues(getProgressbarDefaultConfig());
 
 @Component({
-	standalone: true,
 	imports: [ProgressbarComponent],
 	providers: provideHashConfig('progressbar'),
 	template: `<div auProgressbar #widget></div>`,

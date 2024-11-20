@@ -4,7 +4,6 @@ import {Component, signal} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @Component({
-	standalone: true,
 	imports: [AgnosUIAngularModule, ReactiveFormsModule, FormsModule],
 	template: `
 		<button class="btn btn-primary" type="button" (click)="show(modal)">Launch demo modal</button>

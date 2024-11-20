@@ -61,7 +61,6 @@ export class ToastHeaderDirective {
 	}
 }
 @Component({
-	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [SlotDirective, ToastStructureDirective, UseDirective],
 	template: ` <ng-template auToastStructure #structure let-state="state" let-api="api" let-directives="directives">
@@ -97,7 +96,6 @@ export const toastDefaultSlotStructure: SlotContent<ToastContext> = new Componen
  */
 @Component({
 	selector: '[auToast]',
-	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [SlotDirective, UseMultiDirective],
 	template: ` <ng-template #content>

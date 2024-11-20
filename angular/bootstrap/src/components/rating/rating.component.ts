@@ -45,7 +45,6 @@ export class RatingStarDirective {
  */
 @Component({
 	selector: '[auRating]',
-	standalone: true,
 	imports: [UseDirective, SlotDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	encapsulation: ViewEncapsulation.None,

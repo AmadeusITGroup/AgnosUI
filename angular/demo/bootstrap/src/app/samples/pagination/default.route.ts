@@ -2,7 +2,6 @@ import {AgnosUIAngularModule} from '@agnos-ui/angular-bootstrap';
 import {Component, signal} from '@angular/core';
 
 @Component({
-	standalone: true,
 	imports: [AgnosUIAngularModule],
 	template: `
 		<h5>Basic pagination:</h5>

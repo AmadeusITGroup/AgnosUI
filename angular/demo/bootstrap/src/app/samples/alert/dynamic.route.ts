@@ -20,7 +20,6 @@ class AlertContainerService {
 
 @Component({
 	selector: 'app-alert-child',
-	standalone: true,
 	imports: [AlertComponent],
 	template: `
 		@for (alert of alertContainerService.alerts; track alert) {
@@ -45,7 +44,6 @@ export class ChildComponent {
 }
 
 @Component({
-	standalone: true,
 	imports: [ChildComponent],
 	template: `
 		<button class="btn btn-primary addError me-1" (click)="addError()">Add error</button>

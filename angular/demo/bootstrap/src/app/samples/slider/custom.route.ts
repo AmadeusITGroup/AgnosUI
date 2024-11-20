@@ -4,7 +4,6 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import CustomHandleSliderComponent from './custom-handle.component';
 
 @Component({
-	standalone: true,
 	imports: [SliderComponent, SliderLabelDirective, ReactiveFormsModule, FormsModule],
 	template: `
 		<h2>Slider with custom labels</h2>

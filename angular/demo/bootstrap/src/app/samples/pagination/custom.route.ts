@@ -5,7 +5,6 @@ import {Component, signal} from '@angular/core';
 const FILTER_PAG_REGEX = /[^0-9]/g;
 
 @Component({
-	standalone: true,
 	imports: [AgnosUIAngularModule],
 	template: `
 		<p>A pagination with customized links:</p>

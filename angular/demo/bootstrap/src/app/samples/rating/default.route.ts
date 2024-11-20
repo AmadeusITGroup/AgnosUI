@@ -2,7 +2,6 @@ import {AgnosUIAngularModule} from '@agnos-ui/angular-bootstrap';
 import {Component, signal} from '@angular/core';
 
 @Component({
-	standalone: true,
 	imports: [AgnosUIAngularModule],
 	template: `
 		<div [(auRating)]="rating" #rat (auHover)="hovered.set($event)" (auLeave)="left.set($event)" auAriaLabel="rating"></div>

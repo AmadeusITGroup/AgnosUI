@@ -1,11 +1,8 @@
-import {CommonModule} from '@angular/common';
 import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {links} from './links';
 
 @Component({
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	standalone: true,
-	imports: [CommonModule],
 	template: `
 		<h3>Samples:</h3>
 		<div class="sample-links">

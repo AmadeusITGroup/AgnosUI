@@ -19,7 +19,6 @@ export class RatingReadonlyStarDirective {
  */
 @Component({
 	selector: 'app-rating-readonly',
-	standalone: true,
 	imports: [SlotDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `

@@ -2,7 +2,6 @@ import {AgnosUIAngularModule} from '@agnos-ui/angular-bootstrap';
 import {Component} from '@angular/core';
 
 @Component({
-	standalone: true,
 	imports: [AgnosUIAngularModule],
 	template: `
 		<div class="rating-custom" auRating="7" auAriaLabel="custom rating">

@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {ToastComponent} from './toast.component';
 
 @Component({
-	standalone: true,
 	imports: [ToastComponent],
 	template: `<div class="h-[215px]">
 		<button class="btn btn-primary" (click)="reset()">Reset Toast</button>

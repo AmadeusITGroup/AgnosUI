@@ -14,7 +14,6 @@ const paramVisible$ = writable(true);
 const paramRemoveFromDom$ = writable(true);
 
 @Component({
-	standalone: true,
 	selector: 'app-transition-inner',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [AgnosUIAngularModule, FormsModule, CommonModule],

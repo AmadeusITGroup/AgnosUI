@@ -2,7 +2,6 @@ import {Component, ViewEncapsulation} from '@angular/core';
 import {RatingReadonlyComponent, RatingReadonlyStarDirective} from './rating-readonly.component';
 
 @Component({
-	standalone: true,
 	imports: [RatingReadonlyComponent, RatingReadonlyStarDirective],
 	encapsulation: ViewEncapsulation.None,
 	template: `

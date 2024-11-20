@@ -66,7 +66,6 @@ export class AccordionItemStructureDirective {
 }
 
 @Component({
-	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [UseDirective, SlotDirective, NgTemplateOutlet, AccordionItemStructureDirective],
 	template: `
@@ -162,7 +161,6 @@ export const accordionItemDefaultSlotStructure: SlotContent<AccordionItemContext
 @Component({
 	selector: '[auAccordionItem]',
 	exportAs: 'auAccordionItem',
-	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	host: {
 		class: 'accordion-item',

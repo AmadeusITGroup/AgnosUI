@@ -6,7 +6,6 @@ import {getUndefinedValues, hashChangeHook, provideHashConfig} from '../../utils
 const undefinedConfig = getUndefinedValues(getCollapseDefaultConfig());
 
 @Component({
-	standalone: true,
 	imports: [AgnosUIAngularModule],
 	providers: provideHashConfig('collapse'),
 	template: `<div auCollapse #widget="auCollapse">Visible content</div>`,

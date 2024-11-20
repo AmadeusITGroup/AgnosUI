@@ -2,7 +2,6 @@ import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 import {UseDirective, createSimpleClassTransition, createTransition} from '@agnos-ui/angular-bootstrap';
 
 @Component({
-	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [UseDirective],
 	selector: 'app-flip',

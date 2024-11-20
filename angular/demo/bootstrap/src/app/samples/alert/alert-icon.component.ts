@@ -10,7 +10,6 @@ import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	standalone: true,
 	imports: [SlotDirective],
 	selector: 'app-icon-structure',
 	host: {

@@ -2,7 +2,6 @@ import {PaginationComponent, PaginationNumberDirective} from '@agnos-ui/angular-
 import {Component} from '@angular/core';
 
 @Component({
-	standalone: true,
 	imports: [PaginationComponent, PaginationNumberDirective],
 	template: `
 		<p>The default look of the pagination:</p>

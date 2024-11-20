@@ -4,7 +4,6 @@ import heartFill from 'bootstrap-icons/icons/heart-fill.svg';
 import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
-	standalone: true,
 	imports: [AgnosUIAngularModule],
 	template: `
 		<ng-template auRatingStar #custom let-fill="fill">

@@ -36,7 +36,11 @@ function getSymbolDeclaration(node: ts.Node, typeChecker: ts.TypeChecker): ts.De
 	const declaration = symbol?.getDeclarations()?.[0];
 	if (declaration) {
 		if (ts.isImportSpecifier(declaration)) {
-			const exportedNode = typeChecker.getExportSpecifierLocalTargetSymbol(declaration.propertyName ?? declaration.name);
+			const propertyName = declaration.propertyName;
+			if (propertyName && !ts.isIdentifier(propertyName)) {
+				throw new Error('We do not support string literals as imports');
+			}
+			const exportedNode = typeChecker.getExportSpecifierLocalTargetSymbol(propertyName ?? declaration.name);
 			return exportedNode?.getDeclarations()?.[0];
 		}
 	}

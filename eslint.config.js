@@ -165,7 +165,6 @@ export default tseslint.config(
 		extends: [...angular.configs.tsRecommended],
 		processor: angular.processInlineTemplates,
 		rules: {
-			'@angular-eslint/no-host-metadata-property': 'off',
 			'@angular-eslint/directive-selector': [
 				'error',
 				{

@@ -3,7 +3,6 @@ import {Component} from '@angular/core';
 import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 
 @Component({
-	standalone: true,
 	imports: [AgnosUIAngularModule],
 	template: `
 		<div auAccordion #accordion="auAccordion">

@@ -7,7 +7,6 @@ const scrollToMiddle = browserDirective((element) => {
 });
 
 @Component({
-	standalone: true,
 	imports: [AgnosUIAngularModule],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `<div class="position-relative overflow-auto border border-primary-subtle demo-floatingui" [auUse]="scrollToMiddle">
@@ -27,7 +26,6 @@ const scrollToMiddle = browserDirective((element) => {
 			</div>
 		}
 	</div>`,
-
 	styles: "@use '@agnos-ui/common/samples/floatingui/floatingui.scss';",
 })
 export default class FloatingUIComponent {

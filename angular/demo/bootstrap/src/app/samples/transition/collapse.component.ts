@@ -2,7 +2,6 @@ import {ChangeDetectionStrategy, Component, effect, input, model} from '@angular
 import {UseDirective, collapseVerticalTransition, createTransition, toAngularSignal} from '@agnos-ui/angular-bootstrap';
 
 @Component({
-	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [UseDirective],
 	selector: 'app-collapse',

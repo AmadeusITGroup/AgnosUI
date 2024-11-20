@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {AlertComponent} from './alert.component';
 
 @Component({
-	standalone: true,
 	imports: [AlertComponent],
 	template: `
 		<button class="btn btn-primary" (click)="reset()">Reset Alert</button>

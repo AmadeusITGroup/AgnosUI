@@ -3,7 +3,6 @@ import {SlotComponent, UseDirective} from '@agnos-ui/angular-bootstrap';
 import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 
 @Component({
-	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	host: {
 		style: 'display: contents;',
