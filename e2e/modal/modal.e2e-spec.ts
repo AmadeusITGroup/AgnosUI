@@ -77,20 +77,20 @@ Close`,
 		await modalDemoPO.locatorRoot.waitFor();
 		await modalDemoPO.locatorLaunchDemoModalButton.click();
 		await modalPO.locatorDisableBackdropButton.click();
-		await modalPO.locatorBackdrop.waitFor({state: 'hidden'});
+		await expect(modalPO.locatorBackdrop).toBeHidden();
 		await modalPO.locatorEnableBackdropButton.click();
 		await modalPO.locatorBackdrop.waitFor();
 		await modalPO.locatorRoot.waitFor();
 		await modalPO.locatorLaunchOtherModalButton.click();
 		await otherModalPO.waitLoaded();
 		await otherModalPO.locatorDisableBackdropButton.click();
-		await otherModalPO.locatorBackdrop.waitFor({state: 'hidden'});
+		await expect(otherModalPO.locatorBackdrop).toBeHidden();
 		await otherModalPO.locatorEnableBackdropButton.click();
 		await otherModalPO.locatorBackdrop.waitFor();
 		await otherModalPO.locatorCloseButton.click();
-		await otherModalPO.locatorRoot.waitFor({state: 'hidden'});
+		await expect(otherModalPO.locatorRoot).toBeHidden();
 		await modalPO.locatorCloseButton.click();
-		await modalPO.locatorRoot.waitFor({state: 'hidden'});
+		await expect(modalPO.locatorRoot).toBeHidden();
 	});
 
 	test.describe.parallel(`Modal customizability`, () => {
