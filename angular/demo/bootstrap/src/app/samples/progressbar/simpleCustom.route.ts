@@ -2,7 +2,6 @@ import {ProgressbarComponent} from '@agnos-ui/angular-bootstrap';
 import {Component} from '@angular/core';
 
 @Component({
-	standalone: true,
 	imports: [ProgressbarComponent],
 	template: `
 		<div class="d-flex flex-column gap-2">

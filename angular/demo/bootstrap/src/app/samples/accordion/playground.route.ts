@@ -7,7 +7,6 @@ import {getAccordionDefaultConfig} from '@agnos-ui/core-bootstrap';
 
 const undefinedAccordionConfig = getUndefinedValues(getAccordionDefaultConfig());
 @Component({
-	standalone: true,
 	imports: [AgnosUIAngularModule],
 	providers: [provideHashConfig('accordion')],
 	template: ` <div auAccordion>

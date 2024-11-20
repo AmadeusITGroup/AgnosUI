@@ -7,7 +7,6 @@ import {getUndefinedValues, hashChangeHook, provideHashConfig} from '../../utils
 const undefinedConfig = getUndefinedValues(getAlertDefaultConfig());
 
 @Component({
-	standalone: true,
 	imports: [AgnosUIAngularModule],
 	providers: provideHashConfig('alert'),
 	template: `<au-component auAlert #widget />`,

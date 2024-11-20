@@ -44,7 +44,6 @@ export class AlertStructureDirective {
 }
 
 @Component({
-	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [SlotDirective, AlertStructureDirective],
 	template: ` <ng-template auAlertStructure #structure let-state="state" let-api="api" let-directives="directives">
@@ -75,7 +74,6 @@ export const alertDefaultSlotStructure: SlotContent<AlertContext> = new Componen
  */
 @Component({
 	selector: '[auAlert]',
-	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [SlotDirective, UseDirective],
 	template: ` <ng-template #content>

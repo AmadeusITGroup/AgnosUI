@@ -31,7 +31,6 @@ import {AccordionComponent} from './accordion.component';
 			</div>
 		</div>
 	`,
-	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWidget> implements AfterViewInit {

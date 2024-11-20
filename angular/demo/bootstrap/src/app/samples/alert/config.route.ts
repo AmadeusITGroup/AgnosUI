@@ -5,7 +5,6 @@ import {FormsModule} from '@angular/forms';
 import {AlertStatus} from '@agnos-ui/common/samples/alert/alert-status.enum';
 
 @Component({
-	standalone: true,
 	imports: [AgnosUIAngularModule, FormsModule],
 	template: ` <button class="btn btn-primary showAlert" (click)="showAlert(alert)" type="button">Show alert</button>
 		<br />

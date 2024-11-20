@@ -4,7 +4,6 @@ import SuccessComponent from './success.component';
 import SecondaryComponent from './secondary.component';
 
 @Component({
-	standalone: true,
 	imports: [AlertComponent, SecondaryComponent, SuccessComponent],
 	providers: [provideWidgetsConfig()],
 	template: `

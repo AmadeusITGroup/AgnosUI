@@ -7,7 +7,6 @@ import {getUndefinedValues, hashChangeHook, provideHashConfig} from '../../utils
 const undefinedConfig = getUndefinedValues(getRatingDefaultConfig());
 
 @Component({
-	standalone: true,
 	imports: [AgnosUIAngularModule],
 	providers: provideHashConfig('rating'),
 	template: `<div [auRating] #widget></div>`,

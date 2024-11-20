@@ -10,7 +10,6 @@ import pauseSvg from 'bootstrap-icons/icons/pause-fill.svg';
 import stopSvg from 'bootstrap-icons/icons/stop-fill.svg';
 
 @Component({
-	standalone: true,
 	imports: [ProgressbarComponent],
 	providers: [provideWidgetsConfig(() => ({progressbar: {structure: CoffeeProgressbarComponent}}))],
 	template: `

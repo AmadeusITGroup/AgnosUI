@@ -11,7 +11,6 @@ import {ChangeDetectionStrategy, Component, input, model} from '@angular/core';
 
 @Component({
 	selector: 'app-slider',
-	standalone: true,
 	imports: [UseMultiDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	templateUrl: './slider.component.html',

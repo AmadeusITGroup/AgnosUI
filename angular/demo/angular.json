@@ -14,7 +14,7 @@
 			"sourceRoot": "bootstrap/src",
 			"architect": {
 				"build": {
-					"builder": "@angular-devkit/build-angular:application",
+					"builder": "@angular/build:application",
 					"options": {
 						"outputPath": {
 							"base": "dist/bootstrap",
@@ -63,7 +63,7 @@
 					"defaultConfiguration": "production"
 				},
 				"serve": {
-					"builder": "@angular-devkit/build-angular:dev-server",
+					"builder": "@angular/build:dev-server",
 					"configurations": {
 						"production": {
 							"servePath": "/angular/samples/bootstrap",
@@ -90,7 +90,7 @@
 			"sourceRoot": "daisyui/src",
 			"architect": {
 				"build": {
-					"builder": "@angular-devkit/build-angular:application",
+					"builder": "@angular/build:application",
 					"options": {
 						"outputPath": {
 							"base": "dist/daisyui",
@@ -139,7 +139,7 @@
 					"defaultConfiguration": "production"
 				},
 				"serve": {
-					"builder": "@angular-devkit/build-angular:dev-server",
+					"builder": "@angular/build:dev-server",
 					"configurations": {
 						"production": {
 							"servePath": "/angular/samples/daisyui",

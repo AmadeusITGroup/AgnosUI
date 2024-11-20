@@ -3,7 +3,6 @@ import {UseDirective} from '@agnos-ui/angular-headless';
 import {ChangeDetectionStrategy, Component, computed, signal} from '@angular/core';
 
 @Component({
-	standalone: true,
 	imports: [UseDirective, AgnosUIAngularModule],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `

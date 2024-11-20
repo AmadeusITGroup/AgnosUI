@@ -3,7 +3,6 @@ import {AccordionComponent} from './accordion.component';
 import {AccordionItemComponent} from './accordion-item.component';
 
 @Component({
-	standalone: true,
 	imports: [AccordionComponent, AccordionItemComponent],
 	template: `
 		<app-accordion closeOthers itemDestroyOnHide>

@@ -4,7 +4,6 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import CoffeeSliderComponent from './coffee-slider.component';
 
 @Component({
-	standalone: true,
 	imports: [SliderComponent, SliderStructureDirective, ReactiveFormsModule, FormsModule],
 	template: `
 		<h2>Fully custom slider</h2>

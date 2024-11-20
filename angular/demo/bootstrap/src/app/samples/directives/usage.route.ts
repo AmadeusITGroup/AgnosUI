@@ -5,7 +5,6 @@ import {FormsModule} from '@angular/forms';
 import {createSampleDirective} from '@agnos-ui/common/samples/directives/sample-directive';
 
 @Component({
-	standalone: true,
 	imports: [UseDirective, FormsModule],
 	template: `
 		<div [auUse]="[createSampleDirective, config()]">

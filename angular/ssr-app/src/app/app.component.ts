@@ -4,7 +4,6 @@ import {AgnosUIAngularModule, type TreeItem} from '@agnos-ui/angular-bootstrap';
 @Component({
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'app-root',
-	standalone: true,
 	imports: [AgnosUIAngularModule],
 	templateUrl: './app.component.html',
 })

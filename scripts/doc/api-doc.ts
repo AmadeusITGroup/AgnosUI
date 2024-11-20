@@ -219,7 +219,11 @@ export function parseDocs(indexFile: string) {
 							}
 							const declaration = symbol!.getDeclarations()![0];
 							if (ts.isImportSpecifier(declaration)) {
-								const exportedNode = typeChecker.getExportSpecifierLocalTargetSymbol(declaration.propertyName ?? declaration.name);
+								const propertyName = declaration.propertyName;
+								if (propertyName && !ts.isIdentifier(propertyName)) {
+									throw new Error('We do not support string literals as imports');
+								}
+								const exportedNode = typeChecker.getExportSpecifierLocalTargetSymbol(propertyName ?? declaration.name);
 								const functionDeclaration = exportedNode!.getDeclarations()![0];
 								if (ts.isFunctionDeclaration(functionDeclaration)) {
 									for (const [key, val] of Object.entries(visitConfigFunctionDeclaration(functionDeclaration)!)) {

@@ -2,7 +2,6 @@ import {RatingComponent} from './rating.component';
 import {Component} from '@angular/core';
 
 @Component({
-	standalone: true,
 	imports: [RatingComponent],
 	template: `
 		<app-rating [(rating)]="rating" (hover)="hovered = $event" (leave)="left = $event" />

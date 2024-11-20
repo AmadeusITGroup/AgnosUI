@@ -2,7 +2,6 @@ import {SliderComponent} from './slider.component';
 import {Component} from '@angular/core';
 
 @Component({
-	standalone: true,
 	imports: [SliderComponent],
 	template: `
 		<h2 class="text-lg mb-2">DaisyUI Example</h2>

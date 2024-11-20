@@ -41,7 +41,6 @@ export class ProgressbarStructureDirective {
 }
 
 @Component({
-	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [NgClass, SlotDirective, ProgressbarStructureDirective],
 	template: `
@@ -77,7 +76,6 @@ export const progressbarDefaultSlotStructure: SlotContent<ProgressbarContext> = 
  */
 @Component({
 	selector: '[auProgressbar]',
-	standalone: true,
 	imports: [SlotDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	host: {

@@ -4,7 +4,6 @@ import type {ModalData} from './custom-content.component';
 import CustomContentComponent from './custom-content.component';
 
 @Component({
-	standalone: true,
 	imports: [AgnosUIAngularModule],
 	template: ` <button class="btn btn-primary" type="button" (click)="openModal()">Launch demo modal</button> `,
 })

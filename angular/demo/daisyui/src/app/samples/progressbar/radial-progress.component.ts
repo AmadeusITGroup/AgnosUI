@@ -10,7 +10,6 @@ import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 
 @Component({
 	selector: 'app-radial-progress',
-	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [UseDirective],
 	template: ` <div

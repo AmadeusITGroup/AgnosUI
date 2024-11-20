@@ -3,7 +3,6 @@ import {AlertComponent, toAngularSignal} from '@agnos-ui/angular-bootstrap';
 import {MatchMediaService} from './matchMedia.service';
 
 @Component({
-	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [AlertComponent],
 	template: `

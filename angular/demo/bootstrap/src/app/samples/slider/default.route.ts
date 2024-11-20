@@ -4,7 +4,6 @@ import {Component, signal} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @Component({
-	standalone: true,
 	imports: [AgnosUIAngularModule, ReactiveFormsModule, FormsModule],
 	template: `
 		<h2>Slider with form control</h2>

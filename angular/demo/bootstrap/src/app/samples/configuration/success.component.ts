@@ -3,7 +3,6 @@ import {Component, ChangeDetectionStrategy} from '@angular/core';
 
 @Component({
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	standalone: true,
 	selector: 'app-success',
 	imports: [AlertComponent],
 	providers: [provideWidgetsConfig((config) => ({...config, alert: {...config.alert, type: 'success'}}))],

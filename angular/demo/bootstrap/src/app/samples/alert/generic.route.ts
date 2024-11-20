@@ -2,7 +2,6 @@ import {AgnosUIAngularModule, provideWidgetsConfig} from '@agnos-ui/angular-boot
 import {Component} from '@angular/core';
 
 @Component({
-	standalone: true,
 	imports: [AgnosUIAngularModule],
 	providers: [
 		provideWidgetsConfig((config) => {

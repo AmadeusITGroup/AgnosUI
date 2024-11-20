@@ -114,7 +114,6 @@ export class PaginationStructureDirective {
 }
 
 @Component({
-	standalone: true,
 	imports: [SlotDirective, PaginationPagesDirective, PaginationStructureDirective, UseDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
@@ -201,7 +200,6 @@ export const paginationDefaultSlotStructure: SlotContent<PaginationContext> = ne
  */
 @Component({
 	selector: '[auPagination]',
-	standalone: true,
 	imports: [SlotDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	host: {

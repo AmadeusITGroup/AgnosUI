@@ -4,7 +4,6 @@ import {Component} from '@angular/core';
 import AlertIconComponent from './alert-icon.component';
 
 @Component({
-	standalone: true,
 	imports: [AlertComponent],
 	providers: [
 		provideWidgetsConfig((config) => {

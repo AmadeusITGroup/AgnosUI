@@ -2,7 +2,6 @@ import {ProgressbarComponent, provideWidgetsConfig} from '@agnos-ui/angular-boot
 import {Component} from '@angular/core';
 
 @Component({
-	standalone: true,
 	imports: [ProgressbarComponent],
 	providers: [
 		provideWidgetsConfig((config) => {

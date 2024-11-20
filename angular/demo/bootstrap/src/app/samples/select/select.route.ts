@@ -3,7 +3,6 @@ import {Component, computed, signal} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
 @Component({
-	standalone: true,
 	imports: [FormsModule, SelectComponent],
 	providers: [provideWidgetsConfig()],
 	template: `

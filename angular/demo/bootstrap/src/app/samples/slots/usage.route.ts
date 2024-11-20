@@ -2,7 +2,6 @@ import {AlertComponent} from '@agnos-ui/angular-bootstrap';
 import {Component} from '@angular/core';
 
 @Component({
-	standalone: true,
 	imports: [AlertComponent],
 	template: `
 		<au-component auAlert auType="primary" [auDismissible]="false"> Label provided by slot </au-component>

@@ -3,7 +3,6 @@ import {Component} from '@angular/core';
 import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 
 @Component({
-	standalone: true,
 	imports: [AgnosUIAngularModule, ReactiveFormsModule],
 	template: `
 		<div class="form-label" id="ratingLabel">Rating of your experience</div>

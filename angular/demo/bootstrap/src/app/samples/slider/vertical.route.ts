@@ -3,7 +3,6 @@ import {Component} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @Component({
-	standalone: true,
 	imports: [AgnosUIAngularModule, ReactiveFormsModule, FormsModule],
 	template: `
 		<div class="d-flex" style="height: 350px">

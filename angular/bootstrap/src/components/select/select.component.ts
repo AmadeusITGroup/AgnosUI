@@ -52,7 +52,6 @@ export class SelectItemLabelDirective<Item> {
  * @template Item - The type of items in the select dropdown.
  */
 @Component({
-	standalone: true,
 	imports: [UseMultiDirective, SlotDirective, UseDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: '[auSelect]',

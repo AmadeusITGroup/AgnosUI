@@ -17,7 +17,6 @@ function getHtmlText(html: string) {
 }
 
 @Component({
-	standalone: true,
 	imports: [AgnosUIAngularModule],
 	template: `
 		<div class="custom-select my-auto mb-3">

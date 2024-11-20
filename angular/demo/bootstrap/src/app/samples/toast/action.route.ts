@@ -6,7 +6,6 @@ import biArrowCounterClockwise from 'bootstrap-icons/icons/arrow-counterclockwis
 import biCheckCircleFill from 'bootstrap-icons/icons/check-circle-fill.svg';
 
 @Component({
-	standalone: true,
 	imports: [AgnosUIAngularModule],
 	providers: [
 		provideWidgetsConfig((config) => {
@@ -26,7 +25,6 @@ import biCheckCircleFill from 'bootstrap-icons/icons/check-circle-fill.svg';
 export default class ActionToastComponent {}
 
 @Component({
-	standalone: true,
 	imports: [SlotDirective],
 	providers: [SlotDirective],
 	selector: 'app-icon-structure',

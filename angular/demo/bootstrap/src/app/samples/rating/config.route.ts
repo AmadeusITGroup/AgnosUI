@@ -3,7 +3,6 @@ import {RatingComponent, RatingStarDirective, injectWidgetsConfig, provideWidget
 import {Component, signal} from '@angular/core';
 
 @Component({
-	standalone: true,
 	imports: [RatingComponent, RatingStarDirective],
 	providers: [provideWidgetsConfig()],
 	template: `

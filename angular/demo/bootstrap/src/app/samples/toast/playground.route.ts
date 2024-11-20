@@ -7,7 +7,6 @@ import {getUndefinedValues, hashChangeHook, provideHashConfig} from '../../utils
 const undefinedConfig = getUndefinedValues(getToastDefaultConfig());
 
 @Component({
-	standalone: true,
 	imports: [AgnosUIAngularModule],
 	providers: provideHashConfig('toast'),
 	template: `<au-component auToast #widget />`,

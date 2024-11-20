@@ -3,7 +3,6 @@ import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
 import {InnerComponent} from './innerComponent.component';
 
 @Component({
-	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [CommonModule, InnerComponent],
 	template: `

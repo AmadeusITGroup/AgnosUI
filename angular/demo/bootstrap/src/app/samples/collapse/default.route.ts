@@ -2,7 +2,6 @@ import {CollapseDirective} from '@agnos-ui/angular-bootstrap';
 import {Component, signal} from '@angular/core';
 
 @Component({
-	standalone: true,
 	imports: [CollapseDirective],
 	template: `
 		<button class="btn btn-primary mb-2" type="button" aria-controls="auId-0" [attr.aria-expanded]="expanded()" (click)="toggle()">

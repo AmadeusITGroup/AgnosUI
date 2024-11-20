@@ -10,7 +10,6 @@ import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 
 @Component({
 	selector: 'app-progressbar',
-	standalone: true,
 	imports: [UseDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `<progress

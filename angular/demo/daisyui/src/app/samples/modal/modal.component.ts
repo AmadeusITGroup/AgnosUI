@@ -22,7 +22,6 @@ import {ChangeDetectionStrategy, Component, input, model} from '@angular/core';
 			}
 		</dialog>
 	`,
-	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalComponent extends BaseWidgetDirective<ModalWidget> {

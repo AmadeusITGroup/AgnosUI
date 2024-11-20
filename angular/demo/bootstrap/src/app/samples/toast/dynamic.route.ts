@@ -22,7 +22,6 @@ class ToastService {
 
 @Component({
 	selector: 'app-toast-container',
-	standalone: true,
 	imports: [ToastComponent],
 	template: ` <div class="d-flex position-relative mt-2 w-100" aria-live="polite" aria-atomic="true" style="height: 500px; background-color: gray;">
 		@for (position of toastContainerService.toastMap.keys(); track position) {
@@ -45,7 +44,6 @@ class ToastContainerComponent {
 }
 
 @Component({
-	standalone: true,
 	imports: [AgnosUIAngularModule, ToastContainerComponent, FormsModule],
 	template: `
 		<p class="mb-2">

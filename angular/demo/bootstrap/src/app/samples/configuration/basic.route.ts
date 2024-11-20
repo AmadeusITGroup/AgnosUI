@@ -2,7 +2,6 @@ import {AlertComponent, provideWidgetsConfig, injectWidgetsConfig} from '@agnos-
 import {Component} from '@angular/core';
 
 @Component({
-	standalone: true,
 	imports: [AlertComponent],
 	providers: [provideWidgetsConfig()],
 	template: `

@@ -3,7 +3,6 @@ import {Component} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @Component({
-	standalone: true,
 	imports: [AgnosUIAngularModule, ReactiveFormsModule, FormsModule],
 	template: `
 		<h2>Horizontal slider</h2>

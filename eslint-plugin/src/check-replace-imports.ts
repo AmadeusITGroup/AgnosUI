@@ -84,7 +84,7 @@ export const checkReplaceImportsRule = ESLintUtils.RuleCreator.withoutDocs({
 							});
 						} else if (specifiersByPath.size === 1) {
 							reportMissingSubpath = false;
-							importParts.push(specifiersByPath.keys().next().value);
+							importParts.push(specifiersByPath.keys().next().value!);
 						}
 					}
 					if (reportMissingSubpath) {

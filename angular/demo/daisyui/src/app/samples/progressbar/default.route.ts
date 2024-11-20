@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {ProgressbarComponent} from './progressbar.component';
 import {RadialProgressComponent} from './radial-progress.component';
 @Component({
-	standalone: true,
 	imports: [ProgressbarComponent, RadialProgressComponent],
 	template: `
 		<h2 class="text-lg mb-2">Simple progressbars</h2>

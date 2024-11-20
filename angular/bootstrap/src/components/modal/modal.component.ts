@@ -80,7 +80,6 @@ export class ModalFooterDirective<Data> {
  * Component containing the default slots for the modal.
  */
 @Component({
-	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [SlotDirective, ModalHeaderDirective, ModalStructureDirective, UseDirective],
 	template: `
@@ -129,7 +128,6 @@ export const modalDefaultSlotStructure: SlotContent<ModalContext<any>> = new Com
  */
 @Component({
 	selector: '[auModal]',
-	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [UseMultiDirective, SlotDirective],
 	template: `

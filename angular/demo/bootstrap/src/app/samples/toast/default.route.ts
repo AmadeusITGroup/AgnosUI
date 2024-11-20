@@ -2,7 +2,6 @@ import {ToastComponent, provideWidgetsConfig} from '@agnos-ui/angular-bootstrap'
 import {Component} from '@angular/core';
 
 @Component({
-	standalone: true,
 	imports: [ToastComponent],
 	providers: [
 		provideWidgetsConfig((config) => {

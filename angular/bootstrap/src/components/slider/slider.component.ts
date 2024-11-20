@@ -53,7 +53,6 @@ export class SliderHandleDirective {
 }
 
 @Component({
-	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [UseDirective, SliderHandleDirective],
 	template: `
@@ -85,7 +84,6 @@ export class SliderStructureDirective {
 }
 
 @Component({
-	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [SlotDirective, SliderStructureDirective, UseDirective],
 	template: `
@@ -140,7 +138,6 @@ export const sliderDefaultSlotStructure: SlotContent<SliderContext> = new Compon
  */
 @Component({
 	selector: '[auSlider]',
-	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	encapsulation: ViewEncapsulation.None,
 	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SliderComponent), multi: true}],

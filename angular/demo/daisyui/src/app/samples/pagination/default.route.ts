@@ -2,7 +2,6 @@ import {PaginationComponent} from './pagination.component';
 import {Component} from '@angular/core';
 
 @Component({
-	standalone: true,
 	imports: [PaginationComponent],
 	template: ` <app-pagination collectionSize="40" boundaryLinks /> `,
 })

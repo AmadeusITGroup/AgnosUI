@@ -30,7 +30,6 @@ import {DomSanitizer} from '@angular/platform-browser';
 			</div>
 		}
 	`,
-	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AlertComponent extends BaseWidgetDirective<AlertWidget> {

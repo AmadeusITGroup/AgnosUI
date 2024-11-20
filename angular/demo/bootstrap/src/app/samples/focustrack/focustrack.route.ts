@@ -3,7 +3,6 @@ import {activeElement$, createHasFocus} from '@agnos-ui/core';
 import {ChangeDetectionStrategy, Component, effect, signal} from '@angular/core';
 
 @Component({
-	standalone: true,
 	imports: [UseDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `

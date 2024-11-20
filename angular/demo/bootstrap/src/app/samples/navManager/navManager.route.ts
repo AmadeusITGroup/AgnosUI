@@ -3,7 +3,6 @@ import {AgnosUIAngularModule, createNavManager} from '@agnos-ui/angular-bootstra
 import {Component, input} from '@angular/core';
 
 @Component({
-	standalone: true,
 	selector: 'app-navmanager-line',
 	imports: [AgnosUIAngularModule],
 	template: `
@@ -34,7 +33,6 @@ export class NavmanagerLineComponent {
 }
 
 @Component({
-	standalone: true,
 	imports: [NavmanagerLineComponent],
 	template: `
 		<div class="demo-navmanager">
