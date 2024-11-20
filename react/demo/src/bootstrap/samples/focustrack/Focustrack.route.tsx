@@ -12,7 +12,7 @@ const Focustrack = () => {
 	const [activeElements, setActiveElements] = useState<any[]>([]);
 
 	useEffect(() => {
-		setActiveElements([...activeElements, {tagName: activeElement?.tagName.toLowerCase(), id: activeElement?.id || undefined}]);
+		setActiveElements((a) => [...a, {tagName: activeElement?.tagName.toLowerCase(), id: activeElement?.id || undefined}]);
 	}, [activeElement]);
 
 	return (

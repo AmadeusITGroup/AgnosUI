@@ -6,12 +6,14 @@ import {useWidgetWithConfig} from '../../config';
 import type {ToastApi, ToastContext, ToastProps} from './toast.gen';
 import {createToast} from './toast.gen';
 
+const ToastHeaderContent = (slotContext: ToastContext) => (
+	<button {...useDirectives([classDirective, 'btn-close me-0 ms-auto'], slotContext.directives.closeButtonDirective)} />
+);
+
 const ToastHeader = (slotContext: ToastContext) => (
 	<div className="toast-header">
 		<Slot slotContent={slotContext.state.header} props={slotContext} />
-		{slotContext.state.dismissible && (
-			<button {...useDirectives([classDirective, 'btn-close me-0 ms-auto'], slotContext.directives.closeButtonDirective)} />
-		)}
+		{slotContext.state.dismissible && <ToastHeaderContent {...slotContext} />}
 	</div>
 );
 
@@ -69,7 +71,7 @@ export const Toast: ForwardRefExoticComponent<Partial<ToastProps> & RefAttribute
 		structure: ToastDefaultSlotStructure,
 		children: props.children,
 	});
-	useImperativeHandle(ref, () => widgetContext.api, []);
+	useImperativeHandle(ref, () => widgetContext.api, [widgetContext.api]);
 
 	return <>{!widgetContext.state.hidden && <ToastElement {...widgetContext} />}</>;
 });

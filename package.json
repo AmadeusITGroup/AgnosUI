@@ -56,6 +56,7 @@
 		"eslint-plugin-jsdoc": "^50.5.0",
 		"eslint-plugin-playwright": "^2.1.0",
 		"eslint-plugin-react": "^7.37.2",
+		"eslint-plugin-react-hooks": "^5.0.0",
 		"eslint-plugin-svelte": "^2.46.0",
 		"express": "^4.21.1",
 		"glob": "11.0.0",
@@ -78,9 +79,6 @@
 	"optionalDependencies": {
 		"@esbuild/darwin-arm64": "0.24.0",
 		"@lmdb/lmdb-win32-x64": "3.1.6",
-		"@rollup/rollup-darwin-arm64": "4.27.3",
-		"@rollup/rollup-darwin-x64": "4.27.3",
-		"@rollup/rollup-win32-x64-msvc": "4.27.3",
 		"@parcel/watcher-android-arm64": "2.5.0",
 		"@parcel/watcher-darwin-arm64": "2.5.0",
 		"@parcel/watcher-darwin-x64": "2.5.0",
@@ -92,7 +90,10 @@
 		"@parcel/watcher-linux-x64-musl": "2.5.0",
 		"@parcel/watcher-win32-arm64": "2.5.0",
 		"@parcel/watcher-win32-ia32": "2.5.0",
-		"@parcel/watcher-win32-x64": "2.5.0"
+		"@parcel/watcher-win32-x64": "2.5.0",
+		"@rollup/rollup-darwin-arm64": "4.27.3",
+		"@rollup/rollup-darwin-x64": "4.27.3",
+		"@rollup/rollup-win32-x64-msvc": "4.27.3"
 	},
 	"scripts": {
 		"build:coverage": "wireit",

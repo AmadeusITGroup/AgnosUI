@@ -4,9 +4,9 @@ import {useCallback, useState} from 'react';
 const wordsA = ['apple', 'apricot', 'asparagus', 'astronaut', 'athletic', 'autumn', 'avocado'];
 const wordsB = ['banana', 'baseball', 'basketball', 'beautiful', 'bedroom', 'bee', 'bicycle'];
 const wordsC = ['cat', 'caterpillar', 'cave', 'chair', 'cheese', 'cherry', 'chicken'];
+const mainList = [...wordsA, ...wordsB, ...wordsC];
 
 const Default = () => {
-	const [mainList] = useState([...wordsA, ...wordsB, ...wordsC]);
 	const [items, setItems] = useState([] as string[]);
 	const [filterTextProp, setFilterTextProp] = useState(undefined as string | undefined);
 	const onFilterTextChange = useCallback((filterText: string) => {

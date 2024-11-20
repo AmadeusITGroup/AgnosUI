@@ -73,6 +73,7 @@ test.describe(`Slider tests`, () => {
 			const sliderProgressLocator = sliderPO.locatorProgress;
 			const boundingBox = await sliderProgressLocator.boundingBox();
 			// force the click though the progress bar
+			// eslint-disable-next-line playwright/no-force-option
 			await sliderProgressLocator.click({position: {x: boundingBox!.x + boundingBox!.width * 0.5, y: 1}, force: true});
 
 			await expect
