@@ -1,11 +1,18 @@
 import adapter from '@sveltejs/adapter-auto';
 import {vitePreprocess} from '@sveltejs/vite-plugin-svelte';
+import {directivesPreprocess} from '@agnos-ui/svelte-preprocess';
+
+const preprocess = [vitePreprocess()];
+
+if (process.env.NODE_ENV === 'development') {
+	preprocess.push(directivesPreprocess());
+}
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	// Consult https://kit.svelte.dev/docs/integrations#preprocessors
 	// for more information about preprocessors
-	preprocess: [vitePreprocess()],
+	preprocess,
 
 	kit: {
 		// adapter-auto only supports some environments, see https://kit.svelte.dev/docs/adapter-auto for a list.
