@@ -28,15 +28,15 @@ export class CollapseDaisyComponent {
 	readonly title = input('Focus me to see content');
 
 	// The advantage of AgnosUI here is that it plug the transition state to some possible callbacks
-	onShown = output();
-	onHidden = output();
+	readonly shown = output();
+	readonly hidden = output();
 
 	transition = createTransition({
 		props: {
 			visible: false, // could be something in an input that also add the collapse-open class
 			transition: createSimpleClassTransition({}),
-			onShown: () => this.onShown.emit(),
-			onHidden: () => this.onHidden.emit(),
+			onShown: () => this.shown.emit(),
+			onHidden: () => this.hidden.emit(),
 		},
 	});
 }

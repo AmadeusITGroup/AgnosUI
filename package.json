@@ -26,10 +26,10 @@
 		"url": "git+https://github.com/AmadeusITGroup/AgnosUI.git"
 	},
 	"engines": {
-		"npm": "^10.9.0",
+		"npm": "^10.9.1",
 		"node": "^22.11.0"
 	},
-	"packageManager": "npm@10.9.0",
+	"packageManager": "npm@10.9.1",
 	"devDependencies": {
 		"@angular-devkit/build-angular": "^18.2.12",
 		"@angular/animations": "^18.2.12",
@@ -41,15 +41,15 @@
 		"@angular/platform-browser": "^18.2.12",
 		"@angular/platform-browser-dynamic": "^18.2.12",
 		"@axe-core/playwright": "^4.10.1",
-		"@commitlint/cli": "^19.5.0",
+		"@commitlint/cli": "^19.6.0",
 		"@eslint/js": "^9.15.0",
 		"@playwright/test": "^1.49.0",
-		"@types/node": "^22.9.0",
+		"@types/node": "^22.9.3",
 		"@types/uuid": "^10.0.0",
 		"@vitest/browser": "^2.1.5",
 		"@vitest/eslint-plugin": "^1.1.10",
 		"@vitest/ui": "^2.1.5",
-		"angular-eslint": "^18.4.1",
+		"angular-eslint": "^18.4.2",
 		"bootstrap": "^5.3.3",
 		"eslint": "^9.15.0",
 		"eslint-config-prettier": "^9.1.0",
@@ -65,7 +65,7 @@
 		"npm-run-all2": "^7.0.1",
 		"prettier": "^3.3.3",
 		"strip-ansi": "^7.1.0",
-		"svelte": "^5.2.3",
+		"svelte": "^5.2.7",
 		"syncpack": "^13.0.0",
 		"typedoc": "^0.26.11",
 		"typedoc-plugin-markdown": "^4.2.10",
@@ -91,9 +91,9 @@
 		"@parcel/watcher-win32-arm64": "2.5.0",
 		"@parcel/watcher-win32-ia32": "2.5.0",
 		"@parcel/watcher-win32-x64": "2.5.0",
-		"@rollup/rollup-darwin-arm64": "4.27.3",
-		"@rollup/rollup-darwin-x64": "4.27.3",
-		"@rollup/rollup-win32-x64-msvc": "4.27.3"
+		"@rollup/rollup-darwin-arm64": "4.27.4",
+		"@rollup/rollup-darwin-x64": "4.27.4",
+		"@rollup/rollup-win32-x64-msvc": "4.27.4"
 	},
 	"scripts": {
 		"build:coverage": "wireit",

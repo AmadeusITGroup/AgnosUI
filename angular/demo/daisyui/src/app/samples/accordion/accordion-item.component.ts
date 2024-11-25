@@ -20,7 +20,7 @@ import {AccordionComponent} from './accordion.component';
 				tabindex="0"
 				class="collapse-title text-xl font-medium focus-visible:outline-none"
 				[auUse]="directives.toggleDirective"
-				(keydown)="onEnter($event)"
+				(keydown.enter)="api.toggle()"
 			>
 				<ng-content select="[header]" />
 			</div>
@@ -63,11 +63,5 @@ export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWid
 
 	ngAfterViewInit() {
 		queueMicrotask(() => this.api.initDone());
-	}
-
-	onEnter(e: KeyboardEvent) {
-		if (e.key === 'Enter') {
-			this.api.toggle();
-		}
 	}
 }

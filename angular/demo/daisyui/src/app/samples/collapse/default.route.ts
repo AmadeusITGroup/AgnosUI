@@ -4,7 +4,7 @@ import {CollapseDaisyComponent} from './collapse.component';
 @Component({
 	standalone: true,
 	imports: [CollapseDaisyComponent],
-	template: ` <app-collapse (onHidden)="onHidden()"><p>tabindex necessary is already put</p></app-collapse> `,
+	template: ` <app-collapse (hidden)="onHidden()"><p>tabindex necessary is already put</p></app-collapse> `,
 })
 export default class DefaultAlertComponent {
 	onHidden() {
