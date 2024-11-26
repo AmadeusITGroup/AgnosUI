@@ -1,16 +1,16 @@
-import type {ComponentRef, EmbeddedViewRef, OnChanges, OnDestroy, SimpleChanges, Type} from '@angular/core';
+import type {ComponentRef, EmbeddedViewRef, OnChanges, OnDestroy, Signal, SimpleChanges, Type} from '@angular/core';
 import {
 	Component,
 	Directive,
 	EnvironmentInjector,
-	Input,
 	TemplateRef,
-	ViewChild,
 	ViewContainerRef,
 	createComponent,
 	inject,
 	reflectComponentType,
 	ChangeDetectionStrategy,
+	input,
+	viewChild,
 } from '@angular/core';
 import type {SlotContent} from './types';
 import {ComponentTemplate} from './types';
@@ -27,7 +27,11 @@ abstract class SlotHandler<Props extends Record<string, any>, Slot extends SlotC
 	template: `<ng-template #text let-content="content">{{ content }}</ng-template>`,
 })
 class StringSlotComponent {
-	@ViewChild('text', {static: true}) text!: TemplateRef<{content: string}>;
+	readonly text = viewChild.required<
+		TemplateRef<{
+			content: string;
+		}>
+	>('text');
 }
 const stringSlotComponentTemplate = new ComponentTemplate<{content: string}, 'text', StringSlotComponent>(StringSlotComponent, 'text');
 
@@ -138,11 +142,11 @@ class TemplateRefSlotHandler<Props extends Record<string, any>> extends SlotHand
 class ComponentTemplateSlotHandler<
 	Props extends Record<string, any>,
 	K extends string,
-	T extends {[key in K]: TemplateRef<Props>},
+	T extends {[key in K]: Signal<TemplateRef<Props>>},
 > extends SlotHandler<Props, ComponentTemplate<Props, K, T>> {
 	#componentRef: ComponentRef<T> | undefined;
 	readonly #templateSlotHandler = new TemplateRefSlotHandler(this.viewContainerRef);
-	#templateRef: TemplateRef<Props> | undefined;
+	#templateRef: Signal<TemplateRef<Props>> | undefined;
 
 	override slotChange(slot: ComponentTemplate<Props, K, T>, props: Props): void {
 		if (this.#componentRef) {
@@ -153,11 +157,11 @@ class ComponentTemplateSlotHandler<
 			environmentInjector: this.viewContainerRef.injector.get(EnvironmentInjector),
 		});
 		this.#templateRef = this.#componentRef.instance[slot.templateProp];
-		this.#templateSlotHandler.slotChange(this.#templateRef, props);
+		this.#templateSlotHandler.slotChange(this.#templateRef(), props);
 	}
 
 	override propsChange(_slot: ComponentTemplate<Props, K, T>, props: Props): void {
-		this.#templateSlotHandler.propsChange(this.#templateRef!, props);
+		this.#templateSlotHandler.propsChange(this.#templateRef!(), props);
 	}
 
 	override destroy(): void {
@@ -207,11 +211,11 @@ export class SlotDirective<Props extends Record<string, any>> implements OnChang
 	/**
 	 * The slot content to be managed.
 	 */
-	@Input('auSlot') slot: SlotContent<Props>;
+	readonly slot = input.required<SlotContent<Props>>({alias: 'auSlot'});
 	/**
 	 * The properties for the slot content.
 	 */
-	@Input({alias: 'auSlotProps', required: true}) props!: Props;
+	readonly props = input.required<Props>({alias: 'auSlotProps'});
 
 	private readonly _viewContainerRef = inject(ViewContainerRef);
 	private _slotType: ReturnType<typeof getSlotType>;
@@ -224,7 +228,7 @@ export class SlotDirective<Props extends Record<string, any>> implements OnChang
 	ngOnChanges(changes: SimpleChanges): void {
 		const slotChange = changes['slot'];
 		const propsChange = changes['props'];
-		const slot = this.slot;
+		const slot = this.slot();
 		if (slotChange) {
 			const newSlotType = getSlotType(slot);
 			if (newSlotType !== this._slotType) {
@@ -232,9 +236,9 @@ export class SlotDirective<Props extends Record<string, any>> implements OnChang
 				this._slotHandler = newSlotType ? new newSlotType(this._viewContainerRef) : undefined;
 				this._slotType = newSlotType;
 			}
-			this._slotHandler?.slotChange(slot, this.props);
+			this._slotHandler?.slotChange(slot, this.props());
 		} else if (propsChange) {
-			this._slotHandler?.propsChange(slot, this.props);
+			this._slotHandler?.propsChange(slot, this.props());
 		}
 	}
 

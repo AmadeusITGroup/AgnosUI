@@ -2,7 +2,7 @@ import type {Directive as AgnosUIDirective, DirectiveAndParam, DirectivesAndOptP
 import {multiDirective} from '@agnos-ui/core/utils/directive';
 import {isPlatformServer} from '@angular/common';
 import type {OnChanges} from '@angular/core';
-import {DestroyRef, Directive, ElementRef, Injector, Input, PLATFORM_ID, afterNextRender, inject, runInInjectionContext} from '@angular/core';
+import {DestroyRef, Directive, ElementRef, Injector, PLATFORM_ID, afterNextRender, inject, runInInjectionContext, input} from '@angular/core';
 
 export * from '@agnos-ui/core/utils/directive';
 
@@ -84,14 +84,12 @@ export const useDirectiveForHost = <T>(directive?: AgnosUIDirective<T>, params?:
 	selector: '[auUse]',
 })
 export class UseDirective<T> implements OnChanges {
-	@Input('auUse')
-	use: AgnosUIDirective | DirectiveAndParam<T> | undefined;
-
+	readonly use = input.required<AgnosUIDirective | DirectiveAndParam<T>>({alias: 'auUse'});
 	readonly #useDirective = useDirectiveForHost<T>();
 
 	/** @internal */
 	ngOnChanges() {
-		const use = this.use;
+		const use = this.use();
 		const [directive, param] = Array.isArray(use) ? use : [use as any];
 		this.#useDirective.update(directive, param);
 	}
@@ -110,13 +108,12 @@ export class UseMultiDirective<T extends any[]> implements OnChanges {
 	/**
 	 * An input property that takes a tuple of directives and their optional parameters.
 	 */
-	@Input({alias: 'auUseMulti', required: true})
-	useMulti!: DirectivesAndOptParam<T>;
+	readonly useMulti = input.required<DirectivesAndOptParam<T>>({alias: 'auUseMulti'});
 
 	readonly #useDirective = useDirectiveForHost<DirectivesAndOptParam<T>>();
 
 	/** @internal */
 	ngOnChanges() {
-		this.#useDirective.update(multiDirective, this.useMulti);
+		this.#useDirective.update(multiDirective, this.useMulti());
 	}
 }

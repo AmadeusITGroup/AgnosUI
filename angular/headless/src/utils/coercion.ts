@@ -5,7 +5,7 @@ import {booleanAttribute, numberAttribute} from '@angular/core';
  * Intended to be used as a transform function of an input.
  *
  * @example
- * ```@Input({ transform: auBooleanAttribute }) status: boolean | undefined;```
+ * ```readonly status = input({ transform: auBooleanAttribute });```
  * @param value - Value to be transformed.
  * @returns the value transformed
  */
@@ -22,7 +22,7 @@ export function auBooleanAttribute(value: unknown): boolean | undefined {
  * @param value - Value to be transformed.
  *
  * @example
- *  ```@Input({ transform: auNumberAttribute }) id: number | undefined;```
+ *  ```readonly id = input({ transform: auNumberAttribute });```
  * @returns the value transformed
  */
 export function auNumberAttribute(value: unknown): number | undefined {

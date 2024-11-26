@@ -1,6 +1,6 @@
 import type {SlotContent as CoreSlotContent, Widget, WidgetState, Extends} from '@agnos-ui/core/types';
 import type {Signal, TemplateRef, Type} from '@angular/core';
-import {Directive, Input} from '@angular/core';
+import {Directive, input} from '@angular/core';
 
 export * from '@agnos-ui/core/types';
 
@@ -14,7 +14,7 @@ export * from '@agnos-ui/core/types';
  * @param component - The component type that contains the template.
  * @param templateProp - The key in the component that maps to the template reference.
  */
-export class ComponentTemplate<Props, K extends string, T extends {[key in K]: TemplateRef<Props>}> {
+export class ComponentTemplate<Props, K extends string, T extends {[key in K]: Signal<TemplateRef<Props>>}> {
 	constructor(
 		public readonly component: Type<T>,
 		public readonly templateProp: K,
@@ -50,18 +50,15 @@ export abstract class SlotComponent<W extends Widget> {
 	/**
 	 * The state of the widget. Each property of the state is exposed through an Angular {@link https://angular.dev/api/core/Signal | Signal}
 	 */
-	@Input()
-	state!: AngularState<W>;
+	readonly state = input.required<AngularState<W>>();
 	/**
 	 * all the api functions to interact with the widget
 	 */
-	@Input()
-	api!: W['api'];
+	readonly api = input.required<W['api']>();
 	/**
 	 * directives to be used on html elements in the template of the slot
 	 */
-	@Input()
-	directives!: W['directives'];
+	readonly directives = input.required<W['directives']>();
 }
 
 /**
