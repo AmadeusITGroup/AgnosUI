@@ -35,27 +35,27 @@ export default class ActionToastComponent {}
 		<div class="d-flex w-100">
 			<div class="d-flex align-items-center flex-grow-1 toast-body">
 				<span class="d-flex me-2" [innerHTML]="sanitizer.bypassSecurityTrustHtml(biCheckCircleFill)"></span>
-				<ng-template [auSlot]="state.children()" [auSlotProps]="{state, api, directives}" />
+				<ng-template [auSlot]="state().children()" [auSlotProps]="slotContext()" />
 				<button type="button" class="btn btn-sm ms-auto text-bg-success" (click)="actionDemo()">
 					<span class="me-2" [innerHTML]="sanitizer.bypassSecurityTrustHtml(biArrowCounterClockwise)"></span>Undo
 				</button>
 			</div>
-			@if (state.dismissible()) {
+			@if (state().dismissible()) {
 				<button
 					type="button"
 					class="btn-close btn-close-white me-2 m-auto"
-					(click)="api.close()"
-					[attr.aria-label]="state.ariaCloseButtonLabel()"
+					(click)="api().close()"
+					[attr.aria-label]="state().ariaCloseButtonLabel()"
 				></button>
 			}
 		</div>
 	`,
 })
 export class ToastIconComponent extends SlotComponent<ToastWidget> {
-	sanitizer = inject(DomSanitizer);
+	readonly sanitizer = inject(DomSanitizer);
 
-	biCheckCircleFill = biCheckCircleFill;
-	biArrowCounterClockwise = biArrowCounterClockwise;
+	readonly biCheckCircleFill = biCheckCircleFill;
+	readonly biArrowCounterClockwise = biArrowCounterClockwise;
 
 	actionDemo() {
 		window.alert('Undo');

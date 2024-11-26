@@ -1,6 +1,6 @@
 import type {SlotContent as CoreSlotContent, Widget, WidgetState, Extends} from '@agnos-ui/core/types';
 import type {Signal, TemplateRef, Type} from '@angular/core';
-import {Directive, input} from '@angular/core';
+import {computed, Directive, input} from '@angular/core';
 
 export * from '@agnos-ui/core/types';
 
@@ -59,6 +59,10 @@ export abstract class SlotComponent<W extends Widget> {
 	 * directives to be used on html elements in the template of the slot
 	 */
 	readonly directives = input.required<W['directives']>();
+	/**
+	 * The slot context, to be used when the slot component uses other slots.
+	 */
+	readonly slotContext = computed(() => ({state: this.state(), api: this.api(), directives: this.directives()}));
 }
 
 /**

@@ -1,5 +1,5 @@
-import {Component, ViewChild, ViewChildren} from '@angular/core';
-import type {QueryList} from '@angular/core';
+import {Component, viewChild, viewChildren} from '@angular/core';
+
 import {AccordionItemComponent, AgnosUIAngularModule} from '@agnos-ui/angular-bootstrap';
 import {AccordionDirective} from '@agnos-ui/angular-bootstrap';
 import {getUndefinedValues, hashChangeHook, provideHashConfig} from '../../utils';
@@ -21,13 +21,13 @@ const undefinedAccordionConfig = getUndefinedValues(getAccordionDefaultConfig())
 	</div>`,
 })
 export default class PlaygroundComponent {
-	@ViewChild(AccordionDirective) widget!: AccordionDirective;
-	@ViewChildren(AccordionItemComponent) itemWidgets!: QueryList<AccordionItemComponent>;
+	readonly widget = viewChild.required(AccordionDirective);
+	readonly itemWidgets = viewChildren(AccordionItemComponent);
 
 	constructor() {
 		hashChangeHook((props) => {
-			this.widget['_widget'].patch({...undefinedAccordionConfig, ...props});
-			this.itemWidgets?.forEach((widget) => {
+			this.widget()['_widget'].patch({...undefinedAccordionConfig, ...props});
+			this.itemWidgets().forEach((widget) => {
 				widget['_widget'].patch({...undefinedAccordionConfig, ...props});
 			});
 		});

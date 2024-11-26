@@ -1,6 +1,6 @@
 import {ProgressbarComponent} from '@agnos-ui/angular-bootstrap';
 import {getProgressbarDefaultConfig} from '@agnos-ui/core-bootstrap/components/progressbar';
-import {Component, ViewChild} from '@angular/core';
+import {Component, viewChild} from '@angular/core';
 import {getUndefinedValues, hashChangeHook, provideHashConfig} from '../../utils';
 
 const undefinedConfig = getUndefinedValues(getProgressbarDefaultConfig());
@@ -11,11 +11,11 @@ const undefinedConfig = getUndefinedValues(getProgressbarDefaultConfig());
 	template: `<div auProgressbar #widget></div>`,
 })
 export default class PlaygroundComponent {
-	@ViewChild('widget') widget!: ProgressbarComponent;
+	readonly widget = viewChild.required<ProgressbarComponent>('widget');
 
 	constructor() {
 		hashChangeHook((props) => {
-			this.widget['_widget'].patch({...undefinedConfig, ...props});
+			this.widget()['_widget'].patch({...undefinedConfig, ...props});
 		});
 	}
 }
