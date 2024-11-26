@@ -102,6 +102,13 @@ export const componentsMetadata: Metadata = {
 			className: 'text-bg-primary',
 		},
 	},
+	Tree: {
+		title: 'Tree',
+		status: 'beta',
+		since: 'v0.6.0',
+		type: 'standalone',
+		includeStyles: true,
+	},
 };
 
 /**

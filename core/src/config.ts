@@ -10,6 +10,7 @@ import type {ProgressbarProps} from './components/progressbar/progressbar';
 import {identity} from './utils/internal/func';
 import type {SliderProps} from './components/slider/slider';
 import type {ToastProps} from './components/toast/toast';
+import type {TreeProps} from './components/tree/tree';
 
 /**
  * A utility type that makes all properties of an object type `T` optional,
@@ -137,4 +138,8 @@ export type WidgetsConfig = {
 	 * toast widget config
 	 */
 	toast: ToastProps;
+	/**
+	 * tree widget config
+	 */
+	tree: TreeProps;
 };

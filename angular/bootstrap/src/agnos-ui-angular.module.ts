@@ -33,6 +33,13 @@ import {SliderComponent, SliderHandleDirective, SliderLabelDirective, SliderStru
 import {ProgressbarComponent, ProgressbarBodyDirective, ProgressbarStructureDirective} from './components/progressbar/progressbar.component';
 import {ToastBodyDirective, ToastComponent, ToastHeaderDirective, ToastStructureDirective} from './components/toast/toast.component';
 import {CollapseDirective} from './components/collapse';
+import {
+	TreeComponent,
+	TreeItemContentDirective,
+	TreeItemDirective,
+	TreeStructureDirective,
+	TreeItemToggleDirective,
+} from './components/tree/tree.component';
 /* istanbul ignore next */
 const components = [
 	SlotDirective,
@@ -78,6 +85,11 @@ const components = [
 	ToastBodyDirective,
 	ToastHeaderDirective,
 	CollapseDirective,
+	TreeComponent,
+	TreeStructureDirective,
+	TreeItemToggleDirective,
+	TreeItemContentDirective,
+	TreeItemDirective,
 ];
 
 @NgModule({

@@ -84,6 +84,10 @@ export type {ToastContext, ToastProps, ToastState, ToastWidget, ToastApi, ToastD
 export {createToast, getToastDefaultConfig} from './components/toast';
 export * from './components/toast';
 
+export type {TreeProps, TreeState, TreeWidget, TreeApi, TreeDirectives, TreeItem, NormalizedTreeItem} from './components/tree';
+export {createTree, getTreeDefaultConfig} from './components/tree';
+export * from './components/tree';
+
 export * from '@agnos-ui/core-bootstrap/services/transitions';
 export * from '@agnos-ui/core-bootstrap/types';
 

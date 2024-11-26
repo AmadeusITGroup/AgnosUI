@@ -7,6 +7,7 @@ import {Rating} from '@agnos-ui/react-bootstrap/components/rating';
 import {Select} from '@agnos-ui/react-bootstrap/components/select';
 import {Slider} from '@agnos-ui/react-bootstrap/components/slider';
 import {Toast} from '@agnos-ui/react-bootstrap/components/toast';
+import {Tree, type TreeItem} from '@agnos-ui/react-bootstrap/components/tree';
 
 export const App = () => (
 	<div className="container">
@@ -55,5 +56,34 @@ export const App = () => (
 		<div className="my-3">
 			<Toast>This is a toast!</Toast>
 		</div>
+		<h2>Tree</h2>
+		<div className="my-3">
+			<Tree nodes={nodes} />
+		</div>
 	</div>
 );
+
+const nodes: TreeItem[] = [
+	{
+		label: 'Node 1',
+		isExpanded: true,
+		children: [
+			{
+				label: 'Node 1.1',
+				children: [
+					{
+						label: 'Node 1.1.1',
+					},
+				],
+			},
+			{
+				label: 'Node 1.2',
+				children: [
+					{
+						label: 'Node 1.2.1',
+					},
+				],
+			},
+		],
+	},
+];

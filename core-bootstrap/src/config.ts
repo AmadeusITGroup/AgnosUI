@@ -8,6 +8,7 @@ import type {RatingProps} from './components/rating';
 import type {SelectProps} from './components/select';
 import type {SliderProps} from './components/slider';
 import type {ToastProps} from './components/toast';
+import type {TreeProps} from './components/tree';
 
 /**
  * Configuration interface for various Bootstrap widgets.
@@ -53,4 +54,8 @@ export interface BootstrapWidgetsConfig {
 	 * collapse widget config
 	 */
 	collapse: CollapseProps;
+	/**
+	 * tree widget config
+	 */
+	tree: TreeProps;
 }

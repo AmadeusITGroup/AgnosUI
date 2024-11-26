@@ -8,11 +8,37 @@
 	import {Select} from '@agnos-ui/svelte-bootstrap/components/select';
 	import {Slider} from '@agnos-ui/svelte-bootstrap/components/slider';
 	import {Toast} from '@agnos-ui/svelte-bootstrap/components/toast';
+	import {Tree, type TreeItem} from '@agnos-ui/svelte-bootstrap/components/tree';
 	import {onMount} from 'svelte';
 
 	onMount(() => {
 		console.log('AGNOSUI-SSR-HYDRATION-COMPLETE');
 	});
+
+	const nodes: TreeItem[] = [
+		{
+			label: 'Node 1',
+			isExpanded: true,
+			children: [
+				{
+					label: 'Node 1.1',
+					children: [
+						{
+							label: 'Node 1.1.1',
+						},
+					],
+				},
+				{
+					label: 'Node 1.2',
+					children: [
+						{
+							label: 'Node 1.2.1',
+						},
+					],
+				},
+			],
+		},
+	];
 </script>
 
 <div class="container">
@@ -56,5 +82,9 @@
 	<h2>Toast</h2>
 	<div class="my-3">
 		<Toast>This is a toast!</Toast>
+	</div>
+	<h2>Tree</h2>
+	<div class="my-3">
+		<Tree {nodes} />
 	</div>
 </div>
