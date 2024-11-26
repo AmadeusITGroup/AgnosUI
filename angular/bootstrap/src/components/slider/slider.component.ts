@@ -11,16 +11,15 @@ import {
 import {
 	ChangeDetectionStrategy,
 	Component,
-	ContentChild,
 	Directive,
-	EventEmitter,
-	Input,
-	Output,
 	TemplateRef,
-	ViewChild,
 	ViewEncapsulation,
 	forwardRef,
 	inject,
+	input,
+	output,
+	viewChild,
+	contentChild,
 } from '@angular/core';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {callWidgetFactory} from '../../config';
@@ -62,7 +61,7 @@ export class SliderHandleDirective {
 	`,
 })
 class SliderDefaultHandleSlotComponent {
-	@ViewChild('handle', {static: true}) readonly handle!: TemplateRef<SliderSlotHandleContext>;
+	readonly handle = viewChild.required<TemplateRef<SliderSlotHandleContext>>('handle');
 }
 
 /**
@@ -123,7 +122,7 @@ export class SliderStructureDirective {
 	`,
 })
 class SliderDefaultStructureSlotComponent {
-	@ViewChild('structure', {static: true}) structure!: TemplateRef<SliderContext>;
+	readonly structure = viewChild.required<TemplateRef<SliderContext>>('structure');
 }
 
 /**
@@ -153,61 +152,56 @@ export class SliderComponent extends BaseWidgetDirective<SliderWidget> {
 	 *
 	 * @defaultValue `''`
 	 */
-	@Input('auClassName') className: string | undefined;
+	readonly className = input<string>(undefined, {alias: 'auClassName'});
 
 	/**
 	 * Minimum value that can be assigned to the slider
 	 *
 	 * @defaultValue `0`
 	 */
-	@Input({alias: 'auMin', transform: auNumberAttribute})
-	min: number | undefined;
+	readonly min = input(undefined, {alias: 'auMin', transform: auNumberAttribute});
 
 	/**
 	 * Maximum value that can be assigned to the slider
 	 *
 	 * @defaultValue `100`
 	 */
-	@Input({alias: 'auMax', transform: auNumberAttribute})
-	max: number | undefined;
+	readonly max = input(undefined, {alias: 'auMax', transform: auNumberAttribute});
 
 	/**
 	 * Unit value between slider steps
 	 *
 	 * @defaultValue `1`
 	 */
-	@Input({alias: 'auStepSize', transform: auNumberAttribute})
-	stepSize: number | undefined;
+	readonly stepSize = input(undefined, {alias: 'auStepSize', transform: auNumberAttribute});
 
 	/**
 	 * Current slider values
 	 *
 	 * @defaultValue `[0]`
 	 */
-	@Input('auValues')
-	values: number[] | undefined;
+	readonly values = input<number[]>(undefined, {alias: 'auValues'});
 
 	/**
 	 * It `true` slider display is inversed
 	 *
 	 * @defaultValue `false`
 	 */
-	@Input({alias: 'auRtl', transform: auBooleanAttribute})
-	rtl: boolean | undefined;
+	readonly rtl = input(undefined, {alias: 'auRtl', transform: auBooleanAttribute});
 
 	/**
 	 * If `true` the value labels are displayed on the slider
 	 *
 	 * @defaultValue `true`
 	 */
-	@Input({alias: 'auShowValueLabels', transform: auBooleanAttribute}) showValueLabels: boolean | undefined;
+	readonly showValueLabels = input(undefined, {alias: 'auShowValueLabels', transform: auBooleanAttribute});
 
 	/**
 	 * If `true` the min and max labels are displayed on the slider
 	 *
 	 * @defaultValue `true`
 	 */
-	@Input({alias: 'auShowMinMaxLabels', transform: auBooleanAttribute}) showMinMaxLabels: boolean | undefined;
+	readonly showMinMaxLabels = input(undefined, {alias: 'auShowMinMaxLabels', transform: auBooleanAttribute});
 
 	/**
 	 * Return the value for the 'aria-label' attribute for the handle
@@ -220,7 +214,7 @@ export class SliderComponent extends BaseWidgetDirective<SliderWidget> {
 	 * (value: number) => '' + value
 	 * ```
 	 */
-	@Input('auAriaLabelHandle') ariaLabelHandle: ((value: number, sortedIndex: number, index: number) => string) | undefined;
+	readonly ariaLabelHandle = input<(value: number, sortedIndex: number, index: number) => string>(undefined, {alias: 'auAriaLabelHandle'});
 
 	/**
 	 * Return the value for the 'aria-valuetext' attribute for the handle
@@ -233,31 +227,28 @@ export class SliderComponent extends BaseWidgetDirective<SliderWidget> {
 	 * (value: number) => '' + value
 	 * ```
 	 */
-	@Input('auAriaValueText') ariaValueText: ((value: number, sortedIndex: number, index: number) => string) | undefined;
+	readonly ariaValueText = input<(value: number, sortedIndex: number, index: number) => string>(undefined, {alias: 'auAriaValueText'});
 
 	/**
 	 * If `true` slider value cannot be changed but the slider is still focusable
 	 *
 	 * @defaultValue `false`
 	 */
-	@Input({alias: 'auReadonly', transform: auBooleanAttribute})
-	readonly: boolean | undefined;
+	readonly readonly = input(undefined, {alias: 'auReadonly', transform: auBooleanAttribute});
 
 	/**
 	 * If `true` slider value cannot be changed and the slider cannot be focused
 	 *
 	 * @defaultValue `false`
 	 */
-	@Input({alias: 'auDisabled', transform: auBooleanAttribute})
-	disabled: boolean | undefined;
+	readonly disabled = input(undefined, {alias: 'auDisabled', transform: auBooleanAttribute});
 
 	/**
 	 * If `true` is vertically positioned otherwise it is horizontal
 	 *
 	 * @defaultValue `false`
 	 */
-	@Input({alias: 'auVertical', transform: auBooleanAttribute})
-	vertical: boolean | undefined;
+	readonly vertical = input(undefined, {alias: 'auVertical', transform: auBooleanAttribute});
 
 	/**
 	 * An event emitted when slider values are changed
@@ -269,8 +260,7 @@ export class SliderComponent extends BaseWidgetDirective<SliderWidget> {
 	 * () => {}
 	 * ```
 	 */
-	@Output('auValuesChange')
-	valuesChange = new EventEmitter<number[]>();
+	readonly valuesChange = output<number[]>({alias: 'auValuesChange'});
 
 	/**
 	 * Slot to change the default labels of the slider
@@ -280,20 +270,20 @@ export class SliderComponent extends BaseWidgetDirective<SliderWidget> {
 	 * ({value}: SliderSlotLabelContext) => '' + value
 	 * ```
 	 */
-	@Input('auLabel') label: SlotContent<SliderSlotLabelContext>;
-	@ContentChild(SliderLabelDirective, {static: false}) slotLabelFromContent: SliderLabelDirective | undefined;
+	readonly label = input<SlotContent<SliderSlotLabelContext>>(undefined, {alias: 'auLabel'});
+	readonly slotLabelFromContent = contentChild(SliderLabelDirective);
 
 	/**
 	 * Slot to change the default display of the slider
 	 */
-	@Input('auStructure') structure: SlotContent<SliderContext>;
-	@ContentChild(SliderStructureDirective, {static: false}) slotStructureFromContent: SliderStructureDirective | undefined;
+	readonly structure = input<SlotContent<SliderContext>>(undefined, {alias: 'auStructure'});
+	readonly slotStructureFromContent = contentChild(SliderStructureDirective);
 
 	/**
 	 * Slot to change the handlers
 	 */
-	@Input('auHandle') handle: SlotContent<SliderSlotHandleContext>;
-	@ContentChild(SliderHandleDirective, {static: false}) slotHandleFromContent: SliderHandleDirective | undefined;
+	readonly handle = input<SlotContent<SliderSlotHandleContext>>(undefined, {alias: 'auHandle'});
+	readonly slotHandleFromContent = contentChild(SliderHandleDirective);
 
 	constructor() {
 		super(
@@ -315,9 +305,9 @@ export class SliderComponent extends BaseWidgetDirective<SliderWidget> {
 					useDirectiveForHost(widget.directives.sliderDirective);
 				},
 				slotTemplates: () => ({
-					structure: this.slotStructureFromContent?.templateRef,
-					handle: this.slotHandleFromContent?.templateRef,
-					label: this.slotLabelFromContent?.templateRef,
+					structure: this.slotStructureFromContent()?.templateRef,
+					handle: this.slotHandleFromContent()?.templateRef,
+					label: this.slotLabelFromContent()?.templateRef,
 				}),
 			}),
 		);

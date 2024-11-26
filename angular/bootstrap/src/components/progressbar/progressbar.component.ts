@@ -8,7 +8,7 @@ import {
 } from '@agnos-ui/angular-headless';
 import type {SlotContent} from '@agnos-ui/angular-headless';
 import {NgClass} from '@angular/common';
-import {ChangeDetectionStrategy, Component, ContentChild, Directive, Input, TemplateRef, ViewChild, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Directive, TemplateRef, inject, input, viewChild, contentChild} from '@angular/core';
 import type {ProgressbarContext, ProgressbarWidget} from './progressbar.gen';
 import {createProgressbar} from './progressbar.gen';
 
@@ -60,7 +60,7 @@ export class ProgressbarStructureDirective {
 	`,
 })
 class ProgressbarDefaultSlotsComponent {
-	@ViewChild('structure', {static: true}) structure!: TemplateRef<ProgressbarContext>;
+	readonly structure = viewChild.required<TemplateRef<ProgressbarContext>>('structure');
 }
 
 /**
@@ -92,55 +92,54 @@ export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget>
 	 *
 	 * @defaultValue `'Progressbar'`
 	 */
-	@Input('auAriaLabel') ariaLabel: string | undefined;
+	readonly ariaLabel = input<string>(undefined, {alias: 'auAriaLabel'});
 
 	/**
 	 * The minimum value.
 	 *
 	 * @defaultValue `0`
 	 */
-	@Input({alias: 'auMin', transform: auNumberAttribute}) min: number | undefined;
+	readonly min = input(undefined, {alias: 'auMin', transform: auNumberAttribute});
 
 	/**
 	 * The maximum value.
 	 *
 	 * @defaultValue `100`
 	 */
-	@Input({alias: 'auMax', transform: auNumberAttribute}) max: number | undefined;
+	readonly max = input(undefined, {alias: 'auMax', transform: auNumberAttribute});
 
 	/**
 	 * The current value.
 	 *
 	 * @defaultValue `0`
 	 */
-	@Input({alias: 'auValue', transform: auNumberAttribute}) value: number | undefined;
+	readonly value = input(undefined, {alias: 'auValue', transform: auNumberAttribute});
 
 	/**
 	 * CSS classes to be applied on the widget main container
 	 *
 	 * @defaultValue `''`
 	 */
-	@Input('auClassName') className: string | undefined;
+	readonly className = input<string>(undefined, {alias: 'auClassName'});
 
 	/**
 	 * Label of the progress.
 	 */
-	@Input('auChildren') children: SlotContent<ProgressbarContext>;
-	@ContentChild(ProgressbarBodyDirective, {static: false})
-	slotDefaultFromContent: ProgressbarBodyDirective | undefined;
+	readonly children = input<SlotContent<ProgressbarContext>>(undefined, {alias: 'auChildren'});
+	readonly slotDefaultFromContent = contentChild(ProgressbarBodyDirective);
 
 	/**
 	 * Global template for the Progressbar.
 	 */
-	@Input('auStructure') structure: SlotContent<ProgressbarContext>;
-	@ContentChild(ProgressbarStructureDirective, {static: false}) slotStructureFromContent: ProgressbarStructureDirective | undefined;
+	readonly structure = input<SlotContent<ProgressbarContext>>(undefined, {alias: 'auStructure'});
+	readonly slotStructureFromContent = contentChild(ProgressbarStructureDirective);
 
 	/**
 	 * Height of the progressbar, can be any valid css height value.
 	 *
 	 * @defaultValue `''`
 	 */
-	@Input('auHeight') height: string | undefined;
+	readonly height = input<string>(undefined, {alias: 'auHeight'});
 
 	/**
 	 * If `true`, animates a striped progressbar.
@@ -148,14 +147,14 @@ export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget>
 	 *
 	 * @defaultValue `false`
 	 */
-	@Input({alias: 'auAnimated', transform: auBooleanAttribute}) animated: boolean | undefined;
+	readonly animated = input(undefined, {alias: 'auAnimated', transform: auBooleanAttribute});
 
 	/**
 	 * If `true`, shows a striped progressbar.
 	 *
 	 * @defaultValue `false`
 	 */
-	@Input({alias: 'auStriped', transform: auBooleanAttribute}) striped: boolean | undefined;
+	readonly striped = input(undefined, {alias: 'auStriped', transform: auBooleanAttribute});
 
 	/**
 	 * Return the value for the 'aria-valuetext' attribute.
@@ -168,15 +167,14 @@ export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget>
 	 * () => undefined
 	 * ```
 	 */
-	@Input('auAriaValueTextFn') ariaValueTextFn: ((value: number, minimum: number, maximum: number) => string | undefined) | undefined;
+	readonly ariaValueTextFn = input<(value: number, minimum: number, maximum: number) => string | undefined>(undefined, {alias: 'auAriaValueTextFn'});
 
 	/**
 	 * Type of the progressbar, following bootstrap types.
 	 */
-	@Input('auType') type: BSContextualClass | undefined;
+	readonly type = input<BSContextualClass>(undefined, {alias: 'auType'});
 
-	@ViewChild('content', {static: true})
-	slotChildren?: TemplateRef<void>;
+	readonly slotChildren = viewChild<TemplateRef<void>>('content');
 
 	constructor() {
 		super(
@@ -188,10 +186,10 @@ export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget>
 				},
 				afterInit: (widget) => useDirectiveForHost(widget.directives.ariaDirective),
 				slotTemplates: () => ({
-					structure: this.slotStructureFromContent?.templateRef,
-					children: this.slotDefaultFromContent?.templateRef,
+					structure: this.slotStructureFromContent()?.templateRef,
+					children: this.slotDefaultFromContent()?.templateRef,
 				}),
-				slotChildren: () => this.slotChildren,
+				slotChildren: () => this.slotChildren(),
 			}),
 		);
 	}

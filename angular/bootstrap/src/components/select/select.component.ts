@@ -7,7 +7,7 @@ import {
 	auBooleanAttribute,
 	useDirectiveForHost,
 } from '@agnos-ui/angular-headless';
-import {ChangeDetectionStrategy, Component, ContentChild, Directive, EventEmitter, Input, Output, TemplateRef, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Directive, TemplateRef, inject, input, output, contentChild} from '@angular/core';
 import type {Placement} from '@floating-ui/dom';
 import {callWidgetFactory} from '../../config';
 import type {ItemContext, SelectItemContext, SelectWidget} from './select.gen';
@@ -90,19 +90,19 @@ export class SelectComponent<Item> extends BaseWidgetDirective<SelectWidget<Item
 	 *
 	 * @defaultValue `'Select'`
 	 */
-	@Input('auAriaLabel') ariaLabel: string | undefined;
+	readonly ariaLabel = input<string>(undefined, {alias: 'auAriaLabel'});
 
 	/**
 	 * id used for the input inside the select
 	 */
-	@Input('auId') id: string | undefined;
+	readonly id = input<string>(undefined, {alias: 'auId'});
 
 	/**
 	 * List of available items for the dropdown
 	 *
 	 * @defaultValue `[]`
 	 */
-	@Input('auItems') items: Item[] | undefined;
+	readonly items = input<Item[]>(undefined, {alias: 'auItems'});
 
 	/**
 	 * List of allowed placements for the dropdown.
@@ -113,49 +113,49 @@ export class SelectComponent<Item> extends BaseWidgetDirective<SelectWidget<Item
 	 * ['bottom-start', 'top-start', 'bottom-end', 'top-end']
 	 * ```
 	 */
-	@Input('auAllowedPlacements') allowedPlacements: Placement[] | undefined;
+	readonly allowedPlacements = input<Placement[]>(undefined, {alias: 'auAllowedPlacements'});
 
 	/**
 	 * true if the select is open
 	 *
 	 * @defaultValue `false`
 	 */
-	@Input({alias: 'auOpen', transform: auBooleanAttribute}) open: boolean | undefined;
+	readonly open = input(undefined, {alias: 'auOpen', transform: auBooleanAttribute});
 
 	/**
 	 * Filtered text to be display in the filter input
 	 *
 	 * @defaultValue `''`
 	 */
-	@Input('auFilterText') filterText: string | undefined;
+	readonly filterText = input<string>(undefined, {alias: 'auFilterText'});
 
 	/**
 	 * CSS classes to be applied on the widget main container
 	 *
 	 * @defaultValue `''`
 	 */
-	@Input('auClassName') className: string | undefined;
+	readonly className = input<string>(undefined, {alias: 'auClassName'});
 
 	/**
 	 * true if the select is disabled
 	 *
 	 * @defaultValue `false`
 	 */
-	@Input({alias: 'auDisabled', transform: auBooleanAttribute}) disabled: boolean | undefined;
+	readonly disabled = input(undefined, {alias: 'auDisabled', transform: auBooleanAttribute});
 
 	/**
 	 * List of selected item ids
 	 *
 	 * @defaultValue `[]`
 	 */
-	@Input('auSelected') selected: Item[] | undefined;
+	readonly selected = input<Item[]>(undefined, {alias: 'auSelected'});
 
 	/**
 	 * true if a loading process is being done
 	 *
 	 * @defaultValue `false`
 	 */
-	@Input({alias: 'auLoading', transform: auBooleanAttribute}) loading: boolean | undefined;
+	readonly loading = input(undefined, {alias: 'auLoading', transform: auBooleanAttribute});
 
 	/**
 	 * Custom function to get the id of an item
@@ -166,14 +166,14 @@ export class SelectComponent<Item> extends BaseWidgetDirective<SelectWidget<Item
 	 * (item: any) => '' + item
 	 * ```
 	 */
-	@Input('auItemIdFn') itemIdFn: ((item: Item) => string) | undefined;
+	readonly itemIdFn = input<(item: Item) => string>(undefined, {alias: 'auItemIdFn'});
 
 	/**
 	 * Class to be added on the dropdown menu container
 	 *
 	 * @defaultValue `''`
 	 */
-	@Input('auMenuClassName') menuClassName: string | undefined;
+	readonly menuClassName = input<string>(undefined, {alias: 'auMenuClassName'});
 
 	/**
 	 * The template to override the way each badge on the left of the input is displayed.
@@ -184,8 +184,8 @@ export class SelectComponent<Item> extends BaseWidgetDirective<SelectWidget<Item
 	 * ({itemContext}: SelectItemContext<any>) => itemContext.item
 	 * ```
 	 */
-	@Input('auBadgeLabel') badgeLabel: SlotContent<SelectItemContext<Item>>;
-	@ContentChild(SelectBadgeLabelDirective, {static: false}) slotSelectBadgeLabelFromContent: SelectBadgeLabelDirective<Item> | undefined;
+	readonly badgeLabel = input<SlotContent<SelectItemContext<Item>>>(undefined, {alias: 'auBadgeLabel'});
+	readonly slotSelectBadgeLabelFromContent = contentChild(SelectBadgeLabelDirective);
 
 	/**
 	 * The template to override the way each item is displayed in the list.
@@ -196,8 +196,8 @@ export class SelectComponent<Item> extends BaseWidgetDirective<SelectWidget<Item
 	 * ({itemContext}: SelectItemContext<any>) => itemContext.item
 	 * ```
 	 */
-	@Input('auItemLabel') itemLabel: SlotContent<SelectItemContext<Item>>;
-	@ContentChild(SelectItemLabelDirective, {static: false}) slotSelectItemLabelFromContent: SelectItemLabelDirective<Item> | undefined;
+	readonly itemLabel = input<SlotContent<SelectItemContext<Item>>>(undefined, {alias: 'auItemLabel'});
+	readonly slotSelectItemLabelFromContent = contentChild(SelectItemLabelDirective);
 
 	/**
 	 * Callback called when the text filter change
@@ -208,7 +208,7 @@ export class SelectComponent<Item> extends BaseWidgetDirective<SelectWidget<Item
 	 * () => {}
 	 * ```
 	 */
-	@Output('auFilterTextChange') filterTextChange = new EventEmitter<string>();
+	readonly filterTextChange = output<string>({alias: 'auFilterTextChange'});
 
 	/**
 	 * Callback called when the selection change
@@ -218,7 +218,7 @@ export class SelectComponent<Item> extends BaseWidgetDirective<SelectWidget<Item
 	 * () => {}
 	 * ```
 	 */
-	@Output('auSelectedChange') selectedChange = new EventEmitter<Item[]>();
+	readonly selectedChange = output<Item[]>({alias: 'auSelectedChange'});
 
 	/**
 	 * Callback called dropdown open state change
@@ -229,21 +229,21 @@ export class SelectComponent<Item> extends BaseWidgetDirective<SelectWidget<Item
 	 * () => {}
 	 * ```
 	 */
-	@Output('auOpenChange') openChange = new EventEmitter<boolean>();
+	readonly openChange = output<boolean>({alias: 'auOpenChange'});
 
 	/**
 	 * Class to be added on menu items
 	 *
 	 * @defaultValue `''`
 	 */
-	@Input('auMenuItemClassName') menuItemClassName: string | undefined;
+	readonly menuItemClassName = input<string>(undefined, {alias: 'auMenuItemClassName'});
 
 	/**
 	 * Class to be added on selected items (displayed in the input zone)
 	 *
 	 * @defaultValue `''`
 	 */
-	@Input('auBadgeClassName') badgeClassName: string | undefined;
+	readonly badgeClassName = input<string>(undefined, {alias: 'auBadgeClassName'});
 
 	/**
 	 * Retrieves navigable elements within an HTML element containing badges and the input.
@@ -255,7 +255,7 @@ export class SelectComponent<Item> extends BaseWidgetDirective<SelectWidget<Item
 	 * (node: HTMLElement) => node.querySelectorAll('.au-select-badge,input')
 	 * ```
 	 */
-	@Input('auNavSelector') navSelector: ((node: HTMLElement) => NodeListOf<HTMLSpanElement | HTMLInputElement>) | undefined;
+	readonly navSelector = input<(node: HTMLElement) => NodeListOf<HTMLSpanElement | HTMLInputElement>>(undefined, {alias: 'auNavSelector'});
 
 	constructor() {
 		super(
@@ -271,8 +271,8 @@ export class SelectComponent<Item> extends BaseWidgetDirective<SelectWidget<Item
 					useDirectiveForHost(widget.directives.referenceDirective);
 				},
 				slotTemplates: () => ({
-					badgeLabel: this.slotSelectBadgeLabelFromContent?.templateRef,
-					itemLabel: this.slotSelectItemLabelFromContent?.templateRef,
+					badgeLabel: this.slotSelectBadgeLabelFromContent()?.templateRef,
+					itemLabel: this.slotSelectItemLabelFromContent()?.templateRef,
 				}),
 			}),
 		);

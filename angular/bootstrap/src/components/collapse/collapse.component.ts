@@ -1,7 +1,7 @@
 import {auBooleanAttribute, BaseWidgetDirective, useDirectiveForHost} from '@agnos-ui/angular-headless';
 import type {CollapseWidget} from '@agnos-ui/core-bootstrap/components/collapse';
 import {createCollapse} from '@agnos-ui/core-bootstrap/components/collapse';
-import {Directive, EventEmitter, Input, Output} from '@angular/core';
+import {Directive, input, output} from '@angular/core';
 import {callWidgetFactory} from '../../config';
 
 /**
@@ -18,42 +18,42 @@ export class CollapseDirective extends BaseWidgetDirective<CollapseWidget> {
 	 *
 	 * @defaultValue `false`
 	 */
-	@Input({alias: 'auAnimatedOnInit', transform: auBooleanAttribute}) animatedOnInit: boolean | undefined;
+	readonly animatedOnInit = input(undefined, {alias: 'auAnimatedOnInit', transform: auBooleanAttribute});
 
 	/**
 	 * If `true`, collapse closing and opening will be animated.
 	 *
 	 * @defaultValue `true`
 	 */
-	@Input({alias: 'auAnimated', transform: auBooleanAttribute}) animated: boolean | undefined;
+	readonly animated = input(undefined, {alias: 'auAnimated', transform: auBooleanAttribute});
 
 	/**
 	 * CSS classes to be applied on the widget main container
 	 *
 	 * @defaultValue `''`
 	 */
-	@Input('auClassName') className: string | undefined;
+	readonly className = input<string>(undefined, {alias: 'auClassName'});
 
 	/**
 	 * If `true`, collapse will be done horizontally.
 	 *
 	 * @defaultValue `false`
 	 */
-	@Input({alias: 'auHorizontal', transform: auBooleanAttribute}) horizontal: boolean | undefined;
+	readonly horizontal = input(undefined, {alias: 'auHorizontal', transform: auBooleanAttribute});
 
 	/**
 	 * If `true` the collapse is visible to the user
 	 *
 	 * @defaultValue `true`
 	 */
-	@Input({alias: 'auVisible', transform: auBooleanAttribute}) visible: boolean | undefined;
+	readonly visible = input(undefined, {alias: 'auVisible', transform: auBooleanAttribute});
 
 	/**
 	 * id of the collapse
 	 *
 	 * @defaultValue `''`
 	 */
-	@Input('auId') id: string | undefined;
+	readonly id = input<string>(undefined, {alias: 'auId'});
 
 	/**
 	 * Callback called when the collapse visibility changed.
@@ -63,7 +63,7 @@ export class CollapseDirective extends BaseWidgetDirective<CollapseWidget> {
 	 * () => {}
 	 * ```
 	 */
-	@Output('auVisibleChange') visibleChange = new EventEmitter<boolean>();
+	readonly visibleChange = output<boolean>({alias: 'auVisibleChange'});
 
 	/**
 	 * Callback called when the collapse is hidden.
@@ -73,7 +73,7 @@ export class CollapseDirective extends BaseWidgetDirective<CollapseWidget> {
 	 * () => {}
 	 * ```
 	 */
-	@Output('auHidden') hidden = new EventEmitter<void>();
+	readonly hidden = output<void>({alias: 'auHidden'});
 
 	/**
 	 * Callback called when the collapse is shown.
@@ -83,7 +83,7 @@ export class CollapseDirective extends BaseWidgetDirective<CollapseWidget> {
 	 * () => {}
 	 * ```
 	 */
-	@Output('auShown') shown = new EventEmitter<void>();
+	readonly shown = output<void>({alias: 'auShown'});
 
 	constructor() {
 		super(

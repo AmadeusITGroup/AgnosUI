@@ -2,18 +2,7 @@ import type {SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
 import {BaseWidgetDirective, ComponentTemplate, SlotDirective, UseDirective, UseMultiDirective, auBooleanAttribute} from '@agnos-ui/angular-headless';
 import type {ModalContext, ModalWidget, ModalBeforeCloseEvent} from './modal.gen';
 import {createModal} from './modal.gen';
-import {
-	ChangeDetectionStrategy,
-	Component,
-	ContentChild,
-	Directive,
-	EventEmitter,
-	Input,
-	Output,
-	TemplateRef,
-	ViewChild,
-	inject,
-} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Directive, TemplateRef, inject, input, output, viewChild, contentChild} from '@angular/core';
 import {callWidgetFactory} from '../../config';
 
 /**
@@ -109,8 +98,8 @@ export class ModalFooterDirective<Data> {
 	`,
 })
 class ModalDefaultSlotsComponent<Data> {
-	@ViewChild('header', {static: true}) header!: TemplateRef<ModalContext<Data>>;
-	@ViewChild('structure', {static: true}) structure!: TemplateRef<ModalContext<Data>>;
+	readonly header = viewChild.required<TemplateRef<ModalContext<Data>>>('header');
+	readonly structure = viewChild.required<TemplateRef<ModalContext<Data>>>('structure');
 }
 
 /**
@@ -152,42 +141,42 @@ export class ModalComponent<Data> extends BaseWidgetDirective<ModalWidget<Data>>
 	 *
 	 * @defaultValue `true`
 	 */
-	@Input({alias: 'auAnimated', transform: auBooleanAttribute}) animated: boolean | undefined;
+	readonly animated = input(undefined, {alias: 'auAnimated', transform: auBooleanAttribute});
 
 	/**
 	 * The transition to use for the backdrop behind the modal (if present).
 	 *
 	 * @defaultValue `fadeTransition`
 	 */
-	@Input('auBackdropTransition') backdropTransition: TransitionFn | undefined;
+	readonly backdropTransition = input<TransitionFn>(undefined, {alias: 'auBackdropTransition'});
 
 	/**
 	 * The transition to use for the modal.
 	 *
 	 * @defaultValue `fadeTransition`
 	 */
-	@Input('auModalTransition') modalTransition: TransitionFn | undefined;
+	readonly modalTransition = input<TransitionFn>(undefined, {alias: 'auModalTransition'});
 
 	/**
 	 * Whether the modal should be visible when the transition is completed.
 	 *
 	 * @defaultValue `false`
 	 */
-	@Input({alias: 'auVisible', transform: auBooleanAttribute}) visible: boolean | undefined;
+	readonly visible = input(undefined, {alias: 'auVisible', transform: auBooleanAttribute});
 
 	/**
 	 * Whether a backdrop should be created behind the modal.
 	 *
 	 * @defaultValue `true`
 	 */
-	@Input({alias: 'auBackdrop', transform: auBooleanAttribute}) backdrop: boolean | undefined;
+	readonly backdrop = input(undefined, {alias: 'auBackdrop', transform: auBooleanAttribute});
 
 	/**
 	 * Whether the modal should be closed when clicking on the viewport outside the modal.
 	 *
 	 * @defaultValue `true`
 	 */
-	@Input({alias: 'auCloseOnOutsideClick', transform: auBooleanAttribute}) closeOnOutsideClick: boolean | undefined;
+	readonly closeOnOutsideClick = input(undefined, {alias: 'auCloseOnOutsideClick', transform: auBooleanAttribute});
 
 	/**
 	 * Which element should contain the modal and backdrop DOM elements.
@@ -199,83 +188,78 @@ export class ModalComponent<Data> extends BaseWidgetDirective<ModalWidget<Data>>
 	 * typeof window !== 'undefined' ? document.body : null
 	 * ```
 	 */
-	@Input('auContainer') container: HTMLElement | null | undefined;
+	readonly container = input<HTMLElement | null>(undefined, {alias: 'auContainer'});
 
 	/**
 	 * Value of the aria-label attribute to put on the close button.
 	 *
 	 * @defaultValue `'Close'`
 	 */
-	@Input('auAriaCloseButtonLabel') ariaCloseButtonLabel: string | undefined;
+	readonly ariaCloseButtonLabel = input<string>(undefined, {alias: 'auAriaCloseButtonLabel'});
 
 	/**
 	 * Classes to add on the backdrop DOM element.
 	 *
 	 * @defaultValue `''`
 	 */
-	@Input('auBackdropClass') backdropClass: string | undefined;
+	readonly backdropClass = input<string>(undefined, {alias: 'auBackdropClass'});
 
 	/**
 	 * Whether to display the close button.
 	 *
 	 * @defaultValue `true`
 	 */
-	@Input({alias: 'auCloseButton', transform: auBooleanAttribute}) closeButton: boolean | undefined;
+	readonly closeButton = input(undefined, {alias: 'auCloseButton', transform: auBooleanAttribute});
 
 	/**
 	 * CSS classes to be applied on the widget main container
 	 *
 	 * @defaultValue `''`
 	 */
-	@Input('auClassName') className: string | undefined;
+	readonly className = input<string>(undefined, {alias: 'auClassName'});
 
 	/**
 	 * Option to create a fullscreen modal, according to the bootstrap documentation.
 	 *
 	 * @defaultValue `false`
 	 */
-	@Input({alias: 'auFullscreen', transform: auBooleanAttribute}) fullscreen: boolean | undefined;
+	readonly fullscreen = input(undefined, {alias: 'auFullscreen', transform: auBooleanAttribute});
 
 	/**
 	 * Structure of the modal.
 	 * The default structure uses {@link ModalProps.header|header}, {@link ModalProps.children|children} and {@link ModalProps.footer|footer}.
 	 */
-	@Input('auStructure') structure: SlotContent<ModalContext<Data>>;
-	@ContentChild(ModalStructureDirective, {static: false})
-	slotStructureFromContent: ModalStructureDirective<Data> | undefined;
+	readonly structure = input<SlotContent<ModalContext<Data>>>(undefined, {alias: 'auStructure'});
+	readonly slotStructureFromContent = contentChild(ModalStructureDirective);
 
 	/**
 	 * Header of the modal. The default header includes {@link ModalProps.title|title}.
 	 */
-	@Input('auHeader') header: SlotContent<ModalContext<Data>>;
-	@ContentChild(ModalHeaderDirective, {static: false})
-	slotHeaderFromContent: ModalHeaderDirective<Data> | undefined;
+	readonly header = input<SlotContent<ModalContext<Data>>>(undefined, {alias: 'auHeader'});
+	readonly slotHeaderFromContent = contentChild(ModalHeaderDirective);
 
 	/**
 	 * Title of the modal.
 	 */
-	@Input('auTitle') title: SlotContent<ModalContext<Data>>;
-	@ContentChild(ModalTitleDirective, {static: false})
-	slotTitleFromContent: ModalTitleDirective<Data> | undefined;
+	readonly title = input<SlotContent<ModalContext<Data>>>(undefined, {alias: 'auTitle'});
+	readonly slotTitleFromContent = contentChild(ModalTitleDirective);
 
 	/**
 	 * Body of the modal.
 	 */
-	@Input('auChildren') children: SlotContent<ModalContext<Data>>;
-	@ContentChild(ModalBodyDirective, {static: false})
-	slotDefaultFromContent: ModalBodyDirective<Data> | undefined;
+	readonly children = input<SlotContent<ModalContext<Data>>>(undefined, {alias: 'auChildren'});
+	readonly slotDefaultFromContent = contentChild(ModalBodyDirective);
 
 	/**
 	 * Footer of the modal.
 	 */
-	@Input('auFooter') footer: SlotContent<ModalContext<Data>>;
-	@ContentChild(ModalFooterDirective, {static: false})
-	slotFooterFromContent: ModalFooterDirective<Data> | undefined;
+	readonly footer = input<SlotContent<ModalContext<Data>>>(undefined, {alias: 'auFooter'});
+	readonly slotFooterFromContent = contentChild(ModalFooterDirective);
 
 	/**
 	 * Data to use in content slots
 	 */
-	@Input('auContentData') contentData: Data | undefined;
+	readonly contentData = input<Data>(undefined, {alias: 'auContentData'});
 
 	/**
 	 * Event to be triggered when the visible property changes.
@@ -287,7 +271,7 @@ export class ModalComponent<Data> extends BaseWidgetDirective<ModalWidget<Data>>
 	 * () => {}
 	 * ```
 	 */
-	@Output('auVisibleChange') visibleChange = new EventEmitter<boolean>();
+	readonly visibleChange = output<boolean>({alias: 'auVisibleChange'});
 
 	/**
 	 * Event to be triggered when the modal is about to be closed (i.e. the {@link ModalApi.close|close} method was called).
@@ -300,7 +284,7 @@ export class ModalComponent<Data> extends BaseWidgetDirective<ModalWidget<Data>>
 	 * () => {}
 	 * ```
 	 */
-	@Output('auBeforeClose') beforeClose = new EventEmitter<ModalBeforeCloseEvent>();
+	readonly beforeClose = output<ModalBeforeCloseEvent>({alias: 'auBeforeClose'});
 
 	/**
 	 * Event to be triggered when the transition is completed and the modal is not visible.
@@ -310,7 +294,7 @@ export class ModalComponent<Data> extends BaseWidgetDirective<ModalWidget<Data>>
 	 * () => {}
 	 * ```
 	 */
-	@Output('auHidden') hidden = new EventEmitter<void>();
+	readonly hidden = output<void>({alias: 'auHidden'});
 
 	/**
 	 * Event to be triggered when the transition is completed and the modal is visible.
@@ -320,10 +304,9 @@ export class ModalComponent<Data> extends BaseWidgetDirective<ModalWidget<Data>>
 	 * () => {}
 	 * ```
 	 */
-	@Output('auShown') shown = new EventEmitter<void>();
+	readonly shown = output<void>({alias: 'auShown'});
 
-	@ViewChild('content', {static: true})
-	slotChildren?: TemplateRef<void>;
+	readonly slotChildren = viewChild<TemplateRef<void>>('content');
 
 	constructor() {
 		super(
@@ -342,13 +325,13 @@ export class ModalComponent<Data> extends BaseWidgetDirective<ModalWidget<Data>>
 				},
 				slotTemplates: () =>
 					({
-						children: this.slotDefaultFromContent?.templateRef,
-						footer: this.slotFooterFromContent?.templateRef,
-						header: this.slotHeaderFromContent?.templateRef,
-						structure: this.slotStructureFromContent?.templateRef,
-						title: this.slotTitleFromContent?.templateRef,
+						children: this.slotDefaultFromContent()?.templateRef,
+						footer: this.slotFooterFromContent()?.templateRef,
+						header: this.slotHeaderFromContent()?.templateRef,
+						structure: this.slotStructureFromContent()?.templateRef,
+						title: this.slotTitleFromContent()?.templateRef,
 					}) as any,
-				slotChildren: () => this.slotChildren,
+				slotChildren: () => this.slotChildren(),
 			}),
 		);
 	}

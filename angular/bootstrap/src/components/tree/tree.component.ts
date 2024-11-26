@@ -1,17 +1,6 @@
 import type {SlotContent} from '@agnos-ui/angular-headless';
 import {BaseWidgetDirective, callWidgetFactory, ComponentTemplate, SlotDirective, UseDirective} from '@agnos-ui/angular-headless';
-import {
-	ChangeDetectionStrategy,
-	Component,
-	ContentChild,
-	Directive,
-	EventEmitter,
-	inject,
-	Input,
-	Output,
-	TemplateRef,
-	ViewChild,
-} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Directive, inject, input, output, TemplateRef, viewChild} from '@angular/core';
 import type {TreeContext, TreeItem, NormalizedTreeItem, TreeSlotItemContext, TreeWidget} from './tree.gen';
 import {createTree} from './tree.gen';
 
@@ -43,7 +32,7 @@ export class TreeStructureDirective {
 	`,
 })
 class TreeDefaultStructureSlotComponent {
-	@ViewChild('structure', {static: true}) readonly structure!: TemplateRef<TreeContext>;
+	readonly structure = viewChild.required<TemplateRef<TreeContext>>('structure');
 
 	trackNode(index: number, node: NormalizedTreeItem): string {
 		return node.label + node.level + index;
@@ -85,7 +74,7 @@ export class TreeItemToggleDirective {
 	`,
 })
 class TreeDefaultItemToggleSlotComponent {
-	@ViewChild('toggle', {static: true}) readonly toggle!: TemplateRef<TreeSlotItemContext>;
+	readonly toggle = viewChild.required<TemplateRef<TreeSlotItemContext>>('toggle');
 }
 
 /**
@@ -120,7 +109,7 @@ export class TreeItemContentDirective {
 	`,
 })
 class TreeDefaultItemContentSlotComponent {
-	@ViewChild('treeItemContent', {static: true}) readonly treeItemContent!: TemplateRef<TreeSlotItemContext>;
+	readonly treeItemContent = viewChild.required<TemplateRef<TreeSlotItemContext>>('treeItemContent');
 }
 
 /**
@@ -164,7 +153,7 @@ export class TreeItemDirective {
 	`,
 })
 class TreeDefaultItemSlotComponent {
-	@ViewChild('treeItem', {static: true}) readonly treeItem!: TemplateRef<TreeSlotItemContext>;
+	readonly treeItem = viewChild.required<TemplateRef<TreeSlotItemContext>>('treeItem');
 
 	trackNode(index: number, node: NormalizedTreeItem) {
 		return node.label + node.level + index;
@@ -204,10 +193,10 @@ export class TreeComponent extends BaseWidgetDirective<TreeWidget> {
 					onExpandToggle: (item: NormalizedTreeItem) => this.expandToggle.emit(item),
 				},
 				slotTemplates: () => ({
-					structure: this.slotStructureFromContent?.templateRef,
-					item: this.slotItemFromContent?.templateRef,
-					itemContent: this.slotItemContentFromContent?.templateRef,
-					itemToggle: this.slotItemToggleFromContent?.templateRef,
+					structure: this.slotStructureFromContent()?.templateRef,
+					item: this.slotItemFromContent()?.templateRef,
+					itemContent: this.slotItemContentFromContent()?.templateRef,
+					itemToggle: this.slotItemToggleFromContent()?.templateRef,
 				}),
 			}),
 		);
@@ -217,19 +206,19 @@ export class TreeComponent extends BaseWidgetDirective<TreeWidget> {
 	 *
 	 * @defaultValue `''`
 	 */
-	@Input('auAriaLabel') ariaLabel: string | undefined;
+	readonly ariaLabel = input<string>(undefined, {alias: 'auAriaLabel'});
 	/**
 	 * Array of the tree nodes to display
 	 *
 	 * @defaultValue `[]`
 	 */
-	@Input('auNodes') nodes: TreeItem[] | undefined;
+	readonly nodes = input<TreeItem[]>(undefined, {alias: 'auNodes'});
 	/**
 	 * CSS classes to be applied on the widget main container
 	 *
 	 * @defaultValue `''`
 	 */
-	@Input('auClassName') className: string | undefined;
+	readonly className = input<string>(undefined, {alias: 'auClassName'});
 	/**
 	 * Retrieves expand items of the TreeItem
 	 *
@@ -240,7 +229,7 @@ export class TreeComponent extends BaseWidgetDirective<TreeWidget> {
 	 * (node: HTMLElement) => node.querySelectorAll('button')
 	 * ```
 	 */
-	@Input('auNavSelector') navSelector: ((node: HTMLElement) => NodeListOf<HTMLButtonElement>) | undefined;
+	readonly navSelector = input<(node: HTMLElement) => NodeListOf<HTMLButtonElement>>(undefined, {alias: 'auNavSelector'});
 	/**
 	 * Return the value for the 'aria-label' attribute of the toggle
 	 * @param label - tree item label
@@ -250,7 +239,7 @@ export class TreeComponent extends BaseWidgetDirective<TreeWidget> {
 	 * (label: string) => `Toggle ${label}`
 	 * ```
 	 */
-	@Input('auAriaLabelToggleFn') ariaLabelToggleFn: ((label: string) => string) | undefined;
+	readonly ariaLabelToggleFn = input<(label: string) => string>(undefined, {alias: 'auAriaLabelToggleFn'});
 
 	/**
 	 * An event emitted when the user toggles the expand of the TreeItem.
@@ -262,29 +251,29 @@ export class TreeComponent extends BaseWidgetDirective<TreeWidget> {
 	 * () => {}
 	 * ```
 	 */
-	@Output('auExpandToggle') expandToggle = new EventEmitter<NormalizedTreeItem>();
+	readonly expandToggle = output<NormalizedTreeItem>({alias: 'auExpandToggle'});
 
 	/**
 	 * Slot to change the default tree item content
 	 */
-	@Input('auItemContent') item: SlotContent<TreeSlotItemContext>;
-	@ContentChild(TreeItemContentDirective, {static: false}) slotItemContentFromContent: TreeItemContentDirective | undefined;
+	readonly itemContent = input<SlotContent<TreeSlotItemContext>>(undefined, {alias: 'auItemContent'});
+	readonly slotItemContentFromContent = viewChild(TreeItemContentDirective);
 
 	/**
 	 * Slot to change the default display of the tree
 	 */
-	@Input('auStructure') structure: SlotContent<TreeContext>;
-	@ContentChild(TreeStructureDirective, {static: false}) slotStructureFromContent: TreeStructureDirective | undefined;
+	readonly structure = input<SlotContent<TreeContext>>(undefined, {alias: 'auStructure'});
+	readonly slotStructureFromContent = viewChild(TreeStructureDirective);
 
 	/**
 	 * Slot to change the default tree item toggle
 	 */
-	@Input('auToggle') toggle: SlotContent<TreeSlotItemContext>;
-	@ContentChild(TreeItemToggleDirective, {static: false}) slotItemToggleFromContent: TreeItemToggleDirective | undefined;
+	readonly itemToggle = input<SlotContent<TreeSlotItemContext>>(undefined, {alias: 'auItemToggle'});
+	readonly slotItemToggleFromContent = viewChild(TreeItemToggleDirective);
 
 	/**
 	 * Slot to change the default tree item
 	 */
-	@Input('auItem') root: SlotContent<TreeSlotItemContext>;
-	@ContentChild(TreeItemDirective, {static: false}) slotItemFromContent: TreeItemDirective | undefined;
+	readonly item = input<SlotContent<TreeSlotItemContext>>(undefined, {alias: 'auItem'});
+	readonly slotItemFromContent = viewChild(TreeItemDirective);
 }
