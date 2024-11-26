@@ -8,18 +8,7 @@ import {
 	auBooleanAttribute,
 	auNumberAttribute,
 } from '@agnos-ui/angular-headless';
-import {
-	ChangeDetectionStrategy,
-	Component,
-	ContentChild,
-	Directive,
-	EventEmitter,
-	Input,
-	Output,
-	TemplateRef,
-	ViewChild,
-	inject,
-} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Directive, TemplateRef, inject, input, output, viewChild, contentChild} from '@angular/core';
 import {callWidgetFactory} from '../../config';
 
 import type {ToastContext, ToastWidget} from './toast.gen';
@@ -81,7 +70,7 @@ export class ToastHeaderDirective {
 	</ng-template>`,
 })
 class ToastDefaultSlotsComponent {
-	@ViewChild('structure', {static: true}) structure!: TemplateRef<ToastContext>;
+	readonly structure = viewChild.required<TemplateRef<ToastContext>>('structure');
 }
 
 /**
@@ -119,8 +108,7 @@ export class ToastComponent extends BaseWidgetDirective<ToastWidget> {
 	 *
 	 * @defaultValue `true`
 	 */
-	@Input({alias: 'auDismissible', transform: auBooleanAttribute})
-	dismissible: boolean | undefined;
+	readonly dismissible = input(undefined, {alias: 'auDismissible', transform: auBooleanAttribute});
 
 	/**
 	 * The transition function will be executed when the alert is displayed or hidden.
@@ -129,16 +117,14 @@ export class ToastComponent extends BaseWidgetDirective<ToastWidget> {
 	 *
 	 * @defaultValue `fadeTransition`
 	 */
-	@Input('auTransition')
-	transition: TransitionFn | undefined;
+	readonly transition = input<TransitionFn>(undefined, {alias: 'auTransition'});
 
 	/**
 	 * If `true` the alert is visible to the user
 	 *
 	 * @defaultValue `true`
 	 */
-	@Input({alias: 'auVisible', transform: auBooleanAttribute})
-	visible: boolean | undefined;
+	readonly visible = input(undefined, {alias: 'auVisible', transform: auBooleanAttribute});
 
 	/**
 	 * If `true`, alert opening will be animated.
@@ -148,8 +134,7 @@ export class ToastComponent extends BaseWidgetDirective<ToastWidget> {
 	 *
 	 * @defaultValue `false`
 	 */
-	@Input({alias: 'auAnimatedOnInit', transform: auBooleanAttribute})
-	animatedOnInit: boolean | undefined;
+	readonly animatedOnInit = input(undefined, {alias: 'auAnimatedOnInit', transform: auBooleanAttribute});
 
 	/**
 	 * If `true`, alert closing will be animated.
@@ -159,50 +144,46 @@ export class ToastComponent extends BaseWidgetDirective<ToastWidget> {
 	 *
 	 * @defaultValue `true`
 	 */
-	@Input({alias: 'auAnimated', transform: auBooleanAttribute})
-	animated: boolean | undefined;
+	readonly animated = input(undefined, {alias: 'auAnimated', transform: auBooleanAttribute});
 
 	/**
 	 * If `true` automatically hides the toast after the delay.
 	 *
 	 * @defaultValue `true`
 	 */
-	@Input({alias: 'auAutoHide', transform: auBooleanAttribute})
-	autoHide: boolean | undefined;
+	readonly autoHide = input(undefined, {alias: 'auAutoHide', transform: auBooleanAttribute});
 
 	/**
 	 * Delay in milliseconds before hiding the toast.
 	 *
 	 * @defaultValue `5000`
 	 */
-	@Input({alias: 'auDelay', transform: auNumberAttribute})
-	delay: number | undefined;
+	readonly delay = input(undefined, {alias: 'auDelay', transform: auNumberAttribute});
 
 	/**
 	 * Accessibility close button label
 	 *
 	 * @defaultValue `'Close'`
 	 */
-	@Input('auAriaCloseButtonLabel') ariaCloseButtonLabel: string | undefined;
+	readonly ariaCloseButtonLabel = input<string>(undefined, {alias: 'auAriaCloseButtonLabel'});
 
 	/**
 	 * Template for the toast content
 	 */
-	@Input('auChildren') children: SlotContent<ToastContext>;
-	@ContentChild(ToastBodyDirective, {static: false})
-	slotDefaultFromContent: ToastBodyDirective | undefined;
+	readonly children = input<SlotContent<ToastContext>>(undefined, {alias: 'auChildren'});
+	readonly slotDefaultFromContent = contentChild(ToastBodyDirective);
 
 	/**
 	 * Global template for the toast component
 	 */
-	@Input('auStructure') structure: SlotContent<ToastContext>;
-	@ContentChild(ToastStructureDirective, {static: false}) slotStructureFromContent: ToastStructureDirective | undefined;
+	readonly structure = input<SlotContent<ToastContext>>(undefined, {alias: 'auStructure'});
+	readonly slotStructureFromContent = contentChild(ToastStructureDirective);
 
 	/**
 	 * Header template for the toast component
 	 */
-	@Input('auHeader') header: SlotContent<ToastContext>;
-	@ContentChild(ToastHeaderDirective, {static: false}) slotHeaderFromContent: ToastHeaderDirective | undefined;
+	readonly header = input<SlotContent<ToastContext>>(undefined, {alias: 'auHeader'});
+	readonly slotHeaderFromContent = contentChild(ToastHeaderDirective);
 
 	/**
 	 * Callback called when the alert visibility changed.
@@ -212,7 +193,7 @@ export class ToastComponent extends BaseWidgetDirective<ToastWidget> {
 	 * () => {}
 	 * ```
 	 */
-	@Output('auVisibleChange') visibleChange = new EventEmitter<boolean>();
+	readonly visibleChange = output<boolean>({alias: 'auVisibleChange'});
 
 	/**
 	 * Callback called when the alert is hidden.
@@ -222,7 +203,7 @@ export class ToastComponent extends BaseWidgetDirective<ToastWidget> {
 	 * () => {}
 	 * ```
 	 */
-	@Output('auHidden') hidden = new EventEmitter<void>();
+	readonly hidden = output<void>({alias: 'auHidden'});
 
 	/**
 	 * Callback called when the alert is shown.
@@ -232,17 +213,16 @@ export class ToastComponent extends BaseWidgetDirective<ToastWidget> {
 	 * () => {}
 	 * ```
 	 */
-	@Output('auShown') shown = new EventEmitter<void>();
+	readonly shown = output<void>({alias: 'auShown'});
 
 	/**
 	 * CSS classes to be applied on the widget main container
 	 *
 	 * @defaultValue `''`
 	 */
-	@Input('auClassName') className: string | undefined;
+	readonly className = input<string>(undefined, {alias: 'auClassName'});
 
-	@ViewChild('content', {static: true})
-	slotChildren?: TemplateRef<void>;
+	readonly slotChildren = viewChild<TemplateRef<void>>('content');
 
 	constructor() {
 		super(
@@ -258,11 +238,11 @@ export class ToastComponent extends BaseWidgetDirective<ToastWidget> {
 					onHidden: () => this.hidden.emit(),
 				},
 				slotTemplates: () => ({
-					children: this.slotDefaultFromContent?.templateRef,
-					structure: this.slotStructureFromContent?.templateRef,
-					header: this.slotHeaderFromContent?.templateRef,
+					children: this.slotDefaultFromContent()?.templateRef,
+					structure: this.slotStructureFromContent()?.templateRef,
+					header: this.slotHeaderFromContent()?.templateRef,
 				}),
-				slotChildren: () => this.slotChildren,
+				slotChildren: () => this.slotChildren(),
 			}),
 		);
 	}

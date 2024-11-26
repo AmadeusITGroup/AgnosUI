@@ -2,18 +2,7 @@ import type {SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
 import {BaseWidgetDirective, ComponentTemplate, SlotDirective, UseDirective, auBooleanAttribute} from '@agnos-ui/angular-headless';
 import type {AlertContext, AlertWidget} from './alert.gen';
 import {createAlert} from './alert.gen';
-import {
-	ChangeDetectionStrategy,
-	Component,
-	ContentChild,
-	Directive,
-	EventEmitter,
-	Input,
-	Output,
-	TemplateRef,
-	ViewChild,
-	inject,
-} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Directive, TemplateRef, inject, input, output, viewChild, contentChild} from '@angular/core';
 import {callWidgetFactory} from '../../config';
 import type {BSContextualClass} from '@agnos-ui/core-bootstrap/types';
 
@@ -56,7 +45,7 @@ export class AlertStructureDirective {
 	</ng-template>`,
 })
 class AlertDefaultSlotsComponent {
-	@ViewChild('structure', {static: true}) structure!: TemplateRef<AlertContext>;
+	readonly structure = viewChild.required<TemplateRef<AlertContext>>('structure');
 }
 
 /**
@@ -96,8 +85,7 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> {
 	 *
 	 * @defaultValue `'primary'`
 	 */
-	@Input('auType')
-	type: BSContextualClass | undefined;
+	readonly type = input<BSContextualClass>(undefined, {alias: 'auType'});
 
 	/**
 	 * If `true`, alert can be dismissed by the user.
@@ -105,8 +93,7 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> {
 	 *
 	 * @defaultValue `true`
 	 */
-	@Input({alias: 'auDismissible', transform: auBooleanAttribute})
-	dismissible: boolean | undefined;
+	readonly dismissible = input(undefined, {alias: 'auDismissible', transform: auBooleanAttribute});
 
 	/**
 	 * The transition function will be executed when the alert is displayed or hidden.
@@ -115,16 +102,14 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> {
 	 *
 	 * @defaultValue `fadeTransition`
 	 */
-	@Input('auTransition')
-	transition: TransitionFn | undefined;
+	readonly transition = input<TransitionFn>(undefined, {alias: 'auTransition'});
 
 	/**
 	 * If `true` the alert is visible to the user
 	 *
 	 * @defaultValue `true`
 	 */
-	@Input({alias: 'auVisible', transform: auBooleanAttribute})
-	visible: boolean | undefined;
+	readonly visible = input(undefined, {alias: 'auVisible', transform: auBooleanAttribute});
 
 	/**
 	 * If `true`, alert opening will be animated.
@@ -134,8 +119,7 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> {
 	 *
 	 * @defaultValue `false`
 	 */
-	@Input({alias: 'auAnimatedOnInit', transform: auBooleanAttribute})
-	animatedOnInit: boolean | undefined;
+	readonly animatedOnInit = input(undefined, {alias: 'auAnimatedOnInit', transform: auBooleanAttribute});
 
 	/**
 	 * If `true`, alert closing will be animated.
@@ -145,28 +129,26 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> {
 	 *
 	 * @defaultValue `true`
 	 */
-	@Input({alias: 'auAnimated', transform: auBooleanAttribute})
-	animated: boolean | undefined;
+	readonly animated = input(undefined, {alias: 'auAnimated', transform: auBooleanAttribute});
 
 	/**
 	 * Accessibility close button label
 	 *
 	 * @defaultValue `'Close'`
 	 */
-	@Input('auAriaCloseButtonLabel') ariaCloseButtonLabel: string | undefined;
+	readonly ariaCloseButtonLabel = input<string>(undefined, {alias: 'auAriaCloseButtonLabel'});
 
 	/**
 	 * Template for the alert content
 	 */
-	@Input('auChildren') children: SlotContent<AlertContext>;
-	@ContentChild(AlertBodyDirective, {static: false})
-	slotDefaultFromContent: AlertBodyDirective | undefined;
+	readonly children = input<SlotContent<AlertContext>>(undefined, {alias: 'auChildren'});
+	readonly slotDefaultFromContent = contentChild(AlertBodyDirective);
 
 	/**
 	 * Global template for the alert component
 	 */
-	@Input('auStructure') structure: SlotContent<AlertContext>;
-	@ContentChild(AlertStructureDirective, {static: false}) slotStructureFromContent: AlertStructureDirective | undefined;
+	readonly structure = input<SlotContent<AlertContext>>(undefined, {alias: 'auStructure'});
+	readonly slotStructureFromContent = contentChild(AlertStructureDirective);
 
 	/**
 	 * Callback called when the alert visibility changed.
@@ -176,7 +158,7 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> {
 	 * () => {}
 	 * ```
 	 */
-	@Output('auVisibleChange') visibleChange = new EventEmitter<boolean>();
+	readonly visibleChange = output<boolean>({alias: 'auVisibleChange'});
 
 	/**
 	 * Callback called when the alert is hidden.
@@ -186,7 +168,7 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> {
 	 * () => {}
 	 * ```
 	 */
-	@Output('auHidden') hidden = new EventEmitter<void>();
+	readonly hidden = output<void>({alias: 'auHidden'});
 
 	/**
 	 * Callback called when the alert is shown.
@@ -196,17 +178,16 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> {
 	 * () => {}
 	 * ```
 	 */
-	@Output('auShown') shown = new EventEmitter<void>();
+	readonly shown = output<void>({alias: 'auShown'});
 
 	/**
 	 * CSS classes to be applied on the widget main container
 	 *
 	 * @defaultValue `''`
 	 */
-	@Input('auClassName') className: string | undefined;
+	readonly className = input<string>(undefined, {alias: 'auClassName'});
 
-	@ViewChild('content', {static: true})
-	slotChildren?: TemplateRef<void>;
+	readonly slotChildren = viewChild<TemplateRef<void>>('content');
 
 	constructor() {
 		super(
@@ -222,10 +203,10 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> {
 					onHidden: () => this.hidden.emit(),
 				},
 				slotTemplates: () => ({
-					children: this.slotDefaultFromContent?.templateRef,
-					structure: this.slotStructureFromContent?.templateRef,
+					children: this.slotDefaultFromContent()?.templateRef,
+					structure: this.slotStructureFromContent()?.templateRef,
 				}),
-				slotChildren: () => this.slotChildren,
+				slotChildren: () => this.slotChildren(),
 			}),
 		);
 	}

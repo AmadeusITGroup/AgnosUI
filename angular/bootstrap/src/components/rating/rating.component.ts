@@ -10,15 +10,14 @@ import {
 import {
 	ChangeDetectionStrategy,
 	Component,
-	ContentChild,
 	Directive,
-	EventEmitter,
-	Input,
-	Output,
 	TemplateRef,
 	ViewEncapsulation,
 	forwardRef,
 	inject,
+	input,
+	output,
+	contentChild,
 } from '@angular/core';
 import type {ControlValueAccessor} from '@angular/forms';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
@@ -76,35 +75,35 @@ export class RatingComponent extends BaseWidgetDirective<RatingWidget> implement
 	 * (rating: number, maxRating: number) => `${rating} out of ${maxRating}`
 	 * ```
 	 */
-	@Input('auAriaValueTextFn') ariaValueTextFn: ((rating: number, maxRating: number) => string) | undefined;
+	readonly ariaValueTextFn = input<(rating: number, maxRating: number) => string>(undefined, {alias: 'auAriaValueTextFn'});
 
 	/**
 	 * If `true`, the rating is disabled.
 	 *
 	 * @defaultValue `false`
 	 */
-	@Input({alias: 'auDisabled', transform: auBooleanAttribute}) disabled: boolean | undefined;
+	readonly disabled = input(undefined, {alias: 'auDisabled', transform: auBooleanAttribute});
 
 	/**
 	 * The maximum rating that can be given.
 	 *
 	 * @defaultValue `10`
 	 */
-	@Input({alias: 'auMaxRating', transform: auNumberAttribute}) maxRating: number | undefined;
+	readonly maxRating = input(undefined, {alias: 'auMaxRating', transform: auNumberAttribute});
 
 	/**
 	 * The current rating. Could be a decimal value like `3.75`.
 	 *
 	 * @defaultValue `0`
 	 */
-	@Input({alias: 'auRating', transform: auNumberAttribute}) rating: number | undefined;
+	readonly rating = input(undefined, {alias: 'auRating', transform: auNumberAttribute});
 
 	/**
 	 * If `true`, the rating can't be changed.
 	 *
 	 * @defaultValue `false`
 	 */
-	@Input({alias: 'auReadonly', transform: auBooleanAttribute}) readonly: boolean | undefined;
+	readonly readonly = input(undefined, {alias: 'auReadonly', transform: auBooleanAttribute});
 
 	/**
 	 * Define if the rating can be reset.
@@ -113,7 +112,7 @@ export class RatingComponent extends BaseWidgetDirective<RatingWidget> implement
 	 *
 	 * @defaultValue `true`
 	 */
-	@Input({alias: 'auResettable', transform: auBooleanAttribute}) resettable: boolean | undefined;
+	readonly resettable = input(undefined, {alias: 'auResettable', transform: auBooleanAttribute});
 
 	/**
 	 * The template to override the way each star is displayed.
@@ -123,8 +122,8 @@ export class RatingComponent extends BaseWidgetDirective<RatingWidget> implement
 	 * ({fill}: StarContext) => String.fromCharCode(fill === 100 ? 9733 : 9734)
 	 * ```
 	 */
-	@Input('auStar') star: SlotContent<StarContext>;
-	@ContentChild(RatingStarDirective, {static: false}) slotStarFromContent: RatingStarDirective | undefined;
+	readonly star = input<SlotContent<StarContext>>(undefined, {alias: 'auStar'});
+	readonly slotStarFromContent = contentChild(RatingStarDirective);
 
 	/**
 	 * Allows setting a custom rating tabindex.
@@ -132,28 +131,28 @@ export class RatingComponent extends BaseWidgetDirective<RatingWidget> implement
 	 *
 	 * @defaultValue `0`
 	 */
-	@Input({alias: 'auTabindex', transform: auNumberAttribute}) tabindex: number | undefined;
+	readonly tabindex = input(undefined, {alias: 'auTabindex', transform: auNumberAttribute});
 
 	/**
 	 * CSS classes to be applied on the widget main container
 	 *
 	 * @defaultValue `''`
 	 */
-	@Input('auClassName') className: string | undefined;
+	readonly className = input<string>(undefined, {alias: 'auClassName'});
 
 	/**
 	 * The aria label
 	 *
 	 * @defaultValue `'Rating'`
 	 */
-	@Input('auAriaLabel') ariaLabel: string | undefined;
+	readonly ariaLabel = input<string>(undefined, {alias: 'auAriaLabel'});
 
 	/**
 	 * The aria labelled by
 	 *
 	 * @defaultValue `''`
 	 */
-	@Input('auAriaLabelledBy') ariaLabelledBy: string | undefined;
+	readonly ariaLabelledBy = input<string>(undefined, {alias: 'auAriaLabelledBy'});
 
 	/**
 	 * An event emitted when the user is hovering over a given rating.
@@ -165,7 +164,7 @@ export class RatingComponent extends BaseWidgetDirective<RatingWidget> implement
 	 * () => {}
 	 * ```
 	 */
-	@Output('auHover') hover = new EventEmitter<number>();
+	readonly hover = output<number>({alias: 'auHover'});
 
 	/**
 	 * An event emitted when the user stops hovering over a given rating.
@@ -177,7 +176,7 @@ export class RatingComponent extends BaseWidgetDirective<RatingWidget> implement
 	 * () => {}
 	 * ```
 	 */
-	@Output('auLeave') leave = new EventEmitter<number>();
+	readonly leave = output<number>({alias: 'auLeave'});
 
 	/**
 	 * An event emitted when the rating is changed.
@@ -189,7 +188,7 @@ export class RatingComponent extends BaseWidgetDirective<RatingWidget> implement
 	 * () => {}
 	 * ```
 	 */
-	@Output('auRatingChange') ratingChange = new EventEmitter<number>();
+	readonly ratingChange = output<number>({alias: 'auRatingChange'});
 
 	writeValue(value: any): void {
 		this['_widget'].patch({rating: value});
@@ -224,7 +223,7 @@ export class RatingComponent extends BaseWidgetDirective<RatingWidget> implement
 					useDirectiveForHost(widget.directives.containerDirective);
 				},
 				slotTemplates: () => ({
-					star: this.slotStarFromContent?.templateRef,
+					star: this.slotStarFromContent()?.templateRef,
 				}),
 			}),
 		);

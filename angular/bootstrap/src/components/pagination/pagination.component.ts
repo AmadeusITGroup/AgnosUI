@@ -3,15 +3,14 @@ import {BaseWidgetDirective, ComponentTemplate, SlotDirective, UseDirective, auB
 import {
 	ChangeDetectionStrategy,
 	Component,
-	ContentChild,
 	Directive,
-	EventEmitter,
-	Input,
-	Output,
 	TemplateRef,
-	ViewChild,
 	ViewEncapsulation,
 	inject,
+	input,
+	output,
+	viewChild,
+	contentChild,
 } from '@angular/core';
 import {callWidgetFactory} from '../../config';
 import type {PaginationContext, PaginationNumberContext, PaginationWidget} from './pagination.gen';
@@ -181,8 +180,8 @@ export class PaginationStructureDirective {
 	`,
 })
 class PaginationDefaultSlotsComponent {
-	@ViewChild('pages', {static: true}) pages!: TemplateRef<PaginationContext>;
-	@ViewChild('structure', {static: true}) structure!: TemplateRef<PaginationContext>;
+	readonly pages = viewChild.required<TemplateRef<PaginationContext>>('pages');
+	readonly structure = viewChild.required<TemplateRef<PaginationContext>>('structure');
 }
 /**
  * The default slot for the pages
@@ -222,7 +221,7 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> {
 	 * (processPage: number, pageCount: number) => `Page ${processPage} of ${pageCount}`
 	 * ```
 	 */
-	@Input('auAriaPageLabel') ariaPageLabel: ((processPage: number, pageCount: number) => string) | undefined;
+	readonly ariaPageLabel = input<(processPage: number, pageCount: number) => string>(undefined, {alias: 'auAriaPageLabel'});
 
 	/**
 	 * Provide the label for the aria-live element
@@ -237,7 +236,7 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> {
 	 * (currentPage: number) => `Current page is ${currentPage}`
 	 * ```
 	 */
-	@Input('auAriaLiveLabel') ariaLiveLabel: ((currentPage: number, pageCount: number) => string) | undefined;
+	readonly ariaLiveLabel = input<(currentPage: number, pageCount: number) => string>(undefined, {alias: 'auAriaLiveLabel'});
 
 	/**
 	 * The label for the nav element.
@@ -247,7 +246,7 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> {
 	 *
 	 * @defaultValue `'Page navigation'`
 	 */
-	@Input('auAriaLabel') ariaLabel: string | undefined;
+	readonly ariaLabel = input<string>(undefined, {alias: 'auAriaLabel'});
 
 	/**
 	 * The label for the "active" page.
@@ -259,7 +258,7 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> {
 	 * '(current)'
 	 * ```
 	 */
-	@Input('auActiveLabel') activeLabel: string | undefined;
+	readonly activeLabel = input<string>(undefined, {alias: 'auActiveLabel'});
 
 	/**
 	 * The label for the "First" page button.
@@ -271,7 +270,7 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> {
 	 * 'Action link for first page'
 	 * ```
 	 */
-	@Input('auAriaFirstLabel') ariaFirstLabel: string | undefined;
+	readonly ariaFirstLabel = input<string>(undefined, {alias: 'auAriaFirstLabel'});
 
 	/**
 	 * The label for the "Previous" page button.
@@ -283,7 +282,7 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> {
 	 * 'Action link for previous page'
 	 * ```
 	 */
-	@Input('auAriaPreviousLabel') ariaPreviousLabel: string | undefined;
+	readonly ariaPreviousLabel = input<string>(undefined, {alias: 'auAriaPreviousLabel'});
 
 	/**
 	 * The label for the "Next" page button.
@@ -295,7 +294,7 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> {
 	 * 'Action link for next page'
 	 * ```
 	 */
-	@Input('auAriaNextLabel') ariaNextLabel: string | undefined;
+	readonly ariaNextLabel = input<string>(undefined, {alias: 'auAriaNextLabel'});
 
 	/**
 	 * The label for the "Last" page button.
@@ -307,7 +306,7 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> {
 	 * 'Action link for last page'
 	 * ```
 	 */
-	@Input('auAriaLastLabel') ariaLastLabel: string | undefined;
+	readonly ariaLastLabel = input<string>(undefined, {alias: 'auAriaLastLabel'});
 
 	/**
 	 * The label for the "Ellipsis" page.
@@ -316,7 +315,7 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> {
 	 *
 	 * @defaultValue `'Ellipsis page element'`
 	 */
-	@Input('auAriaEllipsisLabel') ariaEllipsisLabel: string | undefined;
+	readonly ariaEllipsisLabel = input<string>(undefined, {alias: 'auAriaEllipsisLabel'});
 
 	/**
 	 * Factory function providing the href for a "Page" page anchor,
@@ -328,7 +327,7 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> {
 	 * (_page: number) => PAGE_LINK_DEFAULT
 	 * ```
 	 */
-	@Input('auPageLink') pageLink: ((pageNumber: number) => string) | undefined;
+	readonly pageLink = input<(pageNumber: number) => string>(undefined, {alias: 'auPageLink'});
 
 	/**
 	 * The template to use for the ellipsis slot
@@ -337,9 +336,8 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> {
 	 *
 	 * @defaultValue `'…'`
 	 */
-	@Input('auEllipsisLabel') ellipsisLabel: SlotContent<PaginationContext>;
-	@ContentChild(PaginationEllipsisDirective, {static: false})
-	slotEllipsisFromContent: PaginationEllipsisDirective | undefined;
+	readonly ellipsisLabel = input<SlotContent<PaginationContext>>(undefined, {alias: 'auEllipsisLabel'});
+	readonly slotEllipsisFromContent = contentChild(PaginationEllipsisDirective);
 
 	/**
 	 * The template to use for the first slot
@@ -348,9 +346,8 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> {
 	 *
 	 * @defaultValue `'«'`
 	 */
-	@Input('auFirstPageLabel') firstPageLabel: SlotContent<PaginationContext>;
-	@ContentChild(PaginationFirstDirective, {static: false})
-	slotFirstFromContent: PaginationFirstDirective | undefined;
+	readonly firstPageLabel = input<SlotContent<PaginationContext>>(undefined, {alias: 'auFirstPageLabel'});
+	readonly slotFirstFromContent = contentChild(PaginationFirstDirective);
 
 	/**
 	 * The template to use for the previous slot
@@ -359,9 +356,8 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> {
 	 *
 	 * @defaultValue `'‹'`
 	 */
-	@Input('auPreviousPageLabel') previousPageLabel: SlotContent<PaginationContext>;
-	@ContentChild(PaginationPreviousDirective, {static: false})
-	slotPreviousFromContent: PaginationPreviousDirective | undefined;
+	readonly previousPageLabel = input<SlotContent<PaginationContext>>(undefined, {alias: 'auPreviousPageLabel'});
+	readonly slotPreviousFromContent = contentChild(PaginationPreviousDirective);
 
 	/**
 	 * The template to use for the next slot
@@ -370,9 +366,8 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> {
 	 *
 	 * @defaultValue `'›'`
 	 */
-	@Input('auNextPageLabel') nextPageLabel: SlotContent<PaginationContext>;
-	@ContentChild(PaginationNextDirective, {static: false})
-	slotNextFromContent: PaginationNextDirective | undefined;
+	readonly nextPageLabel = input<SlotContent<PaginationContext>>(undefined, {alias: 'auNextPageLabel'});
+	readonly slotNextFromContent = contentChild(PaginationNextDirective);
 
 	/**
 	 * The template to use for the last slot
@@ -381,18 +376,16 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> {
 	 *
 	 * @defaultValue `'»'`
 	 */
-	@Input('auLastPageLabel') lastPageLabel: SlotContent<PaginationContext>;
-	@ContentChild(PaginationLastDirective, {static: false})
-	slotLastFromContent: PaginationLastDirective | undefined;
+	readonly lastPageLabel = input<SlotContent<PaginationContext>>(undefined, {alias: 'auLastPageLabel'});
+	readonly slotLastFromContent = contentChild(PaginationLastDirective);
 
 	/**
 	 * The template to use for the pages slot
 	 * To use to customize the pages view
 	 * override any configuration parameters provided for this
 	 */
-	@Input('auPagesDisplay') pagesDisplay: SlotContent<PaginationContext>;
-	@ContentChild(PaginationPagesDirective, {static: false})
-	slotPagesFromContent: PaginationPagesDirective | undefined;
+	readonly pagesDisplay = input<SlotContent<PaginationContext>>(undefined, {alias: 'auPagesDisplay'});
+	readonly slotPagesFromContent = contentChild(PaginationPagesDirective);
 
 	/**
 	 * The template to use for the number slot
@@ -405,9 +398,8 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> {
 	 * ({displayedPage}: PaginationNumberContext) => `${displayedPage}`
 	 * ```
 	 */
-	@Input('auNumberLabel') numberLabel: SlotContent<PaginationNumberContext>;
-	@ContentChild(PaginationNumberDirective, {static: false})
-	slotNumberLabelFromContent: PaginationNumberDirective | undefined;
+	readonly numberLabel = input<SlotContent<PaginationNumberContext>>(undefined, {alias: 'auNumberLabel'});
+	readonly slotNumberLabelFromContent = contentChild(PaginationNumberDirective);
 
 	/**
 	 * The template to use for the structure of the pagination component
@@ -416,30 +408,29 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> {
 	 * {@link PaginationProps.lastPageLabel|lastPageLabel}, {@link PaginationProps.pagesDisplay|pagesDisplay},
 	 * {@link PaginationProps.numberLabel|numberLabel},
 	 */
-	@Input('auStructure') structure: SlotContent<PaginationContext>;
-	@ContentChild(PaginationStructureDirective, {static: false})
-	slotStructureFromContent: PaginationStructureDirective | undefined;
+	readonly structure = input<SlotContent<PaginationContext>>(undefined, {alias: 'auStructure'});
+	readonly slotStructureFromContent = contentChild(PaginationStructureDirective);
 
 	/**
 	 * If `true`, pagination links will be disabled.
 	 *
 	 * @defaultValue `false`
 	 */
-	@Input({alias: 'auDisabled', transform: auBooleanAttribute}) disabled: boolean | undefined;
+	readonly disabled = input(undefined, {alias: 'auDisabled', transform: auBooleanAttribute});
 
 	/**
 	 * If `true`, the "First" and "Last" page links are shown.
 	 *
 	 * @defaultValue `false`
 	 */
-	@Input({alias: 'auBoundaryLinks', transform: auBooleanAttribute}) boundaryLinks: boolean | undefined;
+	readonly boundaryLinks = input(undefined, {alias: 'auBoundaryLinks', transform: auBooleanAttribute});
 
 	/**
 	 * If `true`, the "Next" and "Previous" page links are shown.
 	 *
 	 * @defaultValue `true`
 	 */
-	@Input({alias: 'auDirectionLinks', transform: auBooleanAttribute}) directionLinks: boolean | undefined;
+	readonly directionLinks = input(undefined, {alias: 'auDirectionLinks', transform: auBooleanAttribute});
 
 	/**
 	 * The number of items in your paginated collection.
@@ -453,7 +444,7 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> {
 	 *
 	 * @defaultValue `0`
 	 */
-	@Input({alias: 'auCollectionSize', transform: auNumberAttribute}) collectionSize: number | undefined;
+	readonly collectionSize = input(undefined, {alias: 'auCollectionSize', transform: auNumberAttribute});
 
 	/**
 	 * The current page.
@@ -462,7 +453,7 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> {
 	 *
 	 * @defaultValue `1`
 	 */
-	@Input({alias: 'auPage', transform: auNumberAttribute}) page: number | undefined;
+	readonly page = input(undefined, {alias: 'auPage', transform: auNumberAttribute});
 
 	/**
 	 * The number of items per page.
@@ -470,7 +461,7 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> {
 	 *
 	 * @defaultValue `10`
 	 */
-	@Input({alias: 'auPageSize', transform: auNumberAttribute}) pageSize: number | undefined;
+	readonly pageSize = input(undefined, {alias: 'auPageSize', transform: auNumberAttribute});
 
 	/**
 	 * The pagination display size.
@@ -479,7 +470,7 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> {
 	 *
 	 * @defaultValue `null`
 	 */
-	@Input('auSize') size: 'sm' | 'lg' | null | undefined;
+	readonly size = input<'sm' | 'lg' | null>(undefined, {alias: 'auSize'});
 
 	/**
 	 * pagesFactory returns a function computing the array of pages to be displayed
@@ -499,7 +490,7 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> {
 	 * 	}
 	 * ```
 	 */
-	@Input('auPagesFactory') pagesFactory: ((page: number, pageCount: number) => number[]) | undefined;
+	readonly pagesFactory = input<(page: number, pageCount: number) => number[]>(undefined, {alias: 'auPagesFactory'});
 
 	/**
 	 * An event fired when the page is changed.
@@ -512,14 +503,14 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> {
 	 * () => {}
 	 * ```
 	 */
-	@Output('auPageChange') pageChange = new EventEmitter<number>();
+	readonly pageChange = output<number>({alias: 'auPageChange'});
 
 	/**
 	 * CSS classes to be applied on the widget main container
 	 *
 	 * @defaultValue `''`
 	 */
-	@Input('auClassName') className: string | undefined;
+	readonly className = input<string>(undefined, {alias: 'auClassName'});
 
 	constructor() {
 		super(
@@ -534,14 +525,14 @@ export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> {
 					onPageChange: (page: number) => this.pageChange.emit(page),
 				},
 				slotTemplates: () => ({
-					structure: this.slotStructureFromContent?.templateRef,
-					ellipsisLabel: this.slotEllipsisFromContent?.templateRef,
-					firstPageLabel: this.slotFirstFromContent?.templateRef,
-					previousPageLabel: this.slotPreviousFromContent?.templateRef,
-					nextPageLabel: this.slotNextFromContent?.templateRef,
-					lastPageLabel: this.slotLastFromContent?.templateRef,
-					pagesDisplay: this.slotPagesFromContent?.templateRef,
-					numberLabel: this.slotNumberLabelFromContent?.templateRef,
+					structure: this.slotStructureFromContent()?.templateRef,
+					ellipsisLabel: this.slotEllipsisFromContent()?.templateRef,
+					firstPageLabel: this.slotFirstFromContent()?.templateRef,
+					previousPageLabel: this.slotPreviousFromContent()?.templateRef,
+					nextPageLabel: this.slotNextFromContent()?.templateRef,
+					lastPageLabel: this.slotLastFromContent()?.templateRef,
+					pagesDisplay: this.slotPagesFromContent()?.templateRef,
+					numberLabel: this.slotNumberLabelFromContent()?.templateRef,
 				}),
 			}),
 		);

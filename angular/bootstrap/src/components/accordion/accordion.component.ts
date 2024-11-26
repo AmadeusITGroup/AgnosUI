@@ -9,18 +9,7 @@ import {
 } from '@agnos-ui/angular-headless';
 import {NgTemplateOutlet} from '@angular/common';
 import type {AfterViewInit} from '@angular/core';
-import {
-	ChangeDetectionStrategy,
-	Component,
-	ContentChild,
-	Directive,
-	EventEmitter,
-	Input,
-	Output,
-	TemplateRef,
-	ViewChild,
-	inject,
-} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Directive, TemplateRef, inject, input, output, viewChild, contentChild} from '@angular/core';
 import {callWidgetFactory} from '../../config';
 import type {AccordionItemContext, AccordionItemWidget, AccordionWidget} from './accordion.gen';
 import {createAccordion} from './accordion.gen';
@@ -145,7 +134,7 @@ export class AccordionItemStructureDirective {
 	`,
 })
 class AccordionItemDefaultSlotsComponent {
-	@ViewChild('structure', {static: true}) structure!: TemplateRef<AccordionItemContext>;
+	readonly structure = viewChild.required<TemplateRef<AccordionItemContext>>('structure');
 }
 /**
  * Represents the default slot structure for an accordion item.
@@ -165,7 +154,7 @@ export const accordionItemDefaultSlotStructure: SlotContent<AccordionItemContext
 	host: {
 		class: 'accordion-item',
 	},
-	imports: [SlotDirective, UseDirective],
+	imports: [SlotDirective],
 	template: `
 		<ng-template #content><ng-content /></ng-template>
 		<ng-template [auSlotProps]="{state, api, directives}" [auSlot]="state.structure()" />
@@ -177,17 +166,15 @@ export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWid
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	@Input('auHeader') header: SlotContent<AccordionItemContext>;
-	@ContentChild(AccordionHeaderDirective, {static: false})
-	slotHeaderFromContent: AccordionHeaderDirective | undefined;
+	readonly header = input<SlotContent<AccordionItemContext>>(undefined, {alias: 'auHeader'});
+	readonly slotHeaderFromContent = contentChild(AccordionHeaderDirective);
 	/**
 	 * Content present in the accordion body.
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	@Input('auChildren') children: SlotContent<AccordionItemContext>;
-	@ContentChild(AccordionBodyDirective, {static: false})
-	slotBodyFromContent: AccordionBodyDirective | undefined;
+	readonly children = input<SlotContent<AccordionItemContext>>(undefined, {alias: 'auChildren'});
+	readonly slotBodyFromContent = contentChild(AccordionBodyDirective);
 
 	/**
 	 * Structure of the accordion-item. The default item structure is: accordion-item
@@ -197,81 +184,79 @@ export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWid
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	@Input('auStructure') structure: SlotContent<AccordionItemContext>;
-	@ContentChild(AccordionItemStructureDirective, {static: false})
-	slotStructureFromContent: AccordionItemStructureDirective | undefined;
+	readonly structure = input<SlotContent<AccordionItemContext>>(undefined, {alias: 'auStructure'});
+	readonly slotStructureFromContent = contentChild(AccordionItemStructureDirective);
 
 	/**
 	 * The id of the accordion-item. It can be used for controlling the accordion-item via the accordion api.
 	 */
-	@Input('auId') id: string | undefined;
+	readonly id = input<string>(undefined, {alias: 'auId'});
 	/**
 	 * The transition to use for the accordion-item body-container when the accordion-item is toggled.
 	 */
-	@Input('auTransition') transition: TransitionFn | undefined;
+	readonly transition = input<TransitionFn>(undefined, {alias: 'auTransition'});
 
 	/**
 	 * CSS classes to be applied on the widget main container
 	 *
 	 * @defaultValue `''`
 	 */
-	@Input('auClassName') className: string | undefined;
+	readonly className = input<string>(undefined, {alias: 'auClassName'});
 	/**
 	 * If `true`, the accordion-item body container will be removed from the DOM when the accordion-item is collapsed. It will be just hidden otherwise.
 	 */
-	@Input({alias: 'auDestroyOnHide', transform: auBooleanAttribute}) destroyOnHide: boolean | undefined;
+	readonly destroyOnHide = input(undefined, {alias: 'auDestroyOnHide', transform: auBooleanAttribute});
 	/**
 	 * If `true`, the accordion-item will be disabled.
 	 * It will not react to user's clicks, but still will be possible to toggle programmatically.
 	 */
-	@Input({alias: 'auDisabled', transform: auBooleanAttribute}) disabled: boolean | undefined;
+	readonly disabled = input(undefined, {alias: 'auDisabled', transform: auBooleanAttribute});
 
 	/**
 	 * If `true`, the accordion-item will be visible (expanded). Otherwise, it will be hidden (collapsed).
 	 */
-	@Input({alias: 'auVisible', transform: auBooleanAttribute}) visible: boolean | undefined;
+	readonly visible = input(undefined, {alias: 'auVisible', transform: auBooleanAttribute});
 	/**
 	 * If `true`, accordion-item will be animated.
 	 */
-	@Input({alias: 'auAnimated', transform: auBooleanAttribute}) animated: boolean | undefined;
+	readonly animated = input(undefined, {alias: 'auAnimated', transform: auBooleanAttribute});
 	/**
 	 * CSS classes to add on the accordion-item header DOM element.
 	 */
-	@Input('auHeaderClassName') headerClassName: string | undefined;
+	readonly headerClassName = input<string>(undefined, {alias: 'auHeaderClassName'});
 	/**
 	 * CSS classes to add on the accordion-item collapse DOM element.
 	 */
-	@Input('auButtonClassName') buttonClassName: string | undefined;
+	readonly buttonClassName = input<string>(undefined, {alias: 'auButtonClassName'});
 	/**
 	 * CSS classes to add on the accordion-item body container DOM element.
 	 * The accordion-item body container is the DOM element on what the itemTransition is applied.
 	 */
-	@Input('auBodyContainerClassName') bodyContainerClassName: string | undefined;
+	readonly bodyContainerClassName = input<string>(undefined, {alias: 'auBodyContainerClassName'});
 	/**
 	 * CSS classes to add on the accordion-item body DOM element.
 	 */
-	@Input('auBodyClassName') bodyClassName: string | undefined;
+	readonly bodyClassName = input<string>(undefined, {alias: 'auBodyClassName'});
 	/**
 	 * The html tag to use for the accordion-item-header.
 	 */
-	@Input('auHeadingTag') headingTag: string | undefined;
+	readonly headingTag = input<string>(undefined, {alias: 'auHeadingTag'});
 	/**
 	 * An event fired when an item is shown.
 	 */
-	@Output('auShown') shown = new EventEmitter<void>();
+	readonly shown = output<void>({alias: 'auShown'});
 	/**
 	 * An event fired when an item is hidden.
 	 */
-	@Output('auHidden') hidden = new EventEmitter<void>();
+	readonly hidden = output<void>({alias: 'auHidden'});
 	/**
 	 * An event fired when the `visible` value changes.
 	 *
 	 * Event payload is the new value of visible.
 	 */
-	@Output('auVisibleChange') visibleChange = new EventEmitter<boolean>();
+	readonly visibleChange = output<boolean>({alias: 'auVisibleChange'});
 
-	@ViewChild('content', {static: true})
-	slotChildren?: TemplateRef<void>;
+	readonly slotChildren = viewChild<TemplateRef<void>>('content');
 
 	constructor() {
 		super(
@@ -289,11 +274,11 @@ export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWid
 					useDirectiveForHost(widget.directives.itemDirective);
 				},
 				slotTemplates: () => ({
-					structure: this.slotStructureFromContent?.templateRef,
-					header: this.slotHeaderFromContent?.templateRef,
-					children: this.slotBodyFromContent?.templateRef,
+					structure: this.slotStructureFromContent()?.templateRef,
+					header: this.slotHeaderFromContent()?.templateRef,
+					children: this.slotBodyFromContent()?.templateRef,
 				}),
-				slotChildren: () => this.slotChildren,
+				slotChildren: () => this.slotChildren(),
 			}),
 		);
 	}
@@ -324,14 +309,14 @@ export class AccordionDirective extends BaseWidgetDirective<AccordionWidget> {
 	 *
 	 * @defaultValue `false`
 	 */
-	@Input({alias: 'auCloseOthers', transform: auBooleanAttribute}) closeOthers: boolean | undefined;
+	readonly closeOthers = input(undefined, {alias: 'auCloseOthers', transform: auBooleanAttribute});
 
 	/**
 	 * CSS classes to be applied on the widget main container
 	 *
 	 * @defaultValue `''`
 	 */
-	@Input('auClassName') className: string | undefined;
+	readonly className = input<string>(undefined, {alias: 'auClassName'});
 
 	/**
 	 * An event fired when an item is shown.
@@ -343,7 +328,7 @@ export class AccordionDirective extends BaseWidgetDirective<AccordionWidget> {
 	 * () => {}
 	 * ```
 	 */
-	@Output('auItemShown') itemShown: EventEmitter<string> = new EventEmitter<string>();
+	readonly itemShown = output<string>({alias: 'auItemShown'});
 
 	/**
 	 * An event fired when an item is hidden.
@@ -355,21 +340,21 @@ export class AccordionDirective extends BaseWidgetDirective<AccordionWidget> {
 	 * () => {}
 	 * ```
 	 */
-	@Output('auItemHidden') itemHidden: EventEmitter<string> = new EventEmitter<string>();
+	readonly itemHidden = output<string>({alias: 'auItemHidden'});
 
 	/**
 	 * If `true`, the accordion-item body container will be removed from the DOM when the accordion-item is collapsed. It will be just hidden otherwise.
 	 *
 	 * @defaultValue `true`
 	 */
-	@Input({alias: 'auItemDestroyOnHide', transform: auBooleanAttribute}) itemDestroyOnHide: boolean | undefined;
+	readonly itemDestroyOnHide = input(undefined, {alias: 'auItemDestroyOnHide', transform: auBooleanAttribute});
 
 	/**
 	 * If `true`, accordion-item will be animated.
 	 *
 	 * @defaultValue `true`
 	 */
-	@Input({alias: 'auItemAnimated', transform: auBooleanAttribute}) itemAnimated: boolean | undefined;
+	readonly itemAnimated = input(undefined, {alias: 'auItemAnimated', transform: auBooleanAttribute});
 
 	/**
 	 * The transition to use for the accordion-item body-container when the accordion-item is toggled.
@@ -379,7 +364,7 @@ export class AccordionDirective extends BaseWidgetDirective<AccordionWidget> {
 	 * collapseVerticalTransition
 	 * ```
 	 */
-	@Input('auItemTransition') itemTransition: TransitionFn | undefined;
+	readonly itemTransition = input<TransitionFn>(undefined, {alias: 'auItemTransition'});
 
 	/**
 	 * Structure of the accordion-item. The default item structure is: accordion-item
@@ -389,28 +374,28 @@ export class AccordionDirective extends BaseWidgetDirective<AccordionWidget> {
 	 *
 	 * It is a prop of the accordion-item.
 	 */
-	@Input('auItemStructure') itemStructure: SlotContent<AccordionItemContext>;
+	readonly itemStructure = input<SlotContent<AccordionItemContext>>(undefined, {alias: 'auItemStructure'});
 
 	/**
 	 * CSS classes to add on the accordion-item DOM element.
 	 *
 	 * @defaultValue `''`
 	 */
-	@Input('auItemClassName') itemClassName: string | undefined;
+	readonly itemClassName = input<string>(undefined, {alias: 'auItemClassName'});
 
 	/**
 	 * CSS classes to add on the accordion-item header DOM element.
 	 *
 	 * @defaultValue `''`
 	 */
-	@Input('auItemHeaderClassName') itemHeaderClassName: string | undefined;
+	readonly itemHeaderClassName = input<string>(undefined, {alias: 'auItemHeaderClassName'});
 
 	/**
 	 * CSS classes to add on the accordion-item toggle button DOM element.
 	 *
 	 * @defaultValue `''`
 	 */
-	@Input('auItemButtonClassName') itemButtonClassName: string | undefined;
+	readonly itemButtonClassName = input<string>(undefined, {alias: 'auItemButtonClassName'});
 
 	/**
 	 * CSS classes to add on the accordion-item body container DOM element.
@@ -418,21 +403,21 @@ export class AccordionDirective extends BaseWidgetDirective<AccordionWidget> {
 	 *
 	 * @defaultValue `''`
 	 */
-	@Input('auItemBodyContainerClassName') itemBodyContainerClassName: string | undefined;
+	readonly itemBodyContainerClassName = input<string>(undefined, {alias: 'auItemBodyContainerClassName'});
 
 	/**
 	 * CSS classes to add on the accordion-item body DOM element.
 	 *
 	 * @defaultValue `''`
 	 */
-	@Input('auItemBodyClassName') itemBodyClassName: string | undefined;
+	readonly itemBodyClassName = input<string>(undefined, {alias: 'auItemBodyClassName'});
 
 	/**
 	 * The html tag to use for the accordion-item-header.
 	 *
 	 * @defaultValue `''`
 	 */
-	@Input('auItemHeadingTag') itemHeadingTag: string | undefined;
+	readonly itemHeadingTag = input<string>(undefined, {alias: 'auItemHeadingTag'});
 
 	constructor() {
 		super(
