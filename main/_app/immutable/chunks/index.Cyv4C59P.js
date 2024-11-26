@@ -1,0 +1,3 @@
+const c=`export * from './tree.component';
+export * from './tree.gen';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi9zcmMvY29tcG9uZW50cy90cmVlL2luZGV4LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLGNBQWMsa0JBQWtCLENBQUM7QUFDakMsY0FBYyxZQUFZLENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyJleHBvcnQgKiBmcm9tICcuL3RyZWUuY29tcG9uZW50JztcbmV4cG9ydCAqIGZyb20gJy4vdHJlZS5nZW4nO1xuIl19`;export{c as default};

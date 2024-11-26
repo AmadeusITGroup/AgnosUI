@@ -60,6 +60,7 @@
 <url><loc>https://www.agnosui.dev/latest/docs/angular/components/select/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/components/slider/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/components/toast/api</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/angular/components/tree/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/components/accordion/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/components/alert/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/components/collapse/api</loc></url>
@@ -70,6 +71,7 @@
 <url><loc>https://www.agnosui.dev/latest/docs/react/components/select/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/components/slider/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/components/toast/api</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/react/components/tree/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/components/accordion/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/components/alert/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/components/collapse/api</loc></url>
@@ -80,6 +82,7 @@
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/components/select/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/components/slider/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/components/toast/api</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/svelte/components/tree/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/components/accordion/examples</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/components/accordion/examples</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/components/accordion/examples</loc></url>
@@ -113,6 +116,12 @@
 <url><loc>https://www.agnosui.dev/latest/docs/angular/components/toast/examples</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/components/toast/examples</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/components/toast/examples</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/angular/components/tree/examples</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/react/components/tree/examples</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/svelte/components/tree/examples</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/angular/components/tree/style</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/react/components/tree/style</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/svelte/components/tree/style</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/daisyUI/accordion/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/daisyUI/alert/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/daisyUI/collapse/api</loc></url>
@@ -181,6 +190,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/typescript/headless/components/select</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/headless/components/slider</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/headless/components/toast</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/typescript/headless/components/tree</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/headless/services/extendWidget</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/headless/services/floatingUI</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/headless/services/focustrack</loc></url>
@@ -209,6 +219,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/typescript/bootstrap/components/select</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/bootstrap/components/slider</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/bootstrap/components/toast</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/typescript/bootstrap/components/tree</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/bootstrap/services/transitions/collapse</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/bootstrap/services/transitions/fade</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/types</loc></url>
@@ -223,6 +234,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/components/select</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/components/slider</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/components/toast</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/angular/headless/components/tree</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/services/extendWidget</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/services/floatingUI</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/services/focustrack</loc></url>
@@ -256,6 +268,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/components/select</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/components/slider</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/components/toast</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/components/tree</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/services/extendWidget</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/services/floatingUI</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/services/focustrack</loc></url>
@@ -289,6 +302,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/components/select</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/components/slider</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/components/toast</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/react/headless/components/tree</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/services/extendWidget</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/services/floatingUI</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/services/focustrack</loc></url>
@@ -321,6 +335,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/components/select</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/components/slider</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/components/toast</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/components/tree</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/services/extendWidget</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/services/floatingUI</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/services/focustrack</loc></url>
@@ -352,6 +367,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/components/select</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/components/slider</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/components/toast</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/svelte/headless/components/tree</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/services/extendWidget</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/services/floatingUI</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/services/focustrack</loc></url>
@@ -382,6 +398,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/components/select</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/components/slider</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/components/toast</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/components/tree</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/services/extendWidget</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/services/floatingUI</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/services/focustrack</loc></url>

@@ -1,0 +1,2 @@
+const i=`export * from '@agnos-ui/core/components/tree';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi9zcmMvZ2VuZXJhdGVkL2NvbXBvbmVudHMvdHJlZS9pbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxjQUFjLGdDQUFnQyxDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0ICogZnJvbSAnQGFnbm9zLXVpL2NvcmUvY29tcG9uZW50cy90cmVlJzsiXX0=`;export{i as default};
