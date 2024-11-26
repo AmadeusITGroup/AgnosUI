@@ -16,19 +16,19 @@ import {DomSanitizer} from '@angular/platform-browser';
 		style: 'display: contents;',
 	},
 	template: `
-		<span class="d-flex me-2" [innerHTML]="sanitizer.bypassSecurityTrustHtml(typeIcon[state.type()])"></span>
+		<span class="d-flex me-2" [innerHTML]="sanitizer.bypassSecurityTrustHtml(typeIcon[state().type()])"></span>
 		<div class="alert-body">
-			<ng-template [auSlot]="state.children()" [auSlotProps]="{state, api, directives}" />
-			@if (state.dismissible()) {
-				<button type="button" class="btn-close ms-auto" (click)="api.close()" [attr.aria-label]="state.ariaCloseButtonLabel()"></button>
+			<ng-template [auSlot]="state().children()" [auSlotProps]="slotContext()" />
+			@if (state().dismissible()) {
+				<button type="button" class="btn-close ms-auto" (click)="api().close()" [attr.aria-label]="state().ariaCloseButtonLabel()"></button>
 			}
 		</div>
 	`,
 })
 export default class AlertIconComponent extends SlotComponent<AlertWidget> {
-	sanitizer = inject(DomSanitizer);
+	readonly sanitizer = inject(DomSanitizer);
 
-	typeIcon: Record<string, string> = {
+	readonly typeIcon: Record<string, string> = {
 		success: biCheckCircleFill,
 		info: biInfoCircleFill,
 		warning: biExclamationTriangleFill,

@@ -1,10 +1,10 @@
-import {SliderComponent, SliderStructureDirective} from '@agnos-ui/angular-bootstrap';
+import {SliderComponent} from '@agnos-ui/angular-bootstrap';
 import {Component, ViewEncapsulation} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import CoffeeSliderComponent from './coffee-slider.component';
 
 @Component({
-	imports: [SliderComponent, SliderStructureDirective, ReactiveFormsModule, FormsModule],
+	imports: [SliderComponent, ReactiveFormsModule, FormsModule],
 	template: `
 		<h2>Fully custom slider</h2>
 		<div
