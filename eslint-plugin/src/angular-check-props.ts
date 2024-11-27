@@ -32,11 +32,6 @@ const isAngularComponent = (node: TSESTree.ClassDeclaration) => findDecorator(no
 const isNonStaticPropertyDefinition = (node: TSESTree.Node): node is TSESTree.PropertyDefinition =>
 	node.type === TSESTree.AST_NODE_TYPES.PropertyDefinition && !node.static;
 
-const isFieldWithName =
-	(name: string) =>
-	(node: TSESTree.Node): node is TSESTree.PropertyDefinition =>
-		isNonStaticPropertyDefinition(node) && ASTUtils.getPropertyName(node) === name;
-
 const isThisDotXDotYCallExpression = (node: TSESTree.Node, x: string, y: string): node is TSESTree.CallExpression =>
 	node.type === TSESTree.AST_NODE_TYPES.CallExpression &&
 	node.callee.type === TSESTree.AST_NODE_TYPES.MemberExpression &&
@@ -77,15 +72,15 @@ const getTransformedInputType: (
 	return undefined;
 };
 
-const transformedInputValidMetadata = (alias: string, type: transformedInputType) => {
+const transformedInputValidMetadata = (alias: string, type: transformedInputType | undefined) => {
 	const transform = type === 'Boolean' ? 'auBooleanAttribute' : 'auNumberAttribute';
-	return `{alias: '${alias}', transform: ${transform}}`;
+	return `{alias: '${alias}'${type ? `, transform: ${transform}` : ''}}`;
 };
 
 const reportMissingInputProp = (node: TSESTree.Node, name: string, prop: PropInfo, context: Readonly<TSESLint.RuleContext<'missingProp', any>>) => {
 	const inputType = getTransformedInputType(prop.type, node, context);
 	const alias = validAlias(name);
-	const metadata = inputType ? transformedInputValidMetadata(alias, inputType) : `'${alias}'`;
+	const metadata = transformedInputValidMetadata(alias, inputType);
 	context.report({
 		node,
 		messageId: 'missingProp',
@@ -96,7 +91,10 @@ const reportMissingInputProp = (node: TSESTree.Node, name: string, prop: PropInf
 		fix(fixer) {
 			const indentation = getIndentation(node, context);
 			const doc = createDocWithIndentation(prop.doc, indentation);
-			return fixer.insertTextBefore(node, `${doc}@Input(${metadata}) ${name}: ${typeToString(prop.type, node, context)};\n\n${indentation}`);
+			return fixer.insertTextBefore(
+				node,
+				`${doc}readonly ${name} = input${inputType ? '' : `<${typeToString(prop.type, node, context).replace(' | undefined', '')}>`}(undefined, ${metadata});\n\n${indentation}`,
+			);
 		},
 	});
 };
@@ -118,9 +116,10 @@ const reportMissingOutputProp = (
 		*fix(fixer) {
 			const indentation = getIndentation(node, context);
 			const doc = createDocWithIndentation(prop.doc, indentation);
+			const outputType = typeToString(prop.type, node, context);
 			yield fixer.insertTextBefore(
 				node,
-				`${doc}@Output('${validAlias(name)}') ${name} = new EventEmitter<${typeToString(prop.type, node, context)}>();\n\n${indentation}`,
+				`${doc}readonly ${name} = output${outputType === 'void' ? '' : `<${outputType}>`}({alias: '${validAlias(name)}'});\n\n${indentation}`,
 			);
 			const eventInApiPatch = eventsObject?.properties.get(prop.widgetProp);
 			const emitInFunction = eventInApiPatch ? findCallToEventEmitter(eventInApiPatch, name) : null;
@@ -138,27 +137,27 @@ const reportInvalidInputPropType = (
 	node: TSESTree.PropertyDefinition,
 	name: string,
 	foundType: Type,
-	info: PropInfo,
+	prop: PropInfo,
 	context: Readonly<TSESLint.RuleContext<'invalidPropType', any>>,
 ) => {
-	const expectedType = typeToString(info.type, node, context);
+	const inputType = getTransformedInputType(prop.type, node, context);
+	const alias = validAlias(name);
+	const metadata = transformedInputValidMetadata(alias, inputType);
+	const expectedType = typeToString(prop.type, node, context).replace(' | undefined', '');
 	context.report({
 		node,
 		messageId: 'invalidPropType',
 		data: {
 			name,
 			type: 'input',
-			foundType: typeToString(foundType, node, context),
+			foundType: typeToString(foundType, node, context).replace(' | undefined', ''),
 			expectedType,
 		},
 		fix(fixer) {
-			const typeAnnotation = node.typeAnnotation;
-			const typeText = `: ${expectedType}`;
-			if (typeAnnotation) {
-				return fixer.replaceText(typeAnnotation, typeText);
-			} else {
-				return fixer.insertTextAfter(node.key, typeText);
-			}
+			return fixer.replaceText(
+				node,
+				`readonly ${name} = input${inputType ? '' : `<${typeToString(prop.type, node, context).replace(' | undefined', '')}>`}(undefined, ${metadata});`,
+			);
 		},
 	});
 };
@@ -170,18 +169,18 @@ const reportInvalidOutputPropType = (
 	info: PropInfo,
 	context: Readonly<TSESLint.RuleContext<'invalidPropType', any>>,
 ) => {
-	const expectedType = `EventEmitter<${typeToString(info.type, node, context)}>`;
+	const expectedType = typeToString(info.type, node, context);
 	context.report({
 		node,
 		messageId: 'invalidPropType',
 		data: {
 			name,
 			type: 'output',
-			foundType: typeToString(foundType, node, context),
-			expectedType,
+			foundType: `output<${foundType ? typeToString(foundType, node, context) : undefined}>`,
+			expectedType: `output<${expectedType}>`,
 		},
 		fix(fixer) {
-			const newValue = `new ${expectedType}()`;
+			const newValue = `output${expectedType === 'void' ? '' : `<${expectedType}>`}({alias: '${validAlias(name)}'})`;
 			if (node.value) {
 				return fixer.replaceText(node.value, newValue);
 			} else {
@@ -191,25 +190,28 @@ const reportInvalidOutputPropType = (
 	});
 };
 
-const reportInvalidBooleanOrNumberInput = <T extends transformedInputType>(
+const reportInvalidInputArguments = <T extends transformedInputType | undefined>(
 	type: T,
 	node: TSESTree.PropertyDefinition,
 	name: string,
-	alias: string,
-	context: Readonly<TSESLint.RuleContext<`invalid${T}Meta`, any>>,
+	prop: PropInfo,
+	context: Readonly<TSESLint.RuleContext<`inputInvalidArgs`, any>>,
 ) => {
+	const inputType = getTransformedInputType(prop.type, node, context);
+	const alias = validAlias(name);
 	const metadata = transformedInputValidMetadata(alias, type);
 	context.report({
 		node,
-		messageId: `invalid${type}Meta`,
+		messageId: `inputInvalidArgs`,
 		data: {
 			name,
 			metadata,
 		},
-		*fix(fixer) {
-			const decorator = getDecorator(node, 'Input')!;
-			yield fixer.remove(decorator);
-			yield fixer.insertTextBefore(node, `@Input(${metadata})`);
+		fix(fixer) {
+			return fixer.replaceText(
+				node,
+				`readonly ${name} = input${inputType ? '' : `<${typeToString(prop.type, node, context).replace(' | undefined', '')}>`}(undefined, ${metadata});`,
+			);
 		},
 	});
 };
@@ -217,23 +219,26 @@ const reportInvalidBooleanOrNumberInput = <T extends transformedInputType>(
 const reportInvalidAlias = (
 	node: TSESTree.PropertyDefinition,
 	name: string,
-	type: 'input' | 'output',
-	alias: string,
+	info: PropInfo,
 	context: Readonly<TSESLint.RuleContext<'invalidAlias', any>>,
 ) => {
+	const alias = validAlias(name);
+	const expectedType = typeToString(info.type, node, context);
 	context.report({
 		node,
 		messageId: 'invalidAlias',
 		data: {
 			name,
-			type,
+			type: info.type,
 			alias,
 		},
-		*fix(fixer) {
-			const decoratorName = type.substring(0, 1).toUpperCase() + type.substring(1);
-			const decorator = getDecorator(node, decoratorName)!;
-			yield fixer.remove(decorator);
-			yield fixer.insertTextBefore(node, `@${decoratorName}('${alias}')`);
+		fix(fixer) {
+			const newValue = `output${expectedType === 'void' ? '' : `<${expectedType}>`}({alias: '${alias}'})`;
+			if (node.value) {
+				return fixer.replaceText(node.value, newValue);
+			} else {
+				return fixer.insertTextAfter(node.key, ` = ${newValue}`);
+			}
 		},
 	});
 };
@@ -339,76 +344,97 @@ export const angularCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 	create(context) {
 		return {
 			ClassDeclaration(node) {
-				if (isAngularComponent(node)) {
+				if (
+					node.superClass?.type === TSESTree.AST_NODE_TYPES.Identifier &&
+					node.superClass.name === 'BaseWidgetDirective' &&
+					isAngularComponent(node)
+				) {
 					const content = node.body.body;
-					const widgetNode = content.find(isFieldWithName('_widget'));
+					const constructor = node.body.body.find(
+						(member) => member.type === TSESTree.AST_NODE_TYPES.MethodDefinition && member.kind === 'constructor',
+					) as TSESTree.MethodDefinition | undefined;
+					if (!constructor || constructor.value.type === TSESTree.AST_NODE_TYPES.TSEmptyBodyFunctionExpression) return;
+
+					const widgetNode = (
+						(
+							constructor.value.body.body.find(
+								(member) =>
+									member.type === TSESTree.AST_NODE_TYPES.ExpressionStatement &&
+									member.expression.type === TSESTree.AST_NODE_TYPES.CallExpression &&
+									member.expression.callee.type === TSESTree.AST_NODE_TYPES.Super,
+							) as TSESTree.ExpressionStatement
+						).expression as TSESTree.CallExpression
+					).arguments[0] as TSESTree.Expression;
 					const widgetInfo = widgetNode ? getInfoFromWidgetNode(widgetNode, context) : undefined;
 					if (widgetNode && widgetInfo) {
-						const eventsObject = extractEventsObject(widgetNode.value);
+						const eventsObject = extractEventsObject(widgetNode);
 						for (const classMember of content) {
 							if (!isNonStaticPropertyDefinition(classMember)) continue;
 							const name = ASTUtils.getPropertyName(classMember);
 							if (!name) continue;
-							if (findDecorator(classMember, 'Input')) {
+							if (
+								classMember.type !== TSESTree.AST_NODE_TYPES.PropertyDefinition ||
+								classMember.value?.type !== TSESTree.AST_NODE_TYPES.CallExpression ||
+								classMember.value.callee.type !== TSESTree.AST_NODE_TYPES.Identifier
+							)
+								continue;
+							if (classMember.value.callee.name === 'input') {
 								const inputInfo = widgetInfo.props.get(name);
 								if (inputInfo) {
 									widgetInfo.props.delete(name);
-									const nodeType = getNodeType(classMember, context);
-									if (!isSameType(nodeType, inputInfo.type, context)) {
-										reportInvalidInputPropType(classMember, name, nodeType, inputInfo, context);
+									const nodeType = getNodeType(classMember, context) as any;
+									if (
+										(nodeType.target?.symbol?.name != 'InputSignal' && nodeType.target?.symbol?.name != 'InputSignalWithTransform') ||
+										!nodeType.typeArguments?.length ||
+										!isSameType(nodeType.typeArguments[0], inputInfo.type, context, true)
+									) {
+										reportInvalidInputPropType(classMember, name, nodeType.typeArguments[0], inputInfo, context);
 									}
 									const nodeComment = getNodeDocumentation(classMember.key, context);
 									if (!isSameDoc(nodeComment, inputInfo.doc)) {
 										reportNonMatchingPropDoc(classMember, name, 'input', inputInfo, context);
 									}
-									const decoratorArguments = (getDecorator(classMember, 'Input')!.expression as TSESTree.CallExpression).arguments;
+									const inputArguments = classMember.value.arguments;
 									const inputValidAlias = validAlias(name);
 									const inputType = getTransformedInputType(inputInfo.type, node, context);
-									if (inputType) {
-										if (
-											!decoratorArguments.length ||
-											decoratorArguments[0].type !== TSESTree.AST_NODE_TYPES.ObjectExpression ||
-											!decoratorArguments[0].properties.some(
-												(prop) =>
-													prop.type === TSESTree.AST_NODE_TYPES.Property &&
-													prop.key.type === TSESTree.AST_NODE_TYPES.Identifier &&
-													prop.key.name === 'alias' &&
-													prop.value.type === TSESTree.AST_NODE_TYPES.Literal &&
-													prop.value.value === inputValidAlias,
-											) ||
-											!decoratorArguments[0].properties.some(
+									if (
+										inputArguments.length !== 2 ||
+										inputArguments[1].type !== TSESTree.AST_NODE_TYPES.ObjectExpression ||
+										!inputArguments[1].properties.some(
+											(prop) =>
+												prop.type === TSESTree.AST_NODE_TYPES.Property &&
+												prop.key.type === TSESTree.AST_NODE_TYPES.Identifier &&
+												prop.key.name === 'alias' &&
+												prop.value.type === TSESTree.AST_NODE_TYPES.Literal &&
+												prop.value.value === inputValidAlias,
+										) ||
+										(inputType &&
+											!inputArguments[1].properties.some(
 												(prop) =>
 													prop.type === TSESTree.AST_NODE_TYPES.Property &&
 													prop.key.type === TSESTree.AST_NODE_TYPES.Identifier &&
 													prop.key.name === 'transform' &&
 													prop.value.type === TSESTree.AST_NODE_TYPES.Identifier &&
 													prop.value.name === (inputType === 'Boolean' ? 'auBooleanAttribute' : 'auNumberAttribute'),
-											)
-										) {
-											reportInvalidBooleanOrNumberInput(inputType, classMember, name, inputValidAlias, context);
-										}
-									} else if (
-										!decoratorArguments.length ||
-										decoratorArguments[0].type !== TSESTree.AST_NODE_TYPES.Literal ||
-										decoratorArguments[0].value !== inputValidAlias
+											))
 									) {
-										reportInvalidAlias(classMember, name, 'input', inputValidAlias, context);
+										reportInvalidInputArguments(inputType, classMember, name, inputInfo, context);
 									}
 								} else {
 									reportExtraProp(classMember, name, 'input', context);
 								}
 							}
-							if (findDecorator(classMember, 'Output')) {
+							if (classMember.value.callee.name === 'output') {
 								const outputInfo = widgetInfo.events.get(name);
 								if (outputInfo) {
 									widgetInfo.events.delete(name);
 									const nodeType = getNodeType(classMember, context) as TypeReference;
 									if (
-										nodeType.target?.symbol?.name != 'EventEmitter' ||
+										nodeType.target?.symbol?.name != 'OutputEmitterRef' ||
 										nodeType.typeArguments?.length !== 1 ||
 										!isSameType(nodeType.typeArguments[0], outputInfo.type, context)
 									) {
-										reportInvalidOutputPropType(classMember, name, nodeType, outputInfo, context);
+										reportInvalidOutputPropType(classMember, name, (nodeType as any).typeArguments?.[0], outputInfo, context);
 									}
 									const nodeComment = getNodeDocumentation(classMember.key, context);
 									if (!isSameDoc(nodeComment, outputInfo.doc)) {
@@ -420,13 +446,20 @@ export const angularCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 										reportMissingOutputEmit(classMember, name, outputInfo, eventsObject?.node, eventInEventsObject, context);
 									}
 									const outputValidAlias = validAlias(name);
-									const decoratorArguments = (getDecorator(classMember, 'Output')!.expression as TSESTree.CallExpression).arguments;
+									const outputArguments = classMember.value.arguments;
 									if (
-										!decoratorArguments.length ||
-										decoratorArguments[0].type !== TSESTree.AST_NODE_TYPES.Literal ||
-										decoratorArguments[0].value !== outputValidAlias
+										!outputArguments.length ||
+										outputArguments[0].type !== TSESTree.AST_NODE_TYPES.ObjectExpression ||
+										!outputArguments[0].properties.some(
+											(prop) =>
+												prop.type === TSESTree.AST_NODE_TYPES.Property &&
+												prop.key.type === TSESTree.AST_NODE_TYPES.Identifier &&
+												prop.key.name === 'alias' &&
+												prop.value.type === TSESTree.AST_NODE_TYPES.Literal &&
+												prop.value.value === outputValidAlias,
+										)
 									) {
-										reportInvalidAlias(classMember, name, 'output', outputValidAlias, context);
+										reportInvalidAlias(classMember, name, outputInfo, context);
 									}
 								} else {
 									reportExtraProp(classMember, name, 'output', context);
@@ -434,10 +467,10 @@ export const angularCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 							}
 						}
 						for (const [name, info] of widgetInfo.props) {
-							reportMissingInputProp(widgetNode, name, info, context);
+							reportMissingInputProp(constructor, name, info, context);
 						}
 						for (const [name, info] of widgetInfo.events) {
-							reportMissingOutputProp(widgetNode, name, info, eventsObject, context);
+							reportMissingOutputProp(constructor, name, info, eventsObject, context);
 						}
 					}
 				}
@@ -451,9 +484,8 @@ export const angularCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 		fixable: 'code',
 		messages: {
 			extraProp: 'Extra {{ type }} "{{ name }}" not present in the API.',
-			invalidAlias: 'No proper alias for {{ type }} "{{ name }}": expected \'{{ alias }}\'.',
-			invalidBooleanMeta: 'No proper metadata for boolean input "{{ name }}": expected \'{{ metadata }}\'.',
-			invalidNumberMeta: 'No proper metadata for number input "{{ name }}": expected \'{{ metadata }}\'.',
+			invalidAlias: 'No proper alias for output "{{ name }}": expected \'{{ alias }}\'.',
+			inputInvalidArgs: 'No proper arguments for input "{{ name }}": expected \'(undefined, {{ metadata }})\'.',
 			invalidPropType: 'Invalid type for {{ type }} "{{ name }}": expected {{ expectedType }}, found {{ foundType }}.',
 			nonMatchingPropDoc: 'Documentation for {{ type }} "{{ name }}" does not match the API documentation.',
 			missingProp: 'Missing {{ type }} "{{ name }}" which is present in the API.',

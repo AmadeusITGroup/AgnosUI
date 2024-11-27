@@ -155,11 +155,14 @@ export const getInfoFromWidgetNode = (widgetNode: TSESTree.Node, context: Readon
 	};
 };
 
-export const isSameType = (type1: Type, type2: Type, context: Readonly<TSESLint.RuleContext<any, any>>): boolean => {
+export const isSameType = (type1: Type, type2: Type, context: Readonly<TSESLint.RuleContext<any, any>>, addUndefinedToType1 = false): boolean => {
 	const parserServices = ESLintUtils.getParserServices(context);
 	const checker = parserServices.program.getTypeChecker();
 	const sameTypeFlags = TypeFormatFlags.NoTruncation | TypeFormatFlags.UseFullyQualifiedType | TypeFormatFlags.InTypeAlias;
-	const strType1 = checker.typeToString(type1, undefined, sameTypeFlags);
+	let strType1 = checker.typeToString(type1, undefined, sameTypeFlags);
+	if (addUndefinedToType1) {
+		strType1 = strType1.replace(' | undefined', '') + ' | undefined';
+	}
 	const strType2 = checker.typeToString(type2, undefined, sameTypeFlags);
 	if (strType1 === strType2) {
 		return true;
