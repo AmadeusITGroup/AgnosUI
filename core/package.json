@@ -131,7 +131,7 @@
 		}
 	},
 	"peerDependencies": {
-		"@amadeus-it-group/tansu": "^1.0.0",
+		"@amadeus-it-group/tansu": "divdavem/tansu#signalFirst",
 		"@floating-ui/dom": "^1.6.12",
 		"esm-env": "^1.1.4"
 	},

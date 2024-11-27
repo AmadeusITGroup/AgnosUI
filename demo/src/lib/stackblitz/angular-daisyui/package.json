@@ -11,7 +11,7 @@
 		"preview": "vite preview --outDir dist/demo/browser"
 	},
 	"devDependencies": {
-		"@amadeus-it-group/tansu": "^1.0.0",
+		"@amadeus-it-group/tansu": "divdavem/tansu#signalFirst",
 		"@angular-devkit/build-angular": "^18.2.12",
 		"@angular/animations": "^18.2.12",
 		"@angular/cli": "^18.2.12",

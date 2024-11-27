@@ -146,7 +146,7 @@
 		"@agnos-ui/core": "0.0.0"
 	},
 	"peerDependencies": {
-		"@amadeus-it-group/tansu": "^1.0.0",
+		"@amadeus-it-group/tansu": "divdavem/tansu#signalFirst",
 		"svelte": "^5.2.7"
 	},
 	"devDependencies": {
