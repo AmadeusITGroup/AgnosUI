@@ -1,5 +1,5 @@
-import {ApplicationRef, createComponent, EnvironmentInjector, EventEmitter, inject, Injectable, Injector} from '@angular/core';
-import type {Subscription} from 'rxjs';
+import type {OutputRefSubscription} from '@angular/core';
+import {ApplicationRef, createComponent, EnvironmentInjector, inject, Injectable, Injector, OutputEmitterRef} from '@angular/core';
 import {ModalComponent} from './modal.component';
 import type {ModalProps} from './modal.gen';
 
@@ -24,14 +24,14 @@ export class ModalService {
 			environmentInjector: injector.get(EnvironmentInjector),
 			elementInjector: injector,
 		});
-		const subscriptions: Subscription[] = [];
+		const subscriptions: OutputRefSubscription[] = [];
 		try {
 			for (const [prop, value] of Object.entries(options)) {
 				if (prop.startsWith('on')) {
 					const eventName = `${prop[2].toLowerCase()}${prop.substring(3)}`;
 					const eventEmitter = (component.instance as any)[eventName];
-					if (eventEmitter instanceof EventEmitter) {
-						subscriptions.push(eventEmitter.subscribe(value));
+					if (eventEmitter instanceof OutputEmitterRef) {
+						subscriptions.push(eventEmitter.subscribe(value as any));
 					}
 				} else {
 					component.setInput(`au${prop.substring(0, 1).toUpperCase()}${prop.substring(1)}`, value);
