@@ -62,6 +62,7 @@ export class CollapseDirective extends BaseWidgetDirective<CollapseWidget> {
 	 * ```ts
 	 * () => {}
 	 * ```
+	 * @param visible - The new visibility state of the collapse.
 	 */
 	readonly visibleChange = output<boolean>({alias: 'auVisibleChange'});
 
