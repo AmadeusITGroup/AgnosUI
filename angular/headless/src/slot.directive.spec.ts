@@ -1,6 +1,6 @@
 import {writable} from '@amadeus-it-group/tansu';
 import type {TemplateRef} from '@angular/core';
-import {ChangeDetectionStrategy, Component, Injectable, Input, ViewChild, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Injectable, inject, input, viewChild} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 import {describe, expect, it} from 'vitest';
 import {injectWidgetsConfig, provideWidgetsConfig} from './config';
@@ -15,11 +15,11 @@ describe('slot directive', () => {
 		standalone: true,
 		changeDetection: ChangeDetectionStrategy.OnPush,
 		imports: [SlotDirective],
-		template: '<ng-template [auSlot]="mySlot" [auSlotProps]="mySlotProps"></ng-template>',
+		template: '<ng-template [auSlot]="mySlot()" [auSlotProps]="mySlotProps()"></ng-template>',
 	})
 	class TestComponent {
-		@Input() mySlot: SlotContent<{myProp: string}>;
-		@Input() mySlotProps = {myProp: 'world'};
+		readonly mySlot = input<SlotContent<{myProp: string}>>();
+		readonly mySlotProps = input({myProp: 'world'});
 	}
 
 	it('undefined', () => {
@@ -74,20 +74,20 @@ describe('slot directive', () => {
 			selector: '[auTestSlotDirectiveComponentHello]',
 			standalone: true,
 			changeDetection: ChangeDetectionStrategy.OnPush,
-			template: 'Hello {{myProp}}!',
+			template: 'Hello {{myProp()}}!',
 		})
 		class HelloComponent {
-			@Input() myProp = '';
+			readonly myProp = input('');
 		}
 
 		@Component({
 			selector: '[auTestSlotDirectiveComponentGoodbye]',
 			standalone: true,
 			changeDetection: ChangeDetectionStrategy.OnPush,
-			template: 'Goodbye {{myProp}}!',
+			template: 'Goodbye {{myProp()}}!',
 		})
 		class GoodbyeComponent {
-			@Input() myProp = '';
+			readonly myProp = input('');
 		}
 
 		const fixture = TestBed.createComponent(TestComponent);
@@ -113,26 +113,26 @@ describe('slot directive', () => {
 			template: `
 				<ng-template #hello let-myProp="myProp">Hello {{ myProp }}!</ng-template>
 				<ng-template #goodbye let-myProp="myProp">Goodbye {{ myProp }}!</ng-template>
-				<ng-template [auSlot]="mySlot" [auSlotProps]="mySlotProps"></ng-template>
+				<ng-template [auSlot]="mySlot()" [auSlotProps]="mySlotProps()"></ng-template>
 			`,
 		})
 		class TemplateTestComponent {
-			@ViewChild('hello') hello?: TemplateRef<{myProp: string}>;
-			@ViewChild('goodbye') goodbye?: TemplateRef<{myProp: string}>;
-			@Input() mySlot: SlotContent<{myProp: string}>;
-			@Input() mySlotProps = {myProp: 'world'};
+			readonly hello = viewChild.required<TemplateRef<{myProp: string}>>('hello');
+			readonly goodbye = viewChild.required<TemplateRef<{myProp: string}>>('goodbye');
+			readonly mySlot = input<SlotContent<{myProp: string}>>();
+			readonly mySlotProps = input({myProp: 'world'});
 		}
 
 		const fixture = TestBed.createComponent(TemplateTestComponent);
 		fixture.detectChanges();
 		expect(fixture.nativeElement.textContent).toBe('');
-		fixture.componentRef.setInput('mySlot', fixture.componentInstance.hello);
+		fixture.componentRef.setInput('mySlot', fixture.componentInstance.hello());
 		fixture.detectChanges();
 		expect(fixture.nativeElement.textContent).toBe('Hello world!');
 		fixture.componentRef.setInput('mySlotProps', {myProp: 'to you'});
 		fixture.detectChanges();
 		expect(fixture.nativeElement.textContent).toBe('Hello to you!');
-		fixture.componentRef.setInput('mySlot', fixture.componentInstance.goodbye);
+		fixture.componentRef.setInput('mySlot', fixture.componentInstance.goodbye());
 		fixture.detectChanges();
 		expect(fixture.nativeElement.textContent).toBe('Goodbye to you!');
 		fixture.destroy();
@@ -150,8 +150,8 @@ describe('slot directive', () => {
 			`,
 		})
 		class HelloAndGoodbyeComponent {
-			@ViewChild('hello', {static: true}) hello!: TemplateRef<{myProp: string}>;
-			@ViewChild('goodbye', {static: true}) goodbye!: TemplateRef<{myProp: string}>;
+			readonly hello = viewChild.required<TemplateRef<{myProp: string}>>('hello');
+			readonly goodbye = viewChild.required<TemplateRef<{myProp: string}>>('goodbye');
 		}
 
 		const fixture = TestBed.createComponent(TestComponent);

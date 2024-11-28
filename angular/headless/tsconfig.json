@@ -6,5 +6,5 @@
 		}
 	},
 	"include": ["src"],
-	"files": ["test.ts", "vitest.config.ts"]
+	"exclude": ["**/*.spec.ts", "**/__mocks__/**", "**/*.spec-utils.ts"]
 }

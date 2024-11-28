@@ -3,7 +3,7 @@ import {stateStores, writablesForProps} from '@agnos-ui/core/utils/stores';
 import {typeFunction, typeString} from '@agnos-ui/core/utils/writables';
 
 import {computed, writable} from '@amadeus-it-group/tansu';
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, NgZone, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, input, NgZone, output} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 import {beforeEach, describe, expect, it} from 'vitest';
 import {UseDirective} from './directive';
@@ -84,9 +84,9 @@ describe('callWidgetFactoryWithConfig', () => {
 			changeDetection: ChangeDetectionStrategy.OnPush,
 		})
 		class MyWidgetComponent extends BaseWidgetDirective<MyWidget> {
-			@Output('auMyAction') myAction = new EventEmitter<void>();
-			@Output('auCounterChange') counterChange = new EventEmitter<number>();
-			@Input('auMyValue') myValue: string | undefined;
+			readonly myAction = output({alias: 'auMyAction'});
+			readonly counterChange = output<number>({alias: 'auCounterChange'});
+			readonly myValue = input<string>(undefined, {alias: 'auMyValue'});
 
 			constructor() {
 				super(
@@ -226,7 +226,7 @@ describe('callWidgetFactoryWithConfig', () => {
 			selector: '[auTestMyWidget]',
 		})
 		class MyWidgetComponent extends BaseWidgetDirective<MyWidget> {
-			@Input('auMyValue') myValue: string | undefined;
+			readonly myValue = input<string>(undefined, {alias: 'auMyValue'});
 
 			constructor() {
 				super(
