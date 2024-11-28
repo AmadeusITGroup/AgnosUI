@@ -1,6 +1,6 @@
 import {UseDirective, toAngularSignal} from '@agnos-ui/angular-bootstrap';
 import {activeElement$, createHasFocus} from '@agnos-ui/core';
-import {ChangeDetectionStrategy, Component, effect, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, linkedSignal} from '@angular/core';
 
 @Component({
 	imports: [UseDirective],
@@ -41,19 +41,12 @@ import {ChangeDetectionStrategy, Component, effect, signal} from '@angular/core'
 export default class FocustrackComponent {
 	public readonly hasFocusApi = createHasFocus();
 	public readonly hasFocus = toAngularSignal(this.hasFocusApi.hasFocus$);
-	public readonly activeElements = signal<{tagName?: string; id?: string}[]>([]);
 	private readonly activeElement = toAngularSignal(activeElement$);
-
-	constructor() {
-		effect(
-			() => {
-				this.activeElements.update((elements) =>
-					elements.concat([{tagName: this.activeElement()?.tagName?.toLowerCase(), id: this.activeElement()?.id || undefined}]),
-				);
-			},
-			{allowSignalWrites: true},
-		);
-	}
+	public readonly activeElements = linkedSignal<Element | null, {tagName?: string; id?: string}[]>({
+		source: this.activeElement,
+		computation: (activeElement, previous) =>
+			(previous?.value ?? []).concat([{tagName: activeElement?.tagName?.toLowerCase(), id: activeElement?.id || undefined}]),
+	});
 
 	clear() {
 		this.activeElements.set([]);
