@@ -1,8 +1,12 @@
 import {defineConfig} from 'vitest/config';
 import {alias} from '../../viteAlias';
 
+import angular from '@analogjs/vite-plugin-angular';
+
 export default defineConfig({
+	plugins: [angular()],
 	test: {
+		globals: true,
 		alias,
 		browser: {
 			enabled: true,
@@ -20,5 +24,8 @@ export default defineConfig({
 			provider: 'custom',
 			customProviderModule: '@agnos-ui/code-coverage/vitestProvider',
 		},
+	},
+	optimizeDeps: {
+		include: ['@angular/compiler'],
 	},
 });

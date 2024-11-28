@@ -215,6 +215,15 @@ export default tseslint.config(
 		},
 	},
 	{
+		files: ['angular/headless/src/**/*.spec.ts', 'angular/headless/test.ts', 'angular/headless/vitest.config.ts'],
+		languageOptions: {
+			parserOptions: {
+				project: 'angular/headless/tsconfig.spec.json',
+				projectService: false,
+			},
+		},
+	},
+	{
 		files: ['angular/bootstrap/src/**/*.ts'],
 		rules: {
 			'@angular-eslint/directive-selector': [
