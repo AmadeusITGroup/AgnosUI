@@ -15,11 +15,11 @@ const frameworkDefaults = {
 	svelte: path.join(__dirname, `../../svelte/demo/src/bootstrap/samples/placeholder/PlaceholderSample.route.svelte`),
 };
 
-const importRegExp = /import([^;]+from)?\s*['"]([^'"]+)['"]\s*;/g;
+const importRegExp = /(@use|import)([^;]+from)?\s*['"]([^'"]+)['"]\s*;/g;
 const findDependencies = (fileContent: string) => {
 	const dependencies: string[] = [];
 	for (const dependency of fileContent.matchAll(importRegExp)) {
-		dependencies.push(dependency[2]);
+		dependencies.push(dependency[3]);
 	}
 	return dependencies;
 };

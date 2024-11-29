@@ -41,7 +41,7 @@ import stopSvg from 'bootstrap-icons/icons/stop-fill.svg';
 			</div>
 		</div>
 	`,
-	styles: "@import '@agnos-ui/common/samples/progressbar/custom.scss';",
+	styles: "@use '@agnos-ui/common/samples/progressbar/custom.scss';",
 })
 export default class FullCustomProgressBarComponent implements OnDestroy {
 	readonly sanitizer = inject(DomSanitizer);

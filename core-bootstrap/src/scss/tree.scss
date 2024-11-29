@@ -1,5 +1,5 @@
 @use 'variables';
-@import '_functions';
+@use '_functions';
 
 .au-tree {
 	// scss-docs-start tree-css-vars
@@ -10,8 +10,8 @@
 	--#{variables.$prefix}tree-expand-icon-background-color-hover: #{variables.$au-tree-expand-icon-background-color-hover};
 	--#{variables.$prefix}tree-expand-icon-width: #{variables.$au-tree-expand-icon-width};
 	--#{variables.$prefix}tree-expand-icon-height: #{variables.$au-tree-expand-icon-height};
-	--#{variables.$prefix}tree-expand-icon-default: #{escape-svg(variables.$au-tree-expand-icon-default)};
-	--#{variables.$prefix}tree-expand-icon-hover: #{escape-svg(variables.$au-tree-expand-icon-hover)};
+	--#{variables.$prefix}tree-expand-icon-default: #{functions.escape-svg(variables.$au-tree-expand-icon-default)};
+	--#{variables.$prefix}tree-expand-icon-hover: #{functions.escape-svg(variables.$au-tree-expand-icon-hover)};
 	// scss-docs-end tree-css-vars
 
 	list-style: none;

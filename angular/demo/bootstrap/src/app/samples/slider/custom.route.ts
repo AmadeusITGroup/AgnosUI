@@ -24,7 +24,7 @@ import CustomHandleSliderComponent from './custom-handle.component';
 			[auHandle]="sliderCustomSlotHandle"
 		></div>
 	`,
-	styles: "@import '@agnos-ui/common/samples/slider/custom.scss';",
+	styles: "@use '@agnos-ui/common/samples/slider/custom.scss';",
 })
 export default class CustomSliderComponent {
 	readonly sliderCustomSlotHandle = CustomHandleSliderComponent;

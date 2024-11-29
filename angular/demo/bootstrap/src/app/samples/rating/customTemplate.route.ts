@@ -11,6 +11,6 @@ import {Component} from '@angular/core';
 			</ng-template>
 		</div>
 	`,
-	styles: "@import '@agnos-ui/common/samples/rating/custom.scss';",
+	styles: "@use '@agnos-ui/common/samples/rating/custom.scss';",
 })
 export default class CustomTemplateComponent {}
