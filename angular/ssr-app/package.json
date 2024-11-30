@@ -30,7 +30,7 @@
 		"@angular/cli": "^18.2.12",
 		"@angular/compiler-cli": "^18.2.12",
 		"@types/express": "^5.0.0",
-		"@types/node": "^22.9.3",
+		"@types/node": "^22.10.1",
 		"typescript": "~5.5.4"
 	},
 	"wireit": {
