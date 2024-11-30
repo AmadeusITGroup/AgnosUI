@@ -11,7 +11,7 @@
 	"devDependencies": {
 		"@amadeus-it-group/tansu": "^1.0.0",
 		"@floating-ui/dom": "^1.6.12",
-		"@sveltejs/vite-plugin-svelte": "^4.0.2",
+		"@sveltejs/vite-plugin-svelte": "^5.0.1",
 		"@tsconfig/svelte": "^5.0.4",
 		"bootstrap-icons": "^1.11.3",
 		"sass": "^1.81.0",
