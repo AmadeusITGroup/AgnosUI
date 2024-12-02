@@ -1,6 +1,6 @@
 {
 	"name": "agnos-ui-angular-stackblitz-demo",
-	"version": "0.0.0",
+	"version": "0.6.0-next.1",
 	"private": true,
 	"type": "module",
 	"scripts": {
@@ -11,6 +11,7 @@
 		"preview": "vite preview --outDir dist/demo/browser"
 	},
 	"devDependencies": {
+		"@agnos-ui/angular-headless": "0.6.0-next.1",
 		"@amadeus-it-group/tansu": "^1.0.0",
 		"@angular-devkit/build-angular": "^18.2.12",
 		"@angular/animations": "^18.2.12",

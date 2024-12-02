@@ -1,7 +1,7 @@
 {
 	"name": "@agnos-ui/core-bootstrap",
 	"description": "Styles and component interface extensions necessary to use AgnosUI with Bootstrap.",
-	"version": "0.0.0",
+	"version": "0.6.0-next.1",
 	"private": true,
 	"keywords": [
 		"css",
@@ -116,7 +116,7 @@
 		"sass": "^1.81.0"
 	},
 	"dependencies": {
-		"@agnos-ui/core": "0.0.0"
+		"@agnos-ui/core": "0.6.0-next.1"
 	},
 	"peerDependencies": {
 		"@amadeus-it-group/tansu": "^1.0.0"
