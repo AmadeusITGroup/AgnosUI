@@ -36,7 +36,7 @@ export class TreeStructureDirective {
 		<ng-template auTreeStructure #structure let-state="state" let-directives="directives" let-api="api">
 			<ul role="tree" class="au-tree {{ state.className() }}" [auUse]="directives.navigationDirective">
 				@for (node of state.normalizedNodes(); track trackNode($index, node)) {
-					<ng-template [auSlot]="state.item()" [auSlotProps]="{state, api, directives, item: node}"></ng-template>
+					<ng-template [auSlot]="state.item()" [auSlotProps]="{state, api, directives, item: node}" />
 				}
 			</ul>
 		</ng-template>
@@ -111,7 +111,7 @@ export class TreeItemContentDirective {
 	template: `
 		<ng-template auTreeItem #treeItemContent let-state="state" let-directives="directives" let-item="item" let-api="api">
 			<span class="au-tree-item">
-				<ng-template [auSlot]="state.itemToggle()" [auSlotProps]="{state, api, directives, item}"></ng-template>
+				<ng-template [auSlot]="state.itemToggle()" [auSlotProps]="{state, api, directives, item}" />
 				{{ item.label }}
 			</span>
 		</ng-template>
@@ -149,11 +149,11 @@ export class TreeItemDirective {
 	template: `
 		<ng-template auTreeItem #treeItem let-state="state" let-directives="directives" let-item="item" let-api="api">
 			<li [auUse]="[directives.itemAttributesDirective, {item}]">
-				<ng-template [auSlot]="state.itemContent()" [auSlotProps]="{state, api, directives, item}"></ng-template>
+				<ng-template [auSlot]="state.itemContent()" [auSlotProps]="{state, api, directives, item}" />
 				@if (state.expandedMap().get(item)) {
 					<ul role="group">
 						@for (child of item.children; track trackNode($index, child)) {
-							<ng-template [auSlot]="state.item()" [auSlotProps]="{state, api, directives, item: child}"></ng-template>
+							<ng-template [auSlot]="state.item()" [auSlotProps]="{state, api, directives, item: child}" />
 						}
 					</ul>
 				}
@@ -180,10 +180,11 @@ export const treeDefaultSlotItem: SlotContent<TreeSlotItemContext> = new Compone
  * configurations and customizations through its inputs and outputs.
  */
 @Component({
+	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: '[auTree]',
 	standalone: true,
 	imports: [SlotDirective],
-	template: ` <ng-template [auSlot]="state.structure()" [auSlotProps]="{state, api, directives}"></ng-template> `,
+	template: ` <ng-template [auSlot]="state.structure()" [auSlotProps]="{state, api, directives}" /> `,
 })
 export class TreeComponent extends BaseWidgetDirective<TreeWidget> {
 	constructor() {

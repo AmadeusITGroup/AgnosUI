@@ -96,28 +96,28 @@ export class SliderStructureDirective {
 			<div [auUse]="directives.clickableAreaDirective"></div>
 			@if (state.showMinMaxLabels()) {
 				<div [auUse]="directives.minLabelDirective">
-					<ng-template [auSlot]="state.label()" [auSlotProps]="{state, api, directives, value: state.min()}"></ng-template>
+					<ng-template [auSlot]="state.label()" [auSlotProps]="{state, api, directives, value: state.min()}" />
 				</div>
 				<div [auUse]="directives.maxLabelDirective">
-					<ng-template [auSlot]="state.label()" [auSlotProps]="{state, api, directives, value: state.max()}"></ng-template>
+					<ng-template [auSlot]="state.label()" [auSlotProps]="{state, api, directives, value: state.max()}" />
 				</div>
 			}
 			@if (state.showValueLabels() && state.combinedLabelDisplay()) {
 				<div [auUse]="directives.combinedHandleLabelDisplayDirective">
 					@if (state.rtl()) {
-						<ng-template [auSlot]="state.label()" [auSlotProps]="{state, api, directives, value: state.sortedValues()[1]}"></ng-template> -
-						<ng-template [auSlot]="state.label()" [auSlotProps]="{state, api, directives, value: state.sortedValues()[0]}"></ng-template>
+						<ng-template [auSlot]="state.label()" [auSlotProps]="{state, api, directives, value: state.sortedValues()[1]}" /> -
+						<ng-template [auSlot]="state.label()" [auSlotProps]="{state, api, directives, value: state.sortedValues()[0]}" />
 					} @else {
-						<ng-template [auSlot]="state.label()" [auSlotProps]="{state, api, directives, value: state.sortedValues()[0]}"></ng-template> -
-						<ng-template [auSlot]="state.label()" [auSlotProps]="{state, api, directives, value: state.sortedValues()[1]}"></ng-template>
+						<ng-template [auSlot]="state.label()" [auSlotProps]="{state, api, directives, value: state.sortedValues()[0]}" /> -
+						<ng-template [auSlot]="state.label()" [auSlotProps]="{state, api, directives, value: state.sortedValues()[1]}" />
 					}
 				</div>
 			}
 			@for (item of state.sortedHandles(); track item.id; let i = $index) {
-				<ng-template [auSlot]="state.handle()" [auSlotProps]="{state, api, directives, item}"></ng-template>
+				<ng-template [auSlot]="state.handle()" [auSlotProps]="{state, api, directives, item}" />
 				@if (state.showValueLabels() && !state.combinedLabelDisplay()) {
 					<div [auUse]="[directives.handleLabelDisplayDirective, {index: i}]">
-						<ng-template [auSlot]="state.label()" [auSlotProps]="{state, api, directives, value: state.values()[i]}"></ng-template>
+						<ng-template [auSlot]="state.label()" [auSlotProps]="{state, api, directives, value: state.values()[i]}" />
 					</div>
 				}
 			}
@@ -148,7 +148,7 @@ export const sliderDefaultSlotStructure: SlotContent<SliderContext> = new Compon
 	host: {
 		'(blur)': 'handleBlur()',
 	},
-	template: ` <ng-template [auSlot]="state.structure()" [auSlotProps]="{state, api, directives}"></ng-template> `,
+	template: ` <ng-template [auSlot]="state.structure()" [auSlotProps]="{state, api, directives}" /> `,
 })
 export class SliderComponent extends BaseWidgetDirective<SliderWidget> {
 	/**

@@ -7,7 +7,7 @@ import {ChangeDetectionStrategy, Component, input, output} from '@angular/core';
 	standalone: true,
 	imports: [UseDirective],
 	template: ` <div class="flex flex-col gap-2" [auUse]="directives.accordionDirective">
-		<ng-content></ng-content>
+		<ng-content />
 	</div>`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

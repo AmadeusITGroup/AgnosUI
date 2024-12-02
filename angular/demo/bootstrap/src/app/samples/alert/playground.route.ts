@@ -10,7 +10,7 @@ const undefinedConfig = getUndefinedValues(getAlertDefaultConfig());
 	standalone: true,
 	imports: [AgnosUIAngularModule],
 	providers: provideHashConfig('alert'),
-	template: `<au-component auAlert #widget></au-component>`,
+	template: `<au-component auAlert #widget />`,
 })
 export default class PlaygroundComponent {
 	@ViewChild('widget') widget!: AlertComponent;

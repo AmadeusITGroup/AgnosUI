@@ -123,12 +123,12 @@ export class PaginationStructureDirective {
 				<li class="page-item" [class.active]="page === state.page()" [class.disabled]="page === -1 || state.disabled()">
 					@if (page === -1) {
 						<div class="page-link au-ellipsis" aria-hidden="true">
-							<ng-template [auSlot]="state.ellipsisLabel()" [auSlotProps]="{state, api, directives}"></ng-template>
+							<ng-template [auSlot]="state.ellipsisLabel()" [auSlotProps]="{state, api, directives}" />
 						</div>
 						<span class="visually-hidden">{{ state.ariaEllipsisLabel() }}</span>
 					} @else {
 						<a class="page-link" [auUse]="[directives.pageLink, {page}]">
-							<ng-template [auSlot]="state.numberLabel()" [auSlotProps]="{state, api, directives, displayedPage: page}"></ng-template>
+							<ng-template [auSlot]="state.numberLabel()" [auSlotProps]="{state, api, directives, displayedPage: page}" />
 							@if (state.page() === page) {
 								<span class="visually-hidden">{{ state.activeLabel() }}</span>
 							}
@@ -143,7 +143,7 @@ export class PaginationStructureDirective {
 					<li class="page-item" [class.disabled]="state.previousDisabled()">
 						<a class="page-link" [auUse]="directives.pageFirst">
 							<span aria-hidden="true">
-								<ng-template [auSlot]="state.firstPageLabel()" [auSlotProps]="{state, api, directives}"></ng-template>
+								<ng-template [auSlot]="state.firstPageLabel()" [auSlotProps]="{state, api, directives}" />
 							</span>
 						</a>
 					</li>
@@ -152,17 +152,17 @@ export class PaginationStructureDirective {
 					<li class="page-item" [class.disabled]="state.previousDisabled()">
 						<a class="page-link" [auUse]="directives.pagePrev">
 							<span aria-hidden="true">
-								<ng-template [auSlot]="state.previousPageLabel()" [auSlotProps]="{state, api, directives}"></ng-template>
+								<ng-template [auSlot]="state.previousPageLabel()" [auSlotProps]="{state, api, directives}" />
 							</span>
 						</a>
 					</li>
 				}
-				<ng-template [auSlot]="state.pagesDisplay()" [auSlotProps]="{state, api, directives}"></ng-template>
+				<ng-template [auSlot]="state.pagesDisplay()" [auSlotProps]="{state, api, directives}" />
 				@if (state.directionLinks()) {
 					<li class="page-item" [class.disabled]="state.nextDisabled()">
 						<a class="page-link" [auUse]="directives.pageNext">
 							<span aria-hidden="true">
-								<ng-template [auSlot]="state.nextPageLabel()" [auSlotProps]="{state, api, directives}"></ng-template>
+								<ng-template [auSlot]="state.nextPageLabel()" [auSlotProps]="{state, api, directives}" />
 							</span>
 						</a>
 					</li>
@@ -171,7 +171,7 @@ export class PaginationStructureDirective {
 					<li class="page-item" [class.disabled]="state.nextDisabled()">
 						<a class="page-link" [auUse]="directives.pageLast">
 							<span aria-hidden="true">
-								<ng-template [auSlot]="state.lastPageLabel()" [auSlotProps]="{state, api, directives}"></ng-template>
+								<ng-template [auSlot]="state.lastPageLabel()" [auSlotProps]="{state, api, directives}" />
 							</span>
 						</a>
 					</li>
@@ -208,7 +208,7 @@ export const paginationDefaultSlotStructure: SlotContent<PaginationContext> = ne
 		'[attr.aria-label]': 'state.ariaLabel()',
 	},
 	encapsulation: ViewEncapsulation.None,
-	template: `<ng-template [auSlotProps]="{state, api, directives}" [auSlot]="state.structure()"></ng-template>`,
+	template: `<ng-template [auSlotProps]="{state, api, directives}" [auSlot]="state.structure()" />`,
 })
 export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> {
 	/**

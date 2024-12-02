@@ -3,7 +3,7 @@ import {Component} from '@angular/core';
 
 @Component({
 	standalone: true,
-	template: ` <au-component auTree [auNodes]="nodes"></au-component> `,
+	template: ` <au-component auTree [auNodes]="nodes" /> `,
 	imports: [TreeComponent],
 })
 export default class BasicTreeComponent {
