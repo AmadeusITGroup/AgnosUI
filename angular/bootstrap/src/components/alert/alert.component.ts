@@ -49,7 +49,7 @@ export class AlertStructureDirective {
 	imports: [SlotDirective, AlertStructureDirective],
 	template: ` <ng-template auAlertStructure #structure let-state="state" let-api="api" let-directives="directives">
 		<div class="alert-body">
-			<ng-template [auSlot]="state.children()" [auSlotProps]="{state, api, directives}"></ng-template>
+			<ng-template [auSlot]="state.children()" [auSlotProps]="{state, api, directives}" />
 		</div>
 		@if (state.dismissible()) {
 			<button type="button" class="btn-close" (click)="api.close()" [attr.aria-label]="state.ariaCloseButtonLabel()"></button>
@@ -79,7 +79,7 @@ export const alertDefaultSlotStructure: SlotContent<AlertContext> = new Componen
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [SlotDirective, UseDirective],
 	template: ` <ng-template #content>
-			<ng-content></ng-content>
+			<ng-content />
 		</ng-template>
 
 		@if (!state.hidden()) {
@@ -88,7 +88,7 @@ export const alertDefaultSlotStructure: SlotContent<AlertContext> = new Componen
 				class="au-alert alert alert-{{ state.type() }} {{ state.className() }} {{ state.dismissible() ? 'alert-dismissible' : '' }}"
 				role="alert"
 			>
-				<ng-template [auSlot]="state.structure()" [auSlotProps]="{state, api, directives}"></ng-template>
+				<ng-template [auSlot]="state.structure()" [auSlotProps]="{state, api, directives}" />
 			</div>
 		}`,
 })

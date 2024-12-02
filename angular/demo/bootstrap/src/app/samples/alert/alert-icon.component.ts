@@ -5,13 +5,13 @@ import biInfoCircleFill from 'bootstrap-icons/icons/info-circle-fill.svg';
 import biLightbulb from 'bootstrap-icons/icons/lightbulb.svg';
 import type {AlertWidget} from '@agnos-ui/angular-bootstrap';
 import {SlotComponent, SlotDirective} from '@agnos-ui/angular-bootstrap';
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.OnPush,
 	standalone: true,
 	imports: [SlotDirective],
-	providers: [SlotDirective],
 	selector: 'app-icon-structure',
 	host: {
 		style: 'display: contents;',
@@ -19,7 +19,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 	template: `
 		<span class="d-flex me-2" [innerHTML]="sanitizer.bypassSecurityTrustHtml(typeIcon[state.type()])"></span>
 		<div class="alert-body">
-			<ng-template [auSlot]="state.children()" [auSlotProps]="{state, api, directives}"></ng-template>
+			<ng-template [auSlot]="state.children()" [auSlotProps]="{state, api, directives}" />
 			@if (state.dismissible()) {
 				<button type="button" class="btn-close ms-auto" (click)="api.close()" [attr.aria-label]="state.ariaCloseButtonLabel()"></button>
 			}

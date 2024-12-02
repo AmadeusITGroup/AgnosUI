@@ -64,7 +64,7 @@ export class SelectItemLabelDirective<Item> {
 			@if (state.selectedContexts(); as selectedContexts) {
 				@for (itemContext of selectedContexts; track itemCtxTrackBy($index, itemContext)) {
 					<div [auUse]="[directives.badgeAttributesDirective, itemContext]">
-						<ng-template [auSlot]="state.badgeLabel()" [auSlotProps]="{state, api, directives, itemContext}"></ng-template>
+						<ng-template [auSlot]="state.badgeLabel()" [auSlotProps]="{state, api, directives, itemContext}" />
 					</div>
 				}
 			}
@@ -78,7 +78,7 @@ export class SelectItemLabelDirective<Item> {
 						[auUse]="[directives.itemAttributesDirective, itemContext]"
 						[class.text-bg-primary]="itemContext === state.highlighted()"
 					>
-						<ng-template [auSlot]="state.itemLabel()" [auSlotProps]="{state, api, directives, itemContext}"></ng-template>
+						<ng-template [auSlot]="state.itemLabel()" [auSlotProps]="{state, api, directives, itemContext}" />
 					</li>
 				}
 			</ul>

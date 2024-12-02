@@ -185,6 +185,12 @@ export default tseslint.config(
 		},
 	},
 	{
+		files: ['angular/**/*.component.ts', 'angular/**/*.directive.ts'],
+		rules: {
+			'@angular-eslint/prefer-on-push-component-change-detection': 'error',
+		},
+	},
+	{
 		files: ['angular/headless/src/**/*.ts'],
 		rules: {
 			'@angular-eslint/directive-selector': [
@@ -238,6 +244,7 @@ export default tseslint.config(
 		extends: [...angular.configs.templateRecommended, ...angular.configs.templateAccessibility],
 		rules: {
 			'@angular-eslint/template/elements-content': 'off',
+			'@angular-eslint/template/prefer-self-closing-tags': 'error',
 		},
 	},
 	// react

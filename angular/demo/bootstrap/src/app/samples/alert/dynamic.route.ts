@@ -32,7 +32,7 @@ class AlertContainerService {
 				[auType]="alert.type"
 				[auChildren]="alert.children"
 				(auHidden)="removeAlert(alert)"
-			></au-component>
+			/>
 		}
 	`,
 })

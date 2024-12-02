@@ -10,7 +10,7 @@ const undefinedConfig = getUndefinedValues(getModalDefaultConfig());
 	standalone: true,
 	imports: [AgnosUIAngularModule],
 	providers: provideHashConfig('modal'),
-	template: `<div><au-component auModal #widget></au-component></div>`,
+	template: `<div><au-component auModal #widget /></div>`,
 })
 export default class PlaygroundComponent {
 	@ViewChild('widget') widget!: ModalComponent<any>;

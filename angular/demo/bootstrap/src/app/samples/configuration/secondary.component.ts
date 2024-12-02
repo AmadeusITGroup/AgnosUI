@@ -1,7 +1,8 @@
 import {AlertComponent} from '@agnos-ui/angular-bootstrap';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.OnPush,
 	standalone: true,
 	selector: 'app-secondary',
 	imports: [AlertComponent],

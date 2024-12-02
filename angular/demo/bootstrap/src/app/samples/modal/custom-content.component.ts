@@ -1,10 +1,11 @@
 import type {ModalWidget} from '@agnos-ui/angular-bootstrap';
 import {SlotComponent} from '@agnos-ui/angular-bootstrap';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 
 export type ModalData = {name: string};
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.OnPush,
 	standalone: true,
 	template: `
 		<p>Hello, {{ state.contentData().name }}!</p>

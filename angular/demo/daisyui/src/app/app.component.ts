@@ -1,12 +1,13 @@
 import type {OnInit} from '@angular/core';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {RouterModule} from '@angular/router';
 
 @Component({
+	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'app-root',
 	standalone: true,
 	imports: [RouterModule],
-	template: `<router-outlet></router-outlet>`,
+	template: `<router-outlet />`,
 })
 export class AppComponent implements OnInit {
 	ngOnInit() {

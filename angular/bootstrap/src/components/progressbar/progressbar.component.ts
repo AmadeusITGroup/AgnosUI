@@ -54,7 +54,7 @@ export class ProgressbarStructureDirective {
 					[ngClass]="state.type() ? 'text-bg-' + state.type() : undefined"
 					[style.width.%]="state.percentage()"
 				>
-					<ng-template [auSlot]="state.children()" [auSlotProps]="{state, api, directives}"></ng-template>
+					<ng-template [auSlot]="state.children()" [auSlotProps]="{state, api, directives}" />
 				</div>
 			</div>
 		</ng-template>
@@ -84,8 +84,8 @@ export const progressbarDefaultSlotStructure: SlotContent<ProgressbarContext> = 
 		'[class]': 'state.className()',
 	},
 	template: `
-		<ng-template #content><ng-content></ng-content></ng-template>
-		<ng-template [auSlot]="state.structure()" [auSlotProps]="{state, api, directives}"></ng-template>
+		<ng-template #content><ng-content /></ng-template>
+		<ng-template [auSlot]="state.structure()" [auSlotProps]="{state, api, directives}" />
 	`,
 })
 export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget> {

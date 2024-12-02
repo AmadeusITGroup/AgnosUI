@@ -10,7 +10,7 @@ const undefinedConfig = getUndefinedValues(getToastDefaultConfig());
 	standalone: true,
 	imports: [AgnosUIAngularModule],
 	providers: provideHashConfig('toast'),
-	template: `<au-component auToast #widget></au-component>`,
+	template: `<au-component auToast #widget />`,
 })
 export default class PlaygroundComponent {
 	@ViewChild('widget') widget!: ToastComponent;
