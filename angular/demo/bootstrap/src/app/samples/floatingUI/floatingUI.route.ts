@@ -28,7 +28,7 @@ const scrollToMiddle = browserDirective((element) => {
 		}
 	</div>`,
 
-	styles: "@import '@agnos-ui/common/samples/floatingui/floatingui.scss';",
+	styles: "@use '@agnos-ui/common/samples/floatingui/floatingui.scss';",
 })
 export default class FloatingUIComponent {
 	readonly displayPopover = signal(true);

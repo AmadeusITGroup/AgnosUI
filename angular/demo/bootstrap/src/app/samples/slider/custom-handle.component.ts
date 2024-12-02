@@ -20,7 +20,7 @@ import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 			</svg>
 		</button>
 	`,
-	styles: "@import '@agnos-ui/common/samples/slider/custom.scss';",
+	styles: "@use '@agnos-ui/common/samples/slider/custom.scss';",
 })
 export default class CustomHandleSliderComponent extends SlotComponent<SliderWidget> {
 	readonly item = input.required<SliderHandle>();

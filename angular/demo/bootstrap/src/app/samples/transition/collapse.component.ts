@@ -35,7 +35,7 @@ import {UseDirective, collapseVerticalTransition, createTransition, toAngularSig
 			}
 		</div>
 	`,
-	styles: "@import '@agnos-ui/common/samples/transition/collapse.scss';",
+	styles: "@use '@agnos-ui/common/samples/transition/collapse.scss';",
 })
 export default class CollapseComponent {
 	readonly headerText = input<string>();

@@ -54,7 +54,7 @@ function getHtmlText(html: string) {
 			}
 		</div>
 	`,
-	styles: ["@import '@agnos-ui/common/samples/select/custom.scss';"],
+	styles: ["@use '@agnos-ui/common/samples/select/custom.scss';"],
 })
 export default class CustomSelectComponent {
 	readonly basePageUrl = 'https://en.wikipedia.org/?curid=';

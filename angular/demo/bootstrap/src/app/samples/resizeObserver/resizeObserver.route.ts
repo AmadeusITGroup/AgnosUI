@@ -31,7 +31,7 @@ Modify the height to more than 200 px and see the font size changing.
 			<button type="button" class="btn btn-primary m-2" id="increaseHeight" (click)="increaseHeight()">Height ++</button>
 		</div>
 	`,
-	styles: "@import '@agnos-ui/common/samples/resizeobserver/resizeobserver.scss';",
+	styles: "@use '@agnos-ui/common/samples/resizeobserver/resizeobserver.scss';",
 })
 export default class ResizeObserverComponent {
 	readonly heightValue = signal(180);

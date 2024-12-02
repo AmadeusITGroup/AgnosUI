@@ -98,7 +98,7 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 			</div>
 		</div>
 	`,
-	styles: "@import '@agnos-ui/common/samples/accordion/custom.scss';",
+	styles: "@use '@agnos-ui/common/samples/accordion/custom.scss';",
 })
 export default class AccordionComponent {
 	readonly thirdDisabled = signal(false);

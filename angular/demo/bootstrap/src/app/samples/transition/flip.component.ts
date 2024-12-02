@@ -19,7 +19,7 @@ import {UseDirective, createSimpleClassTransition, createTransition} from '@agno
 			</div>
 		</div>
 	`,
-	styles: "@import '@agnos-ui/common/samples/transition/flip.scss';",
+	styles: "@use '@agnos-ui/common/samples/transition/flip.scss';",
 })
 export default class FlipComponent {
 	readonly transition = createTransition({

@@ -19,7 +19,7 @@ import CoffeeSliderComponent from './coffee-slider.component';
 			[auStructure]="sliderCoffeeSlotStructure"
 		></div>
 	`,
-	styles: "@import '@agnos-ui/common/samples/slider/custom.scss';",
+	styles: "@use '@agnos-ui/common/samples/slider/custom.scss';",
 	encapsulation: ViewEncapsulation.None,
 })
 export default class CustomSliderComponent {

@@ -18,7 +18,7 @@ import {Component} from '@angular/core';
 			</div>
 		</div>
 	`,
-	styles: "@import '@agnos-ui/common/samples/progressbar/custom.scss';",
+	styles: "@use '@agnos-ui/common/samples/progressbar/custom.scss';",
 	host: {
 		style: 'display: contents;',
 	},

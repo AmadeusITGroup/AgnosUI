@@ -16,7 +16,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 		<div class="rating-readonly" auRating="3.64" [auStar]="custom" auReadonly auMaxRating="5" auAriaLabel="readonly rating"></div>
 	`,
 	encapsulation: ViewEncapsulation.None,
-	styles: "@import '@agnos-ui/common/samples/rating/readonly.scss';",
+	styles: "@use '@agnos-ui/common/samples/rating/readonly.scss';",
 })
 export default class ReadonlyRatingComponent {
 	readonly sanitizer = inject(DomSanitizer);

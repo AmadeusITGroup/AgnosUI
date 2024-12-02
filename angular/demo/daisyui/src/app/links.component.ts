@@ -15,7 +15,7 @@ import {links} from './links';
 			}
 		</div>
 	`,
-	styles: "@import '@agnos-ui/common/samples/links.scss';",
+	styles: "@use '@agnos-ui/common/samples/links.scss';",
 })
 export default class LinksComponent {
 	links = inject(links);
