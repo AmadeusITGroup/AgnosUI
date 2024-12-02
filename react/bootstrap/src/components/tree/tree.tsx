@@ -6,7 +6,11 @@ import {createTree} from './tree.gen';
 import classNames from 'classnames';
 
 const ToggleButtonDisplay = ({directive, item}: {directive: TreeDirectives['itemToggleDirective']; item: NormalizedTreeItem}) => {
-	return <button {...useDirective(directive, {item})}></button>;
+	return (
+		<button {...useDirective(directive, {item})}>
+			<span className="au-tree-expand-icon-svg"></span>
+		</button>
+	);
 };
 
 /**
