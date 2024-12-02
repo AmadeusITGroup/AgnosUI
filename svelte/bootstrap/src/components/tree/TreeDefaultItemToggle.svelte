@@ -6,7 +6,9 @@
 
 {#if item.children.length > 0}
 	<!-- svelte-ignore a11y_consider_explicit_label -->
-	<button use:directives.itemToggleDirective={{item: item}}></button>
+	<button use:directives.itemToggleDirective={{item: item}}>
+		<span class="au-tree-expand-icon-svg"></span>
+	</button>
 {:else}
 	<span class="au-tree-expand-icon-placeholder"></span>
 {/if}

@@ -75,7 +75,9 @@ export class TreeItemToggleDirective {
 	template: `
 		<ng-template auTreeItemToggle #toggle let-directives="directives" let-item="item">
 			@if (item.children.length > 0) {
-				<button [auUse]="[directives.itemToggleDirective, {item}]"></button>
+				<button [auUse]="[directives.itemToggleDirective, {item}]">
+					<span class="au-tree-expand-icon-svg"></span>
+				</button>
 			} @else {
 				<span class="au-tree-expand-icon-placeholder"></span>
 			}
@@ -260,7 +262,7 @@ export class TreeComponent extends BaseWidgetDirective<TreeWidget> {
 	 * () => {}
 	 * ```
 	 */
-	@Output('auExpandToggle') expandToggle = new EventEmitter<TreeItem>();
+	@Output('auExpandToggle') expandToggle = new EventEmitter<NormalizedTreeItem>();
 
 	/**
 	 * Slot to change the default tree item content

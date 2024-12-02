@@ -10,7 +10,7 @@
 	--#{variables.$prefix}tree-expand-icon-background-color-hover: #{variables.$au-tree-expand-icon-background-color-hover};
 	--#{variables.$prefix}tree-expand-icon-width: #{variables.$au-tree-expand-icon-width};
 	--#{variables.$prefix}tree-expand-icon-height: #{variables.$au-tree-expand-icon-height};
-	--#{variables.$prefix}tree-expand-icon-default: #{functions.escape-svg(variables.$au-tree-expand-icon-default)};
+	--#{variables.$prefix}tree-expand-icon: #{functions.escape-svg(variables.$au-tree-expand-icon)};
 	--#{variables.$prefix}tree-expand-icon-hover: #{functions.escape-svg(variables.$au-tree-expand-icon-hover)};
 	// scss-docs-end tree-css-vars
 
@@ -44,33 +44,32 @@
 	}
 
 	.au-tree-expand-icon {
-		position: relative;
 		width: var(--#{variables.$prefix}tree-expand-icon-width);
 		height: var(--#{variables.$prefix}tree-expand-icon-height);
 		border-radius: var(--#{variables.$prefix}tree-expand-icon-border-radius);
 		display: inline-flex;
+		align-items: center;
+		justify-content: center;
 		border: 0;
 		padding-inline: 0;
 		margin-inline-end: var(--#{variables.$prefix}tree-expand-icon-margin-inline-end);
 		background-color: var(--#{variables.$prefix}tree-expand-icon-background-color);
+		cursor: pointer;
 
 		&:hover {
-			--#{variables.$prefix}tree-expand-icon-default: var(--#{variables.$prefix}tree-expand-icon-hover);
+			--#{variables.$prefix}tree-expand-icon: var(--#{variables.$prefix}tree-expand-icon-hover);
 			--#{variables.$prefix}tree-expand-icon-background-color: var(--#{variables.$prefix}tree-expand-icon-background-color-hover);
 		}
-	}
 
-	.au-tree-expand-icon::after {
-		position: absolute;
-		content: var(--#{variables.$prefix}tree-expand-icon-default);
-		transition: transform 0.3s;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-	}
+		.au-tree-expand-icon-svg {
+			content: var(--#{variables.$prefix}tree-expand-icon);
+			transition: transform 0.3s;
+		}
 
-	/* Expanded state */
-	.au-tree-expand-icon-expanded::after {
-		transform: translate(-55%, -50%) rotate(90deg);
+		&.au-tree-expand-icon-expanded {
+			.au-tree-expand-icon-svg {
+				transform: rotate(90deg);
+			}
+		}
 	}
 }
