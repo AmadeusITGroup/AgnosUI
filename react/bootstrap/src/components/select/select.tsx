@@ -2,8 +2,9 @@ import {Slot} from '@agnos-ui/react-headless/slot';
 import {classDirective, useDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
 import classNames from 'classnames';
 import {useWidgetWithConfig} from '../../config';
-import type {ItemContext, SelectContext, SelectItemContext, SelectProps, SelectWidget} from './select.gen';
+import type {ItemContext, SelectApi, SelectContext, SelectItemContext, SelectProps, SelectWidget} from './select.gen';
 import {createSelect} from './select.gen';
+import {type Ref, useImperativeHandle} from 'react';
 
 function DefaultBadge<Item>(slotContext: SelectItemContext<Item>) {
 	return <>{'' + slotContext.itemContext.item}</>;
@@ -63,11 +64,12 @@ function Rows<Item>({slotContext}: {slotContext: SelectContext<Item>; menuId: st
  * This component uses a widget context to manage its state and directives. It supports
  * custom badge labels and item labels through the widget configuration.
  */
-export function Select<Item>(props: Partial<SelectProps<Item>>) {
+export function Select<Item>(props: Partial<SelectProps<Item>> & {ref?: Ref<SelectApi<Item>>}) {
 	const widgetContext = useWidgetWithConfig<SelectWidget<Item>>(createSelect, props, 'select', {
 		badgeLabel: DefaultBadge,
 		itemLabel: DefaultItem,
 	});
+	useImperativeHandle(props.ref, () => widgetContext.api, [widgetContext.api]);
 	const {
 		state: {id, visibleItems, filterText, open, className},
 		directives: {hasFocusDirective, referenceDirective, inputContainerDirective, inputDirective},
