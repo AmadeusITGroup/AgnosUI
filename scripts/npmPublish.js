@@ -12,8 +12,8 @@ const directories = [
 	'react/bootstrap/dist',
 	'angular/headless/dist',
 	'angular/bootstrap/dist',
-	'base-po',
-	'page-objects',
+	'base-po/dist',
+	'page-objects/dist',
 ];
 
 export const processEndPromise = (proc) =>
