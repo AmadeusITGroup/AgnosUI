@@ -80,7 +80,7 @@ export function Select<Item>(props: Partial<SelectProps<Item>> & {ref?: Ref<Sele
 		<div {...useDirectives([classDirective, `au-select dropdown border border-1 p-1 mb-3 d-block ${className}`], referenceDirective)}>
 			<div {...useDirectives([classDirective, 'd-flex align-items-center flex-wrap gap-1'], hasFocusDirective, inputContainerDirective)}>
 				<Badges slotContext={widgetContext}></Badges>
-				<input value={filterText} {...useDirective(inputDirective)} onChange={() => {}} />
+				<input type="text" value={filterText} {...useDirective(inputDirective)} onChange={() => {}} />
 			</div>
 			{open && visibleItems.length > 0 && <Rows slotContext={widgetContext} menuId={menuId} />}
 		</div>
