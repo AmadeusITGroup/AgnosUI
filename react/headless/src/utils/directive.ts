@@ -61,8 +61,8 @@ export const useDirective: {
 	<T>(directive: Directive<T>, args: T): {ref: RefCallback<HTMLElement>};
 } = BROWSER
 	? <T>(directive: Directive<T>, args?: T): {ref: RefCallback<HTMLElement>} => {
-			const instance = useRef<ReturnType<typeof directive>>();
-			const propsRef = useRef<T>();
+			const instance = useRef<ReturnType<typeof directive>>(undefined);
+			const propsRef = useRef<T>(undefined);
 			const ref = useCallback(
 				(element: HTMLElement | null) => {
 					instance.current?.destroy?.();

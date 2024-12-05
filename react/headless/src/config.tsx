@@ -18,14 +18,14 @@ type DefaultConfigInput<Config> = Partial2Levels<Config> & {
  *
  * It can be used when extending the core and creating new widgets.
  *
- * @param widgetsConfigContext - the widgets config context
+ * @param WidgetsConfigContext - the widgets config context
  * @returns the use functions and react component
  */
 export const widgetsConfigFactory = <Config extends Record<string, object> = WidgetsConfig>(
-	widgetsConfigContext = createContext(undefined as undefined | WidgetsConfigStore<Config>),
+	WidgetsConfigContext = createContext(undefined as undefined | WidgetsConfigStore<Config>),
 ) => {
 	const useWidgetContext = <Props extends object>(widgetName: keyof Config | null, defaultConfig?: Partial<Props>) => {
-		const widgetsConfig = useContext(widgetsConfigContext);
+		const widgetsConfig = useContext(WidgetsConfigContext);
 		const defaultConfig$ = usePropsAsStore(defaultConfig);
 		return useMemo(
 			() => computed(() => ({...defaultConfig$(), ...(widgetName ? widgetsConfig?.()[widgetName] : undefined)})),
@@ -76,20 +76,20 @@ export const widgetsConfigFactory = <Config extends Record<string, object> = Wid
 	 * ```
 	 */
 	const WidgetsDefaultConfig = ({children, adaptParentConfig, ...props}: DefaultConfigInput<Config>) => {
-		const config$ = useContext(widgetsConfigContext);
+		const config$ = useContext(WidgetsConfigContext);
 		const store$ = useMemo(() => createWidgetsConfig(config$, adaptParentConfig), [config$, adaptParentConfig]);
 		useMemo(() => store$.set(props as any), [props, store$]);
-		return <widgetsConfigContext.Provider value={store$}>{children}</widgetsConfigContext.Provider>;
+		return <WidgetsConfigContext value={store$}>{children}</WidgetsConfigContext>;
 	};
 
 	return {
 		/**
 		 * React context which can be used to provide or consume the widgets default configuration store.
 		 */
-		widgetsConfigContext,
+		WidgetsConfigContext,
 		useWidgetContext,
 		useWidgetWithConfig,
 		WidgetsDefaultConfig,
 	};
 };
-export const {widgetsConfigContext, WidgetsDefaultConfig, useWidgetContext, useWidgetWithConfig} = widgetsConfigFactory();
+export const {WidgetsConfigContext, WidgetsDefaultConfig, useWidgetContext, useWidgetWithConfig} = widgetsConfigFactory();

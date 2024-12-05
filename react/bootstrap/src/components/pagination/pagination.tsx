@@ -2,8 +2,9 @@ import {Slot} from '@agnos-ui/react-headless/slot';
 import classNames from 'classnames';
 import {useWidgetWithConfig} from '../../config';
 import {NavButton, PageItem} from './pageItem';
-import type {PaginationContext, PaginationProps} from './pagination.gen';
+import type {PaginationApi, PaginationContext, PaginationProps} from './pagination.gen';
 import {createPagination} from './pagination.gen';
+import {type Ref, useImperativeHandle} from 'react';
 
 /**
  * Renders the default slot pages for the pagination component.
@@ -114,13 +115,15 @@ export const PaginationDefaultSlotStructure = (slotContext: PaginationContext) =
  * It uses the {@link useWidgetWithConfig} hook to create a pagination widget with the provided props.
  *
  * @param props - The properties for the Pagination component.
+ * @param props.ref - Forwarded reference to the PaginationApi.
  * @returns The rendered pagination navigation element.
  */
-export function Pagination(props: Partial<PaginationProps>) {
+export function Pagination(props: Partial<PaginationProps> & {ref?: Ref<PaginationApi>}) {
 	const widgetContext = useWidgetWithConfig(createPagination, props, 'pagination', {
 		pagesDisplay: PaginationDefaultSlotPages,
 		structure: PaginationDefaultSlotStructure,
 	});
+	useImperativeHandle(props.ref, () => widgetContext.api, [widgetContext.api]);
 
 	return (
 		<nav aria-label={widgetContext.state.ariaLabel}>
