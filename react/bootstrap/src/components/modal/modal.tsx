@@ -3,8 +3,8 @@ import type {Directive} from '@agnos-ui/react-headless/types';
 import {classDirective, useDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
 import {Portal} from '@agnos-ui/react-headless/utils/portal';
 import classNames from 'classnames';
-import type {Ref, RefAttributes} from 'react';
-import {forwardRef, useImperativeHandle} from 'react';
+import type {Ref} from 'react';
+import {useImperativeHandle} from 'react';
 import ReactDOM from 'react-dom/client';
 import {useWidgetWithConfig} from '../../config';
 import type {ModalApi, ModalContext, ModalProps} from './modal.gen';
@@ -71,28 +71,28 @@ const ModalElement = <Data,>(slotContext: ModalContext<Data>) => {
 };
 
 /**
- * A Modal component that uses a forwardRef to expose its API.
+ * A Modal component
  *
  * @template Data - The type of data that the modal will handle.
  *
  * @param props - The properties for the Modal component.
- * @param ref - A ref to access the Modal API.
+ * @param props.ref - A ref to access the Modal API.
  *
  * @returns The rendered Modal component.
  */
-export const Modal = forwardRef(function Modal<Data>(props: Partial<ModalProps<Data>>, ref: Ref<ModalApi<Data>>) {
+export function Modal<Data>(props: Partial<ModalProps<Data>> & {ref?: Ref<ModalApi<Data>>}) {
 	const widgetContext = useWidgetWithConfig(createModal<Data>, props, 'modal', {
 		header: ModalDefaultSlotHeader,
 		structure: ModalDefaultSlotStructure,
 	});
-	useImperativeHandle(ref, () => widgetContext.api, [widgetContext.api]);
+	useImperativeHandle(props.ref, () => widgetContext.api, [widgetContext.api]);
 	return (
 		<Portal container={widgetContext.state.container}>
 			{!widgetContext.state.backdropHidden && <BackdropElement {...widgetContext} />}
 			{!widgetContext.state.hidden && <ModalElement {...widgetContext} />}
 		</Portal>
 	);
-}) as <Data>(props: Partial<ModalProps<Data>> & RefAttributes<ModalApi<Data>>) => JSX.Element;
+}
 
 /**
  * Opens a modal dialog with the specified options.
