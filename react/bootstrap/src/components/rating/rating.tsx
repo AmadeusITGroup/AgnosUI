@@ -1,19 +1,18 @@
 import {Slot} from '@agnos-ui/react-headless/slot';
 import {classDirective, useDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
-import React from 'react';
+import {type Ref, useImperativeHandle, Fragment} from 'react';
 import {useWidgetWithConfig} from '../../config';
-import type {RatingDirectives, RatingProps, RatingState, StarContext} from './rating.gen';
+import type {RatingApi, RatingDirectives, RatingProps, RatingState, StarContext} from './rating.gen';
 import {createRating} from './rating.gen';
 
 function Star({star, state, directive}: {star: StarContext; state: RatingState; directive: RatingDirectives['starDirective']}) {
-	const arg = {index: star.index};
 	return (
-		<React.Fragment key={star.index}>
+		<Fragment key={star.index}>
 			<span className="visually-hidden">({star.index < state.visibleRating ? '*' : ' '})</span>
-			<span {...useDirective(directive, arg)}>
+			<span {...useDirective(directive, {index: star.index})}>
 				<Slot slotContent={state.star} props={star}></Slot>
 			</span>
-		</React.Fragment>
+		</Fragment>
 	);
 }
 
@@ -28,11 +27,13 @@ function Star({star, state, directive}: {star: StarContext; state: RatingState; 
  * It applies directives to the container and individual stars for styling and behavior.
  *
  */
-export function Rating(props: Partial<RatingProps>) {
+export function Rating(props: Partial<RatingProps> & {ref?: Ref<RatingApi>}) {
 	const {
 		state,
 		directives: {containerDirective, starDirective},
+		api,
 	} = useWidgetWithConfig(createRating, props, 'rating');
+	useImperativeHandle(props.ref, () => api, [api]);
 
 	return (
 		<div {...useDirectives([classDirective, 'd-inline-flex'], containerDirective)}>
