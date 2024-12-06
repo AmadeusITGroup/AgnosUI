@@ -15,5 +15,6 @@
 	"search.exclude": {
 		"**/dist": true,
 		"**/generated": true
-	}
+	},
+	"cSpell.words": ["Tanstack", "Tansu"]
 }
