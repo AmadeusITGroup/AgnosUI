@@ -1,0 +1,43 @@
+<div class="overflow-hidden relative cursor-grab active:cursor-grabbing flex flex-col-reverse" [auUse]="directives.emblaDirective">
+	@if (withNavIndicators()) {
+		<div class="flex w-full justify-center gap-2 py-2 cursor-auto">
+			@for (item of items(); track item; let index = $index) {
+				<button
+					class="btn btn-xs md:btn-sm"
+					[class.btn-active]="state.selectedScrollSnap() === index"
+					(click)="api.scrollTo(index)"
+					attr.aria-label="Go to slide {{ index + 1 }}"
+				>
+					{{ index + 1 }}
+				</button>
+			}
+		</div>
+	}
+	<div class="flex container">
+		@for (item of items(); track item) {
+			<div class="basis-full min-w-0 shrink-0 grow-0 flex justify-center">
+				<ng-container *ngTemplateOutlet="slideRef().templateRef; context: {$implicit: item}" />
+			</div>
+		}
+	</div>
+	@if (withNavArrows()) {
+		<div class="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
+			<button
+				class="btn btn-sm md:btn-md btn-circle opacity-75 hover:opacity-100"
+				(pointerdown)="$event.preventDefault()"
+				[disabled]="!state.canScrollPrev()"
+				(click)="api.scrollPrev()"
+				aria-label="Go to previous slide"
+				[innerHTML]="previousSvg"
+			></button>
+			<button
+				class="btn btn-sm md:btn-md btn-circle opacity-75 hover:opacity-100"
+				(pointerdown)="$event.preventDefault()"
+				[disabled]="!state.canScrollNext()"
+				(click)="api.scrollNext()"
+				aria-label="Go to next slide"
+				[innerHTML]="nextSvg"
+			></button>
+		</div>
+	}
+</div>

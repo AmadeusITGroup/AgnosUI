@@ -98,6 +98,16 @@ export const typeString: WritableWithDefaultOptions<string> = {
 };
 
 /**
+ * A writable with default options that normalizes its value to a string or null.
+ *
+ * This object provides a normalized value for strings using the `testToNormalizeValue` function
+ * with the `isString` validator.
+ */
+export const typeStringOrNull: WritableWithDefaultOptions<string | null> = {
+	normalizeValue: testToNormalizeValue(allowNull(isString)),
+};
+
+/**
  * A writable object that holds a function type with default options.
  */
 export const typeFunction: WritableWithDefaultOptions<(...args: any[]) => any> = {

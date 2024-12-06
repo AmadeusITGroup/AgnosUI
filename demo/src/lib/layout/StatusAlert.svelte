@@ -6,7 +6,7 @@
 	import Svg from './Svg.svelte';
 	import {untrack} from 'svelte';
 
-	const regex = /\/(components|services)\/([^/]+)/;
+	const regex = /\/(components|services|daisyUI)\/([^/]+)/;
 	const typeIcon: Record<string, string> = {
 		info: biInfoCircleFill,
 		warning: biExclamationTriangleFill,

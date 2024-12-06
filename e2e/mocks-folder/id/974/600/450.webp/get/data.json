@@ -1,0 +1,40 @@
+{
+	"httpVersion": "2.0",
+	"headers": {
+		"server": "nginx",
+		"content-type": "image/webp",
+		"cache-control": "public, max-age=2592000, stale-while-revalidate=60, stale-if-error=43200, immutable",
+		"content-disposition": "inline; filename=\"974-600x450.webp\"",
+		"picsum-id": "974",
+		"timing-allow-origin": "*",
+		"accept-ranges": "bytes",
+		"age": "0",
+		"date": "Tue, 03 Dec 2024 11:42:24 GMT",
+		"via": "1.1 varnish",
+		"x-served-by": "cache-par-lfpg1960024-PAR",
+		"x-cache": "MISS",
+		"x-cache-hits": "0",
+		"x-timer": "S1733226144.311547,VS0,VE350",
+		"vary": "Origin"
+	},
+	"ignoredHeaders": {
+		":status": "200",
+		"content-length": "35120"
+	},
+	"status": {
+		"code": 200,
+		"message": ""
+	},
+	"bodyFileName": "body.webp",
+	"time": 717.3716679999998,
+	"timings": {
+		"blocked": 173.6291110000002,
+		"dns": -1,
+		"connect": -1,
+		"send": 0.0035410000000410946,
+		"wait": 533.0250699999997,
+		"receive": 10.71394599999985,
+		"ssl": -1
+	},
+	"creationDateTime": "2024-12-03T11:42:24.853Z"
+}
