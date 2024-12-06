@@ -75,10 +75,10 @@ const ModalElement = <Data,>(slotContext: ModalContext<Data>) => {
  *
  * @template Data - The type of data that the modal will handle.
  *
- * @param {Partial<ModalProps<Data>>} props - The properties for the Modal component.
- * @param {Ref<ModalApi<Data>>} ref - A ref to access the Modal API.
+ * @param props - The properties for the Modal component.
+ * @param ref - A ref to access the Modal API.
  *
- * @returns {JSX.Element} The rendered Modal component.
+ * @returns The rendered Modal component.
  */
 export const Modal = forwardRef(function Modal<Data>(props: Partial<ModalProps<Data>>, ref: Ref<ModalApi<Data>>) {
 	const widgetContext = useWidgetWithConfig(createModal<Data>, props, 'modal', {

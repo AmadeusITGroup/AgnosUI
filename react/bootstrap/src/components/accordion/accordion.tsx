@@ -44,10 +44,10 @@ export const AccordionItemDefaultSlotStructure = (slotContext: AccordionItemCont
 /**
  * AccordionItem component is a part of the Accordion component suite.
  *
- * @param {Partial<AccordionItemProps>} props - The properties for the AccordionItem component.
- * @param {ForwardedRef<AccordionItemApi>} ref - The forwarded ref to the AccordionItemApi.
+ * @param props - The properties for the AccordionItem component.
+ * @param ref - The forwarded ref to the AccordionItemApi.
  *
- * @returns {JSX.Element} The rendered AccordionItem component.
+ * @returns The rendered AccordionItem component.
  * @remarks
  * This component uses several hooks:
  * - {@link https://react.dev/reference/react/useContext | useContext} to get the `registerItem` function from {@link AccordionDIContext}.
@@ -86,10 +86,10 @@ export const AccordionItem: ForwardRefExoticComponent<Partial<AccordionItemProps
  * It leverages the {@link useWidgetWithConfig} hook to create the accordion widget and
  * {@link https://react.dev/reference/react/useImperativeHandle | useImperativeHandle} to bind the widget API to the ref.
  *
- * @param {PropsWithChildren<Partial<AccordionProps>>} props - The properties for the Accordion component.
- * @param {ForwardedRef<AccordionApi>} ref - The ref to be forwarded to the Accordion API.
+ * @param props - The properties for the Accordion component.
+ * @param ref - The ref to be forwarded to the Accordion API.
  *
- * @returns {JSX.Element} The rendered Accordion component.
+ * @returns The rendered Accordion component.
  *
  */
 export const Accordion: ForwardRefExoticComponent<PropsWithChildren<Partial<AccordionProps>> & RefAttributes<AccordionApi>> = forwardRef(
