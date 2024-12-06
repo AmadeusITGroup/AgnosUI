@@ -1,2 +1,0 @@
-const i=`export * from '@agnos-ui/core/utils/writables';
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoid3JpdGFibGVzLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vc3JjL2dlbmVyYXRlZC91dGlscy93cml0YWJsZXMudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsY0FBYyxnQ0FBZ0MsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCAqIGZyb20gJ0BhZ25vcy11aS9jb3JlL3V0aWxzL3dyaXRhYmxlcyc7Il19`;export{i as default};

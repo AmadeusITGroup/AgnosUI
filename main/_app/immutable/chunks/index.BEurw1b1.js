@@ -1,3 +1,0 @@
-const i=`export * from './pagination.component';
-export * from './pagination.gen';
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi9zcmMvY29tcG9uZW50cy9wYWdpbmF0aW9uL2luZGV4LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLGNBQWMsd0JBQXdCLENBQUM7QUFDdkMsY0FBYyxrQkFBa0IsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCAqIGZyb20gJy4vcGFnaW5hdGlvbi5jb21wb25lbnQnO1xuZXhwb3J0ICogZnJvbSAnLi9wYWdpbmF0aW9uLmdlbic7XG4iXX0=`;export{i as default};

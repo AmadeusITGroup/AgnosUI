@@ -1,2 +1,0 @@
-const i=`export * from '@agnos-ui/core/services/portal';
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicG9ydGFsLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vc3JjL2dlbmVyYXRlZC9zZXJ2aWNlcy9wb3J0YWwudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsY0FBYyxnQ0FBZ0MsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCAqIGZyb20gJ0BhZ25vcy11aS9jb3JlL3NlcnZpY2VzL3BvcnRhbCc7Il19`;export{i as default};
