@@ -7,6 +7,7 @@
 	import share from 'bootstrap-icons/icons/share.svg?raw';
 
 	import fbasso from '$resources/images/fbasso.webp';
+	import fexbrayat from '$resources/images/fexbrayat.webp';
 	import {onMount} from 'svelte';
 
 	type AuthorInfo = {
@@ -18,6 +19,10 @@
 		fbasso: {
 			icon: fbasso,
 			title: 'Fabrice Basso, Software engineer at Amadeus',
+		},
+		fexbrayat: {
+			icon: fexbrayat,
+			title: 'Florent Exbrayat, Principal engineer at Amadeus',
 		},
 	} satisfies Record<string, AuthorInfo>;
 

@@ -119,7 +119,7 @@
 				{/if}
 				<a
 					class="nav-link"
-					href="{$pathToRoot$}blog/2024-02-01"
+					href="{$pathToRoot$}blog/2024-12-06"
 					class:active={$page.route.id?.startsWith('/blog/')}
 					aria-current={$page.route.id?.startsWith('/blog/') ? 'page' : undefined}>Blog</a
 				>
