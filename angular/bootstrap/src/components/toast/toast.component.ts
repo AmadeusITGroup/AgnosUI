@@ -1,4 +1,4 @@
-import type {SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
+import type {SlotContent, TransitionFn, Directive as AuDirective} from '@agnos-ui/angular-headless';
 import {
 	BaseWidgetDirective,
 	ComponentTemplate,
@@ -222,6 +222,18 @@ export class ToastComponent extends BaseWidgetDirective<ToastWidget> {
 	readonly className = input<string>(undefined, {alias: 'auClassName'});
 
 	readonly slotChildren = viewChild<TemplateRef<void>>('content');
+
+	/**
+	 * Directive passed to the Toast so that a parent can intercept the events, for example to pause the dismiss timer.
+	 */
+	readonly eventsDirective = input<AuDirective<number>>(undefined, {
+		alias: 'auEventsDirective',
+	});
+
+	/**
+	 * ID
+	 */
+	readonly id = input(undefined, {alias: 'auId', transform: auNumberAttribute});
 
 	constructor() {
 		super(
