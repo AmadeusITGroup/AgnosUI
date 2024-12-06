@@ -168,6 +168,7 @@
 	"dependencies": {
 		"@agnos-ui/svelte-bootstrap": "0.5.0",
 		"@amadeus-it-group/tansu": "^1.0.0",
+		"@docsearch/js": "^3.8.0",
 		"@floating-ui/dom": "^1.6.12"
 	},
 	"devDependencies": {
