@@ -19,6 +19,7 @@
 	import type {Snippet} from 'svelte';
 	import type {LayoutData} from './$types';
 	import viewTransition from './view-transition.css?raw';
+	import Search from '$lib/docsearch/Search.svelte';
 
 	let isMainPage = $derived($routeLevel$ === 0);
 	let isApi = $derived($page.route.id?.startsWith('/api/'));
@@ -102,42 +103,48 @@
 			<a class="navbar-brand mx-lg-4 mx-xl-5 d-flex align-items-center" href={$pathToRoot$}
 				><Svg svg={agnosUILogo} className="agnosui-logo-brand me-2" /> AgnosUI
 			</a>
-			<div class="align-items-center d-none d-md-flex gap-3">
-				<div class="d-flex align-items-center"></div>
-				<a
-					class="nav-link"
-					href="{$pathToRoot$}docs/{$selectedFramework$}/getting-started/introduction"
-					class:active={$page.route.id?.startsWith('/docs/')}
-					aria-current={$page.route.id?.startsWith('/docs/') ? 'page' : undefined}>Documentation</a
-				>
-				{#if import.meta.env.API}
+			<div class="align-items-center d-flex">
+				<div class="align-items-left d-flex gap-3">
+					<Search />
+					<div class="vr my-1 d-none d-md-inline-block"></div>
+				</div>
+				<div class="align-items-center d-none d-md-flex gap-3">
+					<div class="d-flex align-items-center"></div>
 					<a
 						class="nav-link"
-						href="{$pathToRoot$}api/{$selectedApiFramework$}/bootstrap/types"
-						class:active={isApi}
-						aria-current={isApi ? 'page' : undefined}>API</a
+						href="{$pathToRoot$}docs/{$selectedFramework$}/getting-started/introduction"
+						class:active={$page.route.id?.startsWith('/docs/')}
+						aria-current={$page.route.id?.startsWith('/docs/') ? 'page' : undefined}>Documentation</a
 					>
-				{/if}
-				<a
-					class="nav-link"
-					href="{$pathToRoot$}blog/2024-12-06"
-					class:active={$page.route.id?.startsWith('/blog/')}
-					aria-current={$page.route.id?.startsWith('/blog/') ? 'page' : undefined}>Blog</a
-				>
-				<div class="vr my-1"></div>
-				<Theme />
-				<div class="vr my-1"></div>
-				<Versions versions={data.versions} />
-				<div class="vr my-1"></div>
-				<a class="nav-link" href="https://github.com/AmadeusITGroup/AgnosUI" aria-label="link to GitHub repository" target="_blank">
-					<Svg className="icon-24 align-middle" svg={github} />
-				</a>
-				<a class="nav-link" href="https://twitter.com/AgnosUI" aria-label="link to twitter / x account" target="_blank">
-					<Svg className="icon-24 align-middle" svg={twitter} />
-				</a>
-				<a class="nav-link" href="https://bsky.app/profile/agnosui.bsky.social" aria-label="link to bluesky profile" target="_blank">
-					<Svg className="icon-24 align-middle" svg={bluesky} />
-				</a>
+					{#if import.meta.env.API}
+						<a
+							class="nav-link"
+							href="{$pathToRoot$}api/{$selectedApiFramework$}/bootstrap/types"
+							class:active={isApi}
+							aria-current={isApi ? 'page' : undefined}>API</a
+						>
+					{/if}
+					<a
+						class="nav-link"
+						href="{$pathToRoot$}blog/2024-12-06"
+						class:active={$page.route.id?.startsWith('/blog/')}
+						aria-current={$page.route.id?.startsWith('/blog/') ? 'page' : undefined}>Blog</a
+					>
+					<div class="vr my-1"></div>
+					<Theme />
+					<div class="vr my-1"></div>
+					<Versions versions={data.versions} />
+					<div class="vr my-1"></div>
+					<a class="nav-link" href="https://github.com/AmadeusITGroup/AgnosUI" aria-label="link to GitHub repository" target="_blank">
+						<Svg className="icon-24 align-middle" svg={github} />
+					</a>
+					<a class="nav-link" href="https://twitter.com/AgnosUI" aria-label="link to twitter / x account" target="_blank">
+						<Svg className="icon-24 align-middle" svg={twitter} />
+					</a>
+					<a class="nav-link" href="https://bsky.app/profile/agnosui.bsky.social" aria-label="link to bluesky profile" target="_blank">
+						<Svg className="icon-24 align-middle" svg={bluesky} />
+					</a>
+				</div>
 			</div>
 			<div class="align-items-center d-flex d-md-none gap-3">
 				<Theme />
