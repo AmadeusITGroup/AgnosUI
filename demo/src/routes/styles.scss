@@ -1,7 +1,6 @@
 @use 'sass:selector';
 @import './bs-customTheme';
 @import './custom-darkCSS.variables';
-
 // @mixin onlyInMode($mode) {
 // 	@at-root #{selector.nest('[data-bs-theme="#{$mode}"]', &)} {
 // 		@content;
@@ -311,4 +310,18 @@ iframe {
 .pres-card-logo {
 	width: 50px;
 	height: 30px;
+}
+
+//DocSearch
+@import '@docsearch/css';
+:root {
+	--docsearch-primary-color: #26005a;
+	--docsearch-text-color: #212529;
+	--docsearch-highlight-color: var(--docsearch-primary-color);
+	--docsearch-hit-color: #212529;
+	--docsearch-muted-color: #212529;
+}
+
+.DocSearch-Hit-content-wrapper {
+	overflow-y: hidden;
 }
