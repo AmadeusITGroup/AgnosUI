@@ -1,0 +1,52 @@
+<script lang="ts" module>
+	const toaster = new ToasterService();
+	const {addToast, removeToast, eventsDirective} = toaster;
+	export {addToast};
+</script>
+
+<script lang="ts">
+	import Toast from './Toast.svelte';
+	import {ToasterService} from '../../services/toasterService.svelte';
+	import type {ToasterProps} from '../../generated';
+
+	let {duration, position, limit, pauseOnHover, dismissible, closeAll, closeAllLabel}: ToasterProps = $props();
+
+	$effect(() => {
+		toaster.options.current = {duration, position, limit, pauseOnHover, dismissible, closeAll, closeAllLabel};
+	});
+</script>
+
+<div class="d-flex mt-2 mr-2 w-100" aria-live="polite" aria-atomic="true">
+	<div class={`toast-container p-3 ${toaster.options.current.position}`}>
+		{#if toaster.options.current.closeAll && toaster.toasts.current.length > 1}
+			<div class="d-flex position-relative align-items-end pb-2">
+				<button class="btn btn-secondary me-0 ms-auto pe-auto" onclick={() => toaster.closeAll()}
+					>{toaster.options.current.closeAllLabel || 'Close all'}</button
+				>
+			</div>
+		{/if}
+		{#each toaster.toasts.current as { id, props: { className, visible, structure, children, header, dismissible, ariaCloseButtonLabel, animated, animatedOnInit, onShown, onHidden, onVisibleChange, transition } } (id)}
+			<div use:eventsDirective={id}>
+				<Toast
+					{animated}
+					{animatedOnInit}
+					autoHide={false}
+					{className}
+					dismissible={dismissible ?? toaster.options.current.dismissible}
+					{ariaCloseButtonLabel}
+					{structure}
+					{children}
+					{header}
+					{onShown}
+					onHidden={() => {
+						removeToast(id);
+						if (onHidden) onHidden();
+					}}
+					{onVisibleChange}
+					{visible}
+					{transition}
+				/>
+			</div>
+		{/each}
+	</div>
+</div>

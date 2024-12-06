@@ -1,4 +1,4 @@
-import type {SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
+import type {SlotContent, TransitionFn, Directive as AuDirective} from '@agnos-ui/angular-headless';
 import {
 	BaseWidgetDirective,
 	ComponentTemplate,
