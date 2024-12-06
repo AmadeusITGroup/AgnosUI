@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type {RatingProps, StarContext} from './rating.gen';
+	import type {RatingApi, RatingProps, StarContext} from './rating.gen';
 	import {createRating} from './rating.gen';
 	import {callWidgetFactory} from '../../config';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
@@ -9,6 +9,7 @@
 	const {
 		state,
 		directives: {containerDirective, starDirective},
+		api: ratingApi,
 	} = callWidgetFactory({
 		factory: createRating,
 		widgetName: 'rating',
@@ -23,6 +24,7 @@
 			},
 		},
 	});
+	export const api: RatingApi = ratingApi;
 </script>
 
 {#snippet star({fill}: StarContext)}

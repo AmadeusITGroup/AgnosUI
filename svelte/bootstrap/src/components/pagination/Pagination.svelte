@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type {PaginationContext, PaginationNumberContext, PaginationProps} from './pagination.gen';
+	import type {PaginationApi, PaginationContext, PaginationNumberContext, PaginationProps} from './pagination.gen';
 	import {createPagination} from './pagination.gen';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import {callWidgetFactory} from '../../config';
@@ -26,6 +26,7 @@
 			},
 		},
 	});
+	export const api: PaginationApi = widget.api;
 </script>
 
 {#snippet structure(props: PaginationContext)}
