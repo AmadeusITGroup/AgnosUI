@@ -61,20 +61,30 @@ export const useDirective: {
 	<T>(directive: Directive<T>, args: T): {ref: RefCallback<HTMLElement>};
 } = BROWSER
 	? <T>(directive: Directive<T>, args?: T): {ref: RefCallback<HTMLElement>} => {
-			const instance = useRef<ReturnType<typeof directive>>(undefined);
+			const directiveRef = useRef(directive);
+			const instanceRef = useRef<ReturnType<typeof directive>>(undefined);
+			const cleanupRef = useRef<ReturnType<typeof directive>>(undefined);
 			const propsRef = useRef<T>(undefined);
+
 			const ref = useCallback(
-				(element: HTMLElement | null) => {
-					instance.current?.destroy?.();
-					instance.current = undefined;
-					if (element) {
-						instance.current = directive(element, propsRef.current as T);
+				(element: HTMLElement) => {
+					if (directiveRef.current !== directive) {
+						instanceRef.current?.destroy?.();
+						instanceRef.current = directive(element, propsRef.current as T);
+						directiveRef.current = directive;
+						void Promise.resolve().then(() => {
+							cleanupRef.current = instanceRef.current;
+						});
 					}
+					return () => {
+						cleanupRef.current?.destroy?.();
+					};
 				},
 				[directive],
 			);
+
 			propsRef.current = args;
-			instance.current?.update?.(args as T);
+			instanceRef.current?.update?.(args as T);
 			return {ref};
 		}
 	: <T>(directive: Directive<T>, args?: T): {ref: RefCallback<HTMLElement>} => ssrAttributes([directive, args as T]) as any;
