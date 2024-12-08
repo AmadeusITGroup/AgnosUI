@@ -11,11 +11,11 @@
 		"uuid": "^11.0.3"
 	},
 	"peerDependencies": {
-		"vite": "^6.0.2"
+		"vite": "^6.0.3"
 	},
 	"devDependencies": {
 		"@types/babel__core": "^7.20.5",
-		"vite": "^6.0.2"
+		"vite": "^6.0.3"
 	},
 	"scripts": {
 		"build": "wireit"
