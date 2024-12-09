@@ -1,8 +1,8 @@
 import type {Directive, DirectivesAndOptParam} from '@agnos-ui/core/types';
 import {attributesData, multiDirective} from '@agnos-ui/core/utils/directive';
-import {BROWSER} from 'esm-env';
+import {BROWSER, DEV} from 'esm-env';
 import type {RefCallback} from 'react';
-import {useCallback, useRef} from 'react';
+import {useCallback, useEffect, useRef} from 'react';
 
 export * from '@agnos-ui/core/utils/directive';
 
@@ -60,23 +60,55 @@ export const useDirective: {
 	(directive: Directive): {ref: RefCallback<HTMLElement>};
 	<T>(directive: Directive<T>, args: T): {ref: RefCallback<HTMLElement>};
 } = BROWSER
-	? <T>(directive: Directive<T>, args?: T): {ref: RefCallback<HTMLElement>} => {
-			const instance = useRef<ReturnType<typeof directive>>(undefined);
-			const propsRef = useRef<T>(undefined);
-			const ref = useCallback(
-				(element: HTMLElement | null) => {
-					instance.current?.destroy?.();
-					instance.current = undefined;
-					if (element) {
+	? DEV
+		? <T>(directive: Directive<T>, args?: T): {ref: RefCallback<HTMLElement>} => {
+				// This is a workaround for React StrictMode that is kinda ugly but kinda necessary due to how we handle transitions `animatedOnInit` property and how React handles ref callbacks in StrictMode (since React 19 anyway).
+				const instance = useRef<ReturnType<typeof directive>>(undefined);
+				const propsRef = useRef<T>(undefined);
+				const refCalledOnce = useRef(false);
+
+				useEffect(() => {
+					queueMicrotask(() => {
+						refCalledOnce.current = false;
+					});
+				}, [directive]);
+
+				const ref = useCallback(
+					(element: HTMLElement) => {
+						if (!refCalledOnce.current) {
+							instance.current = directive(element, propsRef.current as T);
+							refCalledOnce.current = true;
+						}
+						return () => {
+							if (!refCalledOnce.current) {
+								instance.current?.destroy?.();
+								instance.current = undefined;
+							}
+						};
+					},
+					[directive],
+				);
+				propsRef.current = args;
+				instance.current?.update?.(args as T);
+				return {ref};
+			}
+		: <T>(directive: Directive<T>, args?: T): {ref: RefCallback<HTMLElement>} => {
+				const instance = useRef<ReturnType<typeof directive>>(undefined);
+				const propsRef = useRef<T>(undefined);
+				const ref = useCallback(
+					(element: HTMLElement) => {
 						instance.current = directive(element, propsRef.current as T);
-					}
-				},
-				[directive],
-			);
-			propsRef.current = args;
-			instance.current?.update?.(args as T);
-			return {ref};
-		}
+						return () => {
+							instance.current?.destroy?.();
+							instance.current = undefined;
+						};
+					},
+					[directive],
+				);
+				propsRef.current = args;
+				instance.current?.update?.(args as T);
+				return {ref};
+			}
 	: <T>(directive: Directive<T>, args?: T): {ref: RefCallback<HTMLElement>} => ssrAttributes([directive, args as T]) as any;
 
 /**
