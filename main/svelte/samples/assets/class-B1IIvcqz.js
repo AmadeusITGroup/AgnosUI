@@ -1,1 +1,0 @@
-import{a8 as i}from"./AppCommon-DEH8RU-G.js";function c(s,t){var a=s.__className,e=n(t);(a!==e||i)&&(t==null?s.removeAttribute("class"):s.className=e,s.__className=e)}function n(s){return s??""}function l(s,t,a){if(a){if(s.classList.contains(t))return;s.classList.add(t)}else{if(!s.classList.contains(t))return;s.classList.remove(t)}}export{c as s,l as t};
