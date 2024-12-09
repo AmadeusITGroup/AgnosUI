@@ -94,7 +94,7 @@
 		}
 	},
 	"peerDependencies": {
-		"@amadeus-it-group/tansu": "^1.0.0",
+		"@amadeus-it-group/tansu": "^2.0.0",
 		"@angular/common": "^19.0.3",
 		"@angular/core": "^19.0.3"
 	},
