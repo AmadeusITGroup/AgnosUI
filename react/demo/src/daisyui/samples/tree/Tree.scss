@@ -1,0 +1,45 @@
+.au-tree {
+	width: 300px;
+	background-color: #f2f2f2;
+	border-radius: 0.5rem;
+	padding: 0.5rem;
+}
+
+.au-tree-expand-icon {
+	width: 1rem;
+	height: 1rem;
+	border-radius: 0.375rem;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background-color: transparent;
+
+	.au-tree-expand-icon-svg {
+		content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 10 10"><path d="M1 2 L5 7 L9 2" stroke="black" stroke-width="2" fill="none"/></svg>');
+		transition: transform 0.3s;
+	}
+
+	&.au-tree-expand-icon-expanded {
+		.au-tree-expand-icon-svg {
+			transform: rotate(-180deg);
+		}
+	}
+}
+
+// line before the li items
+.au-tree :where(li ul) ::before {
+	position: absolute;
+	bottom: 0.75rem;
+	inset-inline-start: -8px;
+	top: 0.75rem;
+	width: 1px;
+	background-color: lightgrey;
+	content: '';
+}
+
+.au-tree :where(li ul) {
+	position: relative;
+	white-space: nowrap;
+	margin-inline-start: 1rem;
+	padding-inline-start: 0.5rem;
+}
