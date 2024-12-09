@@ -247,7 +247,7 @@ export function createTree(config?: PropsConfig<TreeProps>): TreeWidget {
 		treeMap.clear();
 		return nodes$().map((node) => traverseTree(node, 0, undefined));
 	});
-	const _lastFocusedTreeItem$ = writable<TreeItem>(normalizedNodes$()[0]);
+	const _lastFocusedTreeItem$ = writable<TreeItem | undefined>(normalizedNodes$().find((node) => node.isExpanded !== undefined));
 
 	const getTreeItemInfo = (item: NormalizedTreeItem) => {
 		const treeItem = treeMap.get(item);
