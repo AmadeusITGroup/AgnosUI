@@ -1,8 +1,8 @@
 import {Slot} from '@agnos-ui/react-headless/slot';
 import type {Directive} from '@agnos-ui/react-headless/types';
 import {classDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
-import type {ForwardRefExoticComponent, ForwardedRef, PropsWithChildren, RefAttributes} from 'react';
-import {createContext, forwardRef, useContext, useEffect, useImperativeHandle} from 'react';
+import type {ForwardedRef, PropsWithChildren, Ref} from 'react';
+import {createContext, useContext, useEffect, useImperativeHandle} from 'react';
 import {useWidgetWithConfig} from '../../config';
 import type {AccordionApi, AccordionItemApi, AccordionItemContext, AccordionItemProps, AccordionProps} from './accordion.gen';
 import {createAccordion} from './accordion.gen';
@@ -45,7 +45,7 @@ export const AccordionItemDefaultSlotStructure = (slotContext: AccordionItemCont
  * AccordionItem component is a part of the Accordion component suite.
  *
  * @param props - The properties for the AccordionItem component.
- * @param ref - The forwarded ref to the AccordionItemApi.
+ * @param props.ref - The forwarded ref to the AccordionItemApi.
  *
  * @returns The rendered AccordionItem component.
  * @remarks
@@ -60,24 +60,22 @@ export const AccordionItemDefaultSlotStructure = (slotContext: AccordionItemCont
  * @see {@link useWidgetWithConfig}
  * @see {@link useDirectives}
  */
-export const AccordionItem: ForwardRefExoticComponent<Partial<AccordionItemProps> & RefAttributes<AccordionItemApi>> = forwardRef(
-	function AccordionItem(props: Partial<AccordionItemProps>, ref: ForwardedRef<AccordionItemApi>) {
-		const {registerItem} = useContext(AccordionDIContext);
-		const widgetContext = useWidgetWithConfig(registerItem!, props, null, {
-			structure: AccordionItemDefaultSlotStructure,
-		});
-		const {state, api, directives} = widgetContext;
-		useImperativeHandle(ref, () => api, [api]);
-		useEffect(() => {
-			api.initDone();
-		}, [api]);
-		return (
-			<div {...useDirectives([classDirective, `accordion-item ${state.className}`], directives.itemDirective)}>
-				<Slot slotContent={state.structure} props={widgetContext} />
-			</div>
-		);
-	},
-);
+export function AccordionItem(props: Partial<AccordionItemProps> & {ref?: Ref<AccordionItemApi>}) {
+	const {registerItem} = useContext(AccordionDIContext);
+	const widgetContext = useWidgetWithConfig(registerItem!, props, null, {
+		structure: AccordionItemDefaultSlotStructure,
+	});
+	const {state, api, directives} = widgetContext;
+	useImperativeHandle(props.ref, () => api, [api]);
+	useEffect(() => {
+		api.initDone();
+	}, [api]);
+	return (
+		<div {...useDirectives([classDirective, `accordion-item ${state.className}`], directives.itemDirective)}>
+			<Slot slotContent={state.structure} props={widgetContext} />
+		</div>
+	);
+}
 
 /**
  * Accordion component that provides a collapsible content container.
@@ -87,19 +85,17 @@ export const AccordionItem: ForwardRefExoticComponent<Partial<AccordionItemProps
  * {@link https://react.dev/reference/react/useImperativeHandle | useImperativeHandle} to bind the widget API to the ref.
  *
  * @param props - The properties for the Accordion component.
- * @param ref - The ref to be forwarded to the Accordion API.
+ * @param props.ref - The ref to be forwarded to the Accordion API.
  *
  * @returns The rendered Accordion component.
  *
  */
-export const Accordion: ForwardRefExoticComponent<PropsWithChildren<Partial<AccordionProps>> & RefAttributes<AccordionApi>> = forwardRef(
-	function Accordion(props: PropsWithChildren<Partial<AccordionProps>>, ref: ForwardedRef<AccordionApi>) {
-		const widget = useWidgetWithConfig(createAccordion, props, 'accordion');
-		useImperativeHandle(ref, () => widget.api, [widget.api]);
-		return (
-			<AccordionDIContext.Provider value={widget.api}>
-				<div {...useDirectives([classDirective, 'accordion'], widget.directives.accordionDirective)}>{props.children}</div>
-			</AccordionDIContext.Provider>
-		);
-	},
-);
+export function Accordion(props: PropsWithChildren<Partial<AccordionProps>> & {ref?: ForwardedRef<AccordionApi>}) {
+	const widget = useWidgetWithConfig(createAccordion, props, 'accordion');
+	useImperativeHandle(props.ref, () => widget.api, [widget.api]);
+	return (
+		<AccordionDIContext value={widget.api}>
+			<div {...useDirectives([classDirective, 'accordion'], widget.directives.accordionDirective)}>{props.children}</div>
+		</AccordionDIContext>
+	);
+}
