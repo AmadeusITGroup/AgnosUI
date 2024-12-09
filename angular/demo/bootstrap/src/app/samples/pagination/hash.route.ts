@@ -22,7 +22,7 @@ import {Component, computed} from '@angular/core';
 export default class HashPaginationComponent {
 	hash = toAngularSignal(hash$);
 
-	pageNumber = computed(() => +(this.hash().split('#')[1] ?? 4));
+	readonly pageNumber = computed(() => +(this.hash().split('#')[1] ?? 4));
 
 	pageLink = (currentPage: number) => `#${this.hash().split('#')[0]}#${currentPage}`;
 
