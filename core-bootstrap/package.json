@@ -119,7 +119,7 @@
 		"@agnos-ui/core": "0.0.0"
 	},
 	"peerDependencies": {
-		"@amadeus-it-group/tansu": "^1.0.0"
+		"@amadeus-it-group/tansu": "^2.0.0"
 	},
 	"sideEffects": false
 }

@@ -80,7 +80,7 @@
 	"dependencies": {
 		"@agnos-ui/core-bootstrap": "0.0.0",
 		"@agnos-ui/svelte-bootstrap": "0.0.0",
-		"@amadeus-it-group/tansu": "^1.0.0",
+		"@amadeus-it-group/tansu": "^2.0.0",
 		"@floating-ui/dom": "^1.6.12"
 	},
 	"devDependencies": {
