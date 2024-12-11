@@ -98,7 +98,7 @@ export interface TreeProps extends TreeCommonPropsAndState {
 	 * (node: HTMLElement) => node.querySelectorAll('button')
 	 * ```
 	 */
-	navSelector(node: HTMLElement): NodeListOf<HTMLButtonElement>;
+	navSelector(node: HTMLElement): NodeListOf<HTMLElement>;
 	/**
 	 * Return the value for the 'aria-label' attribute of the toggle
 	 * @param label - tree item label
@@ -315,6 +315,10 @@ export function createTree(config?: PropsConfig<TreeProps>): TreeWidget {
 				const isExpanded = item.isExpanded;
 				refreshElements(); // collapsed items were added to the dom
 				switch (key) {
+					case 'Enter':
+					case ' ':
+						toggleExpanded(item);
+						break;
 					case 'ArrowLeft':
 						if (isExpanded) {
 							toggleExpanded(item);
