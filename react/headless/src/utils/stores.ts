@@ -1,9 +1,44 @@
 import {findChangedProperties} from '@agnos-ui/core/utils/stores';
 import type {ReadableSignal, WritableSignal} from '@amadeus-it-group/tansu';
-import {asReadable, writable} from '@amadeus-it-group/tansu';
+import {asReadable, computed, writable} from '@amadeus-it-group/tansu';
 import {useEffect, useMemo, useRef, useState} from 'react';
 
 export * from '@agnos-ui/core/utils/stores';
+
+interface QueueItem {
+	rerender: (value: Record<string, never>) => void;
+	state: {notified: false | Record<string, never>; changed: boolean; hasEffect: boolean};
+	obj: Record<string, never>;
+}
+
+let queue: QueueItem[] | undefined;
+
+const processQueue = () => {
+	if (queue) {
+		try {
+			for (let i = 0; i < queue.length; i++) {
+				const {rerender, state, obj} = queue[i];
+				if (state.notified === obj && state.hasEffect) {
+					rerender(obj);
+				}
+			}
+		} finally {
+			queue = undefined;
+		}
+	}
+};
+
+const createOnStoreChange = (rerender: QueueItem['rerender'], internalState: QueueItem['state']) => () => {
+	if (internalState.changed && !internalState.notified) {
+		const obj = {};
+		internalState.notified = obj;
+		if (!queue) {
+			queueMicrotask(processQueue);
+			queue = [];
+		}
+		queue.push({rerender, state: internalState, obj});
+	}
+};
 
 /**
  * Observe a readable store inside of a react component.
@@ -13,18 +48,44 @@ export * from '@agnos-ui/core/utils/stores';
  * @returns the observed value of the store
  */
 export function useObservable<T>(store$: ReadableSignal<T>) {
-	const [value, setValue] = useState(() => store$());
-
-	useEffect(() => {
-		return store$.subscribe((arg) => {
-			// We're passing an update function to setValue here instead of just doing setValue(arg) so that
-			// if arg is a function, it is properly used as the value instead of being called as an update function
-			setValue(() => arg);
-		});
+	const [, rerender] = useState({});
+	const internalState = useMemo(() => {
+		const internalState = {
+			hasEffect: false,
+			changed: false,
+			notified: false as false | Record<string, never>,
+			store$: computed(() => {
+				internalState.changed = true;
+				return store$();
+			}),
+		};
+		return internalState;
 	}, [store$]);
-
+	useEffect(() => {
+		internalState.hasEffect = true;
+		const unsubscribe = internalState.store$.subscribe(createOnStoreChange(rerender, internalState));
+		return () => {
+			internalState.hasEffect = false;
+			unsubscribe();
+		};
+	}, [internalState]);
+	const value = internalState.store$();
+	internalState.changed = false;
+	internalState.notified = false;
 	return value;
 }
+
+const createComputed = <T>(store: ReadableSignal<T>, internalState: {changed: boolean}) => {
+	let firstComputation = true;
+	return computed(() => {
+		if (firstComputation) {
+			firstComputation = false;
+		} else {
+			internalState.changed = true;
+		}
+		return store();
+	});
+};
 
 /**
  * Hook to create a proxy object that subscribes to observable stores and triggers re-renders on updates.
@@ -35,47 +96,64 @@ export function useObservable<T>(store$: ReadableSignal<T>) {
  *
  */
 export function useObservablesProxy<State>(stores: {[K in keyof State & string as `${K}$`]: ReadableSignal<State[K]>}): State {
-	const [, triggerRerender] = useState({});
+	interface StoreInfo<T> {
+		store: ReadableSignal<T>;
+		computedStore: ReadableSignal<T>;
+		unsubscribe: (() => void) | null;
+	}
+	const [, rerender] = useState({});
 	const internalState = useMemo(() => {
 		const internalState = {
 			hasEffect: false,
-			storeInfo: {} as Record<string, {unsubscribe: null | (() => void)}>,
-			checkStoreSubscribed: (key: string) => {
-				const store = (stores as any)[`${key}$`];
+			notified: false as false | Record<string, never>,
+			changed: false,
+			storeInfo: {} as {
+				[K in keyof State & string]: StoreInfo<State[K]>;
+			},
+			checkStoreSubscribed: (key: keyof State & string) => {
+				const store = stores[`${key}$`] as ReadableSignal<State[typeof key]> | undefined;
 				if (store) {
 					let storeInfo = internalState.storeInfo[key];
-					if (!storeInfo) {
-						storeInfo = {unsubscribe: null};
+					if (!storeInfo || storeInfo.store !== store) {
+						const unsubscribe = storeInfo?.unsubscribe;
+						storeInfo = {
+							store,
+							computedStore: createComputed(store, internalState),
+							unsubscribe: null,
+						};
 						internalState.storeInfo[key] = storeInfo;
+						unsubscribe?.();
 					}
 					if (internalState.hasEffect && !storeInfo.unsubscribe) {
-						storeInfo.unsubscribe = store.subscribe(() => {
-							triggerRerender({});
-						});
+						storeInfo.unsubscribe = storeInfo.computedStore.subscribe(onStoreChange);
 					}
+					return storeInfo.computedStore;
 				}
-				return store;
+				return undefined;
 			},
 			proxy: new Proxy(
 				{},
 				{
 					get(_target, name) {
-						const store = typeof name === 'string' ? internalState.checkStoreSubscribed(name) : null;
+						const store = typeof name === 'string' ? internalState.checkStoreSubscribed(name as keyof State & string) : null;
 						return store?.();
 					},
 				},
 			),
 		};
+		const onStoreChange = createOnStoreChange(rerender, internalState);
 		return internalState;
 	}, []);
+	internalState.notified = false;
+	internalState.changed = false;
 	useEffect(() => {
 		internalState.hasEffect = true;
-		for (const key of Object.keys(internalState.storeInfo)) {
+		for (const key of Object.keys(internalState.storeInfo) as (keyof State & string)[]) {
 			internalState.checkStoreSubscribed(key);
 		}
 		return () => {
 			internalState.hasEffect = false;
-			for (const info of Object.values(internalState.storeInfo)) {
+			for (const info of Object.values<StoreInfo<unknown>>(internalState.storeInfo)) {
 				const unsubscribe = info.unsubscribe;
 				info.unsubscribe = null;
 				unsubscribe?.();
@@ -98,10 +176,8 @@ export const usePropsAsStore = <T extends object>(props?: Partial<T>): ReadableS
 	const storeRef = useRef<WritableSignal<Partial<T>>>();
 	if (!storeRef.current) {
 		storeRef.current = writable({...props}, {equal: propsEqual});
+	} else {
+		storeRef.current.set({...props});
 	}
-	useEffect(() => {
-		storeRef.current!.set({...props});
-	}, [props]);
-
 	return useMemo(() => asReadable(storeRef.current!), [storeRef.current]);
 };
