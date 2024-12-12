@@ -11,10 +11,10 @@
 		"typescript": "~5.6.3"
 	},
 	"devDependencies": {
-		"@angular/core": "^19.0.3",
+		"@angular/core": "^19.0.0",
 		"@typescript-eslint/rule-tester": "^8.17.0",
 		"@vitest/coverage-v8": "^2.1.8",
-		"svelte": "^5.9.0",
+		"svelte": "^5.0.0",
 		"svelte-eslint-parser": "^0.43.0"
 	},
 	"scripts": {
