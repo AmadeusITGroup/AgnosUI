@@ -6,7 +6,7 @@
 	let {state, directives} = widget;
 </script>
 
-{#each state.progressDisplayOptions as option}
+{#each state.progressDisplayOptions as option (option.id)}
 	<div use:directives.progressDisplayDirective={{option}}></div>
 {/each}
 <div use:directives.clickableAreaDirective></div>

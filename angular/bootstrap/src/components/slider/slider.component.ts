@@ -87,7 +87,7 @@ export class SliderStructureDirective {
 	imports: [SlotDirective, SliderStructureDirective, UseDirective],
 	template: `
 		<ng-template auSliderStructure #structure let-state="state" let-directives="directives" let-api="api">
-			@for (option of state.progressDisplayOptions(); track option) {
+			@for (option of state.progressDisplayOptions(); track option.id) {
 				<div [auUse]="[directives.progressDisplayDirective, {option}]"></div>
 			}
 			<div [auUse]="directives.clickableAreaDirective"></div>

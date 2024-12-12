@@ -34,9 +34,13 @@ export interface ProgressDisplayOptions {
 	 */
 	width: number;
 	/**
-	 * Height of hte progress in %
+	 * Height of the progress in %
 	 */
 	height: number;
+	/**
+	 * Id of the progress
+	 */
+	id: number;
 }
 
 /**
@@ -581,6 +585,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 					top: vertical ? (rtl ? 0 : null) : null,
 					width: vertical ? 100 : sortedValuesPercent[0],
 					height: vertical ? sortedValuesPercent[0] : 100,
+					id: 0,
 				},
 			];
 		} else {
@@ -593,6 +598,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 						top: vertical ? (rtl ? array[index] : null) : null,
 						width: vertical ? 100 : index === array.length - 1 ? svp : array[index + 1] - svp,
 						height: vertical ? (index === array.length - 1 ? svp : array[index + 1] - svp) : 100,
+						id: index,
 					};
 				})
 				.slice(0, sortedValuesPercent.length - 1);
