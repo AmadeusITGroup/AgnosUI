@@ -17,9 +17,9 @@ export const Accordion = (
 		directives: {accordionDirective},
 	} = useWidgetWithConfig(createAccordion, props, 'accordion');
 	return (
-		<AccordionDIContext.Provider value={api}>
+		<AccordionDIContext value={api}>
 			<div {...useDirectives([classDirective, 'flex flex-col gap-2'], accordionDirective)}>{props.children}</div>
-		</AccordionDIContext.Provider>
+		</AccordionDIContext>
 	);
 };
 

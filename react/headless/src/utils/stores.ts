@@ -173,7 +173,7 @@ const propsEqual = <T extends object>(a: T, b: T) => !findChangedProperties(a, b
  * @returns the readable stores
  */
 export const usePropsAsStore = <T extends object>(props?: Partial<T>): ReadableSignal<Partial<T>> => {
-	const storeRef = useRef<WritableSignal<Partial<T>>>();
+	const storeRef = useRef<WritableSignal<Partial<T>>>(undefined);
 	if (!storeRef.current) {
 		storeRef.current = writable({...props}, {equal: propsEqual});
 	} else {

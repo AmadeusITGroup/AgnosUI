@@ -42,11 +42,11 @@ const DynamicDemo = () => {
 			</button>
 			<br />
 			<div className="alertCount mb-3">Alerts in the service: {alerts.length}</div>
-			<AlertContext.Provider value={alerts}>
-				<AlertDispatchContext.Provider value={dispatch}>
+			<AlertContext value={alerts}>
+				<AlertDispatchContext value={dispatch}>
 					<ChildComponent />
-				</AlertDispatchContext.Provider>
-			</AlertContext.Provider>
+				</AlertDispatchContext>
+			</AlertContext>
 		</>
 	);
 };

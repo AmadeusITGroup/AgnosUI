@@ -15,7 +15,7 @@ type DefaultConfigInput = Partial2Levels<WidgetsConfig> & {
 };
 
 const widgetFactories: {
-	widgetsConfigContext: Context<WidgetsConfigStore<WidgetsConfig> | undefined>;
+	WidgetsConfigContext: Context<WidgetsConfigStore<WidgetsConfig> | undefined>;
 	WidgetsDefaultConfig: ({children, adaptParentConfig, ...props}: DefaultConfigInput) => import('react/jsx-runtime').JSX.Element;
 	useWidgetContext: <Props extends object>(
 		widgetName: keyof BootstrapWidgetsConfig | null,
@@ -30,9 +30,9 @@ const widgetFactories: {
 } = widgetsConfigFactory<WidgetsConfig>();
 /**
  * Destructures and exports the following from `widgetFactories`:
- * - `widgetsConfigContext`: The context for widget configurations.
+ * - `WidgetsConfigContext`: The context for widget configurations.
  * - `WidgetsDefaultConfig`: The default configuration for widgets.
  * - `useWidgetContext`: A hook to use the widget context.
  * - `useWidgetWithConfig`: A hook to use a widget with a specific configuration.
  */
-export const {widgetsConfigContext, WidgetsDefaultConfig, useWidgetContext, useWidgetWithConfig} = widgetFactories;
+export const {WidgetsConfigContext, WidgetsDefaultConfig, useWidgetContext, useWidgetWithConfig} = widgetFactories;
