@@ -169,4 +169,10 @@ export const daisyUIMetadata: DaisyMetadata = {
 		since: 'v0.3.0',
 		type: 'daisyUI',
 	},
+	Tree: {
+		title: 'Tree',
+		status: 'beta',
+		since: 'v0.7.0',
+		type: 'daisyUI',
+	},
 };

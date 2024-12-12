@@ -229,7 +229,7 @@ export class TreeComponent extends BaseWidgetDirective<TreeWidget> {
 	 * (node: HTMLElement) => node.querySelectorAll('button')
 	 * ```
 	 */
-	readonly navSelector = input<(node: HTMLElement) => NodeListOf<HTMLButtonElement>>(undefined, {alias: 'auNavSelector'});
+	readonly navSelector = input<(node: HTMLElement) => NodeListOf<HTMLElement>>(undefined, {alias: 'auNavSelector'});
 	/**
 	 * Return the value for the 'aria-label' attribute of the toggle
 	 * @param label - tree item label
