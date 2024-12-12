@@ -94,9 +94,5 @@
 		"@floating-ui/dom": "^1.6.12",
 		"classnames": "^2.5.1"
 	},
-	"peerDependencies": {
-		"react": "^19.0.0",
-		"react-dom": "^19.0.0"
-	},
 	"sideEffects": false
 }

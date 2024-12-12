@@ -2,8 +2,8 @@
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
 	"extends": ["config:recommended", ":dependencyDashboard", "group:allNonMajor"],
 	"ignorePresets": [":prHourlyLimit2", ":prConcurrentLimit10"],
-	"schedule": ["every weekend"],
-	"rangeStrategy": "bump",
+	"schedule": ["* 0-4 1 * *"],
+	"rangeStrategy": "auto",
 	"packageRules": [
 		{
 			"matchPackageNames": ["typescript"],

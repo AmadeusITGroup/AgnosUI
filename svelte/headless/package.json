@@ -147,7 +147,7 @@
 	},
 	"peerDependencies": {
 		"@amadeus-it-group/tansu": "^2.0.0",
-		"svelte": "^5.9.0"
+		"svelte": "^5.0.0"
 	},
 	"devDependencies": {
 		"@sveltejs/package": "^2.3.7"
