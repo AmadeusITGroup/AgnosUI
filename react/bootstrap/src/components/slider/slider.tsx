@@ -70,8 +70,8 @@ const CombinedLabel = (slotContext: SliderContext) => (
  */
 export const SliderDefaultSlotStructure = (slotContext: SliderContext) => (
 	<>
-		{slotContext.state.progressDisplayOptions.map((option, index) => (
-			<ProgressDisplay key={index} directive={slotContext.directives.progressDisplayDirective} option={option} />
+		{slotContext.state.progressDisplayOptions.map((option) => (
+			<ProgressDisplay key={option.id} directive={slotContext.directives.progressDisplayDirective} option={option} />
 		))}
 		<div {...useDirective(slotContext.directives.clickableAreaDirective)} />
 		{slotContext.state.showMinMaxLabels && <MinMaxLabels {...slotContext} />}
