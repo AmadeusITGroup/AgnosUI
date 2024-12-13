@@ -16,9 +16,10 @@
 <url><loc>https://www.agnosui.dev/latest/docs/angular/services/introduction</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/services/focustrack</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/services/floating-ui</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/angular/services/match-media</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/angular/services/navigation-manager</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/services/resize-observer</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/services/transition</loc></url>
-<url><loc>https://www.agnosui.dev/latest/docs/angular/services/match-media</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/getting-started/introduction</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/getting-started/features</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/getting-started/installation</loc></url>
@@ -32,9 +33,10 @@
 <url><loc>https://www.agnosui.dev/latest/docs/react/services/introduction</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/services/focustrack</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/services/floating-ui</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/react/services/match-media</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/react/services/navigation-manager</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/services/resize-observer</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/services/transition</loc></url>
-<url><loc>https://www.agnosui.dev/latest/docs/react/services/match-media</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/getting-started/introduction</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/getting-started/features</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/getting-started/installation</loc></url>
@@ -48,9 +50,10 @@
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/services/introduction</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/services/focustrack</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/services/floating-ui</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/svelte/services/match-media</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/svelte/services/navigation-manager</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/services/resize-observer</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/services/transition</loc></url>
-<url><loc>https://www.agnosui.dev/latest/docs/svelte/services/match-media</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/components/accordion/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/components/alert/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/components/collapse/api</loc></url>
