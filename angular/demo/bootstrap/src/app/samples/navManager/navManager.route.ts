@@ -1,10 +1,9 @@
-import type {NavManagerItemConfig} from '@agnos-ui/angular-bootstrap';
-import {AgnosUIAngularModule, createNavManager} from '@agnos-ui/angular-bootstrap';
+import {createNavManager, UseDirective, type NavManagerItemConfig} from '@agnos-ui/angular-bootstrap';
 import {Component, input} from '@angular/core';
 
 @Component({
 	selector: 'app-navmanager-line',
-	imports: [AgnosUIAngularModule],
+	imports: [UseDirective],
 	template: `
 		<div class="d-flex demo-navmanager-line">
 			<input

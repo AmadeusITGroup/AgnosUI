@@ -1,5 +1,5 @@
 ---
-since: 0.1.1
+since: 0.7.0
 ---
 
 # Navigation Manager
@@ -37,11 +37,11 @@ Whenever you want to custom keyboard navigation within a defined set of DOM elem
 ### In action
 
 ```sample
-{NavManager:navManager/navManager:500}
+{NavManager:navManager/navManager:255}
 ```
 
-### Example Usage - using selector
+### Using selector
 
 ```sample
-{NavManager:navManager/navManagerWithSelector:500}
+{NavManager:navManager/navManagerWithSelector:255}
 ```

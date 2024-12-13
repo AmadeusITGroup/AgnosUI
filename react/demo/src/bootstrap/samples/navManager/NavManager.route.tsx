@@ -1,5 +1,4 @@
-import type {NavManagerItemConfig} from '@agnos-ui/react-bootstrap/services/navManager';
-import {createNavManager} from '@agnos-ui/react-bootstrap/services/navManager';
+import {createNavManager, type NavManagerItemConfig} from '@agnos-ui/react-bootstrap/services/navManager';
 import {useDirective} from '@agnos-ui/react-bootstrap/utils/directive';
 import {useMemo} from 'react';
 
@@ -59,19 +58,17 @@ const NavmanagerSampleLine = ({text}: {text: string}) => {
 	);
 };
 
-const NavmanagerSample = () => {
-	return (
-		<div className="demo-navmanager">
-			<div dir="ltr" className="mt-3 pb-3">
-				<h2>Left-to-right</h2>
-				<NavmanagerSampleLine text="Hello" />
-			</div>
-
-			<div dir="rtl" className="mt-3 pb-3">
-				<h2>Right-to-left</h2>
-				<NavmanagerSampleLine text={'\u05e9\u05c1\u05b8\u05dc\u05d5\u05b9\u05dd'} />
-			</div>
+const NavmanagerSample = () => (
+	<div className="demo-navmanager">
+		<div dir="ltr" className="mt-3 pb-3">
+			<h2>Left-to-right</h2>
+			<NavmanagerSampleLine text="Hello" />
 		</div>
-	);
-};
+
+		<div dir="rtl" className="mt-3 pb-3">
+			<h2>Right-to-left</h2>
+			<NavmanagerSampleLine text={'\u05e9\u05c1\u05b8\u05dc\u05d5\u05b9\u05dd'} />
+		</div>
+	</div>
+);
 export default NavmanagerSample;
