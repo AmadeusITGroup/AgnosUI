@@ -98,9 +98,9 @@ export class TreeItemContentDirective {
 @Component({
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [UseDirective, SlotDirective, TreeItemContentDirective],
+	imports: [SlotDirective, TreeItemContentDirective],
 	template: `
-		<ng-template auTreeItem #treeItemContent let-state="state" let-directives="directives" let-item="item" let-api="api">
+		<ng-template auTreeItemContent #treeItemContent let-state="state" let-directives="directives" let-item="item" let-api="api">
 			<span class="au-tree-item">
 				<ng-template [auSlot]="state.itemToggle()" [auSlotProps]="{state, api, directives, item}" />
 				{{ item.label }}
