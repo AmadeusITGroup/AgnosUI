@@ -334,43 +334,17 @@ test.describe(`Slider tests`, () => {
 			expect((await sliderPO.sliderProgressState())[0]).toEqual('left: 40%; width: 43%; height: 100%;');
 		});
 
-		test(`should move handle on key strokes`, async ({page}) => {
+		test(`should move handle on key strokes and keep the focus`, async ({page}) => {
 			const sliderPO = new SliderPO(page, 1);
 
 			await page.goto('#/slider/range');
 			await sliderPO.locatorRoot.waitFor();
 
 			const expectedState = {...defaultExpectedHandleState};
-			assign(expectedState, [
-				{
-					...expectedState[0],
-					value: '0',
-					ariaLabel: '0',
-					ariaValueText: '0',
-					style: 'left: 0%;',
-				},
-				{
-					...expectedState[1],
-					value: '40',
-					ariaLabel: '40',
-					ariaValueText: '40',
-					style: 'left: 40%;',
-				},
-			]);
-
 			const minLabelLocator = sliderPO.locatorMinLabelHorizontal;
 			const maxLabelLocator = sliderPO.locatorMaxLabelHorizontal;
 
 			await sliderPO.locatorHandle.nth(0).click();
-			await page.keyboard.press('Home');
-
-			await expect.poll(async () => (await sliderPO.sliderHandleState()).at(0)).toEqual(expectedState[0]);
-			expect((await sliderPO.sliderHandleState()).at(1)).toEqual(expectedState[1]);
-			expect((await sliderPO.sliderProgressState())[0]).toEqual('left: 0%; width: 40%; height: 100%;');
-
-			await expect(minLabelLocator).toBeHidden();
-			await expect(maxLabelLocator).toBeVisible();
-
 			await page.keyboard.press('End');
 
 			assign(expectedState, [
@@ -394,8 +368,36 @@ test.describe(`Slider tests`, () => {
 			expect((await sliderPO.sliderHandleState()).at(1)).toEqual(expectedState[1]);
 			expect((await sliderPO.sliderProgressState())[0]).toEqual('left: 40%; width: 60%; height: 100%;');
 
+			await expect(sliderPO.locatorHandle.nth(1)).toBeFocused();
 			await expect(minLabelLocator).toBeVisible();
 			await expect(maxLabelLocator).toBeHidden();
+
+			await page.keyboard.press('Home');
+
+			assign(expectedState, [
+				{
+					...expectedState[0],
+					value: '0',
+					ariaLabel: '0',
+					ariaValueText: '0',
+					style: 'left: 0%;',
+				},
+				{
+					...expectedState[1],
+					value: '40',
+					ariaLabel: '40',
+					ariaValueText: '40',
+					style: 'left: 40%;',
+				},
+			]);
+
+			await expect.poll(async () => (await sliderPO.sliderHandleState()).at(0)).toEqual(expectedState[0]);
+			expect((await sliderPO.sliderHandleState()).at(1)).toEqual(expectedState[1]);
+			expect((await sliderPO.sliderProgressState())[0]).toEqual('left: 0%; width: 40%; height: 100%;');
+
+			await expect(sliderPO.locatorHandle.nth(0)).toBeFocused();
+			await expect(minLabelLocator).toBeHidden();
+			await expect(maxLabelLocator).toBeVisible();
 		});
 
 		test(`should add / remove combined label from dom`, async ({page}) => {
