@@ -1,7 +1,7 @@
 {
 	"name": "@agnos-ui/react-bootstrap",
 	"description": "Bootstrap-based component library for React.",
-	"version": "0.0.0",
+	"version": "0.7.0",
 	"private": true,
 	"type": "module",
 	"main": "./dist/index.cjs",
@@ -145,8 +145,8 @@
 		}
 	},
 	"dependencies": {
-		"@agnos-ui/core-bootstrap": "0.0.0",
-		"@agnos-ui/react-headless": "0.0.0",
+		"@agnos-ui/core-bootstrap": "0.7.0",
+		"@agnos-ui/react-headless": "0.7.0",
 		"classnames": "^2.5.1"
 	},
 	"devDependencies": {
