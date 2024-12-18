@@ -16,9 +16,10 @@
 <url><loc>https://www.agnosui.dev/latest/docs/angular/services/introduction</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/services/focustrack</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/services/floating-ui</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/angular/services/match-media</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/angular/services/navigation-manager</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/services/resize-observer</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/services/transition</loc></url>
-<url><loc>https://www.agnosui.dev/latest/docs/angular/services/match-media</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/getting-started/introduction</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/getting-started/features</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/getting-started/installation</loc></url>
@@ -32,9 +33,10 @@
 <url><loc>https://www.agnosui.dev/latest/docs/react/services/introduction</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/services/focustrack</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/services/floating-ui</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/react/services/match-media</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/react/services/navigation-manager</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/services/resize-observer</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/services/transition</loc></url>
-<url><loc>https://www.agnosui.dev/latest/docs/react/services/match-media</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/getting-started/introduction</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/getting-started/features</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/getting-started/installation</loc></url>
@@ -48,9 +50,10 @@
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/services/introduction</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/services/focustrack</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/services/floating-ui</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/svelte/services/match-media</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/svelte/services/navigation-manager</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/services/resize-observer</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/services/transition</loc></url>
-<url><loc>https://www.agnosui.dev/latest/docs/svelte/services/match-media</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/components/accordion/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/components/alert/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/components/collapse/api</loc></url>
@@ -132,6 +135,7 @@
 <url><loc>https://www.agnosui.dev/latest/docs/angular/daisyUI/rating/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/daisyUI/slider/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/daisyUI/toast/api</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/angular/daisyUI/tree/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/daisyUI/accordion/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/daisyUI/alert/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/daisyUI/collapse/api</loc></url>
@@ -141,6 +145,7 @@
 <url><loc>https://www.agnosui.dev/latest/docs/react/daisyUI/rating/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/daisyUI/slider/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/daisyUI/toast/api</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/react/daisyUI/tree/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/daisyUI/accordion/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/daisyUI/alert/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/daisyUI/collapse/api</loc></url>
@@ -150,6 +155,7 @@
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/daisyUI/rating/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/daisyUI/slider/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/daisyUI/toast/api</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/svelte/daisyUI/tree/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/daisyUI/accordion/headless</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/daisyUI/accordion/headless</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/daisyUI/accordion/headless</loc></url>
@@ -180,6 +186,9 @@
 <url><loc>https://www.agnosui.dev/latest/docs/angular/daisyUI/toast/headless</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/daisyUI/toast/headless</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/daisyUI/toast/headless</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/angular/daisyUI/tree/headless</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/react/daisyUI/tree/headless</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/svelte/daisyUI/tree/headless</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/headless/types</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/headless/config</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/headless/components/accordion</loc></url>
