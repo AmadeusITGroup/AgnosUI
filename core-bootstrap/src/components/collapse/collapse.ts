@@ -209,6 +209,9 @@ export function createCollapse(config?: PropsConfig<CollapseProps>): CollapseWid
 					attributes: {
 						id: computed(() => id$() || undefined),
 					},
+					classNames: {
+						'au-collapse': true,
+					},
 				})),
 			),
 		},
