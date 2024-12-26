@@ -5,6 +5,7 @@
 	import rightToLeftSample from '@agnos-ui/samples/bootstrap/slider/right-to-left';
 	import customSample from '@agnos-ui/samples/bootstrap/slider/custom';
 	import fullcustomSample from '@agnos-ui/samples/bootstrap/slider/fullCustom';
+	import customAccessibility from '@agnos-ui/samples/bootstrap/slider/accessibility';
 	import Sample from '$lib/layout/Sample.svelte';
 	import Section from '$lib/layout/Section.svelte';
 </script>
@@ -26,6 +27,9 @@
 </Section>
 <Section label="Full Custom slider" level={2}>
 	<Sample title="Full custom slider" sample={fullcustomSample} height={380} />
+</Section>
+<Section label="Custom Accessibility slider" level={2}>
+	<Sample title="Custom Accessibility slider" sample={customAccessibility} height={120} />
 </Section>
 <Section label="Accessibility" level={2}>
 	<p>

@@ -159,6 +159,7 @@
 		font-weight: var(--#{variables.$prefix}slider-label-font-weight);
 		margin-block-start: var(--#{variables.$prefix}slider-label-margin-block-start);
 		position: absolute;
+		text-wrap: nowrap;
 
 		&.au-slider-label-min:not(.au-slider-rtl) {
 			left: var(--#{variables.$prefix}slider-label-min-position);

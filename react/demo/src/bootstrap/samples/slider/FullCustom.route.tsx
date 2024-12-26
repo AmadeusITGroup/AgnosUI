@@ -8,7 +8,6 @@ const FullCustomSliderDemo = () => {
 
 	return (
 		<>
-			<h2>Fully custom slider</h2>
 			<Slider
 				min={0}
 				max={100}
