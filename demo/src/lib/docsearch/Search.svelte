@@ -16,7 +16,6 @@
 				indexName: 'agnosui',
 				apiKey: 'e82efd11bdb692114cb75b90299504b8',
 				searchParameters: {
-					indexName: 'agnosui',
 					facetFilters: [`${value ? 'tags:' + value : ''}`],
 				},
 			});

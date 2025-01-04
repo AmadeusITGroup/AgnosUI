@@ -34,7 +34,7 @@ export async function openModal<Data>(options: Partial<ModalProps<Data>>, {conte
 	});
 	try {
 		return await component.api.open();
-	} finally {
-		unmount(component);
+	} catch (_error) {
+		await unmount(component);
 	}
 }

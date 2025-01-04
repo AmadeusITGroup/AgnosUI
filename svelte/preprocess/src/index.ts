@@ -3,7 +3,13 @@ import type {PreprocessorGroup} from 'svelte/compiler';
 import {parse, type AST} from 'svelte/compiler';
 import type {Expression} from 'estree';
 
-const isElement = (node: AST.BaseNode): node is AST.BaseElement => 'attributes' in node;
+interface BaseElement extends AST.BaseNode {
+	name: string;
+	attributes: Array<AST.Attribute | AST.SpreadAttribute | AST.Directive>;
+	fragment: AST.Fragment;
+}
+
+const isElement = (node: AST.BaseNode): node is BaseElement => 'attributes' in node;
 const isEachBlock = (node: AST.BaseNode): node is AST.EachBlock => node.type === 'EachBlock';
 const isIfBlock = (node: AST.BaseNode): node is AST.IfBlock => node.type === 'IfBlock';
 const isAwaitBlock = (node: AST.BaseNode): node is AST.AwaitBlock => node.type === 'AwaitBlock';

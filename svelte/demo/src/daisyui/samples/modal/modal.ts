@@ -15,8 +15,8 @@ export async function openModal(options: DaisyModalProps) {
 	});
 	try {
 		return await component.api.open();
-	} finally {
+	} catch (_error) {
 		target.remove();
-		unmount(component);
+		await unmount(component);
 	}
 }

@@ -9,25 +9,27 @@ import InfoCircle from 'bootstrap-icons/icons/info-circle-fill.svg?react';
 import LightBulb from 'bootstrap-icons/icons/lightbulb.svg?react';
 import type {FunctionComponent, SVGProps} from 'react';
 
+const typeIcon: Record<string, FunctionComponent<SVGProps<SVGSVGElement> & {title?: string | undefined}>> = {
+	success: CheckCircle,
+	info: InfoCircle,
+	warning: ExclamationTriangle,
+	danger: DashCircle,
+	light: LightBulb,
+};
+
 const AlertIcon = (slotContext: AlertContext) => {
 	const {state, api} = slotContext;
-	const typeIcon: Record<string, FunctionComponent<SVGProps<SVGSVGElement> & {title?: string | undefined}>> = {
-		success: CheckCircle,
-		info: InfoCircle,
-		warning: ExclamationTriangle,
-		danger: DashCircle,
-		light: LightBulb,
-	};
+	const Icon = typeIcon[state.type];
 
 	return (
 		<>
-			<span className="d-flex me-2">{typeIcon[state.type]({})}</span>
+			<span className="d-flex me-2">
+				<Icon />
+			</span>
 			<div className="alert-body">
-				<Slot slotContent={state.children} props={slotContext}></Slot>
+				<Slot slotContent={state.children} props={slotContext} />
 			</div>
-			{state.dismissible ? (
-				<button type="button" className="btn-close ms-auto" onClick={api.close} aria-label={state.ariaCloseButtonLabel}></button>
-			) : null}
+			{state.dismissible && <button type="button" className="btn-close ms-auto" onClick={api.close} aria-label={state.ariaCloseButtonLabel}></button>}
 		</>
 	);
 };
