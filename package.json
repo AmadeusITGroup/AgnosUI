@@ -80,8 +80,8 @@
 		"wireit": "^0.14.9"
 	},
 	"optionalDependencies": {
-		"@esbuild/darwin-arm64": "0.24.0",
-		"@lmdb/lmdb-win32-x64": "3.2.0",
+		"@esbuild/darwin-arm64": "0.24.2",
+		"@lmdb/lmdb-win32-x64": "3.2.2",
 		"@parcel/watcher-android-arm64": "2.5.0",
 		"@parcel/watcher-darwin-arm64": "2.5.0",
 		"@parcel/watcher-darwin-x64": "2.5.0",
@@ -94,9 +94,9 @@
 		"@parcel/watcher-win32-arm64": "2.5.0",
 		"@parcel/watcher-win32-ia32": "2.5.0",
 		"@parcel/watcher-win32-x64": "2.5.0",
-		"@rollup/rollup-darwin-arm64": "4.28.1",
-		"@rollup/rollup-darwin-x64": "4.28.1",
-		"@rollup/rollup-win32-x64-msvc": "4.28.1"
+		"@rollup/rollup-darwin-arm64": "4.29.1",
+		"@rollup/rollup-darwin-x64": "4.29.1",
+		"@rollup/rollup-win32-x64-msvc": "4.29.1"
 	},
 	"scripts": {
 		"build:coverage": "wireit",
