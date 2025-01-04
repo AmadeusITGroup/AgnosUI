@@ -43,7 +43,7 @@ export const tooltip = browserDirective((button: HTMLElement, options: {content:
 
 	function hide() {
 		if (componentInstance) {
-			unmount(componentInstance);
+			void unmount(componentInstance);
 			componentInstance = undefined;
 		}
 	}
