@@ -1,33 +1,23 @@
-import {tick} from 'svelte';
+import {createSubscriber} from 'svelte/reactivity';
 
 export class Brewer {
 	#running = $state(false);
 	#value = $state(0);
 	#interval?: any;
-	#subscribers = 0;
+	readonly #subscribe = createSubscriber(() => {
+		this.#interval = setInterval(() => {
+			if (this.#running && this.#value < 100) {
+				this.#value = this.#value + 10;
+			}
+		}, 500);
+		return () => {
+			clearInterval(this.#interval);
+			this.#interval = undefined;
+		};
+	});
 
 	get value() {
-		if ($effect.tracking()) {
-			$effect(() => {
-				if (this.#subscribers === 0) {
-					this.#interval = setInterval(() => {
-						if (this.#running && this.#value < 100) {
-							this.#value = this.#value + 10;
-						}
-					}, 500);
-				}
-				this.#subscribers++;
-				return () => {
-					void tick().then(() => {
-						this.#subscribers--;
-						if (this.#subscribers === 0) {
-							clearInterval(this.#interval);
-							this.#interval = undefined;
-						}
-					});
-				};
-			});
-		}
+		this.#subscribe();
 		return this.#value;
 	}
 
