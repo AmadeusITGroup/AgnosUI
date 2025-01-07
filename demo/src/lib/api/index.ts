@@ -254,10 +254,10 @@ async function docsToReadme(
 			if (line.startsWith('##') || line.startsWith('***')) {
 				toInclude = true;
 			}
-			if (line.match(/^##(#)*\s(Extends|Inherited from|Defined in|Overrides)/)) {
+			if (line.match(/^##(#)*\s(Extends|Inherited from|Overrides)/)) {
 				toInclude = false;
 			}
-			if (toInclude) {
+			if (toInclude && !line.startsWith('Defined in')) {
 				fileContent.push(
 					line
 						.replace(/^(#(#+).*)\(\)$/, '$1')
