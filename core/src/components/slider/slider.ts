@@ -726,7 +726,6 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 							return;
 					}
 					event.preventDefault();
-					event.stopPropagation();
 				}
 			},
 			mousedown: (event: MouseEvent) => {
