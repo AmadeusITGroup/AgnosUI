@@ -14,12 +14,14 @@ import {
 	Directive,
 	TemplateRef,
 	ViewEncapsulation,
+	afterRenderEffect,
+	contentChild,
 	forwardRef,
 	inject,
 	input,
 	output,
+	signal,
 	viewChild,
-	contentChild,
 } from '@angular/core';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {callWidgetFactory} from '../../config';
@@ -56,12 +58,48 @@ export class SliderHandleDirective {
 	imports: [UseDirective, SliderHandleDirective],
 	template: `
 		<ng-template auSliderHandle #handle let-state="state" let-directives="directives" let-item="item">
-			<button [auUse]="[directives.handleDirective, {item}]">&nbsp;</button>
+			<button [auUse]="[directives.handleDirective, {item}]" (keydown)="onKeyDown($event)">&nbsp;</button>
 		</ng-template>
 	`,
 })
 class SliderDefaultHandleSlotComponent {
 	readonly handle = viewChild.required<TemplateRef<SliderSlotHandleContext>>('handle');
+
+	/**
+	 * When the element moves up the DOM Angluar removes the focus
+	 * To avoid this we need to manually focus the element by calling the HTMLElement.focus
+	 * after the change, afterRenderEffect is executed after each render of the component
+	 * and when the signal inside is changed. On each key stroke we set the `refocus` signal
+	 * to the element that needs to be focused and we put the `equal` function to always return
+	 * `false` in order to trigger the change even when the element is the same
+	 */
+	readonly refocus = signal<HTMLElement | undefined>(undefined, {equal: () => false});
+
+	constructor() {
+		afterRenderEffect(() => {
+			this.refocus()?.focus();
+		});
+	}
+
+	/**
+	 * Key handler that sets the refocus element only on the key strokes that move
+	 * the element up the DOM
+	 * @param event object containting key stroke and the target element
+	 */
+	onKeyDown(event: KeyboardEvent) {
+		switch (event.key) {
+			case 'ArrowDown':
+			case 'ArrowLeft':
+			case 'Home':
+			case 'ArrowUp':
+			case 'ArrowRight':
+			case 'End':
+				this.refocus.set(event.target as HTMLElement);
+				break;
+			default:
+				break;
+		}
+	}
 }
 
 /**
