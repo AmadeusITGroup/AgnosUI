@@ -1,1 +1,0 @@
-import{a8 as n}from"./AppCommon-DHQjoM6w.js";function l(s,t,a){var i=s.__className,e=r(t);(i!==e||n)&&(t==null&&!a?s.removeAttribute("class"):s.className=e,s.__className=e)}function r(s,t){return(s??"")+""}function f(s,t,a){if(a){if(s.classList.contains(t))return;s.classList.add(t)}else{if(!s.classList.contains(t))return;s.classList.remove(t)}}export{l as s,f as t};
