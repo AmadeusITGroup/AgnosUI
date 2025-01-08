@@ -40,7 +40,7 @@ export const ToastDefaultSlotStructure = (slotContext: ToastContext) => (
 const ToastElement = (slotContext: ToastContext) => (
 	<div
 		{...useDirectives(
-			[classDirective, `toast ${slotContext.state.dismissible ? 'toast-dismissible' : ''} ${!slotContext.state.header ? 'd-flex' : ''}`],
+			[classDirective, {'toast-dismissible': slotContext.state.dismissible, 'd-flex': !slotContext.state.header}],
 			slotContext.directives.transitionDirective,
 			slotContext.directives.autoHideDirective,
 			slotContext.directives.bodyDirective,

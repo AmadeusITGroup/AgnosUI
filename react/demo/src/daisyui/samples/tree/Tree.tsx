@@ -2,7 +2,7 @@ import type {NormalizedTreeItem, TreeDirectives, TreeProps, TreeState} from '@ag
 import {createTree} from '@agnos-ui/react-headless/components/tree';
 import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
 import {useDirective} from '@agnos-ui/react-headless/utils/directive';
-import classNames from 'classnames';
+import clsx from 'clsx';
 
 export function Tree(props: Partial<Pick<TreeProps, 'className' | 'nodes' | 'navSelector'>>) {
 	const {
@@ -10,7 +10,7 @@ export function Tree(props: Partial<Pick<TreeProps, 'className' | 'nodes' | 'nav
 		directives: {navigationDirective, itemToggleDirective},
 	} = useWidgetWithConfig(createTree, props, 'tree');
 	return (
-		<ul role="tree" className={classNames('bg-base-200', 'rounded-lg', 'menu', 'w-[300px]', state.className)} {...useDirective(navigationDirective)}>
+		<ul role="tree" className={clsx('bg-base-200', 'rounded-lg', 'menu', 'w-[300px]', state.className)} {...useDirective(navigationDirective)}>
 			{state.normalizedNodes.map((node, index) => (
 				<TreeItem state={state} item={node} itemToggleDirective={itemToggleDirective} key={node.label + node.level + index} />
 			))}

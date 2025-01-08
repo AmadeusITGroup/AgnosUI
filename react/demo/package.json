@@ -78,7 +78,6 @@
 		"@types/react-dom": "^19.0.0",
 		"@vitejs/plugin-react": "^4.3.4",
 		"autoprefixer": "^10.4.20",
-		"classnames": "^2.5.1",
 		"daisyui": "^4.12.20",
 		"postcss": "^8.4.49",
 		"react": "^19.0.0",
@@ -92,7 +91,7 @@
 		"@agnos-ui/react-bootstrap": "0.0.0",
 		"@amadeus-it-group/tansu": "^2.0.0",
 		"@floating-ui/dom": "^1.6.12",
-		"classnames": "^2.5.1"
+		"clsx": "^2.1.1"
 	},
 	"sideEffects": false
 }

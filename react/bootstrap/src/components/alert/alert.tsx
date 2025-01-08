@@ -29,7 +29,7 @@ const AlertElement = (slotContext: AlertContext) => (
 		{...useDirectives(
 			[
 				classDirective,
-				`au-alert alert alert-${slotContext.state.type} ${slotContext.state.className} ${slotContext.state.dismissible ? 'alert-dismissible' : ''}`,
+				[`au-alert alert alert-${slotContext.state.type} ${slotContext.state.className}`, {'alert-dismissible': slotContext.state.dismissible}],
 			],
 			slotContext.directives.transitionDirective,
 		)}
