@@ -2,7 +2,7 @@ import {Slot} from '@agnos-ui/react-headless/slot';
 import type {Directive} from '@agnos-ui/react-headless/types';
 import {classDirective, useDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
 import {Portal} from '@agnos-ui/react-headless/utils/portal';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import type {Ref} from 'react';
 import {useImperativeHandle} from 'react';
 import ReactDOM from 'react-dom/client';
@@ -61,7 +61,7 @@ const ModalElement = <Data,>(slotContext: ModalContext<Data>) => {
 	const {fullscreen} = slotContext.state;
 	return (
 		<div {...useDirectives([classDirective, 'modal d-block'], slotContext.directives.modalDirective)}>
-			<div className={classNames('modal-dialog', {'modal-fullscreen': fullscreen})}>
+			<div className={clsx('modal-dialog', {'modal-fullscreen': fullscreen})}>
 				<div className="modal-content">
 					<Slot slotContent={slotContext.state.structure} props={slotContext} />
 				</div>

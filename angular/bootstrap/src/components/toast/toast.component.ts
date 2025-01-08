@@ -92,7 +92,6 @@ export const toastDefaultSlotStructure: SlotContent<ToastContext> = new Componen
 		</ng-template>
 		@if (!state.hidden()) {
 			<div
-				class="toast"
 				[class.d-flex]="!state.header()"
 				[class.toast-dismissible]="state.dismissible()"
 				[auUseMulti]="[directives.autoHideDirective, directives.transitionDirective, directives.bodyDirective]"

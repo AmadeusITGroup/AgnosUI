@@ -1,11 +1,12 @@
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
-import {asReadable, batch, readable, writable} from '@amadeus-it-group/tansu';
+import {asReadable, batch, readable, writable, computed} from '@amadeus-it-group/tansu';
 import {BROWSER} from 'esm-env';
 import type {AttributeValue, Directive, DirectivesAndOptParam, SSRHTMLElement, StyleKey, StyleValue} from '../types';
 import {addEvent, bindAttribute, bindClassName, bindStyle} from './internal/dom';
 import {noop} from './internal/func';
 import {ssrHTMLElement, ssrHTMLElementAttributesAndStyle} from './internal/ssrHTMLElement';
 import {toReadableStore} from './stores';
+import {clsx, type ClassValue} from 'clsx';
 
 /**
  * On a browser environment, returns true if the given element is an HTMLElement.
@@ -505,9 +506,12 @@ export const attributesData = <T extends any[]>(
 };
 
 /**
- * Directive that takes as an argument a string containing CSS classes to be put on the HTML element.
+ * Directive that takes as an argument a string, array or object containing CSS classes to be put on the HTML element.
+ * The class attribute is computed using the clsx library.
  */
-export const classDirective: Directive<string> = createAttributesDirective<string>((className) => ({attributes: {class: className}}));
+export const classDirective: Directive<ClassValue> = createAttributesDirective<ClassValue>((className$) => ({
+	attributes: {class: computed(() => clsx(className$()))},
+}));
 
 /**
  * Combines multiple directives into a single attributes object.

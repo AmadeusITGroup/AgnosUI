@@ -130,6 +130,9 @@
 			]
 		}
 	},
+	"dependencies": {
+		"clsx": "^2.1.1"
+	},
 	"peerDependencies": {
 		"@amadeus-it-group/tansu": "^2.0.0",
 		"@floating-ui/dom": "^1.6.12",

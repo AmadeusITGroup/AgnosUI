@@ -1,6 +1,6 @@
 import {type PaginationProps, createPagination} from '@agnos-ui/react-headless/components/pagination';
 import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
-import classNames from 'classnames';
+import clsx from 'clsx';
 
 export function Pagination(props: Partial<PaginationProps>) {
 	const {
@@ -10,7 +10,7 @@ export function Pagination(props: Partial<PaginationProps>) {
 
 	return (
 		<nav aria-label={state.ariaLabel}>
-			<div className={classNames('join', state.className)}>
+			<div className={clsx('join', state.className)}>
 				{state.boundaryLinks && (
 					<button
 						className="join-item btn btn-outline"
@@ -38,7 +38,7 @@ export function Pagination(props: Partial<PaginationProps>) {
 				{state.pages.map((page) => (
 					<button
 						key={page}
-						className={classNames('join-item', 'btn', 'btn-outline', page === state.page ? 'btn-active' : '')}
+						className={clsx('join-item', 'btn', 'btn-outline', page === state.page ? 'btn-active' : '')}
 						aria-current={page === state.page ? 'page' : undefined}
 						tabIndex={page === -1 ? -1 : state.disabled ? -1 : undefined}
 						onClick={page === -1 ? () => {} : () => select(page)}

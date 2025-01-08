@@ -128,8 +128,7 @@
 		}
 	},
 	"dependencies": {
-		"@agnos-ui/core": "0.7.0",
-		"classnames": "^2.5.1"
+		"@agnos-ui/core": "0.7.0"
 	},
 	"peerDependencies": {
 		"@amadeus-it-group/tansu": "^2.0.0",
