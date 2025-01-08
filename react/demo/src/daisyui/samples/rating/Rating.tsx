@@ -1,6 +1,6 @@
 import {type RatingProps, createRating} from '@agnos-ui/react-headless/components/rating';
 import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import React from 'react';
 
 // You can choose here the props from the core you want as inputs
@@ -13,7 +13,7 @@ export function Rating(
 	} = useWidgetWithConfig(createRating, props, 'rating');
 
 	return (
-		<div className={classNames('rating', className)}>
+		<div className={clsx('rating', className)}>
 			{stars.map(({index}) => (
 				<React.Fragment key={index}>
 					<input

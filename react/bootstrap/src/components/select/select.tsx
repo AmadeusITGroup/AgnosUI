@@ -1,6 +1,6 @@
 import {Slot} from '@agnos-ui/react-headless/slot';
 import {classDirective, useDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import {useWidgetWithConfig} from '../../config';
 import type {ItemContext, SelectApi, SelectContext, SelectItemContext, SelectProps, SelectWidget} from './select.gen';
 import {createSelect} from './select.gen';
@@ -32,7 +32,7 @@ function Badges<Item>({slotContext}: {slotContext: SelectContext<Item>}) {
 }
 
 function SelectItem<Item>({itemContext, slotContext}: {itemContext: ItemContext<Item>; slotContext: SelectContext<Item>}) {
-	const classname = classNames('dropdown-item', 'position-relative', {'text-bg-primary': itemContext === slotContext.state.highlighted});
+	const classname = clsx('dropdown-item', 'position-relative', {'text-bg-primary': itemContext === slotContext.state.highlighted});
 	return (
 		<li className={classname} {...useDirective(slotContext.directives.itemAttributesDirective, itemContext)}>
 			<Slot slotContent={slotContext.state.itemLabel} props={{...slotContext, itemContext}} />

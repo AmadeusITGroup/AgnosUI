@@ -1,5 +1,5 @@
 import {Slot} from '@agnos-ui/react-headless/slot';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import {useWidgetWithConfig} from '../../config';
 import {NavButton, PageItem} from './pageItem';
 import type {PaginationApi, PaginationContext, PaginationProps} from './pagination.gen';
@@ -98,7 +98,7 @@ export const PaginationDefaultSlotStructure = (slotContext: PaginationContext) =
 
 	return (
 		<>
-			<ul className={classNames('au-pagination', 'pagination', {[`pagination-${state.size}`]: !!state.size}, state.className)}>
+			<ul className={clsx('au-pagination', 'pagination', {[`pagination-${state.size}`]: !!state.size}, state.className)}>
 				{ItemsBefore}
 				<Slot slotContent={state.pagesDisplay} props={slotContext}></Slot>
 				{ItemsAfter}

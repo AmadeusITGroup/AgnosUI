@@ -1,6 +1,6 @@
 import {Slot} from '@agnos-ui/react-headless/slot';
 import {useDirective} from '@agnos-ui/react-headless/utils/directive';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import {useWidgetWithConfig} from '../../config';
 import type {ProgressbarContext, ProgressbarProps} from './progressbar.gen';
 import {createProgressbar} from './progressbar.gen';
@@ -14,7 +14,7 @@ import {createProgressbar} from './progressbar.gen';
  */
 export const ProgressbarDefaultSlotStructure = (slotContext: ProgressbarContext) => {
 	const {striped, animated, type} = slotContext.state;
-	const classes = classNames('progress-bar', {'progress-bar-striped': striped}, {'progress-bar-animated': animated}, {[`text-bg-${type}`]: !!type});
+	const classes = clsx('progress-bar', {'progress-bar-striped': striped}, {'progress-bar-animated': animated}, {[`text-bg-${type}`]: !!type});
 	return (
 		<div className="progress" style={{height: slotContext.state.height || undefined}}>
 			<div className={classes} style={{width: `${slotContext.state.percentage}%`}}>

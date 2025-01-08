@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import clsx from 'clsx';
 import * as React from 'react';
 import {type Directive} from '@agnos-ui/react-headless/types';
 import {classDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
@@ -38,8 +38,8 @@ interface NavItemProps extends React.HTMLAttributes<HTMLAnchorElement> {
 export const PageItem = React.forwardRef<HTMLLIElement, PageItemProps>(
 	({disabled, active, activeLabel, className, children, directive, page}: PageItemProps, ref) => {
 		return (
-			<li ref={ref} className={classNames('page-item', {active, disabled})}>
-				<a {...useDirectives([directive, {page}], [classDirective, classNames('page-link', className)])}>
+			<li ref={ref} className={clsx('page-item', {active, disabled})}>
+				<a {...useDirectives([directive, {page}], [classDirective, ['page-link', className]])}>
 					{children}
 					{active && activeLabel && <span className="visually-hidden">{activeLabel}</span>}
 				</a>
@@ -66,8 +66,8 @@ PageItem.displayName = 'PageItem';
  */
 export const NavButton = React.forwardRef<HTMLLIElement, NavItemProps>(({disabled, className, children, directive}: NavItemProps, ref) => {
 	return (
-		<li ref={ref} className={classNames('page-item', {disabled})}>
-			<a {...useDirectives(directive, [classDirective, classNames('page-link', className)])}>
+		<li ref={ref} className={clsx('page-item', {disabled})}>
+			<a {...useDirectives(directive, [classDirective, ['page-link', className]])}>
 				<span aria-hidden="true">{children}</span>
 			</a>
 		</li>

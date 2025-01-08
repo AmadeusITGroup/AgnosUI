@@ -3,7 +3,7 @@ import {useDirective} from '@agnos-ui/react-headless/utils/directive';
 import {useWidgetWithConfig} from '../../config';
 import type {TreeContext, TreeDirectives, NormalizedTreeItem, TreeProps, TreeSlotItemContext} from './tree.gen';
 import {createTree} from './tree.gen';
-import classNames from 'classnames';
+import clsx from 'clsx';
 
 const ToggleButtonDisplay = ({directive, item}: {directive: TreeDirectives['itemToggleDirective']; item: NormalizedTreeItem}) => {
 	return (
@@ -77,7 +77,7 @@ export const DefaultTreeSlotItem = (slotContext: TreeSlotItemContext) => {
 export const DefaultTreeSlotStructure = (slotContext: TreeContext) => {
 	const {state} = slotContext;
 	return (
-		<ul role="tree" className={classNames('au-tree', state.className)} {...useDirective(slotContext.directives.navigationDirective)}>
+		<ul role="tree" className={clsx('au-tree', state.className)} {...useDirective(slotContext.directives.navigationDirective)}>
 			{state.normalizedNodes.map((node, index) => (
 				<Slot key={node.label + node.level + index} slotContent={state.item} props={{item: node, ...slotContext}} />
 			))}
