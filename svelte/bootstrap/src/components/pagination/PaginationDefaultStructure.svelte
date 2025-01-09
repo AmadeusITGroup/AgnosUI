@@ -10,7 +10,7 @@
 
 <ul class="au-pagination pagination {sizeClass} {state.className}">
 	{#if state.boundaryLinks}
-		<li class="page-item" class:disabled={state.previousDisabled}>
+		<li class={['page-item', {disabled: state.previousDisabled}]}>
 			<a class="page-link" use:directives.pageFirst>
 				<span aria-hidden="true">
 					<Slot content={state.firstPageLabel} props={widget} />
@@ -19,7 +19,7 @@
 		</li>
 	{/if}
 	{#if state.directionLinks}
-		<li class="page-item" class:disabled={state.previousDisabled}>
+		<li class={['page-item', {disabled: state.previousDisabled}]}>
 			<a class="page-link" use:directives.pagePrev>
 				<span aria-hidden="true">
 					<Slot content={state.previousPageLabel} props={widget} />
@@ -29,7 +29,7 @@
 	{/if}
 	<Slot content={state.pagesDisplay} props={widget} />
 	{#if state.directionLinks}
-		<li class="page-item" class:disabled={state.nextDisabled}>
+		<li class={['page-item', {disabled: state.nextDisabled}]}>
 			<a class="page-link" use:directives.pageNext>
 				<span aria-hidden="true">
 					<Slot content={state.nextPageLabel} props={widget} />
@@ -38,7 +38,7 @@
 		</li>
 	{/if}
 	{#if state.boundaryLinks}
-		<li class="page-item" class:disabled={state.nextDisabled}>
+		<li class={['page-item', {disabled: state.nextDisabled}]}>
 			<a class="page-link" use:directives.pageLast>
 				<span aria-hidden="true">
 					<Slot content={state.lastPageLabel} props={widget} />

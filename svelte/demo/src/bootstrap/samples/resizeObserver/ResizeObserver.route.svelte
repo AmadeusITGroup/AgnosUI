@@ -25,8 +25,7 @@
 		id="resizable"
 		rows="6"
 		cols="50"
-		class="form-control"
-		class:fontsize={observedHeight && observedHeight > 200}
+		class={['form-control', {fontsize: observedHeight && observedHeight > 200}]}
 		style:height={heightValue + 'px'}
 		value="This simple example is using the resizeObserver feature from @agnos-ui/core and displays the height of the textarea below it.
 Modify the height to more than 200 px and see the font size changing."

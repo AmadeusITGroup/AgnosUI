@@ -40,7 +40,7 @@
 			aria-expanded={state.visible || undefined}
 		>
 			{headerText}
-			<span class="ms-1 collapse-icon" class:expanded={state.visible}>
+			<span class={['ms-1 collapse-icon', {expanded: state.visible}]}>
 				{@html collapseIcon}
 			</span>
 		</button>

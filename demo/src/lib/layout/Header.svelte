@@ -30,13 +30,17 @@
 </svelte:head>
 
 <header
-	class="au-header bg-light pt-3 px-4 px-lg-5 d-flex mb-4 align-items-center title"
-	class:au-rounded={!tabs.length}
-	class:au-rounded-header={tabs.length}
-	class:pb-5={tabs.length}
-	class:pb-3={!tabs.length}
+	class={[
+		'au-header bg-light pt-3 px-4 px-lg-5 d-flex mb-4 align-items-center title',
+		{
+			'au-rounded': !tabs.length,
+			'au-rounded-header': tabs.length,
+			'pb-5': tabs.length,
+			'pb-3': !tabs.length,
+		},
+	]}
 >
-	<div class="w-100 d-flex flex-wrap flex-row-reverse justify-content-between align-items-center" class:pb-3={tabs.length}>
+	<div class={['w-100 d-flex flex-wrap flex-row-reverse justify-content-between align-items-center', {'pb-3': tabs.length}]}>
 		<div class="d-flex ms-auto gap-2 justify-content-center">
 			{#if status === 'inprogress'}<span class="badge text-bg-warning">In progress</span>{/if}
 			{#if status === 'beta'}<span class="badge text-bg-info">Beta</span>{/if}
@@ -73,9 +77,8 @@
 					<a
 						href={`${$pathToRoot$}docs/${$selectedApiFramework$}${path}`}
 						role="tab"
-						class="nav-link au-nav-link-onlightbg"
+						class={['nav-link au-nav-link-onlightbg', {active: isActive}]}
 						aria-selected={isActive}
-						class:active={isActive}
 					>
 						{title}
 					</a>

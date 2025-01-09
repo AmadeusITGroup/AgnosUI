@@ -51,8 +51,7 @@
 		{/if}
 		{#each state.pages as page}
 			<button
-				class="join-item btn btn-outline"
-				class:btn-active={page === state.page}
+				class={['join-item btn btn-outline', {'btn-active': page === state.page}]}
 				aria-current={page === state.page ? 'page' : null}
 				tabindex={page === -1 ? -1 : state.disabled ? -1 : undefined}
 				onclick={page === -1 ? () => {} : () => select(page)}

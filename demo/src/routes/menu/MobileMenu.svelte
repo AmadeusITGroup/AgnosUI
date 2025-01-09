@@ -30,9 +30,8 @@
 <MobileDialog title="AgnosUI" {open} {onclose}>
 	<nav class="navbar navbar-light flex-column align-items-stretch">
 		<a
-			class="nav-item nav-link"
+			class={['nav-item nav-link', {active: $page.route.id?.startsWith('/docs/')}]}
 			href="{$pathToRoot$}docs/{$selectedFramework$}/getting-started/introduction"
-			class:active={$page.route.id?.startsWith('/docs/')}
 			aria-current={$page.route.id?.startsWith('/docs/') ? 'page' : undefined}
 		>
 			Documentation
@@ -40,17 +39,15 @@
 		{#if import.meta.env.API}
 			<hr />
 			<a
-				class="nav-link"
+				class={['nav-link', {active: isApi}]}
 				href="{$pathToRoot$}api/{$selectedApiFramework$}/bootstrap/types"
-				class:active={isApi}
 				aria-current={isApi ? 'page' : undefined}>API</a
 			>
 		{/if}
 		<hr />
 		<a
-			class="nav-item nav-link"
+			class={['nav-item nav-link', {active: $page.route.id?.startsWith('/blog/')}]}
 			href="{$pathToRoot$}blog/2024-12-06"
-			class:active={$page.route.id?.startsWith('/blog/')}
 			aria-current={$page.route.id?.startsWith('/blog/') ? 'page' : undefined}
 		>
 			Blog

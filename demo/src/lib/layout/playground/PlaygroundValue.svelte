@@ -22,8 +22,7 @@
 	{#if type === 'boolean'}
 		<div class="form-check form-switch me-1">
 			<input
-				class="form-check-input boolean"
-				class:empty={api.isEmpty}
+				class={['form-check-input boolean', {empty: api.isEmpty}]}
 				type="checkbox"
 				role="switch"
 				checked={valueOrDefault}
@@ -32,16 +31,16 @@
 			/>
 		</div>
 	{:else if type === 'number'}
-		<input class="number form-control" class:empty={api.isEmpty} {placeholder} value={api.value} oninput={api.onChange} aria-label={ariaLabel} />
+		<input class={['number form-control', {empty: api.isEmpty}]} {placeholder} value={api.value} oninput={api.onChange} aria-label={ariaLabel} />
 	{:else if type === 'function' && api.selectValues}
-		<select class="form-select function" class:empty={api.isEmpty} bind:value onchange={api.onChange} aria-label={ariaLabel}>
+		<select class={['form-select function', {empty: api.isEmpty}]} bind:value onchange={api.onChange} aria-label={ariaLabel}>
 			<option hidden disabled value={undefined} selected></option>
 			{#each api.selectValues as option}
 				<option value={option}>{getPropValueLabel(option)}</option>
 			{/each}
 		</select>
 	{:else}
-		<input class="form-control" class:empty={api.isEmpty} {placeholder} value={api.value} oninput={api.onChange} aria-label={ariaLabel} />
+		<input class={['form-control', {empty: api.isEmpty}]} {placeholder} value={api.value} oninput={api.onChange} aria-label={ariaLabel} />
 	{/if}
 </td>
 <td class="checkbox align-middle">
