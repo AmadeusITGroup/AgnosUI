@@ -243,29 +243,37 @@ export class SliderComponent extends BaseWidgetDirective<SliderWidget> {
 
 	/**
 	 * Return the value for the 'aria-label' attribute for the handle
-	 * @param value - value of the handle
 	 * @param sortedIndex - index of the handle in the sorted list
-	 * @param index - index of the handle in the original list
 	 *
 	 * @defaultValue
 	 * ```ts
-	 * (value: number) => '' + value
+	 * () => 'Value'
 	 * ```
 	 */
-	readonly ariaLabelHandle = input<(value: number, sortedIndex: number, index: number) => string>(undefined, {alias: 'auAriaLabelHandle'});
+	readonly ariaLabel = input<(sortedIndex: number) => string>(undefined, {alias: 'auAriaLabel'});
+
+	/**
+	 * Return the value for the 'aria-labelledBy' attribute for the handle
+	 * @param sortedIndex - index of the handle in the sorted list
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => ''
+	 * ```
+	 */
+	readonly ariaLabelledBy = input<(sortedIndex: number) => string>(undefined, {alias: 'auAriaLabelledBy'});
 
 	/**
 	 * Return the value for the 'aria-valuetext' attribute for the handle
 	 * @param value - value of the handle
 	 * @param sortedIndex - index of the handle in the sorted list
-	 * @param index - index of the handle in the original list
 	 *
 	 * @defaultValue
 	 * ```ts
-	 * (value: number) => '' + value
+	 * (value: number) => ''
 	 * ```
 	 */
-	readonly ariaValueText = input<(value: number, sortedIndex: number, index: number) => string>(undefined, {alias: 'auAriaValueText'});
+	readonly ariaValueText = input<(value: number, sortedIndex: number) => string>(undefined, {alias: 'auAriaValueText'});
 
 	/**
 	 * If `true` slider value cannot be changed but the slider is still focusable

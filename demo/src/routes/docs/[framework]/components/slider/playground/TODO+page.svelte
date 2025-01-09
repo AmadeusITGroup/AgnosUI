@@ -6,7 +6,7 @@
 	import type {PropsValues} from '@agnos-ui/common/propsValues';
 
 	const listPropsValues: {[key in keyof ReturnType<typeof getSliderDefaultConfig>]?: PropsValues[]} = {
-		ariaLabelHandle: ['sliderLabelHandleDefault'],
+		ariaLabel: ['sliderLabelHandleDefault'],
 		ariaValueText: ['sliderValueTextUnits'],
 	};
 </script>

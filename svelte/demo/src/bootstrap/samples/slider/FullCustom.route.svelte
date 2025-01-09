@@ -7,8 +7,6 @@
 	import '@agnos-ui/common/samples/slider/custom.scss';
 </script>
 
-<h2>Fully custom slider</h2>
-
 <Slider min={0} max={100} stepSize={1} bind:values={sliderControl} vertical className="custom-slider">
 	{#snippet structure(props)}
 		<CoffeeSlider {...props} />
