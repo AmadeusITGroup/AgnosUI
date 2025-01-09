@@ -1,1 +1,0 @@
-import{m as r,a0 as e}from"./AppCommon-BVB7qvfB.js";import{M as m}from"./Modal-2DSB0QKA.js";async function i(t,{context:a}={}){const n=document.createElement("div"),o=r(m,{target:n,props:t,context:a});try{return await o.api.open()}catch{await e(o)}}export{i as o};
