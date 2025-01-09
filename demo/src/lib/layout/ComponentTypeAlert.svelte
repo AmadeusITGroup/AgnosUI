@@ -1,7 +1,7 @@
 <script lang="ts">
 	import {Alert} from '@agnos-ui/svelte-bootstrap/components/alert';
 	import biInfoCircleFill from 'bootstrap-icons/icons/info-circle-fill.svg?raw';
-	import {page} from '$app/stores';
+	import {page} from '$app/state';
 	import Svg from './Svg.svelte';
 	import {untrack} from 'svelte';
 
@@ -14,7 +14,7 @@
 	} = $props();
 	let alert: ReturnType<typeof Alert>;
 
-	let componentName = $derived($page.url.pathname.match(regex)?.[2]);
+	let componentName = $derived(page.url.pathname.match(regex)?.[2]);
 	$effect(() => {
 		// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 		componentName;

@@ -13,7 +13,7 @@
 	import openLink from 'bootstrap-icons/icons/box-arrow-up-right.svg?raw';
 	import codeSvg from 'bootstrap-icons/icons/code.svg?raw';
 	import stackblitz from '$resources/icons/stackblitz.svg?raw';
-	import {pathToRoot$, selectedFramework$} from '../stores';
+	import {routing} from '../routing.svelte';
 	import Lazy from './Lazy.svelte';
 	import Svg from './Svg.svelte';
 	import type {SampleInfo} from './sample';
@@ -73,22 +73,22 @@
 		showCode = $bindable(false),
 	}: Props = $props();
 	let code = $state('');
-	let isPlaceholder = $derived(sample.files[$selectedFramework$].entryPoint === 'placeholder');
+	let isPlaceholder = $derived(sample.files[routing.selectedFramework].entryPoint === 'placeholder');
 	let path = $derived(isPlaceholder ? `placeholder/placeholdersample` : `${sample.componentName}/${sample.sampleName}`.toLowerCase());
-	let files = $derived(Object.keys(sample.files[$selectedFramework$].files));
+	let files = $derived(Object.keys(sample.files[routing.selectedFramework].files));
 	let selectedFileName = $state('');
 	$effect.pre(() => {
-		selectedFileName = sample.files[$selectedFramework$].entryPoint;
+		selectedFileName = sample.files[routing.selectedFramework].entryPoint;
 	});
-	let complementaryUrl = $derived(sample.files[$selectedFramework$].complementaryUrl);
+	let complementaryUrl = $derived(sample.files[routing.selectedFramework].complementaryUrl);
 	$effect.pre(() => {
 		if (showCode) {
-			void sample.files[$selectedFramework$].files[selectedFileName]().then((val) => (code = val));
+			void sample.files[routing.selectedFramework].files[selectedFileName]().then((val) => (code = val));
 		} else {
 			code = '';
 		}
 	});
-	let sampleBaseUrl = $derived(`${$pathToRoot$}${$selectedFramework$}/samples${complementaryUrl}/#/${path}`);
+	let sampleBaseUrl = $derived(`${routing.pathToRoot}${routing.selectedFramework}/samples${complementaryUrl}/#/${path}`);
 	let sampleUrl = $derived(sampleBaseUrl + (urlParameters ? `#${JSON.stringify(urlParameters)}` : ''));
 
 	const {showSpinner$, handlerDirective} = createIframeHandler(height, !noresize);
@@ -118,7 +118,7 @@
 					class="btn btn-sm btn-link m-1 p-0"
 					aria-label="Open example in stackblitz"
 					use:tooltip={{content: 'Edit in Stackblitz'}}
-					onclick={async () => (await import('../stackblitz')).openInStackblitz(sample, $selectedFramework$)}
+					onclick={async () => (await import('../stackblitz')).openInStackblitz(sample, routing.selectedFramework)}
 					><Svg className="icon-24 align-middle" svg={stackblitz} /></button
 				>
 			{/if}
@@ -144,7 +144,12 @@
 			</ul>
 		{/if}
 		<div class="border border-top-0">
-			<Lazy component={() => import('./Code.svelte')} {code} fileName={selectedFileName} language={isPlaceholder ? $selectedFramework$ : undefined}>
+			<Lazy
+				component={() => import('./Code.svelte')}
+				{code}
+				fileName={selectedFileName}
+				language={isPlaceholder ? routing.selectedFramework : undefined}
+			>
 				<div class="spinner-border text-primary-emphasis" role="status">
 					<span class="visually-hidden">Loading...</span>
 				</div>

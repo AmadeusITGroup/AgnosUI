@@ -3,8 +3,8 @@
 </script>
 
 <script lang="ts">
-	import {page} from '$app/stores';
-	import {pathToRoot$, selectedApiFramework$} from '$lib/stores';
+	import {page} from '$app/state';
+	import {routing} from '$lib/routing.svelte';
 	import CollapsibleSection from './CollapsibleSection.svelte';
 	import angularLogo from '$resources/logo-angular.svg?raw';
 	import reactLogo from '$resources/logo-react.svg?raw';
@@ -20,8 +20,8 @@
 
 	const regexFwk = /^(.*\/)(angular|react|svelte|typescript)(\/.*)$/;
 	const regexPkg = /^(.*\/api\/)(angular|react|svelte|typescript)\/(bootstrap|headless)(\/.*)$/;
-	let matchFwk = $derived($page.url.pathname.match(regexFwk));
-	let matchPkg = $derived($page.url.pathname.match(regexPkg));
+	let matchFwk = $derived(page.url.pathname.match(regexFwk));
+	let matchPkg = $derived(page.url.pathname.match(regexPkg));
 
 	const angularLogoPrefix = counter++ + '-';
 	const patchedAngularLogo = angularLogo
@@ -34,13 +34,13 @@
 	let frameworks: FwkLink[] = $derived(
 		matchFwk
 			? [
-					...(($page.data.includesPkg
+					...((page.data.includesPkg
 						? [
 								{
 									tag: 'a',
 									id: 'Typescript',
 									href: `${matchFwk[1]}typescript${matchFwk[3]}`,
-									isSelected: $selectedApiFramework$ === 'typescript',
+									isSelected: routing.selectedApiFramework === 'typescript',
 									logo: typescriptLogo,
 								},
 							]
@@ -49,21 +49,21 @@
 						tag: 'a',
 						id: 'Angular',
 						href: `${matchFwk[1]}angular${matchFwk[3]}`,
-						isSelected: $selectedApiFramework$ === 'angular',
+						isSelected: routing.selectedApiFramework === 'angular',
 						logo: patchedAngularLogo,
 					},
 					{
 						tag: 'a',
 						id: 'React',
 						href: `${matchFwk[1]}react${matchFwk[3]}`,
-						isSelected: $selectedApiFramework$ === 'react',
+						isSelected: routing.selectedApiFramework === 'react',
 						logo: reactLogo,
 					},
 					{
 						tag: 'a',
 						id: 'Svelte',
 						href: `${matchFwk[1]}svelte${matchFwk[3]}`,
-						isSelected: $selectedApiFramework$ === 'svelte',
+						isSelected: routing.selectedApiFramework === 'svelte',
 						logo: svelteLogo,
 					},
 				]
@@ -77,14 +77,14 @@
 						tag: 'a',
 						id: 'Headless',
 						href: `${matchPkg[1]}${matchPkg[2]}/headless${matchPkg[4]}`,
-						isSelected: $page.params.type === 'headless',
+						isSelected: page.params.type === 'headless',
 						logo: agnosUILogo,
 					},
 					{
 						tag: 'a',
 						id: 'Bootstrap',
 						href: `${matchPkg[1]}${matchPkg[2]}/bootstrap${matchPkg[4]}`,
-						isSelected: $page.params.type === 'bootstrap',
+						isSelected: page.params.type === 'bootstrap',
 						logo: bootstrapLogo,
 					},
 				]
@@ -94,7 +94,7 @@
 </script>
 
 <nav class="w-100 mt-1">
-	{#if $page.data.includesFwk}
+	{#if page.data.includesFwk}
 		<strong class="d-flex w-100 align-items-center fw-semibold">Framework </strong>
 		<Dropdown ariaLabel="choose the framework" items={frameworks} dropdownClass="mb-2 mt-1" btnClass="btn-outline-primary">
 			{#snippet buttonSnip()}
@@ -107,7 +107,7 @@
 			{/snippet}
 		</Dropdown>
 	{/if}
-	{#if $page.data.includesPkg}
+	{#if page.data.includesPkg}
 		<strong class="d-flex w-100 align-items-center fw-semibold">Package </strong>
 		<Dropdown ariaLabel="choose the package" items={packages} dropdownClass="mb-2 mt-1" btnClass="btn-outline-primary">
 			{#snippet buttonSnip()}
@@ -121,14 +121,14 @@
 		</Dropdown>
 		<hr />
 	{/if}
-	{#each $page.data.menu ?? [] as { title, submenu, path } (title)}
+	{#each page.data.menu ?? [] as { title, submenu, path } (title)}
 		{#if path}
-			{@const isCurrent = $page.url.pathname?.includes(path)}
+			{@const isCurrent = page.url.pathname?.includes(path)}
 			<a
 				class="menu-item menu-item-sidenav d-flex align-items-center justify-content-between"
 				class:active={isCurrent}
 				aria-current={isCurrent ? 'page' : undefined}
-				href="{$pathToRoot$}{path}"
+				href="{routing.pathToRoot}{path}"
 			>
 				{title}
 			</a>
@@ -137,12 +137,12 @@
 			<CollapsibleSection headerText={title} path={submenu}>
 				<div>
 					{#each submenu as { label, status, path, subpath, slug } (slug)}
-						{@const isCurrent = $page.url.pathname?.includes(path)}
+						{@const isCurrent = page.url.pathname?.includes(path)}
 						<a
 							class="menu-item menu-item-sidenav d-flex align-items-center justify-content-between"
 							class:active={isCurrent}
 							aria-current={isCurrent ? 'page' : undefined}
-							href="{$pathToRoot$}{path}{subpath ?? ''}"
+							href="{routing.pathToRoot}{path}{subpath ?? ''}"
 						>
 							{label}
 							{#if status === 'inprogress'}<span class="badge text-bg-warning">In progress</span>{/if}

@@ -1,5 +1,5 @@
 import type {SampleInfo} from '$lib/layout/sample';
-import type {Frameworks} from '$lib/stores';
+import type {Frameworks} from '$lib/routing.svelte';
 import type {Project} from '@stackblitz/sdk';
 import type {StackblitzProcessor} from './utils';
 import {addAsyncFiles, isBootstrapCondition, isDaisyuiCondition} from './utils';

@@ -1,7 +1,8 @@
 <script lang="ts">
-	import {page} from '$app/stores';
+	import {page} from '$app/state';
 	import type {Page} from '@sveltejs/kit';
 	import type {Snippet} from 'svelte';
+	import {routing} from '$lib/routing.svelte';
 
 	interface Props {
 		href?: string;
@@ -16,11 +17,11 @@
 	const docsRegExp = /\/docs\//g;
 	const mdEndRegex = /\/\d{2}-([a-zA-Z-]*)\.md$/g;
 
-	function computedAppliedHref(inputHref: string, page: Page<Record<string, string>>) {
+	function computedAppliedHref(inputHref: string, page: Page<Record<string, string>>, selectedFwk: string) {
 		if (inputHref.startsWith('../')) {
 			return new URL(
 				inputHref
-					.replace(docsRegExp, '/docs/angular/')
+					.replace(docsRegExp, `/docs/${selectedFwk}/`)
 					.replace(categoryRegex, (_m, gr1) => '/' + gr1.toLowerCase())
 					.replace(mdEndRegex, (_m, gr1) => '/' + gr1.toLowerCase()),
 				page.url.href,
@@ -29,7 +30,7 @@
 			return inputHref.match(validMdRegex)?.[1]?.toLowerCase() ?? href;
 		}
 	}
-	let appliedHref = $derived(computedAppliedHref(href, $page));
+	let appliedHref = $derived(computedAppliedHref(href, page, routing.selectedApiFramework));
 </script>
 
 <a href={appliedHref} {title}>{@render children()}</a>

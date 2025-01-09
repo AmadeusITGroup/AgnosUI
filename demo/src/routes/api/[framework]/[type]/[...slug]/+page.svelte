@@ -8,7 +8,7 @@
 	import biInfoCircleFill from 'bootstrap-icons/icons/info-circle-fill.svg?raw';
 	import Header from '$lib/layout/Header.svelte';
 	import ApiSection from '$lib/api/render/ApiSection.svelte';
-	import {selectedPackageType$} from '$lib/stores';
+	import {routing} from '$lib/routing.svelte';
 	import type {PageData} from './$types';
 
 	let {data}: {data: PageData} = $props();
@@ -21,7 +21,7 @@
 	} as any;
 </script>
 
-<Header title={data.title} cssFramework={$selectedPackageType$} />
+<Header title={data.title} cssFramework={routing.selectedPackageType} />
 <Alert type="info" className="p-0 border-0 border-start border-5 border-info" visible dismissible={false}>
 	<div class="alert-container p-3 border border-info rounded-end">
 		<div class="d-flex align-items-center">

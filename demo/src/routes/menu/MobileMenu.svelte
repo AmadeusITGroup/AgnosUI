@@ -5,15 +5,15 @@
 	import twitter from 'bootstrap-icons/icons/twitter-x.svg?raw';
 	import MobileDialog from './MobileDialog.svelte';
 	import Svg from '$lib/layout/Svg.svelte';
-	import {pathToRoot$, selectedFramework$, selectedApiFramework$} from '$lib/stores';
-	import {page} from '$app/stores';
+	import {routing} from '$lib/routing.svelte';
+	import {page} from '$app/state';
 
 	let open = $state(false);
 
 	function onclose() {
 		open = false;
 	}
-	let isApi = $derived($page.route.id?.startsWith('/api/'));
+	let isApi = $derived(page.route.id?.startsWith('/api/'));
 </script>
 
 <button
@@ -31,9 +31,9 @@
 	<nav class="navbar navbar-light flex-column align-items-stretch">
 		<a
 			class="nav-item nav-link"
-			href="{$pathToRoot$}docs/{$selectedFramework$}/getting-started/introduction"
-			class:active={$page.route.id?.startsWith('/docs/')}
-			aria-current={$page.route.id?.startsWith('/docs/') ? 'page' : undefined}
+			href="{routing.pathToRoot}docs/{routing.selectedFramework}/getting-started/introduction"
+			class:active={page.route.id?.startsWith('/docs/')}
+			aria-current={page.route.id?.startsWith('/docs/') ? 'page' : undefined}
 		>
 			Documentation
 		</a>
@@ -41,7 +41,7 @@
 			<hr />
 			<a
 				class="nav-link"
-				href="{$pathToRoot$}api/{$selectedApiFramework$}/bootstrap/types"
+				href="{routing.pathToRoot}api/{routing.selectedApiFramework}/bootstrap/types"
 				class:active={isApi}
 				aria-current={isApi ? 'page' : undefined}>API</a
 			>
@@ -49,9 +49,9 @@
 		<hr />
 		<a
 			class="nav-item nav-link"
-			href="{$pathToRoot$}blog/2024-12-06"
-			class:active={$page.route.id?.startsWith('/blog/')}
-			aria-current={$page.route.id?.startsWith('/blog/') ? 'page' : undefined}
+			href="{routing.pathToRoot}blog/2024-12-06"
+			class:active={page.route.id?.startsWith('/blog/')}
+			aria-current={page.route.id?.startsWith('/blog/') ? 'page' : undefined}
 		>
 			Blog
 		</a>

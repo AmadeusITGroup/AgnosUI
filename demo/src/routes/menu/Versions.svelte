@@ -1,6 +1,6 @@
 <script lang="ts">
-	import {page} from '$app/stores';
-	import {pathToRoot$, selectedFramework$} from '$lib/stores';
+	import {page} from '$app/state';
+	import {routing} from '$lib/routing.svelte';
 	import {validate, compare} from 'compare-versions';
 	import Dropdown from '$lib/layout/Dropdown.svelte';
 	import type {Version} from './version';
@@ -20,10 +20,10 @@
 			version: version.version,
 			href:
 				version.version === 'PREVIEW' ||
-				$page.route.id === '/' ||
-				($page.data['since'] && validate($page.data['since']) && compare($page.data['since'], version.version, '<='))
-					? $page.url.pathname.replace(`/${currentVersion.folder}/`, `/${version.folder}/`)
-					: `${$pathToRoot$.replace(currentVersion.folder, version.folder)}docs/${$selectedFramework$}/getting-started/introduction`,
+				page.route.id === '/' ||
+				(page.data['since'] && validate(page.data['since']) && compare(page.data['since'], version.version, '<='))
+					? page.url.pathname.replace(`/${currentVersion.folder}/`, `/${version.folder}/`)
+					: `${routing.pathToRoot.replace(currentVersion.folder, version.folder)}docs/${routing.selectedFramework}/getting-started/introduction`,
 			isSelected: currentVersion.folder === version.folder,
 		})),
 	);

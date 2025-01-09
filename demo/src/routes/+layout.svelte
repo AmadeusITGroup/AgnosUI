@@ -3,10 +3,10 @@
 	import github from 'bootstrap-icons/icons/github.svg?raw';
 	import bluesky from '$resources/bluesky.svg?raw';
 	import twitter from 'bootstrap-icons/icons/twitter-x.svg?raw';
-	import {canonicalURL$, pathToRoot$, routeLevel$, selectedFramework$, selectedApiFramework$} from '$lib/stores';
+	import {routing} from '$lib/routing.svelte';
 	import './styles.scss';
 	import {afterNavigate, beforeNavigate, onNavigate} from '$app/navigation';
-	import {page, updated} from '$app/stores';
+	import {page, updated} from '$app/state';
 	import MobileSubMenu from './menu/MobileSubMenu.svelte';
 	import MobileMenu from './menu/MobileMenu.svelte';
 	import MainSection from '$lib/layout/MainSection.svelte';
@@ -21,11 +21,11 @@
 	import viewTransition from './view-transition.css?raw';
 	import Search from '$lib/docsearch/Search.svelte';
 
-	let isMainPage = $derived($routeLevel$ === 0);
-	let isApi = $derived($page.route.id?.startsWith('/api/'));
+	let isMainPage = $derived(routing.routeLevel === 0);
+	let isApi = $derived(page.route.id?.startsWith('/api/'));
 
 	beforeNavigate(({willUnload, to}) => {
-		if ($updated && !willUnload && to?.url) {
+		if (updated.current && !willUnload && to?.url) {
 			// force reload of the page on navigation when a new version of the site has been detected
 			location.href = to.url.href;
 		}
@@ -74,33 +74,33 @@
 </script>
 
 <svelte:head>
-	<link rel="canonical" href={$canonicalURL$} />
+	<link rel="canonical" href={routing.canonicalURL} />
 	<!-- Schema.org for Google -->
-	<meta itemprop="name" content={$page.data.pageMeta.title} />
-	<meta itemprop="description" content={$page.data.pageMeta.description} />
-	<meta name="description" content={$page.data.pageMeta.description} />
+	<meta itemprop="name" content={page.data.pageMeta.title} />
+	<meta itemprop="description" content={page.data.pageMeta.description} />
+	<meta name="description" content={page.data.pageMeta.description} />
 	<!-- Twitter -->
 	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content={$page.data.pageMeta.title} />
+	<meta name="twitter:title" content={page.data.pageMeta.title} />
 	<meta property="twitter:domain" content="www.agnosui.dev" />
-	<meta property="twitter:url" content={$page.data.pageMeta.shareUrl} />
-	<meta name="twitter:image" content={$page.data.pageMeta.socialImage} />
-	<meta name="twitter:image:alt" content={$page.data.pageMeta.socialImageAlt} />
-	<meta name="twitter:description" content={$page.data.pageMeta.description} />
+	<meta property="twitter:url" content={page.data.pageMeta.shareUrl} />
+	<meta name="twitter:image" content={page.data.pageMeta.socialImage} />
+	<meta name="twitter:image:alt" content={page.data.pageMeta.socialImageAlt} />
+	<meta name="twitter:description" content={page.data.pageMeta.description} />
 	<!-- Open Graph general (Facebook, Pinterest & Google+) -->
-	<meta name="og:title" content={$page.data.pageMeta.title} />
-	<meta name="og:description" content={$page.data.pageMeta.description} />
-	<meta name="og:url" content={$page.data.pageMeta.shareUrl} />
+	<meta name="og:title" content={page.data.pageMeta.title} />
+	<meta name="og:description" content={page.data.pageMeta.description} />
+	<meta name="og:url" content={page.data.pageMeta.shareUrl} />
 	<meta name="og:site_name" content="AgnosUI" />
 	<meta name="og:locale" content="en" />
 	<meta name="og:type" content="website" />
-	<meta property="og:image" content={$page.data.pageMeta.socialImage} />
+	<meta property="og:image" content={page.data.pageMeta.socialImage} />
 </svelte:head>
 
 <div class="agnos-ui">
 	<nav class="navbar-nav demo-nav-top navbar z-1">
 		<div class="container-xxl">
-			<a class="navbar-brand mx-lg-4 mx-xl-5 d-flex align-items-center" href={$pathToRoot$}
+			<a class="navbar-brand mx-lg-4 mx-xl-5 d-flex align-items-center" href={routing.pathToRoot}
 				><Svg svg={agnosUILogo} className="agnosui-logo-brand me-2" /> AgnosUI
 			</a>
 			<div class="align-items-center d-flex">
@@ -112,23 +112,23 @@
 					<div class="d-flex align-items-center"></div>
 					<a
 						class="nav-link"
-						href="{$pathToRoot$}docs/{$selectedFramework$}/getting-started/introduction"
-						class:active={$page.route.id?.startsWith('/docs/')}
-						aria-current={$page.route.id?.startsWith('/docs/') ? 'page' : undefined}>Documentation</a
+						href="{routing.pathToRoot}docs/{routing.selectedFramework}/getting-started/introduction"
+						class:active={page.route.id?.startsWith('/docs/')}
+						aria-current={page.route.id?.startsWith('/docs/') ? 'page' : undefined}>Documentation</a
 					>
 					{#if import.meta.env.API}
 						<a
 							class="nav-link"
-							href="{$pathToRoot$}api/{$selectedApiFramework$}/bootstrap/types"
+							href="{routing.pathToRoot}api/{routing.selectedApiFramework}/bootstrap/types"
 							class:active={isApi}
 							aria-current={isApi ? 'page' : undefined}>API</a
 						>
 					{/if}
 					<a
 						class="nav-link"
-						href="{$pathToRoot$}blog/2024-12-06"
-						class:active={$page.route.id?.startsWith('/blog/')}
-						aria-current={$page.route.id?.startsWith('/blog/') ? 'page' : undefined}>Blog</a
+						href="{routing.pathToRoot}blog/2024-12-06"
+						class:active={page.route.id?.startsWith('/blog/')}
+						aria-current={page.route.id?.startsWith('/blog/') ? 'page' : undefined}>Blog</a
 					>
 					<div class="vr my-1"></div>
 					<Theme />

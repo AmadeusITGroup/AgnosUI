@@ -1,6 +1,6 @@
 <script lang="ts">
-	import {pathToRoot$, selectedApiFramework$, selectedPackageType$, selectedTabName$} from '../stores';
-	import {page} from '$app/stores';
+	import {routing} from '../routing.svelte';
+	import {page} from '$app/state';
 	import {getTitle} from '../../app';
 	import Svg from '$lib/layout/Svg.svelte';
 	import angularLogo from '$resources/logo-angular.svg?raw';
@@ -19,10 +19,10 @@
 
 	let {title, pageTitle = '', status = '', cssFramework = ''}: Props = $props();
 
-	let tabs = $derived($page.data.tabs ?? []);
-	let isBlog = $derived($page.route.id?.startsWith('/blog/'));
-	let builtPageTitle = $derived(getTitle(pageTitle || title, isBlog ? '' : $selectedApiFramework$, $selectedPackageType$));
-	let includesFwk = $derived(!!$page.params.framework);
+	let tabs = $derived(page.data.tabs ?? []);
+	let isBlog = $derived(page.route.id?.startsWith('/blog/'));
+	let builtPageTitle = $derived(getTitle(pageTitle || title, isBlog ? '' : routing.selectedApiFramework, routing.selectedPackageType));
+	let includesFwk = $derived(!!page.params.framework);
 </script>
 
 <svelte:head>
@@ -41,16 +41,16 @@
 			{#if status === 'inprogress'}<span class="badge text-bg-warning">In progress</span>{/if}
 			{#if status === 'beta'}<span class="badge text-bg-info">Beta</span>{/if}
 			{#if includesFwk}
-				{#if $selectedApiFramework$ === 'typescript'}<span class="d-block d-md-none p-0"
+				{#if routing.selectedApiFramework === 'typescript'}<span class="d-block d-md-none p-0"
 						><Svg svg={typescriptLogo} className="icon-24 d-flex position-relative" /></span
 					>{/if}
-				{#if $selectedApiFramework$ === 'react'}<span class="d-block d-md-none p-0"
+				{#if routing.selectedApiFramework === 'react'}<span class="d-block d-md-none p-0"
 						><Svg svg={reactLogo} className="icon-24 d-flex position-relative" /></span
 					>{/if}
-				{#if $selectedApiFramework$ === 'angular'}<span class="d-block d-md-none p-0"
+				{#if routing.selectedApiFramework === 'angular'}<span class="d-block d-md-none p-0"
 						><Svg svg={angularLogo} className="icon-24 d-flex position-relative" /></span
 					>{/if}
-				{#if $selectedApiFramework$ === 'svelte'}<span class="d-block d-md-none p-0"
+				{#if routing.selectedApiFramework === 'svelte'}<span class="d-block d-md-none p-0"
 						><Svg svg={svelteLogo} className="icon-24 d-flex position-relative" /></span
 					>{/if}
 			{/if}
@@ -68,10 +68,10 @@
 	{#if tabs.length}
 		<ul class="nav-tabs overflow-x-auto overflow-y-hidden px-4 px-lg-5 d-flex flex-nowrap content-tabset justify-content-start nav" role="tablist">
 			{#each tabs as { title, key, path }}
-				{@const isActive = $selectedTabName$ === key}
+				{@const isActive = routing.selectedTabName === key}
 				<li class="nav-item" role="presentation">
 					<a
-						href={`${$pathToRoot$}docs/${$selectedApiFramework$}${path}`}
+						href={`${routing.pathToRoot}docs/${routing.selectedApiFramework}${path}`}
 						role="tab"
 						class="nav-link au-nav-link-onlightbg"
 						aria-selected={isActive}

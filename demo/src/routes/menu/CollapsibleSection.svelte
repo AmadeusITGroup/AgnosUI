@@ -1,11 +1,10 @@
 <script lang="ts">
-	import {page} from '$app/stores';
+	import {page} from '$app/state';
 	import {createTransition} from '@agnos-ui/svelte-bootstrap/services/transitions/baseTransitions';
 	import {collapseVerticalTransition} from '@agnos-ui/svelte-bootstrap/services/transitions/bootstrap';
 	import {writable} from '@amadeus-it-group/tansu';
 	import type {Page} from '@sveltejs/kit';
 	import {onMount, type Snippet} from 'svelte';
-	import {get} from 'svelte/store';
 
 	interface Props {
 		headerText: string;
@@ -20,16 +19,19 @@
 	let {headerText, path, children}: Props = $props();
 
 	const paramAnimated$ = writable(false);
-	const defaultVisible = isOnPage(get(page));
+	const defaultVisible = isOnPage(page);
 	const paramVisible$ = writable(defaultVisible);
 	onMount(() => {
 		paramAnimated$.set(true);
-		return page.subscribe((p) => {
-			if (paramVisible$() === false) {
-				paramVisible$.set(isOnPage(p));
-			}
-		});
 	});
+	$effect(() => {
+		// eslint-disable-next-line @typescript-eslint/no-unused-expressions
+		page;
+		if (paramVisible$() === false) {
+			paramVisible$.set(isOnPage(page));
+		}
+	});
+
 	const {
 		stores: {visible$},
 		api: {toggle},
