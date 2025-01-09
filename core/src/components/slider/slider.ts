@@ -72,11 +72,15 @@ export interface SliderHandle {
 	/**
 	 * ariaLabel of the handle
 	 */
-	ariaLabel: string;
+	ariaLabel: string | undefined;
 	/**
 	 * ariaValueText of the handle
 	 */
-	ariaValueText: string;
+	ariaValueText: string | undefined;
+	/**
+	 * aria-labelledBy of the handle
+	 */
+	ariaLabelledBy: string | undefined;
 }
 
 interface SliderCommonPropsAndState extends WidgetsCommonPropsAndState {
@@ -212,29 +216,37 @@ export interface SliderState extends SliderCommonPropsAndState {
 export interface SliderProps extends SliderCommonPropsAndState {
 	/**
 	 * Return the value for the 'aria-label' attribute for the handle
-	 * @param value - value of the handle
 	 * @param sortedIndex - index of the handle in the sorted list
-	 * @param index - index of the handle in the original list
 	 *
 	 * @defaultValue
 	 * ```ts
-	 * (value: number) => '' + value
+	 * () => 'Value'
 	 * ```
 	 */
-	ariaLabelHandle: (value: number, sortedIndex: number, index: number) => string;
+	ariaLabel: (sortedIndex: number) => string;
+
+	/**
+	 * Return the value for the 'aria-labelledBy' attribute for the handle
+	 * @param sortedIndex - index of the handle in the sorted list
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => ''
+	 * ```
+	 */
+	ariaLabelledBy: (sortedIndex: number) => string;
 
 	/**
 	 * Return the value for the 'aria-valuetext' attribute for the handle
 	 * @param value - value of the handle
 	 * @param sortedIndex - index of the handle in the sorted list
-	 * @param index - index of the handle in the original list
 	 *
 	 * @defaultValue
 	 * ```ts
-	 * (value: number) => '' + value
+	 * (value: number) => ''
 	 * ```
 	 */
-	ariaValueText: (value: number, sortedIndex: number, index: number) => string;
+	ariaValueText: (value: number, sortedIndex: number) => string;
 
 	/**
 	 * An event emitted when slider values are changed
@@ -311,8 +323,9 @@ const defaultSliderConfig: SliderProps = {
 	disabled: false,
 	vertical: false,
 	className: '',
-	ariaLabelHandle: (value: number) => '' + value,
-	ariaValueText: (value: number) => '' + value,
+	ariaLabel: () => 'Value',
+	ariaLabelledBy: () => '',
+	ariaValueText: () => '',
 	onValuesChange: noop,
 	values: [0],
 	showValueLabels: true,
@@ -335,7 +348,8 @@ const configValidator: ConfigValidator<SliderProps> = {
 	readonly: typeBoolean,
 	disabled: typeBoolean,
 	vertical: typeBoolean,
-	ariaLabelHandle: typeFunction,
+	ariaLabel: typeFunction,
+	ariaLabelledBy: typeFunction,
 	ariaValueText: typeFunction,
 	onValuesChange: typeFunction,
 	values: typeArray,
@@ -412,7 +426,8 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			rtl$,
 			values$: _dirtyValues$,
 
-			ariaLabelHandle$,
+			ariaLabel$,
+			ariaLabelledBy$,
 			ariaValueText$,
 			onValuesChange$,
 			showValueLabels$,
@@ -506,13 +521,15 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			.sort((a, b) => a.value - b.value);
 	});
 	const sortedHandles$ = computed(() => {
-		const ariaLabelHandle = ariaLabelHandle$(),
-			ariaValueText = ariaValueText$();
+		const ariaLabelHandle = ariaLabel$(),
+			ariaValueText = ariaValueText$(),
+			ariaLabelledBy = ariaLabelledBy$();
 		return _sortedHandlesValues$().map((sortedValue, index) => {
 			return {
 				...sortedValue,
-				ariaLabel: ariaLabelHandle(sortedValue.value, index, sortedValue.id),
-				ariaValueText: ariaValueText(sortedValue.value, index, sortedValue.id),
+				ariaLabel: ariaLabelledBy(index) ? undefined : ariaLabelHandle(index),
+				ariaLabelledBy: ariaLabelledBy(index) || undefined,
+				ariaValueText: ariaValueText(sortedValue.value, index) || undefined,
 			};
 		});
 	});
@@ -616,9 +633,11 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			return 0;
 		}
 		const sortedValues = sortedValues$();
-		const closestBigger = sortedValues.find((sv) => sv > clickedPercent * 100);
+		const closestBigger = sortedValues.find((sv) => percentCompute(sv) > clickedPercent * 100);
 		const closestBiggerIndex = closestBigger ? sortedValues.indexOf(closestBigger) : sortedValues.length - 1;
-		const midPoint = sortedValues[closestBiggerIndex - 1] + (sortedValues[closestBiggerIndex] - sortedValues[closestBiggerIndex - 1]) / 2;
+		const midPoint = percentCompute(
+			sortedValues[closestBiggerIndex - 1] + (sortedValues[closestBiggerIndex] - sortedValues[closestBiggerIndex - 1]) / 2,
+		);
 		const closestValue = sortedValues[clickedPercent * 100 <= midPoint ? closestBiggerIndex - 1 : closestBiggerIndex];
 		return values.indexOf(closestValue);
 	};
@@ -850,6 +869,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 						'aria-valuenow': computed(() => handleContext$().item.value),
 						'aria-valuetext': computed(() => handleContext$().item.ariaValueText),
 						'aria-label': computed(() => handleContext$().item.ariaLabel),
+						'aria-labelledBy': computed(() => handleContext$().item.ariaLabelledBy),
 						'aria-orientation': computed(() => (vertical$() ? 'vertical' : undefined)),
 						'aria-disabled': computed(() => (disabled$() ? 'true' : undefined)),
 						disabled: disabled$,

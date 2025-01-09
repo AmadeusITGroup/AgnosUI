@@ -1,7 +1,7 @@
 import type {ReadableSignal, WritableSignal} from '@amadeus-it-group/tansu';
 import {computed, writable} from '@amadeus-it-group/tansu';
 import {beforeEach, describe, expect, test, vi} from 'vitest';
-import type {HandleDisplayOptions, ProgressDisplayOptions, SliderProps, SliderState, SliderWidget} from './slider';
+import type {HandleDisplayOptions, ProgressDisplayOptions, SliderHandle, SliderProps, SliderState, SliderWidget} from './slider';
 import {createSlider} from './slider';
 import {assign} from '../../../../common/utils';
 import {attachDirectiveAndSendEvent} from '../components.spec-utils';
@@ -10,6 +10,8 @@ import {attachDirectiveAndSendEvent} from '../components.spec-utils';
 function keyboardEvent(key: string): KeyboardEvent {
 	return new KeyboardEvent('keydown', {key});
 }
+
+const defaultHandle: SliderHandle = {id: 0, value: 0, ariaLabel: 'Value', ariaValueText: undefined, ariaLabelledBy: undefined};
 
 const defaultState: () => SliderState = () => ({
 	min: 0,
@@ -42,7 +44,7 @@ const defaultState: () => SliderState = () => ({
 			top: null,
 		},
 	] as HandleDisplayOptions[],
-	sortedHandles: [{id: 0, value: 0, ariaLabel: '0', ariaValueText: '0'}],
+	sortedHandles: [defaultHandle],
 	className: '',
 	interactive: true,
 	showMinMaxLabels: true,
@@ -121,10 +123,8 @@ describe(`Slider basic`, () => {
 				],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 50,
-						ariaLabel: '50',
-						ariaValueText: '50',
 					},
 				],
 				minValueLabelDisplay: false,
@@ -164,10 +164,8 @@ describe(`Slider basic`, () => {
 				],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 60,
-						ariaLabel: '60',
-						ariaValueText: '60',
 					},
 				],
 				minValueLabelDisplay: true,
@@ -202,10 +200,8 @@ describe(`Slider basic`, () => {
 				],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 50,
-						ariaLabel: '50',
-						ariaValueText: '50',
 					},
 				],
 				maxValueLabelDisplay: false,
@@ -243,10 +239,8 @@ describe(`Slider basic`, () => {
 				],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 60,
-						ariaLabel: '60',
-						ariaValueText: '60',
 					},
 				],
 				minValueLabelDisplay: true,
@@ -281,10 +275,8 @@ describe(`Slider basic`, () => {
 				],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 50,
-						ariaLabel: '50',
-						ariaValueText: '50',
 					},
 				],
 				progressDisplayOptions: [
@@ -326,10 +318,8 @@ describe(`Slider basic`, () => {
 				],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 150,
-						ariaLabel: '150',
-						ariaValueText: '150',
 					},
 				],
 				minValueLabelDisplay: true,
@@ -389,10 +379,8 @@ describe(`Slider basic`, () => {
 				],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 50,
-						ariaLabel: '50',
-						ariaValueText: '50',
 					},
 				],
 				minValueLabelDisplay: true,
@@ -425,10 +413,8 @@ describe(`Slider basic`, () => {
 				],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 50,
-						ariaLabel: '50',
-						ariaValueText: '50',
 					},
 				],
 				minValueLabelDisplay: true,
@@ -455,10 +441,9 @@ describe(`Slider basic`, () => {
 				],
 				sortedHandles: [
 					{
+						...defaultHandle,
 						id: 0,
 						value: 0,
-						ariaLabel: '0',
-						ariaValueText: '0',
 					},
 				],
 				minValueLabelDisplay: false,
@@ -492,10 +477,9 @@ describe(`Slider basic`, () => {
 				],
 				sortedHandles: [
 					{
+						...defaultHandle,
 						id: 0,
 						value: 50,
-						ariaLabel: '50',
-						ariaValueText: '50',
 					},
 				],
 				minValueLabelDisplay: false,
@@ -543,10 +527,8 @@ describe(`Slider basic`, () => {
 				],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 100,
-						ariaLabel: '100',
-						ariaValueText: '100',
 					},
 				],
 				minValueLabelDisplay: true,
@@ -578,10 +560,9 @@ describe(`Slider basic`, () => {
 				],
 				sortedHandles: [
 					{
+						...defaultHandle,
 						id: 0,
 						value: 70,
-						ariaLabel: '70',
-						ariaValueText: '70',
 					},
 				],
 				minValueLabelDisplay: true,
@@ -612,10 +593,7 @@ describe(`Slider basic`, () => {
 				],
 				sortedHandles: [
 					{
-						id: 0,
-						value: 0,
-						ariaLabel: '0',
-						ariaValueText: '0',
+						...defaultHandle,
 					},
 				],
 				minValueLabelDisplay: false,
@@ -652,10 +630,8 @@ describe(`Slider basic`, () => {
 				],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 50,
-						ariaLabel: '50',
-						ariaValueText: '50',
 					},
 				],
 				minValueLabelDisplay: true,
@@ -682,10 +658,8 @@ describe(`Slider basic`, () => {
 				],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 49,
-						ariaLabel: '49',
-						ariaValueText: '49',
 					},
 				],
 				progressDisplayOptions: [
@@ -711,10 +685,8 @@ describe(`Slider basic`, () => {
 				],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 48,
-						ariaLabel: '48',
-						ariaValueText: '48',
 					},
 				],
 				progressDisplayOptions: [
@@ -748,10 +720,8 @@ describe(`Slider basic`, () => {
 				],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 100,
-						ariaLabel: '100',
-						ariaValueText: '100',
 					},
 				],
 				minValueLabelDisplay: true,
@@ -789,10 +759,8 @@ describe(`Slider basic`, () => {
 				],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 50,
-						ariaLabel: '50',
-						ariaValueText: '50',
 					},
 				],
 				minValueLabelDisplay: true,
@@ -819,10 +787,8 @@ describe(`Slider basic`, () => {
 				],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 51,
-						ariaLabel: '51',
-						ariaValueText: '51',
 					},
 				],
 				progressDisplayOptions: [
@@ -848,10 +814,8 @@ describe(`Slider basic`, () => {
 				],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 52,
-						ariaLabel: '52',
-						ariaValueText: '52',
 					},
 				],
 				progressDisplayOptions: [
@@ -883,10 +847,8 @@ describe(`Slider basic`, () => {
 				],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 50,
-						ariaLabel: '50',
-						ariaValueText: '50',
 					},
 				],
 				minValueLabelDisplay: true,
@@ -913,10 +875,7 @@ describe(`Slider basic`, () => {
 				],
 				sortedHandles: [
 					{
-						id: 0,
-						value: 0,
-						ariaLabel: '0',
-						ariaValueText: '0',
+						...defaultHandle,
 					},
 				],
 				minValueLabelDisplay: false,
@@ -949,10 +908,8 @@ describe(`Slider basic`, () => {
 				],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 50,
-						ariaLabel: '50',
-						ariaValueText: '50',
 					},
 				],
 				minValueLabelDisplay: true,
@@ -979,10 +936,8 @@ describe(`Slider basic`, () => {
 				],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 100,
-						ariaLabel: '100',
-						ariaValueText: '100',
 					},
 				],
 				maxValueLabelDisplay: false,
@@ -1063,10 +1018,8 @@ describe(`Slider basic`, () => {
 				sortedValues: [0.5],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 0.5,
-						ariaLabel: '0.5',
-						ariaValueText: '0.5',
 					},
 				],
 			}),
@@ -1098,10 +1051,8 @@ describe(`Slider basic`, () => {
 				sortedValues: [1.5],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 1.5,
-						ariaLabel: '1.5',
-						ariaValueText: '1.5',
 					},
 				],
 			}),
@@ -1127,10 +1078,8 @@ describe(`Slider basic`, () => {
 				sortedValues: [3],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 3,
-						ariaLabel: '3',
-						ariaValueText: '3',
 					},
 				],
 				minValueLabelDisplay: true,
@@ -1180,10 +1129,8 @@ describe(`Slider basic`, () => {
 				sortedValues: [2.5],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 2.5,
-						ariaLabel: '2.5',
-						ariaValueText: '2.5',
 					},
 				],
 				maxValueLabelDisplay: true,
@@ -1209,10 +1156,8 @@ describe(`Slider basic`, () => {
 				sortedValues: [0.93],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 0.93,
-						ariaLabel: '0.93',
-						ariaValueText: '0.93',
 					},
 				],
 				minValueLabelDisplay: true,
@@ -1318,10 +1263,8 @@ describe(`Slider basic`, () => {
 				sortedValues: [1],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 1,
-						ariaLabel: '1',
-						ariaValueText: '1',
 					},
 				],
 			}),
@@ -1351,10 +1294,8 @@ describe(`Slider basic`, () => {
 				sortedValues: [2],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 2,
-						ariaLabel: '2',
-						ariaValueText: '2',
 					},
 				],
 			}),
@@ -1384,10 +1325,8 @@ describe(`Slider basic`, () => {
 				sortedValues: [1],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 1,
-						ariaLabel: '1',
-						ariaValueText: '1',
 					},
 				],
 			}),
@@ -1417,10 +1356,7 @@ describe(`Slider basic`, () => {
 				sortedValues: [0],
 				sortedHandles: [
 					{
-						id: 0,
-						value: 0,
-						ariaLabel: '0',
-						ariaValueText: '0',
+						...defaultHandle,
 					},
 				],
 			}),
@@ -1504,16 +1440,13 @@ describe(`Slider range`, () => {
 				],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 150,
-						ariaLabel: '150',
-						ariaValueText: '150',
 					},
 					{
+						...defaultHandle,
 						id: 1,
 						value: 175,
-						ariaLabel: '175',
-						ariaValueText: '175',
 					},
 				],
 				minValueLabelDisplay: true,
@@ -1555,16 +1488,13 @@ describe(`Slider range`, () => {
 				],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 10,
-						ariaLabel: '10',
-						ariaValueText: '10',
 					},
 					{
+						...defaultHandle,
 						id: 1,
 						value: 50,
-						ariaLabel: '50',
-						ariaValueText: '50',
 					},
 				],
 				minValueLabelDisplay: true,
@@ -1601,16 +1531,13 @@ describe(`Slider range`, () => {
 				],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 10,
-						ariaLabel: '10',
-						ariaValueText: '10',
 					},
 					{
+						...defaultHandle,
 						id: 1,
 						value: 60,
-						ariaLabel: '60',
-						ariaValueText: '60',
 					},
 				],
 			}),
@@ -1651,16 +1578,13 @@ describe(`Slider range`, () => {
 				],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 10,
-						ariaLabel: '10',
-						ariaValueText: '10',
 					},
 					{
+						...defaultHandle,
 						id: 1,
 						value: 50,
-						ariaLabel: '50',
-						ariaValueText: '50',
 					},
 				],
 				minValueLabelDisplay: true,
@@ -1697,16 +1621,13 @@ describe(`Slider range`, () => {
 				],
 				sortedHandles: [
 					{
+						...defaultHandle,
 						id: 1,
 						value: 50,
-						ariaLabel: '50',
-						ariaValueText: '50',
 					},
 					{
-						id: 0,
+						...defaultHandle,
 						value: 100,
-						ariaLabel: '100',
-						ariaValueText: '100',
 					},
 				],
 				maxValueLabelDisplay: false,
@@ -1743,16 +1664,13 @@ describe(`Slider range`, () => {
 				],
 				sortedHandles: [
 					{
+						...defaultHandle,
 						id: 1,
 						value: 70,
-						ariaLabel: '70',
-						ariaValueText: '70',
 					},
 					{
-						id: 0,
+						...defaultHandle,
 						value: 100,
-						ariaLabel: '100',
-						ariaValueText: '100',
 					},
 				],
 			}),
@@ -1793,16 +1711,13 @@ describe(`Slider range`, () => {
 				],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 45,
-						ariaLabel: '45',
-						ariaValueText: '45',
 					},
 					{
+						...defaultHandle,
 						id: 1,
 						value: 50,
-						ariaLabel: '50',
-						ariaValueText: '50',
 					},
 				],
 				minValueLabelDisplay: true,
@@ -1840,16 +1755,13 @@ describe(`Slider range`, () => {
 				],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 45,
-						ariaLabel: '45',
-						ariaValueText: '45',
 					},
 					{
+						...defaultHandle,
 						id: 1,
 						value: 70,
-						ariaLabel: '70',
-						ariaValueText: '70',
 					},
 				],
 				minValueLabelDisplay: true,
@@ -1892,16 +1804,13 @@ describe(`Slider range`, () => {
 				],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 1000,
-						ariaLabel: '1000',
-						ariaValueText: '1000',
 					},
 					{
+						...defaultHandle,
 						id: 1,
 						value: 50000,
-						ariaLabel: '50000',
-						ariaValueText: '50000',
 					},
 				],
 				combinedLabelDisplay: true,
@@ -1942,14 +1851,11 @@ describe(`Slider range`, () => {
 				values: [1000, 700000],
 				sortedHandles: [
 					{
-						ariaLabel: '1000',
-						ariaValueText: '1000',
-						id: 0,
+						...defaultHandle,
 						value: 1000,
 					},
 					{
-						ariaLabel: '700000',
-						ariaValueText: '700000',
+						...defaultHandle,
 						id: 1,
 						value: 700000,
 					},
@@ -1994,16 +1900,88 @@ describe(`Slider range`, () => {
 				rtl: true,
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 10,
-						ariaLabel: '10',
-						ariaValueText: '10',
 					},
 					{
+						...defaultHandle,
 						id: 1,
 						value: 50,
-						ariaLabel: '50',
-						ariaValueText: '50',
+					},
+				],
+				minValueLabelDisplay: true,
+			}),
+		);
+	});
+
+	test(`should properly assign aria values for the handles`, () => {
+		slider.patch({
+			values: [10, 50],
+			ariaLabel: (index: number) => {
+				if (index == 0) {
+					return 'Min value';
+				} else {
+					return 'Max value';
+				}
+			},
+			ariaLabelledBy: (index: number) => {
+				if (index == 0) {
+					return 'minLabel';
+				} else {
+					return 'maxLabel';
+				}
+			},
+			ariaValueText: (value: number, index: number) => {
+				if (index == 0) {
+					return `Min value ${value}`;
+				} else {
+					return `Max value ${value}`;
+				}
+			},
+		});
+		const expectedState = defaultState();
+
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
+				values: [10, 50],
+				sortedValues: [10, 50],
+				handleDisplayOptions: [
+					{
+						left: 10,
+						top: null,
+					},
+					{
+						left: 50,
+						top: null,
+					},
+				],
+				combinedLabelPositionLeft: 30,
+				progressDisplayOptions: [
+					{
+						left: 10,
+						right: null,
+						bottom: null,
+						top: null,
+						width: 40,
+						height: 100,
+						id: 0,
+					},
+				],
+				sortedHandles: [
+					{
+						...defaultHandle,
+						value: 10,
+						ariaLabel: undefined,
+						ariaLabelledBy: 'minLabel',
+						ariaValueText: 'Min value 10',
+					},
+					{
+						...defaultHandle,
+						id: 1,
+						value: 50,
+						ariaLabel: undefined,
+						ariaLabelledBy: 'maxLabel',
+						ariaValueText: 'Max value 50',
 					},
 				],
 				minValueLabelDisplay: true,
@@ -2074,10 +2052,8 @@ describe(`Slider vertical`, () => {
 				sortedValues: [30],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 30,
-						ariaLabel: '30',
-						ariaValueText: '30',
 					},
 				],
 			}),
@@ -2113,10 +2089,8 @@ describe(`Slider vertical`, () => {
 				sortedValues: [30],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 30,
-						ariaLabel: '30',
-						ariaValueText: '30',
 					},
 				],
 				rtl: true,
@@ -2150,10 +2124,8 @@ describe(`Slider vertical`, () => {
 				sortedValues: [30],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 30,
-						ariaLabel: '30',
-						ariaValueText: '30',
 					},
 				],
 			}),
@@ -2182,10 +2154,8 @@ describe(`Slider vertical`, () => {
 				sortedValues: [29],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 29,
-						ariaLabel: '29',
-						ariaValueText: '29',
 					},
 				],
 			}),
@@ -2214,10 +2184,8 @@ describe(`Slider vertical`, () => {
 				sortedValues: [30],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 30,
-						ariaLabel: '30',
-						ariaValueText: '30',
 					},
 				],
 			}),
@@ -2246,10 +2214,8 @@ describe(`Slider vertical`, () => {
 				sortedValues: [31],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 31,
-						ariaLabel: '31',
-						ariaValueText: '31',
 					},
 				],
 			}),
@@ -2278,10 +2244,8 @@ describe(`Slider vertical`, () => {
 				sortedValues: [30],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 30,
-						ariaLabel: '30',
-						ariaValueText: '30',
 					},
 				],
 			}),
@@ -2317,10 +2281,8 @@ describe(`Slider vertical`, () => {
 				sortedValues: [30],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 30,
-						ariaLabel: '30',
-						ariaValueText: '30',
 					},
 				],
 				rtl: true,
@@ -2350,10 +2312,8 @@ describe(`Slider vertical`, () => {
 				sortedValues: [31],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 31,
-						ariaLabel: '31',
-						ariaValueText: '31',
 					},
 				],
 			}),
@@ -2382,10 +2342,8 @@ describe(`Slider vertical`, () => {
 				sortedValues: [32],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 32,
-						ariaLabel: '32',
-						ariaValueText: '32',
 					},
 				],
 			}),
@@ -2414,10 +2372,8 @@ describe(`Slider vertical`, () => {
 				sortedValues: [31],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 31,
-						ariaLabel: '31',
-						ariaValueText: '31',
 					},
 				],
 			}),
@@ -2446,10 +2402,8 @@ describe(`Slider vertical`, () => {
 				sortedValues: [30],
 				sortedHandles: [
 					{
-						id: 0,
+						...defaultHandle,
 						value: 30,
-						ariaLabel: '30',
-						ariaValueText: '30',
 					},
 				],
 			}),

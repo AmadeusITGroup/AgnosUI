@@ -1,9 +1,9 @@
-import {AgnosUIAngularModule} from '@agnos-ui/angular-bootstrap';
+import {SliderComponent} from '@agnos-ui/angular-bootstrap';
 import {Component} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @Component({
-	imports: [AgnosUIAngularModule, ReactiveFormsModule, FormsModule],
+	imports: [SliderComponent, ReactiveFormsModule, FormsModule],
 	template: `
 		<div class="d-flex" style="height: 350px">
 			<div class="col-6" style="height: 300px">

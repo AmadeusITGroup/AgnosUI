@@ -1,9 +1,9 @@
-import {AgnosUIAngularModule} from '@agnos-ui/angular-bootstrap';
+import {SliderComponent} from '@agnos-ui/angular-bootstrap';
 import {Component} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @Component({
-	imports: [AgnosUIAngularModule, ReactiveFormsModule, FormsModule],
+	imports: [SliderComponent, ReactiveFormsModule, FormsModule],
 	template: `
 		<h2>Horizontal slider</h2>
 		<div auSlider auMin="0" auMax="100" auStepSize="1" [formControl]="sliderControl" [auRtl]="true"></div>

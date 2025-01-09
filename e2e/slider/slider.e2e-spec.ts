@@ -7,8 +7,8 @@ const defaultExpectedState: {[key: string]: string | null} = {
 	value: '60',
 	min: '0',
 	max: '100',
-	ariaLabel: '60',
-	ariaValueText: '60',
+	ariaLabel: 'Value',
+	ariaValueText: null,
 	readonly: null,
 	disabled: null,
 	style: 'left: 60%;',
@@ -19,8 +19,8 @@ const defaultExpectedHandleState: {[key: string]: string | null}[] = [
 		value: '10',
 		min: '0',
 		max: '100',
-		ariaLabel: '10',
-		ariaValueText: '10',
+		ariaLabel: 'Value',
+		ariaValueText: null,
 		readonly: null,
 		disabled: null,
 		style: 'left: 10%;',
@@ -29,8 +29,8 @@ const defaultExpectedHandleState: {[key: string]: string | null}[] = [
 		value: '40',
 		min: '0',
 		max: '100',
-		ariaLabel: '40',
-		ariaValueText: '40',
+		ariaLabel: 'Value',
+		ariaValueText: null,
 		readonly: null,
 		disabled: null,
 		style: 'left: 40%;',
@@ -42,8 +42,8 @@ const defaultExpectedHandleStateVertical: {[key: string]: string | null}[] = [
 		value: '10',
 		min: '0',
 		max: '100',
-		ariaLabel: '10',
-		ariaValueText: '10',
+		ariaLabel: 'Value',
+		ariaValueText: null,
 		readonly: null,
 		disabled: null,
 		style: 'top: 90%;',
@@ -52,8 +52,8 @@ const defaultExpectedHandleStateVertical: {[key: string]: string | null}[] = [
 		value: '40',
 		min: '0',
 		max: '100',
-		ariaLabel: '40',
-		ariaValueText: '40',
+		ariaLabel: 'Value',
+		ariaValueText: null,
 		readonly: null,
 		disabled: null,
 		style: 'top: 60%;',
@@ -81,8 +81,6 @@ test.describe(`Slider tests`, () => {
 				.toEqual(
 					assign(expectedState, {
 						value: '43',
-						ariaLabel: '43',
-						ariaValueText: '43',
 						style: 'left: 43%;',
 					}),
 				);
@@ -108,8 +106,6 @@ test.describe(`Slider tests`, () => {
 				.toEqual(
 					assign(expectedState, {
 						value: '88',
-						ariaLabel: '88',
-						ariaValueText: '88',
 						style: 'left: 88%;',
 					}),
 				);
@@ -135,8 +131,6 @@ test.describe(`Slider tests`, () => {
 				.toEqual(
 					assign(expectedState, {
 						value: '0',
-						ariaLabel: '0',
-						ariaValueText: '0',
 						style: 'left: 0%;',
 					}),
 				);
@@ -151,8 +145,6 @@ test.describe(`Slider tests`, () => {
 				.toEqual(
 					assign(expectedState, {
 						value: '100',
-						ariaLabel: '100',
-						ariaValueText: '100',
 						style: 'left: 100%;',
 					}),
 				);
@@ -213,8 +205,6 @@ test.describe(`Slider tests`, () => {
 				.toEqual(
 					assign(expectedState, {
 						value: '88',
-						ariaLabel: '88',
-						ariaValueText: '88',
 						style: 'left: 88%;',
 						readonly: null,
 					}),
@@ -265,7 +255,6 @@ test.describe(`Slider tests`, () => {
 					assign(expectedState, {
 						...expectedState,
 						value: '0',
-						ariaLabel: '0',
 						style: 'left: 0%;',
 						ariaValueText: '0 units',
 					}),
@@ -291,8 +280,6 @@ test.describe(`Slider tests`, () => {
 				.toEqual(
 					assign(expectedState, {
 						value: '88',
-						ariaLabel: '88',
-						ariaValueText: '88',
 						style: 'left: 88%;',
 					}),
 				);
@@ -310,15 +297,11 @@ test.describe(`Slider tests`, () => {
 				{
 					...expectedState[0],
 					value: '40',
-					ariaLabel: '40',
-					ariaValueText: '40',
 					style: 'left: 40%;',
 				},
 				{
 					...expectedState[1],
 					value: '83',
-					ariaLabel: '83',
-					ariaValueText: '83',
 					style: 'left: 83%;',
 				},
 			]);
@@ -341,6 +324,7 @@ test.describe(`Slider tests`, () => {
 			await sliderPO.locatorRoot.waitFor();
 
 			const expectedState = {...defaultExpectedHandleState};
+
 			const minLabelLocator = sliderPO.locatorMinLabelHorizontal;
 			const maxLabelLocator = sliderPO.locatorMaxLabelHorizontal;
 
@@ -351,15 +335,11 @@ test.describe(`Slider tests`, () => {
 				{
 					...expectedState[0],
 					value: '40',
-					ariaLabel: '40',
-					ariaValueText: '40',
 					style: 'left: 40%;',
 				},
 				{
 					...expectedState[1],
 					value: '100',
-					ariaLabel: '100',
-					ariaValueText: '100',
 					style: 'left: 100%;',
 				},
 			]);
@@ -378,15 +358,11 @@ test.describe(`Slider tests`, () => {
 				{
 					...expectedState[0],
 					value: '0',
-					ariaLabel: '0',
-					ariaValueText: '0',
 					style: 'left: 0%;',
 				},
 				{
 					...expectedState[1],
 					value: '40',
-					ariaLabel: '40',
-					ariaValueText: '40',
 					style: 'left: 40%;',
 				},
 			]);
@@ -437,6 +413,40 @@ test.describe(`Slider tests`, () => {
 			await expect(sliderPO.locatorMinLabelHorizontal).toHaveClass(/au-slider-rtl/);
 			await expect(sliderPO.locatorMaxLabelHorizontal).toHaveClass(/au-slider-rtl/);
 		});
+
+		test(`should have proper aria attributes for custom labels`, async ({page}) => {
+			const sliderPO = new SliderPO(page, 0);
+
+			await page.goto('#/slider/accessibility');
+			await sliderPO.locatorRoot.waitFor();
+
+			const expectedState = [
+				{
+					...defaultExpectedHandleState[0],
+					value: '1733007600000',
+					min: '1733007600000',
+					max: '1735599600000',
+					ariaLabel: null,
+					ariaValueText: 'Minimum date: 30 Nov 2024',
+					readonly: null,
+					disabled: null,
+					style: 'left: 0%;',
+				},
+				{
+					...defaultExpectedHandleState[1],
+					value: '1735599600000',
+					min: '1733007600000',
+					max: '1735599600000',
+					ariaLabel: null,
+					ariaValueText: 'Maximum date: 30 Dec 2024',
+					readonly: null,
+					disabled: null,
+					style: 'left: 100%;',
+				},
+			];
+
+			await expect.poll(async () => await sliderPO.sliderHandleState()).toEqual(expectedState);
+		});
 	});
 
 	test.describe(`Vertical slider`, () => {
@@ -457,8 +467,6 @@ test.describe(`Slider tests`, () => {
 				.toEqual(
 					assign(expectedState, {
 						value: '80',
-						ariaLabel: '80',
-						ariaValueText: '80',
 						style: 'top: 20%;',
 					}),
 				);
@@ -476,8 +484,6 @@ test.describe(`Slider tests`, () => {
 				{
 					...expectedState[0],
 					value: '0',
-					ariaLabel: '0',
-					ariaValueText: '0',
 					style: 'top: 100%;',
 				},
 				expectedState[1],
@@ -502,15 +508,11 @@ test.describe(`Slider tests`, () => {
 				{
 					...expectedState[0],
 					value: '40',
-					ariaLabel: '40',
-					ariaValueText: '40',
 					style: 'top: 60%;',
 				},
 				{
 					...expectedState[1],
 					value: '100',
-					ariaLabel: '100',
-					ariaValueText: '100',
 					style: 'top: 0%;',
 				},
 			]);
