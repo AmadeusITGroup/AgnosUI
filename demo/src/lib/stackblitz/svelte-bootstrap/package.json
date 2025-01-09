@@ -9,8 +9,6 @@
 		"preview": "vite preview"
 	},
 	"devDependencies": {
-		"@agnos-ui/svelte-bootstrap": "0.7.0",
-		"@agnos-ui/svelte-preprocess": "0.7.0",
 		"@amadeus-it-group/tansu": "^2.0.0",
 		"@floating-ui/dom": "^1.6.12",
 		"@sveltejs/vite-plugin-svelte": "^5.0.1",
