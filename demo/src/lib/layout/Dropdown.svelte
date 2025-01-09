@@ -52,15 +52,14 @@
 		{@render buttonSnip()}
 	</button>
 	{#if open}
-		<div use:directive class="dropdown-menu dropdown-menu-{placement} position-absolute" class:show={open} data-bs-popper="absolute">
+		<div use:directive class={[`dropdown-menu dropdown-menu-${placement} position-absolute`, {show: open}]} data-bs-popper="absolute">
 			<!-- svelte-ignore a11y_no_static_element_interactions -->
 			{#each items as item, index (item.id)}
 				<svelte:element
 					this={item.tag}
 					use:giveFocus={index}
-					class="dropdown-item d-flex align-items-center"
+					class={['dropdown-item d-flex align-items-center', {active: item.isSelected}]}
 					href={item.tag === 'a' ? item.href : undefined}
-					class:active={item.isSelected}
 					aria-current={item.isSelected ? 'page' : false}
 					onpointerdown={onpointerDown}
 					onclick={() => {

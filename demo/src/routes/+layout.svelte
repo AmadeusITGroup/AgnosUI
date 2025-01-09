@@ -111,23 +111,20 @@
 				<div class="align-items-center d-none d-md-flex gap-3">
 					<div class="d-flex align-items-center"></div>
 					<a
-						class="nav-link"
+						class={['nav-link', {active: $page.route.id?.startsWith('/docs/')}]}
 						href="{$pathToRoot$}docs/{$selectedFramework$}/getting-started/introduction"
-						class:active={$page.route.id?.startsWith('/docs/')}
 						aria-current={$page.route.id?.startsWith('/docs/') ? 'page' : undefined}>Documentation</a
 					>
 					{#if import.meta.env.API}
 						<a
-							class="nav-link"
+							class={['nav-link', {active: isApi}]}
 							href="{$pathToRoot$}api/{$selectedApiFramework$}/bootstrap/types"
-							class:active={isApi}
 							aria-current={isApi ? 'page' : undefined}>API</a
 						>
 					{/if}
 					<a
-						class="nav-link"
+						class={['nav-link', {active: $page.route.id?.startsWith('/blog/')}]}
 						href="{$pathToRoot$}blog/2024-12-06"
-						class:active={$page.route.id?.startsWith('/blog/')}
 						aria-current={$page.route.id?.startsWith('/blog/') ? 'page' : undefined}>Blog</a
 					>
 					<div class="vr my-1"></div>

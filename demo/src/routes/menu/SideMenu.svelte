@@ -125,8 +125,7 @@
 		{#if path}
 			{@const isCurrent = $page.url.pathname?.includes(path)}
 			<a
-				class="menu-item menu-item-sidenav d-flex align-items-center justify-content-between"
-				class:active={isCurrent}
+				class={['menu-item menu-item-sidenav d-flex align-items-center justify-content-between', {active: isCurrent}]}
 				aria-current={isCurrent ? 'page' : undefined}
 				href="{$pathToRoot$}{path}"
 			>
@@ -139,8 +138,7 @@
 					{#each submenu as { label, status, path, subpath, slug } (slug)}
 						{@const isCurrent = $page.url.pathname?.includes(path)}
 						<a
-							class="menu-item menu-item-sidenav d-flex align-items-center justify-content-between"
-							class:active={isCurrent}
+							class={['menu-item menu-item-sidenav d-flex align-items-center justify-content-between', {active: isCurrent}]}
 							aria-current={isCurrent ? 'page' : undefined}
 							href="{$pathToRoot$}{path}{subpath ?? ''}"
 						>

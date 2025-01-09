@@ -6,7 +6,7 @@
 
 <Rating className="rating-readonly" rating={3.64} readonly maxRating={5} ariaLabel="readonly rating">
 	{#snippet star({fill})}
-		<span class="star" class:full={fill === 100}>
+		<span class={['star', {full: fill === 100}]}>
 			<span class="half" style:width={fill + '%'}>{@html heartFill}</span>
 			<span>{@html heartFill}</span>
 		</span>

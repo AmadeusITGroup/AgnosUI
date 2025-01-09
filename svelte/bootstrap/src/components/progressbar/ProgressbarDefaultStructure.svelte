@@ -7,9 +7,11 @@
 
 <div class="progress" style:height={state.height}>
 	<div
-		class={`progress-bar ${state.type ? `text-bg-${state.type}` : ''}`}
-		class:progress-bar-striped={state.striped}
-		class:progress-bar-animated={state.animated}
+		class={[
+			'progress-bar',
+			state.type ? `text-bg-${state.type}` : '',
+			{'progress-bar-striped': state.striped, 'progress-bar-animated': state.animated},
+		]}
 		style:width={`${state.percentage}%`}
 	>
 		<Slot content={state.children} props={{state, api, directives}} />

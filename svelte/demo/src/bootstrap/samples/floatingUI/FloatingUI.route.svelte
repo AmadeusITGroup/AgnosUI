@@ -42,8 +42,7 @@
 		<div
 			use:floatingDirective
 			data-popper-placement={fState.placement}
-			class="popover bs-popover-auto position-absolute"
-			class:invisible={fState.middlewareData?.hide?.referenceHidden}
+			class={['popover bs-popover-auto position-absolute', {invisible: fState.middlewareData?.hide?.referenceHidden}]}
 			role="tooltip"
 		>
 			<div class="popover-arrow position-absolute" use:arrowDirective></div>

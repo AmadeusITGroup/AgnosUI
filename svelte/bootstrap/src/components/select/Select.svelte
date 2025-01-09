@@ -62,7 +62,7 @@
 		<ul use:hasFocusDirective use:floatingDirective use:menuAttributesDirective class="dropdown-menu show">
 			{#each state.visibleItems as itemContext (itemContext.id)}
 				{@const isHighlighted = itemContext === state.highlighted}
-				<li class="dropdown-item position-relative" class:text-bg-primary={isHighlighted} use:itemAttributesDirective={itemContext}>
+				<li class={['dropdown-item position-relative', {'text-bg-primary': isHighlighted}]} use:itemAttributesDirective={itemContext}>
 					<Slot content={state.itemLabel} props={{state, directives: widget.directives, api: widget.api, itemContext}} />
 				</li>
 			{/each}

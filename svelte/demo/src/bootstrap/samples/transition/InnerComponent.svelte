@@ -45,20 +45,17 @@
 	<div class="d-flex flex-wrap gap-2">
 		<button
 			type="button"
-			class="btn btn-sm btn-outline-secondary"
-			class:active={$paramTransition$ === collapseVerticalTransition}
+			class={['btn btn-sm btn-outline-secondary', {active: $paramTransition$ === collapseVerticalTransition}]}
 			onclick={() => changeTransition(collapseVerticalTransition)}>Vertical collapse</button
 		>
 		<button
 			type="button"
-			class="btn btn-sm btn-outline-secondary"
-			class:active={$paramTransition$ === collapseHorizontalTransition}
+			class={['btn btn-sm btn-outline-secondary', {active: $paramTransition$ === collapseHorizontalTransition}]}
 			onclick={() => changeTransition(collapseHorizontalTransition)}>Horizontal collapse</button
 		>
 		<button
 			type="button"
-			class="btn btn-sm btn-outline-secondary"
-			class:active={$paramTransition$ === fadeTransition}
+			class={['btn btn-sm btn-outline-secondary', {active: $paramTransition$ === fadeTransition}]}
 			onclick={() => changeTransition(fadeTransition)}>Fade</button
 		>
 	</div>

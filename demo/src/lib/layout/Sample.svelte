@@ -138,7 +138,7 @@
 			<ul class="nav nav-underline p-3 border-start border-end">
 				{#each files as file}
 					<li class="nav-item">
-						<button class="nav-link" class:active={selectedFileName === file} onclick={() => (selectedFileName = file)}>{file}</button>
+						<button class={['nav-link', {active: selectedFileName === file}]} onclick={() => (selectedFileName = file)}>{file}</button>
 					</li>
 				{/each}
 			</ul>

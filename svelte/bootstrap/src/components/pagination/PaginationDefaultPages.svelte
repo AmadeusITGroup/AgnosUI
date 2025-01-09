@@ -7,7 +7,7 @@
 </script>
 
 {#each state.pages as page}
-	<li class="page-item" class:active={page === state.page} class:disabled={page === -1 || state.disabled}>
+	<li class={['page-item', {active: page === state.page, disabled: page === -1 || state.disabled}]}>
 		{#if page === -1}
 			<div class="page-link au-ellipsis" aria-hidden="true">
 				<Slot content={state.ellipsisLabel} props={widget} />

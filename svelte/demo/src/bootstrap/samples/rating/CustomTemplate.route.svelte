@@ -5,6 +5,6 @@
 
 <Rating className="rating-custom" rating={7} ariaLabel="custom rating">
 	{#snippet star({index, fill})}
-		<span class="star" class:filled={fill === 100} class:bad={index < 3}>&#9733;</span>
+		<span class={['star', {filled: fill === 100, bad: index < 3}]}>&#9733;</span>
 	{/snippet}
 </Rating>

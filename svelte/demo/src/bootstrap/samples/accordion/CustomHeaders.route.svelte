@@ -12,8 +12,7 @@
 		{#snippet structure({state, directives})}
 			<div
 				use:directives.headerDirective
-				class="accordion-button accordion-header custom-header justify-content-between"
-				class:collapsed={!state.visible}
+				class={['accordion-button accordion-header custom-header justify-content-between', {collapsed: !state.visible}]}
 				role="heading"
 				aria-level={2}
 			>
@@ -35,8 +34,7 @@
 		{#snippet structure({state, directives})}
 			<div
 				use:directives.headerDirective
-				class="accordion-button accordion-header custom-header justify-content-between"
-				class:collapsed={!state.visible}
+				class={['accordion-button accordion-header custom-header justify-content-between', {collapsed: !state.visible}]}
 				role="heading"
 				aria-level={2}
 			>
@@ -64,8 +62,7 @@
 		{#snippet structure({state, directives})}
 			<div
 				use:directives.headerDirective
-				class="accordion-header accordion-button custom-header justify-content-between"
-				class:collapsed={!state.visible}
+				class={['accordion-header accordion-button custom-header justify-content-between', {collapsed: !state.visible}]}
 				role="heading"
 				aria-level={2}
 			>
