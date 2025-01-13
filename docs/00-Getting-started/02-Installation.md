@@ -34,3 +34,10 @@ To install the bootstrap part, open your project's terminal and run the followin
 ```bash
 {install-bootstrap}
 ```
+
+npm normally [automatically installs peer dependencies](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#peerdependencies).
+In case it is configured not to install them with the [legacy-peer-deps=true](https://docs.npmjs.com/cli/v11/using-npm/config#legacy-peer-deps) option, the best is to remove this option, or you can also install peer dependencies manually:
+
+```bash
+npm install esm-env @floating-ui/dom @amadeus-it-group/tansu
+```
