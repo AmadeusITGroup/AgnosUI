@@ -108,7 +108,8 @@
 				"static/**",
 				"vite.config.ts",
 				"vite-env.d.ts",
-				"scripts/*"
+				"scripts/*",
+				"../docs/**"
 			],
 			"output": [
 				"dist/**",
@@ -132,7 +133,8 @@
 				"static/**",
 				"vite.config.ts",
 				"vite-env.d.ts",
-				"scripts/*"
+				"scripts/*",
+				"../docs/**"
 			],
 			"output": [
 				"dist/**",
