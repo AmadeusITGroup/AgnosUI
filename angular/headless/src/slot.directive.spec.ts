@@ -12,7 +12,7 @@ import {toAngularSignal} from './utils/stores';
 describe('slot directive', () => {
 	@Component({
 		selector: '[auTestSlotDirective]',
-		standalone: true,
+
 		changeDetection: ChangeDetectionStrategy.OnPush,
 		imports: [SlotDirective],
 		template: '<ng-template [auSlot]="mySlot()" [auSlotProps]="mySlotProps()"></ng-template>',
@@ -72,7 +72,7 @@ describe('slot directive', () => {
 	it('component', () => {
 		@Component({
 			selector: '[auTestSlotDirectiveComponentHello]',
-			standalone: true,
+
 			changeDetection: ChangeDetectionStrategy.OnPush,
 			template: 'Hello {{myProp()}}!',
 		})
@@ -82,7 +82,7 @@ describe('slot directive', () => {
 
 		@Component({
 			selector: '[auTestSlotDirectiveComponentGoodbye]',
-			standalone: true,
+
 			changeDetection: ChangeDetectionStrategy.OnPush,
 			template: 'Goodbye {{myProp()}}!',
 		})
@@ -107,7 +107,7 @@ describe('slot directive', () => {
 	it('template', () => {
 		@Component({
 			selector: '[auTestSlotDirectiveTemplate]',
-			standalone: true,
+
 			imports: [SlotDirective],
 			changeDetection: ChangeDetectionStrategy.OnPush,
 			template: `
@@ -142,7 +142,7 @@ describe('slot directive', () => {
 	it('component template', () => {
 		@Component({
 			selector: '[auTestSlotDirectiveComponentTemplate]',
-			standalone: true,
+
 			changeDetection: ChangeDetectionStrategy.OnPush,
 			template: `
 				<ng-template #hello let-myProp="myProp">Hello {{ myProp }}!</ng-template>

@@ -2,7 +2,6 @@ import {Component, type TemplateRef, inject} from '@angular/core';
 import {ModalService} from './modal.service';
 
 @Component({
-	standalone: true,
 	template: `
 		<ng-template #modalContent>
 			<h3 class="font-bold text-lg">A simple modal</h3>

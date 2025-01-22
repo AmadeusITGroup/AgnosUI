@@ -80,7 +80,6 @@ export const useDirectiveForHost = <T>(directive?: AgnosUIDirective<T>, params?:
  * This directive uses a private instance of {@link useDirectiveForHost} to manage the directive and its parameter.
  */
 @Directive({
-	standalone: true,
 	selector: '[auUse]',
 })
 export class UseDirective<T> implements OnChanges {
@@ -101,7 +100,6 @@ export class UseDirective<T> implements OnChanges {
  * @template T - A tuple type representing the directives and their optional parameters.
  */
 @Directive({
-	standalone: true,
 	selector: '[auUseMulti]',
 })
 export class UseMultiDirective<T extends any[]> implements OnChanges {

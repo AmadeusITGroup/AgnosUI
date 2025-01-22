@@ -5,7 +5,7 @@ import {ChangeDetectionStrategy, Component, Directive, TemplateRef, contentChild
 /**
  * This directive allows the component to retrieve the slot template.
  */
-@Directive({selector: 'ng-template[appRatingStar]', standalone: true})
+@Directive({selector: 'ng-template[appRatingStar]'})
 export class RatingReadonlyStarDirective {
 	public templateRef = inject(TemplateRef<StarContext>);
 	static ngTemplateContextGuard(_dir: RatingReadonlyStarDirective, context: unknown): context is StarContext {

@@ -3,7 +3,7 @@ import {Component, ChangeDetectionStrategy} from '@angular/core';
 
 @Component({
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	standalone: true,
+
 	template: `
 		<div class="position-relative" style="height: 300px">
 			<div class="cup">

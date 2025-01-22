@@ -9,7 +9,7 @@ import {callWidgetFactory} from '../../config';
  */
 @Directive({
 	selector: '[auCollapse]',
-	standalone: true,
+
 	exportAs: 'auCollapse',
 })
 export class CollapseDirective extends BaseWidgetDirective<CollapseWidget> {

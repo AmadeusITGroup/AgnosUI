@@ -33,7 +33,7 @@ import {createSlider} from './slider.gen';
  *
  * This directive uses a template reference to render the {@link SliderSlotLabelContext}.
  */
-@Directive({selector: 'ng-template[auSliderLabel]', standalone: true})
+@Directive({selector: 'ng-template[auSliderLabel]'})
 export class SliderLabelDirective {
 	public templateRef = inject(TemplateRef<SliderSlotLabelContext>);
 	static ngTemplateContextGuard(_dir: SliderLabelDirective, context: unknown): context is SliderSlotLabelContext {
@@ -45,7 +45,7 @@ export class SliderLabelDirective {
  *
  * This directive uses a template reference to render the {@link SliderSlotLabelContext}.
  */
-@Directive({selector: 'ng-template[auSliderHandle]', standalone: true})
+@Directive({selector: 'ng-template[auSliderHandle]'})
 export class SliderHandleDirective {
 	public templateRef = inject(TemplateRef<SliderSlotLabelContext>);
 	static ngTemplateContextGuard(_dir: SliderHandleDirective, context: unknown): context is SliderSlotHandleContext {
@@ -112,7 +112,7 @@ export const sliderDefaultSlotHandle: SlotContent<SliderSlotHandleContext> = new
  *
  * This directive uses a `TemplateRef` to handle the context of the slider slot.
  */
-@Directive({selector: 'ng-template[auSliderStructure]', standalone: true})
+@Directive({selector: 'ng-template[auSliderStructure]'})
 export class SliderStructureDirective {
 	public templateRef = inject(TemplateRef<SliderSlotHandleContext>);
 	static ngTemplateContextGuard(_dir: SliderStructureDirective, context: unknown): context is SliderSlotHandleContext {

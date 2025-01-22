@@ -2,7 +2,6 @@ import {TreeComponent, type TreeItem} from '@agnos-ui/angular-bootstrap';
 import {Component} from '@angular/core';
 
 @Component({
-	standalone: true,
 	template: ` <au-component auTree [auNodes]="nodes" /> `,
 	imports: [TreeComponent],
 })
