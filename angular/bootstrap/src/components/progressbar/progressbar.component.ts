@@ -19,7 +19,7 @@ import type {BSContextualClass} from '@agnos-ui/core-bootstrap/types';
  * Directive that provides a template reference for the progress bar context.
  * This directive provides a template reference for the {@link ProgressbarContext}.
  */
-@Directive({selector: 'ng-template[auProgressbarBody]', standalone: true})
+@Directive({selector: 'ng-template[auProgressbarBody]'})
 export class ProgressbarBodyDirective {
 	public templateRef = inject(TemplateRef<ProgressbarContext>);
 	static ngTemplateContextGuard(_dir: ProgressbarStructureDirective, context: unknown): context is ProgressbarContext {
@@ -32,7 +32,7 @@ export class ProgressbarBodyDirective {
  *
  * This directive provides a template reference for the {@link ProgressbarContext}.
  */
-@Directive({selector: 'ng-template[auProgressbarStructure]', standalone: true})
+@Directive({selector: 'ng-template[auProgressbarStructure]'})
 export class ProgressbarStructureDirective {
 	public templateRef = inject(TemplateRef<ProgressbarContext>);
 	static ngTemplateContextGuard(_dir: ProgressbarStructureDirective, context: unknown): context is ProgressbarContext {

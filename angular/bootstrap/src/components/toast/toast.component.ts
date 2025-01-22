@@ -18,7 +18,7 @@ import {createToast} from './toast.gen';
  * Directive to represent the body of a toast notification.
  * This directive uses a template reference to render the {@link ToastContext}.
  */
-@Directive({selector: 'ng-template[auToastBody]', standalone: true})
+@Directive({selector: 'ng-template[auToastBody]'})
 export class ToastBodyDirective {
 	public templateRef = inject(TemplateRef<ToastContext>);
 	static ngTemplateContextGuard(_dir: ToastBodyDirective, context: unknown): context is ToastContext {
@@ -30,7 +30,7 @@ export class ToastBodyDirective {
  * Directive to define the structure of a toast component.
  * This directive uses a template reference to render the {@link ToastContext}.
  */
-@Directive({selector: 'ng-template[auToastStructure]', standalone: true})
+@Directive({selector: 'ng-template[auToastStructure]'})
 export class ToastStructureDirective {
 	public templateRef = inject(TemplateRef<ToastContext>);
 	static ngTemplateContextGuard(_dir: ToastStructureDirective, context: unknown): context is ToastContext {
@@ -42,7 +42,7 @@ export class ToastStructureDirective {
  * Directive representing the header of a toast component.
  * This directive uses a template reference to render the {@link ToastContext}.
  */
-@Directive({selector: 'ng-template[auToastHeader]', standalone: true})
+@Directive({selector: 'ng-template[auToastHeader]'})
 export class ToastHeaderDirective {
 	public templateRef = inject(TemplateRef<ToastContext>);
 	static ngTemplateContextGuard(_dir: ToastHeaderDirective, context: unknown): context is ToastContext {

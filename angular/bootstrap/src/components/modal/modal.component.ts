@@ -9,7 +9,7 @@ import {callWidgetFactory} from '../../config';
  * Directive to provide the slot structure for the modal widget.
  * This directive provides a template reference for the {@link ModalContext<Data>}.
  */
-@Directive({selector: 'ng-template[auModalStructure]', standalone: true})
+@Directive({selector: 'ng-template[auModalStructure]'})
 export class ModalStructureDirective<Data> {
 	public templateRef = inject(TemplateRef<ModalContext<Data>>);
 	static ngTemplateContextGuard<Data>(_dir: ModalStructureDirective<Data>, context: unknown): context is ModalContext<Data> {
@@ -21,7 +21,7 @@ export class ModalStructureDirective<Data> {
  * Directive to provide the slot header for the modal widget.
  * This directive provides a template reference for the {@link ModalContext<Data>}.
  */
-@Directive({selector: 'ng-template[auModalHeader]', standalone: true})
+@Directive({selector: 'ng-template[auModalHeader]'})
 export class ModalHeaderDirective<Data> {
 	public templateRef = inject(TemplateRef<ModalContext<Data>>);
 	static ngTemplateContextGuard<Data>(_dir: ModalHeaderDirective<Data>, context: unknown): context is ModalContext<Data> {
@@ -33,7 +33,7 @@ export class ModalHeaderDirective<Data> {
  * Directive to provide the slot title for the modal widget.
  * This directive provides a template reference for the {@link ModalContext<Data>}.
  */
-@Directive({selector: 'ng-template[auModalTitle]', standalone: true})
+@Directive({selector: 'ng-template[auModalTitle]'})
 export class ModalTitleDirective<Data> {
 	public templateRef = inject(TemplateRef<ModalContext<Data>>);
 	static ngTemplateContextGuard<Data>(_dir: ModalTitleDirective<Data>, context: unknown): context is ModalContext<Data> {
@@ -45,7 +45,7 @@ export class ModalTitleDirective<Data> {
  * Directive to provide the default slot for the modal widget.
  * This directive provides a template reference for the {@link ModalContext<Data>}.
  */
-@Directive({selector: 'ng-template[auModalBody]', standalone: true})
+@Directive({selector: 'ng-template[auModalBody]'})
 export class ModalBodyDirective<Data> {
 	public templateRef = inject(TemplateRef<ModalContext<Data>>);
 	static ngTemplateContextGuard<Data>(_dir: ModalBodyDirective<Data>, context: unknown): context is ModalContext<Data> {
@@ -57,7 +57,7 @@ export class ModalBodyDirective<Data> {
  * Directive to provide the slot footer for the modal widget.
  * This directive provides a template reference for the {@link ModalContext<Data>}.
  */
-@Directive({selector: 'ng-template[auModalFooter]', standalone: true})
+@Directive({selector: 'ng-template[auModalFooter]'})
 export class ModalFooterDirective<Data> {
 	public templateRef = inject(TemplateRef<ModalContext<Data>>);
 	static ngTemplateContextGuard<Data>(_dir: ModalFooterDirective<Data>, context: unknown): context is ModalContext<Data> {

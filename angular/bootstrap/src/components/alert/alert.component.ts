@@ -11,7 +11,7 @@ import type {BSContextualClass} from '@agnos-ui/core-bootstrap/types';
  *
  * This directive allows the use of a template reference for the alert body content, with type {@link AlertContext}.
  */
-@Directive({selector: 'ng-template[auAlertBody]', standalone: true})
+@Directive({selector: 'ng-template[auAlertBody]'})
 export class AlertBodyDirective {
 	public templateRef = inject(TemplateRef<AlertContext>);
 	static ngTemplateContextGuard(_dir: AlertBodyDirective, context: unknown): context is AlertContext {
@@ -24,7 +24,7 @@ export class AlertBodyDirective {
  *
  * This directive uses a `TemplateRef` to inject the template reference of the {@link AlertContext}.
  */
-@Directive({selector: 'ng-template[auAlertStructure]', standalone: true})
+@Directive({selector: 'ng-template[auAlertStructure]'})
 export class AlertStructureDirective {
 	public templateRef = inject(TemplateRef<AlertContext>);
 	static ngTemplateContextGuard(_dir: AlertStructureDirective, context: unknown): context is AlertContext {

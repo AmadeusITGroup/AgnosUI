@@ -19,7 +19,7 @@ import {createAccordion} from './accordion.gen';
  *
  * This directive provides a template reference for the {@link AccordionItemContext}.
  */
-@Directive({selector: 'ng-template[auAccordionItemBody]', standalone: true})
+@Directive({selector: 'ng-template[auAccordionItemBody]'})
 export class AccordionBodyDirective {
 	public templateRef = inject(TemplateRef<AccordionItemContext>);
 	static ngTemplateContextGuard(_dir: AccordionBodyDirective, context: unknown): context is AccordionItemContext {
@@ -32,7 +32,7 @@ export class AccordionBodyDirective {
  *
  * This directive provides a template reference for the {@link AccordionItemContext}.
  */
-@Directive({selector: 'ng-template[auAccordionItemHeader]', standalone: true})
+@Directive({selector: 'ng-template[auAccordionItemHeader]'})
 export class AccordionHeaderDirective {
 	public templateRef = inject(TemplateRef<AccordionItemContext>);
 	static ngTemplateContextGuard(_dir: AccordionHeaderDirective, context: unknown): context is AccordionItemContext {
@@ -46,7 +46,7 @@ export class AccordionHeaderDirective {
  * This directive provides a template reference for the {@link AccordionItemContext}.
  * It also includes a static method to guard the template context type.
  */
-@Directive({selector: 'ng-template[auAccordionItemStructure]', standalone: true})
+@Directive({selector: 'ng-template[auAccordionItemStructure]'})
 export class AccordionItemStructureDirective {
 	public templateRef = inject(TemplateRef<AccordionItemContext>);
 	static ngTemplateContextGuard(_dir: AccordionItemStructureDirective, context: unknown): context is AccordionItemContext {
@@ -298,7 +298,7 @@ export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWid
 @Directive({
 	selector: '[auAccordion]',
 	exportAs: 'auAccordion',
-	standalone: true,
+
 	host: {
 		class: 'accordion',
 	},

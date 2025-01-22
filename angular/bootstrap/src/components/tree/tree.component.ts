@@ -9,7 +9,7 @@ import {createTree} from './tree.gen';
  *
  * This directive uses a template reference to render the {@link TreeContext}.
  */
-@Directive({selector: 'ng-template[auTreeStructure]', standalone: true})
+@Directive({selector: 'ng-template[auTreeStructure]'})
 export class TreeStructureDirective {
 	public templateRef = inject(TemplateRef<TreeContext>);
 	static ngTemplateContextGuard(_dir: TreeStructureDirective, context: unknown): context is TreeContext {
@@ -18,7 +18,6 @@ export class TreeStructureDirective {
 }
 
 @Component({
-	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [UseDirective, TreeStructureDirective, SlotDirective],
 	template: `
@@ -49,7 +48,7 @@ export const treeDefaultSlotStructure: SlotContent<TreeContext> = new ComponentT
  *
  * This directive uses a template reference to render the {@link TreeSlotItemContext}.
  */
-@Directive({selector: 'ng-template[auTreeItemToggle]', standalone: true})
+@Directive({selector: 'ng-template[auTreeItemToggle]'})
 export class TreeItemToggleDirective {
 	public templateRef = inject(TemplateRef<TreeSlotItemContext>);
 	static ngTemplateContextGuard(_dir: TreeItemToggleDirective, context: unknown): context is TreeSlotItemContext {
@@ -58,7 +57,6 @@ export class TreeItemToggleDirective {
 }
 
 @Component({
-	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [UseDirective, TreeItemToggleDirective],
 	template: `
@@ -87,7 +85,7 @@ export const treeDefaultItemToggle: SlotContent<TreeSlotItemContext> = new Compo
  *
  * This directive uses a template reference to render the {@link TreeSlotItemContext}.
  */
-@Directive({selector: 'ng-template[auTreeItemContent]', standalone: true})
+@Directive({selector: 'ng-template[auTreeItemContent]'})
 export class TreeItemContentDirective {
 	public templateRef = inject(TemplateRef<TreeSlotItemContext>);
 	static ngTemplateContextGuard(_dir: TreeItemContentDirective, context: unknown): context is TreeSlotItemContext {
@@ -96,7 +94,6 @@ export class TreeItemContentDirective {
 }
 
 @Component({
-	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [SlotDirective, TreeItemContentDirective],
 	template: `
@@ -125,7 +122,7 @@ export const treeDefaultSlotItemContent: SlotContent<TreeSlotItemContext> = new 
  *
  * This directive uses a template reference to render the {@link TreeSlotItemContext}.
  */
-@Directive({selector: 'ng-template[auTreeItem]', standalone: true})
+@Directive({selector: 'ng-template[auTreeItem]'})
 export class TreeItemDirective {
 	public templateRef = inject(TemplateRef<TreeSlotItemContext>);
 	static ngTemplateContextGuard(_dir: TreeItemDirective, context: unknown): context is TreeSlotItemContext {
@@ -134,7 +131,6 @@ export class TreeItemDirective {
 }
 
 @Component({
-	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [UseDirective, SlotDirective, TreeItemDirective],
 	template: `
@@ -173,7 +169,7 @@ export const treeDefaultSlotItem: SlotContent<TreeSlotItemContext> = new Compone
 @Component({
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: '[auTree]',
-	standalone: true,
+
 	imports: [SlotDirective],
 	template: ` <ng-template [auSlot]="state.structure()" [auSlotProps]="{state, api, directives}" /> `,
 })

@@ -205,7 +205,6 @@ const getSlotType = (value: any): undefined | {new (viewContainerRef: ViewContai
  */
 @Directive({
 	selector: '[auSlot]',
-	standalone: true,
 })
 export class SlotDirective<Props extends Record<string, any>> implements OnChanges, OnDestroy {
 	/**

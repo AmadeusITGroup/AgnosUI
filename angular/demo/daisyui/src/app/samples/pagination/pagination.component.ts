@@ -10,7 +10,7 @@ import {ChangeDetectionStrategy, Component, input, model} from '@angular/core';
 
 @Component({
 	selector: 'app-pagination',
-	standalone: true,
+
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	templateUrl: './pagination.component.html',
 })

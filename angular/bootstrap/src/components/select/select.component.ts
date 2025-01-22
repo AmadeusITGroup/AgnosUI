@@ -20,7 +20,7 @@ import {createSelect} from './select.gen';
  *
  * This directive uses a template reference to render the {@link SelectItemContext<Item>}.
  */
-@Directive({selector: 'ng-template[auSelectBadgeLabel]', standalone: true})
+@Directive({selector: 'ng-template[auSelectBadgeLabel]'})
 export class SelectBadgeLabelDirective<Item> {
 	public templateRef = inject(TemplateRef<SelectItemContext<Item>>);
 	static ngTemplateContextGuard<Item>(_dir: SelectBadgeLabelDirective<Item>, context: unknown): context is SelectItemContext<Item> {
@@ -38,7 +38,7 @@ export class SelectBadgeLabelDirective<Item> {
  *
  * This directive uses a template reference to render the {@link SelectItemContext<Item>}.
  */
-@Directive({selector: 'ng-template[auSelectItemLabel]', standalone: true})
+@Directive({selector: 'ng-template[auSelectItemLabel]'})
 export class SelectItemLabelDirective<Item> {
 	public templateRef = inject(TemplateRef<SelectItemContext<Item>>);
 	static ngTemplateContextGuard<Item>(_dir: SelectItemLabelDirective<Item>, context: unknown): context is SelectItemContext<Item> {

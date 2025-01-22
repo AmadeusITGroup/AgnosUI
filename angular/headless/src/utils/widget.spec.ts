@@ -76,7 +76,6 @@ describe('callWidgetFactoryWithConfig', () => {
 		});
 
 		@Component({
-			standalone: true,
 			imports: [UseDirective],
 			template: `<button type="button" [auUse]="directives.myDirective" (click)="onClick()">
 				{{ state.derivedValue() }} {{ state.counter() }}
@@ -220,7 +219,6 @@ describe('callWidgetFactoryWithConfig', () => {
 		};
 
 		@Component({
-			standalone: true,
 			template: `{{ state.myValue() }}`,
 			changeDetection: ChangeDetectionStrategy.OnPush,
 			selector: '[auTestMyWidget]',
@@ -237,7 +235,6 @@ describe('callWidgetFactoryWithConfig', () => {
 			}
 		}
 		@Component({
-			standalone: true,
 			imports: [MyWidgetComponent],
 			template: `<div auTestMyWidget [auMyValue]="value"></div>`,
 			changeDetection: ChangeDetectionStrategy.OnPush,

@@ -59,7 +59,6 @@ describe('toAngularSignal', () => {
 	});
 
 	@Component({
-		standalone: true,
 		changeDetection: ChangeDetectionStrategy.OnPush,
 		template: `{{ mySignal() }}`,
 	})
@@ -70,7 +69,6 @@ describe('toAngularSignal', () => {
 	}
 
 	@Component({
-		standalone: true,
 		changeDetection: ChangeDetectionStrategy.OnPush,
 		template: `{{ mySignal() }}`,
 	})

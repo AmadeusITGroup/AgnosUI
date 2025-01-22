@@ -30,7 +30,7 @@ import {createRating} from './rating.gen';
  *
  * This directive uses a template reference to render the {@link StarContext}.
  */
-@Directive({selector: 'ng-template[auRatingStar]', standalone: true})
+@Directive({selector: 'ng-template[auRatingStar]'})
 export class RatingStarDirective {
 	public templateRef = inject(TemplateRef<StarContext>);
 	static ngTemplateContextGuard(_dir: RatingStarDirective, context: unknown): context is StarContext {

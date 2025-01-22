@@ -20,7 +20,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 			</div>
 		}
 	`,
-	standalone: true,
+
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToastComponent extends BaseWidgetDirective<ToastWidget> {

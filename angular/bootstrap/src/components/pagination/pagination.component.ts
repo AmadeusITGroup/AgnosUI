@@ -20,7 +20,7 @@ import {createPagination} from './pagination.gen';
  * A directive to use to give the 'ellipsis' link template to the pagination component
  * This directive provides a template reference for the {@link PaginationContext}.
  */
-@Directive({selector: 'ng-template[auPaginationEllipsis]', standalone: true})
+@Directive({selector: 'ng-template[auPaginationEllipsis]'})
 export class PaginationEllipsisDirective {
 	public templateRef = inject(TemplateRef<PaginationContext>);
 	static ngTemplateContextGuard(_dir: PaginationEllipsisDirective, context: unknown): context is PaginationContext {
@@ -32,7 +32,7 @@ export class PaginationEllipsisDirective {
  * A directive to use to give the 'first' link template to the pagination component
  * This directive provides a template reference for the {@link PaginationContext}.
  */
-@Directive({selector: 'ng-template[auPaginationFirst]', standalone: true})
+@Directive({selector: 'ng-template[auPaginationFirst]'})
 export class PaginationFirstDirective {
 	public templateRef = inject(TemplateRef<PaginationContext>);
 	static ngTemplateContextGuard(_dir: PaginationFirstDirective, context: unknown): context is PaginationContext {
@@ -44,7 +44,7 @@ export class PaginationFirstDirective {
  * A directive to use to give the 'last' link template to the pagination component
  * This directive provides a template reference for the {@link PaginationContext}.
  */
-@Directive({selector: 'ng-template[auPaginationLast]', standalone: true})
+@Directive({selector: 'ng-template[auPaginationLast]'})
 export class PaginationLastDirective {
 	public templateRef = inject(TemplateRef<PaginationContext>);
 	static ngTemplateContextGuard(_dir: PaginationLastDirective, context: unknown): context is PaginationContext {
@@ -56,7 +56,7 @@ export class PaginationLastDirective {
  * A directive to use to give the 'next' link template to the pagination component
  * This directive provides a template reference for the {@link PaginationContext}.
  */
-@Directive({selector: 'ng-template[auPaginationNext]', standalone: true})
+@Directive({selector: 'ng-template[auPaginationNext]'})
 export class PaginationNextDirective {
 	public templateRef = inject(TemplateRef<PaginationContext>);
 	static ngTemplateContextGuard(_dir: PaginationNextDirective, context: unknown): context is PaginationContext {
@@ -68,7 +68,7 @@ export class PaginationNextDirective {
  * A directive to use to give the page 'number' template to the pagination component
  * This directive provides a template reference for the {@link PaginationNumberContext}.
  */
-@Directive({selector: 'ng-template[auPaginationNumber]', standalone: true})
+@Directive({selector: 'ng-template[auPaginationNumber]'})
 export class PaginationNumberDirective {
 	public templateRef = inject(TemplateRef<PaginationNumberContext>);
 	static ngTemplateContextGuard(_dir: PaginationNumberDirective, context: unknown): context is PaginationNumberContext {
@@ -80,7 +80,7 @@ export class PaginationNumberDirective {
  * A directive to use to give the 'previous' link template to the pagination component
  * This directive provides a template reference for the {@link PaginationContext}.
  */
-@Directive({selector: 'ng-template[auPaginationPrevious]', standalone: true})
+@Directive({selector: 'ng-template[auPaginationPrevious]'})
 export class PaginationPreviousDirective {
 	public templateRef = inject(TemplateRef<PaginationContext>);
 	static ngTemplateContextGuard(_dir: PaginationPreviousDirective, context: unknown): context is PaginationContext {
@@ -92,7 +92,7 @@ export class PaginationPreviousDirective {
  * A directive to use to give the 'Pages' template for the Pages slot
  * This directive provides a template reference for the {@link PaginationContext}.
  */
-@Directive({selector: 'ng-template[auPaginationPages]', standalone: true})
+@Directive({selector: 'ng-template[auPaginationPages]'})
 export class PaginationPagesDirective {
 	public templateRef = inject(TemplateRef<PaginationContext>);
 	static ngTemplateContextGuard(_dir: PaginationPagesDirective, context: unknown): context is PaginationContext {
@@ -104,7 +104,7 @@ export class PaginationPagesDirective {
  * Directive to provide the slot structure for the pagination widget.
  * This directive provides a template reference for the {@link PaginationContext}.
  */
-@Directive({selector: 'ng-template[auPaginationStructure]', standalone: true})
+@Directive({selector: 'ng-template[auPaginationStructure]'})
 export class PaginationStructureDirective {
 	public templateRef = inject(TemplateRef<PaginationContext>);
 	static ngTemplateContextGuard(_dir: PaginationStructureDirective, context: unknown): context is PaginationContext {
