@@ -1,6 +1,7 @@
 import {SliderComponent} from '@agnos-ui/angular-bootstrap';
 import type {OnInit} from '@angular/core';
 import {Component, signal} from '@angular/core';
+import {toSignal} from '@angular/core/rxjs-interop';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @Component({
@@ -17,7 +18,7 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 			[auShowValueLabels]="showValues()"
 		></div>
 		Form control value:
-		{{ sliderControl.value }}
+		{{ sliderControlValue() }}
 		<hr />
 
 		<h2>Slider with value</h2>
@@ -50,6 +51,7 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 })
 export default class DefaultSliderComponent implements OnInit {
 	readonly sliderControl = new FormControl([70]);
+	readonly sliderControlValue = toSignal(this.sliderControl.valueChanges, {initialValue: this.sliderControl.value});
 	readonly disabledControl = new FormControl(60);
 	readonly sliderValues = signal([20]);
 	readonly disabledToggle = signal(true);
