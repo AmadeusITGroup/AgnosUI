@@ -261,6 +261,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/services/transitions/simpleClassTransition</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/utils/coercion</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/utils/directive</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/angular/headless/utils/func</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/utils/stores</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/utils/widget</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/utils/writables</loc></url>
@@ -296,6 +297,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/services/transitions/simpleClassTransition</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/utils/coercion</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/utils/directive</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/utils/func</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/utils/stores</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/utils/widget</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/utils/writables</loc></url>
@@ -328,6 +330,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/services/transitions/cssTransitions</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/services/transitions/simpleClassTransition</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/utils/directive</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/react/headless/utils/func</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/utils/portal</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/utils/stores</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/utils/widget</loc></url>
@@ -362,6 +365,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/services/transitions/fade</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/services/transitions/simpleClassTransition</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/utils/directive</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/utils/func</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/utils/portal</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/utils/stores</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/utils/widget</loc></url>
@@ -393,6 +397,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/services/transitions/cssTransitions</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/services/transitions/simpleClassTransition</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/utils/directive</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/svelte/headless/utils/func</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/utils/stores</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/utils/widget</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/utils/writables</loc></url>
@@ -425,6 +430,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/services/transitions/fade</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/services/transitions/simpleClassTransition</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/utils/directive</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/utils/func</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/utils/stores</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/utils/widget</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/utils/writables</loc></url>

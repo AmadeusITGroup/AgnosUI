@@ -1,0 +1,376 @@
+const e=`"use strict";
+const tansu = require("@amadeus-it-group/tansu");
+const dom = require("@floating-ui/dom");
+const services_floatingUI = require("./services/floatingUI.cjs");
+const services_focustrack = require("./services/focustrack.cjs");
+const services_navManager = require("./services/navManager.cjs");
+const utils_directive = require("./stores-CuM3O4Ml.cjs");
+const utils_func = require("./utils/func.cjs");
+const defaultConfig = {
+  id: void 0,
+  ariaLabel: "Select",
+  open: false,
+  disabled: false,
+  items: [],
+  filterText: "",
+  loading: false,
+  selected: [],
+  navSelector: (node) => node.querySelectorAll(".au-select-badge,input"),
+  itemIdFn: (item) => "" + item,
+  onOpenChange: utils_func.noop,
+  onFilterTextChange: utils_func.noop,
+  onSelectedChange: utils_func.noop,
+  allowedPlacements: ["bottom-start", "top-start", "bottom-end", "top-end"],
+  className: "",
+  menuClassName: "",
+  menuItemClassName: "",
+  badgeClassName: ""
+};
+function getSelectDefaultConfig() {
+  return { ...defaultConfig };
+}
+function createSelect(config) {
+  const [
+    {
+      id$: _dirtyId$,
+      open$: _dirtyOpen$,
+      filterText$: _dirtyFilterText$,
+      items$,
+      itemIdFn$,
+      onOpenChange$,
+      onFilterTextChange$,
+      onSelectedChange$,
+      allowedPlacements$,
+      navSelector$,
+      className$,
+      badgeClassName$,
+      ariaLabel$,
+      menuClassName$,
+      ...stateProps
+    },
+    patch
+  ] = utils_directive.writablesForProps(defaultConfig, config);
+  const { selected$ } = stateProps;
+  const id$ = tansu.computed(() => _dirtyId$() ?? utils_directive.generateId());
+  const filterText$ = utils_directive.bindableProp(_dirtyFilterText$, onFilterTextChange$);
+  const { hasFocus$, directive: hasFocusDirective } = services_focustrack.createHasFocus();
+  const open$ = utils_directive.bindableDerived(onOpenChange$, [_dirtyOpen$, hasFocus$], ([_dirtyOpen, hasFocus]) => _dirtyOpen && hasFocus);
+  const selectedContextsMap$ = tansu.computed(() => {
+    const selectedItemsContext = /* @__PURE__ */ new Map();
+    const itemIdFn = itemIdFn$();
+    for (const item of selected$()) {
+      const id = itemIdFn(item);
+      selectedItemsContext.set(id, {
+        item,
+        id: itemIdFn(item),
+        selected: true
+      });
+    }
+    return selectedItemsContext;
+  });
+  const selectedContexts$ = tansu.computed(() => [...selectedContextsMap$().values()]);
+  const highlightedIndex$ = function() {
+    const store = tansu.writable(0);
+    return tansu.asWritable(store, (index) => {
+      const { length } = visibleItems$();
+      if (index != void 0) {
+        if (!length) {
+          index = void 0;
+        } else if (index < 0) {
+          index = length - 1;
+        } else if (index >= length) {
+          index = 0;
+        }
+      }
+      store.set(index);
+    });
+  }();
+  const itemContexts$ = tansu.computed(() => {
+    const itemContexts = /* @__PURE__ */ new Map();
+    if (open$()) {
+      const selectedContextsMap = selectedContextsMap$();
+      const itemIdFn = itemIdFn$();
+      for (const item of items$()) {
+        const id = itemIdFn(item);
+        itemContexts.set(id, {
+          item,
+          id,
+          selected: selectedContextsMap.has(id)
+        });
+      }
+    }
+    return itemContexts;
+  });
+  const visibleItems$ = tansu.computed(() => open$() ? [...itemContexts$().values()] : []);
+  const highlighted$ = tansu.computed(() => {
+    const visibleItems = visibleItems$();
+    const highlightedIndex = highlightedIndex$();
+    return visibleItems.length && highlightedIndex != void 0 ? visibleItems[highlightedIndex] : void 0;
+  });
+  const {
+    directives: { floatingDirective, referenceDirective },
+    stores: { placement$ }
+  } = services_floatingUI.createFloatingUI({
+    props: {
+      computePositionOptions: tansu.asWritable(
+        tansu.computed(() => ({
+          middleware: [
+            dom.offset(5),
+            dom.autoPlacement({
+              allowedPlacements: allowedPlacements$()
+            }),
+            dom.size()
+          ]
+        }))
+      )
+    }
+  });
+  const { directive: navDirective, refreshElements, focusFirst, focusLast, focusLeft, focusRight } = services_navManager.createNavManager();
+  const navManagerConfig$ = tansu.computed(
+    () => ({
+      keys: {
+        Home: focusFirst,
+        End: focusLast,
+        ArrowLeft: focusLeft,
+        ArrowRight: focusRight
+      },
+      selector: navSelector$()
+    })
+  );
+  const onRemoveBadge = (event, item) => {
+    const referenceElement = event.target;
+    refreshElements();
+    widget.api.unselect(item);
+    if (referenceElement instanceof HTMLElement) {
+      setTimeout(() => {
+        if (!focusLeft({ event, referenceElement })) {
+          focusRight({ event, referenceElement });
+        }
+      });
+    }
+    event.preventDefault();
+  };
+  const inputContainerAttributesDirective = utils_directive.createAttributesDirective(() => ({
+    attributes: {
+      role: "combobox",
+      "aria-haspopup": "listbox",
+      "aria-expanded": tansu.computed(() => \`\${open$()}\`),
+      "aria-controls": tansu.computed(() => \`\${id$()}-menu\`)
+    }
+  }));
+  const badgeAttributesDirective = utils_directive.createAttributesDirective((itemContext$) => ({
+    attributes: {
+      tabindex: -1,
+      class: badgeClassName$
+    },
+    classNames: {
+      "au-select-badge": true
+    },
+    events: {
+      keydown: (event) => {
+        let keyManaged = false;
+        switch (event.key) {
+          case "Backspace":
+          case "Delete": {
+            onRemoveBadge(event, itemContext$().item);
+            keyManaged = true;
+            break;
+          }
+        }
+        if (keyManaged) {
+          event.preventDefault();
+        }
+      }
+    }
+  }));
+  const menuAttributesDirective = utils_directive.createAttributesDirective(() => ({
+    attributes: {
+      role: "listbox",
+      id: tansu.computed(() => \`\${id$()}-menu\`),
+      "data-popper-placement": placement$,
+      class: menuClassName$
+    },
+    events: {
+      mousedown: (e) => e.preventDefault()
+    }
+  }));
+  const itemAttributesDirective = utils_directive.createAttributesDirective((itemContext$) => ({
+    attributes: {
+      role: "option",
+      "aria-selected": tansu.computed(() => \`\${itemContext$().selected}\`),
+      style: "cursor: pointer"
+    },
+    classNames: {
+      "au-select-item": true,
+      selected: tansu.computed(() => itemContext$().selected)
+    },
+    events: {
+      click: () => widget.api.toggleItem(itemContext$().item)
+    }
+  }));
+  const inputDirective = utils_directive.createAttributesDirective(() => ({
+    attributes: {
+      id: id$(),
+      type: "text",
+      "aria-label": ariaLabel$(),
+      "aria-autocomplete": "list",
+      autocorrect: "off",
+      autocapitalize: "none",
+      autocomplete: "off"
+    },
+    classNames: {
+      "au-select-input": true
+    },
+    events: {
+      input: (event) => {
+        const value = event.target.value;
+        tansu.batch(() => {
+          open$.set(value != null && value !== "");
+          filterText$.set(value);
+        });
+      },
+      keydown: ({ ctrlKey, key, preventDefault }) => {
+        let keyManaged = true;
+        switch (key) {
+          case "ArrowDown": {
+            const isOpen = open$();
+            if (isOpen) {
+              if (ctrlKey) {
+                widget.api.highlightLast();
+              } else {
+                widget.api.highlightNext();
+              }
+            } else {
+              widget.api.open();
+              widget.api.highlightFirst();
+            }
+            break;
+          }
+          case "ArrowUp":
+            if (ctrlKey) {
+              widget.api.highlightFirst();
+            } else {
+              widget.api.highlightPrevious();
+            }
+            break;
+          case "Enter": {
+            const itemCtx = highlighted$();
+            if (itemCtx) {
+              widget.api.toggleItem(itemCtx.item);
+            }
+            break;
+          }
+          case "Escape":
+            open$.set(false);
+            break;
+          default:
+            keyManaged = false;
+        }
+        if (keyManaged) {
+          preventDefault();
+        }
+      }
+    }
+  }));
+  const badgeCloseButtonDirective = utils_directive.createAttributesDirective((itemContext$) => ({
+    events: {
+      click: (event) => {
+        onRemoveBadge(event, itemContext$().item);
+      }
+    }
+  }));
+  const widget = {
+    ...utils_directive.stateStores({
+      id$,
+      visibleItems$,
+      highlighted$,
+      open$,
+      selectedContexts$,
+      filterText$,
+      placement$,
+      className$,
+      badgeClassName$,
+      ariaLabel$,
+      menuClassName$,
+      ...stateProps
+    }),
+    patch,
+    api: {
+      clear() {
+        selected$.set([]);
+      },
+      select(item) {
+        widget.api.toggleItem(item, true);
+      },
+      unselect(item) {
+        widget.api.toggleItem(item, false);
+      },
+      toggleItem(item, selected) {
+        const itemIdFn = itemIdFn$();
+        const itemId = itemIdFn(item);
+        const selectedContextsMap = selectedContextsMap$();
+        const isInSelected = selectedContextsMap.has(itemId);
+        if (selected == null) {
+          selected = !isInSelected;
+        }
+        if (selected && !itemContexts$().has(itemId) || !selected && !isInSelected) {
+          return;
+        }
+        selected$.update((selectedItems) => {
+          var _a;
+          selectedItems = [...selectedItems];
+          if (selected && !isInSelected) {
+            selectedItems.push(item);
+          } else if (!selected && isInSelected) {
+            const index = selectedItems.findIndex((item2) => itemIdFn(item2) === itemId);
+            selectedItems.splice(index, 1);
+          }
+          (_a = onSelectedChange$()) == null ? void 0 : _a(selectedItems);
+          return selectedItems;
+        });
+      },
+      clearText() {
+      },
+      highlight(item) {
+        const index = visibleItems$().findIndex((itemCtx) => itemCtx.item === item);
+        highlightedIndex$.set(index === -1 ? void 0 : index);
+      },
+      highlightFirst() {
+        highlightedIndex$.set(0);
+      },
+      highlightPrevious() {
+        highlightedIndex$.update((highlightedIndex) => {
+          return highlightedIndex != null ? highlightedIndex - 1 : -1;
+        });
+      },
+      highlightNext() {
+        highlightedIndex$.update((highlightedIndex) => {
+          return highlightedIndex != null ? highlightedIndex + 1 : Infinity;
+        });
+      },
+      highlightLast() {
+        highlightedIndex$.set(-1);
+      },
+      open: () => widget.api.toggle(true),
+      close: () => widget.api.toggle(false),
+      toggle(isOpen) {
+        open$.update((value) => isOpen != null ? isOpen : !value);
+      }
+    },
+    directives: {
+      hasFocusDirective,
+      floatingDirective,
+      referenceDirective,
+      inputContainerDirective: utils_directive.mergeDirectives(utils_directive.bindDirective(navDirective, navManagerConfig$), inputContainerAttributesDirective),
+      badgeAttributesDirective,
+      menuAttributesDirective,
+      itemAttributesDirective,
+      inputDirective,
+      badgeCloseButtonDirective
+    }
+  };
+  return widget;
+}
+exports.createSelect = createSelect;
+exports.getSelectDefaultConfig = getSelectDefaultConfig;
+`;export{e as default};

@@ -1,0 +1,1 @@
+import{ap as n}from"./AppCommon-CEfp6GOi.js";function _(s,a,t){var l=s.__className,e=r(a,t);(l!==e||n)&&(a==null&&!t?s.removeAttribute("class"):s.className=e,s.__className=e)}function r(s,a){return(s??"")+(a?" "+a:"")}export{_ as s};
