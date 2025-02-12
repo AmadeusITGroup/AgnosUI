@@ -1,10 +1,11 @@
 <script lang="ts">
-	import type {SliderContext, SliderProps, SliderSlotHandleContext, SliderSlotLabelContext} from './slider.gen';
+	import type {SliderContext, SliderProps, SliderSlotHandleContext, SliderSlotLabelContext, SliderSlotTickContext} from './slider.gen';
 	import {createSlider} from './slider.gen';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import {callWidgetFactory} from '../../config';
 	import SliderDefaultStructure from './SliderDefaultStructure.svelte';
 	import SliderDefaultHandle from './SliderDefaultHandle.svelte';
+	import SliderDefaultTick from './SliderDefaultTick.svelte';
 
 	let {values = $bindable(), ...props}: Partial<SliderProps> = $props();
 
@@ -15,7 +16,7 @@
 			return {...props, values};
 		},
 		enablePatchChanged: true,
-		defaultConfig: {structure, handle, label},
+		defaultConfig: {structure, handle, tick, label},
 		events: {
 			onValuesChange: function (newValues: number[]): void {
 				values = newValues;
@@ -33,6 +34,9 @@
 {/snippet}
 {#snippet handle(props: SliderSlotHandleContext)}
 	<SliderDefaultHandle {...props} />
+{/snippet}
+{#snippet tick(props: SliderSlotTickContext)}
+	<SliderDefaultTick {...props} />
 {/snippet}
 {#snippet label({value}: SliderSlotLabelContext)}
 	{value}

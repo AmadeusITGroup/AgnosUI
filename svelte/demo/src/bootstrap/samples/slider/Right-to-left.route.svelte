@@ -8,7 +8,7 @@
 </script>
 
 <h2>Horizontal slider</h2>
-<Slider min={0} max={100} stepSize={1} rtl bind:values={sliderControl} />
+<Slider min={0} max={100} stepSize={1} rtl bind:values={sliderControl} showTicks tickInterval={25} />
 <br />
 <Slider min={0} max={100} stepSize={1} rtl bind:values={sliderRangeControl} />
 <h2>Vertical slider</h2>

@@ -73,6 +73,7 @@ export type {
 	SliderState,
 	SliderWidget,
 	SliderHandle,
+	SliderTick,
 	HandleDisplayOptions,
 	ProgressDisplayOptions,
 	SliderDirectives,

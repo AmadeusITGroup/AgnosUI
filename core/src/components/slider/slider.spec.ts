@@ -49,6 +49,8 @@ const defaultState: () => SliderState = () => ({
 	interactive: true,
 	showMinMaxLabels: true,
 	showValueLabels: true,
+	showTicks: false,
+	ticks: [],
 	rtl: false,
 });
 
@@ -1359,6 +1361,369 @@ describe(`Slider basic`, () => {
 						...defaultHandle,
 					},
 				],
+			}),
+		);
+	});
+
+	test(`should compute ticks based on the tickInterval input`, () => {
+		slider.patch({
+			stepSize: 1,
+			tickInterval: 25,
+			showTicks: true,
+		});
+
+		const expectedState = defaultState();
+
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
+				showTicks: true,
+				stepSize: 1,
+				ticks: [
+					{
+						position: 0,
+						value: 0,
+						selected: true,
+						displayLabel: true,
+					},
+					{
+						position: 25,
+						value: 25,
+						selected: false,
+						displayLabel: true,
+					},
+					{
+						position: 50,
+						value: 50,
+						selected: false,
+						displayLabel: true,
+					},
+					{
+						position: 75,
+						value: 75,
+						selected: false,
+						displayLabel: true,
+					},
+					{
+						position: 100,
+						value: 100,
+						selected: false,
+						displayLabel: true,
+					},
+				],
+				maxValueLabelDisplay: false,
+				showValueLabels: false,
+			}),
+		);
+	});
+
+	test(`should compute ticks on the decimal values and properly mark them selected`, () => {
+		slider.patch({
+			min: 0.33,
+			max: 1.55,
+			stepSize: 0.2,
+			showTicks: true,
+			values: [1],
+		});
+
+		const expectedState = defaultState();
+
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
+				min: 0.33,
+				max: 1.55,
+				stepSize: 0.2,
+				values: [0.93],
+				sortedValues: [0.93],
+				sortedHandles: [
+					{
+						...defaultHandle,
+						value: 0.93,
+					},
+				],
+				maxValueLabelDisplay: false,
+				showValueLabels: false,
+				progressDisplayOptions: [
+					{
+						left: 0,
+						right: null,
+						bottom: null,
+						top: null,
+						height: 100,
+						width: 49.180327868852466,
+						id: 0,
+					},
+				],
+				handleDisplayOptions: [
+					{
+						...expectedState.handleDisplayOptions[0],
+						left: 49.180327868852466,
+					},
+				],
+				showTicks: true,
+				ticks: [
+					{
+						position: 0,
+						value: 0.33,
+						selected: true,
+						displayLabel: true,
+					},
+					{
+						position: 16.39344262295082,
+						value: 0.53,
+						selected: true,
+						displayLabel: true,
+					},
+					{
+						position: 32.78688524590164,
+						value: 0.73,
+						selected: true,
+						displayLabel: true,
+					},
+					{
+						position: 49.180327868852466,
+						value: 0.93,
+						selected: true,
+						displayLabel: true,
+					},
+					{
+						position: 65.57377049180327,
+						value: 1.13,
+						selected: false,
+						displayLabel: true,
+					},
+					{
+						position: 81.9672131147541,
+						value: 1.33,
+						selected: false,
+						displayLabel: true,
+					},
+					{
+						position: 98.36065573770492,
+						value: 1.53,
+						selected: false,
+						displayLabel: true,
+					},
+					{
+						position: 100,
+						value: 1.55,
+						selected: false,
+						displayLabel: true,
+					},
+				],
+			}),
+		);
+	});
+
+	test(`should proprely compute tick position for RTL case`, () => {
+		slider.patch({
+			rtl: true,
+			tickInterval: 25,
+			showTicks: true,
+		});
+
+		const expectedState = defaultState();
+
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
+				rtl: true,
+				showTicks: true,
+				maxValueLabelDisplay: false,
+				showValueLabels: false,
+				ticks: [
+					{
+						position: 100,
+						value: 0,
+						selected: true,
+						displayLabel: true,
+					},
+					{
+						position: 75,
+						value: 25,
+						selected: false,
+						displayLabel: true,
+					},
+					{
+						position: 50,
+						value: 50,
+						selected: false,
+						displayLabel: true,
+					},
+					{
+						position: 25,
+						value: 75,
+						selected: false,
+						displayLabel: true,
+					},
+					{
+						position: 0,
+						value: 100,
+						selected: false,
+						displayLabel: true,
+					},
+				],
+				progressDisplayOptions: [
+					{
+						...expectedState.progressDisplayOptions[0],
+						left: null,
+						right: 0,
+						bottom: null,
+						top: null,
+					},
+				],
+				handleDisplayOptions: [
+					{
+						...expectedState.handleDisplayOptions[0],
+						left: 100,
+					},
+				],
+			}),
+		);
+	});
+
+	test(`should automatically hide the min/max/current labels when showTickValues is true`, () => {
+		slider.patch({
+			stepSize: 1,
+			tickInterval: 25,
+			showTicks: true,
+			showTickValues: true,
+			values: [50],
+		});
+
+		const expectedState = defaultState();
+
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
+				showTicks: true,
+				stepSize: 1,
+				values: [50],
+				sortedValues: [50],
+				handleDisplayOptions: [
+					{
+						...expectedState.handleDisplayOptions[0],
+						left: 50,
+					},
+				],
+				sortedHandles: [
+					{
+						...defaultHandle,
+						value: 50,
+					},
+				],
+				progressDisplayOptions: [
+					{
+						...expectedState.progressDisplayOptions[0],
+						width: 50,
+					},
+				],
+				ticks: [
+					{
+						position: 0,
+						value: 0,
+						selected: true,
+						displayLabel: true,
+					},
+					{
+						position: 25,
+						value: 25,
+						selected: true,
+						displayLabel: true,
+					},
+					{
+						position: 50,
+						value: 50,
+						selected: true,
+						displayLabel: true,
+					},
+					{
+						position: 75,
+						value: 75,
+						selected: false,
+						displayLabel: true,
+					},
+					{
+						position: 100,
+						value: 100,
+						selected: false,
+						displayLabel: true,
+					},
+				],
+				minValueLabelDisplay: false,
+				maxValueLabelDisplay: false,
+				showValueLabels: false,
+			}),
+		);
+	});
+
+	test(`should automatically show the min/max/current labels when showTickValues is false`, () => {
+		slider.patch({
+			stepSize: 1,
+			tickInterval: 25,
+			showTicks: true,
+			showTickValues: false,
+			values: [50],
+		});
+
+		const expectedState = defaultState();
+
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
+				showTicks: true,
+				stepSize: 1,
+				values: [50],
+				sortedValues: [50],
+				handleDisplayOptions: [
+					{
+						...expectedState.handleDisplayOptions[0],
+						left: 50,
+					},
+				],
+				sortedHandles: [
+					{
+						...defaultHandle,
+						value: 50,
+					},
+				],
+				progressDisplayOptions: [
+					{
+						...expectedState.progressDisplayOptions[0],
+						width: 50,
+					},
+				],
+				ticks: [
+					{
+						position: 0,
+						value: 0,
+						selected: true,
+						displayLabel: false,
+					},
+					{
+						position: 25,
+						value: 25,
+						selected: true,
+						displayLabel: false,
+					},
+					{
+						position: 50,
+						value: 50,
+						selected: true,
+						displayLabel: false,
+					},
+					{
+						position: 75,
+						value: 75,
+						selected: false,
+						displayLabel: false,
+					},
+					{
+						position: 100,
+						value: 100,
+						selected: false,
+						displayLabel: false,
+					},
+				],
+				minValueLabelDisplay: true,
+				maxValueLabelDisplay: true,
+				showValueLabels: true,
 			}),
 		);
 	});

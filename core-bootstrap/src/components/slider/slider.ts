@@ -1,4 +1,4 @@
-import type {SliderDirectives, SliderHandle, SliderProps as CoreProps, SliderState as CoreState} from '@agnos-ui/core/components/slider';
+import type {SliderDirectives, SliderHandle, SliderProps as CoreProps, SliderState as CoreState, SliderTick} from '@agnos-ui/core/components/slider';
 import {createSlider as createCoreSlider, getSliderDefaultConfig as getCoreDefaultConfig} from '@agnos-ui/core/components/slider';
 import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
 import type {SlotContent, Widget, WidgetFactory, WidgetSlotContext} from '@agnos-ui/core/types';
@@ -31,6 +31,16 @@ export interface SliderSlotHandleContext extends SliderContext {
 	item: SliderHandle;
 }
 
+/**
+ * Represents the context for a slider tick slot
+ */
+export interface SliderSlotTickContext extends SliderContext {
+	/**
+	 * tick context
+	 */
+	tick: SliderTick;
+}
+
 interface SliderExtraProps {
 	/**
 	 * Slot to change the default display of the slider
@@ -51,6 +61,11 @@ interface SliderExtraProps {
 	 *  Slot to change the handlers
 	 */
 	handle: SlotContent<SliderSlotHandleContext>;
+
+	/**
+	 * Slot to change the ticks
+	 */
+	tick: SlotContent<SliderSlotTickContext>;
 }
 
 /**
@@ -71,6 +86,7 @@ const defaultConfigExtraProps: SliderExtraProps = {
 	structure: undefined,
 	label: ({value}: SliderSlotLabelContext) => '' + value,
 	handle: undefined,
+	tick: undefined,
 };
 
 /**

@@ -12,7 +12,17 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 				<div class="mt-3">Form control values: {{ sliderControlRangeValues()?.join(', ') }}</div>
 			</div>
 			<div class="col-6" style="height: 300px">
-				<div auSlider auMin="0" auMax="100" auStepSize="1" auVertical [formControl]="sliderControl" auClassName="my-0"></div>
+				<div
+					auSlider
+					auMin="0"
+					auMax="100"
+					auStepSize="1"
+					auVertical
+					[formControl]="sliderControl"
+					auClassName="my-0"
+					auShowTicks
+					auTickInterval="25"
+				></div>
 				<div class="mt-3">From control value: {{ sliderControlValues() }}</div>
 			</div>
 		</div>
