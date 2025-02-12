@@ -3,7 +3,7 @@ import {asReadable, batch, readable, writable, computed} from '@amadeus-it-group
 import {BROWSER} from 'esm-env';
 import type {AttributeValue, Directive, DirectivesAndOptParam, SSRHTMLElement, StyleKey, StyleValue} from '../types';
 import {addEvent, bindAttribute, bindClassName, bindStyle} from './internal/dom';
-import {noop} from './internal/func';
+import {noop} from './func';
 import {ssrHTMLElement, ssrHTMLElementAttributesAndStyle} from './internal/ssrHTMLElement';
 import {toReadableStore} from './stores';
 import {clsx, type ClassValue} from 'clsx';
@@ -39,7 +39,7 @@ export const browserDirective: <T, U extends HTMLElement>(directive: Directive<T
 			}
 		}
 	: // eslint-disable-next-line @typescript-eslint/no-unused-vars
-		(directive) => () => {};
+		(directive) => noop;
 
 /**
  * Binds the given directive to a store that provides its argument.

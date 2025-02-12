@@ -32,7 +32,7 @@ import {
 import {SliderComponent, SliderHandleDirective, SliderLabelDirective, SliderStructureDirective} from './components/slider/slider.component';
 import {ProgressbarComponent, ProgressbarBodyDirective, ProgressbarStructureDirective} from './components/progressbar/progressbar.component';
 import {ToastBodyDirective, ToastComponent, ToastHeaderDirective, ToastStructureDirective} from './components/toast/toast.component';
-import {CollapseDirective} from './components/collapse';
+import {CollapseDirective, CollapseTriggerDirective} from './components/collapse';
 import {
 	TreeComponent,
 	TreeItemContentDirective,
@@ -85,6 +85,7 @@ const components = [
 	ToastBodyDirective,
 	ToastHeaderDirective,
 	CollapseDirective,
+	CollapseTriggerDirective,
 	TreeComponent,
 	TreeStructureDirective,
 	TreeItemToggleDirective,

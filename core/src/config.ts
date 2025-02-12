@@ -7,7 +7,7 @@ import type {RatingProps} from './components/rating/rating';
 import type {SelectProps} from './components/select/select';
 import type {AccordionProps} from './components/accordion/accordion';
 import type {ProgressbarProps} from './components/progressbar/progressbar';
-import {identity} from './utils/internal/func';
+import {identity} from './utils/func';
 import type {SliderProps} from './components/slider/slider';
 import type {ToastProps} from './components/toast/toast';
 import type {TreeProps} from './components/tree/tree';

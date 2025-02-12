@@ -1,13 +1,12 @@
-import {stateStores, writablesForProps, normalizeConfigStores, mergeConfigStores} from '../../utils/stores';
+import {stateStores, writablesForProps, normalizeConfigStores, mergeConfigStores, idWithDefault} from '../../utils/stores';
 import type {TransitionFn} from '../../services/transitions/baseTransitions';
 import {createTransition} from '../../services/transitions/baseTransitions';
 import type {ConfigValidator, Directive, PropsConfig, Widget, WidgetFactory} from '../../types';
 import {asWritable, computed, readable, writable} from '@amadeus-it-group/tansu';
-import {noop} from '../../utils/internal/func';
+import {noop} from '../../utils/func';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 import {typeBoolean, typeFunction, typeString} from '../../utils/writables';
 import {createAttributesDirective, directiveSubscribe, mergeDirectives, registrationArray} from '../../utils/directive';
-import {generateId} from '../../utils/internal/dom';
 
 /**
  * Adjusts the visibility of accordion items based on the provided open items.
@@ -99,7 +98,7 @@ export interface AccordionProps extends WidgetsCommonPropsAndState {
 	 *
 	 * @defaultValue
 	 * ```ts
-	 * async () => {}
+	 * () => {}
 	 * ```
 	 */
 	itemTransition: TransitionFn;
@@ -364,7 +363,7 @@ const defaultAccordionConfig: AccordionProps = {
 	className: '',
 	itemDestroyOnHide: true,
 	itemAnimated: true,
-	itemTransition: async () => {},
+	itemTransition: noop,
 	itemHeadingTag: '',
 	itemClassName: '',
 	itemHeaderClassName: '',
@@ -461,8 +460,7 @@ export function createAccordionItem(config?: PropsConfig<AccordionItemProps>): A
 	] = writablesForProps(defaultItemConfig, config, configItemValidator);
 
 	const initDone$ = writable(false);
-	const _autoId$ = computed(() => generateId());
-	const id$ = computed(() => _dirtyId$() || _autoId$());
+	const id$ = idWithDefault(_dirtyId$);
 	const transition = createTransition({
 		props: {
 			transition: transition$,

@@ -4,7 +4,7 @@ import {bindableProp, stateStores, writablesForProps} from '../../utils/stores';
 import {clamp, isNumber} from '../../utils/internal/checks';
 import {typeBoolean, typeFunction, typeNumber, typeString} from '../../utils/writables';
 import type {ConfigValidator, PropsConfig, Widget, Directive} from '../../types';
-import {noop} from '../../utils/internal/func';
+import {noop} from '../../utils/func';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 import {createAttributesDirective} from '../../utils/directive';
 

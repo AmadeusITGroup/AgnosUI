@@ -17,6 +17,7 @@ import {collapseVerticalTransition} from '../../services/transitions';
 import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
 import type {SlotContent, Widget, WidgetFactory, WidgetSlotContext} from '@agnos-ui/core/types';
 import type {TransitionFn} from '@agnos-ui/core/services/transitions/baseTransitions';
+import {noop} from '@agnos-ui/core/utils/func';
 
 export * from '@agnos-ui/core/components/accordion';
 
@@ -115,9 +116,9 @@ const accordionItemDefaultConfig: AccordionItemProps = {
 	animated: false,
 	transition: collapseVerticalTransition,
 	destroyOnHide: false,
-	onShown: () => {},
-	onHidden: () => {},
-	onVisibleChange: () => {},
+	onShown: noop,
+	onHidden: noop,
+	onVisibleChange: noop,
 	visible: false,
 	disabled: false,
 	id: '',

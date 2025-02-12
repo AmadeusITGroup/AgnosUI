@@ -1,9 +1,9 @@
 import {Collapse} from '@agnos-ui/react-bootstrap/components/collapse';
-import {useState} from 'react';
+import {useId, useState} from 'react';
 
 const CollapseDemo = () => {
 	const [visible, setVisible] = useState(true);
-	const id = 'auId-0';
+	const id = useId();
 	return (
 		<>
 			<button className="btn btn-primary mb-2" type="button" aria-expanded={visible} aria-controls={id} onClick={() => setVisible(!visible)}>

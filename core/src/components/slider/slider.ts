@@ -3,7 +3,7 @@ import {computed, writable} from '@amadeus-it-group/tansu';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 import {createAttributesDirective, createBrowserStoreDirective, mergeDirectives} from '../../utils/directive';
 import type {ConfigValidator, Directive, PropsConfig, Widget} from '../../types';
-import {noop} from '../../utils/internal/func';
+import {noop} from '../../utils/func';
 import {getDecimalPrecision} from '../../utils/internal/math';
 import {bindableProp, stateStores, writablesForProps} from '../../utils/stores';
 import {typeArray, typeBoolean, typeFunction, typeNumber, typeNumberInRangeFactory, typeString} from '../../utils/writables';

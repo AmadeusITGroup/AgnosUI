@@ -1,10 +1,11 @@
 import {createTransition} from '@agnos-ui/core/services/transitions/baseTransitions';
 import type {ConfigValidator, Directive, PropsConfig, Widget} from '@agnos-ui/core/types';
-import {stateStores, writablesForProps} from '@agnos-ui/core/utils/stores';
+import {idWithDefault, stateStores, writablesForProps} from '@agnos-ui/core/utils/stores';
 import {createAttributesDirective, mergeDirectives} from '@agnos-ui/core/utils/directive';
 import {typeBoolean, typeFunction, typeString} from '@agnos-ui/core/utils/writables';
 import {collapseHorizontalTransition, collapseVerticalTransition} from '../../services/transitions/collapse';
 import {asWritable, computed} from '@amadeus-it-group/tansu';
+import {noop} from '@agnos-ui/core/utils/func';
 
 /**
  * Interface representing the common properties and state for a collapse component.
@@ -125,6 +126,10 @@ export interface CollapseDirectives {
 	 * Directive to apply the collapse.
 	 */
 	collapseDirective: Directive;
+	/**
+	 * Directive to apply to a trigger;
+	 */
+	triggerDirective: Directive;
 }
 
 /**
@@ -140,9 +145,9 @@ export type CollapseWidget = Widget<CollapseProps, CollapseState, CollapseApi, C
 const defaultCollapseConfig: CollapseProps = {
 	visible: true,
 	horizontal: false,
-	onVisibleChange: () => {},
-	onShown: () => {},
-	onHidden: () => {},
+	onVisibleChange: noop,
+	onShown: noop,
+	onHidden: noop,
 	animated: true,
 	animatedOnInit: false,
 	className: '',
@@ -175,9 +180,12 @@ const commonCollapseConfigValidator: ConfigValidator<CollapseProps> = {
  * @returns an CollapseWidget
  */
 export function createCollapse(config?: PropsConfig<CollapseProps>): CollapseWidget {
-	const [{animatedOnInit$, animated$, visible$: requestedVisible$, onVisibleChange$, onHidden$, onShown$, horizontal$, id$, ...stateProps}, patch] =
-		writablesForProps(defaultCollapseConfig, config, commonCollapseConfigValidator);
+	const [
+		{animatedOnInit$, animated$, visible$: requestedVisible$, onVisibleChange$, onHidden$, onShown$, horizontal$, id$: _dirtyId$, ...stateProps},
+		patch,
+	] = writablesForProps(defaultCollapseConfig, config, commonCollapseConfigValidator);
 
+	const id$ = idWithDefault(_dirtyId$);
 	const currentTransitionFn$ = asWritable(computed(() => (horizontal$() ? collapseHorizontalTransition : collapseVerticalTransition)));
 
 	const transition = createTransition({
@@ -207,13 +215,22 @@ export function createCollapse(config?: PropsConfig<CollapseProps>): CollapseWid
 				transition.directives.directive,
 				createAttributesDirective(() => ({
 					attributes: {
-						id: computed(() => id$() || undefined),
+						id: id$,
 					},
 					classNames: {
 						'au-collapse': true,
 					},
 				})),
 			),
+			triggerDirective: createAttributesDirective(() => ({
+				attributes: {
+					'aria-expanded': computed(() => `${visible$()}`),
+					'aria-controls': id$,
+				},
+				events: {
+					click: () => transition.api.toggle(),
+				},
+			})),
 		},
 	};
 }
