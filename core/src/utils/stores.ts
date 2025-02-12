@@ -2,7 +2,8 @@ import type {ReadableSignal, StoreInput, StoresInputValues, WritableSignal} from
 import {asReadable, asWritable, batch, computed, derived, equal as tansuDefaultEqual, get, readable, writable} from '@amadeus-it-group/tansu';
 import type {ConfigValidator, PropsConfig, ValuesOrReadableSignals, WritableWithDefaultOptions} from '../types';
 import {INVALID_VALUE} from '../types';
-import {identity} from './internal/func';
+import {identity} from './func';
+import {generateId} from './internal/dom';
 
 /**
  * Transforms the properties of a given type `P` into writable signals.
@@ -398,3 +399,14 @@ export const bindableProp = <T>(
 			}
 		},
 	);
+
+/**
+ * Wraps an id store in a computed so that undefined and empty values are replaced by a generated id.
+ *
+ * @param id$ - the id store to use
+ * @returns the id store with a default generation if the id is not provided
+ */
+export function idWithDefault(id$: ReadableSignal<string>): ReadableSignal<string> {
+	const autoId$ = computed(() => generateId());
+	return computed(() => id$() || autoId$());
+}

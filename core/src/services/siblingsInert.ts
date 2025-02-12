@@ -1,5 +1,5 @@
 import {computed} from '@amadeus-it-group/tansu';
-import {noop} from '../utils/internal/func';
+import {noop} from '../utils/func';
 import {createBrowserStoreArrayDirective, directiveSubscribe, mergeDirectives} from '../utils/directive';
 import type {Directive} from '../types';
 

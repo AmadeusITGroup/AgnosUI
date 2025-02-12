@@ -1,6 +1,6 @@
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {asReadable, computed, derived, equal, readable, writable} from '@amadeus-it-group/tansu';
-import {noop} from './func';
+import {noop} from '../func';
 
 /**
  * Represents the result of a promise that is still pending.

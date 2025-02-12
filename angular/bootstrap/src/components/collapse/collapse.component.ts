@@ -1,7 +1,7 @@
 import {auBooleanAttribute, BaseWidgetDirective, useDirectiveForHost} from '@agnos-ui/angular-headless';
 import type {CollapseWidget} from '@agnos-ui/core-bootstrap/components/collapse';
 import {createCollapse} from '@agnos-ui/core-bootstrap/components/collapse';
-import {Directive, input, output} from '@angular/core';
+import {Directive, inject, Injector, input, type OnInit, output, runInInjectionContext} from '@angular/core';
 import {callWidgetFactory} from '../../config';
 
 /**
@@ -101,5 +101,20 @@ export class CollapseDirective extends BaseWidgetDirective<CollapseWidget> {
 				},
 			}),
 		);
+	}
+}
+
+@Directive({
+	selector: '[auCollapseTrigger]',
+})
+export class CollapseTriggerDirective implements OnInit {
+	readonly auCollapseTrigger = input.required<CollapseDirective>();
+	private readonly injector = inject(Injector);
+
+	async ngOnInit() {
+		await this.auCollapseTrigger()['_widget'].initialized;
+		runInInjectionContext(this.injector, () => {
+			useDirectiveForHost(this.auCollapseTrigger().directives.triggerDirective);
+		});
 	}
 }

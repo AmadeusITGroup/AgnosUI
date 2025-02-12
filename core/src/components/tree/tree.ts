@@ -4,7 +4,7 @@ import {createNavManager, type NavManagerItemConfig} from '../../services/navMan
 import type {Directive} from '../../types';
 import {type ConfigValidator, type PropsConfig, type Widget} from '../../types';
 import {bindDirective, browserDirective, createAttributesDirective, mergeDirectives} from '../../utils/directive';
-import {noop} from '../../utils/internal/func';
+import {noop} from '../../utils/func';
 import {stateStores, writablesForProps} from '../../utils/stores';
 import {typeArray, typeFunction, typeString} from '../../utils/writables';
 import type {WidgetsCommonPropsAndState} from '../commonProps';

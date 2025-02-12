@@ -1,7 +1,7 @@
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {derived} from '@amadeus-it-group/tansu';
 import {createBrowserStoreDirective} from '../utils/directive';
-import {noop} from '../utils/internal/func';
+import {noop} from '../utils/func';
 import type {Directive, SSRHTMLElement} from '../types';
 
 /**

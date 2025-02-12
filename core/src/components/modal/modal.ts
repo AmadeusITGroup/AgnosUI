@@ -6,7 +6,7 @@ import type {TransitionFn} from '../../services/transitions/baseTransitions';
 import {createTransition} from '../../services/transitions/baseTransitions';
 import {promiseFromStore} from '../../utils/internal/promise';
 import type {ConfigValidator, Directive, PropsConfig, Widget} from '../../types';
-import {noop} from '../../utils/internal/func';
+import {noop} from '../../utils/func';
 import {removeScrollbars, revertScrollbars} from '../../utils/internal/scrollbars';
 import {
 	bindDirective,
@@ -117,7 +117,7 @@ export interface ModalProps extends ModalCommonPropsAndState {
 	 *
 	 * @defaultValue
 	 * ```ts
-	 * async () => {}
+	 * () => {}
 	 * ```
 	 */
 	backdropTransition: TransitionFn;
@@ -134,7 +134,7 @@ export interface ModalProps extends ModalCommonPropsAndState {
 	 *
 	 * @defaultValue
 	 * ```ts
-	 * async () => {}
+	 * () => {}
 	 * ```
 	 */
 	modalTransition: TransitionFn;
@@ -280,12 +280,12 @@ const defaultConfig: ModalProps = {
 	ariaCloseButtonLabel: 'Close',
 	backdrop: true,
 	backdropClass: '',
-	backdropTransition: async () => {},
+	backdropTransition: noop,
 	closeButton: true,
 	closeOnOutsideClick: true,
 	container: typeof window !== 'undefined' ? document.body : null,
 	className: '',
-	modalTransition: async () => {},
+	modalTransition: noop,
 	onBeforeClose: noop,
 	onVisibleChange: noop,
 	onHidden: noop,

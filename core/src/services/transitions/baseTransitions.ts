@@ -2,7 +2,7 @@ import {batch, computed, derived, writable} from '@amadeus-it-group/tansu';
 import {typeBoolean, typeBooleanOrNull, typeFunction} from '../../utils/writables';
 import type {ConfigValidator, Directive, PropsConfig, SSRHTMLElement, Widget} from '../../types';
 import {promiseWithResolve} from '../../utils/internal/promise';
-import {noop} from '../../utils/internal/func';
+import {noop} from '../../utils/func';
 import {bindableDerived, stateStores, writablesForProps} from '../../utils/stores';
 import {createStoreDirective, directiveSubscribe, mergeDirectives} from '../../utils/directive';
 

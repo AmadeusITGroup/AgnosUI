@@ -2,7 +2,7 @@ import type {TransitionFn} from '../../services/transitions/baseTransitions';
 import {createTransition} from '../../services/transitions/baseTransitions';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 import type {ConfigValidator, Directive, PropsConfig, Widget} from '../../types';
-import {noop} from '../../utils/internal/func';
+import {noop} from '../../utils/func';
 import {stateStores, writablesForProps} from '../../utils/stores';
 import {typeBoolean, typeFunction, typeString} from '../../utils/writables';
 
@@ -83,7 +83,7 @@ export interface CommonAlertProps extends CommonAlertCommonPropsAndState {
 	 *
 	 * @defaultValue
 	 * ```ts
-	 * async () => {}
+	 * () => {}
 	 * ```
 	 */
 	transition: TransitionFn;
@@ -147,7 +147,7 @@ const defaultCommonAlertConfig: CommonAlertProps = {
 	onHidden: noop,
 	animated: true,
 	animatedOnInit: false,
-	transition: async () => {},
+	transition: noop,
 	className: '',
 };
 

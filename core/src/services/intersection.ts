@@ -1,5 +1,5 @@
 import {asReadable, derived, type ReadableSignal} from '@amadeus-it-group/tansu';
-import {noop} from '../utils/internal/func';
+import {noop} from '../utils/func';
 import type {PropsConfig} from '../types';
 import {writablesForProps} from '../utils/stores';
 
