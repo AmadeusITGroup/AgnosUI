@@ -525,4 +525,73 @@ test.describe(`Slider tests`, () => {
 			await expect(maxLabelLocator).toBeHidden();
 		});
 	});
+
+	test.describe(`Slider with ticks`, () => {
+		test(`should render the ticks on the horizontal slider`, async ({page}) => {
+			const sliderPO = new SliderPO(page, 0);
+
+			await page.goto('#/slider/ticks');
+			await sliderPO.locatorRoot.waitFor();
+
+			await expect(sliderPO.locatorTick).toHaveCount(5);
+			await expect(sliderPO.locatorTickLabel).toHaveCount(5);
+			expect((await sliderPO.sliderTickLabelState(sliderPO.locatorTickLabel)).map((state) => state.innerText)).toEqual([
+				'0',
+				'25',
+				'50',
+				'75',
+				'100',
+			]);
+		});
+
+		test(`should not render the tick labels when the showTickValues is false`, async ({page}) => {
+			const sliderPO = new SliderPO(page, 2);
+
+			await page.goto('#/slider/ticks');
+			await sliderPO.locatorRoot.waitFor();
+
+			await expect(sliderPO.locatorTick).toHaveCount(5);
+			await expect(sliderPO.locatorTickLabel).toHaveCount(0);
+		});
+
+		test(`should render the ticks on the vertical slider`, async ({page}) => {
+			const sliderPO = new SliderPO(page, 1);
+
+			await page.goto('#/slider/vertical');
+			await sliderPO.locatorRoot.waitFor();
+
+			await expect(sliderPO.locatorTick).toHaveCount(5);
+			await expect(sliderPO.locatorTickLabelVertical).toHaveCount(5);
+			expect((await sliderPO.sliderTickLabelState(sliderPO.locatorTickLabel)).map((state) => state.innerText)).toEqual([
+				'0',
+				'25',
+				'50',
+				'75',
+				'100',
+			]);
+		});
+
+		test(`should handle click on the tick`, async ({page}) => {
+			const sliderPO = new SliderPO(page, 1);
+			const expectedState = {...defaultExpectedState, value: '30', style: 'left: 30%;'};
+
+			await page.goto('#/slider/ticks');
+			await sliderPO.locatorRoot.waitFor();
+
+			await expect(sliderPO.locatorTick).toHaveCount(5);
+
+			await expect.poll(async () => (await sliderPO.sliderHandleState()).at(0)).toEqual(expectedState);
+
+			await sliderPO.locatorTick.nth(1).click();
+
+			await expect
+				.poll(async () => (await sliderPO.sliderHandleState()).at(0))
+				.toEqual(
+					assign(expectedState, {
+						value: '25',
+						style: 'left: 25%;',
+					}),
+				);
+		});
+	});
 });

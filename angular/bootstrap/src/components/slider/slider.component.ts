@@ -23,9 +23,9 @@ import {
 	signal,
 	viewChild,
 } from '@angular/core';
-import {NG_VALUE_ACCESSOR} from '@angular/forms';
+import {type ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {callWidgetFactory} from '../../config';
-import type {SliderContext, SliderSlotHandleContext, SliderSlotLabelContext, SliderWidget} from './slider.gen';
+import type {SliderContext, SliderSlotHandleContext, SliderSlotLabelContext, SliderSlotTickContext, SliderWidget} from './slider.gen';
 import {createSlider} from './slider.gen';
 
 /**
@@ -43,11 +43,11 @@ export class SliderLabelDirective {
 /**
  * Directive representing a handle for a slider component.
  *
- * This directive uses a template reference to render the {@link SliderSlotLabelContext}.
+ * This directive uses a template reference to render the {@link SliderSlotHandleContext}.
  */
 @Directive({selector: 'ng-template[auSliderHandle]'})
 export class SliderHandleDirective {
-	public templateRef = inject(TemplateRef<SliderSlotLabelContext>);
+	public templateRef = inject(TemplateRef<SliderSlotHandleContext>);
 	static ngTemplateContextGuard(_dir: SliderHandleDirective, context: unknown): context is SliderSlotHandleContext {
 		return true;
 	}
@@ -108,6 +108,73 @@ class SliderDefaultHandleSlotComponent {
 export const sliderDefaultSlotHandle: SlotContent<SliderSlotHandleContext> = new ComponentTemplate(SliderDefaultHandleSlotComponent, 'handle');
 
 /**
+ * Directive representing a tick for a slider component.
+ *
+ * This directive uses a template reference to render the {@link SliderSlotTickContext}.
+ */
+@Directive({selector: 'ng-template[auSliderTick]'})
+export class SliderTickDirective {
+	public templateRef = inject(TemplateRef<SliderSlotTickContext>);
+	static ngTemplateContextGuard(_dir: SliderTickDirective, context: unknown): context is SliderSlotTickContext {
+		return true;
+	}
+}
+
+@Component({
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [UseDirective, SliderTickDirective],
+	template: `
+		<ng-template auSliderTick #tick let-state="state" let-directives="directives" let-tick="tick">
+			@if (tick.displayLabel) {
+				<span [auUse]="[directives.tickLabelDirective, {tick}]">
+					{{ tick.value }}
+				</span>
+			}
+			<span [auUse]="[directives.tickDirective, {tick}]">
+				@if (!tick.selected) {
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						style="width: var(--bs-slider-tick-secondary-size); height: var(--bs-slider-tick-primary-size);"
+						fill="none"
+					>
+						<circle
+							cx="50%"
+							cy="50%"
+							r="45%"
+							fill="white"
+							[attr.stroke]="state.disabled() ? 'var(--bs-slider-tick-disabled-color)' : 'var(--bs-slider-tick-neutral-color)'"
+							stroke-width="1.5"
+						/>
+					</svg>
+				} @else {
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						style="width: var(--bs-slider-tick-secondary-size); height: var(--bs-slider-tick-primary-size);"
+						fill="none"
+					>
+						<circle
+							cx="50%"
+							cy="50%"
+							r="50%"
+							[attr.fill]="state.disabled() ? 'var(--bs-slider-tick-disabled-color)' : 'var(--bs-slider-tick-selected-color)'"
+						/>
+						<circle cx="50%" cy="50%" r="25%" fill="white" />
+					</svg>
+				}
+			</span>
+		</ng-template>
+	`,
+})
+class SliderDefaultTickSlotComponent {
+	readonly tick = viewChild.required<TemplateRef<SliderSlotTickContext>>('tick');
+}
+
+/**
+ * A constant representing the default slot tick for the slider component.
+ */
+export const sliderDefaultSlotTick: SlotContent<SliderSlotTickContext> = new ComponentTemplate(SliderDefaultTickSlotComponent, 'tick');
+
+/**
  * Directive that provides structure for the slider component.
  *
  * This directive uses a `TemplateRef` to handle the context of the slider slot.
@@ -148,6 +215,9 @@ export class SliderStructureDirective {
 					}
 				</div>
 			}
+			@for (tick of state.ticks(); track tick.position) {
+				<ng-template [auSlot]="state.tick()" [auSlotProps]="{state, api, directives, tick}" />
+			}
 			@for (item of state.sortedHandles(); track item.id; let i = $index) {
 				<ng-template [auSlot]="state.handle()" [auSlotProps]="{state, api, directives, item}" />
 				@if (state.showValueLabels() && !state.combinedLabelDisplay()) {
@@ -184,7 +254,7 @@ export const sliderDefaultSlotStructure: SlotContent<SliderContext> = new Compon
 	},
 	template: ` <ng-template [auSlot]="state.structure()" [auSlotProps]="{state, api, directives}" /> `,
 })
-export class SliderComponent extends BaseWidgetDirective<SliderWidget> {
+export class SliderComponent extends BaseWidgetDirective<SliderWidget> implements ControlValueAccessor {
 	/**
 	 * CSS classes to be applied on the widget main container
 	 *
@@ -297,6 +367,28 @@ export class SliderComponent extends BaseWidgetDirective<SliderWidget> {
 	readonly vertical = input(undefined, {alias: 'auVertical', transform: auBooleanAttribute});
 
 	/**
+	 * If `true` the ticks are displayed on the slider
+	 *
+	 * @defaultValue `false`
+	 */
+	readonly showTicks = input(undefined, {alias: 'auShowTicks', transform: auBooleanAttribute});
+
+	/**
+	 * Unit value between the ticks
+	 * If value is set to `0` the {@link stepSize} is used to space the ticks
+	 *
+	 * @defaultValue `0`
+	 */
+	readonly tickInterval = input(undefined, {alias: 'auTickInterval', transform: auNumberAttribute});
+
+	/**
+	 * If `true` the tick values are displayed on the slider
+	 *
+	 * @defaultValue `true`
+	 */
+	readonly showTickValues = input(undefined, {alias: 'auShowTickValues', transform: auBooleanAttribute});
+
+	/**
 	 * An event emitted when slider values are changed
 	 *
 	 * Event payload equals to the updated slider values
@@ -331,6 +423,12 @@ export class SliderComponent extends BaseWidgetDirective<SliderWidget> {
 	readonly handle = input<SlotContent<SliderSlotHandleContext>>(undefined, {alias: 'auHandle'});
 	readonly slotHandleFromContent = contentChild(SliderHandleDirective);
 
+	/**
+	 * Slot to change the ticks
+	 */
+	readonly tick = input<SlotContent<SliderSlotTickContext>>(undefined, {alias: 'auTick'});
+	readonly slotTickFromContent = contentChild(SliderTickDirective);
+
 	constructor() {
 		super(
 			callWidgetFactory({
@@ -339,6 +437,7 @@ export class SliderComponent extends BaseWidgetDirective<SliderWidget> {
 				defaultConfig: {
 					structure: sliderDefaultSlotStructure,
 					handle: sliderDefaultSlotHandle,
+					tick: sliderDefaultSlotTick,
 				},
 				events: {
 					onValuesChange: (event) => {
@@ -354,6 +453,7 @@ export class SliderComponent extends BaseWidgetDirective<SliderWidget> {
 					structure: this.slotStructureFromContent()?.templateRef,
 					handle: this.slotHandleFromContent()?.templateRef,
 					label: this.slotLabelFromContent()?.templateRef,
+					tick: this.slotTickFromContent()?.templateRef,
 				}),
 			}),
 		);

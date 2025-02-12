@@ -22,11 +22,13 @@
 					 class="au-slider-clickable-area-vertical"
 					/>
 					<div
+					 aria-hidden="true"
 					 class="au-slider-label-vertical au-slider-label-vertical-min"
 					>
 						"0"
 					</div>
 					<div
+					 aria-hidden="true"
 					 class="au-slider-label-vertical au-slider-label-vertical-max"
 					>
 						"100"
@@ -42,6 +44,7 @@
 					 style="top: 90%;"
 					/>
 					<div
+					 aria-hidden="true"
 					 class="au-slider-label-vertical au-slider-label-vertical-now"
 					 style="top: 90%;"
 					>
@@ -58,6 +61,7 @@
 					 style="top: 60%;"
 					/>
 					<div
+					 aria-hidden="true"
 					 class="au-slider-label-vertical au-slider-label-vertical-now"
 					 style="top: 60%;"
 					>
@@ -85,15 +89,160 @@
 					 class="au-slider-clickable-area-vertical"
 					/>
 					<div
-					 class="au-slider-label-vertical au-slider-label-vertical-min"
+					 aria-hidden="true"
+					 class="au-slider-label-vertical au-slider-label-vertical-min invisible"
 					>
 						"0"
 					</div>
 					<div
-					 class="au-slider-label-vertical au-slider-label-vertical-max"
+					 aria-hidden="true"
+					 class="au-slider-label-vertical au-slider-label-vertical-max invisible"
 					>
 						"100"
 					</div>
+					<span
+					 aria-hidden="true"
+					 class="au-slider-tick-label au-slider-tick-label-vertical"
+					 style="top: 100%;"
+					>
+						"0"
+					</span>
+					<span
+					 aria-hidden="true"
+					 class="au-slider-tick au-slider-tick-vertical"
+					 style="top: 100%;"
+					>
+						<svg
+						 fill="none"
+						 style="width: var(--bs-slider-tick-secondary-size); height: var(--bs-slider-tick-primary-size);"
+						 xmlns="http://www.w3.org/2000/svg"
+						>
+							<circle
+							 cx="50%"
+							 cy="50%"
+							 fill="var(--bs-slider-tick-selected-color)"
+							 r="50%"
+							/>
+							<circle
+							 cx="50%"
+							 cy="50%"
+							 fill="white"
+							 r="25%"
+							/>
+						</svg>
+					</span>
+					<span
+					 aria-hidden="true"
+					 class="au-slider-tick-label au-slider-tick-label-vertical"
+					 style="top: 75%;"
+					>
+						"25"
+					</span>
+					<span
+					 aria-hidden="true"
+					 class="au-slider-tick au-slider-tick-vertical"
+					 style="top: 75%;"
+					>
+						<svg
+						 fill="none"
+						 style="width: var(--bs-slider-tick-secondary-size); height: var(--bs-slider-tick-primary-size);"
+						 xmlns="http://www.w3.org/2000/svg"
+						>
+							<circle
+							 cx="50%"
+							 cy="50%"
+							 fill="var(--bs-slider-tick-selected-color)"
+							 r="50%"
+							/>
+							<circle
+							 cx="50%"
+							 cy="50%"
+							 fill="white"
+							 r="25%"
+							/>
+						</svg>
+					</span>
+					<span
+					 aria-hidden="true"
+					 class="au-slider-tick-label au-slider-tick-label-vertical"
+					 style="top: 50%;"
+					>
+						"50"
+					</span>
+					<span
+					 aria-hidden="true"
+					 class="au-slider-tick au-slider-tick-vertical"
+					 style="top: 50%;"
+					>
+						<svg
+						 fill="none"
+						 style="width: var(--bs-slider-tick-secondary-size); height: var(--bs-slider-tick-primary-size);"
+						 xmlns="http://www.w3.org/2000/svg"
+						>
+							<circle
+							 cx="50%"
+							 cy="50%"
+							 fill="white"
+							 r="45%"
+							 stroke="var(--bs-slider-tick-neutral-color)"
+							 stroke-width="1.5"
+							/>
+						</svg>
+					</span>
+					<span
+					 aria-hidden="true"
+					 class="au-slider-tick-label au-slider-tick-label-vertical"
+					 style="top: 25%;"
+					>
+						"75"
+					</span>
+					<span
+					 aria-hidden="true"
+					 class="au-slider-tick au-slider-tick-vertical"
+					 style="top: 25%;"
+					>
+						<svg
+						 fill="none"
+						 style="width: var(--bs-slider-tick-secondary-size); height: var(--bs-slider-tick-primary-size);"
+						 xmlns="http://www.w3.org/2000/svg"
+						>
+							<circle
+							 cx="50%"
+							 cy="50%"
+							 fill="white"
+							 r="45%"
+							 stroke="var(--bs-slider-tick-neutral-color)"
+							 stroke-width="1.5"
+							/>
+						</svg>
+					</span>
+					<span
+					 aria-hidden="true"
+					 class="au-slider-tick-label au-slider-tick-label-vertical"
+					 style="top: 0%;"
+					>
+						"100"
+					</span>
+					<span
+					 aria-hidden="true"
+					 class="au-slider-tick au-slider-tick-vertical"
+					 style="top: 0%;"
+					>
+						<svg
+						 fill="none"
+						 style="width: var(--bs-slider-tick-secondary-size); height: var(--bs-slider-tick-primary-size);"
+						 xmlns="http://www.w3.org/2000/svg"
+						>
+							<circle
+							 cx="50%"
+							 cy="50%"
+							 fill="white"
+							 r="45%"
+							 stroke="var(--bs-slider-tick-neutral-color)"
+							 stroke-width="1.5"
+							/>
+						</svg>
+					</span>
 					<button
 					 aria-label="Value"
 					 aria-orientation="vertical"
@@ -104,12 +253,6 @@
 					 role="slider"
 					 style="top: 60%;"
 					/>
-					<div
-					 class="au-slider-label-vertical au-slider-label-vertical-now"
-					 style="top: 60%;"
-					>
-						"40"
-					</div>
 				</div>
 				<div
 				 class="mt-3"

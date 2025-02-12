@@ -6,27 +6,31 @@
 	import customSample from '@agnos-ui/samples/bootstrap/slider/custom';
 	import fullcustomSample from '@agnos-ui/samples/bootstrap/slider/fullCustom';
 	import customAccessibility from '@agnos-ui/samples/bootstrap/slider/accessibility';
+	import withTicks from '@agnos-ui/samples/bootstrap/slider/ticks';
 	import Sample from '$lib/layout/Sample.svelte';
 	import Section from '$lib/layout/Section.svelte';
 </script>
 
 <Section label="Basic slider" level={2}>
-	<Sample title="Basic slider" sample={basicSample} height={627} />
+	<Sample title="Basic slider" sample={basicSample} height={530} />
 </Section>
 <Section label="Range slider" level={2}>
 	<Sample title="Range slider" sample={rangeSample} height={300} />
 </Section>
+<Section label="Slider with ticks" level={2}>
+	<Sample title="Slider with ticks" sample={withTicks} height={426} />
+</Section>
 <Section label="Vertical slider" level={2}>
-	<Sample title="Vertical slider" sample={verticalSample} height={627} />
+	<Sample title="Vertical slider" sample={verticalSample} height={382} />
 </Section>
 <Section label="Right to left slider" level={2}>
-	<Sample title="Right to left slider" sample={rightToLeftSample} height={627} />
+	<Sample title="Right to left slider" sample={rightToLeftSample} height={601} />
 </Section>
 <Section label="Custom slider" level={2}>
 	<Sample title="Custom slider" sample={customSample} height={287} />
 </Section>
 <Section label="Full Custom slider" level={2}>
-	<Sample title="Full custom slider" sample={fullcustomSample} height={380} />
+	<Sample title="Full custom slider" sample={fullcustomSample} height={342} />
 </Section>
 <Section label="Custom Accessibility slider" level={2}>
 	<Sample title="Custom Accessibility slider" sample={customAccessibility} height={120} />

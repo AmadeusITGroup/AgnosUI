@@ -10,7 +10,7 @@ const RightToLeftDemo = () => {
 	return (
 		<>
 			<h2>Horizontal slider</h2>
-			<Slider min={0} max={100} stepSize={1} values={sliderControl} onValuesChange={setSliderControl} rtl />
+			<Slider min={0} max={100} stepSize={1} values={sliderControl} onValuesChange={setSliderControl} rtl showTicks tickInterval={25} />
 			<br />
 			<Slider min={0} max={100} stepSize={1} values={sliderRangeControl} onValuesChange={setSliderRangeControl} rtl />
 			<h2>Vertical slider</h2>

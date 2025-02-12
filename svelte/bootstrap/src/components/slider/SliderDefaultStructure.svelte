@@ -29,6 +29,9 @@
 		{/if}
 	</div>
 {/if}
+{#each state.ticks as tick (tick.position)}
+	<Slot content={state.tick} props={{tick, ...widget}} />
+{/each}
 {#each state.sortedHandles as item, i (item.id)}
 	<Slot content={state.handle} props={{item, ...widget}} />
 	{#if state.showValueLabels && !state.combinedLabelDisplay}

@@ -13,7 +13,17 @@ const VerticalSliderDemo = () => {
 					<div className="mt-3">Form control values: {sliderControl?.join(', ')}</div>
 				</div>
 				<div className="col-6" style={{height: '300px'}}>
-					<Slider min={0} max={100} stepSize={1} vertical values={sliderControlRange} onValuesChange={setSliderControlRange} className="my-0" />
+					<Slider
+						min={0}
+						max={100}
+						stepSize={1}
+						vertical
+						values={sliderControlRange}
+						onValuesChange={setSliderControlRange}
+						className="my-0"
+						showTicks
+						tickInterval={25}
+					/>
 					<div className="mt-3">From control value: {sliderControlRange}</div>
 				</div>
 			</div>

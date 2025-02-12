@@ -3,7 +3,16 @@ import {useDirective} from '@agnos-ui/react-headless/utils/directive';
 import type {PropsWithChildren} from 'react';
 import React from 'react';
 import {useWidgetWithConfig} from '../../config';
-import type {ProgressDisplayOptions, SliderContext, SliderDirectives, SliderHandle, SliderProps, SliderSlotHandleContext} from './slider.gen';
+import type {
+	ProgressDisplayOptions,
+	SliderContext,
+	SliderDirectives,
+	SliderHandle,
+	SliderProps,
+	SliderSlotHandleContext,
+	SliderSlotTickContext,
+	SliderTick,
+} from './slider.gen';
 import {createSlider} from './slider.gen';
 
 /**
@@ -16,6 +25,55 @@ import {createSlider} from './slider.gen';
 export const SliderDefaultSlotHandle = (slotContext: SliderSlotHandleContext) => {
 	return <button {...useDirective<{item: SliderHandle}>(slotContext.directives.handleDirective, {item: slotContext.item})}>&nbsp;</button>;
 };
+
+const TickLabelDisplay = ({directive, tick}: {directive: SliderDirectives['tickLabelDirective']; tick: SliderTick}) => {
+	return <span {...useDirective<{tick: SliderTick}>(directive, {tick})}>{tick.value}</span>;
+};
+
+/**
+ * A functional component that renders a tick element with a directive applied to it.
+ * The directive is provided through the `slotContext` parameter.
+ *
+ * @param slotContext - The context object containing the directives and item for the slider tick.
+ * @returns A tick element with the applied directive.
+ */
+export const SliderDefaultTick = (slotContext: SliderSlotTickContext) => (
+	<>
+		{slotContext.tick.displayLabel && <TickLabelDisplay directive={slotContext.directives.tickLabelDirective} tick={slotContext.tick} />}
+		<span {...useDirective<{tick: SliderTick}>(slotContext.directives.tickDirective, {tick: slotContext.tick})}>
+			{slotContext.tick.selected ? (
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					style={{width: 'var(--bs-slider-tick-secondary-size)', height: 'var(--bs-slider-tick-primary-size)'}}
+					fill="none"
+				>
+					<circle
+						cx="50%"
+						cy="50%"
+						r="50%"
+						fill={slotContext.state.disabled ? 'var(--bs-slider-tick-disabled-color)' : 'var(--bs-slider-tick-selected-color)'}
+					/>
+					<circle cx="50%" cy="50%" r="25%" fill="white" />
+				</svg>
+			) : (
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					style={{width: 'var(--bs-slider-tick-secondary-size)', height: 'var(--bs-slider-tick-primary-size)'}}
+					fill="none"
+				>
+					<circle
+						cx="50%"
+						cy="50%"
+						r="45%"
+						fill="white"
+						stroke={slotContext.state.disabled ? 'var(--bs-slider-tick-disabled-color)' : 'var(--bs-slider-tick-neutral-color)'}
+						strokeWidth="1.5"
+					/>
+				</svg>
+			)}
+		</span>
+	</>
+);
 
 const ProgressDisplay = ({directive, option}: {directive: SliderDirectives['progressDisplayDirective']; option: ProgressDisplayOptions}) => {
 	return <div {...useDirective(directive, {option})} />;
@@ -76,7 +134,9 @@ export const SliderDefaultSlotStructure = (slotContext: SliderContext) => (
 		<div {...useDirective(slotContext.directives.clickableAreaDirective)} />
 		{slotContext.state.showMinMaxLabels && <MinMaxLabels {...slotContext} />}
 		{slotContext.state.showValueLabels && slotContext.state.combinedLabelDisplay && <CombinedLabel {...slotContext} />}
-
+		{slotContext.state.ticks.map((tick) => (
+			<Slot key={tick.position} slotContent={slotContext.state.tick} props={{tick, ...slotContext}} />
+		))}
 		{slotContext.state.sortedHandles.map((item, i) => (
 			<React.Fragment key={item.id}>
 				<Slot slotContent={slotContext.state.handle} props={{item, ...slotContext}} />
@@ -104,6 +164,7 @@ export function Slider(props: PropsWithChildren<Partial<SliderProps>>) {
 	const widgetContext = useWidgetWithConfig(createSlider, props, 'slider', {
 		structure: SliderDefaultSlotStructure,
 		handle: SliderDefaultSlotHandle,
+		tick: SliderDefaultTick,
 	});
 
 	return (

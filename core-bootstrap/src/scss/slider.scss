@@ -3,7 +3,7 @@
 /// Mixin used to redefine css variable for different size of slider
 /// In particular the size bar and the size of the handle
 /// The offset is used to add some space between the text and the slider
-@mixin setSliderSize($barSize, $handleSize, $fontSize, $offset) {
+@mixin setSliderSize($barSize, $handleSize, $fontSize, $offset, $tickPrimarySize, $tickSecondarySize) {
 	--#{variables.$prefix}slider-font-size: #{$fontSize};
 	--#{variables.$prefix}slider-border-radius: calc(#{$barSize} / 2);
 
@@ -15,8 +15,11 @@
 	--#{variables.$prefix}slider-vertical-margin-inline-end: calc((#{$handleSize} - #{$barSize}) / 2 + #{$offset} + 3ch + #{$offset});
 
 	--#{variables.$prefix}slider-handle-size: #{$handleSize};
+	--#{variables.$prefix}slider-tick-primary-size: #{$tickPrimarySize};
+	--#{variables.$prefix}slider-tick-secondary-size: #{$tickSecondarySize};
 
 	--#{variables.$prefix}slider-label-margin-block-start: calc(-1 * (#{$fontSize} * 1.5 + (#{$handleSize} - #{$barSize}) / 2));
+	--#{variables.$prefix}slider-tick-label-margin-block-start: calc(-1 * (#{$fontSize} * 1.5 + (#{$tickPrimarySize} - #{$barSize}) / 2));
 	--#{variables.$prefix}slider-label-vertical-margin-inline-start: calc((#{$handleSize} - #{$barSize}) / 2 + #{$barSize} + #{$offset});
 }
 
@@ -45,6 +48,15 @@
 	--#{variables.$prefix}slider-handle-outline: #{variables.$au-slider-handle-outline};
 	--#{variables.$prefix}slider-handle-focus-box-shadow: #{variables.$au-slider-handle-focus-box-shadow};
 	--#{variables.$prefix}slider-handle-focus-hover-box-shadow: #{variables.$au-slider-handle-focus-hover-box-shadow};
+
+	--#{variables.$prefix}slider-tick-primary-size: #{variables.$au-slider-tick-primary-size};
+	--#{variables.$prefix}slider-tick-secondary-size: #{variables.$au-slider-tick-secondary-size};
+
+	--#{variables.$prefix}slider-tick-neutral-color: #{variables.$au-slider-tick-neutral-color};
+	--#{variables.$prefix}slider-tick-selected-color: #{variables.$au-slider-tick-selected-color};
+	--#{variables.$prefix}slider-tick-disabled-color: #{variables.$au-slider-tick-disabled-color};
+
+	--#{variables.$prefix}slider-tick-label-translate-vertical: #{variables.$au-slider-tick-label-translate-vertical};
 
 	--#{variables.$prefix}slider-progress-color: #{variables.$au-slider-progress-color};
 	--#{variables.$prefix}slider-progress-height: #{variables.$au-slider-progress-height};
@@ -89,7 +101,9 @@
 			variables.$au-slider-bar-size-lg,
 			variables.$au-slider-handle-size-lg,
 			variables.$au-slider-font-size-lg,
-			variables.$au-slider-offset-lg
+			variables.$au-slider-offset-lg,
+			variables.$au-slider-tick-primary-size-lg,
+			variables.$au-slider-tick-secondary-size-lg
 		);
 	}
 
@@ -98,7 +112,9 @@
 			variables.$au-slider-bar-size-sm,
 			variables.$au-slider-handle-size-sm,
 			variables.$au-slider-font-size-sm,
-			variables.$au-slider-offset-sm
+			variables.$au-slider-offset-sm,
+			variables.$au-slider-tick-primary-size-sm,
+			variables.$au-slider-tick-secondary-size-sm
 		);
 	}
 
@@ -111,6 +127,10 @@
 			top: calc(50% - var(--#{variables.$prefix}slider-handle-size) / 2);
 			transform: var(--#{variables.$prefix}slider-translate-horizontal);
 		}
+		.au-slider-tick-horizontal {
+			top: calc(50% - var(--#{variables.$prefix}slider-tick-primary-size) / 2);
+			transform: var(--#{variables.$prefix}slider-translate-horizontal);
+		}
 	}
 
 	&.au-slider-vertical {
@@ -120,6 +140,10 @@
 		margin-inline-end: var(--#{variables.$prefix}slider-vertical-margin-inline-end);
 		.au-slider-handle-vertical {
 			left: calc(50% - var(--#{variables.$prefix}slider-handle-size) / 2);
+			transform: var(--#{variables.$prefix}slider-translate-vertical);
+		}
+		.au-slider-tick-vertical {
+			left: calc(50% - var(--#{variables.$prefix}slider-tick-primary-size) / 2);
 			transform: var(--#{variables.$prefix}slider-translate-vertical);
 		}
 	}
@@ -143,6 +167,31 @@
 		&:focus-visible {
 			box-shadow: var(--#{variables.$prefix}slider-handle-focus-box-shadow);
 		}
+	}
+
+	.au-slider-tick {
+		position: absolute;
+		height: var(--#{variables.$prefix}slider-tick-primary-size);
+		width: var(--#{variables.$prefix}slider-tick-secondary-size);
+		cursor: var(--#{variables.$prefix}slider-clickable-area-cursor);
+
+		// center align the svg along the slider axis
+		svg {
+			display: block;
+		}
+	}
+
+	.au-slider-tick-label {
+		position: absolute;
+		text-wrap: nowrap;
+		transform: var(--#{variables.$prefix}slider-translate-horizontal);
+		margin-block-start: var(--#{variables.$prefix}slider-label-margin-block-start);
+	}
+
+	.au-slider-tick-label-vertical {
+		position: absolute;
+		margin-inline-start: var(--#{variables.$prefix}slider-label-vertical-margin-inline-start);
+		transform: var(--#{variables.$prefix}slider-tick-label-translate-vertical);
 	}
 
 	.au-slider-progress {
@@ -232,10 +281,16 @@
 		cursor: var(--#{variables.$prefix}slider-clickable-area-cursor);
 	}
 
+	.au-slider-clickable-area-with-ticks {
+		cursor: default;
+	}
+
 	&.disabled {
 		cursor: var(--#{variables.$prefix}slider-disabled-cursor);
 		.au-slider-label,
-		.au-slider-label-vertical {
+		.au-slider-label-vertical,
+		.au-slider-tick-label,
+		.au-slider-tick-label-vertical {
 			color: var(--#{variables.$prefix}slider-disabled-color);
 		}
 		.au-slider-progress,
@@ -244,7 +299,8 @@
 			cursor: var(--#{variables.$prefix}slider-disabled-cursor);
 		}
 		.au-slider-clickable-area,
-		.au-slider-clickable-area-vertical {
+		.au-slider-clickable-area-vertical,
+		.au-slider-tick {
 			cursor: var(--#{variables.$prefix}slider-disabled-cursor);
 		}
 	}
