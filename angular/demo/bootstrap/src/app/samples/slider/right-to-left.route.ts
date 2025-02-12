@@ -6,7 +6,7 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 	imports: [SliderComponent, ReactiveFormsModule, FormsModule],
 	template: `
 		<h2>Horizontal slider</h2>
-		<div auSlider auMin="0" auMax="100" auStepSize="1" [formControl]="sliderControl" [auRtl]="true"></div>
+		<div auSlider auMin="0" auMax="100" auStepSize="1" [formControl]="sliderControl" [auRtl]="true" auShowTicks="true" auTickStep="25"></div>
 		<br />
 		<div auSlider auMin="0" auMax="100" auStepSize="1" [formControl]="sliderRangeControl" [auRtl]="true"></div>
 		<h2>Vertical slider</h2>
