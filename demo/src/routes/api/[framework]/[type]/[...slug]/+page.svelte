@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Markdown from '$lib/markdown/Markdown.svelte';
-	import {Alert} from '@agnos-ui/svelte-bootstrap/components/alert';
+	import Alert from '../../../../../../../svelte/demo/src/daisyui/samples/alert/Alert.svelte';
 	import ApiCode from '$lib/api/render/ApiCode.svelte';
 	import ApiHeading from '$lib/api/render/ApiHeading.svelte';
 	import ApiParagraph from '$lib/api/render/ApiParagraph.svelte';
@@ -22,15 +22,11 @@
 </script>
 
 <Header title={data.title} cssFramework={$selectedPackageType$} />
-<Alert type="info" className="p-0 border-0 border-start border-5 border-info" visible dismissible={false}>
-	<div class="alert-container p-3 border border-info rounded-end">
-		<div class="d-flex align-items-center">
-			<span class="d-flex me-2">
-				<Svg svg={biInfoCircleFill} className="icon-16" />
-			</span>
-			<span>
-				All following symbols can be imported from <strong class="text-break">{data.import}</strong>
-			</span>
+<Alert className="alert-info mb-4" visible dismissible={false}>
+	<div class="flex items-center gap-2">
+		<Svg svg={biInfoCircleFill} className="icon-16" />
+		<div class="text-lg">
+			All following symbols can be imported from <strong class="text-wrap">{data.import}</strong>
 		</div>
 	</div>
 </Alert>

@@ -58,5 +58,5 @@
 		Sample not found, make sure to fill the samples.ts file.
 	{/if}
 {:else}
-	<Code language={lang.trim() || 'text'} {code} className="mb-4" />
+	<Code language={lang.trim() || 'text'} {code} className="mb-6" />
 {/if}

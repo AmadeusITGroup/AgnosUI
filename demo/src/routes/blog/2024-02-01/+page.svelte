@@ -10,5 +10,5 @@
 
 <Header title={data.pageMeta.title} />
 <Published date="02/01/2024" author="fbasso" title={data.pageMeta.title} />
-<img src="https://www.agnosui.dev/static/tansu-blog.webp" alt="frontend development" class="mb-3" width="100%" style:aspect-ratio={1024 / 500} />
+<img src="https://www.agnosui.dev/static/tansu-blog.webp" alt="frontend development" class="mb-4" width="100%" style:aspect-ratio={1024 / 500} />
 <Markdown {source} />

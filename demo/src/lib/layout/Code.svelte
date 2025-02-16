@@ -40,7 +40,7 @@
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
-	class={`bg-light-subtle doc p-0 d-flex ${className}`}
+	class={`bg-light-subtle doc p-0 flex ${className}`}
 	onmouseenter={() => (showButton = !noCopy)}
 	onmouseleave={() => (showButton = false)}
 	style:min-height={noCopy ? 'unset' : '60px'}
@@ -50,7 +50,7 @@
 	{/if}
 	{#if showButton}
 		<button
-			class="btn btn-secondary copy d-flex align-items-center justify-content-center"
+			class="btn btn-secondary absolute top-[8px] right-[8px] text-primary copy flex items-center justify-center p-0"
 			aria-label="copy to clipboard"
 			use:tooltip={{content: copied ? 'Copied !' : 'Copy to clipboard'}}
 			onclick={copyCode}><Svg className={`align-middle icon-20`} svg={copied ? clipboardCheck : clipboard} /></button
@@ -58,19 +58,16 @@
 	{/if}
 </div>
 
-<style lang="scss">
+<style>
 	.doc {
-		border: 1px solid #d7d9ea;
+		border: 1px solid var(--color-gray-300);
 		position: relative;
 	}
 	.copy {
-		position: absolute;
-		top: 8px;
-		right: 8px;
 		z-index: 3;
 		width: 44px;
 		height: 44px;
-		border: 1px solid #d7d9ea !important;
+		border: 1px solid var(--color-gray-300) !important;
 		border-radius: 8px;
 	}
 </style>

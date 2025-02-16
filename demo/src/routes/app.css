@@ -1,0 +1,293 @@
+@import 'tailwindcss' source('..');
+@source "../../../svelte/demo/src/daisyui/samples/alert/Alert.svelte";
+
+@import './theme.css';
+
+/* tailwindcss has a reset of the default browser ul so we need this to reset to the browser default and add the padding of bs */
+.reset-ul {
+	ul {
+		padding-left: 2rem;
+		list-style-type: disc;
+	}
+	a:not(.tab, .menu-item, .menu-active) {
+		color: var(--color-primary);
+		text-decoration: underline;
+	}
+}
+
+body {
+	min-height: 100vh;
+}
+
+/* should I use asap tailwindcss all the time: Ex flex flex-nowrap... */
+
+.agnos-ui {
+	padding: 0;
+}
+
+main {
+	display: flex;
+	flex-wrap: nowrap;
+}
+
+.demo-sample {
+	/* should I use w-full here */
+	width: 100%;
+}
+
+.card {
+	background-color: var(--color-base-200);
+}
+
+/* // TODO use color of the color palette! */
+.hljs-keyword {
+	color: #d33948 !important;
+}
+.hljs-built_in {
+	color: #bf5308 !important;
+}
+.hljs-symbol {
+	color: #d33948 !important;
+}
+.hljs-variable {
+	color: #d33948 !important;
+}
+
+h1,
+.h1 {
+	font-size: calc(2.125rem + 0.6vw);
+}
+
+h2,
+.h2 {
+	font-size: calc(1.325rem + 0.6vw);
+}
+
+h3,
+.h3 {
+	font-size: calc(1.3rem + 0.4vw);
+}
+
+h5,
+.h5 {
+	font-size: calc(0.8rem + 0.4vw);
+}
+
+.au-rounded-header {
+	@media (min-width: 768px) {
+		border-top-left-radius: 5px;
+	}
+	@media (min-width: 992px) {
+		border-top-right-radius: 5px;
+	}
+}
+
+.au-rounded {
+	@media (min-width: 768px) {
+		border-top-left-radius: 5px;
+		border-bottom-left-radius: 5px;
+	}
+	@media (min-width: 1292px) {
+		border-top-right-radius: 5px;
+		border-bottom-right-radius: 5px;
+	}
+}
+
+.row {
+	--gutter-x: 1.5rem;
+}
+
+header {
+	&.title {
+		margin-left: calc(var(--gutter-x) * -0.5);
+		margin-right: calc(var(--gutter-x) * -0.5);
+		position: relative;
+
+		.content-tabset {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+
+			.active {
+				border-top-color: var(--color-primary);
+			}
+		}
+	}
+}
+
+@media (prefers-reduced-motion) {
+	::view-transition-group(*),
+	::view-transition-old(*),
+	::view-transition-new(*) {
+		animation: none !important;
+	}
+}
+
+blockquote {
+	border: 1px solid var(--color-gray-300);
+	padding: 0.5rem 1.5rem;
+	> p {
+		margin-bottom: 0;
+	}
+}
+
+.shiki {
+	margin-bottom: 0;
+	padding: 0.5rem 1.5rem;
+	tab-size: 1rem;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	overflow-wrap: anywhere;
+	code {
+		white-space: pre-wrap;
+	}
+	@media (max-width: 991px) {
+		padding: 0.5rem;
+	}
+}
+
+iframe {
+	opacity: 0;
+}
+
+iframe.loaded {
+	opacity: 1;
+}
+
+/* svg and logo handling */
+
+[data-agnos-theme='light'] {
+	.svg.auto {
+		display: none;
+	}
+	.svg.dark {
+		display: none;
+	}
+}
+[data-agnos-theme='auto'] {
+	.svg.light {
+		display: none;
+	}
+	.svg.dark {
+		display: none;
+	}
+}
+[data-agnos-theme='dark'] {
+	.svg.light {
+		display: none;
+	}
+	.svg.auto {
+		display: none;
+	}
+}
+
+.logo-bootstrap {
+	color: #712cf9;
+}
+
+.agnosui-logo-brand {
+	width: 25px;
+	height: auto;
+}
+
+.svg {
+	display: inline-flex;
+	align-items: center;
+
+	> svg {
+		width: 100%;
+		height: 100%;
+		fill: currentColor;
+	}
+
+	&.icon-16 {
+		width: 16px;
+		height: 16px;
+	}
+	&.icon-20 {
+		width: 20px;
+		height: 20px;
+	}
+	&.icon-24 {
+		width: 24px;
+		height: 24px;
+	}
+	&.icon-32 {
+		width: 32px;
+		height: 32px;
+	}
+}
+
+.agnos-ui-logo {
+	height: 30px;
+}
+
+/* DocSearch */
+@media (prefers-color-scheme: light) {
+	html:not([data-theme='dark']) .DocSearch {
+		--docsearch-primary-color: #26005a;
+		--docsearch-text-color: #212529;
+		--docsearch-highlight-color: var(--docsearch-primary-color);
+		--docsearch-hit-color: #212529;
+		--docsearch-muted-color: #212529;
+	}
+}
+@media (prefers-color-scheme: dark) {
+	html:not([data-theme='light']) .DocSearch {
+		--docsearch-muted-color: var(--color-gray-700);
+	}
+}
+[data-theme='light'] .DocSearch {
+	--docsearch-primary-color: #26005a;
+	--docsearch-text-color: #212529;
+	--docsearch-highlight-color: var(--docsearch-primary-color);
+	--docsearch-hit-color: #212529;
+	--docsearch-muted-color: #212529;
+}
+[data-theme='dark'] .DocSearch {
+	--docsearch-muted-color: var(--color-gray-700);
+}
+.DocSearch-Button {
+	margin: 0 !important;
+}
+
+.DocSearch-Hit-content-wrapper {
+	overflow-y: hidden;
+}
+
+@media (max-width: 850px) {
+	.DocSearch-Button-Keys,
+	.DocSearch-Button-Placeholder {
+		display: none !important;
+	}
+}
+
+.active {
+	font-weight: 600;
+}
+
+/* dark theme */
+[data-theme='dark'] {
+	.iframe-container {
+		background-color: #212529;
+	}
+
+	.shiki,
+	.shiki span {
+		color: var(--shiki-dark) !important;
+		background-color: var(--shiki-dark-bg) !important;
+		font-style: var(--shiki-dark-font-style) !important;
+		font-weight: var(--shiki-dark-font-weight) !important;
+		text-decoration: var(--shiki-dark-text-decoration) !important;
+	}
+	blockquote {
+		background-color: #131313 !important;
+	}
+	.tab-darkonlightbg {
+		/* dark:text-base-100 is not working to investigate */
+		color: var(--color-base-100);
+	}
+}

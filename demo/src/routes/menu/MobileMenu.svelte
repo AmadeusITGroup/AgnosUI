@@ -9,6 +9,8 @@
 	import {page} from '$app/stores';
 
 	let open = $state(false);
+	let isDocActive = $derived($page.route.id?.startsWith('/docs/'));
+	let isBlogActive = $derived($page.route.id?.startsWith('/blog/'));
 
 	function onclose() {
 		open = false;
@@ -16,60 +18,74 @@
 	let isApi = $derived($page.route.id?.startsWith('/api/'));
 </script>
 
-<button
-	class="btn d-flex align-items-center px-0"
-	aria-expanded={open}
-	onclick={() => {
-		open = true;
-	}}
-	aria-label="open the mobile menu"
->
-	<Svg svg={threeDots} className="icon-20 me-1" />
-</button>
+<li>
+	<button
+		class="btn btn-ghost btn-circle hover:bg-secondary-subtle"
+		aria-expanded={open}
+		onclick={() => {
+			open = true;
+		}}
+		aria-label="open the mobile menu"
+	>
+		<Svg svg={threeDots} className="icon-20" />
+	</button>
+</li>
 
 <MobileDialog title="AgnosUI" {open} {onclose}>
-	<nav class="navbar navbar-light flex-column align-items-stretch">
-		<a
-			class={['nav-item nav-link', {active: $page.route.id?.startsWith('/docs/')}]}
-			href="{$pathToRoot$}docs/{$selectedFramework$}/getting-started/introduction"
-			aria-current={$page.route.id?.startsWith('/docs/') ? 'page' : undefined}
-		>
-			Documentation
-		</a>
-		{#if import.meta.env.API}
-			<hr />
+	<ul class="menu menu-xl bg-base-100 w-56">
+		<li>
 			<a
-				class={['nav-link', {active: isApi}]}
-				href="{$pathToRoot$}api/{$selectedApiFramework$}/bootstrap/types"
-				aria-current={isApi ? 'page' : undefined}>API</a
+				class={[{active: isDocActive}, 'hover:bg-secondary-subtle!', 'focus-visible:bg-secondary-subtle!']}
+				href="{$pathToRoot$}docs/{$selectedFramework$}/getting-started/introduction"
+				aria-current={isDocActive ? 'page' : undefined}
 			>
+				Documentation
+			</a>
+		</li>
+		{#if import.meta.env.API}
+			<li>
+				<a
+					class={[{active: isApi}, 'hover:bg-secondary-subtle!', 'focus-visible:bg-secondary-subtle!']}
+					href="{$pathToRoot$}api/{$selectedApiFramework$}/bootstrap/types"
+					aria-current={isApi ? 'page' : undefined}>API</a
+				>
+			</li>
 		{/if}
-		<hr />
-		<a
-			class={['nav-item nav-link', {active: $page.route.id?.startsWith('/blog/')}]}
-			href="{$pathToRoot$}blog/2024-12-06"
-			aria-current={$page.route.id?.startsWith('/blog/') ? 'page' : undefined}
-		>
-			Blog
-		</a>
-		<hr />
-	</nav>
+		<li>
+			<a
+				class={[{active: isBlogActive}, 'hover:bg-secondary-subtle!', 'focus-visible:bg-secondary-subtle!']}
+				href="{$pathToRoot$}blog/2024-12-06"
+				aria-current={isBlogActive ? 'page' : undefined}
+			>
+				Blog
+			</a>
+		</li>
+	</ul>
 
-	<div class="d-flex justify-content-center">
-		<a class="nav-link" href="https://github.com/AmadeusITGroup/AgnosUI" aria-label="link to GitHub repository" target="_blank">
+	<div class="flex justify-center gap-3">
+		<a
+			class="hover:bg-secondary-subtle! focus-visible:bg-secondary-subtle!"
+			href="https://github.com/AmadeusITGroup/AgnosUI"
+			aria-label="link to GitHub repository"
+			target="_blank"
+		>
 			<Svg className="icon-24 align-middle" svg={github} />
 		</a>
-		<a class="nav-link ms-3" href="https://twitter.com/AgnosUI" aria-label="link to twitter / x account" target="_blank">
+		<a
+			class="hover:bg-secondary-subtle! focus-visible:bg-secondary-subtle!"
+			href="https://twitter.com/AgnosUI"
+			aria-label="link to twitter / x account"
+			target="_blank"
+		>
 			<Svg className="icon-24 align-middle" svg={twitter} />
 		</a>
-		<a class="nav-link ms-3" href="https://bsky.app/profile/agnosui.bsky.social" aria-label="link to bluesky profile" target="_blank">
+		<a
+			class="hover:bg-secondary-subtle! focus-visible:bg-secondary-subtle!"
+			href="https://bsky.app/profile/agnosui.bsky.social"
+			aria-label="link to bluesky profile"
+			target="_blank"
+		>
 			<Svg className="icon-24 align-middle" svg={bluesky} />
 		</a>
 	</div>
 </MobileDialog>
-
-<style lang="scss">
-	.nav-link.active {
-		font-weight: 600;
-	}
-</style>

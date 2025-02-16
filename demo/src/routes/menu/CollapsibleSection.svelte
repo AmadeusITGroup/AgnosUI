@@ -49,10 +49,7 @@
 </script>
 
 <div class="mb-2">
-	<button
-		class="btn p-1 d-flex align-items-center btn-header fw-semibold w-100 justify-content-between"
-		aria-expanded={$visible$}
-		onclick={() => toggle()}
+	<button class="btn p-1 flex items-center btn-header font-semibold w-full justify-content-between" aria-expanded={$visible$} onclick={() => toggle()}
 		>{headerText}
 		<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 100 100" class="ms-1">
 			<rect class="horizontal" x="20" y="45" width="60" height="10" fill="currentColor" />
@@ -64,16 +61,16 @@
 	</div>
 </div>
 
-<style lang="scss">
+<style>
 	.btn-header:focus-visible,
 	.btn-header:hover,
 	.btn-header:focus-visible:active {
-		background-color: var(--bs-secondary-bg-subtle);
-		border-color: var(--bs-secondary-bg-subtle);
+		background-color: var(--color-secondary);
+		border-color: var(--color-secondary);
 		color: var(--bs-secondary-color);
 	}
 	.btn-header {
-		color: var(--bs-primary-text-emphasis);
+		color: var(--color-primary);
 	}
 
 	svg {

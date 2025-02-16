@@ -57,7 +57,7 @@
 	</button>
 </td>
 
-<style lang="scss">
+<style>
 	td.value {
 		max-width: 150px;
 	}

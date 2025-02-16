@@ -1,9 +1,8 @@
 <script lang="ts">
-	import {Alert} from '@agnos-ui/svelte-bootstrap/components/alert';
+	import Alert from '../../../../svelte/demo/src/daisyui/samples/alert/Alert.svelte';
 	import biInfoCircleFill from 'bootstrap-icons/icons/info-circle-fill.svg?raw';
 	import {page} from '$app/stores';
 	import Svg from './Svg.svelte';
-	import {untrack} from 'svelte';
 
 	const regex = /\/(components|services)\/([^/]+)/;
 
@@ -12,29 +11,26 @@
 	}: {
 		componentType: string;
 	} = $props();
-	let alert: ReturnType<typeof Alert>;
+	let visible = $state(true);
 
 	let componentName = $derived($page.url.pathname.match(regex)?.[2]);
 	$effect(() => {
 		// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 		componentName;
-		// FIXME untrack was required to fix an unexpected bug, see https://github.com/AmadeusITGroup/AgnosUI/issues/964
-		untrack(() => alert!.api.open());
+		visible = true;
 	});
 </script>
 
-<Alert bind:this={alert} type={'info'} className="p-0 border-0 border-start border-5 border-info">
-	<div class="alert-container p-3 border border-info rounded-end">
-		<div class="d-flex align-items-center">
-			<span class="d-flex me-2">
-				<Svg svg={biInfoCircleFill} className="icon-16" />
-			</span>
-			<span class="me-4">
-				This component is a <strong>{componentType}</strong> component and can be used <strong>without</strong> the Bootstrap CSS.
-			</span>
+<Alert className="alert-info mb-4" bind:visible>
+	<div>
+		<div class="flex items-center mb-2 gap-2">
+			<Svg svg={biInfoCircleFill} className="icon-16" />
+			<div class="text-lg">Component is <strong>{componentType}</strong></div>
 		</div>
-		<hr />
-		Colors of the component are using the Bootstrap CSS vars (along with a default color) so that if you are using bootstrap the component will take your
-		color palette.
+		<div>This component does not require Bootstrap CSS to be used.</div>
+		<div>
+			Colors of the component use the Bootstrap CSS vars (along with a default color) to ensure that if you do include bootstrap, the component will
+			take your color palette.
+		</div>
 	</div>
 </Alert>

@@ -45,7 +45,7 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-auto">
+	<div class="col-auto-layout">
 		<table class="table table-borderless table-sm">
 			<thead>
 				<tr class="border-0 bg-transparent">

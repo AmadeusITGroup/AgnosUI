@@ -11,7 +11,7 @@ const AlertContent = ({state, api, directives, children}: PropsWithChildren<Widg
 	<div role="alert" className={`alert ${state.className}`} {...useDirective(directives.transitionDirective)}>
 		{children}
 		{state.dismissible && (
-			<button className="btn btn-xs btn-circle btn-ghost" onClick={api.close} aria-label={`${state.ariaCloseButtonLabel}`}>
+			<button className="btn btn-circle btn-ghost btn-xs self-start" onClick={api.close} aria-label={`${state.ariaCloseButtonLabel}`}>
 				<CloseIcon />
 			</button>
 		)}

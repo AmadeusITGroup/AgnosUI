@@ -26,19 +26,19 @@
 
 	function badgeFromType(type: string) {
 		if (type === 'interface') {
-			return 'text-bg-success';
+			return 'badge-success';
 		}
 		if (type === 'type alias') {
-			return 'text-bg-danger';
+			return 'badge-error';
 		}
 		if (type === 'class') {
-			return 'text-bg-secondary';
+			return 'badge-neutral';
 		}
 		if (type === 'function') {
-			return 'text-bg-info';
+			return 'badge-info';
 		}
 		if (type === 'constant') {
-			return 'text-bg-warning';
+			return 'badge-warning';
 		}
 	}
 	function svgFromHeaderText() {
@@ -77,16 +77,16 @@
 		.toLowerCase()
 		.replace(/\s/g, '-')
 		.trim()}
-	<div class="d-flex flex-column flex-md-row align-items-start align-items-md-center mb-2 flex-wrap">
-		<h2 {id} class="{headerClassName} text-primary-emphasis">
-			<span class="text-break">{text.slice(text.indexOf('_') + 1)}</span>
+	<div class="flex flex-col md:flex-row items-start md:items-center mb-2 flex-wrap">
+		<h2 {id} class="{headerClassName} text-primary">
+			<span class="text-wrap">{text.slice(text.indexOf('_') + 1)}</span>
 			<a class="anchor-link d-none d-md-inline" href="#{id}" aria-label="link to {text}"><Svg className="icon-24 align-middle" svg={link} /></a>
 		</h2>
-		<span class="ms-md-auto mb-2 badge rounded-pill {badgeFromType(compType)}">{compType}</span>
+		<span class="md:ms-auto mb-2 badge rounded-full {badgeFromType(compType)}">{compType}</span>
 	</div>
 {:else if depth === 3 || depth === 5}
 	{@const svg = svgFromHeaderText()}
-	<div class="{headerClassName} h{depth} text-secondary-emphasis d-flex align-items-center">
+	<div class="{headerClassName} h{depth} text-gray-600 flex items-center">
 		{#if svg}
 			<Svg className="icon-{depth === 3 ? '24' : '20'} align-middle me-2" {svg} />
 		{/if}
@@ -94,12 +94,12 @@
 	</div>
 {:else}
 	{@const id = apiSymbol.toLowerCase() + '-' + text.toLowerCase().replace(/\s/g, '-').trim()}
-	<div class="{headerClassName} h{depth} text-primary-emphasis mt-2" {id}>
+	<div class="{headerClassName} h{depth} text-primary mt-2" {id}>
 		{text}
 	</div>
 {/if}
 
-<style lang="scss">
+<style>
 	.anchor-link {
 		text-decoration: none;
 		opacity: 0;
