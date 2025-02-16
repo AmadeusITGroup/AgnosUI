@@ -13,7 +13,7 @@
 	"devDependencies": {
 		"@angular/core": "^19.0.0",
 		"@typescript-eslint/rule-tester": "^8.17.0",
-		"@vitest/coverage-v8": "^2.1.8",
+		"@vitest/coverage-v8": "^3.0.0",
 		"svelte": "^5.16.0",
 		"svelte-eslint-parser": "^0.43.0"
 	},
