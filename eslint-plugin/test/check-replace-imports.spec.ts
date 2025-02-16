@@ -1,15 +1,10 @@
 import type {InvalidTestCase} from '@typescript-eslint/rule-tester';
 import {RuleTester} from '@typescript-eslint/rule-tester';
 import type {TSESLint} from '@typescript-eslint/utils';
-import {afterAll, describe, test} from 'vitest';
 import {checkReplaceImportsRule} from '../src/check-replace-imports';
 import eslintParser from '@typescript-eslint/parser';
 
-RuleTester.describe = describe;
-RuleTester.it = test;
-RuleTester.afterAll = afterAll;
-
-describe('check-replace-imports', () => {
+RuleTester.describe('check-replace-imports', () => {
 	const ruleTester = new RuleTester({
 		languageOptions: {
 			parser: eslintParser,
