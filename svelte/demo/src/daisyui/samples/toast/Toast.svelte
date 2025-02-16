@@ -29,7 +29,7 @@
 	<div class="alert {state.className}">
 		{@render children()}
 		{#if state.dismissible}
-			<button class="btn btn-xs btn-circle btn-ghost" onclick={api.close} aria-label={state.ariaCloseButtonLabel}>
+			<button class="btn btn-circle btn-ghost btn-xs" onclick={api.close} aria-label={state.ariaCloseButtonLabel}>
 				{@html closeIconSvg}
 			</button>
 		{/if}

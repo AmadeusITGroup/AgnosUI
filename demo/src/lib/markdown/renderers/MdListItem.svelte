@@ -7,6 +7,6 @@
 
 <style>
 	li::marker {
-		color: var(--bs-primary-text-emphasis) !important;
+		color: var(--color-primary) !important;
 	}
 </style>
