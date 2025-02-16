@@ -1,15 +1,10 @@
 import type {InvalidTestCase} from '@typescript-eslint/rule-tester';
 import {RuleTester} from '@typescript-eslint/rule-tester';
 import type {TSESLint} from '@typescript-eslint/utils';
-import {afterAll, describe, test} from 'vitest';
 import {checkDefaultPropsRule} from '../src/check-default-props';
 import eslintParser from '@typescript-eslint/parser';
 
-RuleTester.describe = describe;
-RuleTester.it = test;
-RuleTester.afterAll = afterAll;
-
-describe('check-default-propss', () => {
+RuleTester.describe('check-default-propss', () => {
 	const ruleTester = new RuleTester({
 		languageOptions: {
 			parser: eslintParser,

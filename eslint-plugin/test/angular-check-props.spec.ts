@@ -1,15 +1,11 @@
 import type {InvalidTestCase} from '@typescript-eslint/rule-tester';
 import {RuleTester} from '@typescript-eslint/rule-tester';
 import type {TSESLint} from '@typescript-eslint/utils';
-import {afterAll, describe, test} from 'vitest';
+
 import {angularCheckPropsRule} from '../src/angular-check-props';
 import eslintParser from '@typescript-eslint/parser';
 
-RuleTester.describe = describe;
-RuleTester.it = test;
-RuleTester.afterAll = afterAll;
-
-describe('angular-check-props', () => {
+RuleTester.describe('angular-check-props', () => {
 	const codeTemplate = (classContent: string, widgetProps: string, events = '{}') =>
 		`import { Component, input, output } from "@angular/core";\nfunction auBooleanAttribute(value: unknown): boolean | undefined {return false;}\nfunction auNumberAttribute(value: unknown): number | undefined {return false;}\nimport type {BaseWidgetDirective} from "@agnos-ui/angular-headless";\ninterface MyWidgetProps {\n${widgetProps}\n}\ninterface MyWidget {\n\tpatch(props: Partial<MyWidgetProps>): void\n}\nconst callWidgetFactory: (config: any) => MyWidget;\n@Component({})\nclass MyComponent extends BaseWidgetDirective<any>{\n${classContent}\n\tconstructor(){super(callWidgetFactory({events: ${events}}));}\n}`;
 

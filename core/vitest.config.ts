@@ -4,13 +4,17 @@ export default defineConfig({
 	test: {
 		browser: {
 			enabled: true,
-			name: 'chromium',
 			provider: 'playwright',
 			headless: true,
 			api: {
 				host: '127.0.0.1',
 			},
 			screenshotFailures: false,
+			instances: [
+				{
+					browser: 'chromium',
+				},
+			],
 		},
 		include: ['./**/*.spec.ts'],
 		coverage: {

@@ -6,5 +6,7 @@ export default defineConfig({
 		coverage: {
 			reporter: ['text', 'json', 'html'],
 		},
+		setupFiles: ['test/setup.ts'],
+		testTimeout: 40_000,
 	},
 });
