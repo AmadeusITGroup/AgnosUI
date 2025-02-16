@@ -31,66 +31,63 @@
 
 <header
 	class={[
-		'au-header bg-light pt-3 px-4 px-lg-5 d-flex mb-4 align-items-center title',
+		'au-header bg-light pt-4 px-6 lg:px-12 flex mb-6 items-center title',
 		{
 			'au-rounded': !tabs.length,
 			'au-rounded-header': tabs.length,
-			'pb-5': tabs.length,
-			'pb-3': !tabs.length,
+			'pb-12': tabs.length,
+			'pb-4': !tabs.length,
 		},
 	]}
 >
-	<div class={['w-100 d-flex flex-wrap flex-row-reverse justify-content-between align-items-center', {'pb-3': tabs.length}]}>
-		<div class="d-flex ms-auto gap-2 justify-content-center">
-			{#if status === 'inprogress'}<span class="badge text-bg-warning">In progress</span>{/if}
-			{#if status === 'beta'}<span class="badge text-bg-info">Beta</span>{/if}
+	<div class={['w-full flex flex-wrap flex-row-reverse justify-between items-center', {'pb-4': tabs.length}]}>
+		<div class="flex ms-auto gap-2 justify-content-center">
+			{#if status === 'inprogress'}<span class="badge badge-warning">In progress</span>{/if}
+			{#if status === 'beta'}<span class="badge badge-info">Beta</span>{/if}
 			{#if includesFwk}
-				{#if $selectedApiFramework$ === 'typescript'}<span class="d-block d-md-none p-0"
-						><Svg svg={typescriptLogo} className="icon-24 d-flex position-relative" /></span
+				{#if $selectedApiFramework$ === 'typescript'}<span class="block md:hidden p-0"
+						><Svg svg={typescriptLogo} className="icon-24 flex relative" /></span
 					>{/if}
-				{#if $selectedApiFramework$ === 'react'}<span class="d-block d-md-none p-0"
-						><Svg svg={reactLogo} className="icon-24 d-flex position-relative" /></span
+				{#if $selectedApiFramework$ === 'react'}<span class="block md:hidden p-0"><Svg svg={reactLogo} className="icon-24 flex relative" /></span
 					>{/if}
-				{#if $selectedApiFramework$ === 'angular'}<span class="d-block d-md-none p-0"
-						><Svg svg={angularLogo} className="icon-24 d-flex position-relative" /></span
+				{#if $selectedApiFramework$ === 'angular'}<span class="block md:hidden p-0"><Svg svg={angularLogo} className="icon-24 flex relative" /></span
 					>{/if}
-				{#if $selectedApiFramework$ === 'svelte'}<span class="d-block d-md-none p-0"
-						><Svg svg={svelteLogo} className="icon-24 d-flex position-relative" /></span
+				{#if $selectedApiFramework$ === 'svelte'}<span class="block md:hidden p-0"><Svg svg={svelteLogo} className="icon-24 flex relative" /></span
 					>{/if}
 			{/if}
-			{#if cssFramework === 'bootstrap'}<span class="d-block d-md-none p-0"
-					><Svg svg={bootstrapLogo} className="icon-24 d-flex logo-bootstrap position-relative" /></span
+			{#if cssFramework === 'bootstrap'}<span class="block md:hidden p-0"
+					><Svg svg={bootstrapLogo} className="icon-24 flex logo-bootstrap relative" /></span
 				>{/if}
-			{#if cssFramework === 'daisyUI'}<span class="d-block d-md-none p-0"><Svg svg={daisyUILogo} className="icon-24 d-flex position-relative" /></span
-				>{/if}
-			{#if cssFramework === 'headless'}<span class="d-block d-md-none badge rounded-pill text-bg-info">headless</span>{/if}
+			{#if cssFramework === 'daisyUI'}<span class="block md:hidden p-0"><Svg svg={daisyUILogo} className="icon-24 flex relative" /></span>{/if}
+			{#if cssFramework === 'headless'}<span class="block md:hidden badge rounded-full text-bg-info">headless</span>{/if}
 		</div>
 		<h1 class="text-primary me-3 me-md-none mb-0 p-0 p-md-3 text-center text-md-start">
 			{title}
 		</h1>
 	</div>
 	{#if tabs.length}
-		<ul class="nav-tabs overflow-x-auto overflow-y-hidden px-4 px-lg-5 d-flex flex-nowrap content-tabset justify-content-start nav" role="tablist">
+		<!-- overflow-x-auto overflow-y-hidden px-4 px-lg-5 flex flex-nowrap content-tabset justify-content-start nav -->
+		<div class="tabs tabs-lift content-tabset px-8 lg:px-12" role="tablist">
 			{#each tabs as { title, key, path }}
 				{@const isActive = $selectedTabName$ === key}
-				<li class="nav-item" role="presentation">
-					<a
-						href={`${$pathToRoot$}docs/${$selectedApiFramework$}${path}`}
-						role="tab"
-						class={['nav-link au-nav-link-onlightbg', {active: isActive}]}
-						aria-selected={isActive}
-					>
-						{title}
-					</a>
-				</li>
+				<!-- <li class="nav-item" role="presentation"> -->
+				<a
+					href={`${$pathToRoot$}docs/${$selectedApiFramework$}${path}`}
+					role="tab"
+					class={['tab', {'tab-darkonlightbg': !isActive}, {active: isActive}]}
+					aria-selected={isActive}
+				>
+					{title}
+				</a>
+				<!-- </li> -->
 			{/each}
-		</ul>
+		</div>
 	{/if}
 </header>
 
-<style lang="scss">
+<style>
 	.au-header {
-		position: relative; // already because of title
+		position: relative; /* use utils ? */
 		&:before {
 			content: ' ';
 			display: block;

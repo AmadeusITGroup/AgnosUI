@@ -6,4 +6,4 @@
 	const tocDirective = createTOC((node) => Array.from(node.querySelectorAll('section')));
 </script>
 
-<div use:tocDirective>{@render children()}</div>
+<div class="px-3" use:tocDirective>{@render children()}</div>

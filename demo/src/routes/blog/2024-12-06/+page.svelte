@@ -10,5 +10,5 @@
 
 <Header title={data.pageMeta.title} />
 <Published date="12/06/2024" author="fexbrayat" title={data.pageMeta.title} />
-<img src="https://www.agnosui.dev/static/roadmap1.0.webp" alt="frontend development" class="mb-3" width="100%" style:aspect-ratio={1013 / 495} />
+<img src="https://www.agnosui.dev/static/roadmap1.0.webp" alt="frontend development" class="mb-4" width="100%" style:aspect-ratio={1013 / 495} />
 <Markdown {source} />

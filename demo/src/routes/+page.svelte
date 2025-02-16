@@ -13,45 +13,45 @@
 </svelte:head>
 
 <!-- TODO make a list of component and iterate over it when needed -->
-<div class="container-xxl d-flex flex-column align-items-center pt-md-5">
-	<div class="d-flex flex-md-row flex-column">
-		<div class="order-md-1 order-2">
-			<h1 class="text-primary-emphasis text-sm-start text-center fs-sm-1 mb-md-5 mb-3">
+<div class="container-xxl flex flex-col items-center md:pt-12">
+	<div class="flex md:flex-row flex-col">
+		<div class="md:order-1 order-2">
+			<h1 class="text-primary sm:text-start text-center sm:fs-1 md:mb-12 mb-4">
 				<span
 					><span class="au-clip">AgnosUI</span>
 					<br />
 					Where components shine.</span
 				>
 			</h1>
-			<h2 class="text-primary-emphasis text-sm-start text-center">Perfected component libraries</h2>
-			<div class="d-flex justify-content-center justify-content-md-start">
-				<ul class="au-landing-list">
-					<li class="d-flex align-items-start">
+			<h2 class="text-primary sm:text-start text-center">Perfected component libraries</h2>
+			<div class="flex justify-center md:justify-start">
+				<ul class="au-landing-list pl-8">
+					<li class="flex items-start">
 						<Svg svg={bullet} className="bullet me-3" />Typescript factories
 					</li>
-					<li class="d-flex align-items-start">
+					<li class="flex items-start">
 						<Svg svg={bullet} className="bullet me-3" />Headless wrappers
 					</li>
-					<li class="d-flex align-items-start">
+					<li class="flex items-start">
 						<Svg svg={bullet} className="bullet me-3" />Bootstrap-styled ready-to-use
 					</li>
 				</ul>
 			</div>
 		</div>
-		<div class="order-md-2 order-1 m-auto mb-md-3">
-			<div class="position-relative au-logo-container">
-				<span class="au-blur position-absolute p-4 p-sm-0"></span>
+		<div class="md:order-2 order-1 m-auto md:mb-4">
+			<div class="relative au-logo-container">
+				<span class="au-blur absolute p-4 sm:p-0"></span>
 				<Svg svg={agnosUILogo} className="agnosui-big-logo me-2" />
 			</div>
 		</div>
 	</div>
-	<div class="card-body my-4">
-		<h5 class="card-title pres-card-title mb-4">Get started with</h5>
+	<div class="card-body my-6">
+		<h5 class="card-title pres-card-title mb-6">Get started with</h5>
 		<div class="card-text btn-grid">
 			<div>
 				<a
 					href="docs/angular/getting-started/introduction"
-					class="btn btn-outline-primary rounded-pill d-flex align-items-center justify-content-start px-sm-3"
+					class="btn btn-outline btn-primary rounded-full flex items-center justify-start sm:px-3"
 					aria-label="link to angular examples"
 					title="Angular"
 				>
@@ -62,7 +62,7 @@
 			<div>
 				<a
 					href="docs/react/getting-started/introduction"
-					class="btn btn-outline-primary rounded-pill d-flex align-items-center justify-content-start px-sm-3"
+					class="btn btn-outline btn-primary rounded-full flex items-center justify-start sm:px-3"
 					aria-label="link to react examples"
 					title="React"
 				>
@@ -73,7 +73,7 @@
 			<div>
 				<a
 					href="docs/svelte/getting-started/introduction"
-					class="btn btn-outline-primary rounded-pill d-flex align-items-center justify-content-start px-sm-3"
+					class="btn btn-outline btn-primary rounded-full flex items-center justify-start sm:px-3"
 					aria-label="link to svelte examples"
 					title="Svelte"
 				>
@@ -84,8 +84,8 @@
 		</div>
 	</div>
 </div>
-<div class="au-features container-xxl mt-2 mt-sm-5">
-	<div class="cards row align-content-around">
+<div class="au-features container-xxl mt-2 sm:mt-5">
+	<div class="cards row content-around">
 		<LandingCard title="Framework agnostic">
 			A framework-agnostic core of component factories that provide reactive models and APIs to drive the data. You can use it with any front-end
 			framework.
@@ -111,7 +111,7 @@
 	</div>
 </div>
 <footer class="au-footer pt-2 mt-2">
-	<div class="container-xxl d-flex flex-column align-items-center">
+	<div class="container-xxl flex flex-col items-center">
 		<p>Released under the MIT License.</p>
 		<p>Copyright © 2023 - present Amadeus</p>
 	</div>
@@ -171,9 +171,6 @@
 		list-style-type: none;
 		font-size: 1rem;
 		margin-bottom: 0.5rem;
-		@media (max-width: 768px) {
-			padding-left: 0;
-		}
 
 		:global(.bullet) {
 			width: 20px;
@@ -181,10 +178,10 @@
 			min-width: 20px;
 			min-height: 20px;
 			margin-top: 3px;
-			color: var(--bs-primary-text-emphasis);
+			color: var(--color-primary);
 		}
 	}
 	.au-footer {
-		border-top: 1px solid var(--bs-primary-text-emphasis);
+		border-top: 1px solid var(--color-primary);
 	}
 </style>
