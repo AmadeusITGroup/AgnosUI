@@ -11,7 +11,9 @@ import {ChangeDetectionStrategy, Component, input, model} from '@angular/core';
 				<ng-content />
 				@if (state.closeButton()) {
 					<form method="dialog">
-						<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" [auUse]="directives.closeButtonDirective">✕</button>
+						<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 dark:hover:text-primary" [auUse]="directives.closeButtonDirective">
+							✕
+						</button>
 					</form>
 				}
 			</div>

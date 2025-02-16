@@ -14,6 +14,6 @@
 	});
 </script>
 
-<div class="mb-4 py-2 px-0 px-sm-3">
+<div class="mb-6 py-3 px-0 sm:px-3">
 	<Code {code} language="scss" />
 </div>

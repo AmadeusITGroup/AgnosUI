@@ -1,0 +1,52 @@
+.menu-item {
+	text-decoration: none;
+	outline: none;
+}
+
+.menu-item-sidenav {
+	padding: 0.1rem 0.5rem;
+	border: none;
+
+	@media (min-width: 768px) {
+		border-radius: 5px;
+	}
+
+	&.active,
+	&.menu-active {
+		color: var(--color-primary-content);
+		background-color: var(--color-primary);
+	}
+}
+
+.menu-item-toc {
+	padding: 0.3rem 0.5rem;
+	border: 1px solid var(--color-secondary);
+	border-width: 0 0 0 2px;
+
+	&.active,
+	&.menu-active {
+		border-color: var(--color-primary);
+		border-left-color: var(--color-primary);
+		font-weight: 400;
+	}
+}
+
+.menu:not(.menu-horizontal) {
+	> li ~ li {
+		margin-top: 0.1rem;
+	}
+}
+
+details {
+	> ul > li ~ li {
+		margin-top: 0.1rem;
+	}
+}
+
+.toc-h2 {
+	padding-left: 1rem;
+}
+
+.toc-h3 {
+	padding-left: 1.5rem;
+}

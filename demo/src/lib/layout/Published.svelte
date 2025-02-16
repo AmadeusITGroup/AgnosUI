@@ -57,15 +57,15 @@
 	};
 </script>
 
-<div class="d-flex flex-wrap">
-	<div class="d-flex gap-3">
+<div class="flex flex-wrap">
+	<div class="flex gap-3">
 		<img src={authorLogo[author].icon} alt="Publisher avatar" class="avatar" width="50" height="50" />
 		<div>
 			<strong>{authorLogo[author].title}</strong>
 			<div>Published on {formattedDate}</div>
 		</div>
 	</div>
-	<div class="d-flex flex-grow-1 justify-content-end gap-3 ms-5 align-self-end">
+	<div class="flex grow-1 justify-end gap-4 ms-12 self-end">
 		{#if mounted}
 			{#if canWebShare}
 				<button class="nav-link" aria-label="Share blog post" onclick={webShare}>
@@ -95,7 +95,7 @@
 		{/if}
 	</div>
 </div>
-<hr />
+<div class="divider"></div>
 
 <style>
 	.avatar {
