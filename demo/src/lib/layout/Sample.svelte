@@ -143,7 +143,7 @@
 				{/each}
 			</ul>
 		{/if}
-		<div class="border border-top-0">
+		<div>
 			<Lazy component={() => import('./Code.svelte')} {code} fileName={selectedFileName} language={isPlaceholder ? $selectedFramework$ : undefined}>
 				<div class="spinner-border text-primary-emphasis" role="status">
 					<span class="visually-hidden">Loading...</span>
