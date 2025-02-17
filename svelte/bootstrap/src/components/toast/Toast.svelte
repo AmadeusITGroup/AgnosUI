@@ -34,7 +34,13 @@
 {/snippet}
 
 {#if !state.hidden}
-	<div class={{'toast-dismissible': state.dismissible, 'd-flex': !state.header}} use:transitionDirective use:autoHideDirective use:bodyDirective>
+	<div
+		class={{'toast-dismissible': state.dismissible, 'd-flex': !state.header}}
+		use:transitionDirective
+		use:autoHideDirective
+		use:bodyDirective
+		use:state.eventsDirective={state.id}
+	>
 		<Slot content={state.structure} props={widget} />
 	</div>
 {/if}
