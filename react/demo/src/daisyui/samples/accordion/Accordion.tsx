@@ -50,7 +50,7 @@ export const AccordionItem = (
 			<div
 				role="button"
 				tabIndex={0}
-				{...useDirectives([classDirective, 'collapse-title text-xl font-medium focus-visible:outline-none'], toggleDirective)}
+				{...useDirectives([classDirective, 'collapse-title text-xl font-medium focus-visible:outline-hidden'], toggleDirective)}
 				onKeyDown={onEnter}
 			>
 				{props.header}

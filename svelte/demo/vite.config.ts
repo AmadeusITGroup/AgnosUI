@@ -3,6 +3,7 @@ import {svelte, vitePreprocess} from '@sveltejs/vite-plugin-svelte';
 import {directivesPreprocess} from '@agnos-ui/svelte-preprocess';
 import path from 'path';
 import {alias} from '../../viteAlias';
+import tailwindcss from '@tailwindcss/vite';
 
 // https://vitejs.dev/config/
 export default defineConfig((config) => ({
@@ -35,6 +36,7 @@ export default defineConfig((config) => ({
 				: alias,
 	},
 	plugins: [
+		tailwindcss(),
 		svelte({
 			preprocess: [vitePreprocess(), directivesPreprocess()],
 		}),

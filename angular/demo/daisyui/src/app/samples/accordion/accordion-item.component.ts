@@ -18,7 +18,7 @@ import {AccordionComponent} from './accordion.component';
 			<div
 				role="button"
 				tabindex="0"
-				class="collapse-title text-xl font-medium focus-visible:outline-none"
+				class="collapse-title text-xl font-medium focus-visible:outline-hidden"
 				[auUse]="directives.toggleDirective"
 				(keydown.enter)="api.toggle()"
 			>

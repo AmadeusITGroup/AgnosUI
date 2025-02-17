@@ -101,8 +101,7 @@
 			],
 			"files": [
 				"daisyui/src/**",
-				"postcss.config.js",
-				"tailwind.config.js",
+				".postcssrc.json",
 				"daisyui/tsconfig.build.json",
 				"angular.json",
 				"tsconfig.build.json",
@@ -147,8 +146,7 @@
 			],
 			"files": [
 				"daisyui/src/**",
-				"postcss.config.js",
-				"tailwind.config.js",
+				".postcssrc.json",
 				"daisyui/tsconfig.json",
 				"angular.json",
 				"tsconfig.build.json",
@@ -186,8 +184,8 @@
 		"@angular/build": "^19.0.0",
 		"@angular/cli": "^19.0.0",
 		"@angular/compiler-cli": "^19.0.0",
-		"autoprefixer": "^10.4.20",
-		"daisyui": "^4.12.20",
+		"@tailwindcss/postcss": "^4.0.6",
+		"daisyui": "^5.0.0-beta.8",
 		"postcss": "^8.4.49",
 		"tailwindcss": "^4.0.0",
 		"typescript": "~5.6.3"

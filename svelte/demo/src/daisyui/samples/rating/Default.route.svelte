@@ -7,7 +7,7 @@
 </script>
 
 <Rating bind:rating onHover={(e) => (hovered = e)} onLeave={(e) => (left = e)} />
-<div>
+<div class="mt-2">
 	Current rate: <span id="defaultRating">{rating}</span><br />
 	Hovered: <span id="defaultHovered">{hovered}</span><br />
 	Left: <span id="defaultLeft">{left}</span>

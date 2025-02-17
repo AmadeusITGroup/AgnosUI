@@ -52,7 +52,7 @@
 </script>
 
 <div class="collapse collapse-arrow bg-base-200" use:itemDirective use:transitionDirective>
-	<div role="button" tabindex="0" class="collapse-title text-xl font-medium focus-visible:outline-none" use:toggleDirective {onkeydown}>
+	<div role="button" tabindex="0" class="collapse-title text-xl font-medium focus-visible:outline-hidden" use:toggleDirective {onkeydown}>
 		{@render header()}
 	</div>
 	<div class="collapse-content" use:bodyContainerAttrsDirective>
