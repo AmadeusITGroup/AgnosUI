@@ -14,17 +14,20 @@ import {AccordionComponent} from './accordion.component';
 	selector: 'app-accordion-item',
 	imports: [UseDirective, UseMultiDirective],
 	template: `
-		<div class="collapse collapse-arrow bg-base-200" [auUseMulti]="[directives.itemDirective, directives.transitionDirective]">
+		<div
+			class="collapse collapse-arrow bg-base-100 border border-base-300 has-[:focus-visible]:ring"
+			[auUseMulti]="[directives.itemDirective, directives.transitionDirective]"
+		>
 			<div
 				role="button"
 				tabindex="0"
-				class="collapse-title text-xl font-medium focus-visible:outline-hidden"
+				class="collapse-title font-semibold focus-visible:outline-hidden"
 				[auUse]="directives.toggleDirective"
 				(keydown.enter)="api.toggle()"
 			>
 				<ng-content select="[header]" />
 			</div>
-			<div class="collapse-content" [auUse]="directives.bodyContainerAttrsDirective">
+			<div class="collapse-content text-sm" [auUse]="directives.bodyContainerAttrsDirective">
 				@if (state.shouldBeInDOM()) {
 					<ng-content />
 				}

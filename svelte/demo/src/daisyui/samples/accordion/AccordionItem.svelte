@@ -51,11 +51,11 @@
 	onMount(widget.api.initDone);
 </script>
 
-<div class="collapse collapse-arrow bg-base-200" use:itemDirective use:transitionDirective>
-	<div role="button" tabindex="0" class="collapse-title text-xl font-medium focus-visible:outline-hidden" use:toggleDirective {onkeydown}>
+<div class="collapse collapse-arrow bg-base-100 border border-base-300 has-[:focus-visible]:ring" use:itemDirective use:transitionDirective>
+	<div role="button" tabindex="0" class="collapse-title font-semibold focus-visible:outline-hidden" use:toggleDirective {onkeydown}>
 		{@render header()}
 	</div>
-	<div class="collapse-content" use:bodyContainerAttrsDirective>
+	<div class="collapse-content text-sm" use:bodyContainerAttrsDirective>
 		{#if state.shouldBeInDOM}
 			{@render children()}
 		{/if}

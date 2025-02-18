@@ -26,10 +26,10 @@
 </script>
 
 {#if !state.hidden}
-	<div class="alert {state.className} flex">
+	<div class="alert {state.className}">
 		{@render children()}
 		{#if state.dismissible}
-			<button class="btn btn-sm btn-circle btn-ghost" onclick={api.close} aria-label={state.ariaCloseButtonLabel}>
+			<button class="btn btn-xs btn-circle btn-ghost" onclick={api.close} aria-label={state.ariaCloseButtonLabel}>
 				{@html closeIconSvg}
 			</button>
 		{/if}

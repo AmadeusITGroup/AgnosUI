@@ -24,11 +24,11 @@
 
 <div
 	tabIndex={0}
-	class="collapse bg-base-200"
+	class="collapse collapse-arrow bg-base-100 border border-base-300"
 	use:transition.directives.directive
 	onblur={() => transition.api.hide()}
 	onfocus={() => transition.api.show()}
 >
-	<div class="collapse-title font-medium text-xl">{props.title ?? 'Focus me to see content'}</div>
+	<div class="collapse-title font-semibold">{props.title ?? 'Focus me to see content'}</div>
 	<div class="collapse-content">{@render children()}</div>
 </div>

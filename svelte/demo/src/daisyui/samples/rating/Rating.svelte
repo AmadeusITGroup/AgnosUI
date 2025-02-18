@@ -31,7 +31,7 @@
 			onclick={() => setRating(index + 1)}
 			type="radio"
 			name="rating-1"
-			class="mask mask-star"
+			class="mask mask-star-2 bg-orange-400"
 			aria-label={`${state.ariaLabel} star ${index + 1}`}
 			checked={index + 1 === state.visibleRating}
 		/>
