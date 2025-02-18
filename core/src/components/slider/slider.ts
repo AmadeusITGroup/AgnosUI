@@ -774,7 +774,6 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 				}
 			},
 			touchstart: (event: TouchEvent) => {
-				event.preventDefault();
 				const handleDrag = (e: TouchEvent) => {
 					e.preventDefault();
 					const newCoord = vertical$() ? e.touches[0].clientY : e.touches[0].clientX;
