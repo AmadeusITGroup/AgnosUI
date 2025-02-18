@@ -6,6 +6,7 @@
 	import customSample from '@agnos-ui/samples/bootstrap/slider/custom';
 	import fullcustomSample from '@agnos-ui/samples/bootstrap/slider/fullCustom';
 	import customAccessibility from '@agnos-ui/samples/bootstrap/slider/accessibility';
+	import withTicks from '@agnos-ui/samples/bootstrap/slider/ticks';
 	import Sample from '$lib/layout/Sample.svelte';
 	import Section from '$lib/layout/Section.svelte';
 </script>
@@ -15,6 +16,9 @@
 </Section>
 <Section label="Range slider" level={2}>
 	<Sample title="Range slider" sample={rangeSample} height={300} />
+</Section>
+<Section label="Slider with ticks" level={2}>
+	<Sample title="Slider with ticks" sample={withTicks} height={240} />
 </Section>
 <Section label="Vertical slider" level={2}>
 	<Sample title="Vertical slider" sample={verticalSample} height={627} />
