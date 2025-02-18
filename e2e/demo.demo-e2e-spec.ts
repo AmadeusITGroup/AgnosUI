@@ -50,6 +50,7 @@ test.describe.parallel('Demo Website', () => {
 				await Promise.all(iframes.map((frame) => frame.waitForURL(frame.url())));
 			}
 			expect((await analyze(page)).violations).toEqual([]);
+			await page.emulateMedia({reducedMotion: 'reduce'});
 			await page.evaluate(() => document.documentElement.setAttribute('data-bs-theme', 'dark'));
 			await page.locator('.btn-dark-mode').first().click();
 			await page.locator('.dropdown-menu button:has-text("Dark")').click();

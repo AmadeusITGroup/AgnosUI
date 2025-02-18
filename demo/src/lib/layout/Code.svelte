@@ -32,7 +32,7 @@
 		code
 			? highlighter.codeToHtml(code, {
 					lang: appliedLanguage && langs.includes(appliedLanguage) ? appliedLanguage : 'text',
-					themes: {light: 'light-plus', dark: 'dark-plus'},
+					themes: {light: 'github-light-default', dark: 'github-dark-default'},
 				})
 			: null,
 	);

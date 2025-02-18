@@ -1,4 +1,4 @@
-<script module>
+<script lang="ts" module>
 	const STEP_SIZE = 86400000; // 1 day in milliseconds
 	const MIN = 1733007600000; // 01-12-2024
 	const MAX = 1735599600000; // 31-12-2024
