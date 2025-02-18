@@ -27,7 +27,7 @@
 	<div class="join {state.className}">
 		{#if state.boundaryLinks}
 			<button
-				class="join-item btn btn-outline"
+				class="join-item btn"
 				aria-label={state.ariaFirstLabel}
 				onclick={() => first()}
 				disabled={state.previousDisabled}
@@ -39,7 +39,7 @@
 		{/if}
 		{#if state.directionLinks}
 			<button
-				class="join-item btn btn-outline"
+				class="join-item btn"
 				disabled={state.previousDisabled}
 				aria-label={state.ariaPreviousLabel}
 				onclick={() => previous()}
@@ -51,7 +51,7 @@
 		{/if}
 		{#each state.pages as page}
 			<button
-				class={['join-item btn btn-outline', {'btn-active': page === state.page}]}
+				class={['join-item btn', page === state.page && 'btn-active']}
 				aria-current={page === state.page ? 'page' : null}
 				tabindex={page === -1 ? -1 : state.disabled ? -1 : undefined}
 				onclick={page === -1 ? () => {} : () => select(page)}
@@ -62,7 +62,7 @@
 		{/each}
 		{#if state.directionLinks}
 			<button
-				class="join-item btn btn-outline"
+				class="join-item btn"
 				disabled={state.nextDisabled}
 				aria-label={state.ariaNextLabel}
 				onclick={() => next()}
@@ -74,7 +74,7 @@
 		{/if}
 		{#if state.boundaryLinks}
 			<button
-				class="join-item btn btn-outline"
+				class="join-item btn"
 				aria-label={state.ariaLastLabel}
 				onclick={() => last()}
 				disabled={state.nextDisabled}

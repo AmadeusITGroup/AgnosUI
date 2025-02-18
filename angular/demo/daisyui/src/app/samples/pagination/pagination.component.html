@@ -2,7 +2,7 @@
 	<div class="join" [class]="state.className()">
 		@if (state.boundaryLinks()) {
 			<button
-				class="join-item btn btn-outline"
+				class="join-item btn"
 				[attr.aria-label]="state.ariaFirstLabel()"
 				(click)="api.first()"
 				[disabled]="state.previousDisabled()"
@@ -14,7 +14,7 @@
 		}
 		@if (state.directionLinks()) {
 			<button
-				class="join-item btn btn-outline"
+				class="join-item btn"
 				[attr.aria-label]="state.ariaPreviousLabel()"
 				(click)="api.previous()"
 				[disabled]="state.previousDisabled()"
@@ -26,7 +26,7 @@
 		}
 		@for (page of state.pages(); track page; let i = $index) {
 			<button
-				class="join-item btn btn-outline"
+				class="join-item btn"
 				[class.btn-active]="page === state.page()"
 				[attr.aria-current]="page === state.page() ? 'page' : null"
 				[attr.tabindex]="state.disabled() ? -1 : undefined"
@@ -41,7 +41,7 @@
 		}
 		@if (state.directionLinks()) {
 			<button
-				class="join-item btn btn-outline"
+				class="join-item btn"
 				[attr.aria-label]="state.ariaNextLabel()"
 				(click)="api.next()"
 				[disabled]="state.nextDisabled()"
@@ -53,7 +53,7 @@
 		}
 		@if (state.boundaryLinks()) {
 			<button
-				class="join-item btn btn-outline"
+				class="join-item btn"
 				[attr.aria-label]="state.ariaLastLabel()"
 				(click)="api.last()"
 				[disabled]="state.nextDisabled()"

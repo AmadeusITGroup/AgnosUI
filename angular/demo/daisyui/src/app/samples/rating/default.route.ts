@@ -5,7 +5,7 @@ import {Component} from '@angular/core';
 	imports: [RatingComponent],
 	template: `
 		<app-rating [(rating)]="rating" (hover)="hovered = $event" (leave)="left = $event" />
-		<div>
+		<div class="mt-2">
 			Current rate: <span id="defaultRating">{{ rating }}</span
 			><br />
 			Hovered: <span id="defaultHovered">{{ hovered }}</span

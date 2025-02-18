@@ -22,12 +22,12 @@ export const Collapse = (props: PropsWithChildren<Partial<{title: string; onHidd
 		<>
 			<div
 				tabIndex={0}
-				className="collapse bg-base-200"
+				className="collapse collapse-arrow bg-base-100 border border-base-300"
 				{...useDirective(transition.directives.directive)}
 				onBlur={() => transition.api.hide()}
 				onFocus={() => transition.api.show()}
 			>
-				<div className="collapse-title font-medium text-xl">{props.title ?? 'Focus me to see content'}</div>
+				<div className="collapse-title font-semibold">{props.title ?? 'Focus me to see content'}</div>
 				<div className="collapse-content">{props.children}</div>
 			</div>
 		</>

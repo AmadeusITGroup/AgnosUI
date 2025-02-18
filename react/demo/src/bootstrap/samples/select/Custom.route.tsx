@@ -1,7 +1,7 @@
 import {abortPrevious, debounce} from '@agnos-ui/common/samples/utils/debounce';
 import type {SelectItemContext} from '@agnos-ui/react-bootstrap/components/select';
 import {Select} from '@agnos-ui/react-bootstrap/components/select';
-import React, {useCallback, useState} from 'react';
+import {useCallback, useState} from 'react';
 import {useDirective} from '@agnos-ui/react-bootstrap/utils/directive';
 
 import '@agnos-ui/common/samples/select/custom.scss';
@@ -89,11 +89,9 @@ const Custom = () => {
 			/>
 			<span className="fw-bold">Selection: </span>
 			{selected.map((item) => (
-				<React.Fragment key={itemIdFn(item)}>
-					<a href={`${basePageUrl}${item.pageid}`} className="pe-2">
-						{item.title}
-					</a>
-				</React.Fragment>
+				<a key={itemIdFn(item)} href={`${basePageUrl}${item.pageid}`} className="pe-2">
+					{item.title}
+				</a>
 			))}
 			{!selected.length && <>none</>}
 		</div>

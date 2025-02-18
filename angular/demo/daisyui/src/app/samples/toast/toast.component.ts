@@ -7,11 +7,11 @@ import {DomSanitizer} from '@angular/platform-browser';
 	selector: 'app-toast',
 	template: `
 		@if (!state.hidden()) {
-			<div class="alert {{ state.className() }} flex">
+			<div class="alert {{ state.className() }}">
 				<ng-content />
 				@if (state.dismissible()) {
 					<button
-						class="btn btn-sm btn-circle btn-ghost"
+						class="btn btn-xs btn-circle btn-ghost"
 						(click)="api.close()"
 						[attr.aria-label]="state.ariaCloseButtonLabel()"
 						[innerHTML]="closeIcon"

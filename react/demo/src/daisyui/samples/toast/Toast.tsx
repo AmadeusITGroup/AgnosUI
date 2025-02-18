@@ -11,10 +11,10 @@ export const Toast = (
 	return (
 		<>
 			{!state.hidden && (
-				<div className={`alert ${state.className} flex`}>
+				<div className={`alert ${state.className}`}>
 					{props.children}
 					{state.dismissible && (
-						<button className="btn btn-sm btn-circle btn-ghost" onClick={api.close} aria-label={`${state.ariaCloseButtonLabel}`}>
+						<button className="btn btn-xs btn-circle btn-ghost" onClick={api.close} aria-label={`${state.ariaCloseButtonLabel}`}>
 							<CloseIcon />
 						</button>
 					)}

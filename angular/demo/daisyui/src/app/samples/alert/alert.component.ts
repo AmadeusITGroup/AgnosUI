@@ -17,11 +17,11 @@ import {DomSanitizer} from '@angular/platform-browser';
 	imports: [UseDirective],
 	template: `
 		@if (!state.hidden()) {
-			<div role="alert" class="flex alert {{ state.className() }}" [auUse]="directives.transitionDirective">
+			<div role="alert" class="alert {{ state.className() }}" [auUse]="directives.transitionDirective">
 				<ng-content />
 				@if (state.dismissible()) {
 					<button
-						class="btn btn-sm btn-circle btn-ghost ms-auto"
+						class="btn btn-xs btn-circle btn-ghost"
 						(click)="api.close()"
 						[attr.aria-label]="state.ariaCloseButtonLabel()"
 						[innerHTML]="closeIcon"

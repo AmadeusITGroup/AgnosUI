@@ -1,4 +1,4 @@
-import {createFilter} from 'vite';
+import {createFilter} from '@rollup/pluginutils';
 import path from 'path';
 
 export const rootFolder = path.join(import.meta.dirname, '..', '..', '..');

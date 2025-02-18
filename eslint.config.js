@@ -147,7 +147,7 @@ export default tseslint.config(
 	},
 	// files using node apis
 	{
-		files: ['**/scripts/**/*.js', '**/tailwind.config.js', 'verdaccio/publish.js', 'react/ssr-app/server.js', '**/svelte.config.js'],
+		files: ['**/scripts/**/*.js', 'verdaccio/publish.js', 'react/ssr-app/server.js', '**/svelte.config.js'],
 
 		languageOptions: {
 			globals: {

@@ -8,10 +8,10 @@ import type {PropsWithChildren} from 'react';
 import type {WidgetSlotContext} from '@agnos-ui/react-headless/types';
 
 const AlertContent = ({state, api, directives, children}: PropsWithChildren<WidgetSlotContext<AlertWidget>>) => (
-	<div role="alert" className={`flex alert ${state.className}`} {...useDirective(directives.transitionDirective)}>
+	<div role="alert" className={`alert ${state.className}`} {...useDirective(directives.transitionDirective)}>
 		{children}
 		{state.dismissible && (
-			<button className="btn btn-sm btn-circle btn-ghost ms-auto" onClick={api.close} aria-label={`${state.ariaCloseButtonLabel}`}>
+			<button className="btn btn-xs btn-circle btn-ghost" onClick={api.close} aria-label={`${state.ariaCloseButtonLabel}`}>
 				<CloseIcon />
 			</button>
 		)}

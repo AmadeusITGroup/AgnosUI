@@ -13,7 +13,7 @@ export function Pagination(props: Partial<PaginationProps>) {
 			<div className={clsx('join', state.className)}>
 				{state.boundaryLinks && (
 					<button
-						className="join-item btn btn-outline"
+						className="join-item btn"
 						aria-label={state.ariaFirstLabel}
 						onClick={() => first()}
 						disabled={state.previousDisabled}
@@ -25,7 +25,7 @@ export function Pagination(props: Partial<PaginationProps>) {
 				)}
 				{state.directionLinks && (
 					<button
-						className="join-item btn btn-outline"
+						className="join-item btn"
 						disabled={state.previousDisabled}
 						aria-label={state.ariaPreviousLabel}
 						onClick={() => previous()}
@@ -38,7 +38,7 @@ export function Pagination(props: Partial<PaginationProps>) {
 				{state.pages.map((page) => (
 					<button
 						key={page}
-						className={clsx('join-item', 'btn', 'btn-outline', page === state.page ? 'btn-active' : '')}
+						className={clsx('join-item', 'btn', page === state.page && 'btn-active')}
 						aria-current={page === state.page ? 'page' : undefined}
 						tabIndex={page === -1 ? -1 : state.disabled ? -1 : undefined}
 						onClick={page === -1 ? () => {} : () => select(page)}
@@ -50,7 +50,7 @@ export function Pagination(props: Partial<PaginationProps>) {
 				))}
 				{state.directionLinks && (
 					<button
-						className="join-item btn btn-outline"
+						className="join-item btn"
 						disabled={state.nextDisabled}
 						aria-label={state.ariaNextLabel}
 						onClick={() => next()}
@@ -62,7 +62,7 @@ export function Pagination(props: Partial<PaginationProps>) {
 				)}
 				{state.boundaryLinks && (
 					<button
-						className="join-item btn btn-outline"
+						className="join-item btn"
 						aria-label={state.ariaLastLabel}
 						onClick={() => last()}
 						disabled={state.nextDisabled}

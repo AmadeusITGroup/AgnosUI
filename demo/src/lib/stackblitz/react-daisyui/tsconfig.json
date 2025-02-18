@@ -15,5 +15,5 @@
 		"allowJs": true
 	},
 	"include": ["src"],
-	"files": ["postcss.config.js", "tailwind.config.js", "vite.config.ts"]
+	"files": ["vite.config.ts"]
 }

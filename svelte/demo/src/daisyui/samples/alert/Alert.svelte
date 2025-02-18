@@ -39,10 +39,10 @@
 </script>
 
 {#if !state.hidden}
-	<div role="alert" class="flex alert {state.className}" use:transitionDirective>
+	<div role="alert" class="alert {state.className}" use:transitionDirective>
 		{@render children()}
 		{#if state.dismissible}
-			<button class="btn btn-sm btn-circle btn-ghost ms-auto" onclick={api.close} aria-label={state.ariaCloseButtonLabel}>
+			<button class="btn btn-xs btn-circle btn-ghost" onclick={api.close} aria-label={state.ariaCloseButtonLabel}>
 				{@html closeIconSvg}
 			</button>
 		{/if}

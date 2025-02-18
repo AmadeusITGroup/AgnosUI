@@ -1,7 +1,6 @@
 import {type RatingProps, createRating} from '@agnos-ui/react-headless/components/rating';
 import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
 import clsx from 'clsx';
-import React from 'react';
 
 // You can choose here the props from the core you want as inputs
 export function Rating(
@@ -15,20 +14,19 @@ export function Rating(
 	return (
 		<div className={clsx('rating', className)}>
 			{stars.map(({index}) => (
-				<React.Fragment key={index}>
-					<input
-						onMouseLeave={api.leave}
-						onMouseEnter={() => api.setHoveredRating(index + 1)}
-						onClick={() => api.setRating(index + 1)}
-						// React throws a warning if an onChange is not provided.
-						onChange={() => {}}
-						type="radio"
-						name="rating-1"
-						className="mask mask-star"
-						aria-label={`${ariaLabel} star ${index + 1}`}
-						checked={index + 1 === visibleRating}
-					/>
-				</React.Fragment>
+				<input
+					key={index}
+					onMouseLeave={api.leave}
+					onMouseEnter={() => api.setHoveredRating(index + 1)}
+					onClick={() => api.setRating(index + 1)}
+					// React throws a warning if an onChange is not provided.
+					onChange={() => {}}
+					type="radio"
+					name="rating-1"
+					className="mask mask-star-2 bg-orange-400"
+					aria-label={`${ariaLabel} star ${index + 1}`}
+					checked={index + 1 === visibleRating}
+				/>
 			))}
 		</div>
 	);
