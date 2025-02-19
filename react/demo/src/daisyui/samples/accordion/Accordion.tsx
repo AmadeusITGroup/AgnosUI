@@ -46,16 +46,22 @@ export const AccordionItem = (
 	};
 
 	return (
-		<div {...useDirectives([classDirective, 'collapse collapse-arrow bg-base-200'], itemDirective, transitionDirective)}>
+		<div
+			{...useDirectives(
+				[classDirective, 'collapse collapse-arrow bg-base-100 border border-base-300 has-[:focus-visible]:ring'],
+				itemDirective,
+				transitionDirective,
+			)}
+		>
 			<div
 				role="button"
 				tabIndex={0}
-				{...useDirectives([classDirective, 'collapse-title text-xl font-medium focus-visible:outline-none'], toggleDirective)}
+				{...useDirectives([classDirective, 'collapse-title font-semibold focus-visible:outline-hidden'], toggleDirective)}
 				onKeyDown={onEnter}
 			>
 				{props.header}
 			</div>
-			<div className="collapse-content" {...useDirective(bodyContainerAttrsDirective)}>
+			<div className="collapse-content text-sm" {...useDirective(bodyContainerAttrsDirective)}>
 				{shouldBeInDOM && props.children}
 			</div>
 		</div>

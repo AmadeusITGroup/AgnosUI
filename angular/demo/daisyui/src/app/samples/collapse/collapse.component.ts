@@ -13,12 +13,12 @@ import {ChangeDetectionStrategy, Component, input, output} from '@angular/core';
 	template: `
 		<div
 			tabindex="0"
-			class="collapse bg-base-200"
+			class="collapse collapse-arrow bg-base-100 border border-base-300"
 			[auUse]="transition.directives.directive"
 			(blur)="transition.api.hide()"
 			(focus)="transition.api.show()"
 		>
-			<div class="collapse-title font-medium text-xl">{{ title() }}</div>
+			<div class="collapse-title font-semibold">{{ title() }}</div>
 			<div class="collapse-content"><ng-content /></div>
 		</div>
 	`,

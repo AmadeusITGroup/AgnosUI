@@ -13,5 +13,5 @@
 		"allowJs": true
 	},
 	"include": ["src"],
-	"files": ["postcss.config.js", "svelte.config.js", "tailwind.config.js", "vite.config.ts"]
+	"files": ["svelte.config.js", "vite.config.ts"]
 }

@@ -6,7 +6,6 @@ import {NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
 	selector: 'app-rating',
-
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	templateUrl: './rating.component.html',
 	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => RatingComponent), multi: true}],

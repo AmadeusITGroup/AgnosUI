@@ -9,7 +9,7 @@ const DaisyUIDemo = () => {
 	return (
 		<>
 			<Rating rating={rating} onRatingChange={setRating} onHover={setHover} onLeave={setLeft} />
-			<div>
+			<div className="mt-2">
 				Current rate: <span id="defaultRating">{rating}</span>
 				<br />
 				Hovered: <span id="defaultHovered">{hover}</span>

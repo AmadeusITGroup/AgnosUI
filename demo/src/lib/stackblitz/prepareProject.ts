@@ -18,7 +18,7 @@ export const createBaseFrameworkProcessors = (): Record<Frameworks, StackblitzPr
 				`import {bootstrapApplication} from '@angular/platform-browser';\nimport MainComponent from './${sample.files.angular.entryPoint.replace(
 					/\.ts$/,
 					'',
-				)}';\nbootstrapApplication(MainComponent).catch((err) => console.error(err));`;
+				)}';\n${isDaisyuiCondition(sample) ? `import '@tailwindcss/browser';\n` : ''}\nbootstrapApplication(MainComponent).catch((err) => console.error(err));`;
 		},
 	],
 	react: [
@@ -32,7 +32,7 @@ export const createBaseFrameworkProcessors = (): Record<Frameworks, StackblitzPr
 		(project, sample) => {
 			project.files['src/main.tsx'] = `import {createRoot} from "react-dom/client";\nimport "./main.css";\nimport App from ${JSON.stringify(
 				`./${sample.files.react.entryPoint.replace(/\.tsx?$/, '')}`,
-			)};\nconst rootElement = document.getElementById('root')!;\nconst root = createRoot(rootElement);\nroot.render(<App />)`;
+			)};\n${isDaisyuiCondition(sample) ? `import '@tailwindcss/browser';\n` : ''}\nconst rootElement = document.getElementById('root')!;\nconst root = createRoot(rootElement);\nroot.render(<App />)`;
 		},
 	],
 	svelte: [
@@ -46,7 +46,7 @@ export const createBaseFrameworkProcessors = (): Record<Frameworks, StackblitzPr
 		(project, sample) => {
 			project.files['src/main.ts'] = `import "./main.css";\nimport {mount} from 'svelte';\nimport App from ${JSON.stringify(
 				`./${sample.files.svelte.entryPoint}`,
-			)};\nconst app = mount(App, {target: document.getElementById('root')!});\nexport default app;`;
+			)};\n${isDaisyuiCondition(sample) ? `import '@tailwindcss/browser';\n` : ''}\nconst app = mount(App, {target: document.getElementById('root')!});\nexport default app;`;
 			project.template = 'node';
 		},
 	],
