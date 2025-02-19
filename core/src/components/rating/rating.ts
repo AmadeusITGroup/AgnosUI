@@ -1,11 +1,11 @@
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
-import {computed, writable} from '@amadeus-it-group/tansu';
+import {computed, readable, writable} from '@amadeus-it-group/tansu';
 import type {ConfigValidator, Directive, PropsConfig, Widget} from '../../types';
 import {INVALID_VALUE} from '../../types';
 import {createAttributesDirective} from '../../utils/directive';
 import {clamp, isNumber} from '../../utils/internal/checks';
 import {noop} from '../../utils/func';
-import {bindableProp, stateStores, writablesForProps} from '../../utils/stores';
+import {bindableProp, stateStores, true$, writablesForProps} from '../../utils/stores';
 import {typeBoolean, typeFunction, typeNumber, typeString} from '../../utils/writables';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 
@@ -340,9 +340,9 @@ export function createRating(config?: PropsConfig<RatingProps>): RatingWidget {
 					},
 				},
 				attributes: {
-					role: 'slider',
+					role: readable('slider'),
 					class: className$,
-					'aria-valuemin': 0,
+					'aria-valuemin': readable(0),
 					tabindex: tabindex$,
 					'aria-valuemax': maxRating$,
 					'aria-valuenow': visibleRating$,
@@ -353,7 +353,7 @@ export function createRating(config?: PropsConfig<RatingProps>): RatingWidget {
 					'aria-labelledby': computed(() => ariaLabelledBy$() || undefined),
 				},
 				classNames: {
-					'au-rating': true,
+					'au-rating': true$,
 				},
 			})),
 			starDirective: createAttributesDirective((starContext$: ReadableSignal<{index: number}>) => {
@@ -377,7 +377,7 @@ export function createRating(config?: PropsConfig<RatingProps>): RatingWidget {
 						cursor: computed(() => (interactive$() ? 'pointer' : 'default')),
 					},
 					classNames: {
-						'au-rating-star': true,
+						'au-rating-star': true$,
 					},
 				};
 			}),

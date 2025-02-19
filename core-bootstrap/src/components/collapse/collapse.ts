@@ -1,6 +1,6 @@
 import {createTransition} from '@agnos-ui/core/services/transitions/baseTransitions';
 import type {ConfigValidator, Directive, PropsConfig, Widget} from '@agnos-ui/core/types';
-import {idWithDefault, stateStores, writablesForProps} from '@agnos-ui/core/utils/stores';
+import {idWithDefault, stateStores, true$, writablesForProps} from '@agnos-ui/core/utils/stores';
 import {createAttributesDirective, mergeDirectives} from '@agnos-ui/core/utils/directive';
 import {typeBoolean, typeFunction, typeString} from '@agnos-ui/core/utils/writables';
 import {collapseHorizontalTransition, collapseVerticalTransition} from '../../services/transitions/collapse';
@@ -218,7 +218,7 @@ export function createCollapse(config?: PropsConfig<CollapseProps>): CollapseWid
 						id: id$,
 					},
 					classNames: {
-						'au-collapse': true,
+						'au-collapse': true$,
 					},
 				})),
 			),

@@ -1,5 +1,5 @@
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
-import {asWritable, batch, computed, writable} from '@amadeus-it-group/tansu';
+import {asWritable, batch, computed, readable, writable} from '@amadeus-it-group/tansu';
 import type {Placement} from '@floating-ui/dom';
 import {autoPlacement, offset, size} from '@floating-ui/dom';
 import type {FloatingUI} from '../../services/floatingUI';
@@ -12,7 +12,7 @@ import type {Directive, PropsConfig, Widget} from '../../types';
 import {bindDirective, createAttributesDirective, mergeDirectives} from '../../utils/directive';
 import {generateId} from '../../utils/internal/dom';
 import {noop} from '../../utils/func';
-import {bindableDerived, bindableProp, stateStores, writablesForProps} from '../../utils/stores';
+import {bindableDerived, bindableProp, stateStores, true$, writablesForProps} from '../../utils/stores';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 
 interface SelectCommonPropsAndState<Item> extends WidgetsCommonPropsAndState {
@@ -527,8 +527,8 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 
 	const inputContainerAttributesDirective = createAttributesDirective(() => ({
 		attributes: {
-			role: 'combobox',
-			'aria-haspopup': 'listbox',
+			role: readable('combobox'),
+			'aria-haspopup': readable('listbox'),
 			'aria-expanded': computed(() => `${open$()}`),
 			'aria-controls': computed(() => `${id$()}-menu`),
 		},
@@ -536,11 +536,11 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 
 	const badgeAttributesDirective = createAttributesDirective((itemContext$: ReadableSignal<ItemContext<Item>>) => ({
 		attributes: {
-			tabindex: -1,
+			tabindex: readable(-1),
 			class: badgeClassName$,
 		},
 		classNames: {
-			'au-select-badge': true,
+			'au-select-badge': true$,
 		},
 		events: {
 			keydown: (event: KeyboardEvent) => {
@@ -562,7 +562,7 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 
 	const menuAttributesDirective = createAttributesDirective(() => ({
 		attributes: {
-			role: 'listbox',
+			role: readable('listbox'),
 			id: computed(() => `${id$()}-menu`),
 			'data-popper-placement': placement$,
 			class: menuClassName$,
@@ -574,12 +574,12 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 
 	const itemAttributesDirective = createAttributesDirective((itemContext$: ReadableSignal<ItemContext<Item>>) => ({
 		attributes: {
-			role: 'option',
+			role: readable('option'),
 			'aria-selected': computed(() => `${itemContext$().selected}`),
-			style: 'cursor: pointer',
+			style: readable('cursor: pointer'),
 		},
 		classNames: {
-			'au-select-item': true,
+			'au-select-item': true$,
 			selected: computed(() => itemContext$().selected),
 		},
 		events: {
@@ -589,16 +589,16 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 
 	const inputDirective = createAttributesDirective(() => ({
 		attributes: {
-			id: id$(),
-			type: 'text',
-			'aria-label': ariaLabel$(),
-			'aria-autocomplete': 'list',
-			autocorrect: 'off',
-			autocapitalize: 'none',
-			autocomplete: 'off',
+			id: id$,
+			type: readable('text'),
+			'aria-label': ariaLabel$,
+			'aria-autocomplete': readable('list'),
+			autocorrect: readable('off'),
+			autocapitalize: readable('none'),
+			autocomplete: readable('off'),
 		},
 		classNames: {
-			'au-select-input': true,
+			'au-select-input': true$,
 		},
 		events: {
 			input: (event: Event) => {

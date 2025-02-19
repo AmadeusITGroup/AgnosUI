@@ -1,7 +1,8 @@
-import {computed} from '@amadeus-it-group/tansu';
+import {computed, readable} from '@amadeus-it-group/tansu';
 import {extendWidgetProps} from '../../services/extendWidget';
 import type {ConfigValidator, Directive, PropsConfig, Widget} from '../../types';
 import {createAttributesDirective, directiveSubscribe} from '../../utils/directive';
+import {true$} from '../../utils/stores';
 import {typeBoolean, typeNumberInRangeFactory} from '../../utils/writables';
 import type {CommonAlertApi, CommonAlertDirectives, CommonAlertProps, CommonAlertState, CommonAlertWidget} from '../alert/common';
 import {createCommonAlert, getCommonAlertDefaultConfig} from '../alert/common';
@@ -102,19 +103,19 @@ export function createToast(config?: PropsConfig<ToastProps>): ToastWidget {
 
 	const bodyDirective = createAttributesDirective(() => ({
 		attributes: {
-			role: 'alert',
-			'aria-atomic': 'true',
+			role: readable('alert'),
+			'aria-atomic': readable('true'),
 			class: computed(() => extendedAlert.stores.className$()),
 		},
 		classNames: {
-			'au-toast': true,
-			toast: true,
+			'au-toast': true$,
+			toast: true$,
 		},
 	}));
 
 	const closeButtonDirective = createAttributesDirective(() => ({
 		attributes: {
-			type: 'button',
+			type: readable('button'),
 			'aria-label': computed(() => extendedAlert.stores.ariaCloseButtonLabel$()),
 		},
 		events: {

@@ -1,6 +1,6 @@
 import {computed} from '@amadeus-it-group/tansu';
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
-import {bindableProp, stateStores, writablesForProps} from '../../utils/stores';
+import {bindableProp, stateStores, true$, writablesForProps} from '../../utils/stores';
 import {clamp, isNumber} from '../../utils/internal/checks';
 import {typeBoolean, typeFunction, typeNumber, typeString} from '../../utils/writables';
 import type {ConfigValidator, PropsConfig, Widget, Directive} from '../../types';
@@ -554,7 +554,7 @@ export function createPagination(config?: PropsConfig<PaginationProps>): Paginat
 					'aria-disabled': computed(() => (disabled$() ? 'true' : undefined)),
 				},
 				classNames: {
-					'au-page': true,
+					'au-page': true$,
 				},
 			})),
 			pageFirst: createAttributesDirective(() => ({
@@ -568,7 +568,7 @@ export function createPagination(config?: PropsConfig<PaginationProps>): Paginat
 					'aria-disabled': computed(() => (previousDisabled$() ? 'true' : undefined)),
 				},
 				classNames: {
-					'au-first': true,
+					'au-first': true$,
 				},
 			})),
 			pagePrev: createAttributesDirective(() => ({
@@ -582,7 +582,7 @@ export function createPagination(config?: PropsConfig<PaginationProps>): Paginat
 					'aria-disabled': computed(() => (previousDisabled$() ? 'true' : undefined)),
 				},
 				classNames: {
-					'au-previous': true,
+					'au-previous': true$,
 				},
 			})),
 			pageNext: createAttributesDirective(() => ({
@@ -596,7 +596,7 @@ export function createPagination(config?: PropsConfig<PaginationProps>): Paginat
 					'aria-disabled': computed(() => (nextDisabled$() ? 'true' : undefined)),
 				},
 				classNames: {
-					'au-next': true,
+					'au-next': true$,
 				},
 			})),
 			pageLast: createAttributesDirective(() => ({
@@ -610,7 +610,7 @@ export function createPagination(config?: PropsConfig<PaginationProps>): Paginat
 					'aria-disabled': computed(() => (nextDisabled$() ? 'true' : undefined)),
 				},
 				classNames: {
-					'au-last': true,
+					'au-last': true$,
 				},
 			})),
 		},

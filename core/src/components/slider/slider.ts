@@ -1,11 +1,11 @@
 import type {ReadableSignal, WritableSignal} from '@amadeus-it-group/tansu';
-import {computed, writable} from '@amadeus-it-group/tansu';
+import {computed, readable, writable} from '@amadeus-it-group/tansu';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 import {createAttributesDirective, createBrowserStoreDirective, mergeDirectives} from '../../utils/directive';
 import type {ConfigValidator, Directive, PropsConfig, Widget} from '../../types';
 import {noop} from '../../utils/func';
 import {getDecimalPrecision} from '../../utils/internal/math';
-import {bindableProp, stateStores, writablesForProps} from '../../utils/stores';
+import {bindableProp, stateStores, true$, writablesForProps} from '../../utils/stores';
 import {typeArray, typeBoolean, typeFunction, typeNumber, typeNumberInRangeFactory, typeString} from '../../utils/writables';
 import {createResizeObserver} from '../../services/resizeObserver';
 
@@ -668,7 +668,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			class: stateProps.className$,
 		},
 		classNames: {
-			'au-slider': true,
+			'au-slider': true$,
 			'au-slider-vertical': vertical$,
 			'au-slider-horizontal': horizontal$,
 			disabled: disabled$,
@@ -843,7 +843,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 					height: computed(() => percent(progressContext$().option.height)),
 				},
 				classNames: {
-					'au-slider-progress': true,
+					'au-slider-progress': true$,
 				},
 			})),
 			clickableAreaDirective: createAttributesDirective(() => ({
@@ -862,7 +862,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 				handleEventsDirective,
 				createAttributesDirective((handleContext$: ReadableSignal<{item: SliderHandle}>) => ({
 					attributes: {
-						role: 'slider',
+						role: readable('slider'),
 						'aria-valuemin': min$,
 						'aria-valuemax': max$,
 						'aria-valuenow': computed(() => handleContext$().item.value),
@@ -879,7 +879,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 						top: computed(() => percent(handleDisplayOptions$()[handleContext$().item.id].top)),
 					},
 					classNames: {
-						'au-slider-handle': true,
+						'au-slider-handle': true$,
 						'au-slider-handle-vertical': vertical$,
 						'au-slider-handle-horizontal': horizontal$,
 					},
