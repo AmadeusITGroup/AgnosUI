@@ -1,11 +1,11 @@
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
-import {computed, writable} from '@amadeus-it-group/tansu';
+import {computed, readable, writable} from '@amadeus-it-group/tansu';
 import {createNavManager, type NavManagerItemConfig} from '../../services/navManager';
 import type {Directive} from '../../types';
 import {type ConfigValidator, type PropsConfig, type Widget} from '../../types';
 import {bindDirective, browserDirective, createAttributesDirective, mergeDirectives} from '../../utils/directive';
 import {noop} from '../../utils/func';
-import {stateStores, writablesForProps} from '../../utils/stores';
+import {stateStores, true$, writablesForProps} from '../../utils/stores';
 import {typeArray, typeFunction, typeString} from '../../utils/writables';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 
@@ -349,10 +349,10 @@ export function createTree(config?: PropsConfig<TreeProps>): TreeWidget {
 				const {item} = treeItemContext$();
 				return item === _lastFocusedTreeItem$() ? '0' : '-1';
 			}),
-			type: 'button',
+			type: readable('button'),
 		},
 		classNames: {
-			'au-tree-expand-icon': true,
+			'au-tree-expand-icon': true$,
 			'au-tree-expand-icon-expanded': computed(() => {
 				_toggleChange$();
 				const {item} = treeItemContext$();
@@ -384,8 +384,8 @@ export function createTree(config?: PropsConfig<TreeProps>): TreeWidget {
 			itemToggleDirective: mergeDirectives(treeItemElementDirective, itemToggleAttributesDirective),
 			itemAttributesDirective: createAttributesDirective((treeItemContext$: ReadableSignal<{item: NormalizedTreeItem}>) => ({
 				attributes: {
-					role: 'treeitem',
-					'aria-selected': 'false', // TODO: adapt aria-selected to the actual selected state
+					role: readable('treeitem'),
+					'aria-selected': readable('false'), // TODO: adapt aria-selected to the actual selected state
 					'aria-expanded': computed(() => {
 						const {item} = treeItemContext$();
 						_toggleChange$();

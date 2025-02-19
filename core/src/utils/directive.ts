@@ -5,7 +5,6 @@ import type {AttributeValue, Directive, DirectivesAndOptParam, SSRHTMLElement, S
 import {addEvent, bindAttribute, bindClassName, bindStyle} from './internal/dom';
 import {noop} from './func';
 import {ssrHTMLElement, ssrHTMLElementAttributesAndStyle} from './internal/ssrHTMLElement';
-import {toReadableStore} from './stores';
 import {clsx, type ClassValue} from 'clsx';
 
 /**
@@ -405,21 +404,21 @@ xw
 	 * @remarks
 	 * The `style` attribute must be added separately.
 	 */
-	attributes?: Record<string, AttributeValue | ReadableSignal<AttributeValue>>;
+	attributes?: Record<string, ReadableSignal<AttributeValue>>;
 
 	/**
 	 * Styles to be added to an HTML element.
 	 * @remarks
 	 * Key-value pairs where keys are CSS style properties and values are style values.
 	 */
-	styles?: Partial<Record<StyleKey, StyleValue | ReadableSignal<StyleValue>>>;
+	styles?: Partial<Record<StyleKey, ReadableSignal<StyleValue>>>;
 
 	/**
 	 * Class names to be added to an HTML element.
 	 * @remarks
 	 * Key-value pairs where keys are class names and values indicate whether the class should be added (true) or removed (false).
 	 */
-	classNames?: Record<string, boolean | ReadableSignal<boolean>>;
+	classNames?: Record<string, ReadableSignal<boolean>>;
 }
 
 /**
@@ -455,18 +454,18 @@ export const createAttributesDirective =
 
 		for (const [attributeName, value] of Object.entries(attributes ?? {})) {
 			if (value != null) {
-				unsubscribers.push(bindAttribute(node, attributeName, toReadableStore(value)));
+				unsubscribers.push(bindAttribute(node, attributeName, value));
 			}
 		}
 
-		for (const [styleName, value] of Object.entries(styles ?? {}) as Iterable<[StyleKey, StyleValue | ReadableSignal<StyleValue>]>) {
+		for (const [styleName, value] of Object.entries(styles ?? {}) as Iterable<[StyleKey, ReadableSignal<StyleValue>]>) {
 			if (value) {
-				unsubscribers.push(bindStyle(node, styleName, toReadableStore(value)));
+				unsubscribers.push(bindStyle(node, styleName, value));
 			}
 		}
 
 		for (const [className, value] of Object.entries(classNames ?? {})) {
-			unsubscribers.push(bindClassName(node, className, toReadableStore(value)));
+			unsubscribers.push(bindClassName(node, className, value));
 		}
 
 		return {

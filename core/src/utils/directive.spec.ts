@@ -16,6 +16,7 @@ import {
 	multiDirective,
 	registrationArray,
 } from './directive';
+import {false$, true$} from './stores';
 
 function getDirectiveAttributes<T = void>(directive: Directive<T>, args?: T) {
 	const node = document.createElement('div');
@@ -324,18 +325,18 @@ describe('directive', () => {
 					click: {handler: clickFn},
 				},
 				attributes: {
-					'aria-label': 'a',
-					readonly: true,
-					disabled: false,
-					'aria-disabled': undefined,
+					'aria-label': readable('a'),
+					readonly: true$,
+					disabled: false$,
+					'aria-disabled': readable(undefined),
 				},
 				styles: {
-					cursor: 'pointer',
+					cursor: readable('pointer'),
 					width: undefined,
 				},
 				classNames: {
-					c1: true,
-					c2: false,
+					c1: true$,
+					c2: false$,
 				},
 			}));
 
@@ -387,11 +388,11 @@ describe('directive', () => {
 		test('should work with classnames', () => {
 			const props = {
 				attributes: {
-					class: 'aa bb',
+					class: readable('aa bb'),
 				},
 				classNames: {
-					cc: true,
-					dd: false,
+					cc: true$,
+					dd: false$,
 				},
 			};
 
@@ -522,7 +523,7 @@ describe('directive', () => {
 			const directive1 = createAttributesDirective(() => ({
 				attributes: {
 					readonly: readonly$,
-					class: 'a',
+					class: readable('a'),
 				},
 				styles: {
 					cursor: cursor$,
@@ -535,7 +536,7 @@ describe('directive', () => {
 			const directive2 = createAttributesDirective(() => ({
 				attributes: {
 					disabled: disabled$,
-					class: 'b',
+					class: readable('b'),
 				},
 				styles: {
 					width: width$,

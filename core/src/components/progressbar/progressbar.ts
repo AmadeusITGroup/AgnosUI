@@ -2,7 +2,7 @@ import {clamp} from '../../utils/internal/checks';
 import {typeFunction, typeNumber, typeString} from '../../utils/writables';
 import {stateStores, writablesForProps} from '../../utils/stores';
 import type {ConfigValidator, Directive, PropsConfig, Widget} from '../../types';
-import {computed} from '@amadeus-it-group/tansu';
+import {computed, readable} from '@amadeus-it-group/tansu';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 import {createAttributesDirective} from '../../utils/directive';
 
@@ -166,7 +166,7 @@ export function createProgressbar(config?: PropsConfig<ProgressbarProps>): Progr
 		directives: {
 			ariaDirective: createAttributesDirective(() => ({
 				attributes: {
-					role: 'progressbar',
+					role: readable('progressbar'),
 					'aria-label': ariaLabel$,
 					'aria-valuenow': value$,
 					'aria-valuemin': min$,

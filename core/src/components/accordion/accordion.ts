@@ -1,4 +1,4 @@
-import {stateStores, writablesForProps, normalizeConfigStores, mergeConfigStores, idWithDefault} from '../../utils/stores';
+import {stateStores, writablesForProps, normalizeConfigStores, mergeConfigStores, idWithDefault, true$} from '../../utils/stores';
 import type {TransitionFn} from '../../services/transitions/baseTransitions';
 import {createTransition} from '../../services/transitions/baseTransitions';
 import type {ConfigValidator, Directive, PropsConfig, Widget, WidgetFactory} from '../../types';
@@ -499,7 +499,7 @@ export function createAccordionItem(config?: PropsConfig<AccordionItemProps>): A
 	const bodyContainerAttrsDirective = createAttributesDirective(() => ({
 		attributes: {
 			id: computed(() => `${id$()}-body-container`),
-			class: bodyContainerClassName$(),
+			class: bodyContainerClassName$,
 			'aria-labelledby': computed(() => `${id$()}-toggle`),
 		},
 	}));
@@ -537,13 +537,13 @@ export function createAccordionItem(config?: PropsConfig<AccordionItemProps>): A
 				toggleDirective,
 				createAttributesDirective(() => ({
 					attributes: {
-						type: 'button',
-						class: buttonClassName$(),
+						type: readable('button'),
+						class: buttonClassName$,
 					},
 				})),
 			),
-			headerDirective: createAttributesDirective(() => ({attributes: {class: headerClassName$()}})),
-			bodyDirective: createAttributesDirective(() => ({attributes: {class: bodyClassName$()}})),
+			headerDirective: createAttributesDirective(() => ({attributes: {class: headerClassName$}})),
+			bodyDirective: createAttributesDirective(() => ({attributes: {class: bodyClassName$}})),
 			transitionDirective,
 			bodyContainerAttrsDirective,
 			bodyContainerDirective: mergeDirectives(transitionDirective, bodyContainerAttrsDirective),
@@ -665,7 +665,7 @@ export function factoryCreateAccordion(
 			directives: {
 				accordionDirective: mergeDirectives(
 					directiveSubscribe(action$),
-					createAttributesDirective(() => ({attributes: {class: className$()}, classNames: {'au-accordion': true}})),
+					createAttributesDirective(() => ({attributes: {class: className$}, classNames: {'au-accordion': true$}})),
 				),
 			},
 		};

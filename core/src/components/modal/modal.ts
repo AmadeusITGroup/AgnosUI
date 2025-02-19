@@ -428,7 +428,7 @@ export function createModal(config$?: PropsConfig<ModalProps>): ModalWidget {
 
 	const closeButtonDirective = createAttributesDirective(() => ({
 		attributes: {
-			type: 'button',
+			type: readable('button'),
 			'aria-label': ariaCloseButtonLabel$,
 		},
 		events: {

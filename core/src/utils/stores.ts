@@ -410,3 +410,6 @@ export function idWithDefault(id$: ReadableSignal<string>): ReadableSignal<strin
 	const autoId$ = computed(() => generateId());
 	return computed(() => id$() || autoId$());
 }
+
+export const true$: ReadableSignal<true> = readable(true);
+export const false$: ReadableSignal<false> = readable(false);
