@@ -1,1 +1,0 @@
-import{H as i,E as c,n as d}from"./stores-DX-ADOKq-MSAn3urh.js";const a=()=>{const{element$:n,directive:s}=i();return{dimensions$:c(n,(r,o)=>{if(r===null)return d;const e=new ResizeObserver(t=>{o(t[0])});return e.observe(r),()=>e==null?void 0:e.disconnect()},void 0),directive:s}};export{a as c};
