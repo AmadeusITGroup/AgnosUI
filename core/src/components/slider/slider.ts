@@ -642,14 +642,24 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 		return values.indexOf(closestValue);
 	};
 
+	/**
+	 * Utility to get the clicked percent based on the clicked coordinate
+	 * @param clickedCoordinate numeric value of the clicked coordinate
+	 * @returns percent value of the clicked coordinate
+	 */
+	const getClickedPercent = (clickedCoordinate: number) => {
+		const sliderDomRectSize = sliderDomRectSize$(),
+			sliderDomRectOffset = sliderDomRectOffset$();
+		let clickedPercent = vertical$()
+			? (sliderDomRectSize - clickedCoordinate + sliderDomRectOffset) / sliderDomRectSize
+			: (clickedCoordinate - sliderDomRectOffset) / sliderDomRectSize;
+		clickedPercent = rtl$() ? 1 - clickedPercent : clickedPercent;
+		return clickedPercent;
+	};
+
 	const adjustCoordinate = (clickedCoordinate: number, handleNumber?: number) => {
 		if (interactive$()) {
-			const sliderDomRectSize = sliderDomRectSize$(),
-				sliderDomRectOffset = sliderDomRectOffset$();
-			let clickedPercent = vertical$()
-				? (sliderDomRectSize - clickedCoordinate + sliderDomRectOffset) / sliderDomRectSize
-				: (clickedCoordinate - sliderDomRectOffset) / sliderDomRectSize;
-			clickedPercent = rtl$() ? 1 - clickedPercent : clickedPercent;
+			const clickedPercent = getClickedPercent(clickedCoordinate);
 			const derivedHandleIndex = handleNumber ?? getClosestSliderHandle(clickedPercent);
 			const newValue = clickedPercent * (max$() - min$()) + min$();
 			values$.update((dh) => {
@@ -696,6 +706,70 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			invisible: computed(() => !maxValueLabelDisplay$()),
 		},
 	}));
+
+	/**
+	 * Mousedown even handler that controls `mousemove` and `mouseup` events
+	 * @param event MouseEvent object
+	 * @param handleId optional handle id
+	 */
+	const mouseDown = (event: MouseEvent, handleId?: number) => {
+		event.preventDefault();
+		const currentTarget = event.target as HTMLElement;
+		const handleDrag = (e: MouseEvent) => {
+			e.preventDefault();
+			const newCoord = vertical$() ? e.clientY : e.clientX;
+			currentTarget.focus();
+			if (_prevCoordinate !== newCoord) {
+				_prevCoordinate = newCoord;
+				adjustCoordinate(newCoord, handleId);
+			}
+		};
+		if (interactive$()) {
+			updateSliderSize$.set({});
+			currentTarget.focus();
+			document.addEventListener('mousemove', handleDrag);
+			document.addEventListener(
+				'mouseup',
+				() => {
+					document.removeEventListener('mousemove', handleDrag);
+				},
+				{once: true},
+			);
+		}
+	};
+
+	const touchStart = (event: TouchEvent, handleId?: number) => {
+		const handleDrag = (e: TouchEvent) => {
+			e.preventDefault();
+			const newCoord = vertical$() ? e.touches[0].clientY : e.touches[0].clientX;
+			(event.target as HTMLElement).focus();
+			if (_prevCoordinate !== newCoord) {
+				_prevCoordinate = newCoord;
+				adjustCoordinate(newCoord, handleId);
+			}
+		};
+		if (interactive$()) {
+			updateSliderSize$.set({});
+			(event.target as HTMLElement).focus();
+			document.addEventListener('touchmove', handleDrag, {passive: false});
+			document.addEventListener(
+				'touchend',
+				() => {
+					document.removeEventListener('touchmove', handleDrag);
+					document.removeEventListener('touchcancel', handleDrag);
+				},
+				{once: true},
+			);
+			document.addEventListener(
+				'touchcancel',
+				() => {
+					document.removeEventListener('touchmove', handleDrag);
+					document.removeEventListener('touchend', handleDrag);
+				},
+				{once: true},
+			);
+		}
+	};
 
 	const handleEventsDirective = createAttributesDirective((handleContext$: ReadableSignal<{item: {id: number}}>) => ({
 		events: {
@@ -748,62 +822,10 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 				}
 			},
 			mousedown: (event: MouseEvent) => {
-				event.preventDefault();
-				const currentTarget = event.target as HTMLElement;
-				const handleDrag = (e: MouseEvent) => {
-					e.preventDefault();
-					const newCoord = vertical$() ? e.clientY : e.clientX;
-					currentTarget.focus();
-					if (_prevCoordinate !== newCoord) {
-						_prevCoordinate = newCoord;
-						adjustCoordinate(newCoord, handleContext$().item.id);
-					}
-				};
-				if (interactive$()) {
-					updateSliderSize$.set({});
-					currentTarget.focus();
-					document.addEventListener('mousemove', handleDrag);
-					// TODO mouse up doesn't work outside the handle area
-					document.addEventListener(
-						'mouseup',
-						() => {
-							document.removeEventListener('mousemove', handleDrag);
-						},
-						{once: true},
-					);
-				}
+				mouseDown(event, handleContext$().item.id);
 			},
 			touchstart: (event: TouchEvent) => {
-				const handleDrag = (e: TouchEvent) => {
-					e.preventDefault();
-					const newCoord = vertical$() ? e.touches[0].clientY : e.touches[0].clientX;
-					(event.target as HTMLElement).focus();
-					if (_prevCoordinate !== newCoord) {
-						_prevCoordinate = newCoord;
-						adjustCoordinate(newCoord, handleContext$().item.id);
-					}
-				};
-				if (interactive$()) {
-					updateSliderSize$.set({});
-					(event.target as HTMLElement).focus();
-					document.addEventListener('touchmove', handleDrag, {passive: false});
-					document.addEventListener(
-						'touchend',
-						() => {
-							document.removeEventListener('touchmove', handleDrag);
-							document.removeEventListener('touchcancel', handleDrag);
-						},
-						{once: true},
-					);
-					document.addEventListener(
-						'touchcancel',
-						() => {
-							document.removeEventListener('touchmove', handleDrag);
-							document.removeEventListener('touchend', handleDrag);
-						},
-						{once: true},
-					);
-				}
+				touchStart(event, handleContext$().item.id);
 			},
 		},
 	}));
@@ -848,8 +870,17 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			})),
 			clickableAreaDirective: createAttributesDirective(() => ({
 				events: {
-					click: (event: MouseEvent) => {
-						adjustCoordinate(vertical$() ? event.clientY : event.clientX);
+					mousedown: (event: MouseEvent) => {
+						const clickedCoordinate = vertical$() ? event.clientY : event.clientX;
+						const closestHandle = getClosestSliderHandle(getClickedPercent(clickedCoordinate));
+						adjustCoordinate(clickedCoordinate, closestHandle);
+						mouseDown(event, closestHandle);
+					},
+					touchstart: (event: TouchEvent) => {
+						const clickedCoordinate = vertical$() ? event.touches[0].clientY : event.touches[0].clientX;
+						const closestHandle = getClosestSliderHandle(getClickedPercent(clickedCoordinate));
+						adjustCoordinate(clickedCoordinate, closestHandle);
+						touchStart(event, closestHandle);
 					},
 				},
 				classNames: {
