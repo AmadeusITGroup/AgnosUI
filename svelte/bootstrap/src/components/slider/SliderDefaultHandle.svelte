@@ -41,4 +41,4 @@
 </script>
 
 <!-- svelte-ignore a11y_consider_explicit_label -->
-<button {onkeydown} use:directives.handleDirective={{item}}> &nbsp; </button>
+<button {onkeydown} use:directives.handleDirective={{item}}></button>

@@ -24,7 +24,7 @@ import {createSlider} from './slider.gen';
  * @returns A button element with the applied directive.
  */
 export const SliderDefaultSlotHandle = (slotContext: SliderSlotHandleContext) => {
-	return <button {...useDirective<{item: SliderHandle}>(slotContext.directives.handleDirective, {item: slotContext.item})}>&nbsp;</button>;
+	return <button {...useDirective<{item: SliderHandle}>(slotContext.directives.handleDirective, {item: slotContext.item})}></button>;
 };
 
 const TickLabelDisplay = ({directive, tick}: {directive: SliderDirectives['tickLabelDirective']; tick: SliderTick}) => {
