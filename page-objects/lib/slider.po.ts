@@ -5,6 +5,9 @@ export const sliderSelectors = {
 	rootComponent: '.au-slider',
 	clickableArea: '.au-slider-clickable-area',
 	handle: '.au-slider-handle',
+	tick: '.au-slider-tick',
+	tickLabel: '.au-slider-tick-label',
+	tickLabelVertical: '.au-slider-tick-label-vertical',
 	minLabelHorizontal: '.au-slider-label-min',
 	maxLabelHorizontal: '.au-slider-label-max',
 	minLabelVertical: '.au-slider-label-vertical-min',
@@ -22,6 +25,18 @@ export class SliderPO extends BasePO {
 
 	get locatorHandle(): Locator {
 		return this.locatorRoot.locator(this.selectors.handle);
+	}
+
+	get locatorTick(): Locator {
+		return this.locatorRoot.locator(this.selectors.tick);
+	}
+
+	get locatorTickLabel(): Locator {
+		return this.locatorRoot.locator(this.selectors.tickLabel);
+	}
+
+	get locatorTickLabelVertical(): Locator {
+		return this.locatorRoot.locator(this.selectors.tickLabelVertical);
 	}
 
 	get locatorMinLabelHorizontal(): Locator {
@@ -68,6 +83,22 @@ export class SliderPO extends BasePO {
 	async sliderProgressState() {
 		return this.locatorRoot.locator(this.selectors.progress).evaluateAll((rootNode: HTMLElement[]) => {
 			return rootNode.map((rn) => rn.getAttribute('style'));
+		});
+	}
+
+	/**
+	 * Get the state of the tick elements
+	 * @param locator tick locator (horizontal or vertical)
+	 * @returns state of all the ticks
+	 */
+	async sliderTickLabelState(locator: Locator) {
+		return locator.evaluateAll((rootNode: HTMLElement[]) => {
+			return rootNode.map((rn) => {
+				return {
+					style: rn.getAttribute('style'),
+					innerText: rn.innerText,
+				};
+			});
 		});
 	}
 }

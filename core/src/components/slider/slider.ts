@@ -83,6 +83,36 @@ export interface SliderHandle {
 	ariaLabelledBy: string | undefined;
 }
 
+/**
+ * Represents a tick in a slider component.
+ */
+export interface SliderTick {
+	/**
+	 * CSS classes to be applied on the tick
+	 */
+	className?: string | null;
+	/**
+	 * Visualized optional explanation of the label
+	 */
+	legend?: string | null;
+	/**
+	 * Position of the tick in percent
+	 */
+	position: number;
+	/**
+	 * If `true` the tick has selected style
+	 */
+	selected: boolean;
+	/**
+	 * Value of the tick
+	 */
+	value: number;
+	/**
+	 * If `true` the tick label is displayed
+	 */
+	displayLabel: boolean;
+}
+
 interface SliderCommonPropsAndState extends WidgetsCommonPropsAndState {
 	/**
 	 * Minimum value that can be assigned to the slider
@@ -148,6 +178,13 @@ interface SliderCommonPropsAndState extends WidgetsCommonPropsAndState {
 	showMinMaxLabels: boolean;
 
 	/**
+	 * If `true` the ticks are displayed on the slider
+	 *
+	 * @defaultValue `false`
+	 */
+	showTicks: boolean;
+
+	/**
 	 * It `true` slider display is inversed
 	 *
 	 * @defaultValue `false`
@@ -208,6 +245,11 @@ export interface SliderState extends SliderCommonPropsAndState {
 	 * Check if the slider is interactive, meaning it is not disabled or readonly
 	 */
 	interactive: boolean;
+
+	/**
+	 * Array of ticks to display on the slider component
+	 */
+	ticks: SliderTick[];
 }
 
 /**
@@ -259,6 +301,20 @@ export interface SliderProps extends SliderCommonPropsAndState {
 	 * ```
 	 */
 	onValuesChange: (values: number[]) => void;
+
+	/**
+	 * Unit value between the ticks
+	 *
+	 * @defaultValue `0`
+	 */
+	tickStep: number;
+
+	/**
+	 * If `true` the tick values are displayed on the slider
+	 *
+	 * @defaultValue `true`
+	 */
+	showTickValues: boolean;
 }
 
 /**
@@ -308,6 +364,16 @@ export interface SliderDirectives {
 	 * Directive to apply to the handle when combined label display is not active
 	 */
 	handleLabelDisplayDirective: Directive<{index: number}>;
+
+	/**
+	 * Directive to apply to the slider tick
+	 */
+	tickDirective: Directive<{item: SliderTick}>;
+
+	/**
+	 * Directive to apply to the slider tick label
+	 */
+	tickLabelDirective: Directive<{item: SliderTick}>;
 }
 
 /**
@@ -330,6 +396,9 @@ const defaultSliderConfig: SliderProps = {
 	values: [0],
 	showValueLabels: true,
 	showMinMaxLabels: true,
+	showTicks: false,
+	showTickValues: true,
+	tickStep: 0,
 	rtl: false,
 };
 
@@ -355,6 +424,9 @@ const configValidator: ConfigValidator<SliderProps> = {
 	values: typeArray,
 	showValueLabels: typeBoolean,
 	showMinMaxLabels: typeBoolean,
+	showTicks: typeBoolean,
+	showTickValues: typeBoolean,
+	tickStep: typeNumber,
 	rtl: typeBoolean,
 	className: typeString,
 };
@@ -409,6 +481,11 @@ const getUpdateDirection = (vertical: boolean, rtl: boolean, keysVertical: boole
 	return 1;
 };
 
+/**
+ * Utility to return percent string
+ * @param value numberic percent value
+ * @returns string with % appended to the numberic value
+ */
 const percent = (value: number | null) => (value != null ? `${value}%` : '');
 
 /**
@@ -432,6 +509,9 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			onValuesChange$,
 			showValueLabels$,
 			showMinMaxLabels$,
+			showTicks$,
+			showTickValues$,
+			tickStep$,
 
 			...stateProps
 		},
@@ -537,8 +617,11 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 	const sortedValuesPercent$ = computed(() => [...valuesPercent$()].sort((a, b) => a - b));
 	const minLabelWidth$ = computed(() => (minLabelDomRect$().width / sliderDomRectSize$()) * 100);
 	const maxLabelWidth$ = computed(() => (maxLabelDomRect$().width / sliderDomRectSize$()) * 100);
+	// to remove adjustedShowValueLabels when the intersection of labels is done
+	const adjustedShowValueLabels$ = computed(() => showValueLabels$() && (!showTicks$() || !showTickValues$()));
 	const minValueLabelDisplay$ = computed(() => {
-		if (!showMinMaxLabels$()) {
+		// to remove showTicks check when the intersection of labels is done
+		if (!showMinMaxLabels$() || (showTicks$() && showTickValues$())) {
 			return false;
 		} else if (!showValueLabels$()) {
 			return true;
@@ -549,7 +632,8 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			: !valuesPercent$().some((percent) => percent < minLabelWidth + 1);
 	});
 	const maxValueLabelDisplay$ = computed(() => {
-		if (!showMinMaxLabels$()) {
+		// to remove showTicks check when the intersection of labels is done
+		if (!showMinMaxLabels$() || (showTicks$() && showTickValues$())) {
 			return false;
 		} else if (!showValueLabels$()) {
 			return true;
@@ -622,10 +706,62 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 		}
 	});
 
+	const computeTicks$ = computed(() => {
+		const vertical = vertical$();
+		const min = min$();
+		const max = max$();
+		const rtl = rtl$();
+		const showTickValues = showTickValues$();
+
+		if (!showTicks$()) {
+			return [];
+		}
+		const tickStep = tickStep$() || stepSize$();
+		const tickArray = [];
+		/**
+		 * Utility to decide whether the position is inverted based on the slider orientation
+		 * @param position initial position to check
+		 * @returns postion based on the slider orientation
+		 */
+		const positionCompute = (position: number) => {
+			return !!rtl !== !!vertical ? 100 - position : position;
+		};
+		for (let step = min; step < max; step += tickStep) {
+			const cleanValue = computeCleanValue(step, min, max, _intStepSize$(), _decimalPrecision$());
+			const stepPercent = percentCompute(cleanValue);
+			tickArray.push({position: positionCompute(stepPercent), selected: false, value: cleanValue, displayLabel: showTickValues});
+		}
+		tickArray.push({position: positionCompute(100), selected: false, value: max, displayLabel: showTickValues});
+		return tickArray;
+	});
+
+	const ticks$ = computed(() => {
+		const sortedValues = sortedValues$();
+		/**
+		 * Utility to verify whether the value is in the selected range
+		 * @param value value to check
+		 * @returns ``true`` if the value is in the selected range, ``false`` otherwise
+		 */
+		const isTickSelected = (value: number) => {
+			const isMultiHandle = sortedValues.length > 1;
+			const currentMax = isMultiHandle ? sortedValues[sortedValues.length - 1] : sortedValues[0];
+			const currentMin = isMultiHandle ? sortedValues[0] : 0;
+			return value <= currentMax && value >= currentMin;
+		};
+
+		return computeTicks$().map((tick) => {
+			return {
+				...tick,
+				selected: isTickSelected(tick.value),
+			};
+		});
+	});
+
 	// functions
 	const percentCompute = (value: number) => {
-		const min = min$();
-		return ((value - min) * 100) / (max$() - min);
+		const min = min$(),
+			max = max$();
+		return ((value - min) * 100) / (max - min);
 	};
 	const getClosestSliderHandle = (clickedPercent: number) => {
 		const values = values$();
@@ -824,9 +960,11 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			combinedLabelPositionTop$,
 			progressDisplayOptions$,
 			handleDisplayOptions$,
-			showValueLabels$,
+			showValueLabels$: adjustedShowValueLabels$,
 			showMinMaxLabels$,
+			showTicks$,
 			rtl$,
+			ticks$,
 			...stateProps,
 		}),
 		patch,
@@ -855,6 +993,9 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 				classNames: {
 					'au-slider-clickable-area': horizontal$,
 					'au-slider-clickable-area-vertical': vertical$,
+				},
+				styles: {
+					cursor: computed(() => (showTicks$() ? 'default' : 'pointer')),
 				},
 			})),
 			handleEventsDirective,
@@ -909,6 +1050,33 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 				styles: {
 					left: computed(() => percent(handleDisplayOptions$()[labelDisplayContext$().index].left)),
 					top: computed(() => percent(handleDisplayOptions$()[labelDisplayContext$().index].top)),
+				},
+			})),
+			tickDirective: createAttributesDirective((tickContext$: ReadableSignal<{item: SliderTick}>) => ({
+				classNames: {
+					'au-slider-tick': true$,
+					'au-slider-tick-horizontal': horizontal$,
+					'au-slider-tick-vertical': vertical$,
+				},
+				styles: {
+					left: computed(() => (vertical$() ? null : percent(tickContext$().item.position))),
+					cursor: computed(() => (disabled$() ? 'disabled' : 'pointer')),
+					top: computed(() => (vertical$() ? percent(tickContext$().item.position) : null)),
+				},
+				events: {
+					click: (event: MouseEvent) => {
+						adjustCoordinate(vertical$() ? event.clientY : event.clientX);
+					},
+				},
+			})),
+			tickLabelDirective: createAttributesDirective((tickContext$: ReadableSignal<{item: SliderTick}>) => ({
+				classNames: {
+					'au-slider-tick-label': true$,
+					'au-slider-tick-label-vertical': vertical$,
+				},
+				styles: {
+					left: computed(() => (vertical$() ? null : percent(tickContext$().item.position))),
+					top: computed(() => (vertical$() ? percent(tickContext$().item.position) : null)),
 				},
 			})),
 		},
