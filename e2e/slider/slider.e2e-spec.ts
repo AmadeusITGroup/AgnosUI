@@ -447,6 +447,39 @@ test.describe(`Slider tests`, () => {
 
 			await expect.poll(async () => await sliderPO.sliderHandleState()).toEqual(expectedState);
 		});
+
+		test(`should move the handle on mouse drag event initiated on clickable area`, async ({page}) => {
+			const sliderPO = new SliderPO(page, 1);
+
+			await page.goto('#/slider/range');
+			await sliderPO.locatorRoot.waitFor();
+
+			const expectedState = {...defaultExpectedHandleState};
+			assign(expectedState, [
+				{
+					...expectedState[0],
+					value: '40',
+					style: 'left: 40%;',
+				},
+				{
+					...expectedState[1],
+					value: '75',
+					style: 'left: 75%;',
+				},
+			]);
+
+			const sliderLocator = sliderPO.locatorRoot;
+			const boundingBox = await sliderLocator.boundingBox();
+
+			await page.mouse.move(boundingBox!.x, boundingBox!.y);
+			await page.mouse.down();
+			await page.mouse.move(boundingBox!.x + boundingBox!.width * 0.75, boundingBox!.y);
+			await page.mouse.up();
+
+			await expect.poll(async () => (await sliderPO.sliderHandleState()).at(0)).toEqual(expectedState[0]);
+			expect((await sliderPO.sliderHandleState()).at(1)).toEqual(expectedState[1]);
+			expect((await sliderPO.sliderProgressState())[0]).toEqual('left: 40%; width: 35%; height: 100%;');
+		});
 	});
 
 	test.describe(`Vertical slider`, () => {
