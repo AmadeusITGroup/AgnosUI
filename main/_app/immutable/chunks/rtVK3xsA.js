@@ -1,0 +1,10 @@
+const e=`"use strict";
+Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
+const slider = require("../../slider-DyvRcMCK.cjs");
+exports.Slider = slider.Slider;
+exports.SliderDefaultSlotHandle = slider.SliderDefaultSlotHandle;
+exports.SliderDefaultSlotStructure = slider.SliderDefaultSlotStructure;
+exports.SliderDefaultTick = slider.SliderDefaultTick;
+exports.createSlider = slider.export_createSlider;
+exports.getSliderDefaultConfig = slider.export_getSliderDefaultConfig;
+`;export{e as default};
