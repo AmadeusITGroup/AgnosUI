@@ -1,0 +1,11 @@
+const e=`$au-tree-item-padding-start: 2.25rem !default;
+$au-tree-expand-icon-margin-inline-end: 0.5rem !default;
+$au-tree-expand-icon-border-radius: 0.375rem !default;
+$au-tree-expand-icon-background-color: transparent !default;
+$au-tree-expand-icon-background-color-hover: var(--#{$prefix}blue-100, #cfe2ff) !default;
+$au-tree-expand-icon-width: 2.25rem;
+$au-tree-expand-icon-height: 2.25rem;
+$au-tree-expand-icon-color: #0d6efd !default;
+$au-tree-expand-icon-color-hover: #052c65 !default;
+$au-tree-expand-icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 10 10"><path d="M3 1 L7 5 L3 9" stroke="#{$au-tree-expand-icon-color}" stroke-width="1" fill="none"/></svg>') !default;
+$au-tree-expand-icon-hover: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 10 10"><path d="M3 1 L7 5 L3 9" stroke="#{$au-tree-expand-icon-color-hover}" stroke-width="1" fill="none"/></svg>') !default;`;export{e as default};
