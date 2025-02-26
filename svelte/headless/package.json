@@ -51,7 +51,8 @@
 	},
 	"scripts": {
 		"build": "wireit",
-		"check": "wireit"
+		"check": "wireit",
+		"test": "vitest run"
 	},
 	"wireit": {
 		"generate:exports": {

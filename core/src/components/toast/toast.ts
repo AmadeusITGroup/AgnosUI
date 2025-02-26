@@ -20,6 +20,14 @@ interface ToastExtraProps {
 	 * @defaultValue `5000`
 	 */
 	delay: number;
+	/**
+	 * Directive passed to the Toast so that a parent can intercept the events, for example to pause the dismiss timer.
+	 */
+	eventsDirective?: Directive<number>;
+	/**
+	 * ID
+	 */
+	id?: number;
 }
 
 interface ExtraDirectives {
@@ -65,6 +73,8 @@ export type ToastWidget = Widget<ToastProps, ToastState, ToastApi, ToastDirectiv
 const toastDefaultConfig: ToastExtraProps = {
 	autoHide: true,
 	delay: 5000,
+	id: undefined,
+	eventsDirective: undefined,
 };
 
 const toastConfigValidator: ConfigValidator<ToastExtraProps> = {
