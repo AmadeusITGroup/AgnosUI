@@ -12,15 +12,14 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	Directive,
+	type OnDestroy,
 	TemplateRef,
 	ViewEncapsulation,
-	afterRenderEffect,
 	contentChild,
 	forwardRef,
 	inject,
 	input,
 	output,
-	signal,
 	viewChild,
 } from '@angular/core';
 import {type ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
@@ -62,24 +61,10 @@ export class SliderHandleDirective {
 		</ng-template>
 	`,
 })
-class SliderDefaultHandleSlotComponent {
+class SliderDefaultHandleSlotComponent implements OnDestroy {
 	readonly handle = viewChild.required<TemplateRef<SliderSlotHandleContext>>('handle');
 
-	/**
-	 * When the element moves up the DOM Angluar removes the focus
-	 * To avoid this we need to manually focus the element by calling the HTMLElement.focus
-	 * after the change, afterRenderEffect is executed after each render of the component
-	 * and when the signal inside is changed. On each key stroke we set the `refocus` signal
-	 * to the element that needs to be focused and we put the `equal` function to always return
-	 * `false` in order to trigger the change even when the element is the same
-	 */
-	readonly refocus = signal<HTMLElement | undefined>(undefined, {equal: () => false});
-
-	constructor() {
-		afterRenderEffect(() => {
-			this.refocus()?.focus();
-		});
-	}
+	private updateTimeout?: ReturnType<typeof setTimeout>;
 
 	/**
 	 * Key handler that sets the refocus element only on the key strokes that move
@@ -94,11 +79,18 @@ class SliderDefaultHandleSlotComponent {
 			case 'ArrowUp':
 			case 'ArrowRight':
 			case 'End':
-				this.refocus.set(event.target as HTMLElement);
+				clearTimeout(this.updateTimeout);
+				this.updateTimeout = setTimeout(() => {
+					(event.target as HTMLElement)?.focus();
+				});
 				break;
 			default:
 				break;
 		}
+	}
+
+	ngOnDestroy() {
+		clearTimeout(this.updateTimeout);
 	}
 }
 
