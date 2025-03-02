@@ -2,9 +2,9 @@
 	import {page} from '$app/stores';
 	import {pathToRoot$, selectedFramework$} from '$lib/stores';
 	import {validate, compare} from 'compare-versions';
-	import Dropdown from '$lib/layout/Dropdown.svelte';
 	import type {Version} from './version';
 	import type {DropdownAnchor} from '$lib/layout/dropdown';
+	import DropdownDaisyUI from '$lib/layout/DropdownDaisyUI.svelte';
 
 	let {versions}: {versions: Version[]} = $props();
 
@@ -42,10 +42,15 @@
 	};
 </script>
 
-<div class="nav-item">
-	<Dropdown
+<li>
+	<DropdownDaisyUI
 		ariaLabel="select the version of agnosui"
-		btnClass="nav-link {currentVersion.version === 'PREVIEW' || currentVersion.folder === 'next' ? 'badge text-bg-warning' : ''}"
+		btnClass="hover:bg-secondary-subtle focus-visible:bg-secondary-subtle! active:bg-secondary-subtle! active:text-base-content! {currentVersion.version ===
+			'PREVIEW' || currentVersion.folder === 'next'
+			? 'btn btn-warning btn-xs active:bg-secondary-subtle!'
+			: ''}"
+		dropdownClass=""
+		dropdownContentClass="bg-base-100 p-2"
 		items={versionsWithUrl}
 		placement="end"
 	>
@@ -55,5 +60,5 @@
 		{#snippet itemSnip(item, index)}
 			{versionLabel(index, item.version, includesNext)}
 		{/snippet}
-	</Dropdown>
-</div>
+	</DropdownDaisyUI>
+</li>
