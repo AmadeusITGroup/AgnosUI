@@ -184,7 +184,7 @@
 		"front-matter": "^4.0.2",
 		"marked": "^15.0.3",
 		"prettier-plugin-svelte": "^3.3.2",
-		"shiki": "^2.0.0",
+		"shiki": "^3.0.0",
 		"svelte": "^5.16.0",
 		"svelte-check": "^4.1.1",
 		"tsx": "^4.19.2"
