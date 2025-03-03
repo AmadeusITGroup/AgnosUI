@@ -15,7 +15,7 @@ import {createAlert} from './alert.gen';
 export const AlertDefaultSlotStructure = (slotContext: AlertContext) => (
 	<>
 		<div className="alert-body">
-			<Slot slotContent={slotContext.state.children} props={slotContext}></Slot>
+			<Slot slotContent={slotContext.state.children} props={slotContext} />
 		</div>
 		{slotContext.state.dismissible && (
 			<button type="button" className="btn-close" onClick={slotContext.api.close} aria-label={slotContext.state.ariaCloseButtonLabel}></button>
@@ -34,7 +34,7 @@ const AlertElement = (slotContext: AlertContext) => (
 			slotContext.directives.transitionDirective,
 		)}
 	>
-		<Slot slotContent={slotContext.state.structure} props={slotContext}></Slot>
+		<Slot slotContent={slotContext.state.structure} props={slotContext} />
 	</div>
 );
 

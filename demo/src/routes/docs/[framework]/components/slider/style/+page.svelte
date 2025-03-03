@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Section from '$lib/layout/Section.svelte';
-	import Style from '$lib/layout/Style.svelte';
+	import StyleCode from '$lib/layout/StyleCode.svelte';
 	import sliderCssVars from '@agnos-ui/styles/core-bootstrap/slider?slider-css-vars';
 	import sliderVars from '@agnos-ui/styles/core-bootstrap/_variables?slider-vars';
 </script>
@@ -14,9 +14,9 @@
 </p>
 
 <Section label="CSS Variables" level={2}>
-	<Style style={sliderCssVars}></Style>
+	<StyleCode style={sliderCssVars} />
 </Section>
 
 <Section label="SCSS Variables" level={2}>
-	<Style style={sliderVars}></Style>
+	<StyleCode style={sliderVars} />
 </Section>

@@ -13,7 +13,7 @@ export function RatingReadonly(props: Pick<Partial<RatingProps>, 'rating' | 'max
 		<div className={`d-inline-flex au-rating ${className}`}>
 			{stars.map((star) => (
 				<span key={star.index} className="au-rating-star">
-					<Slot slotContent={slotStar} props={star}></Slot>
+					<Slot slotContent={slotStar} props={star} />
 				</span>
 			))}
 		</div>

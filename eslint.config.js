@@ -260,6 +260,16 @@ export default tseslint.config(
 	{
 		...react.configs.flat.recommended,
 		files: ['react/**/*.{tsx,jsx}'],
+		rules: {
+			...react.configs.flat.recommended.rules,
+			'react/self-closing-comp': [
+				'error',
+				{
+					component: true,
+					html: false,
+				},
+			],
+		},
 	},
 	{
 		...react.configs.flat['jsx-runtime'],
@@ -299,6 +309,7 @@ export default tseslint.config(
 		files: ['**/*.svelte'],
 		rules: {
 			'prefer-const': ['off'],
+			'svelte/html-self-closing': ['error'],
 		},
 		languageOptions: {
 			parser: svelteParser,

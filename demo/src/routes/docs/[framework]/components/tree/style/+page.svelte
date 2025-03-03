@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Section from '$lib/layout/Section.svelte';
-	import Style from '$lib/layout/Style.svelte';
+	import StyleCode from '$lib/layout/StyleCode.svelte';
 	import treeCssVars from '@agnos-ui/styles/core-bootstrap/tree?tree-css-vars';
 	import treeVars from '@agnos-ui/styles/core-bootstrap/_variables?tree-vars';
 </script>
@@ -14,9 +14,9 @@
 </p>
 
 <Section label="CSS Variables" level={2}>
-	<Style style={treeCssVars}></Style>
+	<StyleCode style={treeCssVars} />
 </Section>
 
 <Section label="SCSS Variables" level={2}>
-	<Style style={treeVars}></Style>
+	<StyleCode style={treeVars} />
 </Section>

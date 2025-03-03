@@ -15,7 +15,7 @@ describe('slot directive', () => {
 
 		changeDetection: ChangeDetectionStrategy.OnPush,
 		imports: [SlotDirective],
-		template: '<ng-template [auSlot]="mySlot()" [auSlotProps]="mySlotProps()"></ng-template>',
+		template: '<ng-template [auSlot]="mySlot()" [auSlotProps]="mySlotProps()" />',
 	})
 	class TestComponent {
 		readonly mySlot = input<SlotContent<{myProp: string}>>();
@@ -113,7 +113,7 @@ describe('slot directive', () => {
 			template: `
 				<ng-template #hello let-myProp="myProp">Hello {{ myProp }}!</ng-template>
 				<ng-template #goodbye let-myProp="myProp">Goodbye {{ myProp }}!</ng-template>
-				<ng-template [auSlot]="mySlot()" [auSlotProps]="mySlotProps()"></ng-template>
+				<ng-template [auSlot]="mySlot()" [auSlotProps]="mySlotProps()" />
 			`,
 		})
 		class TemplateTestComponent {

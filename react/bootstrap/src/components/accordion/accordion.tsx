@@ -18,7 +18,7 @@ const Header = (props: PropsWithChildren<{headerTag: string; directive: Directiv
 const ItemContent = (slotContext: AccordionItemContext) => (
 	<div {...useDirectives([classDirective, 'accordion-collapse'], slotContext.directives.bodyContainerDirective)}>
 		<div {...useDirectives([classDirective, 'accordion-body'], slotContext.directives.bodyDirective)}>
-			<Slot slotContent={slotContext.state.children} props={slotContext}></Slot>
+			<Slot slotContent={slotContext.state.children} props={slotContext} />
 		</div>
 	</div>
 );
@@ -34,7 +34,7 @@ export const AccordionItemDefaultSlotStructure = (slotContext: AccordionItemCont
 	<>
 		<Header directive={slotContext.directives.headerDirective} headerTag={slotContext.state.headingTag}>
 			<button {...useDirectives([classDirective, 'accordion-button'], slotContext.directives.buttonDirective)}>
-				<Slot slotContent={slotContext.state.header} props={slotContext}></Slot>
+				<Slot slotContent={slotContext.state.header} props={slotContext} />
 			</button>
 		</Header>
 		{slotContext.state.shouldBeInDOM && <ItemContent {...slotContext} />}

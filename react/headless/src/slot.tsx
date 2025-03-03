@@ -36,7 +36,7 @@ export const Slot = <Props extends object>({slotContent, props}: {slotContent: S
 	const isFunction = typeof slotContent === 'function';
 	if (isFunction) {
 		const SlotComponent = isReactComponent<Props>(slotContent) ? slotContent : slotWrapper(slotContent);
-		return <SlotComponent {...props}></SlotComponent>;
+		return <SlotComponent {...props} />;
 	}
 	return <>{slotContent}</>;
 };
