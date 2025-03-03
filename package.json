@@ -94,9 +94,9 @@
 		"@parcel/watcher-win32-arm64": "2.5.1",
 		"@parcel/watcher-win32-ia32": "2.5.1",
 		"@parcel/watcher-win32-x64": "2.5.1",
-		"@rollup/rollup-darwin-arm64": "4.34.7",
-		"@rollup/rollup-darwin-x64": "4.34.7",
-		"@rollup/rollup-win32-x64-msvc": "4.34.7"
+		"@rollup/rollup-darwin-arm64": "4.34.9",
+		"@rollup/rollup-darwin-x64": "4.34.9",
+		"@rollup/rollup-win32-x64-msvc": "4.34.9"
 	},
 	"scripts": {
 		"build:coverage": "wireit",
