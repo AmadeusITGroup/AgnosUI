@@ -46,7 +46,7 @@ const ToastAction = (slotContext: ToastContext) => (
 			<span className="d-flex me-2">
 				<BiCheckCircleFill />
 			</span>
-			<Slot slotContent={slotContext.state.children} props={slotContext}></Slot>
+			<Slot slotContent={slotContext.state.children} props={slotContext} />
 			<button type="button" className="btn btn-sm ms-auto text-bg-success" onClick={() => window.alert('Undo')}>
 				<span className="me-2">
 					<BiArrowCounterClockwise />

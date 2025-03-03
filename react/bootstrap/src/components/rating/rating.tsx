@@ -10,7 +10,7 @@ function Star({star, state, directive}: {star: StarContext; state: RatingState; 
 		<Fragment key={star.index}>
 			<span className="visually-hidden">({star.index < state.visibleRating ? '*' : ' '})</span>
 			<span {...useDirective(directive, {index: star.index})}>
-				<Slot slotContent={state.star} props={star}></Slot>
+				<Slot slotContent={state.star} props={star} />
 			</span>
 		</Fragment>
 	);
