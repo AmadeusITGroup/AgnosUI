@@ -12,7 +12,7 @@
 <h2>Ticks as steps</h2>
 <Slider min={0} max={100} stepSize={25} bind:values={sliderRangeControl} disabled={disabledToggle} showTicks />
 
-<div class="form-check form-switch">
+<div class="form-check form-switch mb-2">
 	<input class="form-check-input" type="checkbox" role="switch" id="disabled" bind:checked={disabledToggle} />
 	<label class="form-check-label" for="disabled">Disabled</label>
 </div>

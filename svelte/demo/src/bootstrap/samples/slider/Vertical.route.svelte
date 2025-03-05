@@ -11,7 +11,7 @@
 		<div class="mt-3">Form control values: {sliderControl?.join(', ')}</div>
 	</div>
 	<div class="col-6" style="height: 300px">
-		<Slider min={0} max={100} stepSize={1} vertical bind:values={sliderControlRange} className="my-0" showTicks tickInterval={25} />
+		<Slider min={0} max={100} stepSize={25} vertical bind:values={sliderControlRange} className="my-0" showTicks />
 		<div class="mt-3">From control value: {sliderControlRange?.join(', ')}</div>
 	</div>
 </div>
