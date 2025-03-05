@@ -33,6 +33,7 @@ $au-slider-tick-secondary-size: 1rem !default;
 $au-slider-tick-neutral-color: var(--#{$prefix}light-emphasis, #666666) !default;
 $au-slider-tick-disabled-color: var(--#{$prefix}dark-bg-subtle, #ced4da) !default;
 $au-slider-tick-selected-color: var(--#{$prefix}primary, #0d6efd) !default;
+$au-slider-tick-fill-color: var(--#{$prefix}white, #ffffff) !default;
 $au-slider-tick-label-translate-vertical: translateY(75%) !default;
 $au-slider-progress-color: var(--#{$prefix}primary, #0d6efd) !default;
 $au-slider-progress-height: 0.25rem !default;

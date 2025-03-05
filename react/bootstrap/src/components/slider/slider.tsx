@@ -1,5 +1,6 @@
 import {Slot} from '@agnos-ui/react-headless/slot';
 import {useDirective} from '@agnos-ui/react-headless/utils/directive';
+import clsx from 'clsx';
 import type {PropsWithChildren} from 'react';
 import React from 'react';
 import {useWidgetWithConfig} from '../../config';
@@ -41,36 +42,16 @@ export const SliderDefaultTick = (slotContext: SliderSlotTickContext) => (
 	<>
 		{slotContext.tick.displayLabel && <TickLabelDisplay directive={slotContext.directives.tickLabelDirective} tick={slotContext.tick} />}
 		<span {...useDirective<{tick: SliderTick}>(slotContext.directives.tickDirective, {tick: slotContext.tick})}>
-			{slotContext.tick.selected ? (
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					style={{width: 'var(--bs-slider-tick-secondary-size)', height: 'var(--bs-slider-tick-primary-size)'}}
-					fill="none"
-				>
-					<circle
-						cx="50%"
-						cy="50%"
-						r="50%"
-						fill={slotContext.state.disabled ? 'var(--bs-slider-tick-disabled-color)' : 'var(--bs-slider-tick-selected-color)'}
-					/>
-					<circle cx="50%" cy="50%" r="25%" fill="white" />
-				</svg>
-			) : (
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					style={{width: 'var(--bs-slider-tick-secondary-size)', height: 'var(--bs-slider-tick-primary-size)'}}
-					fill="none"
-				>
-					<circle
-						cx="50%"
-						cy="50%"
-						r="45%"
-						fill="white"
-						stroke={slotContext.state.disabled ? 'var(--bs-slider-tick-disabled-color)' : 'var(--bs-slider-tick-neutral-color)'}
-						strokeWidth="1.5"
-					/>
-				</svg>
-			)}
+			<svg xmlns="http://www.w3.org/2000/svg">
+				<circle
+					className={clsx(
+						'au-slider-tick-outer',
+						{'au-slider-tick-disabled': slotContext.state.disabled},
+						{'au-slider-tick-selected': slotContext.tick.selected},
+					)}
+				/>
+				{slotContext.tick.selected && <circle className="au-slider-tick-inner au-slider-tick-selected" />}
+			</svg>
 		</span>
 	</>
 );

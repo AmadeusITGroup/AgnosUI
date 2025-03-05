@@ -8,7 +8,7 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 		<h2>Ticks as steps</h2>
 		<div auSlider auMin="0" auMax="100" auStepSize="25" [formControl]="sliderRangeControl" auShowTicks></div>
 
-		<div class="form-check form-switch">
+		<div class="form-check form-switch mb-2">
 			<input class="form-check-input" type="checkbox" role="switch" id="disabled" [(ngModel)]="disabledToggle" />
 			<label class="form-check-label" for="disabled">Disabled</label>
 		</div>
