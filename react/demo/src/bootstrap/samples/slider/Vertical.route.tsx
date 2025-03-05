@@ -16,13 +16,12 @@ const VerticalSliderDemo = () => {
 					<Slider
 						min={0}
 						max={100}
-						stepSize={1}
+						stepSize={25}
 						vertical
 						values={sliderControlRange}
 						onValuesChange={setSliderControlRange}
 						className="my-0"
 						showTicks
-						tickInterval={25}
 					/>
 					<div className="mt-3">From control value: {sliderControlRange}</div>
 				</div>

@@ -55,6 +55,7 @@
 	--#{variables.$prefix}slider-tick-neutral-color: #{variables.$au-slider-tick-neutral-color};
 	--#{variables.$prefix}slider-tick-selected-color: #{variables.$au-slider-tick-selected-color};
 	--#{variables.$prefix}slider-tick-disabled-color: #{variables.$au-slider-tick-disabled-color};
+	--#{variables.$prefix}slider-tick-fill-color: #{variables.$au-slider-tick-fill-color};
 
 	--#{variables.$prefix}slider-tick-label-translate-vertical: #{variables.$au-slider-tick-label-translate-vertical};
 
@@ -178,6 +179,41 @@
 		// center align the svg along the slider axis
 		svg {
 			display: block;
+			width: var(--#{variables.$prefix}slider-tick-secondary-size);
+			height: var(--#{variables.$prefix}slider-tick-primary-size);
+			fill: none;
+
+			circle {
+				cx: 50%;
+				cy: 50%;
+				fill: var(--#{variables.$prefix}slider-tick-fill-color);
+
+				&.au-slider-tick-outer {
+					r: 45%;
+					stroke: var(--#{variables.$prefix}slider-tick-neutral-color);
+					stroke-width: 1.5;
+
+					&.au-slider-tick-disabled {
+						stroke: var(--#{variables.$prefix}slider-tick-disabled-color);
+					}
+				}
+
+				&.au-slider-tick-selected {
+					&.au-slider-tick-outer {
+						fill: var(--#{variables.$prefix}slider-tick-selected-color);
+						stroke: none;
+						r: 50%;
+
+						&.au-slider-tick-disabled {
+							fill: var(--#{variables.$prefix}slider-tick-disabled-color);
+						}
+					}
+
+					&.au-slider-tick-inner {
+						r: 25%;
+					}
+				}
+			}
 		}
 	}
 

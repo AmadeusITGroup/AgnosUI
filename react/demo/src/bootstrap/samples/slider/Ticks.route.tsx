@@ -22,7 +22,7 @@ const TicksDemo = () => {
 				showTicks
 			/>
 
-			<div className="form-check form-switch">
+			<div className="form-check form-switch mb-2">
 				<input
 					className="form-check-input"
 					type="checkbox"
