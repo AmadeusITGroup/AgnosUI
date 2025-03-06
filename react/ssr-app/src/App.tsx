@@ -1,5 +1,6 @@
 import {Accordion, AccordionItem} from '@agnos-ui/react-bootstrap/components/accordion';
 import {Alert} from '@agnos-ui/react-bootstrap/components/alert';
+import {Carousel} from '@agnos-ui/react-bootstrap/components/carousel';
 import {Modal} from '@agnos-ui/react-bootstrap/components/modal';
 import {Pagination} from '@agnos-ui/react-bootstrap/components/pagination';
 import {Progressbar} from '@agnos-ui/react-bootstrap/components/progressbar';
@@ -8,6 +9,32 @@ import {Select} from '@agnos-ui/react-bootstrap/components/select';
 import {Slider} from '@agnos-ui/react-bootstrap/components/slider';
 import {Toast} from '@agnos-ui/react-bootstrap/components/toast';
 import {Tree, type TreeItem} from '@agnos-ui/react-bootstrap/components/tree';
+
+const nodes: TreeItem[] = [
+	{
+		label: 'Node 1',
+		isExpanded: true,
+		children: [
+			{
+				label: 'Node 1.1',
+				children: [
+					{
+						label: 'Node 1.1.1',
+					},
+				],
+			},
+			{
+				label: 'Node 1.2',
+				children: [
+					{
+						label: 'Node 1.2.1',
+					},
+				],
+			},
+		],
+	},
+];
+const photos = [944, 1011, 984].map((n) => ({id: `carousel-photo-${n}`, src: `https://picsum.photos/id/${n}/900/500`}));
 
 export const App = () => (
 	<div className="container">
@@ -27,6 +54,10 @@ export const App = () => (
 		<h2>Alert</h2>
 		<div className="my-3">
 			<Alert>This is an alert!</Alert>
+		</div>
+		<h2>Carousel</h2>
+		<div className="my-3">
+			<Carousel slidesData={photos} slide={({src}) => <img className="w-100" alt="random picsum" src={src} />} />
 		</div>
 		<h2>Modal</h2>
 		<div>
@@ -62,28 +93,3 @@ export const App = () => (
 		</div>
 	</div>
 );
-
-const nodes: TreeItem[] = [
-	{
-		label: 'Node 1',
-		isExpanded: true,
-		children: [
-			{
-				label: 'Node 1.1',
-				children: [
-					{
-						label: 'Node 1.1.1',
-					},
-				],
-			},
-			{
-				label: 'Node 1.2',
-				children: [
-					{
-						label: 'Node 1.2.1',
-					},
-				],
-			},
-		],
-	},
-];

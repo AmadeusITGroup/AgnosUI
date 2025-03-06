@@ -104,13 +104,9 @@ const compareName = ({name: a}: {name: string}, {name: b}: {name: string}) => co
 
 const spaceRegExp = /\s+/;
 const excludeClassRegExp = /^(s|svelte|ng)-/;
-const excludeAttrRegExp = /^(ng-|_ng|ngh$|slot$|au|data-svelte(kit)?-)/;
+const excludeAttrRegExp = /^(ng-|_ng|ngh$|au|app|data-svelte(kit)?-)/;
 const attrExceptions = ['autocapitalize', 'autocomplete', 'autocorrect'];
 const booleanAttributes = new Set(['checked', 'disabled', 'inert', 'readonly']);
-
-const excludeAttrSet = new Set([
-	'slot', // slot shouldn't be kept in the DOM by svelte, cf https://github.com/sveltejs/svelte/issues/8621
-]);
 
 const removeTagsAndDescendants = new Set(['script', 'router-outlet']);
 const tagReplacements = new Map([
@@ -126,10 +122,21 @@ const filterTagName = (tagName: string, attributes: HTMLAttribute[]) => {
 	if (tagName.startsWith('app-')) {
 		return '';
 	}
-	if (tagName === 'link' && attributes.some((attr) => attr.name === 'rel' && attr.value === 'modulepreload')) {
+	if (tagName === 'link' && attributes.some((attr) => attr.name === 'rel' && (attr.value === 'modulepreload' || attr.value === 'preload'))) {
 		return '';
 	}
 	return tagName;
+};
+
+const ignoreEmblaTransform = (
+	attr: HTMLAttribute,
+	node: {
+		tagName: string;
+		childNodes: HTMLNode[];
+		attributes: HTMLAttribute[];
+	},
+) => {
+	return attr.name === 'style' && node.attributes.find((attr) => attr.name === 'class')?.value?.includes('au-carousel-container');
 };
 
 export const filterHtmlStructure = (node: HTMLNode): HTMLNode => {
@@ -146,7 +153,7 @@ export const filterHtmlStructure = (node: HTMLNode): HTMLNode => {
 		attributes = [];
 	}
 	attributes = attributes
-		.filter(({name}) => !(excludeAttrSet.has(name) || (excludeAttrRegExp.test(name) && !attrExceptions.includes(name))))
+		.filter((attr) => !(ignoreEmblaTransform(attr, node) || (excludeAttrRegExp.test(attr.name) && !attrExceptions.includes(attr.name))))
 		.map(({name, value}) => {
 			if (name === 'class') {
 				value = value

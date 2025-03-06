@@ -136,6 +136,7 @@
 	"peerDependencies": {
 		"@amadeus-it-group/tansu": "^2.0.0",
 		"@floating-ui/dom": "^1.6.12",
+		"embla-carousel": "^8.5.2",
 		"esm-env": "^1.2.1"
 	},
 	"sideEffects": false

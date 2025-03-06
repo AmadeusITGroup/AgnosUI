@@ -32,4 +32,5 @@ export class AppComponent {
 			],
 		},
 	];
+	readonly photos = [944, 1011, 984].map((n) => ({id: `carousel-photo-${n}`, src: `https://picsum.photos/id/${n}/900/500`}));
 }

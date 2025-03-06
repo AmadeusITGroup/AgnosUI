@@ -1,3 +1,4 @@
+import type {CarouselProps} from './components/carousel';
 import type {AccordionProps} from './components/accordion';
 import type {AlertProps} from './components/alert';
 import type {CollapseProps} from './components/collapse';
@@ -58,4 +59,8 @@ export interface BootstrapWidgetsConfig {
 	 * tree widget config
 	 */
 	tree: TreeProps;
+	/**
+	 * carousel widget config
+	 */
+	carousel: CarouselProps<any>;
 }

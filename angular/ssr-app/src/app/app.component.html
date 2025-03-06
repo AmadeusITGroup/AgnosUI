@@ -12,6 +12,14 @@
 	<div class="my-3">
 		<au-component auAlert>This is an alert!</au-component>
 	</div>
+	<h2>Carousel</h2>
+	<div class="my-3">
+		<div auCarousel [auSlidesData]="photos">
+			<ng-template auCarouselSlide let-src="src">
+				<img class="w-100" alt="random picsum" [src]="src" />
+			</ng-template>
+		</div>
+	</div>
 	<h2>Modal</h2>
 	<div>
 		<au-component auModal>This is a modal!</au-component>
