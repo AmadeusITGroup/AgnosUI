@@ -1,5 +1,6 @@
 export * from './components/accordion';
 export * from './components/alert';
+export * from './components/carousel';
 export * from './components/collapse';
 export * from './components/modal';
 export * from './components/pagination';

@@ -31,6 +31,7 @@
 	},
 	"packageManager": "npm@11.1.0",
 	"devDependencies": {
+		"@amadeus-it-group/kassette": "^1.7.1",
 		"@angular-devkit/build-angular": "^19.0.0",
 		"@angular/animations": "^19.0.0",
 		"@angular/build": "^19.0.0",
@@ -123,7 +124,8 @@
 		"postinstall": "husky",
 		"syncpack:check": "syncpack lint",
 		"syncpack:fix": "syncpack fix-mismatches && syncpack format",
-		"prepare": "wireit"
+		"prepare": "wireit",
+		"kassette": "kassette -c e2e/kassette.config.cjs"
 	},
 	"wireit": {
 		"dev": {

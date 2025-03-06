@@ -17,3 +17,5 @@ blob-report
 *.gen.ts
 .eslintcache
 .DS_Store
+e2e/mocks-folder/**/forwarded-request*
+e2e/mocks-folder/**/input-request*

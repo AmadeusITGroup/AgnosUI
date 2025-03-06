@@ -6,7 +6,6 @@ export type ComponentStatus = 'stable' | 'beta' | 'inprogress' | 'deprecated';
 export type ComponentType = 'bootstrap' | 'standalone' | 'daisyUI';
 
 export interface ComponentMetadata<Props> {
-	title: string;
 	status: ComponentStatus;
 	since: string;
 	type: ComponentType;
@@ -29,13 +28,11 @@ type DaisyMetadata = Partial<
  */
 export const componentsMetadata: Metadata = {
 	Accordion: {
-		title: 'Accordion',
 		status: 'stable',
 		since: 'v0.1.1',
 		type: 'bootstrap',
 	},
 	Alert: {
-		title: 'Alert',
 		status: 'stable',
 		since: 'v0.1.1',
 		type: 'bootstrap',
@@ -43,14 +40,17 @@ export const componentsMetadata: Metadata = {
 			children: 'This is an alert',
 		},
 	},
+	Carousel: {
+		status: 'inprogress',
+		since: 'v0.8.0',
+		type: 'bootstrap',
+	},
 	Collapse: {
-		title: 'Collapse',
 		status: 'beta',
 		since: 'v0.5.0',
 		type: 'bootstrap',
 	},
 	Modal: {
-		title: 'Modal',
 		status: 'stable',
 		since: 'v0.1.1',
 		type: 'bootstrap',
@@ -61,38 +61,32 @@ export const componentsMetadata: Metadata = {
 		},
 	},
 	Pagination: {
-		title: 'Pagination',
 		status: 'stable',
 		since: 'v0.1.1',
 		type: 'bootstrap',
 	},
 	Progressbar: {
-		title: 'Progressbar',
 		status: 'stable',
 		since: 'v0.1.1',
 		type: 'bootstrap',
 	},
 	Rating: {
-		title: 'Rating',
 		status: 'stable',
 		since: 'v0.1.1',
 		type: 'standalone',
 	},
 	Select: {
-		title: 'Select',
 		status: 'inprogress',
 		since: 'v0.1.1',
 		type: 'standalone',
 	},
 	Slider: {
-		title: 'Slider',
 		status: 'stable',
 		since: 'v0.1.1',
 		type: 'standalone',
 		includeStyles: true,
 	},
 	Toast: {
-		title: 'Toast',
 		status: 'stable',
 		since: 'v0.2.0',
 		type: 'bootstrap',
@@ -103,7 +97,6 @@ export const componentsMetadata: Metadata = {
 		},
 	},
 	Tree: {
-		title: 'Tree',
 		status: 'beta',
 		since: 'v0.6.0',
 		type: 'standalone',
@@ -116,61 +109,56 @@ export const componentsMetadata: Metadata = {
  */
 export const daisyUIMetadata: DaisyMetadata = {
 	Accordion: {
-		title: 'Accordion',
 		status: 'stable',
 		since: 'v0.4.0',
 		type: 'daisyUI',
 	},
 	Alert: {
-		title: 'Alert',
 		status: 'stable',
 		since: 'v0.3.0',
 		type: 'daisyUI',
 	},
+	Carousel: {
+		status: 'inprogress',
+		since: 'v0.8.0',
+		type: 'daisyUI',
+	},
 	Collapse: {
-		title: 'Collapse',
 		status: 'beta',
 		since: 'v0.5.0',
 		type: 'daisyUI',
 	},
 	Modal: {
-		title: 'Modal',
 		status: 'stable',
 		since: 'v0.4.0',
 		type: 'daisyUI',
 	},
 	Pagination: {
-		title: 'Pagination',
 		status: 'stable',
 		since: 'v0.3.0',
 		type: 'daisyUI',
 	},
 	Progressbar: {
-		title: 'Progressbar',
 		status: 'stable',
 		since: 'v0.3.0',
 		type: 'daisyUI',
 	},
 	Rating: {
-		title: 'Rating',
 		status: 'stable',
 		since: 'v0.3.0',
 		type: 'daisyUI',
 	},
 	Slider: {
-		title: 'Slider',
 		status: 'stable',
 		since: 'v0.3.0',
 		type: 'daisyUI',
 	},
 	Toast: {
-		title: 'Toast',
 		status: 'stable',
 		since: 'v0.3.0',
 		type: 'daisyUI',
 	},
 	Tree: {
-		title: 'Tree',
 		status: 'beta',
 		since: 'v0.7.0',
 		type: 'daisyUI',
