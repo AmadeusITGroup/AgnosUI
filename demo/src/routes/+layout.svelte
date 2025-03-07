@@ -102,7 +102,7 @@
 <div class="agnos-ui text-base">
 	<nav class="navbar z-1 demo-nav-top justify-between">
 		<div class="navbar-start sm:w-1/2 w-10/35">
-			<a class="lg:mx-2 xl:mx-8 flex items-center" href={$pathToRoot$}><Svg svg={agnosUILogo} className="agnosui-logo-brand me-2" /> AgnosUI </a>
+			<a class="md:mx-2 xl:mx-8 flex items-center" href={$pathToRoot$}><Svg svg={agnosUILogo} className="agnosui-logo-brand me-2" /> AgnosUI </a>
 		</div>
 		<div class="navbar-center">
 			<div class="md:hidden">
@@ -185,8 +185,8 @@
 		{#if isMainPage}
 			{@render children()}
 		{:else}
-			<div class="row flex-wrap sm:flex-nowrap flex content-between w-auto">
-				<aside class="demo-sidebar xl:px-6 hidden md:block items-center sm:items-start col-auto-layout side-menu me-3">
+			<div class="flex-wrap sm:flex-nowrap flex content-between w-auto">
+				<aside class="demo-sidebar xl:px-6 hidden md:block items-center sm:items-start col-auto-layout side-menu">
 					<SideMenu />
 				</aside>
 				<div class="pb-6 col reset-ul">

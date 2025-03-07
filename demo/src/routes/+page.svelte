@@ -45,40 +45,40 @@
 			</div>
 		</div>
 	</div>
-	<div class="card-body my-6">
-		<h5 class="card-title pres-card-title mb-6">Get started with</h5>
-		<div class="card-text btn-grid">
-			<div>
-				<a
-					href="docs/angular/getting-started/introduction"
-					class="btn btn-outline btn-primary rounded-full flex items-center justify-start sm:px-3"
-					aria-label="link to angular examples"
-					title="Angular"
-				>
-					<Svg svg={angularLogo} className="pres-card-logo me-2" />
-					Angular
-				</a>
-			</div>
+	<div class="card-body items-center text-center my-1 md:my-6 p-2 md:p-6">
+		<h5 class="card-title pres-card-title mb-3 md:mb-6">Get started with</h5>
+		<div class="card-text flex flex-row gap-2 sm:gap-5">
 			<div>
 				<a
 					href="docs/react/getting-started/introduction"
-					class="btn btn-outline btn-primary rounded-full flex items-center justify-start sm:px-3"
+					class="btn sm:btn-xl max-[480px]:btn-sm btn-outline btn-primary rounded-full flex items-center justify-start sm:px-5 sm:gap-5 gap-3 p-3 sm:p-6"
 					aria-label="link to react examples"
 					title="React"
 				>
-					<Svg svg={reactLogo} className="pres-card-logo me-2" />
+					<Svg svg={reactLogo} className="icon-32 max-[480px]:w-[20px]! max-[480px]:h-[20px]!" />
 					React
 				</a>
 			</div>
 			<div>
 				<a
 					href="docs/svelte/getting-started/introduction"
-					class="btn btn-outline btn-primary rounded-full flex items-center justify-start sm:px-3"
+					class="btn sm:btn-xl max-[480px]:btn-sm btn-outline btn-primary rounded-full flex items-center justify-start sm:px-5 sm:gap-5 gap-3 p-3 sm:p-6"
 					aria-label="link to svelte examples"
 					title="Svelte"
 				>
-					<Svg svg={svelteLogo} className="pres-card-logo me-2" />
+					<Svg svg={svelteLogo} className="icon-32 max-[480px]:w-[20px]! max-[480px]:h-[20px]!" />
 					Svelte
+				</a>
+			</div>
+			<div>
+				<a
+					href="docs/angular/getting-started/introduction"
+					class="btn sm:btn-xl max-[480px]:btn-sm btn-outline btn-primary rounded-full flex items-center justify-start sm:px-5 sm:gap-5 gap-3 p-3 sm:p-6"
+					aria-label="link to angular examples"
+					title="Angular"
+				>
+					<Svg svg={angularLogo} className="icon-32 max-[480px]:w-[20px]! max-[480px]:h-[20px]!" />
+					Angular
 				</a>
 			</div>
 		</div>
@@ -129,11 +129,6 @@
 		left: 50%;
 		transform: translate(-50%, -50%);
 	}
-	.btn-grid {
-		display: grid;
-		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 0.5rem;
-	}
 	.au-logo-container {
 		width: 380px;
 		height: 380px;
@@ -159,7 +154,6 @@
 	}
 	.pres-card-title {
 		font-size: 1.5rem;
-		text-align: center;
 	}
 	.au-clip {
 		background: -webkit-linear-gradient(100deg, #9240cc 30%, #fce649);

@@ -139,6 +139,7 @@ blockquote {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	overflow-wrap: anywhere;
 	code {
 		white-space: pre-wrap;
 	}
@@ -186,11 +187,6 @@ iframe.loaded {
 	color: #712cf9;
 }
 
-.pres-card-logo {
-	width: 50px;
-	height: 30px;
-}
-
 .agnosui-logo-brand {
 	width: 25px;
 	height: auto;
@@ -217,6 +213,10 @@ iframe.loaded {
 	&.icon-24 {
 		width: 24px;
 		height: 24px;
+	}
+	&.icon-32 {
+		width: 32px;
+		height: 32px;
 	}
 }
 
