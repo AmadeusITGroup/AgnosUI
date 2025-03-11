@@ -1088,6 +1088,7 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 				classNames: {
 					'au-slider-tick-label': true$,
 					'au-slider-tick-label-vertical': vertical$,
+					'au-slider-tick-label-now': computed(() => sortedValues$().some((sv) => sv === tickContext$().tick.value)),
 				},
 				styles: {
 					left: computed(() => (vertical$() ? null : percent(tickContext$().tick.position))),

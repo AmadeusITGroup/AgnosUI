@@ -8,6 +8,7 @@ export const sliderSelectors = {
 	tick: '.au-slider-tick',
 	tickLabel: '.au-slider-tick-label',
 	tickLabelVertical: '.au-slider-tick-label-vertical',
+	tickLabelNow: '.au-slider-tick-label-now',
 	minLabelHorizontal: '.au-slider-label-min',
 	maxLabelHorizontal: '.au-slider-label-max',
 	minLabelVertical: '.au-slider-label-vertical-min',
@@ -33,6 +34,10 @@ export class SliderPO extends BasePO {
 
 	get locatorTickLabel(): Locator {
 		return this.locatorRoot.locator(this.selectors.tickLabel);
+	}
+
+	get locatorTickLabelNow(): Locator {
+		return this.locatorRoot.locator(this.selectors.tickLabelNow);
 	}
 
 	get locatorTickLabelVertical(): Locator {

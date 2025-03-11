@@ -542,6 +542,7 @@ test.describe(`Slider tests`, () => {
 				'75',
 				'100',
 			]);
+			await expect(sliderPO.locatorTickLabelNow).toHaveCount(2);
 		});
 
 		test(`should not render the tick labels when the showTickValues is false`, async ({page}) => {
@@ -552,6 +553,7 @@ test.describe(`Slider tests`, () => {
 
 			await expect(sliderPO.locatorTick).toHaveCount(5);
 			await expect(sliderPO.locatorTickLabel).toHaveCount(0);
+			await expect(sliderPO.locatorTickLabelNow).toHaveCount(0);
 		});
 
 		test(`should render the ticks on the vertical slider`, async ({page}) => {

@@ -230,6 +230,10 @@
 		transform: var(--#{variables.$prefix}slider-tick-label-translate-vertical);
 	}
 
+	.au-slider-tick-label-now {
+		font-weight: var(--#{variables.$prefix}slider-label-now-font-weight);
+	}
+
 	.au-slider-progress {
 		background-color: var(--#{variables.$prefix}slider-progress-color);
 		border-radius: var(--#{variables.$prefix}slider-border-radius);
