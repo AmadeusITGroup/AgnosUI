@@ -89,6 +89,20 @@ export type {TreeProps, TreeState, TreeWidget, TreeApi, TreeDirectives, TreeItem
 export {createTree, getTreeDefaultConfig} from './components/tree';
 export * from './components/tree';
 
+export type {
+	CarouselWidget,
+	CarouselProps,
+	CarouselState,
+	CarouselApi,
+	CarouselDirectives,
+	CarouselSlideDirectives,
+	CarouselSlideProps,
+	CarouselSlideState,
+	CarouselSlideWidget,
+} from './components/carousel';
+export {createCarousel, getCarouselDefaultConfig, createCarouselSlide, getCarouselSlideDefaultConfig} from './components/carousel';
+export * from './components/carousel';
+
 export * from '@agnos-ui/core-bootstrap/services/transitions';
 export * from '@agnos-ui/core-bootstrap/types';
 

@@ -11,7 +11,7 @@ export function getMenu(component: string) {
 	const componentMetadata = componentsMetadata[componentCapitalized];
 
 	return {
-		title: componentMetadata.title,
+		title: componentCapitalized,
 		status: componentMetadata.status,
 		since: componentMetadata.since,
 		type: componentMetadata.type,
