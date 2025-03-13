@@ -1,8 +1,6 @@
 /*
  * Public API Surface of @agnos-ui/angular-bootstrap
  */
-export * from '@agnos-ui/angular-headless';
-
 export * from './agnos-ui-angular.module';
 
 export type {
@@ -98,3 +96,7 @@ export * from '@agnos-ui/core-bootstrap/types';
 
 export type {WidgetsConfig} from './config';
 export {widgetsConfigInjectionToken, provideWidgetsConfig, injectWidgetConfig, injectWidgetsConfig, callWidgetFactory} from './config';
+
+export {ToasterService} from './services/toaster.service';
+
+export * from '@agnos-ui/angular-headless';

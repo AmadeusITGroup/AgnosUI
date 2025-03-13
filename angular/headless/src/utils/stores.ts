@@ -1,6 +1,6 @@
-import type {ReadableSignal} from '@amadeus-it-group/tansu';
-import type {Signal} from '@angular/core';
-import {DestroyRef, inject, signal} from '@angular/core';
+import type {ReadableSignal, WritableSignal as TansuWritableSignal} from '@amadeus-it-group/tansu';
+import type {Signal, WritableSignal} from '@angular/core';
+import {DestroyRef, effect, inject, signal} from '@angular/core';
 import {ZoneWrapper} from './zone';
 
 export * from '@agnos-ui/core/utils/stores';
@@ -28,5 +28,43 @@ export const toAngularSignal = <T>(tansuSignal: ReadableSignal<T>): Signal<T> =>
 		zoneWrapper.planNgZoneRun();
 	});
 	inject(DestroyRef).onDestroy(zoneWrapper.outsideNgZone(subscription));
+
+	return res.asReadonly();
+};
+
+/**
+ * Converts a Tansu `WritableSignal` to an Angular `WritableSignal`.
+ *
+ * This function wraps the provided Tansu signal in an Angular signal, ensuring that updates
+ * are properly handled within Angular's zone. It subscribes to the Tansu signal and updates
+ * the Angular signal with the received values. The equality function for the Angular signal
+ * is set to always return false, ensuring that every new value from the Tansu signal triggers
+ * an update.
+ *
+ * @template T - The type of the value emitted by the signals.
+ * @param tansuSignal - The Tansu signal to convert.
+ * @returns - The resulting Angular signal.
+ */
+export const toAngularWritableSignal = <T>(tansuSignal: TansuWritableSignal<T>): WritableSignal<T> => {
+	const zoneWrapper = inject(ZoneWrapper);
+	const res = signal(undefined as any as T, {equal: () => false});
+	let isUpdating = false;
+
+	const subscription = zoneWrapper.outsideNgZone(tansuSignal.subscribe)((value) => {
+		if (!isUpdating) {
+			res.set(value);
+			zoneWrapper.planNgZoneRun();
+		}
+	});
+	inject(DestroyRef).onDestroy(zoneWrapper.outsideNgZone(subscription));
+
+	// Propagate changes from Angular signal to Tansu signal
+	effect(() => {
+		const value = res();
+		isUpdating = true;
+		tansuSignal.set(value);
+		isUpdating = false;
+	});
+
 	return res;
 };

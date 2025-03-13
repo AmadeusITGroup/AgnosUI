@@ -1,9 +1,11 @@
 import {type ToastProps} from '@agnos-ui/core/components/toast';
-import type {Toast, ToasterProps} from '../generated/services/toaster';
-import {Toaster as CoreToaster} from '../generated/services/toaster';
+import type {ToasterToast, ToasterProps} from '@agnos-ui/core/services/toaster';
+import {Toaster as CoreToaster} from '@agnos-ui/core/services/toaster';
 import {fromStore} from 'svelte/store';
 import type {Directive} from '../generated';
 
+import {defaultToasterProps, ToastPositions} from '@agnos-ui/core/services/toaster';
+export {defaultToasterProps, ToastPositions};
 /**
  * Create a toaster provider with helpers and state.
  * @param props Options for the toaster.
@@ -12,7 +14,7 @@ import type {Directive} from '../generated';
  */
 export class Toaster<Props extends Partial<ToastProps>> {
 	readonly #toaster: CoreToaster<Props>;
-	toasts: {current: Toast<Props>[]};
+	toasts: {current: ToasterToast<Props>[]};
 	options: {current: ToasterProps};
 	addToast: (props: Props) => void;
 	removeToast: (id: number) => void;

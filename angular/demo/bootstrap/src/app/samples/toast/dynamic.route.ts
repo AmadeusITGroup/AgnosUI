@@ -1,8 +1,7 @@
 import type {ToastProps} from '@agnos-ui/angular-bootstrap';
-import {AgnosUIAngularModule, ToastComponent} from '@agnos-ui/angular-bootstrap';
+import {AgnosUIAngularModule, ToastComponent, ToastPositions} from '@agnos-ui/angular-bootstrap';
 import {Component, Injectable, inject, signal} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {ToastPositions} from '@agnos-ui/common/samples/toast/toast-positions.enum';
 
 @Injectable({providedIn: 'root'})
 class ToastService {

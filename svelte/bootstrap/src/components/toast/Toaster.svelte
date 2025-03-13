@@ -6,8 +6,8 @@
 
 <script lang="ts">
 	import Toast from './Toast.svelte';
-	import {ToasterService} from '../../services/toasterService.svelte';
-	import type {ToasterProps} from '../../generated';
+	import {ToasterService} from '../../services/toaster';
+	import type {ToasterProps} from '@agnos-ui/svelte-headless/services/toaster';
 
 	let {duration, position, limit, pauseOnHover, dismissible, closeAll, closeAllLabel}: ToasterProps = $props();
 

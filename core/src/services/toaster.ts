@@ -40,7 +40,7 @@ export interface ToasterProps {
  * Toast object
  * @template Props Type of the toast properties.
  */
-export interface Toast<Props> {
+export interface ToasterToast<Props> {
 	/** Identifier of the toasts in the toaster */
 	id: number;
 	/** Properties of the toast */
@@ -61,14 +61,14 @@ export const defaultToasterProps: ToasterProps = {
  */
 export class Toaster<Props extends Partial<ToastProps> = ToastProps> {
 	idCount = 0;
-	_toasts: WritableSignal<Toast<Props>[]> = writable<Toast<Props>[]>([]);
-	readonly #toasts: ReadableSignal<Toast<Props>[]> = asReadable(this._toasts);
+	_toasts: WritableSignal<ToasterToast<Props>[]> = writable<ToasterToast<Props>[]>([]);
+	readonly #toasts: ReadableSignal<ToasterToast<Props>[]> = asReadable(this._toasts);
 
 	/**
 	 * Get the toasts value from the store
 	 * @returns The array of toasts.
 	 */
-	get toasts(): ReadableSignal<Toast<Props>[]> {
+	get toasts(): ReadableSignal<ToasterToast<Props>[]> {
 		return computed(() =>
 			this.#toasts()
 				.sort((a, b) => b.id - a.id)
