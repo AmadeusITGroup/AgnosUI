@@ -1,8 +1,7 @@
 <script lang="ts">
 	import {addToast, Toaster} from '@agnos-ui/svelte-bootstrap/components/toast';
-	import {ToastPositions} from '@agnos-ui/common/samples/toast/toast-positions.enum';
 	import type {ToasterProps} from '@agnos-ui/svelte-bootstrap/services/toaster';
-	import {defaultToasterProps} from '@agnos-ui/svelte-bootstrap/services/toaster';
+	import {defaultToasterProps, ToastPositions} from '@agnos-ui/svelte-bootstrap/services/toaster';
 	const positions = Object.entries(ToastPositions).map((entry) => {
 		return {
 			value: entry[1],
