@@ -5,7 +5,7 @@ import {fromStore} from 'svelte/store';
 import type {Directive} from '../generated';
 
 import {defaultToasterProps, ToastPositions} from '@agnos-ui/core/services/toaster';
-export {defaultToasterProps, ToastPositions};
+export {defaultToasterProps, ToastPositions, ToasterProps};
 /**
  * Create a toaster provider with helpers and state.
  * @param props Options for the toaster.

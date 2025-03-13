@@ -47,6 +47,7 @@ import {
 	TreeItemToggleDirective,
 } from './components/tree/tree.component';
 import {CarouselComponent, CarouselSlideDirective} from './components/carousel';
+import {ToasterComponent} from './components/toast';
 
 /* istanbul ignore next */
 const components = [
@@ -93,6 +94,7 @@ const components = [
 	ToastStructureDirective,
 	ToastBodyDirective,
 	ToastHeaderDirective,
+	ToasterComponent,
 	CollapseDirective,
 	CollapseTriggerDirective,
 	TreeComponent,
