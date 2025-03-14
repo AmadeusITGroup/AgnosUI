@@ -10,4 +10,6 @@ export * from './components/slider';
 export * from './components/toast';
 export * from './components/tree';
 
+export * from './services/toaster';
+
 export * from './generated';
