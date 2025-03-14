@@ -1,7 +1,7 @@
 import {createAttributesDirective} from '../utils/directive';
 import {type ToastProps} from '../components/toast';
 import type {ReadableSignal, WritableSignal} from '@amadeus-it-group/tansu';
-import {asReadable, computed, writable} from '@amadeus-it-group/tansu';
+import {computed, writable} from '@amadeus-it-group/tansu';
 import type {Directive} from '../types';
 
 export enum ToastPositions {
@@ -47,6 +47,31 @@ export interface ToasterToast<Props> {
 	props: Props;
 }
 
+/**
+ * Represents a timer used by the toaster service.
+ */
+export interface ToasterTimer {
+	/**
+	 * The timeout identifier returned by `setTimeout`.
+	 */
+	timeout: ReturnType<typeof setTimeout> | null;
+
+	/**
+	 * The timestamp when the timer was started.
+	 */
+	started: number;
+
+	/**
+	 * The timestamp when the timer was paused (optional).
+	 */
+	paused?: number;
+
+	/**
+	 * The duration for which the timer is set (optional). Used internally to compute the remaining time.
+	 */
+	duration: number;
+}
+
 export const defaultToasterProps: ToasterProps = {
 	duration: 5000,
 	position: ToastPositions.bottomRight,
@@ -62,7 +87,6 @@ export const defaultToasterProps: ToasterProps = {
 export class Toaster<Props extends Partial<ToastProps> = ToastProps> {
 	idCount = 0;
 	_toasts: WritableSignal<ToasterToast<Props>[]> = writable<ToasterToast<Props>[]>([]);
-	readonly #toasts: ReadableSignal<ToasterToast<Props>[]> = asReadable(this._toasts);
 
 	/**
 	 * Get the toasts value from the store
@@ -70,7 +94,7 @@ export class Toaster<Props extends Partial<ToastProps> = ToastProps> {
 	 */
 	get toasts(): ReadableSignal<ToasterToast<Props>[]> {
 		return computed(() =>
-			this.#toasts()
+			this._toasts()
 				.sort((a, b) => b.id - a.id)
 				.slice(0, this.options().limit),
 		);
@@ -78,7 +102,15 @@ export class Toaster<Props extends Partial<ToastProps> = ToastProps> {
 
 	options: WritableSignal<ToasterProps> = writable<ToasterProps>(defaultToasterProps);
 
-	readonly #timers: Map<number, {timeout: ReturnType<typeof setTimeout>; started: number; paused?: number; duration?: number}> = new Map();
+	readonly #timers: Map<number, ToasterTimer> = new Map();
+
+	/**
+	 * Get the timers value from the store
+	 * @returns The map of timers.
+	 */
+	get timers(): ReadonlyMap<number, ToasterTimer> {
+		return new Map<number, ToasterTimer>(this.#timers);
+	}
 
 	constructor(props?: Partial<ToasterProps>) {
 		this.options.set({
@@ -100,6 +132,7 @@ export class Toaster<Props extends Partial<ToastProps> = ToastProps> {
 			this.#timers.set(id, {
 				timeout: setTimeout(() => this.removeToast(id), duration),
 				started: performance.now(),
+				duration,
 			});
 		}
 	};
@@ -111,8 +144,9 @@ export class Toaster<Props extends Partial<ToastProps> = ToastProps> {
 	pauseTimer = (id: number): void => {
 		if (this.#timers.has(id)) {
 			const timer = this.#timers.get(id);
-			if (timer) {
+			if (timer && timer.timeout) {
 				clearTimeout(timer.timeout);
+				timer.timeout = null;
 				timer.paused = performance.now();
 			}
 		}
@@ -127,10 +161,10 @@ export class Toaster<Props extends Partial<ToastProps> = ToastProps> {
 			const timer = this.#timers.get(id);
 			if (timer) {
 				const paused = timer.paused ?? timer.started;
-				const elapsed = paused - timer.started - (timer.duration ?? 0);
-				const remaining = this.options().duration - elapsed;
+				const elapsed = paused - timer.started;
+				const remaining = (timer.duration ?? 0) - elapsed;
 				this.addTimer(id, remaining);
-				timer.duration = (timer.duration ?? 0) + performance.now() - paused;
+				timer.duration = remaining;
 				timer.paused = undefined;
 			}
 		}

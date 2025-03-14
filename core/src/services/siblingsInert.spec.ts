@@ -11,7 +11,7 @@ describe('sliblingsInert', () => {
 		};
 	});
 
-	describe('sliblingsInert', () => {
+	test('sliblingsInert', () => {
 		const initialMarkup = `
 			<div id="parentElement">
 				<div id="beforeElement"></div>
