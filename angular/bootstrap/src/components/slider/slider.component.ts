@@ -57,7 +57,7 @@ export class SliderHandleDirective {
 	imports: [UseDirective, SliderHandleDirective],
 	template: `
 		<ng-template auSliderHandle #handle let-state="state" let-directives="directives" let-item="item">
-			<button [auUse]="[directives.handleDirective, {item}]" (keydown)="onKeyDown($event)">&nbsp;</button>
+			<button [auUse]="[directives.handleDirective, {item}]" (keydown)="onKeyDown($event)"></button>
 		</ng-template>
 	`,
 })

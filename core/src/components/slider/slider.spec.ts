@@ -68,7 +68,13 @@ describe(`Slider basic`, () => {
 
 	const clickAreaX = (clientX: number) => {
 		attachDirectiveAndSendEvent(slider.directives.clickableAreaDirective, undefined, (node) =>
-			node.dispatchEvent(new MouseEvent('click', {clientX})),
+			node.dispatchEvent(new MouseEvent('mousedown', {clientX})),
+		);
+	};
+
+	const touchAreaX = (clientX: number) => {
+		attachDirectiveAndSendEvent(slider.directives.clickableAreaDirective, undefined, (node) =>
+			node.dispatchEvent(new TouchEvent('touchstart', {touches: [new Touch({clientX, identifier: 0, target: new EventTarget()})]})),
 		);
 	};
 	const useKeyOnHandle = (key: string) => {
@@ -547,6 +553,39 @@ describe(`Slider basic`, () => {
 
 	test(`should set handle to a proper percent when clicked inside the slider`, () => {
 		clickAreaX(70);
+
+		const expectedState = defaultState();
+
+		expect(normalizedState$()).toStrictEqual(
+			assign(expectedState, {
+				values: [70],
+				sortedValues: [70],
+				handleDisplayOptions: [
+					{
+						...expectedState.handleDisplayOptions[0],
+						left: 70,
+					},
+				],
+				sortedHandles: [
+					{
+						...defaultHandle,
+						id: 0,
+						value: 70,
+					},
+				],
+				minValueLabelDisplay: true,
+				progressDisplayOptions: [
+					{
+						...expectedState.progressDisplayOptions[0],
+						width: 70,
+					},
+				],
+			}),
+		);
+	});
+
+	test(`should set handle to a proper percent when touched inside the slider`, () => {
+		touchAreaX(70);
 
 		const expectedState = defaultState();
 
@@ -1736,7 +1775,7 @@ describe(`Slider range`, () => {
 
 	const clickAreaX = (clientX: number) => {
 		attachDirectiveAndSendEvent(slider.directives.clickableAreaDirective, undefined, (node) =>
-			node.dispatchEvent(new MouseEvent('click', {clientX})),
+			node.dispatchEvent(new MouseEvent('mousedown', {clientX})),
 		);
 	};
 	const useKeyOnHandle = (key: string, handleId = 0) => {
