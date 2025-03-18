@@ -39,11 +39,9 @@
 		<input type="checkbox" class="form-check-input" id="closeAll" bind:checked={options.closeAll} />
 	</div>
 	<div class="d-flex form-group align-items-center gap-3 py-3">
-		<button class="btn btn-primary addToast ms-2" onclick={() => addToast({children: `Simple toast ${index++}`, header: 'I am header'})}
-			>Show toast</button
-		>
+		<button class="btn btn-primary ms-2" onclick={() => addToast({children: `Simple toast ${index++}`, header: 'I am header'})}>Show toast</button>
 		<button
-			class="btn btn-primary addToast ms-2"
+			class="btn btn-primary ms-2"
 			onclick={() => addToast({children: `Simple toast ${index++}`, className: 'text-bg-danger', dismissible: true, autoHide: true, delay: 10000})}
 			>Show error toast</button
 		>

@@ -28,8 +28,8 @@ import {FormsModule} from '@angular/forms';
 				<input type="checkbox" class="form-check-input" id="closeAll" [(ngModel)]="closeAll" />
 			</div>
 			<div class="d-flex form-group align-items-center gap-3 py-3">
-				<button class="btn btn-primary addToast ms-2" (click)="addToast()">Show toast</button>
-				<button class="btn btn-primary addToast ms-2" (click)="addToast('error')">Show error toast</button>
+				<button class="btn btn-primary ms-2" (click)="addToast()">Show toast</button>
+				<button class="btn btn-primary ms-2" (click)="addToast('error')">Show error toast</button>
 			</div>
 		</div>
 		<au-component

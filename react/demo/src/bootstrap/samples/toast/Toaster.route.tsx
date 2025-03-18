@@ -8,7 +8,7 @@ const ToasterActions = () => {
 	return (
 		<>
 			<button
-				className="btn btn-primary addToast ms-2"
+				className="btn btn-primary ms-2"
 				onClick={() => {
 					toaster.addToast({children: `Simple toast ${index}`, header: 'I am header'});
 					setIndex(++index);
@@ -17,7 +17,7 @@ const ToasterActions = () => {
 				Show toast
 			</button>
 			<button
-				className="btn btn-primary addToast ms-2"
+				className="btn btn-primary ms-2"
 				onClick={() => {
 					toaster.addToast({children: `Simple toast ${index}`, className: 'text-bg-danger', dismissible: true, autoHide: true, delay: 10000});
 					setIndex(++index);
