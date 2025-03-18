@@ -9,3 +9,4 @@ export * from './slider.po';
 export * from './toast.po';
 export * from './tree.po';
 export * from './collapse.po';
+export * from './carousel.po';

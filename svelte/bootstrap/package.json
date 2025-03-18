@@ -51,7 +51,8 @@
 	},
 	"scripts": {
 		"build": "wireit",
-		"check": "wireit"
+		"check": "wireit",
+		"generate:component-types": "wireit"
 	},
 	"wireit": {
 		"generate:exports": {

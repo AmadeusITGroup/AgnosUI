@@ -46,6 +46,8 @@ import {
 	TreeStructureDirective,
 	TreeItemToggleDirective,
 } from './components/tree/tree.component';
+import {CarouselComponent, CarouselSlideDirective} from './components/carousel';
+
 /* istanbul ignore next */
 const components = [
 	SlotDirective,
@@ -98,6 +100,8 @@ const components = [
 	TreeItemToggleDirective,
 	TreeItemContentDirective,
 	TreeItemDirective,
+	CarouselComponent,
+	CarouselSlideDirective,
 ];
 
 @NgModule({

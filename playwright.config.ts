@@ -126,7 +126,19 @@ const config: PlaywrightTestConfig<FixtureOptions> = {
 	use: {
 		trace: 'on-all-retries',
 		video: 'on-first-retry',
+		proxy: {
+			server: 'http://localhost:4001',
+			bypass: 'localhost',
+		},
+		ignoreHTTPSErrors: true,
 	},
 	projects: playwrightProjects,
+	webServer: {
+		command: 'npm run kassette',
+		port: 4001,
+		reuseExistingServer: true,
+		stdout: 'ignore',
+		stderr: 'ignore',
+	},
 };
 export default config;

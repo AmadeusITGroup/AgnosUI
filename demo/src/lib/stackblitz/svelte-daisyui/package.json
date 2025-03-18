@@ -15,6 +15,7 @@
 		"@tailwindcss/browser": "^4.0.0",
 		"@tsconfig/svelte": "^5.0.4",
 		"daisyui": "^5.0.0-beta.8",
+		"embla-carousel-autoplay": "^8.5.2",
 		"sass": "^1.82.0",
 		"svelte": "^5.16.0",
 		"svelte-check": "^4.1.1",
