@@ -3,7 +3,6 @@ import {ChangeDetectionStrategy, Component, effect, inject, signal} from '@angul
 import {FormsModule} from '@angular/forms';
 
 @Component({
-	selector: 'app-toaster',
 	imports: [ToasterComponent, FormsModule],
 	template: `
 		<p class="mb-2">Similar to dynamic stacking, we expose a service to ease the usage of Toasts</p>
