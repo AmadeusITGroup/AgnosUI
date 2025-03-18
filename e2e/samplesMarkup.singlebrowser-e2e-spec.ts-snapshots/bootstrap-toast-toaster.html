@@ -12,125 +12,149 @@
 		 class="d-flex flex-column gap-2 justify-content-between"
 		>
 			<div
-			 class="align-items-center d-flex form-group gap-3"
+			 class="align-items-center d-flex flex-column flex-sm-row form-group gap-3"
 			>
-				<label
-				 class="me-3"
-				 for="positionSelect"
+				<div
+				 class="align-items-center d-flex justify-content-between w-100"
 				>
-					"Position:"
-				</label>
-				<select
-				 class="form-select w-auto"
-				 id="positionSelect"
+					<label
+					 class="me-3"
+					 for="positionSelect"
+					>
+						"Position:"
+					</label>
+					<select
+					 class="form-select w-auto"
+					 id="positionSelect"
+					>
+						<option
+						 value="top-0 start-0"
+						>
+							"topLeft"
+						</option>
+						<option
+						 value="top-0 start-50 translate-middle-x"
+						>
+							"topCenter"
+						</option>
+						<option
+						 value="top-0 end-0"
+						>
+							"topRight"
+						</option>
+						<option
+						 value="top-50 start-0 translate-middle-y"
+						>
+							"middleLeft"
+						</option>
+						<option
+						 value="top-50 start-50 translate-middle"
+						>
+							"middleCenter"
+						</option>
+						<option
+						 value="top-50 end-0 translate-middle-y"
+						>
+							"middleRight"
+						</option>
+						<option
+						 value="bottom-0 start-0"
+						>
+							"bottomLeft"
+						</option>
+						<option
+						 value="bottom-0 start-50 translate-middle-x"
+						>
+							"bottomCenter"
+						</option>
+						<option
+						 value="bottom-0 end-0"
+						>
+							"bottomRight"
+						</option>
+					</select>
+				</div>
+				<div
+				 class="align-items-center d-flex justify-content-between w-100"
 				>
-					<option
-					 value="top-0 start-0"
+					<label
+					 class="me-3"
+					 for="dismissible"
 					>
-						"topLeft"
-					</option>
-					<option
-					 value="top-0 start-50 translate-middle-x"
-					>
-						"topCenter"
-					</option>
-					<option
-					 value="top-0 end-0"
-					>
-						"topRight"
-					</option>
-					<option
-					 value="top-50 start-0 translate-middle-y"
-					>
-						"middleLeft"
-					</option>
-					<option
-					 value="top-50 start-50 translate-middle"
-					>
-						"middleCenter"
-					</option>
-					<option
-					 value="top-50 end-0 translate-middle-y"
-					>
-						"middleRight"
-					</option>
-					<option
-					 value="bottom-0 start-0"
-					>
-						"bottomLeft"
-					</option>
-					<option
-					 value="bottom-0 start-50 translate-middle-x"
-					>
-						"bottomCenter"
-					</option>
-					<option
-					 value="bottom-0 end-0"
-					>
-						"bottomRight"
-					</option>
-				</select>
-				<label
-				 class="me-3"
-				 for="dismissible"
+						"Dismissible:"
+					</label>
+					<input
+					 class="form-check-input"
+					 id="dismissible"
+					 type="checkbox"
+					/>
+				</div>
+				<div
+				 class="align-items-center d-flex justify-content-between w-100"
 				>
-					"Dismissible:"
-				</label>
-				<input
-				 class="form-check-input"
-				 id="dismissible"
-				 type="checkbox"
-				/>
-				<label
-				 class="me-3"
-				 for="duration"
-				>
-					"Duration:"
-				</label>
-				<input
-				 class="form-control w-auto"
-				 id="duration"
-				 type="number"
-				 value="5000"
-				/>
+					<label
+					 class="me-3"
+					 for="duration"
+					>
+						"Duration:"
+					</label>
+					<input
+					 class="form-control w-50"
+					 id="duration"
+					 type="number"
+					 value="5000"
+					/>
+				</div>
 			</div>
 			<div
-			 class="align-items-center d-flex form-group gap-3"
+			 class="align-items-center d-flex flex-column flex-sm-row form-group gap-3"
 			>
-				<label
-				 class="me-3"
-				 for="limit"
+				<div
+				 class="align-items-center d-flex justify-content-between w-100"
 				>
-					"Max # of toasts:"
-				</label>
-				<input
-				 class="form-control w-auto"
-				 id="limit"
-				 type="number"
-				 value="10"
-				/>
-				<label
-				 class="me-3"
-				 for="pause"
+					<label
+					 class="me-3"
+					 for="limit"
+					>
+						"Max # of toasts:"
+					</label>
+					<input
+					 class="form-control w-50"
+					 id="limit"
+					 type="number"
+					 value="10"
+					/>
+				</div>
+				<div
+				 class="align-items-center d-flex justify-content-between w-100"
 				>
-					"Pause timer on hover:"
-				</label>
-				<input
-				 class="form-check-input"
-				 id="pause"
-				 type="checkbox"
-				/>
-				<label
-				 class="me-3"
-				 for="closeAll"
+					<label
+					 class="me-3"
+					 for="pause"
+					>
+						"Pause timer on hover:"
+					</label>
+					<input
+					 class="form-check-input"
+					 id="pause"
+					 type="checkbox"
+					/>
+				</div>
+				<div
+				 class="align-items-center d-flex justify-content-between w-100"
 				>
-					"Close all toasts button"
-				</label>
-				<input
-				 class="form-check-input"
-				 id="closeAll"
-				 type="checkbox"
-				/>
+					<label
+					 class="me-3"
+					 for="closeAll"
+					>
+						"Close all toasts button"
+					</label>
+					<input
+					 class="form-check-input"
+					 id="closeAll"
+					 type="checkbox"
+					/>
+				</div>
 			</div>
 			<div
 			 class="align-items-center d-flex form-group gap-3 py-3"
@@ -147,6 +171,10 @@
 				</button>
 			</div>
 		</div>
+		<div
+		 class="d-flex mt-2 position-relative w-100"
+		 style="height: 500px; background-color: gray;"
+		/>
 		<div
 		 aria-atomic="true"
 		 aria-live="polite"
