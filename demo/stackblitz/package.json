@@ -7,15 +7,15 @@
 		"build": {
 			"command": "vite build",
 			"dependencies": [
-				"..:sveltekit"
+				"..:sveltekit",
+				"../../angular/demo:build",
+				"../../react/demo:build",
+				"../../svelte/demo:build"
 			],
 			"files": [
 				"vite.config.ts",
 				"../src/lib/stackblitz/**",
-				"../scripts/*",
-				"../../angular/demo:build",
-				"../../react/demo:build",
-				"../../svelte/demo:build"
+				"../scripts/*"
 			],
 			"output": [
 				"dist/**"
