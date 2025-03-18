@@ -3,13 +3,13 @@ import {dirname} from 'path';
 import {fileURLToPath} from 'url';
 import type {UserConfig} from 'vite';
 import {defineConfig} from 'vite';
-import {dependencies, exports as pkgExports} from './package.json';
+import {dependencies, peerDependencies, exports as pkgExports} from './package.json';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const pathRegExp = /\\/g;
 const normalizePath = (str: string) => str.replace(pathRegExp, '/');
-const externalDependencies = [...Object.keys(dependencies)];
+const externalDependencies = [...Object.keys(dependencies), ...Object.keys(peerDependencies)];
 
 // https://vitejs.dev/config/
 export default defineConfig(async (): Promise<UserConfig> => {
