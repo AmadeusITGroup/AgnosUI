@@ -19,29 +19,29 @@ import {FormsModule} from '@angular/forms';
 				<input type="checkbox" class="form-check-input" id="dismissible" [disabled]="duration() === 0" [(ngModel)]="dismissible" />
 				<label class="me-3" for="duration">Duration: </label>
 				<input id="duration" type="number" class="form-control w-auto" [(ngModel)]="duration" />
-				<label class="me-3" for="limit">Max # of toasts: </label>
-				<input id="limit" type="number" class="form-control w-auto" [(ngModel)]="limit" />
 			</div>
 			<div class="d-flex form-group align-items-center gap-3">
+				<label class="me-3" for="limit">Max # of toasts: </label>
+				<input id="limit" type="number" class="form-control w-auto" [(ngModel)]="limit" />
 				<label class="me-3" for="pause">Pause timer on hover: </label>
 				<input type="checkbox" class="form-check-input" id="pause" [(ngModel)]="pauseOnHover" />
 				<label class="me-3" for="closeAll">Close all toasts button</label>
 				<input type="checkbox" class="form-check-input" id="closeAll" [(ngModel)]="closeAll" />
+			</div>
+			<div class="d-flex form-group align-items-center gap-3 py-3">
 				<button class="btn btn-primary addToast ms-2" (click)="addToast()">Show toast</button>
-				<button class="btn btn-primary ms-2" (click)="addToast('error')">Show error toast</button>
+				<button class="btn btn-primary addToast ms-2" (click)="addToast('error')">Show error toast</button>
 			</div>
 		</div>
-		<div style="height: 500px; background-color: gray;">
-			<au-component
-				#toaster
-				auToaster
-				[auDismissible]="dismissible()"
-				[auDuration]="duration()"
-				[auPosition]="position()"
-				[auLimit]="limit()"
-				[auCloseAll]="closeAll()"
-			/>
-		</div>
+		<au-component
+			#toaster
+			auToaster
+			[auDismissible]="dismissible()"
+			[auDuration]="duration()"
+			[auPosition]="position()"
+			[auLimit]="limit()"
+			[auCloseAll]="closeAll()"
+		/>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -49,7 +49,7 @@ export default class ToasterExampleComponent {
 	toasterService = inject(ToasterService);
 	readonly dismissible = signal(this.toasterService.options().dismissible);
 	readonly duration = signal(this.toasterService.options().duration);
-	readonly limit = signal(this.toasterService.options().limit);
+	readonly limit = signal(10);
 	readonly pauseOnHover = signal(false);
 	readonly closeAll = signal(false);
 	positions = Object.entries(ToastPositions).map((entry) => {

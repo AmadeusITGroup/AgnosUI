@@ -93,6 +93,10 @@
 				 type="number"
 				 value="5000"
 				/>
+			</div>
+			<div
+			 class="align-items-center d-flex form-group gap-3"
+			>
 				<label
 				 class="me-3"
 				 for="limit"
@@ -103,12 +107,8 @@
 				 class="form-control w-auto"
 				 id="limit"
 				 type="number"
-				 value=""
+				 value="10"
 				/>
-			</div>
-			<div
-			 class="align-items-center d-flex form-group gap-3"
-			>
 				<label
 				 class="me-3"
 				 for="pause"
@@ -131,6 +131,10 @@
 				 id="closeAll"
 				 type="checkbox"
 				/>
+			</div>
+			<div
+			 class="align-items-center d-flex form-group gap-3 py-3"
+			>
 				<button
 				 class="addToast btn btn-primary ms-2"
 				>
@@ -144,17 +148,13 @@
 			</div>
 		</div>
 		<div
-		 style="height: 500px; background-color: gray;"
+		 aria-atomic="true"
+		 aria-live="polite"
+		 class="d-flex mr-2 mt-2 w-100"
 		>
 			<div
-			 aria-atomic="true"
-			 aria-live="polite"
-			 class="d-flex mr-2 mt-2 w-100"
-			>
-				<div
-				 class="bottom-0 end-0 p-3 toast-container"
-				/>
-			</div>
+			 class="bottom-0 end-0 p-3 toast-container"
+			/>
 		</div>
 	</div>
 </body>

@@ -8,7 +8,7 @@
 		};
 	});
 	let index = 0;
-	const options = $state(defaultToasterProps);
+	const options = $state({...defaultToasterProps, limit: 10});
 	$effect(() => {
 		if (options.duration === 0) {
 			options.dismissible = true;
@@ -29,14 +29,16 @@
 		<input type="checkbox" class="form-check-input" id="dismissible" disabled={options.duration === 0} bind:checked={options.dismissible} />
 		<label class="me-3" for="duration">Duration: </label>
 		<input id="duration" type="number" class="form-control w-auto" bind:value={options.duration} />
-		<label class="me-3" for="limit">Max # of toasts: </label>
-		<input id="limit" type="number" class="form-control w-auto" bind:value={options.limit} />
 	</div>
 	<div class="d-flex form-group align-items-center gap-3">
+		<label class="me-3" for="limit">Max # of toasts: </label>
+		<input id="limit" type="number" class="form-control w-auto" bind:value={options.limit} />
 		<label class="me-3" for="pause">Pause timer on hover: </label>
 		<input type="checkbox" class="form-check-input" id="pause" bind:checked={options.pauseOnHover} />
 		<label class="me-3" for="closeAll">Close all toasts button</label>
 		<input type="checkbox" class="form-check-input" id="closeAll" bind:checked={options.closeAll} />
+	</div>
+	<div class="d-flex form-group align-items-center gap-3 py-3">
 		<button class="btn btn-primary addToast ms-2" onclick={() => addToast({children: `Simple toast ${index++}`, header: 'I am header'})}
 			>Show toast</button
 		>
@@ -48,13 +50,11 @@
 	</div>
 </div>
 
-<div style="height: 500px; background-color: gray;">
-	<Toaster
-		duration={options.duration}
-		position={options.position}
-		dismissible={options.dismissible}
-		limit={options.limit}
-		pauseOnHover={options.pauseOnHover}
-		closeAll={options.closeAll}
-	/>
-</div>
+<Toaster
+	duration={options.duration}
+	position={options.position}
+	dismissible={options.dismissible}
+	limit={options.limit}
+	pauseOnHover={options.pauseOnHover}
+	closeAll={options.closeAll}
+/>

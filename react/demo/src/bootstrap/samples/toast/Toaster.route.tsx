@@ -85,6 +85,8 @@ const ToasterDemo = () => {
 						value={options.duration}
 						onChange={(e) => setOptions({...options, duration: Number(e.target.value)})}
 					/>
+				</div>
+				<div className="d-flex form-group align-items-center gap-3">
 					<label className="me-3" htmlFor="limit">
 						Max # of toasts:{' '}
 					</label>
@@ -95,8 +97,6 @@ const ToasterDemo = () => {
 						value={options.limit}
 						onChange={(e) => setOptions({...options, limit: Number(e.target.value)})}
 					/>
-				</div>
-				<div className="d-flex form-group align-items-center gap-3">
 					<label className="me-3" htmlFor="pause">
 						Pause timer on hover:{' '}
 					</label>
@@ -117,10 +117,11 @@ const ToasterDemo = () => {
 						checked={options.closeAll}
 						onChange={(e) => setOptions({...options, closeAll: e.target.checked})}
 					/>
+				</div>
+				<div className="d-flex form-group align-items-center gap-3 py-3">
 					<ToasterActions />
 				</div>
 			</div>
-			<div style={{height: '500px', backgroundColor: 'gray'}}></div>
 		</ToasterProvider>
 	);
 };
