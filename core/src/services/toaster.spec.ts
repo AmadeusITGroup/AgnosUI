@@ -1,6 +1,5 @@
 import {describe, expect, test, vitest} from 'vitest';
 import {defaultToasterProps, Toaster} from './toaster';
-import exp from 'constants';
 
 interface ToastPropsTest {
 	children: string;
