@@ -4,7 +4,7 @@ import {tmpdir} from 'os';
 import {createServer} from 'net';
 import {dirname, join} from 'path';
 import {createBaseFrameworkProcessors, prepareStackblitzProject, samples} from '../demo/stackblitz/index';
-import pkg from '../package.json' assert {type: 'json'};
+import pkg from '../package.json' with {type: 'json'};
 import type {FixtureOptions} from './fixture';
 import type {Logger} from './processUtils';
 import {runAndWaitForURL, runProcess} from './processUtils';
