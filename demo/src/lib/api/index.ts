@@ -45,7 +45,7 @@ async function getMapMdLocationBySymbol(framework: string, type: string) {
 	for (const line of globals.split('\n')) {
 		const match = line.match(regexGlobal);
 		if (match) {
-			map.set(match[1].replace(/\\/g, ''), match[2]);
+			map.set(match[1].replace(/\\/g, ''), match[2].replace(/\\/g, '/'));
 		}
 	}
 	return map;
