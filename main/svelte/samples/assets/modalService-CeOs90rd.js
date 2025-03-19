@@ -1,0 +1,1 @@
+import{m as r,$ as e}from"./AppCommon-BhqekdnF.js";import{M as m}from"./Modal-Cqt-ZelI.js";async function i(t,{context:a}={}){const n=document.createElement("div"),o=r(m,{target:n,props:t,context:a});try{return await o.api.open()}catch{await e(o)}}export{i as o};
