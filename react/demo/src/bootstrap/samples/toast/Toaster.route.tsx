@@ -1,4 +1,5 @@
 import {toastPositions} from '@agnos-ui/react-bootstrap/types';
+import type {ToastPositions} from '@agnos-ui/react-bootstrap/components/toast';
 import {defaultToasterProps, useToaster, ToasterProvider} from '@agnos-ui/react-bootstrap/components/toast';
 import {useEffect, useState} from 'react';
 
@@ -36,7 +37,13 @@ const ToasterDemo = () => {
 			label: entry[0],
 		};
 	});
-	const [options, setOptions] = useState({...defaultToasterProps, pauseOnHover: false, closeAll: false, limit: 10});
+	const [options, setOptions] = useState({
+		...defaultToasterProps,
+		pauseOnHover: false,
+		closeAll: false,
+		limit: 10,
+		position: toastPositions[defaultToasterProps.position] as ToastPositions,
+	});
 	useEffect(() => {
 		if (options.duration === 0) {
 			setOptions((prevOptions) => ({...prevOptions, dismissible: true}));

@@ -1,6 +1,6 @@
 import type {ReadableSignal, WritableSignal as TansuWritableSignal} from '@amadeus-it-group/tansu';
 import type {Signal, WritableSignal} from '@angular/core';
-import {DestroyRef, effect, inject, signal} from '@angular/core';
+import {DestroyRef, inject, signal} from '@angular/core';
 import {ZoneWrapper} from './zone';
 
 export * from '@agnos-ui/core/utils/stores';
