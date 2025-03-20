@@ -1,11 +1,11 @@
 import type {ToastProps} from '@agnos-ui/angular-bootstrap';
-import {AgnosUIAngularModule, ToastComponent, ToastPositions} from '@agnos-ui/angular-bootstrap';
+import {AgnosUIAngularModule, ToastComponent, toastPositions} from '@agnos-ui/angular-bootstrap';
 import {Component, Injectable, inject, signal} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
 @Injectable({providedIn: 'root'})
 class ToastService {
-	toastMap: Map<string, Partial<ToastProps>[]> = new Map(Object.values(ToastPositions).map((entry) => [entry, []]));
+	toastMap: Map<string, Partial<ToastProps>[]> = new Map(Object.values(toastPositions).map((entry) => [entry, []]));
 
 	add(toast: Partial<ToastProps>) {
 		this.toastMap.get(toast.className!)?.push(toast);
@@ -66,7 +66,7 @@ class ToastContainerComponent {
 })
 export default class DynamicToastComponent {
 	readonly toastContainerService = inject(ToastService);
-	readonly positionList = Object.entries(ToastPositions).map((entry) => {
+	readonly positionList = Object.entries(toastPositions).map((entry) => {
 		return {
 			value: entry[1],
 			label: entry[0],

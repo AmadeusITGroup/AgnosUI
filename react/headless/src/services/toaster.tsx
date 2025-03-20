@@ -3,10 +3,10 @@ import type {ToasterProps, ToasterToast} from '@agnos-ui/core/services/toaster';
 import {Toaster as CoreToaster} from '@agnos-ui/core/services/toaster';
 import {useObservable} from '../generated';
 
-import {defaultToasterProps, ToastPositions} from '@agnos-ui/core/services/toaster';
+import {defaultToasterProps} from '@agnos-ui/core/services/toaster';
 import type {ReactNode} from 'react';
-import {createContext, useContext, useMemo} from 'react';
-export {defaultToasterProps, ToastPositions, ToasterProps};
+import {createContext, useCallback, useContext, useMemo} from 'react';
+export {defaultToasterProps, ToasterProps};
 export type {ToasterToast};
 
 /**
@@ -18,7 +18,7 @@ export const useCreateToaster = <Props extends Partial<ToastProps>>(options?: To
 	const toaster = useMemo(() => new CoreToaster<Props>(options), [options]);
 	const toasts = useObservable(toaster.toasts);
 	const toasterOptions = useObservable(toaster.options);
-	const addToast = (props: Props) => toaster.addToast(props);
+	const addToast = useCallback((props: Props) => toaster.addToast(props), [toaster]);
 	const removeToast = toaster.removeToast;
 	const eventsDirective = toaster.eventsDirective;
 	const closeAll = toaster.closeAll;

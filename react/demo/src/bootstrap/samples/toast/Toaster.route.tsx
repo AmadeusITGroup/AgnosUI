@@ -1,4 +1,5 @@
-import {defaultToasterProps, ToastPositions, useToaster} from '@agnos-ui/react-bootstrap/services/toaster';
+import {toastPositions} from '@agnos-ui/react-bootstrap/types';
+import {defaultToasterProps, useToaster} from '@agnos-ui/react-bootstrap/services/toaster';
 import {ToasterProvider} from '@agnos-ui/react-bootstrap/services/toaster';
 import {useEffect, useState} from 'react';
 
@@ -30,7 +31,7 @@ const ToasterActions = () => {
 };
 
 const ToasterDemo = () => {
-	const positions = Object.entries(ToastPositions).map((entry) => {
+	const positions = Object.entries(toastPositions).map((entry) => {
 		return {
 			value: entry[1],
 			label: entry[0],

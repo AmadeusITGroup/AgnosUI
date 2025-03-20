@@ -51,10 +51,6 @@ describe('toAngularSignals', () => {
 		TestBed.resetTestEnvironment(); // this ends the subscription
 		tansuStore.set(5);
 		expect(signal()).toBe(4); // no change as the subscription was ended
-		ngZone.run(() => {
-			signal.set(6);
-		});
-		expect(tansuStore.get()).toBe(5); // no change as the subscription was ended
 	});
 
 	it('[toAngularSignal] subscribes and unsubscribes outside Angular zone', () => {

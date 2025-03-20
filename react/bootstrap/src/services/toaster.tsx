@@ -3,8 +3,8 @@ import type {ToasterProps} from '@agnos-ui/react-headless/services/toaster';
 import {ToasterProvider as ToasterProviderHeadless, useToaster as useToasterHeadless} from '@agnos-ui/react-headless/services/toaster';
 import type {ToastProps} from '../components/toast/toast.gen';
 import {Toast} from '../components/toast';
-import {defaultToasterProps, ToastPositions} from '@agnos-ui/react-headless/services/toaster';
-export {defaultToasterProps, ToastPositions};
+import {defaultToasterProps} from '@agnos-ui/react-headless/services/toaster';
+export {defaultToasterProps};
 
 interface ToastToasterProps extends Partial<ToastProps> {
 	id: number;
@@ -65,8 +65,8 @@ function ToastToaster({
 export function ToasterContainer() {
 	const toaster = useToaster();
 	return (
-		<div className="d-flex mt-2 mr-2 w-100" aria-live="polite" aria-atomic="true">
-			<div className={`toast-container p-3 ${toaster.options.position}`}>
+		<div className="au-toaster" aria-live="polite" aria-atomic="true">
+			<div className={`au-toaster-container toast-container ${toaster.options.position}`}>
 				{toaster.options.closeAll && toaster.toasts.length > 1 && (
 					<div className="d-flex position-relative align-items-end pb-2">
 						<button className="btn btn-secondary me-0 ms-auto pe-auto" onClick={() => toaster.closeAll()}>

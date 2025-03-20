@@ -1,4 +1,5 @@
-import {ToasterComponent, ToasterService, ToastPositions} from '@agnos-ui/angular-bootstrap';
+import type { ToastPositions} from '@agnos-ui/angular-bootstrap';
+import {ToasterComponent, ToasterService, toastPositions} from '@agnos-ui/angular-bootstrap';
 import {ChangeDetectionStrategy, Component, effect, inject, signal} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
@@ -45,33 +46,33 @@ import {FormsModule} from '@angular/forms';
 			</div>
 		</div>
 		<div class="d-flex position-relative mt-2 w-100" style="height: 500px; background-color: gray;"></div>
-		<au-component
-			#toaster
+		<div
 			auToaster
 			[auDismissible]="dismissible()"
 			[auDuration]="duration()"
 			[auPosition]="position()"
 			[auLimit]="limit()"
 			[auCloseAll]="closeAll()"
-		/>
+		></div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class ToasterExampleComponent {
-	toasterService = inject(ToasterService);
+	readonly toasterService = inject(ToasterService);
 	readonly dismissible = signal(this.toasterService.options().dismissible);
 	readonly duration = signal(this.toasterService.options().duration);
 	readonly limit = signal(10);
 	readonly pauseOnHover = signal(false);
 	readonly closeAll = signal(false);
-	positions = Object.entries(ToastPositions).map((entry) => {
+	readonly positions = Object.entries(toastPositions).map((entry) => {
 		return {
 			value: entry[1],
 			label: entry[0],
 		};
 	});
-	readonly position = signal(this.toasterService.options().position);
+	readonly position = signal(toastPositions[this.toasterService.options().position] as ToastPositions);
 	index = 0;
+
 	constructor() {
 		effect(() => {
 			if (this.duration() === 0) {
@@ -79,6 +80,7 @@ export default class ToasterExampleComponent {
 			}
 		});
 	}
+	
 	addToast(type?: string) {
 		let payload = {children: `Simple toast ${this.index++}`, header: 'I am header'};
 		if (type === 'error') {

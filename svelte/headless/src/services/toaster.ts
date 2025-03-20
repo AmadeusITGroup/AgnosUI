@@ -1,11 +1,13 @@
 import {type ToastProps} from '@agnos-ui/core/components/toast';
-import type {ToasterToast, ToasterProps} from '@agnos-ui/core/services/toaster';
+import type {ToasterToast, ToasterProps, ToastPositions} from '@agnos-ui/core/services/toaster';
 import {Toaster as CoreToaster} from '@agnos-ui/core/services/toaster';
 import {fromStore} from 'svelte/store';
 import type {Directive} from '../generated';
 
-import {defaultToasterProps, ToastPositions} from '@agnos-ui/core/services/toaster';
-export {defaultToasterProps, ToastPositions, ToasterProps};
+import {defaultToasterProps} from '@agnos-ui/core/services/toaster';
+export {defaultToasterProps, ToasterProps};
+export type {ToastPositions};
+
 /**
  * Create a toaster provider with helpers and state.
  * @param props Options for the toaster.
@@ -14,12 +16,12 @@ export {defaultToasterProps, ToastPositions, ToasterProps};
  */
 export class Toaster<Props extends Partial<ToastProps>> {
 	readonly #toaster: CoreToaster<Props>;
-	toasts: {current: ToasterToast<Props>[]};
-	options: {current: ToasterProps};
-	addToast: (props: Props) => void;
-	removeToast: (id: number) => void;
-	eventsDirective: Directive<number>;
-	closeAll: () => void;
+	readonly toasts: {current: ToasterToast<Props>[]};
+	readonly options: {current: ToasterProps};
+	readonly addToast: (props: Props) => void;
+	readonly removeToast: (id: number) => void;
+	readonly eventsDirective: Directive<number>;
+	readonly closeAll: () => void;
 
 	constructor(options?: ToasterProps) {
 		this.#toaster = new CoreToaster<Props>(options);

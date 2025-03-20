@@ -48,23 +48,13 @@ export const toAngularSignal = <T>(tansuSignal: ReadableSignal<T>): Signal<T> =>
 export const toAngularWritableSignal = <T>(tansuSignal: TansuWritableSignal<T>): WritableSignal<T> => {
 	const zoneWrapper = inject(ZoneWrapper);
 	const res = signal(undefined as any as T, {equal: () => false});
-	let isUpdating = false;
-
+	const set = res.set.bind(res);
 	const subscription = zoneWrapper.outsideNgZone(tansuSignal.subscribe)((value) => {
-		if (!isUpdating) {
-			res.set(value);
-			zoneWrapper.planNgZoneRun();
-		}
+		set(value);
+		zoneWrapper.planNgZoneRun();
 	});
 	inject(DestroyRef).onDestroy(zoneWrapper.outsideNgZone(subscription));
-
-	// Propagate changes from Angular signal to Tansu signal
-	effect(() => {
-		const value = res();
-		isUpdating = true;
-		tansuSignal.set(value);
-		isUpdating = false;
-	});
-
+	res.set = zoneWrapper.outsideNgZone(tansuSignal.set);
+	res.update = zoneWrapper.outsideNgZone(tansuSignal.update);
 	return res;
 };

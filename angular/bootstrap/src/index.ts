@@ -3,6 +3,8 @@
  */
 export * from './agnos-ui-angular.module';
 
+export * from '@agnos-ui/angular-headless';
+
 export type {
 	AccordionApi,
 	AccordionItemContext,
@@ -99,4 +101,3 @@ export {widgetsConfigInjectionToken, provideWidgetsConfig, injectWidgetConfig, i
 
 export {ToasterService} from './services/toaster.service';
 
-export * from '@agnos-ui/angular-headless';

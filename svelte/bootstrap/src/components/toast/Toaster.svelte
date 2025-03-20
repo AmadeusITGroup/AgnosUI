@@ -16,8 +16,8 @@
 	});
 </script>
 
-<div class="d-flex mt-2 mr-2 w-100" aria-live="polite" aria-atomic="true">
-	<div class={`toast-container p-3 ${toaster.options.current.position}`}>
+<div class="au-toaster" aria-live="polite" aria-atomic="true">
+	<div class={`au-toaster-container toast-container ${toaster.options.current.position}`}>
 		{#if toaster.options.current.closeAll && toaster.toasts.current.length > 1}
 			<div class="d-flex position-relative align-items-end pb-2">
 				<button class="btn btn-secondary me-0 ms-auto pe-auto" onclick={() => toaster.closeAll()}

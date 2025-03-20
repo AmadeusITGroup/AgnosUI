@@ -1,32 +1,47 @@
 import {createAttributesDirective} from '../utils/directive';
 import {type ToastProps} from '../components/toast';
-import type {ReadableSignal, WritableSignal} from '@amadeus-it-group/tansu';
 import {computed, writable} from '@amadeus-it-group/tansu';
 import type {Directive} from '../types';
 
-export enum ToastPositions {
-	topLeft = 'top-0 start-0',
-	topCenter = 'top-0 start-50 translate-middle-x',
-	topRight = 'top-0 end-0',
-	middleLeft = 'top-50 start-0 translate-middle-y',
-	middleCenter = 'top-50 start-50 translate-middle',
-	middleRight = 'top-50 end-0 translate-middle-y',
-	bottomLeft = 'bottom-0 start-0',
-	bottomCenter = 'bottom-0 start-50 translate-middle-x',
-	bottomRight = 'bottom-0 end-0',
-}
+/**
+ * Represents the possible positions for displaying a toast notification.
+ *
+ * The positions are defined based on a grid layout with three horizontal
+ * alignments (left, center, right) and three vertical alignments (top, middle, bottom).
+ *
+ * Available positions:
+ * - `topLeft`: Top-left corner of the screen.
+ * - `topCenter`: Top-center of the screen.
+ * - `topRight`: Top-right corner of the screen.
+ * - `middleLeft`: Middle-left side of the screen.
+ * - `middleCenter`: Center of the screen.
+ * - `middleRight`: Middle-right side of the screen.
+ * - `bottomLeft`: Bottom-left corner of the screen.
+ * - `bottomCenter`: Bottom-center of the screen.
+ * - `bottomRight`: Bottom-right corner of the screen.
+ */
+export type ToastPositions =
+	| 'topLeft'
+	| 'topCenter'
+	| 'topRight'
+	| 'middleLeft'
+	| 'middleCenter'
+	| 'middleRight'
+	| 'bottomLeft'
+	| 'bottomCenter'
+	| 'bottomRight';
 
 /**
  * Props of the toaster
  */
 export interface ToasterProps {
-	/** How much time a toast is displayed; 0 means it won't be removed until a manual action */
+	/** How much time (ms) a toast is displayed; 0 means it won't be removed until a manual action */
 	duration: number;
 	/** Where to position the toasts */
 	position: ToastPositions;
-	/** Limit the number of toasts at the same time */
+	/** Maximum number of toasts displayed */
 	limit?: number;
-	/**  Pause toast when hover??? */
+	/**  Pause toast when hover */
 	pauseOnHover?: boolean;
 	/** Display a dismiss button on each toast. When duration = 0, this is enforced to true */
 	dismissible: boolean;
@@ -74,7 +89,7 @@ export interface ToasterTimer {
 
 export const defaultToasterProps: ToasterProps = {
 	duration: 5000,
-	position: ToastPositions.bottomRight,
+	position: 'bottomRight',
 	dismissible: false,
 };
 
@@ -82,25 +97,22 @@ export const defaultToasterProps: ToasterProps = {
  * Create a toaster provider with helpers and state.
  * @param props Options for the toaster.
  * @template Props Type of the toast properties.
- * @returns {} Helpers and state for the toaster.
  */
 export class Toaster<Props extends Partial<ToastProps> = ToastProps> {
-	idCount = 0;
-	_toasts: WritableSignal<ToasterToast<Props>[]> = writable<ToasterToast<Props>[]>([]);
+	#idCount = 0;
+	readonly #toasts = writable<ToasterToast<Props>[]>([]);
 
 	/**
 	 * Get the toasts value from the store
 	 * @returns The array of toasts.
 	 */
-	get toasts(): ReadableSignal<ToasterToast<Props>[]> {
-		return computed(() =>
-			this._toasts()
+	readonly toasts = computed(() =>
+			this.#toasts()
 				.sort((a, b) => b.id - a.id)
 				.slice(0, this.options().limit),
-		);
-	}
+	);
 
-	options: WritableSignal<ToasterProps> = writable<ToasterProps>(defaultToasterProps);
+	readonly options = writable<ToasterProps>(defaultToasterProps);
 
 	readonly #timers: Map<number, ToasterTimer> = new Map();
 
@@ -127,7 +139,7 @@ export class Toaster<Props extends Partial<ToastProps> = ToastProps> {
 	 * @param id Id of the toast
 	 * @param duration Duration of the timer, by default taken from options
 	 */
-	addTimer = (id: number, duration: number = this.options().duration): void => {
+	readonly addTimer = (id: number, duration: number = this.options().duration): void => {
 		if (duration > 0) {
 			this.#timers.set(id, {
 				timeout: setTimeout(() => this.removeToast(id), duration),
@@ -141,7 +153,7 @@ export class Toaster<Props extends Partial<ToastProps> = ToastProps> {
 	 * Pause a timer for a toast
 	 * @param id Id of the toast
 	 */
-	pauseTimer = (id: number): void => {
+	readonly pauseTimer = (id: number): void => {
 		if (this.#timers.has(id)) {
 			const timer = this.#timers.get(id);
 			if (timer && timer.timeout) {
@@ -156,7 +168,7 @@ export class Toaster<Props extends Partial<ToastProps> = ToastProps> {
 	 * Resume a timer for a toast
 	 * @param id Id of the toast
 	 */
-	resumeTimer = (id: number): void => {
+	readonly resumeTimer = (id: number): void => {
 		if (this.#timers.has(id)) {
 			const timer = this.#timers.get(id);
 			if (timer) {
@@ -174,7 +186,7 @@ export class Toaster<Props extends Partial<ToastProps> = ToastProps> {
 	 * Events directive is used to set events on the Toast component, to keep track for example of pointer enter/leave,
 	 * used to pause / resume the timer in case of duration and pauseOnHover are specified.
 	 */
-	eventsDirective: Directive<number> = createAttributesDirective<number>((id) => ({
+	readonly eventsDirective: Directive<number> = createAttributesDirective<number>((id) => ({
 		events: {
 			pointerenter: () => this.options().pauseOnHover && this.pauseTimer(id()),
 			pointerleave: () => this.options().pauseOnHover && this.resumeTimer(id()),
@@ -184,13 +196,15 @@ export class Toaster<Props extends Partial<ToastProps> = ToastProps> {
 	/**
 	 * Helper to add a toast to the viewport.
 	 * @param props Options for the toast.
+	 * @returns The ID of the added toast.
 	 */
-	addToast = (props: Props): void => {
+	addToast = (props: Props): number => {
 		const autoHide = props.autoHide ?? this.options().duration > 0;
-		this._toasts.set([...this._toasts(), {id: this.idCount++, props}]);
+		this.#toasts.update(toasts => [...toasts, {id: this.#idCount++, props}]);
 		if (autoHide) {
-			this.addTimer(this.idCount - 1, props.delay);
+			this.addTimer(this.#idCount - 1, props.delay);
 		}
+		return this.#idCount - 1;
 	};
 
 	/**
@@ -199,24 +213,19 @@ export class Toaster<Props extends Partial<ToastProps> = ToastProps> {
 	 */
 	removeToast = (id: number): void => {
 		this.#timers.delete(id);
-		const toastIdx = this._toasts().findIndex((t) => t.id === id);
-		if (toastIdx !== -1) {
-			const updatedToasts = [...this._toasts()];
-			updatedToasts.splice(toastIdx, 1);
-			this._toasts.set(updatedToasts);
-		}
+		this.#toasts.update(toasts => toasts.filter(toast => toast.id !== id));
 	};
 
 	/** Helper to update toasts when options change */
-	updateToasts = (): void => {
+	readonly updateToasts = (): void => {
 		if (this.options().duration === 0) {
 			this.options().dismissible = true;
 		}
 	};
 
 	/** Helper to close all toasts at once */
-	closeAll = (): void => {
-		this._toasts.set([]);
+	readonly closeAll = (): void => {
+		this.#toasts.set([]);
 		this.#timers.clear();
 	};
 }
