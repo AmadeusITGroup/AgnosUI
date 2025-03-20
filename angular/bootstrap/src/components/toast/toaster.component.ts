@@ -1,15 +1,15 @@
 import {Component, inject, ChangeDetectionStrategy, input, effect} from '@angular/core';
 import {ToastComponent} from './toast.component';
-import {ToasterService} from '../../services/toaster.service';
+import {ToasterService} from './toaster.service';
 import {UseDirective} from '@agnos-ui/angular-headless';
 
 @Component({
 	selector: '[auToaster]',
 	imports: [UseDirective, ToastComponent],
 	host: {
-		class: "au-toaster",
-		'aria-live': "polite",
-		'aria-atomic': "true"
+		class: 'au-toaster',
+		'aria-live': 'polite',
+		'aria-atomic': 'true',
 	},
 	template: `
 		<div [class]="'au-toaster-container toast-container ' + toasterService.options().position">

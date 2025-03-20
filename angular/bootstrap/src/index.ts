@@ -83,6 +83,9 @@ export * from './components/slider';
 
 export type {ToastContext, ToastProps, ToastState, ToastWidget, ToastApi, ToastDirectives} from './components/toast';
 export {createToast, getToastDefaultConfig} from './components/toast';
+
+export {defaultToasterProps, ToasterService} from './components/toast';
+export type {ToastPositions, ToasterProps, ToasterTimer, ToasterToast} from './components/toast';
 export * from './components/toast';
 
 export type {TreeProps, TreeState, TreeWidget, TreeApi, TreeDirectives, TreeItem, NormalizedTreeItem} from './components/tree';
@@ -98,6 +101,3 @@ export * from '@agnos-ui/core-bootstrap/types';
 
 export type {WidgetsConfig} from './config';
 export {widgetsConfigInjectionToken, provideWidgetsConfig, injectWidgetConfig, injectWidgetsConfig, callWidgetFactory} from './config';
-
-export {ToasterService} from './services/toaster.service';
-

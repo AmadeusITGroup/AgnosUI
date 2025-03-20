@@ -4,3 +4,4 @@ import Toaster from './Toaster.svelte';
 export * from './toast.gen';
 export {Toast};
 export {Toaster};
+export * from './toasterService';

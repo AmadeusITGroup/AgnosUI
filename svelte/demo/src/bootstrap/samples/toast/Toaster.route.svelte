@@ -1,7 +1,7 @@
 <script lang="ts">
-	import {addToast, Toaster} from '@agnos-ui/svelte-bootstrap/components/toast';
-	import {defaultToasterProps} from '@agnos-ui/svelte-bootstrap/services/toaster';
+	import {addToast, Toaster, defaultToasterProps} from '@agnos-ui/svelte-bootstrap/components/toast';
 	import {toastPositions} from '@agnos-ui/svelte-bootstrap/types';
+	import type {ToastPositions} from '@agnos-ui/svelte-bootstrap/components/toast';
 
 	const positions = Object.entries(toastPositions).map((entry) => {
 		return {
@@ -10,7 +10,7 @@
 		};
 	});
 	let index = 0;
-	const options = $state({...defaultToasterProps, limit: 10, position: toastPositions[defaultToasterProps.position]});
+	const options = $state({...defaultToasterProps, limit: 10, position: toastPositions[defaultToasterProps.position] as ToastPositions});
 	$effect(() => {
 		if (options.duration === 0) {
 			options.dismissible = true;

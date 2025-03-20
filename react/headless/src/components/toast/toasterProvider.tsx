@@ -1,11 +1,10 @@
 import {type ToastProps} from '@agnos-ui/core/components/toast';
-import type {ToasterProps, ToasterToast} from '@agnos-ui/core/services/toaster';
-import {Toaster as CoreToaster} from '@agnos-ui/core/services/toaster';
-import {useObservable} from '../generated';
-
-import {defaultToasterProps} from '@agnos-ui/core/services/toaster';
+import type {ToasterProps, ToasterToast} from '@agnos-ui/core/components/toast';
+import {defaultToasterProps, Toaster as CoreToaster} from '@agnos-ui/core/components/toast';
+import {useObservable} from '../../generated';
 import type {ReactNode} from 'react';
 import {createContext, useCallback, useContext, useMemo} from 'react';
+
 export {defaultToasterProps, ToasterProps};
 export type {ToasterToast};
 

@@ -50,7 +50,8 @@
 		}
 	},
 	"scripts": {
-		"build": "wireit"
+		"build": "wireit",
+		"generate:exports": "wireit"
 	},
 	"wireit": {
 		"generate:exports": {

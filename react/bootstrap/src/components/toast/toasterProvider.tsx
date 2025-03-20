@@ -1,10 +1,8 @@
 import {useDirective} from '@agnos-ui/react-headless/utils/directive';
-import type {ToasterProps} from '@agnos-ui/react-headless/services/toaster';
-import {ToasterProvider as ToasterProviderHeadless, useToaster as useToasterHeadless} from '@agnos-ui/react-headless/services/toaster';
-import type {ToastProps} from '../components/toast/toast.gen';
-import {Toast} from '../components/toast';
-import {defaultToasterProps} from '@agnos-ui/react-headless/services/toaster';
-export {defaultToasterProps};
+import type {ToasterProps} from '@agnos-ui/react-headless/components/toast';
+import {ToasterProvider as ToasterProviderHeadless, useToaster as useToasterHeadless} from '@agnos-ui/react-headless/components/toast';
+import type {ToasterToast, ToastProps} from './toast.gen';
+import {Toast} from './toast';
 
 interface ToastToasterProps extends Partial<ToastProps> {
 	id: number;
@@ -74,7 +72,7 @@ export function ToasterContainer() {
 						</button>
 					</div>
 				)}
-				{toaster.toasts.map(({id, props}) => {
+				{toaster.toasts.map(({id, props}: ToasterToast<Partial<ToastProps>>) => {
 					return <ToastToaster key={id} id={id} {...props} toaster={toaster} />;
 				})}
 			</div>

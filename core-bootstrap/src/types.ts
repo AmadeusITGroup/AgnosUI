@@ -1,4 +1,4 @@
-import type {ToastPositions} from "@agnos-ui/core/services/toaster";
+import type {ToastPositions} from '@agnos-ui/core/components/toast';
 
 /**
  * Represents the contextual classes available in Bootstrap.
@@ -44,7 +44,7 @@ export const BS_CONTEXTUAL_CLASSES: BSContextualClass[] = Object.values({
  * const positionClass = toastPositions.topLeft; // "top-0 start-0"
  * ```
  */
-export const toastPositions: Record<ToastPositions, string>= {
+export const toastPositions: Record<ToastPositions, string> = {
 	topLeft: 'top-0 start-0',
 	topCenter: 'top-0 start-50 translate-middle-x',
 	topRight: 'top-0 end-0',
@@ -54,4 +54,4 @@ export const toastPositions: Record<ToastPositions, string>= {
 	bottomLeft: 'bottom-0 start-0',
 	bottomCenter: 'bottom-0 start-50 translate-middle-x',
 	bottomRight: 'bottom-0 end-0',
-}
+};

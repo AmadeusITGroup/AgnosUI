@@ -1,7 +1,8 @@
-import {createAttributesDirective} from '../utils/directive';
-import {type ToastProps} from '../components/toast';
+import {createAttributesDirective} from '../../utils/directive';
+import {type ToastProps} from './toast';
+import type {Directive} from '../../types';
+import type {ReadableSignal, WritableSignal} from '@amadeus-it-group/tansu';
 import {computed, writable} from '@amadeus-it-group/tansu';
-import type {Directive} from '../types';
 
 /**
  * Represents the possible positions for displaying a toast notification.
@@ -106,13 +107,13 @@ export class Toaster<Props extends Partial<ToastProps> = ToastProps> {
 	 * Get the toasts value from the store
 	 * @returns The array of toasts.
 	 */
-	readonly toasts = computed(() =>
-			this.#toasts()
-				.sort((a, b) => b.id - a.id)
-				.slice(0, this.options().limit),
+	readonly toasts: ReadableSignal<ToasterToast<Props>[]> = computed(() =>
+		this.#toasts()
+			.sort((a, b) => b.id - a.id)
+			.slice(0, this.options().limit),
 	);
 
-	readonly options = writable<ToasterProps>(defaultToasterProps);
+	readonly options: WritableSignal<ToasterProps> = writable<ToasterProps>(defaultToasterProps);
 
 	readonly #timers: Map<number, ToasterTimer> = new Map();
 
@@ -200,7 +201,7 @@ export class Toaster<Props extends Partial<ToastProps> = ToastProps> {
 	 */
 	addToast = (props: Props): number => {
 		const autoHide = props.autoHide ?? this.options().duration > 0;
-		this.#toasts.update(toasts => [...toasts, {id: this.#idCount++, props}]);
+		this.#toasts.update((toasts) => [...toasts, {id: this.#idCount++, props}]);
 		if (autoHide) {
 			this.addTimer(this.#idCount - 1, props.delay);
 		}
@@ -213,7 +214,7 @@ export class Toaster<Props extends Partial<ToastProps> = ToastProps> {
 	 */
 	removeToast = (id: number): void => {
 		this.#timers.delete(id);
-		this.#toasts.update(toasts => toasts.filter(toast => toast.id !== id));
+		this.#toasts.update((toasts) => toasts.filter((toast) => toast.id !== id));
 	};
 
 	/** Helper to update toasts when options change */

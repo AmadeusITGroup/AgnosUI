@@ -61,22 +61,23 @@ const generateExports = async (destination, source, dependencyPkg, includeCompon
 		await addGenerationFile(file);
 	}
 
+	if (includeComponents) {
+		const componentIndexes = (await glob(`components/**/index.ts`, {cwd: sourceFolder})).map(normalizePath);
+		for (const srcFile of componentIndexes) {
+			await addGenerationFile(srcFile);
+		}
+	}
+
+	const globComponents = includeComponents ? 'components/**' : '';
 	// then we check if there is any override present in the destination source folder
 	const destFiles = (
-		await glob(`{services,services/transitions,utils,.}/*.{ts,tsx}`, {
+		await glob([`{services,services/transitions,utils,.}/*.{ts,tsx}`, `${globComponents}/index.ts`], {
 			cwd: destFolder,
 			ignore: ['**/*.gen.ts', '**/*.spec.ts', 'index.ts'],
 		})
 	).map(normalizePath);
 	for (const destFile of destFiles) {
 		await addGenerationFile(destFile, true);
-	}
-
-	if (includeComponents) {
-		const componentIndexes = (await glob(`components/**/index.ts`, {cwd: sourceFolder})).map(normalizePath);
-		for (const srcFile of componentIndexes) {
-			await addGenerationFile(srcFile);
-		}
 	}
 
 	const generationInfos = [...generationMap.values()];

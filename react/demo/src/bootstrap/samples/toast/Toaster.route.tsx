@@ -1,6 +1,5 @@
 import {toastPositions} from '@agnos-ui/react-bootstrap/types';
-import {defaultToasterProps, useToaster} from '@agnos-ui/react-bootstrap/services/toaster';
-import {ToasterProvider} from '@agnos-ui/react-bootstrap/services/toaster';
+import {defaultToasterProps, useToaster, ToasterProvider} from '@agnos-ui/react-bootstrap/components/toast';
 import {useEffect, useState} from 'react';
 
 const ToasterActions = () => {

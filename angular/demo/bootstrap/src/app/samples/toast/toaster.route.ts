@@ -1,4 +1,4 @@
-import type { ToastPositions} from '@agnos-ui/angular-bootstrap';
+import type {ToastPositions} from '@agnos-ui/angular-bootstrap';
 import {ToasterComponent, ToasterService, toastPositions} from '@agnos-ui/angular-bootstrap';
 import {ChangeDetectionStrategy, Component, effect, inject, signal} from '@angular/core';
 import {FormsModule} from '@angular/forms';
@@ -80,7 +80,7 @@ export default class ToasterExampleComponent {
 			}
 		});
 	}
-	
+
 	addToast(type?: string) {
 		let payload = {children: `Simple toast ${this.index++}`, header: 'I am header'};
 		if (type === 'error') {
