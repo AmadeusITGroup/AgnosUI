@@ -1,0 +1,188 @@
+<body>
+	<div
+	 class="container p-3"
+	 id="root"
+	>
+		<p
+		 class="mb-2"
+		>
+			"Similar to dynamic stacking, we expose a service to ease the usage of Toasts"
+		</p>
+		<div
+		 class="d-flex flex-column gap-2 justify-content-between"
+		>
+			<div
+			 class="align-items-center d-flex flex-column flex-sm-row form-group gap-3"
+			>
+				<div
+				 class="align-items-center d-flex justify-content-between w-100"
+				>
+					<label
+					 class="me-3"
+					 for="positionSelect"
+					>
+						"Position:"
+					</label>
+					<select
+					 class="form-select w-auto"
+					 id="positionSelect"
+					>
+						<option
+						 value="topLeft"
+						>
+							"topLeft"
+						</option>
+						<option
+						 value="topCenter"
+						>
+							"topCenter"
+						</option>
+						<option
+						 value="topRight"
+						>
+							"topRight"
+						</option>
+						<option
+						 value="middleLeft"
+						>
+							"middleLeft"
+						</option>
+						<option
+						 value="middleCenter"
+						>
+							"middleCenter"
+						</option>
+						<option
+						 value="middleRight"
+						>
+							"middleRight"
+						</option>
+						<option
+						 value="bottomLeft"
+						>
+							"bottomLeft"
+						</option>
+						<option
+						 value="bottomCenter"
+						>
+							"bottomCenter"
+						</option>
+						<option
+						 value="bottomRight"
+						>
+							"bottomRight"
+						</option>
+					</select>
+				</div>
+				<div
+				 class="align-items-center d-flex justify-content-between w-100"
+				>
+					<label
+					 class="me-3"
+					 for="dismissible"
+					>
+						"Dismissible:"
+					</label>
+					<input
+					 class="form-check-input"
+					 id="dismissible"
+					 type="checkbox"
+					/>
+				</div>
+				<div
+				 class="align-items-center d-flex justify-content-between w-100"
+				>
+					<label
+					 class="me-3"
+					 for="duration"
+					>
+						"Duration:"
+					</label>
+					<input
+					 class="form-control w-50"
+					 id="duration"
+					 type="number"
+					 value="5000"
+					/>
+				</div>
+			</div>
+			<div
+			 class="align-items-center d-flex flex-column flex-sm-row form-group gap-3"
+			>
+				<div
+				 class="align-items-center d-flex justify-content-between w-100"
+				>
+					<label
+					 class="me-3"
+					 for="limit"
+					>
+						"Max # of toasts:"
+					</label>
+					<input
+					 class="form-control w-50"
+					 id="limit"
+					 type="number"
+					 value="10"
+					/>
+				</div>
+				<div
+				 class="align-items-center d-flex justify-content-between w-100"
+				>
+					<label
+					 class="me-3"
+					 for="pause"
+					>
+						"Pause timer on hover:"
+					</label>
+					<input
+					 class="form-check-input"
+					 id="pause"
+					 type="checkbox"
+					/>
+				</div>
+				<div
+				 class="align-items-center d-flex justify-content-between w-100"
+				>
+					<label
+					 class="me-3"
+					 for="closeAll"
+					>
+						"Close all toasts button"
+					</label>
+					<input
+					 class="form-check-input"
+					 id="closeAll"
+					 type="checkbox"
+					/>
+				</div>
+			</div>
+			<div
+			 class="align-items-center d-flex form-group gap-3 py-3"
+			>
+				<button
+				 class="btn btn-primary ms-2"
+				>
+					"Show toast"
+				</button>
+				<button
+				 class="btn btn-primary ms-2"
+				>
+					"Show error toast"
+				</button>
+			</div>
+		</div>
+		<div
+		 class="d-flex mt-2 position-relative w-100"
+		 style="height: 500px; background-color: gray;"
+		/>
+		<div
+		 aria-atomic="true"
+		 aria-live="polite"
+		 class="au-toaster"
+		>
+			<div
+			 class="au-toaster-container bottom-0 end-0 toast-container"
+			/>
+		</div>
+	</div>
+</body>

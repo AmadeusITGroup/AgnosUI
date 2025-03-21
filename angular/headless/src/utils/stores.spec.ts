@@ -2,9 +2,9 @@ import {readable, writable} from '@amadeus-it-group/tansu';
 import {ChangeDetectionStrategy, Component, NgZone, effect} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 import {beforeEach, describe, expect, it} from 'vitest';
-import {toAngularSignal} from './stores';
+import {toAngularSignal, toAngularWritableSignal} from './stores';
 
-describe('toAngularSignal', () => {
+describe('toAngularSignals', () => {
 	let log: string[] = [];
 
 	beforeEach(() => {
@@ -22,7 +22,7 @@ describe('toAngularSignal', () => {
 			}
 		};
 
-	it('works synchronously', () => {
+	it('[toAngularSignal] works synchronously', () => {
 		const tansuStore = writable(1);
 		const signal = TestBed.runInInjectionContext(() => toAngularSignal(tansuStore));
 		expect(signal()).toBe(1);
@@ -33,7 +33,27 @@ describe('toAngularSignal', () => {
 		expect(signal()).toBe(2); // no change as the subscription was ended
 	});
 
-	it('subscribes and unsubscribes outside Angular zone', () => {
+	it('[toAngularWritableSignal] works synchronously', () => {
+		const tansuStore = writable(1);
+		const signal = TestBed.runInInjectionContext(() => toAngularWritableSignal(tansuStore));
+		expect(signal()).toBe(1);
+		tansuStore.set(2);
+		expect(signal()).toBe(2);
+		const ngZone = TestBed.inject(NgZone);
+		ngZone.run(() => {
+			signal.set(3);
+		});
+		expect(tansuStore.get()).toBe(3);
+		ngZone.run(() => {
+			signal.set(4);
+		});
+		expect(tansuStore.get()).toBe(4);
+		TestBed.resetTestEnvironment(); // this ends the subscription
+		tansuStore.set(5);
+		expect(signal()).toBe(4); // no change as the subscription was ended
+	});
+
+	it('[toAngularSignal] subscribes and unsubscribes outside Angular zone', () => {
 		const ngZone = TestBed.inject(NgZone);
 		const tansuStore = readable(0 as number, {
 			onUse: createZoneCheckFn('onUse', (set) => {
@@ -85,7 +105,7 @@ describe('toAngularSignal', () => {
 	}
 
 	for (const MyComponent of [MyTestWithEffectComponent, MyTestWithoutEffectComponent]) {
-		it(`works in ${MyComponent.name} (inside Angular zone)`, async () => {
+		it(`[toAngularSignal] works in ${MyComponent.name} (inside Angular zone)`, async () => {
 			const fixture = TestBed.createComponent(MyComponent);
 			fixture.autoDetectChanges();
 			await fixture.whenStable();
@@ -108,7 +128,7 @@ describe('toAngularSignal', () => {
 			fixture.destroy();
 		});
 
-		it(`works in ${MyComponent.name} (outside Angular zone)`, async () => {
+		it(`[toAngularSignal] works in ${MyComponent.name} (outside Angular zone)`, async () => {
 			const fixture = TestBed.createComponent(MyComponent);
 			fixture.autoDetectChanges();
 			await fixture.whenStable();
