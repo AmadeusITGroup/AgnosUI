@@ -1,6 +1,7 @@
 <script lang="ts">
 	import {onMount} from 'svelte';
 	import docsearch from '@docsearch/js';
+	import '@docsearch/css';
 	import {selectedFramework$} from '$lib/stores';
 
 	function generateUniqueId() {
@@ -23,4 +24,4 @@
 	});
 </script>
 
-<div id="docsearch-{uniqueId}"></div>
+<div class="py-0 rounded-[40px] px-0" id="docsearch-{uniqueId}"></div>
