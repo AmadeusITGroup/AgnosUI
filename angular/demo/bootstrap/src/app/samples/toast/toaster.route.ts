@@ -1,4 +1,3 @@
-import type {ToastPositions} from '@agnos-ui/angular-bootstrap';
 import {ToasterComponent, ToasterService, toastPositions} from '@agnos-ui/angular-bootstrap';
 import {ChangeDetectionStrategy, Component, effect, inject, signal} from '@angular/core';
 import {FormsModule} from '@angular/forms';
@@ -13,7 +12,7 @@ import {FormsModule} from '@angular/forms';
 					<label class="me-3" for="positionSelect">Position: </label>
 					<select id="positionSelect" class="form-select w-auto" [(ngModel)]="position">
 						@for (position of positions; track position) {
-							<option [value]="position.value">{{ position.label }}</option>
+							<option [value]="position">{{ position }}</option>
 						}
 					</select>
 				</div>
@@ -64,13 +63,9 @@ export default class ToasterExampleComponent {
 	readonly limit = signal(10);
 	readonly pauseOnHover = signal(false);
 	readonly closeAll = signal(false);
-	readonly positions = Object.entries(toastPositions).map((entry) => {
-		return {
-			value: entry[1],
-			label: entry[0],
-		};
-	});
-	readonly position = signal(toastPositions[this.toasterService.options().position] as ToastPositions);
+	readonly positions = Object.keys(toastPositions);
+
+	readonly position = signal(this.toasterService.options().position);
 	index = 0;
 
 	constructor() {

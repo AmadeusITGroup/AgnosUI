@@ -199,7 +199,7 @@ export class Toaster<Props extends Partial<ToastProps> = ToastProps> {
 	 * @param props Options for the toast.
 	 * @returns The ID of the added toast.
 	 */
-	addToast = (props: Props): number => {
+	readonly addToast = (props: Props): number => {
 		const autoHide = props.autoHide ?? this.options().duration > 0;
 		this.#toasts.update((toasts) => [...toasts, {id: this.#idCount++, props}]);
 		if (autoHide) {
@@ -212,7 +212,7 @@ export class Toaster<Props extends Partial<ToastProps> = ToastProps> {
 	 * Helper to remove a toast to the viewport.
 	 * @param id Id of the toast to remove.
 	 */
-	removeToast = (id: number): void => {
+	readonly removeToast = (id: number): void => {
 		this.#timers.delete(id);
 		this.#toasts.update((toasts) => toasts.filter((toast) => toast.id !== id));
 	};

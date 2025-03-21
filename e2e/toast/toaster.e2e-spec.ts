@@ -33,6 +33,7 @@ test.describe(`Toaster tests`, () => {
 		await expect((await toasterPO.toastPOs())[0].locatorCloseButton).toBeHidden();
 
 		await toasterDemoPO.locatorDismissibleButton.click();
+		await toasterDemoPO.locatorAddToastButton.click();
 		await expect((await toasterPO.toastPOs())[0].locatorCloseButton).toBeVisible();
 	});
 	test(`Toaster duration should set the auto hide to the correct ms`, async ({page}) => {

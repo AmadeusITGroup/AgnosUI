@@ -1,16 +1,8 @@
 <script lang="ts">
-	import {addToast, Toaster, defaultToasterProps} from '@agnos-ui/svelte-bootstrap/components/toast';
-	import {toastPositions} from '@agnos-ui/svelte-bootstrap/types';
-	import type {ToastPositions} from '@agnos-ui/svelte-bootstrap/components/toast';
-
-	const positions = Object.entries(toastPositions).map((entry) => {
-		return {
-			value: entry[1],
-			label: entry[0],
-		};
-	});
+	import {addToast, Toaster, defaultToasterProps, toastPositions} from '@agnos-ui/svelte-bootstrap/components/toast';
+	const positions = Object.keys(toastPositions);
 	let index = 0;
-	const options = $state({...defaultToasterProps, limit: 10, position: toastPositions[defaultToasterProps.position] as ToastPositions});
+	const options = $state({...defaultToasterProps, limit: 10});
 	$effect(() => {
 		if (options.duration === 0) {
 			options.dismissible = true;
@@ -24,8 +16,8 @@
 		<div class="d-flex w-100 align-items-center justify-content-between">
 			<label class="me-3" for="positionSelect">Position: </label>
 			<select id="positionSelect" class="form-select w-auto" bind:value={options.position}>
-				{#each positions as { value, label }}
-					<option {value}> {label}</option>
+				{#each positions as position}
+					<option value={position}>{position}</option>
 				{/each}
 			</select>
 		</div>

@@ -4,6 +4,7 @@ import type {SlotContent, Widget, WidgetFactory, WidgetSlotContext} from '@agnos
 import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
 import {fadeTransition} from '../../services/transitions';
 import type {TransitionFn} from '@agnos-ui/core/services/transitions/baseTransitions';
+import type {ToastPositions} from '@agnos-ui/core/components/toast';
 
 export * from '@agnos-ui/core/components/toast';
 
@@ -86,3 +87,28 @@ export const createToast: WidgetFactory<ToastWidget> = extendWidgetProps(
 	},
 	coreOverride,
 );
+
+/**
+ * A mapping of toast position keys to their corresponding CSS class strings of bootstrap.
+ * These classes define the positioning of toast notifications on the screen.
+ *
+ * The keys represent various positions on the screen, such as top-left, top-center,
+ * middle-right, etc., and the values are the CSS classes of bootstrap that apply the respective
+ * positioning styles.
+ *
+ * Example usage:
+ * ```typescript
+ * const positionClass = toastPositions.topLeft; // "top-0 start-0"
+ * ```
+ */
+export const toastPositions: Record<ToastPositions, string> = {
+	topLeft: 'top-0 start-0',
+	topCenter: 'top-0 start-50 translate-middle-x',
+	topRight: 'top-0 end-0',
+	middleLeft: 'top-50 start-0 translate-middle-y',
+	middleCenter: 'top-50 start-50 translate-middle',
+	middleRight: 'top-50 end-0 translate-middle-y',
+	bottomLeft: 'bottom-0 start-0',
+	bottomCenter: 'bottom-0 start-50 translate-middle-x',
+	bottomRight: 'bottom-0 end-0',
+};

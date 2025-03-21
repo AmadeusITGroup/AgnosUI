@@ -2,7 +2,7 @@ import {type ToastProps} from '@agnos-ui/core/components/toast';
 import type {ToasterProps, ToasterToast} from '@agnos-ui/core/components/toast';
 import {defaultToasterProps, Toaster as CoreToaster} from '@agnos-ui/core/components/toast';
 import {useObservable} from '../../generated';
-import type {ReactNode} from 'react';
+import type {PropsWithChildren} from 'react';
 import {createContext, useCallback, useContext, useMemo} from 'react';
 
 export {defaultToasterProps, ToasterProps};
@@ -40,7 +40,7 @@ const ToasterContext = createContext<ReturnType<typeof useCreateToaster<any>> | 
  * @param props.children - The children components.
  * @returns The ToasterProvider component.
  */
-export const ToasterProvider = <Props extends Partial<ToastProps>>({options, children}: {options: ToasterProps; children: ReactNode}) => {
+export const ToasterProvider = <Props extends Partial<ToastProps>>({options, children}: PropsWithChildren<{options?: ToasterProps}>) => {
 	const toaster = useCreateToaster<Props>(options);
 	return <ToasterContext.Provider value={toaster}>{children}</ToasterContext.Provider>;
 };

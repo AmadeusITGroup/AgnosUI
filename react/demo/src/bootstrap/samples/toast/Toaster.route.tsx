@@ -1,18 +1,17 @@
-import {toastPositions} from '@agnos-ui/react-bootstrap/types';
 import type {ToastPositions} from '@agnos-ui/react-bootstrap/components/toast';
-import {defaultToasterProps, useToaster, ToasterProvider} from '@agnos-ui/react-bootstrap/components/toast';
+import {defaultToasterProps, useToaster, ToasterProvider, toastPositions} from '@agnos-ui/react-bootstrap/components/toast';
 import {useEffect, useState} from 'react';
 
 const ToasterActions = () => {
 	const toaster = useToaster();
-	let [index, setIndex] = useState(0);
+	const [index, setIndex] = useState(0);
 	return (
 		<>
 			<button
 				className="btn btn-primary ms-2"
 				onClick={() => {
 					toaster.addToast({children: `Simple toast ${index}`, header: 'I am header'});
-					setIndex(++index);
+					setIndex((v) => v + 1);
 				}}
 			>
 				Show toast
@@ -21,7 +20,7 @@ const ToasterActions = () => {
 				className="btn btn-primary ms-2"
 				onClick={() => {
 					toaster.addToast({children: `Simple toast ${index}`, className: 'text-bg-danger', dismissible: true, autoHide: true, delay: 10000});
-					setIndex(++index);
+					setIndex((v) => v + 1);
 				}}
 			>
 				Show error toast
@@ -31,19 +30,15 @@ const ToasterActions = () => {
 };
 
 const ToasterDemo = () => {
-	const positions = Object.entries(toastPositions).map((entry) => {
-		return {
-			value: entry[1],
-			label: entry[0],
-		};
-	});
+	const positions = Object.keys(toastPositions);
+
 	const [options, setOptions] = useState({
 		...defaultToasterProps,
 		pauseOnHover: false,
 		closeAll: false,
 		limit: 10,
-		position: toastPositions[defaultToasterProps.position] as ToastPositions,
 	});
+
 	useEffect(() => {
 		if (options.duration === 0) {
 			setOptions((prevOptions) => ({...prevOptions, dismissible: true}));
@@ -65,10 +60,10 @@ const ToasterDemo = () => {
 							value={options.position}
 							onChange={(e) => setOptions({...options, position: e.target.value as ToastPositions})}
 						>
-							{positions.map(({value, label}) => (
-								<option key={value} value={value}>
+							{positions.map((position) => (
+								<option key={position} value={position}>
 									{' '}
-									{label}
+									{position}
 								</option>
 							))}
 						</select>

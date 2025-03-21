@@ -1,12 +1,12 @@
 <script lang="ts" module>
 	const toaster = new ToasterService();
-	const {addToast, removeToast, eventsDirective} = toaster;
-	export {addToast};
+	const {addToast, removeToast, closeAll, eventsDirective} = toaster;
+	export {addToast, removeToast, closeAll};
 </script>
 
 <script lang="ts">
 	import Toast from './Toast.svelte';
-	import type {ToasterProps} from '@agnos-ui/svelte-headless/components/toast';
+	import {toastPositions, type ToasterProps} from './toast.gen';
 	import {ToasterService} from './toasterService';
 	let {duration, position, limit, pauseOnHover, dismissible, closeAll, closeAllLabel}: ToasterProps = $props();
 	$effect(() => {
@@ -15,7 +15,7 @@
 </script>
 
 <div class="au-toaster" aria-live="polite" aria-atomic="true">
-	<div class={`au-toaster-container toast-container ${toaster.options.current.position}`}>
+	<div class={`au-toaster-container toast-container ${toastPositions[toaster.options.current.position]}`}>
 		{#if toaster.options.current.closeAll && toaster.toasts.current.length > 1}
 			<div class="d-flex position-relative align-items-end pb-2">
 				<button class="au-toaster-closeAll btn btn-secondary me-0 ms-auto pe-auto" onclick={() => toaster.closeAll()}
@@ -38,7 +38,7 @@
 					{onShown}
 					onHidden={() => {
 						removeToast(id);
-						if (onHidden) onHidden();
+						onHidden?.();
 					}}
 					{onVisibleChange}
 					{visible}

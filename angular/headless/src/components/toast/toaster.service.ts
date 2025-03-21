@@ -5,9 +5,15 @@ import {toAngularSignal, toAngularWritableSignal} from '../../generated';
 import type {Signal, WritableSignal} from '@angular/core';
 import {inject, Injectable, InjectionToken} from '@angular/core';
 
-import type {ToastPositions} from '@agnos-ui/core/components/toast';
-export type {ToastPositions};
+export type {ToastPositions} from '@agnos-ui/core/components/toast';
 
+/**
+ * Injection token used to provide configuration properties for the toaster service.
+ *
+ * This token is associated with the `ToasterProps` interface, which defines the
+ * structure of the configuration object. It allows dependency injection to supply
+ * custom properties for the toaster service, such as default settings or behavior.
+ */
 export const ToastPropsToken = new InjectionToken<ToasterProps>('ToasterProps');
 
 /**

@@ -1,7 +1,8 @@
-import {Component, inject, ChangeDetectionStrategy, input, effect} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy, input, effect, computed} from '@angular/core';
 import {ToastComponent} from './toast.component';
 import {ToasterService} from './toaster.service';
 import {UseDirective} from '@agnos-ui/angular-headless';
+import {toastPositions} from './toast.gen';
 
 @Component({
 	selector: '[auToaster]',
@@ -12,7 +13,7 @@ import {UseDirective} from '@agnos-ui/angular-headless';
 		'aria-atomic': 'true',
 	},
 	template: `
-		<div [class]="'au-toaster-container toast-container ' + toasterService.options().position">
+		<div [class]="'au-toaster-container toast-container ' + positionClass()">
 			@if (toasterService.options().closeAll && toasterService.toasts().length > 1) {
 				<div class="d-flex position-relative align-items-end pb-2">
 					<button class="au-toaster-closeAll btn btn-secondary me-0 ms-auto pe-auto" (click)="toasterService.closeAll()">
@@ -51,6 +52,8 @@ export class ToasterComponent {
 	readonly auPauseOnHover = input(this.toasterService.options().pauseOnHover);
 	readonly auCloseAll = input(this.toasterService.options().closeAll);
 	readonly auCloseAllLabel = input(this.toasterService.options().closeAllLabel);
+
+	readonly positionClass = computed(() => toastPositions[this.toasterService.options().position]);
 
 	constructor() {
 		effect(() => {
