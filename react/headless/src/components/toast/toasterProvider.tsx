@@ -1,12 +1,9 @@
 import {type ToastProps} from '@agnos-ui/core/components/toast';
-import type {ToasterProps, ToasterToast} from '@agnos-ui/core/components/toast';
-import {defaultToasterProps, Toaster as CoreToaster} from '@agnos-ui/core/components/toast';
+import type {ToasterProps} from '@agnos-ui/core/components/toast';
+import {Toaster as CoreToaster} from '@agnos-ui/core/components/toast';
 import {useObservable} from '../../generated';
 import type {PropsWithChildren} from 'react';
 import {createContext, useCallback, useContext, useMemo} from 'react';
-
-export {defaultToasterProps, ToasterProps};
-export type {ToasterToast};
 
 /**
  * Custom hook to create a toaster.

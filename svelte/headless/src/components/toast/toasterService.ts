@@ -1,11 +1,7 @@
 import type {Directive} from '../../generated';
-import type {ToastProps, ToasterToast, ToasterProps, ToastPositions} from '@agnos-ui/core/components/toast';
+import type {ToastProps, ToasterToast, ToasterProps} from '@agnos-ui/core/components/toast';
 import {Toaster as CoreToaster} from '@agnos-ui/core/components/toast';
 import {fromStore} from 'svelte/store';
-export {defaultToasterProps} from '@agnos-ui/core/components/toast';
-
-export {ToasterProps};
-export type {ToastPositions};
 
 /**
  * Create a toaster provider with helpers and state.
