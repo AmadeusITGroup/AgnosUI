@@ -1,0 +1,40 @@
+{
+	"httpVersion": "2.0",
+	"headers": {
+		"server": "nginx",
+		"content-type": "image/jpeg",
+		"cache-control": "public, max-age=2592000, stale-while-revalidate=60, stale-if-error=43200, immutable",
+		"content-disposition": "inline; filename=\"944-900x500.jpg\"",
+		"picsum-id": "944",
+		"timing-allow-origin": "*",
+		"accept-ranges": "bytes",
+		"age": "2102912",
+		"date": "Fri, 21 Mar 2025 16:24:44 GMT",
+		"via": "1.1 varnish",
+		"x-served-by": "cache-par-lfpg1960076-PAR",
+		"x-cache": "HIT",
+		"x-cache-hits": "0",
+		"x-timer": "S1742574285.652786,VS0,VE1",
+		"vary": "Origin"
+	},
+	"ignoredHeaders": {
+		":status": "200",
+		"content-length": "110627"
+	},
+	"status": {
+		"code": 200,
+		"message": ""
+	},
+	"bodyFileName": "body.jpeg",
+	"time": 325.5151560000013,
+	"timings": {
+		"blocked": 117.17406600000686,
+		"dns": 53.94288599999709,
+		"connect": 42.995584999996936,
+		"send": 19.646833999999217,
+		"wait": 68.61922500000219,
+		"receive": 23.136559999999008,
+		"ssl": 22.946406999995816
+	},
+	"creationDateTime": "2025-03-21T16:24:44.701Z"
+}
