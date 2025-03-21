@@ -7,6 +7,7 @@ export * from './accordion.po';
 export * from './progressbar.po';
 export * from './slider.po';
 export * from './toast.po';
+export * from './toaster.po';
 export * from './tree.po';
 export * from './collapse.po';
 export * from './carousel.po';

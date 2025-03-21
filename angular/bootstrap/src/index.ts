@@ -1,9 +1,9 @@
 /*
  * Public API Surface of @agnos-ui/angular-bootstrap
  */
-export * from './agnos-ui-angular.module';
-
 export * from '@agnos-ui/angular-headless';
+
+export * from './agnos-ui-angular.module';
 
 export type {
 	AccordionApi,

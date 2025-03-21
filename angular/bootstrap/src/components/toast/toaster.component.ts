@@ -15,7 +15,7 @@ import {UseDirective} from '@agnos-ui/angular-headless';
 		<div [class]="'au-toaster-container toast-container ' + toasterService.options().position">
 			@if (toasterService.options().closeAll && toasterService.toasts().length > 1) {
 				<div class="d-flex position-relative align-items-end pb-2">
-					<button class="btn btn-secondary me-0 ms-auto pe-auto" (click)="toasterService.closeAll()">
+					<button class="au-toaster-closeAll btn btn-secondary me-0 ms-auto pe-auto" (click)="toasterService.closeAll()">
 						{{ toasterService.options().closeAllLabel || 'Close all' }}
 					</button>
 				</div>

@@ -67,7 +67,7 @@ export function ToasterContainer() {
 			<div className={`au-toaster-container toast-container ${toaster.options.position}`}>
 				{toaster.options.closeAll && toaster.toasts.length > 1 && (
 					<div className="d-flex position-relative align-items-end pb-2">
-						<button className="btn btn-secondary me-0 ms-auto pe-auto" onClick={() => toaster.closeAll()}>
+						<button className="au-toaster-closeAll btn btn-secondary me-0 ms-auto pe-auto" onClick={() => toaster.closeAll()}>
 							{toaster.options.closeAllLabel || 'Close all'}
 						</button>
 					</div>
