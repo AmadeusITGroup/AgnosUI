@@ -43,6 +43,9 @@ jobs:
           node scripts/setVersion.js "${{ inputs.version }}"
           npm run syncpack:check
       - run: npm run build:ci
+        env:
+          GTAG: 'true'
+          PRELOAD_VERSIONS: 'true'
       - run: npm run check
       - run: npm run format:check
       - run: npm run lint -- --quiet
@@ -78,7 +81,7 @@ jobs:
           export PUBLISH_TAG="$(node ./scripts/publishTag.js "${{ inputs.version }}")"
           node ./scripts/npmPublish.js --provenance --tag "$PUBLISH_TAG"
           npm run -w demo update:stackblitzPkgs ${{ inputs.version }}
-          npm run build -w demo
+          GTAG=true PRELOAD_VERSIONS=true npm run build -w demo
           git commit -a -m v${{ inputs.version }}
           git tag v${{ inputs.version }}
           git show HEAD

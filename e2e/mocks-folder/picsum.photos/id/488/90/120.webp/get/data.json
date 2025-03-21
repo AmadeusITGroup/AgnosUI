@@ -1,0 +1,36 @@
+{
+	"httpVersion": "2.0",
+	"headers": {
+		"date": "Fri, 21 Mar 2025 16:29:37 GMT",
+		"location": "https://fastly.picsum.photos/id/488/90/120.webp?hmac=9aUFptC-_LaezpQwe8a1okdr95zG7u5D7_MxGxhSmiI",
+		"cf-ray": "923ed445ef72d5b8-CDG",
+		"server": "cloudflare",
+		"cache-control": "private, no-cache, no-store, must-revalidate",
+		"vary": "Origin, Accept-Encoding",
+		"cf-cache-status": "BYPASS",
+		"report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v4?s=w7VUmqJH3w0R%2FPU%2BwOMxqXcb%2BiDBJhsJdj6P7pDe19jT9QQ3mZZ3Lp3d%2BqbpCZTdajiqsNAUL%2FMffMd068lnfoFcWlx5%2BZDOhzYH991O6L8tWk4uMhB2rmDPtsPUPmg%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+		"nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+		"strict-transport-security": "max-age=15552000",
+		"x-content-type-options": "nosniff",
+		"server-timing": "cfL4;desc=\"?proto=TCP&rtt=2013&min_rtt=638&rtt_var=1095&sent=54&recv=49&lost=0&retrans=0&sent_bytes=11504&recv_bytes=3158&delivery_rate=6230440&cwnd=257&unsent_bytes=0&cid=8ad109e6917f7c79&ts=293613&x=0\""
+	},
+	"ignoredHeaders": {
+		":status": "302"
+	},
+	"status": {
+		"code": 302,
+		"message": ""
+	},
+	"bodyFileName": "body",
+	"time": 95.32292200002121,
+	"timings": {
+		"blocked": 0.19406999996863306,
+		"dns": -1,
+		"connect": -1,
+		"send": 0.007525000022724271,
+		"wait": 94.98983400000725,
+		"receive": 0.13149300002260134,
+		"ssl": -1
+	},
+	"creationDateTime": "2025-03-21T16:29:37.632Z"
+}

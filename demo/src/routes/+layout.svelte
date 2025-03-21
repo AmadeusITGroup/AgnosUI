@@ -31,7 +31,7 @@
 		}
 	});
 	onNavigate((navigation) => {
-		if (!document.startViewTransition) return;
+		if (!document.startViewTransition || window.matchMedia('(prefers-reduced-motion)').matches) return;
 		let styleElement = document.createElement('style');
 		styleElement.textContent = viewTransition;
 		document.head.appendChild(styleElement);
@@ -74,6 +74,21 @@
 </script>
 
 <svelte:head>
+	{#if import.meta.env.GTAG}
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-49LCWGVXJ9"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag('js', new Date());
+			gtag('config', 'G-49LCWGVXJ9');
+		</script>
+	{/if}
+	{#if import.meta.env.PRELOAD_VERSIONS}
+		<link rel="preload" href="https://www.agnosui.dev/versions.json" as="fetch" crossorigin="anonymous" />
+	{/if}
 	<link rel="canonical" href={$canonicalURL$} />
 	<!-- Schema.org for Google -->
 	<meta itemprop="name" content={$page.data.pageMeta.title} />

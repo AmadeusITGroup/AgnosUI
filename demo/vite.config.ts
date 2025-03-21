@@ -71,6 +71,8 @@ export default defineConfig((config) => ({
 		'import.meta.env.AGNOSUI_VERSION': version,
 		'import.meta.env.STACKBLITZ': process.env.STACKBLITZ === 'true',
 		'import.meta.env.API': process.env.API === 'true',
+		'import.meta.env.GTAG': process.env.GTAG === 'true',
+		'import.meta.env.PRELOAD_VERSIONS': process.env.PRELOAD_VERSIONS === 'true',
 	},
 	optimizeDeps: {
 		include: ['@amadeus-it-group/tansu', '@floating-ui/dom', 'marked', '@stackblitz/sdk', 'shiki', 'compare-versions', 'esm-env'],

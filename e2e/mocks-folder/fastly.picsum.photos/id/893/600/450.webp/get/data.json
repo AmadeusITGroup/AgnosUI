@@ -1,0 +1,40 @@
+{
+	"httpVersion": "2.0",
+	"headers": {
+		"server": "nginx",
+		"content-type": "image/webp",
+		"cache-control": "public, max-age=2592000, stale-while-revalidate=60, stale-if-error=43200, immutable",
+		"content-disposition": "inline; filename=\"893-600x450.webp\"",
+		"picsum-id": "893",
+		"timing-allow-origin": "*",
+		"accept-ranges": "bytes",
+		"age": "0",
+		"date": "Fri, 21 Mar 2025 16:29:28 GMT",
+		"via": "1.1 varnish",
+		"x-served-by": "cache-par-lfpg1960076-PAR",
+		"x-cache": "MISS",
+		"x-cache-hits": "0",
+		"x-timer": "S1742574568.495724,VS0,VE261",
+		"vary": "Origin"
+	},
+	"ignoredHeaders": {
+		":status": "200",
+		"content-length": "27072"
+	},
+	"status": {
+		"code": 200,
+		"message": ""
+	},
+	"bodyFileName": "body.webp",
+	"time": 441.81794300000183,
+	"timings": {
+		"blocked": 0.3616190000320785,
+		"dns": -1,
+		"connect": -1,
+		"send": 0.021126999985426664,
+		"wait": 439.6233329999959,
+		"receive": 1.811863999988418,
+		"ssl": -1
+	},
+	"creationDateTime": "2025-03-21T16:29:28.899Z"
+}

@@ -1,11 +1,10 @@
-import {building, dev} from '$app/environment';
 import type {Version} from './menu/version';
 
 export const prerender = true;
 
-export const load = async () => {
+export const load = async ({url}) => {
 	let versions: Version[];
-	if (dev || building) {
+	if (!url.href.startsWith('https://www.agnosui.dev/')) {
 		versions = [{folder: 'main', version: 'PREVIEW'}];
 		if (import.meta.env.AGNOSUI_VERSION !== '0.0.0') {
 			versions.push({folder: 'latest', version: `v${import.meta.env.AGNOSUI_VERSION}`});
