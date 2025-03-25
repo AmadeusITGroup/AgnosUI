@@ -106,7 +106,7 @@
 		{/if}
 	</div>
 	<div class="overflow-hidden mt-1 mb-2" use:thumbDirectives.root>
-		<div class="grid grid-flow-col auto-cols-max gap-2 mx-1 my-1 items-center" role="tablist">
+		<div class="grid grid-flow-col auto-cols-max gap-2 mx-1 my-1 items-center" use:mainDirectives.tabList>
 			{#each photos as { thumbnail }, index}
 				<button
 					class={['ring-primary cursor-pointer', mainState.selectedScrollSnap === index && 'ring-3']}

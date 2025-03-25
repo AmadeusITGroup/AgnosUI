@@ -115,6 +115,14 @@ export function createCarousel<SlideData extends {id: string}>(config?: PropsCon
 					},
 				})),
 			),
+			tabList: mergeDirectives(
+				widget.directives.tabList,
+				createAttributesDirective(() => ({
+					classNames: {
+						'carousel-indicators': true$,
+					},
+				})),
+			),
 			tabIndicator: mergeDirectives(
 				widget.directives.tabIndicator,
 				createAttributesDirective((slide$: ReadableSignal<{index: number}>) => ({

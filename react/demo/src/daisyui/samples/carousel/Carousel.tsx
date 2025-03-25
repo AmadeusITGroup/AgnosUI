@@ -57,6 +57,24 @@ const CarouselSlide = ({
 	slideDirective: CarouselDirectives['slide'];
 }) => <div {...useDirectives([classDirective, 'basis-full shrink-0 grow-0'], [slideDirective, {id: photo.id, index}])}>{slideRenderer(photo)}</div>;
 
+const CarouselTabList = ({
+	photos,
+	tabIndicator,
+	tabList,
+	selectedScrollSnap,
+}: {
+	photos: Photo[];
+	tabIndicator: CarouselDirectives['tabIndicator'];
+	tabList: CarouselDirectives['tabList'];
+	selectedScrollSnap: number;
+}) => (
+	<div className="flex gap-1" {...useDirective(tabList)}>
+		{photos.map(({id}, index) => (
+			<CarouselTabIndicator key={id} index={index} tabIndicator={tabIndicator} selectedScrollSnap={selectedScrollSnap} id={id} />
+		))}
+	</div>
+);
+
 export function Carousel({
 	autoplay,
 	photos,
@@ -109,17 +127,12 @@ export function Carousel({
 						<div className="flex p-1 px-2 gap-1 cursor-auto bg-base-100 rounded-xl" dir={direction} onPointerDown={onPointerDown}>
 							{showNavigationArrows && <CarouselPrevButton scrollPrev={directives.scrollPrev} direction={direction} />}
 							{showNavigationIndicators && (
-								<div className="flex gap-1" role="tablist">
-									{photos.map(({id}, index) => (
-										<CarouselTabIndicator
-											key={id}
-											index={index}
-											tabIndicator={directives.tabIndicator}
-											selectedScrollSnap={selectedScrollSnap}
-											id={id}
-										/>
-									))}
-								</div>
+								<CarouselTabList
+									photos={photos}
+									tabIndicator={directives.tabIndicator}
+									tabList={directives.tabList}
+									selectedScrollSnap={selectedScrollSnap}
+								/>
 							)}
 							{showNavigationArrows && <CarouselNextButton scrollNext={directives.scrollNext} direction={direction} />}
 						</div>

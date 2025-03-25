@@ -36,6 +36,22 @@ const CarouselSlide = <SlideData extends {id: string}>({
 	</div>
 );
 
+const CarouselTabList = <SlideData extends {id: string}>({
+	slidesData,
+	tabList,
+	tabIndicator,
+}: {
+	slidesData: SlideData[];
+	tabList: CarouselDirectives['tabList'];
+	tabIndicator: CarouselDirectives['tabIndicator'];
+}) => (
+	<div {...useDirective(tabList)}>
+		{slidesData.map(({id}, index) => (
+			<CarouselTabIndicator key={id} index={index} tabIndicator={tabIndicator} id={id} />
+		))}
+	</div>
+);
+
 /**
  * Renders the default slot navigation for the carousel component.
  *
@@ -55,13 +71,7 @@ export const CarouselDefaultNavigation = <SlideData extends {id: string}>(widget
 					{canScrollNext && <CarouselNextButton scrollNext={directives.scrollNext} />}
 				</>
 			)}
-			{showNavigationIndicators && (
-				<div className="carousel-indicators" role="tablist">
-					{slidesData.map(({id}, index) => (
-						<CarouselTabIndicator key={id} index={index} tabIndicator={directives.tabIndicator} id={id} />
-					))}
-				</div>
-			)}
+			{showNavigationIndicators && <CarouselTabList slidesData={slidesData} tabList={directives.tabList} tabIndicator={directives.tabIndicator} />}
 		</>
 	);
 };

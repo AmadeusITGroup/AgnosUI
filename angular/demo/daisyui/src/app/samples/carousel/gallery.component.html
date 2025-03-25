@@ -41,7 +41,7 @@
 		}
 	</div>
 	<div class="overflow-hidden mt-1 mb-2" [auUse]="thumbCarouselDirectives.root">
-		<div class="grid grid-flow-col auto-cols-max gap-2 mx-1 my-1 items-center" role="tablist">
+		<div class="grid grid-flow-col auto-cols-max gap-2 mx-1 my-1 items-center" [auUse]="mainCarouselDirectives.tabList">
 			@for (photo of photos(); track photo; let index = $index) {
 				@let id = 'gallery-photo-' + index;
 				<button

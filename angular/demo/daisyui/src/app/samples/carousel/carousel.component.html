@@ -24,7 +24,7 @@
 						></button>
 					}
 					@if (state.showNavigationIndicators()) {
-						<div class="flex gap-1" role="tablist">
+						<div class="flex gap-1" [auUse]="directives.tabList">
 							@for (photo of photos(); track photo.id; let index = $index) {
 								<button
 									class="btn btn-xs"

@@ -147,7 +147,7 @@ export const Gallery = ({
 				)}
 			</div>
 			<div className="overflow-hidden mt-1 mb-2" {...useDirective(thumbDirectives.root)}>
-				<div className="grid grid-flow-col auto-cols-max gap-2 mx-1 my-1 items-center" role="tablist">
+				<div className="grid grid-flow-col auto-cols-max gap-2 mx-1 my-1 items-center" {...useDirective(mainDirectives.tabList)}>
 					{photos.map(({thumbnail}, index) => (
 						<GalleryThumbnail
 							key={index}

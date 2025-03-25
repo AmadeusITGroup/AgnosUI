@@ -87,7 +87,7 @@
 						</button>
 					{/if}
 					{#if cState.showNavigationIndicators}
-						<div class="flex gap-1" role="tablist">
+						<div class="flex gap-1" use:directives.tabList>
 							{#each photos as { id }, index (id)}
 								<!-- svelte-ignore a11y_consider_explicit_label -->
 								<button class={['btn btn-xs', cState.selectedScrollSnap === index && 'btn-active']} use:directives.tabIndicator={{index, id}}>
