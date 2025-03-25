@@ -2,20 +2,56 @@ import {
 	auBooleanAttribute,
 	auNumberAttribute,
 	BaseWidgetDirective,
+	ComponentTemplate,
 	type SlotContent,
 	SlotDirective,
 	UseDirective,
 	useDirectiveForHost,
 } from '@agnos-ui/angular-headless';
-import {type CarouselSlideContext, type CarouselWidget, createCarousel} from './carousel.gen';
-import {ChangeDetectionStrategy, Component, contentChild, Directive, inject, input, TemplateRef} from '@angular/core';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import type {CarouselProps} from './carousel.gen';
+import type {CarouselContext, CarouselSlideContext, CarouselWidget} from './carousel.gen';
+import {createCarousel} from './carousel.gen';
+import {ChangeDetectionStrategy, Component, contentChild, Directive, inject, input, TemplateRef, viewChild} from '@angular/core';
 import {callWidgetFactory} from '../../config';
 import type {EmblaPluginType} from 'embla-carousel';
 
+/**
+ * Directive that provides a template reference for the carousel structure using the {@link CarouselContext}.
+ */
+@Directive({selector: 'ng-template[auCarouselStructure]'})
+export class CarouselStructureDirective<SlideData extends {id: string}> {
+	public templateRef = inject(TemplateRef<CarouselContext<SlideData>>);
+
+	static ngTemplateContextGuard<SlideData extends {id: string}>(
+		_dir: CarouselStructureDirective<SlideData>,
+		context: unknown,
+	): context is CarouselContext<SlideData> {
+		return true;
+	}
+}
+
+/**
+ * Directive that provides a template reference for the carousel navigation using the {@link CarouselContext}.
+ */
+@Directive({selector: 'ng-template[auCarouselNavigation]'})
+export class CarouselNavigationDirective<SlideData extends {id: string}> {
+	public templateRef = inject(TemplateRef<CarouselContext<SlideData>>);
+
+	static ngTemplateContextGuard<SlideData extends {id: string}>(
+		_dir: CarouselNavigationDirective<SlideData>,
+		context: unknown,
+	): context is CarouselContext<SlideData> {
+		return true;
+	}
+}
+
+/**
+ * Directive that provides a template reference for the carousel slide  using the {@link CarouselSlideContext}.
+ */
 @Directive({selector: 'ng-template[auCarouselSlide]'})
 export class CarouselSlideDirective<SlideData extends {id: string}> {
-	public templateRef = inject(TemplateRef<{data: CarouselSlideContext<SlideData>}>);
-	readonly myType = input<SlideData>();
+	public templateRef = inject(TemplateRef<CarouselSlideContext<SlideData>>);
 
 	static ngTemplateContextGuard<SlideData extends {id: string}>(
 		_dir: CarouselSlideDirective<SlideData>,
@@ -26,37 +62,72 @@ export class CarouselSlideDirective<SlideData extends {id: string}> {
 }
 
 @Component({
-	selector: '[auCarousel]',
+	imports: [SlotDirective, CarouselStructureDirective, CarouselNavigationDirective, UseDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [UseDirective, SlotDirective],
 	template: `
-		@if (state.showNavigationArrows()) {
-			@if (state.canScrollPrev()) {
-				<button class="carousel-control-prev" [auUse]="directives.scrollPrev">
-					<span class="carousel-control-prev-icon"></span>
-				</button>
-			}
-			@if (state.canScrollNext()) {
-				<button class="carousel-control-next" [auUse]="directives.scrollNext">
-					<span class="carousel-control-next-icon"></span>
-				</button>
-			}
-		}
-		@if (state.showNavigationIndicators()) {
-			<div class="carousel-indicators" role="tablist">
-				@for (slideData of state.slidesData(); track slideData.id; let index = $index) {
-					<button [auUse]="[directives.tabIndicator, {index, id: slideData.id}]"></button>
+		<ng-template auCarouselNavigation #navigation let-state="state" let-api="api" let-directives="directives">
+			@if (state.showNavigationArrows()) {
+				@if (state.canScrollPrev()) {
+					<button class="carousel-control-prev" [auUse]="directives.scrollPrev">
+						<span class="carousel-control-prev-icon"></span>
+					</button>
 				}
-			</div>
-		}
-		<div class="au-carousel-container" aria-atomic="false" aria-live="polite">
-			@for (slideData of state.slidesData(); track slideData.id; let index = $index) {
-				<div [auUse]="[directives.slide, {index, id: slideData.id}]">
-					<ng-template [auSlot]="state.slide()" [auSlotProps]="slideData" />
+				@if (state.canScrollNext()) {
+					<button class="carousel-control-next" [auUse]="directives.scrollNext">
+						<span class="carousel-control-next-icon"></span>
+					</button>
+				}
+			}
+			@if (state.showNavigationIndicators()) {
+				<div class="carousel-indicators" role="tablist">
+					@for (slideData of state.slidesData(); track slideData.id; let index = $index) {
+						<button [auUse]="[directives.tabIndicator, {index, id: slideData.id}]"></button>
+					}
 				</div>
 			}
-		</div>
+		</ng-template>
+		<ng-template auCarouselStructure #structure let-state="state" let-api="api" let-directives="directives">
+			<ng-template [auSlot]="state.navigation()" [auSlotProps]="{state, api, directives}" />
+			<div class="au-carousel-container" aria-atomic="false" aria-live="polite">
+				@for (slideData of state.slidesData(); track slideData.id; let index = $index) {
+					<div [auUse]="[directives.slide, {index, id: slideData.id}]">
+						<ng-template [auSlot]="state.slide()" [auSlotProps]="toSlideContext(slideData, {state, api, directives})" />
+					</div>
+				}
+			</div>
+		</ng-template>
 	`,
+})
+class CarouselDefaultSlotsComponent<SlideData extends {id: string}> {
+	readonly structure = viewChild.required<TemplateRef<CarouselContext<SlideData>>>('structure');
+	readonly navigation = viewChild.required<TemplateRef<CarouselContext<SlideData>>>('navigation');
+
+	toSlideContext(slideData: SlideData, carouselContext: CarouselContext<SlideData>): CarouselSlideContext<SlideData> {
+		return {
+			...slideData,
+			...carouselContext,
+		};
+	}
+}
+/**
+ * The default slot for the structure
+ */
+export const carouselDefaultSlotStructure: SlotContent<CarouselContext<any>> = new ComponentTemplate(CarouselDefaultSlotsComponent, 'structure');
+/**
+ * The default slot for the navigation
+ */
+export const carouselDefaultSlotNavigation: SlotContent<CarouselContext<any>> = new ComponentTemplate(CarouselDefaultSlotsComponent, 'navigation');
+
+/**
+ * CarouselComponent is an Angular Component that extends {@link BaseWidgetDirective}<{@link CarouselWidget}>
+ * to create a customizable carousel widget. It provides various inputs (see {@link CarouselProps})
+ * to configure the appearance and behavior of the carousel.
+ */
+@Component({
+	selector: '[auCarousel]',
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [SlotDirective],
+	template: ` <ng-template [auSlot]="state.structure()" [auSlotProps]="{state, api, directives}" /> `,
 })
 export class CarouselComponent<SlideData extends {id: string}> extends BaseWidgetDirective<CarouselWidget<SlideData>> {
 	/**
@@ -167,11 +238,23 @@ export class CarouselComponent<SlideData extends {id: string}> extends BaseWidge
 	readonly slidesData = input<SlideData[]>(undefined, {alias: 'auSlidesData'});
 
 	/**
+	 * The structure of the carousel.
+	 */
+	readonly structure = input<SlotContent<CarouselContext<SlideData>>>(undefined, {alias: 'auStructure'});
+
+	/**
+	 * The navigation layer of the carousel.
+	 */
+	readonly navigation = input<SlotContent<CarouselContext<SlideData>>>(undefined, {alias: 'auNavigation'});
+
+	/**
 	 * The content of each slide in the carousel.
 	 */
-	readonly slide = input<SlotContent<SlideData>>(undefined, {alias: 'auSlide'});
+	readonly slide = input<SlotContent<CarouselSlideContext<SlideData>>>(undefined, {alias: 'auSlide'});
 
 	readonly slotSlideFromContent = contentChild(CarouselSlideDirective<SlideData>);
+	readonly slotStructureFromContent = contentChild(CarouselStructureDirective<SlideData>);
+	readonly slotNavigationFromContent = contentChild(CarouselNavigationDirective<SlideData>);
 
 	constructor() {
 		super(
@@ -179,8 +262,14 @@ export class CarouselComponent<SlideData extends {id: string}> extends BaseWidge
 				factory: createCarousel,
 				widgetName: 'carousel',
 				afterInit: (widget) => useDirectiveForHost(widget.directives.root),
+				defaultConfig: {
+					structure: carouselDefaultSlotStructure,
+					navigation: carouselDefaultSlotNavigation,
+				},
 				slotTemplates: () => ({
 					slide: this.slotSlideFromContent()?.templateRef,
+					structure: this.slotStructureFromContent()?.templateRef,
+					navigation: this.slotNavigationFromContent()?.templateRef,
 				}),
 			}),
 		);

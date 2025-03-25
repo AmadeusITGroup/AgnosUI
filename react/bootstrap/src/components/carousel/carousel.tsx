@@ -1,12 +1,10 @@
-import type {CarouselApi, CarouselDirectives, CarouselProps, CarouselState} from './carousel.gen';
+import type {CarouselApi, CarouselContext, CarouselDirectives, CarouselProps} from './carousel.gen';
 import {createCarousel} from './carousel.gen';
 import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
 import {Slot} from '@agnos-ui/react-headless/slot';
 import {useDirective} from '@agnos-ui/react-headless/utils/directive';
-import type {Context, Ref} from 'react';
-import {useImperativeHandle, createContext} from 'react';
-
-const CarouselContext: Context<Partial<CarouselApi>> = createContext({});
+import type {Ref} from 'react';
+import {useImperativeHandle} from 'react';
 
 const CarouselPrevButton = ({scrollPrev}: {scrollPrev: CarouselDirectives['scrollPrev']}) => (
 	<button {...useDirective(scrollPrev)}>
@@ -26,18 +24,63 @@ const CarouselTabIndicator = ({index, id, tabIndicator}: {index: number; id: str
 
 const CarouselSlide = <SlideData extends {id: string}>({
 	slideData,
-	slideDirective,
-	slideSlot,
+	widget,
 	index,
 }: {
 	slideData: SlideData;
-	slideDirective: CarouselDirectives['slide'];
-	slideSlot: CarouselState<SlideData>['slide'];
+	widget: CarouselContext<SlideData>;
 	index: number;
 }) => (
-	<div {...useDirective(slideDirective, {id: slideData.id, index})}>
-		<Slot slotContent={slideSlot} props={slideData} />
+	<div {...useDirective(widget.directives.slide, {id: slideData.id, index})}>
+		<Slot slotContent={widget.state.slide} props={{...slideData, ...widget}} />
 	</div>
+);
+
+/**
+ * Renders the default slot navigation for the carousel component.
+ *
+ * @param widget - The widget context containing the state, api and directives for carousel.
+ * @returns The rendered carousel navigation.
+ */
+export const CarouselDefaultNavigation = <SlideData extends {id: string}>(widget: CarouselContext<SlideData>) => {
+	const {
+		state: {showNavigationArrows, showNavigationIndicators, canScrollNext, canScrollPrev, slidesData},
+		directives,
+	} = widget;
+	return (
+		<>
+			{showNavigationArrows && (
+				<>
+					{canScrollPrev && <CarouselPrevButton scrollPrev={directives.scrollPrev} />}
+					{canScrollNext && <CarouselNextButton scrollNext={directives.scrollNext} />}
+				</>
+			)}
+			{showNavigationIndicators && (
+				<div className="carousel-indicators" role="tablist">
+					{slidesData.map(({id}, index) => (
+						<CarouselTabIndicator key={id} index={index} tabIndicator={directives.tabIndicator} id={id} />
+					))}
+				</div>
+			)}
+		</>
+	);
+};
+
+/**
+ * Renders the default slot structure for the carousel component.
+ *
+ * @param widget - The widget context containing the state, api and directives for carousel.
+ * @returns The rendered carousel structure.
+ */
+export const CarouselDefaultStructure = <SlideData extends {id: string}>(widget: CarouselContext<SlideData>) => (
+	<>
+		<Slot slotContent={widget.state.navigation} props={widget} />
+		<div className="au-carousel-container" aria-atomic="false" aria-live="polite">
+			{widget.state.slidesData.map((slideData, index) => (
+				<CarouselSlide key={slideData.id} slideData={slideData} widget={widget} index={index} />
+			))}
+		</div>
+	</>
 );
 
 /**
@@ -55,35 +98,15 @@ const CarouselSlide = <SlideData extends {id: string}>({
  * @returns a JSX element that renders the Carousel component with navigation arrows and indicators.
  */
 export function Carousel<SlideData extends {id: string}>({ref, ...props}: Partial<CarouselProps<SlideData>> & {ref?: Ref<CarouselApi>}) {
-	const {
-		state: {showNavigationArrows, showNavigationIndicators, canScrollPrev, canScrollNext, slidesData, slide},
-		directives,
-		api,
-	} = useWidgetWithConfig(createCarousel<SlideData>, props, 'carousel');
-	useImperativeHandle(ref, () => api, [api]);
+	const widget = useWidgetWithConfig(createCarousel<SlideData>, props, 'carousel', {
+		structure: CarouselDefaultStructure,
+		navigation: CarouselDefaultNavigation,
+	});
+	useImperativeHandle(ref, () => widget.api, [widget.api]);
 
 	return (
-		<CarouselContext value={api}>
-			<div {...useDirective(directives.root)}>
-				{showNavigationArrows && (
-					<>
-						{canScrollPrev && <CarouselPrevButton scrollPrev={directives.scrollPrev} />}
-						{canScrollNext && <CarouselNextButton scrollNext={directives.scrollNext} />}
-					</>
-				)}
-				{showNavigationIndicators && (
-					<div className="carousel-indicators" role="tablist">
-						{slidesData.map(({id}, index) => (
-							<CarouselTabIndicator key={id} index={index} tabIndicator={directives.tabIndicator} id={id} />
-						))}
-					</div>
-				)}
-				<div className="au-carousel-container" aria-atomic="false" aria-live="polite">
-					{slidesData.map((slideData, index) => (
-						<CarouselSlide key={slideData.id} slideData={slideData} slideDirective={directives.slide} slideSlot={slide} index={index} />
-					))}
-				</div>
-			</div>
-		</CarouselContext>
+		<div {...useDirective(widget.directives.root)}>
+			<Slot slotContent={widget.state.structure} props={widget} />
+		</div>
 	);
 }

@@ -21,7 +21,7 @@
 
 <div class="w-full flex justify-center">
 	<div class="max-w-[600px] grow">
-		<Carousel {photos} {showNavigationIndicators} {loop} {dragFree} {autoplay} direction={rtl ? 'rtl' : 'ltr'}>
+		<Carousel {photos} {showNavigationIndicators} {showNavigationArrows} {loop} {dragFree} {autoplay} direction={rtl ? 'rtl' : 'ltr'}>
 			{#snippet slide({alt, src})}
 				<img class="select-none object-contain aspect-[4/3] w-full" {alt} {src} loading="lazy" />
 			{/snippet}
