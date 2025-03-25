@@ -1,0 +1,1 @@
+import{c as s}from"./simpleClassTransition-C_yy_A0O.js";const e=s({animationPendingClasses:["fade"],animationPendingShowClasses:["show"],showClasses:["show","fade"],hideClasses:["d-none","fade"]});export{e as f};
