@@ -174,11 +174,11 @@ export interface CarouselDirectives {
 	 */
 	root: Directive;
 	/**
-	 * A directive to be applied to a navigation button allowing to slide to the previous slide.
+	 * A directive to be applied to a navigation button allowing to scroll to the previous slide.
 	 */
 	scrollPrev: Directive;
 	/**
-	 * A directive to be applied to a navigation button allowing to slide to the next slide.
+	 * A directive to be applied to a navigation button allowing to scroll to the next slide.
 	 */
 	scrollNext: Directive;
 	/**

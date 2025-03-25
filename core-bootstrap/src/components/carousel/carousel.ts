@@ -10,7 +10,14 @@ import {typeArray} from '@agnos-ui/core/utils/writables';
 export * from '@agnos-ui/core/components/carousel';
 
 /**
- * Represents the context for a carousel component.
+ * Represents the context for a carousel.
+ *
+ * @template SlideData - The type of data used by each slide in the carousel.
+ */
+export type CarouselContext<SlideData extends {id: string}> = WidgetSlotContext<CarouselWidget<SlideData>>;
+
+/**
+ * Represents the context for a carousel slide.
  *
  * @template SlideData - The type of data used by each slide in the carousel.
  */
@@ -22,9 +29,17 @@ interface CarouselExtraProps<SlideData extends {id: string}> {
 	 */
 	slidesData: SlideData[];
 	/**
+	 * The structure of the carousel.
+	 */
+	structure: SlotContent<CarouselContext<SlideData>>;
+	/**
+	 * The navigation layer of the carousel.
+	 */
+	navigation: SlotContent<CarouselContext<SlideData>>;
+	/**
 	 * The content of each slide in the carousel.
 	 */
-	slide: SlotContent<SlideData>;
+	slide: SlotContent<CarouselSlideContext<SlideData>>;
 }
 
 /**
@@ -55,11 +70,15 @@ export type CarouselWidget<SlideData extends {id: string}> = Widget<
 
 const defaultConfigExtraProps: CarouselExtraProps<any> = {
 	slidesData: [],
+	structure: undefined,
+	navigation: undefined,
 	slide: undefined,
 };
 
 const configValidator: ConfigValidator<CarouselExtraProps<any>> = {
 	slidesData: typeArray,
+	structure: undefined,
+	navigation: undefined,
 	slide: undefined,
 };
 

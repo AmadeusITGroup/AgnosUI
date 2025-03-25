@@ -6,7 +6,7 @@ import {Component} from '@angular/core';
 	template: `
 		<div auCarousel [auSlidesData]="photos">
 			<ng-template auCarouselSlide let-src="src">
-				<img class="w-100" alt="random picsum" [src]="src" />
+				<img class="w-100" alt="random picsum" [style.aspect-ratio]="1.8 / 1" [src]="src" />
 			</ng-template>
 		</div>
 	`,

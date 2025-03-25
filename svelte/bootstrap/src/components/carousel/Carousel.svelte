@@ -1,52 +1,33 @@
 <script lang="ts" generics="SlideData extends {id: string;}">
-	import type {CarouselProps, CarouselApi} from './carousel.gen';
+	import type {CarouselProps, CarouselApi, CarouselContext} from './carousel.gen';
 	import {createCarousel} from './carousel.gen';
 	import {callWidgetFactory} from '../../config';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
+	import CarouselDefaultNavigation from './CarouselDefaultNavigation.svelte';
+	import CarouselDefaultStructure from './CarouselDefaultStructure.svelte';
 
 	let props: Partial<CarouselProps<SlideData>> = $props();
 
-	const {
-		directives,
-		api: carouselApi,
-		state,
-	} = callWidgetFactory({
+	const widget = callWidgetFactory({
 		factory: createCarousel<SlideData>,
 		widgetName: 'collapse',
 		props,
 		enablePatchChanged: true,
+		defaultConfig: {
+			structure,
+			navigation,
+		},
 	});
-	export const api: CarouselApi = carouselApi;
+	export const api: CarouselApi = widget.api;
 </script>
 
-<div use:directives.root>
-	{#if state.showNavigationArrows}
-		{#if state.canScrollPrev}
-			<!-- svelte-ignore a11y_consider_explicit_label -->
-			<button use:directives.scrollPrev>
-				<span class="carousel-control-prev-icon"></span>
-			</button>
-		{/if}
-		{#if state.canScrollNext}
-			<!-- svelte-ignore a11y_consider_explicit_label -->
-			<button use:directives.scrollNext>
-				<span class="carousel-control-next-icon"></span>
-			</button>
-		{/if}
-	{/if}
-	{#if state.showNavigationIndicators}
-		<div class="carousel-indicators" role="tablist">
-			{#each state.slidesData as { id }, index (id)}
-				<!-- svelte-ignore a11y_consider_explicit_label -->
-				<button use:directives.tabIndicator={{index, id}}></button>
-			{/each}
-		</div>
-	{/if}
-	<div class="au-carousel-container" aria-atomic="false" aria-live="polite">
-		{#each state.slidesData as slideData, index (slideData.id)}
-			<div use:directives.slide={{index, id: slideData.id}}>
-				<Slot content={state.slide} props={slideData} />
-			</div>
-		{/each}
-	</div>
+{#snippet structure(props: CarouselContext<SlideData>)}
+	<CarouselDefaultStructure {...props} />
+{/snippet}
+{#snippet navigation(props: CarouselContext<SlideData>)}
+	<CarouselDefaultNavigation {...props} />
+{/snippet}
+
+<div use:widget.directives.root>
+	<Slot content={widget.state.structure} props={widget} />
 </div>

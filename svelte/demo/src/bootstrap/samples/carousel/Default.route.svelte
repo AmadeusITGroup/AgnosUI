@@ -7,6 +7,6 @@
 
 <Carousel slidesData={photos}>
 	{#snippet slide({src}: Photo)}
-		<img class="w-100" alt="random picsum" {src} />
+		<img class="w-100" alt="random picsum" {src} style="aspect-ratio: 1.8 / 1;" />
 	{/snippet}
 </Carousel>

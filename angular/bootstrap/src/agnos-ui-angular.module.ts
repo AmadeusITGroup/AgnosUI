@@ -46,7 +46,7 @@ import {
 	TreeStructureDirective,
 	TreeItemToggleDirective,
 } from './components/tree/tree.component';
-import {CarouselComponent, CarouselSlideDirective} from './components/carousel';
+import {CarouselComponent, CarouselNavigationDirective, CarouselSlideDirective, CarouselStructureDirective} from './components/carousel';
 import {ToasterComponent} from './components/toast';
 
 /* istanbul ignore next */
@@ -104,6 +104,8 @@ const components = [
 	TreeItemDirective,
 	CarouselComponent,
 	CarouselSlideDirective,
+	CarouselStructureDirective,
+	CarouselNavigationDirective,
 ];
 
 @NgModule({

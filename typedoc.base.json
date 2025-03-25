@@ -28,6 +28,11 @@
 		},
 		"svelte": {
 			"Snippet": "https://svelte.dev/docs/svelte/svelte#Snippet"
+		},
+		"embla-carousel": {
+			"EmblaPluginType": "https://www.embla-carousel.com/plugins/",
+			"EmblaPluginsType": "https://www.embla-carousel.com/plugins/",
+			"EmblaCarouselType": "https://www.embla-carousel.com/api/"
 		}
 	},
 	"excludeNotDocumented": true,
