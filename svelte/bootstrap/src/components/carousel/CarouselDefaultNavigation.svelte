@@ -19,7 +19,7 @@
 	{/if}
 {/if}
 {#if state.showNavigationIndicators}
-	<div class="carousel-indicators" role="tablist">
+	<div use:directives.tabList>
 		{#each state.slidesData as { id }, index (id)}
 			<!-- svelte-ignore a11y_consider_explicit_label -->
 			<button use:directives.tabIndicator={{index, id}}></button>

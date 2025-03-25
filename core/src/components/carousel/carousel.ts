@@ -4,8 +4,9 @@ import {bindDirective, browserDirective, createAttributesDirective, mergeDirecti
 import type {EmblaCarouselType, EmblaPluginsType, EmblaPluginType} from 'embla-carousel';
 import EmblaCarousel from 'embla-carousel';
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
-import {computed, readable, writable} from '@amadeus-it-group/tansu';
+import {computed, readable, writable, asReadable} from '@amadeus-it-group/tansu';
 import {createTypeEnum, typeArray, typeBoolean, typeFunction, typeNumber, typeString, typeStringOrNull} from '../../utils/writables';
+import {createNavManager, type NavManagerItemConfig} from '../../services/navManager';
 
 /**
  * Represents the Embla carousel options
@@ -186,8 +187,13 @@ export interface CarouselDirectives {
 	 */
 	slide: Directive<{id: string; index: number}>;
 	/**
-	 * A directive to be applied to a navigation indicator allowing to slide to the corresponding slide.
-	 * As this directive adds the role `tab` to the element, it is recommended to use it on a button or a link and the parent element should have the role `tablist`.
+	 * A directive to be applied to a tab list allowing to navigate to the corresponding slide.
+	 * This directive adds the role `tablist` and is recommended to be used together with {@link tabIndicator}.
+	 */
+	tabList: Directive;
+	/**
+	 * A directive to be applied to a navigation indicator allowing to scroll to the corresponding slide.
+	 * As this directive adds the role `tab` to the element, it is recommended to use it on a button or a link and the parent element should have the {@link tabList} directive attached.
 	 */
 	tabIndicator: Directive<{index: number; id: string; jump?: boolean}>;
 }
@@ -259,6 +265,7 @@ export function createEmblaCarousel(
 		canScrollNext$: ReadableSignal<boolean>;
 		selectedScrollSnap$: ReadableSignal<number>;
 		initialized$: ReadableSignal<boolean>;
+		slideNodes$: ReadableSignal<HTMLElement[]>;
 	};
 	api: EmblaCarouselType | undefined;
 } {
@@ -269,6 +276,7 @@ export function createEmblaCarousel(
 	const canScrollNext$ = writable(true);
 	const selectedScrollSnap$ = writable(0);
 	const initialized$ = writable(false);
+	const slideNodes$ = writable<HTMLElement[]>([]);
 
 	const directiveArgs$ = computed(() => ({
 		options: options$(),
@@ -302,8 +310,12 @@ export function createEmblaCarousel(
 					scrolling$.set(false);
 					selectedScrollSnap$.set(api.selectedScrollSnap());
 				});
+				emblaApi.on('slidesChanged', (api) => {
+					slideNodes$.set(api.slideNodes());
+				});
 				canScrollNext$.set(emblaApi.canScrollNext());
 				canScrollPrev$.set(emblaApi.canScrollPrev());
+				slideNodes$.set(emblaApi.slideNodes());
 
 				return {
 					update: ({options, plugins}: {options: Partial<EmblaOptions>; plugins: EmblaPluginType[]}) => {
@@ -312,17 +324,24 @@ export function createEmblaCarousel(
 					destroy: () => {
 						emblaApi?.destroy();
 						emblaApi = undefined;
+						initialized$.set(false);
+						scrolling$.set(false);
+						canScrollPrev$.set(false);
+						canScrollNext$.set(true);
+						selectedScrollSnap$.set(0);
+						slideNodes$.set([]);
 					},
 				};
 			}),
 			directiveArgs$,
 		),
 		stores: {
-			scrolling$,
-			canScrollPrev$,
-			canScrollNext$,
-			selectedScrollSnap$,
-			initialized$,
+			scrolling$: asReadable(scrolling$),
+			canScrollPrev$: asReadable(canScrollPrev$),
+			canScrollNext$: asReadable(canScrollNext$),
+			selectedScrollSnap$: asReadable(selectedScrollSnap$),
+			initialized$: asReadable(initialized$),
+			slideNodes$: asReadable(slideNodes$),
 		},
 		get api() {
 			return emblaApi;
@@ -372,10 +391,23 @@ export function createCarousel(config?: PropsConfig<CarouselProps>): CarouselWid
 	}));
 
 	const emblaCarousel = createEmblaCarousel(emblaOptions$, plugins$);
+	const {
+		stores: {slideNodes$, ...emblaStores},
+	} = emblaCarousel;
+	const {directive: navDirective, refreshElements, focusPrevious, focusNext, focusFirst, focusLast} = createNavManager();
+	const navManagerConfig: NavManagerItemConfig = {
+		keys: {
+			ArrowLeft: focusPrevious,
+			ArrowRight: focusNext,
+			Home: focusFirst,
+			End: focusLast,
+		},
+		selector: (node: HTMLElement) => node.querySelectorAll("[role='tab']"),
+	};
 
 	return {
 		...stateStores({
-			...emblaCarousel.stores,
+			...emblaStores,
 			...stateProps,
 			direction$,
 			showNavigationIndicators$,
@@ -425,6 +457,22 @@ export function createCarousel(config?: PropsConfig<CarouselProps>): CarouselWid
 					click: () => emblaCarousel.api?.scrollNext(),
 				},
 			})),
+			tabList: mergeDirectives(
+				bindDirective(navDirective, readable(navManagerConfig)),
+				browserDirective(() => {
+					const unsubscribe = slideNodes$.subscribe(() => {
+						refreshElements();
+					});
+					return {
+						destroy: unsubscribe,
+					};
+				}),
+				createAttributesDirective(() => ({
+					attributes: {
+						role: readable('tablist'),
+					},
+				})),
+			),
 			tabIndicator: createAttributesDirective((slide$: ReadableSignal<{id: string; index: number; jump?: boolean}>) => ({
 				events: {
 					click: () => {
@@ -436,6 +484,7 @@ export function createCarousel(config?: PropsConfig<CarouselProps>): CarouselWid
 					'aria-selected': computed(() => (slide$().index === emblaCarousel.stores.selectedScrollSnap$() ? 'true' : undefined)),
 					'aria-controls': computed(() => slide$().id),
 					role: readable('tab'),
+					tabindex: computed(() => (slide$().index === emblaCarousel.stores.selectedScrollSnap$() ? '0' : '-1')),
 				},
 			})),
 			slide: createAttributesDirective((slide$: ReadableSignal<{id: string; index: number}>) => {

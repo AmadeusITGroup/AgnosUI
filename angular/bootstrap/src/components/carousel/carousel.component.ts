@@ -79,7 +79,7 @@ export class CarouselSlideDirective<SlideData extends {id: string}> {
 				}
 			}
 			@if (state.showNavigationIndicators()) {
-				<div class="carousel-indicators" role="tablist">
+				<div [auUse]="directives.tabList">
 					@for (slideData of state.slidesData(); track slideData.id; let index = $index) {
 						<button [auUse]="[directives.tabIndicator, {index, id: slideData.id}]"></button>
 					}
