@@ -14,7 +14,7 @@ export const Toast = (
 				<div className={`alert ${state.className}`}>
 					{props.children}
 					{state.dismissible && (
-						<button className="btn btn-xs btn-circle btn-ghost" onClick={api.close} aria-label={`${state.ariaCloseButtonLabel}`}>
+						<button className="btn btn-circle btn-ghost btn-xs" onClick={api.close} aria-label={`${state.ariaCloseButtonLabel}`}>
 							<CloseIcon />
 						</button>
 					)}

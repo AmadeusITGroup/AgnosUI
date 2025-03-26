@@ -21,7 +21,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 				<ng-content />
 				@if (state.dismissible()) {
 					<button
-						class="btn btn-xs btn-circle btn-ghost"
+						class="btn btn-circle btn-ghost btn-xs self-start"
 						(click)="api.close()"
 						[attr.aria-label]="state.ariaCloseButtonLabel()"
 						[innerHTML]="closeIcon"

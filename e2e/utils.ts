@@ -24,9 +24,9 @@ export async function switchTheme(page: Page, theme: 'light' | 'dark') {
 	await page.evaluate((_innerTheme) => {
 		const documentElement = document.documentElement;
 		if (_innerTheme === 'dark') {
-			document.documentElement.setAttribute('data-bs-theme', _innerTheme);
+			document.documentElement.setAttribute('data-theme', _innerTheme);
 		} else {
-			documentElement.removeAttribute('data-bs-theme');
+			documentElement.removeAttribute('data-theme');
 		}
 	}, theme);
 }

@@ -3,4 +3,4 @@
 	let {depth, children} = $props();
 </script>
 
-<section class={depth === 2 ? 'my-4' : 'my-3 mx-3'}>{@render children()}</section>
+<section class={depth === 2 ? 'my-6' : 'my-4 mx-4'}>{@render children()}</section>

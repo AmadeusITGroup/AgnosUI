@@ -42,7 +42,7 @@ export const selectedFramework$ = derived(
 			set(p.params.framework as Frameworks);
 		}
 	},
-	'angular' as Frameworks,
+	'react' as Frameworks,
 );
 /**
  * Current non-typescript selected framework
@@ -54,7 +54,7 @@ export const selectedApiFramework$ = derived(
 			set(p.params.framework as ApiFrameworks);
 		}
 	},
-	'angular' as ApiFrameworks,
+	'react' as ApiFrameworks,
 );
 
 /**

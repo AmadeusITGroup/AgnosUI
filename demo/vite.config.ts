@@ -11,6 +11,7 @@ import {watchMarkdown} from './scripts/watchMarkdown.plugin';
 import {emitFile} from './scripts/emitFile.plugin';
 import http from 'http';
 import {alias} from '../viteAlias';
+import tailwindcss from '@tailwindcss/vite';
 
 const proxy: Record<string, string | ProxyOptions> = {
 	'/angular/samples/bootstrap': {
@@ -62,6 +63,7 @@ export default defineConfig((config) => ({
 		copySamples(),
 		includeSamples(),
 		includeStyles(),
+		tailwindcss(),
 		watchMarkdown(),
 		sveltekit(),
 		docExtractor(),

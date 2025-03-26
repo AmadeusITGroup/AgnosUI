@@ -17,9 +17,9 @@
 	}
 </script>
 
-<div class="d-flex align-items-center justify-content-between">
+<div class="flex items-center justify-between">
 	<button
-		class="d-md-none text-dark-emphasis d-flex align-items-center btn btn-link link-underline link-underline-opacity-0"
+		class="md:hidden text-dark-emphasis flex items-center btn btn-link link-hover"
 		aria-expanded={isMenuExpanded}
 		onclick={() => {
 			isMenuExpanded = true;
@@ -28,7 +28,7 @@
 		<Svg svg={menuIcon} className="icon-20 me-1" /><span class="menu-text">Menu</span>
 	</button>
 	<button
-		class="text-dark-emphasis d-flex align-items-center btn btn-link link-underline link-underline-opacity-0"
+		class="text-dark-emphasis flex items-center btn btn-link link-hover m-1"
 		aria-expanded={isOnThisPageExpanded}
 		onclick={() => {
 			isOnThisPageExpanded = true;

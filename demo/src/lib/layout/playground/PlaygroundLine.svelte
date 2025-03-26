@@ -18,7 +18,7 @@
 	<PlaygroundValue {type} {defaultValue} api={prop} ariaLabel="property {key} value input" />
 </tr>
 
-<style lang="scss">
+<style>
 	.btn-link {
 		padding: 0;
 	}

@@ -57,27 +57,27 @@
 	};
 </script>
 
-<div class="d-flex flex-wrap">
-	<div class="d-flex gap-3">
+<div class="flex flex-wrap">
+	<div class="flex gap-3">
 		<img src={authorLogo[author].icon} alt="Publisher avatar" class="avatar" width="50" height="50" />
 		<div>
 			<strong>{authorLogo[author].title}</strong>
 			<div>Published on {formattedDate}</div>
 		</div>
 	</div>
-	<div class="d-flex flex-grow-1 justify-content-end gap-3 ms-5 align-self-end">
+	<div class="flex grow-1 justify-end gap-4 ms-12 self-end">
 		{#if mounted}
 			{#if canWebShare}
-				<button class="nav-link" aria-label="Share blog post" onclick={webShare}>
+				<button class="btn btn-link" aria-label="Share blog post" onclick={webShare}>
 					<Svg className="icon-20 align-middle" svg={share} />
 				</button>
 			{:else}
-				<a target="_blank" class="nav-link" href="https://twitter.com/share?url={encodedUrl}&text={encodedTitle}" aria-label="Share on Twitter">
+				<a target="_blank" class="btn btn-link" href="https://twitter.com/share?url={encodedUrl}&text={encodedTitle}" aria-label="Share on Twitter">
 					<Svg className="icon-20 align-middle" svg={twitter} />
 				</a>
 				<a
 					target="_blank"
-					class="nav-link"
+					class="btn btn-link"
 					href="https://www.facebook.com/sharer/sharer.php?u={encodedUrl}&p[title]={encodedTitle}"
 					aria-label="Share on Facebook"
 				>
@@ -85,7 +85,7 @@
 				</a>
 				<a
 					target="_blank"
-					class="nav-link"
+					class="btn btn-link"
 					href="https://www.linkedin.com/shareArticle?mini=true&url={encodedUrl}&title={encodedTitle}"
 					aria-label="Share on LinkedIn"
 				>
@@ -95,7 +95,7 @@
 		{/if}
 	</div>
 </div>
-<hr />
+<div class="divider"></div>
 
 <style>
 	.avatar {

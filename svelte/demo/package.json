@@ -87,6 +87,8 @@
 		"@sveltejs/package": "^2.3.7",
 		"@sveltejs/vite-plugin-svelte": "^5.0.1",
 		"@tailwindcss/vite": "^4.0.6",
+		"bootstrap": "^5.3.3",
+		"bootstrap-icons": "^1.11.3",
 		"daisyui": "^5.0.6",
 		"embla-carousel-autoplay": "^8.5.2",
 		"prettier-plugin-svelte": "^3.3.2",

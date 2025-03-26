@@ -1,0 +1,142 @@
+@layer components {
+	.card {
+		--card-p: 1rem;
+	}
+	.btn {
+		--btn-p: 0.75rem;
+	}
+	p {
+		margin-bottom: 1rem;
+		margin-top: 0;
+	}
+	.border {
+		border-color: var(--color-gray-300);
+	}
+}
+
+@theme {
+	--color-secondary-subtle: #fffce6;
+	--color-primary-subtle: #564a00;
+	--color-light: #f8eeff;
+	--breakpoint-xs: 0;
+	--breakpoint-sm: 576px;
+	--breakpoint-md: 768px;
+	--breakpoint-lg: 1292px;
+	--breakpoint-xl: 1500px;
+	--breakpoint-2xl: 1800px;
+	--color-gray-100: #f8f9fa;
+	--color-gray-200: #dee2e6;
+	--color-gray-300: #ced4da;
+	--color-gray-400: #adb5bd;
+	--color-gray-500: #6c757d;
+	--color-gray-600: #495057;
+	--color-gray-700: #343a40;
+	--color-gray-800: #212529;
+	--color-gray-900: #16181b;
+}
+
+/* #dee2e6  #495057 */
+
+@plugin "daisyui";
+
+@plugin "daisyui/theme" {
+	name: 'light';
+	default: true;
+	prefersdark: false;
+	--color-primary: #26005a;
+	--color-primary-content: #fff;
+	--color-secondary: #fffce6;
+	--color-base-100: #fff;
+	--color-base-200: #f8eeff;
+	--color-base-content: #160033;
+	--color-neutral: #26005a;
+	--color-warning-content: #160033;
+}
+
+/* todo verify other colors neutral ...*/
+
+@plugin "daisyui/theme" {
+	name: 'dark';
+	default: false;
+	prefersdark: false;
+	--color-primary: #b650ff;
+	--color-primary-content: #fff;
+	--color-secondary: #fffce6;
+	--color-base-100: #160033;
+	--color-base-200: #26005a;
+	--color-secondary-subtle: #564a00;
+	--color-neutral: #b650ff;
+	--color-warning-content: #fff;
+	--color-gray-100: #16181b;
+	--color-gray-200: #212529;
+	--color-gray-300: #343a40;
+	--color-gray-400: #495057;
+	--color-gray-500: #6c757d;
+	--color-gray-600: #adb5bd;
+	--color-gray-700: #ced4da;
+	--color-gray-800: #dee2e6;
+	--color-gray-900: #f8f9fa;
+}
+
+.divider {
+	margin-inline: 0rem;
+}
+
+@utility container-xxl {
+	width: 100%;
+	padding-inline: 0.75rem;
+	margin-inline: auto;
+}
+
+@utility tabs-lift {
+	> .tab.active:is([aria-selected='true']) {
+		--tab-border: 3px 1px 0 1px;
+	}
+}
+
+@utility g-0 {
+	--gutter-y: 0;
+	--gutter-x: 0;
+}
+
+@utility col-auto-layout {
+	flex: 0 0 auto;
+	width: auto;
+}
+
+@utility col {
+	--gutter-x: 1.5rem;
+	flex: 1 0 0%;
+}
+
+@utility row {
+	--gutter-x: 1.5rem;
+	--gutter-y: 0;
+	display: flex;
+	flex-wrap: wrap;
+	margin-top: calc(-1 * var(--gutter-y));
+	margin-right: calc(-0.5 * var(--gutter-x));
+	margin-left: calc(-0.5 * var(--gutter-x));
+	> * {
+		width: 100%;
+		max-width: 100%;
+		padding-inline: calc(var(--gutter-x) * 0.5);
+	}
+}
+/* override daisyUI for accessibility issue */
+@utility tab {
+	&:not(:checked, label:has(:checked), :hover, .tab-active, [aria-selected='true']) {
+		color: var(---color-gray-300);
+	}
+}
+
+@utility tabs-border {
+	& .tab {
+		&:is(:hover) {
+			&:before {
+				--tab-border-color: currentColor;
+				border-top: 3px solid;
+			}
+		}
+	}
+}

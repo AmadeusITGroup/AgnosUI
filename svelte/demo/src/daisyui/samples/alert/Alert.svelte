@@ -9,8 +9,9 @@
 	let {
 		visible = $bindable(),
 		children,
+		icon,
 		...props
-	}: Partial<Pick<AlertProps, 'className' | 'visible' | 'dismissible' | 'ariaCloseButtonLabel'>> & {children: Snippet} = $props();
+	}: Partial<Pick<AlertProps, 'className' | 'visible' | 'dismissible' | 'ariaCloseButtonLabel'>> & {children: Snippet; icon?: Snippet} = $props();
 
 	const transition = createSimpleClassTransition({
 		showClasses: ['transition-opacity'],
@@ -40,9 +41,14 @@
 
 {#if !state.hidden}
 	<div role="alert" class="alert {state.className}" use:transitionDirective>
+		{#if icon}
+			{@render icon()}
+		{:else}
+			<div></div>
+		{/if}
 		{@render children()}
 		{#if state.dismissible}
-			<button class="btn btn-xs btn-circle btn-ghost" onclick={api.close} aria-label={state.ariaCloseButtonLabel}>
+			<button class="btn btn-circle btn-ghost btn-xs self-start" onclick={api.close} aria-label={state.ariaCloseButtonLabel}>
 				{@html closeIconSvg}
 			</button>
 		{/if}
