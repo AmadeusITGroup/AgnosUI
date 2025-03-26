@@ -404,11 +404,11 @@ test.describe(`Slider tests`, () => {
 			const sliderLocator = sliderPO.locatorRoot;
 			const boundingBox = await sliderLocator.boundingBox();
 			await sliderPO.locatorHandle.nth(0).dragTo(sliderLocator, {
-				targetPosition: {x: boundingBox!.x + boundingBox!.width * 0.3, y: 1},
+				targetPosition: {x: boundingBox!.x + boundingBox!.width * 0.25, y: 1},
 			});
 
 			await expect(sliderPO.locatorValueLabel).toHaveCount(1);
-			await expect(sliderPO.locatorValueLabel).toHaveText('70 - 62');
+			await expect(sliderPO.locatorValueLabel).toHaveText('70 - 67');
 
 			await expect(sliderPO.locatorMinLabelHorizontal).toHaveClass(/au-slider-rtl/);
 			await expect(sliderPO.locatorMaxLabelHorizontal).toHaveClass(/au-slider-rtl/);

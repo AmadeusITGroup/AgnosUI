@@ -1783,7 +1783,7 @@ describe(`Slider range`, () => {
 	};
 
 	beforeEach(() => {
-		defConfig = writable({});
+		defConfig = writable({values: [50, 75]});
 		slider = createSlider({config: computed(() => ({...defConfig()}))});
 		const sliderElement = document.createElement('div');
 		vi.spyOn(sliderElement, 'getBoundingClientRect').mockReturnValue({x: 10, y: 0, width: 100, height: 4, top: 0, left: 0} as DOMRect);
@@ -1791,9 +1791,15 @@ describe(`Slider range`, () => {
 		vi.spyOn(minLabel, 'getBoundingClientRect').mockReturnValue({x: 10, y: 5, width: 3, height: 4} as DOMRect);
 		const maxLabel = document.createElement('div');
 		vi.spyOn(maxLabel, 'getBoundingClientRect').mockReturnValue({x: 100, y: 5, width: 3, height: 4} as DOMRect);
+		const currentLowLabel = document.createElement('div');
+		vi.spyOn(currentLowLabel, 'getBoundingClientRect').mockReturnValue({x: 10, y: 5, width: 5, height: 4} as DOMRect);
+		const currentHighLabel = document.createElement('div');
+		vi.spyOn(currentHighLabel, 'getBoundingClientRect').mockReturnValue({x: 10, y: 5, width: 5, height: 4} as DOMRect);
 		const sliderDirective = slider.directives.sliderDirective(sliderElement);
 		const minLabelDirective = slider.directives.minLabelDirective(minLabel);
 		const maxLabelDirective = slider.directives.maxLabelDirective(maxLabel);
+		const handleLabelDirectiveInstance1 = slider.directives.handleLabelDisplayDirective(currentLowLabel, {index: 0});
+		const handleLabelDirectiveInstance2 = slider.directives.handleLabelDisplayDirective(currentHighLabel, {index: 1});
 		normalizedState$ = computed(() => {
 			return normalizeState(slider.state$());
 		});
@@ -1802,6 +1808,8 @@ describe(`Slider range`, () => {
 			sliderDirective!.destroy?.();
 			minLabelDirective!.destroy?.();
 			maxLabelDirective!.destroy?.();
+			handleLabelDirectiveInstance1!.destroy?.();
+			handleLabelDirectiveInstance2!.destroy?.();
 		};
 	});
 
