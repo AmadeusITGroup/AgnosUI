@@ -7,7 +7,7 @@
 </script>
 
 <Slot content={state.navigation} props={widget} />
-<div class="au-carousel-container" aria-atomic="false" aria-live="polite">
+<div use:directives.container>
 	{#each state.slidesData as slideData, index (slideData.id)}
 		<div use:directives.slide={{index, id: slideData.id}}>
 			<Slot content={state.slide} props={{...slideData, ...widget}} />

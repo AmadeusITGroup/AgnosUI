@@ -3,7 +3,7 @@
 	[auUse]="directives.root"
 >
 	@if (state.showNavigationArrows() || state.showNavigationIndicators() || autoplay()) {
-		<div class="absolute top-2 right-2 left-2 z-1 flex" [class]="autoplay() ? 'justify-between' : 'justify-center'" [attr.dir]="state.direction()">
+		<div class="absolute top-2 right-2 left-2 z-1 flex" [class]="autoplay() ? 'justify-between' : 'justify-center'">
 			@if (autoplay()) {
 				<div class="flex p-1 px-2 cursor-auto bg-base-100 rounded" (pointerdown)="$event.preventDefault()">
 					<button
@@ -15,7 +15,7 @@
 				</div>
 			}
 			@if (state.showNavigationArrows() || state.showNavigationIndicators()) {
-				<div class="flex p-1 px-2 gap-1 cursor-auto bg-base-100 rounded-xl" [attr.dir]="state.direction()" (pointerdown)="$event.preventDefault()">
+				<div class="flex p-1 px-2 gap-1 cursor-auto bg-base-100 rounded-xl" (pointerdown)="$event.preventDefault()">
 					@if (state.showNavigationArrows()) {
 						<button
 							class="btn btn-circle btn-xs"
@@ -47,12 +47,7 @@
 			}
 		</div>
 	}
-	<div
-		class="flex container touch-pan-y touch-pinch-zoom"
-		aria-atomic="false"
-		[attr.aria-live]="autoplay() ? 'off' : 'polite'"
-		[attr.dir]="state.direction()"
-	>
+	<div class="flex container touch-pan-y touch-pinch-zoom" aria-atomic="false" [attr.aria-live]="autoplay() ? 'off' : 'polite'">
 		@for (photo of photos(); track photo.id; let index = $index) {
 			<div class="basis-full shrink-0 grow-0" [auUse]="[directives.slide, {index, id: photo.id}]">
 				<ng-container *ngTemplateOutlet="slideTemplate().templateRef; context: photo" />

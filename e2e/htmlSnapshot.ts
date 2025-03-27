@@ -128,7 +128,7 @@ const filterTagName = (tagName: string, attributes: HTMLAttribute[]) => {
 	return tagName;
 };
 
-const ignoreEmblaTransform = (
+const ignoreEmblaStyles = (
 	attr: HTMLAttribute,
 	node: {
 		tagName: string;
@@ -136,7 +136,11 @@ const ignoreEmblaTransform = (
 		attributes: HTMLAttribute[];
 	},
 ) => {
-	return attr.name === 'style' && node.attributes.find((attr) => attr.name === 'class')?.value?.includes('au-carousel-container');
+	return (
+		attr.name === 'style' &&
+		(node.attributes.find((attr) => attr.name === 'class')?.value?.includes('au-carousel-container') ||
+			node.attributes.find((attr) => attr.name === 'class')?.value?.includes('autoplay-progress-bar '))
+	);
 };
 
 export const filterHtmlStructure = (node: HTMLNode): HTMLNode => {
@@ -153,7 +157,7 @@ export const filterHtmlStructure = (node: HTMLNode): HTMLNode => {
 		attributes = [];
 	}
 	attributes = attributes
-		.filter((attr) => !(ignoreEmblaTransform(attr, node) || (excludeAttrRegExp.test(attr.name) && !attrExceptions.includes(attr.name))))
+		.filter((attr) => !(ignoreEmblaStyles(attr, node) || (excludeAttrRegExp.test(attr.name) && !attrExceptions.includes(attr.name))))
 		.map(({name, value}) => {
 			if (name === 'class') {
 				value = value

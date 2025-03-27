@@ -6,21 +6,35 @@ import {useDirective} from '@agnos-ui/react-headless/utils/directive';
 import type {Ref} from 'react';
 import {useImperativeHandle} from 'react';
 
-const CarouselPrevButton = ({scrollPrev}: {scrollPrev: CarouselDirectives['scrollPrev']}) => (
-	<button {...useDirective(scrollPrev)}>
-		<span className="carousel-control-prev-icon"></span>
-	</button>
-);
+const CarouselPrevButton = ({direction, scrollPrev}: {direction: 'ltr' | 'rtl'; scrollPrev: CarouselDirectives['scrollPrev']}) => {
+	const prevBtnClassPrefix = direction === 'rtl' ? 'carousel-control-next' : 'carousel-control-prev';
+	return (
+		<button className={prevBtnClassPrefix} {...useDirective(scrollPrev)}>
+			<span className={`${prevBtnClassPrefix}-icon`}></span>
+		</button>
+	);
+};
 
-const CarouselNextButton = ({scrollNext}: {scrollNext: CarouselDirectives['scrollNext']}) => (
-	<button {...useDirective(scrollNext)}>
-		<span className="carousel-control-next-icon"></span>
-	</button>
-);
+const CarouselNextButton = ({direction, scrollNext}: {direction: 'ltr' | 'rtl'; scrollNext: CarouselDirectives['scrollNext']}) => {
+	const prevBtnClassPrefix = direction === 'ltr' ? 'carousel-control-next' : 'carousel-control-prev';
+	return (
+		<button className={prevBtnClassPrefix} {...useDirective(scrollNext)}>
+			<span className={`${prevBtnClassPrefix}-icon`}></span>
+		</button>
+	);
+};
 
-const CarouselTabIndicator = ({index, id, tabIndicator}: {index: number; id: string; tabIndicator: CarouselDirectives['tabIndicator']}) => (
-	<button {...useDirective(tabIndicator, {index, id})}></button>
-);
+const CarouselTabIndicator = ({
+	index,
+	id,
+	tabIndicator,
+	active,
+}: {
+	index: number;
+	id: string;
+	tabIndicator: CarouselDirectives['tabIndicator'];
+	active: boolean;
+}) => <button data-bs-target className={active ? 'active' : undefined} {...useDirective(tabIndicator, {index, id})}></button>;
 
 const CarouselSlide = <SlideData extends {id: string}>({
 	slideData,
@@ -40,14 +54,16 @@ const CarouselTabList = <SlideData extends {id: string}>({
 	slidesData,
 	tabList,
 	tabIndicator,
+	selectedScrollSnap,
 }: {
 	slidesData: SlideData[];
 	tabList: CarouselDirectives['tabList'];
 	tabIndicator: CarouselDirectives['tabIndicator'];
+	selectedScrollSnap: number;
 }) => (
-	<div {...useDirective(tabList)}>
+	<div className="carousel-indicators" {...useDirective(tabList)}>
 		{slidesData.map(({id}, index) => (
-			<CarouselTabIndicator key={id} index={index} tabIndicator={tabIndicator} id={id} />
+			<CarouselTabIndicator key={id} index={index} tabIndicator={tabIndicator} id={id} active={selectedScrollSnap === index} />
 		))}
 	</div>
 );
@@ -60,18 +76,25 @@ const CarouselTabList = <SlideData extends {id: string}>({
  */
 export const CarouselDefaultNavigation = <SlideData extends {id: string}>(widget: CarouselContext<SlideData>) => {
 	const {
-		state: {showNavigationArrows, showNavigationIndicators, canScrollNext, canScrollPrev, slidesData},
+		state: {showNavigationArrows, showNavigationIndicators, canScrollNext, canScrollPrev, slidesData, direction, selectedScrollSnap},
 		directives,
 	} = widget;
 	return (
 		<>
 			{showNavigationArrows && (
 				<>
-					{canScrollPrev && <CarouselPrevButton scrollPrev={directives.scrollPrev} />}
-					{canScrollNext && <CarouselNextButton scrollNext={directives.scrollNext} />}
+					{canScrollPrev && <CarouselPrevButton scrollPrev={directives.scrollPrev} direction={direction} />}
+					{canScrollNext && <CarouselNextButton scrollNext={directives.scrollNext} direction={direction} />}
 				</>
 			)}
-			{showNavigationIndicators && <CarouselTabList slidesData={slidesData} tabList={directives.tabList} tabIndicator={directives.tabIndicator} />}
+			{showNavigationIndicators && (
+				<CarouselTabList
+					slidesData={slidesData}
+					tabList={directives.tabList}
+					tabIndicator={directives.tabIndicator}
+					selectedScrollSnap={selectedScrollSnap}
+				/>
+			)}
 		</>
 	);
 };
@@ -85,7 +108,7 @@ export const CarouselDefaultNavigation = <SlideData extends {id: string}>(widget
 export const CarouselDefaultStructure = <SlideData extends {id: string}>(widget: CarouselContext<SlideData>) => (
 	<>
 		<Slot slotContent={widget.state.navigation} props={widget} />
-		<div className="au-carousel-container" aria-atomic="false" aria-live="polite">
+		<div {...useDirective(widget.directives.container)}>
 			{widget.state.slidesData.map((slideData, index) => (
 				<CarouselSlide key={slideData.id} slideData={slideData} widget={widget} index={index} />
 			))}
