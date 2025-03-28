@@ -60,7 +60,7 @@
 		};
 		const appliedTheme = (theme: string) => {
 			if (theme === 'auto') {
-				return window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'dark' : 'light';
+				return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 			} else {
 				return theme;
 			}
