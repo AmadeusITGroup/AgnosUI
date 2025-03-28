@@ -115,7 +115,7 @@ export function Carousel({
 			{...useDirective(directives.root)}
 		>
 			{(showNavigationArrows || showNavigationIndicators || autoplay) && (
-				<div className={clsx('absolute top-2 right-2 left-2 z-1 flex', autoplay ? 'justify-between' : 'justify-center')} dir={direction}>
+				<div className={clsx('absolute top-2 right-2 left-2 z-1 flex', autoplay ? 'justify-between' : 'justify-center')}>
 					{autoplay && (
 						<div className="flex p-1 px-2 cursor-auto bg-base-100 rounded" onPointerDown={onPointerDown}>
 							<button className="btn btn-xs btn-square" aria-label={playing ? 'Pause' : 'Play'} onClick={togglePlay}>
@@ -124,7 +124,7 @@ export function Carousel({
 						</div>
 					)}
 					{(showNavigationArrows || showNavigationIndicators) && (
-						<div className="flex p-1 px-2 gap-1 cursor-auto bg-base-100 rounded-xl" dir={direction} onPointerDown={onPointerDown}>
+						<div className="flex p-1 px-2 gap-1 cursor-auto bg-base-100 rounded-xl" onPointerDown={onPointerDown}>
 							{showNavigationArrows && <CarouselPrevButton scrollPrev={directives.scrollPrev} direction={direction} />}
 							{showNavigationIndicators && (
 								<CarouselTabList
@@ -139,7 +139,7 @@ export function Carousel({
 					)}
 				</div>
 			)}
-			<div className="flex container touch-pan-y touch-pinch-zoom" aria-atomic="false" aria-live={autoplay ? 'off' : 'polite'} dir={props.direction}>
+			<div className="flex container touch-pan-y touch-pinch-zoom" aria-atomic="false" aria-live={autoplay ? 'off' : 'polite'}>
 				{photos.map((photo, index) => (
 					<CarouselSlide key={photo.id} index={index} photo={photos[index]} slideRenderer={slideRenderer} slideDirective={directives.slide} />
 				))}

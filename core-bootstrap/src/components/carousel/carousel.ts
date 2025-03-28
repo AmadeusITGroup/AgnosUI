@@ -1,11 +1,16 @@
-import type {ConfigValidator, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '@agnos-ui/core/types';
-import type {CarouselProps as CoreProps, CarouselState as CoreState, CarouselApi, CarouselDirectives} from '@agnos-ui/core/components/carousel';
+import type {ConfigValidator, Directive, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '@agnos-ui/core/types';
+import type {
+	CarouselProps as CoreProps,
+	CarouselState as CoreState,
+	CarouselApi,
+	CarouselDirectives as CoreDirectives,
+} from '@agnos-ui/core/components/carousel';
 import {createCarousel as createCoreCarousel, getCarouselDefaultConfig as getCoreDefaultConfig} from '@agnos-ui/core/components/carousel';
 import {true$} from '@agnos-ui/core/utils/stores';
 import {computed, readable, type ReadableSignal} from '@amadeus-it-group/tansu';
 import {mergeDirectives, createAttributesDirective} from '@agnos-ui/core/utils/directive';
 import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
-import {typeArray} from '@agnos-ui/core/utils/writables';
+import {typeArray, typeString} from '@agnos-ui/core/utils/writables';
 
 export * from '@agnos-ui/core/components/carousel';
 
@@ -25,21 +30,53 @@ export type CarouselSlideContext<SlideData extends {id: string}> = WidgetSlotCon
 
 interface CarouselExtraProps<SlideData extends {id: string}> {
 	/**
+	 * CSS classes to be applied on the widget main container
+	 *
+	 * @defaultValue `''`
+	 */
+	className: string;
+	/**
+	 * Class name to apply to the container of the carousel.
+	 *
+	 * @defaultValue `''`
+	 */
+	containerClass: string;
+	/**
+	 * Class name to apply to each slide in the carousel.
+	 *
+	 * @defaultValue `''`
+	 */
+	slideClass: string | ((slideContext: {id: string; index: number; active: boolean}) => string);
+	/**
 	 * The data for each slide in the carousel.
+	 *
+	 * @defaultValue `[]`
 	 */
 	slidesData: SlideData[];
 	/**
 	 * The structure of the carousel.
+	 *
+	 * @defaultValue `undefined`
 	 */
 	structure: SlotContent<CarouselContext<SlideData>>;
 	/**
 	 * The navigation layer of the carousel.
+	 *
+	 * @defaultValue `undefined`
 	 */
 	navigation: SlotContent<CarouselContext<SlideData>>;
 	/**
 	 * The content of each slide in the carousel.
+	 *
+	 * @defaultValue `undefined`
 	 */
 	slide: SlotContent<CarouselSlideContext<SlideData>>;
+	/**
+	 * The aria-live attribute value for the carousel container.
+	 *
+	 * @defaultValue `'polite'`
+	 */
+	ariaLive: string;
 }
 
 /**
@@ -57,6 +94,20 @@ export interface CarouselState<SlideData extends {id: string}> extends CoreState
 export interface CarouselProps<SlideData extends {id: string}> extends CoreProps, CarouselExtraProps<SlideData> {}
 
 /**
+ * Represents the directives for a carousel component.
+ */
+export interface CarouselDirectives extends Omit<CoreDirectives, 'slide'> {
+	/**
+	 * A directive to be applied to each slide in the carousel.
+	 */
+	slide: Directive<{id: string; index: number}>;
+	/**
+	 * A directive to be applied to container of the carousel.
+	 */
+	container: Directive;
+}
+
+/**
  * Represents a carousel widget with specific properties, state, API, and directives.
  *
  * @template SlideData - The type of the data for each slide.
@@ -69,17 +120,25 @@ export type CarouselWidget<SlideData extends {id: string}> = Widget<
 >;
 
 const defaultConfigExtraProps: CarouselExtraProps<any> = {
+	className: '',
+	containerClass: '',
+	slideClass: '',
 	slidesData: [],
 	structure: undefined,
 	navigation: undefined,
 	slide: undefined,
+	ariaLive: 'polite',
 };
 
 const configValidator: ConfigValidator<CarouselExtraProps<any>> = {
+	className: typeString,
+	containerClass: typeString,
+	slideClass: undefined,
 	slidesData: typeArray,
 	structure: undefined,
 	navigation: undefined,
 	slide: undefined,
+	ariaLive: typeString,
 };
 
 const coreOverride: Partial<CoreProps> = {
@@ -113,52 +172,41 @@ export function createCarousel<SlideData extends {id: string}>(config?: PropsCon
 					classNames: {
 						carousel: true$,
 					},
-				})),
-			),
-			tabList: mergeDirectives(
-				widget.directives.tabList,
-				createAttributesDirective(() => ({
-					classNames: {
-						'carousel-indicators': true$,
-					},
-				})),
-			),
-			tabIndicator: mergeDirectives(
-				widget.directives.tabIndicator,
-				createAttributesDirective((slide$: ReadableSignal<{index: number}>) => ({
-					classNames: {
-						active: computed(() => slide$().index === widget.stores.selectedScrollSnap$()),
-					},
 					attributes: {
-						['data-bs-target']: readable(''),
-					},
-					events: {
-						pointerdown: (e) => e.preventDefault(),
+						class: widget.stores.className$,
 					},
 				})),
 			),
-			scrollPrev: mergeDirectives(
-				widget.directives.scrollPrev,
-				createAttributesDirective(() => ({
-					classNames: {
-						'carousel-control-prev': true$,
-					},
-					events: {
-						pointerdown: (e) => e.preventDefault(),
-					},
-				})),
-			),
-			scrollNext: mergeDirectives(
-				widget.directives.scrollNext,
-				createAttributesDirective(() => ({
-					classNames: {
-						'carousel-control-next': true$,
-					},
-					events: {
-						pointerdown: (e) => e.preventDefault(),
+			slide: mergeDirectives(
+				widget.directives.slide,
+				createAttributesDirective((slideData$: ReadableSignal<{id: string; index: number}>) => ({
+					attributes: {
+						class: computed(() => {
+							const slideClass = widget.stores.slideClass$();
+							if (typeof slideClass === 'function') {
+								const slideData = slideData$();
+								return slideClass({
+									id: slideData.id,
+									index: slideData.index,
+									active: slideData.index === widget.stores.selectedScrollSnap$(),
+								});
+							} else {
+								return slideClass;
+							}
+						}),
 					},
 				})),
 			),
+			container: createAttributesDirective(() => ({
+				classNames: {
+					'au-carousel-container': true$,
+				},
+				attributes: {
+					class: widget.stores.containerClass$,
+					'aria-atomic': readable('false'),
+					'aria-live': widget.stores.ariaLive$,
+				},
+			})),
 		},
 	};
 }

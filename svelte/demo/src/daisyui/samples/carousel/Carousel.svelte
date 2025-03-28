@@ -71,7 +71,7 @@
 	use:directives.root
 >
 	{#if cState.showNavigationArrows || cState.showNavigationIndicators || autoplay}
-		<div class={['absolute top-2 right-2 left-2 z-1 flex', autoplay ? 'justify-between' : 'justify-center']} dir={cState.direction}>
+		<div class={['absolute top-2 right-2 left-2 z-1 flex', autoplay ? 'justify-between' : 'justify-center']}>
 			{#if autoplay}
 				<div class="flex p-1 px-2 cursor-auto bg-base-100 rounded" {onpointerdown}>
 					<button class="btn btn-xs btn-square" aria-label={playing ? 'Pause' : 'Play'} onclick={togglePlay}>
@@ -80,7 +80,7 @@
 				</div>
 			{/if}
 			{#if cState.showNavigationArrows || cState.showNavigationIndicators}
-				<div class="flex p-1 px-2 gap-1 cursor-auto bg-base-100 rounded-xl" dir={cState.direction} {onpointerdown}>
+				<div class="flex p-1 px-2 gap-1 cursor-auto bg-base-100 rounded-xl" {onpointerdown}>
 					{#if cState.showNavigationArrows}
 						<button class="btn btn-circle btn-xs" use:directives.scrollPrev>
 							{@html cState.direction === 'rtl' ? nextSvg : previousSvg}
@@ -105,7 +105,7 @@
 			{/if}
 		</div>
 	{/if}
-	<div class="flex container touch-pan-y touch-pinch-zoom" aria-atomic="false" aria-live={autoplay ? 'off' : 'polite'} dir={cState.direction}>
+	<div class="flex container touch-pan-y touch-pinch-zoom" aria-atomic="false" aria-live={autoplay ? 'off' : 'polite'}>
 		{#each photos as slideData, index (slideData.id)}
 			<div class="basis-full shrink-0 grow-0" use:directives.slide={{id: slideData.id, index}}>
 				{@render slide(slideData)}

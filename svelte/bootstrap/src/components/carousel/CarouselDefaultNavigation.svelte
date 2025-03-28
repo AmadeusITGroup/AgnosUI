@@ -6,23 +6,25 @@
 
 {#if state.showNavigationArrows}
 	{#if state.canScrollPrev}
+		{@const prevBtnClassPrefix = state.direction === 'rtl' ? 'carousel-control-next' : 'carousel-control-prev'}
 		<!-- svelte-ignore a11y_consider_explicit_label -->
-		<button use:directives.scrollPrev>
-			<span class="carousel-control-prev-icon"></span>
+		<button class={prevBtnClassPrefix} use:directives.scrollPrev>
+			<span class="{prevBtnClassPrefix}-icon"></span>
 		</button>
 	{/if}
 	{#if state.canScrollNext}
+		{@const nextBtnClassPrefix = state.direction === 'ltr' ? 'carousel-control-next' : 'carousel-control-prev'}
 		<!-- svelte-ignore a11y_consider_explicit_label -->
-		<button use:directives.scrollNext>
-			<span class="carousel-control-next-icon"></span>
+		<button class={nextBtnClassPrefix} use:directives.scrollNext>
+			<span class="{nextBtnClassPrefix}-icon"></span>
 		</button>
 	{/if}
 {/if}
 {#if state.showNavigationIndicators}
-	<div use:directives.tabList>
+	<div class="carousel-indicators" use:directives.tabList>
 		{#each state.slidesData as { id }, index (id)}
 			<!-- svelte-ignore a11y_consider_explicit_label -->
-			<button use:directives.tabIndicator={{index, id}}></button>
+			<button data-bs-target class={[state.selectedScrollSnap === index && 'active']} use:directives.tabIndicator={{index, id}}></button>
 		{/each}
 	</div>
 {/if}

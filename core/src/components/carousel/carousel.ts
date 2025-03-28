@@ -436,6 +436,7 @@ export function createCarousel(config?: PropsConfig<CarouselProps>): CarouselWid
 					attributes: {
 						role: readable('region'),
 						'aria-roledescription': readable('carousel'),
+						dir: direction$,
 					},
 				})),
 			),
@@ -446,6 +447,8 @@ export function createCarousel(config?: PropsConfig<CarouselProps>): CarouselWid
 				},
 				events: {
 					click: () => emblaCarousel.api?.scrollPrev(),
+					pointerdown: (event) => event.preventDefault(),
+					touchstart: (event) => event.stopPropagation(),
 				},
 			})),
 			scrollNext: createAttributesDirective(() => ({
@@ -455,6 +458,8 @@ export function createCarousel(config?: PropsConfig<CarouselProps>): CarouselWid
 				},
 				events: {
 					click: () => emblaCarousel.api?.scrollNext(),
+					pointerdown: (event) => event.preventDefault(),
+					touchstart: (event) => event.stopPropagation(),
 				},
 			})),
 			tabList: mergeDirectives(

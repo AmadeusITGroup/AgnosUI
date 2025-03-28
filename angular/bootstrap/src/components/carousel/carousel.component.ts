@@ -68,27 +68,33 @@ export class CarouselSlideDirective<SlideData extends {id: string}> {
 		<ng-template auCarouselNavigation #navigation let-state="state" let-api="api" let-directives="directives">
 			@if (state.showNavigationArrows()) {
 				@if (state.canScrollPrev()) {
-					<button class="carousel-control-prev" [auUse]="directives.scrollPrev">
-						<span class="carousel-control-prev-icon"></span>
+					@let prevBtnClassPrefix = state.direction() === 'rtl' ? 'carousel-control-next' : 'carousel-control-prev';
+					<button class="{{ prevBtnClassPrefix }}" [auUse]="directives.scrollPrev">
+						<span class="{{ prevBtnClassPrefix }}-icon"></span>
 					</button>
 				}
 				@if (state.canScrollNext()) {
-					<button class="carousel-control-next" [auUse]="directives.scrollNext">
-						<span class="carousel-control-next-icon"></span>
+					@let nextBtnClassPrefix = state.direction() === 'ltr' ? 'carousel-control-next' : 'carousel-control-prev';
+					<button class="{{ nextBtnClassPrefix }}" [auUse]="directives.scrollNext">
+						<span class="{{ nextBtnClassPrefix }}-icon"></span>
 					</button>
 				}
 			}
 			@if (state.showNavigationIndicators()) {
-				<div [auUse]="directives.tabList">
+				<div class="carousel-indicators" [auUse]="directives.tabList">
 					@for (slideData of state.slidesData(); track slideData.id; let index = $index) {
-						<button [auUse]="[directives.tabIndicator, {index, id: slideData.id}]"></button>
+						<button
+							data-bs-target="true"
+							[attr.class]="state.selectedScrollSnap() === index ? 'active' : undefined"
+							[auUse]="[directives.tabIndicator, {index, id: slideData.id}]"
+						></button>
 					}
 				</div>
 			}
 		</ng-template>
 		<ng-template auCarouselStructure #structure let-state="state" let-api="api" let-directives="directives">
 			<ng-template [auSlot]="state.navigation()" [auSlotProps]="{state, api, directives}" />
-			<div class="au-carousel-container" aria-atomic="false" aria-live="polite">
+			<div [auUse]="directives.container">
 				@for (slideData of state.slidesData(); track slideData.id; let index = $index) {
 					<div [auUse]="[directives.slide, {index, id: slideData.id}]">
 						<ng-template [auSlot]="state.slide()" [auSlotProps]="toSlideContext(slideData, {state, api, directives})" />
@@ -233,22 +239,58 @@ export class CarouselComponent<SlideData extends {id: string}> extends BaseWidge
 	readonly containScroll = input<false | 'trimSnaps' | 'keepSnaps'>(undefined, {alias: 'auContainScroll'});
 
 	/**
+	 * CSS classes to be applied on the widget main container
+	 *
+	 * @defaultValue `''`
+	 */
+	readonly className = input<string>(undefined, {alias: 'auClassName'});
+
+	/**
+	 * Class name to apply to the container of the carousel.
+	 *
+	 * @defaultValue `''`
+	 */
+	readonly containerClass = input<string>(undefined, {alias: 'auContainerClass'});
+
+	/**
+	 * Class name to apply to each slide in the carousel.
+	 *
+	 * @defaultValue `''`
+	 */
+	readonly slideClass = input<string | ((slideContext: {id: string; index: number; active: boolean}) => string)>(undefined, {alias: 'auSlideClass'});
+
+	/**
+	 * The aria-live attribute value for the carousel container.
+	 *
+	 * @defaultValue `'polite'`
+	 */
+	readonly ariaLive = input<string>(undefined, {alias: 'auAriaLive'});
+
+	/**
 	 * The data for each slide in the carousel.
+	 *
+	 * @defaultValue `[]`
 	 */
 	readonly slidesData = input<SlideData[]>(undefined, {alias: 'auSlidesData'});
 
 	/**
 	 * The structure of the carousel.
+	 *
+	 * @defaultValue `undefined`
 	 */
 	readonly structure = input<SlotContent<CarouselContext<SlideData>>>(undefined, {alias: 'auStructure'});
 
 	/**
 	 * The navigation layer of the carousel.
+	 *
+	 * @defaultValue `undefined`
 	 */
 	readonly navigation = input<SlotContent<CarouselContext<SlideData>>>(undefined, {alias: 'auNavigation'});
 
 	/**
 	 * The content of each slide in the carousel.
+	 *
+	 * @defaultValue `undefined`
 	 */
 	readonly slide = input<SlotContent<CarouselSlideContext<SlideData>>>(undefined, {alias: 'auSlide'});
 
