@@ -52,6 +52,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 --------------------------------------------------------------------------------
+Package: embla-carousel-autoplay
+License: "MIT"
+
+
+--------------------------------------------------------------------------------
 Package: @angular/router
 License: "MIT"
 
