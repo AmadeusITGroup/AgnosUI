@@ -28,7 +28,7 @@ export const load = async ({url}) => {
 		pageMeta: {
 			title: 'AgnosUI - Where components shine',
 			description:
-				'Perfected component library for Svelte, React and Angular. Reactive and accessible, supports headless or Bootstrap. Providing: accordion, alert, collapse, modal, pagination, progressbar, rating, select, slider, toast, focus track, tooltip, pop-over, transition.',
+				'Perfected component library for Svelte, React and Angular. Reactive and accessible, supports headless or Bootstrap. Providing: accordion, alert, carousel, collapse, modal, pagination, progressbar, rating, select, slider, toast, tree, focus track, tooltip, pop-over, transition.',
 			socialImage: 'https://www.agnosui.dev/latest/agnosui-logo.png',
 			socialImageAlt: 'Icon of AgnosUI',
 			shareUrl: 'https://www.agnosui.dev/latest/',
