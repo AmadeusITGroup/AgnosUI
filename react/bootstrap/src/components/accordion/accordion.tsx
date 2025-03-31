@@ -2,7 +2,7 @@ import {Slot} from '@agnos-ui/react-headless/slot';
 import type {Directive} from '@agnos-ui/react-headless/types';
 import {classDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
 import type {ForwardedRef, PropsWithChildren, Ref} from 'react';
-import {createContext, useContext, useEffect, useImperativeHandle} from 'react';
+import {createContext, useContext, useEffect, useId, useImperativeHandle} from 'react';
 import {useWidgetWithConfig} from '../../config';
 import type {AccordionApi, AccordionItemApi, AccordionItemContext, AccordionItemProps, AccordionProps} from './accordion.gen';
 import {createAccordion} from './accordion.gen';
@@ -62,8 +62,10 @@ export const AccordionItemDefaultSlotStructure = (slotContext: AccordionItemCont
  */
 export function AccordionItem(props: Partial<AccordionItemProps> & {ref?: Ref<AccordionItemApi>}) {
 	const {registerItem} = useContext(AccordionDIContext);
+	const id = useId();
 	const widgetContext = useWidgetWithConfig(registerItem!, props, null, {
 		structure: AccordionItemDefaultSlotStructure,
+		id,
 	});
 	const {state, api, directives} = widgetContext;
 	useImperativeHandle(props.ref, () => api, [api]);

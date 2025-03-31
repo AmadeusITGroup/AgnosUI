@@ -4,6 +4,7 @@
 	import {callWidgetFactory} from '../../config';
 	import type {Snippet} from 'svelte';
 
+	const id = $props.id();
 	let {children, visible = $bindable(), ...props}: Partial<CollapseProps> & {children: Snippet} = $props();
 
 	const {
@@ -14,6 +15,9 @@
 		widgetName: 'collapse',
 		get props() {
 			return {...props, visible};
+		},
+		defaultConfig: {
+			id,
 		},
 		events: {
 			onVisibleChange: (event) => {

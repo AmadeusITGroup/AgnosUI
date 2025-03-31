@@ -1,5 +1,5 @@
 import type {PropsWithChildren, Ref} from 'react';
-import {useImperativeHandle} from 'react';
+import {useId, useImperativeHandle} from 'react';
 import {useWidgetWithConfig} from '../../config';
 import type {CollapseApi, CollapseProps} from './collapse.gen';
 import {createCollapse} from './collapse.gen';
@@ -18,7 +18,8 @@ import {useDirectives} from '@agnos-ui/react-headless/utils/directive';
  * @returns A div element with transition directives applied, containing the child elements.
  */
 export function Collapse(props: PropsWithChildren<Partial<CollapseProps>> & {ref?: Ref<CollapseApi>}) {
-	const {api, directives} = useWidgetWithConfig(createCollapse, props, 'collapse');
+	const id = useId();
+	const {api, directives} = useWidgetWithConfig(createCollapse, props, 'collapse', {id});
 	useImperativeHandle(props.ref, () => api, [api]);
 
 	return <div {...useDirectives(directives.collapseDirective)}>{props.children}</div>;
