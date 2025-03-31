@@ -11,6 +11,7 @@
 		"accordion",
 		"AgnosUI",
 		"alert",
+		"carousel",
 		"collapse",
 		"components",
 		"modal",
@@ -19,6 +20,7 @@
 		"rating",
 		"slider",
 		"toast",
+		"tree",
 		"widgets"
 	],
 	"repository": {
