@@ -10,6 +10,7 @@
 	const accordionApi = getAccordionApi();
 	const {registerItem} = accordionApi;
 
+	const id = $props.id();
 	let {visible = $bindable(), ...props}: Partial<AccordionItemProps> = $props();
 	const widget = callWidgetFactory({
 		factory: registerItem as WidgetFactory<AccordionItemWidget>,
@@ -17,7 +18,7 @@
 			return {...props, visible};
 		},
 		enablePatchChanged: true,
-		defaultConfig: {structure},
+		defaultConfig: {structure, id},
 		events: {
 			onVisibleChange: (event) => {
 				visible = event;

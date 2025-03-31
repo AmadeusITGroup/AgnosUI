@@ -5,7 +5,7 @@ import {createSimpleClassTransition} from '@agnos-ui/react-headless/services/tra
 import type {WidgetFactory} from '@agnos-ui/react-headless/types';
 import {classDirective, useDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
 import type {Context, PropsWithChildren, ReactNode, KeyboardEvent} from 'react';
-import {createContext, useContext, useEffect} from 'react';
+import {createContext, useContext, useEffect, useId} from 'react';
 
 const AccordionDIContext: Context<Partial<AccordionApi>> = createContext({});
 
@@ -33,11 +33,12 @@ export const AccordionItem = (
 		showClasses: ['collapse-open'],
 		animationPendingShowClasses: ['collapse-open'],
 	});
+	const id = useId();
 	const {
 		state: {shouldBeInDOM},
 		api,
 		directives: {itemDirective, transitionDirective, toggleDirective, bodyContainerAttrsDirective},
-	} = useWidgetWithConfig(registerItem as WidgetFactory<AccordionItemWidget>, props, null, {transition});
+	} = useWidgetWithConfig(registerItem as WidgetFactory<AccordionItemWidget>, props, null, {transition, id});
 	useEffect(() => api.initDone(), [api]);
 	const onEnter = (e: KeyboardEvent<HTMLDivElement>) => {
 		if (e.key === 'Enter') {

@@ -6,6 +6,7 @@
 	import {createSimpleClassTransition} from '@agnos-ui/svelte-headless/services/transitions/simpleClassTransition';
 	import {getAccordionApi} from './accordion';
 
+	const id = $props.id();
 	let {
 		header,
 		children,
@@ -35,6 +36,7 @@
 		},
 		defaultConfig: {
 			transition,
+			id,
 		},
 	});
 	const {
