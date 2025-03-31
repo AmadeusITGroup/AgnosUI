@@ -1,0 +1,1 @@
+import{y as i,z as o,as as d,B as h,at as l,H as m}from"./AppCommon-BPClzbtl.js";function g(t,n,c,_,v){var s=t,a="",e;i(()=>{a!==(a=n()??"")&&(e!==void 0&&(m(e),e=void 0),a!==""&&(e=o(()=>{var f=a+"",r=d(f);h(l(r),r.lastChild),s.before(r)})))})}export{g as h};
