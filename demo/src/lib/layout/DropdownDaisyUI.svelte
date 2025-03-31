@@ -1,22 +1,27 @@
 <script lang="ts" generics="Item extends import('./dropdown').DropdownItem">
-	import {createHasFocus} from '@agnos-ui/svelte-bootstrap/services/focustrack';
+	import {activeElement$} from '@agnos-ui/svelte-bootstrap/services/focustrack';
 	import {fromStore} from 'svelte/store';
-	import type {Snippet} from 'svelte';
+	import {onMount, type Snippet} from 'svelte';
+	import {on} from 'svelte/events';
 
 	let open = $state(false);
 
-	const {hasFocus$, directive} = createHasFocus();
-	const focus = fromStore(hasFocus$);
+	let detailsElement: HTMLDetailsElement;
+	const activeElement = fromStore(activeElement$);
+
 	$effect(() => {
-		open = focus.current;
+		if (detailsElement && activeElement.current && !detailsElement.contains(activeElement.current)) {
+			open = false;
+		}
 	});
 
-	function giveFocus(el: HTMLAnchorElement | HTMLButtonElement, index: number) {
-		if (index === 0) {
-			// is possible in ssr because always closed first
-			el.focus();
-		}
-	}
+	onMount(() =>
+		on(window, 'click', (event: MouseEvent) => {
+			if (!detailsElement.contains(event.target as Node)) {
+				open = false;
+			}
+		}),
+	);
 
 	const toggle = (event: (MouseEvent & {currentTarget: EventTarget & HTMLElement}) | undefined, prevent: boolean = false) => {
 		open = !open;
@@ -58,15 +63,15 @@
 	};
 </script>
 
-<details class={[isDropdown ? {dropdownPlacement} : isDropdown, dropdownClass]} {open}>
+<details class={[isDropdown ? {dropdownPlacement} : isDropdown, dropdownClass]} {open} bind:this={detailsElement}>
 	<summary {onmousedown} aria-label={ariaLabel} onclick={(e) => toggle(e, true)} class={btnClass}>{@render buttonSnip()}</summary>
-	<ul use:directive class={dropdownContentClass}>
+	<ul class={dropdownContentClass}>
 		{#if open}
 			{#each items as item, index (item.id)}
+				<!-- svelte-ignore a11y_no_static_element_interactions -->
 				<li>
 					<svelte:element
 						this={item.tag}
-						use:giveFocus={index}
 						class={[
 							'flex items-center',
 							{'menu-active': item.isSelected},
@@ -92,11 +97,3 @@
 		{/if}
 	</ul>
 </details>
-
-<style>
-	.dropdown {
-		button ~ button {
-			margin-top: 0.5rem;
-		}
-	}
-</style>
