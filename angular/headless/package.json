@@ -1,7 +1,7 @@
 {
 	"name": "@agnos-ui/angular-headless",
 	"description": "Headless component library for Angular.",
-	"version": "0.0.0",
+	"version": "0.8.0",
 	"type": "module",
 	"exports": {
 		".": {
@@ -115,7 +115,7 @@
 		"@angular/core": "^19.0.0"
 	},
 	"dependencies": {
-		"@agnos-ui/core": "0.0.0",
+		"@agnos-ui/core": "0.8.0",
 		"tslib": "^2.8.1"
 	},
 	"devDependencies": {

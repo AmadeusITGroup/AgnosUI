@@ -1,6 +1,6 @@
 {
 	"name": "@agnos-ui/react-ssr-app",
-	"version": "0.0.0",
+	"version": "0.8.0",
 	"private": true,
 	"type": "module",
 	"scripts": {
@@ -10,7 +10,7 @@
 		"check": "wireit"
 	},
 	"dependencies": {
-		"@agnos-ui/react-bootstrap": "0.0.0",
+		"@agnos-ui/react-bootstrap": "0.8.0",
 		"express": "^4.21.2",
 		"react": "^19.0.0",
 		"react-dom": "^19.0.0",
