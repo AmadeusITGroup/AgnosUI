@@ -26,7 +26,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package: @angular/platform-browser
+Package: embla-carousel-autoplay
+License: "MIT"
+
+
+--------------------------------------------------------------------------------
+Package: @angular/forms
 License: "MIT"
 
 The MIT License
@@ -52,7 +57,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package: @angular/forms
+Package: @angular/platform-browser
 License: "MIT"
 
 The MIT License
@@ -114,6 +119,11 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+--------------------------------------------------------------------------------
+Package: embla-carousel
+License: "MIT"
+
 
 --------------------------------------------------------------------------------
 Package: @angular/common
