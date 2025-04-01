@@ -1,7 +1,13 @@
 import type {ReadableSignal, WritableSignal} from '@amadeus-it-group/tansu';
 import {computed, readable, writable} from '@amadeus-it-group/tansu';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
-import {browserDirective, createAttributesDirective, createBrowserStoreDirective, mergeDirectives} from '../../utils/directive';
+import {
+	browserDirective,
+	createAttributesDirective,
+	createBrowserStoreArrayDirective,
+	createBrowserStoreDirective,
+	mergeDirectives,
+} from '../../utils/directive';
 import type {ConfigValidator, Directive, PropsConfig, Widget} from '../../types';
 import {noop} from '../../utils/func';
 import {getDecimalPrecision} from '../../utils/internal/math';
@@ -558,9 +564,21 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 	const {directive: sliderDirective, element$: sliderDom$} = createBrowserStoreDirective();
 	const {directive: minLabelDomDirective, element$: minLabelDom$} = createBrowserStoreDirective();
 	const {directive: maxLabelDomDirective, element$: maxLabelDom$} = createBrowserStoreDirective();
+	const {directive: combinedLabelDomDirective, element$: combinedLabelDom$} = createBrowserStoreDirective();
+	const {directive: handleLabelDirective, elements$: currentLabelDoms$} = createBrowserStoreArrayDirective();
 	const {directive: resizeDirective, dimensions$} = createResizeObserver();
 
 	const updateSliderSize$ = writable({});
+	const currentLabelDomsRect$ = computed(
+		() => {
+			dimensions$();
+			updateSliderSize$();
+			return currentLabelDoms$().map((element: HTMLElement) => element.getBoundingClientRect());
+		},
+		{
+			equal: Object.is,
+		},
+	);
 	const sliderDomRect$ = computed(
 		() => {
 			dimensions$();
@@ -617,39 +635,88 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 	});
 	const valuesPercent$ = computed(() => values$().map((val) => percentCompute(val)));
 	const sortedValuesPercent$ = computed(() => [...valuesPercent$()].sort((a, b) => a - b));
-	const minLabelWidth$ = computed(() => (minLabelDomRect$().width / sliderDomRectSize$()) * 100);
-	const maxLabelWidth$ = computed(() => (maxLabelDomRect$().width / sliderDomRectSize$()) * 100);
-	// to remove adjustedShowValueLabels when the intersection of labels is done
+	const minLabelSize$ = computed(() => {
+		const minLabelDomRect = minLabelDomRect$();
+		return pixelToPercent(vertical$() ? minLabelDomRect.height : minLabelDomRect.width);
+	});
+	const maxLabelSize$ = computed(() => {
+		const maxLabelDomRect = maxLabelDomRect$();
+		return pixelToPercent(vertical$() ? maxLabelDomRect.height : maxLabelDomRect.width);
+	});
+	// to avoid showing the tick labels when the value labels are shown. Not using intersection saves performance on boudingClientRect call
 	const adjustedShowValueLabels$ = computed(() => showValueLabels$() && (!showTicks$() || !showTickValues$()));
+
+	/**
+	 * Utility method to translate pixels to percent based on the slider size
+	 * @param pixels px size to be translated
+	 * @returns percent representation of the pixels provided or 0 if the input was undefined
+	 */
+	const pixelToPercent = (pixels: number | undefined) => (pixels ? (pixels / sliderDomRectSize$()) * 100 : 0);
+
+	const combinedLabelSize$ = computed(() =>
+		pixelToPercent(vertical$() ? combinedLabelDom$()?.getBoundingClientRect().height : combinedLabelDom$()?.getBoundingClientRect().width),
+	);
+	const combinedLabelPosition$ = computed(() => (vertical$() ? combinedLabelPositionTop$() : combinedLabelPositionLeft$()));
+	const currentLabelSizeByIndex = (index: number) =>
+		pixelToPercent(vertical$() ? currentLabelDomsRect$()[index]?.height : currentLabelDomsRect$()[index]?.width);
+
 	const minValueLabelDisplay$ = computed(() => {
-		// to remove showTicks check when the intersection of labels is done
 		if (!showMinMaxLabels$() || (showTicks$() && showTickValues$())) {
 			return false;
 		} else if (!showValueLabels$()) {
 			return true;
 		}
-		const minLabelWidth = minLabelWidth$();
-		return rtl$()
-			? !valuesPercent$().some((percent) => 100 - percent > 100 - minLabelWidth - 1)
-			: !valuesPercent$().some((percent) => percent < minLabelWidth + 1);
+		const minLabelSize = minLabelSize$();
+		const vertical = vertical$();
+		const rtl = rtl$();
+		if (combinedLabelDisplay$()) {
+			const combinedLabelSize = combinedLabelSize$();
+			const combinedLabelPosition = combinedLabelPosition$();
+			return (rtl && !vertical) || (vertical && !rtl)
+				? combinedLabelPosition + combinedLabelSize / 2 < 100 - minLabelSize - 1
+				: combinedLabelPosition - combinedLabelSize / 2 > minLabelSize + 1;
+		}
+		const sortedValuesPercent = sortedValuesPercent$();
+		return rtl
+			? sortedValuesPercent[0] - currentLabelSizeByIndex(sortedValuesPercent.length - 1) / 2 > minLabelSize + 1
+			: sortedValuesPercent[0] - currentLabelSizeByIndex(0) / 2 > minLabelSize + 1;
 	});
 	const maxValueLabelDisplay$ = computed(() => {
-		// TODO: remove showTicks check when the intersection of labels is done
 		if (!showMinMaxLabels$() || (showTicks$() && showTickValues$())) {
 			return false;
 		} else if (!showValueLabels$()) {
 			return true;
 		}
-		const maxLabelWidth = maxLabelWidth$();
-		return rtl$()
-			? !valuesPercent$().some((percent) => 100 - percent < maxLabelWidth + 1)
-			: !valuesPercent$().some((percent) => percent > 100 - maxLabelWidth - 1);
+		const maxLabelSize = maxLabelSize$();
+		const vertical = vertical$();
+		const rtl = rtl$();
+		if (combinedLabelDisplay$()) {
+			const combinedLabelSize = combinedLabelSize$();
+			const combinedLabelPosition = combinedLabelPosition$();
+			return (rtl && !vertical) || (vertical && !rtl)
+				? combinedLabelPosition - combinedLabelSize / 2 > maxLabelSize + 1
+				: combinedLabelPosition + combinedLabelSize / 2 < 100 - maxLabelSize - 1;
+		}
+		const sortedValuesPercent = sortedValuesPercent$();
+		return rtl
+			? 100 - sortedValuesPercent[sortedValuesPercent.length - 1] - currentLabelSizeByIndex(0) / 2 > maxLabelSize + 1
+			: sortedValuesPercent[sortedValuesPercent.length - 1] + currentLabelSizeByIndex(sortedValuesPercent.length - 1) / 2 < 100 - maxLabelSize - 1;
 	});
 
+	// contains the size of the labels even when the `currentLabelDomRect$` doesn't have anything as `combinedLabel` is shown
+	const storedLabelSize$ = writable<number[]>([]);
 	const combinedLabelDisplay$ = computed(() => {
-		const values = values$();
-		// We use a normalizing factor scaling the difference to a slider range of 100 to handle bigger numbers
-		return values.length == 2 && (Math.abs(values[0] - values[1]) * 100) / (max$() - min$()) < 10;
+		const values = sortedValuesPercent$();
+		if (currentLabelDomsRect$().length === values.length) {
+			storedLabelSize$.set(values.map((_, index) => currentLabelSizeByIndex(index) / 2));
+		}
+		const storedLabelSize = storedLabelSize$();
+		const firstLabelSize = storedLabelSize?.[0] ?? 0;
+		const secondLabelSize = storedLabelSize?.[1] ?? 0;
+		const biggestLabelSize = Math.max(firstLabelSize, secondLabelSize);
+		// if the label is taking 50% it means that the initial rendering wasn't finished and getBoundingClientRect returns the size of the slider container
+		const intersectionLimit = biggestLabelSize !== 50 ? biggestLabelSize * 2 + 2 : 15;
+		return values.length == 2 && values[1] - secondLabelSize - values[0] + firstLabelSize < intersectionLimit;
 	});
 	const interactive$ = computed(() => !disabled$() && !readonly$());
 
@@ -1093,36 +1160,42 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 			),
 			minLabelDirective: mergeDirectives(minLabelDomDirective, minLabelDirective),
 			maxLabelDirective: mergeDirectives(maxLabelDomDirective, maxLabelDirective),
-			combinedHandleLabelDisplayDirective: createAttributesDirective(() => ({
-				classNames: {
-					'au-slider-label-vertical': vertical$,
-					'au-slider-label-vertical-now': vertical$,
-					'au-slider-label': horizontal$,
-					'au-slider-label-now': horizontal$,
-				},
-				styles: {
-					left: computed(() => percent(combinedLabelPositionLeft$())),
-					top: computed(() => percent(combinedLabelPositionTop$())),
-				},
-				attributes: {
-					'aria-hidden': readable('true'),
-				},
-			})),
-			handleLabelDisplayDirective: createAttributesDirective((labelDisplayContext$: ReadableSignal<{index: number}>) => ({
-				classNames: {
-					'au-slider-label-vertical': vertical$,
-					'au-slider-label-vertical-now': vertical$,
-					'au-slider-label': horizontal$,
-					'au-slider-label-now': horizontal$,
-				},
-				styles: {
-					left: computed(() => percent(handleDisplayOptions$()[labelDisplayContext$().index].left)),
-					top: computed(() => percent(handleDisplayOptions$()[labelDisplayContext$().index].top)),
-				},
-				attributes: {
-					'aria-hidden': readable('true'),
-				},
-			})),
+			combinedHandleLabelDisplayDirective: mergeDirectives(
+				combinedLabelDomDirective,
+				createAttributesDirective(() => ({
+					classNames: {
+						'au-slider-label-vertical': vertical$,
+						'au-slider-label-vertical-now': vertical$,
+						'au-slider-label': horizontal$,
+						'au-slider-label-now': horizontal$,
+					},
+					styles: {
+						left: computed(() => percent(combinedLabelPositionLeft$())),
+						top: computed(() => percent(combinedLabelPositionTop$())),
+					},
+					attributes: {
+						'aria-hidden': readable('true'),
+					},
+				})),
+			),
+			handleLabelDisplayDirective: mergeDirectives<{index: number}>(
+				handleLabelDirective,
+				createAttributesDirective((labelDisplayContext$: ReadableSignal<{index: number}>) => ({
+					classNames: {
+						'au-slider-label-vertical': vertical$,
+						'au-slider-label-vertical-now': vertical$,
+						'au-slider-label': horizontal$,
+						'au-slider-label-now': horizontal$,
+					},
+					styles: {
+						left: computed(() => percent(handleDisplayOptions$()[labelDisplayContext$().index].left)),
+						top: computed(() => percent(handleDisplayOptions$()[labelDisplayContext$().index].top)),
+					},
+					attributes: {
+						'aria-hidden': readable('true'),
+					},
+				})),
+			),
 			tickDirective: createAttributesDirective((tickContext$: ReadableSignal<{tick: SliderTick}>) => ({
 				classNames: {
 					'au-slider-tick': true$,
