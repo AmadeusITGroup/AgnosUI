@@ -46,7 +46,7 @@ export const componentsMetadata: Metadata = {
 		type: 'bootstrap',
 	},
 	Collapse: {
-		status: 'beta',
+		status: 'stable',
 		since: 'v0.5.0',
 		type: 'bootstrap',
 	},
@@ -124,7 +124,7 @@ export const daisyUIMetadata: DaisyMetadata = {
 		type: 'daisyUI',
 	},
 	Collapse: {
-		status: 'beta',
+		status: 'stable',
 		since: 'v0.5.0',
 		type: 'daisyUI',
 	},
