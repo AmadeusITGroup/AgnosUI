@@ -2,6 +2,9 @@ name: ci
 on:
   push:
     branches: [main, release/**]
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   build:
     needs: e2e-tests

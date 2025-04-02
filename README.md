@@ -4,7 +4,8 @@
   <img src="demo/static/agnosui-logo.svg" alt="angular-logo" width="120px" height="120px"/>
 </p>
 
-[![Build Status](https://github.com/AmadeusITGroup/AgnosUI/workflows/ci/badge.svg?branch=main)](https://github.com/AmadeusITGroup/AgnosUI/actions)
+![npm](https://img.shields.io/npm/v/@agnos-ui/core)
+[![ci](https://github.com/AmadeusITGroup/AgnosUI/actions/workflows/ci.yml/badge.svg)](https://github.com/AmadeusITGroup/AgnosUI/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/AmadeusITGroup/AgnosUI/branch/main/graph/badge.svg)](https://codecov.io/gh/AmadeusITGroup/AgnosUI)
 
 ## Introduction
