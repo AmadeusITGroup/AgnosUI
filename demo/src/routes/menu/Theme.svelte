@@ -123,10 +123,9 @@
 	<DropdownDaisyUI
 		btnClass="hover:bg-secondary-subtle h-full flex focus-visible:bg-secondary-subtle! active:bg-secondary-subtle!"
 		dropdownClass="h-full"
-		dropdownContentClass="bg-base-100 p-2"
+		dropdownContentClass="bg-base-100 p-2 right-0"
 		ariaLabel="toggle the dark mode"
 		items={$themes$}
-		placement="end"
 	>
 		{#snippet buttonSnip()}
 			{#each $themes$ as theme}

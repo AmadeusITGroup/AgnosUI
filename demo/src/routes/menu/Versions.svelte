@@ -50,9 +50,8 @@
 			? 'btn btn-warning btn-xs active:bg-secondary-subtle!'
 			: ''}"
 		dropdownClass=""
-		dropdownContentClass="bg-base-100 p-2"
+		dropdownContentClass="bg-base-100 p-2 right-0"
 		items={versionsWithUrl}
-		placement="end"
 	>
 		{#snippet buttonSnip()}
 			{currentVersion.version}
