@@ -211,7 +211,9 @@
 	</nav>
 	<div class="demo-main flex flex-col z-0" bind:this={container}>
 		{#if isMainPage}
-			{@render children()}
+			<div class="self-center max-w-[1670px]">
+				{@render children()}
+			</div>
 		{:else}
 			<div class="flex-wrap sm:flex-nowrap flex content-between w-full justify-between self-center max-w-[1670px]">
 				<aside class="demo-sidebar xl:px-6 hidden md:block items-center sm:items-start col-auto-layout side-menu">
