@@ -9,7 +9,6 @@
 </script>
 
 <script lang="ts">
-	import {tooltip} from '$lib/tooltip/tooltip-directive.svelte';
 	import openLink from 'bootstrap-icons/icons/box-arrow-up-right.svg?raw';
 	import codeSvg from 'bootstrap-icons/icons/code.svg?raw';
 	import stackblitz from '$resources/icons/stackblitz.svg?raw';
@@ -108,27 +107,27 @@
 	{#if showButtons}
 		<div class="border border-t-0 flex {showCode ? 'border-b-0' : ''} items-center p-1" role="toolbar" aria-label="Toolbar with button groups">
 			<button
-				class="btn btn-sm btn-link m-1 p-0"
+				class="btn btn-sm btn-link m-1 p-0 tooltip"
 				aria-label="Show or hide the code"
-				use:tooltip={{content: 'Toggle code'}}
+				data-tip="Toggle code"
 				onclick={() => (showCode = !showCode)}><Svg className="icon-24 align-middle" svg={codeSvg} /></button
 			>
 			{#if import.meta.env.STACKBLITZ}
 				<button
-					class="btn btn-sm btn-link m-1 p-0"
+					class="btn btn-sm btn-link m-1 p-0 tooltip"
 					aria-label="Open example in stackblitz"
-					use:tooltip={{content: 'Edit in Stackblitz'}}
+					data-tip="Edit in Stackblitz"
 					onclick={async () => (await import('../stackblitz')).openInStackblitz(sample, $selectedFramework$)}
 					><Svg className="icon-24 align-middle" svg={stackblitz} /></button
 				>
 			{/if}
 			<a
 				href={sampleUrl}
-				class="action m-1 p-0"
+				class="action m-1 p-0 tooltip"
 				target="_blank"
 				rel="noreferrer nofollow external"
 				aria-label="View sample in new tab"
-				use:tooltip={{content: 'Open example in a new tab'}}
+				data-tip="Open example in a new tab"
 				><Svg className="icon-20 align-middle" svg={openLink} />
 			</a>
 		</div>

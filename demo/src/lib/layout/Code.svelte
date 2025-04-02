@@ -1,6 +1,5 @@
 <script lang="ts">
 	import highlighter, {languageFromFileName, langs} from './highlight';
-	import {tooltip} from '$lib/tooltip/tooltip-directive.svelte';
 	import clipboard from 'bootstrap-icons/icons/clipboard.svg?raw';
 	import clipboardCheck from 'bootstrap-icons/icons/clipboard-check.svg?raw';
 	import Svg from './Svg.svelte';
@@ -50,9 +49,9 @@
 	{/if}
 	{#if showButton}
 		<button
-			class="btn btn-secondary absolute top-[8px] right-[8px] text-primary copy flex items-center justify-center p-0"
+			class="btn btn-secondary absolute top-[8px] right-[8px] text-primary copy flex items-center justify-center p-0 tooltip"
+			data-tip={copied ? 'Copied !' : 'Copy to clipboard'}
 			aria-label="copy to clipboard"
-			use:tooltip={{content: copied ? 'Copied !' : 'Copy to clipboard'}}
 			onclick={copyCode}><Svg className={`align-middle icon-20`} svg={copied ? clipboardCheck : clipboard} /></button
 		>
 	{/if}
