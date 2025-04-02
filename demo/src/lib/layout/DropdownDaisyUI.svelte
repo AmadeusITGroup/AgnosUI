@@ -74,6 +74,7 @@
 						this={item.tag}
 						class={[
 							'flex items-center',
+							'text-nowrap',
 							{'menu-active': item.isSelected},
 							{'hover:bg-secondary-subtle!': !item.isSelected},
 							{'hover:bg-primary-subtle!': item.isSelected},
