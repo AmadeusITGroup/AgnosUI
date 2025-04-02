@@ -2,6 +2,9 @@ name: pr
 on:
   pull_request:
     branches: [main, release/**]
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
 jobs:
   build:
     uses: './.github/workflows/build.yml'
