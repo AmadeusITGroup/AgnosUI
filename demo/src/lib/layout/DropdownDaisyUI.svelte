@@ -34,7 +34,6 @@
 		ariaLabel: string;
 		btnClass: string;
 		items: Item[];
-		placement?: 'start' | 'end';
 		dropdownClass?: string;
 		buttonSnip: Snippet;
 		itemSnip: Snippet<[Item, number]>;
@@ -45,15 +44,12 @@
 		ariaLabel,
 		btnClass = 'btn m-1',
 		items,
-		placement = 'start',
 		dropdownClass = 'dropdown',
 		dropdownContentClass = 'menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm',
 		buttonSnip,
 		itemSnip,
 	}: Props = $props();
 
-	let isDropdown = dropdownClass.includes('dropdown');
-	let dropdownPlacement = `dropdown-${placement}`;
 	const onpointerDown = (event: PointerEvent) => {
 		event.preventDefault();
 		(event.target as HTMLElement).focus();
@@ -63,7 +59,7 @@
 	};
 </script>
 
-<details class={[isDropdown ? {dropdownPlacement} : isDropdown, dropdownClass]} {open} bind:this={detailsElement}>
+<details class={dropdownClass} {open} bind:this={detailsElement}>
 	<summary {onmousedown} aria-label={ariaLabel} onclick={(e) => toggle(e, true)} class={btnClass}>{@render buttonSnip()}</summary>
 	<ul class={dropdownContentClass}>
 		{#if open}
