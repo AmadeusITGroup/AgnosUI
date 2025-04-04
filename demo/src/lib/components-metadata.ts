@@ -36,9 +36,6 @@ export const componentsMetadata: Metadata = {
 		status: 'stable',
 		since: 'v0.1.1',
 		type: 'bootstrap',
-		playgroundProps: {
-			children: 'This is an alert',
-		},
 	},
 	Carousel: {
 		status: 'beta',
