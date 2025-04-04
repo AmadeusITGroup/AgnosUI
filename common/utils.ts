@@ -11,30 +11,6 @@ export const hashObject$ = computed(() => {
 });
 
 /**
- * Return undefined if the object is empty, the object otherwise
- */
-function undefinedIfEmpty(object: object | undefined) {
-	return object ? (Object.entries(object).filter(([, value]) => value !== undefined).length ? object : undefined) : undefined;
-}
-
-/**
- * Update the hash url
- * @param type Type of value to be updated
- * @param key
- * @param value any value, or undefined to remove the key
- */
-export function updateHashValue(type: 'config' | 'props', key: string, value: any) {
-	const hashObj = structuredClone(hashObject$());
-	const hashObjForType: Record<string, any> = hashObj[type] ?? {};
-	hashObjForType[key] = value;
-	hashObj['config'] = undefinedIfEmpty(hashObj['config']);
-	hashObj['props'] = undefinedIfEmpty(hashObj['props']);
-	const hashString = JSON.stringify(undefinedIfEmpty(hashObj));
-	// TODO: prevent the navigation to be recorded in the history.
-	location.hash = hashString ? `#${hashString}` : '#';
-}
-
-/**
  * Assigns the properties of `partial` to `json`, overwriting any existing properties in `json`.
  * This function is useful to keep the type of `partial` as a Partial of `json`
  * Returns a new object with the combined properties of `json` and `partial`.
