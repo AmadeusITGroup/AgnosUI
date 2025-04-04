@@ -68,7 +68,7 @@ jobs:
         run: npm ci --dry-run
         working-directory: demo/src/lib/stackblitz/svelte-daisyui
       - run: npm run test:coverage
-      - uses: codecov/codecov-action@v4
+      - uses: codecov/codecov-action@v5
         with:
           files: core/coverage/lcov.info,core-bootstrap/coverage/lcov.info,angular/headless/coverage/lcov.info,svelte/preprocess/coverage/lcov.info
           flags: unit

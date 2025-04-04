@@ -24,6 +24,10 @@
 			"matchFileNames": [".github/workflows/*.+(yaml|yml)"],
 			"groupName": "Github Actions",
 			"groupSlug": "github-actions"
+		},
+		{
+			"matchManagers": ["npm"],
+			"labels": ["renovate"]
 		}
 	],
 	"lockFileMaintenance": {"enabled": true, "schedule": ["every weekend"]},
