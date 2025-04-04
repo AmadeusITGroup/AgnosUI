@@ -43,7 +43,7 @@ jobs:
         with:
           pattern: e2e-test-*
           merge-multiple: true
-      - uses: codecov/codecov-action@v4
+      - uses: codecov/codecov-action@v5
         with:
           directory: coverage
           flags: e2e
