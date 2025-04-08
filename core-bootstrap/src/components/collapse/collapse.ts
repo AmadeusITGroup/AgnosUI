@@ -1,11 +1,12 @@
 import {createTransition} from '@agnos-ui/core/services/transitions/baseTransitions';
-import type {ConfigValidator, Directive, PropsConfig, Widget} from '@agnos-ui/core/types';
+import type {ConfigValidator, Directive, PropsConfig, Widget, WidgetFactory} from '@agnos-ui/core/types';
 import {idWithDefault, stateStores, true$, writablesForProps} from '@agnos-ui/core/utils/stores';
 import {createAttributesDirective, mergeDirectives} from '@agnos-ui/core/utils/directive';
 import {typeBoolean, typeFunction, typeString} from '@agnos-ui/core/utils/writables';
 import {collapseHorizontalTransition, collapseVerticalTransition} from '../../services/transitions/collapse';
 import {asWritable, computed} from '@amadeus-it-group/tansu';
 import {noop} from '@agnos-ui/core/utils/func';
+import {createWidgetFactory} from '@agnos-ui/core/utils/widget';
 
 /**
  * Interface representing the common properties and state for a collapse component.
@@ -179,7 +180,7 @@ const commonCollapseConfigValidator: ConfigValidator<CollapseProps> = {
  * @param config - an optional collapse config
  * @returns an CollapseWidget
  */
-export function createCollapse(config?: PropsConfig<CollapseProps>): CollapseWidget {
+export const createCollapse: WidgetFactory<CollapseWidget> = createWidgetFactory('collapse', (config?: PropsConfig<CollapseProps>) => {
 	const [
 		{animatedOnInit$, animated$, visible$: requestedVisible$, onVisibleChange$, onHidden$, onShown$, horizontal$, id$: _dirtyId$, ...stateProps},
 		patch,
@@ -233,4 +234,4 @@ export function createCollapse(config?: PropsConfig<CollapseProps>): CollapseWid
 			})),
 		},
 	};
-}
+});

@@ -7,6 +7,7 @@ import {noop} from '../../utils/func';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 import {typeBoolean, typeFunction, typeString} from '../../utils/writables';
 import {createAttributesDirective, directiveSubscribe, mergeDirectives, registrationArray} from '../../utils/directive';
+import {createWidgetFactory} from '../../utils/widget';
 
 /**
  * Adjusts the visibility of accordion items based on the provided open items.
@@ -567,7 +568,7 @@ export function factoryCreateAccordion(
 	accordionConfig: AccordionProps = defaultAccordionConfig,
 	accordionValidator: ConfigValidator<AccordionProps> = configAccordionValidator,
 ): WidgetFactory<AccordionWidget> {
-	return (config?: PropsConfig<AccordionProps>) => {
+	return createWidgetFactory('accordion', (config?: PropsConfig<AccordionProps>) => {
 		const [writables, patch] = writablesForProps(accordionConfig, config, accordionValidator);
 		const {closeOthers$, onItemShown$, onItemHidden$, className$} = writables;
 		const accordionItemConfig = Object.fromEntries(
@@ -669,7 +670,7 @@ export function factoryCreateAccordion(
 				),
 			},
 		};
-	};
+	});
 }
 
 /**

@@ -30,6 +30,7 @@ const hardCodedImports: Record<string, string> = {
 	WidgetFactory: '@agnos-ui/core/types',
 	PropsConfig: '@agnos-ui/core/types',
 	ConfigValidator: '@agnos-ui/core/types',
+	FACTORY_WIDGET_NAME: '@agnos-ui/core/types',
 	ReadableSignal: '@amadeus-it-group/tansu',
 };
 
