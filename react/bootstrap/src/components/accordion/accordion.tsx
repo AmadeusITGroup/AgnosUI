@@ -3,7 +3,7 @@ import type {Directive} from '@agnos-ui/react-headless/types';
 import {classDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
 import type {ForwardedRef, PropsWithChildren, Ref} from 'react';
 import {createContext, useContext, useEffect, useId, useImperativeHandle} from 'react';
-import {useWidgetWithConfig} from '../../config';
+import {useWidget} from '../../config';
 import type {AccordionApi, AccordionItemApi, AccordionItemContext, AccordionItemProps, AccordionProps} from './accordion.gen';
 import {createAccordion} from './accordion.gen';
 
@@ -51,19 +51,19 @@ export const AccordionItemDefaultSlotStructure = (slotContext: AccordionItemCont
  * @remarks
  * This component uses several hooks:
  * - {@link https://react.dev/reference/react/useContext | useContext} to get the `registerItem` function from {@link AccordionDIContext}.
- * - {@link useWidgetWithConfig} to initialize the widget context.
+ * - {@link useWidget} to initialize the widget context.
  * - {@link https://react.dev/reference/react/useImperativeHandle | useImperativeHandle} to expose the `api` to the parent component.
  * - {@link https://react.dev/reference/react/useEffect | useEffect} to call `api.initDone()` after the component mounts.
  *
  * The component also uses {@link useDirectives} to apply directives to the rendered `div` element.
  *
- * @see {@link useWidgetWithConfig}
+ * @see {@link useWidget}
  * @see {@link useDirectives}
  */
 export function AccordionItem(props: Partial<AccordionItemProps> & {ref?: Ref<AccordionItemApi>}) {
 	const {registerItem} = useContext(AccordionDIContext);
 	const id = useId();
-	const widgetContext = useWidgetWithConfig(registerItem!, props, null, {
+	const widgetContext = useWidget(registerItem!, props, {
 		structure: AccordionItemDefaultSlotStructure,
 		id,
 	});
@@ -83,7 +83,7 @@ export function AccordionItem(props: Partial<AccordionItemProps> & {ref?: Ref<Ac
  * Accordion component that provides a collapsible content container.
  *
  * This component uses a forward ref to expose the Accordion API to parent components.
- * It leverages the {@link useWidgetWithConfig} hook to create the accordion widget and
+ * It leverages the {@link useWidget} hook to create the accordion widget and
  * {@link https://react.dev/reference/react/useImperativeHandle | useImperativeHandle} to bind the widget API to the ref.
  *
  * @param props - The properties for the Accordion component.
@@ -93,7 +93,7 @@ export function AccordionItem(props: Partial<AccordionItemProps> & {ref?: Ref<Ac
  *
  */
 export function Accordion(props: PropsWithChildren<Partial<AccordionProps>> & {ref?: ForwardedRef<AccordionApi>}) {
-	const widget = useWidgetWithConfig(createAccordion, props, 'accordion');
+	const widget = useWidget(createAccordion, props);
 	useImperativeHandle(props.ref, () => widget.api, [widget.api]);
 	return (
 		<AccordionDIContext value={widget.api}>

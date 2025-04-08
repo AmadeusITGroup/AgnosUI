@@ -1,7 +1,7 @@
 import {Slot} from '@agnos-ui/react-headless/slot';
 import {useDirective} from '@agnos-ui/react-headless/utils/directive';
 import clsx from 'clsx';
-import {useWidgetWithConfig} from '../../config';
+import {useWidget} from '../../config';
 import type {ProgressbarContext, ProgressbarProps} from './progressbar.gen';
 import {createProgressbar} from './progressbar.gen';
 
@@ -25,14 +25,14 @@ export const ProgressbarDefaultSlotStructure = (slotContext: ProgressbarContext)
 };
 
 /**
- * Progressbar component that utilizes the {@link useWidgetWithConfig} hook to create a progress bar widget.
+ * Progressbar component that utilizes the {@link useWidget} hook to create a progress bar widget.
  *
  * @param props - The properties to configure the progress bar.
  *
  * @returns A div element containing the progress bar with appropriate ARIA directives and slot content.
  */
 export const Progressbar = (props: Partial<ProgressbarProps>) => {
-	const widgetContext = useWidgetWithConfig(createProgressbar, props, 'progressbar', {
+	const widgetContext = useWidget(createProgressbar, props, {
 		structure: ProgressbarDefaultSlotStructure,
 	});
 	const {state, directives} = widgetContext;

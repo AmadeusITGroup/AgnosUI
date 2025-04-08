@@ -4,21 +4,21 @@ import {useMemo, useRef} from 'react';
 import {useObservablesProxy} from './stores';
 
 /**
- * The useWidget function.
+ * The useWidgetWithConfig function.
  *
  * Allows to create and attach an agnos-ui/core widget to the current react component.
  * @template W - The type of the widget.
- * @param createWidget - the widget factory
+ * @param factory - the widget factory
  * @param props - the props
  * @param propsConfig - the props config
  * @returns the state and api to track and interact with the widget
  */
-export function useWidget<W extends Widget>(
-	createWidget: WidgetFactory<W>,
+export function useWidgetWithConfig<W extends Widget>(
+	factory: WidgetFactory<W>,
 	props: Partial<WidgetProps<W>> = {},
 	propsConfig?: PropsConfig<WidgetProps<W>>,
 ): WidgetSlotContext<W> {
-	const coreWidget = useMemo(() => createWidget({...propsConfig, props: {...propsConfig?.props, ...props}}), []);
+	const coreWidget = useMemo(() => factory({...propsConfig, props: {...propsConfig?.props, ...props}}), []);
 	const previousProps = useRef(props);
 
 	useMemo(() => {

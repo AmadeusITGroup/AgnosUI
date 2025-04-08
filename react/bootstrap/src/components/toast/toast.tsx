@@ -1,7 +1,7 @@
 import {Slot} from '@agnos-ui/react-headless/slot';
 import {classDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
 import {type Ref, useImperativeHandle} from 'react';
-import {useWidgetWithConfig} from '../../config';
+import {useWidget} from '../../config';
 import type {ToastApi, ToastContext, ToastProps} from './toast.gen';
 import {createToast} from './toast.gen';
 
@@ -53,7 +53,7 @@ const ToastElement = (slotContext: ToastContext) => (
 /**
  * Toast component that uses a forward ref to expose the Toast API.
  *
- * This component utilizes the {@link useWidgetWithConfig} hook to create a toast widget
+ * This component utilizes the {@link useWidget} hook to create a toast widget
  * with the provided properties and configuration. It also uses {@link https://react.dev/reference/react/useImperativeHandle | useImperativeHandle}
  * to expose the widget's API through the forwarded ref.
  *
@@ -63,7 +63,7 @@ const ToastElement = (slotContext: ToastContext) => (
  * @returns A JSX element that conditionally renders the `ToastElement` based on the widget's state.
  */
 export function Toast(props: Partial<ToastProps> & {ref?: Ref<ToastApi>}) {
-	const widgetContext = useWidgetWithConfig(createToast, props, 'toast', {
+	const widgetContext = useWidget(createToast, props, {
 		structure: ToastDefaultSlotStructure,
 		children: props.children,
 	});

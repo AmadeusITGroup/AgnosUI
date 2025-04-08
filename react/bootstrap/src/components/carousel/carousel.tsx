@@ -1,6 +1,6 @@
 import type {CarouselApi, CarouselContext, CarouselDirectives, CarouselProps} from './carousel.gen';
 import {createCarousel} from './carousel.gen';
-import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
+import {useWidget} from '@agnos-ui/react-headless/config';
 import {Slot} from '@agnos-ui/react-headless/slot';
 import {useDirective} from '@agnos-ui/react-headless/utils/directive';
 import type {Ref} from 'react';
@@ -119,7 +119,7 @@ export const CarouselDefaultStructure = <SlideData extends {id: string}>(widget:
 /**
  * Carousel component that uses a forward ref to expose an API.
  *
- * This component utilizes the {@link useWidgetWithConfig} hook to create a carousel widget
+ * This component utilizes the {@link useWidget} hook to create a carousel widget
  * and the {@link https://react.dev/reference/react/useImperativeHandle | useImperativeHandle} hook to expose the widget's API via the ref.
  *
  * @template SlideData - The type of data used by each slide in the carousel.
@@ -131,7 +131,7 @@ export const CarouselDefaultStructure = <SlideData extends {id: string}>(widget:
  * @returns a JSX element that renders the Carousel component with navigation arrows and indicators.
  */
 export function Carousel<SlideData extends {id: string}>({ref, ...props}: Partial<CarouselProps<SlideData>> & {ref?: Ref<CarouselApi>}) {
-	const widget = useWidgetWithConfig(createCarousel<SlideData>, props, 'carousel', {
+	const widget = useWidget(createCarousel<SlideData>, props, {
 		structure: CarouselDefaultStructure,
 		navigation: CarouselDefaultNavigation,
 	});

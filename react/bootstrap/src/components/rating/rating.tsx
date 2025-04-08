@@ -1,7 +1,7 @@
 import {Slot} from '@agnos-ui/react-headless/slot';
 import {classDirective, useDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
 import {type Ref, useImperativeHandle, Fragment} from 'react';
-import {useWidgetWithConfig} from '../../config';
+import {useWidget} from '../../config';
 import type {RatingApi, RatingDirectives, RatingProps, RatingState, StarContext} from './rating.gen';
 import {createRating} from './rating.gen';
 
@@ -23,7 +23,7 @@ function Star({star, state, directive}: {star: StarContext; state: RatingState; 
  * @returns The rendered Rating component.
  *
  * @remarks
- * This component uses the {@link useWidgetWithConfig} hook to initialize and configure the rating widget.
+ * This component uses the {@link useWidget} hook to initialize and configure the rating widget.
  * It applies directives to the container and individual stars for styling and behavior.
  *
  */
@@ -32,7 +32,7 @@ export function Rating(props: Partial<RatingProps> & {ref?: Ref<RatingApi>}) {
 		state,
 		directives: {containerDirective, starDirective},
 		api,
-	} = useWidgetWithConfig(createRating, props, 'rating');
+	} = useWidget(createRating, props);
 	useImperativeHandle(props.ref, () => api, [api]);
 
 	return (
