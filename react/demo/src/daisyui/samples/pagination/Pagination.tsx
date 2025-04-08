@@ -1,12 +1,12 @@
 import {type PaginationProps, createPagination} from '@agnos-ui/react-headless/components/pagination';
-import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
+import {useWidget} from '@agnos-ui/react-headless/config';
 import clsx from 'clsx';
 
 export function Pagination(props: Partial<PaginationProps>) {
 	const {
 		state,
 		api: {first, last, next, previous, select},
-	} = useWidgetWithConfig(createPagination, props, 'pagination');
+	} = useWidget(createPagination, props);
 
 	return (
 		<nav aria-label={state.ariaLabel}>

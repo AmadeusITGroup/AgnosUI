@@ -1,7 +1,7 @@
 import {Slot} from '@agnos-ui/react-headless/slot';
 import {classDirective, useDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
 import clsx from 'clsx';
-import {useWidgetWithConfig} from '../../config';
+import {useWidget} from '../../config';
 import type {ItemContext, SelectApi, SelectContext, SelectItemContext, SelectProps, SelectWidget} from './select.gen';
 import {createSelect} from './select.gen';
 import {type Ref, useImperativeHandle} from 'react';
@@ -65,7 +65,7 @@ function Rows<Item>({slotContext}: {slotContext: SelectContext<Item>; menuId: st
  * custom badge labels and item labels through the widget configuration.
  */
 export function Select<Item>(props: Partial<SelectProps<Item>> & {ref?: Ref<SelectApi<Item>>}) {
-	const widgetContext = useWidgetWithConfig<SelectWidget<Item>>(createSelect, props, 'select', {
+	const widgetContext = useWidget<SelectWidget<Item>>(createSelect, props, {
 		badgeLabel: DefaultBadge,
 		itemLabel: DefaultItem,
 	});

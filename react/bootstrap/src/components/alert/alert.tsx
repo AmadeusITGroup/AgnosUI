@@ -2,7 +2,7 @@ import {Slot} from '@agnos-ui/react-headless/slot';
 import {classDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
 import type {Ref} from 'react';
 import {useImperativeHandle} from 'react';
-import {useWidgetWithConfig} from '../../config';
+import {useWidget} from '../../config';
 import type {AlertApi, AlertContext, AlertProps} from './alert.gen';
 import {createAlert} from './alert.gen';
 
@@ -41,7 +41,7 @@ const AlertElement = (slotContext: AlertContext) => (
 /**
  * Alert component that uses a forward ref to expose an API.
  *
- * This component utilizes the {@link useWidgetWithConfig} hook to create an alert widget context
+ * This component utilizes the {@link useWidget} hook to create an alert widget context
  * and the {@link https://react.dev/reference/react/useImperativeHandle | useImperativeHandle} hook to expose the widget's API via the ref.
  *
  * @param props - Partial properties of the AlertProps interface.
@@ -50,7 +50,7 @@ const AlertElement = (slotContext: AlertContext) => (
  * @returns A JSX element that conditionally renders the AlertElement based on the widget's hidden state.
  */
 export function Alert(props: Partial<AlertProps> & {ref?: Ref<AlertApi>}) {
-	const widgetContext = useWidgetWithConfig(createAlert, props, 'alert', {
+	const widgetContext = useWidget(createAlert, props, {
 		structure: AlertDefaultSlotStructure,
 	});
 	useImperativeHandle(props.ref, () => widgetContext.api, [widgetContext.api]);

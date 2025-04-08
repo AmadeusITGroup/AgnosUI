@@ -1,6 +1,6 @@
 import {Slot} from '@agnos-ui/react-headless/slot';
 import {useDirective} from '@agnos-ui/react-headless/utils/directive';
-import {useWidgetWithConfig} from '../../config';
+import {useWidget} from '../../config';
 import type {TreeContext, TreeDirectives, NormalizedTreeItem, TreeProps, TreeSlotItemContext} from './tree.gen';
 import {createTree} from './tree.gen';
 import clsx from 'clsx';
@@ -98,10 +98,10 @@ const defaultConfig: Partial<TreeProps> = {
  * @param props - The properties for the Tree component.
  * @returns The rendered Tree component.
  *
- * The Tree component uses the {@link useWidgetWithConfig} hook to create a widget context with the provided
+ * The Tree component uses the {@link useWidget} hook to create a widget context with the provided
  * configuration. It renders the slot content using the `Slot` component.
  */
 export function Tree(props: Partial<TreeProps>) {
-	const widgetContext = useWidgetWithConfig(createTree, props, 'tree', {...defaultConfig});
+	const widgetContext = useWidget(createTree, props, {...defaultConfig});
 	return <Slot slotContent={widgetContext.state.structure} props={widgetContext} />;
 }

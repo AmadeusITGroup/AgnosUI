@@ -1,7 +1,6 @@
 import type {Partial2Levels, WidgetsConfigStore} from '@agnos-ui/react-headless/config';
 import {widgetsConfigFactory} from '@agnos-ui/react-headless/config';
 import type {Widget, WidgetFactory, WidgetProps, WidgetSlotContext} from '@agnos-ui/react-headless/types';
-import type {BootstrapWidgetsConfig} from '@agnos-ui/core-bootstrap/config';
 import type {ReactNode, Context} from 'react';
 
 export * from '@agnos-ui/react-headless/config';
@@ -18,13 +17,12 @@ const widgetFactories: {
 	WidgetsConfigContext: Context<WidgetsConfigStore<WidgetsConfig> | undefined>;
 	WidgetsDefaultConfig: ({children, adaptParentConfig, ...props}: DefaultConfigInput) => import('react/jsx-runtime').JSX.Element;
 	useWidgetContext: <Props extends object>(
-		widgetName: keyof BootstrapWidgetsConfig | null,
+		widgetName?: string,
 		defaultConfig?: Partial<Props>,
 	) => import('@amadeus-it-group/tansu').ReadableSignal<Partial<Props>>;
-	useWidgetWithConfig: <W extends Widget<object, object, object, object>>(
+	useWidget: <W extends Widget<object, object, object, object>>(
 		factory: WidgetFactory<W>,
 		props: Partial<WidgetProps<W>> | undefined,
-		widgetName: keyof BootstrapWidgetsConfig | null,
 		defaultProps?: Partial<WidgetProps<W>>,
 	) => WidgetSlotContext<W>;
 } = widgetsConfigFactory<WidgetsConfig>();
@@ -33,6 +31,6 @@ const widgetFactories: {
  * - `WidgetsConfigContext`: The context for widget configurations.
  * - `WidgetsDefaultConfig`: The default configuration for widgets.
  * - `useWidgetContext`: A hook to use the widget context.
- * - `useWidgetWithConfig`: A hook to use a widget with a specific configuration.
+ * - `useWidget`: A hook to use a widget with a specific configuration.
  */
-export const {WidgetsConfigContext, WidgetsDefaultConfig, useWidgetContext, useWidgetWithConfig} = widgetFactories;
+export const {WidgetsConfigContext, WidgetsDefaultConfig, useWidgetContext, useWidget} = widgetFactories;
