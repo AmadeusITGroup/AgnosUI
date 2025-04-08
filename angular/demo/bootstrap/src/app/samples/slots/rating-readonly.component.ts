@@ -49,11 +49,8 @@ export class RatingReadonlyComponent extends BaseWidgetDirective<RatingWidget> {
 			}),
 		});
 		super(widget);
-		effect(
-			() => {
-				widget.updateSlots();
-			},
-			{allowSignalWrites: true},
-		);
+		effect(() => {
+			widget.updateSlots();
+		});
 	}
 }
