@@ -85,14 +85,14 @@ export type CallWithObjectArg = TSESTree.CallExpression & {arguments: [TSESTree.
 
 export const isCallWithObjectArg = (node: TSESTree.Node | null | undefined): node is CallWithObjectArg =>
 	node?.type === TSESTree.AST_NODE_TYPES.CallExpression &&
-	node.arguments.length === 1 &&
-	node.arguments[0].type === TSESTree.AST_NODE_TYPES.ObjectExpression;
+	node.arguments.length === 2 &&
+	node.arguments[1].type === TSESTree.AST_NODE_TYPES.ObjectExpression;
 
 export const extractEventsObject = (callWidgetFactoryNode: TSESTree.Expression | null | undefined) => {
 	if (!isCallWithObjectArg(callWidgetFactoryNode)) {
 		return;
 	}
-	const arg = callWidgetFactoryNode.arguments[0];
+	const arg = callWidgetFactoryNode.arguments[1];
 	const events = (
 		arg.properties.find((node) => node.type === TSESTree.AST_NODE_TYPES.Property && ASTUtils.getPropertyName(node) === 'events') as
 			| undefined

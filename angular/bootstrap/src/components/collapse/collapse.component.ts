@@ -88,9 +88,7 @@ export class CollapseDirective extends BaseWidgetDirective<CollapseWidget> {
 
 	constructor() {
 		super(
-			callWidgetFactory({
-				factory: createCollapse,
-				widgetName: 'collapse',
+			callWidgetFactory(createCollapse, {
 				events: {
 					onVisibleChange: (event) => this.visibleChange.emit(event),
 					onShown: () => this.shown.emit(),

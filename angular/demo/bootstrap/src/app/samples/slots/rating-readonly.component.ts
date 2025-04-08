@@ -40,9 +40,7 @@ export class RatingReadonlyComponent extends BaseWidgetDirective<RatingWidget> {
 	readonly slotStarFromContent = contentChild(RatingReadonlyStarDirective);
 
 	constructor() {
-		const widget = callWidgetFactory({
-			factory: createRating,
-			widgetName: 'rating',
+		const widget = callWidgetFactory(createRating, {
 			defaultConfig: {
 				readonly: true,
 			},

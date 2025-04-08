@@ -399,9 +399,7 @@ export class SliderComponent extends BaseWidgetDirective<SliderWidget> implement
 
 	constructor() {
 		super(
-			callWidgetFactory({
-				factory: createSlider,
-				widgetName: 'slider',
+			callWidgetFactory(createSlider, {
 				defaultConfig: {
 					structure: sliderDefaultSlotStructure,
 					handle: sliderDefaultSlotHandle,

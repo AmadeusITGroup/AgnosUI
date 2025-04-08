@@ -12,7 +12,7 @@ RuleTester.afterAll = afterAll;
 
 describe('svelte-check-props', () => {
 	const codeTemplate = (scriptContent: string, widgetProps: string, events = '{}') =>
-		`<script lang="ts" context="module">\ninterface MyWidgetProps {\n${widgetProps}\n}\ninterface MyWidget {\n\tpatch(props: Partial<MyWidgetProps>): void\n}\nconst callWidgetFactory: (config: any) => MyWidget;\n</script><script lang="ts">\n${scriptContent}\nlet widget = callWidgetFactory({events:${events}});\n</script>`;
+		`<script lang="ts" context="module">\ninterface MyWidgetProps {\n${widgetProps}\n}\ninterface MyWidget {\n\tpatch(props: Partial<MyWidgetProps>): void\n}\nconst callWidgetFactory: (config: any) => MyWidget;\n</script><script lang="ts">\n${scriptContent}\nlet widget = callWidgetFactory(() => {}, {events:${events}});\n</script>`;
 
 	const ruleTester = new RuleTester({
 		plugins: {svelte: eslintPluginSvelte},

@@ -32,27 +32,21 @@ const widgetFactories: {
 	provideWidgetsConfig: (adaptParentConfig?: AdaptParentConfig) => FactoryProvider;
 	injectWidgetConfig: <N extends keyof BootstrapWidgetsConfig>(widgetName: N) => ReadableSignal<Partial<WidgetsConfig[N]> | undefined>;
 	injectWidgetsConfig: InjectWidgetsConfig;
-	callWidgetFactory: <W extends Widget<object, object, object, object>>({
-		factory,
-		widgetName,
-		defaultConfig,
-		events,
-		afterInit,
-		slotTemplates,
-		slotChildren,
-	}: {
-		factory: WidgetFactory<W>;
-		widgetName?: keyof BootstrapWidgetsConfig | null | undefined;
-		defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined> | undefined;
-		events?: Partial<Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}`>>;
-		afterInit?: (widget: AngularWidget<W>) => void;
-		slotTemplates?: () => {
-			[K in keyof WidgetProps<W> as IsSlotContent<WidgetProps<W>[K]> extends 0 ? never : K]: WidgetProps<W>[K] extends SlotContent<infer U>
-				? TemplateRef<U> | undefined
-				: never;
-		};
-		slotChildren?: () => TemplateRef<void> | undefined;
-	}) => AngularWidget<W>;
+	callWidgetFactory: <W extends Widget<object, object, object, object>>(
+		factory: WidgetFactory<W>,
+		options?: {
+			widgetName?: keyof BootstrapWidgetsConfig | null | undefined;
+			defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined> | undefined;
+			events?: Partial<Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}`>>;
+			afterInit?: (widget: AngularWidget<W>) => void;
+			slotTemplates?: () => {
+				[K in keyof WidgetProps<W> as IsSlotContent<WidgetProps<W>[K]> extends 0 ? never : K]: WidgetProps<W>[K] extends SlotContent<infer U>
+					? TemplateRef<U> | undefined
+					: never;
+			};
+			slotChildren?: () => TemplateRef<void> | undefined;
+		},
+	) => AngularWidget<W>;
 } = widgetsConfigFactory<WidgetsConfig>(new InjectionToken<WidgetsConfigStore<WidgetsConfig>>('bootstrapWidgetsConfig')) as any;
 
 /**

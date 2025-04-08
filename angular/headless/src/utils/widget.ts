@@ -30,37 +30,32 @@ const createPatchSlots = <T extends object>(set: (object: Partial<T>) => void) =
 /**
  * Call a widget factory using provided configs.
  *
- * @param parameter - the parameter
- * @param parameter.factory - the widget factory to call
- * @param parameter.defaultConfig - the default config of the widget
- * @param parameter.widgetConfig - the config of the widget, overriding the defaultConfig
- * @param parameter.events - the events of the widget
- * @param parameter.afterInit - a callback to call after successful setup of the widget
- * @param parameter.slotTemplates - a function to provide all slot templates using child queries
- * @param parameter.slotChildren - a function to provide the default children slot using a view query
+ * @param factory - the widget factory to call
+ * @param options - the options
+ * @param options.defaultConfig - the default config of the widget
+ * @param options.widgetConfig - the config of the widget, overriding the defaultConfig
+ * @param options.events - the events of the widget
+ * @param options.afterInit - a callback to call after successful setup of the widget
+ * @param options.slotTemplates - a function to provide all slot templates using child queries
+ * @param options.slotChildren - a function to provide the default children slot using a view query
  * @returns the widget
  */
-export const callWidgetFactoryWithConfig = <W extends Widget>({
-	factory,
-	defaultConfig,
-	widgetConfig,
-	events,
-	afterInit,
-	slotTemplates,
-	slotChildren,
-}: {
-	factory: WidgetFactory<W>;
-	defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
-	widgetConfig?: null | undefined | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
-	events?: Partial<Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}`>>;
-	afterInit?: (widget: AngularWidget<W>) => void;
-	slotTemplates?: () => {
-		[K in keyof WidgetProps<W> as IsSlotContent<WidgetProps<W>[K]> extends 0 ? never : K]: WidgetProps<W>[K] extends SlotContent<infer U>
-			? TemplateRef<U> | undefined
-			: never;
-	};
-	slotChildren?: () => TemplateRef<void> | undefined;
-}): AngularWidget<W> => {
+export const callWidgetFactoryWithConfig = <W extends Widget>(
+	factory: WidgetFactory<W>,
+	options?: {
+		defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
+		widgetConfig?: null | undefined | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
+		events?: Partial<Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}`>>;
+		afterInit?: (widget: AngularWidget<W>) => void;
+		slotTemplates?: () => {
+			[K in keyof WidgetProps<W> as IsSlotContent<WidgetProps<W>[K]> extends 0 ? never : K]: WidgetProps<W>[K] extends SlotContent<infer U>
+				? TemplateRef<U> | undefined
+				: never;
+		};
+		slotChildren?: () => TemplateRef<void> | undefined;
+	},
+): AngularWidget<W> => {
+	let {defaultConfig, widgetConfig, events, afterInit, slotTemplates, slotChildren} = options ?? {};
 	const injector = inject(Injector);
 	const slots$ = writable({});
 	const props = {};

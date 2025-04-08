@@ -27,10 +27,7 @@ export class GalleryComponent implements OnInit {
 	readonly expandSvg = this.domSanitizer.bypassSecurityTrustHtml(expandSvg);
 	readonly compressSvg = this.domSanitizer.bypassSecurityTrustHtml(compressSvg);
 
-	private readonly _mainCarousel = callWidgetFactory({
-		factory: createCarousel,
-		widgetName: 'carousel',
-	});
+	private readonly _mainCarousel = callWidgetFactory(createCarousel);
 	get mainCarouselApi() {
 		return this._mainCarousel.api;
 	}
@@ -41,9 +38,7 @@ export class GalleryComponent implements OnInit {
 		return this._mainCarousel.state;
 	}
 
-	private readonly _thumbCarousel = callWidgetFactory({
-		factory: createCarousel,
-		widgetName: 'carousel',
+	private readonly _thumbCarousel = callWidgetFactory(createCarousel, {
 		defaultConfig: {
 			dragFree: true,
 			containScroll: 'keepSnaps',
