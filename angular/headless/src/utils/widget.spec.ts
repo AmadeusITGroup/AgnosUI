@@ -89,11 +89,7 @@ describe('callWidgetFactoryWithConfig', () => {
 
 			constructor() {
 				super(
-					createZoneCheckFn(
-						'callWidgetFactoryWithConfig',
-						callWidgetFactoryWithConfig,
-					)({
-						factory,
+					createZoneCheckFn('callWidgetFactoryWithConfig', callWidgetFactoryWithConfig)(factory, {
 						events: {
 							onCounterChange: (event) => this.counterChange.emit(event),
 							onMyAction: () => this.myAction.emit(),
@@ -227,11 +223,7 @@ describe('callWidgetFactoryWithConfig', () => {
 			readonly myValue = input<string>(undefined, {alias: 'auMyValue'});
 
 			constructor() {
-				super(
-					callWidgetFactoryWithConfig({
-						factory,
-					}),
-				);
+				super(callWidgetFactoryWithConfig(factory));
 			}
 		}
 		@Component({

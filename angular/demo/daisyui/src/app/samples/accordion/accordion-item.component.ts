@@ -46,8 +46,7 @@ export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWid
 
 	constructor() {
 		super(
-			callWidgetFactory({
-				factory: (arg) => inject(AccordionComponent).api.registerItem(arg),
+			callWidgetFactory((arg) => inject(AccordionComponent).api.registerItem(arg), {
 				defaultConfig: {
 					transition: createSimpleClassTransition({
 						showClasses: ['collapse-open'],

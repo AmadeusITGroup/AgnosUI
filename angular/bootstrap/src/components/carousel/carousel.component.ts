@@ -9,8 +9,7 @@ import {
 	useDirectiveForHost,
 } from '@agnos-ui/angular-headless';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import type {CarouselProps} from './carousel.gen';
-import type {CarouselContext, CarouselSlideContext, CarouselWidget} from './carousel.gen';
+import type {CarouselContext, CarouselSlideContext, CarouselWidget, CarouselProps} from './carousel.gen';
 import {createCarousel} from './carousel.gen';
 import {ChangeDetectionStrategy, Component, contentChild, Directive, inject, input, TemplateRef, viewChild} from '@angular/core';
 import {callWidgetFactory} from '../../config';
@@ -300,9 +299,7 @@ export class CarouselComponent<SlideData extends {id: string}> extends BaseWidge
 
 	constructor() {
 		super(
-			callWidgetFactory({
-				factory: createCarousel,
-				widgetName: 'carousel',
+			callWidgetFactory<CarouselWidget<SlideData>>(createCarousel, {
 				afterInit: (widget) => useDirectiveForHost(widget.directives.root),
 				defaultConfig: {
 					structure: carouselDefaultSlotStructure,

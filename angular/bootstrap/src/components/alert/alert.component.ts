@@ -191,9 +191,7 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> {
 
 	constructor() {
 		super(
-			callWidgetFactory({
-				factory: createAlert,
-				widgetName: 'alert',
+			callWidgetFactory(createAlert, {
 				defaultConfig: {
 					structure: alertDefaultSlotStructure,
 				},

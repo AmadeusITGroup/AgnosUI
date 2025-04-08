@@ -1,4 +1,5 @@
 import type {Widget, WidgetFactory, WidgetProps} from '@agnos-ui/core/types';
+import {FACTORY_WIDGET_NAME} from '@agnos-ui/core/types';
 import type {Partial2Levels, WidgetsConfigStore, WidgetsConfig} from '@agnos-ui/core/config';
 import {createWidgetsConfig} from '@agnos-ui/core/config';
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
@@ -124,45 +125,36 @@ export const widgetsConfigFactory = <Config extends {[widgetName: string]: objec
 	 * Creates and initializes a widget using the provided factory and configuration options.
 	 *
 	 * @template W - The type of the widget.
-	 * @param params - The parameters for creating the widget.
-	 * @param params.factory - The factory function to create the widget.
-	 * @param params.widgetName - The name of the widget configuration to inject, if any.
-	 * @param params.defaultConfig - The default configuration for the widget.
-	 * @param params.events - The event handlers for the widget.
-	 * @param params.slotTemplates - A function that returns the slot templates for the widget.
-	 * @param params.slotChildren - A function that returns the slot children for the widget.
-	 * @param params.afterInit - A callback function to be called after the widget is initialized.
+	 * @param factory - The factory function to create the widget.
+	 * @param options - The options for creating the widget.
+	 * @param options.defaultConfig - The default configuration for the widget.
+	 * @param options.events - The event handlers for the widget.
+	 * @param options.slotTemplates - A function that returns the slot templates for the widget.
+	 * @param options.slotChildren - A function that returns the slot children for the widget.
+	 * @param options.afterInit - A callback function to be called after the widget is initialized.
 	 * @returns The initialized widget.
 	 */
-	const callWidgetFactory = <W extends Widget>({
-		factory,
-		widgetName = null,
-		defaultConfig = {},
-		events,
-		afterInit,
-		slotTemplates,
-		slotChildren,
-	}: {
-		factory: WidgetFactory<W>;
-		widgetName?: null | keyof Config;
-		defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
-		events?: Partial<Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}`>>;
-		afterInit?: (widget: AngularWidget<W>) => void;
-		slotTemplates?: () => {
-			[K in keyof WidgetProps<W> as IsSlotContent<WidgetProps<W>[K]> extends 0 ? never : K]: WidgetProps<W>[K] extends SlotContent<infer U>
-				? TemplateRef<U> | undefined
-				: never;
-		};
-		slotChildren?: () => TemplateRef<void> | undefined;
-	}): AngularWidget<W> =>
-		callWidgetFactoryWithConfig({
-			factory,
-			widgetConfig: widgetName ? (injectWidgetConfig(widgetName) as any) : null,
-			defaultConfig,
-			events,
-			afterInit,
-			slotTemplates: slotTemplates as any,
-			slotChildren,
+	const callWidgetFactory = <W extends Widget>(
+		factory: WidgetFactory<W>,
+		options?: {
+			defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
+			events?: Partial<Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}`>>;
+			afterInit?: (widget: AngularWidget<W>) => void;
+			slotTemplates?: () => {
+				[K in keyof WidgetProps<W> as IsSlotContent<WidgetProps<W>[K]> extends 0 ? never : K]: WidgetProps<W>[K] extends SlotContent<infer U>
+					? TemplateRef<U> | undefined
+					: never;
+			};
+			slotChildren?: () => TemplateRef<void> | undefined;
+		},
+	): AngularWidget<W> =>
+		callWidgetFactoryWithConfig(factory, {
+			widgetConfig: factory[FACTORY_WIDGET_NAME] ? (injectWidgetConfig(factory[FACTORY_WIDGET_NAME]) as any) : undefined,
+			defaultConfig: options?.defaultConfig,
+			events: options?.events,
+			afterInit: options?.afterInit,
+			slotTemplates: options?.slotTemplates as any,
+			slotChildren: options?.slotChildren,
 		});
 
 	return {
