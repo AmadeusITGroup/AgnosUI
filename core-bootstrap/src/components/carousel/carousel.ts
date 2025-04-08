@@ -1,4 +1,4 @@
-import type {ConfigValidator, Directive, PropsConfig, SlotContent, Widget, WidgetSlotContext} from '@agnos-ui/core/types';
+import type {ConfigValidator, Directive, PropsConfig, SlotContent, Widget, WidgetFactory, WidgetSlotContext} from '@agnos-ui/core/types';
 import type {
 	CarouselProps as CoreProps,
 	CarouselState as CoreState,
@@ -11,6 +11,7 @@ import {computed, readable, type ReadableSignal} from '@amadeus-it-group/tansu';
 import {mergeDirectives, createAttributesDirective} from '@agnos-ui/core/utils/directive';
 import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
 import {typeArray, typeString} from '@agnos-ui/core/utils/writables';
+import {createWidgetFactory} from '@agnos-ui/core/utils/widget';
 
 export * from '@agnos-ui/core/components/carousel';
 
@@ -160,7 +161,10 @@ export function getCarouselDefaultConfig(): CarouselProps<any> {
  * @param config - an optional carousel config
  * @returns a CarouselWidget
  */
-export function createCarousel<SlideData extends {id: string}>(config?: PropsConfig<CarouselProps<SlideData>>): CarouselWidget<SlideData> {
+export const createCarousel: WidgetFactory<
+	CarouselWidget<{id: string}>,
+	<SlideData extends {id: string}>(config?: PropsConfig<CarouselProps<SlideData>>) => CarouselWidget<SlideData>
+> = createWidgetFactory('carousel', <SlideData extends {id: string}>(config?: PropsConfig<CarouselProps<SlideData>>): CarouselWidget<SlideData> => {
 	const widget = extendWidgetProps(createCoreCarousel, defaultConfigExtraProps, configValidator, coreOverride)(config);
 	return {
 		...widget,
@@ -209,4 +213,4 @@ export function createCarousel<SlideData extends {id: string}>(config?: PropsCon
 			})),
 		},
 	};
-}
+});

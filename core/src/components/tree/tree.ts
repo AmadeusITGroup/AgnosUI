@@ -1,13 +1,14 @@
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {computed, readable, writable} from '@amadeus-it-group/tansu';
 import {createNavManager, type NavManagerItemConfig} from '../../services/navManager';
-import type {Directive} from '../../types';
+import type {Directive, WidgetFactory} from '../../types';
 import {type ConfigValidator, type PropsConfig, type Widget} from '../../types';
 import {bindDirective, browserDirective, createAttributesDirective, mergeDirectives} from '../../utils/directive';
 import {noop} from '../../utils/func';
 import {stateStores, true$, writablesForProps} from '../../utils/stores';
 import {typeArray, typeFunction, typeString} from '../../utils/writables';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
+import {createWidgetFactory} from '../../utils/widget';
 
 /**
  * Represents a tree item component.
@@ -183,7 +184,7 @@ const configValidator: ConfigValidator<TreeProps> = {
  * @param config - an optional tree config
  * @returns a TreeWidget
  */
-export function createTree(config?: PropsConfig<TreeProps>): TreeWidget {
+export const createTree: WidgetFactory<TreeWidget> = createWidgetFactory('tree', (config?: PropsConfig<TreeProps>) => {
 	const [{nodes$, onExpandToggle$, navSelector$, ariaLabelToggleFn$, ...stateProps}, patch] = writablesForProps(
 		defaultTreeConfig,
 		config,
@@ -396,4 +397,4 @@ export function createTree(config?: PropsConfig<TreeProps>): TreeWidget {
 		},
 	};
 	return widget;
-}
+});

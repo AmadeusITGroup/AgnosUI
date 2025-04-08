@@ -8,12 +8,13 @@ import type {HasFocus} from '../../services/focustrack';
 import {createHasFocus} from '../../services/focustrack';
 import type {NavManagerItemConfig} from '../../services/navManager';
 import {createNavManager} from '../../services/navManager';
-import type {Directive, PropsConfig, Widget} from '../../types';
+import type {Directive, PropsConfig, Widget, WidgetFactory} from '../../types';
 import {bindDirective, createAttributesDirective, mergeDirectives} from '../../utils/directive';
 import {generateId} from '../../utils/internal/dom';
 import {noop} from '../../utils/func';
 import {bindableDerived, bindableProp, stateStores, true$, writablesForProps} from '../../utils/stores';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
+import {createWidgetFactory} from '../../utils/widget';
 
 interface SelectCommonPropsAndState<Item> extends WidgetsCommonPropsAndState {
 	/**
@@ -387,7 +388,10 @@ export function getSelectDefaultConfig(): SelectProps<any> {
  * @param config - an optional alert config
  * @returns a SelectWidget
  */
-export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): SelectWidget<Item> {
+export const createSelect: WidgetFactory<
+	SelectWidget<unknown>,
+	<Item>(config?: PropsConfig<SelectProps<Item>>) => SelectWidget<Item>
+> = createWidgetFactory('select', <Item>(config?: PropsConfig<SelectProps<Item>>) => {
 	// Props
 	const [
 		{
@@ -764,4 +768,4 @@ export function createSelect<Item>(config?: PropsConfig<SelectProps<Item>>): Sel
 	};
 
 	return widget;
-}
+});

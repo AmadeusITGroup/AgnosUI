@@ -1,10 +1,11 @@
 import {clamp} from '../../utils/internal/checks';
 import {typeFunction, typeNumber, typeString} from '../../utils/writables';
 import {stateStores, writablesForProps} from '../../utils/stores';
-import type {ConfigValidator, Directive, PropsConfig, Widget} from '../../types';
+import type {ConfigValidator, Directive, PropsConfig, Widget, WidgetFactory} from '../../types';
 import {computed, readable} from '@amadeus-it-group/tansu';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 import {createAttributesDirective} from '../../utils/directive';
+import {createWidgetFactory} from '../../utils/widget';
 
 interface ProgressbarCommonPropsAndState extends WidgetsCommonPropsAndState {
 	/**
@@ -119,7 +120,7 @@ const configValidator: ConfigValidator<ProgressbarProps> = {
  * @param config - an optional progress bar config
  * @returns an ProgressbarWidget
  */
-export function createProgressbar(config?: PropsConfig<ProgressbarProps>): ProgressbarWidget {
+export const createProgressbar: WidgetFactory<ProgressbarWidget> = createWidgetFactory('progressbar', (config?: PropsConfig<ProgressbarProps>) => {
 	const [
 		{
 			// dirty inputs that need adjustment:
@@ -176,4 +177,4 @@ export function createProgressbar(config?: PropsConfig<ProgressbarProps>): Progr
 			})),
 		},
 	};
-}
+});

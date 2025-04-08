@@ -1,6 +1,7 @@
 import type {CommonAlertApi, CommonAlertDirectives, CommonAlertProps, CommonAlertState} from './common';
 import {createCommonAlert, getCommonAlertDefaultConfig} from './common';
 import type {Widget, WidgetFactory} from '../../types';
+import {createWidgetFactory} from '../../utils/widget';
 
 /**
  * Represents the state of an alert component.
@@ -37,4 +38,4 @@ export function getAlertDefaultConfig(): AlertProps {
  * @param config - an optional alert config
  * @returns an AlertWidget
  */
-export const createAlert: WidgetFactory<AlertWidget> = createCommonAlert;
+export const createAlert: WidgetFactory<AlertWidget> = createWidgetFactory('alert', createCommonAlert);
