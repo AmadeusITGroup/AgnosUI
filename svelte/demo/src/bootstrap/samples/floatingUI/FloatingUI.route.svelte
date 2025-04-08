@@ -7,8 +7,7 @@
 	const {
 		state: fState,
 		directives: {floatingDirective, referenceDirective, arrowDirective},
-	} = callWidgetFactory({
-		factory: createFloatingUI,
+	} = callWidgetFactory(createFloatingUI, {
 		props: {
 			arrowOptions: {
 				padding: 6,

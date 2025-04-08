@@ -1,21 +1,14 @@
 import {createWidgetsConfig} from '@agnos-ui/core/config';
+import {FACTORY_WIDGET_NAME} from '@agnos-ui/core/types';
 import type {WidgetsConfig, Partial2Levels, WidgetsConfigStore} from '@agnos-ui/core/config';
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {computed} from '@amadeus-it-group/tansu';
 import {getContext, setContext} from 'svelte';
 import {callWidgetFactoryWithConfig} from './utils/widget.svelte';
-import type {Widget, WidgetProps, WidgetFactory} from './types';
+import type {Widget, WidgetFactory, WidgetProps} from '@agnos-ui/core/types';
 
 export * from '@agnos-ui/core/config';
 
-type WidgetFactoryInput<Config extends {[widgetName: string]: object}, W extends Widget> = {
-	factory: WidgetFactory<W>;
-	widgetName?: null | keyof Config;
-	defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
-	events?: Partial<Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}Change`>>;
-	props?: Partial<WidgetProps<W>>;
-	enablePatchChanged?: true;
-};
 type AdaptParentConfig<Config> = (config: Partial2Levels<Config>) => Partial2Levels<Config>;
 type CreateWidgetsDefaultConfig<Config extends {[widgetName: string]: object}> = (
 	adaptParentConfig?: AdaptParentConfig<Config>,
@@ -85,16 +78,21 @@ export const widgetsConfigFactory = <Config extends {[widgetName: string]: objec
 		return computed(() => widgetsConfig?.()[widgetName]);
 	};
 
-	const callWidgetFactory = <W extends Widget>(input: WidgetFactoryInput<Config, W>) =>
-		callWidgetFactoryWithConfig<W>({
-			factory: input.factory,
-			defaultConfig: input.defaultConfig,
-			widgetConfig: input.widgetName ? (getContextWidgetConfig(input.widgetName) as any) : null,
-			events: input.events,
+	const callWidgetFactory = <W extends Widget>(
+		factory: WidgetFactory<W>,
+		options?: {
+			defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
+			events?: Partial<Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}Change`>>;
+			props?: Partial<WidgetProps<W>>;
+		},
+	) =>
+		callWidgetFactoryWithConfig<W>(factory, {
+			defaultConfig: options?.defaultConfig,
+			widgetConfig: factory[FACTORY_WIDGET_NAME] ? (getContextWidgetConfig(factory[FACTORY_WIDGET_NAME]) as any) : null,
+			events: options?.events,
 			get props() {
-				return input.props;
+				return options?.props;
 			},
-			enablePatchChanged: input.enablePatchChanged,
 		});
 
 	return {

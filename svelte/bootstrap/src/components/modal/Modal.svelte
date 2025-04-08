@@ -8,13 +8,10 @@
 
 	let {visible = $bindable(), ...props}: Partial<ModalProps<Data>> = $props();
 
-	const widget = callWidgetFactory<ModalWidget<Data>>({
-		factory: createModal,
-		widgetName: 'modal',
+	const widget = callWidgetFactory<ModalWidget<Data>>(createModal, {
 		get props() {
 			return {...props, visible};
 		},
-		enablePatchChanged: true,
 		defaultConfig: {
 			header,
 			structure,

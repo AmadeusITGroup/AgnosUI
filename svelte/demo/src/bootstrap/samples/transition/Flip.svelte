@@ -10,8 +10,7 @@
 	const {
 		api: {show, hide},
 		directives: {directive},
-	} = callWidgetFactory({
-		factory: createTransition,
+	} = callWidgetFactory(createTransition, {
 		props: {
 			visible: false,
 			transition: createSimpleClassTransition({hideClasses: ['hide'], animationPendingHideClasses: ['hide']}),

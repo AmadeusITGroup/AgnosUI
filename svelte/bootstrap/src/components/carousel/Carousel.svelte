@@ -8,11 +8,8 @@
 
 	let props: Partial<CarouselProps<SlideData>> = $props();
 
-	const widget = callWidgetFactory({
-		factory: createCarousel<SlideData>,
-		widgetName: 'collapse',
+	const widget = callWidgetFactory(createCarousel<SlideData>, {
 		props,
-		enablePatchChanged: true,
 		defaultConfig: {
 			structure,
 			navigation,

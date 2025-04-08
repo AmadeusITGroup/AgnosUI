@@ -10,13 +10,10 @@
 		state,
 		directives: {containerDirective, starDirective},
 		api: ratingApi,
-	} = callWidgetFactory({
-		factory: createRating,
-		widgetName: 'rating',
+	} = callWidgetFactory(createRating, {
 		get props() {
 			return {...props, rating};
 		},
-		enablePatchChanged: true,
 		defaultConfig: {star},
 		events: {
 			onRatingChange: (value: number) => {

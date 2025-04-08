@@ -52,25 +52,25 @@ const eventStore = <T extends any[]>(
 /**
  * Call a widget factory using provided configs.
  *
- * @param parameter - the parameter
- * @param parameter.factory - the widget factory to call
- * @param parameter.defaultConfig - the default config of the widget
- * @param parameter.widgetConfig - the config of the widget, overriding the defaultConfig
- * @param parameter.events - the events of the widget
- * @param parameter.props - the props of the widget
- * @param parameter.enablePatchChanged - enable patching changed props
+ * @param factory - the widget factory to call
+ * @param options - the optional options
+ * @param options.defaultConfig - the default config of the widget
+ * @param options.widgetConfig - the config of the widget, overriding the defaultConfig
+ * @param options.events - the events of the widget
+ * @param options.props - the props of the widget
  * @returns the widget
  */
-export const callWidgetFactoryWithConfig = <W extends Widget>(parameter: {
-	factory: WidgetFactory<W>;
-	defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
-	widgetConfig?: null | undefined | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
-	events?: Partial<Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}Change`>>;
-	props?: Partial<WidgetProps<W>>;
-	enablePatchChanged?: true;
-}): WidgetSlotContext<W> => {
-	const {factory, defaultConfig, widgetConfig, events, enablePatchChanged} = parameter;
-	const props: Partial<WidgetProps<W>> = parameter.props ?? {};
+export const callWidgetFactoryWithConfig = <W extends Widget>(
+	factory: WidgetFactory<W>,
+	options?: {
+		defaultConfig?: Partial<WidgetProps<W>> | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
+		widgetConfig?: null | undefined | ReadableSignal<Partial<WidgetProps<W>> | undefined>;
+		events?: Partial<Pick<WidgetProps<W>, keyof WidgetProps<W> & `on${string}Change`>>;
+		props?: Partial<WidgetProps<W>>;
+	},
+): WidgetSlotContext<W> => {
+	const {defaultConfig, widgetConfig, events} = options ?? {};
+	const props: Partial<WidgetProps<W>> = options?.props ?? {};
 	const defaultConfig$ = toReadableStore(defaultConfig);
 	const propsWithEvents: PropsConfig<WidgetProps<W>>['props'] = {...props};
 	if (events) {
@@ -85,12 +85,10 @@ export const callWidgetFactoryWithConfig = <W extends Widget>(parameter: {
 	const runes = Object.fromEntries(
 		Object.entries<ReadableSignal<unknown>>(widget.stores as any).map(([key, val]) => [key.slice(0, -1), fromStore(val)]),
 	);
-	if (enablePatchChanged) {
-		const patch = createPatchChangedProps(props, widget.patch);
-		$effect(() => {
-			patch({...parameter.props});
-		});
-	}
+	const patch = createPatchChangedProps(props, widget.patch);
+	$effect(() => {
+		patch({...options?.props});
+	});
 	return {
 		api: widget.api,
 		directives: widget.directives,

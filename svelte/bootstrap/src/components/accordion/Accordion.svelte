@@ -6,11 +6,8 @@
 
 	let {children, ...props}: Partial<AccordionProps> & {children: Snippet} = $props();
 
-	const {directives, api: accordionApi} = callWidgetFactory({
-		factory: createAccordion,
-		widgetName: 'accordion',
+	const {directives, api: accordionApi} = callWidgetFactory(createAccordion, {
 		props,
-		enablePatchChanged: true,
 	});
 	export const api: AccordionApi = accordionApi;
 

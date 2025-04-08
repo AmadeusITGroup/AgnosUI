@@ -7,13 +7,10 @@
 
 	let {visible = $bindable(), ...props}: Partial<ToastProps> = $props();
 
-	const widget = callWidgetFactory({
-		factory: createToast,
-		widgetName: 'toast',
+	const widget = callWidgetFactory(createToast, {
 		get props() {
 			return {...props, visible};
 		},
-		enablePatchChanged: true,
 		defaultConfig: {structure},
 		events: {
 			onVisibleChange: (event) => {

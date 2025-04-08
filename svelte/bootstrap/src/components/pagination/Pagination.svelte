@@ -8,13 +8,10 @@
 
 	let {page = $bindable(), ...props}: Partial<PaginationProps> = $props();
 
-	const widget = callWidgetFactory({
-		factory: createPagination,
-		widgetName: 'pagination',
+	const widget = callWidgetFactory(createPagination, {
 		get props() {
 			return {...props, page};
 		},
-		enablePatchChanged: true,
 		defaultConfig: {
 			structure,
 			pagesDisplay,

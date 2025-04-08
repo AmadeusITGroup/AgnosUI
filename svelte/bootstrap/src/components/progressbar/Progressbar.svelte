@@ -6,11 +6,8 @@
 
 	let props: Partial<ProgressbarProps> = $props();
 
-	const widget = callWidgetFactory({
-		factory: createProgressbar,
-		widgetName: 'progressbar',
+	const widget = callWidgetFactory(createProgressbar, {
 		props,
-		enablePatchChanged: true,
 		defaultConfig: {
 			structure,
 		},

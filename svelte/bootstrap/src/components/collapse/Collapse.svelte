@@ -10,9 +10,7 @@
 	const {
 		directives: {collapseDirective},
 		api: collapseApi,
-	} = callWidgetFactory({
-		factory: createCollapse,
-		widgetName: 'collapse',
+	} = callWidgetFactory(createCollapse, {
 		get props() {
 			return {...props, visible};
 		},
@@ -24,7 +22,6 @@
 				visible = event;
 			},
 		},
-		enablePatchChanged: true,
 	});
 	export const api: CollapseApi = collapseApi;
 </script>
