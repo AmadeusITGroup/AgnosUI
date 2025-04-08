@@ -10,11 +10,8 @@
 	}: Partial<Pick<AccordionProps, 'closeOthers' | 'onItemShown' | 'onItemHidden' | 'itemDestroyOnHide' | 'className'>> & {children: Snippet} =
 		$props();
 
-	const {api, directives} = callWidgetFactory({
-		factory: createAccordion,
-		widgetName: 'accordion',
+	const {api, directives} = callWidgetFactory(createAccordion, {
 		props,
-		enablePatchChanged: true,
 	});
 	setAccordionApi(api);
 </script>

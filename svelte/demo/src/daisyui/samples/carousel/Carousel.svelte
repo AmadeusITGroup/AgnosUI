@@ -31,9 +31,7 @@
 		state: cState,
 		directives,
 		api,
-	} = callWidgetFactory({
-		factory: createCarousel,
-		widgetName: 'carousel',
+	} = callWidgetFactory(createCarousel, {
 		get props() {
 			return {
 				...props,
@@ -44,7 +42,6 @@
 		defaultConfig: {
 			duration: 40,
 		},
-		enablePatchChanged: true,
 	});
 	const onpointerdown = (e: PointerEvent) => {
 		e.preventDefault();

@@ -7,11 +7,8 @@
 	const {
 		state,
 		directives: {ariaDirective},
-	} = callWidgetFactory({
-		factory: createProgressbar,
-		widgetName: 'progressbar',
+	} = callWidgetFactory(createProgressbar, {
 		props,
-		enablePatchChanged: true,
 	});
 
 	const percentFormat = new Intl.NumberFormat('default', {

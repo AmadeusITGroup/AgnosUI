@@ -27,18 +27,13 @@
 	});
 
 	// The main Carousel
-	const {state: mainState, directives: mainDirectives} = callWidgetFactory({
-		factory: createCarousel,
-		widgetName: 'carousel',
-	});
+	const {state: mainState, directives: mainDirectives} = callWidgetFactory(createCarousel);
 
 	// The Thumbnail Carousel
 	const {
 		directives: thumbDirectives,
 		api: {scrollTo: thumbScrollTo},
-	} = callWidgetFactory({
-		factory: createCarousel,
-		widgetName: 'carousel',
+	} = callWidgetFactory(createCarousel, {
 		props: {
 			dragFree: true,
 			containScroll: 'keepSnaps',

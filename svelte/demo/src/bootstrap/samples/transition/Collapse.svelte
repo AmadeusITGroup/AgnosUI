@@ -12,15 +12,13 @@
 		state,
 		api: {toggle},
 		directives: {directive},
-	} = callWidgetFactory({
-		factory: createTransition,
+	} = callWidgetFactory(createTransition, {
 		get props() {
 			return {
 				visible: expanded,
 				transition: collapseVerticalTransition,
 			};
 		},
-		enablePatchChanged: true,
 		events: {
 			onVisibleChange: (val: boolean) => {
 				expanded = val;

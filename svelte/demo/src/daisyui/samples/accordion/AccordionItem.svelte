@@ -1,6 +1,5 @@
 <script lang="ts">
-	import {type AccordionItemProps, type AccordionItemWidget} from '@agnos-ui/svelte-headless/components/accordion';
-	import type {WidgetFactory} from '@agnos-ui/svelte-headless/types';
+	import {type AccordionItemProps} from '@agnos-ui/svelte-headless/components/accordion';
 	import {callWidgetFactory} from '@agnos-ui/svelte-headless/config';
 	import {onMount, type Snippet} from 'svelte';
 	import {createSimpleClassTransition} from '@agnos-ui/svelte-headless/services/transitions/simpleClassTransition';
@@ -23,12 +22,10 @@
 	});
 
 	const {registerItem} = getAccordionApi();
-	const widget = callWidgetFactory({
-		factory: registerItem as WidgetFactory<AccordionItemWidget>,
+	const widget = callWidgetFactory(registerItem, {
 		get props() {
 			return {visible, ...props};
 		},
-		enablePatchChanged: true,
 		events: {
 			onVisibleChange: (event) => {
 				visible = event;
