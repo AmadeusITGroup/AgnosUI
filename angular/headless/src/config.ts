@@ -8,6 +8,8 @@ import type {FactoryProvider, TemplateRef} from '@angular/core';
 import {InjectionToken, Injector, Optional, SkipSelf, inject, runInInjectionContext} from '@angular/core';
 import type {AngularWidget, IsSlotContent, SlotContent} from './types';
 import {callWidgetFactoryWithConfig} from './utils/widget';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import type {BaseWidgetDirective} from './utils/widget';
 
 export * from '@agnos-ui/core/config';
 
@@ -123,6 +125,8 @@ export const widgetsConfigFactory = <Config extends {[widgetName: string]: objec
 
 	/**
 	 * Creates and initializes a widget using the provided factory and configuration options.
+	 *
+	 * The resulting widget can be easily hooked into the lifecycle of an Angular component through {@link BaseWidgetDirective}.
 	 *
 	 * @template W - The type of the widget.
 	 * @param factory - The factory function to create the widget.

@@ -25,6 +25,13 @@ type DefaultConfigInput<Config> = Partial2Levels<Config> & {
 export const widgetsConfigFactory = <Config extends Record<string, object> = WidgetsConfig>(
 	WidgetsConfigContext = createContext(undefined as undefined | WidgetsConfigStore<Config>),
 ) => {
+	/**
+	 * React hook that returns the widgets default configuration store.
+	 *
+	 * @param widgetName - the name of the widget to get the configuration for
+	 * @param defaultConfig - the default configuration of the widget
+	 * @returns the widgets default configuration store
+	 */
 	const useWidgetContext = <Props extends object>(widgetName?: string, defaultConfig?: Partial<Props>) => {
 		const widgetsConfig = useContext(WidgetsConfigContext);
 		const defaultConfig$ = usePropsAsStore(defaultConfig);
@@ -34,6 +41,14 @@ export const widgetsConfigFactory = <Config extends Record<string, object> = Wid
 		);
 	};
 
+	/**
+	 * Create and attach an agnos-ui/core widget to the current react component.
+	 *
+	 * @param factory - the widget factory
+	 * @param props - the widget props
+	 * @param defaultProps - the default widget props
+	 * @returns the state, api and directives to track and interact with the widget
+	 */
 	const useWidget = <W extends Widget>(factory: WidgetFactory<W>, props?: Partial<WidgetProps<W>>, defaultProps?: Partial<WidgetProps<W>>) =>
 		useWidgetWithConfig(factory, props, {config: useWidgetContext(factory[FACTORY_WIDGET_NAME], defaultProps)});
 

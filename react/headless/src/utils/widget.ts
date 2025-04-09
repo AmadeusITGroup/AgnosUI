@@ -4,14 +4,13 @@ import {useMemo, useRef} from 'react';
 import {useObservablesProxy} from './stores';
 
 /**
- * The useWidgetWithConfig function.
+ * Create and attach an agnos-ui/core widget to the current react component.
  *
- * Allows to create and attach an agnos-ui/core widget to the current react component.
  * @template W - The type of the widget.
  * @param factory - the widget factory
  * @param props - the props
  * @param propsConfig - the props config
- * @returns the state and api to track and interact with the widget
+ * @returns the state, api and directives to track and interact with the widget
  */
 export function useWidgetWithConfig<W extends Widget>(
 	factory: WidgetFactory<W>,

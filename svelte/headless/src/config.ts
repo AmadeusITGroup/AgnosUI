@@ -73,11 +73,27 @@ export const widgetsConfigFactory = <Config extends {[widgetName: string]: objec
 		return child$;
 	};
 
+	/**
+	 * Retrieves a widgets configuration store from the Svelte context hierarchy.
+	 *
+	 * @param widgetName - the name of the widget
+	 * @returns the widgets configuration store
+	 */
 	const getContextWidgetConfig = <N extends keyof Config>(widgetName: N): ReadableSignal<Partial<Config[N]> | undefined> => {
 		const widgetsConfig = getContext<WidgetsConfigStore<Config>>(widgetsDefaultConfigKey);
 		return computed(() => widgetsConfig?.()[widgetName]);
 	};
 
+	/**
+	 * Creates and initializes a widget using the provided factory and configuration options.
+	 *
+	 * @param factory - the widget factory
+	 * @param options  - the optional options
+	 * @param options.defaultConfig - the default configuration for the widget
+	 * @param options.events - the events to be passed to the widget
+	 * @param options.props - the props to be passed to the widget
+	 * @returns the state, api and directives to track and interact with the widget
+	 */
 	const callWidgetFactory = <W extends Widget>(
 		factory: WidgetFactory<W>,
 		options?: {
