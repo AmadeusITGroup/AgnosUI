@@ -30,6 +30,8 @@ const createPatchSlots = <T extends object>(set: (object: Partial<T>) => void) =
 /**
  * Call a widget factory using provided configs.
  *
+ * The resulting widget can be easily hooked into the lifecycle of an Angular component through {@link BaseWidgetDirective}.
+ *
  * @param factory - the widget factory to call
  * @param options - the options
  * @param options.defaultConfig - the default config of the widget
