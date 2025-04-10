@@ -5,9 +5,7 @@
 
 	let props: Pick<Partial<RatingProps>, 'rating' | 'maxRating' | 'className' | 'star'> = $props();
 
-	const {state, api: ratingApi} = callWidgetFactory({
-		factory: createRating,
-		widgetName: 'rating',
+	const {state, api: ratingApi} = callWidgetFactory(createRating, {
 		defaultConfig: {star},
 		get props() {
 			return {
@@ -15,7 +13,6 @@
 				readonly: true,
 			};
 		},
-		enablePatchChanged: true,
 	});
 	export const api = ratingApi;
 </script>

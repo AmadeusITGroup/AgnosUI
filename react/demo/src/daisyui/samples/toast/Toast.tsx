@@ -1,13 +1,13 @@
 import {createToast} from '@agnos-ui/react-headless/components/toast';
 import type {ToastProps} from '@agnos-ui/react-headless/components/toast';
-import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
+import {useWidget} from '@agnos-ui/react-headless/config';
 import CloseIcon from '@agnos-ui/common/samples/common/close_icon.svg?react';
 import {type PropsWithChildren} from 'react';
 
 export const Toast = (
 	props: PropsWithChildren<Partial<Pick<ToastProps, 'className' | 'visible' | 'dismissible' | 'ariaCloseButtonLabel' | 'onVisibleChange'>>>,
 ) => {
-	const {state, api} = useWidgetWithConfig(createToast, props, 'toast');
+	const {state, api} = useWidget(createToast, props);
 	return (
 		<>
 			{!state.hidden && (

@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import type {Ref} from 'react';
 import {useImperativeHandle} from 'react';
 import ReactDOM from 'react-dom/client';
-import {useWidgetWithConfig} from '../../config';
+import {useWidget} from '../../config';
 import type {ModalApi, ModalContext, ModalProps} from './modal.gen';
 import {createModal} from './modal.gen';
 
@@ -81,7 +81,7 @@ const ModalElement = <Data,>(slotContext: ModalContext<Data>) => {
  * @returns The rendered Modal component.
  */
 export function Modal<Data>(props: Partial<ModalProps<Data>> & {ref?: Ref<ModalApi<Data>>}) {
-	const widgetContext = useWidgetWithConfig(createModal<Data>, props, 'modal', {
+	const widgetContext = useWidget(createModal<Data>, props, {
 		header: ModalDefaultSlotHeader,
 		structure: ModalDefaultSlotStructure,
 	});

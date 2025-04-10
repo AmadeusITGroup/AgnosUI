@@ -8,13 +8,10 @@
 	const {
 		state,
 		api: {setRating, setHoveredRating, leave},
-	} = callWidgetFactory({
-		factory: createRating,
-		widgetName: 'rating',
+	} = callWidgetFactory(createRating, {
 		get props() {
 			return {...props, rating};
 		},
-		enablePatchChanged: true,
 		events: {
 			onRatingChange: (value: number) => {
 				rating = value;

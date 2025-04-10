@@ -1,9 +1,10 @@
 import type {Widget, WidgetFactory, WidgetProps} from '@agnos-ui/core/types';
+import {FACTORY_WIDGET_NAME} from '@agnos-ui/core/types';
 import {createWidgetsConfig, type WidgetsConfigStore, type WidgetsConfig, type Partial2Levels} from '@agnos-ui/core/config';
 import {computed} from '@amadeus-it-group/tansu';
 import type {ReactNode} from 'react';
 import {createContext, useContext, useMemo} from 'react';
-import {useWidget} from './utils/widget';
+import {useWidgetWithConfig} from './utils/widget';
 import {usePropsAsStore} from './utils/stores';
 
 export * from '@agnos-ui/core/config';
@@ -24,7 +25,14 @@ type DefaultConfigInput<Config> = Partial2Levels<Config> & {
 export const widgetsConfigFactory = <Config extends Record<string, object> = WidgetsConfig>(
 	WidgetsConfigContext = createContext(undefined as undefined | WidgetsConfigStore<Config>),
 ) => {
-	const useWidgetContext = <Props extends object>(widgetName: keyof Config | null, defaultConfig?: Partial<Props>) => {
+	/**
+	 * React hook that returns the widgets default configuration store.
+	 *
+	 * @param widgetName - the name of the widget to get the configuration for
+	 * @param defaultConfig - the default configuration of the widget
+	 * @returns the widgets default configuration store
+	 */
+	const useWidgetContext = <Props extends object>(widgetName?: string, defaultConfig?: Partial<Props>) => {
 		const widgetsConfig = useContext(WidgetsConfigContext);
 		const defaultConfig$ = usePropsAsStore(defaultConfig);
 		return useMemo(
@@ -33,12 +41,16 @@ export const widgetsConfigFactory = <Config extends Record<string, object> = Wid
 		);
 	};
 
-	const useWidgetWithConfig = <W extends Widget>(
-		factory: WidgetFactory<W>,
-		props: Partial<WidgetProps<W>> | undefined,
-		widgetName: keyof Config | null,
-		defaultProps?: Partial<WidgetProps<W>>,
-	) => useWidget(factory, props, {config: useWidgetContext(widgetName, defaultProps)});
+	/**
+	 * Create and attach an agnos-ui/core widget to the current react component.
+	 *
+	 * @param factory - the widget factory
+	 * @param props - the widget props
+	 * @param defaultProps - the default widget props
+	 * @returns the state, api and directives to track and interact with the widget
+	 */
+	const useWidget = <W extends Widget>(factory: WidgetFactory<W>, props?: Partial<WidgetProps<W>>, defaultProps?: Partial<WidgetProps<W>>) =>
+		useWidgetWithConfig(factory, props, {config: useWidgetContext(factory[FACTORY_WIDGET_NAME], defaultProps)});
 
 	/**
 	 * React component that provides in the React context (for all AgnosUI descendant widgets) a new widgets default configuration
@@ -88,8 +100,8 @@ export const widgetsConfigFactory = <Config extends Record<string, object> = Wid
 		 */
 		WidgetsConfigContext,
 		useWidgetContext,
-		useWidgetWithConfig,
+		useWidget,
 		WidgetsDefaultConfig,
 	};
 };
-export const {WidgetsConfigContext, WidgetsDefaultConfig, useWidgetContext, useWidgetWithConfig} = widgetsConfigFactory();
+export const {WidgetsConfigContext, WidgetsDefaultConfig, useWidgetContext, useWidget} = widgetsConfigFactory();

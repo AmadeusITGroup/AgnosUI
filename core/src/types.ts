@@ -108,13 +108,21 @@ export type WidgetState<T extends {state$: SubscribableStore<any>}> = T extends 
 export type WidgetProps<T extends {patch: (arg: any) => void}> = T extends {patch: (arg: Partial<infer U extends object>) => void} ? U : never;
 
 /**
+ * A unique symbol representing a widget factory widget name.
+ */
+export const FACTORY_WIDGET_NAME: unique symbol = Symbol();
+
+/**
  * A factory function type for creating instances of a widget.
  *
  * @template W - The type of the widget that extends the base Widget type.
+ * @template T - The type of the factory function that creates the widget. Useful when the factory function has a generic
  * @param props - Optional configuration properties for the widget.
  * @returns An instance of the widget.
  */
-export type WidgetFactory<W extends Widget> = (props?: PropsConfig<WidgetProps<W>>) => W;
+export type WidgetFactory<W extends Widget, T extends (props?: PropsConfig<WidgetProps<W>>) => W = (props?: PropsConfig<WidgetProps<W>>) => W> = T & {
+	[FACTORY_WIDGET_NAME]?: string;
+};
 
 /**
  * Represents a server-side rendered HTML element with limited functionality.

@@ -23,13 +23,10 @@
 		state,
 		directives: {transitionDirective},
 		api,
-	} = callWidgetFactory({
-		factory: createAlert,
-		widgetName: 'alert',
+	} = callWidgetFactory(createAlert, {
 		get props() {
 			return {...props, visible};
 		},
-		enablePatchChanged: true,
 		defaultConfig: {transition},
 		events: {
 			onVisibleChange: (event) => {

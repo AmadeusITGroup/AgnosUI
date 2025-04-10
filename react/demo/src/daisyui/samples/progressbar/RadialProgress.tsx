@@ -1,11 +1,11 @@
 import {type ProgressbarProps, createProgressbar} from '@agnos-ui/react-headless/components/progressbar';
-import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
+import {useWidget} from '@agnos-ui/react-headless/config';
 import {useDirective} from '@agnos-ui/react-headless/utils/directive';
 import clsx from 'clsx';
 import {useMemo, type CSSProperties} from 'react';
 
 export function RadialProgress(props: Partial<ProgressbarProps>) {
-	const {state, directives} = useWidgetWithConfig(createProgressbar, props, 'progressbar');
+	const {state, directives} = useWidget(createProgressbar, props);
 
 	const percentFormat = useMemo(
 		() =>

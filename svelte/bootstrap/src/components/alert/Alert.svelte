@@ -6,13 +6,10 @@
 
 	let {visible = $bindable(), ...props}: Partial<AlertProps> = $props();
 
-	const widget = callWidgetFactory({
-		factory: createAlert,
-		widgetName: 'alert',
+	const widget = callWidgetFactory(createAlert, {
 		get props() {
 			return {...props, visible};
 		},
-		enablePatchChanged: true,
 		defaultConfig: {structure},
 		events: {
 			onVisibleChange: (event) => {
@@ -35,7 +32,7 @@
 {#if !state.hidden}
 	<div
 		role="alert"
-		class="au-alert alert alert-{state.type} {state.className} {state.dismissible ? 'alert-dismissible' : ''}"
+		class={['au-alert', 'alert', `alert-${state.type}`, state.className, state.dismissible && 'alert-dismissible']}
 		use:transitionDirective
 	>
 		<Slot content={state.structure} props={widget} />

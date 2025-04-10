@@ -8,12 +8,13 @@ import {
 	createBrowserStoreDirective,
 	mergeDirectives,
 } from '../../utils/directive';
-import type {ConfigValidator, Directive, PropsConfig, Widget} from '../../types';
+import type {ConfigValidator, Directive, PropsConfig, Widget, WidgetFactory} from '../../types';
 import {noop} from '../../utils/func';
 import {getDecimalPrecision} from '../../utils/internal/math';
 import {bindableProp, stateStores, true$, writablesForProps} from '../../utils/stores';
 import {typeArray, typeBoolean, typeFunction, typeNumber, typeNumberInRangeFactory, typeString} from '../../utils/writables';
 import {createResizeObserver} from '../../services/resizeObserver';
+import {createWidgetFactory} from '../../utils/widget';
 
 /**
  * Options for displaying progress in a slider component.
@@ -500,7 +501,7 @@ const percent = (value: number | null) => (value != null ? `${value}%` : '');
  * @param config - an optional slider config
  * @returns a SliderWidget
  */
-export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
+export const createSlider: WidgetFactory<SliderWidget> = createWidgetFactory('slider', (config?: PropsConfig<SliderProps>) => {
 	const [
 		{
 			// dirty inputs that need adjustment:
@@ -1233,4 +1234,4 @@ export function createSlider(config?: PropsConfig<SliderProps>): SliderWidget {
 	};
 
 	return widget;
-}
+});

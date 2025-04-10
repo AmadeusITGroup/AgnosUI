@@ -8,13 +8,10 @@
 	const {
 		state,
 		api: {first, previous, next, last, select},
-	} = callWidgetFactory({
-		factory: createPagination,
-		widgetName: 'pagination',
+	} = callWidgetFactory(createPagination, {
 		get props() {
 			return {...props, page};
 		},
-		enablePatchChanged: true,
 		events: {
 			onPageChange: (value: number) => {
 				page = value;

@@ -1,11 +1,12 @@
 import {computed, readable} from '@amadeus-it-group/tansu';
 import {extendWidgetProps} from '../../services/extendWidget';
-import type {ConfigValidator, Directive, PropsConfig, Widget} from '../../types';
+import type {ConfigValidator, Directive, PropsConfig, Widget, WidgetFactory} from '../../types';
 import {createAttributesDirective, directiveSubscribe} from '../../utils/directive';
 import {true$} from '../../utils/stores';
 import {typeBoolean, typeNumberInRangeFactory} from '../../utils/writables';
 import type {CommonAlertApi, CommonAlertDirectives, CommonAlertProps, CommonAlertState, CommonAlertWidget} from '../alert/common';
 import {createCommonAlert, getCommonAlertDefaultConfig} from '../alert/common';
+import {createWidgetFactory} from '../../utils/widget';
 
 interface ToastExtraProps {
 	/**
@@ -85,7 +86,7 @@ export function getToastDefaultConfig(): ToastProps {
  * @param config - an optional toast config
  * @returns a ToastWidget
  */
-export function createToast(config?: PropsConfig<ToastProps>): ToastWidget {
+export const createToast: WidgetFactory<ToastWidget> = createWidgetFactory('toast', (config?: PropsConfig<ToastProps>) => {
 	let _timeout: ReturnType<typeof setTimeout>;
 
 	const extendedAlert = extendWidgetProps<CommonAlertWidget, ToastExtraProps, ExtraDirectives>(
@@ -132,4 +133,4 @@ export function createToast(config?: PropsConfig<ToastProps>): ToastWidget {
 			closeButtonDirective,
 		},
 	};
-}
+});

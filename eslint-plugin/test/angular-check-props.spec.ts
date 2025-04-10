@@ -7,7 +7,7 @@ import eslintParser from '@typescript-eslint/parser';
 
 RuleTester.describe('angular-check-props', () => {
 	const codeTemplate = (classContent: string, widgetProps: string, events = '{}') =>
-		`import { Component, input, output } from "@angular/core";\nfunction auBooleanAttribute(value: unknown): boolean | undefined {return false;}\nfunction auNumberAttribute(value: unknown): number | undefined {return false;}\nimport type {BaseWidgetDirective} from "@agnos-ui/angular-headless";\ninterface MyWidgetProps {\n${widgetProps}\n}\ninterface MyWidget {\n\tpatch(props: Partial<MyWidgetProps>): void\n}\nconst callWidgetFactory: (config: any) => MyWidget;\n@Component({})\nclass MyComponent extends BaseWidgetDirective<any>{\n${classContent}\n\tconstructor(){super(callWidgetFactory({events: ${events}}));}\n}`;
+		`import { Component, input, output } from "@angular/core";\nfunction auBooleanAttribute(value: unknown): boolean | undefined {return false;}\nfunction auNumberAttribute(value: unknown): number | undefined {return false;}\nimport type {BaseWidgetDirective} from "@agnos-ui/angular-headless";\ninterface MyWidgetProps {\n${widgetProps}\n}\ninterface MyWidget {\n\tpatch(props: Partial<MyWidgetProps>): void\n}\nconst callWidgetFactory: (factory: any, config: any) => MyWidget;\n@Component({})\nclass MyComponent extends BaseWidgetDirective<any>{\n${classContent}\n\tconstructor(){super(callWidgetFactory(() => {}, {events: ${events}}));}\n}`;
 
 	const ruleTester = new RuleTester({
 		languageOptions: {

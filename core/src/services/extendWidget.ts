@@ -11,6 +11,7 @@ import type {
 	WidgetSlotContext,
 	WidgetState,
 } from '../types';
+import {FACTORY_WIDGET_NAME} from '../types';
 
 /**
  * Type extending the original Widget props and state with ExtraProps
@@ -85,14 +86,13 @@ export type ExtendWidgetAdaptSlotWidgetProps<Props, ExtraProps extends object, E
  * @param overrideDefaults - object overriding some default props of the widget to extend
  * @returns widget factory with the extra props
  */
-export const extendWidgetProps =
-	<W extends Widget, ExtraProps extends object, ExtraDirectives extends object = object>(
-		factory: WidgetFactory<W>,
-		extraPropsDefaults: ExtraProps,
-		extraPropsConfig?: ConfigValidator<ExtraProps>,
-		overrideDefaults?: Partial<WidgetState<W>>,
-	): WidgetFactory<ExtendWidgetProps<W, ExtraProps, ExtraDirectives>> =>
-	(propsConfig) => {
+export const extendWidgetProps = <W extends Widget, ExtraProps extends object, ExtraDirectives extends object = object>(
+	factory: WidgetFactory<W>,
+	extraPropsDefaults: ExtraProps,
+	extraPropsConfig?: ConfigValidator<ExtraProps>,
+	overrideDefaults?: Partial<WidgetState<W>>,
+): WidgetFactory<ExtendWidgetProps<W, ExtraProps, ExtraDirectives>> => {
+	const extendedFactory: WidgetFactory<ExtendWidgetProps<W, ExtraProps, ExtraDirectives>> = (propsConfig) => {
 		const extraPropsWritables = writablesWithDefault(extraPropsDefaults, propsConfig as PropsConfig<ExtraProps>, extraPropsConfig);
 		const propsConfigConfig = propsConfig?.config;
 		const config = isStore(propsConfigConfig)
@@ -122,3 +122,6 @@ export const extendWidgetProps =
 				}),
 		};
 	};
+	(extendedFactory as any)[FACTORY_WIDGET_NAME] = (factory as any)[FACTORY_WIDGET_NAME];
+	return extendedFactory;
+};

@@ -1,6 +1,6 @@
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {computed, readable, writable} from '@amadeus-it-group/tansu';
-import type {ConfigValidator, Directive, PropsConfig, Widget} from '../../types';
+import type {ConfigValidator, Directive, PropsConfig, Widget, WidgetFactory} from '../../types';
 import {INVALID_VALUE} from '../../types';
 import {createAttributesDirective} from '../../utils/directive';
 import {clamp, isNumber} from '../../utils/internal/checks';
@@ -8,6 +8,7 @@ import {noop} from '../../utils/func';
 import {bindableProp, stateStores, true$, writablesForProps} from '../../utils/stores';
 import {typeBoolean, typeFunction, typeNumber, typeString} from '../../utils/writables';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
+import {createWidgetFactory} from '../../utils/widget';
 
 /**
  * Represents the context for a star in a rating component.
@@ -250,7 +251,7 @@ const configValidator: ConfigValidator<RatingProps> = {
  * @param config - an optional alert config
  * @returns a RatingWidget
  */
-export function createRating(config?: PropsConfig<RatingProps>): RatingWidget {
+export const createRating: WidgetFactory<RatingWidget> = createWidgetFactory('rating', (config?: PropsConfig<RatingProps>) => {
 	const [
 		{
 			// dirty inputs that need adjustment:
@@ -398,4 +399,4 @@ export function createRating(config?: PropsConfig<RatingProps>): RatingWidget {
 	};
 
 	return widget;
-}
+});

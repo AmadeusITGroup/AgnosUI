@@ -7,12 +7,8 @@
 	const {
 		state,
 		directives: {navigationDirective, itemToggleDirective},
-	} = callWidgetFactory({
-		factory: createTree,
-		widgetName: 'tree',
+	} = callWidgetFactory(createTree, {
 		props,
-		enablePatchChanged: true,
-		events: {},
 	});
 </script>
 

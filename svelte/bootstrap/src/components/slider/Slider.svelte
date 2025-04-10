@@ -9,13 +9,10 @@
 
 	let {values = $bindable(), ...props}: Partial<SliderProps> = $props();
 
-	const widget = callWidgetFactory({
-		factory: createSlider,
-		widgetName: 'slider',
+	const widget = callWidgetFactory(createSlider, {
 		get props() {
 			return {...props, values};
 		},
-		enablePatchChanged: true,
 		defaultConfig: {structure, handle, tick, label},
 		events: {
 			onValuesChange: function (newValues: number[]): void {

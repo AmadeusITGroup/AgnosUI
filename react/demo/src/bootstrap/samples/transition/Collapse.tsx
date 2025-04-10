@@ -5,7 +5,7 @@ import {useDirective} from '@agnos-ui/react-bootstrap/utils/directive';
 import type {Directive} from '@agnos-ui/react-bootstrap/types';
 import '@agnos-ui/common/samples/transition/collapse.scss';
 import CollapseIcon from '@agnos-ui/common/samples/transition/collapseButton.svg?react';
-import {useWidget} from '@agnos-ui/react-bootstrap/utils/widget';
+import {useWidget} from '@agnos-ui/react-bootstrap/config';
 
 const CollapseContent = ({directive, children}: PropsWithChildren<{directive: Directive}>) => (
 	<div id="collapse-content" {...useDirective(directive)}>

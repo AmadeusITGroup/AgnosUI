@@ -1,6 +1,5 @@
 <script lang="ts">
-	import type {AccordionItemApi, AccordionItemContext, AccordionItemProps, AccordionItemWidget} from './accordion';
-	import type {WidgetFactory} from '@agnos-ui/svelte-headless/types';
+	import type {AccordionItemApi, AccordionItemContext, AccordionItemProps} from './accordion';
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 	import {callWidgetFactory} from '../../config';
 	import {onMount} from 'svelte';
@@ -12,12 +11,10 @@
 
 	const id = $props.id();
 	let {visible = $bindable(), ...props}: Partial<AccordionItemProps> = $props();
-	const widget = callWidgetFactory({
-		factory: registerItem as WidgetFactory<AccordionItemWidget>,
+	const widget = callWidgetFactory(registerItem, {
 		get props() {
 			return {...props, visible};
 		},
-		enablePatchChanged: true,
 		defaultConfig: {structure, id},
 		events: {
 			onVisibleChange: (event) => {

@@ -10,11 +10,8 @@
 
 	let props: Partial<TreeProps> = $props();
 
-	const widget = callWidgetFactory({
-		factory: createTree,
-		widgetName: 'tree',
+	const widget = callWidgetFactory(createTree, {
 		props,
-		enablePatchChanged: true,
 		defaultConfig: {structure, item, itemContent, itemToggle},
 	});
 	const {state} = widget;

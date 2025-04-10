@@ -3,10 +3,11 @@ import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {bindableProp, stateStores, true$, writablesForProps} from '../../utils/stores';
 import {clamp, isNumber} from '../../utils/internal/checks';
 import {typeBoolean, typeFunction, typeNumber, typeString} from '../../utils/writables';
-import type {ConfigValidator, PropsConfig, Widget, Directive} from '../../types';
+import type {ConfigValidator, PropsConfig, Widget, Directive, WidgetFactory} from '../../types';
 import {noop} from '../../utils/func';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 import {createAttributesDirective} from '../../utils/directive';
+import {createWidgetFactory} from '../../utils/widget';
 
 /**
  * Interface representing the common properties and state for a pagination component.
@@ -403,7 +404,7 @@ const configValidator: ConfigValidator<PaginationProps> = {
  * @param config - an optional pagination config
  * @returns a PaginationWidget
  */
-export function createPagination(config?: PropsConfig<PaginationProps>): PaginationWidget {
+export const createPagination: WidgetFactory<PaginationWidget> = createWidgetFactory('pagination', (config?: PropsConfig<PaginationProps>) => {
 	const [
 		{
 			// dirty inputs that need adjustment:
@@ -617,4 +618,4 @@ export function createPagination(config?: PropsConfig<PaginationProps>): Paginat
 	};
 
 	return widget;
-}
+});

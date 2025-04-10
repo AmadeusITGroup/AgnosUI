@@ -9,13 +9,10 @@
 		state,
 		directives: {closeButtonDirective, dialogDirective},
 		api: modalApi,
-	} = callWidgetFactory({
-		factory: createModal,
-		widgetName: 'modal',
+	} = callWidgetFactory(createModal, {
 		get props() {
 			return {visible, closeOnOutsideClick, ...props};
 		},
-		enablePatchChanged: true,
 		defaultConfig: {closeButton: true},
 		events: {
 			onVisibleChange: (event) => {

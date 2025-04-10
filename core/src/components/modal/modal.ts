@@ -5,7 +5,7 @@ import {stateStores, writablesForProps} from '../../utils/stores';
 import type {TransitionFn} from '../../services/transitions/baseTransitions';
 import {createTransition} from '../../services/transitions/baseTransitions';
 import {promiseFromStore} from '../../utils/internal/promise';
-import type {ConfigValidator, Directive, PropsConfig, Widget} from '../../types';
+import type {ConfigValidator, Directive, PropsConfig, Widget, WidgetFactory} from '../../types';
 import {noop} from '../../utils/func';
 import {removeScrollbars, revertScrollbars} from '../../utils/internal/scrollbars';
 import {
@@ -18,6 +18,7 @@ import {
 } from '../../utils/directive';
 import {portal} from '../../services/portal';
 import {siblingsInert} from '../../services/siblingsInert';
+import {createWidgetFactory} from '../../utils/widget';
 
 /**
  * Value present in the {@link ModalBeforeCloseEvent.result|result} property of the {@link ModalProps.onBeforeClose|onBeforeClose} event
@@ -337,7 +338,7 @@ const modalsAction$ = computed(() => {
  * @param config$ - config of the modal, either as a store or as an object containing values or stores.
  * @returns a new modal widget instance
  */
-export function createModal(config$?: PropsConfig<ModalProps>): ModalWidget {
+export const createModal: WidgetFactory<ModalWidget> = createWidgetFactory('modal', (config$?: PropsConfig<ModalProps>) => {
 	const [
 		{
 			animated$,
@@ -504,4 +505,4 @@ export function createModal(config$?: PropsConfig<ModalProps>): ModalWidget {
 	};
 
 	return res;
-}
+});

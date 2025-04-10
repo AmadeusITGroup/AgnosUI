@@ -178,9 +178,7 @@ export class ProgressbarComponent extends BaseWidgetDirective<ProgressbarWidget>
 
 	constructor() {
 		super(
-			callWidgetFactory({
-				factory: createProgressbar,
-				widgetName: 'progressbar',
+			callWidgetFactory(createProgressbar, {
 				defaultConfig: {
 					structure: progressbarDefaultSlotStructure,
 				},

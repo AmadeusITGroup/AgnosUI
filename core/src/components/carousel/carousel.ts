@@ -1,5 +1,5 @@
 import {stateStores, true$, writablesForProps} from '../../utils/stores';
-import type {ConfigValidator, Directive, PropsConfig, Widget} from '../../types';
+import type {ConfigValidator, Directive, PropsConfig, Widget, WidgetFactory} from '../../types';
 import {bindDirective, browserDirective, createAttributesDirective, mergeDirectives} from '../../utils/directive';
 import type {EmblaCarouselType, EmblaPluginsType, EmblaPluginType} from 'embla-carousel';
 import EmblaCarousel from 'embla-carousel';
@@ -7,6 +7,7 @@ import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {computed, readable, writable, asReadable} from '@amadeus-it-group/tansu';
 import {createTypeEnum, typeArray, typeBoolean, typeFunction, typeNumber, typeString, typeStringOrNull} from '../../utils/writables';
 import {createNavManager, type NavManagerItemConfig} from '../../services/navManager';
+import {createWidgetFactory} from '../../utils/widget';
 
 /**
  * Represents the Embla carousel options
@@ -356,7 +357,7 @@ export function createEmblaCarousel(
  * @param config - an optional carousel config
  * @returns a CarouselWidget
  */
-export function createCarousel(config?: PropsConfig<CarouselProps>): CarouselWidget {
+export const createCarousel: WidgetFactory<CarouselWidget> = createWidgetFactory('carousel', (config?: PropsConfig<CarouselProps>) => {
 	const [
 		{
 			align$,
@@ -509,4 +510,4 @@ export function createCarousel(config?: PropsConfig<CarouselProps>): CarouselWid
 			}),
 		},
 	};
-}
+});

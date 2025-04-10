@@ -6,13 +6,10 @@
 
 	let {open = $bindable(false), filterText = $bindable(), selected = $bindable(), ...props}: Partial<SelectProps<Item>> = $props();
 
-	const widget = callWidgetFactory<SelectWidget<Item>>({
-		factory: createSelect,
-		widgetName: 'select',
+	const widget = callWidgetFactory<SelectWidget<Item>>(createSelect, {
 		get props() {
 			return {...props, open, filterText, selected};
 		},
-		enablePatchChanged: true,
 		defaultConfig: {badgeLabel, itemLabel},
 		events: {
 			onOpenChange: function (isOpen: boolean): void {

@@ -32,9 +32,7 @@ export class ModalComponent extends BaseWidgetDirective<ModalWidget> {
 
 	constructor() {
 		super(
-			callWidgetFactory({
-				factory: createModal,
-				widgetName: 'modal',
+			callWidgetFactory(createModal, {
 				events: {
 					onVisibleChange: (event) => this.visible.set(event),
 					onShown: () => {},

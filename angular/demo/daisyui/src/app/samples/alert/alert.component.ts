@@ -44,9 +44,7 @@ export class AlertComponent extends BaseWidgetDirective<AlertWidget> {
 
 	constructor() {
 		super(
-			callWidgetFactory({
-				factory: createAlert,
-				widgetName: 'alert',
+			callWidgetFactory(createAlert, {
 				events: {
 					onVisibleChange: (event) => this.visible.set(event),
 					onShown: () => this.shown.emit(),

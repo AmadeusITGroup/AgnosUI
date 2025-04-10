@@ -55,9 +55,7 @@ export class CarouselComponent extends BaseWidgetDirective<CarouselWidget> {
 	readonly playing = linkedSignal(() => this.autoplay());
 
 	constructor() {
-		const widget = callWidgetFactory({
-			factory: createCarousel,
-			widgetName: 'carousel',
+		const widget = callWidgetFactory(createCarousel, {
 			defaultConfig: {
 				container: '.container',
 			},

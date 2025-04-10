@@ -1,6 +1,6 @@
 import type {CarouselDirectives, CarouselProps, CarouselState} from '@agnos-ui/react-headless/components/carousel';
 import {createCarousel} from '@agnos-ui/react-headless/components/carousel';
-import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
+import {useWidget} from '@agnos-ui/react-headless/config';
 import {classDirective, useDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
 import clsx from 'clsx';
 import AutoPlay from 'embla-carousel-autoplay';
@@ -90,7 +90,7 @@ export function Carousel({
 		state: {showNavigationArrows, showNavigationIndicators, selectedScrollSnap, direction},
 		directives,
 		api,
-	} = useWidgetWithConfig(createCarousel, {...props, plugins, container: '.container'}, 'carousel');
+	} = useWidget(createCarousel, {...props, plugins, container: '.container'});
 
 	const [playing, setPlaying] = useState(false);
 	useEffect(() => {

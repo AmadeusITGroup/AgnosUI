@@ -1,5 +1,5 @@
 import {type RatingProps, createRating} from '@agnos-ui/react-headless/components/rating';
-import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
+import {useWidget} from '@agnos-ui/react-headless/config';
 import clsx from 'clsx';
 
 // You can choose here the props from the core you want as inputs
@@ -9,7 +9,7 @@ export function Rating(
 	const {
 		state: {visibleRating, stars, className, ariaLabel},
 		api,
-	} = useWidgetWithConfig(createRating, props, 'rating');
+	} = useWidget(createRating, props);
 
 	return (
 		<div className={clsx('rating', className)}>

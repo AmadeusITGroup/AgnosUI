@@ -176,9 +176,7 @@ export const treeDefaultSlotItem: SlotContent<TreeSlotItemContext> = new Compone
 export class TreeComponent extends BaseWidgetDirective<TreeWidget> {
 	constructor() {
 		super(
-			callWidgetFactory({
-				factory: createTree,
-				widgetName: 'tree',
+			callWidgetFactory(createTree, {
 				defaultConfig: {
 					structure: treeDefaultSlotStructure,
 					item: treeDefaultSlotItem,

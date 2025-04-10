@@ -1,6 +1,6 @@
 import type {AlertProps, AlertWidget} from '@agnos-ui/react-headless/components/alert';
 import {createAlert} from '@agnos-ui/react-headless/components/alert';
-import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
+import {useWidget} from '@agnos-ui/react-headless/config';
 import {createSimpleClassTransition} from '@agnos-ui/react-headless/services/transitions/simpleClassTransition';
 import {useDirective} from '@agnos-ui/react-headless/utils/directive';
 import CloseIcon from '@agnos-ui/common/samples/common/close_icon.svg?react';
@@ -27,6 +27,6 @@ export const Alert = (
 		animationPendingHideClasses: ['opacity-0', 'transition-opacity'],
 	});
 
-	const widget = useWidgetWithConfig(createAlert, props, 'alert', {transition});
+	const widget = useWidget(createAlert, props, {transition});
 	return <>{!widget.state.hidden && <AlertContent {...widget}>{props.children}</AlertContent>}</>;
 };

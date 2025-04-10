@@ -7,13 +7,10 @@
 	const {
 		state,
 		directives: {sliderDirective, clickableAreaDirective, handleEventsDirective},
-	} = callWidgetFactory({
-		factory: createSlider,
-		widgetName: 'slider',
+	} = callWidgetFactory(createSlider, {
 		get props() {
 			return {...props, values};
 		},
-		enablePatchChanged: true,
 		events: {
 			onValuesChange: (value: number[]) => {
 				values = value;

@@ -3,7 +3,7 @@ import {useDirective} from '@agnos-ui/react-headless/utils/directive';
 import clsx from 'clsx';
 import type {PropsWithChildren} from 'react';
 import React from 'react';
-import {useWidgetWithConfig} from '../../config';
+import {useWidget} from '../../config';
 import type {
 	ProgressDisplayOptions,
 	SliderContext,
@@ -137,12 +137,12 @@ export const SliderDefaultSlotStructure = (slotContext: SliderContext) => (
  * @param props - The properties for the Slider component.
  * @returns The rendered Slider component.
  *
- * The Slider component uses the {@link useWidgetWithConfig} hook to create a widget context with the provided
+ * The Slider component uses the {@link useWidget} hook to create a widget context with the provided
  * configuration. It then applies the `sliderDirective` to a `div` element and renders the slot content
  * using the `Slot` component.
  */
 export function Slider(props: PropsWithChildren<Partial<SliderProps>>) {
-	const widgetContext = useWidgetWithConfig(createSlider, props, 'slider', {
+	const widgetContext = useWidget(createSlider, props, {
 		structure: SliderDefaultSlotStructure,
 		handle: SliderDefaultSlotHandle,
 		tick: SliderDefaultTick,

@@ -95,9 +95,7 @@ export class TreeComponent extends BaseWidgetDirective<TreeWidget> {
 
 	constructor() {
 		super(
-			callWidgetFactory({
-				factory: createTree,
-				widgetName: 'tree',
+			callWidgetFactory(createTree, {
 				events: {
 					onExpandToggle: (item: NormalizedTreeItem) => this.expandToggle.emit(item),
 				},

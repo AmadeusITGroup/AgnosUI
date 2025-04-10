@@ -10,13 +10,10 @@
 		...props
 	}: Partial<Pick<Props, 'className' | 'visible' | 'dismissible' | 'ariaCloseButtonLabel'>> & {children: Snippet} = $props();
 
-	const {state, api} = callWidgetFactory({
-		factory: createToast,
-		widgetName: 'toast',
+	const {state, api} = callWidgetFactory(createToast, {
 		get props() {
 			return {...props, visible};
 		},
-		enablePatchChanged: true,
 		events: {
 			onVisibleChange: (event) => {
 				visible = event;

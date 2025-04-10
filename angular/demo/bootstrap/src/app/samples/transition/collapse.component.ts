@@ -49,11 +49,8 @@ export default class CollapseComponent {
 	readonly hidden = toAngularSignal(this.transition.stores.hidden$);
 
 	constructor() {
-		effect(
-			() => {
-				this.transition.patch({visible: this.expanded()});
-			},
-			{allowSignalWrites: true},
-		);
+		effect(() => {
+			this.transition.patch({visible: this.expanded()});
+		});
 	}
 }

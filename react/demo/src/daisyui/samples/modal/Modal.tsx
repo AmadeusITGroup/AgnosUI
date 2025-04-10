@@ -1,6 +1,6 @@
 import type {ModalDirectives, ModalProps} from '@agnos-ui/react-headless/components/modal';
 import {createModal} from '@agnos-ui/react-headless/components/modal';
-import {useWidgetWithConfig} from '@agnos-ui/react-headless/config';
+import {useWidget} from '@agnos-ui/react-headless/config';
 import {useDirective} from '@agnos-ui/react-headless/utils/directive';
 import {type PropsWithChildren} from 'react';
 import ReactDOM from 'react-dom/client';
@@ -16,7 +16,7 @@ const ModalCloseButton = ({directives}: {directives: ModalDirectives}) => (
 export function Modal(
 	props: PropsWithChildren<Partial<Pick<ModalProps, 'closeOnOutsideClick' | 'ariaCloseButtonLabel' | 'closeButton' | 'visible' | 'onVisibleChange'>>>,
 ) {
-	const {state, api, directives} = useWidgetWithConfig(createModal, props, 'modal', {closeButton: true});
+	const {state, api, directives} = useWidget(createModal, props, {closeButton: true});
 	return (
 		<dialog className="modal modal-bottom sm:modal-middle" onClose={api.close} {...useDirective(directives.dialogDirective)}>
 			<div className="modal-box">

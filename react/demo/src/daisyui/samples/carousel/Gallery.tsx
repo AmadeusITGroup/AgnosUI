@@ -7,7 +7,7 @@ import PreviousSvg from '@agnos-ui/common/samples/carousel/previous.svg?react';
 import NextSvg from '@agnos-ui/common/samples/carousel/next.svg?react';
 import ExpandSvg from '@agnos-ui/common/samples/carousel/expand.svg?react';
 import CompressSvg from '@agnos-ui/common/samples/carousel/compress.svg?react';
-import {useWidget} from '@agnos-ui/react-headless/utils/widget';
+import {useWidget} from '@agnos-ui/react-headless/config';
 
 const ImageSlide = ({
 	sources,
