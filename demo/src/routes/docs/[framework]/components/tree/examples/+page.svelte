@@ -5,7 +5,7 @@
 </script>
 
 <Section label="Basic tree" id="basic" level={2}>
-	<Sample title="Basic example" sample={sampleBasic} height={190} noresize />
+	<Sample title="Basic example" sample={sampleBasic} height={200} noresize />
 </Section>
 <Section label="Accessibility" level={2}>
 	<p>
