@@ -8,7 +8,7 @@
 		"verdaccio-server": "wireit"
 	},
 	"dependencies": {
-		"verdaccio": "^6.1.2"
+		"verdaccio": "^0.1.0"
 	},
 	"wireit": {
 		"verdaccio-publish": {
