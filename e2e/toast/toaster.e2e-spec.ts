@@ -12,15 +12,15 @@ test.describe(`Toaster tests`, () => {
 		await toasterDemoPO.locatorPositionSelect.selectOption('middleCenter');
 
 		const middleCenterContainer = toasterDemoPO.locatorToasterContainer();
-		await expect(middleCenterContainer).toHaveClass(/top-50/);
-		await expect(middleCenterContainer).toHaveClass(/start-50/);
-		await expect(middleCenterContainer).toHaveClass(/translate-middle/);
+		await expect(middleCenterContainer).toContainClass('top-50');
+		await expect(middleCenterContainer).toContainClass('start-50');
+		await expect(middleCenterContainer).toContainClass('translate-middle');
 
 		await toasterDemoPO.locatorPositionSelect.selectOption('topLeft');
 
 		const topLeftContainer = toasterDemoPO.locatorToasterContainer();
-		await expect(topLeftContainer).toHaveClass(/top-0/);
-		await expect(topLeftContainer).toHaveClass(/start-0/);
+		await expect(topLeftContainer).toContainClass('top-0');
+		await expect(topLeftContainer).toContainClass('start-0');
 	});
 	test(`Toaster dismissible should display close buttons on the toasts`, async ({page}) => {
 		const toasterDemoPO = new ToasterDemoPO(page);

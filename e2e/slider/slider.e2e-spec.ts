@@ -410,8 +410,8 @@ test.describe(`Slider tests`, () => {
 			await expect(sliderPO.locatorValueLabel).toHaveCount(1);
 			await expect(sliderPO.locatorValueLabel).toHaveText('70 - 67');
 
-			await expect(sliderPO.locatorMinLabelHorizontal).toHaveClass(/au-slider-rtl/);
-			await expect(sliderPO.locatorMaxLabelHorizontal).toHaveClass(/au-slider-rtl/);
+			await expect(sliderPO.locatorMinLabelHorizontal).toContainClass('au-slider-rtl');
+			await expect(sliderPO.locatorMaxLabelHorizontal).toContainClass('au-slider-rtl');
 		});
 
 		test(`should have proper aria attributes for custom labels`, async ({page}) => {
