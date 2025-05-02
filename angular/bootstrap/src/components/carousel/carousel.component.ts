@@ -11,6 +11,7 @@ import {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type {CarouselContext, CarouselSlideContext, CarouselWidget, CarouselProps} from './carousel.gen';
 import {createCarousel} from './carousel.gen';
+import type {InputSignal} from '@angular/core';
 import {ChangeDetectionStrategy, Component, contentChild, Directive, inject, input, TemplateRef, viewChild} from '@angular/core';
 import {callWidgetFactory} from '../../config';
 import type {EmblaPluginType} from 'embla-carousel';
@@ -212,7 +213,7 @@ export class CarouselComponent<SlideData extends {id: string}> extends BaseWidge
 	 * Plugins to extend the carousel with additional features
 	 * @defaultValue `[]`
 	 */
-	readonly plugins = input<EmblaPluginType[]>(undefined, {alias: 'auPlugins'});
+	readonly plugins: InputSignal<EmblaPluginType[] | undefined> = input<EmblaPluginType[]>(undefined, {alias: 'auPlugins'});
 
 	/**
 	 * Align the slides relative to the carousel viewport
