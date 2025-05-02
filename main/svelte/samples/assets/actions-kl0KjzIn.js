@@ -1,1 +1,0 @@
-import{a7 as c,a1 as o,a8 as i,a9 as d,aa as m}from"./AppCommon-CsXJDRZ3.js";function k(e,n,r){c(()=>{var a=o(()=>n(e,r==null?void 0:r())||{});if(r&&(a!=null&&a.update)){var s=!1,t={};i(()=>{var f=r();d(f),s&&m(t,f)&&(t=f,a.update(f))}),s=!0}if(a!=null&&a.destroy)return()=>a.destroy()})}export{k as a};
