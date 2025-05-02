@@ -1,1 +1,0 @@
-import{Jb as p,Za as n,vb as a,wb as l}from"./chunk-5FTGIWQY.js";var t=class o{static{this.\u0275fac=function(e){return new(e||o)}}static{this.\u0275cmp=n({type:o,selectors:[["ng-component"]],decls:2,vars:0,template:function(e,s){e&1&&(a(0,"h3"),p(1,"Coming soon..."),l())},encapsulation:2})}};export{t as default};

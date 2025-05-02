@@ -1,0 +1,1 @@
+import{Kb as p,_a as n,wb as a,xb as l}from"./chunk-E6ETVFRP.js";var t=class o{static{this.\u0275fac=function(e){return new(e||o)}}static{this.\u0275cmp=n({type:o,selectors:[["ng-component"]],decls:2,vars:0,template:function(e,s){e&1&&(a(0,"h3"),p(1,"Coming soon..."),l())},encapsulation:2})}};export{t as default};
