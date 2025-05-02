@@ -16,16 +16,16 @@ test.describe(`Toast tests`, () => {
 		await toastDemoPO.locatorAddToastButton.click();
 
 		const middleCenterContainer = toastDemoPO.locatorToastContainer(4);
-		await expect(middleCenterContainer).toHaveClass(/top-50/);
-		await expect(middleCenterContainer).toHaveClass(/start-50/);
-		await expect(middleCenterContainer).toHaveClass(/translate-middle/);
+		await expect(middleCenterContainer).toContainClass('top-50');
+		await expect(middleCenterContainer).toContainClass('start-50');
+		await expect(middleCenterContainer).toContainClass('translate-middle');
 
 		await toastDemoPO.locatorPositionSelect.selectOption('topLeft');
 		await toastDemoPO.locatorAddToastButton.click();
 
 		const topLeftContainer = toastDemoPO.locatorToastContainer(0);
-		await expect(topLeftContainer).toHaveClass(/top-0/);
-		await expect(topLeftContainer).toHaveClass(/start-0/);
+		await expect(topLeftContainer).toContainClass('top-0');
+		await expect(topLeftContainer).toContainClass('start-0');
 	});
 
 	test(`Toast without header`, async ({page}) => {
