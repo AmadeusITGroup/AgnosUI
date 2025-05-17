@@ -3,7 +3,7 @@
 	import type {Snippet} from 'svelte';
 
 	let {children}: {children: Snippet} = $props();
-	const tocDirective = createTOC((node) => Array.from(node.querySelectorAll('section')));
+	const toc = createTOC((node) => Array.from(node.querySelectorAll('section')));
 </script>
 
-<div class="px-3" use:tocDirective>{@render children()}</div>
+<div class="px-3" {@attach toc}>{@render children()}</div>

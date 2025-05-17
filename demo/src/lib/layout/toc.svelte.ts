@@ -10,11 +10,11 @@ import {fromStore} from 'svelte/store';
  * @example
  *
  * ```typescript
- * const tocDirective = createTOC((node) => [...node.querySelectorAll('section')] as HTMLElement[]);
+ * const toc = createTOC((node) => [...node.querySelectorAll('section')] as HTMLElement[]);
  * ```
  *
  * ```html
- * <div use:tocDirective>...</div>
+ * <div {@attach toc}>...</div>
  * ```
  */
 export function createTOC(getElements: (node: HTMLElement) => HTMLElement[]) {

@@ -21,7 +21,7 @@
 
 	const {
 		state,
-		directives: {transitionDirective},
+		attachments: {transitionDirective},
 		api,
 	} = callWidgetFactory(createAlert, {
 		get props() {
@@ -37,7 +37,7 @@
 </script>
 
 {#if !state.hidden}
-	<div role="alert" class="alert {state.className}" use:transitionDirective>
+	<div role="alert" class="alert {state.className}" {@attach transitionDirective()}>
 		{#if icon}
 			{@render icon()}
 		{:else}

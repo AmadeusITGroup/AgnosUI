@@ -14,7 +14,7 @@
 	});
 	const {
 		state,
-		directives: {ariaDirective},
+		attachments: {ariaDirective},
 	} = widget;
 </script>
 
@@ -22,6 +22,6 @@
 	<ProgressbarDefaultStructure {...props} />
 {/snippet}
 
-<div use:ariaDirective class={state.className || undefined}>
+<div {@attach ariaDirective()} class={state.className || undefined}>
 	<Slot content={state.structure} props={widget} />
 </div>

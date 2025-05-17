@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type {SliderSlotHandleContext} from './slider.gen';
 
-	let {item, directives}: SliderSlotHandleContext = $props();
+	let {item, attachments}: SliderSlotHandleContext = $props();
 
 	let refocusElement: HTMLElement | undefined = $state(undefined);
 	let updateTimeout: NodeJS.Timeout;
@@ -41,4 +41,4 @@
 </script>
 
 <!-- svelte-ignore a11y_consider_explicit_label -->
-<button {onkeydown} use:directives.handleDirective={{item}}></button>
+<button {onkeydown} {@attach attachments.handleDirective({item})}></button>

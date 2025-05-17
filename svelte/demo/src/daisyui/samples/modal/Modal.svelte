@@ -7,7 +7,7 @@
 
 	const {
 		state,
-		directives: {closeButtonDirective, dialogDirective},
+		attachments: {closeButtonDirective, dialogDirective},
 		api: modalApi,
 	} = callWidgetFactory(createModal, {
 		get props() {
@@ -23,12 +23,12 @@
 	export const api = modalApi;
 </script>
 
-<dialog class="modal modal-bottom sm:modal-middle" onclose={api.close} use:dialogDirective>
+<dialog class="modal modal-bottom sm:modal-middle" onclose={api.close} {@attach dialogDirective()}>
 	<div class="modal-box">
 		{@render children()}
 		{#if state.closeButton}
 			<form method="dialog">
-				<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" use:closeButtonDirective> ✕ </button>
+				<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" {@attach closeButtonDirective()}> ✕ </button>
 			</form>
 		{/if}
 	</div>

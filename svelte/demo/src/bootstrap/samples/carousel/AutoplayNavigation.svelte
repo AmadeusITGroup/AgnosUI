@@ -4,17 +4,17 @@
 	import playSvg from 'bootstrap-icons/icons/play-fill.svg?raw';
 	import pauseSvg from 'bootstrap-icons/icons/pause-fill.svg?raw';
 	import {on} from 'svelte/events';
+	import type {Attachment} from 'svelte/attachments';
 
-	let {state: cState, directives, api, isPlaying = $bindable()}: CarouselContext<SlideData> & {isPlaying: boolean} = $props();
+	let {state: cState, attachments, api, isPlaying = $bindable()}: CarouselContext<SlideData> & {isPlaying: boolean} = $props();
 
 	const onpointerdown = (e: PointerEvent) => {
 		e.preventDefault();
 	};
-	const notouchstart = (node: HTMLDivElement) => ({
-		destroy: on(node, 'touchstart', (e: TouchEvent) => {
+	const notouchstart: Attachment<HTMLDivElement> = (node: HTMLDivElement) =>
+		on(node, 'touchstart', (e: TouchEvent) => {
 			e.stopPropagation();
-		}),
-	});
+		});
 	const onclick = () => {
 		if (isPlaying) {
 			api.plugins()!.autoplay.stop();
@@ -54,7 +54,7 @@
 </script>
 
 <div class="navigation">
-	<div class="d-flex bg-light rounded-4 py-1 px-2" {onpointerdown} use:notouchstart>
+	<div class="d-flex bg-light rounded-4 py-1 px-2" {onpointerdown} {@attach notouchstart}>
 		<button
 			type="button"
 			class="btn btn-sm btn-outline-primary rounded-5 d-flex align-items-center"
@@ -64,14 +64,14 @@
 			{@html isPlaying ? pauseSvg : playSvg}
 		</button>
 	</div>
-	<div class="d-flex bg-light rounded-4 py-1 px-3 align-items-center" {onpointerdown} use:notouchstart>
-		<div class="pagination pagination-sm align-items-center" use:directives.tabList>
+	<div class="d-flex bg-light rounded-4 py-1 px-3 align-items-center" {onpointerdown} {@attach notouchstart}>
+		<div class="pagination pagination-sm align-items-center" {@attach attachments.tabList()}>
 			{#each cState.slidesData as slideData, index (slideData.id)}
 				<div class="page-item">
 					<button
 						type="button"
 						class={['page-link', cState.selectedScrollSnap === index && 'active']}
-						use:directives.tabIndicator={{index, id: slideData.id}}
+						{@attach attachments.tabIndicator({index, id: slideData.id})}
 					>
 						{index + 1}
 					</button>

@@ -46,9 +46,10 @@
 
 <div class="custom-select my-auto mb-3">
 	<Select {items} {itemIdFn} {onFilterTextChange} {onSelectedChange} {navSelector} badgeClassName="badge text-bg-light d-flex align-items-center">
-		{#snippet badgeLabel({itemContext, directives})}
+		{#snippet badgeLabel({itemContext, attachments})}
 			<a href={`${basePageUrl}${itemContext.item.pageid}`} target="_blank" rel="noreferrer">{itemContext.item.title}</a>
-			<button type="button" class="btn-close ms-1 wiki-btn-close" aria-label="Close" use:directives.badgeCloseButtonDirective={itemContext}></button>
+			<button type="button" class="btn-close ms-1 wiki-btn-close" aria-label="Close" {@attach attachments.badgeCloseButtonDirective(itemContext)}
+			></button>
 		{/snippet}
 		{#snippet itemLabel({itemContext: {id, item}})}
 			<label for={'' + id}>

@@ -24,7 +24,7 @@
 			</div>
 		{/if}
 		{#each toaster.toasts.current as { id, props: { className, visible, structure, children, header, dismissible, ariaCloseButtonLabel, animated, animatedOnInit, onShown, onHidden, onVisibleChange, transition } } (id)}
-			<div use:eventsDirective={id}>
+			<div {@attach (el) => eventsDirective(el, id)?.destroy}>
 				<Toast
 					{animated}
 					{animatedOnInit}

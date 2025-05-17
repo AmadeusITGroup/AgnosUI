@@ -6,7 +6,7 @@
 
 	const {
 		state,
-		directives: {ariaDirective},
+		attachments: {ariaDirective},
 	} = callWidgetFactory(createProgressbar, {
 		props,
 	});
@@ -18,6 +18,6 @@
 	});
 </script>
 
-<div use:ariaDirective class="radial-progress {state.className}" style="--thickness: 0.4rem; --value:{state.percentage};">
+<div {@attach ariaDirective()} class="radial-progress {state.className}" style="--thickness: 0.4rem; --value:{state.percentage};">
 	{percentFormat.format(state.percentage / 100)}
 </div>

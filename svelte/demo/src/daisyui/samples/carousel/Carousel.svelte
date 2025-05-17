@@ -29,7 +29,7 @@
 
 	const {
 		state: cState,
-		directives,
+		attachments,
 		api,
 	} = callWidgetFactory(createCarousel, {
 		get props() {
@@ -65,7 +65,7 @@
 
 <div
 	class="overflow-hidden relative w-full cursor-grab active:cursor-grabbing ring-primary has-[.au-carousel-slide:focus-visible]:ring-3"
-	use:directives.root
+	{@attach attachments.root()}
 >
 	{#if cState.showNavigationArrows || cState.showNavigationIndicators || autoplay}
 		<div class={['absolute top-2 right-2 left-2 z-1 flex', autoplay ? 'justify-between' : 'justify-center']}>
@@ -79,22 +79,22 @@
 			{#if cState.showNavigationArrows || cState.showNavigationIndicators}
 				<div class="flex p-1 px-2 gap-1 cursor-auto bg-base-100 rounded-xl" {onpointerdown}>
 					{#if cState.showNavigationArrows}
-						<button class="btn btn-circle btn-xs" use:directives.scrollPrev>
+						<button class="btn btn-circle btn-xs" {@attach attachments.scrollPrev()}>
 							{@html cState.direction === 'rtl' ? nextSvg : previousSvg}
 						</button>
 					{/if}
 					{#if cState.showNavigationIndicators}
-						<div class="flex gap-1" use:directives.tabList>
+						<div class="flex gap-1" {@attach attachments.tabList()}>
 							{#each photos as { id }, index (id)}
 								<!-- svelte-ignore a11y_consider_explicit_label -->
-								<button class={['btn btn-xs', cState.selectedScrollSnap === index && 'btn-active']} use:directives.tabIndicator={{index, id}}>
+								<button class={['btn btn-xs', cState.selectedScrollSnap === index && 'btn-active']} {@attach attachments.tabIndicator({index, id})}>
 									{index + 1}
 								</button>
 							{/each}
 						</div>
 					{/if}
 					{#if cState.showNavigationArrows}
-						<button class="btn btn-circle btn-xs" use:directives.scrollNext>
+						<button class="btn btn-circle btn-xs" {@attach attachments.scrollNext()}>
 							{@html cState.direction === 'rtl' ? previousSvg : nextSvg}
 						</button>
 					{/if}
@@ -104,7 +104,7 @@
 	{/if}
 	<div class="flex container touch-pan-y touch-pinch-zoom" aria-atomic="false" aria-live={autoplay ? 'off' : 'polite'}>
 		{#each photos as slideData, index (slideData.id)}
-			<div class="basis-full shrink-0 grow-0" use:directives.slide={{id: slideData.id, index}}>
+			<div class="basis-full shrink-0 grow-0" {@attach attachments.slide({id: slideData.id, index})}>
 				{@render slide(slideData)}
 			</div>
 		{/each}

@@ -6,7 +6,7 @@
 
 	const {
 		state: fState,
-		directives: {floatingDirective, referenceDirective, arrowDirective},
+		attachments: {floatingDirective, referenceDirective, arrowDirective},
 	} = callWidgetFactory(createFloatingUI, {
 		props: {
 			arrowOptions: {
@@ -35,16 +35,16 @@
 	};
 </script>
 
-<div class="position-relative overflow-auto border border-primary-subtle demo-floatingui" use:scrollToMiddle>
-	<button use:referenceDirective type="button" class="btn btn-primary" onclick={toggleButton}>Toggle popover</button>
+<div class="position-relative overflow-auto border border-primary-subtle demo-floatingui" {@attach scrollToMiddle}>
+	<button {@attach referenceDirective()} type="button" class="btn btn-primary" onclick={toggleButton}>Toggle popover</button>
 	{#if displayPopover}
 		<div
-			use:floatingDirective
+			{@attach floatingDirective()}
 			data-popper-placement={fState.placement}
 			class={['popover bs-popover-auto position-absolute', {invisible: fState.middlewareData?.hide?.referenceHidden}]}
 			role="tooltip"
 		>
-			<div class="popover-arrow position-absolute" use:arrowDirective></div>
+			<div class="popover-arrow position-absolute" {@attach arrowDirective()}></div>
 			<div class="popover-body text-center">This is a sample popover</div>
 		</div>
 	{/if}

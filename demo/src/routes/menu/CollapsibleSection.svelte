@@ -56,7 +56,7 @@
 			<rect class={['vertical', {expanded: $visible$}]} x="45" y="20" width="10" height="60" fill="currentColor" />
 		</svg>
 	</button>
-	<div class="contents" use:directive>
+	<div class="contents" {@attach (el) => directive(el)?.destroy}>
 		{@render children()}
 	</div>
 </div>

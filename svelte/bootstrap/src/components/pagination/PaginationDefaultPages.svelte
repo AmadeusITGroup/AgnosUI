@@ -3,7 +3,7 @@
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 
 	let widget: PaginationContext = $props();
-	let {state, directives} = widget;
+	let {state, attachments} = widget;
 </script>
 
 {#each state.pages as page}
@@ -14,7 +14,8 @@
 			</div>
 			<span class="visually-hidden">{state.ariaEllipsisLabel}</span>
 		{:else}
-			<a class="page-link" use:directives.pageLink={{page}}>
+			<!-- svelte-ignore a11y_missing_attribute -->
+			<a class="page-link" {@attach attachments.pageLink({page})}>
 				<Slot content={state.numberLabel} props={{...widget, displayedPage: page}} />{#if state.page === page}
 					<span class="visually-hidden">{state.activeLabel}</span>
 				{/if}

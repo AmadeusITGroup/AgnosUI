@@ -27,11 +27,11 @@
 	});
 
 	// The main Carousel
-	const {state: mainState, directives: mainDirectives} = callWidgetFactory(createCarousel);
+	const {state: mainState, attachments: mainAttachments} = callWidgetFactory(createCarousel);
 
 	// The Thumbnail Carousel
 	const {
-		directives: thumbDirectives,
+		attachments: thumbAttachments,
 		api: {scrollTo: thumbScrollTo},
 	} = callWidgetFactory(createCarousel, {
 		props: {
@@ -71,18 +71,26 @@
 </script>
 
 <div bind:this={mainContainer} class="grid grid-flow-row max-h-dvh">
-	<div class="overflow-hidden relative cursor-grab active:cursor-grabbing" use:mainDirectives.root>
+	<div class="overflow-hidden relative cursor-grab active:cursor-grabbing" {@attach mainAttachments.root()}>
 		<div class="flex max-h-full">
 			{#each photosWithLoadState as { src, alt, sources, loadRequested }, index (index)}
-				<GalleryImage {src} {alt} {sources} {loadRequested} {aspectRatio} id="gallery-photo-{index}" {index} slide={mainDirectives.slide} />
+				<GalleryImage {src} {alt} {sources} {loadRequested} {aspectRatio} id="gallery-photo-{index}" {index} slide={mainAttachments.slide} />
 			{/each}
 		</div>
 		{#if withNavArrows}
 			<div class="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
-				<button class="btn btn-primary btn-sm md:btn-md btn-circle opacity-75 hover:opacity-100" {onpointerdown} use:mainDirectives.scrollPrev>
+				<button
+					class="btn btn-primary btn-sm md:btn-md btn-circle opacity-75 hover:opacity-100"
+					{onpointerdown}
+					{@attach mainAttachments.scrollPrev()}
+				>
 					{@html previousSvg}
 				</button>
-				<button class="btn btn-primary btn-sm md:btn-md btn-circle opacity-75 hover:opacity-100" {onpointerdown} use:mainDirectives.scrollNext>
+				<button
+					class="btn btn-primary btn-sm md:btn-md btn-circle opacity-75 hover:opacity-100"
+					{onpointerdown}
+					{@attach mainAttachments.scrollNext()}
+				>
 					{@html nextSvg}
 				</button>
 			</div>
@@ -100,12 +108,12 @@
 			</div>
 		{/if}
 	</div>
-	<div class="overflow-hidden mt-1 mb-2" use:thumbDirectives.root>
-		<div class="grid grid-flow-col auto-cols-max gap-2 mx-1 my-1 items-center" use:mainDirectives.tabList>
+	<div class="overflow-hidden mt-1 mb-2" {@attach thumbAttachments.root()}>
+		<div class="grid grid-flow-col auto-cols-max gap-2 mx-1 my-1 items-center" {@attach mainAttachments.tabList()}>
 			{#each photos as { thumbnail }, index}
 				<button
 					class={['ring-primary cursor-pointer', mainState.selectedScrollSnap === index && 'ring-3']}
-					use:mainDirectives.tabIndicator={{index, id: `gallery-photo-${index}`}}
+					{@attach mainAttachments.tabIndicator({index, id: `gallery-photo-${index}`})}
 				>
 					<img class="select-none" alt="random picsum" src={thumbnail} loading="lazy" style:aspect-ratio={aspectRatio} />
 				</button>

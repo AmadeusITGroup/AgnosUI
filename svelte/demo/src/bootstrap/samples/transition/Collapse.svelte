@@ -11,7 +11,7 @@
 	const {
 		state,
 		api: {toggle},
-		directives: {directive},
+		attachments: {directive},
 	} = callWidgetFactory(createTransition, {
 		get props() {
 			return {
@@ -44,7 +44,7 @@
 		</button>
 	</div>
 	{#if !state.hidden}
-		<div id="collapse-content" use:directive>
+		<div id="collapse-content" {@attach directive()}>
 			<div class="card-body">
 				{@render children()}
 			</div>

@@ -11,7 +11,7 @@
 		<Slot content={state.header} props={widget} />
 		{#if state.dismissible}
 			<!-- svelte-ignore a11y_consider_explicit_label -->
-			<button class="btn-close me-0 ms-auto" use:widget.directives.closeButtonDirective></button>
+			<button class="btn-close me-0 ms-auto" {@attach widget.attachments.closeButtonDirective()}></button>
 		{/if}
 	</div>
 {/if}
@@ -21,5 +21,5 @@
 </div>
 {#if state.dismissible && !state.header}
 	<!-- svelte-ignore a11y_consider_explicit_label -->
-	<button class="btn-close btn-close-white me-2 m-auto" use:widget.directives.closeButtonDirective></button>
+	<button class="btn-close btn-close-white me-2 m-auto" {@attach widget.attachments.closeButtonDirective()}></button>
 {/if}

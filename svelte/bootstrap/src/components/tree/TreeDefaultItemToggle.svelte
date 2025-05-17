@@ -1,12 +1,12 @@
 <script lang="ts">
 	import type {TreeSlotItemContext} from './tree.gen';
 
-	let {item, directives}: TreeSlotItemContext = $props();
+	let {item, attachments}: TreeSlotItemContext = $props();
 </script>
 
 {#if item.children.length > 0}
 	<!-- svelte-ignore a11y_consider_explicit_label -->
-	<button use:directives.itemToggleDirective={{item: item}}>
+	<button {@attach attachments.itemToggleDirective({item: item})}>
 		<span class="au-tree-expand-icon-svg"></span>
 	</button>
 {:else}

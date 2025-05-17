@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type {Source} from '@agnos-ui/common/samples/carousel/photo';
-	import type {CarouselDirectives} from '@agnos-ui/svelte-headless/components/carousel';
+	import type {Attachment} from 'svelte/attachments';
 
 	let {
 		loadRequested,
@@ -19,13 +19,13 @@
 		aspectRatio: number;
 		id: string;
 		index: number;
-		slide: CarouselDirectives['slide'];
+		slide: ({id, index}: {id: string; index: number}) => Attachment<HTMLElement>;
 	} = $props();
 
 	let imageLoaded = $state(false);
 </script>
 
-<div class="relative basis-full min-w-0 shrink-0 grow-0 flex justify-center" use:slide={{id, index}}>
+<div class="relative basis-full min-w-0 shrink-0 grow-0 flex justify-center" {@attach slide({id, index})}>
 	{#if loadRequested}
 		{#if !imageLoaded}
 			<span class="absolute top-1/2 -translate-y-1/2 left-1/2 loading loading-spinner loading-lg text-primary"></span>

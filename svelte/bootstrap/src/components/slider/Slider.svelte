@@ -21,7 +21,7 @@
 		},
 	});
 	const {
-		directives: {sliderDirective},
+		attachments: {sliderDirective},
 		state,
 	} = widget;
 </script>
@@ -40,6 +40,6 @@
 {/snippet}
 
 <!-- on:blur={onTouched} ?? -->
-<div use:sliderDirective>
+<div {@attach sliderDirective()}>
 	<Slot content={state.structure} props={widget} />
 </div>

@@ -25,7 +25,7 @@
 <div
 	tabIndex={0}
 	class="collapse collapse-arrow bg-base-100 border border-base-300"
-	use:transition.directives.directive
+	{@attach (el) => transition.directives.directive(el)?.destroy}
 	onblur={() => transition.api.hide()}
 	onfocus={() => transition.api.show()}
 >

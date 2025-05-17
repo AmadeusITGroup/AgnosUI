@@ -8,7 +8,7 @@
 	let {children, visible = $bindable(), ...props}: Partial<CollapseProps> & {children: Snippet} = $props();
 
 	const {
-		directives: {collapseDirective},
+		attachments: {collapseDirective},
 		api: collapseApi,
 	} = callWidgetFactory(createCollapse, {
 		get props() {
@@ -26,6 +26,6 @@
 	export const api: CollapseApi = collapseApi;
 </script>
 
-<div use:collapseDirective>
+<div {@attach collapseDirective()}>
 	{@render children()}
 </div>

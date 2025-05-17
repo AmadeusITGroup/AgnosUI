@@ -5,7 +5,7 @@
 	let text = $state('focus element clicked');
 </script>
 
-<div use:createSampleDirective={text}>
+<div {@attach (el) => createSampleDirective(el, text)?.destroy}>
 	<button class="btn btn-primary" id="test">button 1</button>
 	<button class="btn btn-primary" id="test2">button 2</button>
 </div>

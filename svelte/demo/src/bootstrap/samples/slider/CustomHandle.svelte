@@ -2,11 +2,11 @@
 	import '@agnos-ui/common/samples/slider/custom.scss';
 	import type {SliderSlotHandleContext} from '@agnos-ui/svelte-bootstrap/components/slider';
 
-	let {item, directives}: SliderSlotHandleContext = $props();
+	let {item, attachments}: SliderSlotHandleContext = $props();
 </script>
 
 <!-- svelte-ignore a11y_consider_explicit_label -->
-<button class="custom-handle" use:directives.handleDirective={{item}}>
+<button class="custom-handle" {@attach attachments.handleDirective({item})}>
 	<svg xmlns="http://www.w3.org/2000/svg" fill="var(--bs-slider-handle-color)" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
 		<path
 			stroke-linecap="round"

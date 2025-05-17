@@ -3,23 +3,23 @@
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 
 	let widget: SliderContext = $props();
-	let {state, directives} = widget;
+	let {state, attachments} = widget;
 </script>
 
 {#each state.progressDisplayOptions as option (option.id)}
-	<div use:directives.progressDisplayDirective={{option}}></div>
+	<div {@attach attachments.progressDisplayDirective({option})}></div>
 {/each}
-<div use:directives.clickableAreaDirective></div>
+<div {@attach attachments.clickableAreaDirective()}></div>
 {#if state.showMinMaxLabels}
-	<div use:directives.minLabelDirective>
+	<div {@attach attachments.minLabelDirective()}>
 		<Slot content={state.label} props={{value: state.min, ...widget}} />
 	</div>
-	<div use:directives.maxLabelDirective>
+	<div {@attach attachments.maxLabelDirective()}>
 		<Slot content={state.label} props={{value: state.max, ...widget}} />
 	</div>
 {/if}
 {#if state.showValueLabels && state.combinedLabelDisplay}
-	<div use:directives.combinedHandleLabelDisplayDirective>
+	<div {@attach attachments.combinedHandleLabelDisplayDirective()}>
 		{#if state.rtl}
 			<Slot content={state.label} props={{value: state.sortedValues[1], ...widget}} /> -
 			<Slot content={state.label} props={{value: state.sortedValues[0], ...widget}} />
@@ -35,7 +35,7 @@
 {#each state.sortedHandles as item, i (item.id)}
 	<Slot content={state.handle} props={{item, ...widget}} />
 	{#if state.showValueLabels && !state.combinedLabelDisplay}
-		<div use:directives.handleLabelDisplayDirective={{index: i}}>
+		<div {@attach attachments.handleLabelDisplayDirective({index: i})}>
 			<Slot content={state.label} props={{value: state.values[i], ...widget}} />
 		</div>
 	{/if}

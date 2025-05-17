@@ -6,7 +6,10 @@
 
 	let {children, ...props}: Partial<AccordionProps> & {children: Snippet} = $props();
 
-	const {directives, api: accordionApi} = callWidgetFactory(createAccordion, {
+	const {
+		attachments: {accordionDirective},
+		api: accordionApi,
+	} = callWidgetFactory(createAccordion, {
 		props,
 	});
 	export const api: AccordionApi = accordionApi;
@@ -14,6 +17,6 @@
 	setAccordionApi(accordionApi);
 </script>
 
-<div class="accordion" use:directives.accordionDirective>
+<div class="accordion" {@attach accordionDirective()}>
 	{@render children()}
 </div>

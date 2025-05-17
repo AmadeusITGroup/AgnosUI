@@ -6,10 +6,10 @@
 
 	const {
 		state,
-		directives: {ariaDirective},
+		attachments: {ariaDirective},
 	} = callWidgetFactory(createProgressbar, {
 		props,
 	});
 </script>
 
-<progress use:ariaDirective class="progress {state.className}" value={state.value} max={state.max}></progress>
+<progress {@attach ariaDirective()} class="progress {state.className}" value={state.value} max={state.max}></progress>

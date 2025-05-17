@@ -1,11 +1,11 @@
 <script lang="ts" module>
-	const iframeSrc = (iframe: HTMLIFrameElement, src: string) => {
-		const update = (src: string) => iframe.contentWindow?.location.replace(new URL(src, window.location.href));
-		update(src);
-		return {
-			update,
+	import type {Attachment} from 'svelte/attachments';
+
+	const iframeSrc =
+		(src: string): Attachment<HTMLIFrameElement> =>
+		(iframe: HTMLIFrameElement) => {
+			iframe.contentWindow?.location.replace(new URL(src, window.location.href));
 		};
-	};
 </script>
 
 <script lang="ts">
@@ -102,7 +102,7 @@
 				</div>
 			</div>
 		{/if}
-		<iframe class="demo-sample d-block" use:iframeSrc={sampleUrl} {title} use:handlerDirective={sampleBaseUrl}></iframe>
+		<iframe class="demo-sample d-block" {@attach iframeSrc(sampleUrl)} {title} use:handlerDirective={sampleBaseUrl}></iframe>
 	</div>
 	{#if showButtons}
 		<div class="border border-t-0 flex {showCode ? 'border-b-0' : ''} items-center p-1" role="toolbar" aria-label="Toolbar with button groups">
