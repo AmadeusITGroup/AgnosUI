@@ -3,13 +3,13 @@
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 
 	let widget: CarouselContext<SlideData> = $props();
-	let {state, directives} = widget;
+	let {state, attachments} = widget;
 </script>
 
 <Slot content={state.navigation} props={widget} />
-<div use:directives.container>
+<div {@attach attachments.container()}>
 	{#each state.slidesData as slideData, index (slideData.id)}
-		<div use:directives.slide={{index, id: slideData.id}}>
+		<div {@attach attachments.slide({index, id: slideData.id})}>
 			<Slot content={state.slide} props={{...slideData, ...widget}} />
 		</div>
 	{/each}

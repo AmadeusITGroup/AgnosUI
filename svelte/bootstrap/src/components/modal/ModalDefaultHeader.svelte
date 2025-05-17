@@ -10,5 +10,5 @@
 </h5>
 {#if widget.state.closeButton}
 	<!-- svelte-ignore a11y_consider_explicit_label -->
-	<button class="btn-close" use:widget.directives.closeButtonDirective></button>
+	<button class="btn-close" {@attach widget.attachments.closeButtonDirective()}></button>
 {/if}

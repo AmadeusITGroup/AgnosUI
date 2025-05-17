@@ -21,7 +21,7 @@
 
 	const {
 		state,
-		directives: {transitionDirective},
+		attachments: {transitionDirective},
 	} = widget;
 </script>
 
@@ -33,7 +33,7 @@
 	<div
 		role="alert"
 		class={['au-alert', 'alert', `alert-${state.type}`, state.className, state.dismissible && 'alert-dismissible']}
-		use:transitionDirective
+		{@attach transitionDirective()}
 	>
 		<Slot content={state.structure} props={widget} />
 	</div>

@@ -26,7 +26,7 @@
 	export const api: SelectApi<Item> = widget.api;
 	const {
 		state,
-		directives: {
+		attachments: {
 			floatingDirective,
 			hasFocusDirective,
 			referenceDirective,
@@ -46,21 +46,21 @@
 	{itemContext.item}
 {/snippet}
 
-<div use:referenceDirective class="au-select dropdown border border-1 p-1 mb-3 d-block {state.className}">
-	<div use:hasFocusDirective use:inputContainerDirective class="d-flex align-items-center flex-wrap gap-1">
+<div {@attach referenceDirective()} class="au-select dropdown border border-1 p-1 mb-3 d-block {state.className}">
+	<div {@attach hasFocusDirective()} {@attach inputContainerDirective()} class="d-flex align-items-center flex-wrap gap-1">
 		{#each state.selectedContexts as itemContext (itemContext.id)}
-			<div use:badgeAttributesDirective={itemContext}>
-				<Slot content={state.badgeLabel} props={{state, directives: widget.directives, api: widget.api, itemContext}} />
+			<div {@attach badgeAttributesDirective(itemContext)}>
+				<Slot content={state.badgeLabel} props={{state, attachments: widget.attachments, api: widget.api, itemContext}} />
 			</div>
 		{/each}
-		<input value={state.filterText} use:inputDirective />
+		<input value={state.filterText} {@attach inputDirective()} />
 	</div>
 	{#if state.open && state.visibleItems.length > 0}
-		<ul use:hasFocusDirective use:floatingDirective use:menuAttributesDirective class="dropdown-menu show">
+		<ul {@attach hasFocusDirective()} {@attach floatingDirective()} {@attach menuAttributesDirective()} class="dropdown-menu show">
 			{#each state.visibleItems as itemContext (itemContext.id)}
 				{@const isHighlighted = itemContext === state.highlighted}
-				<li class={['dropdown-item position-relative', {'text-bg-primary': isHighlighted}]} use:itemAttributesDirective={itemContext}>
-					<Slot content={state.itemLabel} props={{state, directives: widget.directives, api: widget.api, itemContext}} />
+				<li class={['dropdown-item position-relative', {'text-bg-primary': isHighlighted}]} {@attach itemAttributesDirective(itemContext)}>
+					<Slot content={state.itemLabel} props={{state, attachments: widget.attachments, api: widget.api, itemContext}} />
 				</li>
 			{/each}
 		</ul>

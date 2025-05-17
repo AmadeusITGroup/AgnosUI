@@ -25,7 +25,7 @@
 	export const api: ModalApi<Data> = widget.api;
 
 	const {
-		directives: {backdropDirective, backdropPortalDirective, modalDirective, modalPortalDirective},
+		attachments: {backdropDirective, backdropPortalDirective, modalDirective, modalPortalDirective},
 		state,
 	} = widget;
 </script>
@@ -38,11 +38,11 @@
 {/snippet}
 
 {#if !state.backdropHidden}
-	<div class="modal-backdrop" use:backdropPortalDirective use:backdropDirective></div>
+	<div class="modal-backdrop" {@attach backdropPortalDirective()} {@attach backdropDirective()}></div>
 {/if}
 
 {#if !state.hidden}
-	<div class="modal d-block" use:modalPortalDirective use:modalDirective>
+	<div class="modal d-block" {@attach modalPortalDirective()} {@attach modalDirective()}>
 		<div class="modal-dialog {state.fullscreen ? 'modal-fullscreen' : ''}">
 			<div class="modal-content">
 				<Slot content={state.structure} props={widget} />

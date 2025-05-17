@@ -6,7 +6,7 @@
 
 	const {
 		state,
-		directives: {sliderDirective, clickableAreaDirective, handleEventsDirective},
+		attachments: {sliderDirective, clickableAreaDirective, handleEventsDirective},
 	} = callWidgetFactory(createSlider, {
 		get props() {
 			return {...props, values};
@@ -21,9 +21,9 @@
 
 <input
 	type="range"
-	use:sliderDirective
-	use:clickableAreaDirective
-	use:handleEventsDirective={{item: {id: 0}}}
+	{@attach sliderDirective()}
+	{@attach clickableAreaDirective()}
+	{@attach handleEventsDirective({item: {id: 0}})}
 	min={state.min}
 	max={state.max}
 	value={state.sortedHandles[0].value}

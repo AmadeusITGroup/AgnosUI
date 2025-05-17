@@ -38,7 +38,7 @@
 	});
 	const {
 		state,
-		directives: {itemDirective, toggleDirective, transitionDirective, bodyContainerAttrsDirective},
+		attachments: {itemDirective, toggleDirective, transitionDirective, bodyContainerAttrsDirective},
 		api: {toggle},
 	} = widget;
 
@@ -50,11 +50,15 @@
 	onMount(widget.api.initDone);
 </script>
 
-<div class="collapse collapse-arrow bg-base-100 border border-base-300 has-[:focus-visible]:ring" use:itemDirective use:transitionDirective>
-	<div role="button" tabindex="0" class="collapse-title font-semibold focus-visible:outline-hidden" use:toggleDirective {onkeydown}>
+<div
+	class="collapse collapse-arrow bg-base-100 border border-base-300 has-[:focus-visible]:ring"
+	{@attach itemDirective()}
+	{@attach transitionDirective()}
+>
+	<div role="button" tabindex="0" class="collapse-title font-semibold focus-visible:outline-hidden" {@attach toggleDirective()} {onkeydown}>
 		{@render header()}
 	</div>
-	<div class="collapse-content text-sm" use:bodyContainerAttrsDirective>
+	<div class="collapse-content text-sm" {@attach bodyContainerAttrsDirective()}>
 		{#if state.shouldBeInDOM}
 			{@render children()}
 		{/if}

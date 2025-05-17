@@ -1,7 +1,7 @@
 import {findChangedProperties, toReadableStore} from '@agnos-ui/core/utils/stores';
 import type {ReadableSignal, WritableSignal} from '@amadeus-it-group/tansu';
 import {asWritable, computed, writable} from '@amadeus-it-group/tansu';
-import type {PropsConfig, Widget, WidgetFactory, WidgetProps, WidgetSlotContext, WidgetState} from '../types';
+import type {Directive, PropsConfig, Widget, WidgetFactory, WidgetProps, WidgetSlotContext, WidgetState} from '../types';
 import {fromStore} from 'svelte/store';
 
 function createPatchChangedProps<T extends object>(previousProps: Partial<T>, patchFn: (arg: Partial<T>) => void) {
@@ -91,7 +91,12 @@ export const callWidgetFactoryWithConfig = <W extends Widget>(
 	});
 	return {
 		api: widget.api,
-		directives: widget.directives,
+		attachments: Object.fromEntries(
+			Object.entries(widget.directives).map(([key, directive]: [key: string, directive: Directive]) => [
+				key,
+				(params: any) => (element: HTMLElement) => directive(element, params)?.destroy,
+			]),
+		) as any,
 		state: new Proxy(runes, {
 			get(target, name, receiver) {
 				if (Reflect.has(target, name)) {

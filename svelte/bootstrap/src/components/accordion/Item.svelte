@@ -24,7 +24,7 @@
 	});
 	const {
 		state,
-		directives: {itemDirective},
+		attachments: {itemDirective},
 	} = widget;
 	export const api: AccordionItemApi = widget.api;
 
@@ -37,6 +37,6 @@
 	<ItemDefaultStructure {...props} />
 {/snippet}
 
-<div class="accordion-item" use:itemDirective>
+<div class="accordion-item" {@attach itemDirective()}>
 	<Slot content={state.structure} props={widget} />
 </div>

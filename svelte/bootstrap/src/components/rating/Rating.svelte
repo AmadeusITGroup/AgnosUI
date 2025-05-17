@@ -8,7 +8,7 @@
 
 	const {
 		state,
-		directives: {containerDirective, starDirective},
+		attachments: {containerDirective, starDirective},
 		api: ratingApi,
 	} = callWidgetFactory(createRating, {
 		get props() {
@@ -28,11 +28,11 @@
 	{String.fromCharCode(fill === 100 ? 9733 : 9734)}
 {/snippet}
 
-<div use:containerDirective class="d-inline-flex">
+<div {@attach containerDirective()} class="d-inline-flex">
 	<!-- on:blur={onTouched} ?? -->
 	{#each state.stars as { fill, index }}
 		<span class="visually-hidden">({index < state.visibleRating ? '*' : ' '})</span>
-		<span use:starDirective={{index}}>
+		<span {@attach starDirective({index})}>
 			<Slot content={state.star} props={{fill, index}} />
 		</span>
 	{/each}

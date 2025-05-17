@@ -25,6 +25,6 @@
 	<CarouselDefaultNavigation {...props} />
 {/snippet}
 
-<div use:widget.directives.root>
+<div {@attach widget.attachments.root()}>
 	<Slot content={widget.state.structure} props={widget} />
 </div>

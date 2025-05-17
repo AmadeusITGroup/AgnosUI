@@ -6,13 +6,13 @@
 
 	const {
 		state,
-		directives: {navigationDirective, itemToggleDirective},
+		attachments: {navigationDirective, itemToggleDirective},
 	} = callWidgetFactory(createTree, {
 		props,
 	});
 </script>
 
-<ul role="tree" class="bg-base-200 rounded-lg menu w-[300px] {state.className}" use:navigationDirective>
+<ul role="tree" class="bg-base-200 rounded-lg menu w-[300px] {state.className}" {@attach navigationDirective()}>
 	{#each state.normalizedNodes as item, index (item.label + item.level + index)}
 		{@render treeItemSnippet(item)}
 	{/each}
@@ -21,7 +21,7 @@
 {#snippet treeItemSnippet(treeItem: NormalizedTreeItem)}
 	<!-- svelte-ignore a11y_role_has_required_aria_props -->
 	<li role="treeitem">
-		<span class="flex flex-wrap items-center" use:itemToggleDirective={{item: treeItem}}>
+		<span class="flex flex-wrap items-center" {@attach itemToggleDirective({item: treeItem})}>
 			<span class="me-1">
 				{@render itemIconSnippet(treeItem)}
 			</span>

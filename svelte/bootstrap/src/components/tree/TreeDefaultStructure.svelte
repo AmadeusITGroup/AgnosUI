@@ -3,10 +3,10 @@
 	import type {TreeContext} from './tree.gen';
 
 	let widget: TreeContext = $props();
-	let {state, directives} = widget;
+	let {state, attachments} = widget;
 </script>
 
-<ul role="tree" class="au-tree {state.className}" use:directives.navigationDirective>
+<ul role="tree" class="au-tree {state.className}" {@attach attachments.navigationDirective()}>
 	{#each state.normalizedNodes as item, index (item.label + item.level + index)}
 		<Slot content={state.item} props={{item, ...widget}} />
 	{/each}

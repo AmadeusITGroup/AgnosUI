@@ -3,7 +3,7 @@
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 
 	let widget: PaginationContext = $props();
-	let {state, directives} = widget;
+	let {state, attachments} = widget;
 
 	let sizeClass = $derived(state.size ? `pagination-${state.size}` : '');
 </script>
@@ -11,7 +11,8 @@
 <ul class="au-pagination pagination {sizeClass} {state.className}">
 	{#if state.boundaryLinks}
 		<li class={['page-item', {disabled: state.previousDisabled}]}>
-			<a class="page-link" use:directives.pageFirst>
+			<!-- svelte-ignore a11y_missing_attribute -->
+			<a class="page-link" {@attach attachments.pageFirst()}>
 				<span aria-hidden="true">
 					<Slot content={state.firstPageLabel} props={widget} />
 				</span>
@@ -20,7 +21,8 @@
 	{/if}
 	{#if state.directionLinks}
 		<li class={['page-item', {disabled: state.previousDisabled}]}>
-			<a class="page-link" use:directives.pagePrev>
+			<!-- svelte-ignore a11y_missing_attribute -->
+			<a class="page-link" {@attach attachments.pagePrev()}>
 				<span aria-hidden="true">
 					<Slot content={state.previousPageLabel} props={widget} />
 				</span>
@@ -30,7 +32,8 @@
 	<Slot content={state.pagesDisplay} props={widget} />
 	{#if state.directionLinks}
 		<li class={['page-item', {disabled: state.nextDisabled}]}>
-			<a class="page-link" use:directives.pageNext>
+			<!-- svelte-ignore a11y_missing_attribute -->
+			<a class="page-link" {@attach attachments.pageNext()}>
 				<span aria-hidden="true">
 					<Slot content={state.nextPageLabel} props={widget} />
 				</span>
@@ -39,7 +42,8 @@
 	{/if}
 	{#if state.boundaryLinks}
 		<li class={['page-item', {disabled: state.nextDisabled}]}>
-			<a class="page-link" use:directives.pageLast>
+			<!-- svelte-ignore a11y_missing_attribute -->
+			<a class="page-link" {@attach attachments.pageLast()}>
 				<span aria-hidden="true">
 					<Slot content={state.lastPageLabel} props={widget} />
 				</span>

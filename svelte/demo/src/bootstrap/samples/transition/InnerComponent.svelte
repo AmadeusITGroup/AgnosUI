@@ -79,7 +79,7 @@
 	</ul>
 
 	{#if !$paramRemoveFromDom$ || !$hidden$}
-		<div use:directive style="max-width: 300px;">
+		<div {@attach (el) => directive(el)?.destroy} style="max-width: 300px;">
 			<div class="card" style="width: 300px;">
 				<div class="card-body">You can collapse this card by clicking Toggle</div>
 			</div>

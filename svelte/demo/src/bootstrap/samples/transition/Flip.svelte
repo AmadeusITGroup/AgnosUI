@@ -9,7 +9,7 @@
 
 	const {
 		api: {show, hide},
-		directives: {directive},
+		attachments: {directive},
 	} = callWidgetFactory(createTransition, {
 		props: {
 			visible: false,
@@ -19,7 +19,7 @@
 </script>
 
 <div class="flip-card">
-	<div class="flip-card-inner" use:directive>
+	<div class="flip-card-inner" {@attach directive()}>
 		<div class="flip-card-front">
 			{@render children()}
 			<button class="btn btn-outline-secondary" onclick={() => hide()}>Hide again.</button>

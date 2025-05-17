@@ -10,12 +10,12 @@
 	}: Partial<Pick<AccordionProps, 'closeOthers' | 'onItemShown' | 'onItemHidden' | 'itemDestroyOnHide' | 'className'>> & {children: Snippet} =
 		$props();
 
-	const {api, directives} = callWidgetFactory(createAccordion, {
+	const {api, attachments} = callWidgetFactory(createAccordion, {
 		props,
 	});
 	setAccordionApi(api);
 </script>
 
-<div class="flex flex-col gap-2" use:directives.accordionDirective>
+<div class="flex flex-col gap-2" {@attach attachments.accordionDirective()}>
 	{@render children()}
 </div>

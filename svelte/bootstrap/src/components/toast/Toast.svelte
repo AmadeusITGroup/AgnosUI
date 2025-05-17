@@ -22,7 +22,7 @@
 
 	const {
 		state,
-		directives: {transitionDirective, autoHideDirective, bodyDirective},
+		attachments: {transitionDirective, autoHideDirective, bodyDirective},
 	} = widget;
 </script>
 
@@ -31,7 +31,12 @@
 {/snippet}
 
 {#if !state.hidden}
-	<div class={{'toast-dismissible': state.dismissible, 'd-flex': !state.header}} use:transitionDirective use:autoHideDirective use:bodyDirective>
+	<div
+		class={{'toast-dismissible': state.dismissible, 'd-flex': !state.header}}
+		{@attach transitionDirective()}
+		{@attach autoHideDirective()}
+		{@attach bodyDirective()}
+	>
 		<Slot content={state.structure} props={widget} />
 	</div>
 {/if}

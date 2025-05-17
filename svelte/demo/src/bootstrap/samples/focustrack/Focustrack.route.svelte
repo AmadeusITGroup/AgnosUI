@@ -15,7 +15,7 @@
 </script>
 
 <div class="demo-focustrack">
-	<div use:directive class="my-2 p-2 border">
+	<div {@attach (el) => directive(el)?.destroy} class="my-2 p-2 border">
 		<h5>Container</h5>
 		<input class="form-control" type="text" placeholder="Focusable input" id="focusableInput" /><br />
 		<input class="form-control" type="text" placeholder="Other focusable input" id="otherFocusableInput" />

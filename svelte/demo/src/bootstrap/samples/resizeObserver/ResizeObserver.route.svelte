@@ -15,21 +15,22 @@
 	function decreaseHeight() {
 		heightValue = observedHeight ? observedHeight - 50 : 0;
 	}
+	const textarea =
+		`This simple example is using the resizeObserver feature from @agnos-ui/core and displays the height of the textarea below it.\n` +
+		`Modify the height to more than 200 px and see the font size changing.`;
 </script>
 
 <div class="demo-resize-observer">
 	<label for="resizable">Resizable textarea:</label>
 	<textarea
-		use:resizeDirective
+		{@attach (el) => resizeDirective(el)?.destroy}
 		name="resizable"
 		id="resizable"
 		rows="6"
 		cols="50"
 		class={['form-control', {fontsize: observedHeight && observedHeight > 200}]}
-		style:height={heightValue + 'px'}
-		value="This simple example is using the resizeObserver feature from @agnos-ui/core and displays the height of the textarea below it.
-Modify the height to more than 200 px and see the font size changing."
-	></textarea>
+		style:height={heightValue + 'px'}>{textarea}</textarea
+	>
 	<div>Textarea content height: <span id="dynamic-height">{observedHeight}</span>px</div>
 	<button type="button" class="btn btn-primary m-2" id="decreaseHeight" onclick={decreaseHeight}>Height --</button>
 	<button type="button" class="btn btn-primary m-2" id="increaseHeight" onclick={increaseHeight}>Height ++</button>

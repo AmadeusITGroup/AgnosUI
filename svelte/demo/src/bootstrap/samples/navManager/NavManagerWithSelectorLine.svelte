@@ -18,7 +18,7 @@
 	let {text = ''} = $props();
 </script>
 
-<div class="d-flex demo-navmanager-line" use:directive={navManagerConfig}>
+<div class="d-flex demo-navmanager-line" {@attach (el) => directive(el, navManagerConfig)?.destroy}>
 	<input type="text" aria-label="navigable-input-1" value={text} class="form-control me-1" />
 	<span tabindex="-1" class="form-control w-auto me-1">{text}</span>
 	<input tabindex="-1" type="checkbox" aria-label="navigable-input-2" class="form-check-input align-self-center me-1" />
