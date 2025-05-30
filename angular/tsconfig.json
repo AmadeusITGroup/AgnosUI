@@ -5,17 +5,12 @@
 	"compilerOptions": {
 		"outDir": "./dist/out-tsc",
 		"noEmit": false,
-		"forceConsistentCasingInFileNames": true,
-		"strict": true,
 		"noImplicitOverride": true,
 		"noPropertyAccessFromIndexSignature": true,
 		"sourceMap": true,
 		"declaration": false,
-		"downlevelIteration": true,
 		"experimentalDecorators": true,
 		"importHelpers": true,
-		"target": "ES2022",
-		"module": "esnext",
 		"lib": ["es2022", "dom", "dom.iterable"],
 		"useDefineForClassFields": false
 	},
@@ -24,6 +19,7 @@
 		"strictInjectionParameters": true,
 		"strictInputAccessModifiers": true,
 		"strictTemplates": true,
-		"strictStandalone": true
+		"strictStandalone": true,
+		"typeCheckHostBindings": true
 	}
 }

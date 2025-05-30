@@ -128,6 +128,7 @@ function patchSimpleChanges(patchFn: (obj: any) => void, changes: SimpleChanges)
  */
 @Directive()
 export abstract class BaseWidgetDirective<W extends Widget> implements OnChanges, OnInit, AfterContentChecked {
+	// eslint-disable-next-line @angular-eslint/prefer-inject
 	constructor(private readonly _widget: AngularWidget<W>) {}
 
 	/**

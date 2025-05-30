@@ -16,11 +16,11 @@
 						"outputPath": "dist/ssr-app",
 						"index": "src/index.html",
 						"browser": "src/main.ts",
-						"polyfills": ["zone.js"],
 						"tsConfig": "tsconfig.build.json",
 						"styles": ["src/styles.css", "@agnos-ui/core-bootstrap/scss/agnosui.scss"],
 						"scripts": [],
 						"server": "src/main.server.ts",
+						"outputMode": "server",
 						"prerender": true,
 						"ssr": {
 							"entry": "server.ts"

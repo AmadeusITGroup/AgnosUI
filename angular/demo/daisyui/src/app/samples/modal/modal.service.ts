@@ -1,7 +1,6 @@
-import {ApplicationRef, EnvironmentInjector, Injectable, type Type, createComponent, inject, TemplateRef} from '@angular/core';
+import {ApplicationRef, EnvironmentInjector, Injectable, type Type, createComponent, inject, TemplateRef, DOCUMENT} from '@angular/core';
 import {ModalComponent} from './modal.component';
 import {type ModalProps} from '@agnos-ui/angular-headless';
-import {DOCUMENT} from '@angular/common';
 
 @Injectable({providedIn: 'root'})
 export class ModalService {

@@ -1,10 +1,9 @@
-import {CommonModule} from '@angular/common';
 import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
 import {InnerComponent} from './innerComponent.component';
 
 @Component({
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [CommonModule, InnerComponent],
+	imports: [InnerComponent],
 	template: `
 		<div class="demo-transition mb-3">
 			<button id="toggle-component" class="btn btn-outline-secondary" (click)="toggleShow()">Toggle component</button>

@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"baseUrl": "./",
 		"target": "es2022",
-		"module": "esnext",
+		"module": "preserve",
 		"strict": true,
 		"skipLibCheck": true,
 		"noImplicitReturns": true,

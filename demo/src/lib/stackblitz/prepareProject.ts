@@ -15,10 +15,10 @@ export const createBaseFrameworkProcessors = (): Record<Frameworks, StackblitzPr
 		addAsyncFiles(import.meta.glob('./angular-daisyui/**', {query: '?raw', import: 'default'}) as any, '', './angular-daisyui/', isDaisyuiCondition),
 		(project, sample) => {
 			project.files['src/main.ts'] =
-				`import {bootstrapApplication} from '@angular/platform-browser';\nimport MainComponent from './${sample.files.angular.entryPoint.replace(
+				`import {bootstrapApplication} from '@angular/platform-browser';\nimport {provideBrowserGlobalErrorListeners, provideZonelessChangeDetection} from '@angular/core';\nimport MainComponent from './${sample.files.angular.entryPoint.replace(
 					/\.ts$/,
 					'',
-				)}';\n${isDaisyuiCondition(sample) ? `import '@tailwindcss/browser';\n` : ''}\nbootstrapApplication(MainComponent).catch((err) => console.error(err));`;
+				)}';\n${isDaisyuiCondition(sample) ? `import '@tailwindcss/browser';\n` : ''}\nbootstrapApplication(MainComponent, {providers: [provideBrowserGlobalErrorListeners(), provideZonelessChangeDetection()]}).catch((err) => console.error(err));`;
 		},
 	],
 	react: [
