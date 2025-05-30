@@ -18,7 +18,6 @@
 						"assets": [],
 						"index": "index.html",
 						"browser": "src/main.ts",
-						"polyfills": ["src/polyfills.ts"],
 						"outputPath": "dist/demo",
 						"scripts": [],
 						"inlineStyleLanguage": "scss",

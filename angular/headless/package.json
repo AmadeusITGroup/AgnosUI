@@ -111,8 +111,8 @@
 	},
 	"peerDependencies": {
 		"@amadeus-it-group/tansu": "^2.0.0",
-		"@angular/common": "^19.0.0",
-		"@angular/core": "^19.0.0"
+		"@angular/common": "^20.0.0",
+		"@angular/core": "^20.0.0"
 	},
 	"dependencies": {
 		"@agnos-ui/core": "0.0.0",
@@ -121,16 +121,16 @@
 	"devDependencies": {
 		"@analogjs/vite-plugin-angular": "^1.10.1",
 		"@analogjs/vitest-angular": "^1.10.1",
-		"@angular-devkit/build-angular": "^19.0.0",
-		"@angular/animations": "^19.0.0",
-		"@angular/cli": "^19.0.0",
-		"@angular/common": "^19.0.0",
-		"@angular/compiler": "^19.0.0",
-		"@angular/core": "^19.0.0",
-		"@angular/forms": "^19.0.0",
-		"@angular/platform-browser": "^19.0.0",
-		"@angular/platform-browser-dynamic": "^19.0.0",
-		"ng-packagr": "^19.0.0",
+		"@angular/animations": "^20.0.0",
+		"@angular/build": "^20.0.0",
+		"@angular/cli": "^20.0.0",
+		"@angular/common": "^20.0.0",
+		"@angular/compiler": "^20.0.0",
+		"@angular/core": "^20.0.0",
+		"@angular/forms": "^20.0.0",
+		"@angular/platform-browser": "^20.0.0",
+		"@angular/platform-browser-dynamic": "^20.0.0",
+		"ng-packagr": "^20.0.0",
 		"rxjs": "^7.8.1",
 		"zone.js": "~0.15.0"
 	},
