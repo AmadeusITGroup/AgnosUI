@@ -28,26 +28,23 @@
 				>
 					"Press ESC key, click on ✕ button or click outside the modal to close"
 				</p>
-				<form
-				 method="dialog"
+				<button
+				 aria-label="Close"
+				 class="absolute btn btn-circle btn-ghost btn-sm right-2 top-2"
+				 type="button"
 				>
-					<button
-					 aria-label="Close"
-					 class="absolute btn btn-circle btn-ghost btn-sm right-2 top-2"
-					 type="button"
-					>
-						"✕"
-					</button>
-				</form>
+					"✕"
+				</button>
 			</div>
-			<form
+			<div
 			 class="modal-backdrop"
-			 method="dialog"
 			>
-				<button>
+				<button
+				 type="button"
+				>
 					"Close"
 				</button>
-			</form>
+			</div>
 		</dialog>
 	</div>
 </body>
