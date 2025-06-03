@@ -1,1 +1,0 @@
-import{f as d,a as m}from"./nu3i0CEJ.js";import{p,b as i,g as c,a8 as f,l,k as n,R as u,m as v}from"./DdRCHyDR.js";import g from"./D4LFzqN7.js";var h=d('<div class="mb-6 py-3 px-0 sm:px-3"><!></div>');function C(t,s){p(s,!0);let a=f("");i(()=>{s.style.css().then(r=>u(a,r,!0))});var e=h(),o=l(e);g(o,{get code(){return c(a)},language:"scss"}),v(e),m(t,e),n()}export{C as S};
