@@ -1,0 +1,50 @@
+const a=`import {createNavManager, type NavManagerItemConfig} from '@agnos-ui/react-bootstrap/services/navManager';
+import {useDirective} from '@agnos-ui/react-bootstrap/utils/directive';
+import {useMemo} from 'react';
+
+const NavmanagerSampleLine = ({text}: {text: string}) => {
+	const navManager = useMemo(createNavManager, []);
+	const navManagerConfig = useMemo(
+		(): NavManagerItemConfig => ({
+			keys: {
+				ArrowLeft: navManager.focusLeft,
+				ArrowRight: navManager.focusRight,
+				Home: navManager.focusFirst,
+				End: navManager.focusLast,
+				'Meta+ArrowLeft': navManager.focusFirstLeft,
+				'Meta+ArrowRight': navManager.focusFirstRight,
+			},
+			selector: (divElement) => divElement.querySelectorAll('input,span'),
+		}),
+		[navManager],
+	);
+
+	return (
+		<div className="d-flex demo-navmanager-line" {...useDirective(navManager.directive, navManagerConfig)}>
+			<input type="text" aria-label="navigable-input-1" defaultValue={text} className="form-control me-1" />
+			<span tabIndex={-1} className="form-control w-auto me-1">
+				{text}
+			</span>
+			<input tabIndex={-1} type="checkbox" aria-label="navigable-input-2" className="form-check-input align-self-center me-1" />
+			<input tabIndex={-1} type="text" aria-label="navigable-input-3" defaultValue={text} disabled className="form-control me-1" />
+			<input tabIndex={-1} type="text" aria-label="navigable-input-4" defaultValue={text} className="form-control me-1" />
+		</div>
+	);
+};
+
+const NavmanagerSample = () => (
+	<div className="demo-navmanager">
+		<div dir="ltr" className="mt-3 pb-3">
+			<h2>Left-to-right</h2>
+			<NavmanagerSampleLine text="Hello" />
+		</div>
+
+		<div dir="rtl" className="mt-3 pb-3">
+			<h2>Right-to-left</h2>
+			<NavmanagerSampleLine text={'\\u05e9\\u05c1\\u05b8\\u05dc\\u05d5\\u05b9\\u05dd'} />
+		</div>
+	</div>
+);
+
+export default NavmanagerSample;
+`;export{a as default};

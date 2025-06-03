@@ -1,0 +1,1 @@
+import{a8 as c,a2 as o,a9 as i,aa as d,ab as m}from"./AppCommon-CSq__kFJ.js";function b(e,n,r){c(()=>{var a=o(()=>n(e,r==null?void 0:r())||{});if(r&&(a!=null&&a.update)){var s=!1,t={};i(()=>{var f=r();d(f),s&&m(t,f)&&(t=f,a.update(f))}),s=!0}if(a!=null&&a.destroy)return()=>a.destroy()})}export{b as a};
