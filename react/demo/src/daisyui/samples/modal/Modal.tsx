@@ -6,11 +6,9 @@ import {type PropsWithChildren} from 'react';
 import ReactDOM from 'react-dom/client';
 
 const ModalCloseButton = ({directives}: {directives: ModalDirectives}) => (
-	<form method="dialog">
-		<button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" {...useDirective(directives.closeButtonDirective)}>
-			✕
-		</button>
-	</form>
+	<button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" {...useDirective(directives.closeButtonDirective)}>
+		✕
+	</button>
 );
 
 export function Modal(
@@ -24,9 +22,11 @@ export function Modal(
 				{state.closeButton && <ModalCloseButton directives={directives} />}
 			</div>
 			{props.closeOnOutsideClick && (
-				<form method="dialog" className="modal-backdrop">
-					<button onClick={api.close}>Close</button>
-				</form>
+				<div className="modal-backdrop">
+					<button type="button" onClick={api.close}>
+						Close
+					</button>
+				</div>
 			)}
 		</dialog>
 	);

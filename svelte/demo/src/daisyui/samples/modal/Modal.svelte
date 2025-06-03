@@ -27,14 +27,12 @@
 	<div class="modal-box">
 		{@render children()}
 		{#if state.closeButton}
-			<form method="dialog">
-				<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" use:closeButtonDirective> ✕ </button>
-			</form>
+			<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" use:closeButtonDirective> ✕ </button>
 		{/if}
 	</div>
 	{#if closeOnOutsideClick}
-		<form method="dialog" class="modal-backdrop">
-			<button onclick={api.close}>Close</button>
-		</form>
+		<div class="modal-backdrop">
+			<button type="button" onclick={api.close}>Close</button>
+		</div>
 	{/if}
 </dialog>

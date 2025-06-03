@@ -1,5 +1,4 @@
-import type {OutputRefSubscription} from '@angular/core';
-import {ApplicationRef, createComponent, EnvironmentInjector, inject, Injectable, Injector, OutputEmitterRef} from '@angular/core';
+import {ApplicationRef, createComponent, EnvironmentInjector, inject, Injectable, Injector, inputBinding, outputBinding} from '@angular/core';
 import {ModalComponent} from './modal.component';
 import type {ModalProps} from './modal.gen';
 
@@ -23,28 +22,20 @@ export class ModalService {
 		const component = createComponent(ModalComponent, {
 			environmentInjector: injector.get(EnvironmentInjector),
 			elementInjector: injector,
-		});
-		const subscriptions: OutputRefSubscription[] = [];
-		try {
-			for (const [prop, value] of Object.entries(options)) {
-				if (prop.startsWith('on')) {
-					const eventName = `${prop[2].toLowerCase()}${prop.substring(3)}`;
-					const eventEmitter = (component.instance as any)[eventName];
-					if (eventEmitter instanceof OutputEmitterRef) {
-						subscriptions.push(eventEmitter.subscribe(value as any));
-					}
+			bindings: Object.entries(options).map(([key, value]) => {
+				if (key.startsWith('on')) {
+					return outputBinding(`au${key.substring(2)}`, value as any);
 				} else {
-					component.setInput(`au${prop.substring(0, 1).toUpperCase()}${prop.substring(1)}`, value);
+					return inputBinding(`au${key[0].toUpperCase()}${key.substring(1)}`, () => value);
 				}
-			}
+			}),
+		});
+		try {
 			this._applicationRef.attachView(component.hostView);
 			await component.instance['_widget'].initialized;
 			return await component.instance.api.open();
 		} finally {
 			component.destroy();
-			for (const subscription of subscriptions) {
-				subscription.unsubscribe();
-			}
 		}
 	}
 }

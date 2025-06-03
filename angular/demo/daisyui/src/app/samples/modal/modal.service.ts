@@ -1,4 +1,14 @@
-import {ApplicationRef, EnvironmentInjector, Injectable, type Type, createComponent, inject, TemplateRef, DOCUMENT} from '@angular/core';
+import {
+	ApplicationRef,
+	EnvironmentInjector,
+	Injectable,
+	type Type,
+	createComponent,
+	inject,
+	TemplateRef,
+	DOCUMENT,
+	inputBinding,
+} from '@angular/core';
 import {ModalComponent} from './modal.component';
 import {type ModalProps} from '@agnos-ui/angular-headless';
 
@@ -32,12 +42,9 @@ export class ModalService {
 			hostElement: div,
 			environmentInjector: this._injector,
 			projectableNodes: [nodes],
+			bindings: Object.entries(options).map(([key, value]) => inputBinding(key, () => value)),
 		});
 		try {
-			for (const prop of Object.keys(options)) {
-				const value = (options as any)[prop];
-				component.setInput(prop, value);
-			}
 			this._applicationRef.attachView(component.hostView);
 			await component.instance['_widget'].initialized;
 			await component.instance.api.open();
