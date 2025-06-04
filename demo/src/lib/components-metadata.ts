@@ -38,7 +38,7 @@ export const componentsMetadata: Metadata = {
 		type: 'bootstrap',
 	},
 	Carousel: {
-		status: 'beta',
+		status: 'stable',
 		since: 'v0.8.0',
 		type: 'bootstrap',
 	},
@@ -116,7 +116,7 @@ export const daisyUIMetadata: DaisyMetadata = {
 		type: 'daisyUI',
 	},
 	Carousel: {
-		status: 'beta',
+		status: 'stable',
 		since: 'v0.8.0',
 		type: 'daisyUI',
 	},
