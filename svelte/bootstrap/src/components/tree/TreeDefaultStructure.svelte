@@ -4,6 +4,7 @@
 
 	let widget: TreeContext = $props();
 	let {state, directives} = widget;
+	$inspect('main state', state);
 </script>
 
 <ul role="tree" class="au-tree {state.className}" use:directives.navigationDirective>
