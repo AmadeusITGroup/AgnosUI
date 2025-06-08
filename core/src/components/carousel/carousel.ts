@@ -395,11 +395,11 @@ export const createCarousel: WidgetFactory<CarouselWidget> = createWidgetFactory
 	const {
 		stores: {slideNodes$, ...emblaStores},
 	} = emblaCarousel;
-	const {directive: navDirective, refreshElements, focusPrevious, focusNext, focusFirst, focusLast} = createNavManager();
+	const {directive: navDirective, refreshElements, focusLeft, focusRight, focusFirst, focusLast} = createNavManager();
 	const navManagerConfig: NavManagerItemConfig = {
 		keys: {
-			ArrowLeft: focusPrevious,
-			ArrowRight: focusNext,
+			ArrowLeft: focusLeft,
+			ArrowRight: focusRight,
 			Home: focusFirst,
 			End: focusLast,
 		},
