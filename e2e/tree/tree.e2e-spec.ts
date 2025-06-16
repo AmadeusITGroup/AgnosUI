@@ -364,4 +364,28 @@ test.describe(`Tree tests`, () => {
 			});
 		});
 	});
+
+	test.describe.only(`Drag and drop`, () => {
+		test(`should move the node between parents`, async ({page}) => {
+			const treePO = new TreePO(page, 0);
+
+			await page.goto('#/tree/basic');
+			await treePO.locatorRoot.waitFor();
+
+			await (await treePO.locatorItemToggle.all()).at(1)?.click();
+			await (await treePO.locatorItemToggle.all()).at(2)?.click();
+
+			expect(await treePO.locatorItemToggle.count()).toEqual(3);
+
+			const sourceBoundingBox = await (await treePO.locatorItemContainer.all()).at(4)?.boundingBox();
+			await page.mouse.move(sourceBoundingBox!.x, sourceBoundingBox!.y);
+			await page.mouse.down();
+
+			const targetBoundingBox = await (await treePO.locatorItemContainer.all()).at(1)?.boundingBox();
+			await page.mouse.move(targetBoundingBox!.x, targetBoundingBox!.y);
+			await page.mouse.up();
+
+			expect(await treePO.locatorItemToggle.count()).toEqual(2);
+		});
+	});
 });
