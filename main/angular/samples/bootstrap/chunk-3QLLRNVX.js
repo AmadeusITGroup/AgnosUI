@@ -1,1 +1,0 @@
-import{Hb as p,Va as n,rb as a,sb as l}from"./chunk-OSJKQHZ2.js";var e=class e{};e.\u0275fac=function(t){return new(t||e)},e.\u0275cmp=n({type:e,selectors:[["ng-component"]],decls:2,vars:0,template:function(t,i){t&1&&(a(0,"h3"),p(1,"Coming soon..."),l())},encapsulation:2});var o=e;export{o as default};
