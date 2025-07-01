@@ -45,6 +45,7 @@ test.describe(`Toaster tests`, () => {
 
 		await toasterDemoPO.locatorDurationInput.fill('500');
 		await toasterDemoPO.locatorAddToastButton.click();
+		await expect.poll(async () => (await toasterPO.toastPOs()).length).toBe(1);
 		const toast = (await toasterPO.toastPOs())[0].locatorRoot;
 		await expect(toast).toBeVisible();
 		await expect(toast).toHaveCount(0, {timeout: 1000});
@@ -88,6 +89,7 @@ test.describe(`Toaster tests`, () => {
 		await toasterDemoPO.locatorPauseOnHoverButton.click();
 		await toasterDemoPO.locatorAddToastButton.click();
 
+		await expect.poll(async () => (await toasterPO.toastPOs()).length).toBe(1);
 		const toast = (await toasterPO.toastPOs())[0].locatorRoot;
 		await expect(toast).toBeVisible();
 		await toast.hover();
