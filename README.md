@@ -21,7 +21,6 @@ Feel free to explore the [demo site](https://www.agnosui.dev/latest/) to see Agn
 2. **Extensive Framework Support**: AgnosUI currently offers support for three widely-used front-end frameworks: Angular, React, and Svelte. This diverse compatibility ensures that developers can leverage AgnosUI's components seamlessly across projects, irrespective of the chosen framework.
 
 3. **Adapters for Each Framework**: To achieve compatibility with different front-end frameworks, each component in AgnosUI has an adapter for every supported framework. These adapters play a pivotal role in building the component's UI by:
-
    - Constructing the appropriate markup based on the core data.
    - Connecting user actions to the corresponding core methods.
    - Listening for any change to the model and automatically triggering re-renders of the markup.
