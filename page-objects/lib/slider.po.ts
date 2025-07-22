@@ -4,6 +4,7 @@ import type {Locator} from '@playwright/test';
 export const sliderSelectors = {
 	rootComponent: '.au-slider',
 	clickableArea: '.au-slider-clickable-area',
+	clickableAreaVertical: '.au-slider-clickable-area-vertical',
 	handle: '.au-slider-handle',
 	tick: '.au-slider-tick',
 	tickLabel: '.au-slider-tick-label',
@@ -22,6 +23,14 @@ export class SliderPO extends BasePO {
 
 	override getComponentSelector(): string {
 		return this.selectors.rootComponent;
+	}
+
+	get clickableArea(): Locator {
+		return this.locatorRoot.locator(this.selectors.clickableArea);
+	}
+
+	get clickableAreaVertical(): Locator {
+		return this.locatorRoot.locator(this.selectors.clickableAreaVertical);
 	}
 
 	get locatorHandle(): Locator {
