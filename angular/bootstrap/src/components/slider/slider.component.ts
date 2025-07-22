@@ -216,11 +216,15 @@ export const sliderDefaultSlotStructure: SlotContent<SliderContext> = new Compon
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	encapsulation: ViewEncapsulation.None,
 	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SliderComponent), multi: true}],
-	imports: [SlotDirective],
+	imports: [SlotDirective, UseDirective],
 	host: {
 		'(blur)': 'handleBlur()',
 	},
-	template: ` <ng-template [auSlot]="state.structure()" [auSlotProps]="{state, api, directives}" /> `,
+	template: `
+		<div [auUse]="directives.sliderDirective">
+			<ng-template [auSlot]="state.structure()" [auSlotProps]="{state, api, directives}" />
+		</div>
+	`,
 })
 export class SliderComponent extends BaseWidgetDirective<SliderWidget> implements ControlValueAccessor {
 	/**
@@ -413,7 +417,7 @@ export class SliderComponent extends BaseWidgetDirective<SliderWidget> implement
 					},
 				},
 				afterInit: (widget) => {
-					useDirectiveForHost(widget.directives.sliderDirective);
+					useDirectiveForHost(widget.directives.containerDirective);
 				},
 				slotTemplates: () => ({
 					structure: this.slotStructureFromContent()?.templateRef,
