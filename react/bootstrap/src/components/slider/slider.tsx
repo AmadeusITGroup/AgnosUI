@@ -149,8 +149,10 @@ export function Slider(props: PropsWithChildren<Partial<SliderProps>>) {
 	});
 
 	return (
-		<div {...useDirective(widgetContext.directives.sliderDirective)}>
-			<Slot slotContent={widgetContext.state.structure} props={widgetContext} />
+		<div {...useDirective(widgetContext.directives.containerDirective)}>
+			<div {...useDirective(widgetContext.directives.sliderDirective)}>
+				<Slot slotContent={widgetContext.state.structure} props={widgetContext} />
+			</div>
 		</div>
 	);
 }

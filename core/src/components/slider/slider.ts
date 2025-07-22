@@ -335,6 +335,11 @@ export interface SliderDirectives {
 	sliderDirective: Directive;
 
 	/**
+	 * Directive to apply to the slider container wrapping the slider content
+	 */
+	containerDirective: Directive;
+
+	/**
 	 * Directive used to style the progress display for each handle
 	 */
 	progressDisplayDirective: Directive<{option: ProgressDisplayOptions}>;
@@ -881,12 +886,23 @@ export const createSlider: WidgetFactory<SliderWidget> = createWidgetFactory('sl
 	const horizontal$ = computed(() => !vertical$());
 
 	const containerDirective = createAttributesDirective(() => ({
+		classNames: {
+			'au-slider': true$,
+			'au-slider-vertical': vertical$,
+			'au-slider-horizontal': horizontal$,
+		},
+		attributes: {
+			class: stateProps.className$,
+		},
+	}));
+
+	const contentDirective = createAttributesDirective(() => ({
 		attributes: {
 			'aria-disabled': computed(() => (disabled$() ? 'true' : undefined)),
 			class: stateProps.className$,
 		},
 		classNames: {
-			'au-slider': true$,
+			'au-slider-content': true$,
 			'au-slider-vertical': vertical$,
 			'au-slider-horizontal': horizontal$,
 			disabled: disabled$,
@@ -1092,7 +1108,8 @@ export const createSlider: WidgetFactory<SliderWidget> = createWidgetFactory('sl
 		patch,
 		api: {},
 		directives: {
-			sliderDirective: mergeDirectives(sliderDirective, resizeDirective, containerDirective),
+			sliderDirective: mergeDirectives(sliderDirective, resizeDirective, contentDirective),
+			containerDirective,
 			progressDisplayDirective: createAttributesDirective((progressContext$: ReadableSignal<{option: ProgressDisplayOptions}>) => ({
 				styles: {
 					left: computed(() => percent(progressContext$().option.left)),

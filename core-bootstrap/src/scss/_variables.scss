@@ -38,12 +38,19 @@ $au-slider-tick-label-translate-vertical: translateY(75%) !default;
 $au-slider-progress-color: var(--#{$prefix}primary, #0d6efd) !default;
 $au-slider-progress-height: 0.25rem !default;
 $au-slider-progress-vertical-transform: rotate(90deg) !default;
-$au-slider-margin-block-end: calc((#{$au-slider-handle-size} - #{$au-slider-secondary-size}) / 2 + 0.5rem) !default;
-$au-slider-margin-block-start: calc((#{$au-slider-handle-size} - #{$au-slider-secondary-size}) / 2 + #{$au-slider-font-size} * 1.5 + 0.5rem) !default;
+$au-slider-padding: calc(var(--#{$prefix}slider-handle-size) / 2) !default;
+$au-slider-margin-block-end: calc((var(--#{$prefix}slider-handle-size) - var(--#{$prefix}slider-secondary-size)) / 2 + 0.5rem) !default;
+$au-slider-margin-block-start: calc(
+	(var(--#{$prefix}slider-handle-size) - var(--#{$prefix}slider-secondary-size)) / 2 + var(--#{$prefix}slider-font-size) * 1.5 + 0.5rem
+) !default;
 $au-slider-label-now-font-weight: normal !default;
 $au-slider-label-font-weight: normal !default;
 $au-slider-label-margin-block-start: calc(
-	-1 * (#{$au-slider-font-size} * #{$au-slider-line-height} + (#{$au-slider-handle-size} - #{$au-slider-secondary-size}) / 2)
+	-1 *
+		(
+			var(--#{$prefix}slider-font-size) * var(--#{$prefix}slider-line-height) +
+				(var(--#{$prefix}slider-handle-size) - var(--#{$prefix}slider-secondary-size)) / 2
+		)
 ) !default;
 $au-slider-label-min-position: 0 !default;
 $au-slider-label-max-position: 0 !default;
