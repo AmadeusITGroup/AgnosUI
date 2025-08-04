@@ -1,5 +1,6 @@
 <script lang="ts">
 	import {page} from '$app/stores';
+	import type {RouteId} from '$app/types';
 	import {writable} from '@amadeus-it-group/tansu';
 	import type {Page} from '@sveltejs/kit';
 	import {onMount, type Snippet} from 'svelte';
@@ -27,7 +28,7 @@
 		});
 	});
 
-	function isOnPage(page: Page<Record<string, string>, string | null>) {
+	function isOnPage(page: Page<Record<string, string>, RouteId | null>) {
 		return path.some((p) => page.url.pathname?.includes(p.path));
 	}
 
