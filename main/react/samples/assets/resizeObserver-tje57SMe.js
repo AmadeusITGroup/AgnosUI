@@ -1,0 +1,1 @@
+import{B as i,u as c,n as v}from"./dom-BhJG5nY--CcHiBM3Q.js";const b=()=>{const{element$:s,directive:o}=i();return{dimensions$:c(s,(e,n)=>{if(e===null)return v;const r=new ResizeObserver(t=>{n(t[0])});return r.observe(e),()=>r?.disconnect()},void 0),directive:o}};export{b as c};

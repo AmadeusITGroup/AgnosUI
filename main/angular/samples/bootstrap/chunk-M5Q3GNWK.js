@@ -1,0 +1,1 @@
+import{Ob as m,Wa as n,wb as a,xb as l}from"./chunk-UWPIAXXW.js";var e=class e{};e.\u0275fac=function(t){return new(t||e)},e.\u0275cmp=n({type:e,selectors:[["ng-component"]],decls:2,vars:0,template:function(t,s){t&1&&(a(0,"h3"),m(1,"Coming soon..."),l())},encapsulation:2});var o=e;export{o as default};

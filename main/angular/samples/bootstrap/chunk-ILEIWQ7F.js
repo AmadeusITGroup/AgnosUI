@@ -1,1 +1,0 @@
-import{Ib as p,Wa as n,sb as a,tb as l}from"./chunk-GCR2P3WM.js";var e=class e{};e.\u0275fac=function(t){return new(t||e)},e.\u0275cmp=n({type:e,selectors:[["ng-component"]],decls:2,vars:0,template:function(t,i){t&1&&(a(0,"h3"),p(1,"Coming soon..."),l())},encapsulation:2});var o=e;export{o as default};
