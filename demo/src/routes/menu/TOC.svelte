@@ -50,7 +50,7 @@
 	<div class="ms-2 mt-1 border-start-1">
 		<div class="hidden lg:block font-bold mb-1">On this page</div>
 		<ul class="menu ps-0">
-			{#each tocElements as { label, href, isVisible, submenu } (href)}
+			{#each tocElements as { label, href, isVisible, submenu }}
 				<li class="mb-0!">
 					<a
 						class={[

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import {page} from '$app/stores';
+	import type {RouteId} from '$app/types';
 	import {createTransition} from '@agnos-ui/svelte-bootstrap/services/transitions/baseTransitions';
 	import {collapseVerticalTransition} from '@agnos-ui/svelte-bootstrap/services/transitions/bootstrap';
 	import {writable} from '@amadeus-it-group/tansu';
@@ -43,7 +44,7 @@
 		},
 	});
 
-	function isOnPage(page: Page<Record<string, string>, string | null>) {
+	function isOnPage(page: Page<Record<string, string>, RouteId | null>) {
 		return path.some((p) => page.url.pathname?.includes(p.path));
 	}
 </script>

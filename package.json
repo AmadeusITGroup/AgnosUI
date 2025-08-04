@@ -28,10 +28,10 @@
 		"url": "git+https://github.com/AmadeusITGroup/AgnosUI.git"
 	},
 	"engines": {
-		"npm": "^11.0.0",
+		"npm": "^10.9.2",
 		"node": "^22.12.0"
 	},
-	"packageManager": "npm@11.4.2",
+	"packageManager": "npm@10.9.2",
 	"devDependencies": {
 		"@amadeus-it-group/kassette": "^1.7.1",
 		"@angular-devkit/build-angular": "^20.0.0",
@@ -82,7 +82,7 @@
 		"wireit": "^0.14.9"
 	},
 	"optionalDependencies": {
-		"@esbuild/darwin-arm64": "0.25.5",
+		"@esbuild/darwin-arm64": "0.25.8",
 		"lightningcss-darwin-arm64": "1.30.1",
 		"lightningcss-darwin-x64": "1.30.1",
 		"lightningcss-freebsd-x64": "1.30.1",
@@ -93,7 +93,7 @@
 		"lightningcss-linux-x64-musl": "1.30.1",
 		"lightningcss-win32-arm64-msvc": "1.30.1",
 		"lightningcss-win32-x64-msvc": "1.30.1",
-		"@lmdb/lmdb-win32-x64": "3.4.1",
+		"@lmdb/lmdb-win32-x64": "3.4.2",
 		"@parcel/watcher-android-arm64": "2.5.1",
 		"@parcel/watcher-darwin-arm64": "2.5.1",
 		"@parcel/watcher-darwin-x64": "2.5.1",
@@ -106,9 +106,9 @@
 		"@parcel/watcher-win32-arm64": "2.5.1",
 		"@parcel/watcher-win32-ia32": "2.5.1",
 		"@parcel/watcher-win32-x64": "2.5.1",
-		"@rollup/rollup-darwin-arm64": "4.44.1",
-		"@rollup/rollup-darwin-x64": "4.44.1",
-		"@rollup/rollup-win32-x64-msvc": "4.44.1",
+		"@rollup/rollup-darwin-arm64": "4.46.2",
+		"@rollup/rollup-darwin-x64": "4.46.2",
+		"@rollup/rollup-win32-x64-msvc": "4.46.2",
 		"@tailwindcss/oxide-android-arm64": "4.1.11",
 		"@tailwindcss/oxide-darwin-arm64": "4.1.11",
 		"@tailwindcss/oxide-darwin-x64": "4.1.11",
