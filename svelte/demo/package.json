@@ -85,7 +85,7 @@
 	},
 	"devDependencies": {
 		"@sveltejs/package": "^2.3.7",
-		"@sveltejs/vite-plugin-svelte": "^5.0.1",
+		"@sveltejs/vite-plugin-svelte": "^6.0.0",
 		"@tailwindcss/vite": "^4.0.6",
 		"bootstrap": "^5.3.3",
 		"bootstrap-icons": "^1.11.3",
