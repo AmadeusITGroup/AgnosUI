@@ -249,6 +249,30 @@ export class SliderComponent extends BaseWidgetDirective<SliderWidget> implement
 	readonly max = input(undefined, {alias: 'auMax', transform: auNumberAttribute});
 
 	/**
+	 * Minimum distance between two values.
+	 * When set to 0, no minimum distance constraint is applied.
+	 *
+	 * @defaultValue 0
+	 */
+	readonly minRange = input(undefined, {alias: 'auMinRange', transform: auNumberAttribute});
+
+	/**
+	 * Maximum distance between two values
+	 * When set to 0, no maximum distance constraint is applied.
+	 *
+	 * @defaultValue 0
+	 */
+	readonly maxRange = input(undefined, {alias: 'auMaxRange', transform: auNumberAttribute});
+
+	/**
+	 * When true, if moving a value would break the minRange or maxRange constraint,
+	 * it will instead push or pull the neighboring values to keep the allowed range rather than just stopping.
+	 *
+	 * @defaultValue false
+	 */
+	readonly pushRange = input(undefined, {alias: 'auPushRange', transform: auBooleanAttribute});
+
+	/**
 	 * Unit value between slider steps
 	 *
 	 * @defaultValue `1`
