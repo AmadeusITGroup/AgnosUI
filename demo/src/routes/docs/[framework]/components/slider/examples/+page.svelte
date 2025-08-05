@@ -3,6 +3,7 @@
 	import rangeSample from '@agnos-ui/samples/bootstrap/slider/range';
 	import verticalSample from '@agnos-ui/samples/bootstrap/slider/vertical';
 	import rightToLeftSample from '@agnos-ui/samples/bootstrap/slider/right-to-left';
+	import rangeLimits from '@agnos-ui/samples/bootstrap/slider/RangeLimits';
 	import customSample from '@agnos-ui/samples/bootstrap/slider/custom';
 	import fullcustomSample from '@agnos-ui/samples/bootstrap/slider/fullCustom';
 	import customAccessibility from '@agnos-ui/samples/bootstrap/slider/accessibility';
@@ -22,6 +23,10 @@
 </Section>
 <Section label="Vertical slider" level={2}>
 	<Sample title="Vertical slider" sample={verticalSample} height={382} />
+</Section>
+<Section label="Range with limits" level={2}>
+	<div class="py-3 px-0 sm:px-4">Slider handles stay within set distances and can push each other to maintain the range.</div>
+	<Sample title="Range slider" sample={rangeLimits} height={300} />
 </Section>
 <Section label="Right to left slider" level={2}>
 	<Sample title="Right to left slider" sample={rightToLeftSample} height={601} />
