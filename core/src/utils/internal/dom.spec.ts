@@ -92,7 +92,6 @@ describe('computeCommonAncestor', () => {
 		const a$ = writable(<any>'blue');
 
 		const unbind = bindStyle(node, 'color', a$);
-		console.log('(DEBUG)   node:', node);
 
 		const expectedState: Record<string, string> = {style: 'color: blue;'};
 		expect(getAttributes(node)).toStrictEqual(expectedState);
