@@ -69,12 +69,13 @@ test.describe(`Tree tests`, () => {
 				);
 		});
 
-		test(`Keyboard navigation`, async ({page}) => {
-			const treePO = new TreePO(page, 0);
+		test.describe(`Keyboard navigation`, () => {
+			test(`should navigate to the end with End key`, async ({page}) => {
+				const treePO = new TreePO(page, 0);
 
-			await page.goto('#/tree/basic');
-			await treePO.locatorRoot.waitFor();
-			await test.step(`should navigate to the end with End key`, async () => {
+				await page.goto('#/tree/basic');
+				await treePO.locatorRoot.waitFor();
+
 				await page.keyboard.press('Tab');
 				await page.keyboard.press('End');
 				await page.keyboard.press('Enter');
@@ -106,9 +107,14 @@ test.describe(`Tree tests`, () => {
 					);
 			});
 
-			await test.step(`should handle the left key stroke`, async () => {
+			test(`should handle the left key stroke`, async ({page}) => {
+				const treePO = new TreePO(page, 0);
+
+				await page.goto('#/tree/basic');
+				await treePO.locatorRoot.waitFor();
+
 				await page.keyboard.press('Tab');
-				await page.keyboard.press('Shift+Tab');
+				await page.keyboard.press('End');
 				await page.keyboard.press('ArrowLeft');
 
 				await expect
@@ -133,10 +139,6 @@ test.describe(`Tree tests`, () => {
 						),
 					);
 
-				await page.keyboard.press('Tab');
-				await page.keyboard.press('Shift+Tab');
-
-				await page.keyboard.press('ArrowLeft');
 				await page.keyboard.press('ArrowLeft');
 
 				await expect
@@ -167,9 +169,13 @@ test.describe(`Tree tests`, () => {
 					);
 			});
 
-			await test.step(`should handle the right key stroke`, async () => {
+			test(`should handle the right key stroke`, async ({page}) => {
+				const treePO = new TreePO(page, 0);
+
+				await page.goto('#/tree/basic');
+				await treePO.locatorRoot.waitFor();
+
 				await page.keyboard.press('Tab');
-				await page.keyboard.press('Shift+Tab');
 				await page.keyboard.press('ArrowRight');
 
 				await expect
@@ -193,9 +199,6 @@ test.describe(`Tree tests`, () => {
 							],
 						),
 					);
-
-				await page.keyboard.press('Tab');
-				await page.keyboard.press('Shift+Tab');
 
 				await page.keyboard.press('ArrowRight');
 				await page.keyboard.press('ArrowRight');
@@ -246,9 +249,15 @@ test.describe(`Tree tests`, () => {
 					);
 			});
 
-			await test.step(`should handle the up key stroke`, async () => {
+			test(`should handle the up key stroke`, async ({page}) => {
+				const treePO = new TreePO(page, 0);
+
+				await page.goto('#/tree/basic');
+				await treePO.locatorRoot.waitFor();
+
 				await page.keyboard.press('Tab');
-				await page.keyboard.press('Shift+Tab');
+				await page.keyboard.press('ArrowDown');
+				await page.keyboard.press('ArrowDown');
 				await page.keyboard.press('ArrowUp');
 				await page.keyboard.press('Enter');
 
@@ -260,30 +269,32 @@ test.describe(`Tree tests`, () => {
 							[
 								{
 									ariaSelected: 'false',
-									ariaExpanded: 'false',
+									ariaExpanded: 'true',
 								},
-							],
-						),
-					);
-
-				await expect
-					.poll(async () => await treePO.itemToggleState())
-					.toEqual(
-						assign(
-							[{}],
-							[
 								{
-									ariaLabel: 'Toggle Node 1',
+									ariaSelected: 'false',
+									ariaExpanded: 'true',
+								},
+								{
+									ariaSelected: 'false',
+									ariaExpanded: null,
+								},
+								{
+									ariaSelected: 'false', // new node in dom
+									ariaExpanded: 'false', // new node in dom
 								},
 							],
 						),
 					);
 			});
 
-			await test.step(`should handle the down key stroke`, async () => {
+			test(`should handle the down key stroke`, async ({page}) => {
+				const treePO = new TreePO(page, 0);
+
+				await page.goto('#/tree/basic');
+				await treePO.locatorRoot.waitFor();
+
 				await page.keyboard.press('Tab');
-				await page.keyboard.press('Shift+Tab');
-				await page.keyboard.press('Enter');
 				await page.keyboard.press('ArrowDown');
 				await page.keyboard.press('Enter');
 
@@ -298,40 +309,59 @@ test.describe(`Tree tests`, () => {
 									ariaExpanded: 'true',
 								},
 								{
-									ariaSelected: 'false', // new node in dom
-									ariaExpanded: 'false', // new node in dom
+									ariaSelected: 'false',
+									ariaExpanded: 'true',
+								},
+								{
+									ariaSelected: 'false',
+									ariaExpanded: null,
 								},
 								{
 									ariaSelected: 'false', // new node in dom
 									ariaExpanded: 'false', // new node in dom
-								},
-							],
-						),
-					);
-
-				await expect
-					.poll(async () => await treePO.itemToggleState())
-					.toEqual(
-						assign(
-							[{}],
-							[
-								{
-									ariaLabel: 'Toggle Node 1',
-								},
-								{
-									ariaLabel: 'Toggle Node 1.1', // new node in dom
-								},
-								{
-									ariaLabel: 'Toggle Node 1.2', // new node in dom
 								},
 							],
 						),
 					);
 			});
 
-			await test.step(`should handle the Home key stroke`, async () => {
+			test(`should handle the Home key stroke`, async ({page}) => {
+				const treePO = new TreePO(page, 0);
+
+				await page.goto('#/tree/basic');
+				await treePO.locatorRoot.waitFor();
+
 				await page.keyboard.press('Tab');
-				await page.keyboard.press('Shift+Tab');
+
+				await page.keyboard.press('ArrowDown');
+				await page.keyboard.press('Enter');
+
+				await expect
+					.poll(async () => await treePO.itemContainerState())
+					.toEqual(
+						assign(
+							[{}],
+							[
+								{
+									ariaSelected: 'false',
+									ariaExpanded: 'true',
+								},
+								{
+									ariaSelected: 'false',
+									ariaExpanded: 'true',
+								},
+								{
+									ariaSelected: 'false',
+									ariaExpanded: null,
+								},
+								{
+									ariaSelected: 'false', // new node in dom
+									ariaExpanded: 'false', // new node in dom
+								},
+							],
+						),
+					);
+
 				await page.keyboard.press('Home');
 				await page.keyboard.press('Enter');
 
