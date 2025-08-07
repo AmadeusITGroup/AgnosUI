@@ -80,8 +80,8 @@ test.describe(`Slider tests`, () => {
 				.poll(async () => (await sliderPO.sliderHandleState()).at(0))
 				.toEqual(
 					assign(expectedState, {
-						value: '43',
-						style: 'left: 43%;',
+						value: '44',
+						style: 'left: 44%;',
 					}),
 				);
 		});
@@ -408,7 +408,7 @@ test.describe(`Slider tests`, () => {
 			});
 
 			await expect(sliderPO.locatorValueLabel).toHaveCount(1);
-			await expect(sliderPO.locatorValueLabel).toHaveText('70 - 67');
+			await expect(sliderPO.locatorValueLabel).toHaveText('70 - 68');
 
 			await expect(sliderPO.locatorMinLabelHorizontal).toContainClass('au-slider-rtl');
 			await expect(sliderPO.locatorMaxLabelHorizontal).toContainClass('au-slider-rtl');
@@ -468,12 +468,12 @@ test.describe(`Slider tests`, () => {
 				},
 			]);
 
-			const sliderLocator = sliderPO.locatorRoot;
-			const boundingBox = await sliderLocator.boundingBox();
+			const clickableArea = sliderPO.clickableArea;
+			const boundingBox = await clickableArea.boundingBox();
 
-			await page.mouse.move(boundingBox!.x, boundingBox!.y);
+			await page.mouse.move(boundingBox!.x, boundingBox!.y + 10);
 			await page.mouse.down();
-			await page.mouse.move(boundingBox!.x + boundingBox!.width * 0.75, boundingBox!.y);
+			await page.mouse.move(boundingBox!.x + boundingBox!.width * 0.75, boundingBox!.y + 10);
 			await page.mouse.up();
 
 			await expect.poll(async () => (await sliderPO.sliderHandleState()).at(0)).toEqual(expectedState[0]);
@@ -483,7 +483,7 @@ test.describe(`Slider tests`, () => {
 	});
 
 	test.describe(`Vertical slider`, () => {
-		test(`should move the handle to correct tick on the slider click event`, async ({page}) => {
+		test(`should move the handle to correct position on the slider click event`, async ({page}) => {
 			const sliderPO = new SliderPO(page, 0);
 
 			await page.goto('#/slider/vertical');
@@ -491,9 +491,9 @@ test.describe(`Slider tests`, () => {
 
 			const expectedState = {...defaultExpectedHandleStateVertical[1]};
 
-			const sliderLocator = sliderPO.locatorRoot;
-			const boundingBox = await sliderLocator.boundingBox();
-			await sliderLocator.click({position: {y: boundingBox!.height * 0.2, x: 1}});
+			const clickableAreaLocator = sliderPO.clickableAreaVertical;
+			const boundingBox = await clickableAreaLocator.boundingBox();
+			await clickableAreaLocator.click({position: {y: boundingBox!.height * 0.2, x: 1}});
 
 			await expect
 				.poll(async () => (await sliderPO.sliderHandleState()).at(1))

@@ -1,6 +1,6 @@
 import type {SliderHandle, SliderWidget} from '@agnos-ui/angular-bootstrap';
 import {SlotComponent, UseDirective} from '@agnos-ui/angular-bootstrap';
-import {ChangeDetectionStrategy, Component, input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, input, ViewEncapsulation} from '@angular/core';
 
 @Component({
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -20,6 +20,7 @@ import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 		</button>
 	`,
 	styles: "@use '@agnos-ui/common/samples/slider/custom.scss';",
+	encapsulation: ViewEncapsulation.None,
 })
 export default class CustomHandleSliderComponent extends SlotComponent<SliderWidget> {
 	readonly item = input.required<SliderHandle>();
