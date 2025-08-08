@@ -905,6 +905,7 @@ export const createSlider: WidgetFactory<SliderWidget> = createWidgetFactory('sl
 			'au-slider-content': true$,
 			'au-slider-vertical': vertical$,
 			'au-slider-horizontal': horizontal$,
+			'au-slider-with-labels': computed(() => showValueLabels$() || showMinMaxLabels$() || (showTickValues$() && showTicks$())),
 			disabled: disabled$,
 		},
 	}));

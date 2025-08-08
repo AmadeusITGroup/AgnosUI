@@ -8,6 +8,15 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 	imports: [SliderComponent, ReactiveFormsModule, FormsModule],
 	template: `
 		<h2>Slider with form control</h2>
+		<div class="form-check form-switch">
+			<input class="form-check-input" type="checkbox" role="switch" id="showMinMax" [(ngModel)]="showMinMax" />
+			<label class="form-check-label" for="showMinMax">Min-Max label visibility</label>
+		</div>
+		<div class="form-check form-switch">
+			<input class="form-check-input" type="checkbox" role="switch" id="showValues" [(ngModel)]="showValues" />
+			<label class="form-check-label" for="showValues">Value label visibility</label>
+		</div>
+
 		<div
 			auSlider
 			auMin="0"
@@ -37,15 +46,6 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 		<div class="form-check form-switch">
 			<input class="form-check-input" type="checkbox" role="switch" id="readonly" [(ngModel)]="readonlyToggle" />
 			<label class="form-check-label" for="readonly">Readonly</label>
-		</div>
-
-		<div class="form-check form-switch">
-			<input class="form-check-input" type="checkbox" role="switch" id="showMinMax" [(ngModel)]="showMinMax" />
-			<label class="form-check-label" for="showMinMax">Min-Max label visibility</label>
-		</div>
-		<div class="form-check form-switch">
-			<input class="form-check-input" type="checkbox" role="switch" id="showValues" [(ngModel)]="showValues" />
-			<label class="form-check-label" for="showValues">Value label visibility</label>
 		</div>
 	`,
 })
