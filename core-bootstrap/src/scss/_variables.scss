@@ -15,8 +15,6 @@ $au-slider-line-height: 1.5 !default;
 $au-slider-primary-size: 100% !default;
 $au-slider-secondary-size: 0.25rem !default;
 $au-slider-border-radius: 0.125rem !default;
-$au-slider-vertical-margin-inline-start: 1rem !default;
-$au-slider-vertical-margin-inline-end: 3rem !default;
 $au-slider-translate-vertical: translateY(-50%) !default;
 $au-slider-translate-horizontal: translateX(-50%) !default;
 $au-slider-handle-color: var(--#{$prefix}primary, #0d6efd) !default;
@@ -39,8 +37,12 @@ $au-slider-progress-color: var(--#{$prefix}primary, #0d6efd) !default;
 $au-slider-progress-height: 0.25rem !default;
 $au-slider-progress-vertical-transform: rotate(90deg) !default;
 $au-slider-padding: calc(var(--#{$prefix}slider-handle-size) / 2) !default;
-$au-slider-margin-block-end: calc((var(--#{$prefix}slider-handle-size) - var(--#{$prefix}slider-secondary-size)) / 2 + 0.5rem) !default;
-$au-slider-margin-block-start: calc(
+$au-slider-vertical-margin-inline-no-labels: calc((var(--#{$prefix}slider-handle-size) - var(--#{$prefix}slider-secondary-size)) * 0.75) !default;
+$au-slider-vertical-margin-inline-with-labels: calc(
+	(var(--#{$prefix}slider-handle-size) - var(--#{$prefix}slider-secondary-size)) / 2 + 4ch
+) !default;
+$au-slider-horizontal-margin-block-no-labels: calc((var(--#{$prefix}slider-handle-size) - var(--#{$prefix}slider-secondary-size)) * 0.75) !default;
+$au-slider-horizontal-margin-block-with-labels: calc(
 	(var(--#{$prefix}slider-handle-size) - var(--#{$prefix}slider-secondary-size)) / 2 + var(--#{$prefix}slider-font-size) * 1.5 + 0.5rem
 ) !default;
 $au-slider-label-now-font-weight: normal !default;
