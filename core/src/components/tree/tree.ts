@@ -1,9 +1,11 @@
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {computed, readable, writable} from '@amadeus-it-group/tansu';
+import type {DragAndDropConfig} from '../../services/dragAndDrop';
+import {createDragAndDropManager} from '../../services/dragAndDrop';
 import {createNavManager, type NavManagerItemConfig} from '../../services/navManager';
-import type {Directive, WidgetFactory} from '../../types';
+import type {Directive, WidgetFactory, SSRHTMLElement} from '../../types';
 import {type ConfigValidator, type PropsConfig, type Widget} from '../../types';
-import {bindDirective, browserDirective, createAttributesDirective, mergeDirectives} from '../../utils/directive';
+import {bindDirective, browserDirective, createAttributesDirective, mapDirectiveArg, mergeDirectives} from '../../utils/directive';
 import {noop} from '../../utils/func';
 import {stateStores, true$, writablesForProps} from '../../utils/stores';
 import {typeArray, typeFunction, typeString} from '../../utils/writables';
@@ -147,6 +149,10 @@ export interface TreeDirectives {
 	 * Directive to handle attributes for the tree item
 	 */
 	itemAttributesDirective: Directive<{item: NormalizedTreeItem}>;
+	/**
+	 * Directive to handle draggable items
+	 */
+	draggableDirective: Directive<{item: NormalizedTreeItem; filler?: boolean}>;
 }
 /**
  * Represents a Tree widget component.
@@ -224,6 +230,99 @@ export const createTree: WidgetFactory<TreeWidget> = createWidgetFactory('tree',
 		},
 		selector: navSelector$(),
 	}));
+
+	interface DragContext {
+		sourceItem: NormalizedTreeItem | undefined;
+		targetItem: NormalizedTreeItem | undefined;
+	}
+
+	const {draggableDirective, dragContext} = createDragAndDropManager<DragContext>();
+
+	const dragAndDropConfig: (item: NormalizedTreeItem, filler?: boolean) => DragAndDropConfig = (item: NormalizedTreeItem, filler?: boolean) => ({
+		dragStartHandler: (event: DragEvent) => {
+			(event.target as HTMLElement).style.opacity = '0.5';
+			dragContext.set({
+				sourceItem: item,
+				targetItem: undefined,
+			});
+		},
+		dragEnterHandler: (event: DragEvent) => {
+			(event.target as HTMLElement).style.border = '3px dotted #666';
+		},
+		dragEndHandler: (event: DragEvent) => {
+			(event.target as HTMLElement).style.opacity = '1';
+		},
+		dragLeaveHandler: (event: DragEvent) => {
+			(event.target as HTMLElement).style.border = '';
+		},
+		dragOverHandler: (event: DragEvent) => {
+			event.preventDefault();
+		},
+		dropHandler: (event: DragEvent) => {
+			(event.target as HTMLElement).style.border = '';
+			if (dragContext) {
+				dragContext.update((value) => {
+					if (value) {
+						value.targetItem = item;
+					}
+					return value;
+				});
+			}
+			const dragContextValue = dragContext.get()!;
+			const dragSource = dragContextValue.sourceItem!;
+			const dragTarget = dragContextValue.targetItem!;
+			if (isAnscensor(dragSource, dragTarget)) {
+				return;
+			}
+			if (filler) {
+				const parent = treeMap.get(dragSource)?.parent;
+				if (parent) {
+					parent.children = parent?.children.filter((child) => child !== dragSource);
+				}
+				const targetParent = treeMap.get(dragTarget)?.parent;
+				if (targetParent) {
+					const targetIndex = targetParent.children.indexOf(dragTarget);
+					targetParent.children.splice(targetIndex, 0, dragSource);
+					treeMap.set(dragSource, {parent: targetParent});
+				}
+			} else {
+				const parent = treeMap.get(dragSource)?.parent;
+				if (parent) {
+					parent.children = parent?.children.filter((child) => child !== dragSource);
+					treeMap.set(dragSource, {parent: dragTarget});
+				}
+				dragTarget.children.push(dragContextValue.sourceItem!);
+				dragTarget.isExpanded = true;
+			}
+			const newSourceParent = treeMap.get(dragSource)?.parent;
+			updateSourceLevels(dragSource, newSourceParent!.level + 1);
+			_toggleChange$.set({});
+		},
+	});
+
+	const updateSourceLevels = (source: NormalizedTreeItem, level: number) => {
+		source.level = level;
+		if (source.children) {
+			source.children.forEach((child) => updateSourceLevels(child, level + 1));
+		}
+	};
+
+	/**
+	 * Utility to check source is an ancestor of target
+	 * @param source node to check if is an ancestor of target
+	 * @param target node to check if is a descendant of source
+	 * @returns `true` if source is an ancestor of target, `false` otherwise
+	 */
+	const isAnscensor = (source: NormalizedTreeItem, target: NormalizedTreeItem) => {
+		if (target === source) {
+			return true;
+		}
+		const parent = treeMap.get(target)?.parent;
+		if (parent) {
+			return isAnscensor(source, parent);
+		}
+		return false;
+	};
 
 	const traverseTree = (node: TreeItem, level: number, parent: NormalizedTreeItem | undefined) => {
 		const copyNode: NormalizedTreeItem = {
@@ -394,6 +493,10 @@ export const createTree: WidgetFactory<TreeWidget> = createWidgetFactory('tree',
 					}),
 				},
 			})),
+			draggableDirective: mapDirectiveArg<{item: NormalizedTreeItem; filler?: boolean}, DragAndDropConfig, SSRHTMLElement>(
+				draggableDirective,
+				(arg: {item: NormalizedTreeItem; filler?: boolean}) => dragAndDropConfig(arg.item, arg.filler),
+			),
 		},
 	};
 	return widget;
