@@ -13,6 +13,32 @@ const DefaultSliderDemo = () => {
 	return (
 		<>
 			<h2>Slider with form control</h2>
+			<div className="form-check form-switch">
+				<input
+					className="form-check-input"
+					type="checkbox"
+					role="switch"
+					id="showMinMax"
+					checked={minMaxLabelToggle}
+					onChange={() => setMinMaxLabelToggle(!minMaxLabelToggle)}
+				/>
+				<label className="form-check-label" htmlFor="showMinMax">
+					Min-Max label visibility
+				</label>
+			</div>
+			<div className="form-check form-switch">
+				<input
+					className="form-check-input"
+					type="checkbox"
+					role="switch"
+					id="showValues"
+					checked={valueLabelToggle}
+					onChange={() => setValueLabelToggle(!valueLabelToggle)}
+				/>
+				<label className="form-check-label" htmlFor="showValues">
+					Value label visibility
+				</label>
+			</div>
 			<Slider
 				min={0}
 				max={100}
@@ -62,32 +88,6 @@ const DefaultSliderDemo = () => {
 				/>
 				<label className="form-check-label" htmlFor="readonly">
 					Readonly
-				</label>
-			</div>
-			<div className="form-check form-switch">
-				<input
-					className="form-check-input"
-					type="checkbox"
-					role="switch"
-					id="showMinMax"
-					checked={minMaxLabelToggle}
-					onChange={() => setMinMaxLabelToggle(!minMaxLabelToggle)}
-				/>
-				<label className="form-check-label" htmlFor="showMinMax">
-					Min-Max label visibility
-				</label>
-			</div>
-			<div className="form-check form-switch">
-				<input
-					className="form-check-input"
-					type="checkbox"
-					role="switch"
-					id="showValues"
-					checked={valueLabelToggle}
-					onChange={() => setValueLabelToggle(!valueLabelToggle)}
-				/>
-				<label className="form-check-label" htmlFor="showValues">
-					Value label visibility
 				</label>
 			</div>
 		</>

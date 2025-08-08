@@ -16,6 +16,7 @@ export const sliderSelectors = {
 	maxLabelVertical: '.au-slider-label-vertical-max',
 	valueLabel: '.au-slider-label-now',
 	progress: '.au-slider-progress',
+	content: '.au-slider-content',
 };
 
 export class SliderPO extends BasePO {
@@ -75,6 +76,10 @@ export class SliderPO extends BasePO {
 
 	get locatorValueLabel(): Locator {
 		return this.locatorRoot.locator(this.selectors.valueLabel);
+	}
+
+	get locatorContent(): Locator {
+		return this.locatorRoot.locator(this.selectors.content);
 	}
 
 	async sliderHandleState() {
