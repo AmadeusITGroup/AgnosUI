@@ -260,6 +260,20 @@ test.describe(`Slider tests`, () => {
 					}),
 				);
 		});
+
+		test(`should remove the top margin when the labels are not present`, async ({page}) => {
+			const sliderDemoPO = new SliderDemoPO(page);
+			const sliderPO = new SliderPO(page, 0);
+			await page.goto('#/slider/default');
+			await sliderPO.locatorRoot.waitFor();
+
+			await expect(sliderPO.locatorContent).toContainClass('au-slider-with-labels');
+
+			await sliderDemoPO.showMinMaxToggle.click();
+			await sliderDemoPO.showValuesToggle.click();
+
+			await expect(sliderPO.locatorContent).not.toContainClass('au-slider-with-labels');
+		});
 	});
 
 	test.describe(`Range slider`, () => {

@@ -9,10 +9,10 @@
 
 	--#{variables.$prefix}slider-secondary-size: #{$barSize};
 
-	--#{variables.$prefix}slider-margin-block-start: calc((#{$handleSize} - #{$barSize}) / 2 + #{$fontSize} * 1.5 + #{$offset});
-	--#{variables.$prefix}slider-margin-block-end: calc((#{$handleSize} - #{$barSize}) / 2 + #{$offset});
-	--#{variables.$prefix}slider-vertical-margin-inline-start: calc((#{$handleSize} - #{$barSize}) / 2 + #{$offset});
-	--#{variables.$prefix}slider-vertical-margin-inline-end: calc((#{$handleSize} - #{$barSize}) / 2 + #{$offset} + 3ch + #{$offset});
+	--#{variables.$prefix}slider-horizontal-margin-block-with-labels: calc((#{$handleSize} - #{$barSize}) / 2 + #{$fontSize} * 1.5 + #{$offset});
+	--#{variables.$prefix}slider-horizontal-margin-block-no-labels: calc((#{$handleSize} - #{$barSize}) * 0.75);
+	--#{variables.$prefix}slider-vertical-margin-inline-no-labels: calc((#{$handleSize} - #{$barSize}) * 0.75);
+	--#{variables.$prefix}slider-vertical-margin-inline-with-labels: calc((#{$handleSize} - #{$barSize}) / 2 + #{$offset} + 3ch + #{$offset});
 
 	--#{variables.$prefix}slider-handle-size: #{$handleSize};
 	--#{variables.$prefix}slider-tick-primary-size: #{$tickPrimarySize};
@@ -34,10 +34,10 @@
 
 	--#{variables.$prefix}slider-primary-size: #{variables.$au-slider-primary-size};
 	--#{variables.$prefix}slider-secondary-size: #{variables.$au-slider-secondary-size};
-	--#{variables.$prefix}slider-margin-block-start: #{variables.$au-slider-margin-block-start};
-	--#{variables.$prefix}slider-margin-block-end: #{variables.$au-slider-margin-block-end};
-	--#{variables.$prefix}slider-vertical-margin-inline-start: #{variables.$au-slider-vertical-margin-inline-start};
-	--#{variables.$prefix}slider-vertical-margin-inline-end: #{variables.$au-slider-vertical-margin-inline-end};
+	--#{variables.$prefix}slider-horizontal-margin-block-with-labels: #{variables.$au-slider-horizontal-margin-block-with-labels};
+	--#{variables.$prefix}slider-horizontal-margin-block-no-labels: #{variables.$au-slider-horizontal-margin-block-no-labels};
+	--#{variables.$prefix}slider-vertical-margin-inline-no-labels: #{variables.$au-slider-vertical-margin-inline-no-labels};
+	--#{variables.$prefix}slider-vertical-margin-inline-with-labels: #{variables.$au-slider-vertical-margin-inline-with-labels};
 	--#{variables.$prefix}slider-translate-vertical: #{variables.$au-slider-translate-vertical};
 	--#{variables.$prefix}slider-translate-horizontal: #{variables.$au-slider-translate-horizontal};
 	--#{variables.$prefix}slider-padding: #{variables.$au-slider-padding};
@@ -136,8 +136,11 @@
 		&.au-slider-horizontal {
 			width: var(--#{variables.$prefix}slider-primary-size);
 			height: var(--#{variables.$prefix}slider-secondary-size);
-			margin-block-start: var(--#{variables.$prefix}slider-margin-block-start);
-			margin-block-end: var(--#{variables.$prefix}slider-margin-block-end);
+			margin-block-start: var(--#{variables.$prefix}slider-horizontal-margin-block-no-labels);
+			margin-block-end: var(--#{variables.$prefix}slider-horizontal-margin-block-no-labels);
+			&.au-slider-with-labels {
+				margin-block-start: var(--#{variables.$prefix}slider-horizontal-margin-block-with-labels);
+			}
 			.au-slider-handle-horizontal {
 				top: calc(50% - var(--#{variables.$prefix}slider-handle-size) / 2);
 				transform: var(--#{variables.$prefix}slider-translate-horizontal);
@@ -151,8 +154,11 @@
 		&.au-slider-vertical {
 			height: var(--#{variables.$prefix}slider-primary-size);
 			width: var(--#{variables.$prefix}slider-secondary-size);
-			margin-inline-start: var(--#{variables.$prefix}slider-vertical-margin-inline-start);
-			margin-inline-end: var(--#{variables.$prefix}slider-vertical-margin-inline-end);
+			margin-inline-start: var(--#{variables.$prefix}slider-vertical-margin-inline-no-labels);
+			margin-inline-end: var(--#{variables.$prefix}slider-vertical-margin-inline-with-labels);
+			&.au-slider-with-labels {
+				margin-inline-end: var(--#{variables.$prefix}slider-vertical-margin-inline-with-labels);
+			}
 			.au-slider-handle-vertical {
 				left: calc(50% - var(--#{variables.$prefix}slider-handle-size) / 2);
 				transform: var(--#{variables.$prefix}slider-translate-vertical);
