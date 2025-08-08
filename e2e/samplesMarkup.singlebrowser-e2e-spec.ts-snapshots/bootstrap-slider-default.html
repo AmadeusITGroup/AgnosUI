@@ -7,10 +7,44 @@
 			"Slider with form control"
 		</h2>
 		<div
+		 class="form-check form-switch"
+		>
+			<input
+			 checked="checked"
+			 class="form-check-input"
+			 id="showMinMax"
+			 role="switch"
+			 type="checkbox"
+			/>
+			<label
+			 class="form-check-label"
+			 for="showMinMax"
+			>
+				"Min-Max label visibility"
+			</label>
+		</div>
+		<div
+		 class="form-check form-switch"
+		>
+			<input
+			 checked="checked"
+			 class="form-check-input"
+			 id="showValues"
+			 role="switch"
+			 type="checkbox"
+			/>
+			<label
+			 class="form-check-label"
+			 for="showValues"
+			>
+				"Value label visibility"
+			</label>
+		</div>
+		<div
 		 class="au-slider au-slider-horizontal"
 		>
 			<div
-			 class="au-slider-content au-slider-horizontal"
+			 class="au-slider-content au-slider-horizontal au-slider-with-labels"
 			>
 				<div
 				 class="au-slider-progress"
@@ -58,7 +92,7 @@
 		 class="au-slider au-slider-horizontal"
 		>
 			<div
-			 class="au-slider-content au-slider-horizontal"
+			 class="au-slider-content au-slider-horizontal au-slider-with-labels"
 			>
 				<div
 				 class="au-slider-progress"
@@ -107,7 +141,7 @@
 		>
 			<div
 			 aria-disabled="true"
-			 class="au-slider-content au-slider-horizontal disabled"
+			 class="au-slider-content au-slider-horizontal au-slider-with-labels disabled"
 			>
 				<div
 				 class="au-slider-progress"
@@ -181,40 +215,6 @@
 			 for="readonly"
 			>
 				"Readonly"
-			</label>
-		</div>
-		<div
-		 class="form-check form-switch"
-		>
-			<input
-			 checked="checked"
-			 class="form-check-input"
-			 id="showMinMax"
-			 role="switch"
-			 type="checkbox"
-			/>
-			<label
-			 class="form-check-label"
-			 for="showMinMax"
-			>
-				"Min-Max label visibility"
-			</label>
-		</div>
-		<div
-		 class="form-check form-switch"
-		>
-			<input
-			 checked="checked"
-			 class="form-check-input"
-			 id="showValues"
-			 role="switch"
-			 type="checkbox"
-			/>
-			<label
-			 class="form-check-label"
-			 for="showValues"
-			>
-				"Value label visibility"
 			</label>
 		</div>
 	</div>
