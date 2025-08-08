@@ -3,6 +3,7 @@
 	import rangeSample from '@agnos-ui/samples/bootstrap/slider/range';
 	import verticalSample from '@agnos-ui/samples/bootstrap/slider/vertical';
 	import rightToLeftSample from '@agnos-ui/samples/bootstrap/slider/right-to-left';
+	import rangeLimits from '@agnos-ui/samples/bootstrap/slider/RangeLimits';
 	import customSample from '@agnos-ui/samples/bootstrap/slider/custom';
 	import fullcustomSample from '@agnos-ui/samples/bootstrap/slider/fullCustom';
 	import customAccessibility from '@agnos-ui/samples/bootstrap/slider/accessibility';
@@ -16,6 +17,9 @@
 </Section>
 <Section label="Range slider" level={2}>
 	<Sample title="Range slider" sample={rangeSample} height={300} />
+</Section>
+<Section label="Range with limits" level={2}>
+	<Sample title="Range slider" sample={rangeLimits} height={300} />
 </Section>
 <Section label="Slider with ticks" level={2}>
 	<Sample title="Slider with ticks" sample={withTicks} height={426} />
