@@ -12,7 +12,7 @@ const DefaultSliderDemo = () => {
 
 	return (
 		<>
-			<h2>Slider with form control</h2>
+			<h5>Slider with form control</h5>
 			<div className="form-check form-switch">
 				<input
 					className="form-check-input"
@@ -50,11 +50,11 @@ const DefaultSliderDemo = () => {
 			/>
 			Form control value: {sliderControl.join(', ')}
 			<hr />
-			<h2>Slider with value</h2>
+			<h5>Slider with value</h5>
 			<Slider min={0} max={100} stepSize={1} values={sliderValues} onValuesChange={setSliderValues} />
 			Value: {sliderValues.join(', ')}
 			<hr />
-			<h2>Disabled slider</h2>
+			<h5>Disabled slider</h5>
 			<Slider
 				min={0}
 				max={100}

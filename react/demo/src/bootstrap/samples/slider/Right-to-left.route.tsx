@@ -9,11 +9,11 @@ const RightToLeftDemo = () => {
 
 	return (
 		<>
-			<h2>Horizontal slider</h2>
+			<h5>Horizontal slider</h5>
 			<Slider min={0} max={100} stepSize={1} values={sliderControl} onValuesChange={setSliderControl} rtl showTicks tickInterval={25} />
 			<br />
 			<Slider min={0} max={100} stepSize={1} values={sliderRangeControl} onValuesChange={setSliderRangeControl} rtl />
-			<h2>Vertical slider</h2>
+			<h5>Vertical slider</h5>
 			<div className="d-flex" style={{height: '350px'}}>
 				<div className="col-6" style={{height: '300px'}}>
 					<Slider

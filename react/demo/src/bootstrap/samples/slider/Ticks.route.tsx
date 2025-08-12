@@ -11,7 +11,7 @@ const TicksDemo = () => {
 
 	return (
 		<>
-			<h2>Ticks as steps</h2>
+			<h5>Ticks as steps</h5>
 			<Slider
 				min={0}
 				max={100}
@@ -36,11 +36,11 @@ const TicksDemo = () => {
 				</label>
 			</div>
 
-			<h2>With intermediate steps</h2>
+			<h5>With intermediate steps</h5>
 			<Slider min={0} max={100} stepSize={1} values={sliderControl} onValuesChange={setSliderControl} showTicks tickInterval={25} />
 			<br />
 
-			<h2>Without tick labels</h2>
+			<h5>Without tick labels</h5>
 			<Slider
 				min={0}
 				max={100}

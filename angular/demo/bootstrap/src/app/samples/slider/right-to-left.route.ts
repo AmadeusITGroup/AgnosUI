@@ -5,11 +5,11 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 @Component({
 	imports: [SliderComponent, ReactiveFormsModule, FormsModule],
 	template: `
-		<h2>Horizontal slider</h2>
+		<h5>Horizontal slider</h5>
 		<div auSlider auMin="0" auMax="100" auStepSize="1" [formControl]="sliderControl" auRtl auShowTicks auTickInterval="25"></div>
 		<br />
 		<div auSlider auMin="0" auMax="100" auStepSize="1" [formControl]="sliderRangeControl" auRtl></div>
-		<h2>Vertical slider</h2>
+		<h5>Vertical slider</h5>
 		<div class="d-flex" style="height: 350px">
 			<div class="col-6" style="height: 300px">
 				<div auSlider auMin="0" auMax="100" auRtl auStepSize="1" auVertical [formControl]="sliderControl" auClassName="my-0"></div>
