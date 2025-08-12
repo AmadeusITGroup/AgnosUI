@@ -9,7 +9,7 @@ const CustomSliderDemo = () => {
 
 	return (
 		<>
-			<h2>Slider with custom labels</h2>
+			<h5>Slider with custom labels</h5>
 			<Slider
 				min={0}
 				max={100}
@@ -20,7 +20,7 @@ const CustomSliderDemo = () => {
 				className="au-custom-slider-container"
 			/>
 			<hr />
-			<h2>Slider with custom handle</h2>
+			<h5>Slider with custom handle</h5>
 			<Slider
 				min={0}
 				max={100}
