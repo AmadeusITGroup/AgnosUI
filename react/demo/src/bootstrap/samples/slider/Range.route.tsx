@@ -7,11 +7,11 @@ const RangeSliderDemo = () => {
 
 	return (
 		<>
-			<h2>Slider with form control</h2>
+			<h5>Slider with form control</h5>
 			<Slider min={0} max={100} stepSize={1} values={sliderControl} onValuesChange={setSliderControl} />
 			Form control values: {sliderControl?.join(', ')}
 			<hr />
-			<h2>Slider with values</h2>
+			<h5>Slider with values</h5>
 			<Slider min={0} max={100} stepSize={1} values={sliderValues} onValuesChange={setSliderValues} />
 			Values: {sliderValues.join(', ')}
 		</>
