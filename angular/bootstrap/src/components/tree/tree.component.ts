@@ -1,7 +1,7 @@
 import type {SlotContent} from '@agnos-ui/angular-headless';
 import {BaseWidgetDirective, callWidgetFactory, ComponentTemplate, SlotDirective, UseDirective} from '@agnos-ui/angular-headless';
 import {ChangeDetectionStrategy, Component, Directive, inject, input, output, TemplateRef, viewChild} from '@angular/core';
-import type {TreeContext, TreeItem, NormalizedTreeItem, TreeSlotItemContext, TreeWidget} from './tree.gen';
+import type {NormalizedTreeItem, TreeContext, TreeItem, TreeSlotItemContext, TreeWidget} from './tree.gen';
 import {createTree} from './tree.gen';
 
 /**
@@ -95,10 +95,11 @@ export class TreeItemContentDirective {
 
 @Component({
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [SlotDirective, TreeItemContentDirective],
+	imports: [SlotDirective, TreeItemContentDirective, UseDirective],
 	template: `
 		<ng-template auTreeItemContent #treeItemContent let-state="state" let-directives="directives" let-item="item" let-api="api">
-			<span class="au-tree-item">
+			<span style="width:100%; height:3px;" [auUse]="[directives.draggableDirective, {item: item, filler: true}]"></span>
+			<span class="au-tree-item" [auUse]="[directives.draggableDirective, {item: item}]">
 				<ng-template [auSlot]="state.itemToggle()" [auSlotProps]="{state, api, directives, item}" />
 				{{ item.label }}
 			</span>

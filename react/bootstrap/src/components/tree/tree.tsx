@@ -38,10 +38,13 @@ export const DefaultTreeSlotItemToggle = (slotContext: TreeSlotItemContext) => {
 export const DefaultTreeSlotItemContent = (slotContext: TreeSlotItemContext) => {
 	const {state, item} = slotContext;
 	return (
-		<span className="au-tree-item">
-			<Slot slotContent={state.itemToggle} props={{...slotContext}} />
-			{item.label}
-		</span>
+		<>
+			<span style={{width: '100%', height: '3px'}} {...useDirective(slotContext.directives.draggableDirective, {item, filler: true})}></span>
+			<span className="au-tree-item" {...useDirective(slotContext.directives.draggableDirective, {item})}>
+				<Slot slotContent={state.itemToggle} props={{...slotContext}} />
+				{item.label}
+			</span>
+		</>
 	);
 };
 
