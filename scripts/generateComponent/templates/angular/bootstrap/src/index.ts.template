@@ -1,0 +1,5 @@
+end//export-start
+export type {[componentName]Props, [componentName]State, [componentName]Widget, [componentName]Api, [componentName]Directives} from './components/[componentNameLowerCase]';
+export {create[componentName], get[componentName]DefaultConfig} from './components/[componentNameLowerCase]';
+export * from './components/[componentNameLowerCase]';
+//export-end

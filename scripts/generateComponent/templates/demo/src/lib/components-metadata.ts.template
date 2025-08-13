@@ -1,0 +1,8 @@
+//content-start
+	[componentName]: {
+		status: 'inprogress',
+		since: 'v',
+		type: 'standalone',
+		includeStyles: true,
+	}, 
+//content-end

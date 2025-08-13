@@ -32,6 +32,7 @@ for (const file of files) {
 const angularModuleContent = await readFile(normalizePath(path.join(__dirname, '../src/agnos-ui-angular.module.ts')), {encoding: 'utf-8'});
 const componentsFromAngularModule = new Set(
 	angularModuleContent
+		.replace('// [content-placeholder]', '')
 		.match(/const components = \[([^\]]+)\];/)[1]
 		.split(',')
 		.map((component) => component.trim())

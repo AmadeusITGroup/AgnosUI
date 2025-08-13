@@ -1,0 +1,8 @@
+import {[componentName]PO} from '@agnos-ui/page-objects';
+import {test} from '../fixture';
+
+
+test.describe(`[componentName] tests`, () => {
+	test.describe(`Basic [componentNameLowerCase]`, () => {
+	});
+});

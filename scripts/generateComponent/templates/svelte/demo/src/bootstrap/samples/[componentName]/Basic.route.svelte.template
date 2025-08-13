@@ -1,0 +1,5 @@
+<script lang="ts">
+	import {[componentName]} from '@agnos-ui/svelte-bootstrap/components/[componentNameLowerCase]';
+</script>
+
+<[componentName] />

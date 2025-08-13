@@ -99,6 +99,7 @@ export const componentsMetadata: Metadata = {
 		type: 'standalone',
 		includeStyles: true,
 	},
+	// [content-placeholder]
 };
 
 /**

@@ -1,0 +1,49 @@
+import type {[componentName]Props as CoreProps, [componentName]State as CoreState, [componentName]Api, [componentName]Directives} from '@agnos-ui/core/components/[componentNameLowerCase]';
+import {create[componentName] as createCore[componentName], get[componentName]DefaultConfig as getCoreDefaultConfig} from '@agnos-ui/core/components/[componentNameLowerCase]';
+import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
+import type {Widget, WidgetFactory, WidgetSlotContext} from '@agnos-ui/core/types';
+
+export * from '@agnos-ui/core/components/[componentNameLowerCase]';
+
+/**
+ * Represents the context for a [componentName] widget.
+ * This interface is an alias for `WidgetSlotContext<[componentName]Widget>`.
+ */
+export type [componentName]Context = WidgetSlotContext<[componentName]Widget>;
+
+/**
+ * Represents additional properties for the [componentName] widget like slots etc.
+ */
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+interface [componentName]ExtraProps {}
+
+/**
+ * Represents the state of a [componentName] component.
+ */
+export interface [componentName]State extends CoreState, [componentName]ExtraProps {}
+/**
+ * Represents the properties for the [componentName] component.
+ */
+export interface [componentName]Props extends CoreProps, [componentName]ExtraProps {}
+/**
+ * Represents a [componentName] widget component.
+ */
+export type [componentName]Widget = Widget<[componentName]Props, [componentName]State, [componentName]Api, [componentName]Directives>;
+
+const defaultConfigExtraProps: [componentName]ExtraProps = {
+};
+
+/**
+ * Retrieve a shallow copy of the default [componentName] config
+ * @returns the default [componentName] config
+ */
+export function get[componentName]DefaultConfig(): [componentName]Props {
+	return {...getCoreDefaultConfig(), ...defaultConfigExtraProps};
+}
+
+/**
+ * Create a [componentName] with given config props
+ * @param config - an optional [componentName] config
+ * @returns a [componentName]Widget
+ */
+export const create[componentName]: WidgetFactory<[componentName]Widget> = extendWidgetProps(createCore[componentName], defaultConfigExtraProps, {});

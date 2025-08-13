@@ -1,0 +1,4 @@
+import [componentName] from './[componentName].svelte';
+
+export * from './[componentNameLowerCase].gen';
+export {[componentName]};

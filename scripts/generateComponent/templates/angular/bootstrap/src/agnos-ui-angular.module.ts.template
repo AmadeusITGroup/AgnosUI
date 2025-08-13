@@ -1,0 +1,8 @@
+//import-start
+import {
+	[componentName]Component,
+} from './components/[componentNameLowerCase]/[componentNameLowerCase].component';
+//import-end
+//content-start
+[componentName]Component,
+//content-end
