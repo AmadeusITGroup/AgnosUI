@@ -1,0 +1,13 @@
+import {BasePO} from '@agnos-ui/base-po';
+
+export const [componentNameLowerCase]Selectors = {
+	rootComponent: '',
+};
+
+export class [componentName]PO extends BasePO {
+	selectors = structuredClone([componentNameLowerCase]Selectors);
+
+	override getComponentSelector(): string {
+		return this.selectors.rootComponent;
+	}
+}

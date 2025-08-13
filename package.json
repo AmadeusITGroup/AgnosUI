@@ -148,7 +148,8 @@
 		"syncpack:check": "syncpack lint",
 		"syncpack:fix": "syncpack fix-mismatches && syncpack format",
 		"prepare": "wireit",
-		"kassette": "kassette -c e2e/kassette.config.cjs"
+		"kassette": "kassette -c e2e/kassette.config.cjs",
+		"generateComponent": "node --import tsx scripts/generateComponent/generateComponent.ts %npm_config_name% && npm run prepare"
 	},
 	"wireit": {
 		"dev": {

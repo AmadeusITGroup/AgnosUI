@@ -1,0 +1,9 @@
+//import-start
+import type {[componentName]Props} from './components/[componentNameLowerCase]';
+//import-end
+//content-start
+/**
+* [componentNameLowerCase] widget config
+*/
+[componentNameLowerCase]: [componentName]Props;
+//content-end

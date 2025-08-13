@@ -1,0 +1,19 @@
+import {useWidget} from '../../config';
+import type {[componentName]Props} from './[componentNameLowerCase].gen';
+import {create[componentName]} from './[componentNameLowerCase].gen';
+
+const defaultConfig: Partial<[componentName]Props> = {};
+
+/**
+ * [componentName] component that integrates with a widget context and renders a slot structure.
+ *
+ * @param props - The properties for the [componentName] component.
+ * @returns The rendered [componentName] component.
+ *
+ * The [componentName] component uses the {@link useWidget} hook to create a widget context with the provided
+ * configuration. It renders the slot content using the `Slot` component.
+ */
+export function [componentName](props: Partial<[componentName]Props>) {
+	const widgetContext = useWidget(create[componentName], props, {...defaultConfig});
+	return ``;
+}
