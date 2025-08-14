@@ -15,6 +15,7 @@ import {bindableProp, stateStores, true$, writablesForProps} from '../../utils/s
 import {typeArray, typeBoolean, typeFunction, typeNumber, typeNumberInRangeFactory, typeString} from '../../utils/writables';
 import {createResizeObserver} from '../../services/resizeObserver';
 import {createWidgetFactory} from '../../utils/widget';
+import {manageMinMaxRange} from './slider-utils';
 
 /**
  * Options for displaying progress in a slider component.
@@ -323,6 +324,30 @@ export interface SliderProps extends SliderCommonPropsAndState {
 	 * @defaultValue `true`
 	 */
 	showTickValues: boolean;
+
+	/**
+	 * Minimum distance between two values.
+	 * When set to 0, no minimum distance constraint is applied.
+	 *
+	 * @defaultValue 0
+	 */
+	minRange: number;
+
+	/**
+	 * Maximum distance between two values
+	 * When set to 0, no maximum distance constraint is applied.
+	 *
+	 * @defaultValue 0
+	 */
+	maxRange: number;
+
+	/**
+	 * When true, if moving a value would break the minRange or maxRange constraint,
+	 * it will instead push or pull the neighboring values to keep the allowed range rather than just stopping.
+	 *
+	 * @defaultValue false
+	 */
+	pushRange: boolean;
 }
 
 /**
@@ -412,6 +437,9 @@ const defaultSliderConfig: SliderProps = {
 	showTicks: false,
 	showTickValues: true,
 	tickInterval: 0,
+	minRange: 0,
+	maxRange: 0,
+	pushRange: false,
 	rtl: false,
 };
 
@@ -442,6 +470,9 @@ const configValidator: ConfigValidator<SliderProps> = {
 	tickInterval: typeNumberInRangeFactory(0, +Infinity, {strict: true}),
 	rtl: typeBoolean,
 	className: typeString,
+	minRange: typeNumberInRangeFactory(0, +Infinity),
+	maxRange: typeNumberInRangeFactory(0, +Infinity),
+	pushRange: typeBoolean,
 };
 
 /**
@@ -512,6 +543,9 @@ export const createSlider: WidgetFactory<SliderWidget> = createWidgetFactory('sl
 			// dirty inputs that need adjustment:
 			min$: _dirtyMinimum$,
 			max$: _dirtyMaximum$,
+			minRange$: _dirtyMinimumRange$,
+			maxRange$: _dirtyMaximumRange$,
+			pushRange$,
 			stepSize$,
 			rtl$,
 			values$: _dirtyValues$,
@@ -550,9 +584,28 @@ export const createSlider: WidgetFactory<SliderWidget> = createWidgetFactory('sl
 		}
 		return Math.max(_dirtyMinimum, _dirtyMaximum);
 	});
+	const minRange$ = computed(() => {
+		const _dirtyMinimumRange = _dirtyMinimumRange$();
+		if (_dirtyMinimumRange <= 0) {
+			return 0;
+		}
+		const _dirtyMaximumRange = _dirtyMaximumRange$();
+		return _dirtyMaximumRange === 0 ? _dirtyMinimumRange : Math.min(_dirtyMinimumRange, _dirtyMaximumRange);
+	});
+	const maxRange$ = computed(() => {
+		const _dirtyMaximumRange = _dirtyMaximumRange$();
+		if (_dirtyMaximumRange <= 0) {
+			return 0;
+		}
+
+		const _dirtyMinimumRange = _dirtyMinimumRange$();
+		return _dirtyMinimumRange === 0 ? _dirtyMaximumRange : Math.max(_dirtyMinimumRange, _dirtyMaximumRange);
+	});
 	const _decimalPrecision$ = computed(() => Math.max(getDecimalPrecision(stepSize$()), getDecimalPrecision(min$()), getDecimalPrecision(max$())));
 	const _intStepSize$ = computed(() => stepSize$() * Math.pow(10, _decimalPrecision$()));
 
+	// Storage of the previous values to detect changes
+	let previousValues = _dirtyValues$();
 	const values$ = bindableProp(
 		_dirtyValues$,
 		onValuesChange$,
@@ -561,7 +614,20 @@ export const createSlider: WidgetFactory<SliderWidget> = createWidgetFactory('sl
 			const max = max$();
 			const intStepSize = _intStepSize$();
 			const decimalPrecision = _decimalPrecision$();
-			return dirtyValues.map((dv) => computeCleanValue(dv, min, max, intStepSize, decimalPrecision));
+			const newValues = dirtyValues.map((dv) => computeCleanValue(dv, min, max, intStepSize, decimalPrecision));
+			if (dirtyValues.length > 1) {
+				const minRange = minRange$();
+				const maxRange = maxRange$();
+				if (minRange || maxRange) {
+					const pushRange = pushRange$();
+					const changedIndex = newValues.findIndex((dv, index) => dv !== previousValues[index]);
+					if (changedIndex !== -1) {
+						manageMinMaxRange(newValues, changedIndex, minRange, maxRange, min, max, pushRange);
+					}
+				}
+			}
+			previousValues = newValues;
+			return newValues;
 		},
 		typeArray.equal,
 	);
