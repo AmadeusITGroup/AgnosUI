@@ -48,6 +48,7 @@ import {
 } from './components/tree/tree.component';
 import {CarouselComponent, CarouselNavigationDirective, CarouselSlideDirective, CarouselStructureDirective} from './components/carousel';
 import {ToasterComponent} from './components/toast';
+import {DrawerBodyDirective, DrawerComponent, DrawerHeaderDirective, DrawerStructureDirective} from './components/drawer/drawer.component';
 // [import-placeholder]
 
 /* istanbul ignore next */
@@ -107,6 +108,10 @@ const components = [
 	CarouselSlideDirective,
 	CarouselStructureDirective,
 	CarouselNavigationDirective,
+	DrawerComponent,
+	DrawerStructureDirective,
+	DrawerHeaderDirective,
+	DrawerBodyDirective,
 	// [content-placeholder]
 ];
 

@@ -11,4 +11,5 @@ export * from './toaster.po';
 export * from './tree.po';
 export * from './collapse.po';
 export * from './carousel.po';
+export * from './drawer.po';
 // [content-placeholder]

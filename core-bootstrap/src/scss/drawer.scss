@@ -1,0 +1,92 @@
+@use 'variables' as *;
+
+.au-drawer {
+	// scss-docs-start drawer-css-vars
+	--#{$prefix}drawer-z-index: #{$au-drawer-z-index};
+	// scss-docs-end drawer-css-vars
+
+	display: flex;
+	flex-direction: column;
+	background: #fff;
+	box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+	z-index: var(--#{$prefix}drawer-z-index);
+
+	// Inline (left/right depending on writing direction)
+	&.inline-start {
+		inset-block: 0;
+		inset-inline-start: 0;
+	}
+
+	&.inline-end {
+		inset-block: 0;
+		inset-inline-end: 0;
+
+		.au-splitter {
+			inset-inline-end: auto;
+		}
+	}
+
+	// Block (top/bottom)
+	&.block-start {
+		inset-inline: 0;
+		inset-block-start: 0;
+
+		.au-splitter {
+			inset-block-start: auto;
+		}
+	}
+
+	&.block-end {
+		inset-inline: 0;
+		inset-block-end: 0;
+	}
+
+	.au-drawer-header {
+		padding: 0.75rem 1rem;
+		font-weight: 600;
+		border-bottom: 1px solid #e2e2e2;
+	}
+
+	.au-drawer-body {
+		padding: 1rem;
+		overflow-y: auto;
+		flex: 1;
+	}
+
+	// Vertical splitter (default for inline drawers)
+	.au-splitter {
+		position: absolute;
+		inset-block: 0;
+		inset-inline-end: -4px; // half outside for visual separation
+		width: 8px; // larger hit area
+		cursor: ew-resize;
+		background: transparent;
+	}
+
+	// Horizontal splitter for block drawers (height resize)
+	&.block-start .au-splitter,
+	&.block-end .au-splitter {
+		inset-inline: 0;
+		width: auto;
+		height: 8px;
+		cursor: ns-resize;
+	}
+}
+
+.au-drawer-backdrop {
+	// scss-docs-start drawer-backdrop-css-vars
+	--#{$prefix}drawer-backdrop-z-index: #{$au-drawer-backdrop-z-index};
+	--#{$prefix}drawer-backdrop-color: #{$au-drawer-backdrop-color};
+	--#{$prefix}drawer-backdrop-opacity: #{$au-drawer-backdrop-opacity};
+	// scss-docs-end drawer-backdrop-css-vars
+
+	position: fixed;
+	inset: 0;
+	background: var(--#{$prefix}drawer-backdrop-color);
+	z-index: var(--#{$prefix}drawer-backdrop-z-index);
+
+	&.show {
+		opacity: var(--#{$prefix}drawer-backdrop-opacity);
+		pointer-events: auto;
+	}
+}
