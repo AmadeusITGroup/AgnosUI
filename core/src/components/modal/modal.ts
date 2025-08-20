@@ -1,13 +1,9 @@
 import {computed, readable} from '@amadeus-it-group/tansu';
-import type {WidgetsCommonPropsAndState} from '../commonProps';
-import {typeBoolean, typeFunction, typeHTMLElementOrNull, typeString} from '../../utils/writables';
-import {stateStores, writablesForProps} from '../../utils/stores';
+import {portal} from '../../services/portal';
+import {siblingsInert} from '../../services/siblingsInert';
 import type {TransitionFn} from '../../services/transitions/baseTransitions';
 import {createTransition} from '../../services/transitions/baseTransitions';
-import {promiseFromStore} from '../../utils/internal/promise';
 import type {ConfigValidator, Directive, PropsConfig, Widget, WidgetFactory} from '../../types';
-import {noop} from '../../utils/func';
-import {removeScrollbars, revertScrollbars} from '../../utils/internal/scrollbars';
 import {
 	bindDirective,
 	bindDirectiveNoArg,
@@ -17,9 +13,13 @@ import {
 	mergeDirectives,
 	registrationArray,
 } from '../../utils/directive';
-import {portal} from '../../services/portal';
-import {siblingsInert} from '../../services/siblingsInert';
+import {noop} from '../../utils/func';
+import {promiseFromStore} from '../../utils/internal/promise';
+import {removeScrollbars, revertScrollbars} from '../../utils/internal/scrollbars';
+import {stateStores, writablesForProps} from '../../utils/stores';
 import {createWidgetFactory} from '../../utils/widget';
+import {typeBoolean, typeFunction, typeHTMLElementOrNull, typeString} from '../../utils/writables';
+import type {WidgetsCommonPropsAndState} from '../commonProps';
 
 /**
  * Value present in the {@link ModalBeforeCloseEvent.result|result} property of the {@link ModalProps.onBeforeClose|onBeforeClose} event

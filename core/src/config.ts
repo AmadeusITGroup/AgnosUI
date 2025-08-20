@@ -13,6 +13,7 @@ import type {ToastProps} from './components/toast/toast';
 import type {TreeProps} from './components/tree/tree';
 import type {CarouselProps} from './components/carousel';
 import type {CollapseProps} from './components/collapse';
+import type {DrawerProps} from './components/drawer/drawer';
 // [import-placeholder]
 
 /**
@@ -153,5 +154,9 @@ export type WidgetsConfig = {
 	 * collapse widget config
 	 */
 	collapse: CollapseProps;
+	/**
+	 * drawer widget config
+	 */
+	drawer: DrawerProps;
 	// [content-placeholder]
 };

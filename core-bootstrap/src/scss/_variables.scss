@@ -102,4 +102,11 @@ $au-tree-expand-icon-color: #0d6efd !default;
 $au-tree-expand-icon-color-hover: #052c65 !default;
 // scss-docs-end tree-vars
 
+// drawer variables
+// scss-docs-start drawer-vars
+$au-drawer-z-index: 2010;
+$au-drawer-backdrop-z-index: 2000;
+$au-drawer-backdrop-color: #1a1a1a;
+$au-drawer-backdrop-opacity: 0.75;
+// scss-docs-end drawer-vars
 // [content-placeholder]
