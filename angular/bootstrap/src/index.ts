@@ -98,6 +98,9 @@ export type {CarouselWidget, CarouselProps, CarouselState, CarouselApi, Carousel
 export {createCarousel, getCarouselDefaultConfig} from './components/carousel';
 export * from './components/carousel';
 
+export * from './components/drawer';
+export type {DrawerProps, DrawerState, DrawerWidget, DrawerApi, DrawerDirectives, DrawerPositions} from './components/drawer';
+export {createDrawer, getDrawerDefaultConfig} from './components/drawer';
 // [export-placeholder]
 
 export * from '@agnos-ui/core-bootstrap/services/transitions';
