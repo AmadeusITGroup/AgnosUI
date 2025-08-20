@@ -187,4 +187,27 @@ describe('sliblingsInert', () => {
 		instance2?.destroy?.();
 		expect(testArea.innerHTML).toBe(initialMarkup);
 	});
+
+	test('ignoreInertAttributeName', () => {
+		const initialMarkup = `
+			<div id="parentElement">
+				<div id="ignored" data-agnos-ignore-inert="true"></div>
+				<div id="element"></div>
+			</div>
+			<div id="containerElement" inert=""></div>
+			<div id="otherContainerElement"></div>
+		`;
+		testArea.innerHTML = initialMarkup;
+		const instance = siblingsInert(document.getElementById('element')!);
+		expect(testArea.innerHTML).toBe(`
+			<div id="parentElement">
+				<div id="ignored" data-agnos-ignore-inert="true"></div>
+				<div id="element"></div>
+			</div>
+			<div id="containerElement" inert=""></div>
+			<div id="otherContainerElement" inert=""></div>
+		`);
+		instance?.destroy?.();
+		expect(testArea.innerHTML).toBe(initialMarkup);
+	});
 });

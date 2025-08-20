@@ -3,6 +3,8 @@ import {noop} from '../utils/func';
 import {createBrowserStoreArrayDirective, directiveSubscribe, mergeDirectives} from '../utils/directive';
 import type {Directive} from '../types';
 
+const ignoreInertAttributeName = 'data-agnos-ignore-inert';
+
 const internalSetSiblingsInert = (element: Element) => {
 	const inertValues = new Map<Element, boolean>();
 
@@ -10,7 +12,7 @@ const internalSetSiblingsInert = (element: Element) => {
 		const parent = element.parentElement;
 		if (parent && element !== document.body) {
 			Array.from(parent.children).forEach((sibling) => {
-				if (sibling !== element && sibling.nodeName !== 'SCRIPT') {
+				if (sibling !== element && sibling.nodeName !== 'SCRIPT' && !sibling.hasAttribute(ignoreInertAttributeName)) {
 					inertValues.set(sibling, sibling.hasAttribute('inert'));
 					sibling.toggleAttribute('inert', true);
 				}
