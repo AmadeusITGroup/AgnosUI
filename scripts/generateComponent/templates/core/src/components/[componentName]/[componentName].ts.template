@@ -1,0 +1,73 @@
+import type {WidgetsCommonPropsAndState} from '../commonProps';
+import {type ConfigValidator, type PropsConfig, type Widget} from '../../types';
+import {stateStores, writablesForProps} from '../../utils/stores';
+import {typeString} from '../../utils/writables';
+
+interface [componentName]CommonPropsAndState extends WidgetsCommonPropsAndState {}
+
+/**
+ * Interface representing the properties for the [componentName] component.
+ */
+export interface [componentName]Props extends [componentName]CommonPropsAndState {}
+
+/**
+ * Represents the state of a [componentName] component.
+ */
+export interface [componentName]State extends [componentName]CommonPropsAndState {}
+
+    
+/**
+ * Interface representing the API for a [componentName] component.
+ */
+ // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface [componentName]Api {}
+
+/**
+ * Interface representing various directives used in the [componentName] component.
+ */
+ // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface [componentName]Directives {}
+
+/**
+ * Represents a [componentName] widget component.
+ */
+export type [componentName]Widget = Widget<[componentName]Props, [componentName]State, [componentName]Api, [componentName]Directives>;
+
+/**
+ * Retrieve a shallow copy of the default [componentName] config
+ * @returns the default [componentName] config
+ */
+export function get[componentName]DefaultConfig(): [componentName]Props {
+	return {
+        ...default[componentName]Config
+    };
+}
+
+const default[componentName]Config: [componentName]Props = {
+	className: '',
+};
+
+const configValidator: ConfigValidator<[componentName]Props> = {
+	className: typeString,
+};
+
+/**
+ * Create a [componentName] widget with given config props
+ * @param config - an optional [componentName] config
+ * @returns a [componentName]Widget
+ */
+export function create[componentName](config?: PropsConfig<[componentName]Props>): [componentName]Widget {
+    const [{...stateProps}, patch] = writablesForProps(
+		default[componentName]Config,
+		config,
+		configValidator,
+	);
+
+    const widget: [componentName]Widget = {
+		...stateStores({...stateProps}),
+		patch,
+		api: {},
+		directives: {}
+    }
+	return widget;
+}

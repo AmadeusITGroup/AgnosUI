@@ -1,0 +1,2 @@
+export * from './[componentNameLowerCase].component';
+export * from './[componentNameLowerCase].gen';

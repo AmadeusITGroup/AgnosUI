@@ -1,0 +1,6 @@
+//content-start
+<h2>[componentName]</h2>
+	<div class="my-3">
+		<au-component au[componentName] />
+	</div>
+//content-end

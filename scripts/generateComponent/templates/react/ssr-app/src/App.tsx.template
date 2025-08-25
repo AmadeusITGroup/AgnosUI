@@ -1,0 +1,10 @@
+//import-start
+import {[componentName]} from '@agnos-ui/react-bootstrap/components/[componentNameLowerCase]';
+//import-end
+
+//content-start
+<h2>[componentName]</h2>
+		<div className="my-3">
+			<[componentName]/>
+		</div>
+//content-end

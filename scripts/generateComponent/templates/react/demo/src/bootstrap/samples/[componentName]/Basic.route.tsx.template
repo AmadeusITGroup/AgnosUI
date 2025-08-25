@@ -1,0 +1,8 @@
+import {[componentName]} from '@agnos-ui/react-bootstrap/components/[componentNameLowerCase]';
+
+const BasicDemo = () => {
+	
+	return <[componentName] />;
+};
+
+export default BasicDemo;

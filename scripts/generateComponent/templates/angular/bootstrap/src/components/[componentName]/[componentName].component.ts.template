@@ -1,0 +1,32 @@
+import {BaseWidgetDirective, callWidgetFactory} from '@agnos-ui/angular-headless';
+import {
+	ChangeDetectionStrategy,
+    Component,
+    input
+} from '@angular/core';
+import type {[componentName]Widget} from './[componentNameLowerCase].gen';
+import {create[componentName]} from './[componentNameLowerCase].gen';
+
+/**
+ * [componentName]Component is an Angular component that extends the BaseWidgetDirective
+ * to provide a customizable [componentNameLowerCase] widget. This component allows for various
+ * configurations and customizations through its inputs and outputs.
+ */
+@Component({
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: '[au[componentName]]',
+	template: ``,
+})
+export class [componentName]Component extends BaseWidgetDirective<[componentName]Widget> {
+	constructor() {
+		super(
+			callWidgetFactory(create[componentName], {})
+		);
+	}
+	/**
+	 * CSS classes to be applied on the widget main container
+	 *
+	 * @defaultValue `''`
+	 */
+	readonly className = input<string>(undefined, {alias: 'auClassName'});
+}

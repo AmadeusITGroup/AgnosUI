@@ -1,0 +1,3 @@
+//content-start
+@use '[componentNameLowerCase]';
+//content-end

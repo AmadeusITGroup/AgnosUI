@@ -96,6 +96,8 @@ export type {CarouselWidget, CarouselProps, CarouselState, CarouselApi, Carousel
 export {createCarousel, getCarouselDefaultConfig} from './components/carousel';
 export * from './components/carousel';
 
+// [export-placeholder]
+
 export * from '@agnos-ui/core-bootstrap/services/transitions';
 export * from '@agnos-ui/core-bootstrap/types';
 

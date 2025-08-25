@@ -10,6 +10,7 @@
 	import {Slider} from '@agnos-ui/svelte-bootstrap/components/slider';
 	import {Toast} from '@agnos-ui/svelte-bootstrap/components/toast';
 	import {Tree, type TreeItem} from '@agnos-ui/svelte-bootstrap/components/tree';
+	// [import-placeholder]
 	import {onMount} from 'svelte';
 
 	onMount(() => {
@@ -98,4 +99,5 @@
 	<div class="my-3">
 		<Tree {nodes} />
 	</div>
+	<!-- [content-placeholder] -->
 </div>
