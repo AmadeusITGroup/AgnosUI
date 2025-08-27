@@ -1,10 +1,10 @@
 import type {ReadableSignal, WritableSignal} from '@amadeus-it-group/tansu';
 import {computed, writable} from '@amadeus-it-group/tansu';
 import {beforeEach, describe, expect, test, vi} from 'vitest';
-import type {HandleDisplayOptions, ProgressDisplayOptions, SliderHandle, SliderProps, SliderState, SliderWidget} from './slider';
-import {createSlider} from './slider';
 import {assign} from '../../../../common/utils';
 import {attachDirectiveAndSendEvent} from '../components.spec-utils';
+import type {HandleDisplayOptions, ProgressDisplayOptions, SliderHandle, SliderProps, SliderState, SliderWidget} from './slider';
+import {createSlider} from './slider';
 
 // TODO move to the utils?
 function keyboardEvent(key: string): KeyboardEvent {
@@ -2399,6 +2399,21 @@ describe(`Slider range`, () => {
 				minValueLabelDisplay: true,
 			}),
 		);
+	});
+
+	test(`should handle range limits`, () => {
+		// Initial state with three handles
+		slider.patch({
+			values: [30, 50, 60],
+			minRange: 10,
+			pushRange: true,
+		});
+
+		// Simulate handle move
+		slider.patch({
+			values: [45, 50, 60],
+		});
+		expect(normalizedState$().values).toStrictEqual([45, 55, 65]);
 	});
 });
 
