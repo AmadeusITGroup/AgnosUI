@@ -3,7 +3,7 @@
 	import rangeSample from '@agnos-ui/samples/bootstrap/slider/range';
 	import verticalSample from '@agnos-ui/samples/bootstrap/slider/vertical';
 	import rightToLeftSample from '@agnos-ui/samples/bootstrap/slider/right-to-left';
-	import rangeLimits from '@agnos-ui/samples/bootstrap/slider/RangeLimits';
+	import rangeLimits from '@agnos-ui/samples/bootstrap/slider/rangeLimits';
 	import customSample from '@agnos-ui/samples/bootstrap/slider/custom';
 	import fullcustomSample from '@agnos-ui/samples/bootstrap/slider/fullCustom';
 	import customAccessibility from '@agnos-ui/samples/bootstrap/slider/accessibility';
