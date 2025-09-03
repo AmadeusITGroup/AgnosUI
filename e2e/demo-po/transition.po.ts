@@ -66,14 +66,14 @@ export class TransitionPO extends BasePO {
 					.replace(/^(\w)/g, (_a, b) => b.toLowerCase());
 			const state: Partial<State> = {};
 			for (const child of rootNode.querySelector('ul')!.children) {
-				const [property, value] = child.textContent!.split('=');
+				const [property, value] = child.textContent.split('=');
 				(state as any)[toCamelCase(property)] = JSON.parse(value);
 			}
 			for (const checkbox of rootNode.querySelectorAll<HTMLInputElement>('input[type=checkbox]')) {
-				const property = checkbox.parentElement!.textContent!;
+				const property = checkbox.parentElement!.textContent;
 				(state as any)[toCamelCase(property)] = checkbox.checked;
 			}
-			state.transition = toCamelCase(rootNode.querySelector('button.active')!.textContent!) as any;
+			state.transition = toCamelCase(rootNode.querySelector('button.active')!.textContent) as any;
 			const className = rootNode.querySelector('.card')?.parentElement!.className.trim();
 			state.classes = className === '' ? [] : className?.split(/\s+/).sort();
 			return state as State;
