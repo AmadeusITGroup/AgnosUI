@@ -14,7 +14,7 @@
 		"@tailwindcss/browser": "^4.0.0",
 		"@types/react": "^19.0.0",
 		"@types/react-dom": "^19.0.0",
-		"@vitejs/plugin-react": "^4.3.4",
+		"@vitejs/plugin-react": "^5.0.0",
 		"daisyui": "^5.0.6",
 		"embla-carousel-autoplay": "^8.5.2",
 		"react": "^19.0.0",
