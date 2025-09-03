@@ -1,0 +1,1 @@
+import{g as n}from"./dom-CzJpOnsw-BpVpkhUo.js";import{r as t}from"./App-DznaVqkl.js";const i=(r,s)=>{const e=t.useRef(void 0),c=t.useRef(void 0),o=t.useCallback(u=>(e.current=r(u,c.current),()=>{e.current?.destroy?.(),e.current=void 0}),[r]);return c.current=s,e.current?.update?.(s),{ref:o}},f=(...r)=>i(n,r);export{f as a,i as u};
