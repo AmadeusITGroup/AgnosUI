@@ -1,0 +1,1 @@
+import{aj as i}from"./AppCommon-C3njszSs.js";import{q as c,n as v}from"./dom-CzJpOnsw-6p6st5u1.js";const b=()=>{const{element$:o,directive:s}=c();return{dimensions$:i(o,(e,t)=>{if(e===null)return v;const r=new ResizeObserver(n=>{t(n[0])});return r.observe(e),()=>r?.disconnect()},void 0),directive:s}};export{b as c};
