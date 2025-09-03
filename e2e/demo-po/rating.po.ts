@@ -32,9 +32,9 @@ export class RatingDemoPO extends BasePO {
 	async defaultRatingDemoState() {
 		return await this.locatorRoot.evaluate((rootNode: HTMLElement) => {
 			return {
-				rating: +rootNode.querySelector('#defaultRating')!.textContent!,
-				hovered: +rootNode.querySelector('#defaultHovered')!.textContent!,
-				left: +rootNode.querySelector('#defaultLeft')!.textContent!,
+				rating: +rootNode.querySelector('#defaultRating')!.textContent,
+				hovered: +rootNode.querySelector('#defaultHovered')!.textContent,
+				left: +rootNode.querySelector('#defaultLeft')!.textContent,
 			};
 		});
 	}
@@ -42,9 +42,9 @@ export class RatingDemoPO extends BasePO {
 	async formRatingDemoState() {
 		return await this.locatorRoot.evaluate((rootNode: HTMLElement) => {
 			return {
-				msg: rootNode.querySelector('#form-msg')!.textContent!.trim(),
-				model: +rootNode.querySelector('#form-model')!.textContent!,
-				enabledBtnText: rootNode.querySelector('#form-btn-enable')!.textContent!.trim(),
+				msg: rootNode.querySelector('#form-msg')!.textContent.trim(),
+				model: +rootNode.querySelector('#form-model')!.textContent,
+				enabledBtnText: rootNode.querySelector('#form-btn-enable')!.textContent.trim(),
 			};
 		});
 	}

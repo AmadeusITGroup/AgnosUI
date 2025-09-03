@@ -13,7 +13,7 @@ export class CollapseDemoPO extends BasePO {
 	async defaultCollapseDemoState() {
 		return await this.locatorRoot.evaluate((rootNode: HTMLElement) => {
 			return {
-				page: +rootNode.querySelector('#defaultPage')!.textContent!,
+				page: +rootNode.querySelector('#defaultPage')!.textContent,
 			};
 		});
 	}

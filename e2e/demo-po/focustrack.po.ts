@@ -29,7 +29,7 @@ export class FocusTrackPO extends BasePO {
 	async getState(): Promise<{activeElements: string[]; isInContainer: boolean}> {
 		return await this.locatorRoot.evaluate((root) => {
 			return {
-				activeElements: [...root.querySelectorAll('li')].map((el) => el.textContent!.trim()),
+				activeElements: [...root.querySelectorAll('li')].map((el) => el.textContent.trim()),
 				isInContainer: (root.querySelector('#containerHasFocus') as HTMLInputElement).checked,
 			};
 		});
