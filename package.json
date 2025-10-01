@@ -58,7 +58,7 @@
 		"angular-eslint": "^20.0.0-alpha.1",
 		"eslint": "^9.16.0",
 		"eslint-config-prettier": "^10.0.0",
-		"eslint-plugin-jsdoc": "^54.0.0",
+		"eslint-plugin-jsdoc": "^60.0.0",
 		"eslint-plugin-playwright": "^2.1.0",
 		"eslint-plugin-react": "^7.37.2",
 		"eslint-plugin-react-hooks": "^5.1.0",
