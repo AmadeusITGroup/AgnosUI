@@ -89,6 +89,7 @@
 	--#{variables.$prefix}slider-clickable-area-vertical-flex-shrink: #{variables.$au-slider-clickable-area-vertical-flex-shrink};
 	--#{variables.$prefix}slider-clickable-area-cursor: #{variables.$au-slider-clickable-area-cursor};
 
+	--#{variables.$prefix}slider-disabled-background-color: #{variables.$au-slider-disabled-background-color};
 	--#{variables.$prefix}slider-disabled-color: #{variables.$au-slider-disabled-color};
 	--#{variables.$prefix}slider-disabled-cursor: #{variables.$au-slider-disabled-cursor};
 	// scss-docs-end slider-css-vars
@@ -347,6 +348,8 @@
 
 		&.disabled {
 			cursor: var(--#{variables.$prefix}slider-disabled-cursor);
+			background-color: var(--#{variables.$prefix}slider-disabled-background-color);
+
 			.au-slider-label,
 			.au-slider-label-vertical,
 			.au-slider-tick-label,
