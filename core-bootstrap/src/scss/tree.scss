@@ -1,5 +1,4 @@
 @use 'variables';
-@use '_functions';
 
 .au-tree {
 	// scss-docs-start tree-css-vars
@@ -10,8 +9,8 @@
 	--#{variables.$prefix}tree-expand-icon-background-color-hover: #{variables.$au-tree-expand-icon-background-color-hover};
 	--#{variables.$prefix}tree-expand-icon-width: #{variables.$au-tree-expand-icon-width};
 	--#{variables.$prefix}tree-expand-icon-height: #{variables.$au-tree-expand-icon-height};
-	--#{variables.$prefix}tree-expand-icon: #{functions.escape-svg(variables.$au-tree-expand-icon)};
-	--#{variables.$prefix}tree-expand-icon-hover: #{functions.escape-svg(variables.$au-tree-expand-icon-hover)};
+	--#{variables.$prefix}tree-expand-icon-color: #{variables.$au-tree-expand-icon-color};
+	--#{variables.$prefix}tree-expand-icon-color-hover: #{variables.$au-tree-expand-icon-color-hover};
 	// scss-docs-end tree-css-vars
 
 	list-style: none;
@@ -57,13 +56,19 @@
 		cursor: pointer;
 
 		&:hover {
-			--#{variables.$prefix}tree-expand-icon: var(--#{variables.$prefix}tree-expand-icon-hover);
 			--#{variables.$prefix}tree-expand-icon-background-color: var(--#{variables.$prefix}tree-expand-icon-background-color-hover);
+
+			.au-tree-expand-icon-svg .au-tree-expand-icon-svg-fill {
+				stroke: var(--#{variables.$prefix}tree-expand-icon-color-hover);
+			}
 		}
 
 		.au-tree-expand-icon-svg {
-			content: var(--#{variables.$prefix}tree-expand-icon);
 			transition: transform 0.3s;
+
+			.au-tree-expand-icon-svg-fill {
+				stroke: var(--#{variables.$prefix}tree-expand-icon-color);
+			}
 		}
 
 		&.au-tree-expand-icon-expanded {
