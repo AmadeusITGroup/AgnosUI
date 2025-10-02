@@ -8,7 +8,9 @@ import clsx from 'clsx';
 const ToggleButtonDisplay = ({directive, item}: {directive: TreeDirectives['itemToggleDirective']; item: NormalizedTreeItem}) => {
 	return (
 		<button {...useDirective(directive, {item})}>
-			<span className="au-tree-expand-icon-svg"></span>
+			<svg className="au-tree-expand-icon-svg" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 10 10">
+				<path d="M3 1 L7 5 L3 9" className="au-tree-expand-icon-svg-fill" strokeWidth="1" fill="none" />
+			</svg>
 		</button>
 	);
 };
