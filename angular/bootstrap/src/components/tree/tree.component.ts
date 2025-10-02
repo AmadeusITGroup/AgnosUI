@@ -1,6 +1,6 @@
 import type {SlotContent} from '@agnos-ui/angular-headless';
 import {BaseWidgetDirective, callWidgetFactory, ComponentTemplate, SlotDirective, UseDirective} from '@agnos-ui/angular-headless';
-import {ChangeDetectionStrategy, Component, Directive, inject, input, output, TemplateRef, viewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, contentChild, Directive, inject, input, output, TemplateRef, viewChild} from '@angular/core';
 import type {TreeContext, TreeItem, NormalizedTreeItem, TreeSlotItemContext, TreeWidget} from './tree.gen';
 import {createTree} from './tree.gen';
 
@@ -251,23 +251,23 @@ export class TreeComponent extends BaseWidgetDirective<TreeWidget> {
 	 * Slot to change the default tree item content
 	 */
 	readonly itemContent = input<SlotContent<TreeSlotItemContext>>(undefined, {alias: 'auItemContent'});
-	readonly slotItemContentFromContent = viewChild(TreeItemContentDirective);
+	readonly slotItemContentFromContent = contentChild(TreeItemContentDirective);
 
 	/**
 	 * Slot to change the default display of the tree
 	 */
 	readonly structure = input<SlotContent<TreeContext>>(undefined, {alias: 'auStructure'});
-	readonly slotStructureFromContent = viewChild(TreeStructureDirective);
+	readonly slotStructureFromContent = contentChild(TreeStructureDirective);
 
 	/**
 	 * Slot to change the default tree item toggle
 	 */
 	readonly itemToggle = input<SlotContent<TreeSlotItemContext>>(undefined, {alias: 'auItemToggle'});
-	readonly slotItemToggleFromContent = viewChild(TreeItemToggleDirective);
+	readonly slotItemToggleFromContent = contentChild(TreeItemToggleDirective);
 
 	/**
 	 * Slot to change the default tree item
 	 */
 	readonly item = input<SlotContent<TreeSlotItemContext>>(undefined, {alias: 'auItem'});
-	readonly slotItemFromContent = viewChild(TreeItemDirective);
+	readonly slotItemFromContent = contentChild(TreeItemDirective);
 }
