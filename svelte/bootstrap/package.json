@@ -1,7 +1,7 @@
 {
 	"name": "@agnos-ui/svelte-bootstrap",
 	"description": "Bootstrap-based component library for Svelte.",
-	"version": "0.9.1",
+	"version": "0.9.2",
 	"private": true,
 	"type": "module",
 	"main": "./dist/index.js",
@@ -164,8 +164,8 @@
 		}
 	},
 	"dependencies": {
-		"@agnos-ui/core-bootstrap": "0.9.1",
-		"@agnos-ui/svelte-headless": "0.9.1"
+		"@agnos-ui/core-bootstrap": "0.9.2",
+		"@agnos-ui/svelte-headless": "0.9.2"
 	},
 	"peerDependencies": {
 		"@amadeus-it-group/tansu": "^2.0.0",
