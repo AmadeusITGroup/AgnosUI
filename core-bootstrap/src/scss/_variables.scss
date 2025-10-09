@@ -70,6 +70,7 @@ $au-slider-clickable-area-main-size: 1.5rem !default;
 $au-slider-clickable-area-secondary-size: 100% !default;
 $au-slider-clickable-area-vertical-flex-shrink: 0 !default;
 $au-slider-clickable-area-cursor: pointer !default;
+$au-slider-disabled-background-color: $au-slider-color-background !default;
 $au-slider-disabled-color: var(--#{$prefix}dark-bg-subtle, #ced4da) !default;
 $au-slider-disabled-cursor: not-allowed !default;
 
@@ -99,8 +100,6 @@ $au-tree-expand-icon-width: 2.25rem;
 $au-tree-expand-icon-height: 2.25rem;
 $au-tree-expand-icon-color: #0d6efd !default;
 $au-tree-expand-icon-color-hover: #052c65 !default;
-$au-tree-expand-icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 10 10"><path d="M3 1 L7 5 L3 9" stroke="#{$au-tree-expand-icon-color}" stroke-width="1" fill="none"/></svg>') !default;
-$au-tree-expand-icon-hover: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 10 10"><path d="M3 1 L7 5 L3 9" stroke="#{$au-tree-expand-icon-color-hover}" stroke-width="1" fill="none"/></svg>') !default;
 // scss-docs-end tree-vars
 
 // [content-placeholder]

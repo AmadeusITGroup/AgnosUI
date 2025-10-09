@@ -1,6 +1,6 @@
 import type {SlotContent} from '@agnos-ui/angular-headless';
 import {BaseWidgetDirective, callWidgetFactory, ComponentTemplate, SlotDirective, UseDirective} from '@agnos-ui/angular-headless';
-import {ChangeDetectionStrategy, Component, Directive, inject, input, output, TemplateRef, viewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, contentChild, Directive, inject, input, output, TemplateRef, viewChild} from '@angular/core';
 import type {TreeContext, TreeItem, NormalizedTreeItem, TreeSlotItemContext, TreeWidget} from './tree.gen';
 import {createTree} from './tree.gen';
 
@@ -63,7 +63,9 @@ export class TreeItemToggleDirective {
 		<ng-template auTreeItemToggle #toggle let-directives="directives" let-item="item">
 			@if (item.children.length > 0) {
 				<button [auUse]="[directives.itemToggleDirective, {item}]">
-					<span class="au-tree-expand-icon-svg"></span>
+					<svg class="au-tree-expand-icon-svg" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 10 10">
+						<path d="M3 1 L7 5 L3 9" class="au-tree-expand-icon-svg-fill" stroke-width="1" fill="none" />
+					</svg>
 				</button>
 			} @else {
 				<span class="au-tree-expand-icon-placeholder"></span>
@@ -251,23 +253,23 @@ export class TreeComponent extends BaseWidgetDirective<TreeWidget> {
 	 * Slot to change the default tree item content
 	 */
 	readonly itemContent = input<SlotContent<TreeSlotItemContext>>(undefined, {alias: 'auItemContent'});
-	readonly slotItemContentFromContent = viewChild(TreeItemContentDirective);
+	readonly slotItemContentFromContent = contentChild(TreeItemContentDirective);
 
 	/**
 	 * Slot to change the default display of the tree
 	 */
 	readonly structure = input<SlotContent<TreeContext>>(undefined, {alias: 'auStructure'});
-	readonly slotStructureFromContent = viewChild(TreeStructureDirective);
+	readonly slotStructureFromContent = contentChild(TreeStructureDirective);
 
 	/**
 	 * Slot to change the default tree item toggle
 	 */
 	readonly itemToggle = input<SlotContent<TreeSlotItemContext>>(undefined, {alias: 'auItemToggle'});
-	readonly slotItemToggleFromContent = viewChild(TreeItemToggleDirective);
+	readonly slotItemToggleFromContent = contentChild(TreeItemToggleDirective);
 
 	/**
 	 * Slot to change the default tree item
 	 */
 	readonly item = input<SlotContent<TreeSlotItemContext>>(undefined, {alias: 'auItem'});
-	readonly slotItemFromContent = viewChild(TreeItemDirective);
+	readonly slotItemFromContent = contentChild(TreeItemDirective);
 }
