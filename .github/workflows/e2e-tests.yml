@@ -10,9 +10,9 @@ jobs:
         shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
-          node-version: '22.x'
+          node-version: '24.x'
           cache: 'npm'
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
@@ -49,9 +49,9 @@ jobs:
           directory: coverage
           flags: e2e
           use_oidc: ${{ !(github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork) }}
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
-          node-version: '22.x'
+          node-version: '24.x'
           cache: 'npm'
           registry-url: 'https://registry.npmjs.org'
       - run: npx playwright merge-reports --reporter html ./blob-report
