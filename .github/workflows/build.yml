@@ -1,10 +1,6 @@
 name: build
 on:
   workflow_call:
-    secrets:
-      NPM_TOKEN:
-        description: 'NPM token to use to publish packages'
-        required: false
     inputs:
       version:
         description: 'Version number (x.y.z) to set before executing the build'
@@ -31,6 +27,7 @@ jobs:
           node-version: '22.x'
           cache: 'npm'
           registry-url: 'https://registry.npmjs.org'
+      - run: npm install -g npm@11.6.2
       - run: npm ci
       - run: npx playwright install --with-deps --only-shell
       - run: npm run syncpack:check
@@ -92,8 +89,6 @@ jobs:
             git checkout -B $RELEASE_BRANCH
             git push origin v${{ inputs.version }} $RELEASE_BRANCH
           fi
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - if: inputs.docPublish && (inputs.version != '' || inputs.docPath != '')
         uses: actions/checkout@v5
         with:
