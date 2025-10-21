@@ -22,7 +22,7 @@ describe('sliblingsInert', () => {
 			<div id="otherContainerElement"></div>
 		`;
 		testArea.innerHTML = initialMarkup;
-		const instance = siblingsInert(document.getElementById('element')!);
+		const instance = siblingsInert(document.getElementById('element')!, true);
 		expect(testArea.innerHTML).toBe(`
 			<div id="parentElement">
 				<div id="beforeElement" inert=""></div>
@@ -51,7 +51,7 @@ describe('sliblingsInert', () => {
 			</div>
 		`;
 		testArea.innerHTML = initialMarkup;
-		const instance1 = siblingsInert(document.getElementById('element1')!);
+		const instance1 = siblingsInert(document.getElementById('element1')!, true);
 		const only1Markup = `
 			<div id="parentElement1">
 				<div id="beforeElement1" inert=""></div>
@@ -66,7 +66,7 @@ describe('sliblingsInert', () => {
 			</div>
 		`;
 		expect(testArea.innerHTML).toBe(only1Markup);
-		const instance2 = siblingsInert(document.getElementById('element2')!);
+		const instance2 = siblingsInert(document.getElementById('element2')!, true);
 		expect(testArea.innerHTML).toBe(`
 			<div id="parentElement1" inert="">
 				<div id="beforeElement1"></div>
@@ -101,7 +101,7 @@ describe('sliblingsInert', () => {
 			</div>
 		`;
 		testArea.innerHTML = initialMarkup;
-		const instance1 = siblingsInert(document.getElementById('element1')!);
+		const instance1 = siblingsInert(document.getElementById('element1')!, true);
 		expect(testArea.innerHTML).toBe(`
 			<div id="parentElement1">
 				<div id="beforeElement1" inert=""></div>
@@ -115,7 +115,7 @@ describe('sliblingsInert', () => {
 				<div id="alreadyHidden" inert=""></div>
 			</div>
 		`);
-		const instance2 = siblingsInert(document.getElementById('element2')!);
+		const instance2 = siblingsInert(document.getElementById('element2')!, true);
 		const markup2 = `
 			<div id="parentElement1" inert="">
 				<div id="beforeElement1"></div>
@@ -143,13 +143,13 @@ describe('sliblingsInert', () => {
 			<div id="element3"></div>
 		`;
 		testArea.innerHTML = initialMarkup;
-		const instance1 = siblingsInert(document.getElementById('element1')!);
+		const instance1 = siblingsInert(document.getElementById('element1')!, true);
 		expect(testArea.innerHTML).toBe(`
 			<div id="element1"></div>
 			<div id="element2" inert=""></div>
 			<div id="element3" inert=""></div>
 		`);
-		const instance2 = siblingsInert(document.getElementById('element2')!);
+		const instance2 = siblingsInert(document.getElementById('element2')!, true);
 		const markup2 = `
 			<div id="element1" inert=""></div>
 			<div id="element2"></div>
@@ -169,13 +169,13 @@ describe('sliblingsInert', () => {
 			<div id="element3" inert=""></div>
 		`;
 		testArea.innerHTML = initialMarkup;
-		const instance1 = siblingsInert(document.getElementById('element1')!);
+		const instance1 = siblingsInert(document.getElementById('element1')!, true);
 		expect(testArea.innerHTML).toBe(`
 			<div id="element1"></div>
 			<div id="element2" inert=""></div>
 			<div id="element3" inert=""></div>
 		`);
-		const instance2 = siblingsInert(document.getElementById('element2')!);
+		const instance2 = siblingsInert(document.getElementById('element2')!, true);
 		const markup2 = `
 			<div id="element1" inert=""></div>
 			<div id="element2"></div>
@@ -185,6 +185,54 @@ describe('sliblingsInert', () => {
 		instance1?.destroy?.();
 		expect(testArea.innerHTML).toBe(markup2);
 		instance2?.destroy?.();
+		expect(testArea.innerHTML).toBe(initialMarkup);
+	});
+
+	test('ignoreInertAttributeName', () => {
+		const initialMarkup = `
+			<div id="parentElement">
+				<div id="ignored" data-agnos-ignore-inert="true"></div>
+				<div id="element"></div>
+			</div>
+			<div id="containerElement" inert=""></div>
+			<div id="otherContainerElement"></div>
+		`;
+		testArea.innerHTML = initialMarkup;
+		const instance = siblingsInert(document.getElementById('element')!, true);
+		expect(testArea.innerHTML).toBe(`
+			<div id="parentElement">
+				<div id="ignored" data-agnos-ignore-inert="true"></div>
+				<div id="element"></div>
+			</div>
+			<div id="containerElement" inert=""></div>
+			<div id="otherContainerElement" inert=""></div>
+		`);
+		instance?.destroy?.();
+		expect(testArea.innerHTML).toBe(initialMarkup);
+	});
+
+	test('should not apply the directive when the conditional parameter is false', () => {
+		const initialMarkup = `
+			<div id="parentElement">
+				<div id="beforeElement"></div>
+				<div id="element"></div>
+				<div id="afterElement"></div>
+			</div>
+			<div id="containerElement" inert=""></div>
+			<div id="otherContainerElement"></div>
+		`;
+		testArea.innerHTML = initialMarkup;
+		const instance = siblingsInert(document.getElementById('element')!, false);
+		expect(testArea.innerHTML).toBe(`
+			<div id="parentElement">
+				<div id="beforeElement"></div>
+				<div id="element"></div>
+				<div id="afterElement"></div>
+			</div>
+			<div id="containerElement" inert=""></div>
+			<div id="otherContainerElement"></div>
+		`);
+		instance?.destroy?.();
 		expect(testArea.innerHTML).toBe(initialMarkup);
 	});
 });
