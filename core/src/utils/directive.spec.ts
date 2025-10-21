@@ -7,6 +7,7 @@ import {
 	bindDirective,
 	bindDirectiveNoArg,
 	createAttributesDirective,
+	createConditionalStoreArrayDirective,
 	createStoreArrayDirective,
 	createStoreDirective,
 	directiveAttributes,
@@ -188,6 +189,25 @@ describe('directive', () => {
 			expect(values).toEqual([[], [element], [element, element], [element]]);
 			instance2?.destroy?.();
 			expect(values).toEqual([[], [element], [element, element], [element], []]);
+			unsubscribe();
+		});
+	});
+
+	describe(`createConditionalStoreArrayDirective`, () => {
+		test(`should not apply the directive when conditional parameter is false`, () => {
+			const {directive, elements$} = createConditionalStoreArrayDirective();
+			const element2: SSRHTMLElement = document.createElement('span');
+			const values: SSRHTMLElement[][] = [];
+			const unsubscribe = elements$.subscribe((value) => values.push(value));
+			expect(values).toEqual([[]]);
+			const instance1 = directive(element, false);
+			expect(values).toEqual([[]]);
+			const instance2 = directive(element2, true);
+			expect(values).toEqual([[], [element2]]);
+			instance1?.destroy?.();
+			expect(values).toEqual([[], [element2]]);
+			instance2?.destroy?.();
+			expect(values).toEqual([[], [element2], []]);
 			unsubscribe();
 		});
 	});

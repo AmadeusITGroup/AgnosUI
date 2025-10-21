@@ -196,6 +196,51 @@ export const registrationArray = <T>(): ReadableSignal<T[]> & {register: (elemen
  * Returns a directive and a store. The store contains at any time the array of all the DOM elements on which the directive is
  * currently used.
  *
+ *  The directive is applied depending on the value of its argument:
+ * - `true` or `undefined`: Apply directive to the element.
+ * - `false`: Do not apply apply directive to the element.
+ *
+ * @remarks
+ * It is the same as {@link createConditionalBrowserStoreArrayDirective}, but the returned directive is also executed in a server environment
+ * and the type of the elements is {@link SSRHTMLElement} instead of HTMLElement.
+ *
+ * If the directive is intended to be used on a single element element, it may be more appropriate to use
+ * {@link createStoreDirective} instead.
+ *
+ *
+ * @returns An object with two properties: the `directive` property that is the directive to use on some DOM elements,
+ * and the `elements$` property that is the store containing an array of all the elements on which the directive is currently
+ * used.
+ */
+export const createConditionalStoreArrayDirective = (): {directive: Directive<boolean | undefined>; elements$: ReadableSignal<SSRHTMLElement[]>} => {
+	const elements$ = registrationArray<SSRHTMLElement>();
+	return {
+		elements$: asReadable(elements$),
+		directive: (element, enabled = true) => {
+			let destroyElements: undefined | (() => void);
+			const update = (newEnabled: boolean | undefined = true) => {
+				if (!!newEnabled != !!destroyElements) {
+					if (newEnabled) {
+						destroyElements = elements$.register(element);
+					} else {
+						destroyElements?.();
+						destroyElements = undefined;
+					}
+				}
+			};
+			update(enabled);
+			return {
+				destroy: () => update(false),
+				update,
+			};
+		},
+	};
+};
+
+/**
+ * Returns a directive and a store. The store contains at any time the array of all the DOM elements on which the directive is
+ * currently used.
+ *
  * @remarks
  * It is the same as {@link createBrowserStoreArrayDirective}, but the returned directive is also executed in a server environment
  * and the type of the elements is {@link SSRHTMLElement} instead of HTMLElement.
@@ -208,10 +253,10 @@ export const registrationArray = <T>(): ReadableSignal<T[]> & {register: (elemen
  * used.
  */
 export const createStoreArrayDirective = (): {directive: Directive; elements$: ReadableSignal<SSRHTMLElement[]>} => {
-	const elements$ = registrationArray<SSRHTMLElement>();
+	const {directive, elements$} = createConditionalStoreArrayDirective();
 	return {
-		elements$: asReadable(elements$),
-		directive: (element) => ({destroy: elements$.register(element)}),
+		directive: bindDirectiveNoArg(directive),
+		elements$,
 	};
 };
 
@@ -232,6 +277,33 @@ export const createStoreArrayDirective = (): {directive: Directive; elements$: R
  */
 export const createBrowserStoreArrayDirective = (): {directive: Directive<void, SSRHTMLElement>; elements$: ReadableSignal<HTMLElement[]>} => {
 	const {directive, elements$} = createStoreArrayDirective();
+	return {directive: browserDirective(directive), elements$: elements$ as ReadableSignal<HTMLElement[]>};
+};
+
+/**
+ * Returns a directive and a store. The store contains at any time the array of all the DOM elements on which the directive is
+ * currently used.
+ *
+ *  The directive is applied depending on the value of its argument:
+ * - `true` or `undefined`: Apply directive to the element.
+ * - `false`: Do not apply apply directive to the element.
+ *
+ * @remarks
+ * It is the same as {@link createConditionalStoreArrayDirective}, but the returned directive is only executed in a browser environment
+ * and the type of the elements is HTMLElement instead of {@link SSRHTMLElement}.
+ *
+ * If the directive is intended to be used on a single element element, it may be more appropriate to use
+ * {@link createBrowserStoreDirective} instead.
+ *
+ * @returns An object with two properties: the `directive` property that is the directive to use on some DOM elements,
+ * and the `elements$` property that is the store containing an array of all the elements on which the directive is currently
+ * used.
+ */
+export const createConditionalBrowserStoreArrayDirective = (): {
+	directive: Directive<boolean | undefined, SSRHTMLElement>;
+	elements$: ReadableSignal<HTMLElement[]>;
+} => {
+	const {directive, elements$} = createConditionalStoreArrayDirective();
 	return {directive: browserDirective(directive), elements$: elements$ as ReadableSignal<HTMLElement[]>};
 };
 
