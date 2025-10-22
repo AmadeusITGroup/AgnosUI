@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {Modal, modalCloseButtonClick, modalOutsideClick} from '@agnos-ui/svelte-bootstrap/components/modal';
+	import {Modal, modalCloseButtonClick, modalOutsideClick, modalCloseEscape} from '@agnos-ui/svelte-bootstrap/components/modal';
 
 	let modal: Modal<unknown>;
 	let message = $state('');
@@ -19,12 +19,18 @@
 	onclick={async () => {
 		message = '';
 		const result = await modal.api.open();
-		if (result === modalCloseButtonClick) {
-			message = 'You clicked on the close button.';
-		} else if (result === modalOutsideClick) {
-			message = 'You clicked outside the modal.';
-		} else {
-			message = `You answered the question with "${result ? 'Yes' : 'No'}".`;
+		switch (result) {
+			case modalCloseButtonClick:
+				message = 'You clicked on the close button.';
+				break;
+			case modalOutsideClick:
+				message = 'You clicked outside the modal.';
+				break;
+			case modalCloseEscape:
+				message = 'You pressed the Escape key.';
+				break;
+			default:
+				message = `You answered the question with "${result ? 'Yes' : 'No'}".`;
 		}
 	}}>Launch demo modal</button
 >

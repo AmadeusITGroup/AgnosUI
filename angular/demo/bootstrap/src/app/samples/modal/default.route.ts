@@ -1,5 +1,5 @@
 import type {ModalComponent} from '@agnos-ui/angular-bootstrap';
-import {AgnosUIAngularModule, modalCloseButtonClick, modalOutsideClick} from '@agnos-ui/angular-bootstrap';
+import {AgnosUIAngularModule, modalCloseButtonClick, modalCloseEscape, modalOutsideClick} from '@agnos-ui/angular-bootstrap';
 import {Component, signal} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
@@ -29,12 +29,18 @@ export default class DefaultModalComponent {
 	async show(modal: ModalComponent<void>) {
 		this.message.set('');
 		const result = await modal.api.open();
-		if (result === modalCloseButtonClick) {
-			this.message.set('You clicked on the close button.');
-		} else if (result === modalOutsideClick) {
-			this.message.set('You clicked outside the modal.');
-		} else {
-			this.message.set(`You answered the question with "${result ? 'Yes' : 'No'}".`);
+		switch (result) {
+			case modalCloseButtonClick:
+				this.message.set('You clicked on the close button.');
+				break;
+			case modalOutsideClick:
+				this.message.set('You clicked outside the modal.');
+				break;
+			case modalCloseEscape:
+				this.message.set('You pressed the Escape key.');
+				break;
+			default:
+				this.message.set(`You answered the question with "${result ? 'Yes' : 'No'}".`);
 		}
 	}
 }
