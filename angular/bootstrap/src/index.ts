@@ -25,6 +25,8 @@ export type {AlertContext, AlertProps, AlertState, AlertWidget, AlertApi, AlertD
 export {createAlert, getAlertDefaultConfig} from './components/alert';
 export * from './components/alert';
 
+export type {CollapseProps, CollapseWidget, CollapseApi, CollapseDirectives, CollapseState} from './components/collapse';
+export {createCollapse, getCollapseDefaultConfig} from './components/collapse';
 export * from './components/collapse';
 
 export type {ModalContext, ModalProps, ModalState, ModalWidget, ModalApi, ModalDirectives, ModalBeforeCloseEvent} from './components/modal';

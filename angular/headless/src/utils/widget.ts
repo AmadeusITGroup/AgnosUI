@@ -5,6 +5,8 @@ import type {AngularState, AngularWidget, IsSlotContent, SlotContent, Widget, Wi
 import {toAngularSignal, toReadableStore} from './stores';
 import {ZoneWrapper} from './zone';
 
+export * from '@agnos-ui/core/utils/widget';
+
 const createPatchSlots = <T extends object>(set: (object: Partial<T>) => void) => {
 	let lastValue: Partial<T> = {};
 	return (object: T) => {
