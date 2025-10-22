@@ -76,6 +76,9 @@ Close`,
 		await page.goto('#/modal/stack');
 		await modalDemoPO.locatorRoot.waitFor();
 		await modalDemoPO.locatorLaunchDemoModalButton.click();
+		await modalPO.waitLoaded();
+		const firstModalHandle = await modalPO.locatorRoot.elementHandle();
+		expect(await firstModalHandle?.evaluate((el) => el === document.activeElement)).toBe(true);
 		await modalPO.locatorDisableBackdropButton.click();
 		await expect(modalPO.locatorBackdrop).toBeHidden();
 		await modalPO.locatorEnableBackdropButton.click();
@@ -83,14 +86,20 @@ Close`,
 		await modalPO.locatorRoot.waitFor();
 		await modalPO.locatorLaunchOtherModalButton.click();
 		await otherModalPO.waitLoaded();
+		const secondModalHandle = await otherModalPO.locatorRoot.elementHandle();
+		expect(await secondModalHandle?.evaluate((el) => el === document.activeElement)).toBe(true);
 		await otherModalPO.locatorDisableBackdropButton.click();
 		await expect(otherModalPO.locatorBackdrop).toBeHidden();
 		await otherModalPO.locatorEnableBackdropButton.click();
 		await otherModalPO.locatorBackdrop.waitFor();
 		await otherModalPO.locatorCloseButton.click();
 		await expect(otherModalPO.locatorRoot).toBeHidden();
+		const launchOtherModalButtonHandle = await modalPO.locatorLaunchOtherModalButton.elementHandle();
+		expect(await launchOtherModalButtonHandle?.evaluate((el) => el === document.activeElement)).toBe(true);
 		await modalPO.locatorCloseButton.click();
 		await expect(modalPO.locatorRoot).toBeHidden();
+		const launchModalButton = await modalDemoPO.locatorLaunchDemoModalButton.elementHandle();
+		expect(await launchModalButton?.evaluate((el) => el === document.activeElement)).toBe(true);
 	});
 
 	test.describe.parallel(`Modal customizability`, () => {

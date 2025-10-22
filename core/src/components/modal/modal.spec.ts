@@ -1,5 +1,5 @@
 import {describe, expect, test, beforeEach} from 'vitest';
-import {createModal, modalCloseButtonClick, modalOutsideClick} from './modal';
+import {createModal, modalCloseButtonClick, modalCloseEscape, modalOutsideClick} from './modal';
 import {attachDirectiveAndClick} from '../components.spec-utils';
 
 describe('modal', () => {
@@ -88,6 +88,20 @@ describe('modal', () => {
 		element.click();
 		const result = await promise;
 		expect(result).toBe(modalOutsideClick);
+		directive?.destroy?.();
+	});
+
+	test('close on ESC key press', async () => {
+		const element = document.createElement('div');
+		const modal = createModal({
+			props: {modalTransition: noopTransition},
+		});
+		const directive = modal.directives.modalDirective(element);
+		const promise = modal.api.open();
+		const escEvent = new KeyboardEvent('keydown', {key: 'Escape'});
+		element.dispatchEvent(escEvent);
+		const result = await promise;
+		expect(result).toBe(modalCloseEscape);
 		directive?.destroy?.();
 	});
 
