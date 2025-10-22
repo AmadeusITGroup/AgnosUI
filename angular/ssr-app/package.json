@@ -1,6 +1,6 @@
 {
 	"name": "@agnos-ui/angular-ssr-app",
-	"version": "0.9.2",
+	"version": "0.9.3",
 	"scripts": {
 		"ng": "ng",
 		"dev": "ng serve",
@@ -9,7 +9,7 @@
 	},
 	"private": true,
 	"dependencies": {
-		"@agnos-ui/angular-bootstrap": "0.9.2",
+		"@agnos-ui/angular-bootstrap": "0.9.3",
 		"@angular/animations": "^20.0.0",
 		"@angular/common": "^20.0.0",
 		"@angular/compiler": "^20.0.0",

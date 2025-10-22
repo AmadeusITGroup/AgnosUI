@@ -1,6 +1,6 @@
 {
 	"name": "@agnos-ui/svelte-ssr-app",
-	"version": "0.9.2",
+	"version": "0.9.3",
 	"private": true,
 	"scripts": {
 		"dev": "wireit",
@@ -9,7 +9,7 @@
 		"check": "wireit"
 	},
 	"dependencies": {
-		"@agnos-ui/svelte-bootstrap": "0.9.2"
+		"@agnos-ui/svelte-bootstrap": "0.9.3"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^6.0.0",
