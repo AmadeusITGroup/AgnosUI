@@ -3,6 +3,8 @@ import {findChangedProperties} from '@agnos-ui/core/utils/stores';
 import {useMemo, useRef} from 'react';
 import {useObservablesProxy} from './stores';
 
+export * from '@agnos-ui/core/utils/widget';
+
 /**
  * Create and attach an agnos-ui/core widget to the current react component.
  *

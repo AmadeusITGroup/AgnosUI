@@ -12,6 +12,7 @@ import type {SliderProps} from './components/slider/slider';
 import type {ToastProps} from './components/toast/toast';
 import type {TreeProps} from './components/tree/tree';
 import type {CarouselProps} from './components/carousel';
+import type {CollapseProps} from './components/collapse';
 
 /**
  * A utility type that makes all properties of an object type `T` optional,
@@ -147,4 +148,8 @@ export type WidgetsConfig = {
 	 * carousel widget config
 	 */
 	carousel: CarouselProps;
+	/**
+	 * collapse widget config
+	 */
+	collapse: CollapseProps;
 };
