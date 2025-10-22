@@ -1,0 +1,1 @@
+import{a9 as n,a3 as o,aa as i,ab as d,ac as m}from"./AppCommon-yGDLvh0E.js";function b(e,c,r){n(()=>{var a=o(()=>c(e,r==null?void 0:r())||{});if(r&&(a!=null&&a.update)){var s=!1,t={};i(()=>{var f=r();d(f),s&&m(t,f)&&(t=f,a.update(f))}),s=!0}if(a!=null&&a.destroy)return()=>a.destroy()})}export{b as a};

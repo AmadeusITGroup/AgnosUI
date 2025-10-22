@@ -1,0 +1,1 @@
+import{a9 as h,aa as k,a3 as S,ad as T,ae as c}from"./AppCommon-yGDLvh0E.js";function t(r,i){return r===i||(r==null?void 0:r[c])===i}function A(r={},i,f,q){return h(()=>{var a,s;return k(()=>{a=s,s=[],S(()=>{r!==f(...s)&&(i(r,...s),a&&t(f(...a),r)&&i(null,...a))})}),()=>{T(()=>{s&&t(f(...s),r)&&i(null,...s)})}}),r}export{A as b};
