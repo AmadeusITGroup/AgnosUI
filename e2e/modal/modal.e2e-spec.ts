@@ -76,6 +76,8 @@ Close`,
 		await page.goto('#/modal/stack');
 		await modalDemoPO.locatorRoot.waitFor();
 		await modalDemoPO.locatorLaunchDemoModalButton.click();
+		await modalPO.waitLoaded();
+		expect(await page.evaluate(() => document.activeElement?.textContent)).toContain('First modal');
 		await modalPO.locatorDisableBackdropButton.click();
 		await expect(modalPO.locatorBackdrop).toBeHidden();
 		await modalPO.locatorEnableBackdropButton.click();
@@ -83,14 +85,17 @@ Close`,
 		await modalPO.locatorRoot.waitFor();
 		await modalPO.locatorLaunchOtherModalButton.click();
 		await otherModalPO.waitLoaded();
+		expect(await page.evaluate(() => document.activeElement?.textContent)).toContain('Other modal');
 		await otherModalPO.locatorDisableBackdropButton.click();
 		await expect(otherModalPO.locatorBackdrop).toBeHidden();
 		await otherModalPO.locatorEnableBackdropButton.click();
 		await otherModalPO.locatorBackdrop.waitFor();
 		await otherModalPO.locatorCloseButton.click();
 		await expect(otherModalPO.locatorRoot).toBeHidden();
+		expect(await page.evaluate(() => document.activeElement?.textContent)).toContain('Launch other modal');
 		await modalPO.locatorCloseButton.click();
 		await expect(modalPO.locatorRoot).toBeHidden();
+		expect(await page.evaluate(() => document.activeElement?.textContent)).toContain('Launch demo modal');
 	});
 
 	test.describe.parallel(`Modal customizability`, () => {

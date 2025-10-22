@@ -20,6 +20,7 @@ import {
 import {portal} from '../../services/portal';
 import {siblingsInert} from '../../services/siblingsInert';
 import {createWidgetFactory} from '../../utils/widget';
+import {focusElement} from '../../services/focusElement';
 
 /**
  * Value present in the {@link ModalBeforeCloseEvent.result|result} property of the {@link ModalProps.onBeforeClose|onBeforeClose} event
@@ -32,6 +33,12 @@ export const modalOutsideClick: unique symbol = Symbol();
  * and returned by the {@link ModalApi.open|open} method, when the modal is closed by a click on the close button.
  */
 export const modalCloseButtonClick: unique symbol = Symbol();
+
+/**
+ * Value present in the {@link ModalBeforeCloseEvent.result|result} property of the {@link ModalProps.onBeforeClose|onBeforeClose} event
+ * and returned by the {@link ModalApi.open|open} method, when the modal is closed by pressing the Escape key.
+ */
+export const modalCloseEscape: unique symbol = Symbol();
 
 /**
  * Properties of the modal widget that are also in the state of the modal.
@@ -447,11 +454,23 @@ export const createModal: WidgetFactory<ModalWidget> = createWidgetFactory('moda
 	const modalAttributeDirective = createAttributesDirective(() => ({
 		attributes: {
 			class: className$,
+			tabIndex: readable('-1'),
 		},
 		events: {
 			click: (event) => {
 				if (event.currentTarget === event.target && closeOnOutsideClick$()) {
 					close(modalOutsideClick);
+				}
+			},
+			keydown: (event: KeyboardEvent) => {
+				const {key} = event;
+				switch (key) {
+					case 'Escape':
+						close(modalCloseEscape);
+						event.stopPropagation();
+						break;
+					default:
+						break;
 				}
 			},
 		},
@@ -479,6 +498,7 @@ export const createModal: WidgetFactory<ModalWidget> = createWidgetFactory('moda
 				bindDirectiveNoArg(siblingsInert),
 				directiveSubscribe(action$),
 				modalAttributeDirective,
+				focusElement,
 			),
 			closeButtonDirective,
 			dialogDirective: bindDirective(

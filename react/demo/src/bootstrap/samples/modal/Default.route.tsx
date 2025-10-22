@@ -1,5 +1,5 @@
 import type {ModalApi} from '@agnos-ui/react-bootstrap/components/modal';
-import {Modal, modalCloseButtonClick, modalOutsideClick} from '@agnos-ui/react-bootstrap/components/modal';
+import {Modal, modalCloseButtonClick, modalOutsideClick, modalCloseEscape} from '@agnos-ui/react-bootstrap/components/modal';
 import {useRef, useState} from 'react';
 
 const DefaultDemo = () => {
@@ -31,12 +31,18 @@ const DefaultDemo = () => {
 				onClick={async () => {
 					setMessage('');
 					const result = await modal.current!.open();
-					if (result === modalCloseButtonClick) {
-						setMessage('You clicked on the close button.');
-					} else if (result === modalOutsideClick) {
-						setMessage('You clicked outside the modal.');
-					} else {
-						setMessage(`You answered the question with "${result ? 'Yes' : 'No'}".`);
+					switch (result) {
+						case modalCloseButtonClick:
+							setMessage('You clicked on the close button.');
+							break;
+						case modalOutsideClick:
+							setMessage('You clicked outside the modal.');
+							break;
+						case modalCloseEscape:
+							setMessage('You pressed the Escape key.');
+							break;
+						default:
+							setMessage(`You answered the question with "${result ? 'Yes' : 'No'}".`);
 					}
 				}}
 			>
