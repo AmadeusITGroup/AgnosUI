@@ -30,10 +30,12 @@ test.describe(`Toaster tests`, () => {
 		await toasterDemoPO.locatorRoot.waitFor();
 
 		await toasterDemoPO.locatorAddToastButton.click();
+		await expect.poll(async () => (await toasterPO.toastPOs()).length).toBe(1);
 		await expect((await toasterPO.toastPOs())[0].locatorCloseButton).toBeHidden();
 
 		await toasterDemoPO.locatorDismissibleButton.click();
 		await toasterDemoPO.locatorAddToastButton.click();
+		await expect.poll(async () => (await toasterPO.toastPOs()).length).toBe(2);
 		await expect((await toasterPO.toastPOs())[0].locatorCloseButton).toBeVisible();
 	});
 	test(`Toaster duration should set the auto hide to the correct ms`, async ({page}) => {
@@ -59,6 +61,7 @@ test.describe(`Toaster tests`, () => {
 		await toasterDemoPO.locatorDurationInput.fill('0');
 		await expect(toasterDemoPO.locatorDismissibleButton).toBeChecked();
 		await toasterDemoPO.locatorAddToastButton.click();
+		await expect.poll(async () => (await toasterPO.toastPOs()).length).toBe(1);
 		await expect((await toasterPO.toastPOs())[0].locatorCloseButton).toBeVisible();
 	});
 	test(`Toaster limit displays a max of toasts in a given time`, async ({page}) => {
@@ -107,6 +110,10 @@ test.describe(`Toaster tests`, () => {
 		await toasterDemoPO.locatorAddToastButton.click();
 		await toasterDemoPO.locatorAddToastButton.click();
 
+		await expect.poll(async () => (await toasterPO.toastPOs()).length).toBe(2);
+
 		await expect(toasterPO.locatorCloseButton).toBeVisible();
+		await toasterPO.locatorCloseButton.click();
+		await expect.poll(async () => (await toasterPO.toastPOs()).length).toBe(0);
 	});
 });
