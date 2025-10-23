@@ -205,6 +205,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/typescript/headless/config</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/headless/components/accordion</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/headless/components/alert</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/typescript/headless/components/collapse</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/headless/components/modal</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/headless/components/pagination</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/headless/components/progressbar</loc></url>
@@ -251,6 +252,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/components/accordion</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/components/alert</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/components/carousel</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/angular/headless/components/collapse</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/components/modal</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/components/pagination</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/components/progressbar</loc></url>
@@ -323,6 +325,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/components/accordion</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/components/alert</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/components/carousel</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/react/headless/components/collapse</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/components/modal</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/components/pagination</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/components/progressbar</loc></url>
@@ -392,6 +395,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/components/accordion</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/components/alert</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/components/carousel</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/svelte/headless/components/collapse</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/components/modal</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/components/pagination</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/components/progressbar</loc></url>
