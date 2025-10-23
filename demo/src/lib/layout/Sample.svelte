@@ -106,30 +106,26 @@
 	</div>
 	{#if showButtons}
 		<div class="border border-t-0 flex {showCode ? 'border-b-0' : ''} items-center p-1" role="toolbar" aria-label="Toolbar with button groups">
-			<button
-				class="btn btn-sm btn-link m-1 p-0 tooltip"
-				aria-label="Show or hide the code"
-				data-tip="Toggle code"
-				onclick={() => (showCode = !showCode)}><Svg className="icon-24 align-middle" svg={codeSvg} /></button
-			>
-			{#if import.meta.env.STACKBLITZ}
-				<button
-					class="btn btn-sm btn-link m-1 p-0 tooltip"
-					aria-label="Open example in stackblitz"
-					data-tip="Edit in Stackblitz"
-					onclick={async () => (await import('../stackblitz')).openInStackblitz(sample, $selectedFramework$)}
-					><Svg className="icon-24 align-middle" svg={stackblitz} /></button
+			<div class="tooltip" data-tip="Toggle code">
+				<button class="btn btn-sm btn-link m-1 p-0" aria-label="Show or hide the code" onclick={() => (showCode = !showCode)}
+					><Svg className="icon-24 align-middle" svg={codeSvg} /></button
 				>
+			</div>
+			{#if import.meta.env.STACKBLITZ}
+				<div class="tooltip" data-tip="Edit in Stackblitz">
+					<button
+						class="btn btn-sm btn-link m-1 p-0"
+						aria-label="Open example in stackblitz"
+						onclick={async () => (await import('../stackblitz')).openInStackblitz(sample, $selectedFramework$)}
+						><Svg className="icon-24 align-middle" svg={stackblitz} /></button
+					>
+				</div>
 			{/if}
-			<a
-				href={sampleUrl}
-				class="action m-1 p-0 tooltip"
-				target="_blank"
-				rel="noreferrer nofollow external"
-				aria-label="View sample in new tab"
-				data-tip="Open example in a new tab"
-				><Svg className="icon-20 align-middle" svg={openLink} />
-			</a>
+			<div class="tooltip" data-tip="Open example in a new tab">
+				<a href={sampleUrl} class="btn btn-link btn-sm m-1 p-0" target="_blank" rel="noreferrer nofollow external" aria-label="View sample in new tab"
+					><Svg className="icon-20 align-middle" svg={openLink} />
+				</a>
+			</div>
 		</div>
 	{/if}
 	{#if showCode}
@@ -149,14 +145,3 @@
 		</div>
 	{/if}
 </div>
-
-<style>
-	.action {
-		display: inline-flex;
-
-		> :global(svg) {
-			width: 20px;
-			height: 20px;
-		}
-	}
-</style>
