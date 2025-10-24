@@ -30,7 +30,7 @@ export {createCollapse, getCollapseDefaultConfig} from './components/collapse';
 export * from './components/collapse';
 
 export type {ModalContext, ModalProps, ModalState, ModalWidget, ModalApi, ModalDirectives, ModalBeforeCloseEvent} from './components/modal';
-export {createModal, getModalDefaultConfig, modalCloseButtonClick, modalOutsideClick} from './components/modal';
+export {createModal, getModalDefaultConfig, modalCloseButtonClick, modalOutsideClick, modalCloseEscape} from './components/modal';
 export * from './components/modal';
 
 export type {
