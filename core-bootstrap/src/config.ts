@@ -10,6 +10,7 @@ import type {SelectProps} from './components/select';
 import type {SliderProps} from './components/slider';
 import type {ToastProps} from './components/toast';
 import type {TreeProps} from './components/tree';
+import type {DrawerProps} from './components/drawer';
 // [import-placeholder]
 
 /**
@@ -64,5 +65,9 @@ export interface BootstrapWidgetsConfig {
 	 * carousel widget config
 	 */
 	carousel: CarouselProps<any>;
+	/**
+	 * drawer widget config
+	 */
+	drawer: DrawerProps;
 	// [content-placeholder]
 }
