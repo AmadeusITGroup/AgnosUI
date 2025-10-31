@@ -58,6 +58,7 @@
 <url><loc>https://www.agnosui.dev/latest/docs/angular/components/alert/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/components/carousel/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/components/collapse/api</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/angular/components/drawer/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/components/modal/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/components/pagination/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/components/progressbar/api</loc></url>
@@ -70,6 +71,7 @@
 <url><loc>https://www.agnosui.dev/latest/docs/react/components/alert/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/components/carousel/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/components/collapse/api</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/react/components/drawer/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/components/modal/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/components/pagination/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/components/progressbar/api</loc></url>
@@ -82,6 +84,7 @@
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/components/alert/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/components/carousel/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/components/collapse/api</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/svelte/components/drawer/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/components/modal/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/components/pagination/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/components/progressbar/api</loc></url>
@@ -102,6 +105,12 @@
 <url><loc>https://www.agnosui.dev/latest/docs/angular/components/collapse/examples</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/components/collapse/examples</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/components/collapse/examples</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/angular/components/drawer/examples</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/react/components/drawer/examples</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/svelte/components/drawer/examples</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/angular/components/drawer/style</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/react/components/drawer/style</loc></url>
+<url><loc>https://www.agnosui.dev/latest/docs/svelte/components/drawer/style</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/components/modal/examples</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/components/modal/examples</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/components/modal/examples</loc></url>
@@ -206,6 +215,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/typescript/headless/components/accordion</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/headless/components/alert</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/headless/components/collapse</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/typescript/headless/components/drawer</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/headless/components/modal</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/headless/components/pagination</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/headless/components/progressbar</loc></url>
@@ -236,6 +246,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/typescript/bootstrap/components/alert</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/bootstrap/components/carousel</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/bootstrap/components/collapse</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/typescript/bootstrap/components/drawer</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/bootstrap/components/modal</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/bootstrap/components/pagination</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/bootstrap/components/progressbar</loc></url>
@@ -253,6 +264,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/components/alert</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/components/carousel</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/components/collapse</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/angular/headless/components/drawer</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/components/modal</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/components/pagination</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/components/progressbar</loc></url>
@@ -290,6 +302,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/components/alert</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/components/carousel</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/components/collapse</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/components/drawer</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/components/modal</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/components/pagination</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/components/progressbar</loc></url>
@@ -328,6 +341,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/components/alert</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/components/carousel</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/components/collapse</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/react/headless/components/drawer</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/components/modal</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/components/pagination</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/components/progressbar</loc></url>
@@ -364,6 +378,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/components/alert</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/components/carousel</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/components/collapse</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/components/drawer</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/components/modal</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/components/pagination</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/components/progressbar</loc></url>
@@ -400,6 +415,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/components/alert</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/components/carousel</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/components/collapse</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/svelte/headless/components/drawer</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/components/modal</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/components/pagination</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/components/progressbar</loc></url>
@@ -434,6 +450,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/components/alert</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/components/carousel</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/components/collapse</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/components/drawer</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/components/modal</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/components/pagination</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/components/progressbar</loc></url>
