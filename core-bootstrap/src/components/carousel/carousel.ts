@@ -56,20 +56,14 @@ interface CarouselExtraProps<SlideData extends {id: string}> {
 	slidesData: SlideData[];
 	/**
 	 * The structure of the carousel.
-	 *
-	 * @defaultValue `undefined`
 	 */
 	structure: SlotContent<CarouselContext<SlideData>>;
 	/**
 	 * The navigation layer of the carousel.
-	 *
-	 * @defaultValue `undefined`
 	 */
 	navigation: SlotContent<CarouselContext<SlideData>>;
 	/**
 	 * The content of each slide in the carousel.
-	 *
-	 * @defaultValue `undefined`
 	 */
 	slide: SlotContent<CarouselSlideContext<SlideData>>;
 	/**

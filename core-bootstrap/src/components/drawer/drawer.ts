@@ -11,6 +11,7 @@ import {collapseHorizontalTransition, collapseVerticalTransition, fadeTransition
 import {createWidgetFactory} from '@agnos-ui/core/utils/widget';
 import {createAttributesDirective, mergeDirectives} from '@agnos-ui/core/utils/directive';
 import {true$} from '@agnos-ui/core/utils/stores';
+import type {TransitionFn} from '@agnos-ui/core/services/transitions/baseTransitions';
 
 export * from '@agnos-ui/core/components/drawer';
 
@@ -45,7 +46,32 @@ export interface DrawerState extends CoreState, DrawerExtraProps {}
 /**
  * Represents the properties for the Drawer component.
  */
-export interface DrawerProps extends CoreProps, DrawerExtraProps {}
+export interface DrawerProps extends CoreProps, DrawerExtraProps {
+	/**
+	 * The transition function will be executed when the drawer is displayed or hidden.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * collapseHorizontalTransition
+	 * ```
+	 */
+	transition: TransitionFn;
+	/**
+	 * The transition function for vertically positioned drawer (top, bottom) that will be executed when the drawer is displayed or hidden.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * collapseVerticalTransition
+	 * ```
+	 */
+	verticalTransition: TransitionFn;
+	/**
+	 * The transition to use for the backdrop behind the drawer (if present).
+	 *
+	 * @defaultValue `fadeTransition`
+	 */
+	backdropTransition: TransitionFn;
+}
 
 /**
  * Represents the directives for the Drawer component.
@@ -85,6 +111,12 @@ const configValidator: ConfigValidator<DrawerExtraProps> = {
 	children: undefined,
 };
 
+const coreOverride: Partial<CoreProps> = {
+	backdropTransition: fadeTransition,
+	transition: collapseHorizontalTransition,
+	verticalTransition: collapseVerticalTransition,
+};
+
 /**
  * Retrieve a shallow copy of the default Drawer config
  * @returns the default Drawer config
@@ -92,12 +124,6 @@ const configValidator: ConfigValidator<DrawerExtraProps> = {
 export function getDrawerDefaultConfig(): DrawerProps {
 	return {...getCoreDefaultConfig(), ...defaultConfigExtraProps, ...coreOverride};
 }
-
-const coreOverride: Partial<CoreProps> = {
-	backdropTransition: fadeTransition,
-	transition: collapseHorizontalTransition,
-	verticalTransition: collapseVerticalTransition,
-};
 
 /**
  * Create a Drawer with given config props

@@ -44,7 +44,7 @@ export class CollapseDirective extends BaseWidgetDirective<CollapseWidget> {
 	/**
 	 * If `true` the collapse is visible to the user
 	 *
-	 * @defaultValue `true`
+	 * @defaultValue `false`
 	 */
 	readonly visible = input(undefined, {alias: 'auVisible', transform: auBooleanAttribute});
 

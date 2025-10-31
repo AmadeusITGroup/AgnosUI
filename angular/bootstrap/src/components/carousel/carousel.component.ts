@@ -138,16 +138,25 @@ export const carouselDefaultSlotNavigation: SlotContent<CarouselContext<any>> = 
 export class CarouselComponent<SlideData extends {id: string}> extends BaseWidgetDirective<CarouselWidget<SlideData>> {
 	/**
 	 * Aria label for navigation indicators
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * (index: number) => `Select slide ${index + 1}`
+	 * ```
 	 */
 	readonly ariaIndicatorLabel = input<(index: number) => string>(undefined, {alias: 'auAriaIndicatorLabel'});
 
 	/**
 	 * Aria label for previous button
+	 *
+	 * @defaultValue `'Select previous slide'`
 	 */
 	readonly ariaPrevLabel = input<string>(undefined, {alias: 'auAriaPrevLabel'});
 
 	/**
 	 * Aria label for next button
+	 *
+	 * @defaultValue `'Select next slide'`
 	 */
 	readonly ariaNextLabel = input<string>(undefined, {alias: 'auAriaNextLabel'});
 
@@ -201,11 +210,15 @@ export class CarouselComponent<SlideData extends {id: string}> extends BaseWidge
 
 	/**
 	 * If `true`, 'previous' and 'next' navigation arrows will be visible.
+	 *
+	 * @defaultValue `true`
 	 */
 	readonly showNavigationArrows = input(undefined, {alias: 'auShowNavigationArrows', transform: auBooleanAttribute});
 
 	/**
 	 * If `true`, navigation indicators at the bottom of the slide will be visible.
+	 *
+	 * @defaultValue `true`
 	 */
 	readonly showNavigationIndicators = input(undefined, {alias: 'auShowNavigationIndicators', transform: auBooleanAttribute});
 
@@ -227,6 +240,8 @@ export class CarouselComponent<SlideData extends {id: string}> extends BaseWidge
 	 * Enables choosing a custom container element which holds the slides. By default, Embla will choose the first direct child element of the root element. Provide a valid CSS selector string.
 	 *
 	 * @see {@link https://www.embla-carousel.com/api/options/#container}
+	 *
+	 * @defaultValue `null`
 	 */
 	readonly container = input<string | null>(undefined, {alias: 'auContainer'});
 
@@ -275,22 +290,16 @@ export class CarouselComponent<SlideData extends {id: string}> extends BaseWidge
 
 	/**
 	 * The structure of the carousel.
-	 *
-	 * @defaultValue `undefined`
 	 */
 	readonly structure = input<SlotContent<CarouselContext<SlideData>>>(undefined, {alias: 'auStructure'});
 
 	/**
 	 * The navigation layer of the carousel.
-	 *
-	 * @defaultValue `undefined`
 	 */
 	readonly navigation = input<SlotContent<CarouselContext<SlideData>>>(undefined, {alias: 'auNavigation'});
 
 	/**
 	 * The content of each slide in the carousel.
-	 *
-	 * @defaultValue `undefined`
 	 */
 	readonly slide = input<SlotContent<CarouselSlideContext<SlideData>>>(undefined, {alias: 'auSlide'});
 
