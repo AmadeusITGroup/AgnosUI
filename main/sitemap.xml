@@ -263,6 +263,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/components/tree</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/services/extendWidget</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/services/floatingUI</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/angular/headless/services/focusElement</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/services/focustrack</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/services/hash</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/services/intersection</loc></url>
@@ -299,6 +300,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/components/tree</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/services/extendWidget</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/services/floatingUI</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/services/focusElement</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/services/focustrack</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/services/hash</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/services/intersection</loc></url>
@@ -336,6 +338,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/components/tree</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/services/extendWidget</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/services/floatingUI</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/react/headless/services/focusElement</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/services/focustrack</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/services/hash</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/services/intersection</loc></url>
@@ -371,6 +374,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/components/tree</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/services/extendWidget</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/services/floatingUI</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/services/focusElement</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/services/focustrack</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/services/hash</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/services/intersection</loc></url>
@@ -406,6 +410,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/components/tree</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/services/extendWidget</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/services/floatingUI</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/svelte/headless/services/focusElement</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/services/focustrack</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/services/hash</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/services/intersection</loc></url>
@@ -439,6 +444,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/components/tree</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/services/extendWidget</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/services/floatingUI</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/services/focusElement</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/services/focustrack</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/services/hash</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/services/intersection</loc></url>
