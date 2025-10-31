@@ -27,6 +27,29 @@ describe('focus element', () => {
 		await expect.poll(() => document.activeElement).toBe(testArea);
 	});
 
+	test('should not fail if the root element is removed', async () => {
+		const rootElement = document.createElement('div');
+		rootElement.tabIndex = -1;
+		rootElement.id = 'rootElement';
+
+		testArea.appendChild(rootElement);
+		rootElement.focus();
+		await expect.poll(() => document.activeElement).toBe(rootElement);
+
+		const firstDiv = document.createElement('div');
+		firstDiv.tabIndex = -1;
+		firstDiv.id = 'firstElementToFocus';
+		testArea.appendChild(firstDiv);
+		const firstInstance = focusElement(document.getElementById('firstElementToFocus')!);
+		await expect.poll(() => document.activeElement).toBe(firstDiv);
+
+		testArea.removeChild(rootElement);
+		firstInstance?.destroy?.();
+		testArea.removeChild(firstDiv);
+
+		await expect.poll(() => document.activeElement).toBe(document.body);
+	});
+
 	test('should focus the next focusable element in the stack when the current one is destroyed', async () => {
 		const firstDiv = document.createElement('div');
 		firstDiv.tabIndex = -1;
