@@ -40,7 +40,7 @@ const main = async () => {
 
 		await npmLoginEnd;
 		console.log('Logged in');
-		await publish();
+		await publish(process.argv.slice(2));
 	} finally {
 		await new Promise((resolve) => verdaccio.close(resolve));
 	}
