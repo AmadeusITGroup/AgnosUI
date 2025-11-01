@@ -24,6 +24,8 @@ interface EmblaOptions {
 	 * Enables choosing a custom container element which holds the slides. By default, Embla will choose the first direct child element of the root element. Provide a valid CSS selector string.
 	 *
 	 * @see {@link https://www.embla-carousel.com/api/options/#container}
+	 *
+	 * @defaultValue `null`
 	 */
 	container: string | null;
 	/**
@@ -80,10 +82,14 @@ interface EmblaOptions {
 interface CarouselCommonPropsState extends Pick<EmblaOptions, 'direction'> {
 	/**
 	 * If `true`, 'previous' and 'next' navigation arrows will be visible.
+	 *
+	 * @defaultValue `true`
 	 */
 	showNavigationArrows: boolean;
 	/**
 	 * If `true`, navigation indicators at the bottom of the slide will be visible.
+	 *
+	 * @defaultValue `true`
 	 */
 	showNavigationIndicators: boolean;
 }
@@ -99,14 +105,23 @@ export interface CarouselProps extends EmblaOptions, CarouselCommonPropsState {
 	plugins: EmblaPluginType[];
 	/**
 	 * Aria label for navigation indicators
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * (index: number) => `Select slide ${index + 1}`
+	 * ```
 	 */
 	ariaIndicatorLabel: (index: number) => string;
 	/**
 	 * Aria label for previous button
+	 *
+	 * @defaultValue `'Select previous slide'`
 	 */
 	ariaPrevLabel: string;
 	/**
 	 * Aria label for next button
+	 *
+	 * @defaultValue `'Select next slide'`
 	 */
 	ariaNextLabel: string;
 }

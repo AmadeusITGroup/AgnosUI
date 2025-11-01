@@ -113,16 +113,22 @@ export const drawerDefaultSlotStructure: SlotContent<DrawerContext> = new Compon
 export class DrawerComponent extends BaseWidgetDirective<DrawerWidget> {
 	/**
 	 * If `true` opening and closing will be animated.
+	 *
+	 * @defaultValue `true`
 	 */
 	readonly animated = input(undefined, {alias: 'auAnimated', transform: auBooleanAttribute});
 
 	/**
 	 * aria-labelledby attribute to use for the drawer element.
+	 *
+	 * @defaultValue `''`
 	 */
 	readonly ariaLabelledBy = input<string>(undefined, {alias: 'auAriaLabelledBy'});
 
 	/**
 	 * aria-describedby attribute to use for the drawer element.
+	 *
+	 * @defaultValue `''`
 	 */
 	readonly ariaDescribedBy = input<string>(undefined, {alias: 'auAriaDescribedBy'});
 
@@ -138,7 +144,7 @@ export class DrawerComponent extends BaseWidgetDirective<DrawerWidget> {
 	 *
 	 * @defaultValue
 	 * ```ts
-	 * () => {}
+	 * collapseVerticalTransition
 	 * ```
 	 */
 	readonly verticalTransition = input<TransitionFn>(undefined, {alias: 'auVerticalTransition'});
@@ -148,7 +154,7 @@ export class DrawerComponent extends BaseWidgetDirective<DrawerWidget> {
 	 *
 	 * @defaultValue
 	 * ```ts
-	 * () => {}
+	 * collapseHorizontalTransition
 	 * ```
 	 */
 	readonly transition = input<TransitionFn>(undefined, {alias: 'auTransition'});
@@ -156,10 +162,7 @@ export class DrawerComponent extends BaseWidgetDirective<DrawerWidget> {
 	/**
 	 * The transition to use for the backdrop behind the drawer (if present).
 	 *
-	 * @defaultValue
-	 * ```ts
-	 * () => {}
-	 * ```
+	 * @defaultValue `fadeTransition`
 	 */
 	readonly backdropTransition = input<TransitionFn>(undefined, {alias: 'auBackdropTransition'});
 
@@ -177,11 +180,15 @@ export class DrawerComponent extends BaseWidgetDirective<DrawerWidget> {
 
 	/**
 	 * If `true` displays the backdrop element and disables the body scrolling, otherwise the body of the document is navigable
+	 *
+	 * @defaultValue `true`
 	 */
 	readonly backdrop = input(undefined, {alias: 'auBackdrop', transform: auBooleanAttribute});
 
 	/**
 	 * If `true` allows body scrolling when the drawer is open.
+	 *
+	 * @defaultValue `false`
 	 */
 	readonly bodyScroll = input(undefined, {alias: 'auBodyScroll', transform: auBooleanAttribute});
 
@@ -195,7 +202,7 @@ export class DrawerComponent extends BaseWidgetDirective<DrawerWidget> {
 	/**
 	 * CSS classes to be applied on the widget main container
 	 *
-	 * @defaultValue `''`
+	 * @defaultValue `'w-full'`
 	 */
 	readonly className = input<string>(undefined, {alias: 'auClassName'});
 
@@ -208,11 +215,15 @@ export class DrawerComponent extends BaseWidgetDirective<DrawerWidget> {
 
 	/**
 	 * The width of the drawer in pixels.
+	 *
+	 * @defaultValue `200`
 	 */
 	readonly width = input(undefined, {alias: 'auWidth', transform: auNumberAttribute});
 
 	/**
 	 * The height of the drawer in pixels.
+	 *
+	 * @defaultValue `200`
 	 */
 	readonly height = input(undefined, {alias: 'auHeight', transform: auNumberAttribute});
 

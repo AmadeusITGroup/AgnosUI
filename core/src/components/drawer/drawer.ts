@@ -21,6 +21,12 @@ export type DrawerPositions = 'inline-start' | 'inline-end' | 'block-start' | 'b
 
 interface DrawerCommonPropsAndState extends WidgetsCommonPropsAndState {
 	/**
+	 * CSS classes to be applied on the widget main container
+	 *
+	 * @defaultValue `'w-full'`
+	 */
+	className: string;
+	/**
 	 * Which element should contain the drawer and backdrop DOM elements.
 	 * If it is not null, the drawer and backdrop DOM elements are moved to the specified container.
 	 * Otherwise, they stay where the widget is located.
@@ -84,30 +90,44 @@ export interface DrawerProps extends DrawerCommonPropsAndState {
 	backdropTransition: TransitionFn;
 	/**
 	 * If `true` opening and closing will be animated.
+	 *
+	 * @defaultValue `true`
 	 */
 	animated: boolean;
 	/**
 	 * aria-labelledby attribute to use for the drawer element.
+	 *
+	 * @defaultValue `''`
 	 */
 	ariaLabelledBy: string;
 	/**
 	 * aria-describedby attribute to use for the drawer element.
+	 *
+	 * @defaultValue `''`
 	 */
 	ariaDescribedBy: string;
 	/**
 	 * The width of the drawer in pixels.
+	 *
+	 * @defaultValue `200`
 	 */
 	width: number;
 	/**
 	 * The height of the drawer in pixels.
+	 *
+	 * @defaultValue `200`
 	 */
 	height: number;
 	/**
 	 * If `true` displays the backdrop element and disables the body scrolling, otherwise the body of the document is navigable
+	 *
+	 * @defaultValue `true`
 	 */
 	backdrop: boolean;
 	/**
 	 * If `true` allows body scrolling when the drawer is open.
+	 *
+	 * @defaultValue `false`
 	 */
 	bodyScroll: boolean;
 	/**

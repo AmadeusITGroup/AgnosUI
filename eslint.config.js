@@ -348,6 +348,12 @@ export default tseslint.config(
 			'@typescript-eslint/no-unused-expressions': 'off',
 		},
 	},
+	{
+		files: ['{core,core-bootstrap}/src/**/*.ts'],
+		rules: {
+			'@agnos-ui/check-default-props': ['error'],
+		},
+	},
 	// jsdoc,
 	{
 		files: ['{core,core-bootstrap}/src/**/*.{ts,tsx}', '{angular,react,svelte}/{headless,bootstrap}/src/**/*.{ts,tsx}'],
