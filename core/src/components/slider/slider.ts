@@ -293,7 +293,7 @@ export interface SliderProps extends SliderCommonPropsAndState {
 	 *
 	 * @defaultValue
 	 * ```ts
-	 * (value: number) => ''
+	 * () => ''
 	 * ```
 	 */
 	ariaValueText: (value: number, sortedIndex: number) => string;
@@ -329,7 +329,7 @@ export interface SliderProps extends SliderCommonPropsAndState {
 	 * Minimum distance between two values.
 	 * When set to 0, no minimum distance constraint is applied.
 	 *
-	 * @defaultValue 0
+	 * @defaultValue `0`
 	 */
 	minRange: number;
 
@@ -337,7 +337,7 @@ export interface SliderProps extends SliderCommonPropsAndState {
 	 * Maximum distance between two values
 	 * When set to 0, no maximum distance constraint is applied.
 	 *
-	 * @defaultValue 0
+	 * @defaultValue `0`
 	 */
 	maxRange: number;
 
@@ -345,7 +345,7 @@ export interface SliderProps extends SliderCommonPropsAndState {
 	 * When true, if moving a value would break the minRange or maxRange constraint,
 	 * it will instead push or pull the neighboring values to keep the allowed range rather than just stopping.
 	 *
-	 * @defaultValue false
+	 * @defaultValue `false`
 	 */
 	pushRange: boolean;
 }

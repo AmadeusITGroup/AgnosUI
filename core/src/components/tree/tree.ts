@@ -60,14 +60,7 @@ interface TreeItemInfo {
 	htmlElement?: HTMLElement;
 }
 
-interface TreeCommonPropsAndState extends WidgetsCommonPropsAndState {
-	/**
-	 * Optional accessibility label for the tree if there is no explicit label
-	 *
-	 * @defaultValue `''`
-	 */
-	ariaLabel?: string;
-}
+interface TreeCommonPropsAndState extends WidgetsCommonPropsAndState {}
 /**
  * Interface representing the properties for the Tree component.
  */

@@ -14,7 +14,7 @@ interface CollapseCommonPropsAndState {
 	/**
 	 * If `true` the collapse is visible to the user
 	 *
-	 * @defaultValue `true`
+	 * @defaultValue `false`
 	 */
 	visible: boolean;
 }
@@ -88,7 +88,10 @@ export interface CollapseProps extends CollapseCommonPropsAndState {
 	 *
 	 * Depending on the value of `animatedOnInit`, the animation can be optionally skipped during the showing process.
 	 *
-	 * @defaultValue `() => {}`
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
 	 */
 	transition: TransitionFn;
 }

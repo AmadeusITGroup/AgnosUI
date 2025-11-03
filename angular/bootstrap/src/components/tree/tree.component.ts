@@ -198,12 +198,6 @@ export class TreeComponent extends BaseWidgetDirective<TreeWidget> {
 		);
 	}
 	/**
-	 * Optional accessibility label for the tree if there is no explicit label
-	 *
-	 * @defaultValue `''`
-	 */
-	readonly ariaLabel = input<string>(undefined, {alias: 'auAriaLabel'});
-	/**
 	 * Array of the tree nodes to display
 	 *
 	 * @defaultValue `[]`
