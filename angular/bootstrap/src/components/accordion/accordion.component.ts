@@ -1,15 +1,15 @@
 import type {SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
 import {
+	auBooleanAttribute,
 	BaseWidgetDirective,
 	ComponentTemplate,
 	SlotDirective,
 	UseDirective,
-	auBooleanAttribute,
 	useDirectiveForHost,
 } from '@agnos-ui/angular-headless';
 import {NgTemplateOutlet} from '@angular/common';
 import type {AfterViewInit} from '@angular/core';
-import {ChangeDetectionStrategy, Component, Directive, TemplateRef, inject, input, output, viewChild, contentChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, contentChild, Directive, inject, input, output, TemplateRef, viewChild} from '@angular/core';
 import {callWidgetFactory} from '../../config';
 import type {AccordionItemContext, AccordionItemWidget, AccordionWidget} from './accordion.gen';
 import {createAccordion} from './accordion.gen';
@@ -22,6 +22,7 @@ import {createAccordion} from './accordion.gen';
 @Directive({selector: 'ng-template[auAccordionItemBody]'})
 export class AccordionBodyDirective {
 	public templateRef = inject(TemplateRef<AccordionItemContext>);
+
 	static ngTemplateContextGuard(_dir: AccordionBodyDirective, context: unknown): context is AccordionItemContext {
 		return true;
 	}
@@ -35,6 +36,7 @@ export class AccordionBodyDirective {
 @Directive({selector: 'ng-template[auAccordionItemHeader]'})
 export class AccordionHeaderDirective {
 	public templateRef = inject(TemplateRef<AccordionItemContext>);
+
 	static ngTemplateContextGuard(_dir: AccordionHeaderDirective, context: unknown): context is AccordionItemContext {
 		return true;
 	}
@@ -49,6 +51,7 @@ export class AccordionHeaderDirective {
 @Directive({selector: 'ng-template[auAccordionItemStructure]'})
 export class AccordionItemStructureDirective {
 	public templateRef = inject(TemplateRef<AccordionItemContext>);
+
 	static ngTemplateContextGuard(_dir: AccordionItemStructureDirective, context: unknown): context is AccordionItemContext {
 		return true;
 	}
@@ -59,23 +62,23 @@ export class AccordionItemStructureDirective {
 	imports: [UseDirective, SlotDirective, NgTemplateOutlet, AccordionItemStructureDirective],
 	template: `
 		<ng-template auAccordionItemStructure #structure let-state="state" let-api="api" let-directives="directives">
-			@switch (state.headingTag()) {
-				@case ('h1') {
+			@switch (state.headingLevel()) {
+				@case (1) {
 					<ng-container [ngTemplateOutlet]="h1" />
 				}
-				@case ('h2') {
+				@case (2) {
 					<ng-container [ngTemplateOutlet]="h2" />
 				}
-				@case ('h3') {
+				@case (3) {
 					<ng-container [ngTemplateOutlet]="h3" />
 				}
-				@case ('h4') {
+				@case (4) {
 					<ng-container [ngTemplateOutlet]="h4" />
 				}
-				@case ('h5') {
+				@case (5) {
 					<ng-container [ngTemplateOutlet]="h5" />
 				}
-				@case ('h6') {
+				@case (6) {
 					<ng-container [ngTemplateOutlet]="h6" />
 				}
 				@default {
@@ -136,6 +139,7 @@ export class AccordionItemStructureDirective {
 class AccordionItemDefaultSlotsComponent {
 	readonly structure = viewChild.required<TemplateRef<AccordionItemContext>>('structure');
 }
+
 /**
  * Represents the default slot structure for an accordion item.
  */
@@ -156,7 +160,9 @@ export const accordionItemDefaultSlotStructure: SlotContent<AccordionItemContext
 	},
 	imports: [SlotDirective],
 	template: `
-		<ng-template #content><ng-content /></ng-template>
+		<ng-template #content>
+			<ng-content />
+		</ng-template>
 		<ng-template [auSlotProps]="{state, api, directives}" [auSlot]="state.structure()" />
 	`,
 })
@@ -238,9 +244,9 @@ export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWid
 	 */
 	readonly bodyClassName = input<string>(undefined, {alias: 'auBodyClassName'});
 	/**
-	 * The html tag to use for the accordion-item-header.
+	 * The html heading level to use for the accordion-item-header.
 	 */
-	readonly headingTag = input<string>(undefined, {alias: 'auHeadingTag'});
+	readonly headingLevel = input<1 | 2 | 3 | 4 | 5 | 6>(undefined, {alias: 'auHeadingLevel'});
 	/**
 	 * An event fired when an item is shown.
 	 */
@@ -412,11 +418,11 @@ export class AccordionDirective extends BaseWidgetDirective<AccordionWidget> {
 	readonly itemBodyClassName = input<string>(undefined, {alias: 'auItemBodyClassName'});
 
 	/**
-	 * The html tag to use for the accordion-item-header.
+	 * The html heading level to use for the accordion-item-header.
 	 *
-	 * @defaultValue `''`
+	 * @defaultValue `2`
 	 */
-	readonly itemHeadingTag = input<string>(undefined, {alias: 'auItemHeadingTag'});
+	readonly itemHeadingLevel = input<1 | 2 | 3 | 4 | 5 | 6>(undefined, {alias: 'auItemHeadingLevel'});
 
 	constructor() {
 		super(
