@@ -126,7 +126,7 @@ const accordionItemDefaultConfig: AccordionItemProps = {
 	buttonClassName: '',
 	bodyContainerClassName: '',
 	bodyClassName: '',
-	headingTag: '',
+	headingLevel: 2,
 	className: '',
 	structure: undefined,
 	children: undefined,

@@ -1,11 +1,11 @@
-import {stateStores, writablesForProps, normalizeConfigStores, mergeConfigStores, idWithDefault, true$} from '../../utils/stores';
+import {idWithDefault, mergeConfigStores, normalizeConfigStores, stateStores, true$, writablesForProps} from '../../utils/stores';
 import type {TransitionFn} from '../../services/transitions/baseTransitions';
 import {createTransition} from '../../services/transitions/baseTransitions';
 import type {ConfigValidator, Directive, PropsConfig, Widget, WidgetFactory} from '../../types';
 import {asWritable, computed, readable, writable} from '@amadeus-it-group/tansu';
 import {noop} from '../../utils/func';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
-import {typeBoolean, typeFunction, typeString} from '../../utils/writables';
+import {createTypeEnum, typeBoolean, typeFunction, typeString} from '../../utils/writables';
 import {createAttributesDirective, directiveSubscribe, mergeDirectives, registrationArray} from '../../utils/directive';
 import {createWidgetFactory} from '../../utils/widget';
 
@@ -135,11 +135,11 @@ export interface AccordionProps extends WidgetsCommonPropsAndState {
 	 */
 	itemBodyClassName: string;
 	/**
-	 * The html tag to use for the accordion-item-header.
+	 * The html heading level to use for the accordion-item-header.
 	 *
-	 * @defaultValue `''`
+	 * @defaultValue `2`
 	 */
-	itemHeadingTag: string;
+	itemHeadingLevel: 1 | 2 | 3 | 4 | 5 | 6;
 }
 
 /**
@@ -162,28 +162,33 @@ export interface AccordionApi {
 	 * If the itemId is not valid, nothing will happen.
 	 */
 	expand(itemId: string): void;
+
 	/**
 	 * Given the itemId, will collapse the corresponding accordion-item.
 	 *
 	 * If the itemId is not valid, nothing will happen.
 	 */
 	collapse(itemId: string): void;
+
 	/**
 	 * Given the itemId, will toggle the corresponding accordion-item.
 	 *
 	 * If the itemId is not valid, nothing will happen.
 	 */
 	toggle(itemId: string): void;
+
 	/**
 	 * It will expand all the items in the accordion.
 	 *
 	 * If `closeOthers` is `true` it will expand only the last accordion-item.
 	 */
 	expandAll(): void;
+
 	/**
 	 * It will collapse all the accordion-items in the accordion.
 	 */
 	collapseAll(): void;
+
 	/**
 	 * Creates a new accordionItem.
 	 */
@@ -218,10 +223,12 @@ export interface AccordionItemApi {
 	 * It will expand the accordion-item.
 	 */
 	expand(): void;
+
 	/**
 	 * It will toggle the accordion-item.
 	 */
 	toggle(): void;
+
 	/**
 	 * Method to be called after the initialization to allow animations.
 	 */
@@ -304,9 +311,9 @@ interface AccordionItemCommonPropsAndState extends WidgetsCommonPropsAndState {
 	 */
 	bodyClassName: string;
 	/**
-	 * The html tag to use for the accordion-item-header.
+	 * The html heading level to use for the accordion-item-header.
 	 */
-	headingTag: string;
+	headingLevel: 1 | 2 | 3 | 4 | 5 | 6;
 }
 
 /**
@@ -365,7 +372,7 @@ const defaultAccordionConfig: AccordionProps = {
 	itemDestroyOnHide: true,
 	itemAnimated: true,
 	itemTransition: noop,
-	itemHeadingTag: '',
+	itemHeadingLevel: 2,
 	itemClassName: '',
 	itemHeaderClassName: '',
 	itemButtonClassName: '',
@@ -388,7 +395,7 @@ const defaultItemConfig: AccordionItemProps = {
 	buttonClassName: defaultAccordionConfig.itemButtonClassName,
 	bodyContainerClassName: defaultAccordionConfig.itemBodyContainerClassName,
 	bodyClassName: defaultAccordionConfig.itemBodyClassName,
-	headingTag: defaultAccordionConfig.itemHeadingTag,
+	headingLevel: defaultAccordionConfig.itemHeadingLevel,
 };
 const coreAccordionItemProps = Object.keys(defaultItemConfig);
 
@@ -413,7 +420,7 @@ const configAccordionValidator: ConfigValidator<AccordionProps> = {
 	itemButtonClassName: typeString,
 	itemBodyContainerClassName: typeString,
 	itemBodyClassName: typeString,
-	itemHeadingTag: typeString,
+	itemHeadingLevel: createTypeEnum([1, 2, 3, 4, 5, 6]),
 };
 
 const configItemValidator: ConfigValidator<AccordionItemProps> = {
@@ -431,7 +438,7 @@ const configItemValidator: ConfigValidator<AccordionItemProps> = {
 	buttonClassName: typeString,
 	bodyContainerClassName: typeString,
 	bodyClassName: typeString,
-	headingTag: typeString,
+	headingLevel: createTypeEnum([1, 2, 3, 4, 5, 6]),
 };
 
 /**
@@ -478,7 +485,7 @@ export function createAccordionItem(config?: PropsConfig<AccordionItemProps>): A
 			},
 		},
 	});
-	const shouldBeInDOM$ = computed(() => destroyOnHide$() === false || !transition.stores.hidden$());
+	const shouldBeInDOM$ = computed(() => !destroyOnHide$() || !transition.stores.hidden$());
 	const toggleDirective = createAttributesDirective(() => ({
 		attributes: {
 			id: computed(() => `${id$()}-toggle`),
@@ -554,7 +561,7 @@ export function createAccordionItem(config?: PropsConfig<AccordionItemProps>): A
 }
 
 /**
- * Create an accordion WidgetFactory based on a item factory and the list of item props that should inherit from the parent accordion
+ * Create an accordion WidgetFactory based on an item factory and the list of item props that should inherit from the parent accordion
  *
  * @param itemFactory - the item factory
  * @param accordionItemProps - the list of item props

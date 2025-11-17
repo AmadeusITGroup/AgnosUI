@@ -1,18 +1,15 @@
 import {Slot} from '@agnos-ui/react-headless/slot';
 import type {Directive} from '@agnos-ui/react-headless/types';
 import {classDirective, useDirectives} from '@agnos-ui/react-headless/utils/directive';
-import type {ForwardedRef, PropsWithChildren, Ref} from 'react';
-import {createContext, useContext, useEffect, useId, useImperativeHandle} from 'react';
+import type {Context, ForwardedRef, JSX, PropsWithChildren, Ref} from 'react';
+import {createContext, createElement, useContext, useEffect, useId, useImperativeHandle} from 'react';
 import {useWidget} from '../../config';
 import type {AccordionApi, AccordionItemApi, AccordionItemContext, AccordionItemProps, AccordionProps} from './accordion.gen';
 import {createAccordion} from './accordion.gen';
 
-type AccordionTag = `h${1 | 2 | 3 | 4 | 5 | 6}`;
-
-const Header = (props: PropsWithChildren<{headerTag: string; directive: Directive}>) => {
-	const re = new RegExp('^h[1-6]$');
-	const Heading = (re.test(props.headerTag) ? props.headerTag : 'h2') as AccordionTag;
-	return <Heading {...useDirectives([classDirective, 'accordion-header'], props.directive)}>{props.children}</Heading>;
+const Header = (props: PropsWithChildren<{headingLevel: 1 | 2 | 3 | 4 | 5 | 6; directive: Directive}>) => {
+	const HeadingTag = `h${props.headingLevel}` as keyof JSX.IntrinsicElements;
+	return createElement(HeadingTag, {...useDirectives([classDirective, 'accordion-header'], props.directive)}, props.children);
 };
 
 const ItemContent = (slotContext: AccordionItemContext) => (
@@ -23,7 +20,7 @@ const ItemContent = (slotContext: AccordionItemContext) => (
 	</div>
 );
 
-const AccordionDIContext: React.Context<Partial<AccordionApi>> = createContext({});
+const AccordionDIContext: Context<Partial<AccordionApi>> = createContext({});
 /**
  * Renders the default slot structure for an accordion item.
  *
@@ -32,7 +29,7 @@ const AccordionDIContext: React.Context<Partial<AccordionApi>> = createContext({
  */
 export const AccordionItemDefaultSlotStructure = (slotContext: AccordionItemContext) => (
 	<>
-		<Header directive={slotContext.directives.headerDirective} headerTag={slotContext.state.headingTag}>
+		<Header directive={slotContext.directives.headerDirective} headingLevel={slotContext.state.headingLevel}>
 			<button {...useDirectives([classDirective, 'accordion-button'], slotContext.directives.buttonDirective)}>
 				<Slot slotContent={slotContext.state.header} props={slotContext} />
 			</button>

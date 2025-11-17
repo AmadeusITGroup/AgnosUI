@@ -5,9 +5,7 @@
 	let widget: AccordionItemContext = $props();
 	const {state, directives} = widget;
 
-	const re = new RegExp('^h[1-6]$');
-
-	let headingTag = $derived(re.test(state.headingTag) ? state.headingTag : 'h2');
+	let headingTag = $derived(`h${state.headingLevel}`);
 </script>
 
 <svelte:element this={headingTag} class="accordion-header" use:directives.headerDirective>
