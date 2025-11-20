@@ -509,6 +509,7 @@ export function createAccordionItem(config?: PropsConfig<AccordionItemProps>): A
 			id: computed(() => `${id$()}-body-container`),
 			class: bodyContainerClassName$,
 			'aria-labelledby': computed(() => `${id$()}-toggle`),
+			role: readable('region'),
 		},
 	}));
 

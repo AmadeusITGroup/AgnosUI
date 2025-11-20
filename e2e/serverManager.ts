@@ -165,6 +165,7 @@ const createStackblitzBuild = (verdaccioServer: RunnableServer) => {
 		await Promise.all([stackblitzBuild.ensureReady(), verdaccioServer.ensureReady()]);
 	};
 	const ensureExited = async () => {
+		// eslint-disable-next-line @typescript-eslint/await-thenable
 		await Promise.all([...stackblitzServers].map((server) => server.ensureExited()));
 		await stackblitzBuild.ensureExited();
 	};

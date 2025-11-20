@@ -53,6 +53,7 @@ export function attachDirectiveAndClick(directive: Directive<void>): void;
 /**
  * Utility method to register a directive to a fake button and click on it.
  *
+ * @template T - The type of the directive parameters
  * @param directive - the directive to attach
  * @param args - the args of the directive
  */

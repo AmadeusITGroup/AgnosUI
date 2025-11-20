@@ -44,7 +44,7 @@ function getHtmlText(html: string) {
 				</ng-template>
 			</div>
 			<span class="fw-bold">Selection: </span>
-			@if (selected.length) {
+			@if (selected().length) {
 				@for (item of selected(); track item) {
 					<a attr.href="{{ basePageUrl + item.pageid }}" class="pe-2">{{ item.title }}</a>
 				}
