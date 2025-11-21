@@ -1,13 +1,23 @@
 <script lang="ts">
-	import sampleBasic from '@agnos-ui/samples/bootstrap/drawer/basic';
-	import samplePosition from '@agnos-ui/samples/bootstrap/drawer/position';
-	import sampleBody from '@agnos-ui/samples/bootstrap/drawer/body';
 	import Sample from '$lib/layout/Sample.svelte';
 	import Section from '$lib/layout/Section.svelte';
+	import sampleBasic from '@agnos-ui/samples/bootstrap/drawer/basic';
+	import sampleBody from '@agnos-ui/samples/bootstrap/drawer/body';
+	import samplePosition from '@agnos-ui/samples/bootstrap/drawer/position';
+	import sampleSizes from '@agnos-ui/samples/bootstrap/drawer/sizes';
 </script>
 
 <Section label="Basic drawer" id="basic" level={2}>
 	<Sample title="Basic example" sample={sampleBasic} height={190} noresize />
+</Section>
+<Section label="Drawer size" id="positions" level={2}>
+	<p>You can customize the drawer's width or height by adjusting the following CSS variables:</p>
+	<p class="ps-5">
+		<code>--bs-drawer-size</code>: sets the default size of the drawer<br />
+		<code>--bs-drawer-min-size</code>: defines the minimum allowed size<br />
+		<code>--bs-drawer-max-size</code>: defines the maximum allowed size<br />
+	</p>
+	<Sample title="Sizes example" sample={sampleSizes} height={190} noresize />
 </Section>
 <Section label="Drawer positions" id="positions" level={2}>
 	<Sample title="Position example" sample={samplePosition} height={190} noresize />

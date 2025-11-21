@@ -108,6 +108,16 @@ export const typeStringOrNull: WritableWithDefaultOptions<string | null> = {
 };
 
 /**
+ * A writable with default options that normalizes its value to a number or null.
+ *
+ * This writable uses a normalization function that allows null values and ensures
+ * the value is a boolean.
+ */
+export const typeNumberOrNull: WritableWithDefaultOptions<number | null> = {
+	normalizeValue: testToNormalizeValue(allowNull(isNumber)),
+};
+
+/**
  * A writable object that holds a function type with default options.
  */
 export const typeFunction: WritableWithDefaultOptions<(...args: any[]) => any> = {

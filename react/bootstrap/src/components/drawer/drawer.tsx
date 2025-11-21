@@ -14,6 +14,7 @@ const DrawerElement = (slotContext: DrawerContext) => (
 		<div {...useDirective(slotContext.directives.containerDirective)}>
 			<Slot slotContent={slotContext.state.structure} props={slotContext} />
 		</div>
+		{slotContext.state.resizable && <Splitter {...slotContext} />}
 	</div>
 );
 
@@ -25,17 +26,18 @@ const DrawerElement = (slotContext: DrawerContext) => (
  */
 export const DefaultDrawerSlotStructure = (slotContext: DrawerContext) => (
 	<>
-		<div className="au-drawer-header">
-			<Slot slotContent={slotContext.state.header} props={slotContext} />
+		<div className="au-drawer-content">
+			<div className="au-drawer-header">
+				<Slot slotContent={slotContext.state.header} props={slotContext} />
+			</div>
+			<div className="au-drawer-body">
+				<Slot slotContent={slotContext.state.children} props={slotContext} />
+			</div>
 		</div>
-		<div className="au-drawer-body">
-			<Slot slotContent={slotContext.state.children} props={slotContext} />
-		</div>
-		{slotContext.state.resizable && <Splitter {...slotContext} />}
 	</>
 );
 
-const Splitter = (slotContext: DrawerContext) => <div {...useDirective(slotContext.directives.splitterDirective)} />;
+const Splitter = (slotContext: DrawerContext) => <div {...useDirective(slotContext.directives.splitterDirective)} tabIndex={0} />;
 
 const defaultConfig: Partial<DrawerProps> = {
 	structure: DefaultDrawerSlotStructure,

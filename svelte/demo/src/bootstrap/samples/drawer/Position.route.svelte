@@ -5,8 +5,6 @@
 	let drawerPlacement = $state('inline-start' as DrawerTypes);
 	// svelte-ignore non_reactive_update
 	let drawer: Drawer;
-	let width = $state(200);
-	let height = $state(150);
 </script>
 
 <button class="btn btn-primary mb-3" onclick={() => drawer.api.open()}>Open Drawer</button>
@@ -20,19 +18,16 @@
 	</select>
 </div>
 
-<Drawer
-	bind:this={drawer}
-	className={drawerPlacement}
-	header="Basic drawer"
-	resizable
-	onHeightChange={(h) => (height = h)}
-	{height}
-	onWidthChange={(w) => (width = w)}
-	{width}
->
+<Drawer bind:this={drawer} className={'drawer-position-size ' + drawerPlacement} header="Hi, I am drawer!" resizable>
 	<ul>
 		<li>First item</li>
 		<li>Second item</li>
 		<li>Third item</li>
 	</ul>
 </Drawer>
+
+<style>
+	:global(.drawer-position-size) {
+		--bs-drawer-size: 200px;
+	}
+</style>

@@ -1,5 +1,5 @@
 import {BasePO} from '@agnos-ui/base-po';
-import type {Locator} from '@playwright/test';
+import type {Page, Locator} from '@playwright/test';
 
 export class DrawerDemoPO extends BasePO {
 	private readonly locators = {
@@ -34,3 +34,8 @@ export class DrawerDemoPO extends BasePO {
 		return this._page.getByRole('switch', {name: this.locators.bodyScrollToggle});
 	}
 }
+
+export const openDemoDrawer = async (page: Page) => {
+	const drawerDemoPO = new DrawerDemoPO(page);
+	await drawerDemoPO.locatorToggleDrawerButton.click();
+};

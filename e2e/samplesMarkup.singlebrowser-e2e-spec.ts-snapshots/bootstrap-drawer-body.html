@@ -1,7 +1,10 @@
-<body>
+<body
+ style="overflow-x: hidden; overflow-y: hidden;"
+>
 	<div
 	 class="container p-3"
 	 id="root"
+	 inert="inert"
 	>
 		<div
 		 class="align-items-center d-flex mb-3"
@@ -55,5 +58,57 @@
 		>
 			"ScrollToMe"
 		</button>
+	</div>
+	<div
+	 class="au-drawer-backdrop fade show"
+	 data-agnos-ignore-inert="data-agnos-ignore-inert"
+	/>
+	<div
+	 aria-describedby=""
+	 aria-labelledby=""
+	 aria-modal="true"
+	 class="au-drawer collapse collapse-horizontal inline-start show"
+	 role="dialog"
+	 style="position: fixed; outline-color: initial; outline-style: none; outline-width: initial;"
+	 tabindex="-1"
+	>
+		<div
+		 class="au-drawer-container"
+		>
+			<div
+			 class="au-drawer-content"
+			>
+				<div
+				 class="au-drawer-header"
+				>
+					<div
+					 class="d-flex"
+					>
+						<span>
+							"Hi, I am drawer!"
+						</span>
+						<button
+						 aria-label="Close"
+						 class="btn-close ms-auto"
+						/>
+					</div>
+				</div>
+				<div
+				 class="au-drawer-body"
+				>
+					<ul>
+						<li>
+							"First item"
+						</li>
+						<li>
+							"Second item"
+						</li>
+						<li>
+							"Third item"
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
 	</div>
 </body>

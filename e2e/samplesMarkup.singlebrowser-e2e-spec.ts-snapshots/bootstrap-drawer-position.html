@@ -1,7 +1,10 @@
-<body>
+<body
+ style="overflow-x: hidden; overflow-y: hidden;"
+>
 	<div
 	 class="container p-3"
 	 id="root"
+	 inert="inert"
 	>
 		<button
 		 class="btn btn-primary mb-3"
@@ -43,5 +46,51 @@
 				</option>
 			</select>
 		</div>
+	</div>
+	<div
+	 class="au-drawer-backdrop fade show"
+	 data-agnos-ignore-inert="data-agnos-ignore-inert"
+	/>
+	<div
+	 aria-describedby=""
+	 aria-labelledby=""
+	 aria-modal="true"
+	 class="au-drawer collapse collapse-horizontal drawer-position-size inline-start show"
+	 role="dialog"
+	 style="position: fixed; outline-color: initial; outline-style: none; outline-width: initial;"
+	 tabindex="-1"
+	>
+		<div
+		 class="au-drawer-container"
+		>
+			<div
+			 class="au-drawer-content"
+			>
+				<div
+				 class="au-drawer-header"
+				>
+					"Hi, I am drawer!"
+				</div>
+				<div
+				 class="au-drawer-body"
+				>
+					<ul>
+						<li>
+							"First item"
+						</li>
+						<li>
+							"Second item"
+						</li>
+						<li>
+							"Third item"
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div
+		 class="au-splitter"
+		 tabindex="0"
+		/>
 	</div>
 </body>
