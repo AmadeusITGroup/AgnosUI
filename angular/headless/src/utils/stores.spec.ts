@@ -28,7 +28,7 @@ describe('toAngularSignals', () => {
 		expect(signal()).toBe(1);
 		tansuStore.set(2);
 		expect(signal()).toBe(2);
-		TestBed.resetTestEnvironment(); // this ends the subscription
+		TestBed.resetTestingModule(); // this ends the subscription
 		tansuStore.set(3);
 		expect(signal()).toBe(2); // no change as the subscription was ended
 	});
@@ -48,7 +48,7 @@ describe('toAngularSignals', () => {
 			signal.set(4);
 		});
 		expect(tansuStore.get()).toBe(4);
-		TestBed.resetTestEnvironment(); // this ends the subscription
+		TestBed.resetTestingModule(); // this ends the subscription
 		tansuStore.set(5);
 		expect(signal()).toBe(4); // no change as the subscription was ended
 	});
@@ -79,6 +79,7 @@ describe('toAngularSignals', () => {
 	});
 
 	@Component({
+		selector: '[auMyTestWithoutEffect]',
 		changeDetection: ChangeDetectionStrategy.OnPush,
 		template: `{{ mySignal() }}`,
 	})
@@ -89,6 +90,7 @@ describe('toAngularSignals', () => {
 	}
 
 	@Component({
+		selector: '[auMyTestWithEffect]',
 		changeDetection: ChangeDetectionStrategy.OnPush,
 		template: `{{ mySignal() }}`,
 	})
@@ -106,6 +108,9 @@ describe('toAngularSignals', () => {
 
 	for (const MyComponent of [MyTestWithEffectComponent, MyTestWithoutEffectComponent]) {
 		it(`[toAngularSignal] works in ${MyComponent.name} (inside Angular zone)`, async () => {
+			TestBed.configureTestingModule({
+				imports: [MyComponent],
+			});
 			const fixture = TestBed.createComponent(MyComponent);
 			fixture.autoDetectChanges();
 			await fixture.whenStable();

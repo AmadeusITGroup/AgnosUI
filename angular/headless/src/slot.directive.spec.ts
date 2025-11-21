@@ -180,7 +180,7 @@ describe('widgets config', () => {
 
 		@Component({
 			selector: '[auTestWidgetConfig]',
-			template: `maxRating = {{ myConfig().rating.maxRating }}`,
+			template: `maxRating = {{ myConfig().rating?.maxRating }}`,
 			providers: [
 				provideWidgetsConfig((parentConfig) => {
 					if (!parentConfig.rating) {

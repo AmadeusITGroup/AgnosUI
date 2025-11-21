@@ -1,12 +1,13 @@
 import {defineConfig} from 'vitest/config';
 import {alias} from '../viteAlias';
+import {playwright} from '@vitest/browser-playwright';
 
 export default defineConfig({
 	test: {
 		alias,
 		browser: {
 			enabled: true,
-			provider: 'playwright',
+			provider: playwright(),
 			headless: true,
 			api: {
 				host: '127.0.0.1',

@@ -14,6 +14,20 @@
 						"project": "ng-package.json",
 						"tsConfig": "tsconfig.build.json"
 					}
+				},
+				"test": {
+					"builder": "@angular/build:unit-test",
+					"options": {
+						"include": ["src/**/*.spec.ts"],
+						"providersFile": "test-providers.ts",
+						"buildTarget": ":build",
+						"browsers": ["ChromiumHeadless"]
+					},
+					"configurations": {
+						"coverage": {
+							"coverage": true
+						}
+					}
 				}
 			}
 		}
