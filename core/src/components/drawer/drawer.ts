@@ -1,18 +1,19 @@
-import {asWritable, computed, readable, writable} from '@amadeus-it-group/tansu';
+import {asWritable, computed, readable} from '@amadeus-it-group/tansu';
+import {focusElement} from '../../services/focusElement';
+import {createMousedownPositionDirective} from '../../services/mousedownPosition';
 import {portal} from '../../services/portal';
 import {siblingsInert} from '../../services/siblingsInert';
 import type {TransitionFn} from '../../services/transitions/baseTransitions';
 import {createTransition} from '../../services/transitions/baseTransitions';
 import type {Directive, WidgetFactory} from '../../types';
 import {type ConfigValidator, type PropsConfig, type Widget} from '../../types';
-import {bindDirective, createAttributesDirective, mergeDirectives} from '../../utils/directive';
+import {bindDirective, createAttributesDirective, createBrowserStoreDirective, isBrowserHTMLElement, mergeDirectives} from '../../utils/directive';
 import {noop} from '../../utils/func';
 import {removeScrollbars, revertScrollbars} from '../../utils/internal/scrollbars';
 import {bindableProp, stateStores, true$, writablesForProps} from '../../utils/stores';
 import {createWidgetFactory} from '../../utils/widget';
-import {typeBoolean, typeFunction, typeHTMLElementOrNull, typeNumberInRangeFactory, typeString} from '../../utils/writables';
+import {typeBoolean, typeFunction, typeHTMLElementOrNull, typeString} from '../../utils/writables';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
-import {focusElement} from '../../services/focusElement';
 
 /**
  * Possible values for the drawer positions
@@ -107,17 +108,41 @@ export interface DrawerProps extends DrawerCommonPropsAndState {
 	 */
 	ariaDescribedBy: string;
 	/**
-	 * The width of the drawer in pixels.
+	 * The width of the drawer when opened horizontally. Accepts any valid CSS width value (e.g., '300px', '50%', '20rem').
 	 *
-	 * @defaultValue `200`
+	 * @defaultValue `'max-content'`
 	 */
-	width: number;
+	width: CSSStyleDeclaration['width'];
 	/**
-	 * The height of the drawer in pixels.
+	 * The min-width of the drawer when opened horizontally. Accepts any valid CSS min-width value (e.g., '90vw', 'calc(100% - 3rem)').
 	 *
-	 * @defaultValue `200`
+	 * @defaultValue `'none'`
 	 */
-	height: number;
+	minWidth: CSSStyleDeclaration['minWidth'];
+	/**
+	 * The max-width of the drawer when opened horizontally. Accepts any valid CSS max-width value (e.g., '3rem').
+	 *
+	 * @defaultValue `'none'`
+	 */
+	maxWidth: CSSStyleDeclaration['maxWidth'];
+	/**
+	 * The height of the drawer when opened vertically. Accepts any valid CSS height value (e.g., '300px', '50%', '20rem').
+	 *
+	 * @defaultValue `'max-content'`
+	 */
+	height: CSSStyleDeclaration['height'];
+	/**
+	 * The min-height of the drawer when opened vertically. Accepts any valid CSS min-height value (e.g., '3rem').
+	 *
+	 * @defaultValue `'none'`
+	 */
+	minHeight: CSSStyleDeclaration['minHeight'];
+	/**
+	 * The max-height of the drawer when opened vertically. Accepts any valid CSS max-height value (e.g., '90vw', 'calc(100% - 3rem)').
+	 *
+	 * @defaultValue `'none'`
+	 */
+	maxHeight: CSSStyleDeclaration['maxHeight'];
 	/**
 	 * If `true` displays the backdrop element and disables the body scrolling, otherwise the body of the document is navigable
 	 *
@@ -158,7 +183,7 @@ export interface DrawerProps extends DrawerCommonPropsAndState {
 	 * () => {}
 	 * ```
 	 */
-	onWidthChange: (width: number) => void;
+	onWidthChange: (width: string) => void;
 	/**
 	 * An event emitted when the height is changed.
 	 *
@@ -169,7 +194,43 @@ export interface DrawerProps extends DrawerCommonPropsAndState {
 	 * () => {}
 	 * ```
 	 */
-	onHeightChange: (width: number) => void;
+	onHeightChange: (width: string) => void;
+	/**
+	 * An event emitted when the min width is changed.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
+	 */
+	onMinWidth: () => void;
+	/**
+	 * An event emitted when the max width is changed.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
+	 */
+	onMaxWidth: () => void;
+	/**
+	 * An event emitted when the min height is changed.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
+	 */
+	onMinHeight: () => void;
+	/**
+	 * An event emitted when the max height is changed.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
+	 */
+	onMaxHeight: () => void;
 	/**
 	 * Event to be triggered when the visible property changes.
 	 *
@@ -236,10 +297,6 @@ export interface DrawerDirectives {
 	 * Directive to put on the splitter DOM element.
 	 */
 	splitterDirective: Directive;
-	/**
-	 * Directive to put on the container DOM element in order for the drawer to size correctly.
-	 */
-	containerDirective: Directive;
 }
 
 /**
@@ -270,9 +327,17 @@ const defaultDrawerConfig: DrawerProps = {
 	verticalTransition: noop,
 	onHidden: noop,
 	onShown: noop,
-	width: 200,
-	height: 200,
+	width: 'max-content',
+	minWidth: 'none',
+	maxWidth: 'none',
+	height: 'max-content',
+	minHeight: 'none',
+	maxHeight: 'none',
 	onWidthChange: noop,
+	onMinWidth: noop,
+	onMaxWidth: noop,
+	onMinHeight: noop,
+	onMaxHeight: noop,
 	onHeightChange: noop,
 	onVisibleChange: noop,
 	resizable: false,
@@ -293,10 +358,18 @@ const configValidator: ConfigValidator<DrawerProps> = {
 	container: typeHTMLElementOrNull,
 	onHidden: typeFunction,
 	onShown: typeFunction,
-	width: typeNumberInRangeFactory(0, +Infinity),
-	height: typeNumberInRangeFactory(0, +Infinity),
+	width: typeString,
+	minWidth: typeString,
+	maxWidth: typeString,
+	height: typeString,
+	minHeight: typeString,
+	maxHeight: typeString,
 	onWidthChange: typeFunction,
+	onMinWidth: typeFunction,
+	onMaxWidth: typeFunction,
 	onHeightChange: typeFunction,
+	onMinHeight: typeFunction,
+	onMaxHeight: typeFunction,
 	onVisibleChange: typeFunction,
 	resizable: typeBoolean,
 	backdrop: typeBoolean,
@@ -326,16 +399,24 @@ export const createDrawer: WidgetFactory<DrawerWidget> = createWidgetFactory('dr
 			onHidden$,
 			onShown$,
 			width$: _dirtyWidth$,
+			minWidth$,
+			maxWidth$,
 			height$: _dirtyHeight$,
+			minHeight$,
+			maxHeight$,
 			onWidthChange$,
+			onMinWidth$,
+			onMaxWidth$,
 			onHeightChange$,
+			onMinHeight$,
+			onMaxHeight$,
 			onVisibleChange$,
 			...stateProps
 		},
 		patch,
 	] = writablesForProps(defaultDrawerConfig, config, configValidator);
 
-	const isVertical = computed(() => {
+	const isVertical$ = computed(() => {
 		const isVertical = ['block-start', 'block-end'].some((placement) => className$().includes(placement));
 		return isVertical;
 	});
@@ -343,7 +424,7 @@ export const createDrawer: WidgetFactory<DrawerWidget> = createWidgetFactory('dr
 		props: {
 			animated: animated$,
 			animatedOnInit: animated$,
-			transition: asWritable(computed(() => (isVertical() ? verticalTransition$() : transition$()))),
+			transition: asWritable(computed(() => (isVertical$() ? verticalTransition$() : transition$()))),
 			visible: requestedVisible$,
 			onVisibleChange: onVisibleChange$,
 			onHidden: onHidden$,
@@ -358,37 +439,37 @@ export const createDrawer: WidgetFactory<DrawerWidget> = createWidgetFactory('dr
 		computed(() => ({container: container$()})),
 	);
 
-	const drawerAttributeDirective = createAttributesDirective(() => ({
-		attributes: {
-			class: className$,
-			role: readable('dialog'),
-			'aria-describedby': ariaDescribedBy$,
-			'aria-labelledby': ariaLabelledBy$,
-			'aria-modal': readable('true'),
-			tabIndex: readable('-1'),
-		},
-		styles: {
-			width: computed(() => (isVertical() ? '100%' : `${width$()}px`)),
-			height: computed(() => (isVertical() ? `${height$()}px` : '100%')),
-			position: computed(() => (container$() !== document.body && container$() !== null ? 'relative' : 'fixed')),
-			outline: readable('none'),
-		},
-		events: {
-			keydown: async (e: KeyboardEvent) => {
-				const {key} = e;
-				if (key === 'Escape') {
-					await transition.api.hide();
-				}
+	const {directive: drawerElementDirective, element$: drawerElement$} = createBrowserStoreDirective();
+	const drawerAttributeDirective = mergeDirectives(
+		drawerElementDirective,
+		createAttributesDirective(() => ({
+			attributes: {
+				class: className$,
+				role: readable('dialog'),
+				'aria-describedby': ariaDescribedBy$,
+				'aria-labelledby': ariaLabelledBy$,
+				'aria-modal': readable('true'),
+				tabIndex: readable('-1'),
 			},
-		},
-	}));
-
-	const containerDirective = createAttributesDirective(() => ({
-		styles: {
-			width: computed(() => (isVertical() ? '100%' : `${width$()}px`)),
-			height: computed(() => (isVertical() ? `${height$()}px` : '100%')),
-		},
-	}));
+			styles: {
+				'--df-drawer-size': computed(() => (isVertical$() ? height$() : width$())),
+				'--df-drawer-min-size': computed(() => (isVertical$() ? minHeight$() : minWidth$())),
+				'--df-drawer-max-size': computed(() => (isVertical$() ? maxHeight$() : maxWidth$())),
+				position: computed(() => {
+					const container = container$();
+					return container && isBrowserHTMLElement(container) && container !== document.body ? 'relative' : 'fixed';
+				}),
+				outline: readable('none'),
+			},
+			events: {
+				keydown: async (e: KeyboardEvent) => {
+					if (e.key === 'Escape') {
+						await transition.api.hide();
+					}
+				},
+			},
+		})),
+	);
 
 	const backdropTransition = createTransition({
 		props: {
@@ -426,55 +507,59 @@ export const createDrawer: WidgetFactory<DrawerWidget> = createWidgetFactory('dr
 			'data-agnos-ignore-inert': true$,
 		},
 		events: {
-			click: async () => {
-				await transition.api.hide();
-			},
+			click: () => transition.api.hide(),
 		},
 	}));
 
 	const direction = computed(() => (['inline-start', 'block-start'].some((placement) => className$().includes(placement)) ? 1 : -1));
-	const startDimension = writable(0);
-	const startPos = writable(0);
-	const dimension = writable(0);
 
-	const splitterDirective = createAttributesDirective(() => ({
-		attributes: {
-			draggable: readable('true'),
+	let startSize = 0;
+	const splitterDirective = createMousedownPositionDirective({
+		onMoveStart() {
+			const drawerElement = drawerElement$();
+			if (drawerElement) {
+				startSize = isVertical$() ? drawerElement.offsetHeight : drawerElement.offsetWidth;
+			}
 		},
-		events: {
-			dragstart: (e: DragEvent) => {
-				startPos.set(isVertical() ? e.clientY : e.clientX);
-				startDimension.set(isVertical() ? height$() : width$());
-				e.dataTransfer?.setDragImage(new Image(), 0, 0); // Remove drag image
-			},
-			dragend: (e: DragEvent) => {
-				document.body.style.cursor = '';
-				// Final update of the dimension as Firefox does not contain the proper clientX/Y in drag event
-				// firefox bug: https://bugzilla.mozilla.org/show_bug.cgi?id=505521
-				updateDimension(e);
-			},
-			dragover: (event: DragEvent) => {
-				event.preventDefault();
-			},
-			drag: (e: DragEvent) => {
-				updateDimension(e);
-			},
+		onMove(position) {
+			const dir = direction();
+			if (isVertical$()) {
+				height$.set(Math.max(0, startSize + dir * position.dy) + 'px');
+			} else {
+				width$.set(Math.max(0, startSize + dir * position.dx) + 'px');
+			}
 		},
-	}));
+		onMoveEnd(position) {
+			const drawerElement = drawerElement$();
+			if (drawerElement) {
+				const dir = direction();
+				if (isVertical$()) {
+					const expectedsize = startSize + dir * position.dy;
+					const realSize = drawerElement.offsetHeight;
+					height$.set(`${realSize}px`);
+					if (expectedsize < realSize) {
+						console.log(`🔴(DEBUG)    [drawer.ts:551]: onMinHeight$:`);
+						onMinHeight$()();
+					} else if (expectedsize > realSize) {
+						console.log(`🔴(DEBUG)    [drawer.ts:551]: onMaxHeight$:`);
+						onMaxHeight$()();
+					}
+				} else {
+					const expectedsize = startSize + dir * position.dx;
+					const realSize = drawerElement.offsetWidth;
+					width$.set(`${realSize}px`);
+					if (expectedsize < realSize) {
+						console.log(`🔴(DEBUG)    [drawer.ts:551]: onMinWidth$:`);
+						onMinWidth$()();
+					} else if (expectedsize > realSize) {
+						console.log(`🔴(DEBUG)    [drawer.ts:551]: onMaxWidth$:`);
+						onMaxWidth$()();
+					}
+				}
+			}
+		},
+	});
 
-	/**
-	 * Utility function to update the relevant dimension of the drawer based on the positioning and input drag event
-	 * @param e Drag event object
-	 */
-	const updateDimension = (e: DragEvent) => {
-		if (!isVertical() && e.clientX > 0) {
-			dimension.set(startDimension() + direction() * (e.clientX - startPos()));
-			width$.set(dimension());
-		} else if (isVertical() && e.clientY > 0) {
-			dimension.set(startDimension() + direction() * (e.clientY - startPos()));
-			height$.set(dimension());
-		}
-	};
 	const visible$ = transition.stores.visible$;
 	const transitioning$ = computed(() => transition.stores.transitioning$() || backdropTransition.stores.transitioning$());
 	const hidden$ = computed(() => !transitioning$() && !visible$());
@@ -495,15 +580,15 @@ export const createDrawer: WidgetFactory<DrawerWidget> = createWidgetFactory('dr
 			close: transition.api.hide,
 		},
 		directives: {
-			containerDirective,
 			drawerPortalDirective,
 			drawerDirective: mergeDirectives(
-				transition.directives.directive,
+				drawerAttributeDirective,
 				bindDirective(
 					siblingsInert,
 					computed(() => !bodyScroll$()),
 				),
-				drawerAttributeDirective,
+				// This directive must come after the attribute directive, to ensure that all the classes and attributes are applied for the transition
+				transition.directives.directive,
 				focusElement,
 			),
 			backdropPortalDirective,

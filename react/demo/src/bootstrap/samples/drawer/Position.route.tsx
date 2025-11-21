@@ -7,8 +7,8 @@ type DrawerTypes = 'inline-start' | 'inline-end' | 'block-start' | 'block-end';
 const BasicDemo = () => {
 	const [placement, setPosition] = useState<DrawerTypes>('inline-start');
 	const refDrawer = useRef<DrawerApi>(null);
-	const [width, setWidth] = useState(200);
-	const [height, setHeight] = useState(150);
+	const [width, setWidth] = useState('200px');
+	const [height, setHeight] = useState('150px');
 
 	return (
 		<>

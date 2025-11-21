@@ -5,8 +5,8 @@
 	let drawerPlacement = $state('inline-start' as DrawerTypes);
 	// svelte-ignore non_reactive_update
 	let drawer: Drawer;
-	let width = $state(200);
-	let height = $state(150);
+	let width = $state('200px');
+	let height = $state('150px');
 </script>
 
 <button class="btn btn-primary mb-3" onclick={() => drawer.api.open()}>Open Drawer</button>

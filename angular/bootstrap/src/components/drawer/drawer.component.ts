@@ -1,7 +1,6 @@
 import type {SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
 import {
 	auBooleanAttribute,
-	auNumberAttribute,
 	BaseWidgetDirective,
 	callWidgetFactory,
 	ComponentTemplate,
@@ -214,19 +213,46 @@ export class DrawerComponent extends BaseWidgetDirective<DrawerWidget> {
 	readonly resizable = input(undefined, {alias: 'auResizable', transform: auBooleanAttribute});
 
 	/**
-	 * The width of the drawer in pixels.
+	 * The width of the drawer when opened horizontally. Accepts any valid CSS width value (e.g., '300px', '50%', '20rem').
 	 *
-	 * @defaultValue `200`
+	 * @defaultValue `'max-content'`
 	 */
-	readonly width = input(undefined, {alias: 'auWidth', transform: auNumberAttribute});
+	readonly width = input<string>(undefined, {alias: 'auWidth'});
 
 	/**
-	 * The height of the drawer in pixels.
+	 * The min-width of the drawer when opened horizontally. Accepts any valid CSS min-width value (e.g., '90vw', 'calc(100% - 3rem)').
 	 *
-	 * @defaultValue `200`
+	 * @defaultValue `'none'`
 	 */
-	readonly height = input(undefined, {alias: 'auHeight', transform: auNumberAttribute});
+	readonly minWidth = input<string>(undefined, {alias: 'auMinWidth'});
 
+	/**
+	 * The max-width of the drawer when opened horizontally. Accepts any valid CSS max-width value (e.g., '3rem').
+	 *
+	 * @defaultValue `'none'`
+	 */
+	readonly maxWidth = input<string>(undefined, {alias: 'auMaxWidth'});
+
+	/**
+	 * The height of the drawer when opened vertically. Accepts any valid CSS height value (e.g., '300px', '50%', '20rem').
+	 *
+	 * @defaultValue `'max-content'`
+	 */
+	readonly height = input<string>(undefined, {alias: 'auHeight'});
+
+	/**
+	 * The min-height of the drawer when opened vertically. Accepts any valid CSS min-height value (e.g., '3rem').
+	 *
+	 * @defaultValue `'none'`
+	 */
+	readonly minHeight = input<string>(undefined, {alias: 'auMinHeight'});
+
+	/**
+	 * The max-height of the drawer when opened vertically. Accepts any valid CSS max-height value (e.g., '90vw', 'calc(100% - 3rem)').
+	 *
+	 * @defaultValue `'none'`
+	 */
+	readonly maxHeight = input<string>(undefined, {alias: 'auMaxHeight'});
 	/**
 	 * An event emitted when the width is changed.
 	 *
@@ -237,7 +263,7 @@ export class DrawerComponent extends BaseWidgetDirective<DrawerWidget> {
 	 * () => {}
 	 * ```
 	 */
-	readonly widthChange = output<number>({alias: 'auWidthChange'});
+	readonly widthChange = output<string>({alias: 'auWidthChange'});
 
 	/**
 	 * An event emitted when the height is changed.
@@ -249,7 +275,7 @@ export class DrawerComponent extends BaseWidgetDirective<DrawerWidget> {
 	 * () => {}
 	 * ```
 	 */
-	readonly heightChange = output<number>({alias: 'auHeightChange'});
+	readonly heightChange = output<string>({alias: 'auHeightChange'});
 
 	/**
 	 * Event to be triggered when the visible property changes.
@@ -297,10 +323,10 @@ export class DrawerComponent extends BaseWidgetDirective<DrawerWidget> {
 				events: {
 					onHidden: () => this.hidden.emit(),
 					onShown: () => this.shown.emit(),
-					onWidthChange: (width: number) => {
+					onWidthChange: (width: string) => {
 						this.widthChange.emit(width);
 					},
-					onHeightChange: (height: number) => {
+					onHeightChange: (height: string) => {
 						this.heightChange.emit(height);
 					},
 					onVisibleChange: (event) => this.visibleChange.emit(event),
