@@ -55,13 +55,11 @@ describe('directive', () => {
 			expect(directiveArg$.subscribe).not.toHaveBeenCalled();
 			const boundDirectiveInstance = boundDirective(element);
 			const directiveInstance = directive.mock.results[0].value;
-			expect(directive).toHaveBeenCalledOnce();
 			expect(directiveArg$.subscribe).toHaveBeenCalledOnce();
-			expect(directive).toHaveBeenCalledWith(element, 1);
+			expect(directive).toHaveBeenCalledExactlyOnceWith(element, 1);
 			expect(directiveInstance.update).not.toHaveBeenCalled();
 			store.set(5);
-			expect(directiveInstance.update).toHaveBeenCalledOnce();
-			expect(directiveInstance.update).toHaveBeenCalledWith(5);
+			expect(directiveInstance.update).toHaveBeenCalledExactlyOnceWith(5);
 			expect(directiveInstance.destroy).not.toHaveBeenCalled();
 			boundDirectiveInstance?.destroy?.();
 			expect(directiveInstance.destroy).toHaveBeenCalledOnce();
@@ -261,10 +259,8 @@ describe('directive', () => {
 			expect(directive1Instance.update).not.toHaveBeenCalled();
 			expect(directive2Instance.update).not.toHaveBeenCalled();
 			mergedDirectiveInstance?.update?.(2);
-			expect(directive1Instance.update).toHaveBeenCalledOnce();
-			expect(directive1Instance.update).toHaveBeenCalledWith(2);
-			expect(directive2Instance.update).toHaveBeenCalledOnce();
-			expect(directive2Instance.update).toHaveBeenCalledWith(2);
+			expect(directive1Instance.update).toHaveBeenCalledExactlyOnceWith(2);
+			expect(directive2Instance.update).toHaveBeenCalledExactlyOnceWith(2);
 			expect(directive1Instance.destroy).not.toHaveBeenCalled();
 			expect(directive2Instance.destroy).not.toHaveBeenCalled();
 			mergedDirectiveInstance?.destroy?.();
@@ -328,8 +324,7 @@ describe('directive', () => {
 			]);
 			expect(directive1).not.toHaveBeenCalled();
 			expect(directive2).not.toHaveBeenCalled();
-			expect(directive1Instance.update).toHaveBeenCalledOnce();
-			expect(directive1Instance.update).toHaveBeenCalledWith(8);
+			expect(directive1Instance.update).toHaveBeenCalledExactlyOnceWith(8);
 			expect(directive2Instance.update).not.toHaveBeenCalled();
 			multi?.destroy?.();
 			expect(directive1Instance.destroy).toHaveBeenCalledOnce();

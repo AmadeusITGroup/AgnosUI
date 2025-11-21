@@ -350,6 +350,7 @@ describe(`Accordion`, () => {
 			class: 'my-body-container',
 			id: 'my-id-body-container',
 			'aria-labelledby': 'my-id-toggle',
+			role: 'region',
 		});
 		expect(getAttributes(bodyNode)).toStrictEqual({class: 'my-body'});
 		expect(getAttributes(headerNode)).toStrictEqual({class: 'my-header'});
@@ -369,6 +370,7 @@ describe(`Accordion`, () => {
 			class: 'my-body-container',
 			id: 'my-id-body-container',
 			'aria-labelledby': 'my-id-toggle',
+			role: 'region',
 		});
 		expect(getAttributes(buttonNode)).toStrictEqual({
 			class: 'my-button',

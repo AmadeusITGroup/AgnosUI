@@ -55,8 +55,8 @@ test.describe(`Drawer tests`, () => {
 
 		// no bodyscrolling and has backdrop
 		await drawerPO.waitLoaded();
-		await expect(drawerDemoPO.locatorBodyScrollToggle).toBeHidden();
-		await expect(drawerDemoPO.locatorDummyButton).toBeHidden();
+		await expect(drawerPO.locatorBackdrop).toBeVisible();
+		await expect(drawerDemoPO.locatorRoot).toHaveAttribute('inert');
 		await drawerPO.locatorBackdrop.click();
 		await expect(drawerPO.locatorRoot).toBeHidden();
 
@@ -65,9 +65,8 @@ test.describe(`Drawer tests`, () => {
 		await drawerDemoPO.locatorToggleDrawerButton.click();
 
 		await drawerPO.waitLoaded();
-		await expect(drawerDemoPO.locatorBodyScrollToggle).toBeHidden();
-		await expect(drawerDemoPO.locatorDummyButton).toBeHidden();
 		await expect(drawerPO.locatorBackdrop).toBeHidden();
+		await expect(drawerDemoPO.locatorRoot).toHaveAttribute('inert');
 		await drawerPO.locatorCloseButton.click();
 		await expect(drawerPO.locatorRoot).toBeHidden();
 
@@ -77,8 +76,8 @@ test.describe(`Drawer tests`, () => {
 		await drawerDemoPO.locatorToggleDrawerButton.click();
 
 		await drawerPO.waitLoaded();
-		await expect(drawerDemoPO.locatorBodyScrollToggle).toBeVisible();
-		await expect(drawerDemoPO.locatorDummyButton).toBeVisible();
+		await expect(drawerPO.locatorBackdrop).toBeVisible();
+		await expect(drawerDemoPO.locatorRoot).not.toHaveAttribute('inert');
 		await drawerPO.locatorBackdrop.click();
 		await expect(drawerPO.locatorRoot).toBeHidden();
 
@@ -87,9 +86,8 @@ test.describe(`Drawer tests`, () => {
 		await drawerDemoPO.locatorToggleDrawerButton.click();
 
 		await drawerPO.waitLoaded();
-		await expect(drawerDemoPO.locatorBodyScrollToggle).toBeVisible();
-		await expect(drawerDemoPO.locatorDummyButton).toBeVisible();
 		await expect(drawerPO.locatorBackdrop).toBeHidden();
+		await expect(drawerDemoPO.locatorRoot).not.toHaveAttribute('inert');
 		await drawerPO.locatorCloseButton.click();
 	});
 

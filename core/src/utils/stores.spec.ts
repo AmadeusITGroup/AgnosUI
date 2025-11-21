@@ -419,8 +419,7 @@ describe(`Stores service`, () => {
 			onValueChange$.set(newListener);
 			dirtyValue$.set(2);
 			expect(onChangeCalls).toEqual([2, 4, 3]); // listener was changed, old listener not called
-			expect(newListener).toHaveBeenCalledWith(2);
-			expect(newListener).toHaveBeenCalledOnce();
+			expect(newListener).toHaveBeenCalledExactlyOnceWith(2);
 			expect(values).toEqual([1, 2, 4, 3, 2]);
 			unsubscribe();
 		});
@@ -538,8 +537,7 @@ describe(`Stores service`, () => {
 			onValueChange$.set(newListener);
 			value$.set(2);
 			expect(onChangeCalls).toEqual([2, 4, 3]); // listener was changed, old listener not called
-			expect(newListener).toHaveBeenCalledWith(2);
-			expect(newListener).toHaveBeenCalledOnce();
+			expect(newListener).toHaveBeenCalledExactlyOnceWith(2);
 			expect(values).toEqual([1, 3, 2, 4, 3, 4, 3, 2]);
 			unsubscribe();
 		});

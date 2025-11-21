@@ -76,6 +76,8 @@ export const removeClasses = (element: SSRHTMLElement, classes?: string[]): void
  * @param type - A string representing the event type to listen for.
  * @param fn - The event listener function or object.
  * @param options - An options object that specifies characteristics about the event listener.
+ * @template K - event type
+ * @template T - event object type
  * @returns A function that removes the event listener from the element.
  */
 export function addEvent<K extends keyof HTMLElementEventMap, T extends HTMLElementEventMap[K]>(
