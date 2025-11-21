@@ -112,7 +112,7 @@ describe('callWidgetFactoryWithConfig', () => {
 		log.push('before autoDetectChanges');
 		fixture.componentInstance.myAction.subscribe(createZoneCheckFn('myActionListener', noop));
 		fixture.componentInstance.counterChange.subscribe(createZoneCheckFn('counterChangeListener', noop));
-		fixture.autoDetectChanges(true);
+		fixture.autoDetectChanges();
 		log.push('after autoDetectChanges');
 		expect(fixture.nativeElement.innerText.trim()).toBe('derived from defValue 0');
 		log.push('before first await 0');

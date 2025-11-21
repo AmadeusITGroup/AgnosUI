@@ -5,18 +5,15 @@
 	"type": "module",
 	"exports": {
 		".": {
-			"types": "./dist/index.d.ts",
-			"esm2022": "./dist/esm2022/agnos-ui-angular-headless.mjs",
-			"esm": "./dist/esm2022/agnos-ui-angular-headless.mjs",
+			"types": "./dist/types/agnos-ui-angular-headless.d.ts",
 			"default": "./dist/fesm2022/agnos-ui-angular-headless.mjs"
 		}
 	},
 	"scripts": {
 		"ng": "ng",
 		"build": "wireit",
-		"test": "vitest run",
-		"tdd": "vitest",
-		"tdd:ui": "vitest --ui",
+		"test": "ng test ",
+		"tdd": "ng test --watch",
 		"test:coverage": "wireit"
 	},
 	"wireit": {
@@ -75,7 +72,7 @@
 			]
 		},
 		"test:coverage": {
-			"command": "node --import @agnos-ui/code-coverage/interceptReadFile ../../node_modules/vitest/vitest.mjs run --coverage",
+			"command": "ng test --configuration coverage",
 			"dependencies": [
 				"../../code-coverage:build"
 			],
@@ -111,26 +108,24 @@
 	},
 	"peerDependencies": {
 		"@amadeus-it-group/tansu": "^2.0.0",
-		"@angular/common": "^20.0.0",
-		"@angular/core": "^20.0.0"
+		"@angular/common": "^21.0.0",
+		"@angular/core": "^21.0.0"
 	},
 	"dependencies": {
 		"@agnos-ui/core": "0.0.0",
 		"tslib": "^2.8.1"
 	},
 	"devDependencies": {
-		"@analogjs/vite-plugin-angular": "^1.10.1",
-		"@analogjs/vitest-angular": "^1.10.1",
-		"@angular/animations": "^20.0.0",
-		"@angular/build": "^20.0.0",
-		"@angular/cli": "^20.0.0",
-		"@angular/common": "^20.0.0",
-		"@angular/compiler": "^20.0.0",
-		"@angular/core": "^20.0.0",
-		"@angular/forms": "^20.0.0",
-		"@angular/platform-browser": "^20.0.0",
-		"@angular/platform-browser-dynamic": "^20.0.0",
-		"ng-packagr": "^20.0.0",
+		"@angular/animations": "^21.0.0",
+		"@angular/build": "^21.0.0",
+		"@angular/cli": "^21.0.0",
+		"@angular/common": "^21.0.0",
+		"@angular/compiler": "^21.0.0",
+		"@angular/core": "^21.0.0",
+		"@angular/forms": "^21.0.0",
+		"@angular/platform-browser": "^21.0.0",
+		"@angular/platform-browser-dynamic": "^21.0.0",
+		"ng-packagr": "^21.0.0",
 		"rxjs": "^7.8.1",
 		"zone.js": "~0.15.0"
 	},
