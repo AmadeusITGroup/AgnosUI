@@ -62,23 +62,23 @@ export const createCollapseTransition = ({
 		if (animated && isBrowserHTMLElement(element)) {
 			let {maxSize, minSize} = context;
 
-			if (!maxSize) {
-				// measure the element in its show state
-				removeClasses(element, animationPendingClasses);
-				removeClasses(element, hideClasses);
-				addClasses(element, showClasses);
-				maxSize = element.getBoundingClientRect()[dimension] + 'px';
-				context.maxSize = maxSize;
-			}
+			// if (!maxSize) {
+			// measure the element in its show state
+			removeClasses(element, animationPendingClasses);
+			removeClasses(element, hideClasses);
+			addClasses(element, showClasses);
+			maxSize = element.getBoundingClientRect()[dimension] + 'px';
+			context.maxSize = maxSize;
+			// }
 
-			if (!minSize) {
-				// measure the element in its hide state
-				removeClasses(element, animationPendingClasses);
-				removeClasses(element, showClasses);
-				addClasses(element, hideClasses);
-				minSize = element.getBoundingClientRect()[dimension] + 'px';
-				context.minSize = minSize;
-			}
+			// if (!minSize) {
+			// measure the element in its hide state
+			removeClasses(element, animationPendingClasses);
+			removeClasses(element, showClasses);
+			addClasses(element, hideClasses);
+			minSize = element.getBoundingClientRect()[dimension] + 'px';
+			context.minSize = minSize;
+			// }
 
 			removeClasses(element, showClasses);
 			removeClasses(element, hideClasses);

@@ -1,14 +1,13 @@
 import type {DrawerApi} from '@agnos-ui/react-bootstrap/components/drawer';
 import {Drawer} from '@agnos-ui/react-bootstrap/components/drawer';
 import {useRef, useState} from 'react';
+import './position.css';
 
 type DrawerTypes = 'inline-start' | 'inline-end' | 'block-start' | 'block-end';
 
 const BasicDemo = () => {
 	const [placement, setPosition] = useState<DrawerTypes>('inline-start');
 	const refDrawer = useRef<DrawerApi>(null);
-	const [width, setWidth] = useState(200);
-	const [height, setHeight] = useState(150);
 
 	return (
 		<>
@@ -26,16 +25,7 @@ const BasicDemo = () => {
 					<option value="block-end">Bottom</option>
 				</select>
 			</div>
-			<Drawer
-				ref={refDrawer}
-				className={placement}
-				header={<>Hi, I am drawer!</>}
-				resizable
-				width={width}
-				height={height}
-				onHeightChange={setHeight}
-				onWidthChange={setWidth}
-			>
+			<Drawer ref={refDrawer} className={`drawer-position-size ${placement}`} header={<>Hi, I am drawer!</>} resizable>
 				<ul>
 					<li>First item</li>
 					<li>Second item</li>

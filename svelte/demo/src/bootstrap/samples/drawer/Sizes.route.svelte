@@ -7,10 +7,18 @@
 
 <button class="btn btn-primary mb-3" onclick={() => drawer.api.open()}>Open Drawer</button>
 
-<Drawer bind:this={drawer} header="Hi, I am drawer!" className="inline-start" resizable>
+<Drawer bind:this={drawer} header="Hi, I am drawer!" className="drawer-custom-size inline-start" resizable>
 	<ul>
 		<li>First item</li>
 		<li>Second item</li>
 		<li>Third item</li>
 	</ul>
 </Drawer>
+
+<style>
+	:global(.drawer-custom-size) {
+		--bs-drawer-size: 20rem;
+		--bs-drawer-min-size: max-content;
+		--bs-drawer-max-size: calc(100vw - 2rem);
+	}
+</style>

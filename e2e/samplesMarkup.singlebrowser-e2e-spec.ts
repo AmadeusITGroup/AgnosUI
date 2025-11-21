@@ -1,5 +1,6 @@
 import type {Page} from '@playwright/test';
 import {openDemoModal, openDaisyUIDemoModal} from './demo-po/modal.po';
+import {openDemoDrawer} from './demo-po/drawer.po';
 import {typeAndSelect} from './demo-po/select.po';
 import {expect, test, samplesList} from './fixture';
 import {htmlSnapshot} from './htmlSnapshot';
@@ -21,6 +22,10 @@ test.describe(`Samples markup consistency check`, () => {
 		'bootstrap/modal/default': openDemoModal,
 		'bootstrap/modal/stack': openDemoModal,
 		'bootstrap/select/default': (page: Page) => typeAndSelect(page, 'a'),
+		'bootstrap/drawer/basic': openDemoDrawer,
+		'bootstrap/drawer/position': openDemoDrawer,
+		'bootstrap/drawer/sizes': openDemoDrawer,
+		'bootstrap/drawer/body': openDemoDrawer,
 		'daisyui/modal/default': openDaisyUIDemoModal,
 	};
 
