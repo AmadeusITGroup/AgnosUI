@@ -5,27 +5,21 @@
 	import {createDrawer} from './drawer.gen';
 	import DrawerDefaultStructure from './DrawerDefaultStructure.svelte';
 
-	let {width = $bindable(), height = $bindable(), visible = $bindable(), ...props}: Partial<DrawerProps> = $props();
+	let {visible = $bindable(), ...props}: Partial<DrawerProps> = $props();
 
 	const widget = callWidgetFactory(createDrawer, {
 		get props() {
-			return {...props, width, height, visible};
+			return {...props, visible};
 		},
 		defaultConfig: {structure},
 		events: {
-			onWidthChange: (value: number) => {
-				width = value;
-			},
-			onHeightChange: (value: number) => {
-				height = value;
-			},
 			onVisibleChange: (event) => {
 				visible = event;
 			},
 		},
 	});
 	const {
-		directives: {backdropDirective, backdropPortalDirective, drawerDirective, drawerPortalDirective, containerDirective},
+		directives: {backdropDirective, backdropPortalDirective, drawerDirective, drawerPortalDirective, containerDirective, splitterDirective},
 		state,
 	} = widget;
 
@@ -41,6 +35,10 @@
 		<div use:containerDirective>
 			<Slot content={state.structure} props={widget} />
 		</div>
+		{#if state.resizable}
+			<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+			<div use:splitterDirective tabindex="0"></div>
+		{/if}
 	</div>
 {/if}
 {#if !state.backdropHidden}

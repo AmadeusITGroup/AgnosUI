@@ -30,3 +30,20 @@ export async function switchTheme(page: Page, theme: 'light' | 'dark') {
 		}
 	}, theme);
 }
+
+/**
+ * Prevents CSS transitions on all elements of the page.
+ *
+ * @param page - The Playwright Page object to modify.
+ *
+ */
+export async function preventTransitions(page: Page) {
+	await page.addStyleTag({
+		content: `
+        * {
+          transition: none !important;
+          animation: none !important;
+        }
+      `,
+	});
+}

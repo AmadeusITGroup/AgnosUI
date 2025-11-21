@@ -1,8 +1,10 @@
 import type {Page} from '@playwright/test';
-import {openDemoModal, openDaisyUIDemoModal} from './demo-po/modal.po';
+import {openDemoDrawer} from './demo-po/drawer.po';
+import {openDaisyUIDemoModal, openDemoModal} from './demo-po/modal.po';
 import {typeAndSelect} from './demo-po/select.po';
-import {expect, test, samplesList} from './fixture';
+import {expect, samplesList, test} from './fixture';
 import {htmlSnapshot} from './htmlSnapshot';
+import {preventTransitions} from './utils';
 
 test.describe.configure({mode: 'parallel'});
 
@@ -21,6 +23,10 @@ test.describe(`Samples markup consistency check`, () => {
 		'bootstrap/modal/default': openDemoModal,
 		'bootstrap/modal/stack': openDemoModal,
 		'bootstrap/select/default': (page: Page) => typeAndSelect(page, 'a'),
+		'bootstrap/drawer/basic': openDemoDrawer,
+		'bootstrap/drawer/position': openDemoDrawer,
+		'bootstrap/drawer/sizes': openDemoDrawer,
+		'bootstrap/drawer/body': openDemoDrawer,
 		'daisyui/modal/default': openDaisyUIDemoModal,
 	};
 
@@ -34,6 +40,7 @@ test.describe(`Samples markup consistency check`, () => {
 				// eslint-disable-next-line playwright/no-networkidle
 				await page.goto(`${baseURL}${samplesExtraHash[sampleKey] ?? ''}`, {waitUntil: 'networkidle'});
 				await expect.poll(async () => (await page.locator('#root').innerHTML()).trim().length).toBeGreaterThan(0);
+				await preventTransitions(page);
 				await samplesExtraAction[sampleKey]?.(page);
 				expect(await htmlSnapshot(page.locator('body'))).toMatchSnapshot(`${sampleKey.toLowerCase()}.html`);
 			});

@@ -1,6 +1,6 @@
 import type {DrawerPositions} from '@agnos-ui/angular-bootstrap';
 import {DrawerComponent, DrawerHeaderDirective} from '@agnos-ui/angular-bootstrap';
-import {Component, signal} from '@angular/core';
+import {Component, signal, ViewEncapsulation} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
 @Component({
@@ -15,7 +15,7 @@ import {FormsModule} from '@angular/forms';
 				<option value="block-end">Bottom</option>
 			</select>
 		</div>
-		<au-component #drawer auDrawer [auClassName]="drawerPlacement()" [(auWidth)]="width" [(auHeight)]="height" auResizable>
+		<au-component #drawer auDrawer [auClassName]="drawerPlacement() + ' drawer-position-size'" auResizable>
 			<ng-template auDrawerHeader> Hi, I am drawer! </ng-template>
 			<ul>
 				<li>First item</li>
@@ -24,10 +24,17 @@ import {FormsModule} from '@angular/forms';
 			</ul>
 		</au-component>
 	`,
+	styles: [
+		`
+			.drawer-position-size {
+				--bs-drawer-size: 200px;
+				--bs-drawer-max-size: calc(100% - 2rem);
+			}
+		`,
+	],
 	imports: [DrawerComponent, FormsModule, DrawerHeaderDirective],
+	encapsulation: ViewEncapsulation.None,
 })
 export default class BasicDrawerComponent {
 	readonly drawerPlacement = signal<DrawerPositions>('inline-start');
-	readonly width = signal(200);
-	readonly height = signal(150);
 }

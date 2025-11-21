@@ -1,4 +1,5 @@
 import {DrawerPO} from '@agnos-ui/page-objects';
+import {assign} from 'common/utils';
 import {DrawerDemoPO} from '../demo-po/drawer.po';
 import {expect, test} from '../fixture';
 
@@ -91,52 +92,70 @@ test.describe(`Drawer tests`, () => {
 		await drawerPO.locatorCloseButton.click();
 	});
 
-	test(`Drawer should be resizable and save the new size`, async ({page, browserName}) => {
-		if (browserName === 'firefox') {
-			// Firefox does not support drag and drop properly
-			// TODO: remove when firefox bug: https://bugzilla.mozilla.org/show_bug.cgi?id=505521 is fixed
-			return;
-		}
+	test(`Drawer should be resizable and save the new size`, async ({page}) => {
 		const drawerDemoPO = new DrawerDemoPO(page);
 		const drawerPO = new DrawerPO(page, 0);
 
 		await page.goto('#/drawer/position');
 		await drawerDemoPO.locatorToggleDrawerButton.click();
 
-		await expect(drawerPO.locatorContainer).toHaveAttribute('style', 'width: 200px; height: 100%;');
+		const expectedVariables = {
+			'--bs-drawer-size': '',
+			'--bs-drawer-size-min': '',
+			'--bs-drawer-size-max': '',
+		};
+		const expectedBoundingBox = {x: 0, y: 0, width: 200, height: 720};
 
-		const splitterLocator = drawerPO.locatorSplitter;
-		await splitterLocator.hover();
+		expect(await drawerPO.statePosition()).toStrictEqual(expectedVariables);
+		await expect.poll(async () => await drawerPO.locatorRoot.boundingBox()).toStrictEqual(expectedBoundingBox);
+
+		let mousePos = await drawerPO.hoverOnSplitter();
 		await page.mouse.down();
 		await page.mouse.move(500, 200);
 		await page.mouse.up();
 
-		await expect(drawerPO.locatorContainer).toHaveAttribute('style', 'width: 500px; height: 100%;');
+		await expect
+			.poll(async () => await drawerPO.locatorRoot.boundingBox())
+			.toStrictEqual(assign(expectedBoundingBox, {width: expectedBoundingBox.width + 500 - mousePos.x}));
+		expect(await drawerPO.statePosition()).toStrictEqual(assign(expectedVariables, {'--bs-drawer-size': `${expectedBoundingBox.width}px`}));
 
 		await drawerPO.locatorBackdrop.click();
 
 		await drawerDemoPO.locatorToggleDrawerButton.click();
 
 		// the width should be kept after reopening
-		await expect(drawerPO.locatorContainer).toHaveAttribute('style', 'width: 500px; height: 100%;');
+		await expect.poll(async () => await drawerPO.locatorRoot.boundingBox()).toStrictEqual(expectedBoundingBox);
+		expect(await drawerPO.statePosition()).toStrictEqual(expectedVariables);
 
 		await drawerPO.locatorBackdrop.click();
 		await drawerDemoPO.locatorPositionSelect.selectOption('block-start');
 		await drawerDemoPO.locatorToggleDrawerButton.click();
 
-		await expect(drawerPO.locatorContainer).toHaveAttribute('style', 'width: 100%; height: 150px;');
+		await expect
+			.poll(async () => await drawerPO.locatorRoot.boundingBox())
+			.toStrictEqual(
+				assign(expectedBoundingBox, {
+					width: 1280,
+					height: 500,
+				}),
+			);
+		expect(await drawerPO.statePosition()).toStrictEqual(assign(expectedVariables, {'--bs-drawer-size': '500px'}));
 
-		await splitterLocator.hover();
+		mousePos = await drawerPO.hoverOnSplitter();
 		await page.mouse.down();
 		await page.mouse.move(100, 300);
 		await page.mouse.up();
 
-		await expect(drawerPO.locatorContainer).toHaveAttribute('style', 'width: 100%; height: 304px;');
+		await expect
+			.poll(async () => await drawerPO.locatorRoot.boundingBox())
+			.toStrictEqual(assign(expectedBoundingBox, {height: expectedBoundingBox.height + 300 - mousePos.y}));
+		expect(await drawerPO.statePosition()).toStrictEqual(assign(expectedVariables, {'--bs-drawer-size': '300px'}));
 
 		await drawerPO.locatorBackdrop.click();
 		await drawerDemoPO.locatorToggleDrawerButton.click();
 
 		// the height should be kept after reopening
-		await expect(drawerPO.locatorContainer).toHaveAttribute('style', 'width: 100%; height: 304px;');
+		await expect.poll(async () => await drawerPO.locatorRoot.boundingBox()).toStrictEqual(expectedBoundingBox);
+		expect(await drawerPO.statePosition()).toStrictEqual(expectedVariables);
 	});
 });

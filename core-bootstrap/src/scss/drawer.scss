@@ -5,46 +5,92 @@
 	--#{$prefix}drawer-z-index: #{$au-drawer-z-index};
 	// scss-docs-end drawer-css-vars
 
-	display: flex;
+	display: inline-flex;
 	flex-direction: column;
 	background: #fff;
 	box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
 	z-index: var(--#{$prefix}drawer-z-index);
 
+	--#{$prefix}drawer-size: max-content;
+	--#{$prefix}drawer-min-size: 0;
+	--#{$prefix}drawer-max-size: none;
+	--#{$prefix}drawer-splitter-size: 8px;
+
+	width: 100%;
+	min-width: 0;
+	max-width: none;
+	height: var(--#{$prefix}drawer-size);
+	min-height: var(--#{$prefix}drawer-min-size);
+	max-height: var(--#{$prefix}drawer-max-size);
+
+	&.collapse-horizontal {
+		width: var(--#{$prefix}drawer-size);
+		min-width: var(--#{$prefix}drawer-min-size);
+		max-width: var(--#{$prefix}drawer-max-size);
+		height: 100%;
+		min-height: 0;
+		max-height: none;
+	}
+
+	&.collapsing {
+		min-width: 0px !important;
+		min-height: 0px !important;
+	}
+
+	.au-drawer-container {
+		overflow: hidden;
+	}
+
+	.au-drawer-content {
+		min-width: max-content;
+	}
+
 	// Inline (left/right depending on writing direction)
 	&.inline-start {
-		inset-block: 0;
 		inset-inline-start: 0;
+		inset-block: 0;
+		.au-splitter {
+			inset-block: 0;
+			inset-inline: auto calc(var(--#{$prefix}drawer-splitter-size) / -2);
+		}
 	}
 
 	&.inline-end {
-		inset-block: 0;
 		inset-inline-end: 0;
-
+		inset-block: 0;
 		.au-splitter {
-			inset-inline-end: auto;
+			inset-block: 0;
+			inset-inline: calc(var(--#{$prefix}drawer-splitter-size) auto / -2);
 		}
 	}
 
 	// Block (top/bottom)
 	&.block-start {
 		inset-inline: 0;
-		inset-block-start: 0;
-
+		inset-block: 0;
 		.au-splitter {
-			inset-block-start: auto;
+			inset-block: auto calc(var(--#{$prefix}drawer-splitter-size) / -2);
+			inset-inline: 0;
 		}
 	}
 
 	&.block-end {
 		inset-inline: 0;
 		inset-block-end: 0;
+		.au-splitter {
+			inset-block: calc(var(--#{$prefix}drawer-splitter-size) auto / -2);
+			inset-inline: 0;
+		}
 	}
 
 	.au-drawer-header {
 		padding: 0.75rem 1rem;
 		font-weight: 600;
 		border-bottom: 1px solid #e2e2e2;
+	}
+
+	.au-drawer-container {
+		display: inline-block;
 	}
 
 	.au-drawer-body {
@@ -56,17 +102,14 @@
 	// Vertical splitter (default for inline drawers)
 	.au-splitter {
 		position: absolute;
-		inset-block: 0;
-		inset-inline-end: -4px; // half outside for visual separation
-		width: 8px; // larger hit area
+		width: var(--#{$prefix}drawer-splitter-size);
 		cursor: ew-resize;
-		background: transparent;
+		touch-action: none;
 	}
 
 	// Horizontal splitter for block drawers (height resize)
 	&.block-start .au-splitter,
 	&.block-end .au-splitter {
-		inset-inline: 0;
 		width: auto;
 		height: 8px;
 		cursor: ns-resize;

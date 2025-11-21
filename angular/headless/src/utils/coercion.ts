@@ -31,3 +31,19 @@ export function auNumberAttribute(value: unknown): number | undefined {
 	}
 	return numberAttribute(value);
 }
+
+/**
+ * Transforms a value (typically a string) to a number.
+ * Intended to be used as a transform function of an input.
+ * @param value - Value to be transformed. `null` or `undefined`, returns the value unchanged.
+ *
+ * @example
+ *  ```readonly id = input({ transform: auNumberOrNullAttribute });```
+ * @returns the value transformed
+ */
+export function auNumberOrNullAttribute(value: unknown): number | null | undefined {
+	if (value == null) {
+		return value;
+	}
+	return numberAttribute(value);
+}

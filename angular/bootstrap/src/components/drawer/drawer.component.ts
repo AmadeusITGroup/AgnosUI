@@ -1,7 +1,7 @@
 import type {SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
 import {
 	auBooleanAttribute,
-	auNumberAttribute,
+	auNumberOrNullAttribute,
 	BaseWidgetDirective,
 	callWidgetFactory,
 	ComponentTemplate,
@@ -62,19 +62,18 @@ export class DrawerBodyDirective {
 
 @Component({
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [SlotDirective, DrawerStructureDirective, UseDirective],
+	imports: [SlotDirective, DrawerStructureDirective],
 	template: ` <ng-template auDrawerStructure #structure let-state="state" let-api="api" let-directives="directives">
-		@if (state.header()) {
-			<div class="au-drawer-header">
-				<ng-template [auSlot]="state.header()" [auSlotProps]="{state, api, directives}" />
+		<div class="au-drawer-content">
+			@if (state.header()) {
+				<div class="au-drawer-header">
+					<ng-template [auSlot]="state.header()" [auSlotProps]="{state, api, directives}" />
+				</div>
+			}
+			<div class="au-drawer-body">
+				<ng-template [auSlot]="state.children()" [auSlotProps]="{state, api, directives}" />
 			</div>
-		}
-		<div class="au-drawer-body">
-			<ng-template [auSlot]="state.children()" [auSlotProps]="{state, api, directives}" />
 		</div>
-		@if (state.resizable()) {
-			<div [auUse]="directives.splitterDirective"></div>
-		}
 	</ng-template>`,
 })
 class DrawerDefaultSlotsComponent {
@@ -102,6 +101,9 @@ export const drawerDefaultSlotStructure: SlotContent<DrawerContext> = new Compon
 				<div [auUse]="directives.containerDirective">
 					<ng-template [auSlot]="state.structure()" [auSlotProps]="{state, api, directives}" />
 				</div>
+				@if (state.resizable()) {
+					<div [auUse]="directives.splitterDirective" [tabIndex]="0"></div>
+				}
 			</div>
 		}
 		@if (!state.backdropHidden()) {
@@ -193,6 +195,14 @@ export class DrawerComponent extends BaseWidgetDirective<DrawerWidget> {
 	readonly bodyScroll = input(undefined, {alias: 'auBodyScroll', transform: auBooleanAttribute});
 
 	/**
+	 * Size of the drawer in pixel once the user start interacting.
+	 * It corresponds to the height or the width depending on the drawer orientation
+	 *
+	 * @defaultValue `null`
+	 */
+	readonly size = input(undefined, {alias: 'auSize', transform: auNumberOrNullAttribute});
+
+	/**
 	 * Classes to add on the backdrop DOM element.
 	 *
 	 * @defaultValue `''`
@@ -214,42 +224,16 @@ export class DrawerComponent extends BaseWidgetDirective<DrawerWidget> {
 	readonly resizable = input(undefined, {alias: 'auResizable', transform: auBooleanAttribute});
 
 	/**
-	 * The width of the drawer in pixels.
+	 * An event emitted when the drawer size (width or height depending on the orientation).
 	 *
-	 * @defaultValue `200`
-	 */
-	readonly width = input(undefined, {alias: 'auWidth', transform: auNumberAttribute});
-
-	/**
-	 * The height of the drawer in pixels.
-	 *
-	 * @defaultValue `200`
-	 */
-	readonly height = input(undefined, {alias: 'auHeight', transform: auNumberAttribute});
-
-	/**
-	 * An event emitted when the width is changed.
-	 *
-	 * Event payload is equal to the newly selected width.
+	 * Event payload is equal to the newly selected width or height.
 	 *
 	 * @defaultValue
 	 * ```ts
 	 * () => {}
 	 * ```
 	 */
-	readonly widthChange = output<number>({alias: 'auWidthChange'});
-
-	/**
-	 * An event emitted when the height is changed.
-	 *
-	 * Event payload is equal to the newly selected height.
-	 *
-	 * @defaultValue
-	 * ```ts
-	 * () => {}
-	 * ```
-	 */
-	readonly heightChange = output<number>({alias: 'auHeightChange'});
+	readonly sizeChange = output<number | null>({alias: 'auSizeChange'});
 
 	/**
 	 * Event to be triggered when the visible property changes.
@@ -262,6 +246,36 @@ export class DrawerComponent extends BaseWidgetDirective<DrawerWidget> {
 	 * ```
 	 */
 	readonly visibleChange = output<boolean>({alias: 'auVisibleChange'});
+
+	/**
+	 * Event to be triggered when the minimized state changes.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
+	 */
+	readonly minimizedChange = output<boolean>({alias: 'auMinimizedChange'});
+
+	/**
+	 * Event to be triggered when the maximized state changes.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
+	 */
+	readonly maximizedChange = output<boolean>({alias: 'auMaximizedChange'});
+
+	/**
+	 * Event to be triggered when the user start or stop resizing the drawer.
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
+	 */
+	readonly resizingChange = output<boolean>({alias: 'auResizingChange'});
 
 	/**
 	 * Event to be triggered when the transition is completed and the drawer is not visible.
@@ -295,14 +309,14 @@ export class DrawerComponent extends BaseWidgetDirective<DrawerWidget> {
 					children: this.slotBodyFromContent()?.templateRef,
 				}),
 				events: {
+					onResizingChange: (event) => this.resizingChange.emit(event),
 					onHidden: () => this.hidden.emit(),
 					onShown: () => this.shown.emit(),
-					onWidthChange: (width: number) => {
-						this.widthChange.emit(width);
+					onSizeChange: (size: number | null) => {
+						this.sizeChange.emit(size);
 					},
-					onHeightChange: (height: number) => {
-						this.heightChange.emit(height);
-					},
+					onMaximizedChange: (event) => this.maximizedChange.emit(event),
+					onMinimizedChange: (event) => this.minimizedChange.emit(event),
 					onVisibleChange: (event) => this.visibleChange.emit(event),
 				},
 				slotChildren: () => this.slotChildren(),
