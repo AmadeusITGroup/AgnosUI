@@ -180,10 +180,14 @@ export function bindAttribute(
  *
  * @returns unsubscription method to remove the binding
  */
-export function bindStyle(node: SSRHTMLElement, styleName: StyleKey, value$: ReadableSignal<StyleValue>): UnsubscribeFunction & UnsubscribeObject {
+export function bindStyle(node: SSRHTMLElement, styleName: string, value$: ReadableSignal<StyleValue>): UnsubscribeFunction & UnsubscribeObject {
 	return value$.subscribe((value) => {
 		const style = node.style;
-		style[styleName] = '' + (notEmpty(value) ? value : '');
+		if (notEmpty(value)) {
+			style.setProperty(styleName, '' + value);
+		} else {
+			style.removeProperty(styleName);
+		}
 	});
 }
 

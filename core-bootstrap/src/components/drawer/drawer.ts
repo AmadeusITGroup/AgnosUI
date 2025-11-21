@@ -12,6 +12,7 @@ import {createWidgetFactory} from '@agnos-ui/core/utils/widget';
 import {createAttributesDirective, mergeDirectives} from '@agnos-ui/core/utils/directive';
 import {true$} from '@agnos-ui/core/utils/stores';
 import type {TransitionFn} from '@agnos-ui/core/services/transitions/baseTransitions';
+import {computed} from '@amadeus-it-group/tansu';
 
 export * from '@agnos-ui/core/components/drawer';
 
@@ -132,6 +133,12 @@ export function getDrawerDefaultConfig(): DrawerProps {
  */
 export const createDrawer: WidgetFactory<DrawerWidget> = createWidgetFactory('drawer', (config?: PropsConfig<DrawerProps>): DrawerWidget => {
 	const widget = extendWidgetProps(createCoreDrawer, defaultConfigExtraProps, configValidator, coreOverride)(config);
+
+	const isVertical$ = computed(() => {
+		const isVertical = ['block-start', 'block-end'].some((placement) => widget.stores.className$().includes(placement));
+		return isVertical;
+	});
+
 	return {
 		...widget,
 		directives: {
@@ -141,6 +148,7 @@ export const createDrawer: WidgetFactory<DrawerWidget> = createWidgetFactory('dr
 				createAttributesDirective(() => ({
 					classNames: {
 						'au-drawer': true$,
+						'au-drawer-vertical': isVertical$,
 						show: widget.stores.visible$,
 					},
 				})),

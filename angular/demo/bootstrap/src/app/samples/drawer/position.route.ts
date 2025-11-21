@@ -28,6 +28,6 @@ import {FormsModule} from '@angular/forms';
 })
 export default class BasicDrawerComponent {
 	readonly drawerPlacement = signal<DrawerPositions>('inline-start');
-	readonly width = signal(200);
-	readonly height = signal(150);
+	readonly width = signal('20rem');
+	readonly height = signal('150px');
 }

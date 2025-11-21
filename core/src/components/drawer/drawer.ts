@@ -1,18 +1,23 @@
 import {asWritable, computed, readable, writable} from '@amadeus-it-group/tansu';
+import {focusElement} from '../../services/focusElement';
+import {createMousedownPositionDirective} from '../../services/mousedownPosition';
 import {portal} from '../../services/portal';
 import {siblingsInert} from '../../services/siblingsInert';
 import type {TransitionFn} from '../../services/transitions/baseTransitions';
 import {createTransition} from '../../services/transitions/baseTransitions';
 import type {Directive, WidgetFactory} from '../../types';
 import {type ConfigValidator, type PropsConfig, type Widget} from '../../types';
-import {bindDirective, createAttributesDirective, mergeDirectives} from '../../utils/directive';
+import {bindDirective, browserDirective, createAttributesDirective, isBrowserHTMLElement, mergeDirectives} from '../../utils/directive';
 import {noop} from '../../utils/func';
 import {removeScrollbars, revertScrollbars} from '../../utils/internal/scrollbars';
 import {bindableProp, stateStores, true$, writablesForProps} from '../../utils/stores';
 import {createWidgetFactory} from '../../utils/widget';
-import {typeBoolean, typeFunction, typeHTMLElementOrNull, typeNumberInRangeFactory, typeString} from '../../utils/writables';
+import {typeBoolean, typeFunction, typeHTMLElementOrNull, typeString} from '../../utils/writables';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
-import {focusElement} from '../../services/focusElement';
+
+async function wait(ms: number): Promise<void> {
+	return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 /**
  * Possible values for the drawer positions
@@ -70,6 +75,7 @@ export interface DrawerProps extends DrawerCommonPropsAndState {
 	 * ```
 	 */
 	transition: TransitionFn;
+
 	/**
 	 * The transition function for vertically positioned drawer (top, bottom) that will be executed when the drawer is displayed or hidden.
 	 *
@@ -79,6 +85,7 @@ export interface DrawerProps extends DrawerCommonPropsAndState {
 	 * ```
 	 */
 	verticalTransition: TransitionFn;
+
 	/**
 	 * The transition to use for the backdrop behind the drawer (if present).
 	 *
@@ -107,17 +114,17 @@ export interface DrawerProps extends DrawerCommonPropsAndState {
 	 */
 	ariaDescribedBy: string;
 	/**
-	 * The width of the drawer in pixels.
+	 * The width of the drawer when opened. Accepts any valid CSS width value (e.g., '300px', '50%', '20rem').
 	 *
-	 * @defaultValue `200`
+	 * @defaultValue `'auto'`
 	 */
-	width: number;
+	width: string;
 	/**
-	 * The height of the drawer in pixels.
+	 * The height of the drawer when opened. Accepts any valid CSS height value (e.g., '300px', '50%', '20rem').
 	 *
-	 * @defaultValue `200`
+	 * @defaultValue `'auto'`
 	 */
-	height: number;
+	height: string;
 	/**
 	 * If `true` displays the backdrop element and disables the body scrolling, otherwise the body of the document is navigable
 	 *
@@ -158,7 +165,7 @@ export interface DrawerProps extends DrawerCommonPropsAndState {
 	 * () => {}
 	 * ```
 	 */
-	onWidthChange: (width: number) => void;
+	onWidthChange: (width: string) => void;
 	/**
 	 * An event emitted when the height is changed.
 	 *
@@ -169,7 +176,7 @@ export interface DrawerProps extends DrawerCommonPropsAndState {
 	 * () => {}
 	 * ```
 	 */
-	onHeightChange: (width: number) => void;
+	onHeightChange: (width: string) => void;
 	/**
 	 * Event to be triggered when the visible property changes.
 	 *
@@ -270,8 +277,8 @@ const defaultDrawerConfig: DrawerProps = {
 	verticalTransition: noop,
 	onHidden: noop,
 	onShown: noop,
-	width: 200,
-	height: 200,
+	width: 'auto',
+	height: 'auto',
 	onWidthChange: noop,
 	onHeightChange: noop,
 	onVisibleChange: noop,
@@ -293,8 +300,8 @@ const configValidator: ConfigValidator<DrawerProps> = {
 	container: typeHTMLElementOrNull,
 	onHidden: typeFunction,
 	onShown: typeFunction,
-	width: typeNumberInRangeFactory(0, +Infinity),
-	height: typeNumberInRangeFactory(0, +Infinity),
+	width: typeString,
+	height: typeString,
 	onWidthChange: typeFunction,
 	onHeightChange: typeFunction,
 	onVisibleChange: typeFunction,
@@ -335,7 +342,7 @@ export const createDrawer: WidgetFactory<DrawerWidget> = createWidgetFactory('dr
 		patch,
 	] = writablesForProps(defaultDrawerConfig, config, configValidator);
 
-	const isVertical = computed(() => {
+	const isVertical$ = computed(() => {
 		const isVertical = ['block-start', 'block-end'].some((placement) => className$().includes(placement));
 		return isVertical;
 	});
@@ -343,7 +350,7 @@ export const createDrawer: WidgetFactory<DrawerWidget> = createWidgetFactory('dr
 		props: {
 			animated: animated$,
 			animatedOnInit: animated$,
-			transition: asWritable(computed(() => (isVertical() ? verticalTransition$() : transition$()))),
+			transition: asWritable(computed(() => (isVertical$() ? verticalTransition$() : transition$()))),
 			visible: requestedVisible$,
 			onVisibleChange: onVisibleChange$,
 			onHidden: onHidden$,
@@ -358,35 +365,50 @@ export const createDrawer: WidgetFactory<DrawerWidget> = createWidgetFactory('dr
 		computed(() => ({container: container$()})),
 	);
 
-	const drawerAttributeDirective = createAttributesDirective(() => ({
-		attributes: {
-			class: className$,
-			role: readable('dialog'),
-			'aria-describedby': ariaDescribedBy$,
-			'aria-labelledby': ariaLabelledBy$,
-			'aria-modal': readable('true'),
-			tabIndex: readable('-1'),
-		},
-		styles: {
-			width: computed(() => (isVertical() ? '100%' : `${width$()}px`)),
-			height: computed(() => (isVertical() ? `${height$()}px` : '100%')),
-			position: computed(() => (container$() !== document.body && container$() !== null ? 'relative' : 'fixed')),
-			outline: readable('none'),
-		},
-		events: {
-			keydown: async (e: KeyboardEvent) => {
-				const {key} = e;
-				if (key === 'Escape') {
-					await transition.api.hide();
-				}
+	let drawerElement: HTMLElement | undefined = undefined;
+	const drawerElementDirective = browserDirective((element) => {
+		drawerElement = element;
+		return {
+			destroy() {
+				drawerElement = undefined;
 			},
-		},
-	}));
+		};
+	});
+	const drawerAttributeDirective = mergeDirectives(
+		drawerElementDirective,
+		createAttributesDirective(() => ({
+			attributes: {
+				class: className$,
+				role: readable('dialog'),
+				'aria-describedby': ariaDescribedBy$,
+				'aria-labelledby': ariaLabelledBy$,
+				'aria-modal': readable('true'),
+				tabIndex: readable('-1'),
+			},
+			styles: {
+				width: computed(() => (isVertical$() ? '100%' : width$())),
+				height: computed(() => (isVertical$() ? height$() : '100%')),
+				position: computed(() => {
+					const container = container$();
+					return container && isBrowserHTMLElement(container) && container !== document.body ? 'relative' : 'fixed';
+				}),
+				outline: readable('none'),
+			},
+			events: {
+				keydown: async (e: KeyboardEvent) => {
+					if (e.key === 'Escape') {
+						await transition.api.hide();
+					}
+				},
+			},
+		})),
+	);
 
 	const containerDirective = createAttributesDirective(() => ({
 		styles: {
-			width: computed(() => (isVertical() ? '100%' : `${width$()}px`)),
-			height: computed(() => (isVertical() ? `${height$()}px` : '100%')),
+			// width: computed(() => (isVertical$() ? '100%' : width$())),
+			// height: computed(() => (isVertical$() ? height$() : '100%')),
+			// height: writable('100%'),
 		},
 	}));
 
@@ -427,54 +449,41 @@ export const createDrawer: WidgetFactory<DrawerWidget> = createWidgetFactory('dr
 		},
 		events: {
 			click: async () => {
+				console.log(`🔴(DEBUG)    [drawer.ts:454]: click: `);
+				await wait(0);
 				await transition.api.hide();
 			},
 		},
 	}));
 
 	const direction = computed(() => (['inline-start', 'block-start'].some((placement) => className$().includes(placement)) ? 1 : -1));
-	const startDimension = writable(0);
-	const startPos = writable(0);
-	const dimension = writable(0);
 
-	const splitterDirective = createAttributesDirective(() => ({
-		attributes: {
-			draggable: readable('true'),
+	let startSize = 0;
+	const splitterDirective = createMousedownPositionDirective({
+		onMoveStart(position) {
+			if (drawerElement) {
+				startSize = isVertical$() ? drawerElement.offsetHeight : drawerElement.offsetWidth;
+			}
 		},
-		events: {
-			dragstart: (e: DragEvent) => {
-				startPos.set(isVertical() ? e.clientY : e.clientX);
-				startDimension.set(isVertical() ? height$() : width$());
-				e.dataTransfer?.setDragImage(new Image(), 0, 0); // Remove drag image
-			},
-			dragend: (e: DragEvent) => {
-				document.body.style.cursor = '';
-				// Final update of the dimension as Firefox does not contain the proper clientX/Y in drag event
-				// firefox bug: https://bugzilla.mozilla.org/show_bug.cgi?id=505521
-				updateDimension(e);
-			},
-			dragover: (event: DragEvent) => {
-				event.preventDefault();
-			},
-			drag: (e: DragEvent) => {
-				updateDimension(e);
-			},
+		onMove(position) {
+			const dir = direction();
+			if (isVertical$()) {
+				height$.set(startSize + dir * position.dy + 'px');
+			} else {
+				width$.set(startSize + dir * position.dx + 'px');
+			}
 		},
-	}));
+		onMoveEnd(position) {
+			if (drawerElement) {
+				if (isVertical$()) {
+					height$.set(drawerElement.offsetHeight + 'px');
+				} else {
+					width$.set(drawerElement.offsetWidth + 'px');
+				}
+			}
+		},
+	});
 
-	/**
-	 * Utility function to update the relevant dimension of the drawer based on the positioning and input drag event
-	 * @param e Drag event object
-	 */
-	const updateDimension = (e: DragEvent) => {
-		if (!isVertical() && e.clientX > 0) {
-			dimension.set(startDimension() + direction() * (e.clientX - startPos()));
-			width$.set(dimension());
-		} else if (isVertical() && e.clientY > 0) {
-			dimension.set(startDimension() + direction() * (e.clientY - startPos()));
-			height$.set(dimension());
-		}
-	};
 	const visible$ = transition.stores.visible$;
 	const transitioning$ = computed(() => transition.stores.transitioning$() || backdropTransition.stores.transitioning$());
 	const hidden$ = computed(() => !transitioning$() && !visible$());
@@ -491,19 +500,29 @@ export const createDrawer: WidgetFactory<DrawerWidget> = createWidgetFactory('dr
 		}),
 		patch,
 		api: {
-			open: transition.api.show,
-			close: transition.api.hide,
+			open: async () => {
+				// Need to wait for the classes and styles in the elements
+				console.log(`🔴(DEBUG)    [drawer.ts:506]: width$: `, width$());
+				await wait(500);
+				await transition.api.show();
+			},
+			close: async () => {
+				console.log(`🔴(DEBUG)    [drawer.ts:509]: close: `, close);
+				// Need to wait for the classes and styles in the elements
+				await wait(0);
+				await transition.api.hide();
+			},
 		},
 		directives: {
 			containerDirective,
 			drawerPortalDirective,
 			drawerDirective: mergeDirectives(
-				transition.directives.directive,
+				drawerAttributeDirective,
+				transition.directives.directive, // This directive must come after the attribute directive, to b esure that all the classes and attributes are applied
 				bindDirective(
 					siblingsInert,
 					computed(() => !bodyScroll$()),
 				),
-				drawerAttributeDirective,
 				focusElement,
 			),
 			backdropPortalDirective,
