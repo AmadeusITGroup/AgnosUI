@@ -1,1 +1,0 @@
-import{a9 as d,a4 as c,aa as n,ab as u,ac as p}from"./AppCommon-eHSu19bS.js";function y(s,o,r){d(()=>{var a=c(()=>o(s,r?.())||{});if(r&&a?.update){var t=!1,f={};n(()=>{var e=r();u(e),t&&p(f,e)&&(f=e,a.update(e))}),t=!0}if(a?.destroy)return()=>a.destroy()})}export{y as a};
