@@ -1,7 +1,7 @@
 <div class="rating" [class]="state.className()">
-	@for (item of state.stars(); track trackByIndex(index); let index = $index) {
+	@for (item of state.stars(); track $index; let index = $index) {
 		<input
-			(blur)="onTouched()"
+			(blur)="touched.emit(true)"
 			(mouseleave)="api.leave()"
 			(mouseenter)="api.setHoveredRating(index + 1)"
 			(click)="api.setRating(index + 1)"

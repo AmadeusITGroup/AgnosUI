@@ -1,21 +1,23 @@
+import {form, Field} from '@angular/forms/signals';
 import {RatingComponent} from './rating.component';
-import {Component} from '@angular/core';
+import {Component, signal} from '@angular/core';
 
 @Component({
-	imports: [RatingComponent],
+	imports: [RatingComponent, Field],
 	template: `
-		<app-rating [(rating)]="rating" (hover)="hovered = $event" (leave)="left = $event" />
+		<app-rating (hover)="hovered.set($event)" (leave)="left.set($event)" [field]="form.rating" />
 		<div class="mt-2">
-			Current rate: <span id="defaultRating">{{ rating }}</span
+			Current rate: <span id="defaultRating">{{ model().rating }}</span
 			><br />
-			Hovered: <span id="defaultHovered">{{ hovered }}</span
+			Hovered: <span id="defaultHovered">{{ hovered() }}</span
 			><br />
-			Left: <span id="defaultLeft">{{ left }}</span>
+			Left: <span id="defaultLeft">{{ left() }}</span>
 		</div>
 	`,
 })
 export default class DefaultRatingComponent {
-	rating = 3;
-	hovered = 0;
-	left = 0;
+	readonly model = signal<{rating: number}>({rating: 3});
+	readonly form = form(this.model);
+	readonly hovered = signal(0);
+	readonly left = signal(0);
 }

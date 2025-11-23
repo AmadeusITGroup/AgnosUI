@@ -1,10 +1,10 @@
 import {AgnosUIAngularModule} from '@agnos-ui/angular-bootstrap';
 import {Component, signal} from '@angular/core';
 import {toSignal} from '@angular/core/rxjs-interop';
-import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormControl, ReactiveFormsModule} from '@angular/forms';
 
 @Component({
-	imports: [AgnosUIAngularModule, ReactiveFormsModule, FormsModule],
+	imports: [AgnosUIAngularModule, ReactiveFormsModule],
 	template: `
 		<h5>Slider with form control</h5>
 		<div auSlider auMin="0" auMax="100" auStepSize="1" [formControl]="sliderControl"></div>

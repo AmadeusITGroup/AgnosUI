@@ -130,8 +130,12 @@ function patchSimpleChanges(patchFn: (obj: any) => void, changes: SimpleChanges)
  */
 @Directive()
 export abstract class BaseWidgetDirective<W extends Widget> implements OnChanges, OnInit, AfterContentChecked {
-	// eslint-disable-next-line @angular-eslint/prefer-inject
-	constructor(private readonly _widget: AngularWidget<W>) {}
+	constructor(
+		// eslint-disable-next-line @angular-eslint/prefer-inject
+		private readonly _widget: AngularWidget<W>,
+		// eslint-disable-next-line @angular-eslint/prefer-inject
+		private readonly propRenames?: Record<string, string>,
+	) {}
 
 	/**
 	 * Retrieves the widget api
@@ -162,7 +166,16 @@ export abstract class BaseWidgetDirective<W extends Widget> implements OnChanges
 	 * @internal
 	 */
 	ngOnChanges(changes: SimpleChanges): void {
-		patchSimpleChanges(this._widget.patch, changes);
+		const renamedChanges: SimpleChanges = {};
+		if (this.propRenames) {
+			for (const [key, simpleChange] of Object.entries(changes)) {
+				const renamedKey = this.propRenames[key] ?? key;
+				renamedChanges[renamedKey] = simpleChange;
+			}
+		} else {
+			Object.assign(renamedChanges, changes);
+		}
+		patchSimpleChanges(this._widget.patch, renamedChanges);
 	}
 
 	/** @internal */
