@@ -1,10 +1,10 @@
 import {SliderComponent} from '@agnos-ui/angular-bootstrap';
 import {Component} from '@angular/core';
 import {toSignal} from '@angular/core/rxjs-interop';
-import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormControl, ReactiveFormsModule} from '@angular/forms';
 
 @Component({
-	imports: [SliderComponent, ReactiveFormsModule, FormsModule],
+	imports: [SliderComponent, ReactiveFormsModule],
 	template: `
 		<div class="d-flex" style="height: 350px">
 			<div class="col-6" style="height: 300px">

@@ -1,10 +1,10 @@
 import {SliderComponent, SliderLabelDirective} from '@agnos-ui/angular-bootstrap';
 import {Component} from '@angular/core';
-import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import CustomHandleSliderComponent from './custom-handle.component';
 
 @Component({
-	imports: [SliderComponent, SliderLabelDirective, ReactiveFormsModule, FormsModule],
+	imports: [SliderComponent, SliderLabelDirective, ReactiveFormsModule],
 	template: `
 		<h5>Slider with custom labels</h5>
 		<div auSlider auMin="0" auMax="100" auStepSize="1" [formControl]="sliderCustomLabelControl" auClassName="au-custom-slider-container">

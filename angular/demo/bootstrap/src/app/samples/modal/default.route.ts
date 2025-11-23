@@ -1,10 +1,10 @@
 import type {ModalComponent} from '@agnos-ui/angular-bootstrap';
 import {AgnosUIAngularModule, modalCloseButtonClick, modalCloseEscape, modalOutsideClick} from '@agnos-ui/angular-bootstrap';
 import {Component, signal} from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormsModule} from '@angular/forms';
 
 @Component({
-	imports: [AgnosUIAngularModule, ReactiveFormsModule, FormsModule],
+	imports: [AgnosUIAngularModule, FormsModule],
 	template: `
 		<button class="btn btn-primary" type="button" (click)="show(modal)">Launch demo modal</button>
 		<div class="form-check form-switch mt-3">
