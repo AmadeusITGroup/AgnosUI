@@ -149,7 +149,7 @@ const createFix = (propDeclaration: ts.Declaration, actualDefaultValue: string |
 const wrapMarkdown = (value: string) =>
 	value.includes('(') || value.includes('\n') || value.length > 25 ? `\`\`\`ts\n${value}\n\`\`\`` : `\`${value}\``;
 
-const markdownRegExp = /^```ts\n([\s\S]*)\n```$|^`(.*)`$/;
+const markdownRegExp = /^```ts\r?\n([\s\S]*)\r?\n```$|^`(.*)`$/;
 const unwrapMarkdown = (value: string) => {
 	const match = markdownRegExp.exec(value);
 	return match ? (match[1] ?? match[2]) : value;
@@ -217,7 +217,7 @@ export const checkDefaultPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 								defaultValueItems[0].text?.length === 1 && defaultValueItems[0].text?.[0].kind === 'text'
 									? defaultValueItems[0].text?.[0].text
 									: undefined;
-							if (foundDefaultValueTag !== tsDocActualDefaultValue) {
+							if (foundDefaultValueTag?.replaceAll('\r', '') !== tsDocActualDefaultValue?.replaceAll('\r', '')) {
 								context.report({
 									node,
 									messageId: 'incorrectDefaultValue',
