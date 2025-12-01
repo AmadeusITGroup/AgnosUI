@@ -1,13 +1,19 @@
 import {Pagination} from '@agnos-ui/react-bootstrap/components/pagination';
 import {WidgetsDefaultConfig} from '@agnos-ui/react-bootstrap/config';
 import type {PaginationContext, PaginationNumberContext} from '@agnos-ui/react-bootstrap/components/pagination';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import type {FormEvent, FocusEvent, KeyboardEvent} from 'react';
 
 const FILTER_PAG_REGEX = /[^0-9]/g;
 
 function CustomPages({state, api}: PaginationContext) {
+	const [prevVal, setPrevVal] = useState(state.page.toString());
 	const [inputVal, setValue] = useState(state.page.toString());
+	if (prevVal != state.page.toString()) {
+		setPrevVal(state.page.toString());
+		setValue(state.page.toString());
+	}
+
 	function handleKeyDownEnter(e: KeyboardEvent<HTMLInputElement>) {
 		if (e.key === 'Enter') {
 			handleTheChange(e);
@@ -22,9 +28,7 @@ function CustomPages({state, api}: PaginationContext) {
 	function formatInput(e: FormEvent<HTMLInputElement>) {
 		setValue(e.currentTarget.value.replace(FILTER_PAG_REGEX, ''));
 	}
-	useEffect(() => {
-		setValue(state.page.toString());
-	}, [state.page]);
+
 	return (
 		state.pages.length && (
 			<li className="au-custom-pages-item">

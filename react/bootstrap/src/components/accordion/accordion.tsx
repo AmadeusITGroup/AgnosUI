@@ -57,7 +57,7 @@ export const AccordionItemDefaultSlotStructure = (slotContext: AccordionItemCont
  * @see {@link useWidget}
  * @see {@link useDirectives}
  */
-export function AccordionItem(props: Partial<AccordionItemProps> & {ref?: Ref<AccordionItemApi>}) {
+export function AccordionItem({ref, ...props}: Partial<AccordionItemProps> & {ref?: Ref<AccordionItemApi>}) {
 	const {registerItem} = useContext(AccordionDIContext);
 	const id = useId();
 	const widgetContext = useWidget(registerItem!, props, {
@@ -65,7 +65,7 @@ export function AccordionItem(props: Partial<AccordionItemProps> & {ref?: Ref<Ac
 		id,
 	});
 	const {state, api, directives} = widgetContext;
-	useImperativeHandle(props.ref, () => api, [api]);
+	useImperativeHandle(ref, () => api, [api]);
 	useEffect(() => {
 		api.initDone();
 	}, [api]);
@@ -89,9 +89,9 @@ export function AccordionItem(props: Partial<AccordionItemProps> & {ref?: Ref<Ac
  * @returns The rendered Accordion component.
  *
  */
-export function Accordion(props: PropsWithChildren<Partial<AccordionProps>> & {ref?: ForwardedRef<AccordionApi>}) {
+export function Accordion({ref, ...props}: PropsWithChildren<Partial<AccordionProps>> & {ref?: ForwardedRef<AccordionApi>}) {
 	const widget = useWidget(createAccordion, props);
-	useImperativeHandle(props.ref, () => widget.api, [widget.api]);
+	useImperativeHandle(ref, () => widget.api, [widget.api]);
 	return (
 		<AccordionDIContext value={widget.api}>
 			<div {...useDirectives([classDirective, 'accordion'], widget.directives.accordionDirective)}>{props.children}</div>

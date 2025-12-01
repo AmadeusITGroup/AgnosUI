@@ -1,6 +1,6 @@
 import type {ToastPositions} from '@agnos-ui/react-bootstrap/components/toast';
 import {defaultToasterProps, useToaster, ToasterProvider, toastPositions} from '@agnos-ui/react-bootstrap/components/toast';
-import {useEffect, useState} from 'react';
+import {useCallback, useState} from 'react';
 
 const ToasterActions = () => {
 	const toaster = useToaster();
@@ -39,11 +39,9 @@ const ToasterDemo = () => {
 		limit: 10,
 	});
 
-	useEffect(() => {
-		if (options.duration === 0) {
-			setOptions((prevOptions) => ({...prevOptions, dismissible: true}));
-		}
-	}, [options.duration]);
+	const setDuration = useCallback((duration: number) => {
+		setOptions((o) => ({...o, duration, dismissible: duration === 0 ? true : o.dismissible}));
+	}, []);
 
 	return (
 		<ToasterProvider options={options}>
@@ -90,7 +88,7 @@ const ToasterDemo = () => {
 							type="number"
 							className="form-control w-50"
 							value={options.duration}
-							onChange={(e) => setOptions({...options, duration: Number(e.target.value)})}
+							onChange={(e) => setDuration(Number(e.target.value))}
 						/>
 					</div>
 				</div>

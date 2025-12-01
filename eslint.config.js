@@ -5,6 +5,7 @@ import eslintConfigPrettier from 'eslint-config-prettier';
 import eslintPluginSvelte from 'eslint-plugin-svelte';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
+import {defineConfig} from 'eslint/config';
 import vitest from '@vitest/eslint-plugin';
 import playwright from 'eslint-plugin-playwright';
 import agnosUi from '@agnos-ui/eslint-plugin';
@@ -14,7 +15,7 @@ import svelteParser from 'svelte-eslint-parser';
 import angular from 'angular-eslint';
 import reactHooks from 'eslint-plugin-react-hooks';
 
-export default tseslint.config(
+export default defineConfig(
 	// global ignores
 	{
 		ignores: [

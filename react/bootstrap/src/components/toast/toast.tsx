@@ -58,16 +58,16 @@ const ToastElement = (slotContext: ToastContext) => (
  * to expose the widget's API through the forwarded ref.
  *
  * @param props - Partial properties of `ToastProps` to configure the toast widget.
- * @param props.ref - Ref to expose the Toast API.
+ * @param props.ref - Ref to the Toast API.
  *
  * @returns A JSX element that conditionally renders the `ToastElement` based on the widget's state.
  */
-export function Toast(props: Partial<ToastProps> & {ref?: Ref<ToastApi>}) {
+export function Toast({ref, ...props}: Partial<ToastProps> & {ref?: Ref<ToastApi>}) {
 	const widgetContext = useWidget(createToast, props, {
 		structure: ToastDefaultSlotStructure,
 		children: props.children,
 	});
-	useImperativeHandle(props.ref, () => widgetContext.api, [widgetContext.api]);
+	useImperativeHandle(ref, () => widgetContext.api, [widgetContext.api]);
 
 	return <>{!widgetContext.state.hidden && <ToastElement {...widgetContext} />}</>;
 }

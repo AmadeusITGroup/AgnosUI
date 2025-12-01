@@ -49,10 +49,10 @@ const AlertElement = (slotContext: AlertContext) => (
  *
  * @returns A JSX element that conditionally renders the AlertElement based on the widget's hidden state.
  */
-export function Alert(props: Partial<AlertProps> & {ref?: Ref<AlertApi>}) {
+export function Alert({ref, ...props}: Partial<AlertProps> & {ref?: Ref<AlertApi>}) {
 	const widgetContext = useWidget(createAlert, props, {
 		structure: AlertDefaultSlotStructure,
 	});
-	useImperativeHandle(props.ref, () => widgetContext.api, [widgetContext.api]);
+	useImperativeHandle(ref, () => widgetContext.api, [widgetContext.api]);
 	return <>{!widgetContext.state.hidden && <AlertElement {...widgetContext} />}</>;
 }

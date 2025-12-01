@@ -51,9 +51,9 @@ const defaultConfig: Partial<DrawerProps> = {
  * The Drawer component uses the {@link useWidget} hook to create a widget context with the provided
  * configuration. It renders the slot content using the `Slot` component.
  */
-export function Drawer(props: Partial<DrawerProps> & {ref?: Ref<DrawerApi>}) {
+export function Drawer({ref, ...props}: Partial<DrawerProps> & {ref?: Ref<DrawerApi>}) {
 	const widgetContext = useWidget(createDrawer, props, {...defaultConfig});
-	useImperativeHandle(props.ref, () => widgetContext.api, [widgetContext.api]);
+	useImperativeHandle(ref, () => widgetContext.api, [widgetContext.api]);
 	return (
 		<Portal container={widgetContext.state.container}>
 			{!widgetContext.state.backdropHidden && <BackdropElement {...widgetContext} />}

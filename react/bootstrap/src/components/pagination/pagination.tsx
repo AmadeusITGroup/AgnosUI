@@ -118,12 +118,12 @@ export const PaginationDefaultSlotStructure = (slotContext: PaginationContext) =
  * @param props.ref - Forwarded reference to the PaginationApi.
  * @returns The rendered pagination navigation element.
  */
-export function Pagination(props: Partial<PaginationProps> & {ref?: Ref<PaginationApi>}) {
+export function Pagination({ref, ...props}: Partial<PaginationProps> & {ref?: Ref<PaginationApi>}) {
 	const widgetContext = useWidget(createPagination, props, {
 		pagesDisplay: PaginationDefaultSlotPages,
 		structure: PaginationDefaultSlotStructure,
 	});
-	useImperativeHandle(props.ref, () => widgetContext.api, [widgetContext.api]);
+	useImperativeHandle(ref, () => widgetContext.api, [widgetContext.api]);
 
 	return (
 		<nav aria-label={widgetContext.state.ariaLabel}>

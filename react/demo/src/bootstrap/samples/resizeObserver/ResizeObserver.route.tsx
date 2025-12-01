@@ -5,7 +5,7 @@ import {useMemo, useState} from 'react';
 import {useDirective} from '@agnos-ui/react-bootstrap/utils/directive';
 
 const ResizeObserver = () => {
-	const resizeObserver = useMemo(createResizeObserver, []);
+	const resizeObserver = useMemo(() => createResizeObserver(), []);
 	const [heightValue, setHeightValue] = useState(180);
 	const dimensions = useObservable(resizeObserver.dimensions$);
 
