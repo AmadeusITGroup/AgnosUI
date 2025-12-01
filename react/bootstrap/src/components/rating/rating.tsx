@@ -20,6 +20,7 @@ function Star({star, state, directive}: {star: StarContext; state: RatingState; 
  * Rating component that displays a series of stars based on the provided state.
  *
  * @param props - The properties for the Rating component.
+ * @param props.ref - Ref to the Rating API.
  * @returns The rendered Rating component.
  *
  * @remarks
@@ -27,13 +28,13 @@ function Star({star, state, directive}: {star: StarContext; state: RatingState; 
  * It applies directives to the container and individual stars for styling and behavior.
  *
  */
-export function Rating(props: Partial<RatingProps> & {ref?: Ref<RatingApi>}) {
+export function Rating({ref, ...props}: Partial<RatingProps> & {ref?: Ref<RatingApi>}) {
 	const {
 		state,
 		directives: {containerDirective, starDirective},
 		api,
 	} = useWidget(createRating, props);
-	useImperativeHandle(props.ref, () => api, [api]);
+	useImperativeHandle(ref, () => api, [api]);
 
 	return (
 		<div {...useDirectives([classDirective, 'd-inline-flex'], containerDirective)}>

@@ -2,18 +2,20 @@
 import {activeElement$, createHasFocus} from '@agnos-ui/react-bootstrap/services/focustrack';
 import {useDirective} from '@agnos-ui/react-bootstrap/utils/directive';
 import {useObservable} from '@agnos-ui/react-bootstrap/utils/stores';
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 
 const Focustrack = () => {
 	const [hasFocus] = useState(createHasFocus);
 	const hasFocusState = useObservable(hasFocus.hasFocus$);
 
 	const activeElement = useObservable(activeElement$);
+	const [prevActiveElement, setPrevActiveElement] = useState<Element | null>(null);
 	const [activeElements, setActiveElements] = useState<any[]>([]);
 
-	useEffect(() => {
+	if (prevActiveElement !== activeElement) {
+		setPrevActiveElement(activeElement);
 		setActiveElements((a) => [...a, {tagName: activeElement?.tagName.toLowerCase(), id: activeElement?.id || undefined}]);
-	}, [activeElement]);
+	}
 
 	return (
 		<div className="demo-focustrack">

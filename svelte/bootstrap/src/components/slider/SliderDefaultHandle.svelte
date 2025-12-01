@@ -4,7 +4,7 @@
 	let {item, directives}: SliderSlotHandleContext = $props();
 
 	let refocusElement: HTMLElement | undefined = $state(undefined);
-	let updateTimeout: NodeJS.Timeout;
+	let updateTimeout: ReturnType<typeof setTimeout>;
 
 	// Manually keep focus as scheduling goal elements are re-ordered.
 	// Svelte currently does not retain focus as elements are moved, even when keyed.

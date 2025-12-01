@@ -17,10 +17,10 @@ import {useDirectives} from '@agnos-ui/react-headless/utils/directive';
  *
  * @returns A div element with transition directives applied, containing the child elements.
  */
-export function Collapse(props: PropsWithChildren<Partial<CollapseProps>> & {ref?: Ref<CollapseApi>}) {
+export function Collapse({ref, ...props}: PropsWithChildren<Partial<CollapseProps>> & {ref?: Ref<CollapseApi>}) {
 	const id = useId();
 	const {api, directives} = useWidget(createCollapse, props, {id});
-	useImperativeHandle(props.ref, () => api, [api]);
+	useImperativeHandle(ref, () => api, [api]);
 
 	return <div {...useDirectives(directives.collapseDirective)}>{props.children}</div>;
 }

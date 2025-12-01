@@ -3,7 +3,7 @@ import {useDirective} from '@agnos-ui/react-bootstrap/utils/directive';
 import {useMemo} from 'react';
 
 const NavmanagerSampleLine = ({text}: {text: string}) => {
-	const navManager = useMemo(createNavManager, []);
+	const navManager = useMemo(() => createNavManager(), []);
 	const navManagerConfig = useMemo(
 		(): NavManagerItemConfig => ({
 			keys: {

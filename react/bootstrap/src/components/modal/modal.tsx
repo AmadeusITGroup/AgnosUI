@@ -80,12 +80,12 @@ const ModalElement = <Data,>(slotContext: ModalContext<Data>) => {
  *
  * @returns The rendered Modal component.
  */
-export function Modal<Data>(props: Partial<ModalProps<Data>> & {ref?: Ref<ModalApi<Data>>}) {
+export function Modal<Data>({ref, ...props}: Partial<ModalProps<Data>> & {ref?: Ref<ModalApi<Data>>}) {
 	const widgetContext = useWidget(createModal<Data>, props, {
 		header: ModalDefaultSlotHeader,
 		structure: ModalDefaultSlotStructure,
 	});
-	useImperativeHandle(props.ref, () => widgetContext.api, [widgetContext.api]);
+	useImperativeHandle(ref, () => widgetContext.api, [widgetContext.api]);
 	return (
 		<Portal container={widgetContext.state.container}>
 			{!widgetContext.state.backdropHidden && <BackdropElement {...widgetContext} />}
