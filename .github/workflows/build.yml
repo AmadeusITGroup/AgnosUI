@@ -21,7 +21,7 @@ jobs:
       id-token: write
       contents: write
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: '24.x'
@@ -90,7 +90,7 @@ jobs:
             git push origin v${{ inputs.version }} $RELEASE_BRANCH
           fi
       - if: inputs.docPublish && (inputs.version != '' || inputs.docPath != '')
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: gh-pages
           path: gh-pages

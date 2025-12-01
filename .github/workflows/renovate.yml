@@ -9,8 +9,8 @@ jobs:
   renovate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-      - uses: renovatebot/github-action@v43.0.10
+      - uses: actions/checkout@v6
+      - uses: renovatebot/github-action@v43.0.20
         with:
           configurationFile: selfhost-renovate.json
           token: ${{ secrets.GITHUB_TOKEN }}
