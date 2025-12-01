@@ -55,7 +55,7 @@
 		"@vitest/browser-playwright": "^4.0.12",
 		"@vitest/eslint-plugin": "^1.1.14",
 		"@vitest/ui": "^4.0.0",
-		"angular-eslint": "^20.6.0",
+		"angular-eslint": "^21.0.0",
 		"eslint": "^9.16.0",
 		"eslint-config-prettier": "^10.0.0",
 		"eslint-plugin-jsdoc": "^61.0.0",
