@@ -1,7 +1,6 @@
 import type {SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
 import {
 	auBooleanAttribute,
-	auNumberAttribute,
 	BaseWidgetDirective,
 	callWidgetFactory,
 	ComponentTemplate,
@@ -216,16 +215,16 @@ export class DrawerComponent extends BaseWidgetDirective<DrawerWidget> {
 	/**
 	 * The width of the drawer in pixels.
 	 *
-	 * @defaultValue `200`
+	 * @defaultValue `'auto'`
 	 */
-	readonly width = input(undefined, {alias: 'auWidth', transform: auNumberAttribute});
+	readonly width = input<string>(undefined, {alias: 'auWidth'});
 
 	/**
 	 * The height of the drawer in pixels.
 	 *
-	 * @defaultValue `200`
+	 * @defaultValue `'auto'`
 	 */
-	readonly height = input(undefined, {alias: 'auHeight', transform: auNumberAttribute});
+	readonly height = input<string>(undefined, {alias: 'auHeight'});
 
 	/**
 	 * An event emitted when the width is changed.
@@ -237,7 +236,7 @@ export class DrawerComponent extends BaseWidgetDirective<DrawerWidget> {
 	 * () => {}
 	 * ```
 	 */
-	readonly widthChange = output<number>({alias: 'auWidthChange'});
+	readonly widthChange = output<string>({alias: 'auWidthChange'});
 
 	/**
 	 * An event emitted when the height is changed.
@@ -249,7 +248,7 @@ export class DrawerComponent extends BaseWidgetDirective<DrawerWidget> {
 	 * () => {}
 	 * ```
 	 */
-	readonly heightChange = output<number>({alias: 'auHeightChange'});
+	readonly heightChange = output<string>({alias: 'auHeightChange'});
 
 	/**
 	 * Event to be triggered when the visible property changes.
@@ -297,10 +296,10 @@ export class DrawerComponent extends BaseWidgetDirective<DrawerWidget> {
 				events: {
 					onHidden: () => this.hidden.emit(),
 					onShown: () => this.shown.emit(),
-					onWidthChange: (width: number) => {
+					onWidthChange: (width: string) => {
 						this.widthChange.emit(width);
 					},
-					onHeightChange: (height: number) => {
+					onHeightChange: (height: string) => {
 						this.heightChange.emit(height);
 					},
 					onVisibleChange: (event) => this.visibleChange.emit(event),

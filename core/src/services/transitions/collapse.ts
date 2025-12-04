@@ -61,6 +61,10 @@ export const createCollapseTransition = ({
 	createCSSTransition((element, direction, animated, context: CollapseContext) => {
 		if (animated && isBrowserHTMLElement(element)) {
 			let {maxSize, minSize} = context;
+			debugger;
+			console.log(`🔴(DEBUG)    [collapse.ts:69]: element: `, element, element.className);
+			console.log(`🔴(DEBUG)    [collapse.ts:69]: HTML: `, element.outerHTML);
+			console.log(`🔴(DEBUG)    [collapse.ts:64] (avant) `, {maxSize, minSize});
 
 			if (!maxSize) {
 				// measure the element in its show state
@@ -79,11 +83,13 @@ export const createCollapseTransition = ({
 				minSize = element.getBoundingClientRect()[dimension] + 'px';
 				context.minSize = minSize;
 			}
+			console.log(`🔴(DEBUG)    [collapse.ts:64] (après) `, {maxSize, minSize});
 
 			removeClasses(element, showClasses);
 			removeClasses(element, hideClasses);
 
 			const values = direction === 'show' ? [minSize, maxSize] : [maxSize, minSize];
+			console.log(`🔴(DEBUG)    [collapse.ts:90]: element.style[dimension]: `, element.style[dimension]);
 			element.style[dimension] = values[0];
 			reflow(element); // explicitly applies the initial state
 			addClasses(element, animationPendingClasses);

@@ -142,7 +142,7 @@ export interface SSRHTMLElement extends Pick<HTMLElement, 'setAttribute' | 'remo
 	/**
 	 * Object allowing to manipulate the style of the element.
 	 */
-	style: Partial<Record<StyleKey, StyleValue>>;
+	style: Pick<HTMLElement['style'], 'setProperty' | 'removeProperty'>;
 }
 
 /**
@@ -250,16 +250,7 @@ export type AttributeValue = string | number | boolean | undefined;
  */
 export type StyleKey = Exclude<
 	keyof CSSStyleDeclaration,
-	| 'length'
-	| 'item'
-	| 'parentRule'
-	| 'getPropertyValue'
-	| 'getPropertyPriority'
-	| 'setProperty'
-	| 'removeProperty'
-	| typeof Symbol.iterator
-	| number
-	| 'cssText'
+	'length' | 'item' | 'parentRule' | 'getPropertyValue' | 'getPropertyPriority' | typeof Symbol.iterator | number | 'cssText'
 >;
 
 /**

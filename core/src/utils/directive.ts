@@ -483,7 +483,7 @@ xw
 	 * @remarks
 	 * Key-value pairs where keys are CSS style properties and values are style values.
 	 */
-	styles?: Partial<Record<StyleKey, ReadableSignal<StyleValue>>>;
+	styles?: Partial<Record<string, ReadableSignal<StyleValue>>>;
 
 	/**
 	 * Class names to be added to an HTML element.
@@ -540,6 +540,7 @@ export const createAttributesDirective =
 			unsubscribers.push(bindClassName(node, className, value));
 		}
 
+		console.log(`🔴(DEBUG)    [directive.ts:545]: createAttributesDirective: `, (node as HTMLElement).outerHTML);
 		return {
 			update: (args: T) => args$.set(args),
 			destroy: () => unsubscribers.forEach((fn) => fn()),
