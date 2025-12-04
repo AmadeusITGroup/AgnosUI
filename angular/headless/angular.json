@@ -20,6 +20,7 @@
 					"options": {
 						"include": ["src/**/*.spec.ts"],
 						"providersFile": "test-providers.ts",
+						"setupFiles": ["setup-test.ts"],
 						"buildTarget": ":build",
 						"browsers": ["ChromiumHeadless"]
 					},
