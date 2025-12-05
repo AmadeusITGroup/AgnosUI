@@ -142,7 +142,7 @@ export interface SSRHTMLElement extends Pick<HTMLElement, 'setAttribute' | 'remo
 	/**
 	 * Object allowing to manipulate the style of the element.
 	 */
-	style: Partial<Record<StyleKey, StyleValue>>;
+	style: Partial<Record<StyleKey, StyleValue>> & Pick<HTMLElement['style'], 'setProperty' | 'removeProperty'>;
 }
 
 /**
@@ -242,6 +242,10 @@ export type ConfigValidator<T extends object> = {[K in keyof T]: WritableWithDef
  */
 export type AttributeValue = string | number | boolean | undefined;
 
+type CamelToKebab<S extends string> = S extends `${infer Head}${infer Tail}`
+	? `${Head extends Lowercase<Head> ? Head : `-${Lowercase<Head>}`}${CamelToKebab<Tail>}`
+	: S;
+
 /**
  * Represents a key of the CSSStyleDeclaration interface, excluding certain properties and methods.
  *
@@ -249,14 +253,14 @@ export type AttributeValue = string | number | boolean | undefined;
  * dealing with the methods and other non-style properties of CSSStyleDeclaration.
  */
 export type StyleKey = Exclude<
-	keyof CSSStyleDeclaration,
+	keyof CSSStyleDeclaration | CamelToKebab<keyof CSSStyleDeclaration & string> | `--${string}`,
 	| 'length'
 	| 'item'
 	| 'parentRule'
-	| 'getPropertyValue'
-	| 'getPropertyPriority'
 	| 'setProperty'
 	| 'removeProperty'
+	| 'getPropertyValue'
+	| 'getPropertyPriority'
 	| typeof Symbol.iterator
 	| number
 	| 'cssText'
