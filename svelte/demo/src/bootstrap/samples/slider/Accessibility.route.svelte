@@ -18,7 +18,7 @@
 	import {Slider} from '@agnos-ui/svelte-bootstrap/components/slider';
 	import {SvelteDate} from 'svelte/reactivity';
 
-	let sliderValues = $state([MIN, MAX]);
+	let sliderValues = $state([1733266800000, 1735340400000]);
 </script>
 
 <span id="labelID">Date range</span>

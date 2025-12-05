@@ -18,7 +18,7 @@ const ariaValueText = (value: number, index: number) => {
 const label = ({value}: SliderSlotLabelContext) => new Date(value).toLocaleDateString('en-GB', {dateStyle: 'medium', timeZone: 'UTC'});
 
 const AccessibilitySliderDemo = () => {
-	const [sliderValues, setSliderValues] = useState([MIN, MAX]);
+	const [sliderValues, setSliderValues] = useState([1733266800000, 1735340400000]);
 
 	return (
 		<>
