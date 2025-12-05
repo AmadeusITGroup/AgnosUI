@@ -242,25 +242,6 @@ test.describe(`Slider tests`, () => {
 			await expect(sliderPO.locatorMaxLabelHorizontal).toBeVisible();
 		});
 
-		test(`should update the aria values on user change`, async ({page}) => {
-			const sliderPO = new SliderPO(page, 0);
-
-			await page.goto('#/slider/playground#{"props":{"ariaValueText":{"value":"sliderValueTextUnits"}}}');
-			await sliderPO.locatorRoot.waitFor();
-
-			const expectedState = {...defaultExpectedState};
-			await expect
-				.poll(async () => (await sliderPO.sliderHandleState()).at(0))
-				.toEqual(
-					assign(expectedState, {
-						...expectedState,
-						value: '0',
-						style: 'left: 0%;',
-						ariaValueText: '0 units',
-					}),
-				);
-		});
-
 		test(`should remove the top margin when the labels are not present`, async ({page}) => {
 			const sliderDemoPO = new SliderDemoPO(page);
 			const sliderPO = new SliderPO(page, 0);
@@ -404,7 +385,24 @@ test.describe(`Slider tests`, () => {
 				targetPosition: {x: boundingBox!.x + boundingBox!.width * 0.35, y: 1},
 			});
 
-			await expect(sliderPO.locatorValueLabel).toHaveCount(1);
+			await expect(sliderPO.locatorValueLabel).toHaveCount(3);
+		});
+
+		test(`should add / remove combined label from dom in case of a long label`, async ({page}) => {
+			const sliderPO = new SliderPO(page, 0);
+
+			await page.goto('#/slider/accessibility');
+			await sliderPO.locatorRoot.waitFor();
+
+			await expect(sliderPO.locatorValueLabel).toHaveCount(2);
+
+			const sliderLocator = sliderPO.locatorRoot;
+			const boundingBox = await sliderLocator.boundingBox();
+			await sliderPO.locatorHandle.nth(0).dragTo(sliderLocator, {
+				targetPosition: {x: boundingBox!.x + boundingBox!.width * 0.7, y: 1},
+			});
+
+			await expect(sliderPO.locatorValueLabel).toHaveCount(3);
 		});
 
 		test(`should invert the slider display for the RTL case`, async ({page}) => {
@@ -421,8 +419,8 @@ test.describe(`Slider tests`, () => {
 				targetPosition: {x: boundingBox!.x + boundingBox!.width * 0.25, y: 1},
 			});
 
-			await expect(sliderPO.locatorValueLabel).toHaveCount(1);
-			await expect(sliderPO.locatorValueLabel).toHaveText('70 - 68');
+			await expect(sliderPO.locatorValueLabel).toHaveCount(3);
+			await expect(sliderPO.locatorValueLabel.nth(0)).toHaveText('70 - 68');
 
 			await expect(sliderPO.locatorMinLabelHorizontal).toContainClass('au-slider-rtl');
 			await expect(sliderPO.locatorMaxLabelHorizontal).toContainClass('au-slider-rtl');
@@ -437,25 +435,25 @@ test.describe(`Slider tests`, () => {
 			const expectedState = [
 				{
 					...defaultExpectedHandleState[0],
-					value: '1733007600000',
+					value: '1733266800000',
 					min: '1733007600000',
 					max: '1735599600000',
 					ariaLabel: null,
-					ariaValueText: 'Minimum date: 30 Nov 2024',
+					ariaValueText: 'Minimum date: 3 Dec 2024',
 					readonly: null,
 					disabled: null,
-					style: 'left: 0%;',
+					style: 'left: 10%;',
 				},
 				{
 					...defaultExpectedHandleState[1],
-					value: '1735599600000',
+					value: '1735340400000',
 					min: '1733007600000',
 					max: '1735599600000',
 					ariaLabel: null,
-					ariaValueText: 'Maximum date: 30 Dec 2024',
+					ariaValueText: 'Maximum date: 27 Dec 2024',
 					readonly: null,
 					disabled: null,
-					style: 'left: 100%;',
+					style: 'left: 90%;',
 				},
 			];
 

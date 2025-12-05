@@ -188,7 +188,7 @@ export class SliderStructureDirective {
 			}
 			@for (item of state.sortedHandles(); track item.id; let i = $index) {
 				<ng-template [auSlot]="state.handle()" [auSlotProps]="{state, api, directives, item}" />
-				@if (state.showValueLabels() && !state.combinedLabelDisplay()) {
+				@if (state.showValueLabels()) {
 					<div [auUse]="[directives.handleLabelDisplayDirective, {index: i}]">
 						<ng-template [auSlot]="state.label()" [auSlotProps]="{state, api, directives, value: state.values()[i]}" />
 					</div>
