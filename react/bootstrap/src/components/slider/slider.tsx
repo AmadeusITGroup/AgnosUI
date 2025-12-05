@@ -121,7 +121,7 @@ export const SliderDefaultSlotStructure = (slotContext: SliderContext) => (
 		{slotContext.state.sortedHandles.map((item, i) => (
 			<React.Fragment key={item.id}>
 				<Slot slotContent={slotContext.state.handle} props={{item, ...slotContext}} />
-				{slotContext.state.showValueLabels && !slotContext.state.combinedLabelDisplay && (
+				{slotContext.state.showValueLabels && (
 					<HandleLabelDisplay directive={slotContext.directives.handleLabelDisplayDirective} index={i}>
 						<Slot slotContent={slotContext.state.label} props={{value: slotContext.state.values[i], ...slotContext}} />
 					</HandleLabelDisplay>
