@@ -1,4 +1,32 @@
-import type {SSRHTMLElement, StyleKey, StyleValue} from '../../types';
+import type {SSRHTMLElement} from '../../types';
+
+const ssrHTMLElementStyle: unique symbol = Symbol('style');
+class SSRStyle {
+	[ssrHTMLElementStyle]() {
+		return {...this};
+	}
+
+	setProperty(property: string, value: string | null, priority?: string) {
+		if (!value) {
+			this.removeProperty(property);
+		} else {
+			if (priority !== 'important' && priority !== '' && priority != null) {
+				return;
+			}
+
+			if (priority) {
+				value += ' !important';
+			}
+			(this as any)[property] = value;
+		}
+	}
+
+	removeProperty(property: string): string {
+		const value = (this as any)[property] ?? '';
+		delete (this as any)[property];
+		return value;
+	}
+}
 
 /**
  * A unique symbol used to represent the attributes and style of an SSR (Server-Side Rendering) HTML element.
@@ -14,7 +42,7 @@ const spaceRegExp = /\s+/;
  */
 export const ssrHTMLElement = (): SSRHTMLElement => {
 	const attributes: Record<string, string> = {};
-	const style: Partial<Record<StyleKey, StyleValue>> = {};
+	const style = new SSRStyle();
 	let classNames = new Set<string>();
 
 	const toggleClass = (className: string, force = !classNames.has(className)) => {
@@ -57,7 +85,7 @@ export const ssrHTMLElement = (): SSRHTMLElement => {
 		},
 
 		[ssrHTMLElementAttributesAndStyle as any]() {
-			return {attributes: {...attributes}, classNames: [...classNames], style: {...style}};
+			return {attributes: {...attributes}, classNames: [...classNames], style: style[ssrHTMLElementStyle]()};
 		},
 	};
 };
