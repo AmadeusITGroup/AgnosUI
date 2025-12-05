@@ -639,6 +639,7 @@ export const createSlider: WidgetFactory<SliderWidget> = createWidgetFactory('sl
 	const {directive: combinedLabelDomDirective, element$: combinedLabelDom$} = createBrowserStoreDirective();
 	const {directive: handleLabelDirective, elements$: currentLabelDoms$} = createBrowserStoreArrayDirective();
 	const {directive: resizeDirective, dimensions$} = createResizeObserver();
+	const {directive: resizeCombineLabelDirective, dimensions$: combinedDimensions$} = createResizeObserver();
 
 	const updateSliderSize$ = writable({});
 	const currentLabelDomsRect$ = computed(
@@ -725,9 +726,12 @@ export const createSlider: WidgetFactory<SliderWidget> = createWidgetFactory('sl
 	 */
 	const pixelToPercent = (pixels: number | undefined) => (pixels ? (pixels / sliderDomRectSize$()) * 100 : 0);
 
-	const combinedLabelSize$ = computed(() =>
-		pixelToPercent(vertical$() ? combinedLabelDom$()?.getBoundingClientRect().height : combinedLabelDom$()?.getBoundingClientRect().width),
-	);
+	const combinedLabelSize$ = computed(() => {
+		const element = combinedLabelDom$();
+		combinedDimensions$();
+		return pixelToPercent(vertical$() ? element?.getBoundingClientRect().height : element?.getBoundingClientRect().width);
+	});
+
 	const combinedLabelPosition$ = computed(() => (vertical$() ? combinedLabelPositionTop$() : combinedLabelPositionLeft$()));
 	const currentLabelSizeByIndex = (index: number) =>
 		pixelToPercent(vertical$() ? currentLabelDomsRect$()[index]?.height : currentLabelDomsRect$()[index]?.width);
@@ -775,28 +779,65 @@ export const createSlider: WidgetFactory<SliderWidget> = createWidgetFactory('sl
 			: sortedValuesPercent[sortedValuesPercent.length - 1] + currentLabelSizeByIndex(sortedValuesPercent.length - 1) / 2 < 100 - maxLabelSize - 1;
 	});
 
-	// contains the size of the labels even when the `currentLabelDomRect$` doesn't have anything as `combinedLabel` is shown
-	const storedLabelSize$ = writable<number[]>([]);
 	const combinedLabelDisplay$ = computed(() => {
-		const values = sortedValuesPercent$();
-		if (currentLabelDomsRect$().length === values.length) {
-			storedLabelSize$.set(values.map((_, index) => currentLabelSizeByIndex(index) / 2));
+		const currentLabelDomsRect = currentLabelDomsRect$();
+		if (currentLabelDomsRect.length == 2) {
+			return doLabelsIntersect(currentLabelDomsRect[0], currentLabelDomsRect[1]);
 		}
-		const storedLabelSize = storedLabelSize$();
-		const firstLabelSize = storedLabelSize?.[0] ?? 0;
-		const secondLabelSize = storedLabelSize?.[1] ?? 0;
-		const biggestLabelSize = Math.max(firstLabelSize, secondLabelSize);
-		// if the label is taking 50% it means that the initial rendering wasn't finished and getBoundingClientRect returns the size of the slider container
-		const intersectionLimit = biggestLabelSize !== 50 ? biggestLabelSize * 2 + 2 : 15;
-		return values.length == 2 && values[1] - secondLabelSize - values[0] + firstLabelSize < intersectionLimit;
+		return false;
 	});
+
+	/**
+	 * Utility to check whether two labels intersect
+	 * @param rect1 DOMRect of the first label
+	 * @param rect2 DOMRect of the second label
+	 * @returns `true` if the labels overlap, `false` otherwise
+	 */
+	function doLabelsIntersect(rect1: DOMRect, rect2: DOMRect): boolean {
+		const emptyRect = new DOMRect();
+		if (rect1 === emptyRect || rect2 === emptyRect) {
+			return false;
+		}
+
+		const vertical = vertical$();
+		const handleOptions = handleDisplayOptions$();
+
+		// Get positions (already adjusted to slider bounds by labelPosition)
+		const labelPosition1 = labelPosition(handleOptions[0][vertical ? 'top' : 'left'], 0);
+		const labelPosition2 = labelPosition(handleOptions[1][vertical ? 'top' : 'left'], 1);
+
+		if (labelPosition1 === null || labelPosition2 === null) {
+			return false;
+		}
+
+		// Get label sizes in percent
+		const labelSize1 = currentLabelSizeByIndex(0);
+		const labelSize2 = currentLabelSizeByIndex(1);
+
+		// Calculate edges in percent (labels are centered on position)
+		const labelStart1 = labelPosition1 - labelSize1 / 2;
+		const labelEnd1 = labelPosition1 + labelSize1 / 2;
+		const labelStart2 = labelPosition2 - labelSize2 / 2;
+		const labelEnd2 = labelPosition2 + labelSize2 / 2;
+
+		// Check if ranges overlap
+		return !(labelEnd1 < labelStart2 || labelStart1 > labelEnd2);
+	}
+
 	const interactive$ = computed(() => !disabled$() && !readonly$());
 
 	const combinedLabelPositionLeft$ = computed(() => {
 		const sortedValuesPercent = sortedValuesPercent$();
-		const combinedPosition = (sortedValuesPercent[0] + sortedValuesPercent[1]) / 2;
+		const combinedLabelSize = combinedLabelSize$();
+		let combinedPosition = (sortedValuesPercent[0] + sortedValuesPercent[1]) / 2;
+		if (combinedPosition < combinedLabelSize / 2) {
+			combinedPosition = combinedLabelSize / 2;
+		} else if (combinedPosition > 100 - combinedLabelSize / 2) {
+			combinedPosition = 100 - combinedLabelSize / 2;
+		}
 		return vertical$() || sortedValuesPercent.length != 2 ? 0 : rtl$() ? 100 - combinedPosition : combinedPosition;
 	});
+
 	const combinedLabelPositionTop$ = computed(() => {
 		const sortedValuesPercent = sortedValuesPercent$();
 		const combinedPosition = 100 - (sortedValuesPercent[0] + sortedValuesPercent[1]) / 2;
@@ -813,6 +854,26 @@ export const createSlider: WidgetFactory<SliderWidget> = createWidgetFactory('sl
 			};
 		});
 	});
+
+	/**
+	 * Computes the label position inside the slider bounds
+	 * @param position actual label position
+	 * @param index index on the label in the array in the DOM
+	 * @returns position of the label within the slider bounds
+	 */
+	const labelPosition = (position: number | null, index: number) => {
+		if (position === null) {
+			return null;
+		}
+		let percentPos = position;
+		const currentLabelSize = currentLabelSizeByIndex(index);
+		if (percentPos < currentLabelSize / 2) {
+			percentPos = currentLabelSize / 2;
+		} else if (percentPos > 100 - currentLabelSize / 2) {
+			percentPos = 100 - currentLabelSize / 2;
+		}
+		return percentPos;
+	};
 
 	const progressDisplayOptions$ = computed(() => {
 		const vertical = vertical$(),
@@ -1246,6 +1307,7 @@ export const createSlider: WidgetFactory<SliderWidget> = createWidgetFactory('sl
 			minLabelDirective: mergeDirectives(minLabelDomDirective, minLabelDirective),
 			maxLabelDirective: mergeDirectives(maxLabelDomDirective, maxLabelDirective),
 			combinedHandleLabelDisplayDirective: mergeDirectives(
+				resizeCombineLabelDirective,
 				combinedLabelDomDirective,
 				createAttributesDirective(() => ({
 					classNames: {
@@ -1273,8 +1335,9 @@ export const createSlider: WidgetFactory<SliderWidget> = createWidgetFactory('sl
 						'au-slider-label-now': horizontal$,
 					},
 					styles: {
-						left: computed(() => percent(handleDisplayOptions$()[labelDisplayContext$().index].left)),
+						left: computed(() => percent(labelPosition(handleDisplayOptions$()[labelDisplayContext$().index].left, labelDisplayContext$().index))),
 						top: computed(() => percent(handleDisplayOptions$()[labelDisplayContext$().index].top)),
+						opacity: computed(() => (combinedLabelDisplay$() ? '0' : '1')),
 					},
 					attributes: {
 						'aria-hidden': readable('true'),
