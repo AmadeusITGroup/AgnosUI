@@ -82,7 +82,7 @@
 		"wireit": "^0.14.9"
 	},
 	"optionalDependencies": {
-		"@esbuild/darwin-arm64": "0.27.0",
+		"@esbuild/darwin-arm64": "0.27.1",
 		"@lmdb/lmdb-win32-x64": "3.4.4",
 		"@parcel/watcher-android-arm64": "2.5.1",
 		"@parcel/watcher-darwin-arm64": "2.5.1",
