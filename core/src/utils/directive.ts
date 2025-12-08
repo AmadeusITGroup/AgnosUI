@@ -1,10 +1,19 @@
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {asReadable, batch, readable, writable, computed} from '@amadeus-it-group/tansu';
 import {BROWSER} from 'esm-env';
-import type {AttributeValue, Directive, DirectivesAndOptParam, SSRHTMLElement, StyleKey, StyleValue} from '../types';
+import type {
+	AttributeValue,
+	Directive,
+	DirectivesAndOptParam,
+	SSRHTMLElement,
+	StyleKey,
+	StyleKeyCustomProperty,
+	StyleKeyKebabCase,
+	StyleValue,
+} from '../types';
 import {addEvent, bindAttribute, bindClassName, bindStyle} from './internal/dom';
 import {noop} from './func';
-import {ssrHTMLElement, ssrHTMLElementAttributesAndStyle} from './internal/ssrHTMLElement';
+import {cssTextFromObject, ssrHTMLElement, ssrHTMLElementAttributesAndStyle} from './internal/ssrHTMLElement';
 import {clsx, type ClassValue} from 'clsx';
 
 /**
@@ -562,7 +571,7 @@ export const attributesData = <T extends any[]>(
 ): {
 	attributes: Record<string, string>;
 	classNames: string[];
-	style: Partial<Record<StyleKey, StyleValue>>;
+	style: Partial<Record<StyleKeyKebabCase | StyleKeyCustomProperty, StyleValue>>;
 } => {
 	const instances = [];
 	try {
@@ -601,10 +610,7 @@ export function directiveAttributes<T extends any[]>(...directives: DirectivesAn
 	if (classNames.length) {
 		attributes['class'] = classNames.join(' ');
 	}
-	const stringStyle = Object.entries(style)
-		.filter(([, value]) => !!value)
-		.map(([name, value]) => `${name}: ${value};`)
-		.join('');
+	const stringStyle = cssTextFromObject(style);
 	if (stringStyle.length) {
 		attributes['style'] = stringStyle;
 	}

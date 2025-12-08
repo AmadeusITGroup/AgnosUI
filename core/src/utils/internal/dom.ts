@@ -1,6 +1,6 @@
 import type {ReadableSignal, UnsubscribeFunction, UnsubscribeObject} from '@amadeus-it-group/tansu';
 import {BROWSER} from 'esm-env';
-import type {AttributeValue, SSRHTMLElement, StyleKey, StyleValue} from '../../types';
+import type {AttributeValue, SSRHTMLElement, StyleKey, StyleKeyCustomProperty, StyleValue} from '../../types';
 import {isBrowserHTMLElement} from '../directive';
 import {noop} from '../func';
 
@@ -169,6 +169,8 @@ export function bindAttribute(
 		: attributeSubscribe(node, attributeName, value$);
 }
 
+const isCustomProperty = (styleName: StyleKey): styleName is StyleKeyCustomProperty => styleName.startsWith('--');
+
 /**
  * Binds a value from a `ReadableSignal` to the specified CSS style property of an HTML element.
  * When the value emitted by the signal changes, it updates the style property accordingly.
@@ -183,9 +185,8 @@ export function bindAttribute(
 export function bindStyle(node: SSRHTMLElement, styleName: StyleKey, value$: ReadableSignal<StyleValue>): UnsubscribeFunction & UnsubscribeObject {
 	return value$.subscribe((value) => {
 		const style = node.style;
-		const isCssVariable = styleName.startsWith('--');
 		value = '' + (notEmpty(value) ? value : '');
-		if (isCssVariable) {
+		if (isCustomProperty(styleName)) {
 			style.setProperty(styleName, value);
 		} else {
 			style[styleName] = value;

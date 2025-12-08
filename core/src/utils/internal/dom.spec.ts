@@ -120,6 +120,39 @@ describe('computeCommonAncestor', () => {
 		expect(getAttributes(node)).toStrictEqual(expectedState);
 	});
 
+	test('bindStyle (custom property)', () => {
+		const node = document.createElement('div');
+		const a$ = writable(<any>'value1');
+
+		const unbind = bindStyle(node, '--my-custom-prop', a$);
+
+		const expectedState: Record<string, string> = {style: '--my-custom-prop: value1;'};
+		expect(getAttributes(node)).toStrictEqual(expectedState);
+
+		a$.set('value2');
+		expect(getAttributes(node)).toStrictEqual(assign(expectedState, {style: '--my-custom-prop: value2;'}));
+
+		a$.set('');
+		expect(getAttributes(node)).toStrictEqual(assign(expectedState, {style: ''}));
+
+		a$.set('a');
+		a$.set(false);
+		expect(getAttributes(node)).toStrictEqual(expectedState);
+
+		a$.set('a');
+		a$.set(undefined);
+		expect(getAttributes(node)).toStrictEqual(expectedState);
+
+		a$.set('a');
+		a$.set(null);
+		expect(getAttributes(node)).toStrictEqual(expectedState);
+
+		unbind();
+
+		a$.set('changes');
+		expect(getAttributes(node)).toStrictEqual(expectedState);
+	});
+
 	test('bindClassName', () => {
 		const node = document.createElement('div');
 		const a$ = writable(<boolean>true);

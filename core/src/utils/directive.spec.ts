@@ -573,5 +573,28 @@ describe('directive', () => {
 			const mergedDirective = mergeDirectives(directive1, directive2);
 			expect(directiveAttributes(mergedDirective), 'should work the same with mergeDirectives').toStrictEqual(expectedState);
 		});
+
+		test('should work with CSS custom properties', () => {
+			const myCustomProp1$ = writable('value1');
+			const myCustomProp2$ = writable('value2');
+			const myCustomProp3$ = writable('value3');
+			const myCustomProp4$ = writable('value4');
+			const myCustomProp5$ = writable('value5' as string | null);
+
+			const directive = createAttributesDirective(() => ({
+				styles: {
+					'--my-custom-prop-1': myCustomProp1$,
+					'--myCustom-prop-2': myCustomProp2$,
+					'--my Custom Prop3': myCustomProp3$,
+					'--my:custom;Prop4': myCustomProp4$,
+					'--to-be-removed': myCustomProp5$,
+				},
+			}));
+
+			myCustomProp5$.set(null);
+			expect(directiveAttributes(directive)).toStrictEqual({
+				style: '--my-custom-prop-1: value1;--myCustom-prop-2: value2;--my\\ Custom\\ Prop3: value3;--my\\:custom\\;Prop4: value4;',
+			});
+		});
 	});
 });

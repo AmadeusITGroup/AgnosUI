@@ -1,30 +1,72 @@
-import type {SSRHTMLElement} from '../../types';
+import type {SSRHTMLElement, StyleKeyCustomProperty, StyleKeyKebabCase, StyleValue} from '../../types';
+
+const importantSuffixRegExp = /\s*!important$/;
+const withoutImportant = (value: string | undefined): string => value?.replace(importantSuffixRegExp, '') ?? '';
+
+const toKebabCase = (str: string) => str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+
+const getStyleKeyFromDirectProp = (str: string | symbol): undefined | StyleKeyKebabCase => {
+	if (typeof str !== 'string' || str.startsWith('--')) {
+		return undefined;
+	}
+	return toKebabCase(str) as StyleKeyKebabCase;
+};
+
+const getStyleKeyFromMethods = (str: string): undefined | StyleKeyKebabCase => {
+	if (!str.startsWith('--') && str !== toKebabCase(str)) {
+		return undefined;
+	}
+	return str as StyleKeyKebabCase;
+};
 
 const ssrHTMLElementStyle: unique symbol = Symbol('style');
 class SSRStyle {
-	[ssrHTMLElementStyle]() {
-		return {...this};
+	// all styles in kebab-case, including custom properties:
+	[ssrHTMLElementStyle]: Partial<Record<StyleKeyKebabCase | StyleKeyCustomProperty, string>> = {};
+
+	constructor() {
+		return new Proxy(this, {
+			get: (target, prop) => {
+				const styleKey = prop in target ? undefined : getStyleKeyFromDirectProp(prop);
+				if (styleKey) {
+					return withoutImportant(target[ssrHTMLElementStyle][styleKey]);
+				} else {
+					return (target as any)[prop];
+				}
+			},
+			set: (target, prop, value) => {
+				const styleKey = prop in target ? undefined : getStyleKeyFromDirectProp(prop);
+				if (styleKey) {
+					target.setProperty(styleKey, value);
+				} else {
+					(target as any)[prop] = value;
+				}
+				return true;
+			},
+		});
 	}
 
 	setProperty(property: string, value: string | null, priority?: string) {
 		if (!value) {
 			this.removeProperty(property);
-		} else {
-			if (priority !== 'important' && priority !== '' && priority != null) {
-				return;
-			}
-
-			if (priority) {
-				value += ' !important';
-			}
-			(this as any)[property] = value;
+			return;
 		}
+		const key = getStyleKeyFromMethods(property);
+		if (!key || (priority !== 'important' && priority !== '' && priority != null) || importantSuffixRegExp.test(value)) {
+			return;
+		}
+		this[ssrHTMLElementStyle][key] = value + (priority ? ' !important' : '');
 	}
 
 	removeProperty(property: string): string {
-		const value = (this as any)[property] ?? '';
-		delete (this as any)[property];
-		return value;
+		const key = getStyleKeyFromMethods(property);
+		if (!key) {
+			return '';
+		}
+		const style = this[ssrHTMLElementStyle];
+		const value = style[key];
+		delete style[key];
+		return withoutImportant(value);
 	}
 }
 
@@ -85,7 +127,20 @@ export const ssrHTMLElement = (): SSRHTMLElement => {
 		},
 
 		[ssrHTMLElementAttributesAndStyle as any]() {
-			return {attributes: {...attributes}, classNames: [...classNames], style: style[ssrHTMLElementStyle]()};
+			return {attributes: {...attributes}, classNames: [...classNames], style: {...style[ssrHTMLElementStyle]}};
 		},
 	};
 };
+
+const cssEscapeStyleName = (styleName: string): string => styleName.replace(/([^\w-])/gi, '\\$1');
+
+/**
+ * Converts a style object to a CSS text string.
+ * @param style - The style object to convert.
+ * @returns The CSS text string representation of the style object.
+ */
+export const cssTextFromObject = (style: Partial<Record<StyleKeyKebabCase | StyleKeyCustomProperty, StyleValue>>): string =>
+	Object.entries(style)
+		.filter(([, value]) => !!value)
+		.map(([name, value]) => `${cssEscapeStyleName(name)}: ${value};`)
+		.join('');

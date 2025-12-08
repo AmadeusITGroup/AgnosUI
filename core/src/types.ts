@@ -142,7 +142,7 @@ export interface SSRHTMLElement extends Pick<HTMLElement, 'setAttribute' | 'remo
 	/**
 	 * Object allowing to manipulate the style of the element.
 	 */
-	style: Partial<Record<StyleKey, StyleValue>> & Pick<HTMLElement['style'], 'setProperty' | 'removeProperty'>;
+	style: Partial<Record<StyleKeyCamelCase | StyleKeyKebabCase, StyleValue>> & Pick<HTMLElement['style'], 'setProperty' | 'removeProperty'>;
 }
 
 /**
@@ -247,24 +247,44 @@ type CamelToKebab<S extends string> = S extends `${infer Head}${infer Tail}`
 	: S;
 
 /**
- * Represents a key of the CSSStyleDeclaration interface, excluding certain properties and methods.
+ * Represents a key of the CSSStyleDeclaration interface (in camelCase), excluding certain properties and methods.
  *
  * This is useful for scenarios where you need to work with CSS properties directly without
  * dealing with the methods and other non-style properties of CSSStyleDeclaration.
  */
-export type StyleKey = Exclude<
-	keyof CSSStyleDeclaration | CamelToKebab<keyof CSSStyleDeclaration & string> | `--${string}`,
+export type StyleKeyCamelCase = Exclude<
+	keyof CSSStyleDeclaration,
 	| 'length'
 	| 'item'
 	| 'parentRule'
-	| 'setProperty'
-	| 'removeProperty'
 	| 'getPropertyValue'
 	| 'getPropertyPriority'
+	| 'setProperty'
+	| 'removeProperty'
 	| typeof Symbol.iterator
 	| number
 	| 'cssText'
 >;
+
+/**
+ * Represents a key of the CSSStyleDeclaration interface, converted to kebab-case, excluding certain properties and methods.
+ *
+ * This is useful for scenarios where you need to work with CSS properties directly without
+ * dealing with the methods and other non-style properties of CSSStyleDeclaration.
+ */
+export type StyleKeyKebabCase = CamelToKebab<StyleKeyCamelCase>;
+
+/**
+ * Represents a CSS custom property key.
+ * CSS custom properties are defined using the `--` prefix.
+ */
+export type StyleKeyCustomProperty = `--${string}`;
+
+/**
+ * Represents a key that can be used for styling purposes.
+ * This includes camelCase style keys, kebab-case style keys, and CSS custom property keys.
+ */
+export type StyleKey = StyleKeyCamelCase | StyleKeyKebabCase | StyleKeyCustomProperty;
 
 /**
  * Represents a value that can be used for styling purposes.
