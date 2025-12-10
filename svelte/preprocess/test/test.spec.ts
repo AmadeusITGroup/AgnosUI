@@ -15,6 +15,10 @@ for (const [filename, readFile] of Object.entries(testSourceFiles)) {
 		const transformedFile = await preprocess(fileContent, [directivesPreprocess()], {filename});
 		// check that compiler doesn't throw:
 		compile(transformedFile.code, {});
-		await expect(transformedFile.code).toMatchFileSnapshot(join(transformedFilesFolder, basename(filename)));
+
+		// normalize EOL to LF and trim trailing spaces to avoid invisible snapshot diffs
+		const normalizedCode = transformedFile.code.replace(/\r\n/g, '\n').replace(/[ \t]+$/gm, '');
+
+		await expect(normalizedCode).toMatchFileSnapshot(join(transformedFilesFolder, basename(filename)));
 	});
 }
