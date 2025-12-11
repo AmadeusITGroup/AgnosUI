@@ -31,7 +31,7 @@
 		"npm": "^11.5.0",
 		"node": "^24.10.0"
 	},
-	"packageManager": "npm@10.9.4",
+	"packageManager": "npm@11.7.0",
 	"devDependencies": {
 		"@amadeus-it-group/kassette": "^1.7.1",
 		"@angular-devkit/build-angular": "^21.0.0",
