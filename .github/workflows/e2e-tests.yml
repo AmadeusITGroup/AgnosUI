@@ -9,7 +9,7 @@ jobs:
       matrix:
         shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: '24.x'
@@ -25,7 +25,7 @@ jobs:
             mkdir -p coverage/e2e-${{ matrix.shard }}
             mv e2e/coverage/lcov.info coverage/e2e-${{ matrix.shard }}/lcov.info
           fi
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: e2e-test-${{ matrix.shard }}
           path: |
@@ -39,8 +39,8 @@ jobs:
       id-token: write
       contents: read
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/download-artifact@v5
+      - uses: actions/checkout@v6
+      - uses: actions/download-artifact@v6
         with:
           pattern: e2e-test-*
           merge-multiple: true
@@ -55,7 +55,7 @@ jobs:
           cache: 'npm'
           registry-url: 'https://registry.npmjs.org'
       - run: npx playwright merge-reports --reporter html ./blob-report
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: e2e-playwright-report
           path: playwright-report
