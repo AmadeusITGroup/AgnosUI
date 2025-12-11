@@ -1,3 +1,4 @@
+/* eslint-disable vitest/no-standalone-expect */
 import {describe, expect, test} from 'vitest';
 import {cssTextFromObject, ssrHTMLElement, ssrHTMLElementAttributesAndStyle} from './ssrHTMLElement';
 import type {SSRHTMLElement} from '../../types';

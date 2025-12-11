@@ -47,6 +47,8 @@ describe(`Rating`, () => {
 			hovers.length = 0;
 			leaves.length = 0;
 			unsubscribe();
+			// FIXME should be a text fixture instead, reused by all unit tests under core
+			// eslint-disable-next-line vitest/no-standalone-expect
 			expect(consoleErrorSpy).not.toHaveBeenCalled();
 			consoleErrorSpy.mockRestore();
 		});

@@ -462,7 +462,7 @@ describe(`Select model`, () => {
 				});
 
 				['Delete', 'Backspace'].forEach((key) => {
-					test.skip(`Remove selected with ${key}`, async () => {
+					test.todo(`Remove selected with ${key}`, async () => {
 						const {getState} = testCtx;
 						const expectedState = getState();
 						expect(expectedState.selectedContexts).toStrictEqual([

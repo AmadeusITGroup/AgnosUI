@@ -21,6 +21,7 @@
 		aspectRatio?: number;
 	} = $props();
 
+	// svelte-ignore state_referenced_locally
 	let photosWithLoadState = $state(photos.map((photo, index) => ({...photo, loadRequested: index === 0})));
 	$effect(() => {
 		photosWithLoadState = photos.map((photo, index) => ({...photo, loadRequested: index === 0}));

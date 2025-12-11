@@ -56,13 +56,15 @@ describe('promiseStateStore', () => {
 				const store = promiseStateStore(thenable);
 				expect(store()).toBe(promisePending);
 				reject(value);
+				let error;
 				try {
 					await thenable;
 					expect.fail('the promise should be rejected');
-				} catch (error) {
-					expect(error).toBe(value);
+				} catch (_error) {
+					error = _error;
 					// should pass here
 				}
+				expect(error).toBe(value);
 				let storeValue = store();
 				expect(storeValue.status).toBe('rejected');
 				expect((storeValue as PromiseRejectedResult).reason).toBe(value);

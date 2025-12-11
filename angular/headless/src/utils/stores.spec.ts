@@ -116,6 +116,7 @@ describe('toAngularSignals', () => {
 			await fixture.whenStable();
 			expect(fixture.nativeElement.textContent).toBe('1');
 			if (MyComponent === MyTestWithEffectComponent) {
+				// eslint-disable-next-line vitest/no-conditional-expect
 				expect(fixture.componentInstance.changes).toStrictEqual([1]);
 			}
 			const zone = TestBed.inject(NgZone);
@@ -128,6 +129,7 @@ describe('toAngularSignals', () => {
 			await fixture.whenStable();
 			expect(fixture.nativeElement.textContent).toBe('3');
 			if (MyComponent === MyTestWithEffectComponent) {
+				// eslint-disable-next-line vitest/no-conditional-expect
 				expect(fixture.componentInstance.changes).toStrictEqual([1, 3]);
 			}
 			fixture.destroy();
@@ -139,6 +141,7 @@ describe('toAngularSignals', () => {
 			await fixture.whenStable();
 			expect(fixture.nativeElement.textContent).toBe('1');
 			if (MyComponent === MyTestWithEffectComponent) {
+				// eslint-disable-next-line vitest/no-conditional-expect
 				expect(fixture.componentInstance.changes).toStrictEqual([1]);
 			}
 			expect(NgZone.isInAngularZone()).toBeFalsy();
@@ -147,6 +150,7 @@ describe('toAngularSignals', () => {
 			await fixture.whenStable();
 			expect(fixture.nativeElement.textContent).toBe('3');
 			if (MyComponent === MyTestWithEffectComponent) {
+				// eslint-disable-next-line vitest/no-conditional-expect
 				expect(fixture.componentInstance.changes).toStrictEqual([1, 3]);
 			}
 			fixture.destroy();
