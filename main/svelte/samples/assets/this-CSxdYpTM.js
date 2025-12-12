@@ -1,0 +1,1 @@
+import{a7 as b,a8 as t,a2 as c,ab as h,ac as k}from"./AppCommon-CTA2S8Vh.js";function u(a,s){return a===s||a?.[k]===s}function d(a={},s,f,S){return b(()=>{var i,r;return t(()=>{i=r,r=[],c(()=>{a!==f(...r)&&(s(a,...r),i&&u(f(...i),a)&&s(null,...i))})}),()=>{h(()=>{r&&u(f(...r),a)&&s(null,...r)})}}),a}export{d as b};

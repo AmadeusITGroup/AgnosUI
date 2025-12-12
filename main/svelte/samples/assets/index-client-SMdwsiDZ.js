@@ -1,0 +1,1 @@
+import{ah as a,ai as f,aj as b}from"./AppCommon-CTA2S8Vh.js";function g(r){let t;const c=f(e=>{let u=!1;const i=r.subscribe(s=>{t=s,u&&e()});return u=!0,i});function n(){return a()?(c(),t):b(r)}return"set"in r?{get current(){return n()},set current(e){r.set(e)}}:{get current(){return n()}}}export{g as f};
