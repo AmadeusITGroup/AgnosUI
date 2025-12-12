@@ -1795,11 +1795,14 @@ describe(`Slider range`, () => {
 		vi.spyOn(currentLowLabel, 'getBoundingClientRect').mockReturnValue({x: 10, y: 5, width: 5, height: 4} as DOMRect);
 		const currentHighLabel = document.createElement('div');
 		vi.spyOn(currentHighLabel, 'getBoundingClientRect').mockReturnValue({x: 10, y: 5, width: 5, height: 4} as DOMRect);
+		const combinedLabel = document.createElement('div');
+		vi.spyOn(combinedLabel, 'getBoundingClientRect').mockReturnValue({x: 10, y: 5, width: 20, height: 24} as DOMRect);
 		const sliderDirective = slider.directives.sliderDirective(sliderElement);
 		const minLabelDirective = slider.directives.minLabelDirective(minLabel);
 		const maxLabelDirective = slider.directives.maxLabelDirective(maxLabel);
 		const handleLabelDirectiveInstance1 = slider.directives.handleLabelDisplayDirective(currentLowLabel, {index: 0});
 		const handleLabelDirectiveInstance2 = slider.directives.handleLabelDisplayDirective(currentHighLabel, {index: 1});
+		const combinedLabelDirective = slider.directives.combinedHandleLabelDisplayDirective(combinedLabel);
 		normalizedState$ = computed(() => {
 			return normalizeState(slider.state$());
 		});
@@ -1810,6 +1813,7 @@ describe(`Slider range`, () => {
 			maxLabelDirective!.destroy?.();
 			handleLabelDirectiveInstance1!.destroy?.();
 			handleLabelDirectiveInstance2!.destroy?.();
+			combinedLabelDirective!.destroy?.();
 		};
 	});
 
@@ -2202,7 +2206,7 @@ describe(`Slider range`, () => {
 						top: null,
 					},
 				],
-				combinedLabelPositionLeft: 2.55,
+				combinedLabelPositionLeft: 10,
 				progressDisplayOptions: [
 					{
 						left: 0.1,
@@ -2414,6 +2418,35 @@ describe(`Slider range`, () => {
 			values: [45, 50, 60],
 		});
 		expect(normalizedState$().values).toStrictEqual([45, 55, 65]);
+	});
+
+	test(`should put the combined label within the slider margins`, () => {
+		slider.patch({
+			min: 100,
+			max: 200,
+			values: [100, 100],
+		});
+
+		expect(slider.state$().combinedLabelDisplay).toBe(true);
+		expect(slider.state$().combinedLabelPositionLeft).toBe(10);
+
+		slider.patch({
+			min: 100,
+			max: 200,
+			values: [150, 200],
+		});
+
+		expect(slider.state$().combinedLabelDisplay).toBe(false);
+		expect(slider.state$().combinedLabelPositionLeft).toBe(75);
+
+		slider.patch({
+			min: 100,
+			max: 200,
+			values: [200, 200],
+		});
+
+		expect(slider.state$().combinedLabelDisplay).toBe(true);
+		expect(slider.state$().combinedLabelPositionLeft).toBe(90);
 	});
 });
 
@@ -2835,5 +2868,74 @@ describe(`Slider vertical`, () => {
 				],
 			}),
 		);
+	});
+});
+
+describe(`Slider vertical range`, () => {
+	let slider: SliderWidget;
+	let defConfig: WritableSignal<Partial<SliderProps>>;
+
+	beforeEach(() => {
+		defConfig = writable({values: [30, 75], vertical: true});
+		slider = createSlider({config: computed(() => ({...defConfig()}))});
+		const sliderElement = document.createElement('div');
+		vi.spyOn(sliderElement, 'getBoundingClientRect').mockReturnValue({x: 10, y: 0, width: 4, height: 100, top: 0, left: 0} as DOMRect);
+		const minLabel = document.createElement('div');
+		vi.spyOn(minLabel, 'getBoundingClientRect').mockReturnValue({x: 20, y: 0, width: 3, height: 4} as DOMRect);
+		const maxLabel = document.createElement('div');
+		vi.spyOn(maxLabel, 'getBoundingClientRect').mockReturnValue({x: 20, y: 100, width: 3, height: 4} as DOMRect);
+		const combinedLabel = document.createElement('div');
+		vi.spyOn(combinedLabel, 'getBoundingClientRect').mockReturnValue({x: 10, y: 5, width: 20, height: 4} as DOMRect);
+		const currentLowLabel = document.createElement('div');
+		vi.spyOn(currentLowLabel, 'getBoundingClientRect').mockReturnValue({x: 10, y: 5, width: 5, height: 4} as DOMRect);
+		const currentHighLabel = document.createElement('div');
+		vi.spyOn(currentHighLabel, 'getBoundingClientRect').mockReturnValue({x: 10, y: 5, width: 5, height: 4} as DOMRect);
+		const sliderDirective = slider.directives.sliderDirective(sliderElement);
+		const minLabelDirective = slider.directives.minLabelDirective(minLabel);
+		const maxLabelDirective = slider.directives.maxLabelDirective(maxLabel);
+		const handleLabelDirectiveInstance1 = slider.directives.handleLabelDisplayDirective(currentLowLabel, {index: 0});
+		const handleLabelDirectiveInstance2 = slider.directives.handleLabelDisplayDirective(currentHighLabel, {index: 1});
+		const combinedLabelDirective = slider.directives.combinedHandleLabelDisplayDirective(combinedLabel);
+		slider.patch({
+			vertical: true,
+		});
+
+		return () => {
+			sliderDirective!.destroy?.();
+			minLabelDirective!.destroy?.();
+			maxLabelDirective!.destroy?.();
+			handleLabelDirectiveInstance1!.destroy?.();
+			handleLabelDirectiveInstance2!.destroy?.();
+			combinedLabelDirective!.destroy?.();
+		};
+	});
+
+	test(`should put the combined label within the slider margins`, () => {
+		slider.patch({
+			min: 100,
+			max: 200,
+			values: [100, 100],
+		});
+
+		expect(slider.state$().combinedLabelDisplay).toBe(true);
+		expect(slider.state$().combinedLabelPositionTop).toBe(100);
+
+		slider.patch({
+			min: 100,
+			max: 200,
+			values: [150, 200],
+		});
+
+		expect(slider.state$().combinedLabelDisplay).toBe(false);
+		expect(slider.state$().combinedLabelPositionTop).toBe(25);
+
+		slider.patch({
+			min: 100,
+			max: 200,
+			values: [200, 200],
+		});
+
+		expect(slider.state$().combinedLabelDisplay).toBe(true);
+		expect(slider.state$().combinedLabelPositionTop).toBe(0);
 	});
 });

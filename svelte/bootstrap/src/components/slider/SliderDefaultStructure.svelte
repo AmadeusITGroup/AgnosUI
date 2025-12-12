@@ -34,7 +34,7 @@
 {/each}
 {#each state.sortedHandles as item, i (item.id)}
 	<Slot content={state.handle} props={{item, ...widget}} />
-	{#if state.showValueLabels && !state.combinedLabelDisplay}
+	{#if state.showValueLabels}
 		<div use:directives.handleLabelDisplayDirective={{index: i}}>
 			<Slot content={state.label} props={{value: state.values[i], ...widget}} />
 		</div>

@@ -22,7 +22,7 @@ export default class AccessibilitySliderComponent {
 	readonly stepSize = 86400000; // 1 day in milliseconds
 	readonly min = 1733007600000; // 01-12-2024
 	readonly max = 1735599600000; // 31-12-2024
-	readonly sliderValues = signal([this.min, this.max]);
+	readonly sliderValues = signal([1733266800000, 1735340400000]);
 
 	readonly ariaLabelledBy = () => 'labelID';
 
