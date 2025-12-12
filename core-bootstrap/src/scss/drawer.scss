@@ -5,11 +5,36 @@
 	--#{$prefix}drawer-z-index: #{$au-drawer-z-index};
 	// scss-docs-end drawer-css-vars
 
-	display: flex;
+	display: inline-flex;
 	flex-direction: column;
+	overflow: hidden;
 	background: #fff;
 	box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
 	z-index: var(--#{$prefix}drawer-z-index);
+
+	--df-drawer-size: max-content;
+	--df-drawer-min-size: none;
+	--df-drawer-max-size: none;
+
+	width: 100%;
+	min-width: none;
+	max-width: none;
+	height: var(--df-drawer-size);
+	min-height: var(--df-drawer-min-size);
+	max-height: var(--df-drawer-max-size);
+
+	&.collapse-horizontal {
+		width: var(--df-drawer-size);
+		min-width: var(--df-drawer-min-size);
+		max-width: var(--df-drawer-max-size);
+		height: 100%;
+		min-height: none;
+		max-height: none;
+	}
+
+	.au-drawer-container {
+		width: max-content;
+	}
 
 	// Inline (left/right depending on writing direction)
 	&.inline-start {
@@ -45,6 +70,10 @@
 		padding: 0.75rem 1rem;
 		font-weight: 600;
 		border-bottom: 1px solid #e2e2e2;
+	}
+
+	.au-drawer-container {
+		display: inline-block;
 	}
 
 	.au-drawer-body {

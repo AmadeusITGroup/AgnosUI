@@ -13,10 +13,10 @@
 		},
 		defaultConfig: {structure},
 		events: {
-			onWidthChange: (value: number) => {
+			onWidthChange: (value: string) => {
 				width = value;
 			},
-			onHeightChange: (value: number) => {
+			onHeightChange: (value: string) => {
 				height = value;
 			},
 			onVisibleChange: (event) => {
