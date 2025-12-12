@@ -1,45 +1,76 @@
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
 import {derived} from '@amadeus-it-group/tansu';
-import {createBrowserStoreDirective} from '../utils/directive';
+import {browserDirective, createBrowserStoreArrayDirective} from '../utils/directive';
 import {noop} from '../utils/func';
 import type {Directive, SSRHTMLElement} from '../types';
 
 /**
- * Create a resize observer object
- * @returns An object containing the store with the dimentions of observed element (ResizeObserverEntry), the directive to be applied to the html element to be observed
+ * Create a resize observer that can be applied to multiple elements
+ * @returns An object containing the store with the dimensions map of observed elements (ResizeObserverEntry), the directive to be applied to the html element to be observed
+ */
+export const createResizeObserverMap = (): {
+	dimensionsMap$: ReadableSignal<Map<HTMLElement, ResizeObserverEntry>>;
+	directive: Directive<void, SSRHTMLElement>;
+} => {
+	const {elements$, directive} = createBrowserStoreArrayDirective();
+
+	const dimensionsMap$ = derived(
+		elements$,
+		(elements, set) => {
+			const dimensionsMap = new Map<HTMLElement, ResizeObserverEntry>();
+
+			if (elements.length === 0) {
+				set(dimensionsMap);
+				return noop;
+			}
+
+			const observer = new ResizeObserver((entries) => {
+				entries.forEach((entry) => dimensionsMap.set(entry.target as HTMLElement, entry));
+				set(dimensionsMap);
+			});
+
+			elements.forEach((element) => observer.observe(element));
+
+			return () => observer.disconnect();
+		},
+		new Map(),
+	);
+
+	return {dimensionsMap$, directive};
+};
+
+/**
+ * Create a resize observer object for a single element
+ * @returns An object containing the store with the dimensions of observed element (ResizeObserverEntry), the directive to be applied to the html element to be observed
  */
 export const createResizeObserver = (): {
 	dimensions$: ReadableSignal<ResizeObserverEntry | undefined>;
 	directive: Directive<void, SSRHTMLElement>;
 } => {
-	const {element$, directive} = createBrowserStoreDirective();
+	const {dimensionsMap$, directive: arrayDirective} = createResizeObserverMap();
+	let firstElement: HTMLElement | null = null;
 
-	const observedElement$ = derived<ResizeObserverEntry | undefined, ReadableSignal<HTMLElement | null>>(
-		element$,
-		(element, set) => {
-			if (element === null) {
-				return noop;
-			}
+	const directive: Directive<void, SSRHTMLElement> = browserDirective((element) => {
+		if (firstElement === null) {
+			firstElement = element;
+		} else {
+			console.error('createResizeObserver directive can only be applied to a single element. Use createResizeObserverArray for multiple elements.');
+			return;
+		}
 
-			const observer = new ResizeObserver((entries) => {
-				set(entries[0]);
-			});
+		const result = arrayDirective(element);
+		if (!result) return;
 
-			observer.observe(element);
+		const originalDestroy = result.destroy;
+		return {
+			...result,
+			destroy: () => {
+				firstElement = null;
+				originalDestroy?.();
+			},
+		};
+	});
 
-			return () => observer?.disconnect();
-		},
-		undefined,
-	);
-
-	return {
-		/**
-		 * Store which contains the dimensions of the observed element (ResizeObserverEntry type)
-		 * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserverEntry | MDN documentation}
-		 */
-		dimensions$: observedElement$,
-
-		/** Directive to be attached to html element in order to listen to resize events */
-		directive,
-	};
+	const dimensions$ = derived(dimensionsMap$, (map) => (firstElement ? map.get(firstElement) : undefined), undefined);
+	return {dimensions$, directive};
 };
