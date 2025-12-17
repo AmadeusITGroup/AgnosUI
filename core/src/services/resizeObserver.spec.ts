@@ -93,7 +93,7 @@ describe(`ResizeObserver service`, () => {
 
 		expect(consoleErrorSpy).toHaveBeenCalledOnce();
 		expect(consoleErrorSpy.mock.calls[0][0]).toBe(
-			'createResizeObserver directive can only be applied to a single element. Use createResizeObserverArray for multiple elements.',
+			'createResizeObserver directive can only be applied to a single element. Use createResizeObserverMap for multiple elements.',
 		);
 
 		//textarea default values
