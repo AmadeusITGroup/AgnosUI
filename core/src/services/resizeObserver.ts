@@ -54,7 +54,7 @@ export const createResizeObserver = (): {
 		if (firstElement === null) {
 			firstElement = element;
 		} else {
-			console.error('createResizeObserver directive can only be applied to a single element. Use createResizeObserverArray for multiple elements.');
+			console.error('createResizeObserver directive can only be applied to a single element. Use createResizeObserverMap for multiple elements.');
 			return;
 		}
 
