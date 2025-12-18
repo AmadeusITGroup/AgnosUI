@@ -22,26 +22,19 @@ export function getAttributes(node: HTMLElement) {
  * @param args - the args of the directive
  * @param sendEvent - the event dispatcher function
  * @param nodeType - the type of the DOM element to create
- * @param destroyAfterEvent - automatically destroy the directive after use
- * @returns the element and the destroy reference
  */
 export function attachDirectiveAndSendEvent<T = void>(
 	directive: Directive<T>,
 	args: T,
 	sendEvent: (node: HTMLElement) => void,
 	nodeType: string = 'div',
-	destroyAfterEvent = true,
-): {element: HTMLElement; destroy: void | {destroy?: () => void}} {
+) {
 	const element = document.createElement(nodeType);
+	document.body.appendChild(element);
 	const destroy = directive(element, args);
 	sendEvent(element);
-	if (destroyAfterEvent) {
-		destroy?.destroy?.();
-	}
-	return {
-		element,
-		destroy,
-	};
+	destroy?.destroy?.();
+	element.remove();
 }
 
 /**

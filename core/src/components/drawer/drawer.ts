@@ -152,7 +152,7 @@ export interface DrawerProps extends DrawerCommonPropsAndState {
 	 */
 	onShown: () => void;
 	/**
-	 * An event emitted when the drawer size (width or height depending on the orientation).
+	 * An event emitted when the drawer size changes (width or height depending on the orientation).
 	 *
 	 * Event payload is equal to the newly selected width or height.
 	 *
@@ -192,7 +192,7 @@ export interface DrawerProps extends DrawerCommonPropsAndState {
 	 */
 	onMaximizedChange: (isMaximized: boolean) => void;
 	/**
-	 * Event to be triggered when the user start or stop resizing the drawer.
+	 * Event to be triggered when the user starts or stops resizing the drawer.
 	 *
 	 * @defaultValue
 	 * ```ts
@@ -445,9 +445,8 @@ export const createDrawer: WidgetFactory<DrawerWidget> = createWidgetFactory('dr
 		},
 	}));
 
-	const direction = computed(() => (['inline-start', 'block-start'].some((placement) => className$().includes(placement)) ? 1 : -1));
+	const direction$ = computed(() => (['inline-start', 'block-start'].some((placement) => className$().includes(placement)) ? 1 : -1));
 
-	let startSize = 0;
 	const isMinimized$ = writable(<boolean | undefined>undefined);
 	const isMaximized$ = writable(<boolean | undefined>undefined);
 
@@ -465,23 +464,24 @@ export const createDrawer: WidgetFactory<DrawerWidget> = createWidgetFactory('dr
 	}
 
 	const splitterDirective = mergeDirectives(
-		createPointerdownPositionDirective({
-			onMoveStart() {
-				const isVertical = isVertical$();
-				startSize = drawerElement$()![isVertical ? 'offsetHeight' : 'offsetWidth'];
-				onResizingChange$()(true);
-			},
-			onMove(position) {
-				setSize(startSize + direction() * position[isVertical$() ? 'dy' : 'dx']);
-			},
-			onMoveEnd() {
-				const isVertical = isVertical$();
-				const drawerElement = drawerElement$()!;
-				const newSize = drawerElement[isVertical ? 'offsetHeight' : 'offsetWidth'];
-				drawerElement.style[isVertical ? 'height' : 'width'] = '';
-				size$.set(newSize);
-				onResizingChange$()(false);
-			},
+		createPointerdownPositionDirective((event) => {
+			const drawerElement = drawerElement$()!;
+			const isVertical = isVertical$();
+			const startSize = drawerElement[isVertical ? 'offsetHeight' : 'offsetWidth'];
+			const clientXorY = isVertical ? 'clientY' : 'clientX';
+			const startPos = event[clientXorY];
+			const direction = direction$();
+			onResizingChange$()(true);
+
+			return {
+				onMove(event) {
+					setSize(startSize + direction * (event[clientXorY] - startPos));
+				},
+				onEnd() {
+					drawerElement.style[isVertical ? 'height' : 'width'] = '';
+					onResizingChange$()(false);
+				},
+			};
 		}),
 		createAttributesDirective(() => ({
 			events: {

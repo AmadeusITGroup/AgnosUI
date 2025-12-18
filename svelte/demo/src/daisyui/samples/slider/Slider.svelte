@@ -28,6 +28,6 @@
 	max={state.max}
 	value={state.sortedHandles[0].value}
 	step={state.stepSize}
-	class="range"
+	class="range touch-none"
 	aria-label={state.sortedHandles[0].ariaLabel}
 />

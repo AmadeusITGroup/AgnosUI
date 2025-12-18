@@ -14,6 +14,7 @@ import {getDecimalPrecision} from '../../utils/internal/math';
 import {bindableProp, stateStores, true$, writablesForProps} from '../../utils/stores';
 import {typeArray, typeBoolean, typeFunction, typeNumber, typeNumberInRangeFactory, typeString} from '../../utils/writables';
 import {createResizeObserver, createResizeObserverMap} from '../../services/resizeObserver';
+import {createPointerdownPositionDirective, type PointerPositionHandlers} from '../../services/pointerdownPosition';
 import {createWidgetFactory} from '../../utils/widget';
 import {manageMinMaxRange} from './slider-utils';
 import {clamp} from '../../utils/internal/checks';
@@ -566,7 +567,6 @@ export const createSlider: WidgetFactory<SliderWidget> = createWidgetFactory('sl
 		patch,
 	] = writablesForProps(defaultSliderConfig, config, configValidator);
 	const {vertical$, disabled$, readonly$} = stateProps;
-	let _prevCoordinate = -1;
 	const _handleElements = new Map<number, HTMLElement>();
 	// clean inputs adjustment
 	const min$ = computed(() => {
@@ -1042,131 +1042,88 @@ export const createSlider: WidgetFactory<SliderWidget> = createWidgetFactory('sl
 	});
 
 	/**
-	 * Mousedown even handler that controls `mousemove` and `mouseup` events
-	 * @param event MouseEvent object
+	 * pointerdown event handler
+	 * @param event PointerEvent object
 	 * @param handleId optional handle id
+	 * @returns move and end handlers if interactive
 	 */
-	const mouseDown = (event: MouseEvent, handleId?: number) => {
-		event.preventDefault();
+	const pointerMoveStart = (event: PointerEvent, handleId?: number): PointerPositionHandlers | undefined => {
 		const currentTarget = handleId !== undefined ? _handleElements.get(handleId) : (event.target as HTMLElement);
-		const handleDrag = (e: MouseEvent) => {
-			e.preventDefault();
-			const newCoord = vertical$() ? e.clientY : e.clientX;
-			currentTarget?.focus();
-			if (_prevCoordinate !== newCoord) {
-				_prevCoordinate = newCoord;
-				adjustCoordinate(newCoord, handleId);
-			}
-		};
 		if (interactive$()) {
+			const vertical = vertical$();
+			const clientXorY = vertical ? 'clientY' : 'clientX';
+			let _prevCoordinate = event[clientXorY];
 			updateSliderSize$.set({});
 			currentTarget?.focus();
-			document.addEventListener('mousemove', handleDrag);
-			document.addEventListener(
-				'mouseup',
-				() => {
-					document.removeEventListener('mousemove', handleDrag);
-				},
-				{once: true},
-			);
-		}
-	};
-
-	const touchStart = (event: TouchEvent, handleId?: number) => {
-		const currentTarget = handleId !== undefined ? _handleElements.get(handleId) : (event.target as HTMLElement);
-		const handleDrag = (e: TouchEvent) => {
-			e.preventDefault();
-			const newCoord = vertical$() ? e.touches[0].clientY : e.touches[0].clientX;
-			currentTarget?.focus();
-			if (_prevCoordinate !== newCoord) {
-				_prevCoordinate = newCoord;
-				adjustCoordinate(newCoord, handleId);
-			}
-		};
-		if (interactive$()) {
-			updateSliderSize$.set({});
-			currentTarget?.focus();
-			document.addEventListener('touchmove', handleDrag, {passive: false});
-			document.addEventListener(
-				'touchend',
-				() => {
-					document.removeEventListener('touchmove', handleDrag);
-					document.removeEventListener('touchcancel', handleDrag);
-				},
-				{once: true},
-			);
-			document.addEventListener(
-				'touchcancel',
-				() => {
-					document.removeEventListener('touchmove', handleDrag);
-					document.removeEventListener('touchend', handleDrag);
-				},
-				{once: true},
-			);
-		}
-	};
-
-	const handleEventsDirective = createAttributesDirective((handleContext$: ReadableSignal<{item: {id: number}}>) => ({
-		events: {
-			keydown: (event: KeyboardEvent) => {
-				const handleIndex = handleContext$().item.id;
-				const {key} = event;
-				const rtl = rtl$(),
-					stepSize = stepSize$(),
-					min = min$(),
-					max = max$(),
-					vertical = vertical$();
-				if (interactive$()) {
-					switch (key) {
-						case 'ArrowDown':
-							updateValue(handleIndex, values$, stepSize, getUpdateDirection(vertical, rtl, true));
-							break;
-						case 'ArrowLeft':
-							updateValue(handleIndex, values$, stepSize, getUpdateDirection(vertical, rtl, false));
-							break;
-						case 'ArrowUp':
-							updateValue(handleIndex, values$, stepSize, -1 * getUpdateDirection(vertical, rtl, true));
-							break;
-						case 'ArrowRight':
-							updateValue(handleIndex, values$, stepSize, -1 * getUpdateDirection(vertical, rtl, false));
-							break;
-						case 'Home':
-							values$.update((value) => {
-								value = [...value];
-								value[handleIndex] = min;
-								return value;
-							});
-							break;
-						case 'End':
-							values$.update((value) => {
-								value = [...value];
-								value[handleIndex] = max;
-								return value;
-							});
-							break;
-						case 'PageUp':
-							// TODO it is optional in accessibility guidelines, so define the skip value for steps and write unit test
-							break;
-						case 'PageDown':
-							// TODO it is optional in accessibility guidelines, so define the skip value for steps and write unit test
-							break;
-						default:
-							return;
+			return {
+				onMove: (event: PointerEvent) => {
+					currentTarget?.focus();
+					const newCoord = event[clientXorY];
+					if (_prevCoordinate !== newCoord) {
+						_prevCoordinate = newCoord;
+						adjustCoordinate(newCoord, handleId);
 					}
-					event.preventDefault();
-				}
+				},
+			};
+		}
+		return undefined;
+	};
+
+	const handleEventsDirective = mergeDirectives(
+		createAttributesDirective((handleContext$: ReadableSignal<{item: {id: number}}>) => ({
+			events: {
+				keydown: (event: KeyboardEvent) => {
+					const handleIndex = handleContext$().item.id;
+					const {key} = event;
+					const rtl = rtl$(),
+						stepSize = stepSize$(),
+						min = min$(),
+						max = max$(),
+						vertical = vertical$();
+					if (interactive$()) {
+						switch (key) {
+							case 'ArrowDown':
+								updateValue(handleIndex, values$, stepSize, getUpdateDirection(vertical, rtl, true));
+								break;
+							case 'ArrowLeft':
+								updateValue(handleIndex, values$, stepSize, getUpdateDirection(vertical, rtl, false));
+								break;
+							case 'ArrowUp':
+								updateValue(handleIndex, values$, stepSize, -1 * getUpdateDirection(vertical, rtl, true));
+								break;
+							case 'ArrowRight':
+								updateValue(handleIndex, values$, stepSize, -1 * getUpdateDirection(vertical, rtl, false));
+								break;
+							case 'Home':
+								values$.update((value) => {
+									value = [...value];
+									value[handleIndex] = min;
+									return value;
+								});
+								break;
+							case 'End':
+								values$.update((value) => {
+									value = [...value];
+									value[handleIndex] = max;
+									return value;
+								});
+								break;
+							case 'PageUp':
+								// TODO it is optional in accessibility guidelines, so define the skip value for steps and write unit test
+								break;
+							case 'PageDown':
+								// TODO it is optional in accessibility guidelines, so define the skip value for steps and write unit test
+								break;
+							default:
+								return;
+						}
+						event.preventDefault();
+					}
+				},
 			},
-			mousedown: (event: MouseEvent) => {
-				if (event.button !== 0) {
-					return;
-				}
-				mouseDown(event, handleContext$().item.id);
-			},
-			touchstart: (event: TouchEvent) => {
-				touchStart(event, handleContext$().item.id);
-			},
-		},
-	}));
+		})),
+		createPointerdownPositionDirective<{item: {id: number}}>((position, {item: {id}}) => pointerMoveStart(position, id)),
+	);
 
 	const widget: SliderWidget = {
 		...stateStores({
@@ -1209,30 +1166,21 @@ export const createSlider: WidgetFactory<SliderWidget> = createWidgetFactory('sl
 					'au-slider-progress': true$,
 				},
 			})),
-			clickableAreaDirective: createAttributesDirective(() => ({
-				events: {
-					mousedown: (event: MouseEvent) => {
-						if (event.button !== 0) {
-							return;
-						}
-						const clickedCoordinate = vertical$() ? event.clientY : event.clientX;
-						const closestHandle = getClosestSliderHandle(getClickedPercent(clickedCoordinate));
-						adjustCoordinate(clickedCoordinate, closestHandle);
-						mouseDown(event, closestHandle);
+			clickableAreaDirective: mergeDirectives(
+				createAttributesDirective(() => ({
+					classNames: {
+						'au-slider-clickable-area': horizontal$,
+						'au-slider-clickable-area-vertical': vertical$,
+						'au-slider-clickable-area-with-ticks': computed(() => showTicks$() && tickInterval$() === 0),
 					},
-					touchstart: (event: TouchEvent) => {
-						const clickedCoordinate = vertical$() ? event.touches[0].clientY : event.touches[0].clientX;
-						const closestHandle = getClosestSliderHandle(getClickedPercent(clickedCoordinate));
-						adjustCoordinate(clickedCoordinate, closestHandle);
-						touchStart(event, closestHandle);
-					},
-				},
-				classNames: {
-					'au-slider-clickable-area': horizontal$,
-					'au-slider-clickable-area-vertical': vertical$,
-					'au-slider-clickable-area-with-ticks': computed(() => showTicks$() && tickInterval$() === 0),
-				},
-			})),
+				})),
+				createPointerdownPositionDirective((position) => {
+					const clickedCoordinate = vertical$() ? position.clientY : position.clientX;
+					const closestHandle = getClosestSliderHandle(getClickedPercent(clickedCoordinate));
+					adjustCoordinate(clickedCoordinate, closestHandle);
+					return pointerMoveStart(position, closestHandle);
+				}),
+			),
 			handleEventsDirective,
 			handleDirective: mergeDirectives(
 				handleElementDirective,
