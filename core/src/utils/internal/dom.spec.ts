@@ -1,5 +1,5 @@
 import {beforeEach, describe, expect, test, vi} from 'vitest';
-import {addEvent, bindAttribute, bindClassName, bindStyle, computeCommonAncestor} from './dom';
+import {addEvent, appendHtml, bindAttribute, bindClassName, bindStyle, computeCommonAncestor} from './dom';
 import {assign} from '../../../../common/utils';
 import {writable} from '@amadeus-it-group/tansu';
 
@@ -197,5 +197,20 @@ describe('computeCommonAncestor', () => {
 
 		node.click();
 		expect(fn).toHaveBeenCalledTimes(1);
+	});
+
+	test('appendHtml', () => {
+		const node = document.createElement('div');
+
+		const child = appendHtml(node, `<div class="div1"></div>`) as Element;
+		expect(child.outerHTML).toMatchInlineSnapshot(`"<div class="div1"></div>"`);
+
+		const children = appendHtml(node, `<div class="div2"></div><div class="div3"></div>`) as Element[];
+		expect(children.map((el) => el.outerHTML)).toMatchInlineSnapshot(`
+			[
+			  "<div class="div2"></div>",
+			  "<div class="div3"></div>",
+			]
+		`);
 	});
 });
