@@ -157,7 +157,6 @@ export const filterHtmlStructure = (node: HTMLNode): HTMLNode => {
 		attributes = [];
 	}
 	attributes = attributes
-		.filter((attr) => !(ignoreEmblaStyles(attr, node) || (excludeAttrRegExp.test(attr.name) && !attrExceptions.includes(attr.name))))
 		.map(({name, value}) => {
 			if (name === 'class') {
 				value = value
@@ -171,6 +170,14 @@ export const filterHtmlStructure = (node: HTMLNode): HTMLNode => {
 			}
 			return {name, value};
 		})
+		.filter(
+			(attr) =>
+				!(
+					ignoreEmblaStyles(attr, node) ||
+					(excludeAttrRegExp.test(attr.name) && !attrExceptions.includes(attr.name)) ||
+					(attr.name === 'class' && !attr.value)
+				),
+		)
 		.sort(compareName);
 	childNodes = cleanChildNodes(childNodes.map(filterHtmlStructure));
 	return {
