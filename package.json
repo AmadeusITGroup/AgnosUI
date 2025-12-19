@@ -1,7 +1,7 @@
 {
 	"name": "@agnos-ui/agnos-ui",
 	"description": "Framework-agnostic component library.",
-	"version": "0.9.3",
+	"version": "0.9.4",
 	"homepage": "https://www.agnosui.dev/latest/",
 	"bugs": "https://github.com/AmadeusITGroup/AgnosUI/issues",
 	"license": "MIT",

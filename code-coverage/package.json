@@ -1,6 +1,6 @@
 {
 	"name": "@agnos-ui/code-coverage",
-	"version": "0.9.3",
+	"version": "0.9.4",
 	"private": true,
 	"dependencies": {
 		"@babel/core": "^7.26.0",
