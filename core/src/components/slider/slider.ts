@@ -20,6 +20,7 @@ import {clamp} from '../../utils/internal/checks';
 
 /**
  * Options for displaying progress in a slider component.
+ * Test change
  */
 export interface ProgressDisplayOptions {
 	/**
