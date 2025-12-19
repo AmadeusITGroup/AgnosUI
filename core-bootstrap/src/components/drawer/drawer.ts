@@ -6,12 +6,13 @@ import type {
 } from '@agnos-ui/core/components/drawer';
 import {createDrawer as createCoreDrawer, getDrawerDefaultConfig as getCoreDefaultConfig} from '@agnos-ui/core/components/drawer';
 import {extendWidgetProps} from '@agnos-ui/core/services/extendWidget';
+import type {TransitionFn} from '@agnos-ui/core/services/transitions/baseTransitions';
 import type {ConfigValidator, Directive, PropsConfig, SlotContent, Widget, WidgetFactory, WidgetSlotContext} from '@agnos-ui/core/types';
-import {collapseHorizontalTransition, collapseVerticalTransition, fadeTransition} from '../../services/transitions';
-import {createWidgetFactory} from '@agnos-ui/core/utils/widget';
 import {createAttributesDirective, mergeDirectives} from '@agnos-ui/core/utils/directive';
 import {true$} from '@agnos-ui/core/utils/stores';
-import type {TransitionFn} from '@agnos-ui/core/services/transitions/baseTransitions';
+import {createWidgetFactory} from '@agnos-ui/core/utils/widget';
+import {collapseHorizontalTransition, collapseVerticalTransition, fadeTransition} from '../../services/transitions';
+import {computed} from '@amadeus-it-group/tansu';
 
 export * from '@agnos-ui/core/components/drawer';
 
@@ -132,18 +133,25 @@ export function getDrawerDefaultConfig(): DrawerProps {
  */
 export const createDrawer: WidgetFactory<DrawerWidget> = createWidgetFactory('drawer', (config?: PropsConfig<DrawerProps>): DrawerWidget => {
 	const widget = extendWidgetProps(createCoreDrawer, defaultConfigExtraProps, configValidator, coreOverride)(config);
+
 	return {
 		...widget,
 		directives: {
 			...widget.directives,
 			drawerDirective: mergeDirectives(
-				widget.directives.drawerDirective,
 				createAttributesDirective(() => ({
 					classNames: {
 						'au-drawer': true$,
 						show: widget.stores.visible$,
 					},
+					styles: {
+						'--bs-drawer-size': computed(() => {
+							const size = widget.stores.size$();
+							return size == null ? undefined : size + 'px';
+						}),
+					},
 				})),
+				widget.directives.drawerDirective, // need to be last, to ensure that all the classes and attributes are applied for the transition
 			),
 			backdropDirective: mergeDirectives(
 				widget.directives.backdropDirective,
@@ -162,14 +170,11 @@ export const createDrawer: WidgetFactory<DrawerWidget> = createWidgetFactory('dr
 					},
 				})),
 			),
-			containerDirective: mergeDirectives(
-				widget.directives.containerDirective,
-				createAttributesDirective(() => ({
-					classNames: {
-						'au-drawer-container': true$,
-					},
-				})),
-			),
+			containerDirective: createAttributesDirective(() => ({
+				classNames: {
+					'au-drawer-container': true$,
+				},
+			})),
 		},
 	};
 });
