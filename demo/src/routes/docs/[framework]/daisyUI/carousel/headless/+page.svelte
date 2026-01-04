@@ -7,8 +7,8 @@
 
 <Section label="Headless" id="default" level={2}>
 	<p>
-		The headless Carousel simply wraps the <a href="https://www.embla-carousel.com/">Embla Carousel</a> as an AgnosUI widget, allowing the options and
-		plugins to be set through our configuration.
+		The headless Carousel simply wraps the <a href="https://www.embla-carousel.com/">Embla Carousel</a> as an AgnosUI widget, allowing the options and plugins
+		to be set through our configuration.
 	</p>
 	<Sample title="Headless example" sample={daisyUIDefault} height={450} />
 </Section>
