@@ -224,7 +224,7 @@ export class DrawerComponent extends BaseWidgetDirective<DrawerWidget> {
 	readonly resizable = input(undefined, {alias: 'auResizable', transform: auBooleanAttribute});
 
 	/**
-	 * An event emitted when the drawer size (width or height depending on the orientation).
+	 * An event emitted when the drawer size changes (width or height depending on the orientation).
 	 *
 	 * Event payload is equal to the newly selected width or height.
 	 *
@@ -268,7 +268,7 @@ export class DrawerComponent extends BaseWidgetDirective<DrawerWidget> {
 	readonly maximizedChange = output<boolean>({alias: 'auMaximizedChange'});
 
 	/**
-	 * Event to be triggered when the user start or stop resizing the drawer.
+	 * Event to be triggered when the user starts or stops resizing the drawer.
 	 *
 	 * @defaultValue
 	 * ```ts

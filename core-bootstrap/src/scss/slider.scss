@@ -26,6 +26,8 @@
 }
 
 .au-slider {
+	touch-action: none;
+
 	// scss-docs-start slider-css-vars
 	--#{variables.$prefix}slider-background-color: #{variables.$au-slider-color-background};
 	--#{variables.$prefix}slider-font-size: #{variables.$au-slider-font-size};

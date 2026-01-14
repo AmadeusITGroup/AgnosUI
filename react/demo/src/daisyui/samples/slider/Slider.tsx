@@ -16,7 +16,7 @@ export function Slider(props: Partial<Pick<SliderProps, 'min' | 'max' | 'values'
 			value={state.sortedHandles[0].value}
 			onChange={() => null}
 			step={state.stepSize}
-			className="range"
+			className="range touch-none"
 			aria-label={state.sortedHandles[0].ariaLabel}
 			{...useDirectives([sliderDirective, undefined], [clickableAreaDirective, undefined], [handleEventsDirective, {item: {id: 0}}])}
 		/>

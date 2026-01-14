@@ -27,6 +27,18 @@ function keyboardEvent(key: string): KeyboardEvent {
 	return new KeyboardEvent('keydown', {key});
 }
 
+function pointerEvent(type: 'pointerdown' | 'pointerup', pointerType: 'mouse' | 'touch', clientX: number): PointerEvent {
+	return new PointerEvent(type, {
+		pointerId: 1,
+		clientX,
+		clientY: 0,
+		pointerType,
+		isPrimary: true,
+		bubbles: true,
+		cancelable: true,
+	});
+}
+
 const defaultHandle: SliderHandle = {id: 0, value: 0, ariaLabel: 'Value', ariaValueText: undefined, ariaLabelledBy: undefined};
 
 const defaultState: () => SliderState = () => ({
@@ -83,15 +95,17 @@ describe(`Slider basic`, () => {
 	let defConfig: WritableSignal<Partial<SliderProps>>;
 
 	const clickAreaX = (clientX: number) => {
-		attachDirectiveAndSendEvent(slider.directives.clickableAreaDirective, undefined, (node) =>
-			node.dispatchEvent(new MouseEvent('mousedown', {clientX})),
-		);
+		attachDirectiveAndSendEvent(slider.directives.clickableAreaDirective, undefined, (node) => {
+			node.dispatchEvent(pointerEvent('pointerdown', 'mouse', clientX));
+			node.dispatchEvent(pointerEvent('pointerup', 'mouse', clientX));
+		});
 	};
 
 	const touchAreaX = (clientX: number) => {
-		attachDirectiveAndSendEvent(slider.directives.clickableAreaDirective, undefined, (node) =>
-			node.dispatchEvent(new TouchEvent('touchstart', {touches: [new Touch({clientX, identifier: 0, target: new EventTarget()})]})),
-		);
+		attachDirectiveAndSendEvent(slider.directives.clickableAreaDirective, undefined, (node) => {
+			node.dispatchEvent(pointerEvent('pointerdown', 'touch', clientX));
+			node.dispatchEvent(pointerEvent('pointerup', 'touch', clientX));
+		});
 	};
 	const useKeyOnHandle = (key: string) => {
 		attachDirectiveAndSendEvent(slider.directives.handleEventsDirective, {item: {id: 0}}, (node) => node.dispatchEvent(keyboardEvent(key)));
@@ -1790,9 +1804,10 @@ describe(`Slider range`, () => {
 	let defConfig: WritableSignal<Partial<SliderProps>>;
 	let currentLowLabel: HTMLDivElement, currentHighLabel: HTMLDivElement, combinedLabel: HTMLDivElement;
 	const clickAreaX = (clientX: number) => {
-		attachDirectiveAndSendEvent(slider.directives.clickableAreaDirective, undefined, (node) =>
-			node.dispatchEvent(new MouseEvent('mousedown', {clientX})),
-		);
+		attachDirectiveAndSendEvent(slider.directives.clickableAreaDirective, undefined, (node) => {
+			node.dispatchEvent(pointerEvent('pointerdown', 'mouse', clientX));
+			node.dispatchEvent(pointerEvent('pointerup', 'mouse', clientX));
+		});
 	};
 	const useKeyOnHandle = (key: string, handleId = 0) => {
 		attachDirectiveAndSendEvent(slider.directives.handleEventsDirective, {item: {id: handleId}}, (node) => node.dispatchEvent(keyboardEvent(key)));
