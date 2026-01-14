@@ -281,6 +281,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/services/intersection</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/services/matchMedia</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/services/navManager</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/angular/headless/services/pointerdownPosition</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/services/portal</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/services/resizeObserver</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/services/siblingsInert</loc></url>
@@ -319,6 +320,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/services/intersection</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/services/matchMedia</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/services/navManager</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/services/pointerdownPosition</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/services/portal</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/services/resizeObserver</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/services/siblingsInert</loc></url>
@@ -358,6 +360,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/services/intersection</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/services/matchMedia</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/services/navManager</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/react/headless/services/pointerdownPosition</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/services/portal</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/services/resizeObserver</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/services/siblingsInert</loc></url>
@@ -395,6 +398,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/services/intersection</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/services/matchMedia</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/services/navManager</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/services/pointerdownPosition</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/services/portal</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/services/resizeObserver</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/services/siblingsInert</loc></url>
@@ -432,6 +436,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/services/intersection</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/services/matchMedia</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/services/navManager</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/svelte/headless/services/pointerdownPosition</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/services/portal</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/services/resizeObserver</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/services/siblingsInert</loc></url>
@@ -467,6 +472,7 @@
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/services/intersection</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/services/matchMedia</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/services/navManager</loc></url>
+<url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/services/pointerdownPosition</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/services/portal</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/services/resizeObserver</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/services/siblingsInert</loc></url>
