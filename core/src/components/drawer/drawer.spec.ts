@@ -1,6 +1,7 @@
 import {beforeEach, describe, expect, test} from 'vitest';
 import {createDrawer} from './drawer';
 import {assign} from '../../../../common/utils';
+import {userEvent} from 'vitest/browser';
 
 describe(`Drawer`, () => {
 	const noopTransition = async () => {};
@@ -167,7 +168,7 @@ describe(`Drawer`, () => {
 		directive?.destroy?.();
 	});
 
-	test('closes on escape click', () => {
+	test('closes on escape click', async () => {
 		testArea.innerHTML = `
 				<div id="drawerElement"></div>
 			`;
@@ -179,13 +180,83 @@ describe(`Drawer`, () => {
 		});
 		const directive = drawer.directives.drawerDirective(drawerElement);
 		drawer.api.open();
+		await expect.poll(() => document.activeElement).toBe(drawerElement);
 		expect(drawer.stores.visible$()).toBe(true);
 		expect(drawer.stores.hidden$()).toBe(false);
-		const escEvent = new KeyboardEvent('keydown', {key: 'Escape'});
-		drawerElement.dispatchEvent(escEvent);
+		await userEvent.keyboard('{Escape}');
 		expect(drawer.stores.visible$()).toBe(false);
-		expect(drawer.stores.hidden$()).toBe(false);
+		expect(drawer.stores.hidden$()).toBe(true);
 		directive?.destroy?.();
+	});
+
+	test(`should resize the drawer with keyboard`, async () => {
+		testArea.innerHTML = `
+				<div id="drawerElement">
+					<div id="drawerSplitter" tabindex="0"></div>
+				</div>
+			`;
+		const drawerElement = document.getElementById('drawerElement')!;
+		const splitterElement = document.getElementById('drawerSplitter')!;
+		const drawer = createDrawer({
+			props: {
+				transition: noopTransition,
+			},
+		});
+		const drawerSize = drawer.stores.size$;
+		const directive = drawer.directives.drawerDirective(drawerElement);
+		const splitterDirective = drawer.directives.splitterDirective(splitterElement);
+		drawer.api.open();
+		await expect.poll(() => document.activeElement).toBe(drawerElement);
+		await userEvent.keyboard('{Tab}');
+		await expect.poll(() => document.activeElement).toBe(splitterElement);
+		expect(drawerSize()).toBeNull();
+		await userEvent.keyboard('{ArrowRight}');
+		expect(drawerSize()).toBe(10);
+		await userEvent.keyboard('{ArrowUp}');
+		expect(drawerSize()).toBe(20);
+		await userEvent.keyboard('{ArrowLeft}');
+		expect(drawerSize()).toBe(10);
+		await userEvent.keyboard('{ArrowDown}');
+		expect(drawerSize()).toBe(0);
+		directive?.destroy?.();
+		splitterDirective?.destroy?.();
+	});
+
+	test(`should hide backdrop when specified`, () => {
+		document.body.style.overflow = 'auto';
+		const drawer = createDrawer({
+			props: {
+				transition: noopTransition,
+				bodyScroll: false,
+				backdrop: true,
+			},
+		});
+		const backdropHidden = drawer.stores.backdropHidden$;
+		expect(backdropHidden()).toBe(true);
+		expect(document.body.style.overflow).toBe('auto');
+		drawer.api.open();
+		expect(backdropHidden()).toBe(false);
+		expect(document.body.style.overflow).toBe('hidden');
+		drawer.api.close();
+
+		document.body.style.overflow = 'auto';
+		drawer.patch({backdrop: false});
+
+		expect(backdropHidden()).toBe(true);
+		expect(document.body.style.overflow).toBe('auto');
+		drawer.api.open();
+		expect(backdropHidden()).toBe(true);
+		expect(document.body.style.overflow).toBe('hidden');
+		drawer.api.close();
+
+		document.body.style.overflow = 'auto';
+		drawer.patch({backdrop: true, bodyScroll: true});
+
+		expect(backdropHidden()).toBe(true);
+		expect(document.body.style.overflow).toBe('auto');
+		drawer.api.open();
+		expect(backdropHidden()).toBe(false);
+		expect(document.body.style.overflow).toBe('auto');
 	});
 
 	describe('checks events', () => {
