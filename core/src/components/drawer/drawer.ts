@@ -450,6 +450,16 @@ export const createDrawer: WidgetFactory<DrawerWidget> = createWidgetFactory('dr
 	const isMinimized$ = writable(<boolean | undefined>undefined);
 	const isMaximized$ = writable(<boolean | undefined>undefined);
 
+	/**
+	 * Sets the size of the drawer element and updates related state.
+	 *
+	 * This function updates the drawer's dimensions (width or height depending on orientation),
+	 * calculates the actual rendered size, and adjusts the minimized/maximized states
+	 *
+	 * @param size - The desired size in pixels for the drawer. Must be a non-negative number. Will be rounded to the nearest integer and clamped to a minimum of 0.
+	 *
+	 * @returns The actual rendered size of the drawer element in pixels after applying the style.
+	 */
 	function setSize(size: number) {
 		const drawerElement = drawerElement$()!;
 		const isVertical = isVertical$();
@@ -471,15 +481,22 @@ export const createDrawer: WidgetFactory<DrawerWidget> = createWidgetFactory('dr
 			const clientXorY = isVertical ? 'clientY' : 'clientX';
 			const startPos = event[clientXorY];
 			const direction = direction$();
-			onResizingChange$()(true);
+			let isResizing = false;
 
 			return {
 				onMove(event) {
 					setSize(startSize + direction * (event[clientXorY] - startPos));
+					if (!isResizing) {
+						isResizing = true;
+						onResizingChange$()(true);
+					}
 				},
 				onEnd() {
 					drawerElement.style[isVertical ? 'height' : 'width'] = '';
-					onResizingChange$()(false);
+					if (isResizing) {
+						onResizingChange$()(false);
+						isResizing = false;
+					}
 				},
 			};
 		}),
