@@ -1,5 +1,5 @@
 import type {ReadableSignal} from '@amadeus-it-group/tansu';
-import {asReadable, batch, readable, writable, computed} from '@amadeus-it-group/tansu';
+import {asReadable, batch, readable, writable, computed, derived} from '@amadeus-it-group/tansu';
 import {BROWSER} from 'esm-env';
 import type {
 	AttributeValue,
@@ -378,6 +378,35 @@ export const createBrowserStoreDirective = (): {
 	const {directive, element$} = createStoreDirective();
 	return {directive: browserDirective(directive), element$: element$ as ReadableSignal<HTMLElement | null>};
 };
+
+/**
+ * Returns a directive that conditionally applies another directive.
+ *
+ * @param directive - The directive to conditionally apply.
+ * @param condition - The condition
+ * @returns A directive that applies the given directive when true, and removes it when false.
+ */
+export const conditionalDirective =
+	<T, U extends SSRHTMLElement>(directive: Directive<T, U>, condition: ReadableSignal<boolean>): Directive<T, U> =>
+	(element, arg) => {
+		const instance$ = derived(
+			condition,
+			(enabled, set) => {
+				const instance = enabled ? directive(element, arg) : undefined;
+				set(instance);
+				return () => instance?.destroy?.();
+			},
+			undefined as ReturnType<Directive<T, U>>,
+		);
+		const destroy = instance$.subscribe(() => {});
+		return {
+			update(newArg: T) {
+				arg = newArg;
+				instance$()?.update?.(newArg);
+			},
+			destroy,
+		};
+	};
 
 /**
  * Merges multiple directives into a single directive that executes all of them when called.
