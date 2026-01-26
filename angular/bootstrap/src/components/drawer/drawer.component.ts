@@ -203,6 +203,13 @@ export class DrawerComponent extends BaseWidgetDirective<DrawerWidget> {
 	readonly size = input(undefined, {alias: 'auSize', transform: auNumberOrNullAttribute});
 
 	/**
+	 * If `true` focuses the drawer when it is opened.
+	 *
+	 * @defaultValue `true`
+	 */
+	readonly focusOnInit = input(undefined, {alias: 'auFocusOnInit', transform: auBooleanAttribute});
+
+	/**
 	 * Classes to add on the backdrop DOM element.
 	 *
 	 * @defaultValue `''`
