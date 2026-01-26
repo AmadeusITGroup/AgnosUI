@@ -9,6 +9,7 @@ import type {Directive, WidgetFactory} from '../../types';
 import {type ConfigValidator, type PropsConfig, type Widget} from '../../types';
 import {
 	bindDirective,
+	conditionalDirective,
 	createAttributesDirective,
 	createBrowserStoreDirective,
 	directiveSubscribe,
@@ -133,6 +134,12 @@ export interface DrawerProps extends DrawerCommonPropsAndState {
 	 * @defaultValue `false`
 	 */
 	bodyScroll: boolean;
+	/**
+	 * If `true` focuses the drawer when it is opened.
+	 *
+	 * @defaultValue `true`
+	 */
+	focusOnInit: boolean;
 	/**
 	 * Event to be triggered when the transition is completed and the drawer is not visible.
 	 *
@@ -294,6 +301,7 @@ const defaultDrawerConfig: DrawerProps = {
 	backdrop: true,
 	bodyScroll: false,
 	size: null,
+	focusOnInit: true,
 };
 
 const configValidator: ConfigValidator<DrawerProps> = {
@@ -318,6 +326,7 @@ const configValidator: ConfigValidator<DrawerProps> = {
 	backdrop: typeBoolean,
 	bodyScroll: typeBoolean,
 	size: typeNumberOrNull,
+	focusOnInit: typeBoolean,
 };
 
 /**
@@ -348,6 +357,7 @@ export const createDrawer: WidgetFactory<DrawerWidget> = createWidgetFactory('dr
 			onMinimizedChange$,
 			onMaximizedChange$,
 			onResizingChange$,
+			focusOnInit$,
 			...stateProps
 		},
 		patch,
@@ -576,7 +586,7 @@ export const createDrawer: WidgetFactory<DrawerWidget> = createWidgetFactory('dr
 				),
 				// This directive must come after the attribute directive, to ensure that all the classes and attributes are applied for the transition
 				transition.directives.directive,
-				focusElement,
+				conditionalDirective(focusElement, focusOnInit$),
 			),
 			backdropPortalDirective,
 			backdropDirective: mergeDirectives(backdropTransition.directives.directive, backdropAttributeDirective),

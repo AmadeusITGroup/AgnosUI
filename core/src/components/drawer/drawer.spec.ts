@@ -259,6 +259,49 @@ describe(`Drawer`, () => {
 		expect(document.body.style.overflow).toBe('auto');
 	});
 
+	test(`should focus the drawer on init when the option is true`, async () => {
+		testArea.tabIndex = -1;
+		testArea.focus();
+		const drawerElement = document.createElement('div');
+		drawerElement.setAttribute('id', 'drawerElement');
+		testArea.appendChild(drawerElement);
+		await expect.poll(() => document.activeElement).toBe(testArea);
+		const drawer = createDrawer({
+			props: {
+				transition: noopTransition,
+				bodyScroll: false,
+				backdrop: true,
+			},
+		});
+		const directive = drawer.directives.drawerDirective(drawerElement);
+		await expect.poll(() => document.activeElement).toBe(drawerElement);
+
+		directive?.destroy?.();
+		testArea.removeChild(drawerElement);
+	});
+
+	test(`should not focus the drawer on init when the option is false`, async () => {
+		testArea.tabIndex = -1;
+		testArea.focus();
+		const drawerElement = document.createElement('div');
+		drawerElement.setAttribute('id', 'drawerElement');
+		testArea.appendChild(drawerElement);
+		await expect.poll(() => document.activeElement).toBe(testArea);
+		const drawer = createDrawer({
+			props: {
+				transition: noopTransition,
+				bodyScroll: false,
+				backdrop: true,
+				focusOnInit: false,
+			},
+		});
+		const directive = drawer.directives.drawerDirective(drawerElement);
+		await expect.poll(() => document.activeElement).toBe(testArea);
+
+		directive?.destroy?.();
+		testArea.removeChild(drawerElement);
+	});
+
 	describe('checks events', () => {
 		test('onMinimizedChange when mouse is in the viewport', () => {
 			const {destroy, mouseDown, mouseMouse, mouseUp, state} = prepareTest('50px');
