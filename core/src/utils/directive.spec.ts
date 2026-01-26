@@ -6,6 +6,7 @@ import type {Directive, SSRHTMLElement} from '../types';
 import {
 	bindDirective,
 	bindDirectiveNoArg,
+	conditionalDirective,
 	createAttributesDirective,
 	createConditionalStoreArrayDirective,
 	createStoreArrayDirective,
@@ -207,6 +208,116 @@ describe('directive', () => {
 			instance2?.destroy?.();
 			expect(values).toEqual([[], [element2], []]);
 			unsubscribe();
+		});
+	});
+
+	describe('conditionalDirective', () => {
+		test(`should apply the directive without parameters when conditional parameter is true`, () => {
+			const directiveCondition = writable(false);
+
+			const directive = directiveSpy<void>();
+			const directiveConditional = conditionalDirective(directive, directiveCondition);
+
+			expect(directive).not.toHaveBeenCalled();
+
+			const boundDirectiveInstance = directiveConditional(element);
+
+			expect(directive).not.toHaveBeenCalled();
+
+			directiveCondition.set(true);
+
+			const directiveInstance = directive.mock.results[0].value;
+			expect(directive).toHaveBeenCalledOnce();
+			expect(directiveInstance.destroy).not.toHaveBeenCalled();
+
+			directiveCondition.set(false);
+
+			expect(directive).toHaveBeenCalledOnce(); // Still only called once
+			expect(directiveInstance.destroy).toHaveBeenCalledOnce();
+
+			boundDirectiveInstance?.destroy?.();
+			expect(directiveInstance.destroy).toHaveBeenCalledOnce();
+		});
+
+		test(`should not apply the directive twice when condition stays true`, () => {
+			const directiveCondition = writable(false);
+
+			const directive = directiveSpy<void>();
+			const directiveConditional = conditionalDirective(directive, directiveCondition);
+
+			expect(directive).not.toHaveBeenCalled();
+
+			const boundDirectiveInstance = directiveConditional(element);
+
+			expect(directive).not.toHaveBeenCalled();
+
+			// First time: set to true
+			directiveCondition.set(true);
+
+			expect(directive).toHaveBeenCalledOnce();
+			const directiveInstance = directive.mock.results[0].value;
+
+			// Second time: set to true again
+			directiveCondition.set(true);
+
+			// Should still be called only once
+			expect(directive).toHaveBeenCalledOnce();
+			expect(directiveInstance.destroy).not.toHaveBeenCalled();
+
+			boundDirectiveInstance?.destroy?.();
+			expect(directiveInstance.destroy).toHaveBeenCalledOnce();
+		});
+
+		test(`should apply the directive with parameters when conditional parameter is true`, () => {
+			const conditionStore = writable(false);
+			const condition$ = asReadable(conditionStore);
+
+			// Create a directive that accepts parameters
+			const directiveWithParam = directiveSpy<number>();
+
+			// Wrap it with conditionalDirective
+			const conditionalDir = conditionalDirective(directiveWithParam, condition$);
+
+			// Apply the conditional directive with initial parameter
+			const instance = conditionalDir(element, 1);
+
+			// Inner directive should not be applied yet (condition is false)
+			expect(directiveWithParam).not.toHaveBeenCalled();
+			// Enable the conditional directive
+			conditionStore.set(true);
+
+			// Now the inner directive should be applied with the initial parameter
+			const directiveInstance = directiveWithParam.mock.results[0].value;
+			expect(directiveWithParam).toHaveBeenCalledExactlyOnceWith(element, 1);
+			expect(directiveInstance.update).not.toHaveBeenCalled();
+
+			// Update the parameter via the instance
+			instance?.update?.(5);
+
+			// The inner directive's update should be called with the new value
+			expect(directiveInstance.update).toHaveBeenCalledExactlyOnceWith(5);
+			expect(directiveInstance.destroy).not.toHaveBeenCalled();
+
+			// Disable the conditional directive
+			conditionStore.set(false);
+
+			// The inner directive should be destroyed
+			expect(directiveInstance.destroy).toHaveBeenCalledOnce();
+
+			// Update the parameter via the instance
+			instance?.update?.(10);
+
+			// Mock should still be called once (condition is false)
+			expect(directiveWithParam).toHaveBeenCalledOnce();
+
+			conditionStore.set(true);
+
+			expect(directiveWithParam).toHaveBeenCalledTimes(2);
+			expect(directiveWithParam).lastCalledWith(element, 10);
+
+			// Cleanup
+			instance?.destroy?.();
+			expect(directiveInstance.destroy).toHaveBeenCalledOnce();
 		});
 	});
 
