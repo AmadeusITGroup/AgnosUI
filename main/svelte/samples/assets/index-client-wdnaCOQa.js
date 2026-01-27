@@ -1,1 +1,0 @@
-import{ai as a,aj as f,ak as b}from"./AppCommon-Wa4AmAan.js";function g(r){let t;const c=f(e=>{let u=!1;const i=r.subscribe(s=>{t=s,u&&e()});return u=!0,i});function n(){return a()?(c(),t):b(r)}return"set"in r?{get current(){return n()},set current(e){r.set(e)}}:{get current(){return n()}}}export{g as f};

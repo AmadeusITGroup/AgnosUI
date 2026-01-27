@@ -1,1 +1,0 @@
-import{a8 as t,a9 as b,a3 as c,ac as d,ad as h}from"./AppCommon-Wa4AmAan.js";function u(a,s){return a===s||a?.[h]===s}function T(a={},s,f,k){return t(()=>{var i,r;return b(()=>{i=r,r=[],c(()=>{a!==f(...r)&&(s(a,...r),i&&u(f(...i),a)&&s(null,...i))})}),()=>{d(()=>{r&&u(f(...r),a)&&s(null,...r)})}}),a}export{T as b};
