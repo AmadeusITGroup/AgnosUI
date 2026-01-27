@@ -222,6 +222,10 @@ export interface DrawerState extends DrawerCommonPropsAndState {
 	 * Flag to show whether the drawer is fully hidden.
 	 */
 	hidden: boolean;
+	/**
+	 * Flag to show whether the drawer is vertically positioned.
+	 */
+	isVertical: boolean;
 }
 
 /**
@@ -569,6 +573,7 @@ export const createDrawer: WidgetFactory<DrawerWidget> = createWidgetFactory('dr
 			visible$,
 			backdropHidden$,
 			hidden$,
+			isVertical$,
 		}),
 		patch,
 		api: {
