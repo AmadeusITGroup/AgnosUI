@@ -1,7 +1,7 @@
 {
 	"name": "@agnos-ui/angular-bootstrap",
 	"description": "Bootstrap-based component library for Angular.",
-	"version": "0.0.0",
+	"version": "0.10.0",
 	"type": "module",
 	"exports": {
 		".": {
@@ -97,8 +97,8 @@
 		"@angular/core": "^21.0.0"
 	},
 	"dependencies": {
-		"@agnos-ui/angular-headless": "0.0.0",
-		"@agnos-ui/core-bootstrap": "0.0.0",
+		"@agnos-ui/angular-headless": "0.10.0",
+		"@agnos-ui/core-bootstrap": "0.10.0",
 		"tslib": "^2.8.1"
 	},
 	"devDependencies": {
