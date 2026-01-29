@@ -231,11 +231,11 @@ export interface DrawerApi {
 	/**
 	 * Trigger the opening of the drawer.
 	 */
-	open: () => void;
+	open: () => Promise<void>;
 	/**
 	 * Trigger the closing of the drawer.
 	 */
-	close: () => void;
+	close: () => Promise<void>;
 }
 
 /**
