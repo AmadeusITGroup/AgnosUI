@@ -120,7 +120,7 @@ describe(`Drawer`, () => {
 		destroy();
 	});
 
-	test('makes everything inert except the drawer', () => {
+	test('makes everything inert except the drawer', async () => {
 		testArea.innerHTML = `
 			<div id="previousElement"></div>
 			<div id="drawerElement"></div>
@@ -133,18 +133,18 @@ describe(`Drawer`, () => {
 		});
 		const drawerElement = document.getElementById('drawerElement')!;
 		const directive = drawer.directives.drawerDirective(drawerElement);
-		drawer.api.open();
+		await drawer.api.open();
 		expect(document.getElementById('previousElement')!.hasAttribute('inert')).toBeTruthy();
 		expect(drawer.stores.visible$()).toBe(true);
 		expect(drawer.stores.hidden$()).toBe(false);
-		drawer.api.close();
+		await drawer.api.close();
 		expect(drawer.stores.visible$()).toBe(false);
-		expect(drawer.stores.hidden$()).toBe(false);
+		expect(drawer.stores.hidden$()).toBe(true);
 		directive?.destroy?.();
 		expect(document.getElementById('previousElement')!.hasAttribute('inert')).toBeFalsy();
 	});
 
-	test('closes on backdrop click', () => {
+	test('closes on backdrop click', async () => {
 		testArea.innerHTML = `
 				<div id="backdropElement"></div>
 				<div id="drawerElement"></div>
@@ -154,16 +154,17 @@ describe(`Drawer`, () => {
 		const drawer = createDrawer({
 			props: {
 				transition: noopTransition,
+				backdropTransition: noopTransition,
 			},
 		});
 		const backdropDirective = drawer.directives.backdropDirective(backdropElement);
 		const directive = drawer.directives.drawerDirective(drawerElement);
-		drawer.api.open();
+		await drawer.api.open();
 		expect(drawer.stores.visible$()).toBe(true);
 		expect(drawer.stores.hidden$()).toBe(false);
 		backdropElement.click();
-		expect(drawer.stores.visible$()).toBe(false);
-		expect(drawer.stores.hidden$()).toBe(false);
+		await expect.poll(() => drawer.stores.visible$()).toBe(false);
+		await expect.poll(() => drawer.stores.hidden$()).toBe(true);
 		backdropDirective?.destroy?.();
 		directive?.destroy?.();
 	});
@@ -179,7 +180,7 @@ describe(`Drawer`, () => {
 			},
 		});
 		const directive = drawer.directives.drawerDirective(drawerElement);
-		drawer.api.open();
+		await drawer.api.open();
 		await expect.poll(() => document.activeElement).toBe(drawerElement);
 		expect(drawer.stores.visible$()).toBe(true);
 		expect(drawer.stores.hidden$()).toBe(false);
@@ -205,7 +206,7 @@ describe(`Drawer`, () => {
 		const drawerSize = drawer.stores.size$;
 		const directive = drawer.directives.drawerDirective(drawerElement);
 		const splitterDirective = drawer.directives.splitterDirective(splitterElement);
-		drawer.api.open();
+		await drawer.api.open();
 		await expect.poll(() => document.activeElement).toBe(drawerElement);
 		await userEvent.keyboard('{Tab}');
 		await expect.poll(() => document.activeElement).toBe(splitterElement);
@@ -226,35 +227,36 @@ describe(`Drawer`, () => {
 		document.body.style.overflow = 'auto';
 		const drawer = createDrawer({
 			props: {
-				transition: noopTransition,
 				bodyScroll: false,
 				backdrop: true,
 			},
 		});
+
 		const backdropHidden = drawer.stores.backdropHidden$;
 		expect(backdropHidden()).toBe(true);
 		expect(document.body.style.overflow).toBe('auto');
-		drawer.api.open();
+		// Api test only (no dom element), so it can't be awaited
+		void drawer.api.open();
 		expect(backdropHidden()).toBe(false);
 		expect(document.body.style.overflow).toBe('hidden');
-		drawer.api.close();
+		void drawer.api.close();
 
 		document.body.style.overflow = 'auto';
 		drawer.patch({backdrop: false});
 
 		expect(backdropHidden()).toBe(true);
 		expect(document.body.style.overflow).toBe('auto');
-		drawer.api.open();
+		void drawer.api.open();
 		expect(backdropHidden()).toBe(true);
 		expect(document.body.style.overflow).toBe('hidden');
-		drawer.api.close();
+		void drawer.api.close();
 
 		document.body.style.overflow = 'auto';
 		drawer.patch({backdrop: true, bodyScroll: true});
 
 		expect(backdropHidden()).toBe(true);
 		expect(document.body.style.overflow).toBe('auto');
-		drawer.api.open();
+		void drawer.api.open();
 		expect(backdropHidden()).toBe(false);
 		expect(document.body.style.overflow).toBe('auto');
 	});
