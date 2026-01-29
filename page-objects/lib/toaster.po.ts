@@ -1,6 +1,6 @@
 import type {Locator} from '@playwright/test';
 import {BasePO} from '@agnos-ui/base-po';
-import {ToastPO, toastSelectors} from './toast.po';
+import {ToastPO} from './toast.po';
 
 export const toasterSelectors = {
 	rootComponent: '.au-toaster',
@@ -18,11 +18,8 @@ export class ToasterPO extends BasePO {
 		return this.locatorRoot.locator(this.selectors.container);
 	}
 
-	async toastPOs(): Promise<ToastPO[]> {
-		return Array.from(
-			{length: await this.locatorContainer.locator(toastSelectors.rootComponent).count()},
-			(_, i: number) => new ToastPO(this.locatorContainer, i),
-		);
+	poToast(index?: number) {
+		return new ToastPO(this.locatorContainer, index);
 	}
 
 	get locatorCloseButton(): Locator {
