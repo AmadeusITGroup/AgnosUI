@@ -6,9 +6,10 @@ import {type ConfigValidator, type PropsConfig, type Widget} from '../../types';
 import {bindDirective, browserDirective, createAttributesDirective, mergeDirectives} from '../../utils/directive';
 import {noop} from '../../utils/func';
 import {stateStores, true$, writablesForProps} from '../../utils/stores';
-import {typeArray, typeFunction, typeString} from '../../utils/writables';
+import {typeArray, typeBoolean, typeFunction, typeString} from '../../utils/writables';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
 import {createWidgetFactory} from '../../utils/widget';
+import {focusElement} from '../../services/focusElement';
 
 /**
  * Represents a tree item component.
@@ -50,6 +51,10 @@ export interface NormalizedTreeItem extends TreeItem {
 	 * An array of children nodes
 	 */
 	children: NormalizedTreeItem[];
+	/**
+	 * Flag whether the item is being currently edited
+	 */
+	isEdited: boolean;
 }
 
 /**
@@ -58,9 +63,18 @@ export interface NormalizedTreeItem extends TreeItem {
 interface TreeItemInfo {
 	parent: NormalizedTreeItem | undefined;
 	htmlElement?: HTMLElement;
+	originalNode: TreeItem;
 }
 
-interface TreeCommonPropsAndState extends WidgetsCommonPropsAndState {}
+interface TreeCommonPropsAndState extends WidgetsCommonPropsAndState {
+	/**
+	 * If `true` the tree items can be modified from the tree itself, otherwise they are just displayed
+	 *
+	 * @defaultValue `false`
+	 */
+	isEditable: boolean;
+}
+
 /**
  * Interface representing the properties for the Tree component.
  */
@@ -103,6 +117,17 @@ export interface TreeProps extends TreeCommonPropsAndState {
 	 * ```
 	 */
 	ariaLabelToggleFn: (label: string) => string;
+	/**
+	 * An event emitted when the nodes array is modified
+	 *
+	 * @param nodes - The updated nodes array
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
+	 */
+	onNodesChange: (nodes: TreeItem[]) => void;
 }
 /**
  * Represents the state of a Tree component.
@@ -121,8 +146,13 @@ export interface TreeState extends TreeCommonPropsAndState {
 /**
  * Interface representing the API for a Tree component.
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface TreeApi {}
+export interface TreeApi {
+	/**
+	 * Method to get the TreeItem from the input from the NormalizedTreeItem
+	 * @returns TreeItem that corresponds to the given NormalizedTreeItem
+	 */
+	getOriginalNode(normalizedItem: NormalizedTreeItem): TreeItem | undefined;
+}
 
 /**
  * Interface representing various directives used in the Tree component.
@@ -140,6 +170,14 @@ export interface TreeDirectives {
 	 * Directive to handle attributes for the tree item
 	 */
 	itemAttributesDirective: Directive<{item: NormalizedTreeItem}>;
+	/**
+	 * Directive for the input field when editing a tree item
+	 */
+	itemInputDirective: Directive<{item: NormalizedTreeItem}>;
+	/**
+	 * Directive to put on the label to handle the modify
+	 */
+	itemModifyDirective: Directive<{item: NormalizedTreeItem}>;
 }
 /**
  * Represents a Tree widget component.
@@ -162,6 +200,8 @@ const defaultTreeConfig: TreeProps = {
 	onExpandToggle: noop,
 	navSelector: (node: HTMLElement) => node.querySelectorAll('button'),
 	ariaLabelToggleFn: (label: string) => `Toggle ${label}`,
+	onNodesChange: noop,
+	isEditable: false,
 };
 
 const configValidator: ConfigValidator<TreeProps> = {
@@ -170,6 +210,8 @@ const configValidator: ConfigValidator<TreeProps> = {
 	onExpandToggle: typeFunction,
 	navSelector: typeFunction,
 	ariaLabelToggleFn: typeFunction,
+	onNodesChange: typeFunction,
+	isEditable: typeBoolean,
 };
 
 /**
@@ -178,7 +220,7 @@ const configValidator: ConfigValidator<TreeProps> = {
  * @returns a TreeWidget
  */
 export const createTree: WidgetFactory<TreeWidget> = createWidgetFactory('tree', (config?: PropsConfig<TreeProps>) => {
-	const [{nodes$, onExpandToggle$, navSelector$, ariaLabelToggleFn$, ...stateProps}, patch] = writablesForProps(
+	const [{nodes$, onExpandToggle$, navSelector$, ariaLabelToggleFn$, onNodesChange$, isEditable$, ...stateProps}, patch] = writablesForProps(
 		defaultTreeConfig,
 		config,
 		configValidator,
@@ -191,6 +233,9 @@ export const createTree: WidgetFactory<TreeWidget> = createWidgetFactory('tree',
 	};
 
 	const _toggleChange$ = writable({});
+
+	// Store for tracking editing value
+	const _editingValue$ = writable<string>('');
 
 	const expandedMap$ = computed(() => {
 		normalizedNodes$();
@@ -224,10 +269,12 @@ export const createTree: WidgetFactory<TreeWidget> = createWidgetFactory('tree',
 			ariaLabel: node.ariaLabel ?? node.label,
 			level,
 			children: [],
+			isEdited: false,
 			isExpanded: node.children?.length ? (node.isExpanded ?? false) : undefined,
 		};
 		treeMap.set(copyNode, {
 			parent,
+			originalNode: node,
 		});
 
 		if (node.children) {
@@ -241,7 +288,7 @@ export const createTree: WidgetFactory<TreeWidget> = createWidgetFactory('tree',
 		treeMap.clear();
 		return nodes$().map((node) => traverseTree(node, 0, undefined));
 	});
-	const _lastFocusedTreeItem$ = writable<TreeItem | undefined>(normalizedNodes$().find((node) => node.isExpanded !== undefined));
+	const _lastFocusedTreeItem$ = writable<NormalizedTreeItem | undefined>(normalizedNodes$().find((node) => node.isExpanded !== undefined));
 
 	const getTreeItemInfo = (item: NormalizedTreeItem) => {
 		const treeItem = treeMap.get(item);
@@ -306,6 +353,13 @@ export const createTree: WidgetFactory<TreeWidget> = createWidgetFactory('tree',
 			keydown: (event: KeyboardEvent) => {
 				const {key} = event;
 				const {item} = treeItemContext$();
+
+				// Don't handle keyboard shortcuts if user is editing in an input
+				const target = event.target as HTMLElement;
+				if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+					return;
+				}
+
 				const isExpanded = item.isExpanded;
 				refreshElements(); // collapsed items were added to the dom
 				switch (key) {
@@ -336,6 +390,7 @@ export const createTree: WidgetFactory<TreeWidget> = createWidgetFactory('tree',
 		},
 		attributes: {
 			'aria-label': computed(() => {
+				_toggleChange$();
 				const {item} = treeItemContext$();
 				return ariaLabelToggleFn$()(item.ariaLabel);
 			}),
@@ -369,15 +424,108 @@ export const createTree: WidgetFactory<TreeWidget> = createWidgetFactory('tree',
 		onExpandToggle$()(node);
 	};
 
+	const finishEditing = (item: NormalizedTreeItem) => {
+		const newLabel = _editingValue$();
+		if (newLabel !== item.label) {
+			// Update normalized item
+			item.label = newLabel;
+			item.ariaLabel = newLabel;
+			// Update original node through the map
+			const treeItemInfo = getTreeItemInfo(item);
+			if (treeItemInfo?.originalNode) {
+				treeItemInfo.originalNode.label = newLabel;
+			}
+
+			onNodesChange$()(nodes$());
+		}
+		item.isEdited = false;
+		_toggleChange$.set({});
+	};
+
+	const itemInputDirective = createAttributesDirective((treeItemContext$: ReadableSignal<{item: NormalizedTreeItem}>) => ({
+		attributes: {
+			type: readable('text'),
+			value: computed(() => {
+				const {item} = treeItemContext$();
+				return item.label;
+			}),
+		},
+		events: {
+			focus: (event: FocusEvent) => {
+				const input = event.target as HTMLInputElement;
+				_editingValue$.set(input.value);
+				input.select(); // Select all text on focus
+			},
+			input: (event: Event) => {
+				const input = event.target as HTMLInputElement;
+				_editingValue$.set(input.value);
+			},
+			blur: () => {
+				const {item} = treeItemContext$();
+				finishEditing(item);
+			},
+			keydown: (event: KeyboardEvent) => {
+				const {key} = event;
+				const {item} = treeItemContext$();
+
+				switch (key) {
+					case 'Escape':
+						event.stopPropagation();
+						item.isEdited = false;
+						_toggleChange$.set({});
+						break;
+					case 'Enter':
+						event.stopPropagation();
+						finishEditing(item);
+						break;
+					default:
+						return;
+				}
+			},
+		},
+	}));
+
 	const widget: TreeWidget = {
-		...stateStores({normalizedNodes$, expandedMap$, ...stateProps}),
+		...stateStores({normalizedNodes$, expandedMap$, isEditable$, ...stateProps}),
 		patch,
-		api: {},
+		api: {
+			getOriginalNode(normalizedItem: NormalizedTreeItem) {
+				return treeMap.get(normalizedItem)?.originalNode;
+			},
+		},
 		directives: {
 			navigationDirective: bindDirective(navDirective, navManagerConfig$),
 			itemToggleDirective: mergeDirectives(treeItemElementDirective, itemToggleAttributesDirective),
+			itemInputDirective: mergeDirectives(itemInputDirective, focusElement),
+			itemModifyDirective: createAttributesDirective((treeItemContext$: ReadableSignal<{item: NormalizedTreeItem}>) => ({
+				events: {
+					dblclick: (event: MouseEvent) => {
+						if (!isEditable$()) {
+							return;
+						}
+						event.stopPropagation();
+						event.preventDefault();
+						const {item} = treeItemContext$();
+						item.isEdited = true;
+						_editingValue$.set(item.label);
+						_toggleChange$.set({});
+					},
+					keydown: (event: KeyboardEvent) => {
+						const {key} = event;
+						const {item} = treeItemContext$();
+						if (key === 'F2') {
+							item.isEdited = true;
+							_editingValue$.set(item.label);
+							_toggleChange$.set({});
+						} else if (key === 'Escape') {
+							focusElementIfExists(_lastFocusedTreeItem$());
+						}
+					},
+				},
+			})),
 			itemAttributesDirective: createAttributesDirective((treeItemContext$: ReadableSignal<{item: NormalizedTreeItem}>) => ({
 				attributes: {
+					tabindex: readable(0),
 					role: readable('treeitem'),
 					'aria-selected': readable('false'), // TODO: adapt aria-selected to the actual selected state
 					'aria-expanded': computed(() => {

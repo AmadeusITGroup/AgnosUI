@@ -69,6 +69,27 @@ test.describe(`Tree tests`, () => {
 				);
 		});
 
+		test(`should edit the tree labels on double click`, async ({page}) => {
+			const treePO = new TreePO(page, 0);
+
+			await page.goto('#/tree/editable');
+			await treePO.locatorRoot.waitFor();
+
+			const firstItemLocator = (await treePO.locatorItemContainer.all()).at(0);
+
+			await firstItemLocator?.locator('span').dblclick();
+
+			const textInput = firstItemLocator?.getByRole('textbox');
+			expect(textInput).toBeDefined();
+			expect(await textInput?.inputValue()).toBe('Node 1');
+
+			await textInput?.fill('New Node');
+			await page.keyboard.press('Enter');
+
+			await expect.poll(async () => (await treePO.itemToggleState()).at(0)).toEqual({ariaLabel: 'Toggle New Node'});
+			expect(await firstItemLocator?.locator('span').textContent()).toBe('New Node');
+		});
+
 		test.describe(`Keyboard navigation`, () => {
 			test(`should navigate to the end with End key`, async ({page}) => {
 				const treePO = new TreePO(page, 0);

@@ -1,7 +1,7 @@
 import type {SlotContent} from '@agnos-ui/angular-headless';
-import {BaseWidgetDirective, callWidgetFactory, ComponentTemplate, SlotDirective, UseDirective} from '@agnos-ui/angular-headless';
+import {auBooleanAttribute, BaseWidgetDirective, callWidgetFactory, ComponentTemplate, SlotDirective, UseDirective} from '@agnos-ui/angular-headless';
 import {ChangeDetectionStrategy, Component, contentChild, Directive, inject, input, output, TemplateRef, viewChild} from '@angular/core';
-import type {TreeContext, TreeItem, NormalizedTreeItem, TreeSlotItemContext, TreeWidget} from './tree.gen';
+import type {NormalizedTreeItem, TreeContext, TreeItem, TreeSlotItemContext, TreeWidget} from './tree.gen';
 import {createTree} from './tree.gen';
 
 /**
@@ -97,12 +97,16 @@ export class TreeItemContentDirective {
 
 @Component({
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [SlotDirective, TreeItemContentDirective],
+	imports: [SlotDirective, TreeItemContentDirective, UseDirective],
 	template: `
 		<ng-template auTreeItemContent #treeItemContent let-state="state" let-directives="directives" let-item="item" let-api="api">
 			<span class="au-tree-item">
 				<ng-template [auSlot]="state.itemToggle()" [auSlotProps]="{state, api, directives, item}" />
-				{{ item.label }}
+				@if (item.isEdited) {
+					<input class="input input-sm w-32 min-w-0 flex-shrink" [auUse]="[directives.itemInputDirective, {item}]" />
+				} @else {
+					<span [auUse]="[directives.itemModifyDirective, {item}]">{{ item.label }}</span>
+				}
 			</span>
 		</ng-template>
 	`,
@@ -187,6 +191,10 @@ export class TreeComponent extends BaseWidgetDirective<TreeWidget> {
 				},
 				events: {
 					onExpandToggle: (item: NormalizedTreeItem) => this.expandToggle.emit(item),
+					onNodesChange: (nodes) => {
+						console.log('Nodes changed', nodes);
+						this.nodesChange.emit(nodes);
+					},
 				},
 				slotTemplates: () => ({
 					structure: this.slotStructureFromContent()?.templateRef,
@@ -230,6 +238,12 @@ export class TreeComponent extends BaseWidgetDirective<TreeWidget> {
 	 * ```
 	 */
 	readonly ariaLabelToggleFn = input<(label: string) => string>(undefined, {alias: 'auAriaLabelToggleFn'});
+	/**
+	 * If `true` the tree items can be modified from the tree itself, otherwise they are just displayed
+	 *
+	 * @defaultValue `false`
+	 */
+	readonly isEditable = input(undefined, {alias: 'auIsEditable', transform: auBooleanAttribute});
 
 	/**
 	 * An event emitted when the user toggles the expand of the TreeItem.
@@ -242,6 +256,17 @@ export class TreeComponent extends BaseWidgetDirective<TreeWidget> {
 	 * ```
 	 */
 	readonly expandToggle = output<NormalizedTreeItem>({alias: 'auExpandToggle'});
+	/**
+	 * An event emitted when the nodes array is modified
+	 *
+	 * @param nodes - The updated nodes array
+	 *
+	 * @defaultValue
+	 * ```ts
+	 * () => {}
+	 * ```
+	 */
+	readonly nodesChange = output<TreeItem[]>({alias: 'auNodesChange'});
 
 	/**
 	 * Slot to change the default tree item content
