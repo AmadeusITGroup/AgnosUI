@@ -67,6 +67,7 @@ test.describe.parallel(`Accordion tests`, () => {
 		updateAccordionState(expectedState, 1, true);
 		await expect.poll(() => accordionPO.state()).toEqual(expectedState);
 	});
+
 	test(`Toggle Panels`, async ({page}) => {
 		const accordionDemoPO = new AccordionTogglePanels(page);
 		await page.goto('#/accordion/togglepanels');

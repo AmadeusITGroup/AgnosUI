@@ -68,6 +68,7 @@ test.describe.parallel(`Rating tests`, () => {
 			await expect.poll(() => ratingPO.state()).toEqual(expectedState);
 			await expect.poll(() => ratingDemoPO.defaultRatingDemoState()).toEqual({rating: 0, hovered: 5, left: 5});
 		});
+
 		await test.step('keyboard interactions', async () => {
 			await ratingPO.locatorRoot.focus();
 			const expectValue = async (value: number) => {

@@ -108,6 +108,7 @@ for (const sample of ['navmanager', 'navmanagerwithselector']) {
 				}
 				const useMeta = process.platform === 'darwin' && browserName != 'chromium';
 				const fastForwardKey = useMeta ? `Meta+${forwardKey}` : 'End';
+
 				await test.step(`fast forward (${fastForwardKey})`, async () => {
 					await page.keyboard.press(fastForwardKey);
 					await expect.poll(() => getCaretPosition(page)).toEqual([value.length, value.length]);
@@ -119,6 +120,7 @@ for (const sample of ['navmanager', 'navmanagerwithselector']) {
 				});
 
 				const fastBackwardKey = useMeta ? `Meta+${backwardKey}` : 'Home';
+
 				await test.step(`fast backward (${fastBackwardKey})`, async () => {
 					await page.keyboard.press(fastBackwardKey);
 					await expect.poll(() => getCaretPosition(page)).toEqual([0, 0]);

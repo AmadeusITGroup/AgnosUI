@@ -22,6 +22,7 @@ test.describe(`Toaster tests`, () => {
 		await expect(topLeftContainer).toContainClass('top-0');
 		await expect(topLeftContainer).toContainClass('start-0');
 	});
+
 	test(`Toaster dismissible should display close buttons on the toasts`, async ({page}) => {
 		const toasterDemoPO = new ToasterDemoPO(page);
 		const toasterPO = new ToasterPO(page);
@@ -38,6 +39,7 @@ test.describe(`Toaster tests`, () => {
 		await expect.poll(async () => (await toasterPO.toastPOs()).length).toBe(2);
 		await expect((await toasterPO.toastPOs())[0].locatorCloseButton).toBeVisible();
 	});
+
 	test(`Toaster duration should set the auto hide to the correct ms`, async ({page}) => {
 		const toasterDemoPO = new ToasterDemoPO(page);
 		const toasterPO = new ToasterPO(page);
@@ -52,6 +54,7 @@ test.describe(`Toaster tests`, () => {
 		await expect(toast).toBeVisible();
 		await expect(toast).toHaveCount(0, {timeout: 1000});
 	});
+
 	test(`Toaster duration 0 makes toasts dismissible by default`, async ({page}) => {
 		const toasterDemoPO = new ToasterDemoPO(page);
 		const toasterPO = new ToasterPO(page);
@@ -65,6 +68,7 @@ test.describe(`Toaster tests`, () => {
 		await expect.poll(async () => (await toasterPO.toastPOs()).length).toBe(1);
 		await expect((await toasterPO.toastPOs())[0].locatorCloseButton).toBeVisible();
 	});
+
 	test(`Toaster limit displays a max of toasts in a given time`, async ({page}) => {
 		const toasterDemoPO = new ToasterDemoPO(page);
 		const toasterPO = new ToasterPO(page);
@@ -81,6 +85,7 @@ test.describe(`Toaster tests`, () => {
 
 		expect(await toasterPO.toastPOs()).toHaveLength(2);
 	});
+
 	test(`Toaster pause on hover should pause the auto hide on hover`, async ({page}) => {
 		const toasterDemoPO = new ToasterDemoPO(page);
 		const toasterPO = new ToasterPO(page);
@@ -100,6 +105,7 @@ test.describe(`Toaster tests`, () => {
 		await toasterDemoPO.locatorAddToastButton.hover();
 		await expect(toast).toBeHidden({timeout: 1000});
 	});
+
 	test(`Toaster close all should close all toasts`, async ({page}) => {
 		const toasterDemoPO = new ToasterDemoPO(page);
 		const toasterPO = new ToasterPO(page);

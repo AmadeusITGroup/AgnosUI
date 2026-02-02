@@ -1,11 +1,11 @@
-import {form, Field} from '@angular/forms/signals';
+import {form, FormField} from '@angular/forms/signals';
 import {RatingComponent} from './rating.component';
 import {Component, signal} from '@angular/core';
 
 @Component({
-	imports: [RatingComponent, Field],
+	imports: [RatingComponent, FormField],
 	template: `
-		<app-rating (hover)="hovered.set($event)" (leave)="left.set($event)" [field]="form.rating" />
+		<app-rating (hover)="hovered.set($event)" (leave)="left.set($event)" [formField]="form.rating" />
 		<div class="mt-2">
 			Current rate: <span id="defaultRating">{{ model().rating }}</span
 			><br />

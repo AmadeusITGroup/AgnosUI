@@ -54,6 +54,7 @@
 </script>
 
 <div class="navigation">
+	<!-- svelte-ignore a11y_no_static_element_interactions -->
 	<div class="d-flex bg-light rounded-4 py-1 px-2" {onpointerdown} use:notouchstart>
 		<button
 			type="button"
@@ -64,6 +65,7 @@
 			{@html isPlaying ? pauseSvg : playSvg}
 		</button>
 	</div>
+	<!-- svelte-ignore a11y_no_static_element_interactions -->
 	<div class="d-flex bg-light rounded-4 py-1 px-3 align-items-center" {onpointerdown} use:notouchstart>
 		<div class="pagination pagination-sm align-items-center" use:directives.tabList>
 			{#each cState.slidesData as slideData, index (slideData.id)}
