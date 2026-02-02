@@ -31,6 +31,7 @@ test.describe.parallel(`Pagination tests`, () => {
 		hrefs: ['#', '#', '#', '#', '#', '#'],
 		hrefsNavigation: {previous: '#', next: '#'},
 	};
+
 	test(`Default features`, async ({page}) => {
 		const paginationDemoPO = new PaginationDemoPO(page);
 		const paginationPO = new PaginationPO(page, 0);

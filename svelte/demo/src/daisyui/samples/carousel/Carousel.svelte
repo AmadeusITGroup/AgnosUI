@@ -70,6 +70,7 @@
 	{#if cState.showNavigationArrows || cState.showNavigationIndicators || autoplay}
 		<div class={['absolute top-2 right-2 left-2 z-1 flex', autoplay ? 'justify-between' : 'justify-center']}>
 			{#if autoplay}
+				<!-- svelte-ignore a11y_no_static_element_interactions -->
 				<div class="flex p-1 px-2 cursor-auto bg-base-100 rounded" {onpointerdown}>
 					<button class="btn btn-xs btn-square" aria-label={playing ? 'Pause' : 'Play'} onclick={togglePlay}>
 						{@html playing ? pauseSvg : playSvg}
@@ -77,6 +78,7 @@
 				</div>
 			{/if}
 			{#if cState.showNavigationArrows || cState.showNavigationIndicators}
+				<!-- svelte-ignore a11y_no_static_element_interactions -->
 				<div class="flex p-1 px-2 gap-1 cursor-auto bg-base-100 rounded-xl" {onpointerdown}>
 					{#if cState.showNavigationArrows}
 						<button class="btn btn-circle btn-xs" use:directives.scrollPrev>

@@ -20,6 +20,7 @@ test.describe.parallel(`Modal tests`, () => {
 		};
 		await page.goto('#/modal/default');
 		await modalDemoPO.locatorRoot.waitFor();
+
 		await test.step('open modal and click on close', async () => {
 			await modalDemoPO.locatorLaunchDemoModalButton.click();
 			expect(await modalPO.state()).toStrictEqual(expectedState);
@@ -27,6 +28,7 @@ test.describe.parallel(`Modal tests`, () => {
 			await modalPO.locatorRoot.waitFor({state: 'hidden'});
 			await expect(modalDemoPO.locatorMessage).toContainText('You clicked on the close button.');
 		});
+
 		await test.step('open modal and click on yes', async () => {
 			await modalDemoPO.locatorLaunchDemoModalButton.click();
 			expect(await modalPO.state()).toStrictEqual(expectedState);
@@ -34,6 +36,7 @@ test.describe.parallel(`Modal tests`, () => {
 			await modalPO.locatorRoot.waitFor({state: 'hidden'});
 			await expect(modalDemoPO.locatorMessage).toContainText('You answered the question with "Yes".');
 		});
+
 		await test.step('open modal and click on no', async () => {
 			await modalDemoPO.locatorLaunchDemoModalButton.click();
 			expect(await modalPO.state()).toStrictEqual(expectedState);
@@ -41,6 +44,7 @@ test.describe.parallel(`Modal tests`, () => {
 			await modalPO.locatorRoot.waitFor({state: 'hidden'});
 			await expect(modalDemoPO.locatorMessage).toContainText('You answered the question with "No".');
 		});
+
 		await test.step('open modal and click on backdrop', async () => {
 			await modalDemoPO.locatorLaunchDemoModalButton.click();
 			expect(await modalPO.state()).toStrictEqual(expectedState);

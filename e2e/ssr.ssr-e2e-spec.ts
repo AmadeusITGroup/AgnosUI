@@ -3,6 +3,7 @@ import {htmlSnapshot} from './htmlSnapshot';
 
 test.describe('SSR without rehydration', () => {
 	test.use({javaScriptEnabled: false});
+
 	test('Markup', async ({page}) => {
 		// eslint-disable-next-line playwright/no-networkidle
 		await page.goto('.', {waitUntil: 'networkidle'});
