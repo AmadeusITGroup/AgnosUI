@@ -304,6 +304,30 @@ describe(`Drawer`, () => {
 		testArea.removeChild(drawerElement);
 	});
 
+	test(`should properly initialize inline drawer and hide backdrop`, () => {
+		testArea.innerHTML = `
+				<div id="drawerElement"></div>
+			`;
+		const drawer = createDrawer({
+			props: {
+				bodyScroll: false,
+				backdrop: true,
+				inline: true,
+			},
+		});
+
+		const drawerElement = document.getElementById('drawerElement')!;
+		const directive = drawer.directives.drawerDirective(drawerElement);
+
+		expect(drawer.stores.inline$()).toBe(true);
+		expect(drawer.stores.backdropHidden$()).toBe(true);
+		expect(drawer.stores.container$()).toBeNull();
+
+		expect(drawerElement.getAttribute('style')).toContain('relative');
+
+		directive?.destroy?.();
+	});
+
 	describe('checks events', () => {
 		test('onMinimizedChange when mouse is in the viewport', () => {
 			const {destroy, mouseDown, mouseMove, mouseUp, state} = prepareTest('50px');

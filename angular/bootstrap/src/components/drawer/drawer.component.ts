@@ -219,7 +219,7 @@ export class DrawerComponent extends BaseWidgetDirective<DrawerWidget> {
 	/**
 	 * CSS classes to be applied on the widget main container
 	 *
-	 * @defaultValue `'w-full'`
+	 * @defaultValue `''`
 	 */
 	readonly className = input<string>(undefined, {alias: 'auClassName'});
 
@@ -229,6 +229,14 @@ export class DrawerComponent extends BaseWidgetDirective<DrawerWidget> {
 	 * @defaultValue `false`
 	 */
 	readonly resizable = input(undefined, {alias: 'auResizable', transform: auBooleanAttribute});
+
+	/**
+	 * If `true`, the drawer is inline.
+	 * When inline mode is enabled, the drawer stays in the document flow and moves content as it expands/resizes.
+	 *
+	 * @defaultValue `false`
+	 */
+	readonly inline = input(undefined, {alias: 'auInline', transform: auBooleanAttribute});
 
 	/**
 	 * An event emitted when the drawer size changes (width or height depending on the orientation).
