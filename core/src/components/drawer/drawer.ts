@@ -22,6 +22,7 @@ import {bindableProp, stateStores, true$, writablesForProps} from '../../utils/s
 import {createWidgetFactory} from '../../utils/widget';
 import {typeBoolean, typeFunction, typeHTMLElementOrNull, typeNumberOrNull, typeString} from '../../utils/writables';
 import type {WidgetsCommonPropsAndState} from '../commonProps';
+import {getTextDirection} from '../../utils/internal/textDirection';
 
 /**
  * Possible values for the drawer positions
@@ -491,6 +492,9 @@ export const createDrawer: WidgetFactory<DrawerWidget> = createWidgetFactory('dr
 		createPointerdownPositionDirective((event) => {
 			const drawerElement = drawerElement$()!;
 			const isVertical = isVertical$();
+			const documentDirection = getTextDirection(drawerElement) === 'ltr' ? 1 : -1;
+			// should invert the direction factor for horizontal drawer in rtl, but not for vertical drawer since top and bottom are not impacted by text direction
+			const directionFactor = isVertical ? 1 : documentDirection;
 			const startSize = drawerElement[isVertical ? 'offsetHeight' : 'offsetWidth'];
 			const clientXorY = isVertical ? 'clientY' : 'clientX';
 			const startPos = event[clientXorY];
@@ -499,7 +503,7 @@ export const createDrawer: WidgetFactory<DrawerWidget> = createWidgetFactory('dr
 
 			return {
 				onMove(event) {
-					setSize(startSize + direction * (event[clientXorY] - startPos));
+					setSize(startSize + directionFactor * direction * (event[clientXorY] - startPos));
 					if (!isResizing) {
 						isResizing = true;
 						onResizingChange$()(true);

@@ -76,7 +76,7 @@ describe(`Drawer`, () => {
 			mouseDown(x: number, y: number) {
 				dispatchEvent(splitterElement, 'pointerdown', x, y);
 			},
-			mouseMouse(x: number, y: number) {
+			mouseMove(x: number, y: number) {
 				dispatchEvent(splitterElement, 'pointermove', x, y);
 			},
 			mouseUp(x: number, y: number) {
@@ -306,12 +306,12 @@ describe(`Drawer`, () => {
 
 	describe('checks events', () => {
 		test('onMinimizedChange when mouse is in the viewport', () => {
-			const {destroy, mouseDown, mouseMouse, mouseUp, state} = prepareTest('50px');
+			const {destroy, mouseDown, mouseMove, mouseUp, state} = prepareTest('50px');
 
 			const expectedState = state();
 
 			mouseDown(100, 8);
-			mouseMouse(25, 8);
+			mouseMove(25, 8);
 			mouseUp(25, 8);
 
 			expect(state()).toStrictEqual(
@@ -326,11 +326,11 @@ describe(`Drawer`, () => {
 		});
 
 		test('onMinSize when mouse is out of viewport', () => {
-			const {destroy, mouseDown, mouseMouse, mouseUp, state} = prepareTest();
+			const {destroy, mouseDown, mouseMove, mouseUp, state} = prepareTest();
 			const expectedState = state();
 
 			mouseDown(100, 8);
-			mouseMouse(-10, 8);
+			mouseMove(-10, 8);
 			mouseUp(-10, 8);
 
 			expect(state()).toStrictEqual(
@@ -345,13 +345,13 @@ describe(`Drawer`, () => {
 		});
 
 		test('onMaxSize when mouse is in the viewport', () => {
-			const {destroy, mouseDown, mouseMouse, mouseUp, state} = prepareTest(undefined, '110px');
+			const {destroy, mouseDown, mouseMove, mouseUp, state} = prepareTest(undefined, '110px');
 			const expectedState = state();
 			const viewportSize = window.innerWidth;
 			const mousePosX = viewportSize - 10;
 
 			mouseDown(100, 8);
-			mouseMouse(mousePosX, 8);
+			mouseMove(mousePosX, 8);
 			mouseUp(mousePosX, 8);
 
 			expect(state()).toStrictEqual(
@@ -366,13 +366,13 @@ describe(`Drawer`, () => {
 		});
 
 		test('onMaxSize when mouse is out of viewport', () => {
-			const {destroy, mouseDown, mouseMouse, mouseUp, state} = prepareTest(undefined, '110px');
+			const {destroy, mouseDown, mouseMove, mouseUp, state} = prepareTest(undefined, '110px');
 			const expectedState = state();
 			const viewportSize = window.innerWidth;
 			const mousePosX = viewportSize + 10;
 
 			mouseDown(100, 8);
-			mouseMouse(mousePosX, 8);
+			mouseMove(mousePosX, 8);
 			mouseUp(mousePosX, 8);
 
 			expect(state()).toStrictEqual(
@@ -384,6 +384,119 @@ describe(`Drawer`, () => {
 			);
 
 			destroy();
+		});
+
+		test('should properly resize the inline drawer in RTL layout', () => {
+			document.documentElement.dir = 'rtl';
+
+			const {destroy, mouseDown, mouseMove, mouseUp, state} = prepareTest();
+			const expectedState = state();
+
+			expect(state()).toStrictEqual(expectedState);
+
+			mouseDown(100, 8);
+			mouseMove(150, 8);
+			mouseUp(150, 8);
+
+			expect(state()).toStrictEqual(
+				assign(expectedState, {
+					'--drawer-size': '50px',
+					width: 50,
+				}),
+			);
+
+			mouseDown(150, 8);
+			mouseMove(100, 8);
+			mouseUp(100, 8);
+
+			expect(state()).toStrictEqual(
+				assign(expectedState, {
+					'--drawer-size': '100px',
+					width: 100,
+				}),
+			);
+
+			destroy();
+
+			document.documentElement.dir = 'ltr';
+		});
+
+		test('should resize the vertical drawer the same way in both LTR and RTL layout', () => {
+			document.documentElement.dir = 'ltr';
+			const {drawer, destroy, mouseDown, mouseMove, mouseUp, state} = prepareTest();
+
+			// Update CSS to bind --drawer-size to height instead of width for vertical drawer
+			testArea.querySelector('style')!.textContent = `
+				#drawerElement {
+					--drawer-size: 100px;
+					width: 100px;
+					height: var(--drawer-size);
+				}
+				#splitterElement {
+					height: 10px;
+				}
+			`;
+
+			drawer.patch({className: 'block-start'});
+
+			const expectedState = state();
+
+			// Moving down should increase size
+			mouseDown(8, 100);
+			mouseMove(8, 150);
+			mouseUp(8, 150);
+
+			expect(state()).toStrictEqual(
+				assign(expectedState, {
+					'--drawer-size': '150px',
+					width: 100,
+					height: 150,
+				}),
+			);
+
+			// Moving up should decrease size
+			mouseDown(8, 150);
+			mouseMove(8, 100);
+			mouseUp(8, 100);
+
+			expect(state()).toStrictEqual(
+				assign(expectedState, {
+					'--drawer-size': '100px',
+					width: 100,
+					height: 100,
+				}),
+			);
+
+			document.documentElement.dir = 'rtl';
+
+			// Moving down should increase size (same as LTR)
+			mouseDown(8, 100);
+			mouseMove(8, 150);
+			mouseUp(8, 150);
+
+			expect(state()).toStrictEqual(
+				assign(expectedState, {
+					'--drawer-size': '150px',
+					width: 100,
+					height: 150,
+				}),
+			);
+
+			// Moving up should decrease size (same as LTR)
+			mouseDown(8, 150);
+			mouseMove(8, 100);
+			mouseUp(8, 100);
+
+			expect(state()).toStrictEqual(
+				assign(expectedState, {
+					'--drawer-size': '100px',
+					width: 100,
+					height: 100,
+				}),
+			);
+
+			destroy();
+			document.documentElement.dir = 'ltr';
 		});
 	});
 });
