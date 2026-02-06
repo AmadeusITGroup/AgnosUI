@@ -1,1 +1,0 @@
-import{j as s,r as t}from"./App-XYQ6f2LA.js";const o=n=>n.prototype instanceof t.Component,c=({slotContent:n,props:r})=>typeof n=="function"?o(n)?s.jsx(n,{...r}):s.jsx(s.Fragment,{children:n(r)}):s.jsx(s.Fragment,{children:n});export{c as S};

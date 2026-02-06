@@ -1,0 +1,104 @@
+const t=`import { jsx, Fragment, jsxs } from "react/jsx-runtime";
+import { useDirectives, classDirective, useDirective } from "@agnos-ui/react-headless/utils/directive";
+import { ToasterProvider as ToasterProvider$1, useToaster as useToaster$1 } from "@agnos-ui/react-headless/components/toast";
+import { createToast, defaultToasterProps, getToastDefaultConfig, toastPositions } from "@agnos-ui/core-bootstrap/components/toast";
+import { Slot } from "@agnos-ui/react-headless/slot";
+import { useImperativeHandle } from "react";
+import { useWidget } from "./generated/config.js";
+const export_getToastDefaultConfig = getToastDefaultConfig;
+const export_createToast = createToast;
+const export_toastPositions = toastPositions;
+const export_defaultToasterProps = defaultToasterProps;
+const ToastHeaderContent = (slotContext) => /* @__PURE__ */ jsx("button", { ...useDirectives([classDirective, "btn-close me-0 ms-auto"], slotContext.directives.closeButtonDirective) });
+const ToastHeader = (slotContext) => /* @__PURE__ */ jsxs("div", { className: "toast-header", children: [
+  /* @__PURE__ */ jsx(Slot, { slotContent: slotContext.state.header, props: slotContext }),
+  slotContext.state.dismissible && /* @__PURE__ */ jsx(ToastHeaderContent, { ...slotContext })
+] });
+const ToastCloseButtonNoHeader = (slotContext) => /* @__PURE__ */ jsx("button", { ...useDirectives([classDirective, "btn-close btn-close-white me-2 m-auto"], slotContext.directives.closeButtonDirective) });
+const ToastDefaultSlotStructure = (slotContext) => /* @__PURE__ */ jsxs(Fragment, { children: [
+  slotContext.state.header && /* @__PURE__ */ jsx(ToastHeader, { ...slotContext }),
+  /* @__PURE__ */ jsx("div", { className: "toast-body", children: /* @__PURE__ */ jsx(Slot, { slotContent: slotContext.state.children, props: slotContext }) }),
+  slotContext.state.dismissible && !slotContext.state.header && /* @__PURE__ */ jsx(ToastCloseButtonNoHeader, { ...slotContext })
+] });
+const ToastElement = (slotContext) => /* @__PURE__ */ jsx(
+  "div",
+  {
+    ...useDirectives(
+      [classDirective, { "toast-dismissible": slotContext.state.dismissible, "d-flex": !slotContext.state.header }],
+      slotContext.directives.transitionDirective,
+      slotContext.directives.autoHideDirective,
+      slotContext.directives.bodyDirective
+    ),
+    children: /* @__PURE__ */ jsx(Slot, { slotContent: slotContext.state.structure, props: slotContext })
+  }
+);
+function Toast({ ref, ...props }) {
+  const widgetContext = useWidget(export_createToast, props, {
+    structure: ToastDefaultSlotStructure,
+    children: props.children
+  });
+  useImperativeHandle(ref, () => widgetContext.api, [widgetContext.api]);
+  return /* @__PURE__ */ jsx(Fragment, { children: !widgetContext.state.hidden && /* @__PURE__ */ jsx(ToastElement, { ...widgetContext }) });
+}
+const ToastToaster = ({
+  id,
+  className,
+  visible,
+  structure,
+  children,
+  header,
+  dismissible,
+  ariaCloseButtonLabel,
+  animated,
+  animatedOnInit,
+  onShown,
+  onHidden,
+  onVisibleChange,
+  transition,
+  toaster
+}) => /* @__PURE__ */ jsx("div", { ...useDirective(toaster.eventsDirective, id), children: /* @__PURE__ */ jsx(
+  Toast,
+  {
+    animated,
+    animatedOnInit,
+    autoHide: false,
+    className,
+    dismissible: dismissible ?? toaster.options.dismissible,
+    ariaCloseButtonLabel,
+    structure,
+    header,
+    onShown,
+    onHidden: () => {
+      toaster.removeToast(id);
+      onHidden?.();
+    },
+    onVisibleChange,
+    visible,
+    transition,
+    children
+  }
+) });
+function ToasterContainer() {
+  const toaster = useToaster();
+  return /* @__PURE__ */ jsx("div", { className: "au-toaster", "aria-live": "polite", "aria-atomic": "true", children: /* @__PURE__ */ jsxs("div", { className: \`au-toaster-container toast-container \${export_toastPositions[toaster.options.position]}\`, children: [
+    toaster.options.closeAll && toaster.toasts.length > 1 && /* @__PURE__ */ jsx("div", { className: "d-flex position-relative align-items-end pb-2", children: /* @__PURE__ */ jsx("button", { className: "au-toaster-closeAll btn btn-secondary me-0 ms-auto pe-auto", onClick: () => toaster.closeAll(), children: toaster.options.closeAllLabel || "Close all" }) }),
+    toaster.toasts.map(({ id, props }) => /* @__PURE__ */ jsx(ToastToaster, { id, ...props, toaster }, id))
+  ] }) });
+}
+const ToasterProvider = ({ options, children }) => /* @__PURE__ */ jsxs(ToasterProvider$1, { options, children: [
+  children,
+  /* @__PURE__ */ jsx(ToasterContainer, {})
+] });
+const useToaster = () => useToaster$1();
+export {
+  Toast as T,
+  ToastDefaultSlotStructure as a,
+  ToasterContainer as b,
+  ToasterProvider as c,
+  export_defaultToasterProps as d,
+  export_createToast as e,
+  export_getToastDefaultConfig as f,
+  export_toastPositions as g,
+  useToaster as u
+};
+`;export{t as default};

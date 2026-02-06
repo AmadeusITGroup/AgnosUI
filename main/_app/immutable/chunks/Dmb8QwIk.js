@@ -1,1 +1,0 @@
-import{x as c,y as _,z as o,E as d,A as y,H as E,B as T,C as b,D as A,F as f}from"./CoDYgO7C.js";function p(t,i,u=!1){_&&o();var r=new A(t),h=u?d:0;function n(a,s){if(_){const l=y(t)===E;if(a===l){var e=T();b(e),r.anchor=e,f(!1),r.ensure(a,s),f(!0);return}}r.ensure(a,s)}c(()=>{var a=!1;i((s,e=!0)=>{a=!0,n(e,s)}),a||n(!1,null)},h)}export{p as i};
