@@ -1,6 +1,5 @@
 import type {InvalidTestCase} from '@typescript-eslint/rule-tester';
 import {RuleTester} from '@typescript-eslint/rule-tester';
-import type {TSESLint} from '@typescript-eslint/utils';
 import {afterAll, describe, test} from 'vitest';
 import {svelteCheckPropsRule} from '../src/svelte-check-props';
 import svelteParser from 'svelte-eslint-parser';
@@ -11,8 +10,48 @@ RuleTester.it = test;
 RuleTester.afterAll = afterAll;
 
 describe('svelte-check-props', () => {
-	const codeTemplate = (scriptContent: string, widgetProps: string, events = '{}') =>
-		`<script lang="ts" context="module">\ninterface MyWidgetProps {\n${widgetProps}\n}\ninterface MyWidget {\n\tpatch(props: Partial<MyWidgetProps>): void\n}\nconst callWidgetFactory: (config: any) => MyWidget;\n</script><script lang="ts">\n${scriptContent}\nlet widget = callWidgetFactory(() => {}, {events:${events}});\n</script>`;
+	// Utility helpers
+	const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+	const toEventName = (prop: string) => `on${capitalize(prop)}Change`;
+
+	// Event handler generators
+	const eventHandler = (prop: string, param = 'value', extraCode = '') => `{${toEventName(prop)}: (${param}) => { ${extraCode}${prop} = ${param}; }}`;
+
+	const eventHandlerArrow = (prop: string, param = 'value') => `{${toEventName(prop)}: (${param}) => ${prop} = ${param}}`;
+
+	// Expected output from the ESLint fixer
+	const fixedEventHandler = (prop: string, param = 'value') =>
+		['{', `\t${toEventName(prop)}: (${param}) => {`, `\t${prop} = ${param};`, '},}'].join('\n');
+
+	// Widget props definitions
+	const WIDGET_PROPS = {
+		someProp: 'someProp: string; onSomePropChange: (event: string) => void;',
+		somePropNumber: 'someProp: number; onSomePropChange: (event: number) => void;',
+		rating: 'rating: number; onRatingChange: (event: number) => void;',
+	};
+
+	// Generates a complete Svelte component template with module/instance scripts
+	const codeTemplate = (propsType: string, propsDestructure: string, widgetProps: string, events = '{}') => `<script lang="ts" context="module">
+interface MyWidgetProps {
+${widgetProps}
+}
+interface MyWidget {
+	patch(props: Partial<MyWidgetProps>): void;
+	api: {};
+	directives: {};
+	state: {};
+}
+const createWidget: () => MyWidget;
+const callWidgetFactory: <W>(factory: () => W, options: any) => W;
+declare function $props<T>(): T;
+declare function $bindable<T>(val?: T): T;
+</script><script lang="ts">
+let {${propsDestructure}...props}: ${propsType} = $props<${propsType}>();
+const widget = callWidgetFactory(createWidget, {
+	get props() { return props; },
+	events: ${events},
+});
+</script>`;
 
 	const ruleTester = new RuleTester({
 		plugins: {svelte: eslintPluginSvelte},
@@ -26,333 +65,104 @@ describe('svelte-check-props', () => {
 			},
 		},
 	});
-	type MessageIds<T extends TSESLint.RuleModule<any, any>> = T extends TSESLint.RuleModule<infer U, any> ? U : never;
 
-	const invalid: (InvalidTestCase<MessageIds<typeof svelteCheckPropsRule>, []> & {outputError?: boolean})[] = [
+	const invalid: InvalidTestCase<
+		'extraBindable' | 'missingBindable' | 'invalidBindableType' | 'missingEventHandler' | 'missingBindingAssignment',
+		[]
+	>[] = [
 		{
-			name: 'extra prop',
+			name: 'reports extraBindable when $bindable has no corresponding widget event',
 			filename: 'file.svelte',
-			code: codeTemplate('export let someProp: string | undefined;', ''),
-			errors: [{messageId: 'extraProp', data: {name: 'someProp'}}],
-			output: codeTemplate('', ''),
+			code: codeTemplate('{someProp?: string}', 'someProp = $bindable(), ', ''),
+			errors: [{messageId: 'extraBindable', data: {name: 'someProp'}}],
 		},
 		{
-			name: 'extra props',
+			name: 'reports missingBindable when widget has onChange but component lacks $bindable',
 			filename: 'file.svelte',
-			code: codeTemplate('export let someProp1: string | undefined, someProp2: string | undefined;', ''),
-			errors: [
-				{messageId: 'extraProp', data: {name: 'someProp1'}},
-				{messageId: 'extraProp', data: {name: 'someProp2'}},
+			code: codeTemplate('{}', '', WIDGET_PROPS.someProp),
+			errors: [{messageId: 'missingBindable', data: {name: 'someProp'}}],
+			output: [
+				codeTemplate('{someProp?: string}', 'someProp = $bindable(), ', WIDGET_PROPS.someProp),
+				codeTemplate('{someProp?: string}', 'someProp = $bindable(), ', WIDGET_PROPS.someProp, fixedEventHandler('someProp')),
 			],
-			output: codeTemplate('', ''),
 		},
 		{
-			name: 'extra prop among other props',
+			name: 'reports invalidBindableType when bindable type mismatches widget prop type',
+			filename: 'file.svelte',
+			code: codeTemplate('{someProp?: string}', 'someProp = $bindable(), ', WIDGET_PROPS.somePropNumber, eventHandler('someProp')),
+			errors: [{messageId: 'invalidBindableType', data: {name: 'someProp', expectedType: 'number', foundType: 'string | undefined'}}],
+		},
+		{
+			name: 'reports missingEventHandler when bindable exists but events object lacks handler',
+			filename: 'file.svelte',
+			code: codeTemplate('{someProp?: string}', 'someProp = $bindable(), ', WIDGET_PROPS.someProp),
+			errors: [{messageId: 'missingEventHandler', data: {name: 'someProp', widgetProp: 'onSomePropChange'}}],
+			output: codeTemplate('{someProp?: string}', 'someProp = $bindable(), ', WIDGET_PROPS.someProp, fixedEventHandler('someProp')),
+		},
+		{
+			name: 'reports missingBindingAssignment when handler exists but lacks assignment to bindable',
 			filename: 'file.svelte',
 			code: codeTemplate(
-				'export let someProp1: string | undefined, someProp2: string | undefined;',
-				'someProp2: string; onSomeProp2Change: (event: string) => void;',
-				'{onSomeProp2Change: (event) => {someProp2 = event;}}',
+				'{someProp?: string}',
+				'someProp = $bindable(), ',
+				WIDGET_PROPS.someProp,
+				'{onSomePropChange: (event) => { console.log(event); }}',
 			),
-			errors: [{messageId: 'extraProp', data: {name: 'someProp1'}}],
+			errors: [{messageId: 'missingBindingAssignment', data: {name: 'someProp', widgetProp: 'onSomePropChange'}}],
 			output: codeTemplate(
-				'export let  someProp2: string | undefined;',
-				'someProp2: string; onSomeProp2Change: (event: string) => void;',
-				'{onSomeProp2Change: (event) => {someProp2 = event;}}',
-			),
-		},
-		{
-			name: 'extra props amoung other props',
-			filename: 'file.svelte',
-			code: codeTemplate(
-				'export let someProp1: string | undefined, someProp2: string | undefined, someProp3: string | undefined;',
-				'someProp2: string; onSomeProp2Change: (event: string) => void;',
-				'{onSomeProp2Change: (event) => {someProp2 = event;}}',
-			),
-			errors: [
-				{messageId: 'extraProp', data: {name: 'someProp1'}},
-				{messageId: 'extraProp', data: {name: 'someProp3'}},
-			],
-			output: codeTemplate(
-				'export let  someProp2: string | undefined;',
-				'someProp2: string; onSomeProp2Change: (event: string) => void;',
-				'{onSomeProp2Change: (event) => {someProp2 = event;}}',
-			),
-		},
-		{
-			name: 'yet another extra prop',
-			filename: 'file.svelte',
-			code: codeTemplate(
-				'export let someProp1: string | undefined, someProp2: string | undefined;',
-				'someProp1: string; onSomeProp1Change: (event: string) => void;',
-				'{onSomeProp1Change: (event) => {someProp1 = event;}}',
-			),
-			errors: [{messageId: 'extraProp', data: {name: 'someProp2'}}],
-			output: codeTemplate(
-				'export let someProp1: string | undefined;',
-				'someProp1: string; onSomeProp1Change: (event: string) => void;',
-				'{onSomeProp1Change: (event) => {someProp1 = event;}}',
-			),
-		},
-		{
-			name: 'yet another extra props',
-			filename: 'file.svelte',
-			code: codeTemplate(
-				'export let someProp1: string | undefined, someProp2: string | undefined, someProp3: string | undefined;',
-				'someProp1: string; onSomeProp1Change: (event: string) => void;',
-				'{onSomeProp1Change: (event) => {someProp1 = event;}}',
-			),
-			errors: [
-				{messageId: 'extraProp', data: {name: 'someProp2'}},
-				{messageId: 'extraProp', data: {name: 'someProp3'}},
-			],
-			output: codeTemplate(
-				'export let someProp1: string | undefined;',
-				'someProp1: string; onSomeProp1Change: (event: string) => void;',
-				'{onSomeProp1Change: (event) => {someProp1 = event;}}',
-			),
-		},
-		{
-			name: 'so many extra props',
-			filename: 'file.svelte',
-			code: codeTemplate(
-				'export let someProp1: string | undefined, someProp2: string | undefined, someProp3: string | undefined, someProp4: string | undefined;',
-				'someProp1: string; onSomeProp1Change: (event: string) => void;',
-				'{onSomeProp1Change: (event) => {someProp1 = event;}}',
-			),
-			errors: [
-				{messageId: 'extraProp', data: {name: 'someProp2'}},
-				{messageId: 'extraProp', data: {name: 'someProp3'}},
-				{messageId: 'extraProp', data: {name: 'someProp4'}},
-			],
-			output: codeTemplate(
-				'export let someProp1: string | undefined;',
-				'someProp1: string; onSomeProp1Change: (event: string) => void;',
-				'{onSomeProp1Change: (event) => {someProp1 = event;}}',
-			),
-		},
-		{
-			name: 'extra extra extra props',
-			filename: 'file.svelte',
-			code: codeTemplate(
-				'export let someProp1: string | undefined, someProp2: string | undefined, someProp3: string | undefined, someProp4: string | undefined;',
-				'someProp1: string; onSomeProp1Change: (event: string) => void; someProp3: string; onSomeProp3Change: (event: string) => void;',
-				'{onSomeProp1Change: (event) => {someProp1 = event;}, onSomeProp3Change: (event) => {someProp3 = event;}}',
-			),
-			errors: [
-				{messageId: 'extraProp', data: {name: 'someProp2'}},
-				{messageId: 'extraProp', data: {name: 'someProp4'}},
-			],
-			output: codeTemplate(
-				'export let someProp1: string | undefined,  someProp3: string | undefined;',
-				'someProp1: string; onSomeProp1Change: (event: string) => void; someProp3: string; onSomeProp3Change: (event: string) => void;',
-				'{onSomeProp1Change: (event) => {someProp1 = event;}, onSomeProp3Change: (event) => {someProp3 = event;}}',
-			),
-		},
-		{
-			name: 'missing bound prop',
-			filename: 'file.svelte',
-			code: codeTemplate('', 'someProp: string; onSomePropChange: (event: string) => void;', '{onSomePropChange: (event) => {someProp = event;}}'),
-			errors: [{messageId: 'missingBoundProp', data: {name: 'someProp'}}],
-			output: codeTemplate(
-				'\nexport let someProp: string | undefined = undefined;',
-				'someProp: string; onSomePropChange: (event: string) => void;',
-				'{onSomePropChange: (event) => {someProp = event;}}',
-			),
-		},
-		{
-			name: 'missing bound prop in api',
-			filename: 'file.svelte',
-			code: codeTemplate(
-				'let someProp: string | undefined;',
-				'onSomePropChange: (event: string) => void;',
-				'{onSomePropChange: (event) => {someProp = event;}}',
-			),
-			errors: [{messageId: 'missingBoundPropInAPI', data: {name: 'someProp'}}],
-		},
-		{
-			name: 'extra prop + missing bound prop',
-			filename: 'file.svelte',
-			code: codeTemplate(
-				'export let someProp: string | undefined;',
-				'onSomePropChange: (event: string) => void;',
-				'{onSomePropChange: (event) => {someProp = event;}}',
-			),
-			errors: [
-				{messageId: 'extraProp', data: {name: 'someProp'}},
-				{messageId: 'missingBoundPropInAPI', data: {name: 'someProp'}},
-			],
-			output: codeTemplate('', 'onSomePropChange: (event: string) => void;', '{onSomePropChange: (event) => {someProp = event;}}'),
-			outputError: true,
-		},
-		{
-			name: 'invalid prop type',
-			filename: 'file.svelte',
-			code: codeTemplate(
-				'export let someProp: string;',
-				'someProp: string; onSomePropChange: (event: string) => void;',
-				'{onSomePropChange: (event) => {someProp = event;}}',
-			),
-			errors: [{messageId: 'invalidPropType', data: {name: 'someProp', expectedType: 'string | undefined', foundType: 'string'}}],
-			output: codeTemplate(
-				'export let someProp: string | undefined;',
-				'someProp: string; onSomePropChange: (event: string) => void;',
-				'{onSomePropChange: (event) => {someProp = event;}}',
-			),
-		},
-		{
-			name: 'invalid string or undefined prop type',
-			filename: 'file.svelte',
-			code: codeTemplate(
-				'export let someProp: string | undefined;',
-				'someProp: number; onSomePropChange: (event: number) => void;',
-				'{onSomePropChange: (event) => {someProp = event;}}',
-			),
-			errors: [{messageId: 'invalidPropType', data: {name: 'someProp', expectedType: 'number | undefined', foundType: 'string | undefined'}}],
-			output: codeTemplate(
-				'export let someProp: number | undefined;',
-				'someProp: number; onSomePropChange: (event: number) => void;',
-				'{onSomePropChange: (event) => {someProp = event;}}',
-			),
-		},
-		{
-			name: 'invalid untyped prop',
-			filename: 'file.svelte',
-			code: codeTemplate(
-				'export let someProp;',
-				'someProp: number; onSomePropChange: (event: number) => void;',
-				'{onSomePropChange: (event) => {someProp = event;}}',
-			),
-			errors: [{messageId: 'invalidPropType', data: {name: 'someProp', expectedType: 'number | undefined', foundType: 'any'}}],
-			output: codeTemplate(
-				'export let someProp: number | undefined;',
-				'someProp: number; onSomePropChange: (event: number) => void;',
-				'{onSomePropChange: (event) => {someProp = event;}}',
-			),
-		},
-		{
-			name: 'missing binding assignment',
-			filename: 'file.svelte',
-			code: codeTemplate('export let something: number | undefined;', 'onSomethingChange: (event: number) => void;\nsomething: number;'),
-			errors: [{messageId: 'missingBindingAssignment', data: {propBinding: 'something', widgetProp: 'onSomethingChange'}}],
-			output: codeTemplate(
-				'export let something: number | undefined;',
-				'onSomethingChange: (event: number) => void;\nsomething: number;',
-				'{\n\tonSomethingChange: (event) => {\n\t\tsomething = event;\n\t},}',
-			),
-		},
-		{
-			name: 'another missing binding assignment',
-			filename: 'file.svelte',
-			code: codeTemplate(
-				'export let something: number | undefined;',
-				'onSomethingChange: (event: number) => void;\nsomething: number;',
-				'{\n\tother: 5,\n}',
-			),
-			errors: [{messageId: 'missingBindingAssignment', data: {propBinding: 'something', widgetProp: 'onSomethingChange'}}],
-			output: codeTemplate(
-				'export let something: number | undefined;',
-				'onSomethingChange: (event: number) => void;\nsomething: number;',
-				'{\n\tonSomethingChange: (event) => {\n\t\tsomething = event;\n\t},\n\tother: 5,\n}',
-			),
-		},
-		{
-			name: 'yet another missing binding assignment',
-			filename: 'file.svelte',
-			code: codeTemplate(
-				'export let something: number | undefined;',
-				'onSomethingChange: (event: number) => void;\nsomething: number;',
-				'{\n\tonSomethingChange: (evt) => {\n\t\tsomethingElse(evt);\n\t},\n}',
-			),
-			errors: [{messageId: 'missingBindingAssignment', data: {propBinding: 'something', widgetProp: 'onSomethingChange'}}],
-			output: codeTemplate(
-				'export let something: number | undefined;',
-				'onSomethingChange: (event: number) => void;\nsomething: number;',
-				'{\n\tonSomethingChange: (evt) => {\n\t\tsomethingElse(evt);\n\t\n\t\tsomething = evt;\n\t},\n}',
-			),
-		},
-		{
-			name: 'yet yet another missing binding assignment',
-			filename: 'file.svelte',
-			code: codeTemplate(
-				'export let something: number | undefined;',
-				'onSomethingChange: (event: number) => void;\nsomething: number;',
-				'{\n\tonSomethingChange: (evt) => {\n\t\t\n\t},\n}',
-			),
-			errors: [{messageId: 'missingBindingAssignment', data: {propBinding: 'something', widgetProp: 'onSomethingChange'}}],
-			output: codeTemplate(
-				'export let something: number | undefined;',
-				'onSomethingChange: (event: number) => void;\nsomething: number;',
-				'{\n\tonSomethingChange: (evt) => {\n\t\t\n\t\n\t\tsomething = evt;\n\t},\n}',
-			),
-		},
-		{
-			name: 'yet yet yet another missing binding assignment',
-			filename: 'file.svelte',
-			code: codeTemplate(
-				'export let something: number | undefined;',
-				'onSomethingChange: (event: number) => void;\nsomething: number;',
-				'{\n\tonSomethingChange: (evt) => callSomething(),\n}',
-			),
-			errors: [{messageId: 'missingBindingAssignment', data: {propBinding: 'something', widgetProp: 'onSomethingChange'}}],
-			output: codeTemplate(
-				'export let something: number | undefined;',
-				'onSomethingChange: (event: number) => void;\nsomething: number;',
-				'{\n\tonSomethingChange: (event) => {\n\t\tsomething = event;\n\t},\n}',
-			),
-		},
-		{
-			name: 'why so many missing binding assignments',
-			filename: 'file.svelte',
-			code: codeTemplate(
-				'export let something: number | undefined;',
-				'onSomethingChange: (event: number) => void;\nsomething: number;',
-				'{\n\tonSomethingChange: undefined,\n}',
-			),
-			errors: [{messageId: 'missingBindingAssignment', data: {propBinding: 'something', widgetProp: 'onSomethingChange'}}],
-			output: codeTemplate(
-				'export let something: number | undefined;',
-				'onSomethingChange: (event: number) => void;\nsomething: number;',
-				'{\n\tonSomethingChange: (event) => {\n\t\tsomething = event;\n\t},\n}',
+				'{someProp?: string}',
+				'someProp = $bindable(), ',
+				WIDGET_PROPS.someProp,
+				'{onSomePropChange: (event) => { console.log(event); \tsomeProp = event;\n}}',
 			),
 		},
 	];
 
+	const valid = [
+		{
+			name: 'passes with empty code',
+			filename: 'file.svelte',
+			code: '',
+		},
+		{
+			name: 'passes when no widget factory call exists',
+			filename: 'file.svelte',
+			code: '<script lang="ts">let {x = $bindable(), ...props} = $props();</script>',
+		},
+		{
+			name: 'passes when widget has no bindable props',
+			filename: 'file.svelte',
+			code: codeTemplate('{}', '', ''),
+		},
+		{
+			name: 'passes when bindable has matching event handler with block body assignment',
+			filename: 'file.svelte',
+			code: codeTemplate('{someProp?: string}', 'someProp = $bindable(), ', WIDGET_PROPS.someProp, eventHandler('someProp')),
+		},
+		{
+			name: 'passes when bindable has matching event handler with arrow expression assignment',
+			filename: 'file.svelte',
+			code: codeTemplate('{rating?: number}', 'rating = $bindable(), ', WIDGET_PROPS.rating, eventHandlerArrow('rating')),
+		},
+		{
+			name: 'passes with multiple bindables each having correct handlers',
+			filename: 'file.svelte',
+			code: codeTemplate(
+				'{someProp?: string; rating?: number}',
+				'someProp = $bindable(), rating = $bindable(), ',
+				`${WIDGET_PROPS.someProp} ${WIDGET_PROPS.rating}`,
+				'{onSomePropChange: (event) => { someProp = event; }, onRatingChange: (value) => rating = value}',
+			),
+		},
+		{
+			name: 'passes when bindable has default value',
+			filename: 'file.svelte',
+			code: codeTemplate('{someProp?: string}', "someProp = $bindable('default'), ", WIDGET_PROPS.someProp, eventHandler('someProp')),
+		},
+	];
+
 	ruleTester.run('svelte-check-props', svelteCheckPropsRule, {
-		valid: [
-			{
-				name: 'empty code',
-				code: '',
-			},
-			{
-				name: 'ignore widget in context module',
-				code: '<script lang="ts" context="module">const widget = {patch(items: Partial<{onSomething: (event: number) => {}}>) {}};</script>',
-			},
-			{
-				name: 'no props',
-				code: codeTemplate('', ''),
-			},
-			{
-				name: 'just one event prop',
-				filename: 'file.svelte',
-				code: codeTemplate('', 'onSomething: (event: number) => void;'),
-			},
-			{
-				name: 'a prop with its associated event prop',
-				filename: 'file.svelte',
-				code: codeTemplate(
-					'export let something: number | undefined;',
-					'onSomethingChange: (event: number) => void;\nsomething: number;',
-					'{\n\tonSomethingChange: (event) => something = event,\n}',
-				),
-			},
-			...invalid
-				.filter(({output, outputError}) => !!output && !outputError)
-				.map(({output, name}) => ({
-					name: `fix: ${name}`,
-					code: Array.isArray(output!) ? output.join('') : output!,
-				})),
-		],
-		invalid: invalid.map(({outputError, ...testCase}) => testCase),
+		valid,
+		invalid,
 	});
 });
