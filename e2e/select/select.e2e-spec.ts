@@ -6,7 +6,8 @@ import type {PromiseValue} from 'e2e/utils';
 
 type State = PromiseValue<ReturnType<SelectPO['state']>>;
 
-test.describe.parallel('Select tests', () => {
+// FIXME: select tests are flaky, to be fixed in https://github.com/AmadeusITGroup/AgnosUI/issues/1284
+test.describe.fixme('Select tests', () => {
 	test.describe(`Basic select`, () => {
 		test.beforeEach(async ({page}) => {
 			await page.goto('#/select/select?filterText=initial value');
