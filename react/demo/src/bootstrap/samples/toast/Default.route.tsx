@@ -5,8 +5,8 @@ import {useRef} from 'react';
 
 const DefaultToastDemo = () => {
 	const refToast = useRef<ToastApi>(null);
-	function reset() {
-		refToast.current!.open();
+	async function reset() {
+		await refToast.current!.open();
 	}
 
 	return (

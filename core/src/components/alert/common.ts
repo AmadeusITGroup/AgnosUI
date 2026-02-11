@@ -115,12 +115,12 @@ export interface CommonAlertApi {
 	/**
 	 * Triggers alert closing programmatically (same as clicking on the close button (×)).
 	 */
-	close(): void;
+	close(): Promise<void>;
 
 	/**
 	 * Triggers the alert to be displayed for the user.
 	 */
-	open(): void;
+	open(): Promise<void>;
 }
 
 /**

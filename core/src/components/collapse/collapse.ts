@@ -103,17 +103,17 @@ export interface CollapseApi {
 	/**
 	 * Triggers collapse closing programmatically.
 	 */
-	close(): void;
+	close(): Promise<void>;
 
 	/**
 	 * Triggers the collapse content to be displayed for the user.
 	 */
-	open(): void;
+	open(): Promise<void>;
 
 	/**
 	 * Toggles the collapse content visibility.
 	 */
-	toggle(): void;
+	toggle(): Promise<void>;
 }
 
 /**
