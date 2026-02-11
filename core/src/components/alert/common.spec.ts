@@ -28,7 +28,7 @@ describe(`Common Alert`, () => {
 	test(`should close on method call`, () => {
 		const expectedState = state;
 		expect(expectedState.visible).toBe(true);
-		commonAlert.api.close();
+		void commonAlert.api.close();
 		expectedState.visible = false;
 		expectedState.hidden = true;
 		expect(state).toEqual(expectedState);
@@ -38,7 +38,7 @@ describe(`Common Alert`, () => {
 		commonAlert.patch({visible: false});
 		const expectedState = state;
 		expect(expectedState.visible).toBe(false);
-		commonAlert.api.open();
+		void commonAlert.api.open();
 		expectedState.visible = true;
 		expectedState.hidden = false;
 		expect(state).toEqual(expectedState);
@@ -71,13 +71,13 @@ describe(`Common Alert`, () => {
 		});
 		alertEvents.directives.transitionDirective(element);
 
-		alertEvents.api.close();
+		void alertEvents.api.close();
 		await promiseOnHidden.promise;
 		expect(onVisibleChangeCounter).toBe(1);
 		expect(onShownCounter).toBe(0);
 		expect(onHiddenCounter).toBe(1);
 
-		alertEvents.api.open();
+		void alertEvents.api.open();
 		await promiseOnShown.promise;
 		expect(onVisibleChangeCounter).toBe(2);
 		expect(onShownCounter).toBe(1);

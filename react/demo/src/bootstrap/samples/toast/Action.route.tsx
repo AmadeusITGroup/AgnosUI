@@ -9,8 +9,8 @@ import {useRef} from 'react';
 const ActionToastDemo = () => {
 	const refToast = useRef<ToastApi>(null);
 
-	function reset() {
-		refToast.current?.open();
+	async function reset() {
+		await refToast.current?.open();
 	}
 
 	return (

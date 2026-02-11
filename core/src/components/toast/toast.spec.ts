@@ -31,7 +31,7 @@ describe(`Toast`, () => {
 	test(`should close on method call`, () => {
 		const expectedState = state;
 		expect(expectedState.visible).toBe(true);
-		toast.api.close();
+		void toast.api.close();
 		expect(state).toEqual(
 			assign(expectedState, {
 				visible: false,
@@ -44,7 +44,7 @@ describe(`Toast`, () => {
 		toast.patch({visible: false});
 		const expectedState = state;
 		expect(expectedState.visible).toBe(false);
-		toast.api.open();
+		void toast.api.open();
 		expect(state).toEqual(
 			assign(expectedState, {
 				visible: true,
@@ -80,13 +80,13 @@ describe(`Toast`, () => {
 		});
 		toastEvents.directives.transitionDirective(element);
 
-		toastEvents.api.close();
+		void toastEvents.api.close();
 		await promiseOnHidden.promise;
 		expect(onVisibleChangeCounter).toBe(1);
 		expect(onShownCounter).toBe(0);
 		expect(onHiddenCounter).toBe(1);
 
-		toastEvents.api.open();
+		void toastEvents.api.open();
 		await promiseOnShown.promise;
 		expect(onVisibleChangeCounter).toBe(2);
 		expect(onShownCounter).toBe(1);
