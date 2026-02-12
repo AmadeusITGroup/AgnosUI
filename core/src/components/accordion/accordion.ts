@@ -160,34 +160,41 @@ export interface AccordionApi {
 	 * Given the itemId, will expand the corresponding accordion-item.
 	 *
 	 * If the itemId is not valid, nothing will happen.
+	 * @returns A promise that resolves when the expand operation is completed.
 	 */
-	expand(itemId: string): void;
+	expand(itemId: string): Promise<void>;
 
 	/**
 	 * Given the itemId, will collapse the corresponding accordion-item.
 	 *
 	 * If the itemId is not valid, nothing will happen.
+	 * @returns A promise that resolves when the collapse operation is completed.
 	 */
-	collapse(itemId: string): void;
+	collapse(itemId: string): Promise<void>;
 
 	/**
 	 * Given the itemId, will toggle the corresponding accordion-item.
 	 *
+	 * @returns A promise that resolves when the toggle operation is completed.
 	 * If the itemId is not valid, nothing will happen.
 	 */
-	toggle(itemId: string): void;
+	toggle(itemId: string): Promise<void>;
 
 	/**
 	 * It will expand all the items in the accordion.
 	 *
 	 * If `closeOthers` is `true` it will expand only the last accordion-item.
+	 *
+	 * @returns A promise that resolves when all the expand operations are completed.
 	 */
-	expandAll(): void;
+	expandAll(): Promise<void>;
 
 	/**
 	 * It will collapse all the accordion-items in the accordion.
+	 *
+	 * @returns A promise that resolves when all the collapse operations are completed.
 	 */
-	collapseAll(): void;
+	collapseAll(): Promise<void>;
 
 	/**
 	 * Creates a new accordionItem.
@@ -216,18 +223,21 @@ export type AccordionWidget = Widget<AccordionProps, AccordionState, AccordionAp
 export interface AccordionItemApi {
 	/**
 	 * It will collapse the accordion-item.
+	 * @returns A promise that resolves when the collapse operation is completed.
 	 */
-	collapse(): void;
+	collapse(): Promise<void>;
 
 	/**
 	 * It will expand the accordion-item.
+	 * @returns A promise that resolves when the expand operation is completed.
 	 */
-	expand(): void;
+	expand(): Promise<void>;
 
 	/**
 	 * It will toggle the accordion-item.
+	 * @returns A promise that resolves when the toggle operation is completed.
 	 */
-	toggle(): void;
+	toggle(): Promise<void>;
 
 	/**
 	 * Method to be called after the initialization to allow animations.
@@ -498,7 +508,7 @@ export function createAccordionItem(config?: PropsConfig<AccordionItemProps>): A
 		events: {
 			click: () => {
 				if (!disabled$()) {
-					visible$.update((c: boolean) => !c);
+					void transition.api.toggle();
 				}
 			},
 		},
@@ -530,15 +540,9 @@ export function createAccordionItem(config?: PropsConfig<AccordionItemProps>): A
 			initDone: () => {
 				initDone$.set(true);
 			},
-			collapse: () => {
-				visible$.set(false);
-			},
-			expand: () => {
-				visible$.set(true);
-			},
-			toggle: () => {
-				visible$.update((c: boolean) => !c);
-			},
+			collapse: transition.api.hide,
+			expand: transition.api.show,
+			toggle: transition.api.toggle,
 		},
 		directives: {
 			toggleDirective,
@@ -610,20 +614,20 @@ export function factoryCreateAccordion(
 			...stateStores({itemWidgets$, className$}),
 			patch,
 			api: {
-				expand: (id: string) => {
-					getItem(itemWidgets$(), id)?.api.expand();
+				expand: async (id: string) => {
+					await getItem(itemWidgets$(), id)?.api.expand();
 				},
-				collapse: (id: string) => {
-					getItem(itemWidgets$(), id)?.api.collapse();
+				collapse: async (id: string) => {
+					await getItem(itemWidgets$(), id)?.api.collapse();
 				},
-				toggle: (id: string) => {
-					getItem(itemWidgets$(), id)?.api.toggle();
+				toggle: async (id: string) => {
+					await getItem(itemWidgets$(), id)?.api.toggle();
 				},
-				expandAll: () => {
-					itemWidgets$().forEach((i) => i.api.expand());
+				expandAll: async () => {
+					await Promise.all(itemWidgets$().map((i) => i.api.expand()));
 				},
-				collapseAll: () => {
-					itemWidgets$().forEach((i) => i.api.collapse());
+				collapseAll: async () => {
+					await Promise.all(itemWidgets$().map((i) => i.api.collapse()));
 				},
 				registerItem: (propsConfig?: PropsConfig<AccordionItemProps>) => {
 					const itemProps = accordionItemProps as (keyof AccordionItemProps)[];

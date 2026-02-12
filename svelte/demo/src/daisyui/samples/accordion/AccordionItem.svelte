@@ -44,7 +44,7 @@
 
 	const onkeydown = (e: KeyboardEvent) => {
 		if (e.key === 'Enter') {
-			toggle();
+			void toggle();
 		}
 	};
 	onMount(widget.api.initDone);
