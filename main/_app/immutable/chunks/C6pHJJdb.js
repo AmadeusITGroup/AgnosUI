@@ -1,0 +1,310 @@
+const e=`import type { WidgetSlotContext, SlotContent, Widget, WidgetFactory, Directive } from '@agnos-ui/svelte-headless/types';
+import type { TransitionFn } from '@agnos-ui/svelte-headless/services/transitions/baseTransitions';
+/**
+ * Retrieve a shallow copy of the default Toast config
+ * @returns the default Toast config
+ */
+declare const export_getToastDefaultConfig: () => ToastProps;
+export { export_getToastDefaultConfig as getToastDefaultConfig };
+/**
+ * Represents the context for a Toast widget.
+ * This interface is an alias for \`WidgetSlotContext<ToastWidget>\`.
+ */
+export interface ToastContext extends WidgetSlotContext<ToastWidget> {
+}
+/**
+ * Represents the state of a Toast component.
+ */
+export interface ToastState {
+    /**
+     * Is \`true\` when the alert is hidden. Compared to \`visible\`, this is updated after the transition is executed.
+     */
+    hidden: boolean;
+    /**
+     * If \`true\`, alert can be dismissed by the user.
+     * The close button (×) will be displayed and you can be notified of the event with the (close) output.
+     *
+     * @defaultValue \`true\`
+     */
+    dismissible: boolean;
+    /**
+     * If \`true\` the alert is visible to the user
+     *
+     * @defaultValue \`true\`
+     */
+    visible: boolean;
+    /**
+     * Accessibility close button label
+     *
+     * @defaultValue \`'Close'\`
+     */
+    ariaCloseButtonLabel: string;
+    /**
+     * CSS classes to be applied on the widget main container
+     *
+     * @defaultValue \`''\`
+     */
+    className: string;
+    /**
+     * If \`true\` automatically hides the toast after the delay.
+     *
+     * @defaultValue \`true\`
+     */
+    autoHide: boolean;
+    /**
+     * Delay in milliseconds before hiding the toast.
+     *
+     * @defaultValue \`5000\`
+     */
+    delay: number;
+    /**
+     * Global template for the toast component
+     */
+    structure: SlotContent<ToastContext>;
+    /**
+     * Template for the toast content
+     */
+    children: SlotContent<ToastContext>;
+    /**
+     * Header template for the toast component
+     */
+    header: SlotContent<ToastContext>;
+}
+/**
+ * Interface representing the properties for the Toast component.
+ */
+export interface ToastProps {
+    /**
+     * The transition function will be executed when the alert is displayed or hidden.
+     *
+     * Depending on the value of \`animatedOnInit\`, the animation can be optionally skipped during the showing process.
+     *
+     * @defaultValue \`fadeTransition\`
+     */
+    transition: TransitionFn;
+    /**
+     * Callback called when the alert visibility changed.
+     *
+     * @defaultValue
+     * \`\`\`ts
+     * () => {}
+     * \`\`\`
+     */
+    onVisibleChange: (visible: boolean) => void;
+    /**
+     * Callback called when the alert is hidden.
+     *
+     * @defaultValue
+     * \`\`\`ts
+     * () => {}
+     * \`\`\`
+     */
+    onHidden: () => void;
+    /**
+     * Callback called when the alert is shown.
+     *
+     * @defaultValue
+     * \`\`\`ts
+     * () => {}
+     * \`\`\`
+     */
+    onShown: () => void;
+    /**
+     * If \`true\`, alert opening will be animated.
+     *
+     * Animation is triggered  when the \`.open()\` function is called
+     * or the visible prop is changed
+     *
+     * @defaultValue \`false\`
+     */
+    animatedOnInit: boolean;
+    /**
+     * If \`true\`, alert closing will be animated.
+     *
+     * Animation is triggered  when clicked on the close button (×),
+     * via the \`.close()\` function or the visible prop is changed
+     *
+     * @defaultValue \`true\`
+     */
+    animated: boolean;
+    /**
+     * If \`true\`, alert can be dismissed by the user.
+     * The close button (×) will be displayed and you can be notified of the event with the (close) output.
+     *
+     * @defaultValue \`true\`
+     */
+    dismissible: boolean;
+    /**
+     * If \`true\` the alert is visible to the user
+     *
+     * @defaultValue \`true\`
+     */
+    visible: boolean;
+    /**
+     * Accessibility close button label
+     *
+     * @defaultValue \`'Close'\`
+     */
+    ariaCloseButtonLabel: string;
+    /**
+     * CSS classes to be applied on the widget main container
+     *
+     * @defaultValue \`''\`
+     */
+    className: string;
+    /**
+     * If \`true\` automatically hides the toast after the delay.
+     *
+     * @defaultValue \`true\`
+     */
+    autoHide: boolean;
+    /**
+     * Delay in milliseconds before hiding the toast.
+     *
+     * @defaultValue \`5000\`
+     */
+    delay: number;
+    /**
+     * Global template for the toast component
+     */
+    structure: SlotContent<ToastContext>;
+    /**
+     * Template for the toast content
+     */
+    children: SlotContent<ToastContext>;
+    /**
+     * Header template for the toast component
+     */
+    header: SlotContent<ToastContext>;
+}
+/**
+ * Represents a Toast widget component.
+ */
+export type ToastWidget = Widget<ToastProps, ToastState, ToastApi, ToastDirectives>;
+/**
+ * Create an ToastWidget with given config props
+ * @param config - an optional alert config
+ * @returns an ToastWidget
+ */
+declare const export_createToast: WidgetFactory<ToastWidget>;
+export { export_createToast as createToast };
+/**
+ * A mapping of toast position keys to their corresponding CSS class strings of bootstrap.
+ * These classes define the positioning of toast notifications on the screen.
+ *
+ * The keys represent various positions on the screen, such as top-left, top-center,
+ * middle-right, etc., and the values are the CSS classes of bootstrap that apply the respective
+ * positioning styles.
+ *
+ * Example usage:
+ * \`\`\`typescript
+ * const positionClass = toastPositions.topLeft; // "top-0 start-0"
+ * \`\`\`
+ */
+declare const export_toastPositions: Record<ToastPositions, string>;
+export { export_toastPositions as toastPositions };
+/**
+ * Represents the API for the toast component.
+ */
+export interface ToastApi {
+    /**
+     * Triggers alert closing programmatically (same as clicking on the close button (×)).
+     */
+    close(): Promise<void>;
+    /**
+     * Triggers the alert to be displayed for the user.
+     */
+    open(): Promise<void>;
+}
+/**
+ * Interface representing the directives for a toast component.
+ */
+export interface ToastDirectives {
+    /**
+     * the transition directive, piloting what is the visual effect of going from hidden to visible
+     */
+    transitionDirective: Directive;
+    /**
+     * Directive that handles the autohide of the toast component
+     */
+    autoHideDirective: Directive;
+    /**
+     * Directive that adds all the necessary attributes to the body
+     */
+    bodyDirective: Directive;
+    /**
+     * Directive that adds all the necessary attributes to the close button depending on the presence of the header
+     */
+    closeButtonDirective: Directive;
+}
+/**
+ * Represents the possible positions for displaying a toast notification.
+ *
+ * The positions are defined based on a grid layout with three horizontal
+ * alignments (left, center, right) and three vertical alignments (top, middle, bottom).
+ *
+ * Available positions:
+ * - \`topLeft\`: Top-left corner of the screen.
+ * - \`topCenter\`: Top-center of the screen.
+ * - \`topRight\`: Top-right corner of the screen.
+ * - \`middleLeft\`: Middle-left side of the screen.
+ * - \`middleCenter\`: Center of the screen.
+ * - \`middleRight\`: Middle-right side of the screen.
+ * - \`bottomLeft\`: Bottom-left corner of the screen.
+ * - \`bottomCenter\`: Bottom-center of the screen.
+ * - \`bottomRight\`: Bottom-right corner of the screen.
+ */
+export type ToastPositions = 'topLeft' | 'topCenter' | 'topRight' | 'middleLeft' | 'middleCenter' | 'middleRight' | 'bottomLeft' | 'bottomCenter' | 'bottomRight';
+/**
+ * Props of the toaster
+ */
+export interface ToasterProps {
+    /** How much time (ms) a toast is displayed; 0 means it won't be removed until a manual action */
+    duration: number;
+    /** Where to position the toasts */
+    position: ToastPositions;
+    /** Maximum number of toasts displayed */
+    limit?: number;
+    /**  Pause toast when hover */
+    pauseOnHover?: boolean;
+    /** Display a dismiss button on each toast. When duration = 0, this is enforced to true */
+    dismissible: boolean;
+    /** Add a button to close all the toasts at once */
+    closeAll?: boolean;
+    /** Close all label */
+    closeAllLabel?: string;
+}
+/**
+ * Toast object
+ * @template Props Type of the toast properties.
+ */
+export interface ToasterToast<Props> {
+    /** Identifier of the toasts in the toaster */
+    id: number;
+    /** Properties of the toast */
+    props: Props;
+}
+/**
+ * Represents a timer used by the toaster service.
+ */
+export interface ToasterTimer {
+    /**
+     * The timeout identifier returned by \`setTimeout\`.
+     */
+    timeout: ReturnType<typeof setTimeout> | null;
+    /**
+     * The timestamp when the timer was started.
+     */
+    started: number;
+    /**
+     * The timestamp when the timer was paused (optional).
+     */
+    paused?: number;
+    /**
+     * The duration for which the timer is set (optional). Used internally to compute the remaining time.
+     */
+    duration: number;
+}
+declare const export_defaultToasterProps: ToasterProps;
+export { export_defaultToasterProps as defaultToasterProps };
+`;export{e as default};
