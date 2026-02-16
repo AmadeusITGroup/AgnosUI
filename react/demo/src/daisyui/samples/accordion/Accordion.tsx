@@ -41,7 +41,7 @@ export const AccordionItem = (
 	useEffect(() => api.initDone(), [api]);
 	const onEnter = (e: KeyboardEvent<HTMLDivElement>) => {
 		if (e.key === 'Enter') {
-			api.toggle();
+			void api.toggle();
 		}
 	};
 

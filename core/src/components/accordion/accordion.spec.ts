@@ -18,7 +18,10 @@ function createItems(accordion: AccordionWidget, n = 3): AccordionItemWidget[] {
 	for (let i = 0; i < n; i++) {
 		items.push(accordion.api.registerItem());
 	}
-	items.forEach((i) => i.directives.itemDirective(el));
+	items.forEach((i) => {
+		i.directives.itemDirective(el);
+		i.directives.bodyContainerDirective(el);
+	});
 	return items;
 }
 
@@ -125,38 +128,44 @@ describe(`Accordion`, () => {
 		button.click();
 	});
 
-	test(`should expand all the items and close them`, () => {
+	test(`should expand all the items and close them`, async () => {
 		const el = document.createElement('div');
-		accordion.api.registerItem().directives.itemDirective(el);
-		accordion.api.registerItem().directives.itemDirective(el);
-		accordion.api.registerItem().directives.itemDirective(el);
+		const item1 = accordion.api.registerItem();
+		const item2 = accordion.api.registerItem();
+		const item3 = accordion.api.registerItem();
+		item1.directives.itemDirective(el);
+		item1.directives.bodyContainerDirective(el);
+		item2.directives.itemDirective(el);
+		item2.directives.bodyContainerDirective(el);
+		item3.directives.itemDirective(el);
+		item3.directives.bodyContainerDirective(el);
 		expectOpenItems(state, [false, false, false]);
-		accordion.api.expandAll();
+		await accordion.api.expandAll();
 		expectOpenItems(state, [true, true, true]);
-		accordion.api.collapseAll();
+		await accordion.api.collapseAll();
 		expectOpenItems(state, [false, false, false]);
 	});
 
-	test(`should toggle items from accordion api`, () => {
+	test(`should toggle items from accordion api`, async () => {
 		const items = createItems(accordion);
 		const itemIds = items.map((i) => i.state$().id);
 		expectOpenItems(state, [false, false, false]);
-		accordion.api.expand(itemIds[0]);
-		accordion.api.expand(itemIds[2]);
+		await accordion.api.expand(itemIds[0]);
+		await accordion.api.expand(itemIds[2]);
 		expectOpenItems(state, [true, false, true]);
-		accordion.api.toggle(itemIds[1]);
-		accordion.api.collapse(itemIds[2]);
+		await accordion.api.toggle(itemIds[1]);
+		await accordion.api.collapse(itemIds[2]);
 		expectOpenItems(state, [true, true, false]);
 	});
 
-	test(`should toggle items with item api`, () => {
+	test(`should toggle items with item api`, async () => {
 		const items = createItems(accordion);
 		expectOpenItems(state, [false, false, false]);
-		items[0].api.expand();
-		items[2].api.expand();
+		await items[0].api.expand();
+		await items[2].api.expand();
 		expectOpenItems(state, [true, false, true]);
-		items[1].api.toggle();
-		items[2].api.collapse();
+		await items[1].api.toggle();
+		await items[2].api.collapse();
 		expectOpenItems(state, [true, true, false]);
 	});
 
@@ -167,12 +176,12 @@ describe(`Accordion`, () => {
 		i.directives.bodyContainerDirective(element);
 		expectOpenItems(state, [false]);
 		//calling it twice to ensure only one event is fired
-		i.api.toggle();
-		i.api.expand();
+		void i.api.toggle();
+		void i.api.expand();
 		await promiseOnShownItem.promise;
 		expectOpenItems(state, [true]);
-		i.api.toggle();
-		i.api.collapse();
+		void i.api.toggle();
+		void i.api.collapse();
 		await promiseOnHiddenItem.promise;
 		expectOpenItems(state, [false]);
 		expect(itemShown).toBe(1);
@@ -188,10 +197,10 @@ describe(`Accordion`, () => {
 		bodyContainerDirective(element);
 		itemDirective(element);
 		expectOpenItems(state, [false]);
-		accordion.api.toggle(id$());
-		accordion.api.expand(id$());
+		void accordion.api.toggle(id$());
+		void accordion.api.expand(id$());
 		await promiseOnShown.promise;
-		accordion.api.collapse(id$());
+		void accordion.api.collapse(id$());
 		await promiseOnHidden.promise;
 		expect(showns).toMatchObject([id$()]);
 		expect(hiddens).toMatchObject([id$()]);
@@ -208,7 +217,7 @@ describe(`Accordion`, () => {
 		expectOpenItems(state, [true, true, false]);
 	});
 
-	test(`should close the old item if closeOthers`, () => {
+	test(`should close the old item if closeOthers`, async () => {
 		const element = document.createElement('div');
 		accordion.directives.accordionDirective(element);
 		const items = createItems(accordion, 2);
@@ -220,11 +229,11 @@ describe(`Accordion`, () => {
 		expectOpenItems(state, [true, false]);
 
 		// item api
-		items[1].api.expand();
+		await items[1].api.expand();
 		expectOpenItems(state, [false, true]);
 
 		// accordion api
-		accordion.api.expand(items[0].state$().id);
+		await accordion.api.expand(items[0].state$().id);
 		expectOpenItems(state, [true, false]);
 	});
 
@@ -241,21 +250,23 @@ describe(`Accordion`, () => {
 		expectOpenItems(state, [false, true, false, false]);
 	});
 
-	test(`should have correct value for shouldBeInDOM`, () => {
+	test(`should have correct value for shouldBeInDOM`, async () => {
+		const el = document.createElement('div');
 		const i = accordion.api.registerItem({props: {visible: true}});
+		i.directives.bodyContainerDirective(el);
 		expect(i.state$().shouldBeInDOM).toBe(true);
-		i.api.collapse();
+		await i.api.collapse();
 		expect(i.state$().shouldBeInDOM).toBe(false);
 		i.patch({destroyOnHide: false});
 		expect(i.state$().shouldBeInDOM).toBe(true);
 	});
 
-	test(`should closeOthers work when oldOpen is undefined`, () => {
+	test(`should closeOthers work when oldOpen is undefined`, async () => {
 		const element = document.createElement('div');
 		accordion.directives.accordionDirective(element);
 		const items = createItems(accordion, 4);
-		items[0].api.expand();
-		items[1].api.expand();
+		await items[0].api.expand();
+		await items[1].api.expand();
 		expectOpenItems(state, [true, true, false, false]);
 		//oldOpenItem is undefined because initially openItems was [] and the first value of
 		//oldOpenItem is openItems[0]
@@ -263,18 +274,18 @@ describe(`Accordion`, () => {
 		expectOpenItems(state, [false, true, false, false]);
 	});
 
-	test(`should call initDone to enable the transition on item`, () => {
+	test(`should call initDone to enable the transition on item`, async () => {
 		const el = document.createElement('div');
 		const transition = vi.fn();
 		const itemWidget = accordion.api.registerItem({props: {transition}});
 		itemWidget.directives.itemDirective(el);
 		itemWidget.directives.bodyContainerDirective(el);
 		expectOpenItems(state, [false]);
-		itemWidget.api.expand();
+		await itemWidget.api.expand();
 		expectOpenItems(state, [true]);
 		expect(transition.mock.calls[transition.mock.calls.length - 1].slice(1, 3)).toEqual(['show', false]);
 		itemWidget.api.initDone();
-		itemWidget.api.collapse();
+		await itemWidget.api.collapse();
 		expectOpenItems(state, [false]);
 		expect(transition.mock.calls[transition.mock.calls.length - 1].slice(1, 3)).toEqual(['hide', true]);
 	});
