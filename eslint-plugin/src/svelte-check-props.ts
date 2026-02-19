@@ -2,236 +2,158 @@ import type {TSESLint} from '@typescript-eslint/utils';
 import {ESLintUtils, TSESTree} from '@typescript-eslint/utils';
 import type {AST as SvelteAST} from 'svelte-eslint-parser';
 import type {Type} from 'typescript';
-import type {EventInfo, PropInfo} from './ast-utils';
-import {
-	addIndentation,
-	extractEventsObject,
-	getChildIndentation,
-	getIndentation,
-	getInfoFromWidgetNode,
-	getNodeType,
-	insertNewLineBefore,
-	isSameType,
-	typeToString,
-} from './ast-utils';
+import {SignatureKind} from 'typescript';
+import {isSameType, typeToString} from './ast-utils';
 
-type ExportLetNode = TSESTree.VariableDeclarator & {
-	id: TSESTree.Identifier;
-	parent: TSESTree.VariableDeclaration & {parent: TSESTree.ExportNamedDeclaration};
-};
+interface EventInfo {
+	readonly propBinding: string;
+	readonly type: Type;
+	readonly widgetProp: string;
+}
 
-const isContextModuleScript = (node: SvelteAST.SvelteScriptElement) => {
-	return node.startTag.attributes.some(
-		(attribute) =>
-			attribute.type === 'SvelteAttribute' &&
-			attribute.key.name === 'context' &&
-			attribute.value.length === 1 &&
-			attribute.value[0].type === 'SvelteLiteral' &&
-			attribute.value[0].value === 'module',
+interface BindableInfo {
+	readonly node: TSESTree.Node;
+	readonly name: string;
+	readonly type: Type;
+}
+
+const isContextModuleScript = (node: SvelteAST.SvelteScriptElement) =>
+	node.startTag.attributes.some(
+		(attr) =>
+			attr.type === 'SvelteAttribute' &&
+			attr.key.name === 'context' &&
+			attr.value.length === 1 &&
+			attr.value[0].type === 'SvelteLiteral' &&
+			attr.value[0].value === 'module',
 	);
-};
 
-const followingComma = (node: TSESTree.Node, context: Readonly<TSESLint.RuleContext<any, any>>) => {
-	const followingComma = context.sourceCode.getTokenAfter(node);
-	return followingComma?.value === ',' ? followingComma : null;
-};
-
-const getStatementNode = (node: any) => {
-	while (node && node.parent?.type !== 'SvelteScriptElement') {
-		node = node.parent;
-	}
-	return node;
-};
-
-const reportExtraProp = (
-	node: ExportLetNode,
-	allExtraProps: Map<ExportLetNode, boolean>,
-	context: Readonly<TSESLint.RuleContext<'extraProp', any>>,
-) => {
-	context.report({
-		node,
-		messageId: 'extraProp',
-		data: {
-			name: node.id.name,
-		},
-		fix(fixer) {
-			allExtraProps.set(node, true);
-			const declarations = node.parent.declarations as ExportLetNode[];
-			if (declarations.every((declaration) => allExtraProps.get(declaration))) {
-				return fixer.remove(node.parent.parent);
-			}
-			const range: [number, number] = [...node.range];
-			const comma = followingComma(node, context);
-			if (comma) {
-				// remove until the following comma
-				range[1] = comma.range[1];
-			}
-			const position = declarations.indexOf(node);
-			if (position === declarations.length - 1) {
-				// last node in the declarations
-				for (let i = position - 1; i >= 0; i--) {
-					const previousNode = declarations[i];
-					// find the last non-removed node:
-					if (!allExtraProps.get(previousNode)) {
-						const comma = followingComma(previousNode, context);
-						if (comma) {
-							range[0] = comma.range[0];
-						}
-						break;
-					}
-				}
-			}
-			return fixer.removeRange(range);
-		},
-	});
-};
-
-const reportMissingPropInAPI = (node: TSESTree.Node, name: string, context: Readonly<TSESLint.RuleContext<'missingBoundPropInAPI', any>>) => {
-	context.report({
-		node,
-		messageId: 'missingBoundPropInAPI',
-		data: {
-			name,
-		},
-	});
-};
-
-const reportMissingProp = (
-	node: TSESTree.Node,
-	insertPosition: TSESTree.Node,
-	name: string,
-	prop: PropInfo,
-	context: Readonly<TSESLint.RuleContext<'missingBoundProp', any>>,
-) => {
-	context.report({
-		node,
-		messageId: 'missingBoundProp',
-		data: {
-			name,
-		},
-		fix(fixer) {
-			return insertNewLineBefore(fixer, insertPosition, `export let ${name}: ${typeToString(prop.type, node, context)} = undefined;`, context);
-		},
-	});
-};
-
-const reportInvalidPropType = (
-	node: ExportLetNode,
-	info: PropInfo,
-	foundType: Type,
-	context: Readonly<TSESLint.RuleContext<'invalidPropType', any>>,
-) => {
-	const expectedType = typeToString(info.type, node, context);
-	context.report({
-		node,
-		messageId: 'invalidPropType',
-		data: {
-			name: node.id.name,
-			expectedType,
-			foundType: typeToString(foundType, node, context),
-		},
-		fix(fixer) {
-			const typeAnnotation = node.id.typeAnnotation;
-			const typeText = `: ${expectedType}`;
-			if (typeAnnotation) {
-				return fixer.replaceText(typeAnnotation, typeText);
-			} else {
-				return fixer.insertTextAfter(node.id, typeText);
-			}
-		},
-	});
-};
-
-const isBindingAssignment = (node: TSESTree.Node, propName: string) =>
+const isBindingAssignment = (node: TSESTree.Node, propName: string): boolean =>
 	node.type === TSESTree.AST_NODE_TYPES.AssignmentExpression &&
 	node.operator === '=' &&
 	node.left.type === TSESTree.AST_NODE_TYPES.Identifier &&
 	node.left.name === propName;
 
-const isBindingAssignmentStatement = (propName: string) => (node: TSESTree.Node) =>
-	node.type === TSESTree.AST_NODE_TYPES.ExpressionStatement && isBindingAssignment(node.expression, propName);
-
-const findBindingAssignment = (functionNode: TSESTree.Node, propName: string) => {
-	const body =
-		functionNode.type === TSESTree.AST_NODE_TYPES.ArrowFunctionExpression || functionNode.type === TSESTree.AST_NODE_TYPES.FunctionExpression
-			? functionNode.body
-			: undefined;
-	if (body) {
-		if (body.type === TSESTree.AST_NODE_TYPES.BlockStatement) {
-			return body.body.find(isBindingAssignmentStatement(propName));
-		} else if (isBindingAssignment(body, propName)) {
-			return body;
-		}
+const findBindingAssignment = (functionNode: TSESTree.Node, propName: string): TSESTree.Node | undefined => {
+	if (functionNode.type !== TSESTree.AST_NODE_TYPES.ArrowFunctionExpression && functionNode.type !== TSESTree.AST_NODE_TYPES.FunctionExpression) {
+		return undefined;
 	}
-	return undefined;
+	const body = functionNode.body;
+	if (body.type === TSESTree.AST_NODE_TYPES.BlockStatement) {
+		return body.body.find((stmt) => stmt.type === TSESTree.AST_NODE_TYPES.ExpressionStatement && isBindingAssignment(stmt.expression, propName));
+	}
+	return isBindingAssignment(body, propName) ? body : undefined;
 };
 
-const fixApiPatchEventHandler = (
-	fixer: TSESLint.RuleFixer,
-	prop: EventInfo,
-	widgetStatementNode: TSESTree.Node,
-	widgetPatchArgNode: TSESTree.ObjectExpression | undefined,
-	eventInApiPatch: TSESTree.Node | undefined,
-	bindingAssignment: TSESTree.Node | undefined,
-	context: Readonly<TSESLint.RuleContext<any, any>>,
-) => {
-	const arrowFunction = `(event) => {\n\t${prop.propBinding} = event;\n}`;
-	if (eventInApiPatch) {
-		if (
-			(eventInApiPatch.type === TSESTree.AST_NODE_TYPES.ArrowFunctionExpression ||
-				eventInApiPatch.type === TSESTree.AST_NODE_TYPES.FunctionExpression) &&
-			eventInApiPatch.body.type === TSESTree.AST_NODE_TYPES.BlockStatement &&
-			eventInApiPatch.params[0]?.type === TSESTree.AST_NODE_TYPES.Identifier
-		) {
-			let content = '';
-			if (prop.propBinding && !bindingAssignment) {
-				content += `\n${prop.propBinding} = ${eventInApiPatch.params[0].name};`;
+const extractBindableEvents = (
+	callNode: TSESTree.CallExpression,
+	context: Readonly<TSESLint.RuleContext<MessageIds, Options>>,
+): Map<string, EventInfo> => {
+	const parserServices = ESLintUtils.getParserServices(context);
+	const checker = parserServices.program.getTypeChecker();
+	const events = new Map<string, EventInfo>();
+
+	const factoryArg = callNode.arguments[0];
+	if (!factoryArg) return events;
+
+	const factoryTsNode = parserServices.esTreeNodeToTSNodeMap.get(factoryArg);
+	const factoryType = checker.getTypeAtLocation(factoryTsNode);
+	const callSigs = factoryType.getCallSignatures();
+	if (callSigs.length === 0) return events;
+
+	const returnType = callSigs[0].getReturnType();
+	const patchSymbol = returnType.getProperty('patch');
+	if (!patchSymbol) return events;
+
+	const patchType = checker.getTypeOfSymbolAtLocation(patchSymbol, factoryTsNode);
+	const patchSigs = checker.getSignaturesOfType(patchType, SignatureKind.Call);
+	if (patchSigs.length === 0) return events;
+
+	const patchParam = patchSigs[0].getParameters()[0];
+	if (!patchParam) return events;
+
+	const patchParamType = checker.getTypeOfSymbolAtLocation(patchParam, factoryTsNode);
+	for (const sym of patchParamType.getProperties()) {
+		const symName = sym.getName();
+		if (symName.startsWith('on') && symName.endsWith('Change')) {
+			const propPart = symName.slice(2, -6);
+			const bindingName = propPart.charAt(0).toLowerCase() + propPart.slice(1);
+			let eventParamType = checker.getVoidType();
+			const symType = checker.getNonNullableType(checker.getTypeOfSymbolAtLocation(sym, factoryTsNode));
+			const eventSigs = checker.getSignaturesOfType(symType, SignatureKind.Call);
+			if (eventSigs.length > 0 && eventSigs[0].getParameters().length > 0) {
+				eventParamType = checker.getTypeOfSymbolAtLocation(eventSigs[0].getParameters()[0], factoryTsNode);
 			}
-			const indentation = getChildIndentation(eventInApiPatch.body.body[0], eventInApiPatch.body, context);
-			return insertNewLineBefore(fixer, context.sourceCode.getLastToken(eventInApiPatch.body)!, addIndentation(content, indentation), context);
+			events.set(bindingName, {propBinding: bindingName, type: eventParamType, widgetProp: symName});
 		}
-		const indentation = getIndentation(eventInApiPatch, context);
-		return fixer.replaceText(eventInApiPatch, addIndentation(arrowFunction, indentation));
 	}
-	const propText = `\n${prop.widgetProp}: ${arrowFunction},`;
-	if (widgetPatchArgNode) {
-		const indentation = getChildIndentation(widgetPatchArgNode.properties[0], widgetPatchArgNode, context);
-		return fixer.insertTextAfter(context.sourceCode.getFirstToken(widgetPatchArgNode)!, addIndentation(propText, indentation));
-	}
-	const widgetPatchCall = `\nwidget.patch({${addIndentation(propText, '\t')}\n});`;
-	const indentation = getIndentation(widgetStatementNode, context);
-	return fixer.insertTextAfter(widgetStatementNode, addIndentation(widgetPatchCall, indentation));
+	return events;
 };
 
-const reportApiPatchEventHandlerIssue = (
-	name: string,
-	prop: EventInfo,
-	widgetStatementNode: TSESTree.Node,
-	widgetPatchArgNode: TSESTree.ObjectExpression | undefined,
-	eventInWidgetPatch: TSESTree.Node | undefined,
-	bindingAssignment: TSESTree.Node | undefined,
-	context: Readonly<TSESLint.RuleContext<'missingBindingAssignment', any>>,
-) => {
-	context.report({
-		node: eventInWidgetPatch || widgetPatchArgNode || widgetStatementNode,
-		messageId: 'missingBindingAssignment',
-		data: {
-			name,
-			widgetProp: prop.widgetProp,
-			propBinding: prop.propBinding,
-		},
-		fix(fixer) {
-			return fixApiPatchEventHandler(fixer, prop, widgetStatementNode, widgetPatchArgNode, eventInWidgetPatch, bindingAssignment, context);
-		},
-	});
+const extractEventsHandlers = (callNode: TSESTree.CallExpression): {node: TSESTree.ObjectExpression; handlers: Map<string, TSESTree.Node>} | null => {
+	const optionsArg = callNode.arguments[1];
+	if (optionsArg?.type !== TSESTree.AST_NODE_TYPES.ObjectExpression) return null;
+
+	for (const prop of optionsArg.properties) {
+		if (prop.type === TSESTree.AST_NODE_TYPES.Property && prop.key.type === TSESTree.AST_NODE_TYPES.Identifier && prop.key.name === 'events') {
+			if (prop.value.type === TSESTree.AST_NODE_TYPES.ObjectExpression) {
+				const handlers = new Map<string, TSESTree.Node>();
+				for (const eventProp of prop.value.properties) {
+					if (eventProp.type === TSESTree.AST_NODE_TYPES.Property && eventProp.key.type === TSESTree.AST_NODE_TYPES.Identifier) {
+						handlers.set(eventProp.key.name, eventProp.value);
+					}
+				}
+				return {node: prop.value, handlers};
+			}
+		}
+	}
+	return null;
 };
 
-export const svelteCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
+const extractBindables = (
+	propsNode: TSESTree.VariableDeclarator,
+	context: Readonly<TSESLint.RuleContext<MessageIds, Options>>,
+): Map<string, BindableInfo> => {
+	const bindables = new Map<string, BindableInfo>();
+	if (propsNode.id.type !== TSESTree.AST_NODE_TYPES.ObjectPattern || !propsNode.init) return bindables;
+
+	const parserServices = ESLintUtils.getParserServices(context);
+	const checker = parserServices.program.getTypeChecker();
+
+	const propsCallTsNode = parserServices.esTreeNodeToTSNodeMap.get(propsNode.init);
+	const propsType = checker.getTypeAtLocation(propsCallTsNode);
+
+	for (const prop of propsNode.id.properties) {
+		if (prop.type !== TSESTree.AST_NODE_TYPES.Property || prop.key.type !== TSESTree.AST_NODE_TYPES.Identifier) continue;
+
+		const name = prop.key.name;
+		const valueNode = prop.value;
+
+		if (valueNode.type === TSESTree.AST_NODE_TYPES.AssignmentPattern) {
+			const right = valueNode.right;
+			if (
+				right.type === TSESTree.AST_NODE_TYPES.CallExpression &&
+				right.callee.type === TSESTree.AST_NODE_TYPES.Identifier &&
+				right.callee.name === '$bindable'
+			) {
+				const propSymbol = propsType.getProperty(name);
+				const type = propSymbol ? checker.getTypeOfSymbol(propSymbol) : checker.getAnyType();
+				bindables.set(name, {node: prop, name, type});
+			}
+		}
+	}
+	return bindables;
+};
+
+type MessageIds = 'extraBindable' | 'invalidBindableType' | 'missingBindable' | 'missingEventHandler' | 'missingBindingAssignment';
+type Options = [];
+
+export const svelteCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs<Options, MessageIds>({
 	create(context) {
 		let inContextModule = false;
-		const exportLetNodes: ExportLetNode[] = [];
-		let scriptScope: any;
-		let widgetNode: TSESTree.VariableDeclarator | undefined;
+		let scriptScope: TSESLint.Scope.Scope | undefined;
+		let propsNode: TSESTree.VariableDeclarator | undefined;
+		let widgetCallNode: TSESTree.CallExpression | undefined;
+
 		return {
 			SvelteScriptElement(node: SvelteAST.SvelteScriptElement) {
 				scriptScope = context.sourceCode.getScope(node as any);
@@ -241,74 +163,163 @@ export const svelteCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 				inContextModule = false;
 			},
 			VariableDeclarator(node) {
-				// only take into account declarations done in the top-most scope (with no upper scope),
-				// and not in a context="module" script
 				if (inContextModule || context.sourceCode.getScope(node) !== scriptScope) return;
-				if (node.id.type === TSESTree.AST_NODE_TYPES.Identifier) {
-					if (node.id.name === 'widget') {
-						widgetNode = node;
-					}
-					if (
-						node.parent?.type === TSESTree.AST_NODE_TYPES.VariableDeclaration &&
-						node.parent.kind === 'let' &&
-						node.parent.parent?.type === TSESTree.AST_NODE_TYPES.ExportNamedDeclaration
-					) {
-						exportLetNodes.push(node as ExportLetNode);
-					}
+
+				if (
+					node.init?.type === TSESTree.AST_NODE_TYPES.CallExpression &&
+					node.init.callee.type === TSESTree.AST_NODE_TYPES.Identifier &&
+					node.init.callee.name === '$props'
+				) {
+					propsNode = node;
+				}
+
+				if (
+					node.init?.type === TSESTree.AST_NODE_TYPES.CallExpression &&
+					node.init.callee.type === TSESTree.AST_NODE_TYPES.Identifier &&
+					node.init.callee.name === 'callWidgetFactory'
+				) {
+					widgetCallNode = node.init;
 				}
 			},
 			'Program:exit'() {
-				if (widgetNode) {
-					const widgetInfo = getInfoFromWidgetNode(widgetNode, context);
-					if (widgetInfo) {
-						const widgetStatementNode = getStatementNode(widgetNode);
-						const bindings = new Set(widgetInfo?.bindings);
-						const extraProps = new Map(
-							exportLetNodes
-								.filter((exportNode) => {
-									const name = exportNode.id.name;
-									const propInfo = widgetInfo.props.get(name);
-									const validProp = propInfo && bindings.delete(name);
-									if (validProp) {
-										const nodeType = getNodeType(exportNode, context);
-										if (!isSameType(propInfo.type, nodeType, context)) {
-											reportInvalidPropType(exportNode, propInfo, nodeType, context);
+				if (!widgetCallNode || !propsNode) return;
+
+				// Capture in local constants for use in closures (TypeScript narrowing)
+				const widgetCall = widgetCallNode;
+				const props = propsNode;
+
+				const expectedEvents = extractBindableEvents(widgetCall, context);
+				const bindables = extractBindables(props, context);
+				const eventsInfo = extractEventsHandlers(widgetCall);
+				const checkedBindings = new Set<string>();
+
+				for (const [name, bindable] of bindables) {
+					const expectedEvent = expectedEvents.get(name);
+					if (!expectedEvent) {
+						context.report({
+							node: bindable.node,
+							messageId: 'extraBindable',
+							data: {name},
+						});
+						continue;
+					}
+					checkedBindings.add(name);
+
+					if (!isSameType(expectedEvent.type, bindable.type, context, true)) {
+						context.report({
+							node: bindable.node,
+							messageId: 'invalidBindableType',
+							data: {
+								name,
+								expectedType: typeToString(expectedEvent.type, bindable.node, context),
+								foundType: typeToString(bindable.type, bindable.node, context),
+							},
+						});
+					}
+
+					const handler = eventsInfo?.handlers.get(expectedEvent.widgetProp);
+					if (handler) {
+						const assignment = findBindingAssignment(handler, name);
+						if (!assignment) {
+							context.report({
+								node: handler,
+								messageId: 'missingBindingAssignment',
+								data: {name, widgetProp: expectedEvent.widgetProp},
+								fix(fixer) {
+									if (
+										handler.type === TSESTree.AST_NODE_TYPES.ArrowFunctionExpression &&
+										handler.body.type === TSESTree.AST_NODE_TYPES.BlockStatement &&
+										handler.params[0]?.type === TSESTree.AST_NODE_TYPES.Identifier
+									) {
+										const paramName = handler.params[0].name;
+										const lastToken = context.sourceCode.getLastToken(handler.body)!;
+										return fixer.insertTextBefore(lastToken, `\t${name} = ${paramName};\n`);
+									}
+									return null;
+								},
+							});
+						}
+					} else {
+						context.report({
+							node: eventsInfo?.node || widgetCall,
+							messageId: 'missingEventHandler',
+							data: {name, widgetProp: expectedEvent.widgetProp},
+							fix(fixer) {
+								const eventHandler = `${expectedEvent.widgetProp}: (value) => {\n\t${name} = value;\n},`;
+								if (eventsInfo?.node) {
+									const firstToken = context.sourceCode.getFirstToken(eventsInfo.node)!;
+									return fixer.insertTextAfter(firstToken, `\n\t${eventHandler}`);
+								} else if (widgetCall.arguments.length > 1) {
+									const optionsArg = widgetCall.arguments[1];
+									if (optionsArg.type === TSESTree.AST_NODE_TYPES.ObjectExpression) {
+										if (optionsArg.properties.length > 0) {
+											const firstProp = optionsArg.properties[0];
+											return fixer.insertTextBefore(firstProp, `events: {\n\t${eventHandler}\n},\n`);
+										} else {
+											const openBrace = context.sourceCode.getFirstToken(optionsArg)!;
+											return fixer.insertTextAfter(openBrace, `\nevents: {\n\t${eventHandler}\n}\n`);
 										}
 									}
-									return !validProp;
-								})
-								.map((item) => [item, false]),
-						);
-						for (const [prop] of extraProps) {
-							reportExtraProp(prop, extraProps, context);
-						}
-						for (const binding of bindings) {
-							const prop = widgetInfo.props.get(binding);
-							if (prop) {
-								reportMissingProp(widgetNode, widgetStatementNode, binding, prop, context);
-							} else {
-								reportMissingPropInAPI(widgetNode, binding, context);
-							}
-						}
-						if (widgetInfo.events.size > 0) {
-							const eventsObject = extractEventsObject(widgetNode.init);
-							for (const [eventName, eventInfo] of widgetInfo.events) {
-								const eventInApiPatch = eventsObject?.properties.get(eventInfo.widgetProp);
-								const bindingAssignment =
-									eventInApiPatch && eventInfo.propBinding ? findBindingAssignment(eventInApiPatch, eventInfo.propBinding) : undefined;
-								if (!bindingAssignment && eventInfo.propBinding) {
-									reportApiPatchEventHandlerIssue(
-										eventName,
-										eventInfo,
-										widgetStatementNode,
-										eventsObject?.node,
-										eventInApiPatch,
-										bindingAssignment,
-										context,
-									);
 								}
-							}
-						}
+								return null;
+							},
+						});
+					}
+				}
+
+				for (const [bindingName, eventInfo] of expectedEvents) {
+					if (!checkedBindings.has(bindingName)) {
+						context.report({
+							node: props.id,
+							messageId: 'missingBindable',
+							data: {name: bindingName},
+							fix(fixer) {
+								if (props.id.type !== TSESTree.AST_NODE_TYPES.ObjectPattern) return null;
+
+								const fixes: TSESLint.RuleFix[] = [];
+								const propsProperties = props.id.properties;
+								if (propsProperties.length === 0) {
+									const openBrace = context.sourceCode.getFirstToken(props.id)!;
+									fixes.push(fixer.insertTextAfter(openBrace, ` ${bindingName} = $bindable() `));
+								} else {
+									const lastProp = propsProperties[propsProperties.length - 1];
+									if (lastProp.type === TSESTree.AST_NODE_TYPES.RestElement) {
+										fixes.push(fixer.insertTextBefore(lastProp, `${bindingName} = $bindable(), `));
+									} else {
+										fixes.push(fixer.insertTextAfter(lastProp, `, ${bindingName} = $bindable()`));
+									}
+								}
+
+								const typeAnnotation = props.id.typeAnnotation;
+								if (typeAnnotation?.typeAnnotation.type === TSESTree.AST_NODE_TYPES.TSTypeLiteral) {
+									const typeLiteral = typeAnnotation.typeAnnotation;
+									const typeText = `${bindingName}?: ${typeToString(eventInfo.type, props, context)}`;
+									if (typeLiteral.members.length === 0) {
+										fixes.push(fixer.replaceText(typeLiteral, `{${typeText}}`));
+									} else {
+										const firstMember = typeLiteral.members[0];
+										fixes.push(fixer.insertTextBefore(firstMember, `${typeText}; `));
+									}
+								}
+
+								const propsCall = props.init;
+								if (
+									propsCall?.type === TSESTree.AST_NODE_TYPES.CallExpression &&
+									propsCall.typeArguments?.params[0]?.type === TSESTree.AST_NODE_TYPES.TSTypeLiteral
+								) {
+									const typeLiteral = propsCall.typeArguments.params[0];
+									const typeText = `${bindingName}?: ${typeToString(eventInfo.type, props, context)}`;
+									if (typeLiteral.members.length === 0) {
+										fixes.push(fixer.replaceText(typeLiteral, `{${typeText}}`));
+									} else {
+										const firstMember = typeLiteral.members[0];
+										fixes.push(fixer.insertTextBefore(firstMember, `${typeText}; `));
+									}
+								}
+
+								return fixes;
+							},
+						});
 					}
 				}
 			},
@@ -316,15 +327,15 @@ export const svelteCheckPropsRule = ESLintUtils.RuleCreator.withoutDocs({
 	},
 	meta: {
 		docs: {
-			description: 'Check AgnosUI props in svelte components.',
+			description: 'Check AgnosUI bindable props in Svelte 5 components.',
 		},
 		fixable: 'code',
 		messages: {
-			extraProp: 'Extra "export let {{ name }}" declaration, not corresponding to a bound property in the API.',
-			invalidPropType: 'Invalid type for "export let {{ name }}" declaration: expected {{ expectedType }}, found {{ foundType }}.',
-			missingBoundProp: 'Missing "export let {{ name }}" declaration, as it is a bound property in the API.',
-			missingBoundPropInAPI: 'Missing property {{ name }} in the API.',
-			missingBindingAssignment: 'Could not find assignment to {{ propBinding }} in {{ widgetProp }} listener in call to widget.patch.',
+			extraBindable: 'Extra bindable "{{ name }}" not corresponding to a widget event binding.',
+			invalidBindableType: 'Invalid type for bindable "{{ name }}": expected {{ expectedType }}, found {{ foundType }}.',
+			missingBindable: 'Missing bindable "{{ name }}" for widget event binding.',
+			missingEventHandler: 'Missing event handler "{{ widgetProp }}" for bindable "{{ name }}".',
+			missingBindingAssignment: 'Missing assignment to "{{ name }}" in "{{ widgetProp }}" handler.',
 		},
 		type: 'problem',
 		schema: [],
