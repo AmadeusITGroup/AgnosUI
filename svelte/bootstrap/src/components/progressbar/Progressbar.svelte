@@ -7,7 +7,9 @@
 	let props: Partial<ProgressbarProps> = $props();
 
 	const widget = callWidgetFactory(createProgressbar, {
-		props,
+		get props() {
+			return props;
+		},
 		defaultConfig: {
 			structure,
 		},

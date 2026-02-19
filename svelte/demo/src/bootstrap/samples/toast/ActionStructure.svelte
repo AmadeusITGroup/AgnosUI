@@ -5,7 +5,7 @@
 	import type {ToastContext} from '@agnos-ui/svelte-bootstrap/components/toast';
 
 	let widget: ToastContext = $props();
-	let state = widget.state;
+	let state = $derived(widget.state);
 </script>
 
 <div class="d-flex w-100">

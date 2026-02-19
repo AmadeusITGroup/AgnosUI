@@ -3,7 +3,8 @@
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 
 	let widget: SliderContext = $props();
-	let {state, directives} = widget;
+	let state = $derived(widget.state);
+	let directives = $derived(widget.directives);
 </script>
 
 {#each state.progressDisplayOptions as option (option.id)}

@@ -2,7 +2,7 @@
 	import Code from '$lib/layout/Code.svelte';
 	import Sample from '$lib/layout/Sample.svelte';
 	import type {SampleInfo} from '$lib/layout/sample';
-	import {selectedFramework$} from '$lib/stores';
+	import {routing} from '$lib/routing.svelte';
 	import samples from '../samples';
 
 	interface Props {
@@ -27,7 +27,7 @@
 	$effect(() => {
 		if (lang !== 'sample' && text.trim().match(/^\{[a-z-]+\}$/) && extensions.has(lang)) {
 			const codeKey = text.trim().slice(1, -1);
-			void import(`../../../../../docs/code/${codeKey}/${codeKey}-${$selectedFramework$}.${extensions.get(lang)}?raw`).then(
+			void import(`../../../../../docs/code/${codeKey}/${codeKey}-${routing.selectedFramework}.${extensions.get(lang)}?raw`).then(
 				(val) => (code = val.default),
 			);
 		} else {

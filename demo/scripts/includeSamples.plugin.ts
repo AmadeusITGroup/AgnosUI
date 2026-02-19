@@ -1,6 +1,6 @@
 import type {Plugin} from 'vite';
 import path from 'path';
-import type {Frameworks} from '$lib/stores';
+import type {Frameworks} from '$lib/routing.svelte';
 import {readFile} from 'fs/promises';
 import {existsSync} from 'fs';
 

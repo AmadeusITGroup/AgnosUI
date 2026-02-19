@@ -1,10 +1,7 @@
 <script lang="ts">
-	import {page} from '$app/stores';
-	import type {RouteId} from '$app/types';
+	import {page} from '$app/state';
 	import {writable} from '@amadeus-it-group/tansu';
-	import type {Page} from '@sveltejs/kit';
-	import {onMount, type Snippet} from 'svelte';
-	import {get} from 'svelte/store';
+	import {type Snippet} from 'svelte';
 
 	interface Props {
 		headerText: string;
@@ -18,18 +15,19 @@
 
 	let {headerText, path, children}: Props = $props();
 
-	const defaultVisible = isOnPage(get(page));
+	const defaultVisible = isOnPage(page.url);
 	const isOpen$ = writable(defaultVisible);
-	onMount(() => {
-		return page.subscribe((p) => {
-			if (isOpen$() === false) {
-				isOpen$.set(isOnPage(p));
-			}
-		});
+
+	$effect(() => {
+		// eslint-disable-next-line @typescript-eslint/no-unused-expressions
+		page.url;
+		if (isOpen$() === false) {
+			isOpen$.set(isOnPage(page.url));
+		}
 	});
 
-	function isOnPage(page: Page<Record<string, string>, RouteId | null>) {
-		return path.some((p) => page.url.pathname?.includes(p.path));
+	function isOnPage(url: URL) {
+		return path.some((p) => url.pathname?.includes(p.path));
 	}
 
 	const onmousedown = (event: MouseEvent) => {

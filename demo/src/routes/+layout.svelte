@@ -3,10 +3,10 @@
 	import github from 'bootstrap-icons/icons/github.svg?raw';
 	import bluesky from '$resources/bluesky.svg?raw';
 	import twitter from 'bootstrap-icons/icons/twitter-x.svg?raw';
-	import {canonicalURL$, pathToRoot$, routeLevel$, selectedFramework$, selectedApiFramework$} from '$lib/stores';
+	import {routing} from '$lib/routing.svelte';
 	import './app.css';
 	import {afterNavigate, beforeNavigate, onNavigate} from '$app/navigation';
-	import {page, updated} from '$app/stores';
+	import {page, updated} from '$app/state';
 	import MobileSubMenu from './menu/MobileSubMenu.svelte';
 	import MobileMenu from './menu/MobileMenu.svelte';
 	import MainSection from '$lib/layout/MainSection.svelte';
@@ -21,13 +21,13 @@
 	import viewTransition from './view-transition.css?raw';
 	import Search from '$lib/docsearch/Search.svelte';
 
-	let isMainPage = $derived($routeLevel$ === 0);
-	let isApi = $derived($page.route.id?.startsWith('/api/'));
-	let isDocActive = $derived($page.route.id?.startsWith('/docs/'));
-	let isBlogActive = $derived($page.route.id?.startsWith('/blog/'));
+	let isMainPage = $derived(routing.routeLevel === 0);
+	let isApi = $derived(page.route.id?.startsWith('/api/'));
+	let isDocActive = $derived(page.route.id?.startsWith('/docs/'));
+	let isBlogActive = $derived(page.route.id?.startsWith('/blog/'));
 
 	beforeNavigate(({willUnload, to}) => {
-		if ($updated && !willUnload && to?.url) {
+		if (updated.current && !willUnload && to?.url) {
 			// force reload of the page on navigation when a new version of the site has been detected
 			location.href = to.url.href;
 		}
@@ -91,34 +91,34 @@
 	{#if import.meta.env.PRELOAD_VERSIONS}
 		<link rel="preload" href="https://www.agnosui.dev/versions.json" as="fetch" crossorigin="anonymous" />
 	{/if}
-	<link rel="canonical" href={$canonicalURL$} />
+	<link rel="canonical" href={routing.canonicalURL} />
 	<!-- Schema.org for Google -->
-	<meta itemprop="name" content={$page.data.pageMeta.title} />
-	<meta itemprop="description" content={$page.data.pageMeta.description} />
-	<meta name="description" content={$page.data.pageMeta.description} />
+	<meta itemprop="name" content={page.data.pageMeta.title} />
+	<meta itemprop="description" content={page.data.pageMeta.description} />
+	<meta name="description" content={page.data.pageMeta.description} />
 	<!-- Twitter -->
 	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content={$page.data.pageMeta.title} />
+	<meta name="twitter:title" content={page.data.pageMeta.title} />
 	<meta property="twitter:domain" content="www.agnosui.dev" />
-	<meta property="twitter:url" content={$page.data.pageMeta.shareUrl} />
-	<meta name="twitter:image" content={$page.data.pageMeta.socialImage} />
-	<meta name="twitter:image:alt" content={$page.data.pageMeta.socialImageAlt} />
-	<meta name="twitter:description" content={$page.data.pageMeta.description} />
+	<meta property="twitter:url" content={page.data.pageMeta.shareUrl} />
+	<meta name="twitter:image" content={page.data.pageMeta.socialImage} />
+	<meta name="twitter:image:alt" content={page.data.pageMeta.socialImageAlt} />
+	<meta name="twitter:description" content={page.data.pageMeta.description} />
 	<!-- Open Graph general (Facebook, Pinterest & Google+) -->
-	<meta name="og:title" content={$page.data.pageMeta.title} />
-	<meta name="og:description" content={$page.data.pageMeta.description} />
-	<meta name="og:url" content={$page.data.pageMeta.shareUrl} />
+	<meta name="og:title" content={page.data.pageMeta.title} />
+	<meta name="og:description" content={page.data.pageMeta.description} />
+	<meta name="og:url" content={page.data.pageMeta.shareUrl} />
 	<meta name="og:site_name" content="AgnosUI" />
 	<meta name="og:locale" content="en" />
 	<meta name="og:type" content="website" />
-	<meta property="og:image" content={$page.data.pageMeta.socialImage} />
+	<meta property="og:image" content={page.data.pageMeta.socialImage} />
 </svelte:head>
 
 <div class="agnos-ui text-base">
 	<nav class="navbar z-1 demo-nav-top justify-between max-w-[1720px] mx-auto">
 		<!--  -->
 		<div class="navbar-start sm:w-1/2 w-10/35">
-			<a class="md:mx-2 xl:mx-8 flex items-center text-xl" href={$pathToRoot$}
+			<a class="md:mx-2 xl:mx-8 flex items-center text-xl" href={routing.pathToRoot}
 				><Svg svg={agnosUILogo} className="agnosui-logo-brand me-2" /> AgnosUI
 			</a>
 		</div>
@@ -139,7 +139,7 @@
 					<li>
 						<a
 							class={[{active: isDocActive}, 'hover:bg-secondary-subtle!', 'focus-visible:bg-secondary-subtle!']}
-							href="{$pathToRoot$}docs/{$selectedFramework$}/getting-started/introduction"
+							href={`${routing.pathToRoot}docs/${routing.selectedFramework}/getting-started/introduction`}
 							aria-current={isDocActive ? 'page' : undefined}>Documentation</a
 						>
 					</li>
@@ -147,7 +147,7 @@
 						<li>
 							<a
 								class={[{active: isApi}, 'hover:bg-secondary-subtle!', 'focus-visible:bg-secondary-subtle!']}
-								href="{$pathToRoot$}api/{$selectedApiFramework$}/bootstrap/types"
+								href={`${routing.pathToRoot}api/${routing.selectedApiFramework}/bootstrap/types`}
 								aria-current={isApi ? 'page' : undefined}>API</a
 							>
 						</li>
@@ -155,7 +155,7 @@
 					<li class="flex flex-nowrap flex-row">
 						<a
 							class={[{active: isBlogActive}, 'hover:bg-secondary-subtle!', 'focus-visible:bg-secondary-subtle!']}
-							href="{$pathToRoot$}blog/2024-12-06"
+							href={`${routing.pathToRoot}blog/2024-12-06`}
 							aria-current={isBlogActive ? 'page' : undefined}>Blog</a
 						>
 					</li>

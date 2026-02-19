@@ -3,7 +3,8 @@
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 
 	let widget: AccordionItemContext = $props();
-	const {state, directives} = widget;
+	let state = $derived(widget.state);
+	let directives = $derived(widget.directives);
 
 	let headingTag = $derived(`h${state.headingLevel}`);
 </script>

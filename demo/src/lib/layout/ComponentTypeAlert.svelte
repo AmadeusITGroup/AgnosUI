@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Alert from '../../../../svelte/demo/src/daisyui/samples/alert/Alert.svelte';
 	import biInfoCircleFill from 'bootstrap-icons/icons/info-circle-fill.svg?raw';
-	import {page} from '$app/stores';
+	import {page} from '$app/state';
 	import Svg from './Svg.svelte';
 
 	const regex = /\/(components|services)\/([^/]+)/;
@@ -13,7 +13,7 @@
 	} = $props();
 	let visible = $state(true);
 
-	let componentName = $derived($page.url.pathname.match(regex)?.[2]);
+	let componentName = $derived(page.url.pathname.match(regex)?.[2]);
 	$effect(() => {
 		// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 		componentName;
