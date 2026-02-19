@@ -3,7 +3,8 @@
 	import type {TreeContext} from './tree.gen';
 
 	let widget: TreeContext = $props();
-	let {state, directives} = widget;
+	let state = $derived(widget.state);
+	let directives = $derived(widget.directives);
 </script>
 
 <ul role="tree" class="au-tree {state.className}" use:directives.navigationDirective>

@@ -5,17 +5,17 @@
 	import twitter from 'bootstrap-icons/icons/twitter-x.svg?raw';
 	import MobileDialog from './MobileDialog.svelte';
 	import Svg from '$lib/layout/Svg.svelte';
-	import {pathToRoot$, selectedFramework$, selectedApiFramework$} from '$lib/stores';
-	import {page} from '$app/stores';
+	import {routing} from '$lib/routing.svelte';
+	import {page} from '$app/state';
 
 	let open = $state(false);
-	let isDocActive = $derived($page.route.id?.startsWith('/docs/'));
-	let isBlogActive = $derived($page.route.id?.startsWith('/blog/'));
+	let isDocActive = $derived(page.route.id?.startsWith('/docs/'));
+	let isBlogActive = $derived(page.route.id?.startsWith('/blog/'));
 
 	function onclose() {
 		open = false;
 	}
-	let isApi = $derived($page.route.id?.startsWith('/api/'));
+	let isApi = $derived(page.route.id?.startsWith('/api/'));
 </script>
 
 <li>
@@ -36,7 +36,7 @@
 		<li>
 			<a
 				class={[{active: isDocActive}, 'hover:bg-secondary-subtle!', 'focus-visible:bg-secondary-subtle!']}
-				href="{$pathToRoot$}docs/{$selectedFramework$}/getting-started/introduction"
+				href="{routing.pathToRoot}docs/{routing.selectedFramework}/getting-started/introduction"
 				aria-current={isDocActive ? 'page' : undefined}
 			>
 				Documentation
@@ -46,7 +46,7 @@
 			<li>
 				<a
 					class={[{active: isApi}, 'hover:bg-secondary-subtle!', 'focus-visible:bg-secondary-subtle!']}
-					href="{$pathToRoot$}api/{$selectedApiFramework$}/bootstrap/types"
+					href="{routing.pathToRoot}api/{routing.selectedApiFramework}/bootstrap/types"
 					aria-current={isApi ? 'page' : undefined}>API</a
 				>
 			</li>
@@ -54,7 +54,7 @@
 		<li>
 			<a
 				class={[{active: isBlogActive}, 'hover:bg-secondary-subtle!', 'focus-visible:bg-secondary-subtle!']}
-				href="{$pathToRoot$}blog/2024-12-06"
+				href="{routing.pathToRoot}blog/2024-12-06"
 				aria-current={isBlogActive ? 'page' : undefined}
 			>
 				Blog

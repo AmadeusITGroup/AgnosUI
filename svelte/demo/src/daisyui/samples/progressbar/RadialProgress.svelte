@@ -8,7 +8,9 @@
 		state,
 		directives: {ariaDirective},
 	} = callWidgetFactory(createProgressbar, {
-		props,
+		get props() {
+			return props;
+		},
 	});
 
 	const percentFormat = new Intl.NumberFormat('default', {

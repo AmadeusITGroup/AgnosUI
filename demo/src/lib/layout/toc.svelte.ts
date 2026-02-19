@@ -1,6 +1,5 @@
 import {intersectionApi} from '$lib/stores';
-import {navigating as appNavigating} from '$app/stores';
-import {fromStore} from 'svelte/store';
+import {navigating} from '$app/state';
 
 /**
  * Create a directive to facilitate the interception usage in Svelte
@@ -19,13 +18,12 @@ import {fromStore} from 'svelte/store';
  */
 export function createTOC(getElements: (node: HTMLElement) => HTMLElement[]) {
 	let container = $state<HTMLElement>();
-	const navigating = fromStore(appNavigating);
 	function directive(node: HTMLElement) {
 		container = node;
 	}
 
 	$effect(() => {
-		if (!navigating.current) {
+		if (!navigating.to) {
 			intersectionApi.patch({
 				elements: container ? getElements(container) : [],
 			});

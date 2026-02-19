@@ -3,7 +3,7 @@
 	import {type AlertProps} from '@agnos-ui/svelte-bootstrap/components/alert';
 	import biInfoCircleFill from 'bootstrap-icons/icons/info-circle-fill.svg?raw';
 	import biExclamationTriangleFill from 'bootstrap-icons/icons/exclamation-triangle-fill.svg?raw';
-	import {page} from '$app/stores';
+	import {page} from '$app/state';
 	import Svg from './Svg.svelte';
 
 	const regex = /\/(components|services|daisyUI)\/([^/]+)/;
@@ -22,7 +22,7 @@
 			? 'This component is still under active development. More features will be added in the near future.'
 			: 'This component has all the basic functionalities implemented. More polishing features might be added in the near future.',
 	);
-	let componentName = $derived($page.url.pathname.match(regex)?.[2]);
+	let componentName = $derived(page.url.pathname.match(regex)?.[2]);
 	let visible = $state(true);
 	let issueUrl = $derived(`https://github.com/AmadeusITGroup/AgnosUI/issues?q=is%3Aopen+is%3Aissue+label%3A%22widget%3A+${componentName}%22`);
 	$effect(() => {

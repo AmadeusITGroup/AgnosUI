@@ -1,4 +1,4 @@
-import type {Frameworks} from '$lib/stores';
+import type {Frameworks} from '$lib/routing.svelte';
 
 export type AsyncFilesSet = Record<string, () => Promise<string>>;
 

@@ -1,12 +1,9 @@
 <script lang="ts">
-	import {page} from '$app/stores';
-	import type {RouteId} from '$app/types';
+	import {page} from '$app/state';
 	import {createTransition} from '@agnos-ui/svelte-bootstrap/services/transitions/baseTransitions';
 	import {collapseVerticalTransition} from '@agnos-ui/svelte-bootstrap/services/transitions/bootstrap';
 	import {writable} from '@amadeus-it-group/tansu';
-	import type {Page} from '@sveltejs/kit';
 	import {onMount, type Snippet} from 'svelte';
-	import {get} from 'svelte/store';
 
 	interface Props {
 		headerText: string;
@@ -21,15 +18,17 @@
 	let {headerText, path, children}: Props = $props();
 
 	const paramAnimated$ = writable(false);
-	const defaultVisible = isOnPage(get(page));
+	const defaultVisible = isOnPage(page.url);
 	const paramVisible$ = writable(defaultVisible);
 	onMount(() => {
 		paramAnimated$.set(true);
-		return page.subscribe((p) => {
-			if (paramVisible$() === false) {
-				paramVisible$.set(isOnPage(p));
-			}
-		});
+	});
+	$effect(() => {
+		// eslint-disable-next-line @typescript-eslint/no-unused-expressions
+		page.url;
+		if (paramVisible$() === false) {
+			paramVisible$.set(isOnPage(page.url));
+		}
 	});
 	const {
 		stores: {visible$},
@@ -44,8 +43,8 @@
 		},
 	});
 
-	function isOnPage(page: Page<Record<string, string>, RouteId | null>) {
-		return path.some((p) => page.url.pathname?.includes(p.path));
+	function isOnPage(url: URL) {
+		return path.some((p) => url.pathname?.includes(p.path));
 	}
 </script>
 

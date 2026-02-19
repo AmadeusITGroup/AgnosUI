@@ -3,7 +3,7 @@
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 
 	let widget: AlertContext = $props();
-	let state = widget.state;
+	let state = $derived(widget.state);
 </script>
 
 <div class="alert-body">

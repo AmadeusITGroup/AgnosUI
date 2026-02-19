@@ -9,7 +9,9 @@
 	let props: Partial<CarouselProps<SlideData>> = $props();
 
 	const widget = callWidgetFactory(createCarousel<SlideData>, {
-		props,
+		get props() {
+			return props;
+		},
 		defaultConfig: {
 			structure,
 			navigation,

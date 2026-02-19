@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {page} from '$app/stores';
+	import {page} from '$app/state';
 	import Svg from '$lib/layout/Svg.svelte';
 	import twitter from 'bootstrap-icons/icons/twitter-x.svg?raw';
 	import facebook from 'bootstrap-icons/icons/facebook.svg?raw';
@@ -37,11 +37,11 @@
 	let canWebShare = $state(false);
 	let mounted = $state(false);
 
-	let encodedUrl = $derived(encodeURIComponent($page.url.href));
+	let encodedUrl = $derived(encodeURIComponent(page.url.href));
 	let encodedTitle = $derived(encodeURIComponent(title));
 	let formattedDate = $derived(Intl.DateTimeFormat('en-US', {dateStyle: 'medium'}).format(new Date(date)));
 	let webShareData = $derived({
-		url: $page.url.href,
+		url: page.url.href,
 		title,
 	});
 

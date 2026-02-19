@@ -8,7 +8,7 @@
 	import biInfoCircleFill from 'bootstrap-icons/icons/info-circle-fill.svg?raw';
 	import Header from '$lib/layout/Header.svelte';
 	import ApiSection from '$lib/api/render/ApiSection.svelte';
-	import {selectedPackageType$} from '$lib/stores';
+	import {routing} from '$lib/routing.svelte';
 	import type {PageData} from './$types';
 
 	let {data}: {data: PageData} = $props();
@@ -21,7 +21,7 @@
 	} as any;
 </script>
 
-<Header title={data.title} cssFramework={$selectedPackageType$} />
+<Header title={data.title} cssFramework={routing.selectedPackageType} />
 <Alert className="alert-info mb-4" visible dismissible={false}>
 	<div class="flex items-center gap-2">
 		<Svg svg={biInfoCircleFill} className="icon-16" />

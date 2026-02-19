@@ -3,7 +3,7 @@
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 
 	let widget: ToastContext = $props();
-	let state = widget.state;
+	let state = $derived(widget.state);
 </script>
 
 {#if state.header}

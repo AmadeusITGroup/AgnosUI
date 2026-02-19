@@ -8,7 +8,9 @@
 		state,
 		directives: {navigationDirective, itemToggleDirective},
 	} = callWidgetFactory(createTree, {
-		props,
+		get props() {
+			return props;
+		},
 	});
 </script>
 

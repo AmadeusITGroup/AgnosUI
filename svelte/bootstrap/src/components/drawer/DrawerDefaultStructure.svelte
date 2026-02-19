@@ -3,14 +3,13 @@
 	import type {DrawerContext} from './drawer.gen';
 
 	let widget: DrawerContext = $props();
-	let {state} = widget;
 </script>
 
 <div class="au-drawer-content">
 	<div class="au-drawer-header">
-		<Slot content={state.header} props={widget} />
+		<Slot content={widget.state.header} props={widget} />
 	</div>
 	<div class="au-drawer-body">
-		<Slot content={state.children} props={widget} />
+		<Slot content={widget.state.children} props={widget} />
 	</div>
 </div>

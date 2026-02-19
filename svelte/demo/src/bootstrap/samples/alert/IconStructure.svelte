@@ -8,7 +8,7 @@
 	import type {AlertContext} from '@agnos-ui/svelte-bootstrap/components/alert';
 
 	let widget: AlertContext = $props();
-	let state = widget.state;
+	let state = $derived(widget.state);
 
 	const typeIcon: Record<string, string> = {
 		success: biCheckCircleFill,

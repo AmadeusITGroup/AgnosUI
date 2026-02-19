@@ -11,7 +11,9 @@
 		$props();
 
 	const {api, directives} = callWidgetFactory(createAccordion, {
-		props,
+		get props() {
+			return props;
+		},
 	});
 	setAccordionApi(api);
 </script>

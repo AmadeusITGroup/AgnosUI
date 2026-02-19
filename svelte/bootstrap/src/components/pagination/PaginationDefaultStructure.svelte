@@ -3,7 +3,8 @@
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 
 	let widget: PaginationContext = $props();
-	let {state, directives} = widget;
+	let state = $derived(widget.state);
+	let directives = $derived(widget.directives);
 
 	let sizeClass = $derived(state.size ? `pagination-${state.size}` : '');
 </script>

@@ -11,7 +11,9 @@
 	let props: Partial<TreeProps> = $props();
 
 	const widget = callWidgetFactory(createTree, {
-		props,
+		get props() {
+			return props;
+		},
 		defaultConfig: {structure, item, itemContent, itemToggle},
 	});
 	const {state} = widget;

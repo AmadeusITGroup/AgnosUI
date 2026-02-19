@@ -3,7 +3,8 @@
 	import {Slot} from '@agnos-ui/svelte-headless/slot';
 
 	let widget: CarouselContext<SlideData> = $props();
-	let {state, directives} = widget;
+	let state = $derived(widget.state);
+	let directives = $derived(widget.directives);
 </script>
 
 <Slot content={state.navigation} props={widget} />
