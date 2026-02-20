@@ -33,7 +33,7 @@ interface DrawerCommonPropsAndState extends WidgetsCommonPropsAndState {
 	/**
 	 * CSS classes to be applied on the widget main container
 	 *
-	 * @defaultValue `'w-full'`
+	 * @defaultValue `''`
 	 */
 	className: string;
 	/**
@@ -72,6 +72,13 @@ interface DrawerCommonPropsAndState extends WidgetsCommonPropsAndState {
 	 * @defaultValue `null`
 	 */
 	size: number | null;
+	/**
+	 * If `true`, the drawer is inline.
+	 * When inline mode is enabled, the drawer stays in the document flow and moves content as it expands/resizes.
+	 *
+	 * @defaultValue `false`
+	 */
+	inline: boolean;
 }
 
 /**
@@ -290,7 +297,7 @@ const defaultDrawerConfig: DrawerProps = {
 	ariaLabelledBy: '',
 	backdropClass: '',
 	backdropTransition: noop,
-	className: 'w-full',
+	className: '',
 	visible: false,
 	container: typeof window !== 'undefined' ? document.body : null,
 	transition: noop,
@@ -307,6 +314,7 @@ const defaultDrawerConfig: DrawerProps = {
 	bodyScroll: false,
 	size: null,
 	focusOnInit: true,
+	inline: false,
 };
 
 const configValidator: ConfigValidator<DrawerProps> = {
@@ -332,6 +340,7 @@ const configValidator: ConfigValidator<DrawerProps> = {
 	bodyScroll: typeBoolean,
 	size: typeNumberOrNull,
 	focusOnInit: typeBoolean,
+	inline: typeBoolean,
 };
 
 /**
@@ -342,14 +351,14 @@ const configValidator: ConfigValidator<DrawerProps> = {
 export const createDrawer: WidgetFactory<DrawerWidget> = createWidgetFactory('drawer', (config?: PropsConfig<DrawerProps>) => {
 	const [
 		{
-			backdrop$,
+			backdrop$: _backdrop$,
 			backdropTransition$,
 			backdropClass$,
-			bodyScroll$,
+			bodyScroll$: _bodyScroll$,
 			transition$,
 			verticalTransition$,
 			visible$: requestedVisible$,
-			container$,
+			container$: _container$,
 			className$,
 			size$: _dirtySize$,
 			animated$,
@@ -363,10 +372,16 @@ export const createDrawer: WidgetFactory<DrawerWidget> = createWidgetFactory('dr
 			onMaximizedChange$,
 			onResizingChange$,
 			focusOnInit$,
+			inline$,
 			...stateProps
 		},
 		patch,
 	] = writablesForProps(defaultDrawerConfig, config, configValidator);
+
+	// Override props when inline mode is enabled
+	const backdrop$ = computed(() => (inline$() ? false : _backdrop$()));
+	const bodyScroll$ = computed(() => (inline$() ? true : _bodyScroll$()));
+	const container$ = computed(() => (inline$() ? null : _container$()));
 
 	const size$ = bindableProp(_dirtySize$, onSizeChange$, (value) => (value ? Math.round(value) : value));
 
@@ -397,14 +412,17 @@ export const createDrawer: WidgetFactory<DrawerWidget> = createWidgetFactory('dr
 		createAttributesDirective(() => ({
 			attributes: {
 				class: className$,
-				role: readable('dialog'),
-				'aria-describedby': ariaDescribedBy$,
-				'aria-labelledby': ariaLabelledBy$,
-				'aria-modal': readable('true'),
+				role: computed(() => (inline$() ? 'complementary' : 'dialog')),
+				'aria-describedby': computed(() => ariaDescribedBy$() || undefined),
+				'aria-labelledby': computed(() => ariaLabelledBy$() || undefined),
+				'aria-modal': computed(() => (inline$() ? undefined : 'true')),
 				tabIndex: readable('-1'),
 			},
 			styles: {
 				position: computed(() => {
+					if (inline$()) {
+						return 'relative';
+					}
 					const container = container$();
 					return container && isBrowserHTMLElement(container) && container !== document.body ? 'relative' : 'fixed';
 				}),
@@ -578,6 +596,7 @@ export const createDrawer: WidgetFactory<DrawerWidget> = createWidgetFactory('dr
 			backdropHidden$,
 			hidden$,
 			isVertical$,
+			inline$,
 		}),
 		patch,
 		api: {

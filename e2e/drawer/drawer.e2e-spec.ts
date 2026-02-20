@@ -136,10 +136,10 @@ test.describe(`Drawer tests`, () => {
 			.toStrictEqual(
 				assign(expectedBoundingBox, {
 					width: 1280,
-					height: 500,
+					height: 501,
 				}),
 			);
-		expect(await drawerPO.statePosition()).toStrictEqual(assign(expectedVariables, {'--bs-drawer-size': '500px'}));
+		expect(await drawerPO.statePosition()).toStrictEqual(assign(expectedVariables, {'--bs-drawer-size': '501px'}));
 
 		mousePos = await drawerPO.hoverOnSplitter();
 		await page.mouse.down();
@@ -149,7 +149,7 @@ test.describe(`Drawer tests`, () => {
 		await expect
 			.poll(async () => await drawerPO.locatorRoot.boundingBox())
 			.toStrictEqual(assign(expectedBoundingBox, {height: expectedBoundingBox.height + 300 - mousePos.y}));
-		expect(await drawerPO.statePosition()).toStrictEqual(assign(expectedVariables, {'--bs-drawer-size': '300px'}));
+		expect(await drawerPO.statePosition()).toStrictEqual(assign(expectedVariables, {'--bs-drawer-size': '301px'}));
 
 		await drawerPO.locatorBackdrop.click();
 		await drawerDemoPO.locatorToggleDrawerButton.click();

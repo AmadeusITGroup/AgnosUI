@@ -1,0 +1,146 @@
+<body>
+	<div
+	 class="container p-3"
+	 id="root"
+	>
+		<button
+		 class="btn btn-primary mb-3"
+		>
+			"Toggle Inline Drawer"
+		</button>
+		<div
+		 class="align-items-center d-flex mb-3"
+		>
+			<label
+			 class="me-3"
+			 for="drawerPlacement"
+			>
+				"Placement:"
+			</label>
+			<select
+			 class="form-select w-auto"
+			 id="drawerPlacement"
+			>
+				<option
+				 value="inline-start"
+				>
+					"Left"
+				</option>
+				<option
+				 value="inline-end"
+				>
+					"Right"
+				</option>
+				<option
+				 value="block-start"
+				>
+					"Top"
+				</option>
+				<option
+				 value="block-end"
+				>
+					"Bottom"
+				</option>
+			</select>
+		</div>
+		<div
+		 class="d-flex demo-inline-drawer"
+		>
+			<div
+			 style="order: 1;"
+			>
+				<div
+				 class="au-drawer collapse collapse-horizontal inline-start show"
+				 role="complementary"
+				 style="position: relative; outline-color: initial; outline-style: none; outline-width: initial;"
+				 tabindex="-1"
+				>
+					<div
+					 class="au-drawer-container"
+					>
+						<div
+						 class="au-drawer-content"
+						>
+							<div
+							 class="au-drawer-header"
+							>
+								<h2>
+									"Inline Drawer"
+								</h2>
+								<button
+								 aria-label="Close"
+								 class="btn-close ms-auto"
+								/>
+							</div>
+							<div
+							 class="au-drawer-body"
+							>
+								<div
+								 class="p-3"
+								>
+									<h6>
+										"Drawer Content"
+									</h6>
+									<ul>
+										<li>
+											"No backdrop overlay"
+										</li>
+										<li>
+											"Stays in document flow"
+										</li>
+										<li>
+											"Pushes page content"
+										</li>
+										<li>
+											"Page remains scrollable"
+										</li>
+										<li>
+											"Fully interactable"
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div
+					 class="au-splitter"
+					 tabindex="0"
+					/>
+				</div>
+			</div>
+			<div
+			 class="flex-grow-1 p-3"
+			 style="order: 2;"
+			>
+				<h6>
+					"Main Page Content"
+				</h6>
+				<p>
+					"This content is pushed aside by the inline drawer. You can interact with everything on this page even when the drawer is open."
+				</p>
+				<p>
+					"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+				</p>
+				<button
+				 class="btn btn-secondary"
+				>
+					"Clickable Button"
+				</button>
+				<p>
+					"Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+				</p>
+				<input
+				 class="form-control mt-2"
+				 placeholder="Type here..."
+				 type="text"
+				 value=""
+				/>
+				<p
+				 class="mt-2"
+				>
+					"Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident."
+				</p>
+			</div>
+		</div>
+	</div>
+</body>

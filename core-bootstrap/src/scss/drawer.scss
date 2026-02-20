@@ -7,10 +7,9 @@
 
 	display: inline-flex;
 	flex-direction: column;
-	background: #fff;
-	box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+	flex-shrink: 0;
+	background-color: var(--#{$prefix}body-bg, #fff);
 	z-index: var(--#{$prefix}drawer-z-index);
-
 	--#{$prefix}drawer-size: max-content;
 	--#{$prefix}drawer-min-size: 0;
 	--#{$prefix}drawer-max-size: none;
@@ -49,6 +48,7 @@
 	&.inline-start {
 		inset-inline-start: 0;
 		inset-block: 0;
+		border-inline-end: 1px solid #e2e2e2;
 		.au-splitter {
 			inset-block: 0;
 			inset-inline: auto calc(var(--#{$prefix}drawer-splitter-size) / -2);
@@ -58,6 +58,7 @@
 	&.inline-end {
 		inset-inline-end: 0;
 		inset-block: 0;
+		border-inline-start: 1px solid #e2e2e2;
 		.au-splitter {
 			inset-block: 0;
 			inset-inline: calc(var(--#{$prefix}drawer-splitter-size) auto / -2);
@@ -68,6 +69,7 @@
 	&.block-start {
 		inset-inline: 0;
 		inset-block: 0;
+		border-block-end: 1px solid #e2e2e2;
 		.au-splitter {
 			inset-block: auto calc(var(--#{$prefix}drawer-splitter-size) / -2);
 			inset-inline: 0;
@@ -77,6 +79,7 @@
 	&.block-end {
 		inset-inline: 0;
 		inset-block-end: 0;
+		border-block-start: 1px solid #e2e2e2;
 		.au-splitter {
 			inset-block: calc(var(--#{$prefix}drawer-splitter-size) auto / -2);
 			inset-inline: 0;
@@ -84,6 +87,9 @@
 	}
 
 	.au-drawer-header {
+		display: inline-flex;
+		align-items: center;
+		width: 100%;
 		padding: 0.75rem 1rem;
 		font-weight: 600;
 		border-bottom: 1px solid #e2e2e2;
