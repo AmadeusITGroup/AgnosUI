@@ -70,6 +70,34 @@ export const removeClasses = (element: SSRHTMLElement, classes?: string[]): void
 };
 
 /**
+ * Appends HTML content to the specified element and returns the created node(s).
+ *
+ * If the inserted HTML generates a single root element, that element is returned.
+ * If multiple top-level elements are created, an array of those elements is returned.
+ *
+ * @param element - The target HTMLElement to which the HTML will be appended.
+ * @param html - The HTML string to insert. It can contain one or multiple root elements.
+ * @returns The created HTMLElement if only one element was added, or an array of HTMLElements if multiple were added.
+ *
+ * @example
+ * // Appends a single element and returns it
+ * const container = document.getElementById('container');
+ * const newDiv = appendHtml(container, '<div class="item"></div>');
+ *
+ * // Appends multiple elements and returns them as an array
+ * const items = appendHtml(container, '<li>One</li><li>Two</li>');
+ */
+export const appendHtml = (element: Element, html: string): Element | Element[] => {
+	const template = document.createElement('template');
+	template.innerHTML = html.trim();
+
+	const children = Array.from(template.content.children);
+	element.append(...children);
+
+	return children.length === 1 ? children[0] : children;
+};
+
+/**
  * Adds an event listener to the specified element.
  *
  * @param element - The HTML element to which the event listener will be added.
