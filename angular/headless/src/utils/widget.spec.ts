@@ -3,7 +3,7 @@ import {stateStores, writablesForProps} from '@agnos-ui/core/utils/stores';
 import {typeFunction, typeString} from '@agnos-ui/core/utils/writables';
 
 import {computed, writable} from '@amadeus-it-group/tansu';
-import {ChangeDetectionStrategy, Component, input, NgZone, output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, input, output} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 import {beforeEach, describe, expect, it} from 'vitest';
 import {UseDirective} from './directive';
@@ -16,18 +16,18 @@ describe('callWidgetFactoryWithConfig', () => {
 		log = [];
 	});
 
-	const createZoneCheckFn =
+	const createCheckFn =
 		<T extends any[], R>(name: string, fn: (...args: T) => R) =>
 		(...args: T): R => {
-			log.push(`begin ${name}, ngZone = ${NgZone.isInAngularZone()}`);
+			log.push(`begin ${name}`);
 			try {
 				return fn(...args);
 			} finally {
-				log.push(`end ${name}, ngZone = ${NgZone.isInAngularZone()}`);
+				log.push(`end ${name}`);
 			}
 		};
 
-	it('calls the core outside angular zone and events in angular zone', async () => {
+	it('calls the core and dispatches events correctly', async () => {
 		const noop = () => {};
 		type MyWidget = Widget<
 			{onMyAction: () => void; onCounterChange: (value: number) => void; myValue: string},
@@ -36,7 +36,7 @@ describe('callWidgetFactoryWithConfig', () => {
 			{myDirective: Directive}
 		>;
 
-		const factory: WidgetFactory<MyWidget> = createZoneCheckFn('factory', (propsConfig) => {
+		const factory: WidgetFactory<MyWidget> = createCheckFn('factory', (propsConfig) => {
 			const [{onCounterChange$, myValue$}, patch] = writablesForProps(
 				{
 					onMyAction: noop,
@@ -50,7 +50,7 @@ describe('callWidgetFactoryWithConfig', () => {
 					onCounterChange: undefined,
 				},
 			);
-			const derivedValue$ = computed(createZoneCheckFn('computeDerivedValue', () => `derived from ${myValue$()}`));
+			const derivedValue$ = computed(createCheckFn('computeDerivedValue', () => `derived from ${myValue$()}`));
 			const counter$ = writable(0);
 			return {
 				...stateStores({
@@ -58,20 +58,20 @@ describe('callWidgetFactoryWithConfig', () => {
 					counter$,
 				}),
 				api: {
-					myApiFn: createZoneCheckFn('myApiFn', () => {}),
-					incrementCounter: createZoneCheckFn('incrementCounter', () => {
+					myApiFn: createCheckFn('myApiFn', () => {}),
+					incrementCounter: createCheckFn('incrementCounter', () => {
 						const value = counter$() + 1;
 						counter$.set(value);
 						onCounterChange$()(value);
 					}),
 				},
 				directives: {
-					myDirective: createZoneCheckFn('myDirective', () => ({
-						update: createZoneCheckFn('myDirectiveUpdate', noop),
-						destroy: createZoneCheckFn('myDirectiveDestroy', noop),
+					myDirective: createCheckFn('myDirective', () => ({
+						update: createCheckFn('myDirectiveUpdate', noop),
+						destroy: createCheckFn('myDirectiveDestroy', noop),
 					})),
 				},
-				patch: createZoneCheckFn('patch', patch),
+				patch: createCheckFn('patch', patch),
 			};
 		});
 
@@ -89,7 +89,7 @@ describe('callWidgetFactoryWithConfig', () => {
 
 			constructor() {
 				super(
-					createZoneCheckFn('callWidgetFactoryWithConfig', callWidgetFactoryWithConfig)(factory, {
+					createCheckFn('callWidgetFactoryWithConfig', callWidgetFactoryWithConfig)(factory, {
 						events: {
 							onCounterChange: (event) => this.counterChange.emit(event),
 							onMyAction: () => this.myAction.emit(),
@@ -98,33 +98,24 @@ describe('callWidgetFactoryWithConfig', () => {
 				);
 			}
 
-			onClick = createZoneCheckFn('onClick', () => {});
+			onClick = createCheckFn('onClick', () => {});
 		}
 
-		const ngZone = TestBed.inject(NgZone);
-		ngZone.onUnstable.subscribe(() => {
-			log.push('enter ngZone');
-		});
-		ngZone.onStable.subscribe(() => {
-			log.push('leave ngZone');
-		});
 		const fixture = TestBed.createComponent(MyWidgetComponent);
 		log.push('before autoDetectChanges');
-		fixture.componentInstance.myAction.subscribe(createZoneCheckFn('myActionListener', noop));
-		fixture.componentInstance.counterChange.subscribe(createZoneCheckFn('counterChangeListener', noop));
+		fixture.componentInstance.myAction.subscribe(createCheckFn('myActionListener', noop));
+		fixture.componentInstance.counterChange.subscribe(createCheckFn('counterChangeListener', noop));
 		fixture.autoDetectChanges();
 		log.push('after autoDetectChanges');
 		expect(fixture.nativeElement.innerText.trim()).toBe('derived from defValue 0');
 		log.push('before first await 0');
 		await Promise.resolve();
 		log.push('after first await 0');
-		ngZone.run(
-			createZoneCheckFn('ngZone.run', () => {
-				fixture.componentRef.setInput('auMyValue', 'newValue');
-				fixture.componentInstance.api.myApiFn();
-			}),
-		);
-		log.push('after ngZone.run');
+		fixture.componentRef.setInput('auMyValue', 'newValue');
+		fixture.componentInstance.api.myApiFn();
+		log.push('before first whenStable');
+		await fixture.whenStable();
+		log.push('after first whenStable');
 		expect(fixture.nativeElement.innerText.trim()).toBe('derived from newValue 0');
 		log.push('before click');
 		fixture.nativeElement.querySelector('button').click();
@@ -132,6 +123,9 @@ describe('callWidgetFactoryWithConfig', () => {
 		log.push('before incrementCounter');
 		fixture.componentInstance.api.incrementCounter();
 		log.push('after incrementCounter');
+		log.push('before second whenStable');
+		await fixture.whenStable();
+		log.push('after second whenStable');
 		expect(fixture.nativeElement.innerText.trim()).toBe('derived from newValue 1');
 		log.push('before destroy');
 		fixture.destroy();
@@ -140,50 +134,41 @@ describe('callWidgetFactoryWithConfig', () => {
 		await Promise.resolve();
 		log.push('after last await 0');
 		expect(log).toStrictEqual([
-			'enter ngZone',
-			'begin callWidgetFactoryWithConfig, ngZone = true',
-			'end callWidgetFactoryWithConfig, ngZone = true',
-			'leave ngZone',
+			'begin callWidgetFactoryWithConfig',
+			'end callWidgetFactoryWithConfig',
 			'before autoDetectChanges',
-			'enter ngZone',
-			'begin factory, ngZone = false',
-			'end factory, ngZone = false',
-			'begin computeDerivedValue, ngZone = false',
-			'end computeDerivedValue, ngZone = false',
-			'begin myDirective, ngZone = false',
-			'end myDirective, ngZone = false',
-			'leave ngZone',
+			'begin factory',
+			'end factory',
+			'begin computeDerivedValue',
+			'end computeDerivedValue',
+			'begin myDirective',
+			'end myDirective',
 			'after autoDetectChanges',
 			'before first await 0',
 			'after first await 0',
-			'enter ngZone',
-			'begin ngZone.run, ngZone = true',
-			'begin myApiFn, ngZone = false',
-			'end myApiFn, ngZone = false',
-			'end ngZone.run, ngZone = true',
-			'begin patch, ngZone = false',
-			'begin computeDerivedValue, ngZone = false',
-			'end computeDerivedValue, ngZone = false',
-			'end patch, ngZone = false',
-			'leave ngZone',
-			'after ngZone.run',
+			'begin myApiFn',
+			'end myApiFn',
+			'before first whenStable',
+			'begin patch',
+			'begin computeDerivedValue',
+			'end computeDerivedValue',
+			'end patch',
+			'after first whenStable',
 			'before click',
-			'enter ngZone',
-			'begin onClick, ngZone = true',
-			'end onClick, ngZone = true',
-			'leave ngZone',
+			'begin onClick',
+			'end onClick',
 			'after click',
 			'before incrementCounter',
-			'begin incrementCounter, ngZone = false',
-			'enter ngZone',
-			'begin counterChangeListener, ngZone = true',
-			'end counterChangeListener, ngZone = true',
-			'leave ngZone',
-			'end incrementCounter, ngZone = false',
+			'begin incrementCounter',
+			'begin counterChangeListener',
+			'end counterChangeListener',
+			'end incrementCounter',
 			'after incrementCounter',
+			'before second whenStable',
+			'after second whenStable',
 			'before destroy',
-			'begin myDirectiveDestroy, ngZone = false',
-			'end myDirectiveDestroy, ngZone = false',
+			'begin myDirectiveDestroy',
+			'end myDirectiveDestroy',
 			'after destroy',
 			'before last await 0',
 			'after last await 0',

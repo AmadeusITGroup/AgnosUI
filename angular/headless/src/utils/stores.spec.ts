@@ -1,27 +1,10 @@
 import {readable, writable} from '@amadeus-it-group/tansu';
-import {ChangeDetectionStrategy, Component, NgZone, effect} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
-import {beforeEach, describe, expect, it} from 'vitest';
+import {describe, expect, it} from 'vitest';
 import {toAngularSignal, toAngularWritableSignal} from './stores';
 
 describe('toAngularSignals', () => {
-	let log: string[] = [];
-
-	beforeEach(() => {
-		log = [];
-	});
-
-	const createZoneCheckFn =
-		<T extends any[], R>(name: string, fn: (...args: T) => R) =>
-		(...args: T): R => {
-			log.push(`begin ${name}, ngZone = ${NgZone.isInAngularZone()}`);
-			try {
-				return fn(...args);
-			} finally {
-				log.push(`end ${name}, ngZone = ${NgZone.isInAngularZone()}`);
-			}
-		};
-
 	it('[toAngularSignal] works synchronously', () => {
 		const tansuStore = writable(1);
 		const signal = TestBed.runInInjectionContext(() => toAngularSignal(tansuStore));
@@ -39,43 +22,30 @@ describe('toAngularSignals', () => {
 		expect(signal()).toBe(1);
 		tansuStore.set(2);
 		expect(signal()).toBe(2);
-		const ngZone = TestBed.inject(NgZone);
-		ngZone.run(() => {
-			signal.set(3);
-		});
+		signal.set(3);
 		expect(tansuStore.get()).toBe(3);
-		ngZone.run(() => {
-			signal.set(4);
-		});
+		signal.set(4);
 		expect(tansuStore.get()).toBe(4);
 		TestBed.resetTestingModule(); // this ends the subscription
 		tansuStore.set(5);
 		expect(signal()).toBe(4); // no change as the subscription was ended
 	});
 
-	it('[toAngularSignal] subscribes and unsubscribes outside Angular zone', () => {
-		const ngZone = TestBed.inject(NgZone);
+	it('[toAngularSignal] subscribes and unsubscribes', () => {
+		const log: string[] = [];
 		const tansuStore = readable(0 as number, {
-			onUse: createZoneCheckFn('onUse', (set) => {
+			onUse: (set) => {
+				log.push('onUse');
 				set(1);
-				return createZoneCheckFn('destroy', () => {});
-			}),
+				return () => {
+					log.push('destroy');
+				};
+			},
 		});
-		ngZone.run(
-			createZoneCheckFn('ngZone.run', () => {
-				const signal = TestBed.runInInjectionContext(() => toAngularSignal(tansuStore));
-				expect(signal()).toBe(1);
-				TestBed.resetTestingModule();
-			}),
-		);
-		expect(log).toStrictEqual([
-			'begin ngZone.run, ngZone = true',
-			'begin onUse, ngZone = false',
-			'end onUse, ngZone = false',
-			'begin destroy, ngZone = false',
-			'end destroy, ngZone = false',
-			'end ngZone.run, ngZone = true',
-		]);
+		const signal = TestBed.runInInjectionContext(() => toAngularSignal(tansuStore));
+		expect(signal()).toBe(1);
+		TestBed.resetTestingModule();
+		expect(log).toStrictEqual(['onUse', 'destroy']);
 	});
 
 	@Component({
@@ -107,10 +77,7 @@ describe('toAngularSignals', () => {
 	}
 
 	for (const MyComponent of [MyTestWithEffectComponent, MyTestWithoutEffectComponent]) {
-		it(`[toAngularSignal] works in ${MyComponent.name} (inside Angular zone)`, async () => {
-			TestBed.configureTestingModule({
-				imports: [MyComponent],
-			});
+		it(`[toAngularSignal] works in ${MyComponent.name}`, async () => {
 			const fixture = TestBed.createComponent(MyComponent);
 			fixture.autoDetectChanges();
 			await fixture.whenStable();
@@ -119,32 +86,6 @@ describe('toAngularSignals', () => {
 				// eslint-disable-next-line vitest/no-conditional-expect
 				expect(fixture.componentInstance.changes).toStrictEqual([1]);
 			}
-			const zone = TestBed.inject(NgZone);
-			expect(NgZone.isInAngularZone()).toBeFalsy();
-			zone.run(() => {
-				expect(NgZone.isInAngularZone()).toBeTruthy();
-				fixture.componentInstance.myStore.set(2);
-				fixture.componentInstance.myStore.set(3);
-			});
-			await fixture.whenStable();
-			expect(fixture.nativeElement.textContent).toBe('3');
-			if (MyComponent === MyTestWithEffectComponent) {
-				// eslint-disable-next-line vitest/no-conditional-expect
-				expect(fixture.componentInstance.changes).toStrictEqual([1, 3]);
-			}
-			fixture.destroy();
-		});
-
-		it(`[toAngularSignal] works in ${MyComponent.name} (outside Angular zone)`, async () => {
-			const fixture = TestBed.createComponent(MyComponent);
-			fixture.autoDetectChanges();
-			await fixture.whenStable();
-			expect(fixture.nativeElement.textContent).toBe('1');
-			if (MyComponent === MyTestWithEffectComponent) {
-				// eslint-disable-next-line vitest/no-conditional-expect
-				expect(fixture.componentInstance.changes).toStrictEqual([1]);
-			}
-			expect(NgZone.isInAngularZone()).toBeFalsy();
 			fixture.componentInstance.myStore.set(2);
 			fixture.componentInstance.myStore.set(3);
 			await fixture.whenStable();

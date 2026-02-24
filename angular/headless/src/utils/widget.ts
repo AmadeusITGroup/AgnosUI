@@ -3,7 +3,6 @@ import type {AfterContentChecked, OnChanges, OnInit, SimpleChanges, TemplateRef}
 import {Directive, Injector, inject, runInInjectionContext} from '@angular/core';
 import type {AngularState, AngularWidget, IsSlotContent, SlotContent, Widget, WidgetFactory, WidgetProps} from '../types';
 import {toAngularSignal, toReadableStore} from './stores';
-import {ZoneWrapper} from './zone';
 
 export * from '@agnos-ui/core/utils/widget';
 
@@ -59,7 +58,7 @@ export const callWidgetFactoryWithConfig = <W extends Widget>(
 		slotChildren?: () => TemplateRef<void> | undefined;
 	},
 ): AngularWidget<W> => {
-	let {defaultConfig, widgetConfig, events, afterInit, slotTemplates, slotChildren} = options ?? {};
+	const {defaultConfig, widgetConfig, events: eventsProp, afterInit, slotTemplates, slotChildren} = options ?? {};
 	const injector = inject(Injector);
 	const slots$ = writable({});
 	const props = {};
@@ -81,24 +80,21 @@ export const callWidgetFactoryWithConfig = <W extends Widget>(
 		},
 		ngInit() {
 			runInInjectionContext(injector, () => {
-				const zoneWrapper = inject(ZoneWrapper);
-				factory = zoneWrapper.outsideNgZone(factory);
 				const defaultConfig$ = toReadableStore(defaultConfig);
-				events = zoneWrapper.insideNgZoneWrapFunctionsObject(events);
 				const widget = factory({
 					config: computed(() => ({
 						...defaultConfig$(),
 						children: slotChildren?.(),
 						...widgetConfig?.(),
 						...slots$(),
-						...(events as Partial<WidgetProps<W>>),
+						...(eventsProp as Partial<WidgetProps<W>>),
 					})),
 					props,
 				});
 				Object.assign(res, {
-					patch: zoneWrapper.outsideNgZone(widget.patch),
-					directives: zoneWrapper.outsideNgZoneWrapDirectivesObject(widget.directives),
-					api: zoneWrapper.outsideNgZoneWrapFunctionsObject(widget.api),
+					patch: widget.patch,
+					directives: widget.directives,
+					api: widget.api,
 					state: Object.fromEntries(
 						Object.entries<ReadableSignal<unknown>>(widget.stores as any).map(([key, val]) => [key.slice(0, -1), toAngularSignal(val)]),
 					),
