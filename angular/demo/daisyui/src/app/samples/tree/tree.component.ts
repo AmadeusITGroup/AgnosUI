@@ -15,13 +15,16 @@ import {ChangeDetectionStrategy, Component, input, output} from '@angular/core';
 		</ul>
 
 		<ng-template #treeItem let-item="item">
-			<!-- eslint-disable-next-line @angular-eslint/template/role-has-required-aria -->
-			<li role="treeitem">
-				<span class="flex flex-wrap items-center" [auUse]="[directives.itemToggleDirective, {item}]">
+			<li [auUse]="[directives.itemAttributesDirective, {item}]">
+				<span class="flex flex-nowrap items-center" [auUse]="[directives.itemToggleDirective, {item}]">
 					<span class="me-1">
 						<ng-container [ngTemplateOutlet]="itemIcon" [ngTemplateOutletContext]="{item}" />
 					</span>
-					<span>{{ item.label }}</span>
+					@if (item.isEdited) {
+						<input class="input input-sm w-32 min-w-0 flex-shrink" [auUse]="[directives.itemInputDirective, {item}]" />
+					} @else {
+						<span [auUse]="[directives.itemModifyDirective, {item}]">{{ item.label }}</span>
+					}
 					@if (item.children.length > 0) {
 						<span class="ms-auto">
 							<svg
