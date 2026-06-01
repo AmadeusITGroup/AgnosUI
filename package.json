@@ -44,7 +44,7 @@
 		"@angular/forms": "^21.0.0",
 		"@angular/platform-browser": "^21.0.0",
 		"@axe-core/playwright": "^4.10.1",
-		"@commitlint/cli": "^20.0.0",
+		"@commitlint/cli": "^21.0.0",
 		"@eslint/js": "^9.16.0",
 		"@playwright/test": "^1.49.0",
 		"@types/node": "^24.0.0",
