@@ -63,7 +63,6 @@
 <url><loc>https://www.agnosui.dev/latest/docs/angular/components/pagination/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/components/progressbar/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/components/rating/api</loc></url>
-<url><loc>https://www.agnosui.dev/latest/docs/angular/components/select/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/components/slider/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/components/toast/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/components/tree/api</loc></url>
@@ -76,7 +75,6 @@
 <url><loc>https://www.agnosui.dev/latest/docs/react/components/pagination/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/components/progressbar/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/components/rating/api</loc></url>
-<url><loc>https://www.agnosui.dev/latest/docs/react/components/select/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/components/slider/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/components/toast/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/components/tree/api</loc></url>
@@ -89,7 +87,6 @@
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/components/pagination/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/components/progressbar/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/components/rating/api</loc></url>
-<url><loc>https://www.agnosui.dev/latest/docs/svelte/components/select/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/components/slider/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/components/toast/api</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/components/tree/api</loc></url>
@@ -123,9 +120,6 @@
 <url><loc>https://www.agnosui.dev/latest/docs/angular/components/rating/examples</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/components/rating/examples</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/components/rating/examples</loc></url>
-<url><loc>https://www.agnosui.dev/latest/docs/angular/components/select/examples</loc></url>
-<url><loc>https://www.agnosui.dev/latest/docs/react/components/select/examples</loc></url>
-<url><loc>https://www.agnosui.dev/latest/docs/svelte/components/select/examples</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/angular/components/slider/examples</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/react/components/slider/examples</loc></url>
 <url><loc>https://www.agnosui.dev/latest/docs/svelte/components/slider/examples</loc></url>
@@ -223,7 +217,6 @@
 <url><loc>https://www.agnosui.dev/latest/api/typescript/bootstrap/components/pagination</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/bootstrap/components/progressbar</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/bootstrap/components/rating</loc></url>
-<url><loc>https://www.agnosui.dev/latest/api/typescript/bootstrap/components/select</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/bootstrap/components/slider</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/bootstrap/components/toast</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/typescript/bootstrap/components/tree</loc></url>
@@ -241,7 +234,6 @@
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/components/pagination</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/components/progressbar</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/components/rating</loc></url>
-<url><loc>https://www.agnosui.dev/latest/api/angular/headless/components/select</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/components/slider</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/components/toast</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/headless/components/tree</loc></url>
@@ -280,7 +272,6 @@
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/components/pagination</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/components/progressbar</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/components/rating</loc></url>
-<url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/components/select</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/components/slider</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/components/toast</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/angular/bootstrap/components/tree</loc></url>
@@ -320,7 +311,6 @@
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/components/pagination</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/components/progressbar</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/components/rating</loc></url>
-<url><loc>https://www.agnosui.dev/latest/api/react/headless/components/select</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/components/slider</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/components/toast</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/headless/components/tree</loc></url>
@@ -358,7 +348,6 @@
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/components/pagination</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/components/progressbar</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/components/rating</loc></url>
-<url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/components/select</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/components/slider</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/components/toast</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/react/bootstrap/components/tree</loc></url>
@@ -396,7 +385,6 @@
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/components/pagination</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/components/progressbar</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/components/rating</loc></url>
-<url><loc>https://www.agnosui.dev/latest/api/svelte/headless/components/select</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/components/slider</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/components/toast</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/headless/components/tree</loc></url>
@@ -432,7 +420,6 @@
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/components/pagination</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/components/progressbar</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/components/rating</loc></url>
-<url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/components/select</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/components/slider</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/components/toast</loc></url>
 <url><loc>https://www.agnosui.dev/latest/api/svelte/bootstrap/components/tree</loc></url>
