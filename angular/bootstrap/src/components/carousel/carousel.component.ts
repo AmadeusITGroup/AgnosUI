@@ -25,8 +25,8 @@ export class CarouselStructureDirective<SlideData extends {id: string}> {
 
 	static ngTemplateContextGuard<SlideData extends {id: string}>(
 		_dir: CarouselStructureDirective<SlideData>,
-		context: unknown,
-	): context is CarouselContext<SlideData> {
+		_context: unknown,
+	): _context is CarouselContext<SlideData> {
 		return true;
 	}
 }
@@ -40,8 +40,8 @@ export class CarouselNavigationDirective<SlideData extends {id: string}> {
 
 	static ngTemplateContextGuard<SlideData extends {id: string}>(
 		_dir: CarouselNavigationDirective<SlideData>,
-		context: unknown,
-	): context is CarouselContext<SlideData> {
+		_context: unknown,
+	): _context is CarouselContext<SlideData> {
 		return true;
 	}
 }
@@ -55,8 +55,8 @@ export class CarouselSlideDirective<SlideData extends {id: string}> {
 
 	static ngTemplateContextGuard<SlideData extends {id: string}>(
 		_dir: CarouselSlideDirective<SlideData>,
-		context: unknown,
-	): context is CarouselSlideContext<SlideData> {
+		_context: unknown,
+	): _context is CarouselSlideContext<SlideData> {
 		return true;
 	}
 }

@@ -78,7 +78,7 @@ const toastConfigValidator: ConfigValidator<ToastExtraProps> = {
  * @returns the default toast config
  */
 export function getToastDefaultConfig(): ToastProps {
-	return {...getCommonAlertDefaultConfig(), ...toastDefaultConfig} as any;
+	return {...getCommonAlertDefaultConfig(), ...toastDefaultConfig};
 }
 
 /**

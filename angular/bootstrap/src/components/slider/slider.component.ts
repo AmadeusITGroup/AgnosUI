@@ -35,7 +35,7 @@ import {createSlider} from './slider.gen';
 @Directive({selector: 'ng-template[auSliderLabel]'})
 export class SliderLabelDirective {
 	public templateRef = inject(TemplateRef<SliderSlotLabelContext>);
-	static ngTemplateContextGuard(_dir: SliderLabelDirective, context: unknown): context is SliderSlotLabelContext {
+	static ngTemplateContextGuard(_dir: SliderLabelDirective, _context: unknown): _context is SliderSlotLabelContext {
 		return true;
 	}
 }
@@ -47,7 +47,7 @@ export class SliderLabelDirective {
 @Directive({selector: 'ng-template[auSliderHandle]'})
 export class SliderHandleDirective {
 	public templateRef = inject(TemplateRef<SliderSlotHandleContext>);
-	static ngTemplateContextGuard(_dir: SliderHandleDirective, context: unknown): context is SliderSlotHandleContext {
+	static ngTemplateContextGuard(_dir: SliderHandleDirective, _context: unknown): _context is SliderSlotHandleContext {
 		return true;
 	}
 }
@@ -107,7 +107,7 @@ export const sliderDefaultSlotHandle: SlotContent<SliderSlotHandleContext> = new
 @Directive({selector: 'ng-template[auSliderTick]'})
 export class SliderTickDirective {
 	public templateRef = inject(TemplateRef<SliderSlotTickContext>);
-	static ngTemplateContextGuard(_dir: SliderTickDirective, context: unknown): context is SliderSlotTickContext {
+	static ngTemplateContextGuard(_dir: SliderTickDirective, _context: unknown): _context is SliderSlotTickContext {
 		return true;
 	}
 }
@@ -150,7 +150,7 @@ export const sliderDefaultSlotTick: SlotContent<SliderSlotTickContext> = new Com
 @Directive({selector: 'ng-template[auSliderStructure]'})
 export class SliderStructureDirective {
 	public templateRef = inject(TemplateRef<SliderSlotHandleContext>);
-	static ngTemplateContextGuard(_dir: SliderStructureDirective, context: unknown): context is SliderSlotHandleContext {
+	static ngTemplateContextGuard(_dir: SliderStructureDirective, _context: unknown): _context is SliderSlotHandleContext {
 		return true;
 	}
 }

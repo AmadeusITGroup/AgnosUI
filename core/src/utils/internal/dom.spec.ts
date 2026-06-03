@@ -155,8 +155,8 @@ describe('computeCommonAncestor', () => {
 
 	test('bindClassName', () => {
 		const node = document.createElement('div');
-		const a$ = writable(<boolean>true);
-		const b$ = writable(<boolean>false);
+		const a$ = writable(true);
+		const b$ = writable(false);
 
 		const unbindA = bindClassName(node, 'a', a$);
 		const unbindB = bindClassName(node, 'b', b$);

@@ -12,7 +12,7 @@ import {callWidgetFactory} from '../../config';
 @Directive({selector: 'ng-template[auModalStructure]'})
 export class ModalStructureDirective<Data> {
 	public templateRef = inject(TemplateRef<ModalContext<Data>>);
-	static ngTemplateContextGuard<Data>(_dir: ModalStructureDirective<Data>, context: unknown): context is ModalContext<Data> {
+	static ngTemplateContextGuard<Data>(_dir: ModalStructureDirective<Data>, _context: unknown): _context is ModalContext<Data> {
 		return true;
 	}
 }
@@ -24,7 +24,7 @@ export class ModalStructureDirective<Data> {
 @Directive({selector: 'ng-template[auModalHeader]'})
 export class ModalHeaderDirective<Data> {
 	public templateRef = inject(TemplateRef<ModalContext<Data>>);
-	static ngTemplateContextGuard<Data>(_dir: ModalHeaderDirective<Data>, context: unknown): context is ModalContext<Data> {
+	static ngTemplateContextGuard<Data>(_dir: ModalHeaderDirective<Data>, _context: unknown): _context is ModalContext<Data> {
 		return true;
 	}
 }
@@ -36,7 +36,7 @@ export class ModalHeaderDirective<Data> {
 @Directive({selector: 'ng-template[auModalTitle]'})
 export class ModalTitleDirective<Data> {
 	public templateRef = inject(TemplateRef<ModalContext<Data>>);
-	static ngTemplateContextGuard<Data>(_dir: ModalTitleDirective<Data>, context: unknown): context is ModalContext<Data> {
+	static ngTemplateContextGuard<Data>(_dir: ModalTitleDirective<Data>, _context: unknown): _context is ModalContext<Data> {
 		return true;
 	}
 }
@@ -48,7 +48,7 @@ export class ModalTitleDirective<Data> {
 @Directive({selector: 'ng-template[auModalBody]'})
 export class ModalBodyDirective<Data> {
 	public templateRef = inject(TemplateRef<ModalContext<Data>>);
-	static ngTemplateContextGuard<Data>(_dir: ModalBodyDirective<Data>, context: unknown): context is ModalContext<Data> {
+	static ngTemplateContextGuard<Data>(_dir: ModalBodyDirective<Data>, _context: unknown): _context is ModalContext<Data> {
 		return true;
 	}
 }
@@ -60,7 +60,7 @@ export class ModalBodyDirective<Data> {
 @Directive({selector: 'ng-template[auModalFooter]'})
 export class ModalFooterDirective<Data> {
 	public templateRef = inject(TemplateRef<ModalContext<Data>>);
-	static ngTemplateContextGuard<Data>(_dir: ModalFooterDirective<Data>, context: unknown): context is ModalContext<Data> {
+	static ngTemplateContextGuard<Data>(_dir: ModalFooterDirective<Data>, _context: unknown): _context is ModalContext<Data> {
 		return true;
 	}
 }

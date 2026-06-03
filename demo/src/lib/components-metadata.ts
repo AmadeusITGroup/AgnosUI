@@ -48,7 +48,7 @@ export const componentsMetadata: Metadata = {
 		type: 'bootstrap',
 	},
 	Drawer: {
-		status: 'beta',
+		status: 'stable',
 		since: 'v0.10.0',
 		type: 'standalone',
 		includeStyles: true,
@@ -78,11 +78,6 @@ export const componentsMetadata: Metadata = {
 		since: 'v0.1.1',
 		type: 'standalone',
 	},
-	Select: {
-		status: 'inprogress',
-		since: 'v0.1.1',
-		type: 'standalone',
-	},
 	Slider: {
 		status: 'stable',
 		since: 'v0.1.1',
@@ -100,7 +95,7 @@ export const componentsMetadata: Metadata = {
 		},
 	},
 	Tree: {
-		status: 'beta',
+		status: 'stable',
 		since: 'v0.6.0',
 		type: 'standalone',
 		includeStyles: true,
@@ -163,7 +158,7 @@ export const daisyUIMetadata: DaisyMetadata = {
 		type: 'daisyUI',
 	},
 	Tree: {
-		status: 'beta',
+		status: 'stable',
 		since: 'v0.7.0',
 		type: 'daisyUI',
 	},

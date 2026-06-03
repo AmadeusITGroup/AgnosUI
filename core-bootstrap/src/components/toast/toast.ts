@@ -69,6 +69,7 @@ const coreOverride: Partial<CoreProps> = {
  * @returns the default Toast config
  */
 export function getToastDefaultConfig(): ToastProps {
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
 	return {...getCoreDefaultConfig(), ...defaultConfigExtraProps, ...coreOverride} as any;
 }
 

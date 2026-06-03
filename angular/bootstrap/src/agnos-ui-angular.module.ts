@@ -20,7 +20,6 @@ import {
 	PaginationPreviousDirective,
 } from './components/pagination/pagination.component';
 import {RatingComponent, RatingStarDirective} from './components/rating/rating.component';
-import {SelectBadgeLabelDirective, SelectComponent, SelectItemLabelDirective} from './components/select/select.component';
 import {AlertBodyDirective, AlertComponent, AlertStructureDirective} from './components/alert/alert.component';
 import {
 	AccordionDirective,
@@ -54,9 +53,6 @@ import {DrawerBodyDirective, DrawerComponent, DrawerHeaderDirective, DrawerStruc
 /* istanbul ignore next */
 const components = [
 	SlotDirective,
-	SelectComponent,
-	SelectBadgeLabelDirective,
-	SelectItemLabelDirective,
 	UseDirective,
 	UseMultiDirective,
 	RatingComponent,

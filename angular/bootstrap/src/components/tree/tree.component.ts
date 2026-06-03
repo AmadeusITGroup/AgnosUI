@@ -12,7 +12,7 @@ import {createTree} from './tree.gen';
 @Directive({selector: 'ng-template[auTreeStructure]'})
 export class TreeStructureDirective {
 	public templateRef = inject(TemplateRef<TreeContext>);
-	static ngTemplateContextGuard(_dir: TreeStructureDirective, context: unknown): context is TreeContext {
+	static ngTemplateContextGuard(_dir: TreeStructureDirective, _context: unknown): _context is TreeContext {
 		return true;
 	}
 }
@@ -51,7 +51,7 @@ export const treeDefaultSlotStructure: SlotContent<TreeContext> = new ComponentT
 @Directive({selector: 'ng-template[auTreeItemToggle]'})
 export class TreeItemToggleDirective {
 	public templateRef = inject(TemplateRef<TreeSlotItemContext>);
-	static ngTemplateContextGuard(_dir: TreeItemToggleDirective, context: unknown): context is TreeSlotItemContext {
+	static ngTemplateContextGuard(_dir: TreeItemToggleDirective, _context: unknown): _context is TreeSlotItemContext {
 		return true;
 	}
 }
@@ -90,7 +90,7 @@ export const treeDefaultItemToggle: SlotContent<TreeSlotItemContext> = new Compo
 @Directive({selector: 'ng-template[auTreeItemContent]'})
 export class TreeItemContentDirective {
 	public templateRef = inject(TemplateRef<TreeSlotItemContext>);
-	static ngTemplateContextGuard(_dir: TreeItemContentDirective, context: unknown): context is TreeSlotItemContext {
+	static ngTemplateContextGuard(_dir: TreeItemContentDirective, _context: unknown): _context is TreeSlotItemContext {
 		return true;
 	}
 }
@@ -127,7 +127,7 @@ export const treeDefaultSlotItemContent: SlotContent<TreeSlotItemContext> = new 
 @Directive({selector: 'ng-template[auTreeItem]'})
 export class TreeItemDirective {
 	public templateRef = inject(TemplateRef<TreeSlotItemContext>);
-	static ngTemplateContextGuard(_dir: TreeItemDirective, context: unknown): context is TreeSlotItemContext {
+	static ngTemplateContextGuard(_dir: TreeItemDirective, _context: unknown): _context is TreeSlotItemContext {
 		return true;
 	}
 }

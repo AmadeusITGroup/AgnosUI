@@ -5,7 +5,6 @@ import {Modal} from '@agnos-ui/react-bootstrap/components/modal';
 import {Pagination} from '@agnos-ui/react-bootstrap/components/pagination';
 import {Progressbar} from '@agnos-ui/react-bootstrap/components/progressbar';
 import {Rating} from '@agnos-ui/react-bootstrap/components/rating';
-import {Select} from '@agnos-ui/react-bootstrap/components/select';
 import {Slider} from '@agnos-ui/react-bootstrap/components/slider';
 import {Toast} from '@agnos-ui/react-bootstrap/components/toast';
 import {Tree, type TreeItem} from '@agnos-ui/react-bootstrap/components/tree';
@@ -76,10 +75,6 @@ export const App = () => (
 		<h2>Rating</h2>
 		<div className="my-3">
 			<Rating />
-		</div>
-		<h2>Select</h2>
-		<div className="my-3">
-			<Select items={['AgnosUI']} />
 		</div>
 		<h2>Slider</h2>
 		<div className="my-3">

@@ -62,7 +62,6 @@ test.describe.parallel('Transition tests', () => {
 	];
 
 	for (const scenario of testCases) {
-		// eslint-disable-next-line playwright/valid-title
 		test.describe.parallel(scenario.name, () => {
 			test('toggle with animation', async ({page}) => {
 				const po = new TransitionPO(page);

@@ -82,7 +82,7 @@ describe(`Rating`, () => {
 			expect(stateChangeCount).toBe(1);
 
 			// note that this is not invalid, it only goes back to the default value
-			rating.patch({rating: undefined as any});
+			rating.patch({rating: undefined});
 			expect(state).toMatchObject({rating: 0});
 			expect(stateChangeCount).toBe(1);
 
@@ -93,12 +93,12 @@ describe(`Rating`, () => {
 			expect(stateChangeCount).toBe(1);
 			expectLogInvalidValue();
 
-			rating.patch({rating: Infinity as any});
+			rating.patch({rating: Infinity});
 			expect(state).toMatchObject({rating: 0});
 			expect(stateChangeCount).toBe(1);
 			expectLogInvalidValue();
 
-			rating.patch({rating: NaN as any});
+			rating.patch({rating: NaN});
 			expect(state).toMatchObject({rating: 0});
 			expect(stateChangeCount).toBe(1);
 			expectLogInvalidValue();
@@ -120,7 +120,7 @@ describe(`Rating`, () => {
 			expectLogInvalidValue();
 
 			// note that this is not invalid, it only goes back to the default value
-			rating.patch({maxRating: undefined as any});
+			rating.patch({maxRating: undefined});
 			expect(state).toMatchObject({maxRating: 10});
 			expect(stateChangeCount).toBe(1);
 			expect(consoleErrorSpy).not.toHaveBeenCalled();
@@ -130,12 +130,12 @@ describe(`Rating`, () => {
 			expect(stateChangeCount).toBe(1);
 			expectLogInvalidValue();
 
-			rating.patch({maxRating: Infinity as any});
+			rating.patch({maxRating: Infinity});
 			expect(state).toMatchObject({maxRating: 10});
 			expect(stateChangeCount).toBe(1);
 			expectLogInvalidValue();
 
-			rating.patch({maxRating: NaN as any});
+			rating.patch({maxRating: NaN});
 			expect(state).toMatchObject({maxRating: 10});
 			expect(stateChangeCount).toBe(1);
 			expectLogInvalidValue();
@@ -157,7 +157,7 @@ describe(`Rating`, () => {
 			expectLogInvalidValue();
 
 			// note that this is not invalid, it only goes back to the default value
-			rating.patch({disabled: undefined as any});
+			rating.patch({disabled: undefined});
 			expect(state).toMatchObject({disabled: false});
 			expect(stateChangeCount).toBe(1);
 			expect(consoleErrorSpy).not.toHaveBeenCalled();
@@ -194,7 +194,7 @@ describe(`Rating`, () => {
 			expectLogInvalidValue();
 
 			// note that this is not invalid, it only goes back to the default value
-			rating.patch({readonly: undefined as any});
+			rating.patch({readonly: undefined});
 			expect(state).toMatchObject({readonly: false});
 			expect(stateChangeCount).toBe(1);
 			expect(consoleErrorSpy).not.toHaveBeenCalled();
@@ -231,7 +231,7 @@ describe(`Rating`, () => {
 			expectLogInvalidValue();
 
 			// note that this is not invalid, it only goes back to the default value
-			rating.patch({tabindex: undefined as any});
+			rating.patch({tabindex: undefined});
 			expect(state).toMatchObject({tabindex: 0});
 			expect(stateChangeCount).toBe(1);
 			expect(consoleErrorSpy).not.toHaveBeenCalled();
@@ -241,12 +241,12 @@ describe(`Rating`, () => {
 			expect(stateChangeCount).toBe(1);
 			expectLogInvalidValue();
 
-			rating.patch({tabindex: Infinity as any});
+			rating.patch({tabindex: Infinity});
 			expect(state).toMatchObject({tabindex: 0});
 			expect(stateChangeCount).toBe(1);
 			expectLogInvalidValue();
 
-			rating.patch({tabindex: NaN as any});
+			rating.patch({tabindex: NaN});
 			expect(state).toMatchObject({tabindex: 0});
 			expect(stateChangeCount).toBe(1);
 			expectLogInvalidValue();

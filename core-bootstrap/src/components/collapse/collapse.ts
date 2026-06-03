@@ -55,6 +55,7 @@ const configValidator: ConfigValidator<CollapseExtraProps> = {
  * @returns the default collapse config
  */
 export function getCollapseDefaultConfig(): CollapseProps {
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
 	return {...getCoreDefaultConfig(), ...defaultConfigExtraProps} as any;
 }
 

@@ -6,7 +6,6 @@ import type {ModalProps} from './components/modal';
 import type {PaginationProps} from './components/pagination';
 import type {ProgressbarProps} from './components/progressbar';
 import type {RatingProps} from './components/rating';
-import type {SelectProps} from './components/select';
 import type {SliderProps} from './components/slider';
 import type {ToastProps} from './components/toast';
 import type {TreeProps} from './components/tree';
@@ -25,10 +24,6 @@ export interface BootstrapWidgetsConfig {
 	 * the rating widget config
 	 */
 	rating: RatingProps;
-	/**
-	 * the select widget config
-	 */
-	select: SelectProps<any>;
 	/**
 	 * the modal widget config
 	 */

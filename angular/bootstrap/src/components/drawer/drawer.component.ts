@@ -31,7 +31,7 @@ import {createDrawer} from './drawer.gen';
 @Directive({selector: 'ng-template[auDrawerStructure]'})
 export class DrawerStructureDirective {
 	public templateRef = inject(TemplateRef<DrawerContext>);
-	static ngTemplateContextGuard(_dir: DrawerStructureDirective, context: unknown): context is DrawerContext {
+	static ngTemplateContextGuard(_dir: DrawerStructureDirective, _context: unknown): _context is DrawerContext {
 		return true;
 	}
 }
@@ -43,7 +43,7 @@ export class DrawerStructureDirective {
 @Directive({selector: 'ng-template[auDrawerHeader]'})
 export class DrawerHeaderDirective {
 	public templateRef = inject(TemplateRef<DrawerContext>);
-	static ngTemplateContextGuard(_dir: DrawerHeaderDirective, context: unknown): context is DrawerContext {
+	static ngTemplateContextGuard(_dir: DrawerHeaderDirective, _context: unknown): _context is DrawerContext {
 		return true;
 	}
 }
@@ -55,7 +55,7 @@ export class DrawerHeaderDirective {
 @Directive({selector: 'ng-template[auDrawerBody]'})
 export class DrawerBodyDirective {
 	public templateRef = inject(TemplateRef<DrawerContext>);
-	static ngTemplateContextGuard(_dir: DrawerBodyDirective, context: unknown): context is DrawerContext {
+	static ngTemplateContextGuard(_dir: DrawerBodyDirective, _context: unknown): _context is DrawerContext {
 		return true;
 	}
 }

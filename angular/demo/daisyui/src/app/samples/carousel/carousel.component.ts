@@ -24,7 +24,7 @@ interface Photo {
 @Directive({selector: 'ng-template[appCarouselSlide]'})
 export class CarouselSlideDirective {
 	readonly templateRef = inject(TemplateRef);
-	static ngTemplateContextGuard(_dir: CarouselSlideDirective, context: unknown): context is Photo {
+	static ngTemplateContextGuard(_dir: CarouselSlideDirective, _context: unknown): _context is Photo {
 		return true;
 	}
 }

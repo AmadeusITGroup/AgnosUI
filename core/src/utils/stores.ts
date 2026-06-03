@@ -185,7 +185,8 @@ export const normalizeConfigStores = <T extends object>(
 		for (const key of keys) {
 			res[key] = configIsStore
 				? computed(() => config()[key])
-				: toReadableStore(config[key] as ReadableSignal<T[typeof key] | undefined> | T[typeof key] | undefined);
+				: // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+					toReadableStore(config[key] as ReadableSignal<T[typeof key] | undefined> | T[typeof key] | undefined);
 		}
 	}
 	return res;
@@ -254,6 +255,7 @@ export const writablesWithDefault = <T extends object>(
 	const configStores = normalizeConfigStores<T>(keys, propsConfig?.config);
 	const props = propsConfig?.props;
 	for (const key of keys) {
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
 		const propValue = props?.[key] as undefined | WritableSignal<T[typeof key] | undefined> | T[typeof key];
 		res[`${key}$`] = writableWithDefault(defConfig[key], configStores[key], options?.[key], toWritableStore(propValue));
 	}

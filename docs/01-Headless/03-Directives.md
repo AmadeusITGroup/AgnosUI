@@ -7,7 +7,7 @@ since: 0.1.1
 ## Overview
 
 Directives in AgnosUI are inspired by the **actions** in Svelte. These directives are element-level lifecycle functions that are executed when the element is created. They are updated (if an update function is provided) when a parameter changes, and finally, they are executed when the element is destroyed.
-These directives are typically used to add custom event handlers. For instance, core services like [focus track](../04-Services/01-Focustrack.md) and [floating ui](../04-Services/03-Floating-UI.md) create directives that are utilized by components such as [Select](../components/select/examples).
+These directives are typically used to add custom event handlers.
 
 ## Usage
 

@@ -94,6 +94,7 @@ const defaultConfigExtraProps: SliderExtraProps = {
  * @returns the default Slider config
  */
 export function getSliderDefaultConfig(): SliderProps {
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
 	return {...getCoreDefaultConfig(), ...defaultConfigExtraProps} as any;
 }
 

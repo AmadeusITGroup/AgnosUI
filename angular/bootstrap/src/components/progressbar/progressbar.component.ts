@@ -22,7 +22,7 @@ import type {BSContextualClass} from '@agnos-ui/core-bootstrap/types';
 @Directive({selector: 'ng-template[auProgressbarBody]'})
 export class ProgressbarBodyDirective {
 	public templateRef = inject(TemplateRef<ProgressbarContext>);
-	static ngTemplateContextGuard(_dir: ProgressbarStructureDirective, context: unknown): context is ProgressbarContext {
+	static ngTemplateContextGuard(_dir: ProgressbarBodyDirective, _context: unknown): _context is ProgressbarContext {
 		return true;
 	}
 }
@@ -35,7 +35,7 @@ export class ProgressbarBodyDirective {
 @Directive({selector: 'ng-template[auProgressbarStructure]'})
 export class ProgressbarStructureDirective {
 	public templateRef = inject(TemplateRef<ProgressbarContext>);
-	static ngTemplateContextGuard(_dir: ProgressbarStructureDirective, context: unknown): context is ProgressbarContext {
+	static ngTemplateContextGuard(_dir: ProgressbarStructureDirective, _context: unknown): _context is ProgressbarContext {
 		return true;
 	}
 }

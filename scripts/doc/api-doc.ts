@@ -252,6 +252,7 @@ export function parseDocs(indexFile: string) {
 												};
 											}
 										} else {
+											console.error(property);
 											throw new Error('Unknow assignement in config');
 										}
 									}

@@ -111,6 +111,7 @@ export const Gallery = ({
 	useEffect(() => {
 		const selectedSnap = mainState.selectedScrollSnap;
 		thumbApi.scrollTo(selectedSnap);
+		// eslint-disable-next-line react-hooks/set-state-in-effect
 		setPhotosWithLoadState((photos) =>
 			photos.map((photoWithLoadState, index) =>
 				Math.abs(index - selectedSnap) <= 1 && !photoWithLoadState.loadRequested ? {...photoWithLoadState, loadRequested: true} : photoWithLoadState,

@@ -23,7 +23,7 @@ import {createPagination} from './pagination.gen';
 @Directive({selector: 'ng-template[auPaginationEllipsis]'})
 export class PaginationEllipsisDirective {
 	public templateRef = inject(TemplateRef<PaginationContext>);
-	static ngTemplateContextGuard(_dir: PaginationEllipsisDirective, context: unknown): context is PaginationContext {
+	static ngTemplateContextGuard(_dir: PaginationEllipsisDirective, _context: unknown): _context is PaginationContext {
 		return true;
 	}
 }
@@ -35,7 +35,7 @@ export class PaginationEllipsisDirective {
 @Directive({selector: 'ng-template[auPaginationFirst]'})
 export class PaginationFirstDirective {
 	public templateRef = inject(TemplateRef<PaginationContext>);
-	static ngTemplateContextGuard(_dir: PaginationFirstDirective, context: unknown): context is PaginationContext {
+	static ngTemplateContextGuard(_dir: PaginationFirstDirective, _context: unknown): _context is PaginationContext {
 		return true;
 	}
 }
@@ -47,7 +47,7 @@ export class PaginationFirstDirective {
 @Directive({selector: 'ng-template[auPaginationLast]'})
 export class PaginationLastDirective {
 	public templateRef = inject(TemplateRef<PaginationContext>);
-	static ngTemplateContextGuard(_dir: PaginationLastDirective, context: unknown): context is PaginationContext {
+	static ngTemplateContextGuard(_dir: PaginationLastDirective, _context: unknown): _context is PaginationContext {
 		return true;
 	}
 }
@@ -59,7 +59,7 @@ export class PaginationLastDirective {
 @Directive({selector: 'ng-template[auPaginationNext]'})
 export class PaginationNextDirective {
 	public templateRef = inject(TemplateRef<PaginationContext>);
-	static ngTemplateContextGuard(_dir: PaginationNextDirective, context: unknown): context is PaginationContext {
+	static ngTemplateContextGuard(_dir: PaginationNextDirective, _context: unknown): _context is PaginationContext {
 		return true;
 	}
 }
@@ -71,7 +71,7 @@ export class PaginationNextDirective {
 @Directive({selector: 'ng-template[auPaginationNumber]'})
 export class PaginationNumberDirective {
 	public templateRef = inject(TemplateRef<PaginationNumberContext>);
-	static ngTemplateContextGuard(_dir: PaginationNumberDirective, context: unknown): context is PaginationNumberContext {
+	static ngTemplateContextGuard(_dir: PaginationNumberDirective, _context: unknown): _context is PaginationNumberContext {
 		return true;
 	}
 }
@@ -83,7 +83,7 @@ export class PaginationNumberDirective {
 @Directive({selector: 'ng-template[auPaginationPrevious]'})
 export class PaginationPreviousDirective {
 	public templateRef = inject(TemplateRef<PaginationContext>);
-	static ngTemplateContextGuard(_dir: PaginationPreviousDirective, context: unknown): context is PaginationContext {
+	static ngTemplateContextGuard(_dir: PaginationPreviousDirective, _context: unknown): _context is PaginationContext {
 		return true;
 	}
 }
@@ -95,7 +95,7 @@ export class PaginationPreviousDirective {
 @Directive({selector: 'ng-template[auPaginationPages]'})
 export class PaginationPagesDirective {
 	public templateRef = inject(TemplateRef<PaginationContext>);
-	static ngTemplateContextGuard(_dir: PaginationPagesDirective, context: unknown): context is PaginationContext {
+	static ngTemplateContextGuard(_dir: PaginationPagesDirective, _context: unknown): _context is PaginationContext {
 		return true;
 	}
 }
@@ -107,7 +107,7 @@ export class PaginationPagesDirective {
 @Directive({selector: 'ng-template[auPaginationStructure]'})
 export class PaginationStructureDirective {
 	public templateRef = inject(TemplateRef<PaginationContext>);
-	static ngTemplateContextGuard(_dir: PaginationStructureDirective, context: unknown): context is PaginationContext {
+	static ngTemplateContextGuard(_dir: PaginationStructureDirective, _context: unknown): _context is PaginationContext {
 		return true;
 	}
 }

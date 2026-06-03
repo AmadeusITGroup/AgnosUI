@@ -95,6 +95,7 @@ export function Carousel({
 	const [playing, setPlaying] = useState(false);
 	useEffect(() => {
 		if (autoplay) {
+			// eslint-disable-next-line react-hooks/set-state-in-effect
 			setPlaying(true);
 		}
 	}, [autoplay]);

@@ -23,7 +23,8 @@ import {clsx, type ClassValue} from 'clsx';
  * @returns true in a browser environment if the given element is an HTMLElement, otherwise false.
  */
 export const isBrowserHTMLElement: (element: SSRHTMLElement) => element is HTMLElement = BROWSER
-	? (((element: SSRHTMLElement) => {
+	? // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+		(((element: SSRHTMLElement) => {
 			const contentWindow = (element as any as Element)?.ownerDocument?.defaultView ?? window;
 			return element instanceof contentWindow.HTMLElement;
 		}) as any)

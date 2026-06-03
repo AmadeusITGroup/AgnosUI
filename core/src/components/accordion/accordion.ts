@@ -637,6 +637,7 @@ export function factoryCreateAccordion(
 							onHidden: defaultItemConfig.onHidden,
 							onShown: defaultItemConfig.onShown,
 						},
+						// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
 						{config, props: propsConfig?.props} as PropsConfig<Pick<AccordionItemProps, 'onHidden' | 'onShown'>>,
 					);
 					const item = itemFactory({

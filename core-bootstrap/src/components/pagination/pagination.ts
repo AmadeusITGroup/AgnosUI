@@ -157,6 +157,7 @@ const configValidator: ConfigValidator<PaginationExtraProps> = {
  * @returns the default Pagination config
  */
 export function getPaginationDefaultConfig(): PaginationProps {
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
 	return {...getCoreDefaultConfig(), ...defaultConfigExtraProps} as any;
 }
 

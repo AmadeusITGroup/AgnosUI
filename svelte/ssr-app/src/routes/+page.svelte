@@ -6,7 +6,6 @@
 	import {Pagination} from '@agnos-ui/svelte-bootstrap/components/pagination';
 	import {Progressbar} from '@agnos-ui/svelte-bootstrap/components/progressbar';
 	import {Rating} from '@agnos-ui/svelte-bootstrap/components/rating';
-	import {Select} from '@agnos-ui/svelte-bootstrap/components/select';
 	import {Slider} from '@agnos-ui/svelte-bootstrap/components/slider';
 	import {Toast} from '@agnos-ui/svelte-bootstrap/components/toast';
 	import {Tree, type TreeItem} from '@agnos-ui/svelte-bootstrap/components/tree';
@@ -83,10 +82,6 @@
 	<h2>Rating</h2>
 	<div class="my-3">
 		<Rating />
-	</div>
-	<h2>Select</h2>
-	<div class="my-3">
-		<Select items={['AgnosUI']} />
 	</div>
 	<h2>Slider</h2>
 	<div class="my-3">

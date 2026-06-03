@@ -108,6 +108,7 @@ const defaultConfigItemExtraProps: AccordionItemExtraProps = {
 	header: undefined,
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
 const defaultPropsWithoutOverride: AccordionProps = {
 	...getCoreDefaultConfig(),
 	...defaultConfigExtraProps,

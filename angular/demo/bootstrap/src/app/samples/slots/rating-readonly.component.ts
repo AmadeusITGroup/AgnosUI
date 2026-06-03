@@ -8,7 +8,7 @@ import {ChangeDetectionStrategy, Component, Directive, TemplateRef, contentChild
 @Directive({selector: 'ng-template[appRatingStar]'})
 export class RatingReadonlyStarDirective {
 	public templateRef = inject(TemplateRef<StarContext>);
-	static ngTemplateContextGuard(_dir: RatingReadonlyStarDirective, context: unknown): context is StarContext {
+	static ngTemplateContextGuard(_dir: RatingReadonlyStarDirective, _context: unknown): _context is StarContext {
 		return true;
 	}
 }

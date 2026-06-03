@@ -33,7 +33,7 @@ import {createRating} from './rating.gen';
 @Directive({selector: 'ng-template[auRatingStar]'})
 export class RatingStarDirective {
 	public templateRef = inject(TemplateRef<StarContext>);
-	static ngTemplateContextGuard(_dir: RatingStarDirective, context: unknown): context is StarContext {
+	static ngTemplateContextGuard(_dir: RatingStarDirective, _context: unknown): _context is StarContext {
 		return true;
 	}
 }

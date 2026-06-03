@@ -73,6 +73,7 @@ const configValidator: ConfigValidator<AlertExtraProps> = {
  * @returns the default Alert config
  */
 export function getAlertDefaultConfig(): AlertProps {
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
 	return {...getCoreDefaultConfig(), ...defaultConfigExtraProps, ...coreOverride} as any;
 }
 

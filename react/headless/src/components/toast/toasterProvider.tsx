@@ -4,20 +4,19 @@ import {Toaster as CoreToaster} from '@agnos-ui/core/components/toast';
 import {findChangedProperties} from '@agnos-ui/core/utils/stores';
 import {useObservable} from '../../generated';
 import type {PropsWithChildren} from 'react';
-import {createContext, useCallback, useContext, useMemo, useRef} from 'react';
+import {createContext, useCallback, useContext, useEffect, useMemo, useRef} from 'react';
 
 /**
  * Custom hook to create a toaster.
  * @param options - Optional toaster properties.
  * @returns An object containing toaster methods and properties.
  */
-export const useCreateToaster = <Props extends Partial<ToastProps>>(options?: Partial<ToasterProps>) => {
+export const useCreateToaster = <Props extends Partial<ToastProps>>(options: Partial<ToasterProps> = {}) => {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const toaster = useMemo(() => new CoreToaster<Props>(options), []);
-	options = options ?? {};
 
 	const previousOptions = useRef(options);
-	useMemo(() => {
+	useEffect(() => {
 		const changedOptions = findChangedProperties(previousOptions.current, options);
 		previousOptions.current = options;
 		if (changedOptions) {

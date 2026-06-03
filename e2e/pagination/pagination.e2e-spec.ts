@@ -81,6 +81,7 @@ test.describe.parallel(`Pagination tests`, () => {
 				hrefsNavigation: {first: '#', previous: '#', next: '#', last: '#'},
 				pages: ['1', '2', '3', '4', '5(current)', '6'],
 			});
+		// eslint-disable-next-line playwright/prefer-locator
 		await paginationWithBoundariesPO.locatorNthPage(2).click();
 		await expect
 			.poll(() => paginationWithBoundariesPO.state())

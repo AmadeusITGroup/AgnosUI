@@ -4,7 +4,6 @@ import type {ModalProps} from './components/modal/modal';
 import type {AlertProps} from './components/alert/alert';
 import type {PaginationProps} from './components/pagination/pagination';
 import type {RatingProps} from './components/rating/rating';
-import type {SelectProps} from './components/select/select';
 import type {AccordionProps} from './components/accordion/accordion';
 import type {ProgressbarProps} from './components/progressbar/progressbar';
 import {identity} from './utils/func';
@@ -114,10 +113,6 @@ export type WidgetsConfig = {
 	 * the rating widget config
 	 */
 	rating: RatingProps;
-	/**
-	 * the select widget config
-	 */
-	select: SelectProps<any>;
 	/**
 	 * the modal widget config
 	 */

@@ -23,7 +23,7 @@ import {createAccordion} from './accordion.gen';
 export class AccordionBodyDirective {
 	public templateRef = inject(TemplateRef<AccordionItemContext>);
 
-	static ngTemplateContextGuard(_dir: AccordionBodyDirective, context: unknown): context is AccordionItemContext {
+	static ngTemplateContextGuard(_dir: AccordionBodyDirective, _context: unknown): _context is AccordionItemContext {
 		return true;
 	}
 }
@@ -37,7 +37,7 @@ export class AccordionBodyDirective {
 export class AccordionHeaderDirective {
 	public templateRef = inject(TemplateRef<AccordionItemContext>);
 
-	static ngTemplateContextGuard(_dir: AccordionHeaderDirective, context: unknown): context is AccordionItemContext {
+	static ngTemplateContextGuard(_dir: AccordionHeaderDirective, _context: unknown): _context is AccordionItemContext {
 		return true;
 	}
 }
@@ -52,7 +52,7 @@ export class AccordionHeaderDirective {
 export class AccordionItemStructureDirective {
 	public templateRef = inject(TemplateRef<AccordionItemContext>);
 
-	static ngTemplateContextGuard(_dir: AccordionItemStructureDirective, context: unknown): context is AccordionItemContext {
+	static ngTemplateContextGuard(_dir: AccordionItemStructureDirective, _context: unknown): _context is AccordionItemContext {
 		return true;
 	}
 }

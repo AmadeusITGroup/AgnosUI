@@ -55,19 +55,6 @@ export {createRating, getRatingDefaultConfig} from './components/rating';
 export * from './components/rating';
 
 export type {
-	SelectContext,
-	SelectItemContext,
-	SelectProps,
-	SelectState,
-	SelectWidget,
-	ItemContext,
-	SelectApi,
-	SelectDirectives,
-} from './components/select';
-export {createSelect, getSelectDefaultConfig} from './components/select';
-export * from './components/select';
-
-export type {
 	SliderContext,
 	SliderProps,
 	SliderSlotHandleContext,

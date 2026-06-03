@@ -3,7 +3,6 @@ import {NavManagerLinePO, NavManagerPO} from '../demo-po/navmanager.po';
 import {expect, test} from '../fixture';
 
 for (const sample of ['navmanager', 'navmanagerwithselector']) {
-	// eslint-disable-next-line playwright/valid-title
 	test.describe(sample, () => {
 		test.beforeEach(async ({page}) => {
 			await page.goto(`#/navmanager/${sample}`);
@@ -35,7 +34,6 @@ for (const sample of ['navmanager', 'navmanagerwithselector']) {
 		];
 
 		for (const {name, backwardKey, forwardKey, getLocator, keyPresses} of useCases) {
-			// eslint-disable-next-line playwright/valid-title
 			test(name, async ({page, browserName}) => {
 				const navManagerPO = new NavManagerPO(page);
 				const navManagerLine = new NavManagerLinePO(getLocator(navManagerPO));

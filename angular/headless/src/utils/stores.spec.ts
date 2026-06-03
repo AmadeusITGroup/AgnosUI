@@ -55,7 +55,7 @@ describe('toAngularSignals', () => {
 
 	it('[toAngularSignal] subscribes and unsubscribes outside Angular zone', () => {
 		const ngZone = TestBed.inject(NgZone);
-		const tansuStore = readable(0 as number, {
+		const tansuStore = readable<number>(0, {
 			onUse: createZoneCheckFn('onUse', (set) => {
 				set(1);
 				return createZoneCheckFn('destroy', () => {});

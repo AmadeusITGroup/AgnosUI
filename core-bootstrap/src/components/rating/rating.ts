@@ -41,6 +41,7 @@ const defaultConfigExtraProps: RatingExtraProps = {
  * @returns the default Rating config
  */
 export function getRatingDefaultConfig(): RatingProps {
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
 	return {...getCoreDefaultConfig(), ...defaultConfigExtraProps} as any;
 }
 

@@ -86,6 +86,7 @@ const configValidator: ConfigValidator<ProgressbarExtraProps> = {
  * @returns the default Progressbar config
  */
 export function getProgressbarDefaultConfig(): ProgressbarProps {
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
 	return {...getCoreDefaultConfig(), ...defaultConfigExtraProps} as any;
 }
 

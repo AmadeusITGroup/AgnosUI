@@ -690,7 +690,7 @@ describe('directive', () => {
 			const myCustomProp2$ = writable('value2');
 			const myCustomProp3$ = writable('value3');
 			const myCustomProp4$ = writable('value4');
-			const myCustomProp5$ = writable('value5' as string | null);
+			const myCustomProp5$ = writable('value5');
 
 			const directive = createAttributesDirective(() => ({
 				styles: {
@@ -702,7 +702,7 @@ describe('directive', () => {
 				},
 			}));
 
-			myCustomProp5$.set(null);
+			myCustomProp5$.set(null as unknown as string);
 			expect(directiveAttributes(directive)).toStrictEqual({
 				style: '--my-custom-prop-1: value1;--myCustom-prop-2: value2;--my\\ Custom\\ Prop3: value3;--my\\:custom\\;Prop4: value4;',
 			});

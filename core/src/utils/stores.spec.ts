@@ -88,8 +88,8 @@ describe(`Stores service`, () => {
 
 	describe('mergeConfigStores', () => {
 		test('Basic functionalities', () => {
-			const store1 = {a: writable(undefined as number | undefined), b: writable(1 as number | undefined)};
-			const store2 = {a: writable(2 as number | undefined), b: writable(undefined as number | undefined)};
+			const store1 = {a: writable(undefined as number | undefined), b: writable<number | undefined>(1)};
+			const store2 = {a: writable(2), b: writable<number | undefined>(undefined)};
 			const merged = mergeConfigStores(['a', 'b'], store1, store2);
 			const aValues: (number | undefined)[] = [];
 			const bValues: (number | undefined)[] = [];
@@ -139,8 +139,8 @@ describe(`Stores service`, () => {
 			const spyErrorLog = vi.spyOn(console, 'error').mockImplementation(() => {});
 			const storeValues: number[] = [];
 			const propValues: (number | undefined)[] = [];
-			const config$ = writable(9 as undefined | number);
-			const prop$ = writable(2 as undefined | number);
+			const config$ = writable<number | undefined>(9);
+			const prop$ = writable<number | undefined>(2);
 			const store$ = writableWithDefault(
 				0,
 				config$,
@@ -189,19 +189,19 @@ describe(`Stores service`, () => {
 
 		test(`Provided prop store with custom set`, () => {
 			const storeValues: number[] = [];
-			const config$ = writable(20 as number | undefined);
+			const config$ = writable<number | undefined>(20);
 			const refValues: (number | undefined)[] = [];
-			const refValue$ = writable(0 as number | undefined);
+			const refValue$ = writable<number | undefined>(0);
 			const prop$: WritableSignal<number | undefined> = asWritable(
 				computed(() => {
 					const refValue = refValue$();
 					return refValue !== undefined ? refValue + 1 : undefined;
 				}),
 				{
-					set(newValue: number | undefined) {
+					set(newValue: number | undefined): void {
 						refValue$.set(newValue !== undefined ? newValue - 1 : undefined);
 					},
-					update(updater: Updater<number | undefined>) {
+					update(updater: Updater<number | undefined>): void {
 						refValue$.update((curValue) => {
 							const res = updater(curValue !== undefined ? curValue + 1 : undefined);
 							return res !== undefined ? res - 1 : undefined;
@@ -292,7 +292,7 @@ describe(`Stores service`, () => {
 
 		test(`Basic functionalities with an object containing a store and a value`, () => {
 			const defConfig = {a: 1, b: 2};
-			const config = {a: writable(4 as number | undefined), b: 3};
+			const config = {a: writable<number | undefined>(4), b: 3};
 			const props = writablesWithDefault(defConfig, {config});
 			const a: number[] = [];
 			const b: number[] = [];
