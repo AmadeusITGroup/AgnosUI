@@ -24,6 +24,9 @@
 						"prerender": true,
 						"ssr": {
 							"entry": "server.ts"
+						},
+						"security": {
+							"allowedHosts": ["localhost"]
 						}
 					},
 					"configurations": {
