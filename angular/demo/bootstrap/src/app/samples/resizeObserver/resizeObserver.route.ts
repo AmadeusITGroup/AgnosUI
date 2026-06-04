@@ -1,10 +1,9 @@
 import {AgnosUIAngularModule, createResizeObserver, toAngularSignal} from '@agnos-ui/angular-bootstrap';
 import {UseDirective} from '@agnos-ui/angular-headless';
-import {ChangeDetectionStrategy, Component, computed, signal} from '@angular/core';
+import {Component, computed, signal} from '@angular/core';
 
 @Component({
 	imports: [UseDirective, AgnosUIAngularModule],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
 		<div class="demo-resize-observer">
 			<label for="resizable">Resizable textarea:</label>

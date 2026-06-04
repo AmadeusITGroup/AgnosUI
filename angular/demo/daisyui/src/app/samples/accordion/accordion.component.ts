@@ -1,6 +1,6 @@
 import type {AccordionWidget} from '@agnos-ui/angular-headless';
 import {BaseWidgetDirective, UseDirective, auBooleanAttribute, callWidgetFactory, createAccordion} from '@agnos-ui/angular-headless';
-import {ChangeDetectionStrategy, Component, input, output} from '@angular/core';
+import {Component, input, output} from '@angular/core';
 
 @Component({
 	selector: 'app-accordion',
@@ -8,7 +8,6 @@ import {ChangeDetectionStrategy, Component, input, output} from '@angular/core';
 	template: ` <div class="flex flex-col gap-2" [auUse]="directives.accordionDirective">
 		<ng-content />
 	</div>`,
-	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccordionComponent extends BaseWidgetDirective<AccordionWidget> {
 	readonly closeOthers = input(undefined, {transform: auBooleanAttribute});

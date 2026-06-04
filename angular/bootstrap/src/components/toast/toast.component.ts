@@ -8,7 +8,7 @@ import {
 	auBooleanAttribute,
 	auNumberAttribute,
 } from '@agnos-ui/angular-headless';
-import {ChangeDetectionStrategy, Component, Directive, TemplateRef, inject, input, output, viewChild, contentChild} from '@angular/core';
+import {Component, Directive, TemplateRef, inject, input, output, viewChild, contentChild} from '@angular/core';
 import {callWidgetFactory} from '../../config';
 
 import type {ToastContext, ToastWidget} from './toast.gen';
@@ -50,7 +50,6 @@ export class ToastHeaderDirective {
 	}
 }
 @Component({
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [SlotDirective, ToastStructureDirective, UseDirective],
 	template: ` <ng-template auToastStructure #structure let-state="state" let-api="api" let-directives="directives">
 		@if (state.header()) {
@@ -85,7 +84,6 @@ export const toastDefaultSlotStructure: SlotContent<ToastContext> = new Componen
  */
 @Component({
 	selector: '[auToast]',
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [SlotDirective, UseMultiDirective],
 	template: ` <ng-template #content>
 			<ng-content />

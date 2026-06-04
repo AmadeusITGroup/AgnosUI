@@ -1,5 +1,5 @@
 import {createSimpleClassTransition, createTransition, UseDirective} from '@agnos-ui/angular-headless';
-import {ChangeDetectionStrategy, Component, input, output} from '@angular/core';
+import {Component, input, output} from '@angular/core';
 /**
  * You can create easily your own collapse component with the help of the `createTransition` function
  * you will be able to plug the transition event of DaisyUI to your component.
@@ -9,7 +9,6 @@ import {ChangeDetectionStrategy, Component, input, output} from '@angular/core';
 @Component({
 	selector: 'app-collapse',
 	imports: [UseDirective],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
 		<div
 			tabindex="0"

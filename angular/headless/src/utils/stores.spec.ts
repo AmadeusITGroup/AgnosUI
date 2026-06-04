@@ -1,5 +1,5 @@
 import {readable, writable} from '@amadeus-it-group/tansu';
-import {ChangeDetectionStrategy, Component, NgZone, effect} from '@angular/core';
+import {Component, NgZone, effect} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 import {beforeEach, describe, expect, it} from 'vitest';
 import {toAngularSignal, toAngularWritableSignal} from './stores';
@@ -80,7 +80,6 @@ describe('toAngularSignals', () => {
 
 	@Component({
 		selector: '[auMyTestWithoutEffect]',
-		changeDetection: ChangeDetectionStrategy.OnPush,
 		template: `{{ mySignal() }}`,
 	})
 	class MyTestWithoutEffectComponent {
@@ -91,7 +90,6 @@ describe('toAngularSignals', () => {
 
 	@Component({
 		selector: '[auMyTestWithEffect]',
-		changeDetection: ChangeDetectionStrategy.OnPush,
 		template: `{{ mySignal() }}`,
 	})
 	class MyTestWithEffectComponent {

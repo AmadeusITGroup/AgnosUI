@@ -6,12 +6,11 @@ import {
 	createProgressbar,
 	UseDirective,
 } from '@agnos-ui/angular-headless';
-import {ChangeDetectionStrategy, Component, input} from '@angular/core';
+import {Component, input} from '@angular/core';
 
 @Component({
 	selector: 'app-progressbar',
 	imports: [UseDirective],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `<progress
 		class="progress"
 		[class]="state.className()"

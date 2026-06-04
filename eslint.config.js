@@ -186,12 +186,6 @@ export default defineConfig(
 		},
 	},
 	{
-		files: ['angular/**/*.component.ts', 'angular/**/*.directive.ts'],
-		rules: {
-			'@angular-eslint/prefer-on-push-component-change-detection': 'error',
-		},
-	},
-	{
 		files: ['angular/headless/src/**/*.ts'],
 		rules: {
 			'@angular-eslint/directive-selector': [

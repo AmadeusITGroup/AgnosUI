@@ -1,5 +1,5 @@
 import {ToasterComponent, ToasterService, toastPositions} from '@agnos-ui/angular-bootstrap';
-import {ChangeDetectionStrategy, Component, effect, inject, signal} from '@angular/core';
+import {Component, effect, inject, signal} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
 @Component({
@@ -54,7 +54,6 @@ import {FormsModule} from '@angular/forms';
 			[auCloseAll]="closeAll()"
 		></div>
 	`,
-	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class ToasterExampleComponent {
 	readonly toasterService = inject(ToasterService);

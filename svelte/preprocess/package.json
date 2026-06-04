@@ -16,7 +16,6 @@
 	},
 	"scripts": {
 		"build": "wireit",
-		"check": "wireit",
 		"tdd": "vitest",
 		"tdd:ui": "vitest --ui",
 		"test": "tsc -p test/tsconfig.json && vitest run",

@@ -1,5 +1,5 @@
 import {AgnosUIAngularModule, browserDirective, createFloatingUI, toAngularSignal} from '@agnos-ui/angular-bootstrap';
-import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
+import {Component, signal} from '@angular/core';
 import {autoPlacement, hide, offset, shift} from '@floating-ui/dom';
 
 const scrollToMiddle = browserDirective((element) => {
@@ -8,9 +8,8 @@ const scrollToMiddle = browserDirective((element) => {
 
 @Component({
 	imports: [AgnosUIAngularModule],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `<div class="position-relative overflow-auto border border-primary-subtle demo-floatingui" [auUse]="scrollToMiddle">
-		<button [auUse]="floatingUI.directives.referenceDirective" type="button" class="btn btn-primary" (click)="toggleDisplayPopover()">
+		<button [auUse]="floatingUI.directives.referenceDirective" type="button" class="btn btn-primary" (click)="displayPopover.update((val) => !val)">
 			Toggle popover
 		</button>
 		@if (displayPopover()) {
@@ -30,9 +29,6 @@ const scrollToMiddle = browserDirective((element) => {
 })
 export default class FloatingUIComponent {
 	readonly displayPopover = signal(true);
-	toggleDisplayPopover() {
-		this.displayPopover.update((val) => !val);
-	}
 
 	readonly floatingUI = createFloatingUI({
 		props: {

@@ -3,7 +3,7 @@ import {stateStores, writablesForProps} from '@agnos-ui/core/utils/stores';
 import {typeFunction, typeString} from '@agnos-ui/core/utils/writables';
 
 import {computed, writable} from '@amadeus-it-group/tansu';
-import {ChangeDetectionStrategy, Component, input, NgZone, output} from '@angular/core';
+import {Component, input, NgZone, output} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 import {beforeEach, describe, expect, it} from 'vitest';
 import {UseDirective} from './directive';
@@ -80,7 +80,6 @@ describe('callWidgetFactoryWithConfig', () => {
 			template: `<button type="button" [auUse]="directives.myDirective" (click)="onClick()">
 				{{ state.derivedValue() }} {{ state.counter() }}
 			</button>`,
-			changeDetection: ChangeDetectionStrategy.OnPush,
 		})
 		class MyWidgetComponent extends BaseWidgetDirective<MyWidget> {
 			readonly myAction = output({alias: 'auMyAction'});
@@ -216,7 +215,6 @@ describe('callWidgetFactoryWithConfig', () => {
 
 		@Component({
 			template: `{{ state.myValue() }}`,
-			changeDetection: ChangeDetectionStrategy.OnPush,
 			selector: '[auTestMyWidget]',
 		})
 		class MyWidgetComponent extends BaseWidgetDirective<MyWidget> {
@@ -229,7 +227,6 @@ describe('callWidgetFactoryWithConfig', () => {
 		@Component({
 			imports: [MyWidgetComponent],
 			template: `<div auTestMyWidget [auMyValue]="value"></div>`,
-			changeDetection: ChangeDetectionStrategy.OnPush,
 		})
 		class MyTestComponent {
 			value = 'myInitValue';

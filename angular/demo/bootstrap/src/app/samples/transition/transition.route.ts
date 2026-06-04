@@ -1,12 +1,11 @@
-import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
+import {Component, signal} from '@angular/core';
 import {InnerComponent} from './innerComponent.component';
 
 @Component({
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [InnerComponent],
 	template: `
 		<div class="demo-transition mb-3">
-			<button id="toggle-component" class="btn btn-outline-secondary" (click)="toggleShow()">Toggle component</button>
+			<button id="toggle-component" class="btn btn-outline-secondary" (click)="showComponent.update((val) => !val)">Toggle component</button>
 			@if (showComponent()) {
 				<app-transition-inner />
 			}
@@ -15,7 +14,4 @@ import {InnerComponent} from './innerComponent.component';
 })
 export default class TransitionComponent {
 	readonly showComponent = signal(true);
-	toggleShow() {
-		this.showComponent.update((val) => !val);
-	}
 }

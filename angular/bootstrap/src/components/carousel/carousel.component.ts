@@ -12,7 +12,7 @@ import {
 import type {CarouselContext, CarouselSlideContext, CarouselWidget, CarouselProps} from './carousel.gen';
 import {createCarousel} from './carousel.gen';
 import type {InputSignal} from '@angular/core';
-import {ChangeDetectionStrategy, Component, contentChild, Directive, inject, input, TemplateRef, viewChild} from '@angular/core';
+import {Component, contentChild, Directive, inject, input, TemplateRef, viewChild} from '@angular/core';
 import {callWidgetFactory} from '../../config';
 import type {EmblaPluginType} from 'embla-carousel';
 
@@ -63,7 +63,6 @@ export class CarouselSlideDirective<SlideData extends {id: string}> {
 
 @Component({
 	imports: [SlotDirective, CarouselStructureDirective, CarouselNavigationDirective, UseDirective],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
 		<ng-template auCarouselNavigation #navigation let-state="state" let-api="api" let-directives="directives">
 			@if (state.showNavigationArrows()) {
@@ -131,7 +130,6 @@ export const carouselDefaultSlotNavigation: SlotContent<CarouselContext<any>> = 
  */
 @Component({
 	selector: '[auCarousel]',
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [SlotDirective],
 	template: ` <ng-template [auSlot]="state.structure()" [auSlotProps]="{state, api, directives}" /> `,
 })

@@ -7,18 +7,7 @@ import {
 	auNumberAttribute,
 	useDirectiveForHost,
 } from '@agnos-ui/angular-headless';
-import {
-	ChangeDetectionStrategy,
-	Component,
-	Directive,
-	TemplateRef,
-	ViewEncapsulation,
-	forwardRef,
-	inject,
-	input,
-	output,
-	contentChild,
-} from '@angular/core';
+import {Component, Directive, TemplateRef, ViewEncapsulation, forwardRef, inject, input, output, contentChild} from '@angular/core';
 import type {ControlValueAccessor} from '@angular/forms';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {callWidgetFactory} from '../../config';
@@ -45,7 +34,6 @@ export class RatingStarDirective {
 @Component({
 	selector: '[auRating]',
 	imports: [UseDirective, SlotDirective],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	encapsulation: ViewEncapsulation.None,
 	host: {
 		class: 'd-inline-flex',

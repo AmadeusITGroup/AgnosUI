@@ -8,7 +8,7 @@ import {
 	createSimpleClassTransition,
 } from '@agnos-ui/angular-headless';
 
-import {ChangeDetectionStrategy, Component, inject, input, model, output} from '@angular/core';
+import {Component, inject, input, model, output} from '@angular/core';
 import closeIcon from '@agnos-ui/common/samples/common/close_icon.svg';
 import {DomSanitizer} from '@angular/platform-browser';
 
@@ -30,7 +30,6 @@ import {DomSanitizer} from '@angular/platform-browser';
 			</div>
 		}
 	`,
-	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AlertComponent extends BaseWidgetDirective<AlertWidget> {
 	readonly closeIcon = inject(DomSanitizer).bypassSecurityTrustHtml(closeIcon);

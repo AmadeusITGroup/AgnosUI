@@ -1,5 +1,8 @@
 {
-	"extends": "../tsconfig.json",
+	"extends": "../tsconfig.build.json",
 	"include": ["src"],
-	"exclude": ["**/*.spec.ts", "**/__mocks__/**", "**/*.spec-utils.ts"]
+	"exclude": ["**/*.spec.ts", "**/__mocks__/**", "**/*.spec-utils.ts"],
+	"compilerOptions": {
+		"rootDir": "src"
+	}
 }

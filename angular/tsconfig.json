@@ -3,12 +3,8 @@
 	"extends": "../tsconfig.json",
 	"compileOnSave": false,
 	"compilerOptions": {
-		"outDir": "./dist/out-tsc",
-		"noEmit": false,
 		"noImplicitOverride": true,
 		"noPropertyAccessFromIndexSignature": true,
-		"sourceMap": true,
-		"declaration": false,
 		"experimentalDecorators": true,
 		"importHelpers": true,
 		"lib": ["es2022", "dom", "dom.iterable"],

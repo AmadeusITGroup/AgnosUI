@@ -1,6 +1,6 @@
 import type {RatingWidget, SlotContent, StarContext} from '@agnos-ui/angular-bootstrap';
 import {BaseWidgetDirective, SlotDirective, callWidgetFactory, createRating} from '@agnos-ui/angular-bootstrap';
-import {ChangeDetectionStrategy, Component, Directive, TemplateRef, contentChild, effect, inject, input, numberAttribute} from '@angular/core';
+import {Component, Directive, TemplateRef, contentChild, effect, inject, input, numberAttribute} from '@angular/core';
 
 /**
  * This directive allows the component to retrieve the slot template.
@@ -20,7 +20,6 @@ export class RatingReadonlyStarDirective {
 @Component({
 	selector: 'app-rating-readonly',
 	imports: [SlotDirective],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
 		<div class="d-inline-flex au-rating" [class]="state.className()">
 			@for (item of state.stars(); track item) {

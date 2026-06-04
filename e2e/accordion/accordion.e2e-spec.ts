@@ -1,7 +1,7 @@
 import {expect, test} from '../fixture';
 import {AccordionPO} from '@agnos-ui/page-objects';
 import {AccordionTogglePanels} from '../demo-po/accordion.po';
-import type {PromiseValue} from 'e2e/utils';
+import type {PromiseValue} from '../utils';
 
 type State = PromiseValue<ReturnType<AccordionPO['state']>>;
 

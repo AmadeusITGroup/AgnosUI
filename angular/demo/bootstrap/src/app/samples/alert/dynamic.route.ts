@@ -1,20 +1,22 @@
 import {AlertComponent} from '@agnos-ui/angular-bootstrap';
 import type {AlertProps} from '@agnos-ui/angular-bootstrap';
-import {Component, inject, Injectable} from '@angular/core';
+import {Component, inject, Injectable, signal} from '@angular/core';
 
 @Injectable({providedIn: 'root'})
 class AlertContainerService {
-	alerts: Partial<AlertProps>[] = [];
+	private readonly _alerts = signal<Partial<AlertProps>[]>([]);
+	readonly alerts = this._alerts.asReadonly();
+
 	add(alert: Partial<AlertProps>) {
-		this.alerts.push(alert);
+		this._alerts.update((alerts) => [...alerts, alert]);
 	}
 
 	remove(type: Partial<AlertProps>) {
-		this.alerts = this.alerts.filter((al) => al !== type);
+		this._alerts.update((alerts) => alerts.filter((al) => al !== type));
 	}
 
 	clear() {
-		this.alerts = [];
+		this._alerts.set([]);
 	}
 }
 
@@ -22,7 +24,7 @@ class AlertContainerService {
 	selector: 'app-alert-child',
 	imports: [AlertComponent],
 	template: `
-		@for (alert of alertContainerService.alerts; track alert) {
+		@for (alert of alertContainerService.alerts(); track alert) {
 			<au-component
 				auAlert
 				[auAnimated]="alert.animated"
@@ -30,17 +32,13 @@ class AlertContainerService {
 				[auDismissible]="alert.dismissible"
 				[auType]="alert.type"
 				[auChildren]="alert.children"
-				(auHidden)="removeAlert(alert)"
+				(auHidden)="alertContainerService.remove(alert)"
 			/>
 		}
 	`,
 })
 export class ChildComponent {
 	readonly alertContainerService = inject(AlertContainerService);
-
-	removeAlert(type: Partial<AlertProps>) {
-		this.alertContainerService.remove(type);
-	}
 }
 
 @Component({
@@ -50,7 +48,7 @@ export class ChildComponent {
 		<button class="btn btn-primary addInfo me-1" (click)="addInfo()">Add info</button>
 		<button class="btn btn-primary addWarning me-1" (click)="addWarning()">Add warning</button>
 		<br />
-		<div class="alertCount mb-3">Alerts in the service: {{ alertContainerService.alerts.length }}</div>
+		<div class="alertCount mb-3">Alerts in the service: {{ alertContainerService.alerts().length }}</div>
 		<app-alert-child />
 	`,
 })

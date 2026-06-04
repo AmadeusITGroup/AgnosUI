@@ -6,12 +6,10 @@ import {
 	callWidgetFactory,
 	createPagination,
 } from '@agnos-ui/angular-headless';
-import {ChangeDetectionStrategy, Component, input, model} from '@angular/core';
+import {Component, input, model} from '@angular/core';
 
 @Component({
 	selector: 'app-pagination',
-
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	templateUrl: './pagination.component.html',
 })
 export class PaginationComponent extends BaseWidgetDirective<PaginationWidget> {

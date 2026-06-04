@@ -1,6 +1,6 @@
 import type {ModalWidget} from '@agnos-ui/angular-headless';
 import {BaseWidgetDirective, UseDirective, auBooleanAttribute, callWidgetFactory, createModal} from '@agnos-ui/angular-headless';
-import {ChangeDetectionStrategy, Component, input, model} from '@angular/core';
+import {Component, input, model} from '@angular/core';
 
 @Component({
 	selector: 'app-modal',
@@ -20,7 +20,6 @@ import {ChangeDetectionStrategy, Component, input, model} from '@angular/core';
 			}
 		</dialog>
 	`,
-	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalComponent extends BaseWidgetDirective<ModalWidget> {
 	readonly closeOnOutsideClick = input(undefined, {transform: auBooleanAttribute});

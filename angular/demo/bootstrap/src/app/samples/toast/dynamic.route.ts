@@ -5,17 +5,14 @@ import {FormsModule} from '@angular/forms';
 
 @Injectable({providedIn: 'root'})
 class ToastService {
-	toastMap: Map<string, Partial<ToastProps>[]> = new Map(Object.values(toastPositions).map((entry) => [entry, []]));
+	readonly toastMap = new Map(Object.values(toastPositions).map((entry) => [entry, signal<Partial<ToastProps>[]>([])]));
 
 	add(toast: Partial<ToastProps>) {
-		this.toastMap.get(toast.className!)?.push(toast);
+		this.toastMap.get(toast.className!)?.update((toasts) => [...toasts, toast]);
 	}
 
 	remove(toast: Partial<ToastProps>) {
-		this.toastMap.set(
-			toast.className!,
-			this.toastMap.get(toast.className!)!.filter((t) => t !== toast),
-		);
+		this.toastMap.get(toast.className!)?.update((toasts) => toasts.filter((t) => t !== toast));
 	}
 }
 
@@ -25,8 +22,13 @@ class ToastService {
 	template: ` <div class="d-flex position-relative mt-2 w-100" aria-live="polite" aria-atomic="true" style="height: 500px; background-color: gray;">
 		@for (position of toastContainerService.toastMap.keys(); track position) {
 			<div class="toast-container p-3 {{ position }}">
-				@for (toast of toastContainerService.toastMap.get(position); track toast) {
-					<au-component auToast (auHidden)="removeToast(toast)" auHeader="I am header" [auAutoHide]="toast.autoHide" [auDelay]="toast.delay"
+				@for (toast of toastContainerService.toastMap.get(position)!(); track toast) {
+					<au-component
+						auToast
+						(auHidden)="toastContainerService.remove(toast)"
+						auHeader="I am header"
+						[auAutoHide]="toast.autoHide"
+						[auDelay]="toast.delay"
 						>Simple toast</au-component
 					>
 				}
@@ -36,10 +38,6 @@ class ToastService {
 })
 class ToastContainerComponent {
 	readonly toastContainerService = inject(ToastService);
-
-	removeToast(toast: Partial<ToastProps>) {
-		this.toastContainerService.remove(toast);
-	}
 }
 
 @Component({

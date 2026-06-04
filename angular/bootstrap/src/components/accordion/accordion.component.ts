@@ -9,7 +9,7 @@ import {
 } from '@agnos-ui/angular-headless';
 import {NgTemplateOutlet} from '@angular/common';
 import type {AfterViewInit} from '@angular/core';
-import {ChangeDetectionStrategy, Component, contentChild, Directive, inject, input, output, TemplateRef, viewChild} from '@angular/core';
+import {Component, contentChild, Directive, inject, input, output, TemplateRef, viewChild} from '@angular/core';
 import {callWidgetFactory} from '../../config';
 import type {AccordionItemContext, AccordionItemWidget, AccordionWidget} from './accordion.gen';
 import {createAccordion} from './accordion.gen';
@@ -58,7 +58,6 @@ export class AccordionItemStructureDirective {
 }
 
 @Component({
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [UseDirective, SlotDirective, NgTemplateOutlet, AccordionItemStructureDirective],
 	template: `
 		<ng-template auAccordionItemStructure #structure let-state="state" let-api="api" let-directives="directives">
@@ -154,7 +153,6 @@ export const accordionItemDefaultSlotStructure: SlotContent<AccordionItemContext
 @Component({
 	selector: '[auAccordionItem]',
 	exportAs: 'auAccordionItem',
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	host: {
 		class: 'accordion-item',
 	},

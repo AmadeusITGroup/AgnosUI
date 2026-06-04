@@ -1,9 +1,8 @@
 import type {SliderHandle, SliderWidget} from '@agnos-ui/angular-bootstrap';
 import {SlotComponent, UseDirective} from '@agnos-ui/angular-bootstrap';
-import {ChangeDetectionStrategy, Component, input, ViewEncapsulation} from '@angular/core';
+import {Component, input, ViewEncapsulation} from '@angular/core';
 
 @Component({
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	host: {
 		style: 'display: contents;',
 	},

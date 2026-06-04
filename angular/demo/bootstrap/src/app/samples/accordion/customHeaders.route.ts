@@ -51,7 +51,7 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 							>
 								Toggle second
 							</button>
-							<button type="button" class="btn btn-sm btn-outline-secondary" (click)="toggleThirdDisabled()">
+							<button type="button" class="btn btn-sm btn-outline-secondary" (click)="thirdDisabled.update((val) => !val)">
 								{{ thirdDisabled() ? 'En' : 'Dis' }}able third
 							</button>
 							<button type="button" class="btn btn-sm btn-outline-danger" (click)="accordion.api.collapseAll()">Collapse all</button>
@@ -101,8 +101,5 @@ import BODY from '@agnos-ui/common/samples/accordion/body.txt';
 })
 export default class AccordionComponent {
 	readonly thirdDisabled = signal(false);
-	toggleThirdDisabled() {
-		this.thirdDisabled.update((val) => !val);
-	}
 	readonly BODY = BODY;
 }

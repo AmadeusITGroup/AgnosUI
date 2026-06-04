@@ -104,7 +104,7 @@ const compareName = ({name: a}: {name: string}, {name: b}: {name: string}) => co
 
 const spaceRegExp = /\s+/;
 const excludeClassRegExp = /^(s|svelte|ng)-/;
-const excludeAttrRegExp = /^(ng-|_ng|ngh$|au|app|data-svelte(kit)?-)/;
+const excludeAttrRegExp = /^(ng-|_ng|ngh$|au|app|data-svelte(kit)?-|jsaction)/;
 const attrExceptions = ['autocapitalize', 'autocomplete', 'autocorrect'];
 const booleanAttributes = new Set(['checked', 'disabled', 'inert', 'readonly']);
 

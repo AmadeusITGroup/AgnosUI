@@ -1,8 +1,7 @@
 import type {Source} from '@agnos-ui/common/samples/carousel/photo';
-import {Component, input, signal, ChangeDetectionStrategy} from '@angular/core';
+import {Component, input, signal} from '@angular/core';
 
 @Component({
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	// eslint-disable-next-line @angular-eslint/component-selector
 	selector: 'div[appGalleryImage]',
 	template: `

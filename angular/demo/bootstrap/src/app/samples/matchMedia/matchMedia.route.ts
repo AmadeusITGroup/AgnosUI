@@ -1,9 +1,8 @@
-import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {AlertComponent, toAngularSignal} from '@agnos-ui/angular-bootstrap';
 import {MatchMediaService} from './matchMedia.service';
 
 @Component({
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [AlertComponent],
 	template: `
 		<div class="mb-2">Resize the window to see the message below updated.</div>

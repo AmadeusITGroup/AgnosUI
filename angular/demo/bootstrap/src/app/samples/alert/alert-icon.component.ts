@@ -5,11 +5,10 @@ import biInfoCircleFill from 'bootstrap-icons/icons/info-circle-fill.svg';
 import biLightbulb from 'bootstrap-icons/icons/lightbulb.svg';
 import type {AlertWidget} from '@agnos-ui/angular-bootstrap';
 import {SlotComponent, SlotDirective} from '@agnos-ui/angular-bootstrap';
-import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [SlotDirective],
 	selector: 'app-icon-structure',
 	host: {

@@ -10,18 +10,21 @@
 			"architect": {
 				"build": {
 					"builder": "@angular/build:ng-packagr",
-					"options": {
-						"project": "ng-package.json",
-						"tsConfig": "tsconfig.build.json"
-					}
+					"configurations": {
+						"production": {
+							"tsConfig": "tsconfig.build.json"
+						},
+						"development": {
+							"tsConfig": "tsconfig.json"
+						}
+					},
+					"defaultConfiguration": "production"
 				},
 				"test": {
 					"builder": "@angular/build:unit-test",
 					"options": {
-						"include": ["src/**/*.spec.ts"],
 						"providersFile": "test-providers.ts",
 						"setupFiles": ["setup-test.ts"],
-						"buildTarget": ":build",
 						"browsers": ["ChromiumHeadless"]
 					},
 					"configurations": {

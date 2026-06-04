@@ -1,4 +1,4 @@
-import type {AlertApi, AlertProps} from '@agnos-ui/react-bootstrap/components/alert';
+import type {AlertApi} from '@agnos-ui/react-bootstrap/components/alert';
 import {Alert} from '@agnos-ui/react-bootstrap/components/alert';
 import {useRef, useState} from 'react';
 import {AlertStatus} from '@agnos-ui/common/samples/alert/alert-status.enum';
@@ -9,7 +9,7 @@ const DefaultDemo = () => {
 	const [animatedOnInit, setAnimatedOnInit] = useState(true);
 	const [animated, setanimated] = useState(true);
 	const [dismissible, setDismissible] = useState(true);
-	const [type, setType] = useState(String(AlertStatus.success));
+	const [type, setType] = useState(AlertStatus.success);
 
 	return (
 		<>
@@ -23,7 +23,7 @@ const DefaultDemo = () => {
 					<label className="align-self-center me-3" htmlFor="typeSelect">
 						Alert type:{' '}
 					</label>
-					<select id="typeSelect" className="form-select w-auto" value={type} onChange={(e) => setType(e.target.value)}>
+					<select id="typeSelect" className="form-select w-auto" value={type} onChange={(e) => setType(e.target.value as AlertStatus)}>
 						{Object.entries(AlertStatus)
 							.map((entry) => {
 								return {
@@ -65,7 +65,7 @@ const DefaultDemo = () => {
 			<br />
 			<br />
 
-			<Alert ref={alertRef} animatedOnInit={animatedOnInit} animated={animated} dismissible={dismissible} type={type as AlertProps['type']}>
+			<Alert ref={alertRef} animatedOnInit={animatedOnInit} animated={animated} dismissible={dismissible} type={type}>
 				<h4 className="alert-heading">Well done!</h4>
 				<p>
 					Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing

@@ -1,6 +1,6 @@
 import type {SlotContent} from '@agnos-ui/angular-headless';
 import {BaseWidgetDirective, callWidgetFactory, ComponentTemplate, SlotDirective, UseDirective} from '@agnos-ui/angular-headless';
-import {ChangeDetectionStrategy, Component, contentChild, Directive, inject, input, output, TemplateRef, viewChild} from '@angular/core';
+import {Component, contentChild, Directive, inject, input, output, TemplateRef, viewChild} from '@angular/core';
 import type {TreeContext, TreeItem, NormalizedTreeItem, TreeSlotItemContext, TreeWidget} from './tree.gen';
 import {createTree} from './tree.gen';
 
@@ -18,7 +18,6 @@ export class TreeStructureDirective {
 }
 
 @Component({
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [UseDirective, TreeStructureDirective, SlotDirective],
 	template: `
 		<ng-template auTreeStructure #structure let-state="state" let-directives="directives" let-api="api">
@@ -57,7 +56,6 @@ export class TreeItemToggleDirective {
 }
 
 @Component({
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [UseDirective, TreeItemToggleDirective],
 	template: `
 		<ng-template auTreeItemToggle #toggle let-directives="directives" let-item="item">
@@ -96,7 +94,6 @@ export class TreeItemContentDirective {
 }
 
 @Component({
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [SlotDirective, TreeItemContentDirective],
 	template: `
 		<ng-template auTreeItemContent #treeItemContent let-state="state" let-directives="directives" let-item="item" let-api="api">
@@ -133,7 +130,6 @@ export class TreeItemDirective {
 }
 
 @Component({
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [UseDirective, SlotDirective, TreeItemDirective],
 	template: `
 		<ng-template auTreeItem #treeItem let-state="state" let-directives="directives" let-item="item" let-api="api">
@@ -169,7 +165,6 @@ export const treeDefaultSlotItem: SlotContent<TreeSlotItemContext> = new Compone
  * configurations and customizations through its inputs and outputs.
  */
 @Component({
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: '[auTree]',
 
 	imports: [SlotDirective],

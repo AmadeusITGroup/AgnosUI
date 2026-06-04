@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AgnosUIAngularModule, toAngularSignal} from '@agnos-ui/angular-bootstrap';
 import type {TransitionFn} from '@agnos-ui/core';
 import {createTransition} from '@agnos-ui/core';
@@ -15,7 +15,6 @@ const paramRemoveFromDom$ = writable(true);
 
 @Component({
 	selector: 'app-transition-inner',
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [AgnosUIAngularModule, FormsModule, CommonModule],
 	template: `
 		<div class="transition-inner">

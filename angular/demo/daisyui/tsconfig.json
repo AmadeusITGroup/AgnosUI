@@ -4,10 +4,10 @@
 	"compilerOptions": {
 		"outDir": "./dist/out-tsc",
 		"paths": {
-			"@agnos-ui/core": ["./core/src"],
-			"@agnos-ui/core/*": ["./core/src/*"],
-			"@agnos-ui/angular-headless": ["./angular/headless/src"],
-			"@agnos-ui/common/*": ["./common/*"]
+			"@agnos-ui/core": ["../../../core/src"],
+			"@agnos-ui/core/*": ["../../../core/src/*"],
+			"@agnos-ui/angular-headless": ["../../headless/src"],
+			"@agnos-ui/common/*": ["../../../common/*"]
 		}
 	}
 }

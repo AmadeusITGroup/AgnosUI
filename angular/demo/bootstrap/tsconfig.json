@@ -4,14 +4,14 @@
 	"compilerOptions": {
 		"outDir": "./dist/out-tsc",
 		"paths": {
-			"@agnos-ui/core": ["./core/src"],
-			"@agnos-ui/core/*": ["./core/src/*"],
-			"@agnos-ui/angular-headless": ["./angular/headless/src"],
-			"@agnos-ui/angular-bootstrap": ["./angular/bootstrap/src"],
-			"@agnos-ui/common/*": ["./common/*"],
-			"@agnos-ui/core-bootstrap": ["./core-bootstrap/src"],
-			"@agnos-ui/core-bootstrap/*": ["./core-bootstrap/src/*"],
-			"bootstrap-icons/icons/*": ["./node_modules/bootstrap-icons/icons/*"]
+			"@agnos-ui/core": ["../../../core/src"],
+			"@agnos-ui/core/*": ["../../../core/src/*"],
+			"@agnos-ui/angular-headless": ["../../headless/src"],
+			"@agnos-ui/angular-bootstrap": ["../../bootstrap/src"],
+			"@agnos-ui/common/*": ["../../../common/*"],
+			"@agnos-ui/core-bootstrap": ["../../../core-bootstrap/src"],
+			"@agnos-ui/core-bootstrap/*": ["../../../core-bootstrap/src/*"],
+			"bootstrap-icons/icons/*": ["../../../node_modules/bootstrap-icons/icons/*"]
 		}
 	}
 }

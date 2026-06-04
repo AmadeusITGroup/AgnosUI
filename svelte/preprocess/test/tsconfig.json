@@ -4,6 +4,7 @@
 	"files": ["test.spec.ts", "vite-env.d.ts"],
 	"compilerOptions": {
 		"noEmit": true,
-		"emitDeclarationOnly": false
+		"emitDeclarationOnly": false,
+		"types": ["node"]
 	}
 }

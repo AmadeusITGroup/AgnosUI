@@ -1,6 +1,6 @@
 import {expect, test} from '../fixture';
 import {FocusTrackPO} from '../demo-po/focustrack.po';
-import type {PromiseValue} from 'e2e/utils';
+import type {PromiseValue} from '../utils';
 
 type State = PromiseValue<ReturnType<FocusTrackPO['getState']>>;
 

@@ -6,7 +6,7 @@ import {
 	UseDirective,
 	type CarouselWidget,
 } from '@agnos-ui/angular-headless';
-import {Component, effect, inject, input, ChangeDetectionStrategy, linkedSignal, Directive, contentChild, TemplateRef} from '@angular/core';
+import {Component, effect, inject, input, linkedSignal, Directive, contentChild, TemplateRef} from '@angular/core';
 import AutoPlay from 'embla-carousel-autoplay';
 import previousSvg from '@agnos-ui/common/samples/carousel/previous.svg';
 import nextSvg from '@agnos-ui/common/samples/carousel/next.svg';
@@ -30,7 +30,6 @@ export class CarouselSlideDirective {
 }
 
 @Component({
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'app-carousel',
 	templateUrl: 'carousel.component.html',
 	imports: [UseDirective, NgTemplateOutlet],

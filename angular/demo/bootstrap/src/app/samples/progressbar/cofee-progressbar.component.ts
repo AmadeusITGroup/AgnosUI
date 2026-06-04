@@ -1,9 +1,7 @@
 import {type ProgressbarWidget, SlotComponent} from '@agnos-ui/angular-bootstrap';
-import {Component, ChangeDetectionStrategy} from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
-	changeDetection: ChangeDetectionStrategy.OnPush,
-
 	template: `
 		<div class="position-relative" style="height: 300px">
 			<div class="cup">

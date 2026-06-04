@@ -1,6 +1,5 @@
 import {BaseWidgetDirective, callWidgetFactory} from '@agnos-ui/angular-headless';
 import {
-	ChangeDetectionStrategy,
     Component,
     input
 } from '@angular/core';
@@ -13,7 +12,6 @@ import {create[componentName]} from './[componentNameLowerCase].gen';
  * configurations and customizations through its inputs and outputs.
  */
 @Component({
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: '[au[componentName]]',
 	template: ``,
 })

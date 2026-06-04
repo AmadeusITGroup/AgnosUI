@@ -1,5 +1,6 @@
 <script lang="ts">
 	import docsearch from '@docsearch/js';
+	// @ts-expect-error - no types available for docsearch/css
 	import '@docsearch/css';
 	import {routing} from '$lib/routing.svelte';
 

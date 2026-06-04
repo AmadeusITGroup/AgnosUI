@@ -1,6 +1,6 @@
 import {writable} from '@amadeus-it-group/tansu';
 import type {TemplateRef} from '@angular/core';
-import {ChangeDetectionStrategy, Component, Injectable, inject, input, viewChild} from '@angular/core';
+import {Component, Injectable, inject, input, viewChild} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 import {describe, expect, it} from 'vitest';
 import {injectWidgetsConfig, provideWidgetsConfig} from './config';
@@ -12,8 +12,6 @@ import {toAngularSignal} from './utils/stores';
 describe('slot directive', () => {
 	@Component({
 		selector: '[auTestSlotDirective]',
-
-		changeDetection: ChangeDetectionStrategy.OnPush,
 		imports: [SlotDirective],
 		template: '<ng-template [auSlot]="mySlot()" [auSlotProps]="mySlotProps()" />',
 	})
@@ -72,8 +70,6 @@ describe('slot directive', () => {
 	it('component', () => {
 		@Component({
 			selector: '[auTestSlotDirectiveComponentHello]',
-
-			changeDetection: ChangeDetectionStrategy.OnPush,
 			template: 'Hello {{myProp()}}!',
 		})
 		class HelloComponent {
@@ -82,8 +78,6 @@ describe('slot directive', () => {
 
 		@Component({
 			selector: '[auTestSlotDirectiveComponentGoodbye]',
-
-			changeDetection: ChangeDetectionStrategy.OnPush,
 			template: 'Goodbye {{myProp()}}!',
 		})
 		class GoodbyeComponent {
@@ -107,9 +101,7 @@ describe('slot directive', () => {
 	it('template', () => {
 		@Component({
 			selector: '[auTestSlotDirectiveTemplate]',
-
 			imports: [SlotDirective],
-			changeDetection: ChangeDetectionStrategy.OnPush,
 			template: `
 				<ng-template #hello let-myProp="myProp">Hello {{ myProp }}!</ng-template>
 				<ng-template #goodbye let-myProp="myProp">Goodbye {{ myProp }}!</ng-template>
@@ -142,8 +134,6 @@ describe('slot directive', () => {
 	it('component template', () => {
 		@Component({
 			selector: '[auTestSlotDirectiveComponentTemplate]',
-
-			changeDetection: ChangeDetectionStrategy.OnPush,
 			template: `
 				<ng-template #hello let-myProp="myProp">Hello {{ myProp }}!</ng-template>
 				<ng-template #goodbye let-myProp="myProp">Goodbye {{ myProp }}!</ng-template>

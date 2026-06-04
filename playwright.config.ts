@@ -79,9 +79,9 @@ const allProjects: Record<Project, () => void> = {
 		});
 	},
 	stackblitz: () => {
-		(selectedFrameworks.filteredList ?? selectedFrameworks.fullList).forEach((_framework) => {
-			(selectedBrowsers.filteredList ?? ['chromium']).forEach((_browser) => {
-				/** playwrightProjects.push({
+		(selectedFrameworks.filteredList ?? selectedFrameworks.fullList).forEach((framework) => {
+			(selectedBrowsers.filteredList ?? ['chromium']).forEach((browser) => {
+				playwrightProjects.push({
 					name: `stackblitz:${framework}:${browser}`,
 					testMatch: 'samplesMarkup.singlebrowser-e2e-spec.ts',
 					use: {
@@ -89,7 +89,7 @@ const allProjects: Record<Project, () => void> = {
 						framework,
 						project: 'stackblitz',
 					},
-				}); */
+				});
 			});
 		});
 	},

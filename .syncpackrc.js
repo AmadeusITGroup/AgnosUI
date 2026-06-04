@@ -35,5 +35,6 @@ export default {
 	sortPackages: false,
 	sortAz: ['bin', 'contributors', 'dependencies', 'devDependencies', 'keywords', 'peerDependencies', 'resolutions'],
 	sortExports: [],
+	dependencyTypes: ['!overrides'],
 	formatRepository: false,
 };

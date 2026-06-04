@@ -1,6 +1,6 @@
 import {UseDirective, type CarouselContext} from '@agnos-ui/angular-bootstrap';
 import type {ElementRef} from '@angular/core';
-import {ChangeDetectionStrategy, Component, effect, inject, input, output, signal, viewChild} from '@angular/core';
+import {Component, effect, inject, input, output, signal, viewChild} from '@angular/core';
 import playSvg from 'bootstrap-icons/icons/play-fill.svg';
 import pauseSvg from 'bootstrap-icons/icons/pause-fill.svg';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -48,7 +48,6 @@ import {DomSanitizer} from '@angular/platform-browser';
 		</div>
 	`,
 	imports: [UseDirective],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AutoplayNavigationComponent {
 	readonly state = input.required<CarouselContext<any>['state']>();

@@ -1,8 +1,7 @@
-import {Component, ChangeDetectionStrategy} from '@angular/core';
+import {Component} from '@angular/core';
 import {AgnosUIAngularModule, type TreeItem} from '@agnos-ui/angular-bootstrap';
 
 @Component({
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'app-root',
 	imports: [AgnosUIAngularModule],
 	templateUrl: './app.component.html',

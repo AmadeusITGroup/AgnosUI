@@ -1,17 +1,6 @@
 import type {SlotContent} from '@agnos-ui/angular-headless';
 import {BaseWidgetDirective, ComponentTemplate, SlotDirective, UseDirective, auBooleanAttribute, auNumberAttribute} from '@agnos-ui/angular-headless';
-import {
-	ChangeDetectionStrategy,
-	Component,
-	Directive,
-	TemplateRef,
-	ViewEncapsulation,
-	inject,
-	input,
-	output,
-	viewChild,
-	contentChild,
-} from '@angular/core';
+import {Component, Directive, TemplateRef, ViewEncapsulation, inject, input, output, viewChild, contentChild} from '@angular/core';
 import {callWidgetFactory} from '../../config';
 import type {PaginationContext, PaginationNumberContext, PaginationWidget} from './pagination.gen';
 import {createPagination} from './pagination.gen';
@@ -114,7 +103,6 @@ export class PaginationStructureDirective {
 
 @Component({
 	imports: [SlotDirective, PaginationPagesDirective, PaginationStructureDirective, UseDirective],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
 		<ng-template auPaginationPages #pages let-state="state" let-api="api" let-directives="directives">
 			@for (page of state.pages(); track page; let i = $index) {
@@ -200,7 +188,6 @@ export const paginationDefaultSlotStructure: SlotContent<PaginationContext> = ne
 @Component({
 	selector: '[auPagination]',
 	imports: [SlotDirective],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	host: {
 		'[attr.aria-label]': 'state.ariaLabel()',
 	},

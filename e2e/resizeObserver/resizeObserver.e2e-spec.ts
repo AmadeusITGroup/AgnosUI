@@ -1,4 +1,4 @@
-import {ResizeObserverDemoPO} from 'e2e/demo-po/resizeObserver.po';
+import {ResizeObserverDemoPO} from '../demo-po/resizeObserver.po';
 import {expect, test} from '../fixture';
 
 test.describe(`Resize Observer demo tests`, () => {

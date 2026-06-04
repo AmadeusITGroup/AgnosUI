@@ -2,7 +2,7 @@ import type {NormalizedTreeItem, TreeItem, TreeWidget} from '@agnos-ui/angular-h
 import {BaseWidgetDirective, UseDirective, callWidgetFactory, createTree} from '@agnos-ui/angular-headless';
 import {NgTemplateOutlet} from '@angular/common';
 
-import {ChangeDetectionStrategy, Component, input, output} from '@angular/core';
+import {Component, input, output} from '@angular/core';
 
 @Component({
 	selector: 'app-tree',
@@ -85,7 +85,6 @@ import {ChangeDetectionStrategy, Component, input, output} from '@angular/core';
 			}
 		</ng-template>
 	`,
-	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TreeComponent extends BaseWidgetDirective<TreeWidget> {
 	readonly nodes = input<TreeItem[]>();

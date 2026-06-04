@@ -2,7 +2,7 @@ import type {SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
 import {BaseWidgetDirective, ComponentTemplate, SlotDirective, UseDirective, UseMultiDirective, auBooleanAttribute} from '@agnos-ui/angular-headless';
 import type {ModalContext, ModalWidget, ModalBeforeCloseEvent} from './modal.gen';
 import {createModal} from './modal.gen';
-import {ChangeDetectionStrategy, Component, Directive, TemplateRef, inject, input, output, viewChild, contentChild} from '@angular/core';
+import {Component, Directive, TemplateRef, inject, input, output, viewChild, contentChild} from '@angular/core';
 import {callWidgetFactory} from '../../config';
 
 /**
@@ -69,7 +69,6 @@ export class ModalFooterDirective<Data> {
  * Component containing the default slots for the modal.
  */
 @Component({
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [SlotDirective, ModalHeaderDirective, ModalStructureDirective, UseDirective],
 	template: `
 		<ng-template auModalHeader #header let-state="state" let-api="api" let-directives="directives">
@@ -117,7 +116,6 @@ export const modalDefaultSlotStructure: SlotContent<ModalContext<any>> = new Com
  */
 @Component({
 	selector: '[auModal]',
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [UseMultiDirective, SlotDirective],
 	template: `
 		<ng-template #content><ng-content /></ng-template>

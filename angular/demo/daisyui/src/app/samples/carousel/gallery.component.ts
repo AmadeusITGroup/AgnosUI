@@ -1,4 +1,4 @@
-import {Component, computed, effect, inject, Injector, input, signal, untracked, viewChild, ChangeDetectionStrategy} from '@angular/core';
+import {Component, computed, effect, inject, Injector, input, signal, untracked, viewChild} from '@angular/core';
 import type {ElementRef, OnInit} from '@angular/core';
 import type {Photo} from '@agnos-ui/common/samples/carousel/photo';
 import {auBooleanAttribute, callWidgetFactory, createCarousel, UseDirective} from '@agnos-ui/angular-headless';
@@ -10,7 +10,6 @@ import compressSvg from '@agnos-ui/common/samples/carousel/compress.svg';
 import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'app-gallery',
 	templateUrl: 'gallery.component.html',
 	imports: [UseDirective, GalleryImageComponent],

@@ -9,7 +9,6 @@ import {
 	useDirectiveForHost,
 } from '@agnos-ui/angular-headless';
 import {
-	ChangeDetectionStrategy,
 	Component,
 	Directive,
 	type OnDestroy,
@@ -53,7 +52,6 @@ export class SliderHandleDirective {
 }
 
 @Component({
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [UseDirective, SliderHandleDirective],
 	template: `
 		<ng-template auSliderHandle #handle let-state="state" let-directives="directives" let-item="item">
@@ -113,7 +111,6 @@ export class SliderTickDirective {
 }
 
 @Component({
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [UseDirective, SliderTickDirective],
 	template: `
 		<ng-template auSliderTick #tick let-state="state" let-directives="directives" let-tick="tick">
@@ -156,7 +153,6 @@ export class SliderStructureDirective {
 }
 
 @Component({
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [SlotDirective, SliderStructureDirective, UseDirective],
 	template: `
 		<ng-template auSliderStructure #structure let-state="state" let-directives="directives" let-api="api">
@@ -213,7 +209,6 @@ export const sliderDefaultSlotStructure: SlotContent<SliderContext> = new Compon
  */
 @Component({
 	selector: '[auSlider]',
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	encapsulation: ViewEncapsulation.None,
 	providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SliderComponent), multi: true}],
 	imports: [SlotDirective, UseDirective],

@@ -1,10 +1,9 @@
 import {UseDirective, toAngularSignal} from '@agnos-ui/angular-bootstrap';
 import {activeElement$, createHasFocus} from '@agnos-ui/core';
-import {ChangeDetectionStrategy, Component, linkedSignal} from '@angular/core';
+import {Component, linkedSignal} from '@angular/core';
 
 @Component({
 	imports: [UseDirective],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
 		<div class="demo-focustrack">
 			<div [auUse]="hasFocusApi.directive" class="my-2 p-2 border">

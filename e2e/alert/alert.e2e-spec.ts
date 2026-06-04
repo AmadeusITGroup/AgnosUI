@@ -2,7 +2,7 @@ import {AlertPO} from '@agnos-ui/page-objects';
 import {expect, test} from '../fixture';
 import {AlertDemoPO} from '../demo-po/alert.po';
 import {assign} from 'common/utils';
-import type {PromiseValue} from 'e2e/utils';
+import type {PromiseValue} from '../utils';
 
 type State = PromiseValue<ReturnType<AlertPO['state']>>;
 

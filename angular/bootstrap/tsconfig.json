@@ -1,12 +1,14 @@
 {
-	"extends": "./tsconfig.build.json",
+	"extends": "../tsconfig.json",
 	"compilerOptions": {
 		"paths": {
-			"@agnos-ui/core/*": ["./core/src/*"],
-			"@agnos-ui/core-bootstrap/*": ["./core-bootstrap/src/*"],
-			"@agnos-ui/angular-headless": ["./angular/headless/src"]
+			"@agnos-ui/core/*": ["../../core/src/*"],
+			"@agnos-ui/core-bootstrap/*": ["../../core-bootstrap/src/*"],
+			"@agnos-ui/angular-headless": ["../headless/src"]
 		},
 		"allowJs": true
 	},
+	"include": ["src"],
+	"exclude": ["src/test.ts", "**/*.spec.ts", "scripts"],
 	"files": ["scripts/verify-module.js"]
 }

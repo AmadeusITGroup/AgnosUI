@@ -2,7 +2,7 @@ import type {SlotContent, TransitionFn} from '@agnos-ui/angular-headless';
 import {BaseWidgetDirective, ComponentTemplate, SlotDirective, UseDirective, auBooleanAttribute} from '@agnos-ui/angular-headless';
 import type {AlertContext, AlertWidget} from './alert.gen';
 import {createAlert} from './alert.gen';
-import {ChangeDetectionStrategy, Component, Directive, TemplateRef, inject, input, output, viewChild, contentChild} from '@angular/core';
+import {Component, Directive, TemplateRef, inject, input, output, viewChild, contentChild} from '@angular/core';
 import {callWidgetFactory} from '../../config';
 import type {BSContextualClass} from '@agnos-ui/core-bootstrap/types';
 
@@ -33,7 +33,6 @@ export class AlertStructureDirective {
 }
 
 @Component({
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [SlotDirective, AlertStructureDirective],
 	template: ` <ng-template auAlertStructure #structure let-state="state" let-api="api" let-directives="directives">
 		<div class="alert-body">
@@ -63,7 +62,6 @@ export const alertDefaultSlotStructure: SlotContent<AlertContext> = new Componen
  */
 @Component({
 	selector: '[auAlert]',
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [SlotDirective, UseDirective],
 	template: ` <ng-template #content>
 			<ng-content />

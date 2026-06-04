@@ -1,7 +1,6 @@
 {
 	"compilerOptions": {
 		"jsx": "react-jsx",
-		"baseUrl": "./",
 		"target": "es2022",
 		"module": "esnext",
 		"strict": true,

@@ -1,7 +1,7 @@
 import {expect, test} from '../fixture';
 import {RatingPO} from '@agnos-ui/page-objects';
 import {RatingDemoPO} from '../demo-po/rating.po';
-import type {PromiseValue} from 'e2e/utils';
+import type {PromiseValue} from '../utils';
 
 type State = PromiseValue<ReturnType<RatingPO['state']>>;
 

@@ -2,7 +2,7 @@ import {expect, test} from '../fixture';
 import {ModalDefaultDemoModalPO, ModalDemoPO, ModalStackDemoModalPO} from '../demo-po/modal.po';
 import {ModalPO} from '@agnos-ui/page-objects';
 import {assign} from 'common/utils';
-import type {PromiseValue} from 'e2e/utils';
+import type {PromiseValue} from '../utils';
 
 type State = PromiseValue<ReturnType<ModalPO['state']>>;
 

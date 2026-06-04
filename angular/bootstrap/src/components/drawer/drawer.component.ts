@@ -9,18 +9,7 @@ import {
 	UseDirective,
 	UseMultiDirective,
 } from '@agnos-ui/angular-headless';
-import {
-	ChangeDetectionStrategy,
-	Component,
-	contentChild,
-	Directive,
-	inject,
-	input,
-	output,
-	TemplateRef,
-	viewChild,
-	ViewEncapsulation,
-} from '@angular/core';
+import {Component, contentChild, Directive, inject, input, output, TemplateRef, viewChild, ViewEncapsulation} from '@angular/core';
 import type {DrawerContext, DrawerWidget} from './drawer.gen';
 import {createDrawer} from './drawer.gen';
 
@@ -61,7 +50,6 @@ export class DrawerBodyDirective {
 }
 
 @Component({
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [SlotDirective, DrawerStructureDirective],
 	template: ` <ng-template auDrawerStructure #structure let-state="state" let-api="api" let-directives="directives">
 		<div class="au-drawer-content">
@@ -91,7 +79,6 @@ export const drawerDefaultSlotStructure: SlotContent<DrawerContext> = new Compon
  * configurations and customizations through its inputs and outputs.
  */
 @Component({
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [UseMultiDirective, SlotDirective, UseDirective],
 	selector: '[auDrawer]',
 	template: `

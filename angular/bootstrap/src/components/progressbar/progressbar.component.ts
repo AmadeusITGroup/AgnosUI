@@ -8,7 +8,7 @@ import {
 } from '@agnos-ui/angular-headless';
 import type {SlotContent} from '@agnos-ui/angular-headless';
 import {NgClass} from '@angular/common';
-import {ChangeDetectionStrategy, Component, Directive, TemplateRef, inject, input, viewChild, contentChild} from '@angular/core';
+import {Component, Directive, TemplateRef, inject, input, viewChild, contentChild} from '@angular/core';
 import type {ProgressbarContext, ProgressbarWidget} from './progressbar.gen';
 import {createProgressbar} from './progressbar.gen';
 
@@ -41,7 +41,6 @@ export class ProgressbarStructureDirective {
 }
 
 @Component({
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [NgClass, SlotDirective, ProgressbarStructureDirective],
 	template: `
 		<ng-template auProgressbarStructure #structure let-state="state" let-api="api" let-directives="directives">
@@ -77,7 +76,6 @@ export const progressbarDefaultSlotStructure: SlotContent<ProgressbarContext> = 
 @Component({
 	selector: '[auProgressbar]',
 	imports: [SlotDirective],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	host: {
 		'[class]': 'state.className()',
 	},

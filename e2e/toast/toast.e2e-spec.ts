@@ -1,7 +1,7 @@
 import {ToastPO} from '@agnos-ui/page-objects';
 import {ToastDemoPO} from '../demo-po/toast.po';
 import {expect, test} from '../fixture';
-import type {PromiseValue} from 'e2e/utils';
+import type {PromiseValue} from '../utils';
 
 type State = PromiseValue<ReturnType<ToastPO['state']>>;
 

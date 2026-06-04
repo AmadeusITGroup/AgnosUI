@@ -1,22 +1,22 @@
 import type {RatingWidget} from '@agnos-ui/angular-headless';
 import {BaseWidgetDirective, auNumberAttribute, callWidgetFactory, createRating} from '@agnos-ui/angular-headless';
-import {ChangeDetectionStrategy, Component, input, model, output} from '@angular/core';
+import {Component, input, model, output} from '@angular/core';
 import type {FormValueControl} from '@angular/forms/signals';
 
 @Component({
 	selector: 'app-rating',
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	templateUrl: './rating.component.html',
 })
 export class RatingComponent extends BaseWidgetDirective<RatingWidget> implements FormValueControl<number> {
 	readonly maxRating = input(undefined, {transform: auNumberAttribute});
 	readonly value = model(0);
+	readonly touched = model<boolean>(false);
+
 	readonly disabled = input(false);
 	readonly ariaLabel = input<string>();
 	readonly className = input<string>();
 	readonly hover = output<number>();
 	readonly leave = output<number>();
-	readonly touched = output<boolean>();
 
 	constructor() {
 		super(

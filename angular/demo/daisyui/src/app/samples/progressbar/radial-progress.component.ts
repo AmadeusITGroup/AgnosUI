@@ -6,11 +6,10 @@ import {
 	createProgressbar,
 	UseDirective,
 } from '@agnos-ui/angular-headless';
-import {ChangeDetectionStrategy, Component, input} from '@angular/core';
+import {Component, input} from '@angular/core';
 
 @Component({
 	selector: 'app-radial-progress',
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [UseDirective],
 	template: ` <div
 		class="radial-progress"

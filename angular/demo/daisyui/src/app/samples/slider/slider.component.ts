@@ -7,12 +7,11 @@ import {
 	createSlider,
 	UseMultiDirective,
 } from '@agnos-ui/angular-headless';
-import {ChangeDetectionStrategy, Component, input, model} from '@angular/core';
+import {Component, input, model} from '@angular/core';
 
 @Component({
 	selector: 'app-slider',
 	imports: [UseMultiDirective],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	templateUrl: './slider.component.html',
 })
 export class SliderComponent extends BaseWidgetDirective<SliderWidget> {

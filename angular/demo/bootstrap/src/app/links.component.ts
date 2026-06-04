@@ -1,8 +1,7 @@
-import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {links} from './links';
 
 @Component({
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
 		<h3>Samples:</h3>
 		<div class="sample-links">

@@ -1,4 +1,4 @@
-import {Component, inject, ChangeDetectionStrategy, input, effect, computed} from '@angular/core';
+import {Component, inject, input, effect, computed} from '@angular/core';
 import {ToastComponent} from './toast.component';
 import {ToasterService} from './toaster.service';
 import {UseDirective} from '@agnos-ui/angular-headless';
@@ -40,7 +40,6 @@ import {toastPositions} from './toast.gen';
 			}
 		</div>
 	`,
-	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToasterComponent {
 	readonly toasterService = inject(ToasterService);

@@ -13,7 +13,9 @@ test.describe('SSR without rehydration', () => {
 });
 
 test.describe('SSR rehydration', () => {
-	test('Markup', async ({page}) => {
+	test('Markup', async ({page, framework}) => {
+		// eslint-disable-next-line playwright/no-skipped-test
+		test.skip(framework === 'react', 'React hydration is not supported yet');
 		let resolveHydration: () => void;
 		const promiseHydration = new Promise<void>((resolve) => (resolveHydration = resolve));
 		const errors: string[] = [];

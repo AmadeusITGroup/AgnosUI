@@ -7,7 +7,7 @@ import {
 	callWidgetFactory,
 	createSimpleClassTransition,
 } from '@agnos-ui/angular-headless';
-import {type AfterViewInit, ChangeDetectionStrategy, Component, inject, input, model, output} from '@angular/core';
+import {type AfterViewInit, Component, inject, input, model, output} from '@angular/core';
 import {AccordionComponent} from './accordion.component';
 
 @Component({
@@ -34,7 +34,6 @@ import {AccordionComponent} from './accordion.component';
 			</div>
 		</div>
 	`,
-	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccordionItemComponent extends BaseWidgetDirective<AccordionItemWidget> implements AfterViewInit {
 	readonly className = input<string>();

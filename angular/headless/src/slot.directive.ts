@@ -8,7 +8,6 @@ import {
 	createComponent,
 	inject,
 	reflectComponentType,
-	ChangeDetectionStrategy,
 	input,
 	viewChild,
 } from '@angular/core';
@@ -23,7 +22,6 @@ abstract class SlotHandler<Props extends Record<string, any>, Slot extends SlotC
 }
 
 @Component({
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `<ng-template #text let-content="content">{{ content }}</ng-template>`,
 })
 class StringSlotComponent {
