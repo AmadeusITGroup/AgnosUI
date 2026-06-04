@@ -1,0 +1,6 @@
+const e=`.drawer-custom-size {
+	--bs-drawer-size: 20rem;
+	--bs-drawer-min-size: max-content;
+	--bs-drawer-max-size: calc(100vw - 2rem);
+}
+`;export{e as default};

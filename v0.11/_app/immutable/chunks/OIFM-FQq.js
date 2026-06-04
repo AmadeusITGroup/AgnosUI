@@ -1,0 +1,35 @@
+const t=`{
+	"name": "agnos-ui-angular-stackblitz-demo",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"ng": "ng",
+		"start": "ng serve",
+		"build": "ng build",
+		"watch": "ng build --watch --configuration development",
+		"preview": "vite preview --outDir dist/demo/browser"
+	},
+	"devDependencies": {
+		"@agnos-ui/angular-headless": "0.11.0-next.0",
+		"@amadeus-it-group/tansu": "^2.0.0",
+		"@angular/animations": "^22.0.0",
+		"@angular/build": "^22.0.0",
+		"@angular/cli": "^22.0.0",
+		"@angular/common": "^22.0.0",
+		"@angular/compiler": "^22.0.0",
+		"@angular/compiler-cli": "^22.0.0",
+		"@angular/core": "^22.0.0",
+		"@angular/forms": "^22.0.0",
+		"@angular/platform-browser": "^22.0.0",
+		"@angular/router": "^22.0.0",
+		"@floating-ui/dom": "^1.6.12",
+		"@tailwindcss/browser": "^4.0.0",
+		"daisyui": "^5.0.6",
+		"embla-carousel-autoplay": "^8.5.2",
+		"rxjs": "^7.8.1",
+		"tslib": "^2.8.1",
+		"typescript": "~6.0.2"
+	}
+}
+`;export{t as default};

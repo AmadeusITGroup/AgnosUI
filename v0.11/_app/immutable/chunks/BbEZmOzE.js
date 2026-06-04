@@ -1,0 +1,46 @@
+const t=`<script lang="ts">
+import {ssrAttributes as __AgnosUISveltePreprocess__ssrAttributes, classDirective as __AgnosUISveltePreprocess__classDirective} from '@agnos-ui/svelte-headless/utils/directive';
+import {BROWSER as __AgnosUISveltePreprocess__BROWSER} from 'esm-env';
+
+	import type {AccordionItemApi, AccordionItemContext, AccordionItemProps} from './accordion';
+	import {Slot} from '@agnos-ui/svelte-headless/slot';
+	import {callWidgetFactory} from '../../config';
+	import {onMount} from 'svelte';
+	import ItemDefaultStructure from './ItemDefaultStructure.svelte';
+	import {getAccordionApi} from './accordion';
+
+	const accordionApi = getAccordionApi();
+	const {registerItem} = accordionApi;
+
+	const id = $props.id();
+	let {visible = $bindable(), ...props}: Partial<AccordionItemProps> = $props();
+	const widget = callWidgetFactory(registerItem, {
+		get props() {
+			return {...props, visible};
+		},
+		defaultConfig: {structure, id},
+		events: {
+			onVisibleChange: (event) => {
+				visible = event;
+			},
+		},
+	});
+	const {
+		state,
+		directives: {itemDirective},
+	} = widget;
+	export const api: AccordionItemApi = widget.api;
+
+	onMount(() => {
+		widget.api.initDone();
+	});
+<\/script>
+
+{#snippet structure(props: AccordionItemContext)}
+	<ItemDefaultStructure {...props} />
+{/snippet}
+
+<div use:__AgnosUISveltePreprocess__classDirective={"accordion-item"} use:itemDirective {...__AgnosUISveltePreprocess__BROWSER ? {} : __AgnosUISveltePreprocess__ssrAttributes(itemDirective, [__AgnosUISveltePreprocess__classDirective, "accordion-item"])}>
+	<Slot content={state.structure} props={widget} />
+</div>
+`;export{t as default};

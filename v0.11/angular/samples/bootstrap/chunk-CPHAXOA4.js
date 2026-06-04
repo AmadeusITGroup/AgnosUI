@@ -1,0 +1,1 @@
+import {o as oE,Y as dc,h as hI,_ as fc}from'./main-W5GSJLCO.js';var o=class t{static{this.\u0275fac=function(e){return new(e||t)};}static{this.\u0275cmp=oE({type:t,selectors:[["ng-component"]],decls:2,vars:0,template:function(e,r){e&1&&(dc(0,"h3"),hI(1,"Coming soon..."),fc());},encapsulation:2});}};export{o as default};
