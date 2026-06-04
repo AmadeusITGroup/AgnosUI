@@ -1,0 +1,1 @@
+import{s as e,p as t,u as a,n as r}from"./DgYdlvpy.js";const n={get data(){return t.data},get error(){return t.error},get params(){return t.params},get route(){return t.route},get status(){return t.status},get url(){return t.url}},u={get to(){return r.current?r.current.to:null}},s={get current(){return a.current},check:e.updated.check},o=n,c=u,p=s;export{c as n,o as p,p as u};
