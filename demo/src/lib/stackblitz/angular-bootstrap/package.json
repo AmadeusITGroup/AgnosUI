@@ -11,6 +11,7 @@
 		"preview": "vite preview --outDir dist/demo/browser"
 	},
 	"devDependencies": {
+		"@agnos-ui/angular-bootstrap": "0.11.0-next.0",
 		"@amadeus-it-group/tansu": "^2.0.0",
 		"@angular/animations": "^22.0.0",
 		"@angular/build": "^22.0.0",
