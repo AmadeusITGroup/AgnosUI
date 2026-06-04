@@ -3,7 +3,7 @@ import type {ToasterToast, ToasterProps} from '@agnos-ui/core/components/toast';
 import {Toaster as CoreToaster} from '@agnos-ui/core/components/toast';
 import {toAngularSignal, toAngularWritableSignal} from '../../generated';
 import type {Signal, WritableSignal} from '@angular/core';
-import {inject, Injectable, InjectionToken} from '@angular/core';
+import {inject, InjectionToken, Service} from '@angular/core';
 
 /**
  * Injection token used to provide configuration properties for the toaster service.
@@ -19,9 +19,7 @@ export const ToastPropsToken = new InjectionToken<ToasterProps>('ToasterProps');
  * @param props Options for the toaster.
  * @template Props Type of the toast properties.
  */
-@Injectable({
-	providedIn: 'root',
-})
+@Service()
 export class ToasterService<Props extends Partial<ToastProps>> {
 	readonly optionsCore = inject(ToastPropsToken, {optional: true});
 	readonly #toaster: CoreToaster<Props> = new CoreToaster<Props>(this.optionsCore ?? undefined);

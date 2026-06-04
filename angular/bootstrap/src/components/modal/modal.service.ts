@@ -1,11 +1,11 @@
-import {ApplicationRef, createComponent, EnvironmentInjector, inject, Injectable, Injector, inputBinding, outputBinding} from '@angular/core';
+import {ApplicationRef, createComponent, EnvironmentInjector, inject, Injector, inputBinding, outputBinding, Service} from '@angular/core';
 import {ModalComponent} from './modal.component';
 import type {ModalProps} from './modal.gen';
 
 /**
  * Service to handle the opening and management of modal components.
  */
-@Injectable({providedIn: 'root'})
+@Service()
 export class ModalService {
 	private readonly _injector = inject(Injector);
 	private readonly _applicationRef = inject(ApplicationRef);

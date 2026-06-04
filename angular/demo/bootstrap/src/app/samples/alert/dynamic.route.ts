@@ -1,8 +1,8 @@
 import {AlertComponent} from '@agnos-ui/angular-bootstrap';
 import type {AlertProps} from '@agnos-ui/angular-bootstrap';
-import {Component, inject, Injectable, signal} from '@angular/core';
+import {Component, inject, Service, signal} from '@angular/core';
 
-@Injectable({providedIn: 'root'})
+@Service()
 class AlertContainerService {
 	private readonly _alerts = signal<Partial<AlertProps>[]>([]);
 	readonly alerts = this._alerts.asReadonly();

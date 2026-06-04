@@ -1,4 +1,4 @@
-import {Injectable, NgZone, inject} from '@angular/core';
+import {NgZone, Service, inject} from '@angular/core';
 
 const noop = () => {};
 const identity = <T>(a: T) => a;
@@ -27,9 +27,7 @@ const createReturnValueWrapper =
  * A utility class that provides methods to run functions inside or outside of Angular's NgZone.
  * This can be useful for optimizing performance by avoiding unnecessary change detection cycles.
  */
-@Injectable({
-	providedIn: 'root',
-})
+@Service()
 export class ZoneWrapper {
 	readonly #zone = inject(NgZone);
 	readonly #hasZone = this.#zone.run(() => NgZone.isInAngularZone()); // check if zone is enabled (can be NoopZone, cf https://angular.io/guide/zone#noopzone)

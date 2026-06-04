@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
+import {Service} from '@angular/core';
 import {createMatchMedia} from '@agnos-ui/angular-bootstrap';
 
-@Injectable({providedIn: 'root'})
+@Service()
 export class MatchMediaService {
 	readonly aboveMd$ = createMatchMedia('(min-width: 768px)');
 }

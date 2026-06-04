@@ -1,6 +1,6 @@
 import {writable} from '@amadeus-it-group/tansu';
 import type {TemplateRef} from '@angular/core';
-import {Component, Injectable, inject, input, viewChild} from '@angular/core';
+import {Component, Service, inject, input, viewChild} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 import {describe, expect, it} from 'vitest';
 import {injectWidgetsConfig, provideWidgetsConfig} from './config';
@@ -161,9 +161,7 @@ describe('slot directive', () => {
 
 describe('widgets config', () => {
 	it('should work to use inject in adaptParentConfig', () => {
-		@Injectable({
-			providedIn: 'root',
-		})
+		@Service()
 		class MySettingsClass {
 			maxRating$ = writable(5);
 		}

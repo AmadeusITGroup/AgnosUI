@@ -1,9 +1,9 @@
 import type {ToastProps} from '@agnos-ui/angular-bootstrap';
 import {AgnosUIAngularModule, ToastComponent, toastPositions} from '@agnos-ui/angular-bootstrap';
-import {Component, Injectable, inject, signal} from '@angular/core';
+import {Component, inject, Service, signal} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
-@Injectable({providedIn: 'root'})
+@Service()
 class ToastService {
 	readonly toastMap = new Map(Object.values(toastPositions).map((entry) => [entry, signal<Partial<ToastProps>[]>([])]));
 
