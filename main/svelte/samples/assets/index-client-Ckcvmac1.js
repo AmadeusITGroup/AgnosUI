@@ -1,0 +1,1 @@
+import{al as a,am as f,an as b}from"./AppCommon-DZ9-aeW5.js";function l(r){let t;const c=b(e=>{let u=!1;const s=r.subscribe(i=>{t=i,u&&e()});return u=!0,s});function n(){return a()?(c(),t):f(r)}return"set"in r?{get current(){return n()},set current(e){r.set(e)}}:{get current(){return n()}}}export{l as f};
