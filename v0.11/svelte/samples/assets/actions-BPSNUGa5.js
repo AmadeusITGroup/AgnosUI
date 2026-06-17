@@ -1,0 +1,1 @@
+import{ab as d,a6 as c,ac as n,ad as u,ae as p}from"./AppCommon-DZ9-aeW5.js";function y(s,o,r){d(()=>{var a=c(()=>o(s,r?.())||{});if(r&&a?.update){var t=!1,f={};n(()=>{var e=r();u(e),t&&p(f,e)&&(f=e,a.update(e))}),t=!0}if(a?.destroy)return()=>a.destroy()})}export{y as a};
